@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>icons/document-open.svg</file>
+        <file>icons/media-playback-start.svg</file>
+        <file>icons/media-playback-pause.svg</file>
+    </qresource>
+</RCC>
