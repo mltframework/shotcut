@@ -27,3 +27,6 @@ win32 {
 
 RESOURCES += \
     resources.qrc
+
+OTHER_FILES += \
+    COPYING
