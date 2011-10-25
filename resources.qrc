@@ -3,5 +3,6 @@
         <file>icons/document-open.svg</file>
         <file>icons/media-playback-start.svg</file>
         <file>icons/media-playback-pause.svg</file>
+        <file>icons/mlt-logo-64.png</file>
     </qresource>
 </RCC>
