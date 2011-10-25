@@ -124,5 +124,6 @@ void MainWindow::onShowFrame (void* frame, unsigned position)
 #ifdef Q_WS_MAC
     emit showImageSignal (mlt->getImage (frame));
 #endif
+    mlt->closeFrame (frame);
     ui->statusBar->showMessage (QString().sprintf ("%.3f", position / mlt->profile()->fps()));
 }

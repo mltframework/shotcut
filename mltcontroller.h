@@ -65,6 +65,8 @@ public:
      */
     QImage getImage (void* frame);
 
+    void closeFrame (void* frame);
+
     Mlt::Profile* profile () const
         { return m_profile; }
 

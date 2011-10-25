@@ -140,10 +140,15 @@ QImage MltController::getImage (void* frame_ptr)
     // TODO: change the format if using a pixel shader
     mlt_image_format format = mlt_image_rgb24a;
     const uint8_t* image = frame->get_image (format, width, height);
-    delete frame;
     QImage qimage (width, height, QImage::Format_ARGB32);
     memcpy (qimage.scanLine(0), image, width * height * 4);
     return qimage;
+}
+
+void MltController::closeFrame (void* frame_ptr)
+{
+    Mlt::Frame* frame = static_cast<Mlt::Frame*> (frame_ptr);
+    delete frame;
 }
 
 void MltController::onWindowResize ()
