@@ -29,6 +29,8 @@ mac {
 win32 {
     INCLUDEPATH += include/mlt++ include/mlt
     LIBS += -Llib -lmlt++ -lmlt
+	RC_FILE = shotcut.rc
+	OTHER_FILES += shotcut.rc
 } else {
     CONFIG += link_pkgconfig
     PKGCONFIG += mlt++
