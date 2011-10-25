@@ -19,6 +19,7 @@ OTHER_FILES += \
     COPYING
 
 mac {
+    TARGET = Shotcut
     QT += opengl
     SOURCES += glwidget.cpp
     HEADERS += glwidget.h
