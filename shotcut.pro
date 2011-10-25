@@ -12,10 +12,19 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui
 
+RESOURCES += \
+    resources.qrc
+
+OTHER_FILES += \
+    COPYING
+
 mac {
     QT += opengl
     SOURCES += glwidget.cpp
     HEADERS += glwidget.h
+    ICON = mlt.icns
+    OTHER_FILES += deploy-osx.sh \
+        mlt.icns
 }
 win32 {
     INCLUDEPATH += include/mlt++ include/mlt
@@ -24,9 +33,3 @@ win32 {
     CONFIG += link_pkgconfig
     PKGCONFIG += mlt++
 }
-
-RESOURCES += \
-    resources.qrc
-
-OTHER_FILES += \
-    COPYING
