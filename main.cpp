@@ -16,8 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QtGui/QApplication>
-#include <QtCore/QDir>
+#include <QtGui>
 #include "mainwindow.h"
 
 int main(int argc, char *argv[])
@@ -30,5 +29,7 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show ();
     w.initializeMlt ();
+    if (argc > 1)
+        w.open(argv[1]);
     return a.exec ();
 }

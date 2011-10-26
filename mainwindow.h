@@ -37,6 +37,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void initializeMlt ();
+    void open(const QString& url);
 
 private:
     void resizeEvent (QResizeEvent* event);

@@ -75,20 +75,24 @@ void MainWindow::initializeMlt ()
     ui->statusBar->showMessage (tr("Ready"));
 }
 
+void MainWindow::open(const QString& url)
+{
+    if (!mlt->open(url.toUtf8().constData())) {
+#ifdef Q_WS_MAC
+        gl->setImageAspectRatio(mlt->profile()->dar());
+#endif
+        play();
+    }
+}
+
 void MainWindow::openVideo ()
 {
-    QString filename = QFileDialog::getOpenFileName (this);
+    QString filename = QFileDialog::getOpenFileName(this);
     if (!filename.isNull())
-    {
-        if (!mlt->open (filename.toUtf8().constData())) {
-#ifdef Q_WS_MAC
-            gl->setImageAspectRatio (mlt->profile()->dar());
-#endif
-            play();
-        }
-    }
-    // If file invalid, then on some platforms the dialog messes up SDL.
-    mlt->onWindowResize ();
+        open(filename);
+    else
+        // If file invalid, then on some platforms the dialog messes up SDL.
+        mlt->onWindowResize();
 }
 
 void MainWindow::play ()
