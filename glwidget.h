@@ -26,12 +26,12 @@ class GLWidget : public QGLWidget
     Q_OBJECT
 
 public:
-    GLWidget (QWidget *parent = 0);
-    ~GLWidget ();
+    GLWidget(QWidget *parent = 0);
+    ~GLWidget();
 
-    QSize minimumSizeHint () const;
-    QSize sizeHint () const;
-    void setImageAspectRatio (double ratio) {
+    QSize minimumSizeHint() const;
+    QSize sizeHint() const;
+    void setImageAspectRatio(double ratio) {
         m_display_ratio = ratio;
     }
 
@@ -42,13 +42,13 @@ private:
     double m_display_ratio;
 
 public slots:
-    void showImage (QImage image);
+    void showImage(QImage image);
 
 protected:
-    void initializeGL ();
-    void resizeGL (int width, int height);
-    void resizeEvent (QResizeEvent* event);
-    void paintGL ();
+    void initializeGL();
+    void resizeGL(int width, int height);
+    void resizeEvent(QResizeEvent* event);
+    void paintGL();
 };
 
 #endif

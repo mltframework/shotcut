@@ -21,15 +21,15 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication a (argc, argv);
-    QDir dir (QApplication::applicationDirPath());
-    dir.cd ("lib");
-    dir.cd ("qt4");
+    QApplication a(argc, argv);
+    QDir dir(QApplication::applicationDirPath());
+    dir.cd("lib");
+    dir.cd("qt4");
     QCoreApplication::addLibraryPath(dir.absolutePath());
     MainWindow w;
-    w.show ();
-    w.initializeMlt ();
+    w.show();
+    w.initializeMlt();
     if (argc > 1)
         w.open(argv[1]);
-    return a.exec ();
+    return a.exec();
 }

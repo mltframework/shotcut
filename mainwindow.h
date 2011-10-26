@@ -36,12 +36,12 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    void initializeMlt ();
+    void initializeMlt();
     void open(const QString& url);
 
 private:
-    void resizeEvent (QResizeEvent* event);
-    void forceResize ();
+    void resizeEvent(QResizeEvent* event);
+    void forceResize();
 
     Ui::MainWindow* ui;
     MltController* mlt;
@@ -54,10 +54,10 @@ signals:
     void showImageSignal(QImage);
 
 public slots:
-    void openVideo ();
-    void play ();
-    void pause ();
-    void onShowFrame (void* frame, unsigned position);
+    void openVideo();
+    void play();
+    void pause();
+    void onShowFrame(void* frame, unsigned position);
 
 private slots:
     void on_actionAbout_Shotcut_triggered();

@@ -25,45 +25,45 @@
 #define GL_TEXTURE_RECTANGLE_EXT GL_TEXTURE_RECTANGLE_NV
 #endif
 
-GLWidget::GLWidget (QWidget *parent)
-    : QGLWidget (parent)
-    , m_image_width (0)
-    , m_image_height (0)
-    , m_texture (0)
-    , m_display_ratio (4.0/3.0)
+GLWidget::GLWidget(QWidget *parent)
+    : QGLWidget(parent)
+    , m_image_width(0)
+    , m_image_height(0)
+    , m_texture(0)
+    , m_display_ratio(4.0/3.0)
 {
-    setAttribute (Qt::WA_PaintOnScreen);
-    setAttribute (Qt::WA_OpaquePaintEvent);
+    setAttribute(Qt::WA_PaintOnScreen);
+    setAttribute(Qt::WA_OpaquePaintEvent);
 }
 
-GLWidget::~GLWidget ()
+GLWidget::~GLWidget()
 {
-    makeCurrent ();
+    makeCurrent();
     if (m_texture)
-        glDeleteTextures (1, &m_texture);
+        glDeleteTextures(1, &m_texture);
 }
 
-QSize GLWidget::minimumSizeHint () const
+QSize GLWidget::minimumSizeHint() const
 {
-    return QSize (40, 30);
+    return QSize(40, 30);
 }
 
-QSize GLWidget::sizeHint () const
+QSize GLWidget::sizeHint() const
 {
-    return QSize (400, 300);
+    return QSize(400, 300);
 }
 
-void GLWidget::initializeGL ()
+void GLWidget::initializeGL()
 {
     QPalette palette;
-    qglClearColor (palette.color (QPalette::Window));
-    glShadeModel (GL_FLAT);
-    glDisable (GL_DEPTH_TEST);
-    glDisable (GL_CULL_FACE);
-    glDisable (GL_LIGHTING);
-    glDisable (GL_DITHER);
-    glDisable (GL_BLEND);
-    glPixelStorei (GL_UNPACK_ALIGNMENT, 1);
+    qglClearColor(palette.color(QPalette::Window));
+    glShadeModel(GL_FLAT);
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_CULL_FACE);
+    glDisable(GL_LIGHTING);
+    glDisable(GL_DITHER);
+    glDisable(GL_BLEND);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 }
 
 void GLWidget::resizeGL(int width, int height)
@@ -91,56 +91,56 @@ void GLWidget::resizeGL(int width, int height)
     x = (width - w) / 2;
     y = (height - h) / 2;
 
-    glViewport (0, 0, width, height);
-    glMatrixMode (GL_PROJECTION);
-    glLoadIdentity ();
-    gluOrtho2D (0, width, height, 0);
-    glMatrixMode (GL_MODELVIEW);
-    glClear (GL_COLOR_BUFFER_BIT);
+    glViewport(0, 0, width, height);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluOrtho2D(0, width, height, 0);
+    glMatrixMode(GL_MODELVIEW);
+    glClear(GL_COLOR_BUFFER_BIT);
 }
 
-void GLWidget::resizeEvent (QResizeEvent* event)
+void GLWidget::resizeEvent(QResizeEvent* event)
 {
-    resizeGL (event->size().width(), event->size().height());
+    resizeGL(event->size().width(), event->size().height());
 }
 
-void GLWidget::paintGL ()
+void GLWidget::paintGL()
 {
-    glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     if (m_texture)
     {
 #ifdef Q_WS_MAC
-        glClear (GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT);
 #endif
-        glEnable (GL_TEXTURE_RECTANGLE_EXT);
-        glBegin (GL_QUADS);
-            glTexCoord2i (0, 0);
-            glVertex2i   (x, y);
-            glTexCoord2i (m_image_width - 1, 0);
-            glVertex2i   (x + w - 1, y);
-            glTexCoord2i (m_image_width - 1, m_image_height - 1);
-            glVertex2i   (x + w - 1, y + h - 1);
-            glTexCoord2i (0, m_image_height - 1);
-            glVertex2i   (x, y + h - 1);
-        glEnd ();
-        glDisable (GL_TEXTURE_RECTANGLE_EXT);
+        glEnable(GL_TEXTURE_RECTANGLE_EXT);
+        glBegin(GL_QUADS);
+            glTexCoord2i(0, 0);
+            glVertex2i  (x, y);
+            glTexCoord2i(m_image_width - 1, 0);
+            glVertex2i  (x + w - 1, y);
+            glTexCoord2i(m_image_width - 1, m_image_height - 1);
+            glVertex2i  (x + w - 1, y + h - 1);
+            glTexCoord2i(0, m_image_height - 1);
+            glVertex2i  (x, y + h - 1);
+        glEnd();
+        glDisable(GL_TEXTURE_RECTANGLE_EXT);
     }
 }
 
-void GLWidget::showImage (QImage image)
+void GLWidget::showImage(QImage image)
 {
-    m_image_width = image.width ();
-    m_image_height = image.height ();
+    m_image_width = image.width();
+    m_image_height = image.height();
 
-    makeCurrent ();
+    makeCurrent();
     if (m_texture)
-        glDeleteTextures (1, &m_texture);
-    glPixelStorei   (GL_UNPACK_ROW_LENGTH, m_image_width);
-    glGenTextures   (1, &m_texture);
-    glBindTexture   (GL_TEXTURE_RECTANGLE_EXT, m_texture);
-    glTexParameteri (GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameterf (GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexImage2D    (GL_TEXTURE_RECTANGLE_EXT, 0, GL_RGBA8, m_image_width, m_image_height, 0,
-                     GL_RGBA, GL_UNSIGNED_BYTE, image.bits());
-    updateGL ();
+        glDeleteTextures(1, &m_texture);
+    glPixelStorei  (GL_UNPACK_ROW_LENGTH, m_image_width);
+    glGenTextures  (1, &m_texture);
+    glBindTexture  (GL_TEXTURE_RECTANGLE_EXT, m_texture);
+    glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameterf(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexImage2D   (GL_TEXTURE_RECTANGLE_EXT, 0, GL_RGBA8, m_image_width, m_image_height, 0,
+                    GL_RGBA, GL_UNSIGNED_BYTE, image.bits());
+    updateGL();
 }
