@@ -58,6 +58,8 @@ public slots:
     void pause ();
     void onShowFrame (void* frame, unsigned position);
 
+private slots:
+    void on_actionAbout_Shotcut_triggered();
 };
 
 #endif // MAINWINDOW_H

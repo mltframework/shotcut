@@ -18,8 +18,7 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QFileDialog>
-#include <QVBoxLayout>
+#include <QtGui>
 
 MainWindow::MainWindow (QWidget *parent)
     : QMainWindow (parent)
@@ -40,6 +39,7 @@ MainWindow::MainWindow (QWidget *parent)
     connect (ui->actionOpen, SIGNAL(triggered()), this, SLOT(openVideo()));
     connect (ui->actionPlay, SIGNAL(triggered()), this, SLOT(play()));
     connect (ui->actionPause, SIGNAL(triggered()), this, SLOT(pause()));
+    connect (ui->actionAbout_Qt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
 
     // Create MLT controller and connect its signals.
     mlt = new MltController (ui->centralWidget);
@@ -127,3 +127,17 @@ void MainWindow::onShowFrame (void* frame, unsigned position)
     mlt->closeFrame (frame);
     ui->statusBar->showMessage (QString().sprintf ("%.3f", position / mlt->profile()->fps()));
 }
+
+void MainWindow::on_actionAbout_Shotcut_triggered()
+{
+    QMessageBox::about(this, tr("About Shotcut"),
+             tr("<h1>Shotcut version 0.5.0</h1>"
+                "<p>Shotcut is an open source cross platform video editor.</p>"
+                "<p><small>Copyright 2011 Meltytech, LLC</small></p>"
+                "<p><small>Licensed under the <a href=\"http://www.gnu.org/licenses/gpl.html\">GNU General Public License v3.0</a></small></p>"
+                "<p><small>This program is distributed in the hope that it will be useful, "
+                "but WITHOUT ANY WARRANTY; without even the implied warranty of "
+                "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</small></p>"
+                ));
+}
+
