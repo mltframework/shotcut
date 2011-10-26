@@ -33,7 +33,7 @@ fixlibs()
   done
 }
 
-BUILD_DIR="../${1}-build-desktop/${1}.app/Contents"
+BUILD_DIR="../shotcut-build-desktop/Shotcut.app/Contents"
 
 # copy qt_menu.nib
 # try MacPorts first
@@ -49,7 +49,7 @@ fi
 cd "$BUILD_DIR/MacOS"
 
 mkdir lib 2>/dev/null
-fixlibs "$1"
+fixlibs Shotcut
 
 # MLT plugins
 mkdir -p lib/mlt 2>/dev/null
