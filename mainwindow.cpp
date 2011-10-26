@@ -41,6 +41,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionPause, SIGNAL(triggered()), this, SLOT(pause()));
     connect(ui->actionAbout_Qt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
 
+    // Accept drag-n-drop of files.
+    this->setAcceptDrops(true);
+
     // Create MLT controller and connect its signals.
     mlt = new MltController(ui->centralWidget);
     connect(mlt, SIGNAL(frameReceived(void*, unsigned)), this, SLOT(onShowFrame(void*, unsigned)));
@@ -143,4 +146,20 @@ void MainWindow::on_actionAbout_Shotcut_triggered()
                 "but WITHOUT ANY WARRANTY; without even the implied warranty of "
                 "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</small></p>"
                 ));
+}
+
+// Drag-n-drop events
+
+void MainWindow::dragEnterEvent(QDragEnterEvent *event)
+{
+    event->acceptProposedAction();
+}
+
+void MainWindow::dropEvent(QDropEvent *event)
+{
+    const QMimeData *mimeData = event->mimeData();
+    if (mimeData->hasUrls()) {
+        open(mimeData->urls().at(0).path());
+        event->acceptProposedAction();
+    }
 }

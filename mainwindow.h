@@ -39,6 +39,10 @@ public:
     void initializeMlt();
     void open(const QString& url);
 
+protected:
+    void dragEnterEvent(QDragEnterEvent *event);
+    void dropEvent(QDropEvent *event);
+
 private:
     void resizeEvent(QResizeEvent* event);
     void forceResize();
