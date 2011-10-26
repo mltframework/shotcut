@@ -68,14 +68,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::initializeMlt()
 {
-    ui->statusBar->showMessage(tr("Loading plugins..."));
-
     mlt->init();
     // Load a color producer to clear the video region with black.
     mlt->open("color:");
     pause();
-
-    ui->statusBar->showMessage(tr("Ready"));
 }
 
 void MainWindow::open(const QString& url)
