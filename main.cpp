@@ -32,8 +32,8 @@ int main(int argc, char *argv[])
     splash.show();
     MainWindow w;
     w.initializeMlt();
-    w.show();
     splash.finish(&w);
+    w.show();
     if (argc > 1)
         w.open(argv[1]);
     return a.exec();
