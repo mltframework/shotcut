@@ -18,6 +18,9 @@ RESOURCES += \
 OTHER_FILES += \
     COPYING
 
+unix {
+    OTHER_FILES += deploy-linux.sh
+}
 mac {
     TARGET = Shotcut
     QT += opengl
