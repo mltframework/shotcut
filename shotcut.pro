@@ -34,7 +34,8 @@ win32 {
     INCLUDEPATH += include/mlt++ include/mlt
     LIBS += -Llib -lmlt++ -lmlt
 	RC_FILE = shotcut.rc
-	OTHER_FILES += shotcut.rc
+    OTHER_FILES += shotcut.rc \
+        deploy-win32.sh
 } else {
     CONFIG += link_pkgconfig
     PKGCONFIG += mlt++
