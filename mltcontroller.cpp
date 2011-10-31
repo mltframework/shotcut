@@ -55,9 +55,9 @@ int MltController::open(const char* url, const char* profile)
         m_profile = 0;
     }
     else {
-//        if (!profile)
-//            // Automate profile
-//            m_profile->from_producer(*m_producer);
+        if (!profile)
+            // Automate profile
+            m_profile->from_producer(*m_producer);
 #ifdef Q_WS_MAC
         // use SDL for audio, OpenGL for video
         m_consumer = new Mlt::Consumer(*m_profile, "sdl_audio");
