@@ -159,3 +159,11 @@ void MainWindow::dropEvent(QDropEvent *event)
         event->acceptProposedAction();
     }
 }
+
+void MainWindow::on_actionOpenURL_triggered()
+{
+    bool ok;
+    QString url = QInputDialog::getText (this, QString(), tr("Enter a media URL"), QLineEdit::Normal, "decklink:", &ok);
+    if (ok && !url.isEmpty())
+        open(url);
+}

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>854</width>
-    <height>557</height>
+    <width>852</width>
+    <height>555</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,7 +23,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>854</width>
+     <width>852</width>
      <height>22</height>
     </rect>
    </property>
@@ -32,6 +32,8 @@
      <string>&amp;File</string>
     </property>
     <addaction name="actionOpen"/>
+    <addaction name="actionOpenURL"/>
+    <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -62,7 +64,7 @@
      <normaloff>:/icons/icons/document-open.svg</normaloff>:/icons/icons/document-open.svg</iconset>
    </property>
    <property name="text">
-    <string>&amp;Open...</string>
+    <string>&amp;Open File...</string>
    </property>
    <property name="toolTip">
     <string>Open file</string>
@@ -120,6 +122,14 @@
   <action name="actionAbout_Qt">
    <property name="text">
     <string>About Qt</string>
+   </property>
+  </action>
+  <action name="actionOpenURL">
+   <property name="text">
+    <string>Open &amp;URL...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+U</string>
    </property>
   </action>
  </widget>

@@ -65,6 +65,7 @@ public slots:
 
 private slots:
     void on_actionAbout_Shotcut_triggered();
+    void on_actionOpenURL_triggered();
 };
 
 #endif // MAINWINDOW_H
