@@ -31,6 +31,8 @@ public:
 
     QSize minimumSizeHint() const;
     QSize sizeHint() const;
+    void showFrame(void*);
+
     void setImageAspectRatio(double ratio) {
         m_display_ratio = ratio;
     }
@@ -40,9 +42,6 @@ private:
     int m_image_width, m_image_height;
     GLuint m_texture;
     double m_display_ratio;
-
-public slots:
-    void showImage(QImage image);
 
 protected:
     void initializeGL();

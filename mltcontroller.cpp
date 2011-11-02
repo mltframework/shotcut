@@ -19,6 +19,8 @@
 #include "mltcontroller.h"
 #include <QWidget>
 #include <QPalette>
+#include <Mlt.h>
+#include "glwidget.h"
 
 MltController::MltController(QObject *parent)
     : QObject(parent)
@@ -145,12 +147,6 @@ QImage MltController::getImage(void* frame_ptr)
     return qimage;
 }
 
-void MltController::closeFrame(void* frame_ptr)
-{
-    Mlt::Frame* frame = static_cast<Mlt::Frame*>(frame_ptr);
-    delete frame;
-}
-
 void MltController::onWindowResize()
 {
     if (m_consumer)
@@ -158,10 +154,11 @@ void MltController::onWindowResize()
         m_consumer->set("refresh", 1);
 }
 
-// MLT consumer-frame-show event handler
+// MLT consumer-frame-show event handler - must use a blocking connection!
 void MltController::on_frame_show(mlt_consumer, void* self, mlt_frame frame_ptr)
 {
     MltController* controller = static_cast<MltController*>(self);
     Mlt::Frame* frame = new Mlt::Frame(frame_ptr);
     emit controller->frameReceived(frame, (unsigned) mlt_frame_get_position(frame_ptr));
+    delete frame;
 }

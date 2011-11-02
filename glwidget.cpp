@@ -19,6 +19,7 @@
 #include <QtGui>
 #include <QtOpenGL>
 #include <QPalette>
+#include <MltFrame.h>
 #include "glwidget.h"
 
 #ifndef GL_TEXTURE_RECTANGLE_EXT
@@ -127,10 +128,12 @@ void GLWidget::paintGL()
     }
 }
 
-void GLWidget::showImage(QImage image)
+void GLWidget::showFrame(void* mltFrame)
 {
-    m_image_width = image.width();
-    m_image_height = image.height();
+    Mlt::Frame* frame = static_cast<Mlt::Frame*>(mltFrame);
+    // TODO: change the format if using a pixel shader
+    mlt_image_format format = mlt_image_rgb24a;
+    const uint8_t* image = frame->get_image(format, m_image_width, m_image_height);
 
     makeCurrent();
     if (m_texture)
@@ -141,6 +144,6 @@ void GLWidget::showImage(QImage image)
     glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameterf(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexImage2D   (GL_TEXTURE_RECTANGLE_EXT, 0, GL_RGBA8, m_image_width, m_image_height, 0,
-                    GL_RGBA, GL_UNSIGNED_BYTE, image.bits());
-    updateGL();
+                    GL_RGBA, GL_UNSIGNED_BYTE, image);
+    glDraw();
 }

@@ -19,6 +19,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QtGui>
+#include <MltProfile.h>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -46,14 +47,13 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Create MLT controller and connect its signals.
     mlt = new MltController(ui->centralWidget);
-    connect(mlt, SIGNAL(frameReceived(void*, unsigned)), this, SLOT(onShowFrame(void*, unsigned)));
+    connect(mlt, SIGNAL(frameReceived(void*, unsigned)), this, SLOT(onShowFrame(void*, unsigned)), Qt::BlockingQueuedConnection);
 #ifdef Q_WS_MAC
     gl = new GLWidget(this);
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(gl);
     layout->setMargin(0);
     ui->centralWidget->setLayout(layout);
-    connect(this, SIGNAL(showImageSignal(QImage)), gl, SLOT(showImage(QImage)));
 #endif
 }
 
@@ -125,9 +125,8 @@ void MainWindow::forceResize()
 void MainWindow::onShowFrame(void* frame, unsigned position)
 {
 #ifdef Q_WS_MAC
-    emit showImageSignal(mlt->getImage(frame));
+    gl->showFrame(frame);
 #endif
-    mlt->closeFrame(frame);
     ui->statusBar->showMessage(QString().sprintf("%.3f", position / mlt->profile()->fps()));
 }
 

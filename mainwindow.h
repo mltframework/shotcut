@@ -54,9 +54,6 @@ private:
     static void on_frame_show(mlt_consumer, MainWindow*, mlt_frame);
 #endif
 
-signals:
-    void showImageSignal(QImage);
-
 public slots:
     void openVideo();
     void play();

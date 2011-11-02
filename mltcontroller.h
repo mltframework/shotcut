@@ -21,7 +21,15 @@
 
 #include <QObject>
 #include <QImage>
-#include <Mlt.h>
+#include <framework/mlt_types.h>
+
+// forward declarations
+namespace Mlt {
+    class Profile;
+    class Producer;
+    class Consumer;
+}
+class GLWidget;
 
 class MltController : public QObject
 {
@@ -64,8 +72,6 @@ public:
      * @return a QImage containing the RGBA image for the frame
      */
     QImage getImage(void* frame);
-
-    void closeFrame(void* frame);
 
     Mlt::Profile* profile() const
         { return m_profile; }
