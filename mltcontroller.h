@@ -19,52 +19,48 @@
 #ifndef MLTCONTROLLER_H
 #define MLTCONTROLLER_H
 
-#include <QObject>
 #include <QImage>
 #include <framework/mlt_types.h>
 
 // forward declarations
+class QWidget;
 namespace Mlt {
     class Profile;
     class Producer;
     class Consumer;
-}
-class GLWidget;
 
-class MltController : public QObject
+class Controller
 {
-    Q_OBJECT
-public:
-    explicit MltController(QObject *parent = 0);
-    ~MltController();
+protected:
+    Controller();
 
-    /** Initialize the controller.
-     */
-    void init();
+public:
+    static Controller* createWidget(QWidget* parent);
+    virtual ~Controller();
 
     /** Open a media file, device, or stream.
      * @param[in] url string of file/device/stream
      * @param[in] profile MLT profile
      * @return 0 if no error. Error code if error.
      */
-    int open(const char* url, const char* profile = 0);
+    virtual int open(const char* url, const char* profile = 0);
 
     /** Close the media.
      */
-    void close();
+    virtual void close();
 
     /** Start playback.
      */
-    void play();
+    virtual void play();
 
     /** Pause playback.
      */
-    void pause();
+    virtual void pause();
 
-    /** Set the SDL audio output level.
+    /** Set the audio output level.
      * @param volume audio volume in the range [0..1]
      */
-    void setVolume(double volume);
+    virtual void setVolume(double volume);
 
     /** Get a QImage for a MLT frame.
      * This is primarily used within a slot connected to the frameReceived signal.
@@ -76,24 +72,17 @@ public:
     Mlt::Profile* profile() const
         { return m_profile; }
 
-signals:
-    /** This method will be called each time a new frame is available.
-     * @param frame pass this opaque frame pointer to getImage()
-     * @param position the frame number of this frame representing time
-     */
-    void frameReceived(void* frame, unsigned position);
+    virtual void onWindowResize();
 
+    virtual QWidget* qwidget() = 0;
 
-public slots:
-    void onWindowResize();
-
-private:
+protected:
     Mlt::Profile* m_profile;
     Mlt::Producer* m_producer;
     Mlt::Consumer* m_consumer;
 
-    static void on_frame_show(mlt_consumer, void* self, mlt_frame frame);
-
 };
+
+} // namespace
 
 #endif // MLTCONTROLLER_H

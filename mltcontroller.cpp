@@ -20,30 +20,35 @@
 #include <QWidget>
 #include <QPalette>
 #include <Mlt.h>
-#ifdef Q_WS_MAC
 #include "glwidget.h"
-#endif
+#include "sdlwidget.h"
 
-MltController::MltController(QObject *parent)
-    : QObject(parent)
-    , m_profile(0)
+namespace Mlt {
+
+Controller::Controller()
+    : m_profile(0)
     , m_producer(0)
     , m_consumer(0)
 {
 }
 
-MltController::~MltController()
+Controller* Controller::createWidget(QWidget* parent)
+{
+    Mlt::Factory::init();
+#ifdef Q_WS_MAC
+    return new GLWidget(parent);
+#else
+    return new SDLWidget(parent);
+#endif
+}
+
+Controller::~Controller()
 {
     close();
     Mlt::Factory::close();
 }
 
-void MltController::init()
-{
-    Mlt::Factory::init();
-}
-
-int MltController::open(const char* url, const char* profile)
+int Controller::open(const char* url, const char* profile)
 {
     int error = 0;
 
@@ -62,48 +67,11 @@ int MltController::open(const char* url, const char* profile)
         if (!profile)
             // Automate profile
             m_profile->from_producer(*m_producer);
-#ifdef Q_WS_MAC
-        // use SDL for audio, OpenGL for video
-        m_consumer = new Mlt::Consumer(*m_profile, "sdl_audio");
-#elif defined(Q_WS_WIN)
-        // sdl_preview does not work good on Windows
-        m_consumer = new Mlt::Consumer(*m_profile, "sdl");
-#else
-        m_consumer = new Mlt::Consumer(*m_profile, "sdl_preview");
-#endif
-        if (m_consumer->is_valid()) {
-            // Embed the SDL window in our GUI.
-            QWidget* widget = qobject_cast<QWidget*>(parent());
-            m_consumer->set("window_id", (int) widget->winId());
-
-#ifndef Q_WS_WIN
-            // Set the background color
-            // XXX: Incorrect color on Windows
-            QPalette pal;
-            m_consumer->set("window_background", pal.color(QPalette::Window).name().toAscii().constData());
-#endif
-
-            // Connect the producer to the consumer - tell it to "run" later
-            m_consumer->connect(*m_producer);
-            // Make an event handler for when a frame's image should be displayed
-            m_consumer->listen("consumer-frame-show", this, (mlt_listener) on_frame_show);
-            m_consumer->start();
-        }
-        else {
-            // Cleanup on error
-            error = 2;
-            delete m_consumer;
-            m_consumer = 0;
-            delete m_producer;
-            m_producer = 0;
-            delete m_profile;
-            m_profile = 0;
-        }
     }
     return error;
 }
 
-void MltController::close()
+void Controller::close()
 {
     if (m_consumer)
         m_consumer->stop();
@@ -115,7 +83,7 @@ void MltController::close()
     m_profile = 0;
 }
 
-void MltController::play()
+void Controller::play()
 {
     if (m_producer)
         m_producer->set_speed(1);
@@ -124,19 +92,19 @@ void MltController::play()
         m_consumer->set("refresh", 1);
 }
 
-void MltController::pause()
+void Controller::pause()
 {
     if (m_producer)
         m_producer->pause();
 }
 
-void MltController::setVolume(double volume)
+void Controller::setVolume(double volume)
 {
     if (m_consumer)
         m_consumer->set("volume", volume);
 }
 
-QImage MltController::getImage(void* frame_ptr)
+QImage Controller::getImage(void* frame_ptr)
 {
     Mlt::Frame* frame = static_cast<Mlt::Frame*>(frame_ptr);
     int width = 0;
@@ -149,18 +117,11 @@ QImage MltController::getImage(void* frame_ptr)
     return qimage;
 }
 
-void MltController::onWindowResize()
+void Controller::onWindowResize()
 {
     if (m_consumer)
         // When paused this tells sdl_still to update.
         m_consumer->set("refresh", 1);
 }
 
-// MLT consumer-frame-show event handler - must use a blocking connection!
-void MltController::on_frame_show(mlt_consumer, void* self, mlt_frame frame_ptr)
-{
-    MltController* controller = static_cast<MltController*>(self);
-    Mlt::Frame* frame = new Mlt::Frame(frame_ptr);
-    emit controller->frameReceived(frame, (unsigned) mlt_frame_get_position(frame_ptr));
-    delete frame;
-}
+} // namespace

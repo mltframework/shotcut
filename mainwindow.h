@@ -36,7 +36,6 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    void initializeMlt();
     void open(const QString& url);
 
 protected:
@@ -48,11 +47,7 @@ private:
     void forceResize();
 
     Ui::MainWindow* ui;
-    MltController* mlt;
-#ifdef Q_WS_MAC
-    GLWidget* gl;
-    static void on_frame_show(mlt_consumer, MainWindow*, mlt_frame);
-#endif
+    Mlt::Controller* mltWidget;
 
 public slots:
     void openVideo();

@@ -28,9 +28,6 @@ MainWindow::MainWindow(QWidget *parent)
     // Create the UI.
     ui->setupUi(this);
 
-    // This is required for SDL embeddding.
-    ui->centralWidget->setAttribute(Qt::WA_NativeWindow);
-
     // These use the icon theme on Linux, with fallbacks to the icons specified in QtDesigner for other platforms.
     ui->actionOpen->setIcon(QIcon::fromTheme("document-open", ui->actionOpen->icon()));
     ui->actionPlay->setIcon(QIcon::fromTheme("media-playback-start", ui->actionPlay->icon()));
@@ -45,45 +42,25 @@ MainWindow::MainWindow(QWidget *parent)
     // Accept drag-n-drop of files.
     this->setAcceptDrops(true);
 
-    // Create MLT controller and connect its signals.
-    mlt = new MltController(ui->centralWidget);
-#ifdef Q_WS_MAC
-    connect(mlt, SIGNAL(frameReceived(void*, unsigned)), this, SLOT(onShowFrame(void*, unsigned)), Qt::BlockingQueuedConnection);
-    gl = new GLWidget(this);
+    // Create MLT video widget and connect its signals.
+    mltWidget = Mlt::Controller::createWidget(this);
     QVBoxLayout *layout = new QVBoxLayout;
-    layout->addWidget(gl);
     layout->setMargin(0);
+    layout->addWidget(mltWidget->qwidget());
     ui->centralWidget->setLayout(layout);
-#else
-    connect(mlt, SIGNAL(frameReceived(void*, unsigned)), this, SLOT(onShowFrame(void*, unsigned)));
-#endif
+    connect(mltWidget->qwidget(), SIGNAL(frameReceived(void*, unsigned)), this, SLOT(onShowFrame(void*, unsigned)));
 }
 
 MainWindow::~MainWindow()
 {
-    delete mlt;
-#ifdef Q_WS_MAC
-    delete gl;
-#endif
+    delete mltWidget;
     delete ui;
-}
-
-void MainWindow::initializeMlt()
-{
-    mlt->init();
-    // Load a color producer to clear the video region with black.
-    mlt->open("color:");
-    pause();
 }
 
 void MainWindow::open(const QString& url)
 {
-    if (!mlt->open(url.toUtf8().constData())) {
-#ifdef Q_WS_MAC
-        gl->setImageAspectRatio(mlt->profile()->dar());
-#endif
+    if (!mltWidget->open(url.toUtf8().constData()))
         play();
-    }
 }
 
 void MainWindow::openVideo()
@@ -93,26 +70,24 @@ void MainWindow::openVideo()
         open(filename);
     else
         // If file invalid, then on some platforms the dialog messes up SDL.
-        mlt->onWindowResize();
+        mltWidget->onWindowResize();
 }
 
 void MainWindow::play()
 {
-    mlt->play();
+    mltWidget->play();
     forceResize();
-    ui->statusBar->showMessage(tr("Playing"));
 }
 
 void MainWindow::pause()
 {
-    mlt->pause();
+    mltWidget->pause();
     forceResize();
-    ui->statusBar->showMessage(tr("Paused"));
 }
 
 void MainWindow::resizeEvent(QResizeEvent*)
 {
-    mlt->onWindowResize();
+    mltWidget->onWindowResize();
 }
 
 void MainWindow::forceResize()
@@ -124,12 +99,9 @@ void MainWindow::forceResize()
     ui->centralWidget->resize(width, height);
 }
 
-void MainWindow::onShowFrame(void* frame, unsigned position)
+void MainWindow::onShowFrame(void*, unsigned position)
 {
-#ifdef Q_WS_MAC
-    gl->showFrame(frame);
-#endif
-    ui->statusBar->showMessage(QString().sprintf("%.3f", position / mlt->profile()->fps()));
+    ui->statusBar->showMessage(QString().sprintf("%.3f", position / mltWidget->profile()->fps()));
 }
 
 void MainWindow::on_actionAbout_Shotcut_triggered()

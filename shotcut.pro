@@ -1,14 +1,18 @@
-QT       += core gui
+QT       += core gui opengl
 
 TARGET = shotcut
 TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    mltcontroller.cpp
+    mltcontroller.cpp \
+    glwidget.cpp \
+    sdlwidget.cpp
 
 HEADERS  += mainwindow.h \
-    mltcontroller.h
+    mltcontroller.h \
+    glwidget.h \
+    sdlwidget.h
 
 FORMS    += mainwindow.ui
 
@@ -25,9 +29,6 @@ OTHER_FILES += \
 
 mac {
     TARGET = Shotcut
-    QT += opengl
-    SOURCES += glwidget.cpp
-    HEADERS += glwidget.h
     ICON = mlt.icns
 }
 win32 {

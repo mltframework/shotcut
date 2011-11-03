@@ -26,12 +26,10 @@ int main(int argc, char *argv[])
     dir.cd("lib");
     dir.cd("qt4");
     QCoreApplication::addLibraryPath(dir.absolutePath());
-    QPixmap pixmap(":/icons/icons/mlt-logo-320.png");
-    QSplashScreen splash(pixmap);
+    QSplashScreen splash(QPixmap(":/icons/icons/mlt-logo-320.png"));
     splash.showMessage(a.tr("Loading plugins..."));
     splash.show();
     MainWindow w;
-    w.initializeMlt();
     splash.finish(&w);
     w.show();
     if (argc > 1)

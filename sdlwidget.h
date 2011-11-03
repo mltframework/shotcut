@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2011 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -16,29 +16,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef GLWIDGET_H
-#define GLWIDGET_H
+#ifndef SDLWIDGET_H
+#define SDLWIDGET_H
 
-#include <QGLWidget>
+#include <QWidget>
 #include "mltcontroller.h"
 
 namespace Mlt {
 
-class GLWidget : public QGLWidget, public Controller
+class SDLWidget : public QWidget, public Controller
 {
     Q_OBJECT
-
 public:
-    GLWidget(QWidget *parent = 0);
-    ~GLWidget();
-
-    QSize minimumSizeHint() const;
-    QSize sizeHint() const;
+    explicit SDLWidget(QWidget *parent = 0);
     int open(const char* url, const char* profile);
     QWidget* qwidget() { return this; }
-
-public slots:
-    void showFrame(void*);
 
 signals:
     /** This method will be called each time a new frame is available.
@@ -47,21 +39,13 @@ signals:
      */
     void frameReceived(void* frame, unsigned position);
 
+public slots:
+
 private:
-    int x, y, w, h;
-    int m_image_width, m_image_height;
-    GLuint m_texture;
-    double m_display_ratio;
-
-protected:
-    void initializeGL();
-    void resizeGL(int width, int height);
-    void resizeEvent(QResizeEvent* event);
-    void paintGL();
-
     static void on_frame_show(mlt_consumer, void* self, mlt_frame frame);
+
 };
 
-} // namespace
+} //namespace
 
-#endif
+#endif // SDLWIDGET_H

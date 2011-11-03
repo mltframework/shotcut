@@ -19,15 +19,18 @@
 #include <QtGui>
 #include <QtOpenGL>
 #include <QPalette>
-#include <MltFrame.h>
+#include <Mlt.h>
 #include "glwidget.h"
 
 #ifndef GL_TEXTURE_RECTANGLE_EXT
 #define GL_TEXTURE_RECTANGLE_EXT GL_TEXTURE_RECTANGLE_NV
 #endif
 
+using namespace Mlt;
+
 GLWidget::GLWidget(QWidget *parent)
     : QGLWidget(parent)
+    , Controller()
     , m_image_width(0)
     , m_image_height(0)
     , m_texture(0)
@@ -146,4 +149,38 @@ void GLWidget::showFrame(void* mltFrame)
     glTexImage2D   (GL_TEXTURE_RECTANGLE_EXT, 0, GL_RGBA8, m_image_width, m_image_height, 0,
                     GL_RGBA, GL_UNSIGNED_BYTE, image);
     glDraw();
+}
+
+int GLWidget::open(const char* url, const char* profile)
+{
+    int error = Controller::open(url, profile);
+
+    if (!error) {
+        // use SDL for audio, OpenGL for video
+        m_consumer = new Mlt::Consumer(*m_profile, "sdl_audio");
+        if (m_consumer->is_valid()) {
+            // Connect the producer to the consumer - tell it to "run" later
+            m_consumer->connect(*m_producer);
+            // Make an event handler for when a frame's image should be displayed
+            m_consumer->listen("consumer-frame-show", this, (mlt_listener) on_frame_show);
+            connect(this, SIGNAL(frameReceived(void*,uint)), this, SLOT(showFrame(void*)), Qt::BlockingQueuedConnection);
+            m_consumer->start();
+            m_display_ratio = m_profile->dar();
+        }
+        else {
+            // Cleanup on error
+            error = 2;
+            Controller::close();
+        }
+    }
+    return error;
+}
+
+// MLT consumer-frame-show event handler - must use a blocking connection!
+void GLWidget::on_frame_show(mlt_consumer, void* self, mlt_frame frame_ptr)
+{
+    GLWidget* widget = static_cast<GLWidget*>(self);
+    Mlt::Frame* frame = new Mlt::Frame(frame_ptr);
+    emit widget->frameReceived(frame, (unsigned) mlt_frame_get_position(frame_ptr));
+    delete frame;
 }
