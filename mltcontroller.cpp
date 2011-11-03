@@ -20,7 +20,9 @@
 #include <QWidget>
 #include <QPalette>
 #include <Mlt.h>
+#ifdef Q_WS_MAC
 #include "glwidget.h"
+#endif
 
 MltController::MltController(QObject *parent)
     : QObject(parent)
