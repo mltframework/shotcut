@@ -47,13 +47,15 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Create MLT controller and connect its signals.
     mlt = new MltController(ui->centralWidget);
-    connect(mlt, SIGNAL(frameReceived(void*, unsigned)), this, SLOT(onShowFrame(void*, unsigned)), Qt::BlockingQueuedConnection);
 #ifdef Q_WS_MAC
+    connect(mlt, SIGNAL(frameReceived(void*, unsigned)), this, SLOT(onShowFrame(void*, unsigned)), Qt::BlockingQueuedConnection);
     gl = new GLWidget(this);
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(gl);
     layout->setMargin(0);
     ui->centralWidget->setLayout(layout);
+#else
+    connect(mlt, SIGNAL(frameReceived(void*, unsigned)), this, SLOT(onShowFrame(void*, unsigned)));
 #endif
 }
 
