@@ -65,7 +65,7 @@ void MainWindow::open(const QString& url)
 
 void MainWindow::openVideo()
 {
-    QString filename = QFileDialog::getOpenFileName(this);
+    QString filename = QFileDialog::getOpenFileName(this, tr("Open File"), QDir::homePath());
     if (!filename.isNull())
         open(filename);
     else
