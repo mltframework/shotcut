@@ -36,16 +36,17 @@ public:
     QSize sizeHint() const;
     int open(const char* url, const char* profile);
     QWidget* qwidget() { return this; }
+    bool isShowingFrame;
 
 public slots:
-    void showFrame(void*);
+    void showFrame(QImage);
 
 signals:
     /** This method will be called each time a new frame is available.
      * @param frame pass this opaque frame pointer to getImage()
      * @param position the frame number of this frame representing time
      */
-    void frameReceived(void* frame, unsigned position);
+    void frameReceived(QImage frame, unsigned position);
 
 private:
     int x, y, w, h;

@@ -53,7 +53,7 @@ public slots:
     void openVideo();
     void play();
     void pause();
-    void onShowFrame(void* frame, unsigned position);
+    void onShowFrame(QImage frame, unsigned position);
 
 private slots:
     void on_actionAbout_Shotcut_triggered();

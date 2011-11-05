@@ -31,10 +31,11 @@ using namespace Mlt;
 GLWidget::GLWidget(QWidget *parent)
     : QGLWidget(parent)
     , Controller()
+    , m_display_ratio(4.0/3.0)
     , m_image_width(0)
     , m_image_height(0)
     , m_texture(0)
-    , m_display_ratio(4.0/3.0)
+    , isShowingFrame(false)
 {
     setAttribute(Qt::WA_PaintOnScreen);
     setAttribute(Qt::WA_OpaquePaintEvent);
@@ -131,13 +132,11 @@ void GLWidget::paintGL()
     }
 }
 
-void GLWidget::showFrame(void* mltFrame)
+void GLWidget::showFrame(QImage image)
 {
-    Mlt::Frame* frame = static_cast<Mlt::Frame*>(mltFrame);
-    // TODO: change the format if using a pixel shader
-    mlt_image_format format = mlt_image_rgb24a;
-    const uint8_t* image = frame->get_image(format, m_image_width, m_image_height);
-
+    isShowingFrame = true;
+    m_image_width = image.width();
+    m_image_height = image.height();
     makeCurrent();
     if (m_texture)
         glDeleteTextures(1, &m_texture);
@@ -147,8 +146,9 @@ void GLWidget::showFrame(void* mltFrame)
     glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameterf(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexImage2D   (GL_TEXTURE_RECTANGLE_EXT, 0, GL_RGBA8, m_image_width, m_image_height, 0,
-                    GL_RGBA, GL_UNSIGNED_BYTE, image);
+                    GL_RGBA, GL_UNSIGNED_BYTE, image.bits());
     glDraw();
+    isShowingFrame = false;
 }
 
 int GLWidget::open(const char* url, const char* profile)
@@ -163,7 +163,8 @@ int GLWidget::open(const char* url, const char* profile)
             m_consumer->connect(*m_producer);
             // Make an event handler for when a frame's image should be displayed
             m_consumer->listen("consumer-frame-show", this, (mlt_listener) on_frame_show);
-            connect(this, SIGNAL(frameReceived(void*,uint)), this, SLOT(showFrame(void*)), Qt::BlockingQueuedConnection);
+            connect(this, SIGNAL(frameReceived(QImage,unsigned)), this, SLOT(showFrame(QImage)));
+            isShowingFrame = false;
             m_consumer->start();
             m_display_ratio = m_profile->dar();
         }
@@ -176,11 +177,14 @@ int GLWidget::open(const char* url, const char* profile)
     return error;
 }
 
-// MLT consumer-frame-show event handler - must use a blocking connection!
+// MLT consumer-frame-show event handler
 void GLWidget::on_frame_show(mlt_consumer, void* self, mlt_frame frame_ptr)
 {
     GLWidget* widget = static_cast<GLWidget*>(self);
-    Mlt::Frame* frame = new Mlt::Frame(frame_ptr);
-    emit widget->frameReceived(frame, (unsigned) mlt_frame_get_position(frame_ptr));
-    delete frame;
+    if (!widget->isShowingFrame) {
+        Mlt::Frame* frame = new Mlt::Frame(frame_ptr);
+        widget->isShowingFrame = true;
+        emit widget->frameReceived(widget->getImage(frame), (unsigned) mlt_frame_get_position(frame_ptr));
+        delete frame;
+    }
 }
