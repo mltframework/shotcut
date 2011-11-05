@@ -37,7 +37,7 @@ signals:
      * @param frame pass this opaque frame pointer to getImage()
      * @param position the frame number of this frame representing time
      */
-    void frameReceived(void* frame, unsigned position);
+    void frameReceived(QImage, unsigned position);
 
 public slots:
 
