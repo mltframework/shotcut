@@ -32,10 +32,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui->actionOpen->setIcon(QIcon::fromTheme("document-open", ui->actionOpen->icon()));
     ui->actionPlay->setIcon(QIcon::fromTheme("media-playback-start", ui->actionPlay->icon()));
     ui->actionPause->setIcon(QIcon::fromTheme("media-playback-pause", ui->actionPause->icon()));
+    m_playIcon = ui->actionPlay->icon();
+    m_pauseIcon = ui->actionPause->icon();
 
     // Connect UI signals.
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openVideo()));
-    connect(ui->actionPlay, SIGNAL(triggered()), this, SLOT(play()));
+    connect(ui->actionPlay, SIGNAL(triggered()), this, SLOT(togglePlayPause()));
     connect(ui->actionPause, SIGNAL(triggered()), this, SLOT(pause()));
     connect(ui->actionAbout_Qt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
 
@@ -73,15 +75,29 @@ void MainWindow::openVideo()
         mltWidget->onWindowResize();
 }
 
+void MainWindow::togglePlayPause()
+{
+    if (ui->actionPlay->icon().cacheKey() == m_playIcon.cacheKey())
+        play();
+    else
+        pause();
+}
+
 void MainWindow::play()
 {
     mltWidget->play();
+    ui->actionPlay->setIcon(m_pauseIcon);
+    ui->actionPlay->setText(tr("Pause"));
+    ui->actionPlay->setToolTip(tr("Pause playback"));
     forceResize();
 }
 
 void MainWindow::pause()
 {
     mltWidget->pause();
+    ui->actionPlay->setIcon(m_playIcon);
+    ui->actionPlay->setText(tr("Play"));
+    ui->actionPlay->setToolTip(tr("Start playback"));
     forceResize();
 }
 

@@ -55,7 +55,6 @@
    </attribute>
    <addaction name="actionOpen"/>
    <addaction name="actionPlay"/>
-   <addaction name="actionPause"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen">

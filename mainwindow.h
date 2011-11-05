@@ -48,9 +48,12 @@ private:
 
     Ui::MainWindow* ui;
     Mlt::Controller* mltWidget;
+    QIcon m_playIcon;
+    QIcon m_pauseIcon;
 
 public slots:
     void openVideo();
+    void togglePlayPause();
     void play();
     void pause();
     void onShowFrame(QImage frame, unsigned position);
