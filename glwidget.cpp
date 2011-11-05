@@ -31,11 +31,11 @@ using namespace Mlt;
 GLWidget::GLWidget(QWidget *parent)
     : QGLWidget(parent)
     , Controller()
-    , m_display_ratio(4.0/3.0)
+    , isShowingFrame(false)
     , m_image_width(0)
     , m_image_height(0)
     , m_texture(0)
-    , isShowingFrame(false)
+    , m_display_ratio(4.0/3.0)
 {
     setAttribute(Qt::WA_PaintOnScreen);
     setAttribute(Qt::WA_OpaquePaintEvent);
