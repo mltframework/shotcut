@@ -69,6 +69,7 @@ int SDLWidget::open(const char* url, const char* profile)
 void SDLWidget::on_frame_show(mlt_consumer, void* self, mlt_frame frame_ptr)
 {
     SDLWidget* widget = static_cast<SDLWidget*>(self);
-    emit widget->frameReceived(QImage(), (unsigned) mlt_frame_get_position(frame_ptr));
+    Frame frame(frame_ptr);
+    emit widget->frameReceived(QFrame(frame), (unsigned) mlt_frame_get_position(frame_ptr));
 }
 

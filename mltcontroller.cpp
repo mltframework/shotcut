@@ -19,11 +19,56 @@
 #include "mltcontroller.h"
 #include <QWidget>
 #include <QPalette>
+#include <QMetaType>
 #include <Mlt.h>
 #include "glwidget.h"
 #include "sdlwidget.h"
 
 namespace Mlt {
+
+QFrame::QFrame(QObject *parent)
+    : QObject(parent)
+    , m_frame(0)
+{}
+
+QFrame::QFrame(const Frame& frame)
+    : QObject(0)
+{
+    Frame* f = const_cast<Frame*>(&frame);
+    m_frame = new Frame(f->get_frame());
+}
+
+QFrame::QFrame(const QFrame& qframe)
+    : QObject(0)
+{
+    Frame* frame = qframe.frame();
+    m_frame = new Frame(frame->get_frame());
+}
+
+QFrame::~QFrame() {
+    delete m_frame;
+}
+
+Frame* QFrame::frame() const {
+    return m_frame;
+}
+
+QImage QFrame::image()
+{
+    if (m_frame) {
+        int width = 0;
+        int height = 0;
+        // TODO: change the format if using a pixel shader
+        mlt_image_format format = mlt_image_rgb24a;
+        const uint8_t* image = m_frame->get_image(format, width, height);
+        QImage qimage(width, height, QImage::Format_ARGB32);
+        memcpy(qimage.scanLine(0), image, width * height * 4);
+        return qimage;
+    }
+    else {
+        return QImage();
+    }
+}
 
 Controller::Controller()
     : m_profile(0)
@@ -34,6 +79,7 @@ Controller::Controller()
 
 Controller* Controller::createWidget(QWidget* parent)
 {
+    qRegisterMetaType<QFrame>("Mlt::QFrame");
     Mlt::Factory::init();
 #ifdef Q_WS_MAC
     return new GLWidget(parent);
@@ -102,19 +148,6 @@ void Controller::setVolume(double volume)
 {
     if (m_consumer)
         m_consumer->set("volume", volume);
-}
-
-QImage Controller::getImage(void* frame_ptr)
-{
-    Mlt::Frame* frame = static_cast<Mlt::Frame*>(frame_ptr);
-    int width = 0;
-    int height = 0;
-    // TODO: change the format if using a pixel shader
-    mlt_image_format format = mlt_image_rgb24a;
-    const uint8_t* image = frame->get_image(format, width, height);
-    QImage qimage(width, height, QImage::Format_ARGB32);
-    memcpy(qimage.scanLine(0), image, width * height * 4);
-    return qimage;
 }
 
 void Controller::onWindowResize()

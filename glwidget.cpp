@@ -132,11 +132,15 @@ void GLWidget::paintGL()
     }
 }
 
-void GLWidget::showFrame(QImage image)
+void GLWidget::showFrame(QFrame frame)
 {
     isShowingFrame = true;
-    m_image_width = image.width();
-    m_image_height = image.height();
+    m_image_width = 0;
+    m_image_height = 0;
+    // TODO: change the format if using a pixel shader
+    mlt_image_format format = mlt_image_rgb24a;
+    const uint8_t* image = frame.frame()->get_image(format, m_image_width, m_image_height);
+
     makeCurrent();
     if (m_texture)
         glDeleteTextures(1, &m_texture);
@@ -146,7 +150,7 @@ void GLWidget::showFrame(QImage image)
     glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameterf(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexImage2D   (GL_TEXTURE_RECTANGLE_EXT, 0, GL_RGBA8, m_image_width, m_image_height, 0,
-                    GL_RGBA, GL_UNSIGNED_BYTE, image.bits());
+                    GL_RGBA, GL_UNSIGNED_BYTE, image);
     glDraw();
     isShowingFrame = false;
 }
@@ -163,7 +167,7 @@ int GLWidget::open(const char* url, const char* profile)
             m_consumer->connect(*m_producer);
             // Make an event handler for when a frame's image should be displayed
             m_consumer->listen("consumer-frame-show", this, (mlt_listener) on_frame_show);
-            connect(this, SIGNAL(frameReceived(QImage,unsigned)), this, SLOT(showFrame(QImage)));
+            connect(this, SIGNAL(frameReceived(Mlt::QFrame, unsigned)), this, SLOT(showFrame(Mlt::QFrame)));
             isShowingFrame = false;
             m_consumer->start();
             m_display_ratio = m_profile->dar();
@@ -182,9 +186,8 @@ void GLWidget::on_frame_show(mlt_consumer, void* self, mlt_frame frame_ptr)
 {
     GLWidget* widget = static_cast<GLWidget*>(self);
     if (!widget->isShowingFrame) {
-        Mlt::Frame* frame = new Mlt::Frame(frame_ptr);
+        Frame frame(frame_ptr);
         widget->isShowingFrame = true;
-        emit widget->frameReceived(widget->getImage(frame), (unsigned) mlt_frame_get_position(frame_ptr));
-        delete frame;
+        emit widget->frameReceived(QFrame(frame), (unsigned) mlt_frame_get_position(frame_ptr));
     }
 }

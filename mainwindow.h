@@ -56,7 +56,7 @@ public slots:
     void togglePlayPause();
     void play();
     void pause();
-    void onShowFrame(QImage frame, unsigned position);
+    void onShowFrame(Mlt::QFrame frame, unsigned position);
 
 private slots:
     void on_actionAbout_Shotcut_triggered();

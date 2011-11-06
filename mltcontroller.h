@@ -21,6 +21,7 @@
 
 #include <QImage>
 #include <framework/mlt_types.h>
+#include <mlt++/MltFrame.h>
 
 // forward declarations
 class QWidget;
@@ -28,6 +29,20 @@ namespace Mlt {
     class Profile;
     class Producer;
     class Consumer;
+
+class QFrame : public QObject
+{
+    Q_OBJECT
+public:
+    QFrame(QObject *parent = 0);
+    QFrame(const Frame& frame);
+    QFrame(const QFrame& qframe);
+    ~QFrame();
+    Frame* frame() const;
+    QImage image();
+private:
+    Frame* m_frame;
+};
 
 class Controller
 {
@@ -61,13 +76,6 @@ public:
      * @param volume audio volume in the range [0..1]
      */
     virtual void setVolume(double volume);
-
-    /** Get a QImage for a MLT frame.
-     * This is primarily used within a slot connected to the frameReceived signal.
-     * @param frame a mlt_frame
-     * @return a QImage containing the RGBA image for the frame
-     */
-    QImage getImage(void* frame);
 
     Mlt::Profile* profile() const
         { return m_profile; }

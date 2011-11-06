@@ -34,10 +34,10 @@ public:
 
 signals:
     /** This method will be called each time a new frame is available.
-     * @param frame pass this opaque frame pointer to getImage()
+     * @param frame a Mlt::QFrame from which to get a QImage
      * @param position the frame number of this frame representing time
      */
-    void frameReceived(QImage, unsigned position);
+    void frameReceived(Mlt::QFrame, unsigned position);
 
 public slots:
 

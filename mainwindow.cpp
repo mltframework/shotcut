@@ -50,7 +50,7 @@ MainWindow::MainWindow(QWidget *parent)
     layout->setMargin(0);
     layout->addWidget(mltWidget->qwidget());
     ui->centralWidget->setLayout(layout);
-    connect(mltWidget->qwidget(), SIGNAL(frameReceived(QImage, unsigned)), this, SLOT(onShowFrame(QImage, unsigned)));
+    connect(mltWidget->qwidget(), SIGNAL(frameReceived(Mlt::QFrame, unsigned)), this, SLOT(onShowFrame(Mlt::QFrame, unsigned)));
 }
 
 MainWindow::~MainWindow()
@@ -115,7 +115,7 @@ void MainWindow::forceResize()
     ui->centralWidget->resize(width, height);
 }
 
-void MainWindow::onShowFrame(QImage, unsigned position)
+void MainWindow::onShowFrame(Mlt::QFrame, unsigned position)
 {
     ui->statusBar->showMessage(QString().sprintf("%.3f", position / mltWidget->profile()->fps()));
 }

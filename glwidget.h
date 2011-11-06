@@ -39,14 +39,14 @@ public:
     bool isShowingFrame;
 
 public slots:
-    void showFrame(QImage);
+    void showFrame(Mlt::QFrame);
 
 signals:
     /** This method will be called each time a new frame is available.
-     * @param frame pass this opaque frame pointer to getImage()
+     * @param frame a Mlt::QFrame from which to get a QImage
      * @param position the frame number of this frame representing time
      */
-    void frameReceived(QImage frame, unsigned position);
+    void frameReceived(Mlt::QFrame frame, unsigned position);
 
 private:
     int x, y, w, h;
