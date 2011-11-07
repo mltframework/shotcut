@@ -31,7 +31,7 @@ using namespace Mlt;
 GLWidget::GLWidget(QWidget *parent)
     : QGLWidget(parent)
     , Controller()
-    , isShowingFrame(false)
+    , showFrameSemaphore(3)
     , m_image_width(0)
     , m_image_height(0)
     , m_texture(0)
@@ -134,7 +134,6 @@ void GLWidget::paintGL()
 
 void GLWidget::showFrame(QFrame frame)
 {
-    isShowingFrame = true;
     m_image_width = 0;
     m_image_height = 0;
     // TODO: change the format if using a pixel shader
@@ -152,7 +151,7 @@ void GLWidget::showFrame(QFrame frame)
     glTexImage2D   (GL_TEXTURE_RECTANGLE_EXT, 0, GL_RGBA8, m_image_width, m_image_height, 0,
                     GL_RGBA, GL_UNSIGNED_BYTE, image);
     glDraw();
-    isShowingFrame = false;
+    showFrameSemaphore.release();
 }
 
 int GLWidget::open(const char* url, const char* profile)
@@ -167,8 +166,8 @@ int GLWidget::open(const char* url, const char* profile)
             m_consumer->connect(*m_producer);
             // Make an event handler for when a frame's image should be displayed
             m_consumer->listen("consumer-frame-show", this, (mlt_listener) on_frame_show);
-            connect(this, SIGNAL(frameReceived(Mlt::QFrame, unsigned)), this, SLOT(showFrame(Mlt::QFrame)));
-            isShowingFrame = false;
+            connect(this, SIGNAL(frameReceived(Mlt::QFrame, unsigned)),
+                    this, SLOT(showFrame(Mlt::QFrame)), Qt::UniqueConnection);
             m_consumer->start();
             m_display_ratio = m_profile->dar();
         }
@@ -185,9 +184,8 @@ int GLWidget::open(const char* url, const char* profile)
 void GLWidget::on_frame_show(mlt_consumer, void* self, mlt_frame frame_ptr)
 {
     GLWidget* widget = static_cast<GLWidget*>(self);
-    if (!widget->isShowingFrame) {
+    if (widget->showFrameSemaphore.tryAcquire()) {
         Frame frame(frame_ptr);
-        widget->isShowingFrame = true;
         emit widget->frameReceived(QFrame(frame), (unsigned) mlt_frame_get_position(frame_ptr));
     }
 }

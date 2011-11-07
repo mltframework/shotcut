@@ -91,7 +91,8 @@ Controller* Controller::createWidget(QWidget* parent)
 Controller::~Controller()
 {
     close();
-    Mlt::Factory::close();
+    // TODO: this is commented out because it causes crash on closing queued QFrames.
+//    Mlt::Factory::close();
 }
 
 int Controller::open(const char* url, const char* profile)

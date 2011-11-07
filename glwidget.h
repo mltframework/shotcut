@@ -20,6 +20,7 @@
 #define GLWIDGET_H
 
 #include <QGLWidget>
+#include <QSemaphore>
 #include "mltcontroller.h"
 
 namespace Mlt {
@@ -36,7 +37,7 @@ public:
     QSize sizeHint() const;
     int open(const char* url, const char* profile);
     QWidget* qwidget() { return this; }
-    bool isShowingFrame;
+    QSemaphore showFrameSemaphore;
 
 public slots:
     void showFrame(Mlt::QFrame);
