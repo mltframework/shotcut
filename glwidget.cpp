@@ -2,6 +2,9 @@
  * Copyright (c) 2011 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
+ * GL shader based on BSD licensed code from Peter Bengtsson:
+ * http://www.fourcc.org/source/YUV420P-OpenGL-GLSLang.c
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -34,9 +37,9 @@ GLWidget::GLWidget(QWidget *parent)
     , showFrameSemaphore(3)
     , m_image_width(0)
     , m_image_height(0)
-    , m_texture(0)
     , m_display_ratio(4.0/3.0)
 {
+    m_texture[0] = m_texture[1] = m_texture[2] = 0;
     setAttribute(Qt::WA_PaintOnScreen);
     setAttribute(Qt::WA_OpaquePaintEvent);
 }
@@ -44,8 +47,9 @@ GLWidget::GLWidget(QWidget *parent)
 GLWidget::~GLWidget()
 {
     makeCurrent();
-    if (m_texture)
-        glDeleteTextures(1, &m_texture);
+    if (m_texture[0])
+        glDeleteTextures(3, m_texture);
+    glUseProgramObjectARB(0);
 }
 
 QSize GLWidget::minimumSizeHint() const
@@ -69,6 +73,37 @@ void GLWidget::initializeGL()
     glDisable(GL_DITHER);
     glDisable(GL_BLEND);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+    // Compile and run fragment shader
+    char* shaderSource =
+    "uniform sampler2DRect Ytex, Utex, Vtex;"
+    "void main(void) {"
+    "  float r, g, b;"
+    "  vec4 txl, ux, vx;"
+    "  float nx = gl_TexCoord[0].x;"
+    "  float ny = gl_TexCoord[0].y;"
+    "  float y = texture2DRect(Ytex, vec2(nx, ny)).r;"
+    "  float u = texture2DRect(Utex, vec2(nx/2.0, ny/4.0)).r;"
+    "  float v=texture2DRect(Vtex, vec2(nx/2.0, ny/4.0)).r;"
+
+    "  y = 1.1643 * (y - 0.0625);"
+    "  u = u - 0.5;"
+    "  v = v - 0.5;"
+
+    "  r = y + 1.5958  * v;"
+    "  g = y - 0.39173 * u - 0.81290 * v;"
+    "  b = y + 2.017   * u;"
+
+    "  gl_FragColor = vec4(r, g, b, 1.0);"
+    "}";
+
+    GLhandleARB shaderObject = glCreateShaderObjectARB(GL_FRAGMENT_SHADER_ARB);
+    m_shader = glCreateProgramObjectARB();
+    glShaderSourceARB(shaderObject, 1, (const GLcharARB**) &shaderSource, NULL);
+    glCompileShaderARB(shaderObject);
+    glAttachObjectARB(m_shader, shaderObject);
+    glLinkProgramARB(m_shader);
+    glUseProgramObjectARB(m_shader);
 }
 
 void GLWidget::resizeGL(int width, int height)
@@ -112,7 +147,7 @@ void GLWidget::resizeEvent(QResizeEvent* event)
 void GLWidget::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    if (m_texture)
+    if (m_texture[0])
     {
 #ifdef Q_WS_MAC
         glClear(GL_COLOR_BUFFER_BIT);
@@ -121,12 +156,12 @@ void GLWidget::paintGL()
         glBegin(GL_QUADS);
             glTexCoord2i(0, 0);
             glVertex2i  (x, y);
-            glTexCoord2i(m_image_width - 1, 0);
-            glVertex2i  (x + w - 1, y);
-            glTexCoord2i(m_image_width - 1, m_image_height - 1);
-            glVertex2i  (x + w - 1, y + h - 1);
-            glTexCoord2i(0, m_image_height - 1);
-            glVertex2i  (x, y + h - 1);
+            glTexCoord2i(m_image_width, 0);
+            glVertex2i  (x + w, y);
+            glTexCoord2i(m_image_width, m_image_height);
+            glVertex2i  (x + w, y + h);
+            glTexCoord2i(0, m_image_height);
+            glVertex2i  (x, y + h);
         glEnd();
         glDisable(GL_TEXTURE_RECTANGLE_EXT);
     }
@@ -136,20 +171,40 @@ void GLWidget::showFrame(QFrame frame)
 {
     m_image_width = 0;
     m_image_height = 0;
-    // TODO: change the format if using a pixel shader
-    mlt_image_format format = mlt_image_rgb24a;
+    mlt_image_format format = mlt_image_yuv420p;
     const uint8_t* image = frame.frame()->get_image(format, m_image_width, m_image_height);
 
+    // Copy each plane of YUV to a texture bound to shader program˙.
     makeCurrent();
-    if (m_texture)
-        glDeleteTextures(1, &m_texture);
+    if (m_texture[0])
+        glDeleteTextures(3, m_texture);
     glPixelStorei  (GL_UNPACK_ROW_LENGTH, m_image_width);
-    glGenTextures  (1, &m_texture);
-    glBindTexture  (GL_TEXTURE_RECTANGLE_EXT, m_texture);
+    glGenTextures  (3, m_texture);
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture  (GL_TEXTURE_RECTANGLE_EXT, m_texture[0]);
+    glUniform1iARB (glGetUniformLocationARB(m_shader, "Ytex"), 0);
     glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameterf(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexImage2D   (GL_TEXTURE_RECTANGLE_EXT, 0, GL_RGBA8, m_image_width, m_image_height, 0,
-                    GL_RGBA, GL_UNSIGNED_BYTE, image);
+    glTexImage2D   (GL_TEXTURE_RECTANGLE_EXT, 0, GL_LUMINANCE, m_image_width, m_image_height, 0,
+                    GL_LUMINANCE, GL_UNSIGNED_BYTE, image);
+
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture  (GL_TEXTURE_RECTANGLE_EXT, m_texture[1]);
+    glUniform1iARB (glGetUniformLocationARB(m_shader, "Utex"), 1);
+    glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameterf(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexImage2D   (GL_TEXTURE_RECTANGLE_EXT, 0, GL_LUMINANCE, m_image_width/2, m_image_height/2, 0,
+                    GL_LUMINANCE, GL_UNSIGNED_BYTE, image + m_image_width * m_image_height);
+
+    glActiveTexture(GL_TEXTURE2);
+    glBindTexture  (GL_TEXTURE_RECTANGLE_EXT, m_texture[2]);
+    glUniform1iARB (glGetUniformLocationARB(m_shader, "Vtex"), 2);
+    glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameterf(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexImage2D   (GL_TEXTURE_RECTANGLE_EXT, 0, GL_LUMINANCE, m_image_width/2, m_image_height/2, 0,
+                    GL_LUMINANCE, GL_UNSIGNED_BYTE, image + m_image_width * m_image_height + m_image_width * m_image_height / 4);
+
     glDraw();
     showFrameSemaphore.release();
 }

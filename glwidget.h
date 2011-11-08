@@ -52,8 +52,9 @@ signals:
 private:
     int x, y, w, h;
     int m_image_width, m_image_height;
-    GLuint m_texture;
+    GLuint m_texture[3];
     double m_display_ratio;
+    GLhandleARB m_shader;
 
 protected:
     void initializeGL();
