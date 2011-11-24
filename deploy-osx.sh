@@ -110,8 +110,12 @@ done
 
 # build DMG
 cd ../../..
+rm Shotcut.dmg 2>/dev/null
+rm -rf staging 2>/dev/null
 mkdir staging
 cp -a Shotcut.app staging/
 ln -s /Applications staging/
+sync
 hdiutil create -fs HFS+ -srcfolder staging -volname Shotcut Shotcut.dmg
-rm -rf staging
+sync
+rm -rf staging 2>/dev/null
