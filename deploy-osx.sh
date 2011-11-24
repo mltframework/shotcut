@@ -1,4 +1,19 @@
 #!/bin/sh
+# Directions
+# 1. install MacPorts
+# 1.1 sudo echo +no_x11 >>/opt/local/etc/macports/variants.conf
+# 2. port install qt4-mac frei0r-plugins ffmpeg libsamplerate libsdl sox glib2 jack
+# 3. get LADSPA swh-plugins and CFLAGS="-march=nocona $CFLAGS" ./configure --enable-darwin --enable-sse
+# 4. get and cd mlt
+# 5. ./configure --enable-gpl --prefix=/opt/local
+# 6. CFLAGS="-I/opt/local/include -DRELOCATABLE" make -j3
+# 7. sudo make install
+# 8. get shotcut
+# 9. mkdir shotcut-build-desktop && cd shotcut-build-desktop
+# 10. qmake ../shotcut/shotcut.pro -r -spec macx-g++
+# 11. make -j3
+# 12. cd ../shotcut && ./deploy-osx.sh
+# 13. Shotcut.dmg is in shotcut-build-desktop
 
 fixlibs()
 {
@@ -88,8 +103,15 @@ done
 
 # LADSPA plugins
 mkdir lib/ladspa 2>/dev/null
-cp -Rn /opt/ladspa/lib/ladspa/* lib/ladspa
+cp -Rn /usr/local/lib/ladspa/* lib/ladspa
 for lib in lib/ladspa/*; do
   fixlibs "$lib"
 done
 
+# build DMG
+cd ../../..
+mkdir staging
+cp -a Shotcut.app staging/
+ln -s /Applications staging/
+hdiutil create -fs HFS+ -srcfolder staging -volname Shotcut Shotcut.dmg
+rm -rf staging
