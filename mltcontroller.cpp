@@ -21,7 +21,9 @@
 #include <QPalette>
 #include <QMetaType>
 #include <Mlt.h>
+#ifndef Q_WS_WIN
 #include "glwidget.h"
+#endif
 #include "sdlwidget.h"
 
 namespace Mlt {

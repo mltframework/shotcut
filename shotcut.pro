@@ -6,12 +6,10 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     mltcontroller.cpp \
-    glwidget.cpp \
     sdlwidget.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
-    glwidget.h \
     sdlwidget.h
 
 FORMS    += mainwindow.ui
@@ -37,5 +35,7 @@ win32 {
 	RC_FILE = shotcut.rc
 } else {
     CONFIG += link_pkgconfig
+    SOURCES += glwidget.cpp
+    HEADERS += glwidget.h
     PKGCONFIG += mlt++
 }

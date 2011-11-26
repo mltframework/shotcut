@@ -21,7 +21,6 @@
 
 #include <QImage>
 #include <framework/mlt_types.h>
-#include <mlt++/MltFrame.h>
 
 // forward declarations
 class QWidget;
@@ -29,6 +28,7 @@ namespace Mlt {
     class Profile;
     class Producer;
     class Consumer;
+    class Frame;
 
 class QFrame : public QObject
 {
