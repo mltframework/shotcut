@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
     dir.cd("qt4");
     QCoreApplication::addLibraryPath(dir.absolutePath());
     QSplashScreen splash(QPixmap(":/icons/icons/mlt-logo-320.png"));
-    splash.showMessage(a.tr("Loading plugins..."));
+    splash.showMessage(a.tr("Loading plugins..."), Qt::AlignHCenter | Qt::AlignBottom);
     splash.show();
     MainWindow w;
     splash.finish(&w);

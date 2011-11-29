@@ -39,12 +39,15 @@ public:
     void open(const QString& url);
 
 protected:
-    void dragEnterEvent(QDragEnterEvent *event);
-    void dropEvent(QDropEvent *event);
+    void dragEnterEvent(QDragEnterEvent*);
+    void dropEvent(QDropEvent*);
+    void closeEvent(QCloseEvent*);
 
 private:
     void resizeEvent(QResizeEvent* event);
     void forceResize();
+    void readSettings();
+    void writeSettings();
 
     Ui::MainWindow* ui;
     Mlt::Controller* mltWidget;

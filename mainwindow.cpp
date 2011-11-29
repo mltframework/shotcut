@@ -44,6 +44,8 @@ MainWindow::MainWindow(QWidget *parent)
     // Accept drag-n-drop of files.
     this->setAcceptDrops(true);
 
+    readSettings();
+
     // Create MLT video widget and connect its signals.
     mltWidget = Mlt::Controller::createWidget(this);
     QVBoxLayout *layout = new QVBoxLayout;
@@ -115,6 +117,22 @@ void MainWindow::forceResize()
     ui->centralWidget->resize(width, height);
 }
 
+void MainWindow::readSettings()
+{
+    QSettings settings("Meltytech.", "Shotcut");
+    QRect rect = settings.value("geometry", QRect(200, 200, 852, 555)).toRect();
+    rect.setTop(rect.top() - ui->menuBar->height());
+    rect.setHeight(rect.height() - ui->menuBar->height());
+    move(rect.topLeft());
+    resize(rect.size());
+}
+
+void MainWindow::writeSettings()
+{
+    QSettings settings("Meltytech", "Shotcut");
+    settings.setValue("geometry", geometry());
+}
+
 void MainWindow::onShowFrame(Mlt::QFrame, unsigned position)
 {
     ui->statusBar->showMessage(QString().sprintf("%.3f", position / mltWidget->profile()->fps()));
@@ -125,11 +143,11 @@ void MainWindow::on_actionAbout_Shotcut_triggered()
     QMessageBox::about(this, tr("About Shotcut"),
              tr("<h1>Shotcut version 0.5.0</h1>"
                 "<p>Shotcut is an open source cross platform video editor.</p>"
-                "<p><small>Copyright 2011 Meltytech, LLC</small></p>"
-                "<p><small>Licensed under the <a href=\"http://www.gnu.org/licenses/gpl.html\">GNU General Public License v3.0</a></small></p>"
-                "<p><small>This program is distributed in the hope that it will be useful, "
+                "<p>Copyright &copy; 2011 Meltytech, LLC</p>"
+                "<p>Licensed under the <a href=\"http://www.gnu.org/licenses/gpl.html\">GNU General Public License v3.0</a></p>"
+                "<p>This program is distributed in the hope that it will be useful, "
                 "but WITHOUT ANY WARRANTY; without even the implied warranty of "
-                "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</small></p>"
+                "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</p>"
                 ));
 }
 
@@ -147,6 +165,12 @@ void MainWindow::dropEvent(QDropEvent *event)
         open(mimeData->urls().at(0).path());
         event->acceptProposedAction();
     }
+}
+
+void MainWindow::closeEvent(QCloseEvent* event)
+{
+    writeSettings();
+    event->accept();
 }
 
 void MainWindow::on_actionOpenURL_triggered()
