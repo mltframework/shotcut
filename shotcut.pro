@@ -23,7 +23,7 @@ OTHER_FILES += \
     deploy-osx.sh \
     deploy-win32.sh \
     mlt.icns \
-    shotcut.rc \
+    shotcut.rc
 
 mac {
     TARGET = Shotcut

@@ -21,6 +21,7 @@
 
 #include <QGLWidget>
 #include <QSemaphore>
+#include <QtOpenGL/QGLShaderProgram>
 #include "mltcontroller.h"
 
 namespace Mlt {
@@ -54,7 +55,7 @@ private:
     int m_image_width, m_image_height;
     GLuint m_texture[3];
     double m_display_ratio;
-    GLhandleARB m_shader;
+    QGLShaderProgram m_shader;
 
 protected:
     void initializeGL();
