@@ -24,6 +24,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    , m_settings("Meltytech", "Shotcut")
 {
     // Create the UI.
     ui->setupUi(this);
@@ -69,9 +70,13 @@ void MainWindow::open(const QString& url)
 
 void MainWindow::openVideo()
 {
-    QString filename = QFileDialog::getOpenFileName(this, tr("Open File"), QDir::homePath());
-    if (!filename.isNull())
+    QString settingKey("openPath");
+    QFileDialog dialog(this, tr("Open File"), m_settings.value(settingKey, QDir::homePath()).toString());
+    QString filename = dialog.getOpenFileName();
+    if (!filename.isNull()) {
+        m_settings.setValue(settingKey, QDir(filename).path());
         open(filename);
+    }
     else
         // If file invalid, then on some platforms the dialog messes up SDL.
         mltWidget->onWindowResize();
@@ -119,8 +124,7 @@ void MainWindow::forceResize()
 
 void MainWindow::readSettings()
 {
-    QSettings settings("Meltytech.", "Shotcut");
-    QRect rect = settings.value("geometry", QRect(200, 200, 852, 555)).toRect();
+    QRect rect = m_settings.value("geometry", QRect(200, 200, 852, 555)).toRect();
     rect.setTop(rect.top() - ui->menuBar->height());
     rect.setHeight(rect.height() - ui->menuBar->height());
     move(rect.topLeft());
@@ -129,8 +133,7 @@ void MainWindow::readSettings()
 
 void MainWindow::writeSettings()
 {
-    QSettings settings("Meltytech", "Shotcut");
-    settings.setValue("geometry", geometry());
+    m_settings.setValue("geometry", geometry());
 }
 
 void MainWindow::onShowFrame(Mlt::QFrame, unsigned position)

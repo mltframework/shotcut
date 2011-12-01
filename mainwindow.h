@@ -20,6 +20,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QSettings>
 #include "mltcontroller.h"
 #ifdef Q_WS_MAC
 #   include "glwidget.h"
@@ -53,6 +54,7 @@ private:
     Mlt::Controller* mltWidget;
     QIcon m_playIcon;
     QIcon m_pauseIcon;
+    QSettings m_settings;
 
 public slots:
     void openVideo();
