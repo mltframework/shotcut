@@ -82,7 +82,7 @@ void GLWidget::initializeGL()
         "  float ny = gl_TexCoord[0].y;"
         "  float y = texture2DRect(Ytex, vec2(nx, ny)).r;"
         "  float u = texture2DRect(Utex, vec2(nx/2.0, ny/4.0)).r;"
-        "  float v=texture2DRect(Vtex, vec2(nx/2.0, ny/4.0)).r;"
+        "  float v = texture2DRect(Vtex, vec2(nx/2.0, ny/4.0)).r;"
 
         "  y = 1.1643 * (y - 0.0625);"
         "  u = u - 0.5;"
@@ -185,7 +185,7 @@ void GLWidget::showFrame(QFrame frame)
     m_shader.setUniformValue(m_shader.uniformLocation("Utex"), 1);
     glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameterf(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexImage2D   (GL_TEXTURE_RECTANGLE_EXT, 0, GL_LUMINANCE, m_image_width/2, m_image_height/2, 0,
+    glTexImage2D   (GL_TEXTURE_RECTANGLE_EXT, 0, GL_LUMINANCE, m_image_width/2, m_image_height/4, 0,
                     GL_LUMINANCE, GL_UNSIGNED_BYTE, image + m_image_width * m_image_height);
 
     glActiveTexture(GL_TEXTURE2);
@@ -193,8 +193,8 @@ void GLWidget::showFrame(QFrame frame)
     m_shader.setUniformValue(m_shader.uniformLocation("Vtex"), 2);
     glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameterf(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexImage2D   (GL_TEXTURE_RECTANGLE_EXT, 0, GL_LUMINANCE, m_image_width/2, m_image_height/2, 0,
-                    GL_LUMINANCE, GL_UNSIGNED_BYTE, image + m_image_width * m_image_height + m_image_width * m_image_height / 4);
+    glTexImage2D   (GL_TEXTURE_RECTANGLE_EXT, 0, GL_LUMINANCE, m_image_width/2, m_image_height/4, 0,
+                    GL_LUMINANCE, GL_UNSIGNED_BYTE, image + m_image_width * m_image_height + m_image_width/2 * m_image_height/2);
 
     glDraw();
     showFrameSemaphore.release();
