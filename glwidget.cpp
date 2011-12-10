@@ -49,7 +49,6 @@ GLWidget::~GLWidget()
     makeCurrent();
     if (m_texture[0])
         glDeleteTextures(3, m_texture);
-    glUseProgramObjectARB(0);
 }
 
 QSize GLWidget::minimumSizeHint() const
@@ -158,7 +157,7 @@ void GLWidget::paintGL()
     }
 }
 
-void GLWidget::showFrame(QFrame frame)
+void GLWidget::showFrame(Mlt::QFrame frame)
 {
     m_image_width = 0;
     m_image_height = 0;
@@ -232,6 +231,6 @@ void GLWidget::on_frame_show(mlt_consumer, void* self, mlt_frame frame_ptr)
     GLWidget* widget = static_cast<GLWidget*>(self);
     if (widget->showFrameSemaphore.tryAcquire()) {
         Frame frame(frame_ptr);
-        emit widget->frameReceived(QFrame(frame), (unsigned) mlt_frame_get_position(frame_ptr));
+        emit widget->frameReceived(Mlt::QFrame(frame), (unsigned) mlt_frame_get_position(frame_ptr));
     }
 }
