@@ -74,7 +74,7 @@ void MainWindow::openVideo()
     QFileDialog dialog(this, tr("Open File"), m_settings.value(settingKey, QDir::homePath()).toString());
     QString filename = dialog.getOpenFileName();
     if (!filename.isNull()) {
-        m_settings.setValue(settingKey, QDir(filename).path());
+        m_settings.setValue(settingKey, QFileInfo(filename).path());
         open(filename);
     }
     else
