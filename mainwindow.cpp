@@ -71,15 +71,17 @@ void MainWindow::open(const QString& url)
 void MainWindow::openVideo()
 {
     QString settingKey("openPath");
-    QFileDialog dialog(this, tr("Open File"), m_settings.value(settingKey, QDir::homePath()).toString());
-    QString filename = dialog.getOpenFileName();
+    QString directory(m_settings.value(settingKey, QDir::homePath()).toString());
+    QString filename = QFileDialog::getOpenFileName(this, tr("Open File"), directory);
+
     if (!filename.isNull()) {
         m_settings.setValue(settingKey, QFileInfo(filename).path());
         open(filename);
     }
-    else
+    else {
         // If file invalid, then on some platforms the dialog messes up SDL.
         mltWidget->onWindowResize();
+    }
 }
 
 void MainWindow::togglePlayPause()
