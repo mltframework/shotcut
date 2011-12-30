@@ -65,12 +65,14 @@ void ScrubBar::setInPoint(int in)
 {
     m_in = qMax(in, 0);
     updatePixmap();
+    emit inChanged(in);
 }
 
 void ScrubBar::setOutPoint(int out)
 {
     m_out = qMin(out, m_max);
     updatePixmap();
+    emit outChanged(out);
 }
 
 void ScrubBar::mousePressEvent(QMouseEvent * event)

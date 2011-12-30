@@ -46,6 +46,8 @@ public:
 
 signals:
     void seeked(int);
+    void inChanged(int);
+    void outChanged(int);
 
 public slots:
     bool onSeek(int value);

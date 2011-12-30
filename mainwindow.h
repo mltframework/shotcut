@@ -70,6 +70,8 @@ public slots:
     void pause();
     void onShowFrame(Mlt::QFrame frame, unsigned position);
     void onSeek(int position);
+    void onInChanged(int in);
+    void onOutChanged(int out);
 
 private slots:
     void on_actionAbout_Shotcut_triggered();

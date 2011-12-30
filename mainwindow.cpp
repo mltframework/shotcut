@@ -69,6 +69,8 @@ MainWindow::MainWindow(QWidget *parent)
     layout->addWidget(m_scrubber);
     layout->addSpacing(4);
     connect(m_scrubber, SIGNAL(seeked(int)), this, SLOT(onSeek(int)));
+    connect(m_scrubber, SIGNAL(inChanged(int)), this, SLOT(onInChanged(int)));
+    connect(m_scrubber, SIGNAL(outChanged(int)), this, SLOT(onOutChanged(int)));
 
     // Add toolbar for transport controls.
     QToolBar* toolbar = new QToolBar(tr("Transport Controls"), this);
@@ -278,11 +280,11 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         }
         break;
     case Qt::Key_I:
-        mltWidget->producer()->set("in", m_positionSpinner->value());
+        onInChanged(m_positionSpinner->value());
         m_scrubber->setInPoint(m_positionSpinner->value());
         break;
     case Qt::Key_O:
-        mltWidget->producer()->set("out", m_positionSpinner->value());
+        onOutChanged(m_positionSpinner->value());
         m_scrubber->setOutPoint(m_positionSpinner->value());
         break;
     default:
@@ -327,6 +329,16 @@ void MainWindow::onSeek(int position)
         if (position >= 0)
             mltWidget->seek(qMin(position, mltWidget->producer()->get_length() - 1));
     }
+}
+
+void MainWindow::onInChanged(int in)
+{
+    mltWidget->producer()->set("in", in);
+}
+
+void MainWindow::onOutChanged(int out)
+{
+    mltWidget->producer()->set("out", out);
 }
 
 void MainWindow::on_actionSkipNext_triggered()
