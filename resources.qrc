@@ -5,5 +5,9 @@
         <file>icons/media-playback-pause.svg</file>
         <file>icons/mlt-logo-64.png</file>
         <file>icons/mlt-logo-320.png</file>
+        <file>icons/media-seek-backward.svg</file>
+        <file>icons/media-seek-forward.svg</file>
+        <file>icons/media-skip-backward.svg</file>
+        <file>icons/media-skip-forward.svg</file>
     </qresource>
 </RCC>

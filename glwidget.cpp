@@ -215,6 +215,7 @@ int GLWidget::open(const char* url, const char* profile)
                     this, SLOT(showFrame(Mlt::QFrame)), Qt::UniqueConnection);
             m_consumer->start();
             m_display_ratio = m_profile->dar();
+            resizeGL(width(), height());
         }
         else {
             // Cleanup on error

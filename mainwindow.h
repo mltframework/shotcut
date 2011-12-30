@@ -30,6 +30,8 @@ namespace Ui {
     class MainWindow;
 }
 class ScrubBar;
+class QSpinBox;
+class QLabel;
 
 class MainWindow : public QMainWindow
 {
@@ -41,6 +43,7 @@ public:
     void open(const QString& url);
 
 protected:
+    void keyPressEvent(QKeyEvent*);
     void dragEnterEvent(QDragEnterEvent*);
     void dropEvent(QDropEvent*);
     void closeEvent(QCloseEvent*);
@@ -57,11 +60,13 @@ private:
     QIcon m_pauseIcon;
     QSettings m_settings;
     ScrubBar* m_scrubber;
+    QSpinBox* m_positionSpinner;
+    QLabel* m_durationLabel;
 
 public slots:
     void openVideo();
     void togglePlayPause();
-    void play();
+    void play(double speed = 1.0);
     void pause();
     void onShowFrame(Mlt::QFrame frame, unsigned position);
     void onSeek(int position);
@@ -69,6 +74,8 @@ public slots:
 private slots:
     void on_actionAbout_Shotcut_triggered();
     void on_actionOpenURL_triggered();
+    void on_actionSkipNext_triggered();
+    void on_actionSkipPrevious_triggered();
 };
 
 #endif // MAINWINDOW_H

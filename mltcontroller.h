@@ -66,7 +66,7 @@ public:
 
     /** Start playback.
      */
-    virtual void play();
+    virtual void play(double speed = 1.0);
 
     /** Pause playback.
      */

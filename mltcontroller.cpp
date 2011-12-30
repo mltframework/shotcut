@@ -113,9 +113,15 @@ int Controller::open(const char* url, const char* profile)
         m_profile = 0;
     }
     else {
+        double fps = m_profile->fps();
         if (!profile)
             // Automate profile
             m_profile->from_producer(*m_producer);
+        if (m_profile->fps() != fps) {
+            // reopen with the correct fps
+            delete m_producer;
+            m_producer = new Mlt::Producer(*m_profile, url);
+        }
     }
     return error;
 }
@@ -132,10 +138,10 @@ void Controller::close()
     m_profile = 0;
 }
 
-void Controller::play()
+void Controller::play(double speed)
 {
     if (m_producer)
-        m_producer->set_speed(1);
+        m_producer->set_speed(speed);
     // If we are paused, then we need to "unlock" sdl_still.
     if (m_consumer)
         m_consumer->set("refresh", 1);

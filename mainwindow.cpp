@@ -34,6 +34,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->actionOpen->setIcon(QIcon::fromTheme("document-open", ui->actionOpen->icon()));
     ui->actionPlay->setIcon(QIcon::fromTheme("media-playback-start", ui->actionPlay->icon()));
     ui->actionPause->setIcon(QIcon::fromTheme("media-playback-pause", ui->actionPause->icon()));
+    ui->actionSkipNext->setIcon(QIcon::fromTheme("media-skip-forward", ui->actionSkipNext->icon()));
+    ui->actionSkipPrevious->setIcon(QIcon::fromTheme("media-skip-backward", ui->actionSkipPrevious->icon()));
     m_playIcon = ui->actionPlay->icon();
     m_pauseIcon = ui->actionPause->icon();
 
@@ -52,19 +54,58 @@ MainWindow::MainWindow(QWidget *parent)
     mltWidget = Mlt::Controller::createWidget(this);
     QVBoxLayout *layout = new QVBoxLayout;
     layout->setMargin(0);
+    layout->setSpacing(0);
     ui->centralWidget->setLayout(layout);
-
     mltWidget->qwidget()->setContentsMargins(0, 0, 0, 0);
     mltWidget->qwidget()->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
     layout->addWidget(mltWidget->qwidget(), 10);
     layout->addStretch();
+    connect(mltWidget->qwidget(), SIGNAL(frameReceived(Mlt::QFrame, unsigned)), this, SLOT(onShowFrame(Mlt::QFrame, unsigned)));
 
+    // Add the scrub bar.
     m_scrubber = new ScrubBar(this);
     m_scrubber->hide();
+    layout->addSpacing(4);
     layout->addWidget(m_scrubber);
-
-    connect(mltWidget->qwidget(), SIGNAL(frameReceived(Mlt::QFrame, unsigned)), this, SLOT(onShowFrame(Mlt::QFrame, unsigned)));
+    layout->addSpacing(4);
     connect(m_scrubber, SIGNAL(seeked(int)), this, SLOT(onSeek(int)));
+
+    // Add toolbar for transport controls.
+    QToolBar* toolbar = new QToolBar(tr("Transport Controls"), this);
+    int s = style()->pixelMetric(QStyle::PM_SmallIconSize);
+    toolbar->setIconSize(QSize(s, s));
+    toolbar->setContentsMargins(0, 0, 5, 0);
+    QWidget *spacer = new QWidget(this);
+    spacer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
+    m_positionSpinner = new QSpinBox(this);
+    m_positionSpinner->setToolTip(tr("Position in frames"));
+    m_positionSpinner->setAlignment(Qt::AlignRight);
+    m_positionSpinner->setRange(0, INT_MAX);
+    m_positionSpinner->setValue(0);
+    m_positionSpinner->setEnabled(false);
+    m_durationLabel = new QLabel(this);
+    m_durationLabel->setToolTip(tr("Duration in seconds"));
+    m_durationLabel->setText("0.000");
+    m_durationLabel->setAlignment(Qt::AlignRight);
+    m_durationLabel->setContentsMargins(0, 5, 0, 0);
+    m_durationLabel->setFixedWidth(m_positionSpinner->width());
+    connect(m_positionSpinner, SIGNAL(valueChanged(int)), this, SLOT(onSeek(int)));
+    connect(m_positionSpinner, SIGNAL(editingFinished()), this, SLOT(setFocus()));
+
+    toolbar->addWidget(m_positionSpinner);
+    toolbar->addWidget(spacer);
+    ui->actionPlay->setEnabled(false);
+    toolbar->addAction(ui->actionPlay);
+    ui->actionSkipPrevious->setEnabled(false);
+    toolbar->addAction(ui->actionSkipPrevious);
+    ui->actionSkipNext->setEnabled(false);
+    toolbar->addAction(ui->actionSkipNext);
+    spacer = new QWidget(this);
+    spacer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
+    toolbar->addWidget(spacer);
+    toolbar->addWidget(m_durationLabel);
+    layout->addWidget(toolbar);
+    setFocus();
 }
 
 MainWindow::~MainWindow()
@@ -76,12 +117,26 @@ MainWindow::~MainWindow()
 void MainWindow::open(const QString& url)
 {
     if (!mltWidget->open(url.toUtf8().constData())) {
+        int len = mltWidget->producer()->get_length();
+        bool seekable = mltWidget->producer()->get_int("seekable");
+
+        mltWidget->producer()->set("ignore_points", 1);
         m_scrubber->setFramerate(mltWidget->profile()->fps());
-        m_scrubber->setScale(mltWidget->producer()->get_length());
-        if (mltWidget->producer()->get_int("seekable"))
+        m_scrubber->setScale(len);
+        if (seekable) {
+            m_durationLabel->setText(QString().sprintf("%.03f", len / mltWidget->profile()->fps()));
+            m_scrubber->setInPoint(mltWidget->producer()->get_in());
+            m_scrubber->setOutPoint(mltWidget->producer()->get_out());
             m_scrubber->show();
-        else
+        }
+        else {
+            m_durationLabel->setText(tr("Live"));
             m_scrubber->hide();
+        }
+        m_positionSpinner->setEnabled(seekable);
+        ui->actionPlay->setEnabled(true);
+        ui->actionSkipPrevious->setEnabled(seekable);
+        ui->actionSkipNext->setEnabled(seekable);
         play();
     }
 }
@@ -94,6 +149,7 @@ void MainWindow::openVideo()
 
     if (!filename.isNull()) {
         m_settings.setValue(settingKey, QFileInfo(filename).path());
+        activateWindow();
         open(filename);
     }
     else {
@@ -110,9 +166,9 @@ void MainWindow::togglePlayPause()
         pause();
 }
 
-void MainWindow::play()
+void MainWindow::play(double speed)
 {
-    mltWidget->play();
+    mltWidget->play(speed);
     ui->actionPlay->setIcon(m_pauseIcon);
     ui->actionPlay->setText(tr("Pause"));
     ui->actionPlay->setToolTip(tr("Pause playback"));
@@ -159,8 +215,12 @@ void MainWindow::writeSettings()
 
 void MainWindow::onShowFrame(Mlt::QFrame, unsigned position)
 {
-    ui->statusBar->showMessage(QString().sprintf("%.3f", position / mltWidget->profile()->fps()));
+    m_positionSpinner->blockSignals(true);
+    m_positionSpinner->setValue((int) position);
+    m_positionSpinner->blockSignals(false);
     m_scrubber->onSeek(position);
+    if (position >= mltWidget->producer()->get_length() - 1)
+        pause();
 }
 
 void MainWindow::on_actionAbout_Shotcut_triggered()
@@ -174,6 +234,60 @@ void MainWindow::on_actionAbout_Shotcut_triggered()
                 "but WITHOUT ANY WARRANTY; without even the implied warranty of "
                 "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</p>"
                 ));
+}
+
+
+void MainWindow::keyPressEvent(QKeyEvent* event)
+{
+    switch (event->key()) {
+    case Qt::Key_Home:
+        onSeek(0);
+        break;
+    case Qt::Key_End:
+        onSeek(mltWidget->producer()->get_length() - 1);
+        break;
+    case Qt::Key_Left:
+        onSeek(m_positionSpinner->value() - 1);
+        break;
+    case Qt::Key_Right:
+        onSeek(m_positionSpinner->value() + 1);
+        break;
+    case Qt::Key_PageUp:
+        onSeek(m_positionSpinner->value() - 10);
+        break;
+    case Qt::Key_PageDown:
+        onSeek(m_positionSpinner->value() + 10);
+        break;
+    case Qt::Key_J:
+        if (mltWidget->producer()->get_int("seekable")) {
+            if (mltWidget->producer()->get_speed() >= 0)
+                play(-1.0);
+            else
+                mltWidget->producer()->set_speed(mltWidget->producer()->get_speed() * 2);
+        }
+        break;
+    case Qt::Key_K:
+        togglePlayPause();
+        break;
+    case Qt::Key_L:
+        if (mltWidget->producer()->get_int("seekable")) {
+            if (mltWidget->producer()->get_speed() <= 0)
+                play();
+            else
+                mltWidget->producer()->set_speed(mltWidget->producer()->get_speed() * 2);
+        }
+        break;
+    case Qt::Key_I:
+        mltWidget->producer()->set("in", m_positionSpinner->value());
+        m_scrubber->setInPoint(m_positionSpinner->value());
+        break;
+    case Qt::Key_O:
+        mltWidget->producer()->set("out", m_positionSpinner->value());
+        m_scrubber->setOutPoint(m_positionSpinner->value());
+        break;
+    default:
+        QMainWindow::keyPressEvent(event);
+    }
 }
 
 // Drag-n-drop events
@@ -208,6 +322,33 @@ void MainWindow::on_actionOpenURL_triggered()
 
 void MainWindow::onSeek(int position)
 {
-    pause();
-    mltWidget->seek(position);
+    if (mltWidget->producer()->get_int("seekable")) {
+        pause();
+        if (position >= 0)
+            mltWidget->seek(qMin(position, mltWidget->producer()->get_length() - 1));
+    }
+}
+
+void MainWindow::on_actionSkipNext_triggered()
+{
+    int pos = m_positionSpinner->value();
+    if (pos < mltWidget->producer()->get_in())
+        mltWidget->seek(mltWidget->producer()->get_in());
+    else if (pos >= mltWidget->producer()->get_out())
+        mltWidget->seek(mltWidget->producer()->get_length() - 1);
+    else
+        mltWidget->seek(mltWidget->producer()->get_out());
+    ui->statusBar->showMessage(ui->actionSkipNext->toolTip(), 3000);
+}
+
+void MainWindow::on_actionSkipPrevious_triggered()
+{
+    int pos = m_positionSpinner->value();
+    if (pos > mltWidget->producer()->get_out())
+        mltWidget->seek(mltWidget->producer()->get_out());
+    else if (pos <= mltWidget->producer()->get_in())
+        mltWidget->seek(0);
+    else
+        mltWidget->seek(mltWidget->producer()->get_in());
+    ui->statusBar->showMessage(ui->actionSkipPrevious->toolTip(), 3000);
 }
