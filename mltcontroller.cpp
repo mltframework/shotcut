@@ -160,4 +160,12 @@ void Controller::onWindowResize()
         m_consumer->set("refresh", 1);
 }
 
+void Controller::seek(int position)
+{
+    if (m_producer)
+        m_producer->seek(position);
+    if (m_consumer) // need to refresh consumer when paused
+        m_consumer->set("refresh", 1);
+}
+
 } // namespace

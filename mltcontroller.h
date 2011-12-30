@@ -84,6 +84,12 @@ public:
 
     virtual QWidget* qwidget() = 0;
 
+    void seek(int position);
+
+    Mlt::Producer* producer() const {
+        return m_producer;
+    }
+
 protected:
     Mlt::Profile* m_profile;
     Mlt::Producer* m_producer;

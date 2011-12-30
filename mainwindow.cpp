@@ -18,8 +18,9 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "scrubbar.h"
 #include <QtGui>
-#include <MltProfile.h>
+#include <Mlt.h>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -51,9 +52,19 @@ MainWindow::MainWindow(QWidget *parent)
     mltWidget = Mlt::Controller::createWidget(this);
     QVBoxLayout *layout = new QVBoxLayout;
     layout->setMargin(0);
-    layout->addWidget(mltWidget->qwidget());
     ui->centralWidget->setLayout(layout);
+
+    mltWidget->qwidget()->setContentsMargins(0, 0, 0, 0);
+    mltWidget->qwidget()->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    layout->addWidget(mltWidget->qwidget(), 10);
+    layout->addStretch();
+
+    m_scrubber = new ScrubBar(this);
+    m_scrubber->hide();
+    layout->addWidget(m_scrubber);
+
     connect(mltWidget->qwidget(), SIGNAL(frameReceived(Mlt::QFrame, unsigned)), this, SLOT(onShowFrame(Mlt::QFrame, unsigned)));
+    connect(m_scrubber, SIGNAL(seeked(int)), this, SLOT(onSeek(int)));
 }
 
 MainWindow::~MainWindow()
@@ -64,8 +75,15 @@ MainWindow::~MainWindow()
 
 void MainWindow::open(const QString& url)
 {
-    if (!mltWidget->open(url.toUtf8().constData()))
+    if (!mltWidget->open(url.toUtf8().constData())) {
+        m_scrubber->setFramerate(mltWidget->profile()->fps());
+        m_scrubber->setScale(mltWidget->producer()->get_length());
+        if (mltWidget->producer()->get_int("seekable"))
+            m_scrubber->show();
+        else
+            m_scrubber->hide();
         play();
+    }
 }
 
 void MainWindow::openVideo()
@@ -117,6 +135,7 @@ void MainWindow::resizeEvent(QResizeEvent*)
 
 void MainWindow::forceResize()
 {
+    return;
     // XXX: this is a hack to force video container to resize
     int width = ui->centralWidget->width();
     int height = ui->centralWidget->height();
@@ -141,6 +160,7 @@ void MainWindow::writeSettings()
 void MainWindow::onShowFrame(Mlt::QFrame, unsigned position)
 {
     ui->statusBar->showMessage(QString().sprintf("%.3f", position / mltWidget->profile()->fps()));
+    m_scrubber->onSeek(position);
 }
 
 void MainWindow::on_actionAbout_Shotcut_triggered()
@@ -184,4 +204,10 @@ void MainWindow::on_actionOpenURL_triggered()
     QString url = QInputDialog::getText (this, QString(), tr("Enter a media URL"), QLineEdit::Normal, "decklink:", &ok);
     if (ok && !url.isEmpty())
         open(url);
+}
+
+void MainWindow::onSeek(int position)
+{
+    pause();
+    mltWidget->seek(position);
 }

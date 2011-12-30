@@ -6,11 +6,13 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     mltcontroller.cpp \
-    sdlwidget.cpp
+    sdlwidget.cpp \
+    scrubbar.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
-    sdlwidget.h
+    sdlwidget.h \
+    scrubbar.h
 
 FORMS    += mainwindow.ui
 

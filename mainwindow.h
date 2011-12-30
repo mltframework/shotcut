@@ -29,6 +29,7 @@
 namespace Ui {
     class MainWindow;
 }
+class ScrubBar;
 
 class MainWindow : public QMainWindow
 {
@@ -55,6 +56,7 @@ private:
     QIcon m_playIcon;
     QIcon m_pauseIcon;
     QSettings m_settings;
+    ScrubBar* m_scrubber;
 
 public slots:
     void openVideo();
@@ -62,6 +64,7 @@ public slots:
     void play();
     void pause();
     void onShowFrame(Mlt::QFrame frame, unsigned position);
+    void onSeek(int position);
 
 private slots:
     void on_actionAbout_Shotcut_triggered();
