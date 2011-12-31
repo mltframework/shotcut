@@ -90,6 +90,10 @@ public:
         return m_producer;
     }
 
+    Mlt::Consumer* consumer() const {
+        return m_consumer;
+    }
+
 protected:
     Mlt::Profile* m_profile;
     Mlt::Producer* m_producer;

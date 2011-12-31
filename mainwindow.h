@@ -72,12 +72,17 @@ public slots:
     void onSeek(int position);
     void onInChanged(int in);
     void onOutChanged(int out);
+    void onVideoWidgetContextMenu(const QPoint& pos);
 
 private slots:
     void on_actionAbout_Shotcut_triggered();
     void on_actionOpenURL_triggered();
     void on_actionSkipNext_triggered();
     void on_actionSkipPrevious_triggered();
+    void on_actionProgressive_triggered(bool checked);
+    void on_actionLowQuality_triggered(bool checked);
+    void on_actionMediumQuality_triggered(bool checked);
+    void on_actionHighQuality_triggered(bool checked);
 };
 
 #endif // MAINWINDOW_H

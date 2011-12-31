@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>852</width>
-    <height>555</height>
+    <width>848</width>
+    <height>551</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,7 +23,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>852</width>
+     <width>848</width>
      <height>22</height>
     </rect>
    </property>
@@ -170,6 +170,41 @@
    </property>
    <property name="shortcut">
     <string>Alt+Left</string>
+   </property>
+  </action>
+  <action name="actionProgressive">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Progressive</string>
+   </property>
+   <property name="toolTip">
+    <string>Force the video preview to deinterlace if needed</string>
+   </property>
+  </action>
+  <action name="actionLowQuality">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Low</string>
+   </property>
+  </action>
+  <action name="actionMediumQuality">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Medium</string>
+   </property>
+  </action>
+  <action name="actionHighQuality">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>High</string>
    </property>
   </action>
  </widget>

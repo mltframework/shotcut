@@ -25,6 +25,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    , mltWidget(0)
     , m_settings("Meltytech", "Shotcut")
 {
     // Create the UI.
@@ -53,14 +54,29 @@ MainWindow::MainWindow(QWidget *parent)
     // Create MLT video widget and connect its signals.
     mltWidget = Mlt::Controller::createWidget(this);
     QVBoxLayout *layout = new QVBoxLayout;
+    mltWidget->qwidget()->setProperty("progressive", ui->actionProgressive->isChecked());
+    if (m_settings.value("quality", "low").toString() == "high") {
+        mltWidget->qwidget()->setProperty("rescale", "bicubic");
+        mltWidget->qwidget()->setProperty("deinterlace_method", "yadif");
+    }
+    else if (m_settings.value("quality", "low").toString() == "medium") {
+        mltWidget->qwidget()->setProperty("rescale", "bilinear");
+        mltWidget->qwidget()->setProperty("deinterlace_method", "linearblend");
+    }
+    else {
+        mltWidget->qwidget()->setProperty("rescale", "nearest");
+        mltWidget->qwidget()->setProperty("deinterlace_method", "onefield");
+    }
+    mltWidget->qwidget()->setContentsMargins(0, 0, 0, 0);
+    mltWidget->qwidget()->setContextMenuPolicy(Qt::CustomContextMenu);
+    mltWidget->qwidget()->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
     layout->setMargin(0);
     layout->setSpacing(0);
-    ui->centralWidget->setLayout(layout);
-    mltWidget->qwidget()->setContentsMargins(0, 0, 0, 0);
-    mltWidget->qwidget()->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
     layout->addWidget(mltWidget->qwidget(), 10);
     layout->addStretch();
+    ui->centralWidget->setLayout(layout);
     connect(mltWidget->qwidget(), SIGNAL(frameReceived(Mlt::QFrame, unsigned)), this, SLOT(onShowFrame(Mlt::QFrame, unsigned)));
+    connect(mltWidget->qwidget(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onVideoWidgetContextMenu(QPoint)));
 
     // Add the scrub bar.
     m_scrubber = new ScrubBar(this);
@@ -208,11 +224,25 @@ void MainWindow::readSettings()
     rect.setHeight(rect.height() - ui->menuBar->height());
     move(rect.topLeft());
     resize(rect.size());
+    ui->actionProgressive->setChecked(m_settings.value("progressive", false).toBool());
+    if (m_settings.value("quality", "low").toString() == "high")
+        ui->actionHighQuality->setChecked(true);
+    else if (m_settings.value("quality", "low").toString() == "medium")
+        ui->actionMediumQuality->setChecked(true);
+    else
+        ui->actionLowQuality->setChecked(true);
 }
 
 void MainWindow::writeSettings()
 {
     m_settings.setValue("geometry", geometry());
+    m_settings.setValue("progressive", ui->actionProgressive->isChecked());
+    if (ui->actionLowQuality->isChecked())
+        m_settings.setValue("quality", "low");
+    else if (ui->actionMediumQuality->isChecked())
+        m_settings.setValue("quality", "medium");
+    else if (ui->actionHighQuality->isChecked())
+        m_settings.setValue("quality", "high");
 }
 
 void MainWindow::onShowFrame(Mlt::QFrame, unsigned position)
@@ -221,7 +251,7 @@ void MainWindow::onShowFrame(Mlt::QFrame, unsigned position)
     m_positionSpinner->setValue((int) position);
     m_positionSpinner->blockSignals(false);
     m_scrubber->onSeek(position);
-    if (position >= mltWidget->producer()->get_length() - 1)
+    if ((int) position >= mltWidget->producer()->get_length() - 1)
         pause();
 }
 
@@ -341,6 +371,19 @@ void MainWindow::onOutChanged(int out)
     mltWidget->producer()->set("out", out);
 }
 
+void MainWindow::onVideoWidgetContextMenu(const QPoint& pos)
+{
+    QMenu menu(this);
+    QActionGroup group(&menu);
+    group.addAction(ui->actionLowQuality);
+    group.addAction(ui->actionMediumQuality);
+    group.addAction(ui->actionHighQuality);
+    menu.addAction(ui->actionProgressive);
+    menu.addSeparator()->setText(tr("Quality"));
+    menu.addActions(group.actions());
+    menu.exec(ui->centralWidget->mapToGlobal(pos));
+}
+
 void MainWindow::on_actionSkipNext_triggered()
 {
     int pos = m_positionSpinner->value();
@@ -363,4 +406,48 @@ void MainWindow::on_actionSkipPrevious_triggered()
     else
         mltWidget->seek(mltWidget->producer()->get_in());
     ui->statusBar->showMessage(ui->actionSkipPrevious->toolTip(), 3000);
+}
+
+void MainWindow::on_actionProgressive_triggered(bool checked)
+{
+    mltWidget->qwidget()->setProperty("progressive", checked);
+    mltWidget->consumer()->stop();
+    mltWidget->consumer()->set("progressive", checked);
+    mltWidget->consumer()->start();
+}
+
+void MainWindow::on_actionLowQuality_triggered(bool checked)
+{
+    if (checked) {
+        mltWidget->qwidget()->setProperty("rescale", "nearest");
+        mltWidget->qwidget()->setProperty("deinterlace_method", "onefield");
+        mltWidget->consumer()->stop();
+        mltWidget->consumer()->set("rescale", "nearest");
+        mltWidget->consumer()->set("deinterlace_method", "onefield");
+        mltWidget->consumer()->start();
+    }
+}
+
+void MainWindow::on_actionMediumQuality_triggered(bool checked)
+{
+    if (checked) {
+        mltWidget->qwidget()->setProperty("rescale", "bilinear");
+        mltWidget->qwidget()->setProperty("deinterlace_method", "linearblend");
+        mltWidget->consumer()->stop();
+        mltWidget->consumer()->set("rescale", "bilinear");
+        mltWidget->consumer()->set("deinterlace_method", "linearblend");
+        mltWidget->consumer()->start();
+    }
+}
+
+void MainWindow::on_actionHighQuality_triggered(bool checked)
+{
+    if (checked) {
+        mltWidget->qwidget()->setProperty("rescale", "bicubic");
+        mltWidget->qwidget()->setProperty("deinterlace_method", "yadif");
+        mltWidget->consumer()->stop();
+        mltWidget->consumer()->set("rescale", "bicubic");
+        mltWidget->consumer()->set("deinterlace_method", "yadif");
+        mltWidget->consumer()->start();
+    }
 }

@@ -18,6 +18,7 @@
 
 #include "sdlwidget.h"
 #include <Mlt.h>
+#include <QVariant>
 
 using namespace Mlt;
 
@@ -54,6 +55,9 @@ int SDLWidget::open(const char* url, const char* profile)
             m_consumer->connect(*m_producer);
             // Make an event handler for when a frame's image should be displayed
             m_consumer->listen("consumer-frame-show", this, (mlt_listener) on_frame_show);
+            m_consumer->set("progressive", property("progressive").toBool());
+            m_consumer->set("rescale", property("rescale").toString().toAscii().constData());
+            m_consumer->set("deinterlace_method", property("deinterlace_method").toString().toAscii().constData());
             m_consumer->start();
         }
         else {
