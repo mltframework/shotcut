@@ -1,13 +1,13 @@
 <RCC>
     <qresource prefix="/icons">
-        <file>icons/document-open.svg</file>
-        <file>icons/media-playback-start.svg</file>
-        <file>icons/media-playback-pause.svg</file>
+        <file>icons/document-open.png</file>
+        <file>icons/media-playback-start.png</file>
+        <file>icons/media-playback-pause.png</file>
         <file>icons/mlt-logo-64.png</file>
         <file>icons/mlt-logo-320.png</file>
-        <file>icons/media-seek-backward.svg</file>
-        <file>icons/media-seek-forward.svg</file>
-        <file>icons/media-skip-backward.svg</file>
-        <file>icons/media-skip-forward.svg</file>
+        <file>icons/media-seek-backward.png</file>
+        <file>icons/media-seek-forward.png</file>
+        <file>icons/media-skip-backward.png</file>
+        <file>icons/media-skip-forward.png</file>
     </qresource>
 </RCC>

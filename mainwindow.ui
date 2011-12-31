@@ -65,7 +65,7 @@
   <action name="actionOpen">
    <property name="icon">
     <iconset resource="resources.qrc">
-     <normaloff>:/icons/icons/document-open.svg</normaloff>:/icons/icons/document-open.svg</iconset>
+     <normaloff>:/icons/icons/document-open.png</normaloff>:/icons/icons/document-open.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Open File...</string>
@@ -94,7 +94,7 @@
   <action name="actionPlay">
    <property name="icon">
     <iconset resource="resources.qrc">
-     <normaloff>:/icons/icons/media-playback-start.svg</normaloff>:/icons/icons/media-playback-start.svg</iconset>
+     <normaloff>:/icons/icons/media-playback-start.png</normaloff>:/icons/icons/media-playback-start.png</iconset>
    </property>
    <property name="text">
     <string>Play</string>
@@ -109,7 +109,7 @@
   <action name="actionPause">
    <property name="icon">
     <iconset resource="resources.qrc">
-     <normaloff>:/icons/icons/media-playback-pause.svg</normaloff>:/icons/icons/media-playback-pause.svg</iconset>
+     <normaloff>:/icons/icons/media-playback-pause.png</normaloff>:/icons/icons/media-playback-pause.png</iconset>
    </property>
    <property name="text">
     <string>Pause</string>
@@ -145,7 +145,7 @@
   <action name="actionSkipNext">
    <property name="icon">
     <iconset resource="resources.qrc">
-     <normaloff>:/icons/icons/media-skip-forward.svg</normaloff>:/icons/icons/media-skip-forward.svg</iconset>
+     <normaloff>:/icons/icons/media-skip-forward.png</normaloff>:/icons/icons/media-skip-forward.png</iconset>
    </property>
    <property name="text">
     <string>Skip Next</string>
@@ -160,7 +160,7 @@
   <action name="actionSkipPrevious">
    <property name="icon">
     <iconset resource="resources.qrc">
-     <normaloff>:/icons/icons/media-skip-backward.svg</normaloff>:/icons/icons/media-skip-backward.svg</iconset>
+     <normaloff>:/icons/icons/media-skip-backward.png</normaloff>:/icons/icons/media-skip-backward.png</iconset>
    </property>
    <property name="text">
     <string>Skip Previous</string>
