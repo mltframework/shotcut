@@ -207,6 +207,36 @@
     <string>High</string>
    </property>
   </action>
+  <action name="actionRewind">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/icons/media-seek-backward.png</normaloff>:/icons/icons/media-seek-backward.png</iconset>
+   </property>
+   <property name="text">
+    <string>Rewind</string>
+   </property>
+   <property name="toolTip">
+    <string>Play quickly backwards</string>
+   </property>
+   <property name="shortcut">
+    <string>J</string>
+   </property>
+  </action>
+  <action name="actionFastForward">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/icons/media-seek-forward.png</normaloff>:/icons/icons/media-seek-forward.png</iconset>
+   </property>
+   <property name="text">
+    <string>Fast Forward</string>
+   </property>
+   <property name="toolTip">
+    <string>Play quickly forwards</string>
+   </property>
+   <property name="shortcut">
+    <string>L</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>

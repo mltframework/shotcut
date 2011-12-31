@@ -37,6 +37,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->actionPause->setIcon(QIcon::fromTheme("media-playback-pause", ui->actionPause->icon()));
     ui->actionSkipNext->setIcon(QIcon::fromTheme("media-skip-forward", ui->actionSkipNext->icon()));
     ui->actionSkipPrevious->setIcon(QIcon::fromTheme("media-skip-backward", ui->actionSkipPrevious->icon()));
+    ui->actionRewind->setIcon(QIcon::fromTheme("media-seek-backward", ui->actionRewind->icon()));
+    ui->actionFastForward->setIcon(QIcon::fromTheme("media-seek-forward", ui->actionFastForward->icon()));
     m_playIcon = ui->actionPlay->icon();
     m_pauseIcon = ui->actionPause->icon();
 
@@ -110,13 +112,17 @@ MainWindow::MainWindow(QWidget *parent)
     connect(m_positionSpinner, SIGNAL(valueChanged(int)), this, SLOT(onSeek(int)));
     connect(m_positionSpinner, SIGNAL(editingFinished()), this, SLOT(setFocus()));
 
+    ui->actionPlay->setEnabled(false);
+    ui->actionSkipPrevious->setEnabled(false);
+    ui->actionSkipNext->setEnabled(false);
+    ui->actionRewind->setEnabled(false);
+    ui->actionFastForward->setEnabled(false);
     toolbar->addWidget(m_positionSpinner);
     toolbar->addWidget(spacer);
-    ui->actionPlay->setEnabled(false);
-    toolbar->addAction(ui->actionPlay);
-    ui->actionSkipPrevious->setEnabled(false);
     toolbar->addAction(ui->actionSkipPrevious);
-    ui->actionSkipNext->setEnabled(false);
+    toolbar->addAction(ui->actionRewind);
+    toolbar->addAction(ui->actionPlay);
+    toolbar->addAction(ui->actionFastForward);
     toolbar->addAction(ui->actionSkipNext);
     spacer = new QWidget(this);
     spacer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
@@ -155,6 +161,8 @@ void MainWindow::open(const QString& url)
         ui->actionPlay->setEnabled(true);
         ui->actionSkipPrevious->setEnabled(seekable);
         ui->actionSkipNext->setEnabled(seekable);
+        ui->actionRewind->setEnabled(seekable);
+        ui->actionFastForward->setEnabled(seekable);
         play();
     }
 }
@@ -290,24 +298,8 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
     case Qt::Key_PageDown:
         onSeek(m_positionSpinner->value() + 10);
         break;
-    case Qt::Key_J:
-        if (mltWidget->producer()->get_int("seekable")) {
-            if (mltWidget->producer()->get_speed() >= 0)
-                play(-1.0);
-            else
-                mltWidget->producer()->set_speed(mltWidget->producer()->get_speed() * 2);
-        }
-        break;
     case Qt::Key_K:
         togglePlayPause();
-        break;
-    case Qt::Key_L:
-        if (mltWidget->producer()->get_int("seekable")) {
-            if (mltWidget->producer()->get_speed() <= 0)
-                play();
-            else
-                mltWidget->producer()->set_speed(mltWidget->producer()->get_speed() * 2);
-        }
         break;
     case Qt::Key_I:
         onInChanged(m_positionSpinner->value());
@@ -457,5 +449,25 @@ void MainWindow::on_actionHighQuality_triggered(bool checked)
             mltWidget->consumer()->set("deinterlace_method", "yadif");
             mltWidget->consumer()->start();
         }
+    }
+}
+
+void MainWindow::on_actionRewind_triggered()
+{
+    if (mltWidget->producer()->get_int("seekable")) {
+        if (mltWidget->producer()->get_speed() >= 0)
+            play(-1.0);
+        else
+            mltWidget->producer()->set_speed(mltWidget->producer()->get_speed() * 2);
+    }
+}
+
+void MainWindow::on_actionFastForward_triggered()
+{
+    if (mltWidget->producer()->get_int("seekable")) {
+        if (mltWidget->producer()->get_speed() <= 0)
+            play();
+        else
+            mltWidget->producer()->set_speed(mltWidget->producer()->get_speed() * 2);
     }
 }

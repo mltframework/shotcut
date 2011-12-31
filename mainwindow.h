@@ -83,6 +83,8 @@ private slots:
     void on_actionLowQuality_triggered(bool checked);
     void on_actionMediumQuality_triggered(bool checked);
     void on_actionHighQuality_triggered(bool checked);
+    void on_actionRewind_triggered();
+    void on_actionFastForward_triggered();
 };
 
 #endif // MAINWINDOW_H
