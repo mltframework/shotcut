@@ -55,13 +55,13 @@ MainWindow::MainWindow(QWidget *parent)
     mltWidget = Mlt::Controller::createWidget(this);
     QVBoxLayout *layout = new QVBoxLayout;
     mltWidget->qwidget()->setProperty("progressive", ui->actionProgressive->isChecked());
-    if (m_settings.value("quality", "low").toString() == "high") {
+    if (m_settings.value("quality", "medium").toString() == "high") {
         mltWidget->qwidget()->setProperty("rescale", "bicubic");
         mltWidget->qwidget()->setProperty("deinterlace_method", "yadif");
     }
-    else if (m_settings.value("quality", "low").toString() == "medium") {
+    else if (m_settings.value("quality", "medium").toString() == "medium") {
         mltWidget->qwidget()->setProperty("rescale", "bilinear");
-        mltWidget->qwidget()->setProperty("deinterlace_method", "linearblend");
+        mltWidget->qwidget()->setProperty("deinterlace_method", "yadif-nospatial");
     }
     else {
         mltWidget->qwidget()->setProperty("rescale", "nearest");
@@ -224,10 +224,10 @@ void MainWindow::readSettings()
     rect.setHeight(rect.height() - ui->menuBar->height());
     move(rect.topLeft());
     resize(rect.size());
-    ui->actionProgressive->setChecked(m_settings.value("progressive", false).toBool());
-    if (m_settings.value("quality", "low").toString() == "high")
+    ui->actionProgressive->setChecked(m_settings.value("progressive", true).toBool());
+    if (m_settings.value("quality", "medium").toString() == "high")
         ui->actionHighQuality->setChecked(true);
-    else if (m_settings.value("quality", "low").toString() == "medium")
+    else if (m_settings.value("quality", "medium").toString() == "medium")
         ui->actionMediumQuality->setChecked(true);
     else
         ui->actionLowQuality->setChecked(true);
@@ -374,13 +374,13 @@ void MainWindow::onOutChanged(int out)
 void MainWindow::onVideoWidgetContextMenu(const QPoint& pos)
 {
     QMenu menu(this);
-    QActionGroup group(&menu);
+    menu.addAction(ui->actionProgressive);
+    QMenu* sub = menu.addMenu(tr("Quality"));
+    QActionGroup group(sub);
     group.addAction(ui->actionLowQuality);
     group.addAction(ui->actionMediumQuality);
     group.addAction(ui->actionHighQuality);
-    menu.addAction(ui->actionProgressive);
-    menu.addSeparator()->setText(tr("Quality"));
-    menu.addActions(group.actions());
+    sub->addActions(group.actions());
     menu.exec(ui->centralWidget->mapToGlobal(pos));
 }
 
@@ -411,9 +411,11 @@ void MainWindow::on_actionSkipPrevious_triggered()
 void MainWindow::on_actionProgressive_triggered(bool checked)
 {
     mltWidget->qwidget()->setProperty("progressive", checked);
-    mltWidget->consumer()->stop();
-    mltWidget->consumer()->set("progressive", checked);
-    mltWidget->consumer()->start();
+    if (mltWidget->consumer()) {
+        mltWidget->consumer()->stop();
+        mltWidget->consumer()->set("progressive", checked);
+        mltWidget->consumer()->start();
+    }
 }
 
 void MainWindow::on_actionLowQuality_triggered(bool checked)
@@ -421,10 +423,12 @@ void MainWindow::on_actionLowQuality_triggered(bool checked)
     if (checked) {
         mltWidget->qwidget()->setProperty("rescale", "nearest");
         mltWidget->qwidget()->setProperty("deinterlace_method", "onefield");
-        mltWidget->consumer()->stop();
-        mltWidget->consumer()->set("rescale", "nearest");
-        mltWidget->consumer()->set("deinterlace_method", "onefield");
-        mltWidget->consumer()->start();
+        if (mltWidget->consumer()) {
+            mltWidget->consumer()->stop();
+            mltWidget->consumer()->set("rescale", "nearest");
+            mltWidget->consumer()->set("deinterlace_method", "onefield");
+            mltWidget->consumer()->start();
+        }
     }
 }
 
@@ -432,11 +436,13 @@ void MainWindow::on_actionMediumQuality_triggered(bool checked)
 {
     if (checked) {
         mltWidget->qwidget()->setProperty("rescale", "bilinear");
-        mltWidget->qwidget()->setProperty("deinterlace_method", "linearblend");
-        mltWidget->consumer()->stop();
-        mltWidget->consumer()->set("rescale", "bilinear");
-        mltWidget->consumer()->set("deinterlace_method", "linearblend");
-        mltWidget->consumer()->start();
+        mltWidget->qwidget()->setProperty("deinterlace_method", "yadif-nospatial");
+        if (mltWidget->consumer()) {
+            mltWidget->consumer()->stop();
+            mltWidget->consumer()->set("rescale", "bilinear");
+            mltWidget->consumer()->set("deinterlace_method", "yadif-nospatial");
+            mltWidget->consumer()->start();
+        }
     }
 }
 
@@ -445,9 +451,11 @@ void MainWindow::on_actionHighQuality_triggered(bool checked)
     if (checked) {
         mltWidget->qwidget()->setProperty("rescale", "bicubic");
         mltWidget->qwidget()->setProperty("deinterlace_method", "yadif");
-        mltWidget->consumer()->stop();
-        mltWidget->consumer()->set("rescale", "bicubic");
-        mltWidget->consumer()->set("deinterlace_method", "yadif");
-        mltWidget->consumer()->start();
+        if (mltWidget->consumer()) {
+            mltWidget->consumer()->stop();
+            mltWidget->consumer()->set("rescale", "bicubic");
+            mltWidget->consumer()->set("deinterlace_method", "yadif");
+            mltWidget->consumer()->start();
+        }
     }
 }
