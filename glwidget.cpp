@@ -216,7 +216,6 @@ int GLWidget::open(const char* url, const char* profile)
             m_consumer->set("progressive", property("progressive").toBool());
             m_consumer->set("rescale", property("rescale").toString().toAscii().constData());
             m_consumer->set("deinterlace_method", property("deinterlace_method").toString().toAscii().constData());
-            m_consumer->start();
             m_display_ratio = m_profile->dar();
             resizeGL(width(), height());
         }

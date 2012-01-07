@@ -26,6 +26,10 @@ int main(int argc, char *argv[])
     dir.cd("lib");
     dir.cd("qt4");
     QCoreApplication::addLibraryPath(dir.absolutePath());
+    a.setOrganizationName("Meltytech");
+    a.setOrganizationDomain("meltytech.com");
+    a.setApplicationName("Shotcut");
+    a.setApplicationVersion("0.5.0");
     QSplashScreen splash(QPixmap(":/icons/icons/mlt-logo-320.png"));
     splash.showMessage(a.tr("Loading plugins..."), Qt::AlignHCenter | Qt::AlignBottom);
     splash.show();

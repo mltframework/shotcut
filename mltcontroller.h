@@ -25,10 +25,12 @@
 // forward declarations
 class QWidget;
 namespace Mlt {
+    class Repository;
     class Profile;
     class Producer;
     class Consumer;
     class Frame;
+    class Properties;
 
 class QFrame : public QObject
 {
@@ -77,14 +79,19 @@ public:
      */
     virtual void setVolume(double volume);
 
-    Mlt::Profile* profile() const
-        { return m_profile; }
-
     virtual void onWindowResize();
 
-    virtual QWidget* qwidget() = 0;
+    virtual QWidget* videoWidget() = 0;
 
     void seek(int position);
+
+    Mlt::Repository* repository() const {
+        return m_repo;
+    }
+
+    Mlt::Profile* profile() const {
+        return m_profile;
+    }
 
     Mlt::Producer* producer() const {
         return m_producer;
@@ -95,6 +102,7 @@ public:
     }
 
 protected:
+    Mlt::Repository* m_repo;
     Mlt::Profile* m_profile;
     Mlt::Producer* m_producer;
     Mlt::Consumer* m_consumer;

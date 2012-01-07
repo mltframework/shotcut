@@ -30,7 +30,7 @@ class SDLWidget : public QWidget, public Controller
 public:
     explicit SDLWidget(QWidget *parent = 0);
     int open(const char* url, const char* profile);
-    QWidget* qwidget() { return this; }
+    QWidget* videoWidget() { return this; }
 
 signals:
     /** This method will be called each time a new frame is available.

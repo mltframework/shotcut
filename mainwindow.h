@@ -40,7 +40,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    void open(const QString& url);
+    void open(const QString& url, const Mlt::Properties* = 0);
 
 protected:
     void keyPressEvent(QKeyEvent*);
@@ -55,7 +55,7 @@ private:
     void writeSettings();
 
     Ui::MainWindow* ui;
-    Mlt::Controller* mltWidget;
+    Mlt::Controller* mlt;
     QIcon m_playIcon;
     QIcon m_pauseIcon;
     QSettings m_settings;
@@ -76,7 +76,7 @@ public slots:
 
 private slots:
     void on_actionAbout_Shotcut_triggered();
-    void on_actionOpenURL_triggered();
+    void on_actionOpenOther_triggered();
     void on_actionSkipNext_triggered();
     void on_actionSkipPrevious_triggered();
     void on_actionProgressive_triggered(bool checked);

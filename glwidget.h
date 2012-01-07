@@ -37,7 +37,7 @@ public:
     QSize minimumSizeHint() const;
     QSize sizeHint() const;
     int open(const char* url, const char* profile);
-    QWidget* qwidget() { return this; }
+    QWidget* videoWidget() { return this; }
     QSemaphore showFrameSemaphore;
 
 public slots:

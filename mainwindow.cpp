@@ -19,14 +19,14 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "scrubbar.h"
+#include "openotherdialog.h"
 #include <QtGui>
 #include <Mlt.h>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
-    , mltWidget(0)
-    , m_settings("Meltytech", "Shotcut")
+    , mlt(0)
 {
     // Create the UI.
     ui->setupUi(this);
@@ -54,31 +54,31 @@ MainWindow::MainWindow(QWidget *parent)
     readSettings();
 
     // Create MLT video widget and connect its signals.
-    mltWidget = Mlt::Controller::createWidget(this);
+    mlt = Mlt::Controller::createWidget(this);
     QVBoxLayout *layout = new QVBoxLayout;
-    mltWidget->qwidget()->setProperty("progressive", ui->actionProgressive->isChecked());
+    mlt->videoWidget()->setProperty("progressive", ui->actionProgressive->isChecked());
     if (m_settings.value("quality", "medium").toString() == "high") {
-        mltWidget->qwidget()->setProperty("rescale", "bicubic");
-        mltWidget->qwidget()->setProperty("deinterlace_method", "yadif");
+        mlt->videoWidget()->setProperty("rescale", "bicubic");
+        mlt->videoWidget()->setProperty("deinterlace_method", "yadif");
     }
     else if (m_settings.value("quality", "medium").toString() == "medium") {
-        mltWidget->qwidget()->setProperty("rescale", "bilinear");
-        mltWidget->qwidget()->setProperty("deinterlace_method", "yadif-nospatial");
+        mlt->videoWidget()->setProperty("rescale", "bilinear");
+        mlt->videoWidget()->setProperty("deinterlace_method", "yadif-nospatial");
     }
     else {
-        mltWidget->qwidget()->setProperty("rescale", "nearest");
-        mltWidget->qwidget()->setProperty("deinterlace_method", "onefield");
+        mlt->videoWidget()->setProperty("rescale", "nearest");
+        mlt->videoWidget()->setProperty("deinterlace_method", "onefield");
     }
-    mltWidget->qwidget()->setContentsMargins(0, 0, 0, 0);
-    mltWidget->qwidget()->setContextMenuPolicy(Qt::CustomContextMenu);
-    mltWidget->qwidget()->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    mlt->videoWidget()->setContentsMargins(0, 0, 0, 0);
+    mlt->videoWidget()->setContextMenuPolicy(Qt::CustomContextMenu);
+    mlt->videoWidget()->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
     layout->setMargin(0);
     layout->setSpacing(0);
-    layout->addWidget(mltWidget->qwidget(), 10);
+    layout->addWidget(mlt->videoWidget(), 10);
     layout->addStretch();
     ui->centralWidget->setLayout(layout);
-    connect(mltWidget->qwidget(), SIGNAL(frameReceived(Mlt::QFrame, unsigned)), this, SLOT(onShowFrame(Mlt::QFrame, unsigned)));
-    connect(mltWidget->qwidget(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onVideoWidgetContextMenu(QPoint)));
+    connect(mlt->videoWidget(), SIGNAL(frameReceived(Mlt::QFrame, unsigned)), this, SLOT(onShowFrame(Mlt::QFrame, unsigned)));
+    connect(mlt->videoWidget(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onVideoWidgetContextMenu(QPoint)));
 
     // Add the scrub bar.
     m_scrubber = new ScrubBar(this);
@@ -134,23 +134,26 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-    delete mltWidget;
+    delete mlt;
     delete ui;
 }
 
-void MainWindow::open(const QString& url)
+void MainWindow::open(const QString& url, const Mlt::Properties* properties)
 {
-    if (!mltWidget->open(url.toUtf8().constData())) {
-        int len = mltWidget->producer()->get_length();
-        bool seekable = mltWidget->producer()->get_int("seekable");
+    if (!mlt->open(url.toUtf8().constData())) {
+        int len = mlt->producer()->get_length();
+        bool seekable = mlt->producer()->get_int("seekable");
+        Mlt::Properties* props = const_cast<Mlt::Properties*>(properties);
 
-        mltWidget->producer()->set("ignore_points", 1);
-        m_scrubber->setFramerate(mltWidget->profile()->fps());
+        mlt->producer()->set("ignore_points", 1);
+        if (properties && props->is_valid())
+            mlt_properties_inherit(mlt->producer()->get_properties(), props->get_properties());
+        m_scrubber->setFramerate(mlt->profile()->fps());
         m_scrubber->setScale(len);
         if (seekable) {
-            m_durationLabel->setText(QString().sprintf("%.03f", len / mltWidget->profile()->fps()));
-            m_scrubber->setInPoint(mltWidget->producer()->get_in());
-            m_scrubber->setOutPoint(mltWidget->producer()->get_out());
+            m_durationLabel->setText(QString().sprintf("%.03f", len / mlt->profile()->fps()));
+            m_scrubber->setInPoint(mlt->producer()->get_in());
+            m_scrubber->setOutPoint(mlt->producer()->get_out());
             m_scrubber->show();
         }
         else {
@@ -170,7 +173,8 @@ void MainWindow::open(const QString& url)
 void MainWindow::openVideo()
 {
     QString settingKey("openPath");
-    QString directory(m_settings.value(settingKey, QDir::homePath()).toString());
+    QString directory(m_settings.value(settingKey,
+        QDesktopServices::storageLocation(QDesktopServices::MoviesLocation)).toString());
     QString filename = QFileDialog::getOpenFileName(this, tr("Open File"), directory);
 
     if (!filename.isNull()) {
@@ -180,7 +184,7 @@ void MainWindow::openVideo()
     }
     else {
         // If file invalid, then on some platforms the dialog messes up SDL.
-        mltWidget->onWindowResize();
+        mlt->onWindowResize();
     }
 }
 
@@ -194,7 +198,7 @@ void MainWindow::togglePlayPause()
 
 void MainWindow::play(double speed)
 {
-    mltWidget->play(speed);
+    mlt->play(speed);
     ui->actionPlay->setIcon(m_pauseIcon);
     ui->actionPlay->setText(tr("Pause"));
     ui->actionPlay->setToolTip(tr("Pause playback"));
@@ -203,7 +207,7 @@ void MainWindow::play(double speed)
 
 void MainWindow::pause()
 {
-    mltWidget->pause();
+    mlt->pause();
     ui->actionPlay->setIcon(m_playIcon);
     ui->actionPlay->setText(tr("Play"));
     ui->actionPlay->setToolTip(tr("Start playback"));
@@ -212,7 +216,7 @@ void MainWindow::pause()
 
 void MainWindow::resizeEvent(QResizeEvent*)
 {
-    mltWidget->onWindowResize();
+    mlt->onWindowResize();
 }
 
 void MainWindow::forceResize()
@@ -259,21 +263,21 @@ void MainWindow::onShowFrame(Mlt::QFrame, unsigned position)
     m_positionSpinner->setValue((int) position);
     m_positionSpinner->blockSignals(false);
     m_scrubber->onSeek(position);
-    if ((int) position >= mltWidget->producer()->get_length() - 1)
+    if ((int) position >= mlt->producer()->get_length() - 1)
         pause();
 }
 
 void MainWindow::on_actionAbout_Shotcut_triggered()
 {
     QMessageBox::about(this, tr("About Shotcut"),
-             tr("<h1>Shotcut version 0.5.0</h1>"
+             tr("<h1>Shotcut version %1</h1>"
                 "<p>Shotcut is an open source cross platform video editor.</p>"
                 "<p>Copyright &copy; 2011 Meltytech, LLC</p>"
                 "<p>Licensed under the <a href=\"http://www.gnu.org/licenses/gpl.html\">GNU General Public License v3.0</a></p>"
                 "<p>This program is distributed in the hope that it will be useful, "
                 "but WITHOUT ANY WARRANTY; without even the implied warranty of "
                 "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</p>"
-                ));
+                ).arg(qApp->applicationVersion()));
 }
 
 
@@ -284,7 +288,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         onSeek(0);
         break;
     case Qt::Key_End:
-        onSeek(mltWidget->producer()->get_length() - 1);
+        onSeek(mlt->producer()->get_length() - 1);
         break;
     case Qt::Key_Left:
         onSeek(m_positionSpinner->value() - 1);
@@ -336,31 +340,45 @@ void MainWindow::closeEvent(QCloseEvent* event)
     event->accept();
 }
 
-void MainWindow::on_actionOpenURL_triggered()
+void MainWindow::on_actionOpenOther_triggered()
 {
-    bool ok;
-    QString url = QInputDialog::getText (this, QString(), tr("Enter a media URL"), QLineEdit::Normal, "decklink:", &ok);
-    if (ok && !url.isEmpty())
-        open(url);
+    // these static are used to open dialog with previous configuration
+    static Mlt::Properties* properties = 0;
+    static QString producer;
+    OpenOtherDialog dialog(mlt);
+
+    if (properties && !producer.isNull())
+        dialog.load(producer, *properties);
+    
+    if (dialog.exec() == QDialog::Accepted && dialog.URL().length() > 0) {
+        QString url = dialog.URL();
+        producer = dialog.producerName();
+        delete properties;
+        properties = dialog.mltProperties();
+        open(url, properties);
+        if (!properties)
+            properties = new Mlt::Properties;
+        properties->set("URL", url.toUtf8().constData());
+    }
 }
 
 void MainWindow::onSeek(int position)
 {
-    if (mltWidget->producer()->get_int("seekable")) {
+    if (mlt->producer()->get_int("seekable")) {
         pause();
         if (position >= 0)
-            mltWidget->seek(qMin(position, mltWidget->producer()->get_length() - 1));
+            mlt->seek(qMin(position, mlt->producer()->get_length() - 1));
     }
 }
 
 void MainWindow::onInChanged(int in)
 {
-    mltWidget->producer()->set("in", in);
+    mlt->producer()->set("in", in);
 }
 
 void MainWindow::onOutChanged(int out)
 {
-    mltWidget->producer()->set("out", out);
+    mlt->producer()->set("out", out);
 }
 
 void MainWindow::onVideoWidgetContextMenu(const QPoint& pos)
@@ -379,47 +397,47 @@ void MainWindow::onVideoWidgetContextMenu(const QPoint& pos)
 void MainWindow::on_actionSkipNext_triggered()
 {
     int pos = m_positionSpinner->value();
-    if (pos < mltWidget->producer()->get_in())
-        mltWidget->seek(mltWidget->producer()->get_in());
-    else if (pos >= mltWidget->producer()->get_out())
-        mltWidget->seek(mltWidget->producer()->get_length() - 1);
+    if (pos < mlt->producer()->get_in())
+        mlt->seek(mlt->producer()->get_in());
+    else if (pos >= mlt->producer()->get_out())
+        mlt->seek(mlt->producer()->get_length() - 1);
     else
-        mltWidget->seek(mltWidget->producer()->get_out());
+        mlt->seek(mlt->producer()->get_out());
     ui->statusBar->showMessage(ui->actionSkipNext->toolTip(), 3000);
 }
 
 void MainWindow::on_actionSkipPrevious_triggered()
 {
     int pos = m_positionSpinner->value();
-    if (pos > mltWidget->producer()->get_out())
-        mltWidget->seek(mltWidget->producer()->get_out());
-    else if (pos <= mltWidget->producer()->get_in())
-        mltWidget->seek(0);
+    if (pos > mlt->producer()->get_out())
+        mlt->seek(mlt->producer()->get_out());
+    else if (pos <= mlt->producer()->get_in())
+        mlt->seek(0);
     else
-        mltWidget->seek(mltWidget->producer()->get_in());
+        mlt->seek(mlt->producer()->get_in());
     ui->statusBar->showMessage(ui->actionSkipPrevious->toolTip(), 3000);
 }
 
 void MainWindow::on_actionProgressive_triggered(bool checked)
 {
-    mltWidget->qwidget()->setProperty("progressive", checked);
-    if (mltWidget->consumer()) {
-        mltWidget->consumer()->stop();
-        mltWidget->consumer()->set("progressive", checked);
-        mltWidget->consumer()->start();
+    mlt->videoWidget()->setProperty("progressive", checked);
+    if (mlt->consumer()) {
+        mlt->consumer()->stop();
+        mlt->consumer()->set("progressive", checked);
+        mlt->consumer()->start();
     }
 }
 
 void MainWindow::on_actionLowQuality_triggered(bool checked)
 {
     if (checked) {
-        mltWidget->qwidget()->setProperty("rescale", "nearest");
-        mltWidget->qwidget()->setProperty("deinterlace_method", "onefield");
-        if (mltWidget->consumer()) {
-            mltWidget->consumer()->stop();
-            mltWidget->consumer()->set("rescale", "nearest");
-            mltWidget->consumer()->set("deinterlace_method", "onefield");
-            mltWidget->consumer()->start();
+        mlt->videoWidget()->setProperty("rescale", "nearest");
+        mlt->videoWidget()->setProperty("deinterlace_method", "onefield");
+        if (mlt->consumer()) {
+            mlt->consumer()->stop();
+            mlt->consumer()->set("rescale", "nearest");
+            mlt->consumer()->set("deinterlace_method", "onefield");
+            mlt->consumer()->start();
         }
     }
 }
@@ -427,13 +445,13 @@ void MainWindow::on_actionLowQuality_triggered(bool checked)
 void MainWindow::on_actionMediumQuality_triggered(bool checked)
 {
     if (checked) {
-        mltWidget->qwidget()->setProperty("rescale", "bilinear");
-        mltWidget->qwidget()->setProperty("deinterlace_method", "yadif-nospatial");
-        if (mltWidget->consumer()) {
-            mltWidget->consumer()->stop();
-            mltWidget->consumer()->set("rescale", "bilinear");
-            mltWidget->consumer()->set("deinterlace_method", "yadif-nospatial");
-            mltWidget->consumer()->start();
+        mlt->videoWidget()->setProperty("rescale", "bilinear");
+        mlt->videoWidget()->setProperty("deinterlace_method", "yadif-nospatial");
+        if (mlt->consumer()) {
+            mlt->consumer()->stop();
+            mlt->consumer()->set("rescale", "bilinear");
+            mlt->consumer()->set("deinterlace_method", "yadif-nospatial");
+            mlt->consumer()->start();
         }
     }
 }
@@ -441,33 +459,33 @@ void MainWindow::on_actionMediumQuality_triggered(bool checked)
 void MainWindow::on_actionHighQuality_triggered(bool checked)
 {
     if (checked) {
-        mltWidget->qwidget()->setProperty("rescale", "bicubic");
-        mltWidget->qwidget()->setProperty("deinterlace_method", "yadif");
-        if (mltWidget->consumer()) {
-            mltWidget->consumer()->stop();
-            mltWidget->consumer()->set("rescale", "bicubic");
-            mltWidget->consumer()->set("deinterlace_method", "yadif");
-            mltWidget->consumer()->start();
+        mlt->videoWidget()->setProperty("rescale", "bicubic");
+        mlt->videoWidget()->setProperty("deinterlace_method", "yadif");
+        if (mlt->consumer()) {
+            mlt->consumer()->stop();
+            mlt->consumer()->set("rescale", "bicubic");
+            mlt->consumer()->set("deinterlace_method", "yadif");
+            mlt->consumer()->start();
         }
     }
 }
 
 void MainWindow::on_actionRewind_triggered()
 {
-    if (mltWidget->producer()->get_int("seekable")) {
-        if (mltWidget->producer()->get_speed() >= 0)
+    if (mlt->producer()->get_int("seekable")) {
+        if (mlt->producer()->get_speed() >= 0)
             play(-1.0);
         else
-            mltWidget->producer()->set_speed(mltWidget->producer()->get_speed() * 2);
+            mlt->producer()->set_speed(mlt->producer()->get_speed() * 2);
     }
 }
 
 void MainWindow::on_actionFastForward_triggered()
 {
-    if (mltWidget->producer()->get_int("seekable")) {
-        if (mltWidget->producer()->get_speed() <= 0)
+    if (mlt->producer()->get_int("seekable")) {
+        if (mlt->producer()->get_speed() <= 0)
             play();
         else
-            mltWidget->producer()->set_speed(mltWidget->producer()->get_speed() * 2);
+            mlt->producer()->set_speed(mlt->producer()->get_speed() * 2);
     }
 }

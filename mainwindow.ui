@@ -32,7 +32,7 @@
      <string>&amp;File</string>
     </property>
     <addaction name="actionOpen"/>
-    <addaction name="actionOpenURL"/>
+    <addaction name="actionOpenOther"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
@@ -71,7 +71,7 @@
     <string>&amp;Open File...</string>
    </property>
    <property name="toolTip">
-    <string>Open file</string>
+    <string>Open a video, audio or image file</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
@@ -131,12 +131,15 @@
     <string>About Qt</string>
    </property>
   </action>
-  <action name="actionOpenURL">
+  <action name="actionOpenOther">
    <property name="text">
-    <string>Open &amp;URL...</string>
+    <string>Open Other...</string>
+   </property>
+   <property name="toolTip">
+    <string>Open a device, stream or generator</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+U</string>
+    <string>Ctrl+Shift+O</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>

@@ -73,7 +73,8 @@ QImage QFrame::image()
 }
 
 Controller::Controller()
-    : m_profile(0)
+    : m_repo(Mlt::Factory::init())
+    , m_profile(0)
     , m_producer(0)
     , m_consumer(0)
 {
@@ -82,7 +83,6 @@ Controller::Controller()
 Controller* Controller::createWidget(QWidget* parent)
 {
     qRegisterMetaType<QFrame>("Mlt::QFrame");
-    Mlt::Factory::init();
 #ifdef Q_WS_MAC
     return new GLWidget(parent);
 #else
@@ -143,8 +143,10 @@ void Controller::play(double speed)
     if (m_producer)
         m_producer->set_speed(speed);
     // If we are paused, then we need to "unlock" sdl_still.
-    if (m_consumer)
+    if (m_consumer) {
+        m_consumer->start();
         m_consumer->set("refresh", 1);
+    }
 }
 
 void Controller::pause()
