@@ -373,12 +373,14 @@ void MainWindow::onSeek(int position)
 
 void MainWindow::onInChanged(int in)
 {
-    mlt->producer()->set("in", in);
+    if (mlt->producer())
+        mlt->producer()->set("in", in);
 }
 
 void MainWindow::onOutChanged(int out)
 {
-    mlt->producer()->set("out", out);
+    if (mlt->producer())
+        mlt->producer()->set("out", out);
 }
 
 void MainWindow::onVideoWidgetContextMenu(const QPoint& pos)
