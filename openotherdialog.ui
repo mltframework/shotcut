@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>631</width>
-    <height>481</height>
+    <width>629</width>
+    <height>479</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -232,7 +232,7 @@
          <item>
           <widget class="QGroupBox" name="groupBox">
            <property name="title">
-            <string>Temperature</string>
+            <string>Noise Temperature</string>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_6">
             <item>
@@ -305,6 +305,9 @@
               <property name="maximum">
                <number>100</number>
               </property>
+              <property name="value">
+               <number>100</number>
+              </property>
               <property name="notchesVisible">
                <bool>true</bool>
               </property>
@@ -335,6 +338,9 @@
                 </property>
                 <property name="singleStep">
                  <double>0.100000000000000</double>
+                </property>
+                <property name="value">
+                 <double>1.000000000000000</double>
                 </property>
                </widget>
               </item>
@@ -367,6 +373,9 @@
               <property name="maximum">
                <number>100</number>
               </property>
+              <property name="value">
+               <number>100</number>
+              </property>
               <property name="notchesVisible">
                <bool>true</bool>
               </property>
@@ -397,6 +406,9 @@
                 </property>
                 <property name="singleStep">
                  <double>0.100000000000000</double>
+                </property>
+                <property name="value">
+                 <double>1.000000000000000</double>
                 </property>
                </widget>
               </item>
@@ -604,6 +616,9 @@
               <property name="maximum">
                <number>100</number>
               </property>
+              <property name="value">
+               <number>100</number>
+              </property>
               <property name="orientation">
                <enum>Qt::Vertical</enum>
               </property>
@@ -638,6 +653,9 @@
                 <property name="singleStep">
                  <double>0.100000000000000</double>
                 </property>
+                <property name="value">
+                 <double>1.000000000000000</double>
+                </property>
                </widget>
               </item>
               <item>
@@ -667,6 +685,9 @@
             <item>
              <widget class="QDial" name="speed2Dial">
               <property name="maximum">
+               <number>100</number>
+              </property>
+              <property name="value">
                <number>100</number>
               </property>
               <property name="notchesVisible">
@@ -700,6 +721,9 @@
                 <property name="singleStep">
                  <double>0.100000000000000</double>
                 </property>
+                <property name="value">
+                 <double>1.000000000000000</double>
+                </property>
                </widget>
               </item>
               <item>
@@ -729,6 +753,9 @@
             <item>
              <widget class="QDial" name="speed3Dial">
               <property name="maximum">
+               <number>100</number>
+              </property>
+              <property name="value">
                <number>100</number>
               </property>
               <property name="notchesVisible">
@@ -761,6 +788,9 @@
                 </property>
                 <property name="singleStep">
                  <double>0.100000000000000</double>
+                </property>
+                <property name="value">
+                 <double>1.000000000000000</double>
                 </property>
                </widget>
               </item>
@@ -797,6 +827,9 @@
               <property name="maximum">
                <number>100</number>
               </property>
+              <property name="value">
+               <number>100</number>
+              </property>
               <property name="orientation">
                <enum>Qt::Vertical</enum>
               </property>
@@ -831,6 +864,9 @@
                 <property name="singleStep">
                  <double>0.100000000000000</double>
                 </property>
+                <property name="value">
+                 <double>1.000000000000000</double>
+                </property>
                </widget>
               </item>
               <item>
@@ -860,6 +896,9 @@
             <item>
              <widget class="QDial" name="move1Dial">
               <property name="maximum">
+               <number>100</number>
+              </property>
+              <property name="value">
                <number>100</number>
               </property>
               <property name="notchesVisible">
@@ -893,6 +932,9 @@
                 <property name="singleStep">
                  <double>0.100000000000000</double>
                 </property>
+                <property name="value">
+                 <double>1.000000000000000</double>
+                </property>
                </widget>
               </item>
               <item>
@@ -922,6 +964,9 @@
             <item>
              <widget class="QDial" name="move2Dial">
               <property name="maximum">
+               <number>100</number>
+              </property>
+              <property name="value">
                <number>100</number>
               </property>
               <property name="notchesVisible">
@@ -954,6 +999,9 @@
                 </property>
                 <property name="singleStep">
                  <double>0.100000000000000</double>
+                </property>
+                <property name="value">
+                 <double>1.000000000000000</double>
                 </property>
                </widget>
               </item>
