@@ -1,3 +1,21 @@
+/*
+ * Copyright (c) 2012 Meltytech, LLC
+ * Author: Dan Dennedy <dan@dennedy.org>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include "openotherdialog.h"
 #include "ui_openotherdialog.h"
 #include "mltcontroller.h"
@@ -20,36 +38,47 @@ OpenOtherDialog::OpenOtherDialog(Mlt::Controller *mc, QWidget *parent) :
     mlt(mc)
 {
     ui->setupUi(this);
- 
-    // build the presets combo
-    QDir dir(QDesktopServices::storageLocation(QDesktopServices::DataLocation));
-    if (dir.cd("presets") && dir.cd("producer")) {
-        ui->presetCombo->addItems(dir.entryList(QDir::Files));
-        QStringList entries = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::Executable);
-        foreach (QString s, entries) {
-            if (dir.cd(s)) {
-                QStringList entries2 = dir.entryList(QDir::Files | QDir::Readable);
-                foreach (QString s2, entries2) {
-                    ui->presetCombo->addItem(s2, s); // userData contains the producer name
-                }
-                dir.cdUp();
-            }
-        }
+
+    QTreeWidgetItem* group = new QTreeWidgetItem(ui->treeWidget, QStringList(tr("Network")));
+    group->setData(0, Qt::UserRole, 0);
+    ui->treeWidget->setCurrentItem(group);
+
+    saveDefaultPreset("color");
+    saveDefaultPreset("frei0r.ising0r");
+    saveDefaultPreset("frei0r.lissajous0r");
+    saveDefaultPreset("frei0r.plasma");
+    loadPresets();
+
+    // populate the device group
+    group = new QTreeWidgetItem(ui->treeWidget, QStringList(tr("Device")));
+    if (mlt->repository()->producers()->get_data("decklink")) {
+        QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("SDI/HDMI")));
+        item->setData(0, Qt::UserRole, 1);
     }
-    
-    // hide tabs for unavailable producers
-    if (!mlt->repository()->producers()->get_data("avformat"))
-        ui->methodTabWidget->removeTab(NetworkTabIndex);
-    if (!mlt->repository()->producers()->get_data("decklink"))
-        ui->methodTabWidget->removeTab(DeckLinkTabIndex);
-    if (!mlt->repository()->producers()->get_data("color"))
-        ui->methodTabWidget->removeTab(ColorTabIndex);
-    if (!mlt->repository()->producers()->get_data("frei0r.ising0r"))
-        ui->methodTabWidget->removeTab(IsingTabIndex);
-    if (!mlt->repository()->producers()->get_data("frei0r.lissajous0r"))
-        ui->methodTabWidget->removeTab(LissajousTabIndex);
-    if (!mlt->repository()->producers()->get_data("frei0r.plasma"))
-        ui->methodTabWidget->removeTab(PlasmaTabIndex);
+
+    // populate the generators
+    group = new QTreeWidgetItem(ui->treeWidget, QStringList(tr("Generator")));
+    if (mlt->repository()->producers()->get_data("color")) {
+        QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("Color")));
+        item->setData(0, Qt::UserRole, 2);
+    }
+    if (mlt->repository()->producers()->get_data("noise")) {
+        QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("Noise")));
+        item->setData(0, Qt::UserRole, 3);
+    }
+    if (mlt->repository()->producers()->get_data("frei0r.ising0r")) {
+        QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("Ising")));
+        item->setData(0, Qt::UserRole, 4);
+    }
+    if (mlt->repository()->producers()->get_data("frei0r.lissajous0r")) {
+        QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("Lissajous")));
+        item->setData(0, Qt::UserRole, 5);
+    }
+    if (mlt->repository()->producers()->get_data("frei0r.plasma")) {
+        QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("Plasma")));
+        item->setData(0, Qt::UserRole, 6);
+    }
+    ui->treeWidget->expandAll();
 }
 
 OpenOtherDialog::~OpenOtherDialog()
@@ -59,19 +88,19 @@ OpenOtherDialog::~OpenOtherDialog()
 
 QString OpenOtherDialog::producerName() const
 {
-    if (ui->methodTabWidget->currentWidget()->objectName() == "networkTab")
+    if (ui->methodTabWidget->currentWidget() == ui->networkTab)
         return "avformat";
-    else if (ui->methodTabWidget->currentWidget()->objectName() == "decklinkTab")
+    else if (ui->methodTabWidget->currentWidget() == ui->decklinkTab)
         return "decklink";
-    else if (ui->methodTabWidget->currentWidget()->objectName() == "colorTab")
+    else if (ui->methodTabWidget->currentWidget() == ui->colorTab)
         return "color";
-    else if (ui->methodTabWidget->currentWidget()->objectName() == "noiseTab")
+    else if (ui->methodTabWidget->currentWidget() == ui->noiseTab)
         return "noise";
-    else if (ui->methodTabWidget->currentWidget()->objectName() == "isingTab")
+    else if (ui->methodTabWidget->currentWidget() == ui->isingTab)
         return "frei0r.ising0r";
-    else if (ui->methodTabWidget->currentWidget()->objectName() == "lissajousTab")
+    else if (ui->methodTabWidget->currentWidget() == ui->lissajousTab)
         return "frei0r.lissajous0r";
-    else if (ui->methodTabWidget->currentWidget()->objectName() == "plasmaTab")
+    else if (ui->methodTabWidget->currentWidget() == ui->plasmaTab)
         return "frei0r.plasma";
     else
         return "color";
@@ -79,19 +108,19 @@ QString OpenOtherDialog::producerName() const
 
 QString OpenOtherDialog::URL() const
 {
-    if (ui->methodTabWidget->currentWidget()->objectName() == "networkTab")
+    if (ui->methodTabWidget->currentWidget() == ui->networkTab)
         return ui->urlLineEdit->text();
-    else if (ui->methodTabWidget->currentWidget()->objectName() == "decklinkTab")
+    else if (ui->methodTabWidget->currentWidget() == ui->decklinkTab)
         return QString("decklink:%1").arg(ui->decklinkCardSpinner->value());
-    else if (ui->methodTabWidget->currentWidget()->objectName() == "colorTab")
+    else if (ui->methodTabWidget->currentWidget() == ui->colorTab)
         return "color:";
-    else if (ui->methodTabWidget->currentWidget()->objectName() == "noiseTab")
+    else if (ui->methodTabWidget->currentWidget() == ui->noiseTab)
         return "noise:";
-    else if (ui->methodTabWidget->currentWidget()->objectName() == "isingTab")
+    else if (ui->methodTabWidget->currentWidget() == ui->isingTab)
         return "frei0r.ising0r:";
-    else if (ui->methodTabWidget->currentWidget()->objectName() == "lissajousTab")
+    else if (ui->methodTabWidget->currentWidget() == ui->lissajousTab)
         return "frei0r.lissajous0r:";
-    else if (ui->methodTabWidget->currentWidget()->objectName() == "plasmaTab")
+    else if (ui->methodTabWidget->currentWidget() == ui->plasmaTab)
         return "frei0r.plasma:";
     else
         return "color:";
@@ -100,22 +129,22 @@ QString OpenOtherDialog::URL() const
 Mlt::Properties* OpenOtherDialog::mltProperties() const
 {
     Mlt::Properties* props = 0;
-    if (ui->methodTabWidget->currentWidget()->objectName() == "colorTab") {
+    if (ui->methodTabWidget->currentWidget() == ui->colorTab) {
         props = new Mlt::Properties;
         props->set("colour", ui->colorLabel->text().toAscii().constData());
     }
-    else if (ui->methodTabWidget->currentWidget()->objectName() == "isingTab") {
+    else if (ui->methodTabWidget->currentWidget() == ui->isingTab) {
         props = new Mlt::Properties;
         props->set("Temperature", ui->tempSpinner->text().toAscii().constData());
         props->set("Border Growth", ui->borderGrowthSpinner->text().toAscii().constData());
         props->set("Spontaneous Growth", ui->spontGrowthSpinner->text().toAscii().constData());
     }
-    else if (ui->methodTabWidget->currentWidget()->objectName() == "lissajousTab") {
+    else if (ui->methodTabWidget->currentWidget() == ui->lissajousTab) {
         props = new Mlt::Properties;
         props->set("ratiox", ui->xratioSpinner->text().toAscii().constData());
         props->set("ratioy", ui->yratioSpinner->text().toAscii().constData());
     }
-    else if (ui->methodTabWidget->currentWidget()->objectName() == "plasmaTab") {
+    else if (ui->methodTabWidget->currentWidget() == ui->plasmaTab) {
         props = new Mlt::Properties;
         props->set("1_speed", ui->speed1Spinner->text().toAscii().constData());
         props->set("2_speed", ui->speed2Spinner->text().toAscii().constData());
@@ -127,6 +156,77 @@ Mlt::Properties* OpenOtherDialog::mltProperties() const
     return props;
 }
 
+Mlt::Properties* OpenOtherDialog::mltProperties(const QString& producer) const
+{
+    Mlt::Properties* props = new Mlt::Properties;
+    if (producer == "color") {
+        props->set("colour", ui->colorLabel->text().toAscii().constData());
+    }
+    else if (producer == "frei0r.ising0r") {
+        props->set("Temperature", ui->tempSpinner->text().toAscii().constData());
+        props->set("Border Growth", ui->borderGrowthSpinner->text().toAscii().constData());
+        props->set("Spontaneous Growth", ui->spontGrowthSpinner->text().toAscii().constData());
+    }
+    else if (producer == "frei0r.ising0r") {
+        props->set("ratiox", ui->xratioSpinner->text().toAscii().constData());
+        props->set("ratioy", ui->yratioSpinner->text().toAscii().constData());
+    }
+    else if (producer == "frei0r.plasma") {
+        props->set("1_speed", ui->speed1Spinner->text().toAscii().constData());
+        props->set("2_speed", ui->speed2Spinner->text().toAscii().constData());
+        props->set("3_speed", ui->speed3Spinner->text().toAscii().constData());
+        props->set("4_speed", ui->speed4Spinner->text().toAscii().constData());
+        props->set("1_move", ui->move1Spinner->text().toAscii().constData());
+        props->set("2_move", ui->move2Spinner->text().toAscii().constData());
+    }
+    return props;
+}
+
+void OpenOtherDialog::loadPresets()
+{
+    // build the presets combo
+    ui->presetCombo->clear();
+    QDir dir(QDesktopServices::storageLocation(QDesktopServices::DataLocation));
+    if (dir.cd("presets") && dir.cd("producer")) {
+        ui->presetCombo->addItems(dir.entryList(QDir::Files));
+        QStringList entries = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::Executable);
+        foreach (QString s, entries) {
+            if (s == producerName() && dir.cd(s)) {
+                ui->presetCombo->addItem("", "");
+                QStringList entries2 = dir.entryList(QDir::Files | QDir::Readable);
+                foreach (QString s2, entries2) {
+                    ui->presetCombo->addItem(s2, s); // userData contains the producer name
+                }
+                dir.cdUp();
+            }
+        }
+    }
+}
+
+void OpenOtherDialog::saveDefaultPreset(const QString& producer)
+{
+    QDir dir(QDesktopServices::storageLocation(QDesktopServices::DataLocation));
+    Mlt::Properties* props = mltProperties(producer);
+
+    if (!dir.exists())
+        dir.mkpath(dir.path());
+    if (!dir.cd("presets")) {
+        if (dir.mkdir("presets"))
+            dir.cd("presets");
+    }
+    if (!dir.cd("producer")) {
+        if (dir.mkdir("producer"))
+            dir.cd("producer");
+    }
+    if (!dir.cd(producer)) {
+        if (dir.mkdir(producer))
+            dir.cd(producer);
+    }
+    if (!QFile(dir.filePath(tr("<defaults>"))).exists()) {
+        props->set("URL", QString(producer + ":").toUtf8().constData());
+        props->save(dir.filePath(tr("<defaults>")).toUtf8().constData());
+    }
+}
 
 void OpenOtherDialog::on_savePresetButton_clicked()
 {
@@ -154,6 +254,15 @@ void OpenOtherDialog::on_savePresetButton_clicked()
             props = new Mlt::Properties;
         props->set("URL", URL().toUtf8().constData());
         props->save(dir.filePath(preset).toUtf8().constData());
+
+        // add the preset and select it
+        loadPresets();
+        for (int i = 0; i < ui->presetCombo->count(); i++) {
+            if (ui->presetCombo->itemText(i) == preset) {
+                ui->presetCombo->setCurrentIndex(i);
+                break;
+            }
+        }
     }
 }
 
@@ -288,54 +397,58 @@ void OpenOtherDialog::on_move2Spinner_valueChanged(double value)
     ui->move2Dial->setValue(value * 100);
 }
 
+void OpenOtherDialog::selectTreeWidget(const QString& s)
+{
+    for (int j = 0; j < ui->treeWidget->topLevelItemCount(); j++) {
+        QTreeWidgetItem* group = ui->treeWidget->topLevelItem(j);
+        for (int i = 0; i < group->childCount(); i++) {
+            if (group->child(i)->text(0) == s) {
+                ui->treeWidget->setCurrentItem(group->child(i));
+                return;
+            }
+        }
+    }
+}
+
 void OpenOtherDialog::load(QString& producer, Mlt::Properties& p)
 {
-    for (int i = 0; i < ui->methodTabWidget->count(); i++) {
-        if (ui->methodTabWidget->widget(i)->objectName() == "networkTab"
-                && producer == "avformat") {
-            ui->methodTabWidget->setCurrentIndex(i);
-            ui->urlLineEdit->setText(p.get("URL"));
-        }
-        else if (ui->methodTabWidget->widget(i)->objectName() == "decklinkTab"
-                && producer == "decklink") {
-            ui->methodTabWidget->setCurrentIndex(i);
-            QString s(p.get("URL"));
-            ui->decklinkCardSpinner->setValue(s.mid(s.indexOf(':') + 1).toInt());
-        }
-        else if (ui->methodTabWidget->widget(i)->objectName() == "colorTab"
-                && producer == "color") {
-            ui->methodTabWidget->setCurrentIndex(i);
-            ui->colorLabel->setText(p.get("colour"));
-            ui->colorLabel->setStyleSheet(QString("background-color: %1")
-                .arg(QString(p.get("colour")).replace(0, 3, "#")));
-        }
-        else if (ui->methodTabWidget->widget(i)->objectName() == "noiseTab"
-                && producer == "noise") {
-            ui->methodTabWidget->setCurrentIndex(i);
-        }
-        else if (ui->methodTabWidget->widget(i)->objectName() == "isingTab"
-                && producer == "frei0r.ising0r") {
-            ui->methodTabWidget->setCurrentIndex(i);
-            ui->tempSpinner->setValue(p.get_double("Temperature"));
-            ui->borderGrowthSpinner->setValue(p.get_double("Border Growth"));
-            ui->spontGrowthSpinner->setValue(p.get_double("Spontaneous Growth"));
-        }
-        else if (ui->methodTabWidget->widget(i)->objectName() == "lissajousTab"
-                && producer == "frei0r.lissajous0r") {
-            ui->methodTabWidget->setCurrentIndex(i);
-            ui->xratioSpinner->setValue(p.get_double("ratiox"));
-            ui->yratioSpinner->setValue(p.get_double("ratioy"));
-        }
-        else if (ui->methodTabWidget->widget(i)->objectName() == "plasmaTab"
-                && producer == "frei0r.plasma") {
-            ui->methodTabWidget->setCurrentIndex(i);
-            ui->speed1Spinner->setValue(p.get_double("1_speed"));
-            ui->speed2Spinner->setValue(p.get_double("2_speed"));
-            ui->speed3Spinner->setValue(p.get_double("3_speed"));
-            ui->speed4Spinner->setValue(p.get_double("4_speed"));
-            ui->move1Spinner->setValue(p.get_double("1_move"));
-            ui->move2Spinner->setValue(p.get_double("1_move"));
-        }
+    if (producer == "avformat") {
+        selectTreeWidget(tr("Network"));
+        ui->urlLineEdit->setText(p.get("URL"));
+    }
+    else if (producer == "decklink") {
+        selectTreeWidget(tr("SDI/HDMI"));
+        QString s(p.get("URL"));
+        ui->decklinkCardSpinner->setValue(s.mid(s.indexOf(':') + 1).toInt());
+    }
+    else if (producer == "color") {
+        selectTreeWidget(tr("Color"));
+        ui->colorLabel->setText(p.get("colour"));
+        ui->colorLabel->setStyleSheet(QString("background-color: %1")
+            .arg(QString(p.get("colour")).replace(0, 3, "#")));
+    }
+    else if (producer == "noise") {
+        selectTreeWidget(tr("Noise"));
+    }
+    else if (producer == "frei0r.ising0r") {
+        selectTreeWidget(tr("Ising"));
+        ui->tempSpinner->setValue(p.get_double("Temperature"));
+        ui->borderGrowthSpinner->setValue(p.get_double("Border Growth"));
+        ui->spontGrowthSpinner->setValue(p.get_double("Spontaneous Growth"));
+    }
+    else if (producer == "frei0r.lissajous0r") {
+        selectTreeWidget(tr("Lissajous"));
+        ui->xratioSpinner->setValue(p.get_double("ratiox"));
+        ui->yratioSpinner->setValue(p.get_double("ratioy"));
+    }
+    else if (producer == "frei0r.plasma") {
+        selectTreeWidget(tr("Plasma"));
+        ui->speed1Spinner->setValue(p.get_double("1_speed"));
+        ui->speed2Spinner->setValue(p.get_double("2_speed"));
+        ui->speed3Spinner->setValue(p.get_double("3_speed"));
+        ui->speed4Spinner->setValue(p.get_double("4_speed"));
+        ui->move1Spinner->setValue(p.get_double("1_move"));
+        ui->move2Spinner->setValue(p.get_double("1_move"));
     }
 }
 
@@ -351,3 +464,29 @@ void OpenOtherDialog::on_presetCombo_activated(int index)
     p.load(dir.filePath(preset).toUtf8().constData());
     load(producer, p);
  }
+
+void OpenOtherDialog::on_treeWidget_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
+{
+    if (current->data(0, Qt::UserRole).isValid()) {
+        ui->methodTabWidget->setCurrentIndex(current->data(0, Qt::UserRole).toInt());
+        loadPresets();
+    }
+}
+
+void OpenOtherDialog::on_deletePresetButton_clicked()
+{
+    QString preset = ui->presetCombo->currentText();
+    int result = QMessageBox::question(this, tr("Delete Preset"),
+                                       tr("Are you sure you want to delete") + " " + preset + "?",
+                                       QMessageBox::No | QMessageBox::Yes, QMessageBox::No);
+    if (result == QMessageBox::Yes) {
+        QDir dir(QDesktopServices::storageLocation(QDesktopServices::DataLocation));
+        QString producer = producerName();
+
+        if (dir.cd("presets") && dir.cd("producer") && dir.cd(producer))
+            QFile(dir.filePath(preset)).remove();
+
+        ui->presetCombo->removeItem(ui->presetCombo->currentIndex());
+        ui->presetCombo->setCurrentIndex(0);
+    }
+}
