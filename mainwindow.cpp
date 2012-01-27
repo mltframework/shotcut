@@ -23,6 +23,8 @@
 #include <QtGui>
 #include <Mlt.h>
 
+static const int STATUS_TIMEOUT_MS = 3000;
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -168,6 +170,9 @@ void MainWindow::open(const QString& url, const Mlt::Properties* properties)
         ui->actionFastForward->setEnabled(seekable);
         play();
     }
+    else {
+        ui->statusBar->showMessage(tr("Failed to open ") + url, STATUS_TIMEOUT_MS);
+    }
 }
 
 void MainWindow::openVideo()
@@ -263,7 +268,8 @@ void MainWindow::onShowFrame(Mlt::QFrame, unsigned position)
     m_positionSpinner->setValue((int) position);
     m_positionSpinner->blockSignals(false);
     m_scrubber->onSeek(position);
-    if ((int) position >= mlt->producer()->get_length() - 1)
+    if (mlt->producer() && mlt->producer()->is_valid()
+            && (int) position >= mlt->producer()->get_length() - 1)
         pause();
 }
 
@@ -405,7 +411,7 @@ void MainWindow::on_actionSkipNext_triggered()
         mlt->seek(mlt->producer()->get_length() - 1);
     else
         mlt->seek(mlt->producer()->get_out());
-    ui->statusBar->showMessage(ui->actionSkipNext->toolTip(), 3000);
+    ui->statusBar->showMessage(ui->actionSkipNext->toolTip(), STATUS_TIMEOUT_MS);
 }
 
 void MainWindow::on_actionSkipPrevious_triggered()
@@ -417,7 +423,7 @@ void MainWindow::on_actionSkipPrevious_triggered()
         mlt->seek(0);
     else
         mlt->seek(mlt->producer()->get_in());
-    ui->statusBar->showMessage(ui->actionSkipPrevious->toolTip(), 3000);
+    ui->statusBar->showMessage(ui->actionSkipPrevious->toolTip(), STATUS_TIMEOUT_MS);
 }
 
 void MainWindow::on_actionProgressive_triggered(bool checked)

@@ -101,6 +101,17 @@ int Controller::open(const char* url, const char* profile)
 {
     int error = 0;
 
+    // this is a dirty hack to prevent re-opening v4l2 from crashing
+    if (m_producer && m_consumer
+            && QString(url).contains("video4linux2")
+            && QString(m_producer->get("resource")).contains("video4linux2")) {
+        Mlt::Producer* dummy = new Mlt::Producer(*m_profile, "color");
+        m_consumer->connect(*dummy);
+        delete m_producer;
+        m_producer = dummy;
+        return 1;
+    }
+
     close();
     m_profile = new Mlt::Profile(profile);
     m_producer = new Mlt::Producer(*m_profile, url);
