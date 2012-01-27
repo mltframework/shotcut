@@ -55,6 +55,11 @@ OpenOtherDialog::OpenOtherDialog(Mlt::Controller *mc, QWidget *parent) :
         QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("SDI/HDMI")));
         item->setData(0, Qt::UserRole, 1);
     }
+#ifdef Q_WS_X11
+    QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("Video4Linux")));
+    item->setData(0, Qt::UserRole, 7);
+    saveDefaultPreset("video4linux2");
+#endif
 
     // populate the generators
     group = new QTreeWidgetItem(ui->treeWidget, QStringList(tr("Generator")));
@@ -102,28 +107,37 @@ QString OpenOtherDialog::producerName() const
         return "frei0r.lissajous0r";
     else if (ui->methodTabWidget->currentWidget() == ui->plasmaTab)
         return "frei0r.plasma";
+    else if (ui->methodTabWidget->currentWidget() == ui->v4lTab)
+        return "video4linux2";
     else
         return "color";
 }
 
+QString OpenOtherDialog::URL(const QString& producer ) const
+{
+    if (producer == "avformat")
+        return ui->urlLineEdit->text();
+    else if (producer == "decklink")
+        return QString("decklink:%1").arg(ui->decklinkCardSpinner->value());
+    else if (producer == "video4linux2") {
+        QString s = QString("video4linux2:%1?width=%2&height=%3&framerate=%4")
+                .arg(ui->v4lLineEdit->text())
+                .arg(ui->v4lWidthSpinBox->value())
+                .arg(ui->v4lHeightSpinBox->value())
+                .arg(ui->v4lFramerateSpinBox->value());
+        if (ui->v4lStandardCombo->currentIndex() > 0)
+            s += QString("&standard=") + ui->v4lStandardCombo->currentText();
+        if (ui->v4lChannelSpinBox->value() > 0)
+            s += QString("&channel=%1").arg(ui->v4lChannelSpinBox->value());
+        return s;
+    }
+    else
+        return producer + ":";
+}
+
 QString OpenOtherDialog::URL() const
 {
-    if (ui->methodTabWidget->currentWidget() == ui->networkTab)
-        return ui->urlLineEdit->text();
-    else if (ui->methodTabWidget->currentWidget() == ui->decklinkTab)
-        return QString("decklink:%1").arg(ui->decklinkCardSpinner->value());
-    else if (ui->methodTabWidget->currentWidget() == ui->colorTab)
-        return "color:";
-    else if (ui->methodTabWidget->currentWidget() == ui->noiseTab)
-        return "noise:";
-    else if (ui->methodTabWidget->currentWidget() == ui->isingTab)
-        return "frei0r.ising0r:";
-    else if (ui->methodTabWidget->currentWidget() == ui->lissajousTab)
-        return "frei0r.lissajous0r:";
-    else if (ui->methodTabWidget->currentWidget() == ui->plasmaTab)
-        return "frei0r.plasma:";
-    else
-        return "color:";
+    return URL(producerName());
 }
 
 Mlt::Properties* OpenOtherDialog::mltProperties() const
@@ -223,7 +237,7 @@ void OpenOtherDialog::saveDefaultPreset(const QString& producer)
             dir.cd(producer);
     }
     if (!QFile(dir.filePath(tr("<defaults>"))).exists()) {
-        props->set("URL", QString(producer + ":").toUtf8().constData());
+        props->set("URL", URL(producer).toUtf8().constData());
         props->save(dir.filePath(tr("<defaults>")).toUtf8().constData());
     }
 }
@@ -449,6 +463,37 @@ void OpenOtherDialog::load(QString& producer, Mlt::Properties& p)
         ui->speed4Spinner->setValue(p.get_double("4_speed"));
         ui->move1Spinner->setValue(p.get_double("1_move"));
         ui->move2Spinner->setValue(p.get_double("1_move"));
+    }
+    else if (producer == "video4linux2") {
+        selectTreeWidget(tr("Video4Linux"));
+        QString s(p.get("URL"));
+        s = s.mid(s.indexOf(':') + 1); // chomp video4linux2:
+        QString device = s.mid(0, s.indexOf('?'));
+        ui->v4lLineEdit->setText(device);
+        s = s.mid(s.indexOf('?') + 1); // chomp device
+        if (s.indexOf('&') != -1)
+        foreach (QString item, s.split('&')) {
+            if (item.indexOf('=') != -1) {
+                QStringList pair = item.split('=');
+                if (pair.at(0) == "width")
+                    ui->v4lWidthSpinBox->setValue(pair.at(1).toInt());
+                else if (pair.at(0) == "height")
+                    ui->v4lHeightSpinBox->setValue(pair.at(1).toInt());
+                else if (pair.at(0) == "framerate")
+                    ui->v4lFramerateSpinBox->setValue(pair.at(1).toDouble());
+                else if (pair.at(0) == "channel")
+                    ui->v4lChannelSpinBox->setValue(pair.at(1).toInt());
+                else if (pair.at(0) == "standard") {
+                    for (int i = 0; i < ui->v4lStandardCombo->count(); i++) {
+                        if (ui->v4lStandardCombo->itemText(i) == pair.at(1)) {
+                            ui->v4lStandardCombo->setCurrentIndex(i);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
     }
 }
 

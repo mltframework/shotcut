@@ -80,6 +80,7 @@ private:
     Ui::OpenOtherDialog *ui;
     Mlt::Controller *mlt;
     Mlt::Properties* mltProperties(const QString& producer) const;
+    QString URL(const QString& producer) const;
     void saveDefaultPreset(const QString& producer);
     void selectTreeWidget(const QString& s);
     void loadPresets();
