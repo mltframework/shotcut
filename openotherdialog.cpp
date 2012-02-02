@@ -22,16 +22,6 @@
 #include <Mlt.h>
 #include <QtGui>
 
-enum {
-    NetworkTabIndex = 0,
-    DeckLinkTabIndex,
-    ColorTabIndex,
-    NoiseTabIndex,
-    IsingTabIndex,
-    LissajousTabIndex,
-    PlasmaTabIndex
-};
-
 OpenOtherDialog::OpenOtherDialog(Mlt::Controller *mc, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::OpenOtherDialog),
@@ -98,7 +88,7 @@ QString OpenOtherDialog::producerName() const
     else if (ui->methodTabWidget->currentWidget() == ui->decklinkTab)
         return "decklink";
     else if (ui->methodTabWidget->currentWidget() == ui->colorTab)
-        return "color";
+        return ui->colorWidget->producerName();
     else if (ui->methodTabWidget->currentWidget() == ui->noiseTab)
         return "noise";
     else if (ui->methodTabWidget->currentWidget() == ui->isingTab)
@@ -140,22 +130,16 @@ Mlt::Properties* OpenOtherDialog::mltProperties() const
 Mlt::Properties* OpenOtherDialog::mltProperties(const QString& producer) const
 {
     Mlt::Properties* props = 0;
-    if (producer == "color") {
-        props = new Mlt::Properties;
-        props->set("colour", ui->colorLabel->text().toAscii().constData());
-    }
-    else if (producer == "frei0r.ising0r") {
+    if (producer == "color")
+        props = ui->colorWidget->mltProperties();
+    else if (producer == "frei0r.ising0r")
         props = ui->isingWidget->mltProperties();
-    }
-    else if (producer == "frei0r.lissajous0r") {
+    else if (producer == "frei0r.lissajous0r")
         props = ui->lissajousWidget->mltProperties();
-    }
-    else if (producer == "frei0r.plasma") {
+    else if (producer == "frei0r.plasma")
         props = ui->plasmaWidget->mltProperties();
-    }
-    else {
+    else
         props = new Mlt::Properties;
-    }
     return props;
 }
 
@@ -243,21 +227,6 @@ void OpenOtherDialog::on_savePresetButton_clicked()
     }
 }
 
-void OpenOtherDialog::on_colorButton_clicked()
-{
-    QColorDialog dialog;
-    dialog.setOption(QColorDialog::ShowAlphaChannel);
-    if (dialog.exec() == QDialog::Accepted) {
-        ui->colorLabel->setText(QString().sprintf("#%02X%02X%02X%02X",
-                                                  qAlpha(dialog.currentColor().rgba()),
-                                                  qRed(dialog.currentColor().rgba()),
-                                                  qGreen(dialog.currentColor().rgba()),
-                                                  qBlue(dialog.currentColor().rgba())
-                                                  ));
-        ui->colorLabel->setStyleSheet(QString("background-color: %1").arg(dialog.currentColor().name()));
-    }
-}
-
 void OpenOtherDialog::selectTreeWidget(const QString& s)
 {
     for (int j = 0; j < ui->treeWidget->topLevelItemCount(); j++) {
@@ -284,9 +253,7 @@ void OpenOtherDialog::load(QString& producer, Mlt::Properties& p)
     }
     else if (producer == "color") {
         selectTreeWidget(tr("Color"));
-        ui->colorLabel->setText(p.get("colour"));
-        ui->colorLabel->setStyleSheet(QString("background-color: %1")
-            .arg(QString(p.get("colour")).replace(0, 3, "#")));
+        ui->colorWidget->load(p);
     }
     else if (producer == "noise") {
         selectTreeWidget(tr("Noise"));

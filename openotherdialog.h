@@ -43,9 +43,7 @@ public:
     Mlt::Properties* mltProperties() const;
     void load(QString& producer, Mlt::Properties& p);
 
-private slots:
-    void on_colorButton_clicked();
-    
+private slots:    
     void on_savePresetButton_clicked();
     void on_presetCombo_activated(int index);
     void on_treeWidget_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
