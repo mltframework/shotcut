@@ -108,7 +108,7 @@ QString OpenOtherDialog::producerName() const
     else if (ui->methodTabWidget->currentWidget() == ui->plasmaTab)
         return ui->plasmaWidget->producerName();
     else if (ui->methodTabWidget->currentWidget() == ui->v4lTab)
-        return "video4linux2";
+        return ui->v4lWidget->producerName();
     else
         return "color";
 }
@@ -119,18 +119,8 @@ QString OpenOtherDialog::URL(const QString& producer ) const
         return ui->urlLineEdit->text();
     else if (producer == "decklink")
         return QString("decklink:%1").arg(ui->decklinkCardSpinner->value());
-    else if (producer == "video4linux2") {
-        QString s = QString("video4linux2:%1?width=%2&height=%3&framerate=%4")
-                .arg(ui->v4lLineEdit->text())
-                .arg(ui->v4lWidthSpinBox->value())
-                .arg(ui->v4lHeightSpinBox->value())
-                .arg(ui->v4lFramerateSpinBox->value());
-        if (ui->v4lStandardCombo->currentIndex() > 0)
-            s += QString("&standard=") + ui->v4lStandardCombo->currentText();
-        if (ui->v4lChannelSpinBox->value() > 0)
-            s += QString("&channel=%1").arg(ui->v4lChannelSpinBox->value());
-        return s;
-    }
+    else if (producer == "video4linux2")
+        return ui->v4lWidget->URL();
     else if (producer == "frei0r.plasma")
         return ui->plasmaWidget->URL();
     else
@@ -315,34 +305,7 @@ void OpenOtherDialog::load(QString& producer, Mlt::Properties& p)
     }
     else if (producer == "video4linux2") {
         selectTreeWidget(tr("Video4Linux"));
-        QString s(p.get("URL"));
-        s = s.mid(s.indexOf(':') + 1); // chomp video4linux2:
-        QString device = s.mid(0, s.indexOf('?'));
-        ui->v4lLineEdit->setText(device);
-        s = s.mid(s.indexOf('?') + 1); // chomp device
-        if (s.indexOf('&') != -1)
-        foreach (QString item, s.split('&')) {
-            if (item.indexOf('=') != -1) {
-                QStringList pair = item.split('=');
-                if (pair.at(0) == "width")
-                    ui->v4lWidthSpinBox->setValue(pair.at(1).toInt());
-                else if (pair.at(0) == "height")
-                    ui->v4lHeightSpinBox->setValue(pair.at(1).toInt());
-                else if (pair.at(0) == "framerate")
-                    ui->v4lFramerateSpinBox->setValue(pair.at(1).toDouble());
-                else if (pair.at(0) == "channel")
-                    ui->v4lChannelSpinBox->setValue(pair.at(1).toInt());
-                else if (pair.at(0) == "standard") {
-                    for (int i = 0; i < ui->v4lStandardCombo->count(); i++) {
-                        if (ui->v4lStandardCombo->itemText(i) == pair.at(1)) {
-                            ui->v4lStandardCombo->setCurrentIndex(i);
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-
+        ui->v4lWidget->load(p);
     }
 }
 
