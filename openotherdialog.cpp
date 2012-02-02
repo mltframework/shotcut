@@ -86,7 +86,7 @@ QString OpenOtherDialog::producerName() const
     if (ui->methodTabWidget->currentWidget() == ui->networkTab)
         return "avformat";
     else if (ui->methodTabWidget->currentWidget() == ui->decklinkTab)
-        return "decklink";
+        return ui->decklinkWidget->producerName();
     else if (ui->methodTabWidget->currentWidget() == ui->colorTab)
         return ui->colorWidget->producerName();
     else if (ui->methodTabWidget->currentWidget() == ui->noiseTab)
@@ -108,7 +108,7 @@ QString OpenOtherDialog::URL(const QString& producer ) const
     if (producer == "avformat")
         return ui->urlLineEdit->text();
     else if (producer == "decklink")
-        return QString("decklink:%1").arg(ui->decklinkCardSpinner->value());
+        return ui->decklinkWidget->URL();
     else if (producer == "video4linux2")
         return ui->v4lWidget->URL();
     else if (producer == "frei0r.plasma")
@@ -248,8 +248,7 @@ void OpenOtherDialog::load(QString& producer, Mlt::Properties& p)
     }
     else if (producer == "decklink") {
         selectTreeWidget(tr("SDI/HDMI"));
-        QString s(p.get("URL"));
-        ui->decklinkCardSpinner->setValue(s.mid(s.indexOf(':') + 1).toInt());
+        ui->decklinkWidget->load(p);
     }
     else if (producer == "color") {
         selectTreeWidget(tr("Color"));

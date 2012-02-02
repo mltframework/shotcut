@@ -125,47 +125,7 @@
          <widget class="QWidget" name="decklinkTab">
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
-            <layout class="QGridLayout" name="gridLayout_2">
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_3">
-               <property name="text">
-                <string>Card</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QSpinBox" name="decklinkCardSpinner"/>
-             </item>
-             <item row="0" column="2">
-              <spacer name="horizontalSpacer">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <spacer name="verticalSpacer">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
+            <widget class="DecklinkProducerWidget" name="decklinkWidget" native="true"/>
            </item>
           </layout>
          </widget>
@@ -258,6 +218,12 @@
    <class>ColorProducerWidget</class>
    <extends>QWidget</extends>
    <header>widgets/colorproducerwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>DecklinkProducerWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/decklinkproducerwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
