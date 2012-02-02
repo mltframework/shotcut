@@ -106,7 +106,7 @@ QString OpenOtherDialog::producerName() const
     else if (ui->methodTabWidget->currentWidget() == ui->lissajousTab)
         return "frei0r.lissajous0r";
     else if (ui->methodTabWidget->currentWidget() == ui->plasmaTab)
-        return "frei0r.plasma";
+        return ui->plasmaWidget->producerName();
     else if (ui->methodTabWidget->currentWidget() == ui->v4lTab)
         return "video4linux2";
     else
@@ -131,6 +131,8 @@ QString OpenOtherDialog::URL(const QString& producer ) const
             s += QString("&channel=%1").arg(ui->v4lChannelSpinBox->value());
         return s;
     }
+    else if (producer == "frei0r.plasma")
+        return ui->plasmaWidget->URL();
     else
         return producer + ":";
 }
@@ -142,56 +144,32 @@ QString OpenOtherDialog::URL() const
 
 Mlt::Properties* OpenOtherDialog::mltProperties() const
 {
-    Mlt::Properties* props = 0;
-    if (ui->methodTabWidget->currentWidget() == ui->colorTab) {
-        props = new Mlt::Properties;
-        props->set("colour", ui->colorLabel->text().toAscii().constData());
-    }
-    else if (ui->methodTabWidget->currentWidget() == ui->isingTab) {
-        props = new Mlt::Properties;
-        props->set("Temperature", ui->tempSpinner->text().toAscii().constData());
-        props->set("Border Growth", ui->borderGrowthSpinner->text().toAscii().constData());
-        props->set("Spontaneous Growth", ui->spontGrowthSpinner->text().toAscii().constData());
-    }
-    else if (ui->methodTabWidget->currentWidget() == ui->lissajousTab) {
-        props = new Mlt::Properties;
-        props->set("ratiox", ui->xratioSpinner->text().toAscii().constData());
-        props->set("ratioy", ui->yratioSpinner->text().toAscii().constData());
-    }
-    else if (ui->methodTabWidget->currentWidget() == ui->plasmaTab) {
-        props = new Mlt::Properties;
-        props->set("1_speed", ui->speed1Spinner->text().toAscii().constData());
-        props->set("2_speed", ui->speed2Spinner->text().toAscii().constData());
-        props->set("3_speed", ui->speed3Spinner->text().toAscii().constData());
-        props->set("4_speed", ui->speed4Spinner->text().toAscii().constData());
-        props->set("1_move", ui->move1Spinner->text().toAscii().constData());
-        props->set("2_move", ui->move2Spinner->text().toAscii().constData());
-    }
-    return props;
+    return mltProperties(producerName());
 }
 
 Mlt::Properties* OpenOtherDialog::mltProperties(const QString& producer) const
 {
-    Mlt::Properties* props = new Mlt::Properties;
+    Mlt::Properties* props = 0;
     if (producer == "color") {
+        props = new Mlt::Properties;
         props->set("colour", ui->colorLabel->text().toAscii().constData());
     }
     else if (producer == "frei0r.ising0r") {
+        props = new Mlt::Properties;
         props->set("Temperature", ui->tempSpinner->text().toAscii().constData());
         props->set("Border Growth", ui->borderGrowthSpinner->text().toAscii().constData());
         props->set("Spontaneous Growth", ui->spontGrowthSpinner->text().toAscii().constData());
     }
     else if (producer == "frei0r.ising0r") {
+        props = new Mlt::Properties;
         props->set("ratiox", ui->xratioSpinner->text().toAscii().constData());
         props->set("ratioy", ui->yratioSpinner->text().toAscii().constData());
     }
     else if (producer == "frei0r.plasma") {
-        props->set("1_speed", ui->speed1Spinner->text().toAscii().constData());
-        props->set("2_speed", ui->speed2Spinner->text().toAscii().constData());
-        props->set("3_speed", ui->speed3Spinner->text().toAscii().constData());
-        props->set("4_speed", ui->speed4Spinner->text().toAscii().constData());
-        props->set("1_move", ui->move1Spinner->text().toAscii().constData());
-        props->set("2_move", ui->move2Spinner->text().toAscii().constData());
+        props = ui->plasmaWidget->mltProperties();
+    }
+    else {
+        props = new Mlt::Properties;
     }
     return props;
 }
@@ -349,67 +327,7 @@ void OpenOtherDialog::on_yratioSpinner_valueChanged(double value)
     ui->yratioDial->setValue(value * 100);
 }
 
-///////////////////// Plasma /////////////////////
-
-void OpenOtherDialog::on_speed1Dial_valueChanged(int value)
-{
-    ui->speed1Spinner->setValue(value/100.0);
-}
-
-void OpenOtherDialog::on_speed1Spinner_valueChanged(double value)
-{
-    ui->speed1Dial->setValue(value * 100);
-}
-
-void OpenOtherDialog::on_speed2Dial_valueChanged(int value)
-{
-    ui->speed2Spinner->setValue(value/100.0);    
-}
-
-void OpenOtherDialog::on_speed2Spinner_valueChanged(double value)
-{
-    ui->speed2Dial->setValue(value * 100);
-}
-
-void OpenOtherDialog::on_speed3Dial_valueChanged(int value)
-{
-    ui->speed3Spinner->setValue(value/100.0);
-}
-
-void OpenOtherDialog::on_speed3Spinner_valueChanged(double value)
-{
-    ui->speed3Dial->setValue(value * 100);
-}
-
-void OpenOtherDialog::on_speed4Dial_valueChanged(int value)
-{
-    ui->speed4Spinner->setValue(value/100.0);
-}
-
-void OpenOtherDialog::on_speed4Spinner_valueChanged(double value)
-{
-    ui->speed4Dial->setValue(value * 100);
-}
-
-void OpenOtherDialog::on_move1Dial_valueChanged(int value)
-{
-    ui->move1Spinner->setValue(value/100.0);    
-}
-
-void OpenOtherDialog::on_move1Spinner_valueChanged(double value)
-{
-    ui->move1Dial->setValue(value * 100);
-}
-
-void OpenOtherDialog::on_move2Dial_valueChanged(int value)
-{
-    ui->move2Spinner->setValue(value/100.0);    
-}
-
-void OpenOtherDialog::on_move2Spinner_valueChanged(double value)
-{
-    ui->move2Dial->setValue(value * 100);
-}
+//////////////////////////////////////////
 
 void OpenOtherDialog::selectTreeWidget(const QString& s)
 {
@@ -457,12 +375,7 @@ void OpenOtherDialog::load(QString& producer, Mlt::Properties& p)
     }
     else if (producer == "frei0r.plasma") {
         selectTreeWidget(tr("Plasma"));
-        ui->speed1Spinner->setValue(p.get_double("1_speed"));
-        ui->speed2Spinner->setValue(p.get_double("2_speed"));
-        ui->speed3Spinner->setValue(p.get_double("3_speed"));
-        ui->speed4Spinner->setValue(p.get_double("4_speed"));
-        ui->move1Spinner->setValue(p.get_double("1_move"));
-        ui->move2Spinner->setValue(p.get_double("1_move"));
+        ui->plasmaWidget->load(p);
     }
     else if (producer == "video4linux2") {
         selectTreeWidget(tr("Video4Linux"));

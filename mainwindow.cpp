@@ -362,8 +362,6 @@ void MainWindow::on_actionOpenOther_triggered()
         delete properties;
         properties = dialog.mltProperties();
         open(url, properties);
-        if (!properties)
-            properties = new Mlt::Properties;
         properties->set("URL", url.toUtf8().constData());
     }
 }

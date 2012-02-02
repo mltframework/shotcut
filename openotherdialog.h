@@ -58,19 +58,6 @@ private slots:
     void on_yratioDial_valueChanged(int value);
     void on_yratioSpinner_valueChanged(double arg1);
     
-    void on_speed1Dial_valueChanged(int value);
-    void on_speed1Spinner_valueChanged(double arg1);
-    void on_speed2Dial_valueChanged(int value);
-    void on_speed2Spinner_valueChanged(double arg1);
-    void on_speed3Dial_valueChanged(int value);
-    void on_speed3Spinner_valueChanged(double arg1);
-    void on_speed4Dial_valueChanged(int value);
-    void on_speed4Spinner_valueChanged(double arg1);
-    void on_move1Dial_valueChanged(int value);
-    void on_move1Spinner_valueChanged(double arg1);
-    void on_move2Dial_valueChanged(int value);
-    void on_move2Spinner_valueChanged(double arg1);
-
     void on_savePresetButton_clicked();
     void on_presetCombo_activated(int index);
     void on_treeWidget_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
