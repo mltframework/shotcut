@@ -9,7 +9,8 @@ SOURCES += main.cpp\
     sdlwidget.cpp \
     scrubbar.cpp \
     openotherdialog.cpp \
-    widgets/plasmawidget.cpp
+    widgets/plasmawidget.cpp \
+    widgets/lissajouswidget.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -17,11 +18,13 @@ HEADERS  += mainwindow.h \
     scrubbar.h \
     openotherdialog.h \
     widgets/plasmawidget.h \
-    abstractproducerwidget.h
+    abstractproducerwidget.h \
+    widgets/lissajouswidget.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
-    widgets/plasmawidget.ui
+    widgets/plasmawidget.ui \
+    widgets/lissajouswidget.ui
 
 RESOURCES += \
     resources.qrc
@@ -48,6 +51,9 @@ win32 {
     HEADERS += glwidget.h
     PKGCONFIG += mlt++
 }
+
+
+
 
 
 

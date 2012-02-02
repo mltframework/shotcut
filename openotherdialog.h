@@ -53,11 +53,6 @@ private slots:
     void on_spontGrowthDial_valueChanged(int value);
     void on_spontGrowthSpinner_valueChanged(double arg1);
     
-    void on_xratioDial_valueChanged(int value);
-    void on_xratioSpinner_valueChanged(double arg1);
-    void on_yratioDial_valueChanged(int value);
-    void on_yratioSpinner_valueChanged(double arg1);
-    
     void on_savePresetButton_clicked();
     void on_presetCombo_activated(int index);
     void on_treeWidget_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);

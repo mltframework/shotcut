@@ -160,10 +160,8 @@ Mlt::Properties* OpenOtherDialog::mltProperties(const QString& producer) const
         props->set("Border Growth", ui->borderGrowthSpinner->text().toAscii().constData());
         props->set("Spontaneous Growth", ui->spontGrowthSpinner->text().toAscii().constData());
     }
-    else if (producer == "frei0r.ising0r") {
-        props = new Mlt::Properties;
-        props->set("ratiox", ui->xratioSpinner->text().toAscii().constData());
-        props->set("ratioy", ui->yratioSpinner->text().toAscii().constData());
+    else if (producer == "frei0r.lissajous0r") {
+        props = ui->lissajousWidget->mltProperties();
     }
     else if (producer == "frei0r.plasma") {
         props = ui->plasmaWidget->mltProperties();
@@ -305,28 +303,6 @@ void OpenOtherDialog::on_spontGrowthSpinner_valueChanged(double value)
     ui->spontGrowthDial->setValue(value * 100);
 }
 
-/////////////////// Lissajous ///////////////////////////////
-
-void OpenOtherDialog::on_xratioDial_valueChanged(int value)
-{
-    ui->xratioSpinner->setValue(value/100.0);
-}
-
-void OpenOtherDialog::on_xratioSpinner_valueChanged(double value)
-{
-    ui->xratioDial->setValue(value * 100);
-}
-
-void OpenOtherDialog::on_yratioDial_valueChanged(int value)
-{
-    ui->yratioSpinner->setValue(value/100.0);    
-}
-
-void OpenOtherDialog::on_yratioSpinner_valueChanged(double value)
-{
-    ui->yratioDial->setValue(value * 100);
-}
-
 //////////////////////////////////////////
 
 void OpenOtherDialog::selectTreeWidget(const QString& s)
@@ -370,8 +346,7 @@ void OpenOtherDialog::load(QString& producer, Mlt::Properties& p)
     }
     else if (producer == "frei0r.lissajous0r") {
         selectTreeWidget(tr("Lissajous"));
-        ui->xratioSpinner->setValue(p.get_double("ratiox"));
-        ui->yratioSpinner->setValue(p.get_double("ratioy"));
+        ui->lissajousWidget->load(p);
     }
     else if (producer == "frei0r.plasma") {
         selectTreeWidget(tr("Plasma"));
