@@ -84,7 +84,7 @@ OpenOtherDialog::~OpenOtherDialog()
 QString OpenOtherDialog::producerName() const
 {
     if (ui->methodTabWidget->currentWidget() == ui->networkTab)
-        return "avformat";
+        return ui->networkWidget->producerName();
     else if (ui->methodTabWidget->currentWidget() == ui->decklinkTab)
         return ui->decklinkWidget->producerName();
     else if (ui->methodTabWidget->currentWidget() == ui->colorTab)
@@ -106,7 +106,7 @@ QString OpenOtherDialog::producerName() const
 QString OpenOtherDialog::URL(const QString& producer ) const
 {
     if (producer == "avformat")
-        return ui->urlLineEdit->text();
+        return ui->networkWidget->URL();
     else if (producer == "decklink")
         return ui->decklinkWidget->URL();
     else if (producer == "video4linux2")
@@ -244,7 +244,7 @@ void OpenOtherDialog::load(QString& producer, Mlt::Properties& p)
 {
     if (producer == "avformat") {
         selectTreeWidget(tr("Network"));
-        ui->urlLineEdit->setText(p.get("URL"));
+        ui->networkWidget->load(p);
     }
     else if (producer == "decklink") {
         selectTreeWidget(tr("SDI/HDMI"));

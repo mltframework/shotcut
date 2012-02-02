@@ -91,34 +91,7 @@
          <widget class="QWidget" name="networkTab">
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout">
-             <item>
-              <widget class="QLabel" name="label_6">
-               <property name="text">
-                <string>&amp;URL</string>
-               </property>
-               <property name="buddy">
-                <cstring>urlLineEdit</cstring>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="urlLineEdit"/>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <spacer name="verticalSpacer_2">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
+            <widget class="NetworkProducerWidget" name="networkWidget" native="true"/>
            </item>
           </layout>
          </widget>
@@ -224,6 +197,12 @@
    <class>DecklinkProducerWidget</class>
    <extends>QWidget</extends>
    <header>widgets/decklinkproducerwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>NetworkProducerWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/networkproducerwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -14,7 +14,8 @@ SOURCES += main.cpp\
     widgets/isingwidget.cpp \
     widgets/video4linuxwidget.cpp \
     widgets/colorproducerwidget.cpp \
-    widgets/decklinkproducerwidget.cpp
+    widgets/decklinkproducerwidget.cpp \
+    widgets/networkproducerwidget.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -27,7 +28,8 @@ HEADERS  += mainwindow.h \
     widgets/isingwidget.h \
     widgets/video4linuxwidget.h \
     widgets/colorproducerwidget.h \
-    widgets/decklinkproducerwidget.h
+    widgets/decklinkproducerwidget.h \
+    widgets/networkproducerwidget.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
@@ -36,7 +38,8 @@ FORMS    += mainwindow.ui \
     widgets/isingwidget.ui \
     widgets/video4linuxwidget.ui \
     widgets/colorproducerwidget.ui \
-    widgets/decklinkproducerwidget.ui
+    widgets/decklinkproducerwidget.ui \
+    widgets/networkproducerwidget.ui
 
 RESOURCES += \
     resources.qrc
@@ -63,6 +66,9 @@ win32 {
     HEADERS += glwidget.h
     PKGCONFIG += mlt++
 }
+
+
+
 
 
 
