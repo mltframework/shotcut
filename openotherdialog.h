@@ -46,13 +46,6 @@ public:
 private slots:
     void on_colorButton_clicked();
     
-    void on_tempDial_valueChanged(int value);
-    void on_tempSpinner_valueChanged(double arg1);
-    void on_borderGrowthDial_valueChanged(int value);
-    void on_borderGrowthSpinner_valueChanged(double arg1);
-    void on_spontGrowthDial_valueChanged(int value);
-    void on_spontGrowthSpinner_valueChanged(double arg1);
-    
     void on_savePresetButton_clicked();
     void on_presetCombo_activated(int index);
     void on_treeWidget_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);

@@ -102,9 +102,9 @@ QString OpenOtherDialog::producerName() const
     else if (ui->methodTabWidget->currentWidget() == ui->noiseTab)
         return "noise";
     else if (ui->methodTabWidget->currentWidget() == ui->isingTab)
-        return "frei0r.ising0r";
+        return ui->isingWidget->producerName();
     else if (ui->methodTabWidget->currentWidget() == ui->lissajousTab)
-        return "frei0r.lissajous0r";
+        return ui->lissajousWidget->producerName();
     else if (ui->methodTabWidget->currentWidget() == ui->plasmaTab)
         return ui->plasmaWidget->producerName();
     else if (ui->methodTabWidget->currentWidget() == ui->v4lTab)
@@ -155,10 +155,7 @@ Mlt::Properties* OpenOtherDialog::mltProperties(const QString& producer) const
         props->set("colour", ui->colorLabel->text().toAscii().constData());
     }
     else if (producer == "frei0r.ising0r") {
-        props = new Mlt::Properties;
-        props->set("Temperature", ui->tempSpinner->text().toAscii().constData());
-        props->set("Border Growth", ui->borderGrowthSpinner->text().toAscii().constData());
-        props->set("Spontaneous Growth", ui->spontGrowthSpinner->text().toAscii().constData());
+        props = ui->isingWidget->mltProperties();
     }
     else if (producer == "frei0r.lissajous0r") {
         props = ui->lissajousWidget->mltProperties();
@@ -271,40 +268,6 @@ void OpenOtherDialog::on_colorButton_clicked()
     }
 }
 
-///////////////// Ising //////////////////////
-
-void OpenOtherDialog::on_tempDial_valueChanged(int value)
-{
-    ui->tempSpinner->setValue(value/100.0);
-}
-
-void OpenOtherDialog::on_tempSpinner_valueChanged(double value)
-{
-    ui->tempDial->setValue(value * 100);
-}
-
-void OpenOtherDialog::on_borderGrowthDial_valueChanged(int value)
-{
-    ui->borderGrowthSpinner->setValue(value/100.0);    
-}
-
-void OpenOtherDialog::on_borderGrowthSpinner_valueChanged(double value)
-{
-    ui->borderGrowthDial->setValue(value * 100);
-}
-
-void OpenOtherDialog::on_spontGrowthDial_valueChanged(int value)
-{
-    ui->spontGrowthSpinner->setValue(value/100.0);
-}
-
-void OpenOtherDialog::on_spontGrowthSpinner_valueChanged(double value)
-{
-    ui->spontGrowthDial->setValue(value * 100);
-}
-
-//////////////////////////////////////////
-
 void OpenOtherDialog::selectTreeWidget(const QString& s)
 {
     for (int j = 0; j < ui->treeWidget->topLevelItemCount(); j++) {
@@ -340,9 +303,7 @@ void OpenOtherDialog::load(QString& producer, Mlt::Properties& p)
     }
     else if (producer == "frei0r.ising0r") {
         selectTreeWidget(tr("Ising"));
-        ui->tempSpinner->setValue(p.get_double("Temperature"));
-        ui->borderGrowthSpinner->setValue(p.get_double("Border Growth"));
-        ui->spontGrowthSpinner->setValue(p.get_double("Spontaneous Growth"));
+        ui->isingWidget->load(p);
     }
     else if (producer == "frei0r.lissajous0r") {
         selectTreeWidget(tr("Lissajous"));
