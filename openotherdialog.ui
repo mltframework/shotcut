@@ -144,6 +144,13 @@
            </item>
           </layout>
          </widget>
+         <widget class="QWidget" name="colorbarsTab">
+          <layout class="QVBoxLayout" name="verticalLayout_6">
+           <item>
+            <widget class="ColorBarsWidget" name="colorbarsWidget" native="true"/>
+           </item>
+          </layout>
+         </widget>
         </widget>
        </item>
       </layout>
@@ -203,6 +210,12 @@
    <class>NetworkProducerWidget</class>
    <extends>QWidget</extends>
    <header>widgets/networkproducerwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ColorBarsWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/colorbarswidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

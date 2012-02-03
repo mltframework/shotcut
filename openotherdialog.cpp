@@ -43,11 +43,11 @@ OpenOtherDialog::OpenOtherDialog(Mlt::Controller *mc, QWidget *parent) :
     group = new QTreeWidgetItem(ui->treeWidget, QStringList(tr("Device")));
     if (mlt->repository()->producers()->get_data("decklink")) {
         QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("SDI/HDMI")));
-        item->setData(0, Qt::UserRole, 1);
+        item->setData(0, Qt::UserRole, ui->decklinkTab->objectName());
     }
 #ifdef Q_WS_X11
     QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("Video4Linux")));
-    item->setData(0, Qt::UserRole, 7);
+    item->setData(0, Qt::UserRole, ui->v4lTab->objectName());
     saveDefaultPreset("video4linux2");
 #endif
 
@@ -55,23 +55,27 @@ OpenOtherDialog::OpenOtherDialog(Mlt::Controller *mc, QWidget *parent) :
     group = new QTreeWidgetItem(ui->treeWidget, QStringList(tr("Generator")));
     if (mlt->repository()->producers()->get_data("color")) {
         QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("Color")));
-        item->setData(0, Qt::UserRole, 2);
+        item->setData(0, Qt::UserRole, ui->colorTab->objectName());
     }
     if (mlt->repository()->producers()->get_data("noise")) {
         QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("Noise")));
-        item->setData(0, Qt::UserRole, 3);
+        item->setData(0, Qt::UserRole, ui->noiseTab->objectName());
     }
     if (mlt->repository()->producers()->get_data("frei0r.ising0r")) {
         QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("Ising")));
-        item->setData(0, Qt::UserRole, 4);
+        item->setData(0, Qt::UserRole, ui->isingTab->objectName());
     }
     if (mlt->repository()->producers()->get_data("frei0r.lissajous0r")) {
         QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("Lissajous")));
-        item->setData(0, Qt::UserRole, 5);
+        item->setData(0, Qt::UserRole, ui->lissajousTab->objectName());
     }
     if (mlt->repository()->producers()->get_data("frei0r.plasma")) {
         QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("Plasma")));
-        item->setData(0, Qt::UserRole, 6);
+        item->setData(0, Qt::UserRole, ui->plasmaTab->objectName());
+    }
+    if (mlt->repository()->producers()->get_data("frei0r.test_pat_B")) {
+        QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("Color Bars")));
+        item->setData(0, Qt::UserRole, ui->colorbarsTab->objectName());
     }
     ui->treeWidget->expandAll();
 }
@@ -99,6 +103,8 @@ QString OpenOtherDialog::producerName() const
         return ui->plasmaWidget->producerName();
     else if (ui->methodTabWidget->currentWidget() == ui->v4lTab)
         return ui->v4lWidget->producerName();
+    else if (ui->methodTabWidget->currentWidget() == ui->colorbarsTab)
+        return ui->colorbarsWidget->producerName();
     else
         return "color";
 }
@@ -138,6 +144,8 @@ Mlt::Properties* OpenOtherDialog::mltProperties(const QString& producer) const
         props = ui->lissajousWidget->mltProperties();
     else if (producer == "frei0r.plasma")
         props = ui->plasmaWidget->mltProperties();
+    else if (producer == "frei0r.test_pat_B")
+        props = ui->colorbarsWidget->mltProperties();
     else
         props = new Mlt::Properties;
     return props;
@@ -273,6 +281,10 @@ void OpenOtherDialog::load(QString& producer, Mlt::Properties& p)
         selectTreeWidget(tr("Video4Linux"));
         ui->v4lWidget->load(p);
     }
+    else if (producer == "frei0r.test_pat_B") {
+        selectTreeWidget(tr("Color Bars"));
+        ui->colorbarsWidget->load(p);
+    }
 }
 
 void OpenOtherDialog::on_presetCombo_activated(int index)
@@ -291,8 +303,13 @@ void OpenOtherDialog::on_presetCombo_activated(int index)
 void OpenOtherDialog::on_treeWidget_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
 {
     if (current->data(0, Qt::UserRole).isValid()) {
-        ui->methodTabWidget->setCurrentIndex(current->data(0, Qt::UserRole).toInt());
-        loadPresets();
+        for (int i = 0; i < ui->methodTabWidget->count(); i++) {
+            if (ui->methodTabWidget->widget(i)->objectName() == current->data(0, Qt::UserRole).toString()) {
+                ui->methodTabWidget->setCurrentIndex(i);
+                loadPresets();
+                break;
+            }
+        }
     }
 }
 
