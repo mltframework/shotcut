@@ -29,15 +29,15 @@ OpenOtherDialog::OpenOtherDialog(Mlt::Controller *mc, QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QTreeWidgetItem* group = new QTreeWidgetItem(ui->treeWidget, QStringList(tr("Network")));
-    group->setData(0, Qt::UserRole, 0);
-    ui->treeWidget->setCurrentItem(group);
-
     saveDefaultPreset("color");
     saveDefaultPreset("frei0r.ising0r");
     saveDefaultPreset("frei0r.lissajous0r");
     saveDefaultPreset("frei0r.plasma");
     loadPresets();
+
+    QTreeWidgetItem* group = new QTreeWidgetItem(ui->treeWidget, QStringList(tr("Network")));
+    group->setData(0, Qt::UserRole, ui->networkTab->objectName());
+    ui->treeWidget->setCurrentItem(group);
 
     // populate the device group
     group = new QTreeWidgetItem(ui->treeWidget, QStringList(tr("Device")));
