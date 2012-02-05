@@ -55,12 +55,8 @@ public:
     static Controller* createWidget(QWidget* parent);
     virtual ~Controller();
 
-    /** Open a media file, device, or stream.
-     * @param[in] url string of file/device/stream
-     * @param[in] profile MLT profile
-     * @return 0 if no error. Error code if error.
-     */
-    virtual int open(const char* url, const char* profile = 0);
+    virtual int open(Mlt::Producer*);
+    virtual int open(const char* url);
 
     /** Close the media.
      */
@@ -89,8 +85,8 @@ public:
         return m_repo;
     }
 
-    Mlt::Profile* profile() const {
-        return m_profile;
+    Mlt::Profile& profile() const {
+        return *m_profile;
     }
 
     Mlt::Producer* producer() const {
@@ -103,10 +99,11 @@ public:
 
 protected:
     Mlt::Repository* m_repo;
-    Mlt::Profile* m_profile;
     Mlt::Producer* m_producer;
     Mlt::Consumer* m_consumer;
 
+private:
+    Mlt::Profile* m_profile;
 };
 
 } // namespace

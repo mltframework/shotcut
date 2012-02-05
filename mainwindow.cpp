@@ -140,20 +140,17 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::open(const QString& url, const Mlt::Properties* properties)
+void MainWindow::open(Mlt::Producer* producer)
 {
-    if (!mlt->open(url.toUtf8().constData())) {
+    if (!mlt->open(producer)) {
         int len = mlt->producer()->get_length();
         bool seekable = mlt->producer()->get_int("seekable");
-        Mlt::Properties* props = const_cast<Mlt::Properties*>(properties);
 
         mlt->producer()->set("ignore_points", 1);
-        if (properties && props->is_valid())
-            mlt_properties_inherit(mlt->producer()->get_properties(), props->get_properties());
-        m_scrubber->setFramerate(mlt->profile()->fps());
+        m_scrubber->setFramerate(mlt->profile().fps());
         m_scrubber->setScale(len);
         if (seekable) {
-            m_durationLabel->setText(QString().sprintf("%.03f", len / mlt->profile()->fps()));
+            m_durationLabel->setText(QString().sprintf("%.03f", len / mlt->profile().fps()));
             m_scrubber->setInPoint(mlt->producer()->get_in());
             m_scrubber->setOutPoint(mlt->producer()->get_out());
             m_scrubber->show();
@@ -169,6 +166,16 @@ void MainWindow::open(const QString& url, const Mlt::Properties* properties)
         ui->actionRewind->setEnabled(seekable);
         ui->actionFastForward->setEnabled(seekable);
         play();
+    }
+}
+
+void MainWindow::open(const QString& url, const Mlt::Properties* properties)
+{
+    if (!mlt->open(url.toUtf8().constData())) {
+        Mlt::Properties* props = const_cast<Mlt::Properties*>(properties);
+        if (props && props->is_valid())
+            mlt_properties_inherit(mlt->producer()->get_properties(), props->get_properties());
+        open(mlt->producer());
     }
     else {
         ui->statusBar->showMessage(tr("Failed to open ") + url, STATUS_TIMEOUT_MS);

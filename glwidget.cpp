@@ -199,13 +199,13 @@ void GLWidget::showFrame(Mlt::QFrame frame)
     showFrameSemaphore.release();
 }
 
-int GLWidget::open(const char* url, const char* profile)
+int GLWidget::open(Mlt::Producer* producer)
 {
-    int error = Controller::open(url, profile);
+    int error = Controller::open(producer);
 
     if (!error) {
         // use SDL for audio, OpenGL for video
-        m_consumer = new Mlt::Consumer(*m_profile, "sdl_audio");
+        m_consumer = new Mlt::Consumer(profile(), "sdl_audio");
         if (m_consumer->is_valid()) {
             // Connect the producer to the consumer - tell it to "run" later
             m_consumer->connect(*m_producer);
@@ -216,7 +216,7 @@ int GLWidget::open(const char* url, const char* profile)
             m_consumer->set("progressive", property("progressive").toBool());
             m_consumer->set("rescale", property("rescale").toString().toAscii().constData());
             m_consumer->set("deinterlace_method", property("deinterlace_method").toString().toAscii().constData());
-            m_display_ratio = m_profile->dar();
+            m_display_ratio = profile().dar();
             resizeGL(width(), height());
         }
         else {

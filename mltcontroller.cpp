@@ -74,9 +74,9 @@ QImage QFrame::image()
 
 Controller::Controller()
     : m_repo(Mlt::Factory::init())
-    , m_profile(0)
     , m_producer(0)
     , m_consumer(0)
+    , m_profile(new Mlt::Profile)
 {
 }
 
@@ -93,11 +93,29 @@ Controller* Controller::createWidget(QWidget* parent)
 Controller::~Controller()
 {
     close();
+    delete m_profile;
     // TODO: this is commented out because it causes crash on closing queued QFrames.
 //    Mlt::Factory::close();
 }
 
-int Controller::open(const char* url, const char* profile)
+int Controller::open(Mlt::Producer* producer)
+{
+    int error = 0;
+
+    if (producer != m_producer)
+        close();
+    if (producer && producer->is_valid()) {
+        m_producer = producer;
+    }
+    else {
+        // Cleanup on error
+        error = 1;
+        delete producer;
+    }
+    return error;
+}
+
+int Controller::open(const char* url)
 {
     int error = 0;
 
@@ -105,7 +123,7 @@ int Controller::open(const char* url, const char* profile)
     if (m_producer && m_consumer
             && QString(url).contains("video4linux2")
             && QString(m_producer->get("resource")).contains("video4linux2")) {
-        Mlt::Producer* dummy = new Mlt::Producer(*m_profile, "color");
+        Mlt::Producer* dummy = new Mlt::Producer(profile(), "color");
         m_consumer->connect(*dummy);
         delete m_producer;
         m_producer = dummy;
@@ -113,26 +131,21 @@ int Controller::open(const char* url, const char* profile)
     }
 
     close();
-    m_profile = new Mlt::Profile(profile);
-    m_producer = new Mlt::Producer(*m_profile, url);
-    if (!m_producer->is_valid()) {
-        // Cleanup on error
-        error = 1;
-        delete m_producer;
-        m_producer = 0;
-        delete m_profile;
-        m_profile = 0;
-    }
-    else {
-        double fps = m_profile->fps();
-        if (!profile)
-            // Automate profile
-            m_profile->from_producer(*m_producer);
-        if (m_profile->fps() != fps) {
+    m_producer = new Mlt::Producer(profile(), url);
+    if (m_producer->is_valid()) {
+        double fps = profile().fps();
+        if (!profile().get_profile()->is_explicit)
+            profile().from_producer(*m_producer);
+        if (profile().fps() != fps) {
             // reopen with the correct fps
             delete m_producer;
-            m_producer = new Mlt::Producer(*m_profile, url);
+            m_producer = new Mlt::Producer(profile(), url);
         }
+    }
+    else {
+        delete m_producer;
+        m_producer = 0;
+        error = 1;
     }
     return error;
 }
@@ -145,8 +158,6 @@ void Controller::close()
     m_consumer = 0;
     delete m_producer;
     m_producer = 0;
-    delete m_profile;
-    m_profile = 0;
 }
 
 void Controller::play(double speed)

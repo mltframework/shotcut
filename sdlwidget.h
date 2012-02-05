@@ -29,7 +29,7 @@ class SDLWidget : public QWidget, public Controller
     Q_OBJECT
 public:
     explicit SDLWidget(QWidget *parent = 0);
-    int open(const char* url, const char* profile);
+    int open(Mlt::Producer*);
     QWidget* videoWidget() { return this; }
 
 signals:

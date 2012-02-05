@@ -40,6 +40,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    void open(Mlt::Producer* producer);
     void open(const QString& url, const Mlt::Properties* = 0);
 
 protected:

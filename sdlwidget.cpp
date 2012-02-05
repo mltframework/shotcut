@@ -30,16 +30,16 @@ SDLWidget::SDLWidget(QWidget *parent)
     parent->setAttribute(Qt::WA_NativeWindow);
 }
 
-int SDLWidget::open(const char* url, const char* profile)
+int SDLWidget::open(Mlt::Producer* producer)
 {
-    int error = Controller::open(url, profile);
+    int error = Controller::open(producer);
 
     if (!error) {
 #if defined(Q_WS_WIN)
         // sdl_preview does not work good on Windows
-        m_consumer = new Mlt::Consumer(*m_profile, "sdl");
+        m_consumer = new Mlt::Consumer(profile(), "sdl");
 #else
-        m_consumer = new Mlt::Consumer(*m_profile, "sdl_preview");
+        m_consumer = new Mlt::Consumer(profile(), "sdl_preview");
 #endif
         if (m_consumer->is_valid()) {
             // Embed the SDL window in our GUI.
