@@ -16,39 +16,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef ISINGWIDGET_H
-#define ISINGWIDGET_H
+#ifndef NOISEWIDGET_H
+#define NOISEWIDGET_H
 
 #include <QWidget>
 #include "abstractproducerwidget.h"
 
 namespace Ui {
-    class IsingWidget;
+    class NoiseWidget;
 }
 
-class IsingWidget : public QWidget, public AbstractProducerWidget
+class NoiseWidget : public QWidget, public AbstractProducerWidget
 {
     Q_OBJECT
 
 public:
-    explicit IsingWidget(QWidget *parent = 0);
-    ~IsingWidget();
+    explicit NoiseWidget(QWidget *parent = 0);
+    ~NoiseWidget();
 
     // AbstractProducerWidget overrides
     Mlt::Producer* producer(Mlt::Profile&);
-    Mlt::Properties* getPreset() const;
-    void loadPreset(Mlt::Properties&);
 
-private slots:
-    void on_tempDial_valueChanged(int value);
-    void on_tempSpinner_valueChanged(double arg1);
-    void on_borderGrowthDial_valueChanged(int value);
-    void on_borderGrowthSpinner_valueChanged(double arg1);
-    void on_spontGrowthDial_valueChanged(int value);
-    void on_spontGrowthSpinner_valueChanged(double arg1);
-    
 private:
-    Ui::IsingWidget *ui;
+    Ui::NoiseWidget *ui;
 };
 
-#endif // ISINGWIDGET_H
+#endif // NOISEWIDGET_H

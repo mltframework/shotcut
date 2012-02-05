@@ -61,7 +61,16 @@ void IsingWidget::on_spontGrowthSpinner_valueChanged(double value)
     ui->spontGrowthDial->setValue(value * 100);
 }
 
-Mlt::Properties* IsingWidget::mltProperties()
+Mlt::Producer* IsingWidget::producer(Mlt::Profile& profile)
+{
+    Mlt::Producer* p = new Mlt::Producer(profile, "frei0r.ising0r");
+    p->set("Temperature", ui->tempSpinner->text().toAscii().constData());
+    p->set("Border Growth", ui->borderGrowthSpinner->text().toAscii().constData());
+    p->set("Spontaneous Growth", ui->spontGrowthSpinner->text().toAscii().constData());
+    return p;
+}
+
+Mlt::Properties* IsingWidget::getPreset() const
 {
     Mlt::Properties* p = new Mlt::Properties;
     p->set("Temperature", ui->tempSpinner->text().toAscii().constData());
@@ -70,7 +79,7 @@ Mlt::Properties* IsingWidget::mltProperties()
     return p;
 }
 
-void IsingWidget::load(Mlt::Properties& p)
+void IsingWidget::loadPreset(Mlt::Properties& p)
 {
     ui->tempSpinner->setValue(p.get_double("Temperature"));
     ui->borderGrowthSpinner->setValue(p.get_double("Border Growth"));

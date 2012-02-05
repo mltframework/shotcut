@@ -47,14 +47,21 @@ void ColorProducerWidget::on_colorButton_clicked()
     }
 }
 
-Mlt::Properties* ColorProducerWidget::mltProperties()
+Mlt::Producer* ColorProducerWidget::producer(Mlt::Profile& profile)
+{
+    Mlt::Producer* p = new Mlt::Producer(profile, "color:");
+    p->set("colour", ui->colorLabel->text().toAscii().constData());
+    return p;
+}
+
+Mlt::Properties* ColorProducerWidget::getPreset() const
 {
     Mlt::Properties* p = new Mlt::Properties;
     p->set("colour", ui->colorLabel->text().toAscii().constData());
-    return p;    
+    return p;
 }
 
-void ColorProducerWidget::load(Mlt::Properties& p)
+void ColorProducerWidget::loadPreset(Mlt::Properties& p)
 {
     ui->colorLabel->setText(p.get("colour"));
     ui->colorLabel->setStyleSheet(QString("background-color: %1")

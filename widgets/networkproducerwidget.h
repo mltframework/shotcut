@@ -35,10 +35,9 @@ public:
     ~NetworkProducerWidget();
 
     // AbstractProducerWidget overrides
-    QString producerName() const
-        { return "avformat"; }
-    QString URL() const;
-    void load(Mlt::Properties&);
+    Mlt::Producer* producer(Mlt::Profile&);
+    Mlt::Properties* getPreset() const;
+    void loadPreset(Mlt::Properties&);
 
 private:
     Ui::NetworkProducerWidget *ui;

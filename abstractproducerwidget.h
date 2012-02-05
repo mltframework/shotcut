@@ -1,18 +1,16 @@
 #ifndef ABSTRACTPRODUCERWIDGET_H
 #define ABSTRACTPRODUCERWIDGET_H
 
-#include <MltProperties.h>
+#include <MltProducer.h>
 
 class AbstractProducerWidget
 {
 public:
-    virtual QString producerName() const = 0;
-    virtual QString URL() const
-        { return producerName() + ":"; }
-    virtual Mlt::Properties* mltProperties()
+    virtual Mlt::Producer* producer(Mlt::Profile&) = 0;
+    virtual void setProducer(Mlt::Producer*) {};
+    virtual Mlt::Properties* getPreset() const
         { return new Mlt::Properties; }
-    virtual void load(Mlt::Properties&)
-        {}
+    virtual void loadPreset(Mlt::Properties&) {}
 };
 
 #endif // ABSTRACTPRODUCERWIDGET_H

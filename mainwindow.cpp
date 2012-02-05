@@ -142,6 +142,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::open(Mlt::Producer* producer)
 {
+    if (!producer->is_valid() || producer->get_int("error"))
+        ui->statusBar->showMessage(tr("Failed to open ") + producer->get("resource"), STATUS_TIMEOUT_MS);
     if (!mlt->open(producer)) {
         int len = mlt->producer()->get_length();
         bool seekable = mlt->producer()->get_int("seekable");
@@ -356,21 +358,12 @@ void MainWindow::closeEvent(QCloseEvent* event)
 void MainWindow::on_actionOpenOther_triggered()
 {
     // these static are used to open dialog with previous configuration
-    static Mlt::Properties* properties = 0;
-    static QString producer;
     OpenOtherDialog dialog(mlt);
 
-    if (properties && !producer.isNull())
-        dialog.load(producer, *properties);
-    
-    if (dialog.exec() == QDialog::Accepted && dialog.URL().length() > 0) {
-        QString url = dialog.URL();
-        producer = dialog.producerName();
-        delete properties;
-        properties = dialog.mltProperties();
-        open(url, properties);
-        properties->set("URL", url.toUtf8().constData());
-    }
+    if (mlt->producer())
+        dialog.load(mlt->producer());
+    if (dialog.exec() == QDialog::Accepted)
+        open(dialog.producer(mlt->profile()));
 }
 
 void MainWindow::onSeek(int position)

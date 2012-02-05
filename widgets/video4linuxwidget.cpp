@@ -45,33 +45,49 @@ QString Video4LinuxWidget::URL() const
     return s;
 }
 
-void Video4LinuxWidget::load(Mlt::Properties& p)
+Mlt::Producer* Video4LinuxWidget::producer(Mlt::Profile& profile)
 {
-    QString s(p.get("URL"));
-    s = s.mid(s.indexOf(':') + 1); // chomp video4linux2:
-    QString device = s.mid(0, s.indexOf('?'));
-    ui->v4lLineEdit->setText(device);
-    s = s.mid(s.indexOf('?') + 1); // chomp device
-    if (s.indexOf('&') != -1)
-    foreach (QString item, s.split('&')) {
-        if (item.indexOf('=') != -1) {
-            QStringList pair = item.split('=');
-            if (pair.at(0) == "width")
-                ui->v4lWidthSpinBox->setValue(pair.at(1).toInt());
-            else if (pair.at(0) == "height")
-                ui->v4lHeightSpinBox->setValue(pair.at(1).toInt());
-            else if (pair.at(0) == "framerate")
-                ui->v4lFramerateSpinBox->setValue(pair.at(1).toDouble());
-            else if (pair.at(0) == "channel")
-                ui->v4lChannelSpinBox->setValue(pair.at(1).toInt());
-            else if (pair.at(0) == "standard") {
-                for (int i = 0; i < ui->v4lStandardCombo->count(); i++) {
-                    if (ui->v4lStandardCombo->itemText(i) == pair.at(1)) {
-                        ui->v4lStandardCombo->setCurrentIndex(i);
-                        break;
-                    }
-                }
-            }
+    Mlt::Producer* p = new Mlt::Producer(profile, URL().toAscii().constData());
+    if (!p->is_valid()) {
+        delete p;
+        p = new Mlt::Producer(profile, "color:");
+        p->set("resource", QString("video4linux2:%1")
+               .arg(ui->v4lLineEdit->text()).toAscii().constData());
+        p->set("error", 1);
+    }
+    p->set("device", ui->v4lLineEdit->text().toAscii().constData());
+    p->set("width", ui->v4lWidthSpinBox->value());
+    p->set("height", ui->v4lHeightSpinBox->value());
+    p->set("framerate", ui->v4lFramerateSpinBox->value());
+    p->set("standard", ui->v4lStandardCombo->currentText().toAscii().constData());
+    p->set("channel", ui->v4lChannelSpinBox->value());
+    return p;
+}
+
+Mlt::Properties* Video4LinuxWidget::getPreset() const
+{
+    Mlt::Properties* p = new Mlt::Properties;
+    p->set("device", ui->v4lLineEdit->text().toAscii().constData());
+    p->set("width", ui->v4lWidthSpinBox->value());
+    p->set("height", ui->v4lHeightSpinBox->value());
+    p->set("framerate", ui->v4lFramerateSpinBox->value());
+    p->set("standard", ui->v4lStandardCombo->currentText().toAscii().constData());
+    p->set("channel", ui->v4lChannelSpinBox->value());
+    return p;
+}
+
+void Video4LinuxWidget::loadPreset(Mlt::Properties& p)
+{
+    ui->v4lLineEdit->setText(p.get("device"));
+    ui->v4lWidthSpinBox->setValue(p.get_int("width"));
+    ui->v4lHeightSpinBox->setValue(p.get_int("height"));
+    ui->v4lFramerateSpinBox->setValue(p.get_double("framerate"));
+    QString s(p.get("standard"));
+    for (int i = 0; i < ui->v4lStandardCombo->count(); i++) {
+        if (ui->v4lStandardCombo->itemText(i) == s) {
+            ui->v4lStandardCombo->setCurrentIndex(i);
+            break;
         }
     }
+    ui->v4lChannelSpinBox->setValue(p.get_int("channel"));
 }

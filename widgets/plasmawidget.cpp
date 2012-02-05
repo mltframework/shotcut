@@ -91,7 +91,19 @@ void PlasmaWidget::on_move2Spinner_valueChanged(double value)
     ui->move2Dial->setValue(value * 100);
 }
 
-Mlt::Properties* PlasmaWidget::mltProperties()
+Mlt::Producer* PlasmaWidget::producer(Mlt::Profile& profile)
+{
+    Mlt::Producer* p = new Mlt::Producer(profile, "frei0r.plasma");
+    p->set("1_speed", ui->speed1Spinner->text().toAscii().constData());
+    p->set("2_speed", ui->speed2Spinner->text().toAscii().constData());
+    p->set("3_speed", ui->speed3Spinner->text().toAscii().constData());
+    p->set("4_speed", ui->speed4Spinner->text().toAscii().constData());
+    p->set("1_move", ui->move1Spinner->text().toAscii().constData());
+    p->set("2_move", ui->move2Spinner->text().toAscii().constData());
+    return p;
+}
+
+Mlt::Properties* PlasmaWidget::getPreset() const
 {
     Mlt::Properties* p = new Mlt::Properties;
     p->set("1_speed", ui->speed1Spinner->text().toAscii().constData());
@@ -103,7 +115,7 @@ Mlt::Properties* PlasmaWidget::mltProperties()
     return p;
 }
 
-void PlasmaWidget::load(Mlt::Properties& p)
+void PlasmaWidget::loadPreset(Mlt::Properties& p)
 {
     ui->speed1Spinner->setValue(p.get_double("1_speed"));
     ui->speed2Spinner->setValue(p.get_double("2_speed"));

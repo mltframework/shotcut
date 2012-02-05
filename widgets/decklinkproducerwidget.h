@@ -35,10 +35,9 @@ public:
     ~DecklinkProducerWidget();
 
     // AbstractProducerWidget overrides
-    QString producerName() const
-        { return "decklink"; }
-    QString URL() const;
-    void load(Mlt::Properties&);
+    Mlt::Producer* producer(Mlt::Profile&);
+    Mlt::Properties* getPreset() const;
+    void loadPreset(Mlt::Properties&);
 
 private:
     Ui::DecklinkProducerWidget *ui;

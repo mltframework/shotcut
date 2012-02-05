@@ -31,12 +31,20 @@ NetworkProducerWidget::~NetworkProducerWidget()
     delete ui;
 }
 
-QString NetworkProducerWidget::URL() const
+Mlt::Producer* NetworkProducerWidget::producer(Mlt::Profile& profile)
 {
-    return ui->urlLineEdit->text();
+    Mlt::Producer* p = new Mlt::Producer(profile, ui->urlLineEdit->text().toUtf8().constData());
+    return p;
 }
 
-void NetworkProducerWidget::load(Mlt::Properties& p)
+Mlt::Properties* NetworkProducerWidget::getPreset() const
 {
-    ui->urlLineEdit->setText(p.get("URL"));
+    Mlt::Properties* p = new Mlt::Properties;
+    p->set("resource", ui->urlLineEdit->text().toUtf8().constData());
+    return p;
+}
+
+void NetworkProducerWidget::loadPreset(Mlt::Properties& p)
+{
+    ui->urlLineEdit->setText(p.get("resource"));
 }

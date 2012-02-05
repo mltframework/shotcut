@@ -34,10 +34,10 @@ public:
     explicit ColorProducerWidget(QWidget *parent = 0);
     ~ColorProducerWidget();
 
-    QString producerName() const
-        { return "color"; }
-    Mlt::Properties* mltProperties();
-    void load(Mlt::Properties&);
+    // AbstractProducerWidget overrides
+    Mlt::Producer* producer(Mlt::Profile&);
+    Mlt::Properties* getPreset() const;
+    void loadPreset(Mlt::Properties&);
 
 private slots:
     void on_colorButton_clicked();

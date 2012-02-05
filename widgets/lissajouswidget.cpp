@@ -51,7 +51,15 @@ void LissajousWidget::on_yratioSpinner_valueChanged(double value)
     ui->yratioDial->setValue(value * 100);
 }
 
-Mlt::Properties* LissajousWidget::mltProperties()
+Mlt::Producer* LissajousWidget::producer(Mlt::Profile& profile)
+{
+    Mlt::Producer* p = new Mlt::Producer(profile, "frei0r.lissajous0r");
+    p->set("ratiox", ui->xratioSpinner->text().toAscii().constData());
+    p->set("ratioy", ui->yratioSpinner->text().toAscii().constData());
+    return p;
+}
+
+Mlt::Properties* LissajousWidget::getPreset() const
 {
     Mlt::Properties* p = new Mlt::Properties;
     p->set("ratiox", ui->xratioSpinner->text().toAscii().constData());
@@ -59,7 +67,7 @@ Mlt::Properties* LissajousWidget::mltProperties()
     return p;
 }
 
-void LissajousWidget::load(Mlt::Properties& p)
+void LissajousWidget::loadPreset(Mlt::Properties& p)
 {
     ui->xratioSpinner->setValue(p.get_double("ratiox"));
     ui->yratioSpinner->setValue(p.get_double("ratioy"));

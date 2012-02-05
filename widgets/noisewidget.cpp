@@ -16,31 +16,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef COLORBARSWIDGET_H
-#define COLORBARSWIDGET_H
+#include "noisewidget.h"
+#include "ui_noisewidget.h"
 
-#include <QWidget>
-#include "abstractproducerwidget.h"
-
-namespace Ui {
-    class ColorBarsWidget;
+NoiseWidget::NoiseWidget(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::NoiseWidget)
+{
+    ui->setupUi(this);
 }
 
-class ColorBarsWidget : public QWidget, public AbstractProducerWidget
+NoiseWidget::~NoiseWidget()
 {
-    Q_OBJECT
+    delete ui;
+}
 
-public:
-    explicit ColorBarsWidget(QWidget *parent = 0);
-    ~ColorBarsWidget();
-
-    // AbstractProducerWidget overrides
-    Mlt::Producer* producer(Mlt::Profile&);
-    Mlt::Properties* getPreset() const;
-    void loadPreset(Mlt::Properties&);
-
-private:
-    Ui::ColorBarsWidget *ui;
-};
-
-#endif // COLORBARSWIDGET_H
+Mlt::Producer* NoiseWidget::producer(Mlt::Profile& profile)
+{
+    return new Mlt::Producer(profile, "noise:");
+}

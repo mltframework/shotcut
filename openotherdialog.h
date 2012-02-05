@@ -28,6 +28,8 @@ namespace Ui {
 namespace Mlt {
     class Controller;
     class Properties;
+    class Producer;
+    class Profile;
 }
 
 class OpenOtherDialog : public QDialog
@@ -38,10 +40,8 @@ public:
     explicit OpenOtherDialog(Mlt::Controller*, QWidget *parent = 0);
     ~OpenOtherDialog();
     
-    QString producerName() const;
-    QString URL() const;
-    Mlt::Properties* mltProperties() const;
-    void load(QString& producer, Mlt::Properties& p);
+    Mlt::Producer* producer(Mlt::Profile&) const;
+    void load(Mlt::Producer*);
 
 private slots:    
     void on_savePresetButton_clicked();
@@ -52,11 +52,12 @@ private slots:
 private:
     Ui::OpenOtherDialog *ui;
     Mlt::Controller *mlt;
-    Mlt::Properties* mltProperties(const QString& producer) const;
-    QString URL(const QString& producer) const;
-    void saveDefaultPreset(const QString& producer);
-    void selectTreeWidget(const QString& s);
+    QObject* m_current;
+
+    Mlt::Producer* producer(Mlt::Profile&, QObject* widget) const;
     void loadPresets();
+    void saveDefaultPreset(QObject* widget);
+    void selectTreeWidget(const QString& s);
 };
 
 #endif // OPENOTHERDIALOG_H

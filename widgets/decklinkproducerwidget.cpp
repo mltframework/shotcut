@@ -31,13 +31,21 @@ DecklinkProducerWidget::~DecklinkProducerWidget()
     delete ui;
 }
 
-QString DecklinkProducerWidget::URL() const
+Mlt::Producer* DecklinkProducerWidget::producer(Mlt::Profile& profile)
 {
-    return QString("decklink:%1").arg(ui->decklinkCardSpinner->value());
+    Mlt::Producer* p = new Mlt::Producer(profile,
+        QString("decklink:%1").arg(ui->decklinkCardSpinner->value()).toAscii().constData());
+    return p;
 }
 
-void DecklinkProducerWidget::load(Mlt::Properties& p)
+Mlt::Properties* DecklinkProducerWidget::getPreset() const
 {
-    QString s(p.get("URL"));
-    ui->decklinkCardSpinner->setValue(s.mid(s.indexOf(':') + 1).toInt());
+    Mlt::Properties* p = new Mlt::Properties;
+    p->set("card", ui->decklinkCardSpinner->value());
+    return p;
+}
+
+void DecklinkProducerWidget::loadPreset(Mlt::Properties& p)
+{
+    ui->decklinkCardSpinner->setValue(p.get_int("card"));
 }

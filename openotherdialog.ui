@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>686</width>
-    <height>496</height>
+    <width>684</width>
+    <height>494</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -109,7 +109,13 @@
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="noiseTab"/>
+         <widget class="QWidget" name="noiseTab">
+          <layout class="QVBoxLayout" name="verticalLayout_7">
+           <item>
+            <widget class="NoiseWidget" name="noiseWidget" native="true"/>
+           </item>
+          </layout>
+         </widget>
          <widget class="QWidget" name="isingTab">
           <layout class="QVBoxLayout" name="verticalLayout_5">
            <item>
@@ -216,6 +222,12 @@
    <class>ColorBarsWidget</class>
    <extends>QWidget</extends>
    <header>widgets/colorbarswidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>NoiseWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/noisewidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

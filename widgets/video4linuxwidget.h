@@ -35,13 +35,13 @@ public:
     ~Video4LinuxWidget();
 
     // AbstractProducerWidget overrides
-    QString producerName() const
-        { return "video4linux2"; }
-    QString URL() const;
-    void load(Mlt::Properties&);
+    Mlt::Producer* producer(Mlt::Profile&);
+    Mlt::Properties* getPreset() const;
+    void loadPreset(Mlt::Properties&);
 
 private:
     Ui::Video4LinuxWidget *ui;
+    QString URL() const;
 };
 
 #endif // VIDEO4LINUXWIDGET_H

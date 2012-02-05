@@ -35,10 +35,9 @@ public:
     ~LissajousWidget();
 
     // AbstractProducerWidget overrides
-    QString producerName() const
-        { return "frei0r.lissajous0r"; }
-    Mlt::Properties* mltProperties();
-    void load(Mlt::Properties&);
+    Mlt::Producer* producer(Mlt::Profile&);
+    Mlt::Properties* getPreset() const;
+    void loadPreset(Mlt::Properties&);
 
 private slots:
     void on_xratioDial_valueChanged(int value);

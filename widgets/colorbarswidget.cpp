@@ -32,14 +32,21 @@ ColorBarsWidget::~ColorBarsWidget()
     delete ui;
 }
 
-Mlt::Properties* ColorBarsWidget::mltProperties()
+Mlt::Producer* ColorBarsWidget::producer(Mlt::Profile& profile)
+{
+    Mlt::Producer* p = new Mlt::Producer(profile, "frei0r.test_pat_B");
+    p->set("Type", ui->comboBox->currentIndex());
+    return p;
+}
+
+Mlt::Properties* ColorBarsWidget::getPreset() const
 {
     Mlt::Properties* p = new Mlt::Properties;
     p->set("Type", ui->comboBox->currentIndex());
     return p;
 }
 
-void ColorBarsWidget::load(Mlt::Properties& p)
+void ColorBarsWidget::loadPreset(Mlt::Properties& p)
 {
     ui->comboBox->setCurrentIndex(p.get_int("Type"));
 }

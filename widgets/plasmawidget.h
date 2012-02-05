@@ -35,10 +35,9 @@ public:
     ~PlasmaWidget();
 
     // AbstractProducerWidget overrides
-    QString producerName() const
-        { return "frei0r.plasma"; }
-    Mlt::Properties* mltProperties();
-    void load(Mlt::Properties&);
+    Mlt::Producer* producer(Mlt::Profile&);
+    Mlt::Properties* getPreset() const;
+    void loadPreset(Mlt::Properties&);
 
 private slots:
     void on_speed1Dial_valueChanged(int value);
