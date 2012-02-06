@@ -17,7 +17,10 @@ SOURCES += main.cpp\
     widgets/decklinkproducerwidget.cpp \
     widgets/networkproducerwidget.cpp \
     widgets/colorbarswidget.cpp \
-    widgets/noisewidget.cpp
+    widgets/noisewidget.cpp \
+    widgets/pulseaudiowidget.cpp \
+    widgets/jackproducerwidget.cpp \
+    widgets/alsawidget.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -33,7 +36,10 @@ HEADERS  += mainwindow.h \
     widgets/decklinkproducerwidget.h \
     widgets/networkproducerwidget.h \
     widgets/colorbarswidget.h \
-    widgets/noisewidget.h
+    widgets/noisewidget.h \
+    widgets/pulseaudiowidget.h \
+    widgets/jackproducerwidget.h \
+    widgets/alsawidget.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
@@ -45,7 +51,10 @@ FORMS    += mainwindow.ui \
     widgets/decklinkproducerwidget.ui \
     widgets/networkproducerwidget.ui \
     widgets/colorbarswidget.ui \
-    widgets/noisewidget.ui
+    widgets/noisewidget.ui \
+    widgets/pulseaudiowidget.ui \
+    widgets/jackproducerwidget.ui \
+    widgets/alsawidget.ui
 
 RESOURCES += \
     resources.qrc

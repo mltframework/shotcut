@@ -142,7 +142,9 @@ MainWindow::~MainWindow()
 
 void MainWindow::open(Mlt::Producer* producer)
 {
-    if (!producer->is_valid() || producer->get_int("error"))
+    if (!producer->is_valid())
+        ui->statusBar->showMessage(tr("Failed to open "), STATUS_TIMEOUT_MS);
+    else if (producer->get_int("error"))
         ui->statusBar->showMessage(tr("Failed to open ") + producer->get("resource"), STATUS_TIMEOUT_MS);
     if (!mlt->open(producer)) {
         int len = mlt->producer()->get_length();

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>684</width>
-    <height>494</height>
+    <width>678</width>
+    <height>488</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -157,6 +157,27 @@
            </item>
           </layout>
          </widget>
+         <widget class="QWidget" name="pulseTab">
+          <layout class="QVBoxLayout" name="verticalLayout_8">
+           <item>
+            <widget class="PulseAudioWidget" name="pulseWidget" native="true"/>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="jackTab">
+          <layout class="QVBoxLayout" name="verticalLayout_9">
+           <item>
+            <widget class="JackProducerWidget" name="jackWidget" native="true"/>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="alsaTab">
+          <layout class="QVBoxLayout" name="verticalLayout_10">
+           <item>
+            <widget class="AlsaWidget" name="alsaWidget" native="true"/>
+           </item>
+          </layout>
+         </widget>
         </widget>
        </item>
       </layout>
@@ -228,6 +249,24 @@
    <class>NoiseWidget</class>
    <extends>QWidget</extends>
    <header>widgets/noisewidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PulseAudioWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/pulseaudiowidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>JackProducerWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/jackproducerwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>AlsaWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/alsawidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

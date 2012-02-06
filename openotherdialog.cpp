@@ -50,6 +50,12 @@ OpenOtherDialog::OpenOtherDialog(Mlt::Controller *mc, QWidget *parent) :
     QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("Video4Linux")));
     item->setData(0, Qt::UserRole, ui->v4lTab->objectName());
     saveDefaultPreset(ui->v4lWidget);
+    item = new QTreeWidgetItem(group, QStringList(tr("PulseAudio")));
+    item->setData(0, Qt::UserRole, ui->pulseTab->objectName());
+    item = new QTreeWidgetItem(group, QStringList(tr("JACK")));
+    item->setData(0, Qt::UserRole, ui->jackTab->objectName());
+    item = new QTreeWidgetItem(group, QStringList(tr("ALSA")));
+    item->setData(0, Qt::UserRole, ui->alsaTab->objectName());
 #endif
 
     // populate the generators
@@ -103,6 +109,12 @@ void OpenOtherDialog::load(Mlt::Producer* producer)
         QString resource(producer->get("resource"));
         if (resource.startsWith("video4linux2:"))
             selectTreeWidget(tr("Video4Linux"));
+        else if (resource.startsWith("pulse:"))
+            selectTreeWidget(tr("PulseAudio"));
+        else if (resource.startsWith("jack:"))
+            selectTreeWidget(tr("JACK"));
+        else if (resource.startsWith("alsa:"))
+            selectTreeWidget(tr("ALSA"));
         else if (service == "avformat")
             selectTreeWidget(tr("Network"));
         else if (service == "decklink")
@@ -259,6 +271,12 @@ void OpenOtherDialog::on_treeWidget_currentItemChanged(QTreeWidgetItem *current,
                     m_current = ui->plasmaWidget;
                 else if (w == ui->colorbarsTab)
                     m_current = ui->colorbarsWidget;
+                else if (w == ui->pulseTab)
+                    m_current = ui->pulseWidget;
+                else if (w == ui->jackTab)
+                    m_current = ui->jackWidget;
+                else if (w == ui->alsaTab)
+                    m_current = ui->alsaWidget;
                 loadPresets();
                 break;
             }

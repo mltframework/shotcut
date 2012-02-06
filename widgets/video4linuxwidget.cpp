@@ -18,10 +18,16 @@
 
 #include "video4linuxwidget.h"
 #include "ui_video4linuxwidget.h"
+#include "pulseaudiowidget.h"
+#include "jackproducerwidget.h"
+#include "alsawidget.h"
+#include <Mlt.h>
+#include <QtGui>
 
 Video4LinuxWidget::Video4LinuxWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::Video4LinuxWidget)
+    ui(new Ui::Video4LinuxWidget),
+    m_audioWidget(0)
 {
     ui->setupUi(this);
 }
@@ -54,6 +60,21 @@ Mlt::Producer* Video4LinuxWidget::producer(Mlt::Profile& profile)
         p->set("resource", QString("video4linux2:%1")
                .arg(ui->v4lLineEdit->text()).toAscii().constData());
         p->set("error", 1);
+    }
+    else if (m_audioWidget) {
+        Mlt::Producer* audio = dynamic_cast<AbstractProducerWidget*>(m_audioWidget)->producer(profile);
+        Mlt::Tractor* tractor = new Mlt::Tractor;
+        tractor->set_track(*p, 0);
+        delete p;
+        tractor->set_track(*audio, 1);
+        delete audio;
+        Mlt::Transition* tran = new Mlt::Transition(profile, "mix");
+        tractor->plant_transition(tran);
+        delete tran;
+        p = new Mlt::Producer(tractor->get_producer());
+        delete tractor;
+        p->set("resource", QString("video4linux2:%1")
+               .arg(ui->v4lLineEdit->text()).toAscii().constData());
     }
     p->set("device", ui->v4lLineEdit->text().toAscii().constData());
     p->set("width", ui->v4lWidthSpinBox->value());
@@ -90,4 +111,23 @@ void Video4LinuxWidget::loadPreset(Mlt::Properties& p)
         }
     }
     ui->v4lChannelSpinBox->setValue(p.get_int("channel"));
+}
+
+void Video4LinuxWidget::on_v4lAudioComboBox_activated(int index)
+{
+    if (m_audioWidget)
+        delete m_audioWidget;
+    m_audioWidget = 0;
+    if (index == 1) {
+        m_audioWidget = new PulseAudioWidget(this);
+        ui->gridLayout_2->addWidget(m_audioWidget, 6, 0, 1, 5);
+    }
+    else if (index == 2) {
+        m_audioWidget = new JackProducerWidget(this);
+        ui->gridLayout_2->addWidget(m_audioWidget, 6, 0, 1, 5);
+    }
+    else if (index == 3) {
+        m_audioWidget = new AlsaWidget(this);
+        ui->gridLayout_2->addWidget(m_audioWidget, 6, 0, 1, 5);
+    }
 }

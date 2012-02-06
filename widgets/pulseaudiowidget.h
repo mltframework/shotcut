@@ -16,36 +16,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef VIDEO4LINUXWIDGET_H
-#define VIDEO4LINUXWIDGET_H
+#ifndef PULSEAUDIOWIDGET_H
+#define PULSEAUDIOWIDGET_H
 
 #include <QWidget>
 #include "abstractproducerwidget.h"
 
 namespace Ui {
-    class Video4LinuxWidget;
+    class PulseAudioWidget;
 }
 
-class Video4LinuxWidget : public QWidget, public AbstractProducerWidget
+class PulseAudioWidget : public QWidget, public AbstractProducerWidget
 {
     Q_OBJECT
 
 public:
-    explicit Video4LinuxWidget(QWidget *parent = 0);
-    ~Video4LinuxWidget();
+    explicit PulseAudioWidget(QWidget *parent = 0);
+    ~PulseAudioWidget();
 
     // AbstractProducerWidget overrides
-    Mlt::Producer* producer(Mlt::Profile&);
-    Mlt::Properties* getPreset() const;
-    void loadPreset(Mlt::Properties&);
-
-private slots:
-    void on_v4lAudioComboBox_activated(int index);
+    Mlt::Producer* producer(Mlt::Profile& profile);
 
 private:
-    Ui::Video4LinuxWidget *ui;
-    QWidget* m_audioWidget;
-    QString URL() const;
+    Ui::PulseAudioWidget *ui;
 };
 
-#endif // VIDEO4LINUXWIDGET_H
+#endif // PULSEAUDIOWIDGET_H

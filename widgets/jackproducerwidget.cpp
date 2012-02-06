@@ -16,36 +16,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef VIDEO4LINUXWIDGET_H
-#define VIDEO4LINUXWIDGET_H
+#include "jackproducerwidget.h"
+#include "ui_jackproducerwidget.h"
 
-#include <QWidget>
-#include "abstractproducerwidget.h"
-
-namespace Ui {
-    class Video4LinuxWidget;
+JackProducerWidget::JackProducerWidget(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::JackProducerWidget)
+{
+    ui->setupUi(this);
 }
 
-class Video4LinuxWidget : public QWidget, public AbstractProducerWidget
+JackProducerWidget::~JackProducerWidget()
 {
-    Q_OBJECT
+    delete ui;
+}
 
-public:
-    explicit Video4LinuxWidget(QWidget *parent = 0);
-    ~Video4LinuxWidget();
-
-    // AbstractProducerWidget overrides
-    Mlt::Producer* producer(Mlt::Profile&);
-    Mlt::Properties* getPreset() const;
-    void loadPreset(Mlt::Properties&);
-
-private slots:
-    void on_v4lAudioComboBox_activated(int index);
-
-private:
-    Ui::Video4LinuxWidget *ui;
-    QWidget* m_audioWidget;
-    QString URL() const;
-};
-
-#endif // VIDEO4LINUXWIDGET_H
+Mlt::Producer* JackProducerWidget::producer(Mlt::Profile& profile)
+{
+    return new Mlt::Producer(profile, "jack:Shotcut");
+}
