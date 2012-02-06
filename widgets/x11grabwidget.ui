@@ -214,6 +214,9 @@ Most users do not need to change this.</string>
      <property name="toolTip">
       <string>The horizontal coordinate from the left edge when using a fixed capture region.</string>
      </property>
+     <property name="maximum">
+      <number>4096</number>
+     </property>
     </widget>
    </item>
    <item row="2" column="2">
@@ -230,6 +233,9 @@ Most users do not need to change this.</string>
      </property>
      <property name="toolTip">
       <string>The vertical coordinate from the top edge when using a fixed capture region.</string>
+     </property>
+     <property name="maximum">
+      <number>4096</number>
      </property>
     </widget>
    </item>
