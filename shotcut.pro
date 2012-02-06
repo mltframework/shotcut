@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     widgets/noisewidget.cpp \
     widgets/pulseaudiowidget.cpp \
     widgets/jackproducerwidget.cpp \
-    widgets/alsawidget.cpp
+    widgets/alsawidget.cpp \
+    widgets/x11grabwidget.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -39,7 +40,8 @@ HEADERS  += mainwindow.h \
     widgets/noisewidget.h \
     widgets/pulseaudiowidget.h \
     widgets/jackproducerwidget.h \
-    widgets/alsawidget.h
+    widgets/alsawidget.h \
+    widgets/x11grabwidget.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
@@ -54,7 +56,8 @@ FORMS    += mainwindow.ui \
     widgets/noisewidget.ui \
     widgets/pulseaudiowidget.ui \
     widgets/jackproducerwidget.ui \
-    widgets/alsawidget.ui
+    widgets/alsawidget.ui \
+    widgets/x11grabwidget.ui
 
 RESOURCES += \
     resources.qrc

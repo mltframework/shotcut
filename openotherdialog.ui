@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>678</width>
-    <height>488</height>
+    <width>676</width>
+    <height>486</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -178,6 +178,13 @@
            </item>
           </layout>
          </widget>
+         <widget class="QWidget" name="x11grabTab">
+          <layout class="QVBoxLayout" name="verticalLayout_11">
+           <item>
+            <widget class="X11grabWidget" name="x11grabWidget" native="true"/>
+           </item>
+          </layout>
+         </widget>
         </widget>
        </item>
       </layout>
@@ -267,6 +274,12 @@
    <class>AlsaWidget</class>
    <extends>QWidget</extends>
    <header>widgets/alsawidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>X11grabWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/x11grabwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

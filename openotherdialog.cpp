@@ -52,10 +52,12 @@ OpenOtherDialog::OpenOtherDialog(Mlt::Controller *mc, QWidget *parent) :
     saveDefaultPreset(ui->v4lWidget);
     item = new QTreeWidgetItem(group, QStringList(tr("PulseAudio")));
     item->setData(0, Qt::UserRole, ui->pulseTab->objectName());
-    item = new QTreeWidgetItem(group, QStringList(tr("JACK")));
+    item = new QTreeWidgetItem(group, QStringList(tr("JACK Audio")));
     item->setData(0, Qt::UserRole, ui->jackTab->objectName());
-    item = new QTreeWidgetItem(group, QStringList(tr("ALSA")));
+    item = new QTreeWidgetItem(group, QStringList(tr("ALSA Audio")));
     item->setData(0, Qt::UserRole, ui->alsaTab->objectName());
+    item = new QTreeWidgetItem(group, QStringList(tr("Screen")));
+    item->setData(0, Qt::UserRole, ui->x11grabTab->objectName());
 #endif
 
     // populate the generators
@@ -112,9 +114,11 @@ void OpenOtherDialog::load(Mlt::Producer* producer)
         else if (resource.startsWith("pulse:"))
             selectTreeWidget(tr("PulseAudio"));
         else if (resource.startsWith("jack:"))
-            selectTreeWidget(tr("JACK"));
+            selectTreeWidget(tr("JACK Audio"));
         else if (resource.startsWith("alsa:"))
-            selectTreeWidget(tr("ALSA"));
+            selectTreeWidget(tr("ALSA Audio"));
+        else if (resource.startsWith("x11grab:"))
+            selectTreeWidget(tr("Screen"));
         else if (service == "avformat")
             selectTreeWidget(tr("Network"));
         else if (service == "decklink")
@@ -277,6 +281,8 @@ void OpenOtherDialog::on_treeWidget_currentItemChanged(QTreeWidgetItem *current,
                     m_current = ui->jackWidget;
                 else if (w == ui->alsaTab)
                     m_current = ui->alsaWidget;
+                else if (w == ui->x11grabTab)
+                    m_current= ui->x11grabWidget;
                 loadPresets();
                 break;
             }

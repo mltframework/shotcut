@@ -82,6 +82,7 @@ Mlt::Producer* Video4LinuxWidget::producer(Mlt::Profile& profile)
     p->set("framerate", ui->v4lFramerateSpinBox->value());
     p->set("standard", ui->v4lStandardCombo->currentText().toAscii().constData());
     p->set("channel", ui->v4lChannelSpinBox->value());
+    p->set("audio_ix", ui->v4lAudioComboBox->currentIndex());
     return p;
 }
 
@@ -94,6 +95,7 @@ Mlt::Properties* Video4LinuxWidget::getPreset() const
     p->set("framerate", ui->v4lFramerateSpinBox->value());
     p->set("standard", ui->v4lStandardCombo->currentText().toAscii().constData());
     p->set("channel", ui->v4lChannelSpinBox->value());
+    p->set("audio_ix", ui->v4lAudioComboBox->currentIndex());
     return p;
 }
 
@@ -111,6 +113,7 @@ void Video4LinuxWidget::loadPreset(Mlt::Properties& p)
         }
     }
     ui->v4lChannelSpinBox->setValue(p.get_int("channel"));
+    ui->v4lAudioComboBox->setCurrentIndex(p.get_int("audio_ix"));
 }
 
 void Video4LinuxWidget::on_v4lAudioComboBox_activated(int index)
@@ -120,14 +123,17 @@ void Video4LinuxWidget::on_v4lAudioComboBox_activated(int index)
     m_audioWidget = 0;
     if (index == 1) {
         m_audioWidget = new PulseAudioWidget(this);
-        ui->gridLayout_2->addWidget(m_audioWidget, 6, 0, 1, 5);
+        ui->gridLayout_2->addWidget(m_audioWidget, ui->gridLayout_2->rowCount() -1,
+                                    0, 1, ui->gridLayout_2->columnCount());
     }
     else if (index == 2) {
         m_audioWidget = new JackProducerWidget(this);
-        ui->gridLayout_2->addWidget(m_audioWidget, 6, 0, 1, 5);
+        ui->gridLayout_2->addWidget(m_audioWidget, ui->gridLayout_2->rowCount() -1,
+                                    0, 1, ui->gridLayout_2->columnCount());
     }
     else if (index == 3) {
         m_audioWidget = new AlsaWidget(this);
-        ui->gridLayout_2->addWidget(m_audioWidget, 6, 0, 1, 5);
+        ui->gridLayout_2->addWidget(m_audioWidget, ui->gridLayout_2->rowCount() -1,
+                                    0, 1, ui->gridLayout_2->columnCount());
     }
 }
