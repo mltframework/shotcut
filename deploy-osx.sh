@@ -117,5 +117,8 @@ cp -a Shotcut.app staging/
 ln -s /Applications staging/
 sync
 hdiutil create -fs HFS+ -srcfolder staging -volname Shotcut Shotcut.dmg
+while [ "$?" -ne 0 ]; do
+  hdiutil create -fs HFS+ -srcfolder staging -volname Shotcut Shotcut.dmg
+done
 sync
 rm -rf staging 2>/dev/null
