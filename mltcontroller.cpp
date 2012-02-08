@@ -80,14 +80,18 @@ Controller::Controller()
 {
 }
 
-Controller* Controller::createWidget(QWidget* parent)
+Controller& Controller::singleton(QWidget* parent)
 {
-    qRegisterMetaType<QFrame>("Mlt::QFrame");
+    static Controller* instance = 0;
+    if (!instance) {
+        qRegisterMetaType<QFrame>("Mlt::QFrame");
 #ifdef Q_WS_MAC
-    return new GLWidget(parent);
+        instance = new GLWidget(parent);
 #else
-    return new SDLWidget(parent);
+        instance = return new SDLWidget(parent);
 #endif
+    }
+    return *instance;
 }
 
 Controller::~Controller()

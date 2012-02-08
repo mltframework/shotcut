@@ -52,7 +52,7 @@ protected:
     Controller();
 
 public:
-    static Controller* createWidget(QWidget* parent);
+    static Controller& singleton(QWidget* parent = 0);
     virtual ~Controller();
 
     virtual int open(Mlt::Producer*);
@@ -107,5 +107,7 @@ private:
 };
 
 } // namespace
+
+#define MLT Mlt::Controller::singleton()
 
 #endif // MLTCONTROLLER_H

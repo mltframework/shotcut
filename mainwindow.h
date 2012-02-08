@@ -21,7 +21,6 @@
 
 #include <QMainWindow>
 #include <QSettings>
-#include "mltcontroller.h"
 #ifdef Q_WS_MAC
 #   include "glwidget.h"
 #endif
@@ -56,7 +55,6 @@ private:
     void writeSettings();
 
     Ui::MainWindow* ui;
-    Mlt::Controller* mlt;
     QIcon m_playIcon;
     QIcon m_pauseIcon;
     QSettings m_settings;
