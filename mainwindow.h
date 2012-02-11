@@ -21,6 +21,7 @@
 
 #include <QMainWindow>
 #include <QSettings>
+#include "mltcontroller.h"
 #ifdef Q_WS_MAC
 #   include "glwidget.h"
 #endif

@@ -88,7 +88,7 @@ Controller& Controller::singleton(QWidget* parent)
 #ifdef Q_WS_MAC
         instance = new GLWidget(parent);
 #else
-        instance = return new SDLWidget(parent);
+        instance = new SDLWidget(parent);
 #endif
     }
     return *instance;

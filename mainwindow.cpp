@@ -18,7 +18,6 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "mltcontroller.h"
 #include "scrubbar.h"
 #include "openotherdialog.h"
 #include <QtGui>
