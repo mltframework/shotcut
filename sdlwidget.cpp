@@ -45,12 +45,8 @@ int SDLWidget::open(Mlt::Producer* producer)
             // Embed the SDL window in our GUI.
             m_consumer->set("window_id", (int) this->winId());
 
-#ifndef Q_WS_WIN
             // Set the background color
-            // XXX: Incorrect color on Windows
-            QPalette pal;
-            m_consumer->set("window_background", pal.color(QPalette::Window).name().toAscii().constData());
-#endif
+            m_consumer->set("window_background", palette().color(QPalette::Window).name().toAscii().constData());
             // Connect the producer to the consumer - tell it to "run" later
             m_consumer->connect(*m_producer);
             // Make an event handler for when a frame's image should be displayed
