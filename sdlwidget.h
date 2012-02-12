@@ -37,7 +37,7 @@ signals:
      * @param frame a Mlt::QFrame from which to get a QImage
      * @param position the frame number of this frame representing time
      */
-    void frameReceived(Mlt::QFrame, unsigned position);
+    void frameReceived(Mlt::QFrame, int position);
 
 public slots:
 

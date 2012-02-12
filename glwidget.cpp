@@ -211,7 +211,7 @@ int GLWidget::open(Mlt::Producer* producer)
             m_consumer->connect(*m_producer);
             // Make an event handler for when a frame's image should be displayed
             m_consumer->listen("consumer-frame-show", this, (mlt_listener) on_frame_show);
-            connect(this, SIGNAL(frameReceived(Mlt::QFrame, unsigned)),
+            connect(this, SIGNAL(frameReceived(Mlt::QFrame, int)),
                     this, SLOT(showFrame(Mlt::QFrame)), Qt::UniqueConnection);
             m_consumer->set("progressive", property("progressive").toBool());
             m_consumer->set("rescale", property("rescale").toString().toAscii().constData());
@@ -234,6 +234,6 @@ void GLWidget::on_frame_show(mlt_consumer, void* self, mlt_frame frame_ptr)
     GLWidget* widget = static_cast<GLWidget*>(self);
     if (widget->showFrameSemaphore.tryAcquire()) {
         Frame frame(frame_ptr);
-        emit widget->frameReceived(Mlt::QFrame(frame), (unsigned) mlt_frame_get_position(frame_ptr));
+        emit widget->frameReceived(Mlt::QFrame(frame), frame.get_position());
     }
 }

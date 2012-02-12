@@ -78,7 +78,7 @@ MainWindow::MainWindow(QWidget *parent)
     layout->addWidget(MLT.videoWidget(), 10);
     layout->addStretch();
     ui->centralWidget->setLayout(layout);
-    connect(MLT.videoWidget(), SIGNAL(frameReceived(Mlt::QFrame, unsigned)), this, SLOT(onShowFrame(Mlt::QFrame, unsigned)));
+    connect(MLT.videoWidget(), SIGNAL(frameReceived(Mlt::QFrame, int)), this, SLOT(onShowFrame(Mlt::QFrame, int)));
     connect(MLT.videoWidget(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onVideoWidgetContextMenu(QPoint)));
 
     // Add the scrub bar.
@@ -271,14 +271,14 @@ void MainWindow::writeSettings()
         m_settings.setValue("quality", "high");
 }
 
-void MainWindow::onShowFrame(Mlt::QFrame, unsigned position)
+void MainWindow::onShowFrame(Mlt::QFrame, int position)
 {
     m_positionSpinner->blockSignals(true);
-    m_positionSpinner->setValue((int) position);
+    m_positionSpinner->setValue(position);
     m_positionSpinner->blockSignals(false);
     m_scrubber->onSeek(position);
     if (MLT.producer() && MLT.producer()->is_valid()
-            && (int) position >= MLT.producer()->get_length() - 1)
+            && position >= MLT.producer()->get_length() - 1)
         pause();
 }
 

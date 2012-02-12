@@ -68,7 +68,7 @@ public slots:
     void togglePlayPause();
     void play(double speed = 1.0);
     void pause();
-    void onShowFrame(Mlt::QFrame frame, unsigned position);
+    void onShowFrame(Mlt::QFrame frame, int position);
     void onSeek(int position);
     void onInChanged(int in);
     void onOutChanged(int out);
