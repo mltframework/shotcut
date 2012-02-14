@@ -57,7 +57,7 @@ public slots:
     void togglePlayPaused();
     void seek(int position);
     void onProducerOpened();
-    void onShowFrame(Mlt::QFrame frame, unsigned position);
+    void onShowFrame(Mlt::QFrame frame, int position);
 
 protected:
     void resizeEvent(QResizeEvent* event);

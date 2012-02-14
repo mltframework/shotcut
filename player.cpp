@@ -226,7 +226,7 @@ Player::Player(QWidget *parent)
     toolbar->addWidget(m_durationLabel);
     layout->addWidget(toolbar);
 
-    connect(MLT.videoWidget(), SIGNAL(frameReceived(Mlt::QFrame, unsigned)), this, SLOT(onShowFrame(Mlt::QFrame, unsigned)));
+    connect(MLT.videoWidget(), SIGNAL(frameReceived(Mlt::QFrame, int)), this, SLOT(onShowFrame(Mlt::QFrame, int)));
     connect(MLT.videoWidget(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onVideoWidgetContextMenu(QPoint)));
     connect(ui->actionPlay, SIGNAL(triggered()), this, SLOT(togglePlayPaused()));
     connect(ui->actionPause, SIGNAL(triggered()), this, SLOT(pause()));
@@ -331,7 +331,7 @@ void Player::onProducerOpened()
     play();
 }
 
-void Player::onShowFrame(Mlt::QFrame, unsigned position)
+void Player::onShowFrame(Mlt::QFrame, int position)
 {
     m_position = position;
     m_positionSpinner->blockSignals(true);
