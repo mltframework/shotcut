@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     widgets/pulseaudiowidget.cpp \
     widgets/jackproducerwidget.cpp \
     widgets/alsawidget.cpp \
-    widgets/x11grabwidget.cpp
+    widgets/x11grabwidget.cpp \
+    player.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -41,7 +42,8 @@ HEADERS  += mainwindow.h \
     widgets/pulseaudiowidget.h \
     widgets/jackproducerwidget.h \
     widgets/alsawidget.h \
-    widgets/x11grabwidget.h
+    widgets/x11grabwidget.h \
+    player.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
@@ -84,3 +86,5 @@ win32 {
     HEADERS += glwidget.h
     PKGCONFIG += mlt++
 }
+
+

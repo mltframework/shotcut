@@ -20,17 +20,11 @@
 #define MLTCONTROLLER_H
 
 #include <QImage>
-#include <framework/mlt_types.h>
+#include <Mlt.h>
 
 // forward declarations
 class QWidget;
 namespace Mlt {
-    class Repository;
-    class Profile;
-    class Producer;
-    class Consumer;
-    class Frame;
-    class Properties;
 
 class QFrame : public QObject
 {

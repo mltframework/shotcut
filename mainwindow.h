@@ -29,9 +29,7 @@
 namespace Ui {
     class MainWindow;
 }
-class ScrubBar;
-class QSpinBox;
-class QLabel;
+class Player;
 
 class MainWindow : public QMainWindow
 {
@@ -43,6 +41,9 @@ public:
     void open(Mlt::Producer* producer);
     void open(const QString& url, const Mlt::Properties* = 0);
 
+signals:
+    void producerOpened();
+
 protected:
     void keyPressEvent(QKeyEvent*);
     void dragEnterEvent(QDragEnterEvent*);
@@ -50,41 +51,20 @@ protected:
     void closeEvent(QCloseEvent*);
 
 private:
-    void resizeEvent(QResizeEvent* event);
-    void forceResize();
     void readSettings();
     void writeSettings();
 
     Ui::MainWindow* ui;
-    QIcon m_playIcon;
-    QIcon m_pauseIcon;
     QSettings m_settings;
-    ScrubBar* m_scrubber;
-    QSpinBox* m_positionSpinner;
-    QLabel* m_durationLabel;
+    Player* m_player;
 
 public slots:
     void openVideo();
-    void togglePlayPause();
-    void play(double speed = 1.0);
-    void pause();
-    void onShowFrame(Mlt::QFrame frame, int position);
-    void onSeek(int position);
-    void onInChanged(int in);
-    void onOutChanged(int out);
-    void onVideoWidgetContextMenu(const QPoint& pos);
+    void showStatusMessage(QString);
 
 private slots:
     void on_actionAbout_Shotcut_triggered();
     void on_actionOpenOther_triggered();
-    void on_actionSkipNext_triggered();
-    void on_actionSkipPrevious_triggered();
-    void on_actionProgressive_triggered(bool checked);
-    void on_actionLowQuality_triggered(bool checked);
-    void on_actionMediumQuality_triggered(bool checked);
-    void on_actionHighQuality_triggered(bool checked);
-    void on_actionRewind_triggered();
-    void on_actionFastForward_triggered();
 };
 
 #endif // MAINWINDOW_H

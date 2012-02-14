@@ -91,36 +91,6 @@
     <string>Ctrl+Q</string>
    </property>
   </action>
-  <action name="actionPlay">
-   <property name="icon">
-    <iconset resource="resources.qrc">
-     <normaloff>:/icons/icons/media-playback-start.png</normaloff>:/icons/icons/media-playback-start.png</iconset>
-   </property>
-   <property name="text">
-    <string>Play</string>
-   </property>
-   <property name="toolTip">
-    <string>Start playback</string>
-   </property>
-   <property name="shortcut">
-    <string>Space</string>
-   </property>
-  </action>
-  <action name="actionPause">
-   <property name="icon">
-    <iconset resource="resources.qrc">
-     <normaloff>:/icons/icons/media-playback-pause.png</normaloff>:/icons/icons/media-playback-pause.png</iconset>
-   </property>
-   <property name="text">
-    <string>Pause</string>
-   </property>
-   <property name="toolTip">
-    <string>Pause playback</string>
-   </property>
-   <property name="shortcut">
-    <string>Backspace</string>
-   </property>
-  </action>
   <action name="actionAbout_Shotcut">
    <property name="text">
     <string>&amp;About Shotcut</string>
@@ -143,101 +113,6 @@
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
-   </property>
-  </action>
-  <action name="actionSkipNext">
-   <property name="icon">
-    <iconset resource="resources.qrc">
-     <normaloff>:/icons/icons/media-skip-forward.png</normaloff>:/icons/icons/media-skip-forward.png</iconset>
-   </property>
-   <property name="text">
-    <string>Skip Next</string>
-   </property>
-   <property name="toolTip">
-    <string>Skip to the next point</string>
-   </property>
-   <property name="shortcut">
-    <string>Alt+Right</string>
-   </property>
-  </action>
-  <action name="actionSkipPrevious">
-   <property name="icon">
-    <iconset resource="resources.qrc">
-     <normaloff>:/icons/icons/media-skip-backward.png</normaloff>:/icons/icons/media-skip-backward.png</iconset>
-   </property>
-   <property name="text">
-    <string>Skip Previous</string>
-   </property>
-   <property name="toolTip">
-    <string>Skip to the previous point</string>
-   </property>
-   <property name="shortcut">
-    <string>Alt+Left</string>
-   </property>
-  </action>
-  <action name="actionProgressive">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Progressive</string>
-   </property>
-   <property name="toolTip">
-    <string>Force the video preview to deinterlace if needed</string>
-   </property>
-  </action>
-  <action name="actionLowQuality">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Low</string>
-   </property>
-  </action>
-  <action name="actionMediumQuality">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Medium</string>
-   </property>
-  </action>
-  <action name="actionHighQuality">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>High</string>
-   </property>
-  </action>
-  <action name="actionRewind">
-   <property name="icon">
-    <iconset resource="resources.qrc">
-     <normaloff>:/icons/icons/media-seek-backward.png</normaloff>:/icons/icons/media-seek-backward.png</iconset>
-   </property>
-   <property name="text">
-    <string>Rewind</string>
-   </property>
-   <property name="toolTip">
-    <string>Play quickly backwards</string>
-   </property>
-   <property name="shortcut">
-    <string>J</string>
-   </property>
-  </action>
-  <action name="actionFastForward">
-   <property name="icon">
-    <iconset resource="resources.qrc">
-     <normaloff>:/icons/icons/media-seek-forward.png</normaloff>:/icons/icons/media-seek-forward.png</iconset>
-   </property>
-   <property name="text">
-    <string>Fast Forward</string>
-   </property>
-   <property name="toolTip">
-    <string>Play quickly forwards</string>
-   </property>
-   <property name="shortcut">
-    <string>L</string>
    </property>
   </action>
  </widget>
