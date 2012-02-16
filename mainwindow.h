@@ -57,6 +57,7 @@ private:
     Ui::MainWindow* ui;
     QSettings m_settings;
     Player* m_player;
+    QDockWidget* m_propertiesDock;
 
 public slots:
     void openVideo();
@@ -65,6 +66,8 @@ public slots:
 private slots:
     void on_actionAbout_Shotcut_triggered();
     void on_actionOpenOther_triggered();
+    void onProducerOpened();
+    void onProducerChanged();
 };
 
 #endif // MAINWINDOW_H

@@ -58,22 +58,23 @@ public:
 
     /** Start playback.
      */
-    virtual void play(double speed = 1.0);
+    void play(double speed = 1.0);
 
     /** Pause playback.
      */
-    virtual void pause();
+    void pause();
 
     /** Set the audio output level.
      * @param volume audio volume in the range [0..1]
      */
-    virtual void setVolume(double volume);
+    void setVolume(double volume);
 
-    virtual void onWindowResize();
+    void onWindowResize();
 
     virtual QWidget* videoWidget() = 0;
 
     void seek(int position);
+    void refreshConsumer();
 
     Mlt::Repository* repository() const {
         return m_repo;

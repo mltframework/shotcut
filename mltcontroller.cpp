@@ -158,7 +158,7 @@ void Controller::play(double speed)
     // If we are paused, then we need to "unlock" sdl_still.
     if (m_consumer) {
         m_consumer->start();
-        m_consumer->set("refresh", 1);
+        refreshConsumer();
     }
 }
 
@@ -176,15 +176,18 @@ void Controller::setVolume(double volume)
 
 void Controller::onWindowResize()
 {
-    if (m_consumer)
-        // When paused this tells sdl_still to update.
-        m_consumer->set("refresh", 1);
+    refreshConsumer();
 }
 
 void Controller::seek(int position)
 {
     if (m_producer)
         m_producer->seek(position);
+    refreshConsumer();
+}
+
+void Controller::refreshConsumer()
+{
     if (m_consumer) // need to refresh consumer when paused
         m_consumer->set("refresh", 1);
 }

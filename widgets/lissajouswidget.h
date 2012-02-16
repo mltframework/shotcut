@@ -22,6 +22,10 @@
 #include <QWidget>
 #include "abstractproducerwidget.h"
 
+namespace Mlt {
+    class Producer;
+}
+
 namespace Ui {
     class LissajousWidget;
 }
@@ -38,6 +42,10 @@ public:
     Mlt::Producer* producer(Mlt::Profile&);
     Mlt::Properties* getPreset() const;
     void loadPreset(Mlt::Properties&);
+    void setProducer(Mlt::Producer*);
+
+signals:
+    void producerChanged();
 
 private slots:
     void on_xratioDial_valueChanged(int value);
@@ -47,6 +55,7 @@ private slots:
     
 private:
     Ui::LissajousWidget *ui;
+    Mlt::Producer* m_producer;
 };
 
 #endif // LISSAJOUSWIDGET_H

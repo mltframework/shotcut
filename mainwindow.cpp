@@ -21,6 +21,21 @@
 #include "scrubbar.h"
 #include "openotherdialog.h"
 #include "player.h"
+
+#include "widgets/alsawidget.h"
+#include "widgets/colorbarswidget.h"
+#include "widgets/colorproducerwidget.h"
+#include "widgets/decklinkproducerwidget.h"
+#include "widgets/isingwidget.h"
+#include "widgets/jackproducerwidget.h"
+#include "widgets/lissajouswidget.h"
+#include "widgets/networkproducerwidget.h"
+#include "widgets/noisewidget.h"
+#include "widgets/plasmawidget.h"
+#include "widgets/pulseaudiowidget.h"
+#include "widgets/video4linuxwidget.h"
+#include "widgets/x11grabwidget.h"
+
 #include <QtGui>
 
 static const int STATUS_TIMEOUT_MS = 3000;
@@ -48,6 +63,12 @@ MainWindow::MainWindow(QWidget *parent)
     layout->addWidget(m_player);
     connect(this, SIGNAL(producerOpened()), m_player, SLOT(onProducerOpened()));
     connect(m_player, SIGNAL(showStatusMessage(QString)), this, SLOT(showStatusMessage(QString)));
+
+    m_propertiesDock = new QDockWidget(tr("Properties"));
+    m_propertiesDock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
+    m_propertiesDock->setFeatures(QDockWidget::DockWidgetMovable);
+    addDockWidget(Qt::LeftDockWidgetArea, m_propertiesDock);
+    connect(this, SIGNAL(producerOpened()), this, SLOT(onProducerOpened()));
 
     setFocus();
 }
@@ -198,4 +219,52 @@ void MainWindow::on_actionOpenOther_triggered()
         dialog.load(MLT.producer());
     if (dialog.exec() == QDialog::Accepted)
         open(dialog.producer(MLT.profile()));
+}
+
+void MainWindow::onProducerOpened()
+{
+    QString service(MLT.producer()->get("mlt_service"));
+    QString resource(MLT.producer()->get("resource"));
+    QWidget* w = 0;
+
+    delete m_propertiesDock->widget();
+
+    // TODO: make a producer widget for avformat file sources
+    if (resource.startsWith("video4linux2:"))
+        w = new Video4LinuxWidget(this);
+    else if (resource.startsWith("pulse:"))
+        w = new PulseAudioWidget(this);
+    else if (resource.startsWith("jack:"))
+        w = new JackProducerWidget(this);
+    else if (resource.startsWith("alsa:"))
+        w = new AlsaWidget(this);
+    else if (resource.startsWith("x11grab:"))
+        w = new X11grabWidget(this);
+    else if (service == "avformat")
+        w = new NetworkProducerWidget(this);
+    else if (service == "decklink")
+        w = new DecklinkProducerWidget(this);
+    else if (service == "color")
+        w = new ColorProducerWidget(this);
+    else if (service == "noise")
+        w = new NoiseWidget(this);
+    else if (service == "frei0r.ising0r")
+        w = new IsingWidget(this);
+    else if (service == "frei0r.lissajous0r")
+        w = new LissajousWidget(this);
+    else if (service == "frei0r.plasma")
+        w = new PlasmaWidget(this);
+    else if (service == "frei0r.test_pat_B")
+        w = new ColorBarsWidget(this);
+    if (w) {
+        dynamic_cast<AbstractProducerWidget*>(w)->setProducer(MLT.producer());
+        if (-1 != w->metaObject()->indexOfSignal("producerChanged()"))
+            connect(w, SIGNAL(producerChanged()), this, SLOT(onProducerChanged()));
+        m_propertiesDock->setWidget(w);
+    }
+}
+
+void MainWindow::onProducerChanged()
+{
+    MLT.refreshConsumer();
 }
