@@ -18,7 +18,6 @@
 
 #include "player.h"
 #include "scrubbar.h"
-#include "mltcontroller.h"
 #include "mainwindow.h"
 #include <QtGui>
 

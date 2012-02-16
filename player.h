@@ -22,14 +22,12 @@
 #include <QWidget>
 #include <QtGui/QIcon>
 #include <QtCore/QSettings>
+#include "mltcontroller.h"
 
 class ScrubBar;
 class QSpinBox;
 class QLabel;
 
-namespace Mlt {
-    class QFrame;
-}
 namespace Ui {
     class Player;
 }
