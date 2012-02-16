@@ -22,10 +22,9 @@
 #include <Mlt.h>
 #include <QtGui>
 
-OpenOtherDialog::OpenOtherDialog(Mlt::Controller *mc, QWidget *parent) :
+OpenOtherDialog::OpenOtherDialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::OpenOtherDialog),
-    mlt(mc)
+    ui(new Ui::OpenOtherDialog)
 {
     ui->setupUi(this);
     m_current = ui->networkWidget;
@@ -42,7 +41,7 @@ OpenOtherDialog::OpenOtherDialog(Mlt::Controller *mc, QWidget *parent) :
 
     // populate the device group
     group = new QTreeWidgetItem(ui->treeWidget, QStringList(tr("Device")));
-    if (mlt->repository()->producers()->get_data("decklink")) {
+    if (MLT.repository()->producers()->get_data("decklink")) {
         QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("SDI/HDMI")));
         item->setData(0, Qt::UserRole, ui->decklinkTab->objectName());
     }
@@ -62,27 +61,27 @@ OpenOtherDialog::OpenOtherDialog(Mlt::Controller *mc, QWidget *parent) :
 
     // populate the generators
     group = new QTreeWidgetItem(ui->treeWidget, QStringList(tr("Generator")));
-    if (mlt->repository()->producers()->get_data("color")) {
+    if (MLT.repository()->producers()->get_data("color")) {
         QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("Color")));
         item->setData(0, Qt::UserRole, ui->colorTab->objectName());
     }
-    if (mlt->repository()->producers()->get_data("noise")) {
+    if (MLT.repository()->producers()->get_data("noise")) {
         QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("Noise")));
         item->setData(0, Qt::UserRole, ui->noiseTab->objectName());
     }
-    if (mlt->repository()->producers()->get_data("frei0r.ising0r")) {
+    if (MLT.repository()->producers()->get_data("frei0r.ising0r")) {
         QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("Ising")));
         item->setData(0, Qt::UserRole, ui->isingTab->objectName());
     }
-    if (mlt->repository()->producers()->get_data("frei0r.lissajous0r")) {
+    if (MLT.repository()->producers()->get_data("frei0r.lissajous0r")) {
         QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("Lissajous")));
         item->setData(0, Qt::UserRole, ui->lissajousTab->objectName());
     }
-    if (mlt->repository()->producers()->get_data("frei0r.plasma")) {
+    if (MLT.repository()->producers()->get_data("frei0r.plasma")) {
         QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("Plasma")));
         item->setData(0, Qt::UserRole, ui->plasmaTab->objectName());
     }
-    if (mlt->repository()->producers()->get_data("frei0r.test_pat_B")) {
+    if (MLT.repository()->producers()->get_data("frei0r.test_pat_B")) {
         QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("Color Bars")));
         item->setData(0, Qt::UserRole, ui->colorbarsTab->objectName());
     }

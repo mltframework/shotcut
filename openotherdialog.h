@@ -26,7 +26,6 @@ namespace Ui {
     class OpenOtherDialog;
 }
 namespace Mlt {
-    class Controller;
     class Properties;
     class Producer;
     class Profile;
@@ -37,7 +36,7 @@ class OpenOtherDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit OpenOtherDialog(Mlt::Controller*, QWidget *parent = 0);
+    explicit OpenOtherDialog(QWidget *parent = 0);
     ~OpenOtherDialog();
     
     Mlt::Producer* producer(Mlt::Profile&) const;
@@ -51,7 +50,6 @@ private slots:
     
 private:
     Ui::OpenOtherDialog *ui;
-    Mlt::Controller *mlt;
     QObject* m_current;
 
     Mlt::Producer* producer(Mlt::Profile&, QObject* widget) const;

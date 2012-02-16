@@ -192,7 +192,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
 void MainWindow::on_actionOpenOther_triggered()
 {
     // these static are used to open dialog with previous configuration
-    OpenOtherDialog dialog(&MLT);
+    OpenOtherDialog dialog(this);
 
     if (MLT.producer())
         dialog.load(MLT.producer());
