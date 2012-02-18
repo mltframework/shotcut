@@ -240,10 +240,10 @@ Player::Player(QWidget *parent)
 
 void Player::readSettings()
 {
-    ui->actionProgressive->setChecked(m_settings.value("progressive", true).toBool());
-    if (m_settings.value("quality", "medium").toString() == "high")
+    ui->actionProgressive->setChecked(m_settings.value("player/progressive", true).toBool());
+    if (m_settings.value("player/quality", "medium").toString() == "high")
         ui->actionHighQuality->setChecked(true);
-    else if (m_settings.value("quality", "medium").toString() == "medium")
+    else if (m_settings.value("player/quality", "medium").toString() == "medium")
         ui->actionMediumQuality->setChecked(true);
     else
         ui->actionLowQuality->setChecked(true);
@@ -419,7 +419,7 @@ void Player::on_actionProgressive_triggered(bool checked)
         MLT.consumer()->set("progressive", checked);
         MLT.consumer()->start();
     }
-    m_settings.setValue("progressive", checked);
+    m_settings.setValue("player/progressive", checked);
 }
 
 void Player::on_actionLowQuality_triggered(bool checked)
@@ -434,7 +434,7 @@ void Player::on_actionLowQuality_triggered(bool checked)
             MLT.consumer()->start();
         }
     }
-    m_settings.setValue("quality", "low");
+    m_settings.setValue("player/quality", "low");
 }
 
 void Player::on_actionMediumQuality_triggered(bool checked)
@@ -449,7 +449,7 @@ void Player::on_actionMediumQuality_triggered(bool checked)
             MLT.consumer()->start();
         }
     }
-    m_settings.setValue("quality", "medium");
+    m_settings.setValue("player/quality", "medium");
 }
 
 void Player::on_actionHighQuality_triggered(bool checked)
@@ -464,5 +464,5 @@ void Player::on_actionHighQuality_triggered(bool checked)
             MLT.consumer()->start();
         }
     }
-    m_settings.setValue("quality", "high");
+    m_settings.setValue("player/quality", "high");
 }
