@@ -52,6 +52,7 @@ signals:
 public slots:
     void play(double speed = 1.0);
     void pause();
+    void stop();
     void togglePlayPaused();
     void seek(int position);
     void onProducerOpened();

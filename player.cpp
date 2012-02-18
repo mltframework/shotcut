@@ -276,6 +276,7 @@ void Player::play(double speed)
     ui->actionFastForward->setEnabled(seekable);
 
     MLT.play(speed);
+    // TODO: use stop icon for live sources
     ui->actionPlay->setIcon(m_pauseIcon);
     ui->actionPlay->setText(tr("Pause"));
     ui->actionPlay->setToolTip(tr("Pause playback"));
@@ -291,12 +292,25 @@ void Player::pause()
 //    forceResize();
 }
 
+void Player::stop()
+{
+    MLT.stop();
+    ui->actionPlay->setIcon(m_playIcon);
+    ui->actionPlay->setText(tr("Play"));
+    ui->actionPlay->setToolTip(tr("Start playback"));
+}
+
 void Player::togglePlayPaused()
 {
     if (ui->actionPlay->icon().cacheKey() == m_playIcon.cacheKey())
         play();
-    else
+    else if (MLT.producer() && (
+             MLT.producer()->get_int("seekable") ||
+             // generators can pause and show property changes
+             QString(MLT.producer()->get("mlt_service")).startsWith("frei0r.")))
         pause();
+    else
+        stop();
 }
 
 void Player::seek(int position)
