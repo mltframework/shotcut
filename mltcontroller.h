@@ -64,6 +64,8 @@ public:
      */
     void pause();
 
+    void stop();
+
     /** Set the audio output level.
      * @param volume audio volume in the range [0..1]
      */

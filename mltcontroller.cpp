@@ -168,6 +168,14 @@ void Controller::pause()
         m_producer->pause();
 }
 
+void Controller::stop()
+{
+    if (m_consumer && !m_consumer->is_stopped())
+        m_consumer->stop();
+    if (m_producer)
+        m_producer->seek(0);
+}
+
 void Controller::setVolume(double volume)
 {
     if (m_consumer)
