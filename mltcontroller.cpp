@@ -21,9 +21,7 @@
 #include <QPalette>
 #include <QMetaType>
 #include <Mlt.h>
-#ifndef Q_WS_WIN
 #include "glwidget.h"
-#endif
 #include "sdlwidget.h"
 
 namespace Mlt {
@@ -85,7 +83,7 @@ Controller& Controller::singleton(QWidget* parent)
     static Controller* instance = 0;
     if (!instance) {
         qRegisterMetaType<QFrame>("Mlt::QFrame");
-#ifdef Q_WS_MAC
+#if defined(Q_WS_MAC) || defined(Q_WS_WIN)
         instance = new GLWidget(parent);
 #else
         instance = new SDLWidget(parent);

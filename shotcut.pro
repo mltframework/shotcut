@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     widgets/jackproducerwidget.cpp \
     widgets/alsawidget.cpp \
     widgets/x11grabwidget.cpp \
-    player.cpp
+    player.cpp \
+    glwidget.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -43,7 +44,8 @@ HEADERS  += mainwindow.h \
     widgets/jackproducerwidget.h \
     widgets/alsawidget.h \
     widgets/x11grabwidget.h \
-    player.h
+    player.h \
+    glwidget.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
@@ -80,11 +82,9 @@ win32 {
     INCLUDEPATH += include/mlt++ include/mlt
     LIBS += -Llib -lmlt++ -lmlt
 	RC_FILE = shotcut.rc
+    SOURCES += GLee/GLee.c
+    HEADERS += GLee/GLee.h
 } else {
     CONFIG += link_pkgconfig
-    SOURCES += glwidget.cpp
-    HEADERS += glwidget.h
     PKGCONFIG += mlt++
 }
-
-

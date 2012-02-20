@@ -19,6 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "GLee/GLee.h"
 #include <QtGui>
 #include <QtOpenGL>
 #include <QPalette>
@@ -73,6 +74,7 @@ void GLWidget::initializeGL()
     glDisable(GL_BLEND);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     m_shader.addShaderFromSourceCode(QGLShader::Fragment,
+        "#extension GL_ARB_texture_rectangle : enable\n"
         "uniform sampler2DRect Ytex, Utex, Vtex;"
         "void main(void) {"
         "  float r, g, b;"
