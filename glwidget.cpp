@@ -19,8 +19,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "GLee/GLee.h"
 #include <QtGui>
+#if defined(Q_WS_WIN)
+#include "GLee/GLee.h"
+#endif
 #include <QtOpenGL>
 #include <QPalette>
 #include <Mlt.h>
