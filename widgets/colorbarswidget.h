@@ -39,6 +39,12 @@ public:
     Mlt::Properties* getPreset() const;
     void loadPreset(Mlt::Properties&);
 
+signals:
+    void producerChanged();
+
+private slots:
+    void on_comboBox_activated(int index);
+
 private:
     Ui::ColorBarsWidget *ui;
 };

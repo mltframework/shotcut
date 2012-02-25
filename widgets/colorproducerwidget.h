@@ -39,9 +39,14 @@ public:
     Mlt::Properties* getPreset() const;
     void loadPreset(Mlt::Properties&);
 
+signals:
+    void producerChanged();
+
 private slots:
     void on_colorButton_clicked();
-    
+    void on_preset_selected(void* p);
+    void on_preset_saveClicked();
+
 private:
     Ui::ColorProducerWidget *ui;
 };

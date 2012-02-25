@@ -16,40 +16,55 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef VIDEO4LINUXWIDGET_H
-#define VIDEO4LINUXWIDGET_H
+#ifndef AVFORMATPRODUCERWIDGET_H
+#define AVFORMATPRODUCERWIDGET_H
 
 #include <QWidget>
 #include "abstractproducerwidget.h"
+#include "mltcontroller.h"
 
 namespace Ui {
-    class Video4LinuxWidget;
+    class AvformatProducerWidget;
 }
 
-class Video4LinuxWidget : public QWidget, public AbstractProducerWidget
+class AvformatProducerWidget : public QWidget, public AbstractProducerWidget
 {
     Q_OBJECT
 
 public:
-    explicit Video4LinuxWidget(QWidget *parent = 0);
-    ~Video4LinuxWidget();
+    explicit AvformatProducerWidget(QWidget *parent = 0);
+    ~AvformatProducerWidget();
 
     // AbstractProducerWidget overrides
     Mlt::Producer* producer(Mlt::Profile&);
-    Mlt::Properties* getPreset() const;
-    void loadPreset(Mlt::Properties&);
-    void setProducer(Mlt::Producer*);
+
+signals:
+    void producerChanged();
 
 private slots:
-    void on_v4lAudioComboBox_activated(int index);
-    void on_preset_selected(void* p);
-    void on_preset_saveClicked();
-    void on_applyButton_clicked();
+    void onFrameReceived(Mlt::QFrame);
+
+    void on_resetButton_clicked();
+
+    void on_videoTrackComboBox_activated(int index);
+
+    void on_audioTrackComboBox_activated(int index);
+
+    void on_scanComboBox_activated(int index);
+
+    void on_fieldOrderComboBox_activated(int index);
+
+    void on_aspectNumSpinBox_valueChanged(int );
+
+    void on_aspectDenSpinBox_valueChanged(int );
+
+    void on_durationSpinBox_editingFinished();
 
 private:
-    Ui::Video4LinuxWidget *ui;
-    QWidget* m_audioWidget;
-    QString URL() const;
+    Ui::AvformatProducerWidget *ui;
+    int m_defaultDuration;
+
+    void reopen(Mlt::Producer* p);
 };
 
-#endif // VIDEO4LINUXWIDGET_H
+#endif // AVFORMATPRODUCERWIDGET_H

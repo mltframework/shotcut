@@ -39,6 +39,9 @@ public:
     Mlt::Properties* getPreset() const;
     void loadPreset(Mlt::Properties&);
 
+signals:
+    void producerChanged();
+
 private slots:
     void on_tempDial_valueChanged(int value);
     void on_tempSpinner_valueChanged(double arg1);
@@ -46,7 +49,9 @@ private slots:
     void on_borderGrowthSpinner_valueChanged(double arg1);
     void on_spontGrowthDial_valueChanged(int value);
     void on_spontGrowthSpinner_valueChanged(double arg1);
-    
+    void on_preset_selected(void* p);
+    void on_preset_saveClicked();
+
 private:
     Ui::IsingWidget *ui;
 };

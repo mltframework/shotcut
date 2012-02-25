@@ -23,7 +23,10 @@ SOURCES += main.cpp\
     widgets/alsawidget.cpp \
     widgets/x11grabwidget.cpp \
     player.cpp \
-    glwidget.cpp
+    glwidget.cpp \
+    widgets/servicepresetwidget.cpp \
+    abstractproducerwidget.cpp \
+    widgets/avformatproducerwidget.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -45,7 +48,9 @@ HEADERS  += mainwindow.h \
     widgets/alsawidget.h \
     widgets/x11grabwidget.h \
     player.h \
-    glwidget.h
+    glwidget.h \
+    widgets/servicepresetwidget.h \
+    widgets/avformatproducerwidget.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
@@ -61,7 +66,9 @@ FORMS    += mainwindow.ui \
     widgets/pulseaudiowidget.ui \
     widgets/jackproducerwidget.ui \
     widgets/alsawidget.ui \
-    widgets/x11grabwidget.ui
+    widgets/x11grabwidget.ui \
+    widgets/servicepresetwidget.ui \
+    widgets/avformatproducerwidget.ui
 
 RESOURCES += \
     resources.qrc

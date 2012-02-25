@@ -2,6 +2,9 @@
  * Copyright (c) 2012 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
+ * GL shader based on BSD licensed code from Peter Bengtsson:
+ * http://www.fourcc.org/source/YUV420P-OpenGL-GLSLang.c
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -16,37 +19,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NETWORKPRODUCERWIDGET_H
-#define NETWORKPRODUCERWIDGET_H
-
-#include <QWidget>
 #include "abstractproducerwidget.h"
 
-namespace Ui {
-    class NetworkProducerWidget;
+AbstractProducerWidget::AbstractProducerWidget()
+    : m_producer(0)
+{
 }
 
-class NetworkProducerWidget : public QWidget, public AbstractProducerWidget
+AbstractProducerWidget::~AbstractProducerWidget()
 {
-    Q_OBJECT
+    delete m_producer;
+}
 
-public:
-    explicit NetworkProducerWidget(QWidget *parent = 0);
-    ~NetworkProducerWidget();
-
-    // AbstractProducerWidget overrides
-    Mlt::Producer* producer(Mlt::Profile&);
-    Mlt::Properties* getPreset() const;
-    void loadPreset(Mlt::Properties&);
-    void setProducer(Mlt::Producer*);
-
-private slots:
-    void on_preset_selected(void* p);
-    void on_preset_saveClicked();
-
-private:
-    Ui::NetworkProducerWidget *ui;
-    void on_applyButton_clicked();
-};
-
-#endif // NETWORKPRODUCERWIDGET_H
+void AbstractProducerWidget::setProducer(Mlt::Producer* producer)
+{
+    delete m_producer;
+    m_producer = 0;
+    if (producer) {
+        loadPreset(*producer);
+        m_producer = new Mlt::Producer(producer);
+    }
+}

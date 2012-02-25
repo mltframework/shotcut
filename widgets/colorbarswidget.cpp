@@ -50,3 +50,11 @@ void ColorBarsWidget::loadPreset(Mlt::Properties& p)
 {
     ui->comboBox->setCurrentIndex(p.get_int("Type"));
 }
+
+void ColorBarsWidget::on_comboBox_activated(int index)
+{
+    if (m_producer) {
+        m_producer->set("Type", index);
+        emit producerChanged();
+    }
+}

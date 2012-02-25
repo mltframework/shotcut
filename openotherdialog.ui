@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>676</width>
-    <height>486</height>
+    <width>668</width>
+    <height>478</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,178 +18,132 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_19">
-     <item>
-      <widget class="QTreeWidget" name="treeWidget">
-       <property name="rootIsDecorated">
-        <bool>false</bool>
+    <widget class="QSplitter" name="splitter">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <widget class="QTreeWidget" name="treeWidget">
+      <property name="rootIsDecorated">
+       <bool>false</bool>
+      </property>
+      <property name="itemsExpandable">
+       <bool>false</bool>
+      </property>
+      <property name="expandsOnDoubleClick">
+       <bool>false</bool>
+      </property>
+      <attribute name="headerVisible">
+       <bool>false</bool>
+      </attribute>
+      <column>
+       <property name="text">
+        <string>1</string>
        </property>
-       <property name="itemsExpandable">
-        <bool>false</bool>
-       </property>
-       <property name="expandsOnDoubleClick">
-        <bool>false</bool>
-       </property>
-       <attribute name="headerVisible">
-        <bool>false</bool>
-       </attribute>
-       <column>
-        <property name="text">
-         <string>1</string>
-        </property>
-       </column>
+      </column>
+     </widget>
+     <widget class="QStackedWidget" name="methodTabWidget">
+      <property name="currentIndex">
+       <number>5</number>
+      </property>
+      <widget class="QWidget" name="networkTab">
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="NetworkProducerWidget" name="networkWidget" native="true"/>
+        </item>
+       </layout>
       </widget>
-     </item>
-     <item>
-      <layout class="QVBoxLayout" name="verticalLayout_20">
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_10">
-         <item>
-          <widget class="QLabel" name="label_2">
-           <property name="text">
-            <string>P&amp;reset</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-           <property name="buddy">
-            <cstring>presetCombo</cstring>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="presetCombo">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="savePresetButton">
-           <property name="text">
-            <string>Save</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="deletePresetButton">
-           <property name="text">
-            <string>Delete</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QStackedWidget" name="methodTabWidget">
-         <property name="currentIndex">
-          <number>0</number>
-         </property>
-         <widget class="QWidget" name="networkTab">
-          <layout class="QVBoxLayout" name="verticalLayout_3">
-           <item>
-            <widget class="NetworkProducerWidget" name="networkWidget" native="true"/>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="decklinkTab">
-          <layout class="QVBoxLayout" name="verticalLayout_2">
-           <item>
-            <widget class="DecklinkProducerWidget" name="decklinkWidget" native="true"/>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="colorTab">
-          <layout class="QVBoxLayout" name="verticalLayout_4">
-           <item>
-            <widget class="ColorProducerWidget" name="colorWidget" native="true"/>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="noiseTab">
-          <layout class="QVBoxLayout" name="verticalLayout_7">
-           <item>
-            <widget class="NoiseWidget" name="noiseWidget" native="true"/>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="isingTab">
-          <layout class="QVBoxLayout" name="verticalLayout_5">
-           <item>
-            <widget class="IsingWidget" name="isingWidget" native="true"/>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="lissajousTab">
-          <layout class="QVBoxLayout" name="verticalLayout_12">
-           <item>
-            <widget class="LissajousWidget" name="lissajousWidget" native="true"/>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="plasmaTab">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-            <horstretch>10</horstretch>
-            <verstretch>10</verstretch>
-           </sizepolicy>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_13">
-           <item>
-            <widget class="PlasmaWidget" name="plasmaWidget" native="true"/>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="v4lTab">
-          <layout class="QGridLayout" name="gridLayout_3">
-           <item row="0" column="0">
-            <widget class="Video4LinuxWidget" name="v4lWidget" native="true"/>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="colorbarsTab">
-          <layout class="QVBoxLayout" name="verticalLayout_6">
-           <item>
-            <widget class="ColorBarsWidget" name="colorbarsWidget" native="true"/>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="pulseTab">
-          <layout class="QVBoxLayout" name="verticalLayout_8">
-           <item>
-            <widget class="PulseAudioWidget" name="pulseWidget" native="true"/>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="jackTab">
-          <layout class="QVBoxLayout" name="verticalLayout_9">
-           <item>
-            <widget class="JackProducerWidget" name="jackWidget" native="true"/>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="alsaTab">
-          <layout class="QVBoxLayout" name="verticalLayout_10">
-           <item>
-            <widget class="AlsaWidget" name="alsaWidget" native="true"/>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="x11grabTab">
-          <layout class="QVBoxLayout" name="verticalLayout_11">
-           <item>
-            <widget class="X11grabWidget" name="x11grabWidget" native="true"/>
-           </item>
-          </layout>
-         </widget>
-        </widget>
-       </item>
-      </layout>
-     </item>
-    </layout>
+      <widget class="QWidget" name="decklinkTab">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="DecklinkProducerWidget" name="decklinkWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="colorTab">
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <widget class="ColorProducerWidget" name="colorWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="noiseTab">
+       <layout class="QVBoxLayout" name="verticalLayout_7">
+        <item>
+         <widget class="NoiseWidget" name="noiseWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="isingTab">
+       <layout class="QVBoxLayout" name="verticalLayout_5">
+        <item>
+         <widget class="IsingWidget" name="isingWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="lissajousTab">
+       <layout class="QVBoxLayout" name="verticalLayout_12">
+        <item>
+         <widget class="LissajousWidget" name="lissajousWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="plasmaTab">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>10</horstretch>
+         <verstretch>10</verstretch>
+        </sizepolicy>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_13">
+        <item>
+         <widget class="PlasmaWidget" name="plasmaWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="v4lTab">
+       <layout class="QGridLayout" name="gridLayout_3">
+        <item row="0" column="0">
+         <widget class="Video4LinuxWidget" name="v4lWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="colorbarsTab">
+       <layout class="QVBoxLayout" name="verticalLayout_6">
+        <item>
+         <widget class="ColorBarsWidget" name="colorbarsWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="pulseTab">
+       <layout class="QVBoxLayout" name="verticalLayout_8">
+        <item>
+         <widget class="PulseAudioWidget" name="pulseWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="jackTab">
+       <layout class="QVBoxLayout" name="verticalLayout_9">
+        <item>
+         <widget class="JackProducerWidget" name="jackWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="alsaTab">
+       <layout class="QVBoxLayout" name="verticalLayout_10">
+        <item>
+         <widget class="AlsaWidget" name="alsaWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="x11grabTab">
+       <layout class="QVBoxLayout" name="verticalLayout_11">
+        <item>
+         <widget class="X11grabWidget" name="x11grabWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </widget>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">

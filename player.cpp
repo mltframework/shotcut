@@ -236,6 +236,7 @@ Player::Player(QWidget *parent)
     connect(m_positionSpinner, SIGNAL(editingFinished()), this, SLOT(setFocus()));
     connect(this, SIGNAL(seeked()), this, SLOT(pause()));
     connect(this, SIGNAL(endOfStream()), this, SLOT(pause()));
+    setFocusPolicy(Qt::StrongFocus);
 }
 
 void Player::readSettings()
@@ -306,8 +307,9 @@ void Player::togglePlayPaused()
         play();
     else if (MLT.producer() && (
              MLT.producer()->get_int("seekable") ||
-             // generators can pause and show property changes
-             QString(MLT.producer()->get("mlt_service")).startsWith("frei0r.")))
+                 // generators can pause and show property changes
+                 QString(MLT.producer()->get("mlt_service")) == "color" ||
+                 QString(MLT.producer()->get("mlt_service")).startsWith("frei0r.")))
         pause();
     else
         stop();

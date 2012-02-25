@@ -18,12 +18,16 @@
 
 #include "networkproducerwidget.h"
 #include "ui_networkproducerwidget.h"
+#include "mltcontroller.h"
 
 NetworkProducerWidget::NetworkProducerWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::NetworkProducerWidget)
 {
     ui->setupUi(this);
+    ui->applyButton->hide();
+    ui->preset->saveDefaultPreset(*getPreset());
+    ui->preset->loadPresets();
 }
 
 NetworkProducerWidget::~NetworkProducerWidget()
@@ -47,4 +51,29 @@ Mlt::Properties* NetworkProducerWidget::getPreset() const
 void NetworkProducerWidget::loadPreset(Mlt::Properties& p)
 {
     ui->urlLineEdit->setText(p.get("resource"));
+}
+
+void NetworkProducerWidget::on_preset_selected(void* p)
+{
+    Mlt::Properties* properties = (Mlt::Properties*) p;
+    loadPreset(*properties);
+    delete properties;
+}
+
+void NetworkProducerWidget::on_preset_saveClicked()
+{
+    ui->preset->savePreset(getPreset());
+}
+
+void NetworkProducerWidget::setProducer(Mlt::Producer* producer)
+{
+    ui->applyButton->show();
+    if (producer)
+        loadPreset(*producer);
+}
+
+void NetworkProducerWidget::on_applyButton_clicked()
+{
+    MLT.open(producer(MLT.profile()));
+    MLT.play();
 }

@@ -68,6 +68,8 @@ private slots:
     void on_actionOpenOther_triggered();
     void onProducerOpened();
     void onProducerChanged();
+    void on_actionViewProperties_triggered(bool checked);
+    void onPropertiesVisibilityChanged(bool visible);
 };
 
 #endif // MAINWINDOW_H

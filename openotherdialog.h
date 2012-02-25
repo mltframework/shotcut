@@ -42,19 +42,14 @@ public:
     Mlt::Producer* producer(Mlt::Profile&) const;
     void load(Mlt::Producer*);
 
-private slots:    
-    void on_savePresetButton_clicked();
-    void on_presetCombo_activated(int index);
+private slots:
     void on_treeWidget_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
-    void on_deletePresetButton_clicked();
-    
+
 private:
     Ui::OpenOtherDialog *ui;
     QObject* m_current;
 
     Mlt::Producer* producer(Mlt::Profile&, QObject* widget) const;
-    void loadPresets();
-    void saveDefaultPreset(QObject* widget);
     void selectTreeWidget(const QString& s);
 };
 

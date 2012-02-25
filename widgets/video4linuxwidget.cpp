@@ -21,7 +21,7 @@
 #include "pulseaudiowidget.h"
 #include "jackproducerwidget.h"
 #include "alsawidget.h"
-#include <Mlt.h>
+#include "mltcontroller.h"
 #include <QtGui>
 
 Video4LinuxWidget::Video4LinuxWidget(QWidget *parent) :
@@ -30,6 +30,9 @@ Video4LinuxWidget::Video4LinuxWidget(QWidget *parent) :
     m_audioWidget(0)
 {
     ui->setupUi(this);
+    ui->applyButton->hide();
+    ui->preset->saveDefaultPreset(*getPreset());
+    ui->preset->loadPresets();
 }
 
 Video4LinuxWidget::~Video4LinuxWidget()
@@ -121,19 +124,37 @@ void Video4LinuxWidget::on_v4lAudioComboBox_activated(int index)
     if (m_audioWidget)
         delete m_audioWidget;
     m_audioWidget = 0;
-    if (index == 1) {
+    if (index == 1)
         m_audioWidget = new PulseAudioWidget(this);
-        ui->gridLayout_2->addWidget(m_audioWidget, ui->gridLayout_2->rowCount() -1,
-                                    0, 1, ui->gridLayout_2->columnCount());
-    }
-    else if (index == 2) {
+    else if (index == 2)
         m_audioWidget = new JackProducerWidget(this);
-        ui->gridLayout_2->addWidget(m_audioWidget, ui->gridLayout_2->rowCount() -1,
-                                    0, 1, ui->gridLayout_2->columnCount());
-    }
-    else if (index == 3) {
+    else if (index == 3)
         m_audioWidget = new AlsaWidget(this);
-        ui->gridLayout_2->addWidget(m_audioWidget, ui->gridLayout_2->rowCount() -1,
-                                    0, 1, ui->gridLayout_2->columnCount());
-    }
+    if (m_audioWidget)
+        ui->audioLayout->addWidget(m_audioWidget);
+}
+
+void Video4LinuxWidget::on_preset_selected(void* p)
+{
+    Mlt::Properties* properties = (Mlt::Properties*) p;
+    loadPreset(*properties);
+    delete properties;
+}
+
+void Video4LinuxWidget::on_preset_saveClicked()
+{
+    ui->preset->savePreset(getPreset());
+}
+
+void Video4LinuxWidget::setProducer(Mlt::Producer* producer)
+{
+    ui->applyButton->show();
+    if (producer)
+        loadPreset(*producer);
+}
+
+void Video4LinuxWidget::on_applyButton_clicked()
+{
+    MLT.open(producer(MLT.profile()));
+    MLT.play();
 }

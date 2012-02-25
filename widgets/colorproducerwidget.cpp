@@ -25,6 +25,8 @@ ColorProducerWidget::ColorProducerWidget(QWidget *parent) :
     ui(new Ui::ColorProducerWidget)
 {
     ui->setupUi(this);
+    ui->preset->saveDefaultPreset(*getPreset());
+    ui->preset->loadPresets();
 }
 
 ColorProducerWidget::~ColorProducerWidget()
@@ -43,27 +45,48 @@ void ColorProducerWidget::on_colorButton_clicked()
                                                   qGreen(dialog.currentColor().rgba()),
                                                   qBlue(dialog.currentColor().rgba())
                                                   ));
-        ui->colorLabel->setStyleSheet(QString("background-color: %1").arg(dialog.currentColor().name()));
+        ui->colorLabel->setStyleSheet(QString("color: %1; background-color: %2")
+                                      .arg((dialog.currentColor().value() < 150)? "white":"black")
+                                      .arg(dialog.currentColor().name()));
+        if (m_producer) {
+            m_producer->set("resource", ui->colorLabel->text().toAscii().constData());
+            emit producerChanged();
+        }
     }
 }
 
 Mlt::Producer* ColorProducerWidget::producer(Mlt::Profile& profile)
 {
     Mlt::Producer* p = new Mlt::Producer(profile, "color:");
-    p->set("colour", ui->colorLabel->text().toAscii().constData());
+    p->set("resource", ui->colorLabel->text().toAscii().constData());
     return p;
 }
 
 Mlt::Properties* ColorProducerWidget::getPreset() const
 {
     Mlt::Properties* p = new Mlt::Properties;
-    p->set("colour", ui->colorLabel->text().toAscii().constData());
+    p->set("resource", ui->colorLabel->text().toAscii().constData());
     return p;
 }
 
 void ColorProducerWidget::loadPreset(Mlt::Properties& p)
 {
-    ui->colorLabel->setText(p.get("colour"));
-    ui->colorLabel->setStyleSheet(QString("background-color: %1")
-        .arg(QString(p.get("colour")).replace(0, 3, "#")));
+    QString color(p.get("resource"));
+    ui->colorLabel->setText(color);
+    color.replace(0, 3, "#");
+    ui->colorLabel->setStyleSheet(QString("color: %1; background-color: %2")
+        .arg((QColor(color).value() < 150)? "white":"black")
+        .arg(color));
+}
+
+void ColorProducerWidget::on_preset_selected(void* p)
+{
+    Mlt::Properties* properties = (Mlt::Properties*) p;
+    loadPreset(*properties);
+    delete properties;
+}
+
+void ColorProducerWidget::on_preset_saveClicked()
+{
+    ui->preset->savePreset(getPreset());
 }

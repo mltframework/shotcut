@@ -21,7 +21,7 @@
 #include "pulseaudiowidget.h"
 #include "jackproducerwidget.h"
 #include "alsawidget.h"
-#include <Mlt.h>
+#include "mltcontroller.h"
 #include <QtGui>
 
 X11grabWidget::X11grabWidget(QWidget *parent) :
@@ -30,6 +30,9 @@ X11grabWidget::X11grabWidget(QWidget *parent) :
     m_audioWidget(0)
 {
     ui->setupUi(this);
+    ui->applyButton->hide();
+    ui->preset->saveDefaultPreset(*getPreset());
+    ui->preset->loadPresets();
 }
 
 X11grabWidget::~X11grabWidget()
@@ -48,21 +51,14 @@ void X11grabWidget::on_audioComboBox_activated(int index)
     if (m_audioWidget)
         delete m_audioWidget;
     m_audioWidget = 0;
-    if (index == 1) {
+    if (index == 1)
         m_audioWidget = new PulseAudioWidget(this);
-        ui->gridLayout->addWidget(m_audioWidget, ui->gridLayout->rowCount() -1,
-                                  0, 1, ui->gridLayout->columnCount());
-    }
-    else if (index == 2) {
+    else if (index == 2)
         m_audioWidget = new JackProducerWidget(this);
-        ui->gridLayout->addWidget(m_audioWidget, ui->gridLayout->rowCount() -1,
-                                  0, 1, ui->gridLayout->columnCount());
-    }
-    else if (index == 3) {
+    else if (index == 3)
         m_audioWidget = new AlsaWidget(this);
-        ui->gridLayout->addWidget(m_audioWidget, ui->gridLayout->rowCount() -1,
-                                  0, 1, ui->gridLayout->columnCount());
-    }
+    if (m_audioWidget)
+        ui->audioLayout->addWidget(m_audioWidget);
 }
 
 QString X11grabWidget::URL(Mlt::Profile& profile) const
@@ -143,4 +139,29 @@ void X11grabWidget::loadPreset(Mlt::Properties& p)
     ui->drawMouseCheckBox->setChecked(p.get_int("draw_mouse"));
     ui->positionComboBox->setCurrentIndex(p.get_int("follow_mouse") + 1);
     ui->audioComboBox->setCurrentIndex(p.get_int("audio_ix"));
+}
+
+void X11grabWidget::on_preset_selected(void* p)
+{
+    Mlt::Properties* properties = (Mlt::Properties*) p;
+    loadPreset(*properties);
+    delete properties;
+}
+
+void X11grabWidget::on_preset_saveClicked()
+{
+    ui->preset->savePreset(getPreset());
+}
+
+void X11grabWidget::setProducer(Mlt::Producer* producer)
+{
+    ui->applyButton->show();
+    if (producer)
+        loadPreset(*producer);
+}
+
+void X11grabWidget::on_applyButton_clicked()
+{
+    MLT.open(producer(MLT.profile()));
+    MLT.play();
 }

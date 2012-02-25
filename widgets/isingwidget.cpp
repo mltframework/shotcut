@@ -24,6 +24,8 @@ IsingWidget::IsingWidget(QWidget *parent) :
     ui(new Ui::IsingWidget)
 {
     ui->setupUi(this);
+    ui->preset->saveDefaultPreset(*getPreset());
+    ui->preset->loadPresets();
 }
 
 IsingWidget::~IsingWidget()
@@ -33,6 +35,10 @@ IsingWidget::~IsingWidget()
 
 void IsingWidget::on_tempDial_valueChanged(int value)
 {
+    if (m_producer) {
+        m_producer->set("Temperature", value/100.0);
+        emit producerChanged();
+    }
     ui->tempSpinner->setValue(value/100.0);
 }
 
@@ -43,7 +49,11 @@ void IsingWidget::on_tempSpinner_valueChanged(double value)
 
 void IsingWidget::on_borderGrowthDial_valueChanged(int value)
 {
-    ui->borderGrowthSpinner->setValue(value/100.0);    
+    if (m_producer) {
+        m_producer->set("Border Growth", value/100.0);
+        emit producerChanged();
+    }
+    ui->borderGrowthSpinner->setValue(value/100.0);
 }
 
 void IsingWidget::on_borderGrowthSpinner_valueChanged(double value)
@@ -53,6 +63,10 @@ void IsingWidget::on_borderGrowthSpinner_valueChanged(double value)
 
 void IsingWidget::on_spontGrowthDial_valueChanged(int value)
 {
+    if (m_producer) {
+        m_producer->set("Spontaneous Growth", value/100.0);
+        emit producerChanged();
+    }
     ui->spontGrowthSpinner->setValue(value/100.0);
 }
 
@@ -84,4 +98,16 @@ void IsingWidget::loadPreset(Mlt::Properties& p)
     ui->tempSpinner->setValue(p.get_double("Temperature"));
     ui->borderGrowthSpinner->setValue(p.get_double("Border Growth"));
     ui->spontGrowthSpinner->setValue(p.get_double("Spontaneous Growth"));
+}
+
+void IsingWidget::on_preset_selected(void* p)
+{
+    Mlt::Properties* properties = (Mlt::Properties*) p;
+    loadPreset(*properties);
+    delete properties;
+}
+
+void IsingWidget::on_preset_saveClicked()
+{
+    ui->preset->savePreset(getPreset());
 }

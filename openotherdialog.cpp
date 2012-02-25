@@ -29,12 +29,6 @@ OpenOtherDialog::OpenOtherDialog(QWidget *parent) :
     ui->setupUi(this);
     m_current = ui->networkWidget;
 
-    saveDefaultPreset(ui->colorWidget);
-    saveDefaultPreset(ui->isingWidget);
-    saveDefaultPreset(ui->lissajousWidget);
-    saveDefaultPreset(ui->plasmaWidget);
-    loadPresets();
-
     QTreeWidgetItem* group = new QTreeWidgetItem(ui->treeWidget, QStringList(tr("Network")));
     group->setData(0, Qt::UserRole, ui->networkTab->objectName());
     ui->treeWidget->setCurrentItem(group);
@@ -48,7 +42,6 @@ OpenOtherDialog::OpenOtherDialog(QWidget *parent) :
 #ifdef Q_WS_X11
     QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("Video4Linux")));
     item->setData(0, Qt::UserRole, ui->v4lTab->objectName());
-    saveDefaultPreset(ui->v4lWidget);
     item = new QTreeWidgetItem(group, QStringList(tr("PulseAudio")));
     item->setData(0, Qt::UserRole, ui->pulseTab->objectName());
     item = new QTreeWidgetItem(group, QStringList(tr("JACK Audio")));
@@ -138,89 +131,6 @@ void OpenOtherDialog::load(Mlt::Producer* producer)
     }
 }
 
-void OpenOtherDialog::loadPresets()
-{
-    // build the presets combo
-    ui->presetCombo->clear();
-    QDir dir(QDesktopServices::storageLocation(QDesktopServices::DataLocation));
-    if (dir.cd("presets") && dir.cd("producer")) {
-        ui->presetCombo->addItems(dir.entryList(QDir::Files));
-        QStringList entries = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::Executable);
-        foreach (QString s, entries) {
-            if (s == m_current->objectName() && dir.cd(s)) {
-                ui->presetCombo->addItem("", "");
-                QStringList entries2 = dir.entryList(QDir::Files | QDir::Readable);
-                foreach (QString s2, entries2) {
-                    ui->presetCombo->addItem(s2, s); // userData contains the tab name
-                }
-                dir.cdUp();
-            }
-        }
-    }
-}
-
-void OpenOtherDialog::saveDefaultPreset(QObject* widget)
-{
-    QDir dir(QDesktopServices::storageLocation(QDesktopServices::DataLocation));
-    Mlt::Properties* props = dynamic_cast<AbstractProducerWidget*>(widget)->getPreset();
-    QString producer(widget->objectName());
-
-    if (!dir.exists())
-        dir.mkpath(dir.path());
-    if (!dir.cd("presets")) {
-        if (dir.mkdir("presets"))
-            dir.cd("presets");
-    }
-    if (!dir.cd("producer")) {
-        if (dir.mkdir("producer"))
-            dir.cd("producer");
-    }
-    if (!dir.cd(producer)) {
-        if (dir.mkdir(producer))
-            dir.cd(producer);
-    }
-    if (!QFile(dir.filePath(tr("<defaults>"))).exists()) {
-        props->save(dir.filePath(tr("<defaults>")).toUtf8().constData());
-    }
-    delete props;
-}
-
-void OpenOtherDialog::on_savePresetButton_clicked()
-{
-    QString preset = QInputDialog::getText(this, tr("Save Preset"), tr("Name:") );
-    if (!preset.isNull()) {
-        QDir dir(QDesktopServices::storageLocation(QDesktopServices::DataLocation));
-        Mlt::Properties* props = dynamic_cast<AbstractProducerWidget*>(m_current)->getPreset();
-        QString producer = m_current->objectName();
-
-        if (!dir.exists())
-            dir.mkpath(dir.path());
-        if (!dir.cd("presets")) {
-            if (dir.mkdir("presets"))
-                dir.cd("presets");
-        }
-        if (!dir.cd("producer")) {
-            if (dir.mkdir("producer"))
-                dir.cd("producer");
-        }
-        if (!dir.cd(producer)) {
-            if (dir.mkdir(producer))
-                dir.cd(producer);
-        }
-        props->save(dir.filePath(preset).toUtf8().constData());
-        delete props;
-
-        // add the preset and select it
-        loadPresets();
-        for (int i = 0; i < ui->presetCombo->count(); i++) {
-            if (ui->presetCombo->itemText(i) == preset) {
-                ui->presetCombo->setCurrentIndex(i);
-                break;
-            }
-        }
-    }
-}
-
 void OpenOtherDialog::selectTreeWidget(const QString& s)
 {
     for (int j = 0; j < ui->treeWidget->topLevelItemCount(); j++) {
@@ -234,20 +144,7 @@ void OpenOtherDialog::selectTreeWidget(const QString& s)
     }
 }
 
-void OpenOtherDialog::on_presetCombo_activated(int index)
-{
-    QString producer = ui->presetCombo->itemData(index).toString();
-    QString preset = ui->presetCombo->itemText(index);
-    QDir dir(QDesktopServices::storageLocation(QDesktopServices::DataLocation));
-    Mlt::Properties p;
-    
-    if (!dir.cd("presets") || !dir.cd("producer") || !dir.cd(producer))
-        return;
-    p.load(dir.filePath(preset).toUtf8().constData());
-    dynamic_cast<AbstractProducerWidget*>(m_current)->loadPreset(p);
- }
-
-void OpenOtherDialog::on_treeWidget_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
+void OpenOtherDialog::on_treeWidget_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem*)
 {
     if (current->data(0, Qt::UserRole).isValid()) {
         QString currentData(current->data(0, Qt::UserRole).toString());
@@ -281,28 +178,9 @@ void OpenOtherDialog::on_treeWidget_currentItemChanged(QTreeWidgetItem *current,
                 else if (w == ui->alsaTab)
                     m_current = ui->alsaWidget;
                 else if (w == ui->x11grabTab)
-                    m_current= ui->x11grabWidget;
-                loadPresets();
+                    m_current = ui->x11grabWidget;
                 break;
             }
         }
-    }
-}
-
-void OpenOtherDialog::on_deletePresetButton_clicked()
-{
-    QString preset = ui->presetCombo->currentText();
-    int result = QMessageBox::question(this, tr("Delete Preset"),
-                                       tr("Are you sure you want to delete") + " " + preset + "?",
-                                       QMessageBox::No | QMessageBox::Yes, QMessageBox::No);
-    if (result == QMessageBox::Yes) {
-        QDir dir(QDesktopServices::storageLocation(QDesktopServices::DataLocation));
-        QString producer = m_current->objectName();
-
-        if (dir.cd("presets") && dir.cd("producer") && dir.cd(producer))
-            QFile(dir.filePath(preset)).remove();
-
-        ui->presetCombo->removeItem(ui->presetCombo->currentIndex());
-        ui->presetCombo->setCurrentIndex(0);
     }
 }

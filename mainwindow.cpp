@@ -35,6 +35,7 @@
 #include "widgets/pulseaudiowidget.h"
 #include "widgets/video4linuxwidget.h"
 #include "widgets/x11grabwidget.h"
+#include "widgets/avformatproducerwidget.h"
 
 #include <QtGui>
 
@@ -54,8 +55,7 @@ MainWindow::MainWindow(QWidget *parent)
     // Accept drag-n-drop of files.
     this->setAcceptDrops(true);
 
-    readSettings();
-
+    // Add the player widget.
     QLayout* layout = new QVBoxLayout(ui->centralWidget);
     layout->setObjectName("centralWidgetLayout");
     layout->setMargin(0);
@@ -65,18 +65,20 @@ MainWindow::MainWindow(QWidget *parent)
     connect(m_player, SIGNAL(showStatusMessage(QString)), this, SLOT(showStatusMessage(QString)));
 
     m_propertiesDock = new QDockWidget(tr("Properties"));
-    m_propertiesDock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
-    m_propertiesDock->setFeatures(QDockWidget::DockWidgetMovable);
+    m_propertiesDock->setObjectName("propertiesDock");
     addDockWidget(Qt::LeftDockWidgetArea, m_propertiesDock);
     connect(this, SIGNAL(producerOpened()), this, SLOT(onProducerOpened()));
+    connect(m_propertiesDock, SIGNAL(visibilityChanged(bool)), this, SLOT(onPropertiesVisibilityChanged(bool)));
 
+    readSettings();
     setFocus();
 }
 
 MainWindow::~MainWindow()
 {
-    delete ui;
+    delete m_propertiesDock;
     delete m_player;
+    delete ui;
 }
 
 void MainWindow::open(Mlt::Producer* producer)
@@ -85,6 +87,7 @@ void MainWindow::open(Mlt::Producer* producer)
         ui->statusBar->showMessage(tr("Failed to open "), STATUS_TIMEOUT_MS);
     else if (producer->get_int("error"))
         ui->statusBar->showMessage(tr("Failed to open ") + producer->get("resource"), STATUS_TIMEOUT_MS);
+    // no else here because open() will delete the producer if open fails
     if (!MLT.open(producer))
         emit producerOpened();
 }
@@ -127,16 +130,14 @@ void MainWindow::showStatusMessage(QString message)
 
 void MainWindow::readSettings()
 {
-    QRect rect = m_settings.value("geometry", QRect(200, 200, 852, 555)).toRect();
-    rect.setTop(rect.top() - ui->menuBar->height());
-    rect.setHeight(rect.height() - ui->menuBar->height());
-    move(rect.topLeft());
-    resize(rect.size());
+    restoreGeometry(m_settings.value("geometry").toByteArray());
+    restoreState(m_settings.value("windowState").toByteArray());
 }
 
 void MainWindow::writeSettings()
 {
-    m_settings.setValue("geometry", geometry());
+    m_settings.setValue("geometry", saveGeometry());
+    m_settings.setValue("windowState", saveState());
 }
 
 void MainWindow::on_actionAbout_Shotcut_triggered()
@@ -240,8 +241,11 @@ void MainWindow::onProducerOpened()
         w = new AlsaWidget(this);
     else if (resource.startsWith("x11grab:"))
         w = new X11grabWidget(this);
-    else if (service == "avformat")
-        w = new NetworkProducerWidget(this);
+    else if (service == "avformat") {
+        AvformatProducerWidget* avw = new AvformatProducerWidget(this);
+        w = avw;
+        connect(avw, SIGNAL(producerChanged()), m_player, SLOT(onProducerOpened()));
+    }
     else if (service == "decklink")
         w = new DecklinkProducerWidget(this);
     else if (service == "color")
@@ -260,11 +264,27 @@ void MainWindow::onProducerOpened()
         dynamic_cast<AbstractProducerWidget*>(w)->setProducer(MLT.producer());
         if (-1 != w->metaObject()->indexOfSignal("producerChanged()"))
             connect(w, SIGNAL(producerChanged()), this, SLOT(onProducerChanged()));
-        m_propertiesDock->setWidget(w);
+        QScrollArea* scroll = new QScrollArea(this);
+        scroll->setWidgetResizable(true);
+        scroll->setWidget(w);
+        m_propertiesDock->setWidget(scroll);
     }
 }
 
 void MainWindow::onProducerChanged()
 {
     MLT.refreshConsumer();
+}
+
+void MainWindow::on_actionViewProperties_triggered(bool checked)
+{
+    if (checked)
+        m_propertiesDock->show();
+    else
+        m_propertiesDock->hide();
+}
+
+void MainWindow::onPropertiesVisibilityChanged(bool visible)
+{
+    ui->actionViewProperties->setChecked(visible);
 }

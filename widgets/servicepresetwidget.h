@@ -16,40 +16,40 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef VIDEO4LINUXWIDGET_H
-#define VIDEO4LINUXWIDGET_H
+#ifndef SERVICEPRESETWIDGET_H
+#define SERVICEPRESETWIDGET_H
 
 #include <QWidget>
-#include "abstractproducerwidget.h"
+#include <MltProperties.h>
 
 namespace Ui {
-    class Video4LinuxWidget;
+    class ServicePresetWidget;
 }
 
-class Video4LinuxWidget : public QWidget, public AbstractProducerWidget
+class ServicePresetWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit Video4LinuxWidget(QWidget *parent = 0);
-    ~Video4LinuxWidget();
+    explicit ServicePresetWidget(QWidget *parent = 0);
+    ~ServicePresetWidget();
 
-    // AbstractProducerWidget overrides
-    Mlt::Producer* producer(Mlt::Profile&);
-    Mlt::Properties* getPreset() const;
-    void loadPreset(Mlt::Properties&);
-    void setProducer(Mlt::Producer*);
+    void loadPresets();
+    void saveDefaultPreset(Mlt::Properties&);
+    void savePreset(Mlt::Properties*);
+
+signals:
+    void selected(void* properties);
+    void saveClicked();
 
 private slots:
-    void on_v4lAudioComboBox_activated(int index);
-    void on_preset_selected(void* p);
-    void on_preset_saveClicked();
-    void on_applyButton_clicked();
+    void on_presetCombo_activated(int index);
+    void on_savePresetButton_clicked();
+    void on_deletePresetButton_clicked();
 
 private:
-    Ui::Video4LinuxWidget *ui;
-    QWidget* m_audioWidget;
-    QString URL() const;
+    Ui::ServicePresetWidget *ui;
+    QString m_widgetName;
 };
 
-#endif // VIDEO4LINUXWIDGET_H
+#endif // SERVICEPRESETWIDGET_H

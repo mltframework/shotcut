@@ -39,6 +39,9 @@ public:
     Mlt::Properties* getPreset() const;
     void loadPreset(Mlt::Properties&);
 
+signals:
+    void producerChanged();
+
 private slots:
     void on_speed1Dial_valueChanged(int value);
     void on_speed1Spinner_valueChanged(double arg1);
@@ -52,6 +55,8 @@ private slots:
     void on_move1Spinner_valueChanged(double arg1);
     void on_move2Dial_valueChanged(int value);
     void on_move2Spinner_valueChanged(double arg1);
+    void on_preset_selected(void* p);
+    void on_preset_saveClicked();
 
 private:
     Ui::PlasmaWidget *ui;

@@ -21,23 +21,24 @@
 
 LissajousWidget::LissajousWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::LissajousWidget),
-    m_producer(0)
+    ui(new Ui::LissajousWidget)
 {
     ui->setupUi(this);
+    ui->preset->saveDefaultPreset(*getPreset());
+    ui->preset->loadPresets();
 }
 
 LissajousWidget::~LissajousWidget()
 {
     delete ui;
-    delete m_producer;
 }
 
 void LissajousWidget::on_xratioDial_valueChanged(int value)
 {
-    if (m_producer)
+    if (m_producer) {
         m_producer->set("ratiox", value/100.0);
-    emit producerChanged();
+        emit producerChanged();
+    }
     ui->xratioSpinner->setValue(value/100.0);
 }
 
@@ -48,9 +49,10 @@ void LissajousWidget::on_xratioSpinner_valueChanged(double value)
 
 void LissajousWidget::on_yratioDial_valueChanged(int value)
 {
-    if (m_producer)
+    if (m_producer) {
         m_producer->set("ratioy", value/100.0);
-    emit producerChanged();
+        emit producerChanged();
+    }
     ui->yratioSpinner->setValue(value/100.0);
 }
 
@@ -81,11 +83,14 @@ void LissajousWidget::loadPreset(Mlt::Properties& p)
     ui->yratioSpinner->setValue(p.get_double("ratioy"));
 }
 
-void LissajousWidget::setProducer(Mlt::Producer* producer)
+void LissajousWidget::on_preset_selected(void* p)
 {
-    delete m_producer;
-    m_producer = 0;
-    ui->xratioSpinner->setValue(producer->get_double("ratiox"));
-    ui->yratioSpinner->setValue(producer->get_double("ratioy"));
-    m_producer = new Mlt::Producer(producer);
+    Mlt::Properties* properties = (Mlt::Properties*) p;
+    loadPreset(*properties);
+    delete properties;
+}
+
+void LissajousWidget::on_preset_saveClicked()
+{
+    ui->preset->savePreset(getPreset());
 }

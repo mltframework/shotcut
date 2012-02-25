@@ -18,12 +18,16 @@
 
 #include "alsawidget.h"
 #include "ui_alsawidget.h"
+#include "mltcontroller.h"
 
 AlsaWidget::AlsaWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::AlsaWidget)
 {
     ui->setupUi(this);
+    ui->applyButton->hide();
+    ui->preset->saveDefaultPreset(*getPreset());
+    ui->preset->loadPresets();
 }
 
 AlsaWidget::~AlsaWidget()
@@ -59,4 +63,29 @@ void AlsaWidget::loadPreset(Mlt::Properties& p)
     int i = s.indexOf(':');
     if (i > -1)
         ui->lineEdit->setText(s.mid(i + 1));
+}
+
+void AlsaWidget::on_preset_selected(void* p)
+{
+    Mlt::Properties* properties = (Mlt::Properties*) p;
+    loadPreset(*properties);
+    delete properties;
+}
+
+void AlsaWidget::on_preset_saveClicked()
+{
+    ui->preset->savePreset(getPreset());
+}
+
+void AlsaWidget::setProducer(Mlt::Producer* producer)
+{
+    ui->applyButton->show();
+    if (producer)
+        loadPreset(*producer);
+}
+
+void AlsaWidget::on_applyButton_clicked()
+{
+    MLT.open(producer(MLT.profile()));
+    MLT.play();
 }

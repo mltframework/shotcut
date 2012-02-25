@@ -24,6 +24,8 @@ PlasmaWidget::PlasmaWidget(QWidget *parent) :
     ui(new Ui::PlasmaWidget)
 {
     ui->setupUi(this);
+    ui->preset->saveDefaultPreset(*getPreset());
+    ui->preset->loadPresets();
 }
 
 PlasmaWidget::~PlasmaWidget()
@@ -33,6 +35,10 @@ PlasmaWidget::~PlasmaWidget()
 
 void PlasmaWidget::on_speed1Dial_valueChanged(int value)
 {
+    if (m_producer) {
+        m_producer->set("1_speed", value/100.0);
+        emit producerChanged();
+    }
     ui->speed1Spinner->setValue(value/100.0);
 }
 
@@ -43,6 +49,10 @@ void PlasmaWidget::on_speed1Spinner_valueChanged(double value)
 
 void PlasmaWidget::on_speed2Dial_valueChanged(int value)
 {
+    if (m_producer) {
+        m_producer->set("2_speed", value/100.0);
+        emit producerChanged();
+    }
     ui->speed2Spinner->setValue(value/100.0);
 }
 
@@ -53,6 +63,10 @@ void PlasmaWidget::on_speed2Spinner_valueChanged(double value)
 
 void PlasmaWidget::on_speed3Dial_valueChanged(int value)
 {
+    if (m_producer) {
+        m_producer->set("3_speed", value/100.0);
+        emit producerChanged();
+    }
     ui->speed3Spinner->setValue(value/100.0);
 }
 
@@ -63,6 +77,10 @@ void PlasmaWidget::on_speed3Spinner_valueChanged(double value)
 
 void PlasmaWidget::on_speed4Dial_valueChanged(int value)
 {
+    if (m_producer) {
+        m_producer->set("4_speed", value/100.0);
+        emit producerChanged();
+    }
     ui->speed4Spinner->setValue(value/100.0);
 }
 
@@ -73,6 +91,10 @@ void PlasmaWidget::on_speed4Spinner_valueChanged(double value)
 
 void PlasmaWidget::on_move1Dial_valueChanged(int value)
 {
+    if (m_producer) {
+        m_producer->set("1_move", value/100.0);
+        emit producerChanged();
+    }
     ui->move1Spinner->setValue(value/100.0);
 }
 
@@ -83,6 +105,10 @@ void PlasmaWidget::on_move1Spinner_valueChanged(double value)
 
 void PlasmaWidget::on_move2Dial_valueChanged(int value)
 {
+    if (m_producer) {
+        m_producer->set("2_move", value/100.0);
+        emit producerChanged();
+    }
     ui->move2Spinner->setValue(value/100.0);
 }
 
@@ -123,4 +149,16 @@ void PlasmaWidget::loadPreset(Mlt::Properties& p)
     ui->speed4Spinner->setValue(p.get_double("4_speed"));
     ui->move1Spinner->setValue(p.get_double("1_move"));
     ui->move2Spinner->setValue(p.get_double("2_move"));
+}
+
+void PlasmaWidget::on_preset_selected(void* p)
+{
+    Mlt::Properties* properties = (Mlt::Properties*) p;
+    loadPreset(*properties);
+    delete properties;
+}
+
+void PlasmaWidget::on_preset_saveClicked()
+{
+    ui->preset->savePreset(getPreset());
 }
