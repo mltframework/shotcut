@@ -120,6 +120,7 @@ void MainWindow::openVideo()
     else {
         // If file invalid, then on some platforms the dialog messes up SDL.
         MLT.onWindowResize();
+        activateWindow();
     }
 }
 
