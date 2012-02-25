@@ -80,7 +80,7 @@ void AvformatProducerWidget::onFrameReceived(Mlt::QFrame)
         m_defaultDuration = m_producer->get_length();
 
     QString s = QString::fromUtf8(m_producer->get("resource"));
-    ui->filenameLabel->setText(ui->filenameLabel->fontMetrics().elidedText(s, Qt::ElideLeft, width() - 10));
+    ui->filenameLabel->setText(ui->filenameLabel->fontMetrics().elidedText(s, Qt::ElideLeft, width() - 20));
     ui->notesTextEdit->setPlainText(QString::fromUtf8(m_producer->get("meta.attr.comment.markup")));
     ui->durationSpinBox->setValue(m_producer->get_length());
 
