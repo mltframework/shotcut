@@ -116,9 +116,9 @@ mkdir staging
 cp -a Shotcut.app staging/
 ln -s /Applications staging/
 sync
-hdiutil create -fs HFS+ -srcfolder staging -volname Shotcut Shotcut.dmg
+hdiutil create -fs HFS+ -srcfolder staging -volname Shotcut -format UDBZ Shotcut.dmg
 while [ "$?" -ne 0 ]; do
-  hdiutil create -fs HFS+ -srcfolder staging -volname Shotcut Shotcut.dmg
+  hdiutil create -fs HFS+ -srcfolder staging -volname Shotcut -format UDBZ Shotcut.dmg
 done
 sync
 rm -rf staging 2>/dev/null
