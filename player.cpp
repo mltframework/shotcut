@@ -206,6 +206,7 @@ Player::Player(QWidget *parent)
     m_positionSpinner->setRange(0, INT_MAX);
     m_positionSpinner->setValue(0);
     m_positionSpinner->setEnabled(false);
+    m_positionSpinner->setKeyboardTracking(false);
     m_durationLabel = new QLabel(this);
     m_durationLabel->setToolTip(tr("Duration in seconds"));
     m_durationLabel->setText("0.000");

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>309</width>
-    <height>455</height>
+    <width>331</width>
+    <height>547</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -64,15 +64,14 @@
        <property name="accelerated">
         <bool>true</bool>
        </property>
+       <property name="keyboardTracking">
+        <bool>false</bool>
+       </property>
+       <property name="suffix">
+        <string> frames</string>
+       </property>
        <property name="maximum">
         <number>2147483647</number>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_7">
-       <property name="text">
-        <string>frames</string>
        </property>
       </widget>
      </item>
@@ -152,6 +151,9 @@
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
            </property>
+           <property name="keyboardTracking">
+            <bool>false</bool>
+           </property>
            <property name="minimum">
             <number>1</number>
            </property>
@@ -174,6 +176,9 @@
           <widget class="QSpinBox" name="aspectDenSpinBox">
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+           <property name="keyboardTracking">
+            <bool>false</bool>
            </property>
            <property name="minimum">
             <number>1</number>
