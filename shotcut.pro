@@ -26,7 +26,8 @@ SOURCES += main.cpp\
     glwidget.cpp \
     widgets/servicepresetwidget.cpp \
     abstractproducerwidget.cpp \
-    widgets/avformatproducerwidget.cpp
+    widgets/avformatproducerwidget.cpp \
+    widgets/imageproducerwidget.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -50,7 +51,8 @@ HEADERS  += mainwindow.h \
     player.h \
     glwidget.h \
     widgets/servicepresetwidget.h \
-    widgets/avformatproducerwidget.h
+    widgets/avformatproducerwidget.h \
+    widgets/imageproducerwidget.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
@@ -68,7 +70,8 @@ FORMS    += mainwindow.ui \
     widgets/alsawidget.ui \
     widgets/x11grabwidget.ui \
     widgets/servicepresetwidget.ui \
-    widgets/avformatproducerwidget.ui
+    widgets/avformatproducerwidget.ui \
+    widgets/imageproducerwidget.ui
 
 RESOURCES += \
     resources.qrc
@@ -95,3 +98,6 @@ win32 {
     CONFIG += link_pkgconfig
     PKGCONFIG += mlt++
 }
+
+
+

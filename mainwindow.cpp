@@ -36,6 +36,7 @@
 #include "widgets/video4linuxwidget.h"
 #include "widgets/x11grabwidget.h"
 #include "widgets/avformatproducerwidget.h"
+#include "widgets/imageproducerwidget.h"
 
 #include <QtGui>
 
@@ -244,6 +245,11 @@ void MainWindow::onProducerOpened()
         w = new X11grabWidget(this);
     else if (service == "avformat") {
         AvformatProducerWidget* avw = new AvformatProducerWidget(this);
+        w = avw;
+        connect(avw, SIGNAL(producerChanged()), m_player, SLOT(onProducerOpened()));
+    }
+    else if (service == "pixbuf" || service == "qimage") {
+        ImageProducerWidget* avw = new ImageProducerWidget(this);
         w = avw;
         connect(avw, SIGNAL(producerChanged()), m_player, SLOT(onProducerOpened()));
     }
