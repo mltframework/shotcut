@@ -200,4 +200,16 @@ void Controller::refreshConsumer()
         m_consumer->set("refresh", 1);
 }
 
+void Controller::saveXML(QString& filename)
+{
+    Mlt::Consumer c(profile(), "xml", filename.toUtf8().constData());
+    Mlt::Service s(m_producer->get_service());
+    int ignore = s.get_int("ignore_points");
+    if (ignore)
+        s.set("ignore_points", 0);
+    c.connect(s);
+    c.start();
+    s.set("ignore_points", ignore);
+}
+
 } // namespace

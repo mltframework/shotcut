@@ -48,6 +48,13 @@ MainWindow::MainWindow(QWidget *parent)
 {
     // Create the UI.
     ui->setupUi(this);
+#ifdef Q_WS_MAC
+    ui->mainToolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+#endif
+
+    // These use the icon theme on Linux, with fallbacks to the icons specified in QtDesigner for other platforms.
+    ui->actionOpen->setIcon(QIcon::fromTheme("document-open", ui->actionOpen->icon()));
+    ui->actionSave->setIcon(QIcon::fromTheme("document-save", ui->actionSave->icon()));
 
     // Connect UI signals.
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openVideo()));
@@ -73,6 +80,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     readSettings();
     setFocus();
+    setCurrentFile("");
 }
 
 MainWindow::~MainWindow()
@@ -140,6 +148,16 @@ void MainWindow::writeSettings()
 {
     m_settings.setValue("geometry", saveGeometry());
     m_settings.setValue("windowState", saveState());
+}
+
+void MainWindow::setCurrentFile(const QString &filename)
+{
+    QString shownName = "Untitled";
+    m_currentFile = filename;
+    setWindowModified(false);
+    if (!m_currentFile.isEmpty())
+        shownName = QFileInfo(m_currentFile).fileName();
+    setWindowTitle(tr("%1[*] - %2").arg(shownName).arg(qApp->applicationName()));
 }
 
 void MainWindow::on_actionAbout_Shotcut_triggered()
@@ -294,4 +312,30 @@ void MainWindow::on_actionViewProperties_triggered(bool checked)
 void MainWindow::onPropertiesVisibilityChanged(bool visible)
 {
     ui->actionViewProperties->setChecked(visible);
+}
+
+void MainWindow::on_actionSave_triggered()
+{
+    if (m_currentFile.isEmpty()) {
+        on_actionSave_As_triggered();
+    } else {
+        MLT.saveXML(m_currentFile);
+        setCurrentFile(m_currentFile);
+        showStatusMessage(tr("Saved %1").arg(m_currentFile));
+    }
+}
+
+void MainWindow::on_actionSave_As_triggered()
+{
+    if (m_currentFile.isEmpty())
+        return;
+    QString settingKey("openPath");
+    QString directory(m_settings.value(settingKey,
+        QDesktopServices::storageLocation(QDesktopServices::MoviesLocation)).toString());
+    QString filename = QFileDialog::getSaveFileName(this, tr("Save XML"), directory, tr("MLT XML (*.mlt)"));
+    if (!filename.isEmpty()) {
+        MLT.saveXML(filename);
+        setCurrentFile(filename);
+        showStatusMessage(tr("Saved %1").arg(m_currentFile));
+    }
 }

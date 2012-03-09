@@ -17,6 +17,9 @@
    <iconset resource="resources.qrc">
     <normaloff>:/icons/icons/mlt-logo-64.png</normaloff>:/icons/icons/mlt-logo-64.png</iconset>
   </property>
+  <property name="unifiedTitleAndToolBarOnMac">
+   <bool>true</bool>
+  </property>
   <widget class="QWidget" name="centralWidget"/>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -33,6 +36,8 @@
     </property>
     <addaction name="actionOpen"/>
     <addaction name="actionOpenOther"/>
+    <addaction name="actionSave"/>
+    <addaction name="actionSave_As"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
@@ -67,6 +72,7 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionOpen"/>
+   <addaction name="actionSave"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen">
@@ -131,6 +137,35 @@
    </property>
    <property name="text">
     <string>&amp;Properties</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/icons/document-save.png</normaloff>:/icons/icons/document-save.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Save</string>
+   </property>
+   <property name="toolTip">
+    <string>Save project as a MLT XML file</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionSave_As">
+   <property name="text">
+    <string>Save &amp;As...</string>
+   </property>
+   <property name="toolTip">
+    <string>Save project to a different MLT XML file</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
    </property>
   </action>
  </widget>

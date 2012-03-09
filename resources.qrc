@@ -9,5 +9,6 @@
         <file>icons/media-seek-forward.png</file>
         <file>icons/media-skip-backward.png</file>
         <file>icons/media-skip-forward.png</file>
+        <file>icons/document-save.png</file>
     </qresource>
 </RCC>

@@ -53,11 +53,13 @@ protected:
 private:
     void readSettings();
     void writeSettings();
+    void setCurrentFile(const QString &filename);
 
     Ui::MainWindow* ui;
     QSettings m_settings;
     Player* m_player;
     QDockWidget* m_propertiesDock;
+    QString m_currentFile;
 
 public slots:
     void openVideo();
@@ -70,6 +72,8 @@ private slots:
     void onProducerChanged();
     void on_actionViewProperties_triggered(bool checked);
     void onPropertiesVisibilityChanged(bool visible);
+    void on_actionSave_triggered();
+    void on_actionSave_As_triggered();
 };
 
 #endif // MAINWINDOW_H

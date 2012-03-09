@@ -77,6 +77,7 @@ public:
 
     void seek(int position);
     void refreshConsumer();
+    void saveXML(QString& filename);
 
     Mlt::Repository* repository() const {
         return m_repo;
