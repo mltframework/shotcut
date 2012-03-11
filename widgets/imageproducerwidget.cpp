@@ -98,6 +98,7 @@ void ImageProducerWidget::reopen(Mlt::Producer* p)
         return;
     }
     emit producerReopened();
+    emit producerChanged();
     MLT.seek(position);
     MLT.play(speed);
     setProducer(p);

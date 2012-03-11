@@ -65,6 +65,7 @@ void AvformatProducerWidget::reopen(Mlt::Producer* p)
     }
     connect(MLT.videoWidget(), SIGNAL(frameReceived(Mlt::QFrame, int)), this, SLOT(onFrameReceived(Mlt::QFrame)));
     emit producerReopened();
+    emit producerChanged();
     MLT.seek(position);
     MLT.play(speed);
     setProducer(p);
