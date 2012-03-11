@@ -349,14 +349,17 @@ void Player::onProducerOpened()
 
 void Player::onShowFrame(Mlt::QFrame, int position)
 {
-    m_position = position;
-    m_positionSpinner->blockSignals(true);
-    m_positionSpinner->setValue((int) position);
-    m_positionSpinner->blockSignals(false);
-    m_scrubber->onSeek(position);
-    if (MLT.producer() && MLT.producer()->is_valid()
-            && (int) position >= MLT.producer()->get_length() - 1)
-        emit endOfStream();
+    if (MLT.producer() && MLT.producer()->is_valid()) {
+        if (position < MLT.producer()->get_length()) {
+            m_position = position;
+            m_positionSpinner->blockSignals(true);
+            m_positionSpinner->setValue((int) position);
+            m_positionSpinner->blockSignals(false);
+            m_scrubber->onSeek(position);
+        }
+        if (position >= MLT.producer()->get_length() - 1)
+            emit endOfStream();
+    }
 }
 
 void Player::onInChanged(int in)
