@@ -327,7 +327,7 @@ void MainWindow::on_actionSave_triggered()
 
 void MainWindow::on_actionSave_As_triggered()
 {
-    if (m_currentFile.isEmpty())
+    if (!MLT.producer())
         return;
     QString settingKey("openPath");
     QString directory(m_settings.value(settingKey,
