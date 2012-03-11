@@ -49,6 +49,7 @@ protected:
     void dragEnterEvent(QDragEnterEvent*);
     void dropEvent(QDropEvent*);
     void closeEvent(QCloseEvent*);
+    bool continueModified();
 
 private:
     void readSettings();
@@ -72,8 +73,8 @@ private slots:
     void onProducerChanged();
     void on_actionViewProperties_triggered(bool checked);
     void onPropertiesVisibilityChanged(bool visible);
-    void on_actionSave_triggered();
-    void on_actionSave_As_triggered();
+    bool on_actionSave_triggered();
+    bool on_actionSave_As_triggered();
 };
 
 #endif // MAINWINDOW_H

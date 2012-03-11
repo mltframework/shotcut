@@ -227,8 +227,12 @@ void MainWindow::dropEvent(QDropEvent *event)
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
-    writeSettings();
-    event->accept();
+    if (continueModified()) {
+        writeSettings();
+        event->accept();
+    } else {
+        event->ignore();
+    }
 }
 
 void MainWindow::on_actionOpenOther_triggered()
@@ -316,21 +320,22 @@ void MainWindow::onPropertiesVisibilityChanged(bool visible)
     ui->actionViewProperties->setChecked(visible);
 }
 
-void MainWindow::on_actionSave_triggered()
+bool MainWindow::on_actionSave_triggered()
 {
     if (m_currentFile.isEmpty()) {
-        on_actionSave_As_triggered();
+        return on_actionSave_As_triggered();
     } else {
         MLT.saveXML(m_currentFile);
         setCurrentFile(m_currentFile);
         showStatusMessage(tr("Saved %1").arg(m_currentFile));
+        return true;
     }
 }
 
-void MainWindow::on_actionSave_As_triggered()
+bool MainWindow::on_actionSave_As_triggered()
 {
     if (!MLT.producer())
-        return;
+        return true;
     QString settingKey("openPath");
     QString directory(m_settings.value(settingKey,
         QDesktopServices::storageLocation(QDesktopServices::MoviesLocation)).toString());
@@ -340,4 +345,23 @@ void MainWindow::on_actionSave_As_triggered()
         setCurrentFile(filename);
         showStatusMessage(tr("Saved %1").arg(m_currentFile));
     }
+    return filename.isEmpty();
+}
+
+bool MainWindow::continueModified()
+{
+    if (isWindowModified()) {
+        int r = QMessageBox::warning(this, qApp->applicationName(),
+                                     tr("The project has been modified.\n"
+                                        "Do you want to save your changes?"),
+                                     QMessageBox::Yes | QMessageBox::Default,
+                                     QMessageBox::No,
+                                     QMessageBox::Cancel | QMessageBox::Escape);
+        if (r == QMessageBox::Yes) {
+            return on_actionSave_triggered();
+        } else if (r == QMessageBox::Cancel) {
+            return false;
+        }
+    }
+    return true;
 }
