@@ -64,7 +64,7 @@ void AvformatProducerWidget::reopen(Mlt::Producer* p)
         return;
     }
     connect(MLT.videoWidget(), SIGNAL(frameReceived(Mlt::QFrame, int)), this, SLOT(onFrameReceived(Mlt::QFrame)));
-    emit producerChanged();
+    emit producerReopened();
     MLT.seek(position);
     MLT.play(speed);
     setProducer(p);
@@ -254,7 +254,7 @@ void AvformatProducerWidget::on_scanComboBox_activated(int index)
             // We need to set these force_ properties as a string so they can be properly removed
             // by setting them NULL.
             m_producer->set("force_progressive", QString::number(index).toAscii().constData());
-        MLT.refreshConsumer();
+        emit producerChanged();
         connect(MLT.videoWidget(), SIGNAL(frameReceived(Mlt::QFrame, int)), this, SLOT(onFrameReceived(Mlt::QFrame)));
     }
 }
@@ -265,7 +265,7 @@ void AvformatProducerWidget::on_fieldOrderComboBox_activated(int index)
         int tff = m_producer->get_int("meta.media.top_field_first");
         if (m_producer->get("force_tff") || tff != index)
             m_producer->set("force_tff", QString::number(index).toAscii().constData());
-        MLT.refreshConsumer();
+        emit producerChanged();
         connect(MLT.videoWidget(), SIGNAL(frameReceived(Mlt::QFrame, int)), this, SLOT(onFrameReceived(Mlt::QFrame)));
     }
 }
@@ -283,7 +283,7 @@ void AvformatProducerWidget::on_aspectNumSpinBox_valueChanged(int)
             m_producer->set("shotcut_aspect_num", ui->aspectNumSpinBox->text().toAscii().constData());
             m_producer->set("shotcut_aspect_den", ui->aspectDenSpinBox->text().toAscii().constData());
         }
-        MLT.refreshConsumer();
+        emit producerChanged();
         connect(MLT.videoWidget(), SIGNAL(frameReceived(Mlt::QFrame, int)), this, SLOT(onFrameReceived(Mlt::QFrame)));
     }
 }

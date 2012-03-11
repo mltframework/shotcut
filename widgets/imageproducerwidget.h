@@ -41,6 +41,7 @@ public:
 
 signals:
     void producerChanged();
+    void producerReopened();
 
 private slots:
     void on_resetButton_clicked();

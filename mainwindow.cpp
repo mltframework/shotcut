@@ -264,12 +264,12 @@ void MainWindow::onProducerOpened()
     else if (service == "avformat") {
         AvformatProducerWidget* avw = new AvformatProducerWidget(this);
         w = avw;
-        connect(avw, SIGNAL(producerChanged()), m_player, SLOT(onProducerOpened()));
+        connect(avw, SIGNAL(producerReopened()), m_player, SLOT(onProducerOpened()));
     }
     else if (service == "pixbuf" || service == "qimage") {
         ImageProducerWidget* avw = new ImageProducerWidget(this);
         w = avw;
-        connect(avw, SIGNAL(producerChanged()), m_player, SLOT(onProducerOpened()));
+        connect(avw, SIGNAL(producerReopened()), m_player, SLOT(onProducerOpened()));
     }
     else if (service == "decklink")
         w = new DecklinkProducerWidget(this);
@@ -294,10 +294,12 @@ void MainWindow::onProducerOpened()
         scroll->setWidget(w);
         m_propertiesDock->setWidget(scroll);
     }
+    onProducerChanged();
 }
 
 void MainWindow::onProducerChanged()
 {
+    setWindowModified(true);
     MLT.refreshConsumer();
 }
 

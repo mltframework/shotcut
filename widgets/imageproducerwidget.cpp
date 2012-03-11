@@ -97,7 +97,7 @@ void ImageProducerWidget::reopen(Mlt::Producer* p)
         setProducer(0);
         return;
     }
-    emit producerChanged();
+    emit producerReopened();
     MLT.seek(position);
     MLT.play(speed);
     setProducer(p);
@@ -123,7 +123,7 @@ void ImageProducerWidget::on_aspectNumSpinBox_valueChanged(int)
             m_producer->set("shotcut_aspect_num", ui->aspectNumSpinBox->text().toAscii().constData());
             m_producer->set("shotcut_aspect_den", ui->aspectDenSpinBox->text().toAscii().constData());
         }
-        MLT.refreshConsumer();
+        emit producerChanged();
     }
 }
 
@@ -183,4 +183,5 @@ void ImageProducerWidget::on_sequenceCheckBox_clicked(bool checked)
 void ImageProducerWidget::on_repeatSpinBox_editingFinished()
 {
     m_producer->set("ttl", ui->repeatSpinBox->value());
+    emit producerChanged();
 }

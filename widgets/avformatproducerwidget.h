@@ -40,6 +40,7 @@ public:
 
 signals:
     void producerChanged();
+    void producerReopened();
 
 private slots:
     void onFrameReceived(Mlt::QFrame);
