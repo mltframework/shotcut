@@ -23,7 +23,7 @@ static const int margin = 14;
 
 ScrubBar::ScrubBar(QWidget *parent)
     : QWidget(parent)
-    , m_position(0)
+    , m_head(0)
     , m_scale(-1)
     , m_fps(25)
     , m_max(1)
@@ -47,7 +47,6 @@ void ScrubBar::setScale(int maximum)
     else
         m_interval = 60 * m_fps; // 60 seconds
     m_interval *= m_scale;
-    m_cursorPosition = m_position * m_scale;
     updatePixmap();
 }
 
@@ -58,7 +57,7 @@ void ScrubBar::setFramerate(double fps)
 
 int ScrubBar::position() const
 {
-    return m_position;
+    return m_head;
 }
 
 void ScrubBar::setInPoint(int in)
@@ -80,6 +79,7 @@ void ScrubBar::mousePressEvent(QMouseEvent * event)
     int x = event->x() - margin;
     int in = m_in * m_scale;
     int out = m_out * m_scale;
+    int head = m_head * m_scale;
     int pos = x / m_scale;
 
     if (m_in > -1 && m_out > -1) {
@@ -90,6 +90,16 @@ void ScrubBar::mousePressEvent(QMouseEvent * event)
         else if (x >= out - 6 && x <= out + 12) {
             m_activeControl = CONTROL_OUT;
             setOutPoint(pos);
+        }
+    }
+    if (m_head > -1) {
+        if (m_activeControl == CONTROL_NONE) {
+            m_activeControl = CONTROL_HEAD;
+            m_head = pos;
+            const int offset = height() / 2;
+            const int x = qMin(x, head);
+            const int w = qAbs(x - head);
+            update(margin + x - offset, 0, w + 2 * offset, height());
         }
     }
     emit seeked(pos);
@@ -110,15 +120,22 @@ void ScrubBar::mouseMoveEvent(QMouseEvent * event)
             setInPoint(pos);
         else if (m_activeControl == CONTROL_OUT)
             setOutPoint(pos);
+        else if (m_activeControl == CONTROL_HEAD) {
+            const int head = m_head * m_scale;
+            const int offset = height() / 2;
+            const int x = qMin(x, head);
+            const int w = qAbs(x - head);
+            update(margin + x - offset, 0, w + 2 * offset, height());
+            m_head = pos;
+        }
         emit seeked(pos);
     }
 }
 
 bool ScrubBar::onSeek(int value)
 {
-    if (value == m_position)
-        return false;
-    m_position = value;
+    if (m_activeControl != CONTROL_HEAD)
+        m_head = value;
     int oldPos = m_cursorPosition;
     m_cursorPosition = value * m_scale;
     const int offset = height() / 2;
@@ -130,7 +147,7 @@ bool ScrubBar::onSeek(int value)
 
 void ScrubBar::paintEvent(QPaintEvent *e)
 {
-
+    QPen pen(QBrush(palette().text().color()), 2);
     QPainter p(this);
     QRect r = e->rect();
     p.setClipRect(r);
@@ -139,12 +156,14 @@ void ScrubBar::paintEvent(QPaintEvent *e)
     // draw pointer
     QPolygon pa(3);
     const int x = height() / 2 - 1;
-    pa.setPoints(3, margin + m_cursorPosition - x + 1, 0, margin + m_cursorPosition + x, 0, margin + m_cursorPosition, x - 1);
+    int head = margin + m_cursorPosition;
+    pa.setPoints(3, head - x, 0, head + x, 0, head, x);
     p.setBrush(palette().text().color());
     p.setPen(Qt::NoPen);
     p.drawPolygon(pa);
-    p.setPen(palette().text().color());
-    p.drawLine(margin + m_cursorPosition, 0, margin + m_cursorPosition, height() - 1);
+    p.setPen(pen);
+    head = margin + m_head * m_scale;
+    p.drawLine(head, 0, head, height() - 1);
 
     // draw in point
     if (m_in > -1) {
@@ -153,7 +172,7 @@ void ScrubBar::paintEvent(QPaintEvent *e)
         p.setBrush(palette().text().color());
         p.setPen(Qt::NoPen);
         p.drawPolygon(pa);
-        p.setPen(QPen(QBrush(palette().text().color()), 2));
+        p.setPen(pen);
         p.drawLine(in, 0, in, height() - 1);
     }
 
@@ -164,7 +183,7 @@ void ScrubBar::paintEvent(QPaintEvent *e)
         p.setBrush(palette().text().color());
         p.setPen(Qt::NoPen);
         p.drawPolygon(pa);
-        p.setPen(QPen(QBrush(palette().text().color()), 2));
+        p.setPen(pen);
         p.drawLine(out, 0, out, height() - 1);
     }
 }

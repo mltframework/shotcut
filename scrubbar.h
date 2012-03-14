@@ -58,7 +58,7 @@ protected:
 
 private:
     int m_cursorPosition;
-    int m_position;
+    int m_head;
     double m_scale;
     double m_fps;
     int m_interval;
