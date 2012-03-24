@@ -7,7 +7,7 @@
 # bash, test, tr, awk, ps, make, cmake, cat, sed, curl or wget, and possibly others
 
 # Author: Dan Dennedy <dan@dennedy.org>
-# Version: 2
+# Version: 3
 # License: GPL2
 
 ################################################################################
@@ -473,6 +473,8 @@ function set_globals {
   # shotcut 
   if [ "$TARGET_OS" = "Darwin" ]; then
     CONFIG[7]="qmake -r -spec macx-g++"
+  elif [ "$(which qmake-qt4)" != "" ]; then
+    CONFIG[7]="qmake-qt4 -r"
   else
     CONFIG[7]="qmake -r"
   fi
