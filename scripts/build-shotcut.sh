@@ -1084,7 +1084,7 @@ function fixlibs()
 {
   target=$(dirname "$1")/$(basename "$1")
   trace fixlibs $target
-  libs=$(otool -L "$target" | awk '/^\t\/opt\/local/ || /^\t\/Users/ {print $1}')
+  libs=$(otool -L "$target" | awk '/^\t\/opt\/local/ || /^\t\/Applications\// || /^\t\/Users\// {print $1}')
 
   # if the target is a lib, change its id
   #if [ $(echo "$1" | grep '\.dylib$') ] || [ $(echo "$1" | grep '\.so$') ]; then
@@ -1304,6 +1304,11 @@ End-of-desktop-file
   tarball="$INSTALL_DIR/Shotcut-$(date +'%Y%m%d').tar.bz2"
   cmd rm "$tarball" 2>/dev/null
   cmd pushd "$INSTALL_DIR"
+  cmd rm -rf Shotcut/.app/include
+  cmd rm Shotcut/.app/lib/*.a
+  cmd rm -rf Shotcut/.app/lib/pkgconfig
+  cmd rm -rf Shotcut/.app/share/doc
+  cmd rm -rf Shotcut/.app/share/man
   cmd tar -cjvf "$tarball" Shotcut
   cmd rm -rf Shotcut
   popd
