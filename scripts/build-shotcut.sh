@@ -7,7 +7,7 @@
 # bash, test, tr, awk, ps, make, cmake, cat, sed, curl or wget, and possibly others
 
 # Author: Dan Dennedy <dan@dennedy.org>
-# Version: 3
+# Version: 4
 # License: GPL2
 
 ################################################################################
@@ -1187,7 +1187,7 @@ function deploy_osx
 
   # build DMG
   log Making disk image
-  dmg_name="$INSTALL_DIR/Shotcut-$(date +'%Y%m%d').dmg"
+  dmg_name="$INSTALL_DIR/shotcut.dmg"
   cmd rm "$dmg_name" 2>/dev/null
   cmd rm -rf staging 2>/dev/null
   cmd mkdir staging
@@ -1301,7 +1301,7 @@ End-of-desktop-file
   popd
 
   log Creating archive
-  tarball="$INSTALL_DIR/Shotcut-$(date +'%Y%m%d').tar.bz2"
+  tarball="$INSTALL_DIR/shotcut.tar.bz2"
   cmd rm "$tarball" 2>/dev/null
   cmd pushd "$INSTALL_DIR"
   cmd rm -rf Shotcut/.app/include
