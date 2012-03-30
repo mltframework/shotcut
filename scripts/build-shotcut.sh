@@ -7,7 +7,7 @@
 # bash, test, tr, awk, ps, make, cmake, cat, sed, curl or wget, and possibly others
 
 # Author: Dan Dennedy <dan@dennedy.org>
-# Version: 4
+# Version: 5
 # License: GPL2
 
 ################################################################################
@@ -426,7 +426,7 @@ function set_globals {
 
   #####
   # mlt
-  CONFIG[1]="./configure --prefix=$FINAL_INSTALL_DIR --enable-gpl"
+  CONFIG[1]="./configure --prefix=$FINAL_INSTALL_DIR --enable-gpl --enable-gpl3"
   # Remember, if adding more of these, to update the post-configure check.
   [ "$QT_INCLUDE_DIR" ] && CONFIG[1]="${CONFIG[1]} --qimage-includedir=$QT_INCLUDE_DIR"
   [ "$QT_LIB_DIR" ] && CONFIG[1]="${CONFIG[1]} --qimage-libdir=$QT_LIB_DIR"
