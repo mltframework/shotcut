@@ -238,6 +238,6 @@ void GLWidget::on_frame_show(mlt_consumer, void* self, mlt_frame frame_ptr)
     GLWidget* widget = static_cast<GLWidget*>(self);
     if (widget->showFrameSemaphore.tryAcquire()) {
         Frame frame(frame_ptr);
-        emit widget->frameReceived(Mlt::QFrame(frame), frame.get_position());
+        emit widget->frameReceived(Mlt::QFrame(frame));
     }
 }

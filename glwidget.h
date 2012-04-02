@@ -46,9 +46,8 @@ public slots:
 signals:
     /** This method will be called each time a new frame is available.
      * @param frame a Mlt::QFrame from which to get a QImage
-     * @param position the frame number of this frame representing time
      */
-    void frameReceived(Mlt::QFrame frame, int position);
+    void frameReceived(Mlt::QFrame frame);
 
 private:
     int x, y, w, h;

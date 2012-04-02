@@ -69,6 +69,6 @@ void SDLWidget::on_frame_show(mlt_consumer, void* self, mlt_frame frame_ptr)
 {
     SDLWidget* widget = static_cast<SDLWidget*>(self);
     Frame frame(frame_ptr);
-    emit widget->frameReceived(Mlt::QFrame(frame), frame.get_position());
+    emit widget->frameReceived(Mlt::QFrame(frame));
 }
 

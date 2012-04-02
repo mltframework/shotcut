@@ -27,7 +27,8 @@ SOURCES += main.cpp\
     widgets/servicepresetwidget.cpp \
     abstractproducerwidget.cpp \
     widgets/avformatproducerwidget.cpp \
-    widgets/imageproducerwidget.cpp
+    widgets/imageproducerwidget.cpp \
+    widgets/timespinbox.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -52,7 +53,8 @@ HEADERS  += mainwindow.h \
     glwidget.h \
     widgets/servicepresetwidget.h \
     widgets/avformatproducerwidget.h \
-    widgets/imageproducerwidget.h
+    widgets/imageproducerwidget.h \
+    widgets/timespinbox.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
@@ -98,6 +100,3 @@ win32 {
     CONFIG += link_pkgconfig
     PKGCONFIG += mlt++
 }
-
-
-

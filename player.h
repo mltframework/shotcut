@@ -27,6 +27,7 @@
 class ScrubBar;
 class QSpinBox;
 class QLabel;
+class TimeSpinBox;
 
 namespace Ui {
     class Player;
@@ -56,7 +57,7 @@ public slots:
     void togglePlayPaused();
     void seek(int position);
     void onProducerOpened();
-    void onShowFrame(Mlt::QFrame frame, int position);
+    void onShowFrame(Mlt::QFrame frame);
 
 protected:
     void resizeEvent(QResizeEvent* event);
@@ -67,7 +68,7 @@ private:
     Ui::Player* ui;
     QSettings m_settings;
     ScrubBar* m_scrubber;
-    QSpinBox* m_positionSpinner;
+    TimeSpinBox* m_positionSpinner;
     QLabel* m_durationLabel;
     unsigned m_position;
     QIcon m_playIcon;

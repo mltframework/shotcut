@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Meltytech, LLC
+ * Copyright (c) 2012 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,36 +16,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SDLWIDGET_H
-#define SDLWIDGET_H
+#ifndef TIMESPINBOX_H
+#define TIMESPINBOX_H
 
-#include <QWidget>
-#include "mltcontroller.h"
+#include <QSpinBox>
 
-namespace Mlt {
+class QRegExpValidator;
 
-class SDLWidget : public QWidget, public Controller
+class TimeSpinBox : public QSpinBox
 {
     Q_OBJECT
+
 public:
-    explicit SDLWidget(QWidget *parent = 0);
-    int open(Mlt::Producer*);
-    QWidget* videoWidget() { return this; }
+    explicit TimeSpinBox(QWidget *parent = 0);
 
-signals:
-    /** This method will be called each time a new frame is available.
-     * @param frame a Mlt::QFrame from which to get a QImage
-     * @param position the frame number of this frame representing time
-     */
-    void frameReceived(Mlt::QFrame);
-
-public slots:
+protected:
+    QValidator::State validate(QString &input, int &pos) const;
+    int valueFromText(const QString &text) const;
+    QString textFromValue(int val) const;
 
 private:
-    static void on_frame_show(mlt_consumer, void* self, mlt_frame frame);
-
+    QRegExpValidator* m_validator;
 };
 
-} //namespace
-
-#endif // SDLWIDGET_H
+#endif // TIMESPINBOX_H

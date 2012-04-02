@@ -19,6 +19,7 @@
 #include "player.h"
 #include "scrubbar.h"
 #include "mainwindow.h"
+#include "widgets/timespinbox.h"
 #include <QtGui>
 
 QT_BEGIN_NAMESPACE
@@ -200,15 +201,12 @@ Player::Player(QWidget *parent)
     toolbar->setContentsMargins(0, 0, 5, 0);
     QWidget *spacer = new QWidget(this);
     spacer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
-    m_positionSpinner = new QSpinBox(this);
-    m_positionSpinner->setToolTip(tr("Position in frames"));
-    m_positionSpinner->setAlignment(Qt::AlignRight);
-    m_positionSpinner->setRange(0, INT_MAX);
-    m_positionSpinner->setValue(0);
+    m_positionSpinner = new TimeSpinBox(this);
+    m_positionSpinner->setToolTip(tr("Current position"));
     m_positionSpinner->setEnabled(false);
     m_positionSpinner->setKeyboardTracking(false);
     m_durationLabel = new QLabel(this);
-    m_durationLabel->setToolTip(tr("Duration in seconds"));
+    m_durationLabel->setToolTip(tr("Duration"));
     m_durationLabel->setText("0.000");
     m_durationLabel->setAlignment(Qt::AlignRight);
     m_durationLabel->setContentsMargins(0, 5, 0, 0);
@@ -226,7 +224,7 @@ Player::Player(QWidget *parent)
     toolbar->addWidget(m_durationLabel);
     layout->addWidget(toolbar);
 
-    connect(MLT.videoWidget(), SIGNAL(frameReceived(Mlt::QFrame, int)), this, SLOT(onShowFrame(Mlt::QFrame, int)));
+    connect(MLT.videoWidget(), SIGNAL(frameReceived(Mlt::QFrame)), this, SLOT(onShowFrame(Mlt::QFrame)));
     connect(MLT.videoWidget(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onVideoWidgetContextMenu(QPoint)));
     connect(ui->actionPlay, SIGNAL(triggered()), this, SLOT(togglePlayPaused()));
     connect(ui->actionPause, SIGNAL(triggered()), this, SLOT(pause()));
@@ -334,7 +332,7 @@ void Player::onProducerOpened()
     m_scrubber->setFramerate(MLT.profile().fps());
     m_scrubber->setScale(len);
     if (seekable) {
-        m_durationLabel->setText(QString().sprintf("%.03f", len / MLT.profile().fps()));
+        m_durationLabel->setText(MLT.producer()->get_length_time());
         m_scrubber->setInPoint(MLT.producer()->get_in());
         m_scrubber->setOutPoint(MLT.producer()->get_out());
         m_scrubber->show();
@@ -347,13 +345,14 @@ void Player::onProducerOpened()
     play();
 }
 
-void Player::onShowFrame(Mlt::QFrame, int position)
+void Player::onShowFrame(Mlt::QFrame frame)
 {
     if (MLT.producer() && MLT.producer()->is_valid()) {
+        int position = frame.frame()->get_position();
         if (position < MLT.producer()->get_length()) {
             m_position = position;
             m_positionSpinner->blockSignals(true);
-            m_positionSpinner->setValue((int) position);
+            m_positionSpinner->setValue(position);
             m_positionSpinner->blockSignals(false);
             m_scrubber->onSeek(position);
         }
