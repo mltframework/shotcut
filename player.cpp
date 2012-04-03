@@ -241,9 +241,9 @@ Player::Player(QWidget *parent)
 void Player::readSettings()
 {
     ui->actionProgressive->setChecked(m_settings.value("player/progressive", true).toBool());
-    if (m_settings.value("player/quality", "medium").toString() == "high")
+    if (m_settings.value("player/quality", "low").toString() == "high")
         ui->actionHighQuality->setChecked(true);
-    else if (m_settings.value("player/quality", "medium").toString() == "medium")
+    else if (m_settings.value("player/quality", "low").toString() == "medium")
         ui->actionMediumQuality->setChecked(true);
     else
         ui->actionLowQuality->setChecked(true);
