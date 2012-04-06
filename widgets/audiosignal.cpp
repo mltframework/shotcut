@@ -34,7 +34,7 @@ AudioSignal::AudioSignal(QWidget *parent): QWidget(parent)
     //label=new QLabel();
     //vbox->addWidget(label);
     setMinimumHeight(10);
-    setMinimumWidth(61);
+    setMinimumWidth(48);
     dbscale << 0 << -1 << -2 << -3 << -4 << -5 << -6 << -8 << -10 << -20 << -40 ;
     setContextMenuPolicy(Qt::ActionsContextMenu);
     m_aMonitoringEnabled = new QAction(tr("Monitor audio signal"), this);
@@ -137,8 +137,8 @@ void AudioSignal::paintEvent(QPaintEvent* /*e*/)
     QPainter p(this);
     int numchan = channels.size();
     bool horiz=width() > height();
-    int dbsize=20;
-    bool showdb=width()>(dbsize+40);
+    int dbsize = fontMetrics().width("-MM");
+    bool showdb=width()>(dbsize+20);
     //valpixel=1.0 for 127, 1.0+(1/40) for 1 short oversample, 1.0+(2/40) for longer oversample
     for (int i = 0; i < numchan; i++) {
         //int maxx= (unsigned char)channels[i] * (horiz ? width() : height() ) / 127;
@@ -174,13 +174,13 @@ void AudioSignal::paintEvent(QPaintEvent* /*e*/)
                 if (horiz){
                     p.fillRect(_x1, _y1, _x2, _y2, QBrush(sig, Qt::SolidPattern) );
                 }else{
-                    p.fillRect(_y1, height()-_x1, _y2,-_x2, QBrush(sig, Qt::SolidPattern) );
+                    p.fillRect(_y1+dbsize, height()-_x1, _y2,-_x2, QBrush(sig, Qt::SolidPattern) );
                 }
                 maxx -= xdelta;
             }
         }
         int xp=valueToPixel((double)peeks.at(i)/127.0)*(horiz?width():height())-2;
-        p.fillRect(horiz?xp:_y1,horiz?_y1:height()-xdelta-xp,horiz?3:_y2,horiz?_y2:3,QBrush(Qt::black,Qt::SolidPattern));
+        p.fillRect(horiz?xp:_y1+dbsize, horiz?_y1:height()-xdelta-xp, horiz?3:_y2, horiz?_y2:3, QBrush(Qt::black,Qt::SolidPattern));
 
     }
     if (showdb){
@@ -188,7 +188,7 @@ void AudioSignal::paintEvent(QPaintEvent* /*e*/)
         for (int l=0;l<dbscale.size();l++){
             if (!horiz){
                 double xf=pow(10.0,(double)dbscale.at(l) / 20.0 )*(double)height();
-                p.drawText(width()-20,height()-xf*40.0/42.0+20, QString().sprintf("%d",dbscale.at(l)));
+                p.drawText(0, height()-xf*40.0/42.0+20, QString().sprintf("%d",dbscale.at(l)));
             }else{
                 double xf=pow(10.0,(double)dbscale.at(l) / 20.0 )*(double)width();
                 p.drawText(xf*40/42-10,height()-2, QString().sprintf("%d",dbscale.at(l)));
