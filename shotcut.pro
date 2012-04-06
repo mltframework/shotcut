@@ -28,7 +28,8 @@ SOURCES += main.cpp\
     abstractproducerwidget.cpp \
     widgets/avformatproducerwidget.cpp \
     widgets/imageproducerwidget.cpp \
-    widgets/timespinbox.cpp
+    widgets/timespinbox.cpp \
+    widgets/audiosignal.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -54,7 +55,8 @@ HEADERS  += mainwindow.h \
     widgets/servicepresetwidget.h \
     widgets/avformatproducerwidget.h \
     widgets/imageproducerwidget.h \
-    widgets/timespinbox.h
+    widgets/timespinbox.h \
+    widgets/audiosignal.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \

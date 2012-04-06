@@ -20,6 +20,7 @@
 #include "scrubbar.h"
 #include "mainwindow.h"
 #include "widgets/timespinbox.h"
+#include "widgets/audiosignal.h"
 #include <QtGui>
 
 QT_BEGIN_NAMESPACE
@@ -183,7 +184,22 @@ Player::Player(QWidget *parent)
     MLT.videoWidget()->setContentsMargins(0, 0, 0, 0);
     MLT.videoWidget()->setContextMenuPolicy(Qt::CustomContextMenu);
     MLT.videoWidget()->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-    layout->addWidget(MLT.videoWidget(), 10);
+
+    QWidget* tmp = new QWidget(this);
+    QHBoxLayout *hlayout = new QHBoxLayout(tmp);
+    hlayout->setSpacing(0);
+    hlayout->addWidget(MLT.videoWidget(), 10);
+    m_volumeSlider = new QSlider(Qt::Vertical);
+    m_audioSignal = new AudioSignal(this);
+    hlayout->addWidget(m_volumeSlider);
+    hlayout->addWidget(m_audioSignal);
+    m_volumeSlider->setRange(0, 99);
+    m_volumeSlider->setValue(m_settings.value("player/volume", 49).toInt());
+    connect(m_volumeSlider, SIGNAL(valueChanged(int)), this, SLOT(onVolumeChanged(int)));
+    connect(this, SIGNAL(audioSamplesSignal(const QVector<int16_t>&, const int&, const int&, const int&)),
+                         m_audioSignal, SLOT(slotReceiveAudio(const QVector<int16_t>&, const int&, const int&, const int&)));
+
+    layout->addWidget(tmp, 10);
     layout->addStretch();
 
     // Add the scrub bar.
@@ -342,6 +358,7 @@ void Player::onProducerOpened()
         m_scrubber->hide();
     }
     m_positionSpinner->setEnabled(seekable);
+    onVolumeChanged(m_volumeSlider->value());
     play();
 }
 
@@ -358,6 +375,7 @@ void Player::onShowFrame(Mlt::QFrame frame)
         }
         if (position >= MLT.producer()->get_length() - 1)
             emit endOfStream();
+        showAudio(frame.frame());
     }
 }
 
@@ -484,4 +502,29 @@ void Player::on_actionHighQuality_triggered(bool checked)
         }
     }
     m_settings.setValue("player/quality", "high");
+}
+
+void Player::showAudio(Mlt::Frame* frame)
+{
+    if (frame->get_int("test_audio"))
+        return;
+    mlt_audio_format format = mlt_audio_s16;
+    int frequency = 0;
+    int channels = 0;
+    int samples = 0;
+    int16_t* data = (int16_t*) frame->get_audio(format, frequency, channels, samples);
+
+    if (samples && data) {
+        QVector<int16_t> pcm(samples * channels);
+        memcpy(pcm.data(), data, samples * channels * sizeof(int16_t));
+        emit audioSamplesSignal(pcm, frequency, channels, samples);
+    }
+}
+
+
+void Player::onVolumeChanged(int volume)
+{
+    MLT.setVolume(pow(double(volume) / 99, 2));
+//    MLT.setVolume(::exp(6.908 * double(volume) / 99) / 1000);
+    m_settings.setValue("player/volume", volume);
 }

@@ -83,7 +83,7 @@ Controller& Controller::singleton(QWidget* parent)
     static Controller* instance = 0;
     if (!instance) {
         qRegisterMetaType<QFrame>("Mlt::QFrame");
-#if defined(Q_WS_MAC) || defined(Q_WS_WIN)
+#if defined(Q_WS_MAC) || defined(Q_WS_WIN) || defined(Q_WS_X11)
         instance = new GLWidget(parent);
 #else
         instance = new SDLWidget(parent);

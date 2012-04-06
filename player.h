@@ -28,6 +28,8 @@ class ScrubBar;
 class QSpinBox;
 class QLabel;
 class TimeSpinBox;
+class AudioSignal;
+class QSlider;
 
 namespace Ui {
     class Player;
@@ -49,6 +51,7 @@ signals:
     void endOfStream();
     void seeked();
     void showStatusMessage(QString);
+    void audioSamplesSignal(const QVector<int16_t>&, const int&, const int&, const int&);
 
 public slots:
     void play(double speed = 1.0);
@@ -58,12 +61,14 @@ public slots:
     void seek(int position);
     void onProducerOpened();
     void onShowFrame(Mlt::QFrame frame);
+    void onVolumeChanged(int);
 
 protected:
     void resizeEvent(QResizeEvent* event);
 
 private:
     void readSettings();
+    void showAudio(Mlt::Frame* frame);
 
     Ui::Player* ui;
     QSettings m_settings;
@@ -73,6 +78,8 @@ private:
     unsigned m_position;
     QIcon m_playIcon;
     QIcon m_pauseIcon;
+    QSlider* m_volumeSlider;
+    AudioSignal* m_audioSignal;
 
 private slots:
     void onInChanged(int in);
