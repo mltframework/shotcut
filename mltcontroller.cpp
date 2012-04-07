@@ -75,6 +75,7 @@ Controller::Controller()
     , m_producer(0)
     , m_consumer(0)
     , m_profile(new Mlt::Profile)
+    , m_volumeFilter(0)
 {
 }
 
@@ -149,6 +150,8 @@ void Controller::close()
     m_consumer = 0;
     delete m_producer;
     m_producer = 0;
+    delete m_volumeFilter;
+    m_volumeFilter = 0;
 }
 
 void Controller::play(double speed)
@@ -178,8 +181,13 @@ void Controller::stop()
 
 void Controller::setVolume(double volume)
 {
-    if (m_consumer)
-        m_consumer->set("volume", volume);
+    if (m_consumer) {
+        if (!m_volumeFilter) {
+            m_volumeFilter = new Filter(profile(), "volume");
+            m_consumer->attach(*m_volumeFilter);
+        }
+        m_volumeFilter->set("gain", volume);
+    }
 }
 
 void Controller::onWindowResize()

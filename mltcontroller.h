@@ -98,10 +98,11 @@ public:
 protected:
     Mlt::Repository* m_repo;
     Mlt::Producer* m_producer;
-    Mlt::Consumer* m_consumer;
+    Mlt::FilteredConsumer* m_consumer;
 
 private:
     Mlt::Profile* m_profile;
+    Mlt::Filter* m_volumeFilter;
 };
 
 } // namespace

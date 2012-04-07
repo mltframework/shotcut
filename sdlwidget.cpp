@@ -39,7 +39,7 @@ int SDLWidget::open(Mlt::Producer* producer)
         // sdl_preview does not work good on Windows
         m_consumer = new Mlt::Consumer(profile(), "sdl");
 #else
-        m_consumer = new Mlt::Consumer(profile(), "sdl_preview");
+        m_consumer = new Mlt::FilteredConsumer(profile(), "sdl_preview");
 #endif
         if (m_consumer->is_valid()) {
             // Embed the SDL window in our GUI.
