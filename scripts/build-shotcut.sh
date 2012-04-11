@@ -321,7 +321,7 @@ function set_globals {
   REPOLOCS[4]="http://git.chromium.org/webm/libvpx.git"
   REPOLOCS[5]="git://mltframework.org/swfdec.git"
   REPOLOCS[6]="http://downloads.sourceforge.net/project/lame/lame/3.98.4/lame-3.98.4.tar.gz"
-  REPOLOCS[7]="git://gitorious.org/mltframework/shotcut.git"
+  REPOLOCS[7]="https://git.gitorious.org/mltframework/shotcut.git"
   REPOLOCS[8]="http://plugin.org.uk/releases/0.4.15/swh-plugins-0.4.15.tar.gz"
 
 
