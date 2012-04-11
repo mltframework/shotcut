@@ -23,6 +23,8 @@
 #include "widgets/audiosignal.h"
 #include <QtGui>
 
+#define VOLUME_KNEE (88)
+
 QT_BEGIN_NAMESPACE
 
 namespace Ui {
@@ -185,6 +187,7 @@ Player::Player(QWidget *parent)
     MLT.videoWidget()->setContextMenuPolicy(Qt::CustomContextMenu);
     MLT.videoWidget()->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 
+    // Add the volume and signal level meter
     QWidget* tmp = new QWidget(this);
     QHBoxLayout *hlayout = new QHBoxLayout(tmp);
     hlayout->setSpacing(0);
@@ -194,7 +197,7 @@ Player::Player(QWidget *parent)
     hlayout->addWidget(m_volumeSlider);
     hlayout->addWidget(m_audioSignal);
     m_volumeSlider->setRange(0, 99);
-    m_volumeSlider->setValue(m_settings.value("player/volume", 49).toInt());
+    m_volumeSlider->setValue(m_settings.value("player/volume", VOLUME_KNEE).toInt());
     connect(m_volumeSlider, SIGNAL(valueChanged(int)), this, SLOT(onVolumeChanged(int)));
     connect(this, SIGNAL(audioSamplesSignal(const QVector<int16_t>&, const int&, const int&, const int&)),
                          m_audioSignal, SLOT(slotReceiveAudio(const QVector<int16_t>&, const int&, const int&, const int&)));
@@ -284,13 +287,6 @@ void Player::resizeEvent(QResizeEvent*)
 
 void Player::play(double speed)
 {
-    bool seekable = MLT.producer()->get_int("seekable");
-    ui->actionPlay->setEnabled(true);
-    ui->actionSkipPrevious->setEnabled(seekable);
-    ui->actionSkipNext->setEnabled(seekable);
-    ui->actionRewind->setEnabled(seekable);
-    ui->actionFastForward->setEnabled(seekable);
-
     MLT.play(speed);
     // TODO: use stop icon for live sources
     ui->actionPlay->setIcon(m_pauseIcon);
@@ -359,6 +355,13 @@ void Player::onProducerOpened()
     }
     m_positionSpinner->setEnabled(seekable);
     onVolumeChanged(m_volumeSlider->value());
+
+    ui->actionPlay->setEnabled(true);
+    ui->actionSkipPrevious->setEnabled(seekable);
+    ui->actionSkipNext->setEnabled(seekable);
+    ui->actionRewind->setEnabled(seekable);
+    ui->actionFastForward->setEnabled(seekable);
+
     play();
 }
 
@@ -521,10 +524,33 @@ void Player::showAudio(Mlt::Frame* frame)
     }
 }
 
+//----------------------------------------------------------------------------
+// IEC standard dB scaling -- as borrowed from meterbridge (c) Steve Harris
+
+static inline float IEC_dB ( float fScale )
+{
+	float dB = 0.0f;
+
+	if (fScale < 0.025f)	    // IEC_Scale(-60.0f)
+		dB = (fScale / 0.0025f) - 70.0f;
+	else if (fScale < 0.075f)	// IEC_Scale(-50.0f)
+		dB = (fScale - 0.025f) / 0.005f - 60.0f;
+	else if (fScale < 0.15f)	// IEC_Scale(-40.0f)
+		dB = (fScale - 0.075f) / 0.0075f - 50.0f;
+	else if (fScale < 0.3f)		// IEC_Scale(-30.0f)
+		dB = (fScale - 0.15f) / 0.015f - 40.0f;
+	else if (fScale < 0.5f)		// IEC_Scale(-20.0f)
+		dB = (fScale - 0.3f) / 0.02f - 30.0f;
+	else /* if (fScale < 1.0f)	// IED_Scale(0.0f)) */
+		dB = (fScale - 0.5f) / 0.025f - 20.0f;
+
+	return (dB > -0.001f && dB < 0.001f ? 0.0f : dB);
+}
 
 void Player::onVolumeChanged(int volume)
 {
-    MLT.setVolume(pow(double(volume) / 99, 2));
-//    MLT.setVolume(::exp(6.908 * double(volume) / 99) / 1000);
+    const double gain = double(volume) / VOLUME_KNEE;
+    MLT.setVolume(gain);
+    emit showStatusMessage(QString("%1 dB").arg(IEC_dB(gain)));
     m_settings.setValue("player/volume", volume);
 }

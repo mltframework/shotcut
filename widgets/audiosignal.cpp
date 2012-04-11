@@ -35,7 +35,7 @@ AudioSignal::AudioSignal(QWidget *parent): QWidget(parent)
     //vbox->addWidget(label);
     setMinimumHeight(10);
     setMinimumWidth(48);
-    dbscale << 0 << -1 << -2 << -3 << -4 << -5 << -6 << -8 << -10 << -20 << -40 ;
+    dbscale << 5 << 0 << -5 << -10 << -15 << -20 << -25 << -30 << -35 << -40 << -50 << -60;
     setContextMenuPolicy(Qt::ActionsContextMenu);
     m_aMonitoringEnabled = new QAction(tr("Monitor audio signal"), this);
     m_aMonitoringEnabled->setCheckable(true);
@@ -43,6 +43,8 @@ AudioSignal::AudioSignal(QWidget *parent): QWidget(parent)
     connect(m_aMonitoringEnabled, SIGNAL(toggled(bool)), this, SLOT(slotSwitchAudioMonitoring(bool)));
     connect(&m_timer,SIGNAL(timeout()),this,SLOT(slotNoAudioTimeout()));
     addAction(m_aMonitoringEnabled);
+    const QFont& font = QWidget::font();
+    QWidget::setFont(QFont(font.family(), font.pointSize() - 2));
 }
 
 AudioSignal::~AudioSignal()
@@ -123,10 +125,34 @@ void AudioSignal::showAudio(const QByteArray arr)
     update();
 }
 
+//----------------------------------------------------------------------------
+// IEC standard dB scaling -- as borrowed from meterbridge (c) Steve Harris
+
+static inline float IEC_Scale ( float dB )
+{
+	float fScale = 1.0f;
+
+	if (dB < -70.0f)
+		fScale = 0.0f;
+	else if (dB < -60.0f)
+		fScale = (dB + 70.0f) * 0.0025f;
+	else if (dB < -50.0f)
+		fScale = (dB + 60.0f) * 0.005f + 0.025f;
+	else if (dB < -40.0)
+		fScale = (dB + 50.0f) * 0.0075f + 0.075f;
+	else if (dB < -30.0f)
+		fScale = (dB + 40.0f) * 0.015f + 0.15f;
+	else if (dB < -20.0f)
+		fScale = (dB + 30.0f) * 0.02f + 0.3f;
+	else if (dB < -0.001f || dB > 0.001f)  /* if (dB < 0.0f) */
+		fScale = (dB + 20.0f) * 0.025f + 0.5f;
+
+	return fScale;
+}
+
 double AudioSignal::valueToPixel(double in)
 {
-	//in=0 -> return 0 (null length from max), in=127/127 return 1 (max length )
-	return 1.0- log10( in)/log10(1.0/127.0);
+	return IEC_Scale(log10(in) * 20.0);
 }
 
 void AudioSignal::paintEvent(QPaintEvent* /*e*/)
@@ -139,12 +165,13 @@ void AudioSignal::paintEvent(QPaintEvent* /*e*/)
     bool horiz=width() > height();
     int dbsize = fontMetrics().width("-MM");
     bool showdb=width()>(dbsize+20);
+    const int h = IEC_Scale(-dbscale.at(0)) * height();
+
     //valpixel=1.0 for 127, 1.0+(1/40) for 1 short oversample, 1.0+(2/40) for longer oversample
     for (int i = 0; i < numchan; i++) {
-        //int maxx= (unsigned char)channels[i] * (horiz ? width() : height() ) / 127;
         double valpixel=valueToPixel((double)(unsigned char)channels[i]/127.0);
-        int maxx=  height()  * valpixel; 
-        int xdelta= height()   /42 ;
+        int maxx=  h  * valpixel;
+        int xdelta= h / 42 ;
         int _y2= (showdb?width()-dbsize:width () ) / numchan - 1  ;
         int _y1= (showdb?width()-dbsize:width() ) *i/numchan;
         int _x2= maxx >  xdelta ? xdelta - 3 : maxx - 3 ;
@@ -179,7 +206,7 @@ void AudioSignal::paintEvent(QPaintEvent* /*e*/)
                 maxx -= xdelta;
             }
         }
-        int xp=valueToPixel((double)peeks.at(i)/127.0)*(horiz?width():height())-2;
+        int xp=valueToPixel((double)peeks.at(i)/127.0)*(horiz?width():h)-2;
         p.fillRect(horiz?xp:_y1+dbsize, horiz?_y1:height()-xdelta-xp, horiz?3:_y2, horiz?_y2:3, QBrush(Qt::black,Qt::SolidPattern));
 
     }
@@ -187,10 +214,10 @@ void AudioSignal::paintEvent(QPaintEvent* /*e*/)
         //draw db value at related pixel
         for (int l=0;l<dbscale.size();l++){
             if (!horiz){
-                double xf=pow(10.0,(double)dbscale.at(l) / 20.0 )*(double)height();
-                p.drawText(0, height()-xf*40.0/42.0+20, QString().sprintf("%d",dbscale.at(l)));
+                double xf = IEC_Scale(dbscale.at(l)) * h;
+                p.drawText(0, height() - xf, QString().sprintf("%d",dbscale.at(l)));
             }else{
-                double xf=pow(10.0,(double)dbscale.at(l) / 20.0 )*(double)width();
+                double xf = IEC_Scale(dbscale.at(l)) * (double) width();
                 p.drawText(xf*40/42-10,height()-2, QString().sprintf("%d",dbscale.at(l)));
             }
         }
