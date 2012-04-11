@@ -34,7 +34,7 @@ AudioSignal::AudioSignal(QWidget *parent): QWidget(parent)
     //label=new QLabel();
     //vbox->addWidget(label);
     setMinimumHeight(10);
-    setMinimumWidth(48);
+    setMinimumWidth(32);
     dbscale << 5 << 0 << -5 << -10 << -15 << -20 << -25 << -30 << -35 << -40 << -50 << -60;
     setContextMenuPolicy(Qt::ActionsContextMenu);
     m_aMonitoringEnabled = new QAction(tr("Monitor audio signal"), this);
@@ -164,7 +164,7 @@ void AudioSignal::paintEvent(QPaintEvent* /*e*/)
     int numchan = channels.size();
     bool horiz=width() > height();
     int dbsize = fontMetrics().width("-MM");
-    bool showdb=width()>(dbsize+20);
+    bool showdb=width()>(dbsize+2);
     const int h = IEC_Scale(-dbscale.at(0)) * height();
 
     //valpixel=1.0 for 127, 1.0+(1/40) for 1 short oversample, 1.0+(2/40) for longer oversample
