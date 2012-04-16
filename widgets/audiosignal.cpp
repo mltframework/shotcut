@@ -160,7 +160,7 @@ void AudioSignal::paintEvent(QPaintEvent* /*e*/)
     QPainter p(this);
     int numchan = channels.size();
     bool horiz=width() > height();
-    int dbsize = fontMetrics().width("-60");
+    int dbsize = fontMetrics().width("-60") + 2;
     bool showdb=width()>(dbsize+2);
     const int h = IEC_Scale(-dbscale.at(0)) * height();
 

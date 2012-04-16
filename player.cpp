@@ -191,7 +191,9 @@ Player::Player(QWidget *parent)
     QWidget* tmp = new QWidget(this);
     QHBoxLayout *hlayout = new QHBoxLayout(tmp);
     hlayout->setSpacing(0);
+    hlayout->setContentsMargins(0, 0, 0, 0);
     hlayout->addWidget(MLT.videoWidget(), 10);
+    hlayout->addSpacing(4);
     m_volumeSlider = new QSlider(Qt::Vertical);
     m_audioSignal = new AudioSignal(this);
     hlayout->addWidget(m_volumeSlider);
