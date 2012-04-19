@@ -37,7 +37,7 @@ int SDLWidget::open(Mlt::Producer* producer)
     if (!error) {
 #if defined(Q_WS_WIN)
         // sdl_preview does not work good on Windows
-        m_consumer = new Mlt::Consumer(profile(), "sdl");
+        m_consumer = new Mlt::FilteredConsumer(profile(), "sdl");
 #else
         m_consumer = new Mlt::FilteredConsumer(profile(), "sdl_preview");
 #endif
