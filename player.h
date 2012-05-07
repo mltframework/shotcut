@@ -80,6 +80,7 @@ private:
     QIcon m_pauseIcon;
     QSlider* m_volumeSlider;
     AudioSignal* m_audioSignal;
+    int m_seekPosition;
 
 private slots:
     void onInChanged(int in);

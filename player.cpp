@@ -24,6 +24,7 @@
 #include <QtGui>
 
 #define VOLUME_KNEE (88)
+#define SEEK_INACTIVE (-1)
 
 QT_BEGIN_NAMESPACE
 
@@ -332,8 +333,11 @@ void Player::seek(int position)
 {
     if (MLT.producer()->get_int("seekable")) {
         emit seeked();
-        if (position >= 0)
-            MLT.seek(qMin(position, MLT.producer()->get_length() - 1));
+        if (position >= 0) {
+            if (m_seekPosition == SEEK_INACTIVE)
+                MLT.seek(qMin(position, MLT.producer()->get_length() - 1));
+            m_seekPosition = qMin(position, MLT.producer()->get_length() - 1);
+        }
     }
 }
 
@@ -381,6 +385,9 @@ void Player::onShowFrame(Mlt::QFrame frame)
         if (position >= MLT.producer()->get_length() - 1)
             emit endOfStream();
         showAudio(frame.frame());
+        if (m_seekPosition != SEEK_INACTIVE)
+            MLT.seek(m_seekPosition);
+        m_seekPosition = SEEK_INACTIVE;
     }
 }
 
