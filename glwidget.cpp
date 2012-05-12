@@ -27,6 +27,9 @@
 #include <QPalette>
 #include <Mlt.h>
 #include "glwidget.h"
+#if defined(Q_WS_X11)
+#include <GL/glu.h>
+#endif
 
 #ifndef GL_TEXTURE_RECTANGLE_EXT
 #define GL_TEXTURE_RECTANGLE_EXT GL_TEXTURE_RECTANGLE_NV
