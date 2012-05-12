@@ -102,3 +102,6 @@ win32 {
     CONFIG += link_pkgconfig
     PKGCONFIG += mlt++
 }
+unix:!mac {
+    LIBS += -lGLU
+}
