@@ -57,7 +57,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QSpinBox" name="durationSpinBox">
+      <widget class="TimeSpinBox" name="durationSpinBox">
        <property name="focusPolicy">
         <enum>Qt::ClickFocus</enum>
        </property>
@@ -69,9 +69,6 @@
        </property>
        <property name="keyboardTracking">
         <bool>false</bool>
-       </property>
-       <property name="suffix">
-        <string> frames</string>
        </property>
        <property name="maximum">
         <number>2147483647</number>
@@ -637,6 +634,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>TimeSpinBox</class>
+   <extends>QSpinBox</extends>
+   <header>widgets/timespinbox.h</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>tabWidget</tabstop>
   <tabstop>videoTrackComboBox</tabstop>

@@ -24,15 +24,15 @@ TimeSpinBox::TimeSpinBox(QWidget *parent)
     : QSpinBox(parent)
 {
     setRange(0, INT_MAX);
-    setValue(0);
     setFixedWidth(this->fontMetrics().width("HHH:MM:SS.MMM"));
     setAlignment(Qt::AlignRight);
     m_validator = new QRegExpValidator(QRegExp("^\\s*(\\d*:){0,3}[.,]*\\d*\\s*$"), this);
+    setValue(0);
 }
 
 QValidator::State TimeSpinBox::validate(QString &input, int &pos) const
 {
-    return m_validator->validate(input, pos);
+        return m_validator->validate(input, pos);
 }
 
 int TimeSpinBox::valueFromText(const QString &text) const
