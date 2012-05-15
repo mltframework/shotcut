@@ -79,7 +79,8 @@ MainWindow::MainWindow(QWidget *parent)
     addDockWidget(Qt::LeftDockWidgetArea, m_propertiesDock);
     ui->menuView->addAction(m_propertiesDock->toggleViewAction());
     m_recentDock = new RecentDock(this);
-    tabifyDockWidget(m_recentDock , m_propertiesDock);
+    addDockWidget(Qt::LeftDockWidgetArea, m_recentDock);
+    tabifyDockWidget(m_recentDock, m_propertiesDock);
     ui->menuView->addAction(m_recentDock->toggleViewAction());
 
     // Connect signals.
