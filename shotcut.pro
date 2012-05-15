@@ -29,7 +29,8 @@ SOURCES += main.cpp\
     widgets/avformatproducerwidget.cpp \
     widgets/imageproducerwidget.cpp \
     widgets/timespinbox.cpp \
-    widgets/audiosignal.cpp
+    widgets/audiosignal.cpp \
+    docks/recentdock.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -56,7 +57,8 @@ HEADERS  += mainwindow.h \
     widgets/avformatproducerwidget.h \
     widgets/imageproducerwidget.h \
     widgets/timespinbox.h \
-    widgets/audiosignal.h
+    widgets/audiosignal.h \
+    docks/recentdock.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
@@ -75,7 +77,8 @@ FORMS    += mainwindow.ui \
     widgets/x11grabwidget.ui \
     widgets/servicepresetwidget.ui \
     widgets/avformatproducerwidget.ui \
-    widgets/imageproducerwidget.ui
+    widgets/imageproducerwidget.ui \
+    docks/recentdock.ui
 
 RESOURCES += \
     resources.qrc

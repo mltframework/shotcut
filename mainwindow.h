@@ -30,6 +30,7 @@ namespace Ui {
     class MainWindow;
 }
 class Player;
+class RecentDock;
 
 class MainWindow : public QMainWindow
 {
@@ -39,7 +40,6 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void open(Mlt::Producer* producer);
-    void open(const QString& url, const Mlt::Properties* = 0);
 
 signals:
     void producerOpened();
@@ -60,9 +60,11 @@ private:
     QSettings m_settings;
     Player* m_player;
     QDockWidget* m_propertiesDock;
+    RecentDock* m_recentDock;
     QString m_currentFile;
 
 public slots:
+    void open(const QString& url, const Mlt::Properties* = 0);
     void openVideo();
     void showStatusMessage(QString);
 
@@ -71,8 +73,6 @@ private slots:
     void on_actionOpenOther_triggered();
     void onProducerOpened();
     void onProducerChanged();
-    void on_actionViewProperties_triggered(bool checked);
-    void onPropertiesVisibilityChanged(bool visible);
     bool on_actionSave_triggered();
     bool on_actionSave_As_triggered();
 };

@@ -37,6 +37,7 @@
 #include "widgets/x11grabwidget.h"
 #include "widgets/avformatproducerwidget.h"
 #include "widgets/imageproducerwidget.h"
+#include "docks/recentdock.h"
 
 #include <QtGui>
 
@@ -72,11 +73,18 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this, SIGNAL(producerOpened()), m_player, SLOT(onProducerOpened()));
     connect(m_player, SIGNAL(showStatusMessage(QString)), this, SLOT(showStatusMessage(QString)));
 
+    // Add the docks.
     m_propertiesDock = new QDockWidget(tr("Properties"));
     m_propertiesDock->setObjectName("propertiesDock");
     addDockWidget(Qt::LeftDockWidgetArea, m_propertiesDock);
+    ui->menuView->addAction(m_propertiesDock->toggleViewAction());
+    m_recentDock = new RecentDock(this);
+    tabifyDockWidget(m_recentDock , m_propertiesDock);
+    ui->menuView->addAction(m_recentDock->toggleViewAction());
+
+    // Connect signals.
     connect(this, SIGNAL(producerOpened()), this, SLOT(onProducerOpened()));
-    connect(m_propertiesDock, SIGNAL(visibilityChanged(bool)), this, SLOT(onPropertiesVisibilityChanged(bool)));
+    connect(m_recentDock, SIGNAL(itemActivated(QString)), this, SLOT(open(QString)));
 
     readSettings();
     setFocus();
@@ -141,6 +149,11 @@ void MainWindow::showStatusMessage(QString message)
 void MainWindow::readSettings()
 {
     restoreGeometry(m_settings.value("geometry").toByteArray());
+#if defined(Q_WS_MAC)
+    QSize s = size();
+    s.setHeight(s.height() + 38);
+    resize(s);
+#endif
     restoreState(m_settings.value("windowState").toByteArray());
 }
 
@@ -269,11 +282,13 @@ void MainWindow::onProducerOpened()
         AvformatProducerWidget* avw = new AvformatProducerWidget(this);
         w = avw;
         connect(avw, SIGNAL(producerReopened()), m_player, SLOT(onProducerOpened()));
+        m_recentDock->add(resource);
     }
     else if (service == "pixbuf" || service == "qimage") {
         ImageProducerWidget* avw = new ImageProducerWidget(this);
         w = avw;
         connect(avw, SIGNAL(producerReopened()), m_player, SLOT(onProducerOpened()));
+        m_recentDock->add(resource);
     }
     else if (service == "decklink")
         w = new DecklinkProducerWidget(this);
@@ -305,19 +320,6 @@ void MainWindow::onProducerChanged()
 {
     setWindowModified(true);
     MLT.refreshConsumer();
-}
-
-void MainWindow::on_actionViewProperties_triggered(bool checked)
-{
-    if (checked)
-        m_propertiesDock->show();
-    else
-        m_propertiesDock->hide();
-}
-
-void MainWindow::onPropertiesVisibilityChanged(bool visible)
-{
-    ui->actionViewProperties->setChecked(visible);
 }
 
 bool MainWindow::on_actionSave_triggered()
