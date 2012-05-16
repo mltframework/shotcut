@@ -108,6 +108,7 @@ void MainWindow::open(Mlt::Producer* producer)
     // no else here because open() will delete the producer if open fails
     if (!MLT.open(producer))
         emit producerOpened();
+    m_player->setFocus();
 }
 
 void MainWindow::open(const QString& url, const Mlt::Properties* properties)
