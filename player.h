@@ -68,6 +68,8 @@ protected:
 
 private:
     void readSettings();
+    void changeDeinterlacer(bool checked, const char* method);
+    void changeInterpolation(bool checked, const char* method);
     void showAudio(Mlt::Frame* frame);
 
     Ui::Player* ui;
@@ -91,9 +93,14 @@ private slots:
     void on_actionFastForward_triggered();
     void onVideoWidgetContextMenu(const QPoint& pos);
     void on_actionProgressive_triggered(bool checked);
-    void on_actionLowQuality_triggered(bool checked);
-    void on_actionMediumQuality_triggered(bool checked);
-    void on_actionHighQuality_triggered(bool checked);
+    void on_actionOneField_triggered(bool checked);
+    void on_actionLinearBlend_triggered(bool checked);
+    void on_actionYadifTemporal_triggered(bool checked);
+    void on_actionYadifSpatial_triggered(bool checked);
+    void on_actionNearest_triggered(bool checked);
+    void on_actionBilinear_triggered(bool checked);
+    void on_actionBicubic_triggered(bool checked);
+    void on_actionHyper_triggered(bool checked);
 };
 
 #endif // PLAYER_H

@@ -51,7 +51,8 @@ int SDLWidget::open(Mlt::Producer* producer)
             m_consumer->connect(*m_producer);
             // Make an event handler for when a frame's image should be displayed
             m_consumer->listen("consumer-frame-show", this, (mlt_listener) on_frame_show);
-            m_consumer->set("progressive", property("progressive").toBool());
+            if (!profile().progressive())
+                m_consumer->set("progressive", property("progressive").toBool());
             m_consumer->set("rescale", property("rescale").toString().toAscii().constData());
             m_consumer->set("deinterlace_method", property("deinterlace_method").toString().toAscii().constData());
         }

@@ -220,7 +220,8 @@ int GLWidget::open(Mlt::Producer* producer)
             m_consumer->listen("consumer-frame-show", this, (mlt_listener) on_frame_show);
             connect(this, SIGNAL(frameReceived(Mlt::QFrame)),
                     this, SLOT(showFrame(Mlt::QFrame)), Qt::UniqueConnection);
-            m_consumer->set("progressive", property("progressive").toBool());
+            if (!profile().progressive())
+                m_consumer->set("progressive", property("progressive").toBool());
             m_consumer->set("rescale", property("rescale").toString().toAscii().constData());
             m_consumer->set("deinterlace_method", property("deinterlace_method").toString().toAscii().constData());
             m_display_ratio = profile().dar();

@@ -37,9 +37,14 @@ public:
     QAction *actionSkipNext;
     QAction *actionSkipPrevious;
     QAction *actionProgressive;
-    QAction *actionLowQuality;
-    QAction *actionMediumQuality;
-    QAction *actionHighQuality;
+    QAction *actionOneField;
+    QAction *actionLinearBlend;
+    QAction *actionYadifTemporal;
+    QAction *actionYadifSpatial;
+    QAction *actionNearest;
+    QAction *actionBilinear;
+    QAction *actionBicubic;
+    QAction *actionHyper;
     QAction *actionRewind;
     QAction *actionFastForward;
 
@@ -68,15 +73,30 @@ public:
         actionProgressive = new QAction(widget);
         actionProgressive->setObjectName(QString::fromUtf8("actionProgressive"));
         actionProgressive->setCheckable(true);
-        actionLowQuality = new QAction(widget);
-        actionLowQuality->setObjectName(QString::fromUtf8("actionLowQuality"));
-        actionLowQuality->setCheckable(true);
-        actionMediumQuality = new QAction(widget);
-        actionMediumQuality->setObjectName(QString::fromUtf8("actionMediumQuality"));
-        actionMediumQuality->setCheckable(true);
-        actionHighQuality = new QAction(widget);
-        actionHighQuality->setObjectName(QString::fromUtf8("actionHighQuality"));
-        actionHighQuality->setCheckable(true);
+        actionOneField = new QAction(widget);
+        actionOneField->setObjectName(QString::fromUtf8("actionOneField"));
+        actionOneField->setCheckable(true);
+        actionLinearBlend = new QAction(widget);
+        actionLinearBlend->setObjectName(QString::fromUtf8("actionLinearBlend"));
+        actionLinearBlend->setCheckable(true);
+        actionYadifTemporal = new QAction(widget);
+        actionYadifTemporal->setObjectName(QString::fromUtf8("actionYadifTemporal"));
+        actionYadifTemporal->setCheckable(true);
+        actionYadifSpatial = new QAction(widget);
+        actionYadifSpatial->setObjectName(QString::fromUtf8("actionYadifSpatial"));
+        actionYadifSpatial->setCheckable(true);
+        actionNearest = new QAction(widget);
+        actionNearest->setObjectName(QString::fromUtf8("actionNearest"));
+        actionNearest->setCheckable(true);
+        actionBilinear = new QAction(widget);
+        actionBilinear->setObjectName(QString::fromUtf8("actionBilinear"));
+        actionBilinear->setCheckable(true);
+        actionBicubic = new QAction(widget);
+        actionBicubic->setObjectName(QString::fromUtf8("actionBicubic"));
+        actionBicubic->setCheckable(true);
+        actionHyper = new QAction(widget);
+        actionHyper->setObjectName(QString::fromUtf8("actionHyper"));
+        actionHyper->setCheckable(true);
         actionRewind = new QAction(widget);
         actionRewind->setObjectName(QString::fromUtf8("actionRewind"));
         QIcon icon6;
@@ -97,39 +117,44 @@ public:
         const char* name = widget->objectName().toUtf8().constData();
         actionPlay->setText(QApplication::translate(name, "Play", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
-        actionPlay->setToolTip(QApplication::translate(name, "Start playback", 0, QApplication::UnicodeUTF8));
+        actionPlay->setToolTip(QApplication::translate(name, "Start playback (K)", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
         actionPlay->setShortcut(QApplication::translate(name, "Space", 0, QApplication::UnicodeUTF8));
         actionPause->setText(QApplication::translate(name, "Pause", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
-        actionPause->setToolTip(QApplication::translate(name, "Pause playback", 0, QApplication::UnicodeUTF8));
+        actionPause->setToolTip(QApplication::translate(name, "Pause playback (K)", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
         actionPause->setShortcut(QApplication::translate(name, "Backspace", 0, QApplication::UnicodeUTF8));
         actionSkipNext->setText(QApplication::translate(name, "Skip Next", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
-        actionSkipNext->setToolTip(QApplication::translate(name, "Skip to the next point", 0, QApplication::UnicodeUTF8));
+        actionSkipNext->setToolTip(QApplication::translate(name, "Skip to the next point (Alt+Right)", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
         actionSkipNext->setShortcut(QApplication::translate(name, "Alt+Right", 0, QApplication::UnicodeUTF8));
         actionSkipPrevious->setText(QApplication::translate(name, "Skip Previous", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
-        actionSkipPrevious->setToolTip(QApplication::translate(name, "Skip to the previous point", 0, QApplication::UnicodeUTF8));
+        actionSkipPrevious->setToolTip(QApplication::translate(name, "Skip to the previous point (Alt+Left)", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
         actionSkipPrevious->setShortcut(QApplication::translate(name, "Alt+Left", 0, QApplication::UnicodeUTF8));
         actionProgressive->setText(QApplication::translate(name, "Progressive", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
         actionProgressive->setToolTip(QApplication::translate(name, "Force the video preview to deinterlace if needed", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
-        actionLowQuality->setText(QApplication::translate(name, "Low", 0, QApplication::UnicodeUTF8));
-        actionMediumQuality->setText(QApplication::translate(name, "Medium", 0, QApplication::UnicodeUTF8));
-        actionHighQuality->setText(QApplication::translate(name, "High", 0, QApplication::UnicodeUTF8));
+        actionOneField->setText(QApplication::translate(name, "One Field (fast)", 0, QApplication::UnicodeUTF8));
+        actionLinearBlend->setText(QApplication::translate(name, "Linear Blend (fast)", 0, QApplication::UnicodeUTF8));
+        actionYadifTemporal->setText(QApplication::translate(name, "YADIF - temporal only (good)", 0, QApplication::UnicodeUTF8));
+        actionYadifSpatial->setText(QApplication::translate(name, "YADIF - temporal + spatial (best)", 0, QApplication::UnicodeUTF8));
+        actionNearest->setText(QApplication::translate(name, "Nearest Neighbor (fast)", 0, QApplication::UnicodeUTF8));
+        actionBilinear->setText(QApplication::translate(name, "Bilinear (good)", 0, QApplication::UnicodeUTF8));
+        actionBicubic->setText(QApplication::translate(name, "Bicubic (better)", 0, QApplication::UnicodeUTF8));
+        actionHyper->setText(QApplication::translate(name, "Hyper/Lanczoz (best)", 0, QApplication::UnicodeUTF8));
         actionRewind->setText(QApplication::translate(name, "Rewind", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
-        actionRewind->setToolTip(QApplication::translate(name, "Play quickly backwards", 0, QApplication::UnicodeUTF8));
+        actionRewind->setToolTip(QApplication::translate(name, "Play quickly backwards (J)", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
         actionRewind->setShortcut(QApplication::translate(name, "J", 0, QApplication::UnicodeUTF8));
         actionFastForward->setText(QApplication::translate(name, "Fast Forward", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
-        actionFastForward->setToolTip(QApplication::translate(name, "Play quickly forwards", 0, QApplication::UnicodeUTF8));
+        actionFastForward->setToolTip(QApplication::translate(name, "Play quickly forwards (L)", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
         actionFastForward->setShortcut(QApplication::translate(name, "L", 0, QApplication::UnicodeUTF8));
     }
@@ -172,18 +197,22 @@ Player::Player(QWidget *parent)
     // Create MLT video widget.
     Mlt::Controller::singleton(this);
     MLT.videoWidget()->setProperty("progressive", ui->actionProgressive->isChecked());
-    if (ui->actionHighQuality->isChecked()) {
-        MLT.videoWidget()->setProperty("rescale", "bicubic");
-        MLT.videoWidget()->setProperty("deinterlace_method", "yadif");
-    }
-    else if (ui->actionMediumQuality->isChecked()) {
-        MLT.videoWidget()->setProperty("rescale", "bilinear");
-        MLT.videoWidget()->setProperty("deinterlace_method", "yadif-nospatial");
-    }
-    else {
-        MLT.videoWidget()->setProperty("rescale", "nearest");
+    if (ui->actionOneField->isChecked())
         MLT.videoWidget()->setProperty("deinterlace_method", "onefield");
-    }
+    else if (ui->actionLinearBlend->isChecked())
+        MLT.videoWidget()->setProperty("deinterlace_method", "linearblend");
+    else if (ui->actionYadifTemporal->isChecked())
+        MLT.videoWidget()->setProperty("deinterlace_method", "yadif-nospatial");
+    else
+        MLT.videoWidget()->setProperty("deinterlace_method", "yadif");
+    if (ui->actionNearest->isChecked())
+        MLT.videoWidget()->setProperty("rescale", "nearest");
+    else if (ui->actionBilinear->isChecked())
+        MLT.videoWidget()->setProperty("rescale", "bilinear");
+    else if (ui->actionBicubic->isChecked())
+        MLT.videoWidget()->setProperty("rescale", "bicubic");
+    else
+        MLT.videoWidget()->setProperty("rescale", "hyper");
     MLT.videoWidget()->setContentsMargins(0, 0, 0, 0);
     MLT.videoWidget()->setContextMenuPolicy(Qt::CustomContextMenu);
     MLT.videoWidget()->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
@@ -263,12 +292,26 @@ Player::Player(QWidget *parent)
 void Player::readSettings()
 {
     ui->actionProgressive->setChecked(m_settings.value("player/progressive", true).toBool());
-    if (m_settings.value("player/quality", "low").toString() == "high")
-        ui->actionHighQuality->setChecked(true);
-    else if (m_settings.value("player/quality", "low").toString() == "medium")
-        ui->actionMediumQuality->setChecked(true);
+    QString deinterlacer = m_settings.value("player/deinterlacer", "onefield").toString();
+    QString interpolation = m_settings.value("player/interpolation", "bilinear").toString();
+
+    if (deinterlacer == "onefield")
+        ui->actionOneField->setChecked(true);
+    else if (deinterlacer == "linearblend")
+        ui->actionLinearBlend->setChecked(true);
+    else if (deinterlacer == "yadif-nospatial")
+        ui->actionYadifTemporal->setChecked(true);
     else
-        ui->actionLowQuality->setChecked(true);
+        ui->actionYadifSpatial->setChecked(true);
+
+    if (interpolation == "nearest")
+        ui->actionNearest->setChecked(true);
+    else if (interpolation == "bilinear")
+        ui->actionBilinear->setChecked(true);
+    else if (interpolation == "bicubic")
+        ui->actionBicubic->setChecked(true);
+    else
+        ui->actionHyper->setChecked(true);
 }
 
 void Player::setIn(unsigned pos)
@@ -451,19 +494,27 @@ void Player::onVideoWidgetContextMenu(const QPoint& pos)
 {
     QMenu menu(this);
     menu.addAction(ui->actionProgressive);
-    QMenu* sub = menu.addMenu(tr("Quality"));
-    QActionGroup group(sub);
-    group.addAction(ui->actionLowQuality);
-    group.addAction(ui->actionMediumQuality);
-    group.addAction(ui->actionHighQuality);
-    sub->addActions(group.actions());
+    QMenu* sub = menu.addMenu(tr("Deinterlacer"));
+    QActionGroup deinterlacerGroup(sub);
+    deinterlacerGroup.addAction(ui->actionOneField);
+    deinterlacerGroup.addAction(ui->actionLinearBlend);
+    deinterlacerGroup.addAction(ui->actionYadifTemporal);
+    deinterlacerGroup.addAction(ui->actionYadifSpatial);
+    sub->addActions(deinterlacerGroup.actions());
+    sub = menu.addMenu(tr("Interpolation"));
+    QActionGroup scalerGroup(sub);
+    scalerGroup.addAction(ui->actionNearest);
+    scalerGroup.addAction(ui->actionBilinear);
+    scalerGroup.addAction(ui->actionBicubic);
+    scalerGroup.addAction(ui->actionHyper);
+    sub->addActions(scalerGroup.actions());
     menu.exec(this->mapToGlobal(pos));
 }
 
 void Player::on_actionProgressive_triggered(bool checked)
 {
     MLT.videoWidget()->setProperty("progressive", checked);
-    if (MLT.consumer()) {
+    if (MLT.consumer() && !MLT.profile().progressive()) {
         MLT.consumer()->stop();
         MLT.consumer()->set("progressive", checked);
         MLT.consumer()->start();
@@ -471,49 +522,70 @@ void Player::on_actionProgressive_triggered(bool checked)
     m_settings.setValue("player/progressive", checked);
 }
 
-void Player::on_actionLowQuality_triggered(bool checked)
+void Player::changeDeinterlacer(bool checked, const char* method)
 {
     if (checked) {
-        MLT.videoWidget()->setProperty("rescale", "nearest");
-        MLT.videoWidget()->setProperty("deinterlace_method", "onefield");
+        MLT.videoWidget()->setProperty("deinterlace_method", method);
         if (MLT.consumer()) {
             MLT.consumer()->stop();
-            MLT.consumer()->set("rescale", "nearest");
-            MLT.consumer()->set("deinterlace_method", "onefield");
+            MLT.consumer()->set("deinterlace_method", method);
             MLT.consumer()->start();
         }
     }
-    m_settings.setValue("player/quality", "low");
+    m_settings.setValue("player/deinterlacer", method);
 }
 
-void Player::on_actionMediumQuality_triggered(bool checked)
+void Player::on_actionOneField_triggered(bool checked)
 {
-    if (checked) {
-        MLT.videoWidget()->setProperty("rescale", "bilinear");
-        MLT.videoWidget()->setProperty("deinterlace_method", "yadif-nospatial");
-        if (MLT.consumer()) {
-            MLT.consumer()->stop();
-            MLT.consumer()->set("rescale", "bilinear");
-            MLT.consumer()->set("deinterlace_method", "yadif-nospatial");
-            MLT.consumer()->start();
-        }
-    }
-    m_settings.setValue("player/quality", "medium");
+    changeDeinterlacer(checked, "onefield");
 }
 
-void Player::on_actionHighQuality_triggered(bool checked)
+void Player::on_actionLinearBlend_triggered(bool checked)
+{
+    changeDeinterlacer(checked, "linearblend");
+}
+
+void Player::on_actionYadifTemporal_triggered(bool checked)
+{
+    changeDeinterlacer(checked, "yadif-nospatial");
+}
+
+void Player::on_actionYadifSpatial_triggered(bool checked)
+{
+    changeDeinterlacer(checked, "yadif");
+}
+
+void Player::changeInterpolation(bool checked, const char* method)
 {
     if (checked) {
-        MLT.videoWidget()->setProperty("rescale", "bicubic");
-        MLT.videoWidget()->setProperty("deinterlace_method", "yadif");
+        MLT.videoWidget()->setProperty("rescale", method);
         if (MLT.consumer()) {
             MLT.consumer()->stop();
-            MLT.consumer()->set("rescale", "bicubic");
-            MLT.consumer()->set("deinterlace_method", "yadif");
+            MLT.consumer()->set("rescale", method);
             MLT.consumer()->start();
         }
     }
-    m_settings.setValue("player/quality", "high");
+    m_settings.setValue("player/interpolation", method);
+}
+
+void Player::on_actionNearest_triggered(bool checked)
+{
+    changeInterpolation(checked, "nearest");
+}
+
+void Player::on_actionBilinear_triggered(bool checked)
+{
+    changeInterpolation(checked, "bilinear");
+}
+
+void Player::on_actionBicubic_triggered(bool checked)
+{
+    changeInterpolation(checked, "bicubic");
+}
+
+void Player::on_actionHyper_triggered(bool checked)
+{
+    changeInterpolation(checked, "hyper");
 }
 
 void Player::showAudio(Mlt::Frame* frame)
