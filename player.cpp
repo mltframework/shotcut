@@ -293,7 +293,7 @@ void Player::readSettings()
 {
     ui->actionProgressive->setChecked(m_settings.value("player/progressive", true).toBool());
     QString deinterlacer = m_settings.value("player/deinterlacer", "onefield").toString();
-    QString interpolation = m_settings.value("player/interpolation", "bilinear").toString();
+    QString interpolation = m_settings.value("player/interpolation", "nearest").toString();
 
     if (deinterlacer == "onefield")
         ui->actionOneField->setChecked(true);
