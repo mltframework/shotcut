@@ -22,6 +22,7 @@
 #include <QtGui>
 #if defined(Q_WS_WIN)
 #include "GLee/GLee.h"
+#include <GL/glu.h>
 #endif
 #include <QtOpenGL>
 #include <QPalette>
@@ -30,7 +31,9 @@
 #if defined(Q_WS_X11)
 #include <GL/glu.h>
 #endif
-
+#if defined(Q_WS_WIN) && !defined(glActiveTexture)
+#define glActiveTexture GLeeFuncPtr_glActiveTexture
+#endif
 #ifndef GL_TEXTURE_RECTANGLE_EXT
 #define GL_TEXTURE_RECTANGLE_EXT GL_TEXTURE_RECTANGLE_NV
 #endif
