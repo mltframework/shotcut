@@ -155,6 +155,7 @@ void Video4LinuxWidget::setProducer(Mlt::Producer* producer)
 
 void Video4LinuxWidget::on_applyButton_clicked()
 {
+    MLT.close();
     MLT.open(producer(MLT.profile()));
     MLT.play();
 }

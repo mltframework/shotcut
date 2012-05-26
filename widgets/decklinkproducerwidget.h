@@ -39,6 +39,14 @@ public:
     Mlt::Properties* getPreset() const;
     void loadPreset(Mlt::Properties&);
 
+signals:
+    void producerChanged();
+
+private slots:
+    void on_deviceCombo_activated(int index);
+
+    void on_profileCombo_activated(int index);
+
 private:
     Ui::DecklinkProducerWidget *ui;
 };

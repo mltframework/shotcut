@@ -292,7 +292,7 @@ void MainWindow::onProducerOpened()
         connect(avw, SIGNAL(producerReopened()), m_player, SLOT(onProducerOpened()));
         m_recentDock->add(resource);
     }
-    else if (service == "decklink")
+    else if (service == "decklink" || resource.contains("decklink"))
         w = new DecklinkProducerWidget(this);
     else if (service == "color")
         w = new ColorProducerWidget(this);

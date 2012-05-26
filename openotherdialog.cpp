@@ -113,7 +113,7 @@ void OpenOtherDialog::load(Mlt::Producer* producer)
             selectTreeWidget(tr("Screen"));
         else if (service == "avformat")
             selectTreeWidget(tr("Network"));
-        else if (service == "decklink")
+        else if (service == "decklink" || resource.contains("decklink"))
             selectTreeWidget(tr("SDI/HDMI"));
         else if (service == "color")
             selectTreeWidget(tr("Color"));
