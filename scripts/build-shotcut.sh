@@ -7,7 +7,7 @@
 # bash, test, tr, awk, ps, make, cmake, cat, sed, curl or wget, and possibly others
 
 # Author: Dan Dennedy <dan@dennedy.org>
-# Version: 5
+# Version: 6
 # License: GPL2
 
 ################################################################################
@@ -20,7 +20,7 @@ AUTO_APPEND_DATE=0
 SOURCE_DIR="$INSTALL_DIR/src"
 ACTION_GET_COMPILE_INSTALL=1
 ACTION_GET_ONLY=0
-ACTION_COMPILE_INSTALL=0
+ACTION_COMPILE_INSTALL=1
 SOURCES_CLEAN=1
 INSTALL_AS_ROOT=0
 CREATE_STARTUP_SCRIPT=1
@@ -81,9 +81,10 @@ export LDFLAGS=
 # usage
 # Reports legal options to this script
 function usage {
-  echo "Usage: $0 [-c config-file] [-t] [-h]"
+  echo "Usage: $0 [-c config-file] [-o target-os] [-t] [-h]"
   echo "Where:"
   echo -e "\t-c config-file\tDefaults to $CONFIGFILE"
+  echo -e "\t-o target-os\tDefaults to $(uname -s); use Win32 to cross-compile"
   echo -e "\t-t\t\tSpawn into sep. process"
 }
 
@@ -93,7 +94,7 @@ function usage {
 function parse_args {
   CONFIGFILEOPT=""
   DETACH=0
-  while getopts ":tc:d:l:" OPT; do
+  while getopts ":tc:o:" OPT; do
     case $OPT in
       c ) CONFIGFILEOPT=$OPTARG
           echo Setting configfile to $CONFIGFILEOPT
@@ -101,6 +102,7 @@ function parse_args {
       t ) DETACH=1;;
       h ) usage
           exit 0;;
+      o ) TARGET_OS=$OPTARG;;
       * ) echo "Unknown option $OPT"
           usage
           exit 1;;
@@ -267,7 +269,7 @@ function read_configuration {
 function set_globals {
   trace "Entering set_globals @ = $@"
   # Set convenience variables.
-  TARGET_OS="$(uname -s)"
+  test "$TARGET_OS" = "" && TARGET_OS="$(uname -s)"
   if test 1 = "$ACTION_GET_ONLY" -o 1 = "$ACTION_GET_COMPILE_INSTALL" ; then
     GET=1
   else
@@ -388,6 +390,8 @@ function set_globals {
     FINAL_INSTALL_DIR="$INSTALL_DIR/`date +'%Y%m%d'`"
   elif test "$TARGET_OS" = "Darwin"; then
     FINAL_INSTALL_DIR="$INSTALL_DIR/build"
+  elif test "$TARGET_OS" = "Win32" ; then
+    FINAL_INSTALL_DIR="$INSTALL_DIR/Shotcut"
   else
     FINAL_INSTALL_DIR="$INSTALL_DIR/Shotcut/.app"
   fi
@@ -396,6 +400,18 @@ function set_globals {
   # CONFIG Array holds the ./configure (or equiv) command for each project
   # CFLAGS_ Array holds additional CFLAGS for the configure/make step of a given project 
   # LDFLAGS_ Array holds additional LDFLAGS for the configure/make step of a given project
+  if test "$TARGET_OS" = "Win32" ; then
+    FFMPEG_SUPPORT_THEORA=0
+    export CROSS=i686-w64-mingw32-
+    export CC=${CROSS}gcc
+    export CXX=${CROSS}g++
+    export AR=${CROSS}ar
+    export RANLIB=${CROSS}ranlib
+    export CFLAGS="-DHAVE_STRUCT_TIMESPEC -I$FINAL_INSTALL_DIR/include"
+    export CXXFLAGS="$CFLAGS"
+    export LDFLAGS="-L$FINAL_INSTALL_DIR/bin -L$FINAL_INSTALL_DIR/lib"
+    export QTDIR="$HOME/qt/4.8.1"
+  fi
 
   #####
   # ffmpeg
@@ -418,7 +434,12 @@ function set_globals {
   # Add optional parameters
   CONFIG[0]="${CONFIG[0]} $FFMPEG_ADDITIONAL_OPTIONS"
   CFLAGS_[0]="-I$FINAL_INSTALL_DIR/include $CFLAGS"
-  LDFLAGS_[0]="-L$FINAL_INSTALL_DIR/lib $LDFLAGS"
+  if test "$TARGET_OS" = "Win32" ; then
+    CONFIG[0]="${CONFIG[0]} --enable-memalign-hack --cross-prefix=$CROSS --arch=x86 --target-os=mingw32"
+    LDFLAGS_[0]="$LDFLAGS"
+  else
+    LDFLAGS_[0]="-L$FINAL_INSTALL_DIR/lib $LDFLAGS"
+  fi
   if test "$TARGET_OS" = "Darwin"; then
     CFLAGS_[0]="${CFLAGS_[0]} -I/opt/local/include"
     LDFLAGS_[0]="${LDFLAGS_[0]} -L/opt/local/lib"
@@ -433,27 +454,42 @@ function set_globals {
   if test "1" = "$MLT_DISABLE_SOX" ; then
     CONFIG[1]="${CONFIG[1]} --disable-sox"
   fi
+  if test "$TARGET_OS" = "Win32" ; then
+    CONFIG[1]="${CONFIG[1]} --disable-kino --disable-vorbis --gtk2-prefix=\"$FINAL_INSTALL_DIR\" --target-os=MinGW --target-arch=i686 --rename-melt=melt.exe"
+  fi
   CFLAGS_[1]="-I$FINAL_INSTALL_DIR/include $CFLAGS"
   [ "$TARGET_OS" = "Darwin" ] && CFLAGS_[1]="${CFLAGS_[1]} -DRELOCATABLE"
   LDFLAGS_[1]="-L$FINAL_INSTALL_DIR/lib $LDFLAGS"
 
   ####
   # frei0r
-  CONFIG[2]="./configure --prefix=$FINAL_INSTALL_DIR"
+  if test "$TARGET_OS" = "Win32" ; then
+    CONFIG[2]="cmake -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DCMAKE_TOOLCHAIN_FILE=my.cmake"
+  else
+    CONFIG[2]="./configure --prefix=$FINAL_INSTALL_DIR"
+  fi
   CFLAGS_[2]=$CFLAGS
   LDFLAGS_[2]=$LDFLAGS
 
   ####
   # x264
-  CONFIG[3]="./configure --prefix=$FINAL_INSTALL_DIR --disable-lavf --disable-ffms --disable-gpac --disable-swscale --enable-shared"
+  CONFIG[3]="./configure --prefix=$FINAL_INSTALL_DIR --disable-lavf --disable-ffms --disable-gpac --disable-swscale --enable-shared --disable-cli"
   CFLAGS_[3]=$CFLAGS
-  [ "$TARGET_OS" = "Darwin" ] && CFLAGS_[3]="-I. -fno-common -read_only_relocs suppress ${CFLAGS_[3]}"
+  if test "$TARGET_OS" = "Win32" ; then
+    CONFIG[3]="${CONFIG[3]} --enable-win32thread --host=i686-w64-mingw32 --cross-prefix=$CROSS"
+  elif test "$TARGET_OS" = "Darwin" ; then
+    CFLAGS_[3]="-I. -fno-common -read_only_relocs suppress ${CFLAGS_[3]}"
+  fi
   LDFLAGS_[3]=$LDFLAGS
   
   ####
   # libvpx
   CONFIG[4]="./configure --prefix=$FINAL_INSTALL_DIR --enable-vp8 --enable-postproc --enable-multithread --enable-runtime-cpu-detect --disable-install-docs --disable-debug-libs --disable-examples"
-  [ "$TARGET_OS" = "Linux" ] && CONFIG[4]="${CONFIG[4]} --enable-shared"
+  if test "$TARGET_OS" = "Linux" ; then
+    CONFIG[4]="${CONFIG[4]} --enable-shared"
+  elif test "$TARGET_OS" = "Win32" ; then
+    CONFIG[4]="${CONFIG[4]} --target=x86-win32-gcc"
+  fi
   CFLAGS_[4]=$CFLAGS
   LDFLAGS_[4]=$LDFLAGS
 
@@ -466,6 +502,9 @@ function set_globals {
   #####
   # lame
   CONFIG[6]="./configure --prefix=$FINAL_INSTALL_DIR --disable-decoder --disable-frontend"
+  if test "$TARGET_OS" = "Win32" ; then
+    CONFIG[6]="${CONFIG[6]} --libdir=$FINAL_INSTALL_DIR/lib --host=x86-w64-mingw32"
+  fi
   CFLAGS_[6]=$CFLAGS
   LDFLAGS_[6]=$LDFLAGS
 
@@ -477,6 +516,9 @@ function set_globals {
     CONFIG[7]="qmake-qt4 -r"
   else
     CONFIG[7]="qmake -r"
+  fi
+  if test "$TARGET_OS" = "Win32" ; then
+    CONFIG[7]="${CONFIG[7]} -spec mingw-mkspec CONFIG+=link_pkgconfig PKGCONFIG+=mlt++ CONFIG-=debug"
   fi
   CFLAGS_[7]=$CFLAGS
   LDFLAGS_[7]=$LDFLAGS
@@ -674,6 +716,145 @@ function clean_dirs {
   feedback_status Done cleaning out in source dirs
 }
 
+function get_win32_build {
+ 
+  if test "frei0r" = "$1" ; then
+      debug "Create cmake rules for frei0r"
+      cat >my.cmake <<END_OF_CMAKE_RULES
+# the name of the target operating system
+SET(CMAKE_SYSTEM_NAME Windows)
+
+# which compilers to use for C and C++
+SET(CMAKE_C_COMPILER ${CROSS}gcc)
+SET(CMAKE_CXX_COMPILER ${CROSS}g++)
+SET(CMAKE_LINKER ${CROSS}ld)
+SET(CMAKE_STRIP ${CROSS}strip)
+SET(CMAKE_RC_COMPILER ${CROSS}windres)
+
+# here is the target environment located
+SET(CMAKE_FIND_ROOT_PATH  /usr/i686-w64-mingw32 $FINAL_INSTALL_DIR)
+
+# adjust the default behaviour of the FIND_XXX() commands:
+# search headers and libraries in the target environment, search 
+# programs in the host environment
+set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
+set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+END_OF_CMAKE_RULES
+
+  elif test "shotcut" = "$1" ; then
+      mkdir mingw-mkspec 2> /dev/null
+      debug "Create qmake mkspec for shotcut"
+      cat >mingw-mkspec/qmake.conf <<END_OF_QMAKE_SPEC
+#
+# qmake configuration for win32-g++
+#
+# Written for MinGW
+#
+
+MAKEFILE_GENERATOR	= MINGW
+TEMPLATE		= app
+CONFIG			+= qt warn_on release link_prl copy_dir_files debug_and_release debug_and_release_target precompile_header
+CONFIG			+= exceptions windows win32 rtti
+QT			+= core gui
+DEFINES			+= UNICODE
+DEFINES			+= QT_LARGEFILE_SUPPORT
+DEFINES 		+= HAVE_STRUCT_TIMESPEC
+QMAKE_COMPILER_DEFINES  += __GNUC__ WIN32
+
+QMAKE_EXT_OBJ           = .o
+QMAKE_EXT_RES           = _res.o
+
+QMAKE_CC		= i686-w64-mingw32-gcc
+QMAKE_LEX		= flex
+QMAKE_LEXFLAGS		=
+QMAKE_YACC		= byacc
+QMAKE_YACCFLAGS		= -d
+QMAKE_CFLAGS		=
+QMAKE_CFLAGS_DEPS	= -M
+QMAKE_CFLAGS_WARN_ON	= -Wall
+QMAKE_CFLAGS_WARN_OFF	= -w
+QMAKE_CFLAGS_RELEASE	= -O2
+QMAKE_CFLAGS_DEBUG	= -g
+QMAKE_CFLAGS_YACC	= -Wno-unused -Wno-parentheses
+
+QMAKE_CXX		= i686-w64-mingw32-g++
+QMAKE_CXXFLAGS		= \$\$QMAKE_CFLAGS
+QMAKE_CXXFLAGS_DEPS	= \$\$QMAKE_CFLAGS_DEPS
+QMAKE_CXXFLAGS_WARN_ON	= \$\$QMAKE_CFLAGS_WARN_ON
+QMAKE_CXXFLAGS_WARN_OFF	= \$\$QMAKE_CFLAGS_WARN_OFF
+QMAKE_CXXFLAGS_RELEASE	= \$\$QMAKE_CFLAGS_RELEASE
+QMAKE_CXXFLAGS_DEBUG	= \$\$QMAKE_CFLAGS_DEBUG
+QMAKE_CXXFLAGS_YACC	= \$\$QMAKE_CFLAGS_YACC
+QMAKE_CXXFLAGS_THREAD	= \$\$QMAKE_CFLAGS_THREAD
+QMAKE_CXXFLAGS_RTTI_ON	= -frtti
+QMAKE_CXXFLAGS_RTTI_OFF	= -fno-rtti
+QMAKE_CXXFLAGS_EXCEPTIONS_ON = -fexceptions -mthreads
+QMAKE_CXXFLAGS_EXCEPTIONS_OFF = -fno-exceptions
+
+QMAKE_INCDIR		= /usr/i686-w64-mingw32/include
+QMAKE_INCDIR_QT		= \$(QTDIR)/include
+QMAKE_LIBDIR_QT		= \$(QTDIR)/lib
+
+
+QMAKE_RUN_CC		= \$(CC) -c \$(CFLAGS) \$(INCPATH) -o \$obj \$src
+QMAKE_RUN_CC_IMP	= \$(CC) -c \$(CFLAGS) \$(INCPATH) -o \$@ \$<
+QMAKE_RUN_CXX		= \$(CXX) -c \$(CXXFLAGS) \$(INCPATH) -o \$obj \$src
+QMAKE_RUN_CXX_IMP	= \$(CXX) -c \$(CXXFLAGS) \$(INCPATH) -o \$@ \$<
+
+QMAKE_LINK		= i686-w64-mingw32-g++
+QMAKE_LINK_C		= i686-w64-mingw32-gcc
+QMAKE_LFLAGS		= -mthreads -Wl,-enable-stdcall-fixup -Wl,-enable-auto-import -Wl,-enable-runtime-pseudo-reloc -mwindows
+QMAKE_LFLAGS_EXCEPTIONS_ON = -mthreads
+QMAKE_LFLAGS_EXCEPTIONS_OFF =
+QMAKE_LFLAGS_RELEASE	= -Wl,-s
+QMAKE_LFLAGS_DEBUG	=
+QMAKE_LFLAGS_CONSOLE	= -Wl,-subsystem,console
+QMAKE_LFLAGS_WINDOWS	= -Wl,-subsystem,windows
+QMAKE_LFLAGS_DLL        = -shared
+QMAKE_LINK_OBJECT_MAX	= 10
+QMAKE_LINK_OBJECT_SCRIPT= object_script
+QMAKE_PREFIX_STATICLIB  = lib
+QMAKE_EXTENSION_STATICLIB = a
+
+
+QMAKE_LIBS		=
+QMAKE_LIBS_CORE         = -lole32 -luuid -lws2_32 -ladvapi32 -lshell32 -luser32 -lkernel32
+QMAKE_LIBS_GUI          = -lgdi32 -lcomdlg32 -loleaut32 -limm32 -lwinmm -lwinspool -lws2_32 -lole32 -luuid -luser32 -ladvapi32
+QMAKE_LIBS_NETWORK      = -lws2_32
+QMAKE_LIBS_OPENGL       = -lglu32 -lopengl32 -lgdi32 -luser32
+QMAKE_LIBS_COMPAT       = -ladvapi32 -lshell32 -lcomdlg32 -luser32 -lgdi32 -lws2_32
+QMAKE_LIBS_QT_ENTRY     = -lmingw32 -lqtmain
+
+MINGW_IN_SHELL      = 1
+QMAKE_DIR_SEP		= /
+QMAKE_QMAKE		~= s,\\\\,/,
+QMAKE_COPY		= cp
+QMAKE_COPY_DIR		= cp -r
+QMAKE_MOVE		= mv
+QMAKE_DEL_FILE		= rm
+QMAKE_MKDIR		= mkdir -p
+QMAKE_DEL_DIR		= rmdir
+QMAKE_CHK_DIR_EXISTS = test -d
+
+QMAKE_MOC		= i686-pc-mingw32-moc
+QMAKE_UIC		= i686-pc-mingw32-uic
+QMAKE_IDC		= i686-pc-mingw32-idc
+QMAKE_RCC		= i686-pc-mingw32-rcc
+
+QMAKE_IDL		= midl
+QMAKE_LIB		= i686-w64-mingw32-ar -ru
+QMAKE_RC		= i686-w64-mingw32-windres
+QMAKE_ZIP		= zip -r -9
+
+QMAKE_STRIP		= i686-w64-mingw32-strip
+QMAKE_STRIPFLAGS_LIB 	+= --strip-unneeded
+load(qt_config)
+      
+END_OF_QMAKE_SPEC
+  fi
+}
+
 #################################################################
 # get_subproject
 # $1 The sourcedir to get sources for
@@ -717,12 +898,6 @@ function get_subproject {
           debug "No git repo, need to check out"
           feedback_status "Cloning git sources for $1"
           DEPTH="--depth 1"
-          # mltframework.org git does not yet support depth option
-          echo $REPOLOC | grep mltframework &> /dev/null
-          test 0 = $? && DEPTH=""
-          # webmproject.org git does not yet support depth option
-          echo $REPOLOC | grep webmproject &> /dev/null
-          test 0 = $? && DEPTH=""
           cmd git --no-pager clone $DEPTH $REPOLOC || die "Unable to git clone source for $1 from $REPOLOC"
           cmd cd $1 || die "Unable to change to directory $1"
           cmd git checkout $REVISION || die "Unable to git checkout $REVISION"
@@ -777,7 +952,22 @@ function get_subproject {
       fi
   fi # git/svn
 
+  if test "$TARGET_OS" = "Win32" ; then
+    get_win32_build "$1"
+  fi
+
   feedback_progress Done getting or updating source for $1
+  cmd popd
+}
+
+function get_win32_prebuilt {
+  log Extracting prebuilts tarball
+  cmd pushd .
+  cmd rm -rf "$FINAL_INSTALL_DIR" 2> /dev/null
+  cmd mkdir -p "$FINAL_INSTALL_DIR"
+  cd "$FINAL_INSTALL_DIR" || die "Unable to change to directory $FINAL_INSTALL_DIR"
+  cmd tar -xjf "$HOME/mlt-prebuilt-mingw32.tar.bz2"
+  cmd unzip "$HOME/gtk+-bundle_2.24.10-20120208_win32.zip"
   cmd popd
 }
 
@@ -794,6 +984,9 @@ function get_all_sources {
     get_subproject $DIR
   done
   feedback_status Done getting all sources
+  if test "$TARGET_OS" = "Win32" ; then
+    get_win32_prebuilt
+  fi
 }
 
 ######################################################################
@@ -951,6 +1144,13 @@ function configure_compile_install_subproject {
   cmd `lookup CONFIG $1` || die "Unable to configure $1"
   feedback_progress Done configuring $1
 
+  # Special post-configure hack for ffmpeg/Win32
+  if test "ffmpeg" = "$1" -a "$TARGET_OS" = "Win32" ; then
+    log "Need to remove lib.exe from config.mak for $1"
+    grep -v SLIB_EXTRA_CMD config.mak | grep -v SLIB_INSTALL_EXTRA_SHLIB > config.new &&
+      mv config.new config.mak
+  fi
+
   # Special hack for mlt, post-configure
   if test "mlt" = "$1" ; then
     mlt_check_configure
@@ -987,7 +1187,9 @@ function configure_compile_install_subproject {
     fi
   else
     if test "shotcut" = "$1" ; then
-      if test "$TARGET_OS" != "Darwin"; then
+      if test "$TARGET_OS" = "Win32" ; then
+        cmd install -c -m 755 release/shotcut.exe "$FINAL_INSTALL_DIR"
+      elif test "$TARGET_OS" != "Darwin"; then
         cmd install -c -m 755 shotcut "$FINAL_INSTALL_DIR"/bin
         cmd install -d "$FINAL_INSTALL_DIR"/lib/qt4
         cmd install -p -c /usr/lib/libQt{Core,Gui,Xml,Svg}.so* "$FINAL_INSTALL_DIR"/lib
@@ -1201,6 +1403,34 @@ function deploy_osx
   cmd rm -rf staging
 }
 
+function deploy_win32 
+{
+  trace "Entering deploy_win32 @ = $@"
+  pushd .
+
+  # Change to right directory
+  log Changing directory to $FINAL_INSTALL_DIR
+  cmd cd $FINAL_INSTALL_DIR || die "Unable to change to directory $FINAL_INSTALL_DIR"
+
+  cmd mv bin/*.dll .
+  cmd mv bin/ffmpeg.exe .
+  cmd rm -rf bin include etc man manifest src *.txt
+  cmd rm lib/*
+  cmd rm -rf lib/pkgconfig
+  cmd rm -rf share/doc share/man share/ffmpeg/examples share/aclocal share/glib-2.0 share/gtk-2.0 share/gtk-doc share/themes
+  cmd cp -p "$QTDIR"/bin/Qt{Core,Gui,OpenGL,Xml,Svg}4.dll .
+  cmd mkdir lib/qt4
+  cmd cp -pr "$QTDIR"/plugins/* lib/qt4
+  cmd tar -xjf "$HOME/ladspa_plugins-win-0.4.15.tar.bz2"
+
+  log Making archive
+  cmd cd ..
+  cmd rm shotcut.zip 2>/dev/null
+  cmd zip -r -9 shotcut.zip $(basename "$FINAL_INSTALL_DIR")
+
+  popd
+}
+
 #################################################################
 # create_startup_script
 # Creates a startup script. Note, that the actual script gets
@@ -1208,6 +1438,9 @@ function deploy_osx
 function create_startup_script {
   if test "$TARGET_OS" = "Darwin" ; then
     deploy_osx
+    return
+  elif test "$TARGET_OS" = "Win32" ; then
+    deploy_win32
     return
   fi
 
