@@ -61,6 +61,8 @@ private slots:
 
     void on_durationSpinBox_editingFinished();
 
+    void on_syncSlider_valueChanged(int value);
+
 private:
     Ui::AvformatProducerWidget *ui;
     int m_defaultDuration;

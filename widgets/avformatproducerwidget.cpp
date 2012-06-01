@@ -39,6 +39,8 @@ AvformatProducerWidget::~AvformatProducerWidget()
 Mlt::Producer* AvformatProducerWidget::producer(Mlt::Profile& profile)
 {
     Mlt::Producer* p = new Mlt::Producer(profile, m_producer->get("resource"));
+    if (p->is_valid())
+        p->set("video_delay", double(ui->syncSlider->value()) / 1000);
     return p;
 }
 
@@ -82,6 +84,7 @@ void AvformatProducerWidget::onFrameReceived(Mlt::QFrame)
 
     QString s = QString::fromUtf8(m_producer->get("resource"));
     ui->filenameLabel->setText(ui->filenameLabel->fontMetrics().elidedText(s, Qt::ElideLeft, width() - 30));
+    ui->filenameLabel->setToolTip(s);
     ui->notesTextEdit->setPlainText(QString::fromUtf8(m_producer->get("meta.attr.comment.markup")));
     ui->durationSpinBox->setValue(m_producer->get_length());
 
@@ -222,6 +225,7 @@ void AvformatProducerWidget::on_resetButton_clicked()
 {
     Mlt::Producer* p = producer(MLT.profile());
     ui->durationSpinBox->setValue(m_defaultDuration);
+    ui->syncSlider->setValue(0);
     reopen(p);
     connect(MLT.videoWidget(), SIGNAL(frameReceived(Mlt::QFrame)), this, SLOT(onFrameReceived(Mlt::QFrame)));
 }
@@ -305,4 +309,10 @@ void AvformatProducerWidget::on_durationSpinBox_editingFinished()
                  "force_progressive, force_tff,"
                  "shotcut_aspect_num, shotcut_aspect_den");
     reopen(p);
+}
+
+void AvformatProducerWidget::on_syncSlider_valueChanged(int value)
+{
+    if (m_producer)
+        m_producer->set("video_delay", double(value) / 1000);
 }
