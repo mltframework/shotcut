@@ -464,7 +464,7 @@ function set_globals {
   ####
   # frei0r
   if test "$TARGET_OS" = "Win32" ; then
-    CONFIG[2]="cmake -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DCMAKE_TOOLCHAIN_FILE=my.cmake"
+    CONFIG[2]="cmake -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DCMAKE_TOOLCHAIN_FILE=my.cmake -DWITHOUT_GAVL=1 -DWITHOUT_OPENCV=1"
   else
     CONFIG[2]="./configure --prefix=$FINAL_INSTALL_DIR"
   fi
