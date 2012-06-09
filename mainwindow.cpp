@@ -320,7 +320,9 @@ void MainWindow::onProducerOpened()
 
 void MainWindow::onProducerChanged()
 {
-    setWindowModified(true);
+    // TODO: disable this until we have playlist support
+    // setWindowModified(true);
+
     MLT.refreshConsumer();
 }
 
