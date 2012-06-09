@@ -180,7 +180,7 @@ void MainWindow::on_actionAbout_Shotcut_triggered()
     QMessageBox::about(this, tr("About Shotcut"),
              tr("<h1>Shotcut version %1</h1>"
                 "<p>Shotcut is an open source cross platform video editor.</p>"
-                "<p>Copyright &copy; 2011 Meltytech, LLC</p>"
+                "<p>Copyright &copy; 2011-2012 Meltytech, LLC</p>"
                 "<p>Licensed under the <a href=\"http://www.gnu.org/licenses/gpl.html\">GNU General Public License v3.0</a></p>"
                 "<p>This program is distributed in the hope that it will be useful, "
                 "but WITHOUT ANY WARRANTY; without even the implied warranty of "

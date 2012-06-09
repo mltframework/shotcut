@@ -1,4 +1,4 @@
-QT       += core gui opengl
+QT       += opengl
 
 TARGET = shotcut
 TEMPLATE = app
@@ -109,3 +109,8 @@ win32 {
 unix:!mac {
     LIBS += -lGLU
 }
+
+isEmpty(SHOTCUT_VERSION) {
+    SHOTCUT_VERSION = 0.5.0
+}
+DEFINES += SHOTCUT_VERSION=\\\"$$SHOTCUT_VERSION\\\"

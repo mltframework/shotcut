@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
     a.setOrganizationName("Meltytech");
     a.setOrganizationDomain("meltytech.com");
     a.setApplicationName("Shotcut");
-    a.setApplicationVersion("0.5.0");
+    a.setApplicationVersion(SHOTCUT_VERSION);
     QSplashScreen splash(QPixmap(":/icons/icons/mlt-logo-320.png"));
     splash.showMessage(a.tr("Loading plugins..."), Qt::AlignHCenter | Qt::AlignBottom);
     splash.show();
