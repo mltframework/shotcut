@@ -179,12 +179,24 @@ void MainWindow::on_actionAbout_Shotcut_triggered()
 {
     QMessageBox::about(this, tr("About Shotcut"),
              tr("<h1>Shotcut version %1</h1>"
-                "<p>Shotcut is an open source cross platform video editor.</p>"
-                "<p>Copyright &copy; 2011-2012 Meltytech, LLC</p>"
+                "<p><a href=\"http://www.shotcut.org/\">Shotcut</a> is a free, open source, cross platform video editor.</p>"
+                "<p>Copyright &copy; 2011-2012 <a href=\"http://www.meltytech.com/\">Meltytech</a>, LLC</p>"
                 "<p>Licensed under the <a href=\"http://www.gnu.org/licenses/gpl.html\">GNU General Public License v3.0</a></p>"
-                "<p>This program is distributed in the hope that it will be useful, "
+                "<p>This program proudly uses the following projects:<ul>"
+                "<li><a href=\"http://qt.nokia.com/\">Qt</a> application and UI framework</li>"
+                "<li><a href=\"http://www.mltframework.org/\">MLT</a> multimedia authoring framework</li>"
+                "<li><a href=\"http://www.ffmpeg.org/\">FFmpeg</a> multimedia format and codec libraries</li>"
+                "<li><a href=\"http://www.videolan.org/developers/x264.html\">x264</a> H.264 encoder</li>"
+                "<li><a href=\"http://www.webmproject.org/\">WebM</a> VP8 encoder</li>"
+                "<li><a href=\"http://lame.sourceforge.net/\">LAME</a> MP3 encoder</li>"
+                "<li><a href=\"http://www.dyne.org/software/frei0r/\">Frei0r</a> video plugins</li>"
+                "<li><a href=\"http://www.ladspa.org/\">LADSPA</a> audio plugins</li>"
+                "</ul></p>"
+                "<p>The source code used to build this program can be downloaded from "
+                "<a href=\"http://www.shotcut.org/\">shotcut.org</a>.</p>"
+                "<small>This program is distributed in the hope that it will be useful, "
                 "but WITHOUT ANY WARRANTY; without even the implied warranty of "
-                "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</p>"
+                "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</small>"
                 ).arg(qApp->applicationVersion()));
 }
 
