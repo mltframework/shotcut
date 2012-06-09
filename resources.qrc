@@ -3,12 +3,12 @@
         <file>icons/document-open.png</file>
         <file>icons/media-playback-start.png</file>
         <file>icons/media-playback-pause.png</file>
-        <file>icons/mlt-logo-64.png</file>
-        <file>icons/mlt-logo-320.png</file>
         <file>icons/media-seek-backward.png</file>
         <file>icons/media-seek-forward.png</file>
         <file>icons/media-skip-backward.png</file>
         <file>icons/media-skip-forward.png</file>
         <file>icons/document-save.png</file>
+        <file>icons/shotcut-logo-640.png</file>
+        <file>icons/shotcut-logo-64.png</file>
     </qresource>
 </RCC>

@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="resources.qrc">
-    <normaloff>:/icons/icons/mlt-logo-64.png</normaloff>:/icons/icons/mlt-logo-64.png</iconset>
+    <normaloff>:/icons/icons/shotcut-logo-64.png</normaloff>:/icons/icons/shotcut-logo-64.png</iconset>
   </property>
   <property name="unifiedTitleAndToolBarOnMac">
    <bool>true</bool>
