@@ -111,6 +111,6 @@ unix:!mac {
 }
 
 isEmpty(SHOTCUT_VERSION) {
-    SHOTCUT_VERSION = 0.5.0
+    SHOTCUT_VERSION = $$system(date "+%y.%m.%d")
 }
 DEFINES += SHOTCUT_VERSION=\\\"$$SHOTCUT_VERSION\\\"
