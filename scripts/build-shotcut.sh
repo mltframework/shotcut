@@ -1189,8 +1189,25 @@ function configure_compile_install_subproject {
     if test "shotcut" = "$1" ; then
       if test "$TARGET_OS" = "Win32" ; then
         cmd install -c -m 755 release/shotcut.exe "$FINAL_INSTALL_DIR"
+        cmd install -p -c COPYING "$FINAL_INSTALL_DIR"/COPYING.txt
+        cat > "$FINAL_INSTALL_DIR"/README.txt <<End-of-README.txt
+Shotcut README
+
+To install Shotcut, simply extract/copy the Shotcut folder to anywhere you
+like such as the Desktop or C:\Program Files.
+
+To run Shotcut, simply open the Shotcut folder and double-click shotcut.exe.
+You might find it convenient to right-click shotcut.exe and choose Send to
+Desktop to add an icon to your desktop.
+
+To upgrade Shotcut, simply download a new zip file and extract it to the
+same location as the old one. If you want to keep more than one version
+around, simply rename the Shotcut folder with the version number in the
+new name.
+End-of-README.txt
       elif test "$TARGET_OS" != "Darwin"; then
         cmd install -c -m 755 shotcut "$FINAL_INSTALL_DIR"/bin
+        cmd install -p -c COPYING "$FINAL_INSTALL_DIR"
         cmd install -d "$FINAL_INSTALL_DIR"/lib/qt4
         cmd install -p -c /usr/lib/libQt{Core,Gui,Xml,Svg}.so* "$FINAL_INSTALL_DIR"/lib
         cmd install -p -c /usr/lib/libaudio.so* "$FINAL_INSTALL_DIR"/lib
@@ -1395,6 +1412,7 @@ function deploy_osx
   cmd mkdir staging
   cmd mv shotcut/Shotcut.app staging
   cmd ln -s /Applications staging
+  cmd cp shotcut/COPYING staging
   sync
   cmd hdiutil create -fs HFS+ -srcfolder staging -volname Shotcut -format UDBZ "$dmg_name"
   while [ "$?" -ne 0 ]; do
