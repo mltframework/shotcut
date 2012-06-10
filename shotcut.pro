@@ -88,13 +88,13 @@ OTHER_FILES += \
     deploy-linux.sh \
     deploy-osx.sh \
     deploy-win32.sh \
-    mlt.icns \
     shotcut.rc \
-    scripts/build-shotcut.sh
+    scripts/build-shotcut.sh \
+    icons/shotcut.icns
 
 mac {
     TARGET = Shotcut
-    ICON = mlt.icns
+    ICON = icons/shotcut.icns
 }
 win32 {
     INCLUDEPATH += include/mlt++ include/mlt
