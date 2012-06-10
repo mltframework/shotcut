@@ -338,7 +338,7 @@ void Player::play(double speed)
     // TODO: use stop icon for live sources
     ui->actionPlay->setIcon(m_pauseIcon);
     ui->actionPlay->setText(tr("Pause"));
-    ui->actionPlay->setToolTip(tr("Pause playback"));
+    ui->actionPlay->setToolTip(tr("Pause playback (K)"));
 //    forceResize();
 }
 
@@ -347,7 +347,7 @@ void Player::pause()
     MLT.pause();
     ui->actionPlay->setIcon(m_playIcon);
     ui->actionPlay->setText(tr("Play"));
-    ui->actionPlay->setToolTip(tr("Start playback"));
+    ui->actionPlay->setToolTip(tr("Start playback (K)"));
 //    forceResize();
 }
 
@@ -356,7 +356,7 @@ void Player::stop()
     MLT.stop();
     ui->actionPlay->setIcon(m_playIcon);
     ui->actionPlay->setText(tr("Play"));
-    ui->actionPlay->setToolTip(tr("Start playback"));
+    ui->actionPlay->setToolTip(tr("Start playback (K)"));
 }
 
 void Player::togglePlayPaused()
