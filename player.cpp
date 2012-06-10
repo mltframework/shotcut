@@ -230,6 +230,7 @@ Player::Player(QWidget *parent)
     hlayout->addWidget(m_audioSignal);
     m_volumeSlider->setRange(0, 99);
     m_volumeSlider->setValue(m_settings.value("player/volume", VOLUME_KNEE).toInt());
+    m_volumeSlider->setToolTip(tr("Adjust the audio volume"));
     connect(m_volumeSlider, SIGNAL(valueChanged(int)), this, SLOT(onVolumeChanged(int)));
     connect(this, SIGNAL(audioSamplesSignal(const QVector<int16_t>&, const int&, const int&, const int&)),
                          m_audioSignal, SLOT(slotReceiveAudio(const QVector<int16_t>&, const int&, const int&, const int&)));
