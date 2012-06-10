@@ -987,6 +987,11 @@ function get_all_sources {
   if test "$TARGET_OS" = "Win32" ; then
     get_win32_prebuilt
   fi
+  if test "$TARGET_OS" = "Darwin" ; then
+    feedback_status Making source archive
+    cd "$SOURCE_DIR"/..
+    tar -cjf "$INSTALL_DIR"/src.tar.bz2 src
+  fi
 }
 
 ######################################################################
