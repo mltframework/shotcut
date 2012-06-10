@@ -989,8 +989,9 @@ function get_all_sources {
   fi
   if test "$TARGET_OS" = "Darwin" ; then
     feedback_status Making source archive
-    cd "$SOURCE_DIR"/..
-    tar -cjf "$INSTALL_DIR"/src.tar.bz2 src
+    cmd cd "$SOURCE_DIR"/..
+    cmd mkdir -p "$INSTALL_DIR" 2> /dev/null
+    cmd tar -cjf "$INSTALL_DIR"/src.tar.bz2 src
   fi
 }
 
