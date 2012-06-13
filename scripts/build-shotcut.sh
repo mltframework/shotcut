@@ -7,7 +7,6 @@
 # bash, test, tr, awk, ps, make, cmake, cat, sed, curl or wget, and possibly others
 
 # Author: Dan Dennedy <dan@dennedy.org>
-# Version: 6
 # License: GPL2
 
 ################################################################################
@@ -1196,7 +1195,7 @@ function configure_compile_install_subproject {
       if test "$TARGET_OS" = "Win32" ; then
         cmd install -c -m 755 release/shotcut.exe "$FINAL_INSTALL_DIR"
         cmd install -p -c COPYING "$FINAL_INSTALL_DIR"/COPYING.txt
-        cat > "$FINAL_INSTALL_DIR"/README.txt <<End-of-README.txt
+        cat > "$FINAL_INSTALL_DIR"/README <<End-of-win32-README
 Shotcut README
 
 To install Shotcut, simply extract/copy the Shotcut folder to anywhere you
@@ -1210,7 +1209,7 @@ To upgrade Shotcut, simply download a new zip file and extract it to the
 same location as the old one. If you want to keep more than one version
 around, simply rename the Shotcut folder with the version number in the
 new name.
-End-of-README.txt
+End-of-win32-README
       elif test "$TARGET_OS" != "Darwin"; then
         cmd install -c -m 755 shotcut "$FINAL_INSTALL_DIR"/bin
         cmd install -p -c COPYING "$FINAL_INSTALL_DIR"
@@ -1439,6 +1438,7 @@ function deploy_win32
   cmd mv bin/*.dll .
   cmd mv bin/ffmpeg.exe .
   cmd rm -rf bin include etc man manifest src *.txt
+  cmd mv README README.txt
   cmd rm lib/*
   cmd rm -rf lib/pkgconfig
   cmd rm -rf share/doc share/man share/ffmpeg/examples share/aclocal share/glib-2.0 share/gtk-2.0 share/gtk-doc share/themes
