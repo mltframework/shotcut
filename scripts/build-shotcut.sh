@@ -989,6 +989,45 @@ function get_all_sources {
   if test "$TARGET_OS" = "Darwin" ; then
     feedback_status Making source archive
     cmd cd "$SOURCE_DIR"/..
+    cat >README <<END_OF_SRC_README
+Basic Build Instructions for Shotcut
+
+We will not be able to cover everything here, and you are largely on your
+own, but here are some hints. There is a big build bash script that is used
+to make Shotcuts daily builds. It is the authoritative install reference:
+  src/shotcut/scripts/build-shotcut.sh
+
+We cannot cover how to build all of Shotcut's dependencies from scratch here.
+On Linux, we rely upon Ubuntu and Fedora's packages to provide most of the
+more mundane dependencies. The rest like x264, libvpx, lame, FFmpeg, and
+frei0r are provided by the script.
+
+For OS X, we rely upon macports to provide the dependencies:
+  port install qt4-mac ffmpeg libsamplerate libsdl sox glib2 jack
+
+For Windows, see this page on the MLT wiki about getting pre-built
+dependencies from various sources on the Internet:
+  http://www.mltframework.org/bin/view/MLT/WindowsBuild
+Except, now we build FFmpeg instead of using a pre-built copy.
+
+As for Shotcut itself, its really as simple as:
+  mkdir build ; cd build ; qmake .. ; make
+There is no make install target at this time. Just copy the executable
+(Shotcut.app on OS X) where needed.
+
+Then, there is the app bundling so that depencies can be located and Qt
+plugins included. For that you really need to see the build script; it
+is fairly complicated espectially on OS X. On Linux, we just use a
+common install prefix and the build script generates shell scripts to
+establish a redirected environment. On Windows, everything is relative
+to the directory containing the .exe. DLLs are in the same directory as
+the .exe, and the lib and share folders are subdirectories. On OS X, all
+dependencies need to be put into the correct locations in Shotcut.app,
+and a script modifies all dylibs to pull them in and make their
+interdependencies relative to the executable. If you are just building for
+yourself, you do not need to do that. You can just let Shotcut use
+the macports dependencies in /opt/local.
+END_OF_SRC_README
     cmd mkdir -p "$INSTALL_DIR" 2> /dev/null
     cmd tar -cjf "$INSTALL_DIR"/src.tar.bz2 src
   fi
