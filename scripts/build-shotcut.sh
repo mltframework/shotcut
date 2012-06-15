@@ -989,7 +989,7 @@ function get_all_sources {
   if test "$TARGET_OS" = "Darwin" ; then
     feedback_status Making source archive
     cmd cd "$SOURCE_DIR"/..
-    cat >README <<END_OF_SRC_README
+    cat >src/README <<END_OF_SRC_README
 Basic Build Instructions for Shotcut
 
 We will not be able to cover everything here, and you are largely on your
