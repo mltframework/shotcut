@@ -216,6 +216,14 @@ int GLWidget::open(Mlt::Producer* producer)
     if (!error) {
         // use SDL for audio, OpenGL for video
         m_consumer = new Mlt::FilteredConsumer(profile(), "sdl_audio");
+        if (!m_consumer->is_valid())
+            m_consumer = new Mlt::FilteredConsumer(profile(), "rtaudio");
+        else
+#ifdef Q_WS_WIN
+            m_consumer->set("audio_buffer", 2048);
+#else
+            m_consumer->set("audio_buffer", 512);
+#endif
         if (m_consumer->is_valid()) {
             // Connect the producer to the consumer - tell it to "run" later
             m_consumer->connect(*m_producer);
