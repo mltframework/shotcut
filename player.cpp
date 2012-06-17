@@ -47,6 +47,9 @@ public:
     QAction *actionHyper;
     QAction *actionRewind;
     QAction *actionFastForward;
+#ifdef Q_WS_X11
+    QAction *actionOpenGL;
+#endif
 
     void setupActions(QWidget* widget)
     {
@@ -107,6 +110,11 @@ public:
         QIcon icon7;
         icon7.addFile(QString::fromUtf8(":/icons/icons/media-seek-forward.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionFastForward->setIcon(icon7);
+#ifdef Q_WS_X11
+        actionOpenGL = new QAction(widget);
+        actionOpenGL->setObjectName(QString::fromUtf8("actionOpenGL"));
+        actionOpenGL->setCheckable(true);
+#endif
 
         retranslateUi(widget);
         QMetaObject::connectSlotsByName(widget);
@@ -157,6 +165,9 @@ public:
         actionFastForward->setToolTip(QApplication::translate(name, "Play quickly forwards (L)", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
         actionFastForward->setShortcut(QApplication::translate(name, "L", 0, QApplication::UnicodeUTF8));
+#ifdef Q_WS_X11
+        actionOpenGL->setText(QApplication::translate(name, "Use OpenGL", 0, QApplication::UnicodeUTF8));
+#endif
     }
 };
 } // namespace Ui
@@ -292,6 +303,9 @@ Player::Player(QWidget *parent)
 
 void Player::readSettings()
 {
+#ifdef Q_WS_X11
+    ui->actionOpenGL->setChecked(m_settings.value("player/opengl", true).toBool());
+#endif
     ui->actionProgressive->setChecked(m_settings.value("player/progressive", true).toBool());
     QString deinterlacer = m_settings.value("player/deinterlacer", "onefield").toString();
     QString interpolation = m_settings.value("player/interpolation", "nearest").toString();
@@ -494,6 +508,13 @@ void Player::on_actionFastForward_triggered()
 void Player::onVideoWidgetContextMenu(const QPoint& pos)
 {
     QMenu menu(this);
+#ifdef Q_WS_X11
+    // Only offer the option to disable OpenGL if SDL is available.
+    Mlt::Consumer* c = new Mlt::Consumer(MLT.profile(), "sdl");
+    if (c->is_valid())
+        menu.addAction(ui->actionOpenGL);
+    delete c;
+#endif
     menu.addAction(ui->actionProgressive);
     QMenu* sub = menu.addMenu(tr("Deinterlacer"));
     QActionGroup deinterlacerGroup(sub);
@@ -511,6 +532,20 @@ void Player::onVideoWidgetContextMenu(const QPoint& pos)
     sub->addActions(scalerGroup.actions());
     menu.exec(this->mapToGlobal(pos));
 }
+
+#ifdef Q_WS_X11
+void Player::on_actionOpenGL_triggered(bool checked)
+{
+    m_settings.setValue("player/opengl", checked);
+    int r = QMessageBox::information(this, qApp->applicationName(),
+                                 tr("You must restart Shotcut to switch using OpenGL.\n"
+                                    "Do you want to exit now?"),
+                                 QMessageBox::Yes | QMessageBox::Default,
+                                 QMessageBox::No | QMessageBox::Escape);
+    if (r == QMessageBox::Yes)
+        QApplication::closeAllWindows();
+}
+#endif
 
 void Player::on_actionProgressive_triggered(bool checked)
 {

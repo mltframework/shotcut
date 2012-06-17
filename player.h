@@ -92,6 +92,9 @@ private slots:
     void on_actionRewind_triggered();
     void on_actionFastForward_triggered();
     void onVideoWidgetContextMenu(const QPoint& pos);
+#ifdef Q_WS_X11
+    void on_actionOpenGL_triggered(bool checked);
+#endif
     void on_actionProgressive_triggered(bool checked);
     void on_actionOneField_triggered(bool checked);
     void on_actionLinearBlend_triggered(bool checked);
