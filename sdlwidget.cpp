@@ -53,6 +53,7 @@ int SDLWidget::open(Mlt::Producer* producer)
             m_consumer->listen("consumer-frame-show", this, (mlt_listener) on_frame_show);
             if (!profile().progressive())
                 m_consumer->set("progressive", property("progressive").toBool());
+            m_consumer->set("real_time", property("realtime").toBool()? 1 : -1);
             m_consumer->set("rescale", property("rescale").toString().toAscii().constData());
             m_consumer->set("deinterlace_method", property("deinterlace_method").toString().toAscii().constData());
         }

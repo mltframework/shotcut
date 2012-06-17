@@ -47,6 +47,7 @@ public:
     QAction *actionHyper;
     QAction *actionRewind;
     QAction *actionFastForward;
+    QAction *actionRealtime;
 #ifdef Q_WS_X11
     QAction *actionOpenGL;
 #endif
@@ -110,6 +111,9 @@ public:
         QIcon icon7;
         icon7.addFile(QString::fromUtf8(":/icons/icons/media-seek-forward.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionFastForward->setIcon(icon7);
+        actionRealtime = new QAction(widget);
+        actionRealtime->setObjectName(QString::fromUtf8("actionRealtime"));
+        actionRealtime->setCheckable(true);
 #ifdef Q_WS_X11
         actionOpenGL = new QAction(widget);
         actionOpenGL->setObjectName(QString::fromUtf8("actionOpenGL"));
@@ -165,6 +169,10 @@ public:
         actionFastForward->setToolTip(QApplication::translate(name, "Play quickly forwards (L)", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
         actionFastForward->setShortcut(QApplication::translate(name, "L", 0, QApplication::UnicodeUTF8));
+        actionRealtime->setText(QApplication::translate(name, "Realtime (frame dropping)", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        actionRealtime->setToolTip(QApplication::translate(name, "Allow the player to drop video frames to try to play in realtime", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
 #ifdef Q_WS_X11
         actionOpenGL->setText(QApplication::translate(name, "Use OpenGL", 0, QApplication::UnicodeUTF8));
 #endif
@@ -207,6 +215,7 @@ Player::Player(QWidget *parent)
 
     // Create MLT video widget.
     Mlt::Controller::singleton(this);
+    MLT.videoWidget()->setProperty("realtime", ui->actionRealtime->isChecked());
     MLT.videoWidget()->setProperty("progressive", ui->actionProgressive->isChecked());
     if (ui->actionOneField->isChecked())
         MLT.videoWidget()->setProperty("deinterlace_method", "onefield");
@@ -306,6 +315,7 @@ void Player::readSettings()
 #ifdef Q_WS_X11
     ui->actionOpenGL->setChecked(m_settings.value("player/opengl", true).toBool());
 #endif
+    ui->actionRealtime->setChecked(m_settings.value("player/realtime", true).toBool());
     ui->actionProgressive->setChecked(m_settings.value("player/progressive", true).toBool());
     QString deinterlacer = m_settings.value("player/deinterlacer", "onefield").toString();
     QString interpolation = m_settings.value("player/interpolation", "nearest").toString();
@@ -515,6 +525,7 @@ void Player::onVideoWidgetContextMenu(const QPoint& pos)
         menu.addAction(ui->actionOpenGL);
     delete c;
 #endif
+    menu.addAction(ui->actionRealtime);
     menu.addAction(ui->actionProgressive);
     QMenu* sub = menu.addMenu(tr("Deinterlacer"));
     QActionGroup deinterlacerGroup(sub);
@@ -546,6 +557,17 @@ void Player::on_actionOpenGL_triggered(bool checked)
         QApplication::closeAllWindows();
 }
 #endif
+
+void Player::on_actionRealtime_triggered(bool checked)
+{
+    MLT.videoWidget()->setProperty("realtime", checked);
+    if (MLT.consumer()) {
+        MLT.consumer()->stop();
+        MLT.consumer()->set("real_time", checked? 1 : -1);
+        MLT.consumer()->start();
+    }
+    m_settings.setValue("player/realtime", checked);
+}
 
 void Player::on_actionProgressive_triggered(bool checked)
 {

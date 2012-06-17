@@ -95,6 +95,7 @@ private slots:
 #ifdef Q_WS_X11
     void on_actionOpenGL_triggered(bool checked);
 #endif
+    void on_actionRealtime_triggered(bool checked);
     void on_actionProgressive_triggered(bool checked);
     void on_actionOneField_triggered(bool checked);
     void on_actionLinearBlend_triggered(bool checked);
