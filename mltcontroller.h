@@ -44,6 +44,7 @@ class Controller
 {
 protected:
     Controller();
+    virtual int reconfigure() = 0;
 
 public:
     static Controller& singleton(QWidget* parent = 0);
@@ -78,6 +79,8 @@ public:
     void seek(int position);
     void refreshConsumer();
     void saveXML(QString& filename);
+    int consumerChanged();
+    int setProfile(const QString& profile_name);
 
     Mlt::Repository* repository() const {
         return m_repo;

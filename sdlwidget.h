@@ -30,6 +30,7 @@ class SDLWidget : public QWidget, public Controller
 public:
     explicit SDLWidget(QWidget *parent = 0);
     int open(Mlt::Producer*);
+    int reconfigure();
     QWidget* videoWidget() { return this; }
 
 signals:

@@ -225,4 +225,60 @@ void Controller::saveXML(QString& filename)
     s.set("ignore_points", ignore);
 }
 
+int Controller::consumerChanged()
+{
+    int error = 0;
+    double gain = m_volumeFilter? m_volumeFilter->get_double("gain") : 1.0;
+
+    if (m_consumer) {
+        m_consumer->stop();
+        delete m_consumer;
+        m_consumer = 0;
+        delete m_volumeFilter;
+        m_volumeFilter = 0;
+        error = reconfigure();
+        if (m_consumer) {
+            setVolume(gain);
+            m_consumer->start();
+        }
+    }
+    return error;
+}
+
+int Controller::setProfile(const QString& profile_name)
+{
+    int error = 0;
+    bool reopen = m_consumer != 0;
+    double speed = m_producer? m_producer->get_speed(): 0;
+    const char* position = m_producer? m_producer->frame_time() : 0;
+    double gain = m_volumeFilter? m_volumeFilter->get_double("gain") : 1.0;
+
+    if (m_consumer)
+        m_consumer->stop();
+    delete m_consumer;
+    m_consumer = 0;
+    delete m_volumeFilter;
+    m_volumeFilter = 0;
+    delete m_profile;
+
+    m_profile = new Mlt::Profile(profile_name.toAscii().constData());
+    if (!profile_name.isEmpty())
+        m_profile->set_explicit(1);
+
+    if (reopen) {
+        Mlt::Consumer c(profile(), "xml", "xml-string");
+        Mlt::Service s(m_producer->get_service());
+        c.connect(s);
+        c.start();
+        m_producer = new Mlt::Producer(profile(), "xml-string", c.get("xml-string"));
+        this->open(m_producer);
+        setVolume(gain);
+        if (m_producer)
+            m_producer->seek(position);
+        play(speed);
+    }
+
+    return error;
+}
+
 } // namespace

@@ -105,6 +105,8 @@ private slots:
     void on_actionBilinear_triggered(bool checked);
     void on_actionBicubic_triggered(bool checked);
     void on_actionHyper_triggered(bool checked);
+    void onExternalTriggered(QAction*);
+    void onProfileTriggered(QAction*);
 };
 
 #endif // PLAYER_H

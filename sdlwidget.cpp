@@ -34,34 +34,45 @@ int SDLWidget::open(Mlt::Producer* producer)
 {
     int error = Controller::open(producer);
 
-    if (!error) {
+    if (!error)
+        error = reconfigure();
+    return error;
+}
+
+int SDLWidget::reconfigure()
+{
+    int error = 0;
+
+    QString serviceName = property("mlt_service").toString();
+    if (!serviceName.isEmpty())
+        m_consumer = new Mlt::FilteredConsumer(profile(), serviceName.toAscii().constData());
+    else
 #if defined(Q_WS_WIN)
         // sdl_preview does not work good on Windows
         m_consumer = new Mlt::FilteredConsumer(profile(), "sdl");
 #else
         m_consumer = new Mlt::FilteredConsumer(profile(), "sdl_preview");
 #endif
-        if (m_consumer->is_valid()) {
-            // Embed the SDL window in our GUI.
-            m_consumer->set("window_id", (int) this->winId());
+    if (m_consumer->is_valid()) {
+        // Embed the SDL window in our GUI.
+        m_consumer->set("window_id", (int) this->winId());
 
-            // Set the background color
-            m_consumer->set("window_background", palette().color(QPalette::Window).name().toAscii().constData());
-            // Connect the producer to the consumer - tell it to "run" later
-            m_consumer->connect(*m_producer);
-            // Make an event handler for when a frame's image should be displayed
-            m_consumer->listen("consumer-frame-show", this, (mlt_listener) on_frame_show);
-            if (!profile().progressive())
-                m_consumer->set("progressive", property("progressive").toBool());
-            m_consumer->set("real_time", property("realtime").toBool()? 1 : -1);
-            m_consumer->set("rescale", property("rescale").toString().toAscii().constData());
-            m_consumer->set("deinterlace_method", property("deinterlace_method").toString().toAscii().constData());
-        }
-        else {
-            // Cleanup on error
-            error = 2;
-            Controller::close();
-        }
+        // Set the background color
+        m_consumer->set("window_background", palette().color(QPalette::Window).name().toAscii().constData());
+        // Connect the producer to the consumer - tell it to "run" later
+        m_consumer->connect(*m_producer);
+        // Make an event handler for when a frame's image should be displayed
+        m_consumer->listen("consumer-frame-show", this, (mlt_listener) on_frame_show);
+        if (!profile().progressive())
+            m_consumer->set("progressive", property("progressive").toBool());
+        m_consumer->set("real_time", property("realtime").toBool()? 1 : -1);
+        m_consumer->set("rescale", property("rescale").toString().toAscii().constData());
+        m_consumer->set("deinterlace_method", property("deinterlace_method").toString().toAscii().constData());
+    }
+    else {
+        // Cleanup on error
+        error = 2;
+        Controller::close();
     }
     return error;
 }

@@ -51,6 +51,16 @@ public:
 #ifdef Q_WS_X11
     QAction *actionOpenGL;
 #endif
+    QActionGroup *externalGroup;
+    QActionGroup *profileGroup;
+
+    void addProfile(QWidget* widget, const QString& desc, const QString& name)
+    {
+        QAction* action = new QAction(desc, widget);
+        action->setCheckable(true);
+        action->setData(name);
+        profileGroup->addAction(action);
+    }
 
     void setupActions(QWidget* widget)
     {
@@ -120,6 +130,59 @@ public:
         actionOpenGL->setCheckable(true);
 #endif
 
+        // Make a list of profiles
+        profileGroup = new QActionGroup(widget);
+        QAction* action = new QAction(widget);
+        const char* name = widget->objectName().toUtf8().constData();
+        action->setText(QApplication::translate(name, "Automatic", 0, QApplication::UnicodeUTF8));
+        action->setCheckable(true);
+        action->setData(QString());
+        profileGroup->addAction(action);
+        addProfile(widget, "HD 720p 50 fps", "atsc_720p_50");
+        addProfile(widget, "HD 720p 59.94 fps", "atsc_720p_5994");
+        addProfile(widget, "HD 720p 60 fps", "atsc_720p_60");
+        addProfile(widget, "HD 1080i 25 fps", "atsc_1080i_50");
+        addProfile(widget, "HD 1080i 29.97 fps", "atsc_1080i_5994");
+        addProfile(widget, "HD 1080p 23.98 fps", "atsc_1080p_2398");
+        addProfile(widget, "HD 1080p 24 fps", "atsc_1080p_24");
+        addProfile(widget, "HD 1080p 25 fps", "atsc_1080p_25");
+        addProfile(widget, "HD 1080p 29.97 fps", "atsc_1080p_2997");
+        addProfile(widget, "HD 1080p 30 fps", "atsc_1080p_30");
+        addProfile(widget, "SD NTSC", "dv_ntsc");
+        addProfile(widget, "SD PAL", "dv_pal");
+
+        // Make a list of the SDI and HDMI devices
+        externalGroup = new QActionGroup(widget);
+        action = new QAction(widget);
+        action->setText(QApplication::translate(name, "None", 0, QApplication::UnicodeUTF8));
+        action->setCheckable(true);
+        action->setData(QString());
+        externalGroup->addAction(action);
+#ifdef Q_WS_X11
+        Mlt::Consumer linsys(MLT.profile(), "sdi");
+        if (linsys.is_valid()) {
+            action = new QAction("DVEO VidPort", widget);
+            action->setCheckable(true);
+            action->setData(QString("sdi"));
+            externalGroup->addAction(action);
+        }
+#endif
+        Mlt::Profile profile;
+        Mlt::Consumer decklink(profile, "decklink:");
+        if (decklink.is_valid()) {
+            decklink.set("list_devices", 1);
+            int n = decklink.get_int("devices");
+            for (int i = 0; i < n; ++i) {
+                QString device(decklink.get(QString("device.%1").arg(i).toAscii().constData()));
+                if (!device.isEmpty()) {
+                    action = new QAction(device, widget);
+                    action->setCheckable(true);
+                    action->setData(QString("decklink:%1").arg(i));
+                    externalGroup->addAction(action);
+                }
+            }
+        }
+
         retranslateUi(widget);
         QMetaObject::connectSlotsByName(widget);
     }
@@ -188,8 +251,9 @@ Player::Player(QWidget *parent)
     , m_position(0)
 {
     setObjectName("Player");
-    ui->setupActions(this);
+    Mlt::Controller::singleton(this);
 
+    ui->setupActions(this);
     // These use the icon theme on Linux, with fallbacks to the icons specified in QtDesigner for other platforms.
     ui->actionPlay->setIcon(QIcon::fromTheme("media-playback-start", ui->actionPlay->icon()));
     ui->actionPause->setIcon(QIcon::fromTheme("media-playback-pause", ui->actionPause->icon()));
@@ -214,7 +278,8 @@ Player::Player(QWidget *parent)
     layout->setSpacing(0);
 
     // Create MLT video widget.
-    Mlt::Controller::singleton(this);
+    MLT.videoWidget()->setProperty("mlt_service", ui->externalGroup->checkedAction()->data());
+    MLT.setProfile(ui->profileGroup->checkedAction()->data().toString());
     MLT.videoWidget()->setProperty("realtime", ui->actionRealtime->isChecked());
     MLT.videoWidget()->setProperty("progressive", ui->actionProgressive->isChecked());
     if (ui->actionOneField->isChecked())
@@ -296,6 +361,8 @@ Player::Player(QWidget *parent)
     toolbar->addWidget(m_durationLabel);
     layout->addWidget(toolbar);
 
+    connect(ui->externalGroup, SIGNAL(triggered(QAction*)), this, SLOT(onExternalTriggered(QAction*)));
+    connect(ui->profileGroup, SIGNAL(triggered(QAction*)), this, SLOT(onProfileTriggered(QAction*)));
     connect(MLT.videoWidget(), SIGNAL(frameReceived(Mlt::QFrame)), this, SLOT(onShowFrame(Mlt::QFrame)));
     connect(MLT.videoWidget(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onVideoWidgetContextMenu(QPoint)));
     connect(ui->actionPlay, SIGNAL(triggered()), this, SLOT(togglePlayPaused()));
@@ -337,6 +404,28 @@ void Player::readSettings()
         ui->actionBicubic->setChecked(true);
     else
         ui->actionHyper->setChecked(true);
+
+    QVariant external = m_settings.value("player/external", "");
+    foreach (QAction* a, ui->externalGroup->actions()) {
+        if (a->data() == external) {
+            a->setChecked(true);
+            break;
+        }
+    }
+
+    QVariant profile = m_settings.value("player/profile", "");
+    // Automatic not permitted for SDI/HDMI
+    if (!external.toString().isEmpty() && profile.toString().isEmpty())
+        profile = QVariant("atsc_720p_50");
+    foreach (QAction* a, ui->profileGroup->actions()) {
+        // Automatic not permitted for SDI/HDMI
+        if (a->data().toString().isEmpty() && !external.toString().isEmpty())
+            a->setDisabled(true);
+        if (a->data() == profile) {
+            a->setChecked(true);
+            break;
+        }
+    }
 }
 
 void Player::setIn(unsigned pos)
@@ -527,6 +616,7 @@ void Player::onVideoWidgetContextMenu(const QPoint& pos)
 #endif
     menu.addAction(ui->actionRealtime);
     menu.addAction(ui->actionProgressive);
+
     QMenu* sub = menu.addMenu(tr("Deinterlacer"));
     QActionGroup deinterlacerGroup(sub);
     deinterlacerGroup.addAction(ui->actionOneField);
@@ -534,6 +624,7 @@ void Player::onVideoWidgetContextMenu(const QPoint& pos)
     deinterlacerGroup.addAction(ui->actionYadifTemporal);
     deinterlacerGroup.addAction(ui->actionYadifSpatial);
     sub->addActions(deinterlacerGroup.actions());
+
     sub = menu.addMenu(tr("Interpolation"));
     QActionGroup scalerGroup(sub);
     scalerGroup.addAction(ui->actionNearest);
@@ -541,6 +632,15 @@ void Player::onVideoWidgetContextMenu(const QPoint& pos)
     scalerGroup.addAction(ui->actionBicubic);
     scalerGroup.addAction(ui->actionHyper);
     sub->addActions(scalerGroup.actions());
+
+    if (ui->externalGroup->actions().count() > 1) {
+        sub = menu.addMenu(tr("Preview on SDI/HDMI"));
+        sub->addActions(ui->externalGroup->actions());
+    };
+
+    sub = menu.addMenu(tr("Signal mode"));
+    sub->addActions(ui->profileGroup->actions());
+
     menu.exec(this->mapToGlobal(pos));
 }
 
@@ -644,6 +744,37 @@ void Player::on_actionBicubic_triggered(bool checked)
 void Player::on_actionHyper_triggered(bool checked)
 {
     changeInterpolation(checked, "hyper");
+}
+
+void Player::onExternalTriggered(QAction *action)
+{
+    m_settings.setValue("player/external", action->data());
+    MLT.videoWidget()->setProperty("mlt_service", action->data());
+
+    QVariant profile = m_settings.value("player/profile", "");
+    // Automatic not permitted for SDI/HDMI
+    if (!action->data().toString().isEmpty() && profile.toString().isEmpty()) {
+        profile = QVariant("atsc_720p_50");
+        m_settings.setValue("player/profile", profile);
+        MLT.setProfile(profile.toString());
+        foreach (QAction* a, ui->profileGroup->actions()) {
+            if (a->data() == profile) {
+                a->setChecked(true);
+                break;
+            }
+        }
+    }
+    else {
+        MLT.consumerChanged();
+    }
+    // Automatic not permitted for SDI/HDMI
+    ui->profileGroup->actions().at(0)->setEnabled(action->data().toString().isEmpty());
+}
+
+void Player::onProfileTriggered(QAction *action)
+{
+    m_settings.setValue("player/profile", action->data());
+    MLT.setProfile(action->data().toString());
 }
 
 void Player::showAudio(Mlt::Frame* frame)
