@@ -282,7 +282,12 @@ Player::Player(QWidget *parent)
     MLT.videoWidget()->setProperty("mlt_service", ui->externalGroup->checkedAction()->data());
     MLT.setProfile(ui->profileGroup->checkedAction()->data().toString());
     MLT.videoWidget()->setProperty("realtime", ui->actionRealtime->isChecked());
-    MLT.videoWidget()->setProperty("progressive", ui->actionProgressive->isChecked());
+    if (ui->externalGroup->checkedAction()->data().toString().isEmpty())
+        MLT.videoWidget()->setProperty("progressive", ui->actionProgressive->isChecked());
+    else {
+        MLT.videoWidget()->setProperty("progressive", MLT.profile().progressive());
+        ui->actionProgressive->setEnabled(false);
+    }
     if (ui->actionOneField->isChecked())
         MLT.videoWidget()->setProperty("deinterlace_method", "onefield");
     else if (ui->actionLinearBlend->isChecked())
@@ -749,12 +754,13 @@ void Player::on_actionHyper_triggered(bool checked)
 
 void Player::onExternalTriggered(QAction *action)
 {
+    bool isExternal = !action->data().toString().isEmpty();
     m_settings.setValue("player/external", action->data());
     MLT.videoWidget()->setProperty("mlt_service", action->data());
 
     QVariant profile = m_settings.value("player/profile", "");
     // Automatic not permitted for SDI/HDMI
-    if (!action->data().toString().isEmpty() && profile.toString().isEmpty()) {
+    if (isExternal && profile.toString().isEmpty()) {
         profile = QVariant("atsc_720p_50");
         m_settings.setValue("player/profile", profile);
         MLT.setProfile(profile.toString());
@@ -769,7 +775,19 @@ void Player::onExternalTriggered(QAction *action)
         MLT.consumerChanged();
     }
     // Automatic not permitted for SDI/HDMI
-    ui->profileGroup->actions().at(0)->setEnabled(action->data().toString().isEmpty());
+    ui->profileGroup->actions().at(0)->setEnabled(!isExternal);
+
+    // Disable progressive option when SDI/HDMI
+    ui->actionProgressive->setEnabled(!isExternal);
+    bool isProgressive = isExternal
+            ? MLT.profile().progressive()
+            : ui->actionProgressive->isChecked();
+    MLT.videoWidget()->setProperty("progressive", isProgressive);
+    if (MLT.consumer()) {
+        MLT.consumer()->stop();
+        MLT.consumer()->set("progressive", isProgressive);
+        MLT.consumer()->start();
+    }
 }
 
 void Player::onProfileTriggered(QAction *action)
