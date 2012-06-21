@@ -249,6 +249,7 @@ Player::Player(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Player)
     , m_position(0)
+    , m_seekPosition(SEEK_INACTIVE)
 {
     setObjectName("Player");
     Mlt::Controller::singleton(this);
