@@ -169,43 +169,45 @@ void GLWidget::paintGL()
 
 void GLWidget::showFrame(Mlt::QFrame frame)
 {
-    m_image_width = 0;
-    m_image_height = 0;
-    mlt_image_format format = mlt_image_yuv420p;
-    const uint8_t* image = frame.frame()->get_image(format, m_image_width, m_image_height);
+    if (frame.frame()->get_int("rendered")) {
+        m_image_width = 0;
+        m_image_height = 0;
+        mlt_image_format format = mlt_image_yuv420p;
+        const uint8_t* image = frame.frame()->get_image(format, m_image_width, m_image_height);
 
-    // Copy each plane of YUV to a texture bound to shader program˙.
-    makeCurrent();
-    if (m_texture[0])
-        glDeleteTextures(3, m_texture);
-    glPixelStorei  (GL_UNPACK_ROW_LENGTH, m_image_width);
-    glGenTextures  (3, m_texture);
+        // Copy each plane of YUV to a texture bound to shader program˙.
+        makeCurrent();
+        if (m_texture[0])
+            glDeleteTextures(3, m_texture);
+        glPixelStorei  (GL_UNPACK_ROW_LENGTH, m_image_width);
+        glGenTextures  (3, m_texture);
 
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture  (GL_TEXTURE_RECTANGLE_EXT, m_texture[0]);
-    m_shader.setUniformValue(m_shader.uniformLocation("Ytex"), 0);
-    glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameterf(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexImage2D   (GL_TEXTURE_RECTANGLE_EXT, 0, GL_LUMINANCE, m_image_width, m_image_height, 0,
-                    GL_LUMINANCE, GL_UNSIGNED_BYTE, image);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture  (GL_TEXTURE_RECTANGLE_EXT, m_texture[0]);
+        m_shader.setUniformValue(m_shader.uniformLocation("Ytex"), 0);
+        glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameterf(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexImage2D   (GL_TEXTURE_RECTANGLE_EXT, 0, GL_LUMINANCE, m_image_width, m_image_height, 0,
+                        GL_LUMINANCE, GL_UNSIGNED_BYTE, image);
 
-    glActiveTexture(GL_TEXTURE1);
-    glBindTexture  (GL_TEXTURE_RECTANGLE_EXT, m_texture[1]);
-    m_shader.setUniformValue(m_shader.uniformLocation("Utex"), 1);
-    glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameterf(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexImage2D   (GL_TEXTURE_RECTANGLE_EXT, 0, GL_LUMINANCE, m_image_width/2, m_image_height/4, 0,
-                    GL_LUMINANCE, GL_UNSIGNED_BYTE, image + m_image_width * m_image_height);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture  (GL_TEXTURE_RECTANGLE_EXT, m_texture[1]);
+        m_shader.setUniformValue(m_shader.uniformLocation("Utex"), 1);
+        glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameterf(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexImage2D   (GL_TEXTURE_RECTANGLE_EXT, 0, GL_LUMINANCE, m_image_width/2, m_image_height/4, 0,
+                        GL_LUMINANCE, GL_UNSIGNED_BYTE, image + m_image_width * m_image_height);
 
-    glActiveTexture(GL_TEXTURE2);
-    glBindTexture  (GL_TEXTURE_RECTANGLE_EXT, m_texture[2]);
-    m_shader.setUniformValue(m_shader.uniformLocation("Vtex"), 2);
-    glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameterf(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexImage2D   (GL_TEXTURE_RECTANGLE_EXT, 0, GL_LUMINANCE, m_image_width/2, m_image_height/4, 0,
-                    GL_LUMINANCE, GL_UNSIGNED_BYTE, image + m_image_width * m_image_height + m_image_width/2 * m_image_height/2);
+        glActiveTexture(GL_TEXTURE2);
+        glBindTexture  (GL_TEXTURE_RECTANGLE_EXT, m_texture[2]);
+        m_shader.setUniformValue(m_shader.uniformLocation("Vtex"), 2);
+        glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameterf(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexImage2D   (GL_TEXTURE_RECTANGLE_EXT, 0, GL_LUMINANCE, m_image_width/2, m_image_height/4, 0,
+                        GL_LUMINANCE, GL_UNSIGNED_BYTE, image + m_image_width * m_image_height + m_image_width/2 * m_image_height/2);
 
-    glDraw();
+        glDraw();
+    }
     showFrameSemaphore.release();
 }
 
