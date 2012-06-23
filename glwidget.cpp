@@ -255,6 +255,7 @@ int GLWidget::reconfigure()
         m_consumer->set("rescale", property("rescale").toString().toAscii().constData());
         m_consumer->set("deinterlace_method", property("deinterlace_method").toString().toAscii().constData());
         m_consumer->set("buffer", 1);
+        m_consumer->set("scrub_audio", 1);
         m_display_ratio = profile().dar();
     }
     else {

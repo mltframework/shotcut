@@ -68,6 +68,9 @@ int SDLWidget::reconfigure()
         m_consumer->set("real_time", property("realtime").toBool()? 1 : -1);
         m_consumer->set("rescale", property("rescale").toString().toAscii().constData());
         m_consumer->set("deinterlace_method", property("deinterlace_method").toString().toAscii().constData());
+#ifndef Q_WS_WIN
+        m_consumer->set("scrub_audio", 1);
+#endif
     }
     else {
         // Cleanup on error
