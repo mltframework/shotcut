@@ -50,32 +50,17 @@ public:
     static Controller& singleton(QWidget* parent = 0);
     virtual ~Controller();
 
+    virtual QWidget* videoWidget() = 0;
     virtual int open(Mlt::Producer*);
     virtual int open(const char* url);
-
-    /** Close the media.
-     */
     virtual void close();
 
-    /** Start playback.
-     */
     void play(double speed = 1.0);
-
-    /** Pause playback.
-     */
     void pause();
-
     void stop();
-
-    /** Set the audio output level.
-     * @param volume audio volume in the range [0..1]
-     */
+    void enableJack(bool enable = true);
     void setVolume(double volume);
-
     void onWindowResize();
-
-    virtual QWidget* videoWidget() = 0;
-
     void seek(int position);
     void refreshConsumer();
     void saveXML(QString& filename);
@@ -85,15 +70,12 @@ public:
     Mlt::Repository* repository() const {
         return m_repo;
     }
-
     Mlt::Profile& profile() const {
         return *m_profile;
     }
-
     Mlt::Producer* producer() const {
         return m_producer;
     }
-
     Mlt::Consumer* consumer() const {
         return m_consumer;
     }
@@ -106,6 +88,12 @@ protected:
 private:
     Mlt::Profile* m_profile;
     Mlt::Filter* m_volumeFilter;
+    Mlt::Filter* m_jackFilter;
+
+    static void on_jack_started(mlt_properties owner, void* object, mlt_position *position);
+    void onJackStarted(int position);
+    static void on_jack_stopped(mlt_properties owner, void* object, mlt_position *position);
+    void onJackStopped(int position);
 };
 
 } // namespace

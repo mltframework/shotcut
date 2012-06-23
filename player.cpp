@@ -53,6 +53,7 @@ public:
 #endif
     QActionGroup *externalGroup;
     QActionGroup *profileGroup;
+    QAction *actionJack;
 
     void addProfile(QWidget* widget, const QString& desc, const QString& name)
     {
@@ -129,6 +130,9 @@ public:
         actionOpenGL->setObjectName(QString::fromUtf8("actionOpenGL"));
         actionOpenGL->setCheckable(true);
 #endif
+        actionJack = new QAction(widget);
+        actionJack->setObjectName(QString::fromUtf8("actionJack"));
+        actionJack->setCheckable(true);
 
         // Make a list of profiles
         profileGroup = new QActionGroup(widget);
@@ -239,6 +243,7 @@ public:
 #ifdef Q_WS_X11
         actionOpenGL->setText(QApplication::translate(name, "Use OpenGL", 0, QApplication::UnicodeUTF8));
 #endif
+        actionJack->setText(QApplication::translate(name, "Use JACK Audio", 0, QApplication::UnicodeUTF8));
     }
 };
 } // namespace Ui
@@ -390,6 +395,7 @@ void Player::readSettings()
 #endif
     ui->actionRealtime->setChecked(m_settings.value("player/realtime", true).toBool());
     ui->actionProgressive->setChecked(m_settings.value("player/progressive", true).toBool());
+    ui->actionJack->setChecked(m_settings.value("player/jack", false).toBool());
     QString deinterlacer = m_settings.value("player/deinterlacer", "onefield").toString();
     QString interpolation = m_settings.value("player/interpolation", "nearest").toString();
 
@@ -523,6 +529,7 @@ void Player::onProducerOpened()
         m_scrubber->hide();
     }
     m_positionSpinner->setEnabled(seekable);
+    on_actionJack_triggered(ui->actionJack->isChecked());
     onVolumeChanged(m_volumeSlider->value());
 
     ui->actionPlay->setEnabled(true);
@@ -647,6 +654,11 @@ void Player::onVideoWidgetContextMenu(const QPoint& pos)
     sub = menu.addMenu(tr("Signal mode"));
     sub->addActions(ui->profileGroup->actions());
 
+    Mlt::Filter* f = new Mlt::Filter(MLT.profile(), "jackrack");
+    if (f->is_valid())
+        menu.addAction(ui->actionJack);
+    delete f;
+
     menu.exec(this->mapToGlobal(pos));
 }
 
@@ -750,6 +762,12 @@ void Player::on_actionBicubic_triggered(bool checked)
 void Player::on_actionHyper_triggered(bool checked)
 {
     changeInterpolation(checked, "hyper");
+}
+
+void Player::on_actionJack_triggered(bool checked)
+{
+    m_settings.setValue("player/jack", checked);
+    MLT.enableJack(checked);
 }
 
 void Player::onExternalTriggered(QAction *action)

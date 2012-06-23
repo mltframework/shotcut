@@ -77,6 +77,7 @@ Controller::Controller()
     , m_consumer(0)
     , m_profile(new Mlt::Profile)
     , m_volumeFilter(0)
+    , m_jackFilter(0)
 {
 }
 
@@ -157,6 +158,8 @@ void Controller::close()
     m_producer = 0;
     delete m_volumeFilter;
     m_volumeFilter = 0;
+    delete m_jackFilter;
+    m_jackFilter = 0;
 }
 
 void Controller::play(double speed)
@@ -168,12 +171,16 @@ void Controller::play(double speed)
         m_consumer->start();
         refreshConsumer();
     }
+    if (m_jackFilter)
+        m_jackFilter->fire_event("jack-start");
 }
 
 void Controller::pause()
 {
     if (m_producer)
         m_producer->pause();
+    if (m_jackFilter)
+        m_jackFilter->fire_event("jack-stop");
 }
 
 void Controller::stop()
@@ -182,7 +189,71 @@ void Controller::stop()
         m_consumer->stop();
     if (m_producer)
         m_producer->seek(0);
+    if (m_jackFilter)
+        m_jackFilter->fire_event("jack-stop");
 }
+
+void Controller::on_jack_started(mlt_properties, void* object, mlt_position *position)
+{
+    if (object && position)
+        ((Controller*) object)->onJackStarted(*position);
+}
+
+void Controller::onJackStarted(int position)
+{
+    if (m_producer) {
+        m_producer->set_speed(1);
+        m_producer->seek(position);
+        refreshConsumer();
+    }
+}
+
+void Controller::on_jack_stopped(mlt_properties, void* object, mlt_position *position)
+{
+    if (object && position)
+        ((Controller*) object)->onJackStopped(*position);
+}
+
+void Controller::onJackStopped(int position)
+{
+    if (m_producer) {
+        m_producer->pause();
+        m_producer->seek(position);
+    }
+    if (m_consumer)
+        m_consumer->purge();
+    refreshConsumer();
+}
+
+void Controller::enableJack(bool enable)
+{
+	if (!m_consumer)
+		return;
+	if (enable && !m_jackFilter) {
+		m_jackFilter = new Mlt::Filter(profile(), "jackrack");
+		if (m_jackFilter->is_valid()) {
+			m_consumer->attach(*m_jackFilter);
+			m_consumer->set("audio_off", 1);
+			if (m_producer && m_producer->get_int("seekable")) {
+				m_jackFilter->listen("jack-started", this, (mlt_listener) on_jack_started);
+				m_jackFilter->listen("jack-stopped", this, (mlt_listener) on_jack_stopped);
+			}
+		}
+		else {
+			delete m_jackFilter;
+			m_jackFilter = 0;
+		}
+	}
+	else if (!enable && m_jackFilter) {
+		m_consumer->detach(*m_jackFilter);
+		delete m_jackFilter;
+		m_jackFilter = 0;
+		m_consumer->set("audio_off", 0);
+		m_consumer->stop();
+		m_consumer->start();
+	}
+}
+
 
 void Controller::setVolume(double volume)
 {
@@ -204,6 +275,10 @@ void Controller::seek(int position)
 {
     if (m_producer)
         m_producer->seek(position);
+    if (m_consumer)
+        m_consumer->purge();
+    if (m_jackFilter)
+        mlt_events_fire(m_jackFilter->get_properties(), "jack-seek", &position, NULL);
     refreshConsumer();
 }
 
@@ -231,13 +306,17 @@ int Controller::consumerChanged()
     double gain = m_volumeFilter? m_volumeFilter->get_double("gain") : 1.0;
 
     if (m_consumer) {
+        bool jackEnabled = m_jackFilter != 0;
         m_consumer->stop();
         delete m_consumer;
         m_consumer = 0;
         delete m_volumeFilter;
         m_volumeFilter = 0;
+        delete m_jackFilter;
+        m_jackFilter= 0;
         error = reconfigure();
         if (m_consumer) {
+            enableJack(jackEnabled);
             setVolume(gain);
             m_consumer->start();
         }
@@ -252,6 +331,7 @@ int Controller::setProfile(const QString& profile_name)
     double speed = m_producer? m_producer->get_speed(): 0;
     const char* position = m_producer? m_producer->frame_time() : 0;
     double gain = m_volumeFilter? m_volumeFilter->get_double("gain") : 1.0;
+    bool jackEnabled = m_jackFilter != 0;
 
     if (m_consumer)
         m_consumer->stop();
@@ -259,6 +339,8 @@ int Controller::setProfile(const QString& profile_name)
     m_consumer = 0;
     delete m_volumeFilter;
     m_volumeFilter = 0;
+    delete m_jackFilter;
+    m_jackFilter= 0;
     delete m_profile;
 
     m_profile = new Mlt::Profile(profile_name.toAscii().constData());
@@ -272,6 +354,7 @@ int Controller::setProfile(const QString& profile_name)
         c.start();
         m_producer = new Mlt::Producer(profile(), "xml-string", c.get("xml-string"));
         this->open(m_producer);
+        enableJack(jackEnabled);
         setVolume(gain);
         if (m_producer)
             m_producer->seek(position);
