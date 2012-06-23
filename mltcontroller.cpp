@@ -225,10 +225,10 @@ void Controller::onJackStopped(int position)
     refreshConsumer();
 }
 
-void Controller::enableJack(bool enable)
+bool Controller::enableJack(bool enable)
 {
 	if (!m_consumer)
-		return;
+		return true;
 	if (enable && !m_jackFilter) {
 		m_jackFilter = new Mlt::Filter(profile(), "jackrack");
 		if (m_jackFilter->is_valid()) {
@@ -242,6 +242,7 @@ void Controller::enableJack(bool enable)
 		else {
 			delete m_jackFilter;
 			m_jackFilter = 0;
+			return false;
 		}
 	}
 	else if (!enable && m_jackFilter) {
@@ -252,6 +253,7 @@ void Controller::enableJack(bool enable)
 		m_consumer->stop();
 		m_consumer->start();
 	}
+	return true;
 }
 
 

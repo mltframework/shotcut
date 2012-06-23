@@ -58,7 +58,7 @@ public:
     void play(double speed = 1.0);
     void pause();
     void stop();
-    void enableJack(bool enable = true);
+    bool enableJack(bool enable = true);
     void setVolume(double volume);
     void onWindowResize();
     void seek(int position);

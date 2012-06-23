@@ -654,10 +654,7 @@ void Player::onVideoWidgetContextMenu(const QPoint& pos)
     sub = menu.addMenu(tr("Signal mode"));
     sub->addActions(ui->profileGroup->actions());
 
-    Mlt::Filter* f = new Mlt::Filter(MLT.profile(), "jackrack");
-    if (f->is_valid())
-        menu.addAction(ui->actionJack);
-    delete f;
+    menu.addAction(ui->actionJack);
 
     menu.exec(this->mapToGlobal(pos));
 }
@@ -767,7 +764,12 @@ void Player::on_actionHyper_triggered(bool checked)
 void Player::on_actionJack_triggered(bool checked)
 {
     m_settings.setValue("player/jack", checked);
-    MLT.enableJack(checked);
+    if (checked && !MLT.enableJack(checked)) {
+        ui->actionJack->setChecked(false);
+        m_settings.setValue("player/jack", false);
+        QMessageBox::warning(this, qApp->applicationName(),
+            tr("Failed to connect to JACK.\nPlease verify that JACK is installed and running."));
+    }
 }
 
 void Player::onExternalTriggered(QAction *action)
