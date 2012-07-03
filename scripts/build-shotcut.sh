@@ -323,7 +323,7 @@ function set_globals {
   REPOLOCS[5]="git://github.com/mltframework/swfdec.git"
   REPOLOCS[6]="http://downloads.sourceforge.net/project/lame/lame/3.98.4/lame-3.98.4.tar.gz"
   REPOLOCS[7]="git://github.com/mltframework/shotcut.git"
-  REPOLOCS[8]="http://plugin.org.uk/releases/0.4.15/swh-plugins-0.4.15.tar.gz"
+  REPOLOCS[8]="http://ftp.de.debian.org/debian/pool/main/s/swh-plugins/swh-plugins_0.4.15+1.orig.tar.gz"
 
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
@@ -368,7 +368,7 @@ function set_globals {
   if test 0 = "$SHOTCUT_HEAD" -a "$SHOTCUT_REVISION" ; then
     REVISIONS[7]="$SHOTCUT_REVISION"
   fi
-  REVISIONS[8]="swh-plugins-0.4.15"
+  REVISIONS[8]="swh-plugins-0.4.15+1"
 
   # Figure out the number of cores in the system. Used both by make and startup script
   if test "$TARGET_OS" = "Darwin"; then
