@@ -31,6 +31,7 @@ namespace Ui {
 }
 class Player;
 class RecentDock;
+class EncodeDock;
 
 class MainWindow : public QMainWindow
 {
@@ -61,6 +62,7 @@ private:
     Player* m_player;
     QDockWidget* m_propertiesDock;
     RecentDock* m_recentDock;
+    EncodeDock* m_encodeDock;
     QString m_currentFile;
 
 public slots:

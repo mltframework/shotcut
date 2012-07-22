@@ -38,6 +38,7 @@
 #include "widgets/avformatproducerwidget.h"
 #include "widgets/imageproducerwidget.h"
 #include "docks/recentdock.h"
+#include "docks/encodedock.h"
 
 #include <QtGui>
 
@@ -82,6 +83,11 @@ MainWindow::MainWindow(QWidget *parent)
     addDockWidget(Qt::LeftDockWidgetArea, m_recentDock);
     tabifyDockWidget(m_recentDock, m_propertiesDock);
     ui->menuView->addAction(m_recentDock->toggleViewAction());
+    m_encodeDock = new EncodeDock(this);
+    m_encodeDock->hide();
+    addDockWidget(Qt::RightDockWidgetArea, m_encodeDock);
+    ui->menuBar->addAction(m_encodeDock->toggleViewAction());
+    ui->mainToolBar->addAction(m_encodeDock->toggleViewAction());
 
     // Connect signals.
     connect(this, SIGNAL(producerOpened()), this, SLOT(onProducerOpened()));

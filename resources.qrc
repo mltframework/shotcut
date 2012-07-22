@@ -10,5 +10,9 @@
         <file>icons/document-save.png</file>
         <file>icons/shotcut-logo-640.png</file>
         <file>icons/shotcut-logo-64.png</file>
+        <file>icons/media-record.png</file>
+        <file>icons/list-add.png</file>
+        <file>icons/list-remove.png</file>
+        <file>icons/view-refresh.png</file>
     </qresource>
 </RCC>
