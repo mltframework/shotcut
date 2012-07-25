@@ -86,7 +86,7 @@ MainWindow::MainWindow(QWidget *parent)
     m_encodeDock = new EncodeDock(this);
     m_encodeDock->hide();
     addDockWidget(Qt::RightDockWidgetArea, m_encodeDock);
-    ui->menuBar->addAction(m_encodeDock->toggleViewAction());
+    ui->menuView->addAction(m_encodeDock->toggleViewAction());
     ui->mainToolBar->addAction(m_encodeDock->toggleViewAction());
 
     // Connect signals.
