@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>339</width>
-    <height>660</height>
+    <width>289</width>
+    <height>658</height>
    </rect>
   </property>
   <property name="windowIcon">
@@ -38,8 +38,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>339</width>
-         <height>634</height>
+         <width>289</width>
+         <height>635</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -774,7 +774,8 @@
                   <item>
                    <widget class="QSpinBox" name="bFramesSpinner">
                     <property name="toolTip">
-                     <string>B frames are the bidrectional &quot;delta&quot; pictures in temporal compression</string>
+                     <string>B frames are the bidrectional &quot;delta&quot; pictures
+in temporal compression</string>
                     </property>
                     <property name="maximum">
                      <number>8</number>
@@ -824,7 +825,9 @@
                   <item>
                    <widget class="QSpinBox" name="videoCodecThreadsSpinner">
                     <property name="toolTip">
-                     <string>The recommended setting is 0 for the x264 codec and number of processor cores (including virtual) - 1 for other codecs. However, not all codecs are multi-threaded.</string>
+                     <string>The recommended setting is 0 for the x264 codec and
+number of processor cores (including virtual) - 1 for other
+codecs. However, not all codecs are multi-threaded.</string>
                     </property>
                    </widget>
                   </item>
@@ -1066,7 +1069,8 @@
                      <item>
                       <widget class="QPushButton" name="reloadSignalButton">
                        <property name="toolTip">
-                        <string>Load all of the signal mode values from the current project or the player's current signal mode</string>
+                        <string>Load all of the signal mode values from the current
+project or the player's current signal mode</string>
                        </property>
                        <property name="icon">
                         <iconset resource="../resources.qrc">
