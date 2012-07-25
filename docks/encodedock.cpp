@@ -194,7 +194,7 @@ void EncodeDock::runMelt(QString& target, int real_time)
 
 void EncodeDock::on_presetsTree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
 {
-    if (!current->parent())
+    if (!current || !current->parent())
         return;
     QString name = current->data(0, Qt::UserRole).toString();
     if (!name.isEmpty()) {
