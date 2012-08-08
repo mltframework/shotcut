@@ -107,7 +107,7 @@ Controller::~Controller()
 //    Mlt::Factory::close();
 }
 
-int Controller::open(Mlt::Producer* producer)
+int Controller::open(Mlt::Producer* producer, bool)
 {
     int error = 0;
 
@@ -268,6 +268,11 @@ void Controller::setVolume(double volume)
     }
 }
 
+double Controller::volume() const
+{
+    return m_volumeFilter? m_volumeFilter->get_double("gain") : 1.0;
+}
+
 void Controller::onWindowResize()
 {
     refreshConsumer();
@@ -305,7 +310,7 @@ void Controller::saveXML(QString& filename)
 int Controller::consumerChanged()
 {
     int error = 0;
-    double gain = m_volumeFilter? m_volumeFilter->get_double("gain") : 1.0;
+    double gain = volume();
 
     if (m_consumer) {
         bool jackEnabled = m_jackFilter != 0;
@@ -316,7 +321,7 @@ int Controller::consumerChanged()
         m_volumeFilter = 0;
         delete m_jackFilter;
         m_jackFilter= 0;
-        error = reconfigure();
+        error = reconfigure(false);
         if (m_consumer) {
             enableJack(jackEnabled);
             setVolume(gain);

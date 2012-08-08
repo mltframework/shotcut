@@ -30,47 +30,68 @@ SDLWidget::SDLWidget(QWidget *parent)
     parent->setAttribute(Qt::WA_NativeWindow);
 }
 
-int SDLWidget::open(Mlt::Producer* producer)
+int SDLWidget::open(Mlt::Producer* producer, bool isMulti)
 {
-    int error = Controller::open(producer);
+    int error = Controller::open(producer, isMulti);
 
     if (!error)
-        error = reconfigure();
+        error = reconfigure(isMulti);
     return error;
 }
 
-int SDLWidget::reconfigure()
+int SDLWidget::reconfigure(bool isMulti)
 {
     int error = 0;
 
     QString serviceName = property("mlt_service").toString();
-    if (!serviceName.isEmpty())
-        m_consumer = new Mlt::FilteredConsumer(profile(), serviceName.toAscii().constData());
-    else
+    if (m_consumer && !m_consumer->is_stopped())
+        m_consumer->stop();
+    delete m_consumer;
+    if (serviceName.isEmpty())
 #if defined(Q_WS_WIN)
         // sdl_preview does not work good on Windows
-        m_consumer = new Mlt::FilteredConsumer(profile(), "sdl");
+        serviceName = "sdl";
 #else
-        m_consumer = new Mlt::FilteredConsumer(profile(), "sdl_preview");
+        serviceName = "sdl_preview";
 #endif
+    if (isMulti)
+        m_consumer = new Mlt::FilteredConsumer(profile(), "multi");
+    else
+        m_consumer = new Mlt::FilteredConsumer(profile(), serviceName.toAscii().constData());
     if (m_consumer->is_valid()) {
-        // Embed the SDL window in our GUI.
-        m_consumer->set("window_id", (int) this->winId());
-
-        // Set the background color
-        m_consumer->set("window_background", palette().color(QPalette::Window).name().toAscii().constData());
         // Connect the producer to the consumer - tell it to "run" later
         m_consumer->connect(*m_producer);
         // Make an event handler for when a frame's image should be displayed
         m_consumer->listen("consumer-frame-show", this, (mlt_listener) on_frame_show);
-        if (!profile().progressive())
-            m_consumer->set("progressive", property("progressive").toBool());
         m_consumer->set("real_time", property("realtime").toBool()? 1 : -1);
-        m_consumer->set("rescale", property("rescale").toString().toAscii().constData());
-        m_consumer->set("deinterlace_method", property("deinterlace_method").toString().toAscii().constData());
+
+        if (isMulti) {
+            m_consumer->set("terminate_on_pause", 0);
+            // Embed the SDL window in our GUI.
+            m_consumer->set("0.window_id", (int) this->winId());
+            // Set the background color
+            m_consumer->set("0.window_background", palette().color(QPalette::Window).name().toAscii().constData());
+            if (!profile().progressive())
+                m_consumer->set("progressive", property("progressive").toBool());
+            m_consumer->set("0.rescale", property("rescale").toString().toAscii().constData());
+            m_consumer->set("0.deinterlace_method", property("deinterlace_method").toString().toAscii().constData());
 #ifndef Q_WS_WIN
-        m_consumer->set("scrub_audio", 1);
+            m_consumer->set("0.scrub_audio", 1);
 #endif
+        }
+        else {
+            // Embed the SDL window in our GUI.
+            m_consumer->set("window_id", (int) this->winId());
+            // Set the background color
+            m_consumer->set("window_background", palette().color(QPalette::Window).name().toAscii().constData());
+            if (!profile().progressive())
+                m_consumer->set("progressive", property("progressive").toBool());
+            m_consumer->set("rescale", property("rescale").toString().toAscii().constData());
+            m_consumer->set("deinterlace_method", property("deinterlace_method").toString().toAscii().constData());
+#ifndef Q_WS_WIN
+            m_consumer->set("scrub_audio", 1);
+#endif
+        }
     }
     else {
         // Cleanup on error

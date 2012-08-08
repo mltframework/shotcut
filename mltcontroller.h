@@ -44,14 +44,14 @@ class Controller
 {
 protected:
     Controller();
-    virtual int reconfigure() = 0;
+    virtual int reconfigure(bool isMulti) = 0;
 
 public:
     static Controller& singleton(QWidget* parent = 0);
     virtual ~Controller();
 
     virtual QWidget* videoWidget() = 0;
-    virtual int open(Mlt::Producer*);
+    virtual int open(Mlt::Producer*, bool isMulti = false);
     virtual int open(const char* url);
     virtual void close();
 
@@ -60,6 +60,7 @@ public:
     void stop();
     bool enableJack(bool enable = true);
     void setVolume(double volume);
+    double volume() const;
     void onWindowResize();
     void seek(int position);
     void refreshConsumer();

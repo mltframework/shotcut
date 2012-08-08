@@ -36,8 +36,8 @@ public:
 
     QSize minimumSizeHint() const;
     QSize sizeHint() const;
-    int open(Mlt::Producer*);
-    int reconfigure();
+    int open(Mlt::Producer*, bool isMulti = false);
+    int reconfigure(bool isMulti);
     QWidget* videoWidget() { return this; }
     QSemaphore showFrameSemaphore;
 

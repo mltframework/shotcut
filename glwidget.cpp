@@ -211,12 +211,12 @@ void GLWidget::showFrame(Mlt::QFrame frame)
     showFrameSemaphore.release();
 }
 
-int GLWidget::open(Mlt::Producer* producer)
+int GLWidget::open(Mlt::Producer* producer, bool isMulti)
 {
-    int error = Controller::open(producer);
+    int error = Controller::open(producer, isMulti);
 
     if (!error) {
-        error = reconfigure();
+        error = reconfigure(isMulti);
         if (!error) {
             connect(this, SIGNAL(frameReceived(Mlt::QFrame)),
                     this, SLOT(showFrame(Mlt::QFrame)), Qt::UniqueConnection);
@@ -226,37 +226,64 @@ int GLWidget::open(Mlt::Producer* producer)
     return error;
 }
 
-int GLWidget::reconfigure()
+int GLWidget::reconfigure(bool isMulti)
 {
     int error = 0;
 
     // use SDL for audio, OpenGL for video
     QString serviceName = property("mlt_service").toString();
-    if (!serviceName.isEmpty())
-        m_consumer = new Mlt::FilteredConsumer(profile(), serviceName.toAscii().constData());
-    else
+    if (m_consumer && !m_consumer->is_stopped())
+        m_consumer->stop();
+    delete m_consumer;
+    if (serviceName.isEmpty()) {
         m_consumer = new Mlt::FilteredConsumer(profile(), "sdl_audio");
-    if (!m_consumer->is_valid())
-        m_consumer = new Mlt::FilteredConsumer(profile(), "rtaudio");
+        if (m_consumer->is_valid())
+            serviceName = "sdl_audio";
+        else
+            serviceName = "rtaudio";
+        delete m_consumer;
+    }
+    if (isMulti)
+        m_consumer = new Mlt::FilteredConsumer(profile(), "multi");
     else
-#ifdef Q_WS_WIN
-        m_consumer->set("audio_buffer", 2048);
-#else
-        m_consumer->set("audio_buffer", 512);
-#endif
+        m_consumer = new Mlt::FilteredConsumer(profile(), serviceName.toAscii().constData());
     if (m_consumer->is_valid()) {
         // Connect the producer to the consumer - tell it to "run" later
         m_consumer->connect(*m_producer);
         // Make an event handler for when a frame's image should be displayed
         m_consumer->listen("consumer-frame-show", this, (mlt_listener) on_frame_show);
-        if (!profile().progressive())
-            m_consumer->set("progressive", property("progressive").toBool());
         m_consumer->set("real_time", property("realtime").toBool()? 1 : -1);
-        m_consumer->set("rescale", property("rescale").toString().toAscii().constData());
-        m_consumer->set("deinterlace_method", property("deinterlace_method").toString().toAscii().constData());
-        m_consumer->set("buffer", 1);
-        m_consumer->set("scrub_audio", 1);
         m_display_ratio = profile().dar();
+
+        if (isMulti) {
+            m_consumer->set("terminate_on_pause", 0);
+            m_consumer->set("0", serviceName.toAscii().constData());
+            if (serviceName == "sdl_audio")
+#ifdef Q_WS_WIN
+                m_consumer->set("0.audio_buffer", 2048);
+#else
+                m_consumer->set("0.audio_buffer", 512);
+#endif
+            if (!profile().progressive())
+                m_consumer->set("0.progressive", property("progressive").toBool());
+            m_consumer->set("0.rescale", property("rescale").toString().toAscii().constData());
+            m_consumer->set("0.deinterlace_method", property("deinterlace_method").toString().toAscii().constData());
+            m_consumer->set("0.buffer", 1);
+        }
+        else {
+            if (serviceName == "sdl_audio")
+#ifdef Q_WS_WIN
+                m_consumer->set("audio_buffer", 2048);
+#else
+                m_consumer->set("audio_buffer", 512);
+#endif
+            if (!profile().progressive())
+                m_consumer->set("progressive", property("progressive").toBool());
+            m_consumer->set("rescale", property("rescale").toString().toAscii().constData());
+            m_consumer->set("deinterlace_method", property("deinterlace_method").toString().toAscii().constData());
+            m_consumer->set("buffer", 1);
+            m_consumer->set("scrub_audio", 1);
+        }
     }
     else {
         // Cleanup on error

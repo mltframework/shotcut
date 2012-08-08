@@ -217,6 +217,26 @@ void EncodeDock::enqueueMelt(const QString& target, int realtime)
         JOBS.add(job);
 }
 
+void EncodeDock::encode(const QString& target)
+{
+    bool isMulti = true;
+    Mlt::Producer* producer = new Mlt::Producer(MLT.producer());
+    double volume = MLT.volume();
+    MLT.close();
+    producer->seek(0);
+    MLT.open(producer, isMulti);
+    MLT.consumer()->set("1", "avformat");
+    MLT.consumer()->set("1.target", target.toUtf8().constData());
+    Mlt::Properties* p = collectProperties(-1);
+    if (p && p->is_valid()) {
+        for (int i = 0; i < p->count(); i++)
+            MLT.consumer()->set(QString("1.%1").arg(p->get_name(i)).toAscii().constData(), p->get(i));
+    }
+    delete p;
+    MLT.setVolume(volume);
+    MLT.play();
+}
+
 void EncodeDock::on_presetsTree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
 {
     if (!current || !current->parent())
@@ -324,6 +344,12 @@ void EncodeDock::on_encodeButton_clicked()
 {
     if (!MLT.producer())
         return;
+    if (ui->encodeButton->text() == tr("Stop Capture")) {
+        bool isMulti = false;
+        MLT.open(MLT.producer(), isMulti);
+        ui->encodeButton->setText(tr("Capture File"));
+        return;
+    }
     bool seekable = MLT.producer()->get_int("seekable");
     QSettings settings;
     QString settingKey("encode/path");
@@ -336,8 +362,9 @@ void EncodeDock::on_encodeButton_clicked()
         if (seekable)
             enqueueMelt(outputFilename);
         else {
-            //TODO: use mulit-consumer to encode and preview
+            // use multi consumer to encode and preview simultaneously
             ui->encodeButton->setText(tr("Stop Capture"));
+            encode(outputFilename);
         }
     }
 }
@@ -374,6 +401,12 @@ void EncodeDock::on_streamButton_clicked()
         m_immediateJob->kill();
         return;
     }
+    if (ui->streamButton->text() == tr("Stop Stream")) {
+        bool isMulti = false;
+        MLT.open(MLT.producer(), isMulti);
+        ui->streamButton->setText(tr("Stream"));
+        return;
+    }
     QString url = QInputDialog::getText(this, tr("Stream"),
         tr("Enter the network protocol scheme, address, port, and parameters as an URL:"),
         QLineEdit::Normal, "udp://224.224.224.224:1234?pkt_size=1316&reuse=1");
@@ -383,7 +416,7 @@ void EncodeDock::on_streamButton_clicked()
         if (MLT.producer()->get_int("seekable"))
             runMelt(url, 1);
         else
-        {} // TODO: use multi-consumer?
+            encode(url);
     }
 }
 

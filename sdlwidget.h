@@ -29,8 +29,8 @@ class SDLWidget : public QWidget, public Controller
     Q_OBJECT
 public:
     explicit SDLWidget(QWidget *parent = 0);
-    int open(Mlt::Producer*);
-    int reconfigure();
+    int open(Mlt::Producer*, bool isMulti = false);
+    int reconfigure(bool isMulti);
     QWidget* videoWidget() { return this; }
 
 signals:

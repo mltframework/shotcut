@@ -68,6 +68,7 @@ private:
     MeltJob* createMeltJob(const QString& target, int realtime = -1);
     void runMelt(const QString& target, int realtime = -1);
     void enqueueMelt(const QString& target, int realtime = -1);
+    void encode(const QString& target);
 };
 
 #endif // ENCODEDOCK_H
