@@ -1,4 +1,4 @@
-QT       += opengl
+QT       += opengl xml
 
 TARGET = shotcut
 TEMPLATE = app
@@ -32,7 +32,9 @@ SOURCES += main.cpp\
     widgets/audiosignal.cpp \
     docks/recentdock.cpp \
     docks/encodedock.cpp \
-    dialogs/addencodepresetdialog.cpp
+    dialogs/addencodepresetdialog.cpp \
+    jobqueue.cpp \
+    docks/jobsdock.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -62,7 +64,9 @@ HEADERS  += mainwindow.h \
     widgets/audiosignal.h \
     docks/recentdock.h \
     docks/encodedock.h \
-    dialogs/addencodepresetdialog.h
+    dialogs/addencodepresetdialog.h \
+    jobqueue.h \
+    docks/jobsdock.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
@@ -84,7 +88,8 @@ FORMS    += mainwindow.ui \
     widgets/imageproducerwidget.ui \
     docks/recentdock.ui \
     docks/encodedock.ui \
-    dialogs/addencodepresetdialog.ui
+    dialogs/addencodepresetdialog.ui \
+    docks/jobsdock.ui
 
 RESOURCES += \
     resources.qrc
@@ -120,4 +125,3 @@ isEmpty(SHOTCUT_VERSION) {
     SHOTCUT_VERSION = $$system(date "+%y.%m.%d")
 }
 DEFINES += SHOTCUT_VERSION=\\\"$$SHOTCUT_VERSION\\\"
-

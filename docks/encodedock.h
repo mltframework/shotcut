@@ -20,6 +20,7 @@
 #define ENCODEDOCK_H
 
 #include <QDockWidget>
+#include <QDomElement>
 
 class QTreeWidgetItem;
 class QStringList;
@@ -29,6 +30,7 @@ namespace Ui {
 namespace Mlt {
     class Properties;
 }
+class MeltJob;
 
 class EncodeDock : public QDockWidget
 {
@@ -37,6 +39,9 @@ class EncodeDock : public QDockWidget
 public:
     explicit EncodeDock(QWidget *parent = 0);
     ~EncodeDock();
+
+public slots:
+    void onProducerOpened();
 
 private slots:
     void on_presetsTree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
@@ -50,14 +55,19 @@ private slots:
     void on_addPresetButton_clicked();
 
     void on_removePresetButton_clicked();
+    void onFinished(MeltJob*, bool isSuccess);
 
 private:
     Ui::EncodeDock *ui;
     Mlt::Properties *m_presets;
+    MeltJob* m_immediateJob;
 
     void loadPresets();
-    QStringList* collectProperties();
-    void runMelt(QString& target, int real_time = -1);
+    Mlt::Properties* collectProperties(int realtime);
+    void collectProperties(QDomElement& node, int realtime);
+    MeltJob* createMeltJob(const QString& target, int realtime = -1);
+    void runMelt(const QString& target, int realtime = -1);
+    void enqueueMelt(const QString& target, int realtime = -1);
 };
 
 #endif // ENCODEDOCK_H

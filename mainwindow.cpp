@@ -39,6 +39,8 @@
 #include "widgets/imageproducerwidget.h"
 #include "docks/recentdock.h"
 #include "docks/encodedock.h"
+#include "docks/jobsdock.h"
+#include "jobqueue.h"
 
 #include <QtGui>
 
@@ -79,15 +81,25 @@ MainWindow::MainWindow(QWidget *parent)
     m_propertiesDock->setObjectName("propertiesDock");
     addDockWidget(Qt::LeftDockWidgetArea, m_propertiesDock);
     ui->menuView->addAction(m_propertiesDock->toggleViewAction());
+
     m_recentDock = new RecentDock(this);
     addDockWidget(Qt::LeftDockWidgetArea, m_recentDock);
     tabifyDockWidget(m_recentDock, m_propertiesDock);
     ui->menuView->addAction(m_recentDock->toggleViewAction());
+
     m_encodeDock = new EncodeDock(this);
     m_encodeDock->hide();
     addDockWidget(Qt::RightDockWidgetArea, m_encodeDock);
     ui->menuView->addAction(m_encodeDock->toggleViewAction());
     ui->mainToolBar->addAction(m_encodeDock->toggleViewAction());
+    connect(this, SIGNAL(producerOpened()), m_encodeDock, SLOT(onProducerOpened()));
+
+    m_jobsDock = new JobsDock(this);
+    m_jobsDock->hide();
+    addDockWidget(Qt::RightDockWidgetArea, m_jobsDock);
+    tabifyDockWidget(m_jobsDock, m_encodeDock);
+    ui->menuView->addAction(m_jobsDock->toggleViewAction());
+    connect(&JOBS, SIGNAL(jobAdded()), m_jobsDock, SLOT(raise()));
 
     // Connect signals.
     connect(this, SIGNAL(producerOpened()), this, SLOT(onProducerOpened()));

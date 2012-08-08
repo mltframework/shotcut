@@ -19,14 +19,17 @@
 #include "encodedock.h"
 #include "ui_encodedock.h"
 #include "dialogs/addencodepresetdialog.h"
+#include "jobqueue.h"
 #include <mltcontroller.h>
 #include <QtDebug>
 #include <QtGui>
+#include <QtXml>
 
 EncodeDock::EncodeDock(QWidget *parent) :
     QDockWidget(parent),
     ui(new Ui::EncodeDock),
-    m_presets(Mlt::Repository::presets())
+    m_presets(Mlt::Repository::presets()),
+    m_immediateJob(0)
 {
     ui->setupUi(this);
     ui->videoCodecThreadsSpinner->setMaximum(QThread::idealThreadCount());
@@ -65,6 +68,14 @@ EncodeDock::~EncodeDock()
 {
     delete ui;
     delete m_presets;
+}
+
+void EncodeDock::onProducerOpened()
+{
+    if (MLT.producer()->get_int("seekable"))
+        ui->encodeButton->setText(tr("Encode File"));
+    else
+        ui->encodeButton->setText(tr("Capture File"));
 }
 
 void EncodeDock::loadPresets()
@@ -106,90 +117,104 @@ void EncodeDock::loadPresets()
     ui->presetsTree->expandAll();
 }
 
-QStringList* EncodeDock::collectProperties()
+Mlt::Properties* EncodeDock::collectProperties(int realtime)
 {
-    QStringList* ls = new QStringList;
-    if (ui->formatCombo->currentIndex() > 0)
-        *ls << QString("f=%1").arg(ui->formatCombo->currentText());
-    if (ui->disableAudioCheckbox->isChecked())
-        *ls << "an=1";
-    else {
-        if (ui->audioCodecCombo->currentIndex() > 0)
-            *ls << QString("acodec=%1").arg(ui->audioCodecCombo->currentText());
-        *ls << QString("ar=%1").arg(ui->sampleRateCombo->currentText());
-        *ls << QString("ab=%1").arg(ui->audioBitrateCombo->currentText());
+    Mlt::Properties* p = new Mlt::Properties;
+    if (p && p->is_valid()) {
+        if (realtime)
+            p->set("real_time", realtime);
+        if (ui->formatCombo->currentIndex() > 0)
+            p->set("f", ui->formatCombo->currentText().toAscii().constData());
+        if (ui->disableAudioCheckbox->isChecked())
+            p->set("an", 1);
+        else {
+            if (ui->audioCodecCombo->currentIndex() > 0)
+                p->set("acodec", ui->audioCodecCombo->currentText().toAscii().constData());
+            p->set("ar", ui->sampleRateCombo->currentText().toAscii().constData());
+            p->set("ab", ui->audioBitrateCombo->currentText().toAscii().constData());
+        }
+        if (ui->disableVideoCheckbox->isChecked())
+            p->set("vn", 1);
+        else {
+            if (ui->videoCodecCombo->currentIndex() > 0)
+                p->set("vcodec", ui->videoCodecCombo->currentText().toAscii().constData());
+            p->set("vb", ui->videoBitrateCombo->currentText().toAscii().constData());
+            p->set("g", ui->gopSpinner->value());
+            p->set("bf", ui->bFramesSpinner->value());
+            p->set("width", ui->widthSpinner->value());
+            p->set("height", ui->heightSpinner->value());
+            p->set("aspect", QString("@%1/%2").arg(ui->aspectNumSpinner->value()).arg(ui->aspectDenSpinner->value()).toAscii().constData());
+            p->set("progressive", ui->scanModeCombo->currentIndex());
+            p->set("top_field_first", ui->fieldOrderCombo->currentIndex());
+            p->set("r", ui->fpsSpinner->value());
+            if (ui->videoCodecThreadsSpinner->value() == 0 && ui->videoCodecCombo->currentText() != "libx264")
+                p->set("threads", QThread::idealThreadCount() - 1);
+            else
+                p->set("threads", ui->videoCodecThreadsSpinner->value());
+        }
+        foreach (QString line, ui->advancedTextEdit->toPlainText().split("\n"))
+            p->parse(line.toUtf8().constData());
     }
-    if (ui->disableVideoCheckbox->isChecked())
-        *ls << "vn=1";
-    else {
-        if (ui->videoCodecCombo->currentIndex() > 0)
-            *ls << QString("vcodec=%1").arg(ui->videoCodecCombo->currentText());
-        *ls << QString("vb=%1").arg(ui->videoBitrateCombo->currentText());
-        *ls << QString("g=%1").arg(ui->gopSpinner->value());
-        *ls << QString("bf=%1").arg(ui->bFramesSpinner->value());
-        *ls << QString("width=%1").arg(ui->widthSpinner->value());
-        *ls << QString("height=%1").arg(ui->heightSpinner->value());
-        *ls << QString("aspect=@%1/%2").arg(ui->aspectNumSpinner->value()).arg(ui->aspectDenSpinner->value());
-        *ls << QString("progressive=%1").arg(ui->scanModeCombo->currentIndex());
-        *ls << QString("top_field_first=%1").arg(ui->fieldOrderCombo->currentIndex());
-        *ls << QString("r=%1").arg(ui->fpsSpinner->value());
-        if (ui->videoCodecThreadsSpinner->value() == 0 && ui->videoCodecCombo->currentText() != "libx264")
-            *ls << QString("threads=%1").arg(QThread::idealThreadCount() - 1);
-        else
-            *ls << QString("threads=%1").arg(ui->videoCodecThreadsSpinner->value());
-    }
-    *ls << ui->advancedTextEdit->toPlainText().split("\n");
-    return ls;
+    return p;
 }
 
-void EncodeDock::runMelt(QString& target, int real_time)
+void EncodeDock::collectProperties(QDomElement& node, int realtime)
 {
-    QTemporaryFile tmp;
+    Mlt::Properties* p = collectProperties(realtime);
+    if (p && p->is_valid()) {
+        for (int i = 0; i < p->count(); i++)
+            node.setAttribute(p->get_name(i), p->get(i));
+    }
+    delete p;
+}
+
+MeltJob* EncodeDock::createMeltJob(const QString& target, int realtime)
+{
+    // get temp filename
+    QTemporaryFile tmp(QDir::tempPath().append("/shotcut-XXXXXX"));
     tmp.open();
     QString tmpName = tmp.fileName();
     tmp.close();
-    QString removeMe(tmpName.append(".mlt"));
-
+    tmpName.append(".mlt");
     MLT.saveXML(tmpName);
 
-//        QString shotcutPath = qApp->applicationDirPath();
-    QString shotcutPath("/Applications/Shotcut.app/Contents/MacOS");
-#ifdef Q_WS_WIN
-    QFileInfo meltPath(shotcutPath, "melt.exe");
-#else
-    QFileInfo meltPath(shotcutPath, "melt");
-#endif
-    QProcess melt(this);
-    melt.setProcessChannelMode(QProcess::ForwardedChannels);
-    QStringList* args = collectProperties();
-    args->prepend(target.prepend("avformat:"));
-    args->prepend("-consumer");
-    args->prepend(tmpName);
-    args->prepend("-verbose");
-    QString profile = QSettings().value("player/profile").toString();
-    if (profile.isEmpty())
-        args->prepend("dv_pal");
-    else
-        args->prepend(profile);
-    args->prepend("-profile");
-    args->append(QString("real_time=%1").arg(real_time));
-    qDebug() << meltPath.absoluteFilePath() << args->join(" ");
-#ifdef Q_WS_WIN
-    melt.start(meltPath.absoluteFilePath(), *args);
-#else
-    args->prepend(meltPath.absoluteFilePath());
-    melt.start("/usr/bin/nice", *args);
-#endif
-    delete args;
-    if (melt.waitForFinished(-1)) {
-        if (melt.exitStatus() == QProcess::NormalExit)
-            qDebug() << "melt succeeeded";
-        else
-            qDebug() << "melt failed with" << melt.exitCode();
+    // parse xml
+    QFile f1(tmpName);
+    f1.open(QIODevice::ReadOnly);
+    QDomDocument dom(tmpName);
+    dom.setContent(&f1);
+    f1.close();
+
+    // add consumer element
+    QDomElement consumerNode = dom.createElement("consumer");
+    dom.documentElement().appendChild(consumerNode);
+    consumerNode.setAttribute("mlt_service", "avformat");
+    consumerNode.setAttribute("target", target);
+    collectProperties(consumerNode, realtime);
+
+    // save new xml
+    f1.open(QIODevice::WriteOnly);
+    QTextStream ts(&f1);
+    dom.save(ts, 2);
+    f1.close();
+
+    return new MeltJob(target, tmpName);
+}
+
+void EncodeDock::runMelt(const QString& target, int realtime)
+{
+    m_immediateJob = createMeltJob(target, realtime);
+    if (m_immediateJob) {
+        connect(m_immediateJob, SIGNAL(finished(MeltJob*,bool)), this, SLOT(onFinished(MeltJob*,bool)));
+        m_immediateJob->start();
     }
-    else
-        qDebug() << "melt timed out" << melt.errorString();
-    QFile::remove(removeMe);
+}
+
+void EncodeDock::enqueueMelt(const QString& target, int realtime)
+{
+    MeltJob* job = createMeltJob(target, realtime);
+    if (job)
+        JOBS.add(job);
 }
 
 void EncodeDock::on_presetsTree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
@@ -299,11 +324,22 @@ void EncodeDock::on_encodeButton_clicked()
 {
     if (!MLT.producer())
         return;
-    QString directory(QSettings().value("openPath",
+    bool seekable = MLT.producer()->get_int("seekable");
+    QSettings settings;
+    QString settingKey("encode/path");
+    QString directory(settings.value(settingKey,
         QDesktopServices::storageLocation(QDesktopServices::MoviesLocation)).toString());
-    QString outputFilename = QFileDialog::getSaveFileName(this, tr("Encode to File"), directory);
-    if (!outputFilename.isEmpty())
-        runMelt(outputFilename);
+    QString outputFilename = QFileDialog::getSaveFileName(this,
+        seekable? tr("Encode to File") : tr("Capture to File"), directory);
+    if (!outputFilename.isEmpty()) {
+        settings.setValue(settingKey, QFileInfo(outputFilename).path());
+        if (seekable)
+            enqueueMelt(outputFilename);
+        else {
+            //TODO: use mulit-consumer to encode and preview
+            ui->encodeButton->setText(tr("Stop Capture"));
+        }
+    }
 }
 
 void EncodeDock::on_reloadSignalButton_clicked()
@@ -334,22 +370,36 @@ void EncodeDock::on_reloadSignalButton_clicked()
 
 void EncodeDock::on_streamButton_clicked()
 {
+    if (m_immediateJob) {
+        m_immediateJob->kill();
+        return;
+    }
     QString url = QInputDialog::getText(this, tr("Stream"),
         tr("Enter the network protocol scheme, address, port, and parameters as an URL:"),
         QLineEdit::Normal, "udp://224.224.224.224:1234?pkt_size=1316&reuse=1");
     if (!url.isEmpty()) {
         ui->dualPassCheckbox->setChecked(false);
-        runMelt(url, 1);
+        ui->streamButton->setText(tr("Stop Stream"));
+        if (MLT.producer()->get_int("seekable"))
+            runMelt(url, 1);
+        else
+        {} // TODO: use multi-consumer?
     }
 }
 
 void EncodeDock::on_addPresetButton_clicked()
 {
-    QStringList* data = collectProperties();
+    Mlt::Properties* data = collectProperties(0);
     AddEncodePresetDialog dialog(this);
+    QStringList ls;
+
+    if (data && data->is_valid())
+        for (int i = 0; i < data->count(); i++)
+            if (strlen(data->get_name(i)) > 0)
+                ls << QString("%1=%2").arg(data->get_name(i)).arg(data->get(i));
 
     dialog.setWindowTitle(tr("Add Encode Preset"));
-    dialog.setProperties(data->join("\n"));
+    dialog.setProperties(ls.join("\n"));
     if (dialog.exec() == QDialog::Accepted) {
         QString preset = dialog.presetName();
         QDir dir(QDesktopServices::storageLocation(QDesktopServices::DataLocation));
@@ -385,8 +435,8 @@ void EncodeDock::on_addPresetButton_clicked()
                 }
             }
         }
-        delete data;
     }
+    delete data;
 }
 
 void EncodeDock::on_removePresetButton_clicked()
@@ -402,4 +452,13 @@ void EncodeDock::on_removePresetButton_clicked()
             ui->presetsTree->topLevelItem(0)->removeChild(ui->presetsTree->currentItem());
         }
     }
+}
+
+void EncodeDock::onFinished(MeltJob* job, bool isSuccess)
+{
+    if (!MLT.producer()->get_int("seekable"))
+        ui->encodeButton->setText(tr("Capture File"));
+    ui->streamButton->setText(tr("Stream"));
+    m_immediateJob = 0;
+    delete job;
 }
