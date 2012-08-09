@@ -66,6 +66,7 @@ private:
     EncodeDock* m_encodeDock;
     JobsDock* m_jobsDock;
     QString m_currentFile;
+    bool m_jobsVisible;
 
 public slots:
     void open(const QString& url, const Mlt::Properties* = 0);
@@ -79,6 +80,7 @@ private slots:
     void onProducerChanged();
     bool on_actionSave_triggered();
     bool on_actionSave_As_triggered();
+    void on_actionEncode_triggered(bool checked);
 };
 
 #endif // MAINWINDOW_H

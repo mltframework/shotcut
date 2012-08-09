@@ -40,6 +40,9 @@ public:
     explicit EncodeDock(QWidget *parent = 0);
     ~EncodeDock();
 
+signals:
+    void captureStateChanged(bool);
+
 public slots:
     void onProducerOpened();
 

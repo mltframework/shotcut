@@ -863,3 +863,12 @@ void Player::onVolumeChanged(int volume)
     emit showStatusMessage(QString("%1 dB").arg(IEC_dB(gain)));
     m_settings.setValue("player/volume", volume);
 }
+
+void Player::onCaptureStateChanged(bool active)
+{
+    ui->actionPlay->setDisabled(active);
+    if (active)
+        MLT.videoWidget()->disconnect(SIGNAL(customContextMenuRequested(QPoint)));
+    else
+        connect(MLT.videoWidget(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onVideoWidgetContextMenu(QPoint)));
+}

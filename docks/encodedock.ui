@@ -6,13 +6,9 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>283</width>
-    <height>652</height>
+    <width>281</width>
+    <height>650</height>
    </rect>
-  </property>
-  <property name="windowIcon">
-   <iconset resource="../resources.qrc">
-    <normaloff>:/icons/icons/media-record.png</normaloff>:/icons/icons/media-record.png</iconset>
   </property>
   <property name="allowedAreas">
    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
@@ -45,7 +41,7 @@
          <x>0</x>
          <y>0</y>
          <width>288</width>
-         <height>574</height>
+         <height>572</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_4">

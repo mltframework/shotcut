@@ -6,15 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>846</width>
-    <height>549</height>
+    <width>844</width>
+    <height>547</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Shotcut</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="resources.qrc">
+   <iconset>
     <normaloff>:/icons/icons/shotcut-logo-64.png</normaloff>:/icons/icons/shotcut-logo-64.png</iconset>
   </property>
   <property name="unifiedTitleAndToolBarOnMac">
@@ -26,7 +26,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>846</width>
+     <width>844</width>
      <height>22</height>
     </rect>
    </property>
@@ -72,11 +72,12 @@
    </attribute>
    <addaction name="actionOpen"/>
    <addaction name="actionSave"/>
+   <addaction name="actionEncode"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen">
    <property name="icon">
-    <iconset resource="resources.qrc">
+    <iconset>
      <normaloff>:/icons/icons/document-open.png</normaloff>:/icons/icons/document-open.png</iconset>
    </property>
    <property name="text">
@@ -129,7 +130,7 @@
   </action>
   <action name="actionSave">
    <property name="icon">
-    <iconset resource="resources.qrc">
+    <iconset>
      <normaloff>:/icons/icons/document-save.png</normaloff>:/icons/icons/document-save.png</iconset>
    </property>
    <property name="text">
@@ -156,11 +157,24 @@
     <string>Ctrl+Shift+S</string>
    </property>
   </action>
+  <action name="actionEncode">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/icons/icons/media-record.png</normaloff>:/icons/icons/media-record.png</iconset>
+   </property>
+   <property name="text">
+    <string>Encode</string>
+   </property>
+   <property name="toolTip">
+    <string>Toggle the Encode and Jobs panels</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources>
-  <include location="resources.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>actionExit</sender>

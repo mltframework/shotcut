@@ -91,14 +91,21 @@ MainWindow::MainWindow(QWidget *parent)
     m_encodeDock->hide();
     addDockWidget(Qt::RightDockWidgetArea, m_encodeDock);
     ui->menuView->addAction(m_encodeDock->toggleViewAction());
-    ui->mainToolBar->addAction(m_encodeDock->toggleViewAction());
     connect(this, SIGNAL(producerOpened()), m_encodeDock, SLOT(onProducerOpened()));
+    connect(m_encodeDock, SIGNAL(visibilityChanged(bool)), ui->actionEncode, SLOT(setChecked(bool)));
+    connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_player, SLOT(onCaptureStateChanged(bool)));
+    connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_propertiesDock, SLOT(setDisabled(bool)));
+    connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_recentDock, SLOT(setDisabled(bool)));
+    connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), ui->actionOpen, SLOT(setDisabled(bool)));
+    connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), ui->actionOpenOther, SLOT(setDisabled(bool)));
+    connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), ui->actionExit, SLOT(setDisabled(bool)));
 
     m_jobsDock = new JobsDock(this);
     m_jobsDock->hide();
     addDockWidget(Qt::RightDockWidgetArea, m_jobsDock);
     tabifyDockWidget(m_jobsDock, m_encodeDock);
     ui->menuView->addAction(m_jobsDock->toggleViewAction());
+    connect(&JOBS, SIGNAL(jobAdded()), m_jobsDock, SLOT(show()));
     connect(&JOBS, SIGNAL(jobAdded()), m_jobsDock, SLOT(raise()));
 
     // Connect signals.
@@ -175,6 +182,7 @@ void MainWindow::readSettings()
     resize(s);
 #endif
     restoreState(m_settings.value("windowState").toByteArray());
+    m_jobsVisible = m_jobsDock->isVisible();
 }
 
 void MainWindow::writeSettings()
@@ -400,4 +408,15 @@ bool MainWindow::continueModified()
         }
     }
     return true;
+}
+
+void MainWindow::on_actionEncode_triggered(bool checked)
+{
+    m_encodeDock->setVisible(checked);
+    if (checked) {
+        m_jobsDock->setVisible(m_jobsVisible);
+    } else {
+        m_jobsVisible = m_jobsDock->isVisible();
+        m_jobsDock->setVisible(false);
+    }
 }

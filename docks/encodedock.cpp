@@ -33,7 +33,7 @@ EncodeDock::EncodeDock(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->videoCodecThreadsSpinner->setMaximum(QThread::idealThreadCount());
-    toggleViewAction()->setIcon(QIcon::fromTheme("media-record", windowIcon()));
+//    toggleViewAction()->setIcon(QIcon::fromTheme("media-record", windowIcon()));
     ui->addPresetButton->setIcon(QIcon::fromTheme("list-add", ui->addPresetButton->icon()));
     ui->removePresetButton->setIcon(QIcon::fromTheme("list-remove", ui->removePresetButton->icon()));
     ui->reloadSignalButton->setIcon(QIcon::fromTheme("view-refresh", ui->reloadSignalButton->icon()));
@@ -348,6 +348,8 @@ void EncodeDock::on_encodeButton_clicked()
         bool isMulti = false;
         MLT.open(MLT.producer(), isMulti);
         ui->encodeButton->setText(tr("Capture File"));
+        emit captureStateChanged(false);
+        ui->streamButton->setDisabled(false);
         return;
     }
     bool seekable = MLT.producer()->get_int("seekable");
@@ -365,6 +367,8 @@ void EncodeDock::on_encodeButton_clicked()
             // use multi consumer to encode and preview simultaneously
             ui->encodeButton->setText(tr("Stop Capture"));
             encode(outputFilename);
+            emit captureStateChanged(true);
+            ui->streamButton->setDisabled(true);
         }
     }
 }
@@ -415,8 +419,11 @@ void EncodeDock::on_streamButton_clicked()
         ui->streamButton->setText(tr("Stop Stream"));
         if (MLT.producer()->get_int("seekable"))
             runMelt(url, 1);
-        else
+        else {
             encode(url);
+            emit captureStateChanged(true);
+            emit ui->encodeButton->setDisabled(true);
+        }
     }
 }
 
@@ -494,4 +501,6 @@ void EncodeDock::onFinished(MeltJob* job, bool isSuccess)
     ui->streamButton->setText(tr("Stream"));
     m_immediateJob = 0;
     delete job;
+    emit captureStateChanged(false);
+    ui->encodeButton->setDisabled(false);
 }

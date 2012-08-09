@@ -62,6 +62,7 @@ public slots:
     void onProducerOpened();
     void onShowFrame(Mlt::QFrame frame);
     void onVolumeChanged(int);
+    void onCaptureStateChanged(bool);
 
 protected:
     void resizeEvent(QResizeEvent* event);
