@@ -68,6 +68,18 @@ bool MeltJob::ran() const
     return m_ran;
 }
 
+bool MeltJob::stopped() const
+{
+    return m_killed;
+}
+
+void MeltJob::stop()
+{
+    terminate();
+    kill();
+    m_killed = true;
+}
+
 void MeltJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
 {
     QFile::remove(m_xml);
@@ -144,6 +156,8 @@ void JobQueue::onFinished(MeltJob* job, bool isSuccess)
     if (item) {
         if (isSuccess)
             item->setText(tr("done"));
+        else if (job->stopped())
+            item->setText(tr("stopped"));
         else
             item->setText(tr("failed"));
     }
@@ -165,4 +179,9 @@ void JobQueue::startNextJob()
             }
         }
     }
+}
+
+MeltJob* JobQueue::jobFromIndex(const QModelIndex& index) const
+{
+    return m_jobs.at(index.row());
 }

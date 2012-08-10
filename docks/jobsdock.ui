@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>155</width>
+    <width>145</width>
     <height>118</height>
    </rect>
   </property>
@@ -17,6 +17,9 @@
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QTreeView" name="treeView">
+      <property name="contextMenuPolicy">
+       <enum>Qt::CustomContextMenu</enum>
+      </property>
       <property name="editTriggers">
        <set>QAbstractItemView::NoEditTriggers</set>
       </property>
@@ -39,6 +42,14 @@
     </item>
    </layout>
   </widget>
+  <action name="actionStopJob">
+   <property name="text">
+    <string>Stop this Job</string>
+   </property>
+   <property name="toolTip">
+    <string>Stop the currently selected job</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

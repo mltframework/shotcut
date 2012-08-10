@@ -32,6 +32,10 @@ public:
     void setModelIndex(const QModelIndex& index);
     QModelIndex modelIndex() const;
     bool ran() const;
+    bool stopped() const;
+
+public slots:
+    void stop();
 
 signals:
     void messageAvailable(MeltJob* job);
@@ -41,6 +45,7 @@ private:
     QString m_xml;
     QModelIndex m_index;
     bool m_ran;
+    bool m_killed;
 
 private slots:
     void onFinished(int exitCode, QProcess::ExitStatus exitStatus);
@@ -63,6 +68,7 @@ protected:
 public:
     static JobQueue& singleton(QObject* parent = 0);
     MeltJob* add(MeltJob *job);
+    MeltJob* jobFromIndex(const QModelIndex& index) const;
 
 signals:
     void jobAdded();

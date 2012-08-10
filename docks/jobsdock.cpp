@@ -19,6 +19,7 @@
 #include "jobsdock.h"
 #include "ui_jobsdock.h"
 #include "jobqueue.h"
+#include <QMenu>
 
 JobsDock::JobsDock(QWidget *parent) :
     QDockWidget(parent),
@@ -35,4 +36,25 @@ JobsDock::JobsDock(QWidget *parent) :
 JobsDock::~JobsDock()
 {
     delete ui;
+}
+
+void JobsDock::on_treeView_customContextMenuRequested(const QPoint &pos)
+{
+    QModelIndex index = ui->treeView->currentIndex();
+    if (!index.isValid()) return;
+    QMenu menu(this);
+    MeltJob* job = JOBS.jobFromIndex(index);
+    if (job) {
+        if (job->state() == QProcess::Running)
+            menu.addAction(ui->actionStopJob);
+    }
+    menu.exec(mapToGlobal(pos));
+}
+
+void JobsDock::on_actionStopJob_triggered()
+{
+    QModelIndex index = ui->treeView->currentIndex();
+    if (!index.isValid()) return;
+    MeltJob* job = JOBS.jobFromIndex(index);
+    if (job) job->stop();
 }

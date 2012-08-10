@@ -360,6 +360,7 @@ void EncodeDock::on_encodeButton_clicked()
     QString outputFilename = QFileDialog::getSaveFileName(this,
         seekable? tr("Encode to File") : tr("Capture to File"), directory);
     if (!outputFilename.isEmpty()) {
+        MLT.pause();
         settings.setValue(settingKey, QFileInfo(outputFilename).path());
         if (seekable)
             enqueueMelt(outputFilename);
@@ -415,6 +416,7 @@ void EncodeDock::on_streamButton_clicked()
         tr("Enter the network protocol scheme, address, port, and parameters as an URL:"),
         QLineEdit::Normal, "udp://224.224.224.224:1234?pkt_size=1316&reuse=1");
     if (!url.isEmpty()) {
+        MLT.pause();
         ui->dualPassCheckbox->setChecked(false);
         ui->streamButton->setText(tr("Stop Stream"));
         if (MLT.producer()->get_int("seekable"))
