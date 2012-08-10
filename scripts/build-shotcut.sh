@@ -458,6 +458,7 @@ function set_globals {
   fi
   CFLAGS_[1]="-I$FINAL_INSTALL_DIR/include $CFLAGS"
   [ "$TARGET_OS" = "Darwin" ] && CFLAGS_[1]="${CFLAGS_[1]} -DRELOCATABLE -DMELT_NOSDL"
+  [ "$TARGET_OS" = "Win32" ]  && CFLAGS_[1]="${CFLAGS_[1]} -DMELT_NOSDL"
   LDFLAGS_[1]="-L$FINAL_INSTALL_DIR/lib $LDFLAGS"
 
   ####
