@@ -52,7 +52,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     // Create the UI.
     ui->setupUi(this);
-#ifdef Q_WS_MAC
+#ifndef Q_WS_X11
     ui->mainToolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 #endif
 
