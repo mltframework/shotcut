@@ -19,6 +19,7 @@
 #include "jobqueue.h"
 #include <QtGui>
 #include <QDebug>
+#include "mainwindow.h"
 
 MeltJob::MeltJob(const QString& name, const QString& xml)
     : QProcess(0)
@@ -41,9 +42,9 @@ void MeltJob::start()
 #endif
     setReadChannel(QProcess::StandardError);
     QStringList args;
-//    args << "-verbose";
+    args << "-progress2";
     args << m_xml;
-    qDebug() << meltPath.absoluteFilePath() << args.join(" ");
+    qDebug() << meltPath.absoluteFilePath() << args;
 #ifdef Q_WS_WIN
     QProcess::start(meltPath.absoluteFilePath(), args);
 #else
@@ -141,6 +142,7 @@ MeltJob* JobQueue::add(MeltJob* job)
 void JobQueue::onMessageAvailable(MeltJob* job)
 {
     QString msg = job->readLine();
+//    qDebug() << msg;
     if (msg.contains("percentage:")) {
         QStandardItem* item = JOBS.itemFromIndex(job->modelIndex());
         if (item) {
@@ -148,6 +150,7 @@ void JobQueue::onMessageAvailable(MeltJob* job)
             item->setText(QString("%1%").arg(percent));
         }
     }
+
 }
 
 void JobQueue::onFinished(MeltJob* job, bool isSuccess)
