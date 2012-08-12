@@ -50,8 +50,8 @@ void MeltJob::start()
 #else
     args.prepend(meltPath.absoluteFilePath());
     QProcess::start("/usr/bin/nice", args);
-    m_ran = true;
 #endif
+    m_ran = true;
 }
 
 void MeltJob::setModelIndex(const QModelIndex& index)
