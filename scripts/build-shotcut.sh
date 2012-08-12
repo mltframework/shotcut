@@ -442,6 +442,8 @@ function set_globals {
   if test "$TARGET_OS" = "Darwin"; then
     CFLAGS_[0]="${CFLAGS_[0]} -I/opt/local/include"
     LDFLAGS_[0]="${LDFLAGS_[0]} -L/opt/local/lib"
+  elif test "$TARGET_OS" = "Linux" ; then
+    CONFIG[0]="${CONFIG[0]} --enable-x11grab --enable-libpulse"
   fi
 
   #####
