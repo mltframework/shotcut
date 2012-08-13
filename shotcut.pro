@@ -34,7 +34,8 @@ SOURCES += main.cpp\
     docks/encodedock.cpp \
     dialogs/addencodepresetdialog.cpp \
     jobqueue.cpp \
-    docks/jobsdock.cpp
+    docks/jobsdock.cpp \
+    dialogs/textviewerdialog.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -66,7 +67,8 @@ HEADERS  += mainwindow.h \
     docks/encodedock.h \
     dialogs/addencodepresetdialog.h \
     jobqueue.h \
-    docks/jobsdock.h
+    docks/jobsdock.h \
+    dialogs/textviewerdialog.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
@@ -89,7 +91,8 @@ FORMS    += mainwindow.ui \
     docks/recentdock.ui \
     docks/encodedock.ui \
     dialogs/addencodepresetdialog.ui \
-    docks/jobsdock.ui
+    docks/jobsdock.ui \
+    dialogs/textviewerdialog.ui
 
 RESOURCES += \
     resources.qrc

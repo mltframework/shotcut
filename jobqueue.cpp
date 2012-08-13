@@ -25,10 +25,16 @@ MeltJob::MeltJob(const QString& name, const QString& xml)
     : QProcess(0)
     , m_xml(xml)
     , m_ran(false)
+    , m_killed(false)
 {
     setObjectName(name);
     connect(this, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(onFinished(int, QProcess::ExitStatus)));
     connect(this, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
+}
+
+MeltJob::~MeltJob()
+{
+    QFile::remove(m_xml);
 }
 
 void MeltJob::start()
@@ -74,6 +80,25 @@ bool MeltJob::stopped() const
     return m_killed;
 }
 
+void MeltJob::appendToLog(const QString& s)
+{
+    m_log.append(s);
+}
+
+QString MeltJob::log() const
+{
+    return m_log;
+}
+
+QString MeltJob::xml() const
+{
+    QFile f(m_xml);
+    f.open(QIODevice::ReadOnly);
+    QString s(f.readAll());
+    f.close();
+    return s;
+}
+
 void MeltJob::stop()
 {
     terminate();
@@ -83,7 +108,6 @@ void MeltJob::stop()
 
 void MeltJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
 {
-    QFile::remove(m_xml);
     if (exitStatus == QProcess::NormalExit && exitCode == 0) {
         qDebug() << "melt succeeeded";
         emit finished(this, true);
@@ -101,14 +125,9 @@ void MeltJob::onReadyRead()
 ///////////////////////////////////////////////////////////////////////////////
 
 JobQueue::JobQueue(QObject *parent) :
-    QStandardItemModel(0, COLUMN_COUNT, parent)
+    QStandardItemModel(0, COLUMN_COUNT, parent),
+    m_paused(false)
 {
-}
-
-JobQueue::~JobQueue()
-{
-    QMutexLocker locker(&m_mutex);
-    qDeleteAll(m_jobs);
 }
 
 JobQueue& JobQueue::singleton(QObject* parent)
@@ -117,6 +136,12 @@ JobQueue& JobQueue::singleton(QObject* parent)
     if (!instance)
         instance = new JobQueue(parent);
     return *instance;
+}
+
+void JobQueue::cleanup()
+{
+    QMutexLocker locker(&m_mutex);
+    qDeleteAll(m_jobs);
 }
 
 MeltJob* JobQueue::add(MeltJob* job)
@@ -150,7 +175,9 @@ void JobQueue::onMessageAvailable(MeltJob* job)
             item->setText(QString("%1%").arg(percent));
         }
     }
-
+    else {
+        job->appendToLog(msg);
+    }
 }
 
 void JobQueue::onFinished(MeltJob* job, bool isSuccess)
@@ -169,6 +196,7 @@ void JobQueue::onFinished(MeltJob* job, bool isSuccess)
 
 void JobQueue::startNextJob()
 {
+    if (m_paused) return;
     QMutexLocker locker(&m_mutex);
     if (!m_jobs.isEmpty()) {
         foreach(MeltJob* job, m_jobs) {
@@ -187,4 +215,20 @@ void JobQueue::startNextJob()
 MeltJob* JobQueue::jobFromIndex(const QModelIndex& index) const
 {
     return m_jobs.at(index.row());
+}
+
+void JobQueue::pause()
+{
+    m_paused = true;
+}
+
+void JobQueue::resume()
+{
+    m_paused = false;
+    startNextJob();
+}
+
+bool JobQueue::isPaused() const
+{
+    return m_paused;
 }

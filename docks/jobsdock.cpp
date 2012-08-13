@@ -20,6 +20,8 @@
 #include "ui_jobsdock.h"
 #include "jobqueue.h"
 #include <QMenu>
+#include "dialogs/textviewerdialog.h"
+#include "mainwindow.h"
 
 JobsDock::JobsDock(QWidget *parent) :
     QDockWidget(parent),
@@ -31,10 +33,12 @@ JobsDock::JobsDock(QWidget *parent) :
     header->setStretchLastSection(false);
     header->setResizeMode(0, QHeaderView::Stretch);
     header->setResizeMode(1, QHeaderView::ResizeToContents);
+    ui->cleanButton->hide();
 }
 
 JobsDock::~JobsDock()
 {
+    JOBS.cleanup();
     delete ui;
 }
 
@@ -45,8 +49,15 @@ void JobsDock::on_treeView_customContextMenuRequested(const QPoint &pos)
     QMenu menu(this);
     MeltJob* job = JOBS.jobFromIndex(index);
     if (job) {
+        if (job->ran() && job->state() == QProcess::NotRunning && job->exitStatus() == QProcess::NormalExit)
+            menu.addAction(ui->actionOpen);
+        if (job->stopped() || (JOBS.isPaused() && !job->ran()))
+            menu.addAction(ui->actionRun);
         if (job->state() == QProcess::Running)
             menu.addAction(ui->actionStopJob);
+        if (job->ran())
+            menu.addAction(ui->actionViewLog);
+        menu.addAction(ui->actionViewXml);
     }
     menu.exec(mapToGlobal(pos));
 }
@@ -57,4 +68,56 @@ void JobsDock::on_actionStopJob_triggered()
     if (!index.isValid()) return;
     MeltJob* job = JOBS.jobFromIndex(index);
     if (job) job->stop();
+}
+
+void JobsDock::on_actionViewLog_triggered()
+{
+    QModelIndex index = ui->treeView->currentIndex();
+    if (!index.isValid()) return;
+    MeltJob* job = JOBS.jobFromIndex(index);
+    if (job) {
+        TextViewerDialog dialog(this);
+        dialog.setWindowTitle(tr("Job Log"));
+        dialog.setText(job->log());
+        dialog.exec();
+    }
+}
+
+void JobsDock::on_actionViewXml_triggered()
+{
+    QModelIndex index = ui->treeView->currentIndex();
+    if (!index.isValid()) return;
+    MeltJob* job = JOBS.jobFromIndex(index);
+    if (job) {
+        TextViewerDialog dialog(this);
+        dialog.setWindowTitle(tr("MLT XML"));
+        dialog.setText(job->xml());
+        dialog.exec();
+    }
+}
+
+void JobsDock::on_pauseButton_toggled(bool checked)
+{
+    if (checked)
+        JOBS.pause();
+    else
+        JOBS.resume();
+}
+
+void JobsDock::on_actionOpen_triggered()
+{
+    QModelIndex index = ui->treeView->currentIndex();
+    if (!index.isValid()) return;
+    MeltJob* job = JOBS.jobFromIndex(index);
+    MainWindow* window = qobject_cast<MainWindow*>(qApp->activeWindow());
+    if (job && window)
+            window->open(job->objectName().toUtf8().constData());
+}
+
+void JobsDock::on_actionRun_triggered()
+{
+    QModelIndex index = ui->treeView->currentIndex();
+    if (!index.isValid()) return;
+    MeltJob* job = JOBS.jobFromIndex(index);
+    if (job) job->start();
 }

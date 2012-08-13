@@ -16,34 +16,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef JOBSDOCK_H
-#define JOBSDOCK_H
+#ifndef TEXTVIEWERDIALOG_H
+#define TEXTVIEWERDIALOG_H
 
-#include <QDockWidget>
+#include <QDialog>
 
 namespace Ui {
-    class JobsDock;
+    class TextViewerDialog;
 }
 
-class JobsDock : public QDockWidget
+class TextViewerDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit JobsDock(QWidget *parent = 0);
-    ~JobsDock();
+    explicit TextViewerDialog(QWidget *parent = 0);
+    ~TextViewerDialog();
+    void setText(const QString& s);
 
 private:
-    Ui::JobsDock *ui;
-
-private slots:
-    void on_treeView_customContextMenuRequested(const QPoint &pos);
-    void on_actionStopJob_triggered();
-    void on_actionViewLog_triggered();
-    void on_actionViewXml_triggered();
-    void on_pauseButton_toggled(bool checked);
-    void on_actionOpen_triggered();
-    void on_actionRun_triggered();
+    Ui::TextViewerDialog *ui;
 };
 
-#endif // JOBSDOCK_H
+#endif // TEXTVIEWERDIALOG_H

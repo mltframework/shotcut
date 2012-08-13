@@ -120,6 +120,9 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete m_propertiesDock;
+    delete m_recentDock;
+    delete m_encodeDock;
+    delete m_jobsDock;
     delete m_player;
     delete ui;
 }

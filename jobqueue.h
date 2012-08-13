@@ -28,11 +28,15 @@ class MeltJob : public QProcess
     Q_OBJECT
 public:
     MeltJob(const QString& name, const QString& xml);
+    ~MeltJob();
     void start();
     void setModelIndex(const QModelIndex& index);
     QModelIndex modelIndex() const;
     bool ran() const;
     bool stopped() const;
+    void appendToLog(const QString&);
+    QString log() const;
+    QString xml() const;
 
 public slots:
     void stop();
@@ -46,6 +50,7 @@ private:
     QModelIndex m_index;
     bool m_ran;
     bool m_killed;
+    QString m_log;
 
 private slots:
     void onFinished(int exitCode, QProcess::ExitStatus exitStatus);
@@ -62,13 +67,16 @@ protected:
         COLUMN_COUNT
     };
     JobQueue(QObject *parent);
-    ~JobQueue();
     void startNextJob();
 
 public:
     static JobQueue& singleton(QObject* parent = 0);
+    void cleanup();
     MeltJob* add(MeltJob *job);
     MeltJob* jobFromIndex(const QModelIndex& index) const;
+    void pause();
+    void resume();
+    bool isPaused() const;
 
 signals:
     void jobAdded();
@@ -80,6 +88,7 @@ public slots:
 private:
     QList<MeltJob*> m_jobs;
     QMutex m_mutex; // protects m_jobs
+    bool m_paused;
 };
 
 #define JOBS JobQueue::singleton()

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>281</width>
-    <height>650</height>
+    <width>279</width>
+    <height>648</height>
    </rect>
   </property>
   <property name="allowedAreas">
@@ -41,7 +41,7 @@
          <x>0</x>
          <y>0</y>
          <width>288</width>
-         <height>572</height>
+         <height>570</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -1131,9 +1131,6 @@ project or the player's current signal mode</string>
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <property name="spacing">
-       <number>12</number>
-      </property>
       <item>
        <widget class="QPushButton" name="encodeButton">
         <property name="text">
