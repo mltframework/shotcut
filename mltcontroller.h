@@ -64,7 +64,7 @@ public:
     void onWindowResize();
     void seek(int position);
     void refreshConsumer();
-    void saveXML(QString& filename);
+    QString saveXML(const QString& filename);
     int consumerChanged();
     int setProfile(const QString& profile_name);
 
