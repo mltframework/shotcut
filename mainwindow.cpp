@@ -99,6 +99,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), ui->actionOpen, SLOT(setDisabled(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), ui->actionOpenOther, SLOT(setDisabled(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), ui->actionExit, SLOT(setDisabled(bool)));
+    connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), this, SLOT(onCaptureStateChanged(bool)));
 
     m_jobsDock = new JobsDock(this);
     m_jobsDock->hide();
@@ -422,4 +423,10 @@ void MainWindow::on_actionEncode_triggered(bool checked)
         m_jobsVisible = m_jobsDock->isVisible();
         m_jobsDock->setVisible(false);
     }
+}
+
+void MainWindow::onCaptureStateChanged(bool started)
+{
+    if (started && MLT.saveXML("in-memory").contains("x11grab:"))
+        showMinimized();
 }

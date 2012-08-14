@@ -81,6 +81,7 @@ private slots:
     bool on_actionSave_triggered();
     bool on_actionSave_As_triggered();
     void on_actionEncode_triggered(bool checked);
+    void onCaptureStateChanged(bool started);
 };
 
 #endif // MAINWINDOW_H
