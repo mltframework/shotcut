@@ -68,7 +68,7 @@ private:
     void loadPresets();
     Mlt::Properties* collectProperties(int realtime);
     void collectProperties(QDomElement& node, int realtime);
-    MeltJob* createMeltJob(const QString& target, int realtime = -1);
+    MeltJob* createMeltJob(const QString& target, int realtime = -1, int pass = 0);
     void runMelt(const QString& target, int realtime = -1);
     void enqueueMelt(const QString& target, int realtime = -1);
     void encode(const QString& target);

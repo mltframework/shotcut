@@ -168,7 +168,7 @@ void EncodeDock::collectProperties(QDomElement& node, int realtime)
     delete p;
 }
 
-MeltJob* EncodeDock::createMeltJob(const QString& target, int realtime)
+MeltJob* EncodeDock::createMeltJob(const QString& target, int realtime, int pass)
 {
     // get temp filename
     QTemporaryFile tmp(QDir::tempPath().append("/shotcut-XXXXXX"));
@@ -191,6 +191,8 @@ MeltJob* EncodeDock::createMeltJob(const QString& target, int realtime)
     consumerNode.setAttribute("mlt_service", "avformat");
     consumerNode.setAttribute("target", target);
     collectProperties(consumerNode, realtime);
+    if (pass == 1 || pass == 2)
+        consumerNode.setAttribute("pass", pass);
 
     // save new xml
     f1.open(QIODevice::WriteOnly);
@@ -212,9 +214,16 @@ void EncodeDock::runMelt(const QString& target, int realtime)
 
 void EncodeDock::enqueueMelt(const QString& target, int realtime)
 {
-    MeltJob* job = createMeltJob(target, realtime);
-    if (job)
+    int pass = ui->dualPassCheckbox->isChecked()? 1 : 0;
+    MeltJob* job = createMeltJob(target, realtime, pass);
+    if (job) {
         JOBS.add(job);
+        if (pass) {
+            job = createMeltJob(target, realtime, 2);
+            if (job)
+                JOBS.add(job);
+        }
+    }
 }
 
 void EncodeDock::encode(const QString& target)
@@ -363,9 +372,12 @@ void EncodeDock::on_encodeButton_clicked()
         MLT.pause();
         settings.setValue(settingKey, QFileInfo(outputFilename).path());
         if (seekable)
+            // Batch encode
             enqueueMelt(outputFilename);
         else {
+            // Capture to file
             // use multi consumer to encode and preview simultaneously
+            ui->dualPassCheckbox->setChecked(false);
             ui->encodeButton->setText(tr("Stop Capture"));
             encode(outputFilename);
             emit captureStateChanged(true);
@@ -420,8 +432,10 @@ void EncodeDock::on_streamButton_clicked()
         ui->dualPassCheckbox->setChecked(false);
         ui->streamButton->setText(tr("Stop Stream"));
         if (MLT.producer()->get_int("seekable"))
+            // Stream in background
             runMelt(url, 1);
         else {
+            // Live streaming in foreground
             encode(url);
             emit captureStateChanged(true);
             emit ui->encodeButton->setDisabled(true);
