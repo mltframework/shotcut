@@ -151,6 +151,8 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                 p->set("threads", QThread::idealThreadCount() - 1);
             else
                 p->set("threads", ui->videoCodecThreadsSpinner->value());
+            if (ui->dualPassCheckbox->isChecked())
+                p->set("pass", 1);
         }
         foreach (QString line, ui->advancedTextEdit->toPlainText().split("\n"))
             p->parse(line.toUtf8().constData());
@@ -340,6 +342,8 @@ void EncodeDock::on_presetsTree_currentItemChanged(QTreeWidgetItem *current, QTr
                     if (pix_fmt != "yuv420p")
                         other.append(QString("%1=%2").arg(name).arg(pix_fmt));
                 }
+                else if (name == "pass")
+                    ui->dualPassCheckbox->setChecked(true);
                 else if (name != "an" && name != "vn" && name != "threads")
                     other.append(QString("%1=%2").arg(name).arg(preset->get(i)));
             }
