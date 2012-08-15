@@ -113,7 +113,7 @@ void EncodeDock::loadPresets()
             }
         }
     }
-
+    ui->presetsTree->model()->sort(0);
     ui->presetsTree->expandAll();
 }
 
