@@ -32,7 +32,8 @@ AudioSignal::AudioSignal(QWidget *parent): QWidget(parent)
 {
     const QFont& font = QWidget::font();
     QWidget::setFont(QFont(font.family(), font.pointSize() - 2));
-    setMinimumHeight(10);
+    setMinimumHeight(300);
+    setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     setMinimumWidth(fontMetrics().width("-60") + 20);
     dbscale << 5 << 0 << -5 << -10 << -15 << -20 << -25 << -30 << -35 << -40 << -50 << -60;
     setContextMenuPolicy(Qt::ActionsContextMenu);
@@ -162,7 +163,7 @@ void AudioSignal::paintEvent(QPaintEvent* /*e*/)
     bool horiz=width() > height();
     int dbsize = fontMetrics().width("-60") + 2;
     bool showdb=width()>(dbsize+2);
-    const int h = IEC_Scale(-dbscale.at(0)) * height();
+    const int h = IEC_Scale(-dbscale.at(0)) * height() - 2;
 
     //valpixel=1.0 for 127, 1.0+(1/40) for 1 short oversample, 1.0+(2/40) for longer oversample
     for (int i = 0; i < numchan; i++) {
@@ -212,7 +213,7 @@ void AudioSignal::paintEvent(QPaintEvent* /*e*/)
         for (int l=0;l<dbscale.size();l++){
             if (!horiz){
                 double xf = IEC_Scale(dbscale.at(l)) * h;
-                p.drawText(0, height() - xf, QString().sprintf("%d",dbscale.at(l)));
+                p.drawText(0, height() - xf + 2, QString().sprintf("%d",dbscale.at(l)));
             }else{
                 double xf = IEC_Scale(dbscale.at(l)) * (double) width();
                 p.drawText(xf*40/42-10,height()-2, QString().sprintf("%d",dbscale.at(l)));
