@@ -165,7 +165,8 @@ void EncodeDock::collectProperties(QDomElement& node, int realtime)
     Mlt::Properties* p = collectProperties(realtime);
     if (p && p->is_valid()) {
         for (int i = 0; i < p->count(); i++)
-            node.setAttribute(p->get_name(i), p->get(i));
+            if (p->get_name(i) && strcmp(p->get_name(i), ""))
+                node.setAttribute(p->get_name(i), p->get(i));
     }
     delete p;
 }
