@@ -63,6 +63,12 @@ private slots:
 
     void on_syncSlider_valueChanged(int value);
 
+    void on_actionOpenFolder_triggered();
+
+    void on_menuButton_clicked();
+
+    void on_actionCopyFullFilePath_triggered();
+
 private:
     Ui::AvformatProducerWidget *ui;
     int m_defaultDuration;

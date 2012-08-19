@@ -20,7 +20,7 @@
 #include "ui_avformatproducerwidget.h"
 #include "sdlwidget.h"
 #include <QtDebug>
-#include <QtGui/QComboBox>
+#include <QtGui>
 
 AvformatProducerWidget::AvformatProducerWidget(QWidget *parent)
     : QWidget(parent)
@@ -315,4 +315,24 @@ void AvformatProducerWidget::on_syncSlider_valueChanged(int value)
 {
     if (m_producer)
         m_producer->set("video_delay", double(value) / 1000);
+}
+
+void AvformatProducerWidget::on_actionOpenFolder_triggered()
+{
+    QFileInfo fi(MLT.producer()->get("resource"));
+    QUrl url(QString("file://").append(fi.path()), QUrl::TolerantMode);
+    QDesktopServices::openUrl(url);
+}
+
+void AvformatProducerWidget::on_menuButton_clicked()
+{
+    QMenu menu;
+    menu.addAction(ui->actionOpenFolder);
+    menu.addAction(ui->actionCopyFullFilePath);
+    menu.exec(ui->menuButton->mapToGlobal(QPoint(0, 0)));
+}
+
+void AvformatProducerWidget::on_actionCopyFullFilePath_triggered()
+{
+    qApp->clipboard()->setText(MLT.producer()->get("resource"));
 }

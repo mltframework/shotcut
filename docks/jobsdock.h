@@ -44,6 +44,8 @@ private slots:
     void on_pauseButton_toggled(bool checked);
     void on_actionOpen_triggered();
     void on_actionRun_triggered();
+    void on_menuButton_clicked();
+    void on_actionOpenFolder_triggered();
 };
 
 #endif // JOBSDOCK_H

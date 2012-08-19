@@ -14,5 +14,7 @@
         <file>icons/list-add.png</file>
         <file>icons/list-remove.png</file>
         <file>icons/view-refresh.png</file>
+        <file>icons/run-build.png</file>
+        <file>icons/format-justify-fill.png</file>
     </qresource>
 </RCC>

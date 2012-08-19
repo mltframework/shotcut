@@ -19,7 +19,7 @@
 #include "jobsdock.h"
 #include "ui_jobsdock.h"
 #include "jobqueue.h"
-#include <QMenu>
+#include <QtGui>
 #include "dialogs/textviewerdialog.h"
 #include "mainwindow.h"
 
@@ -49,8 +49,10 @@ void JobsDock::on_treeView_customContextMenuRequested(const QPoint &pos)
     QMenu menu(this);
     MeltJob* job = JOBS.jobFromIndex(index);
     if (job) {
-        if (job->ran() && job->state() == QProcess::NotRunning && job->exitStatus() == QProcess::NormalExit)
+        if (job->ran() && job->state() == QProcess::NotRunning && job->exitStatus() == QProcess::NormalExit) {
             menu.addAction(ui->actionOpen);
+            menu.addAction(ui->actionOpenFolder);
+        }
         if (job->stopped() || (JOBS.isPaused() && !job->ran()))
             menu.addAction(ui->actionRun);
         if (job->state() == QProcess::Running)
@@ -120,4 +122,21 @@ void JobsDock::on_actionRun_triggered()
     if (!index.isValid()) return;
     MeltJob* job = JOBS.jobFromIndex(index);
     if (job) job->start();
+}
+
+void JobsDock::on_menuButton_clicked()
+{
+    on_treeView_customContextMenuRequested(ui->menuButton->mapToParent(QPoint(0, 0)));
+}
+
+void JobsDock::on_actionOpenFolder_triggered()
+{
+    QModelIndex index = ui->treeView->currentIndex();
+    if (!index.isValid()) return;
+    MeltJob* job = JOBS.jobFromIndex(index);
+    if (job) {
+        QFileInfo fi(job->objectName());
+        QUrl url(QString("file://").append(fi.path()), QUrl::TolerantMode);
+        QDesktopServices::openUrl(url);
+    }
 }

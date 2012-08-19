@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>224</width>
+    <width>232</width>
     <height>279</height>
    </rect>
   </property>
@@ -37,8 +37,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>224</width>
-         <height>219</height>
+         <width>232</width>
+         <height>199</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -102,6 +102,17 @@ the list. This does not stop a currently running job. Right-
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="menuButton">
+        <property name="toolTip">
+         <string>Display a menu of additional actions</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../resources.qrc">
+          <normaloff>:/icons/icons/format-justify-fill.png</normaloff>:/icons/icons/format-justify-fill.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -158,7 +169,14 @@ the list. This does not stop a currently running job. Right-
     <string>Restart a stopped job</string>
    </property>
   </action>
+  <action name="actionOpenFolder">
+   <property name="text">
+    <string>Show in Folder</string>
+   </property>
+  </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="../resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

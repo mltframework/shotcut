@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>319</width>
-    <height>535</height>
+    <width>331</width>
+    <height>553</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -680,6 +680,20 @@
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="menuButton">
+       <property name="toolTip">
+        <string>Display a menu of additional actions</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../resources.qrc">
+         <normaloff>:/icons/icons/format-justify-fill.png</normaloff>:/icons/icons/format-justify-fill.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
       <spacer name="horizontalSpacer_3">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -708,6 +722,16 @@
     </spacer>
    </item>
   </layout>
+  <action name="actionOpenFolder">
+   <property name="text">
+    <string>Show in Folder</string>
+   </property>
+  </action>
+  <action name="actionCopyFullFilePath">
+   <property name="text">
+    <string>Copy Full File Path</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -717,21 +741,26 @@
   </customwidget>
  </customwidgets>
  <tabstops>
+  <tabstop>durationSpinBox</tabstop>
   <tabstop>tabWidget</tabstop>
   <tabstop>videoTrackComboBox</tabstop>
-  <tabstop>audioTrackComboBox</tabstop>
   <tabstop>videoTableWidget</tabstop>
   <tabstop>aspectNumSpinBox</tabstop>
   <tabstop>aspectDenSpinBox</tabstop>
   <tabstop>scanComboBox</tabstop>
   <tabstop>fieldOrderComboBox</tabstop>
-  <tabstop>resetButton</tabstop>
-  <tabstop>notesTextEdit</tabstop>
-  <tabstop>durationSpinBox</tabstop>
+  <tabstop>audioTrackComboBox</tabstop>
   <tabstop>audioTableWidget</tabstop>
+  <tabstop>syncSlider</tabstop>
+  <tabstop>spinBox</tabstop>
   <tabstop>metadataTable</tabstop>
+  <tabstop>resetButton</tabstop>
+  <tabstop>menuButton</tabstop>
+  <tabstop>notesTextEdit</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>syncSlider</sender>
