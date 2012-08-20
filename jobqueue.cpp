@@ -102,7 +102,7 @@ QString MeltJob::xml() const
 void MeltJob::stop()
 {
     terminate();
-    kill();
+    QTimer::singleShot(2000, this, SLOT(kill()));
     m_killed = true;
 }
 
