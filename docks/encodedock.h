@@ -60,6 +60,8 @@ private slots:
     void on_removePresetButton_clicked();
     void onFinished(MeltJob*, bool isSuccess);
 
+    void on_stopCaptureButton_clicked();
+
 private:
     Ui::EncodeDock *ui;
     Mlt::Properties *m_presets;

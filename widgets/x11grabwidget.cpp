@@ -82,13 +82,12 @@ Mlt::Producer* X11grabWidget::producer(Mlt::Profile& profile)
     if (!p->is_valid()) {
         delete p;
         p = new Mlt::Producer(profile, "color:");
-        p->set("resource", QString("x11grab:%1")
-               .arg(ui->lineEdit->text()).toAscii().constData());
         p->set("error", 1);
     }
     else if (m_audioWidget) {
         Mlt::Producer* audio = dynamic_cast<AbstractProducerWidget*>(m_audioWidget)->producer(profile);
         Mlt::Tractor* tractor = new Mlt::Tractor;
+        tractor->set("_profile", &MLT.profile(), 0);
         tractor->set_track(*p, 0);
         delete p;
         tractor->set_track(*audio, 1);
@@ -98,8 +97,6 @@ Mlt::Producer* X11grabWidget::producer(Mlt::Profile& profile)
         delete tran;
         p = new Mlt::Producer(tractor->get_producer());
         delete tractor;
-        p->set("resource", QString("x11grab:%1")
-               .arg(ui->lineEdit->text()).toAscii().constData());
     }
     p->set("display", ui->lineEdit->text().toAscii().constData());
     p->set("xpos", ui->xSpinBox->value());
@@ -110,6 +107,7 @@ Mlt::Producer* X11grabWidget::producer(Mlt::Profile& profile)
     p->set("draw_mouse", ui->drawMouseCheckBox->isChecked()? 1: 0);
     p->set("follow_mouse", ui->positionComboBox->currentIndex() - 1);
     p->set("audio_ix", ui->audioComboBox->currentIndex());
+    p->set("shotcut_bgcapture", ui->backgroundCheckBox->isChecked()? 1: 0);
     return p;
 }
 
@@ -125,6 +123,7 @@ Mlt::Properties* X11grabWidget::getPreset() const
     p->set("draw_mouse", ui->drawMouseCheckBox->isChecked()? 1: 0);
     p->set("follow_mouse", ui->positionComboBox->currentIndex() - 1);
     p->set("audio_ix", ui->audioComboBox->currentIndex());
+    p->set("shotcut_bgcapture", ui->backgroundCheckBox->isChecked()? 1: 0);
     return p;
 }
 
@@ -139,6 +138,7 @@ void X11grabWidget::loadPreset(Mlt::Properties& p)
     ui->drawMouseCheckBox->setChecked(p.get_int("draw_mouse"));
     ui->positionComboBox->setCurrentIndex(p.get_int("follow_mouse") + 1);
     ui->audioComboBox->setCurrentIndex(p.get_int("audio_ix"));
+    ui->backgroundCheckBox->setChecked(p.get_int("shotcut_bgcapture"));
 }
 
 void X11grabWidget::on_preset_selected(void* p)

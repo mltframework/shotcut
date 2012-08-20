@@ -32,6 +32,7 @@ EncodeDock::EncodeDock(QWidget *parent) :
     m_immediateJob(0)
 {
     ui->setupUi(this);
+    ui->stopCaptureButton->hide();
     ui->videoCodecThreadsSpinner->setMaximum(QThread::idealThreadCount());
 //    toggleViewAction()->setIcon(QIcon::fromTheme("media-record", windowIcon()));
     ui->addPresetButton->setIcon(QIcon::fromTheme("list-add", ui->addPresetButton->icon()));
@@ -379,6 +380,11 @@ void EncodeDock::on_encodeButton_clicked()
         if (seekable)
             // Batch encode
             enqueueMelt(outputFilename);
+        else if (MLT.producer()->get_int("shotcut_bgcapture")) {
+            MLT.stop();
+            runMelt(outputFilename);
+            ui->stopCaptureButton->show();
+        }
         else {
             // Capture to file
             // use multi consumer to encode and preview simultaneously
@@ -420,7 +426,7 @@ void EncodeDock::on_reloadSignalButton_clicked()
 void EncodeDock::on_streamButton_clicked()
 {
     if (m_immediateJob) {
-        m_immediateJob->kill();
+        m_immediateJob->stop();
         return;
     }
     if (ui->streamButton->text() == tr("Stop Stream")) {
@@ -439,6 +445,12 @@ void EncodeDock::on_streamButton_clicked()
         if (MLT.producer()->get_int("seekable"))
             // Stream in background
             runMelt(url, 1);
+        else if (MLT.producer()->get_int("shotcut_bgcapture")) {
+            // Stream Shotcut screencast
+            MLT.stop();
+            runMelt(url, 1);
+            ui->stopCaptureButton->show();
+        }
         else {
             // Live streaming in foreground
             encode(url);
@@ -524,4 +536,11 @@ void EncodeDock::onFinished(MeltJob* job, bool isSuccess)
     delete job;
     emit captureStateChanged(false);
     ui->encodeButton->setDisabled(false);
+}
+
+void EncodeDock::on_stopCaptureButton_clicked()
+{
+    ui->stopCaptureButton->hide();
+    if (m_immediateJob)
+        m_immediateJob->stop();
 }
