@@ -389,6 +389,7 @@ QString Controller::resource() const
         }
         delete multitrack;
     }
+    return resource;
 }
 
 } // namespace
