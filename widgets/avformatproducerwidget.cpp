@@ -327,7 +327,8 @@ void AvformatProducerWidget::on_actionOpenFolder_triggered()
 void AvformatProducerWidget::on_menuButton_clicked()
 {
     QMenu menu;
-    menu.addAction(ui->actionOpenFolder);
+    if (!MLT.resource().contains("://")) // not a network stream
+        menu.addAction(ui->actionOpenFolder);
     menu.addAction(ui->actionCopyFullFilePath);
     menu.exec(ui->menuButton->mapToGlobal(QPoint(0, 0)));
 }

@@ -306,7 +306,7 @@ void MainWindow::on_actionOpenOther_triggered()
 void MainWindow::onProducerOpened()
 {
     QString service(MLT.producer()->get("mlt_service"));
-    QString resource(MLT.producer()->get("resource"));
+    QString resource(MLT.resource());
     QWidget* w = 0;
 
     delete m_propertiesDock->widget();
@@ -427,6 +427,7 @@ void MainWindow::on_actionEncode_triggered(bool checked)
 
 void MainWindow::onCaptureStateChanged(bool started)
 {
-    if (started && MLT.saveXML("in-memory").contains("x11grab:"))
+    if (started && MLT.resource().startsWith("x11grab:")
+                && !MLT.producer()->get_int("shotcut_bgcapture"))
         showMinimized();
 }

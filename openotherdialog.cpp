@@ -100,7 +100,8 @@ void OpenOtherDialog::load(Mlt::Producer* producer)
 {
     if (producer && producer->is_valid()) {
         QString service(producer->get("mlt_service"));
-        QString resource(producer->get("resource"));
+        QString resource(MLT.resource());
+
         if (resource.startsWith("video4linux2:"))
             selectTreeWidget(tr("Video4Linux"));
         else if (resource.startsWith("pulse:"))
