@@ -80,6 +80,7 @@ public:
     Mlt::Consumer* consumer() const {
         return m_consumer;
     }
+    QString resource() const;
 
 protected:
     Mlt::Repository* m_repo;

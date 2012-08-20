@@ -372,4 +372,23 @@ int Controller::setProfile(const QString& profile_name)
     return error;
 }
 
+QString Controller::resource() const
+{
+    QString resource;
+    if (!m_producer)
+        return resource;
+    resource = QString(m_producer->get("resource"));
+    if (resource == "<tractor>") {
+        Mlt::Tractor tractor((mlt_tractor) m_producer->get_service());
+        Mlt::Multitrack* multitrack = tractor.multitrack();
+        if (multitrack->is_valid()) {
+            Mlt::Producer* producer = multitrack->track(0);
+            if (producer->is_valid())
+                resource = QString(producer->get("resource"));
+            delete producer;
+        }
+        delete multitrack;
+    }
+}
+
 } // namespace
