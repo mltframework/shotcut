@@ -1237,6 +1237,7 @@ function configure_compile_install_subproject {
       if test "$TARGET_OS" = "Win32" ; then
         cmd install -c -m 755 release/shotcut.exe "$FINAL_INSTALL_DIR"
         cmd install -p -c COPYING "$FINAL_INSTALL_DIR"/COPYING.txt
+        cmd install -c scripts/shotcut.nsi "$FINAL_INSTALL_DIR"/..
         cat > "$FINAL_INSTALL_DIR"/README <<End-of-win32-README
 Shotcut README
 
@@ -1489,10 +1490,9 @@ function deploy_win32
   cmd cp -pr "$QTDIR"/plugins/* lib/qt4
   cmd tar -xjf "$HOME/ladspa_plugins-win-0.4.15.tar.bz2"
 
-  log Making archive
+  log Making installer
   cmd cd ..
-  cmd rm shotcut.zip 2>/dev/null
-  cmd zip -r -9 shotcut.zip $(basename "$FINAL_INSTALL_DIR")
+  cmd makensis shotcut.nsi
 
   popd
 }

@@ -104,7 +104,8 @@ OTHER_FILES += \
     deploy-win32.sh \
     shotcut.rc \
     scripts/build-shotcut.sh \
-    icons/shotcut.icns
+    icons/shotcut.icns \
+    scripts/shotcut.nsi
 
 mac {
     TARGET = Shotcut
