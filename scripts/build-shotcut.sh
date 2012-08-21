@@ -1236,7 +1236,7 @@ function configure_compile_install_subproject {
     if test "shotcut" = "$1" ; then
       if test "$TARGET_OS" = "Win32" ; then
         cmd install -c -m 755 release/shotcut.exe "$FINAL_INSTALL_DIR"
-        cmd install -p -c COPYING "$FINAL_INSTALL_DIR"/COPYING.txt
+        cmd install -c COPYING "$FINAL_INSTALL_DIR"
         cmd install -c scripts/shotcut.nsi "$FINAL_INSTALL_DIR"/..
         cat > "$FINAL_INSTALL_DIR"/README <<End-of-win32-README
 Shotcut README
@@ -1482,6 +1482,7 @@ function deploy_win32
   cmd mv bin/ffmpeg.exe .
   cmd rm -rf bin include etc man manifest src *.txt
   cmd mv README README.txt
+  cmd mv COPYING COPYING.txt
   cmd rm lib/*
   cmd rm -rf lib/pkgconfig
   cmd rm -rf share/doc share/man share/ffmpeg/examples share/aclocal share/glib-2.0 share/gtk-2.0 share/gtk-doc share/themes
