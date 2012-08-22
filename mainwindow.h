@@ -82,6 +82,7 @@ private slots:
     bool on_actionSave_As_triggered();
     void on_actionEncode_triggered(bool checked);
     void onCaptureStateChanged(bool started);
+    void onJobsVisibilityChanged(bool checked);
 };
 
 #endif // MAINWINDOW_H

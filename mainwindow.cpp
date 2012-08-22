@@ -108,6 +108,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->menuView->addAction(m_jobsDock->toggleViewAction());
     connect(&JOBS, SIGNAL(jobAdded()), m_jobsDock, SLOT(show()));
     connect(&JOBS, SIGNAL(jobAdded()), m_jobsDock, SLOT(raise()));
+    connect(m_jobsDock, SIGNAL(visibilityChanged(bool)), this, SLOT(onJobsVisibilityChanged(bool)));
 
     // Connect signals.
     connect(this, SIGNAL(producerOpened()), this, SLOT(onProducerOpened()));
@@ -419,9 +420,11 @@ void MainWindow::on_actionEncode_triggered(bool checked)
     m_encodeDock->setVisible(checked);
     if (checked) {
         m_jobsDock->setVisible(m_jobsVisible);
+        m_encodeDock->raise();
     } else {
-        m_jobsVisible = m_jobsDock->isVisible();
+        bool saveVisibility = m_jobsDock->isVisible();
         m_jobsDock->setVisible(false);
+        m_jobsVisible = saveVisibility;
     }
 }
 
@@ -430,4 +433,9 @@ void MainWindow::onCaptureStateChanged(bool started)
     if (started && MLT.resource().startsWith("x11grab:")
                 && !MLT.producer()->get_int("shotcut_bgcapture"))
         showMinimized();
+}
+
+void MainWindow::onJobsVisibilityChanged(bool checked)
+{
+    m_jobsVisible = checked;
 }
