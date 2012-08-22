@@ -32,7 +32,11 @@ EncodeDock::EncodeDock(QWidget *parent) :
     m_immediateJob(0)
 {
     ui->setupUi(this);
+#ifdef Q_WS_X11
     ui->stopCaptureButton->hide();
+#else
+    delete ui->stopCaptureButton;
+#endif
     ui->videoCodecThreadsSpinner->setMaximum(QThread::idealThreadCount());
 //    toggleViewAction()->setIcon(QIcon::fromTheme("media-record", windowIcon()));
     ui->addPresetButton->setIcon(QIcon::fromTheme("list-add", ui->addPresetButton->icon()));
