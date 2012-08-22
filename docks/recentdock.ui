@@ -10,6 +10,10 @@
     <height>298</height>
    </rect>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../resources.qrc">
+    <normaloff>:/icons/icons/document-open-recent.png</normaloff>:/icons/icons/document-open-recent.png</iconset>
+  </property>
   <property name="windowTitle">
    <string>Recent</string>
   </property>
@@ -40,6 +44,8 @@
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

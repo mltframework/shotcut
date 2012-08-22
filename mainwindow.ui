@@ -14,7 +14,7 @@
    <string>Shotcut</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="resources.qrc">
     <normaloff>:/icons/icons/shotcut-logo-64.png</normaloff>:/icons/icons/shotcut-logo-64.png</iconset>
   </property>
   <property name="unifiedTitleAndToolBarOnMac">
@@ -72,12 +72,12 @@
    </attribute>
    <addaction name="actionOpen"/>
    <addaction name="actionSave"/>
-   <addaction name="actionEncode"/>
+   <addaction name="separator"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen">
    <property name="icon">
-    <iconset>
+    <iconset resource="resources.qrc">
      <normaloff>:/icons/icons/document-open.png</normaloff>:/icons/icons/document-open.png</iconset>
    </property>
    <property name="text">
@@ -130,7 +130,7 @@
   </action>
   <action name="actionSave">
    <property name="icon">
-    <iconset>
+    <iconset resource="resources.qrc">
      <normaloff>:/icons/icons/document-save.png</normaloff>:/icons/icons/document-save.png</iconset>
    </property>
    <property name="text">
@@ -162,7 +162,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resources.qrc">
      <normaloff>:/icons/icons/media-record.png</normaloff>:/icons/icons/media-record.png</iconset>
    </property>
    <property name="text">
@@ -174,7 +174,9 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>actionExit</sender>

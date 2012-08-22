@@ -10,6 +10,7 @@ RecentDock::RecentDock(QWidget *parent) :
     ui(new Ui::RecentDock)
 {
     ui->setupUi(this);
+    toggleViewAction()->setIcon(QIcon::fromTheme("document-open-recent", windowIcon()));
     m_recent = m_settings.value("recent").toStringList();
     add(QString());
 }

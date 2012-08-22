@@ -38,7 +38,7 @@ EncodeDock::EncodeDock(QWidget *parent) :
     delete ui->stopCaptureButton;
 #endif
     ui->videoCodecThreadsSpinner->setMaximum(QThread::idealThreadCount());
-//    toggleViewAction()->setIcon(QIcon::fromTheme("media-record", windowIcon()));
+    toggleViewAction()->setIcon(QIcon::fromTheme("media-record", windowIcon()));
     ui->addPresetButton->setIcon(QIcon::fromTheme("list-add", ui->addPresetButton->icon()));
     ui->removePresetButton->setIcon(QIcon::fromTheme("list-remove", ui->removePresetButton->icon()));
     ui->reloadSignalButton->setIcon(QIcon::fromTheme("view-refresh", ui->reloadSignalButton->icon()));

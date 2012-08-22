@@ -55,6 +55,9 @@ MainWindow::MainWindow(QWidget *parent)
 #ifndef Q_WS_X11
     ui->mainToolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 #endif
+    setCorner(Qt::TopLeftCorner, Qt::LeftDockWidgetArea);
+    setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
+    setDockNestingEnabled(true);
 
     // These use the icon theme on Linux, with fallbacks to the icons specified in QtDesigner for other platforms.
     ui->actionOpen->setIcon(QIcon::fromTheme("document-open", ui->actionOpen->icon()));
@@ -79,18 +82,26 @@ MainWindow::MainWindow(QWidget *parent)
     // Add the docks.
     m_propertiesDock = new QDockWidget(tr("Properties"));
     m_propertiesDock->setObjectName("propertiesDock");
+    m_propertiesDock->setWindowIcon(QIcon((":/icons/icons/view-form.png")));
+    m_propertiesDock->toggleViewAction()->setIcon(QIcon::fromTheme("view-form", m_propertiesDock->windowIcon()));
     addDockWidget(Qt::LeftDockWidgetArea, m_propertiesDock);
     ui->menuView->addAction(m_propertiesDock->toggleViewAction());
+    ui->mainToolBar->addAction(m_propertiesDock->toggleViewAction());
+    connect(m_propertiesDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onPropertiesDockTriggered(bool)));
 
     m_recentDock = new RecentDock(this);
     addDockWidget(Qt::LeftDockWidgetArea, m_recentDock);
     tabifyDockWidget(m_recentDock, m_propertiesDock);
     ui->menuView->addAction(m_recentDock->toggleViewAction());
+    ui->mainToolBar->addAction(m_recentDock->toggleViewAction());
+    connect(m_recentDock, SIGNAL(itemActivated(QString)), this, SLOT(open(QString)));
+    connect(m_recentDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onRecentDockTriggered(bool)));
 
     m_encodeDock = new EncodeDock(this);
     m_encodeDock->hide();
     addDockWidget(Qt::RightDockWidgetArea, m_encodeDock);
     ui->menuView->addAction(m_encodeDock->toggleViewAction());
+    ui->mainToolBar->addAction(ui->actionEncode);
     connect(this, SIGNAL(producerOpened()), m_encodeDock, SLOT(onProducerOpened()));
     connect(m_encodeDock, SIGNAL(visibilityChanged(bool)), ui->actionEncode, SLOT(setChecked(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_player, SLOT(onCaptureStateChanged(bool)));
@@ -112,7 +123,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Connect signals.
     connect(this, SIGNAL(producerOpened()), this, SLOT(onProducerOpened()));
-    connect(m_recentDock, SIGNAL(itemActivated(QString)), this, SLOT(open(QString)));
 
     readSettings();
     setFocus();
@@ -438,4 +448,16 @@ void MainWindow::onCaptureStateChanged(bool started)
 void MainWindow::onJobsVisibilityChanged(bool checked)
 {
     m_jobsVisible = checked;
+}
+
+void MainWindow::onRecentDockTriggered(bool checked)
+{
+    if (checked)
+        m_recentDock->raise();
+}
+
+void MainWindow::onPropertiesDockTriggered(bool checked)
+{
+    if (checked)
+        m_propertiesDock->raise();
 }

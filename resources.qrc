@@ -16,5 +16,7 @@
         <file>icons/view-refresh.png</file>
         <file>icons/run-build.png</file>
         <file>icons/format-justify-fill.png</file>
+        <file>icons/view-form.png</file>
+        <file>icons/document-open-recent.png</file>
     </qresource>
 </RCC>

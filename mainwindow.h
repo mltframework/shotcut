@@ -83,6 +83,8 @@ private slots:
     void on_actionEncode_triggered(bool checked);
     void onCaptureStateChanged(bool started);
     void onJobsVisibilityChanged(bool checked);
+    void onRecentDockTriggered(bool checked);
+    void onPropertiesDockTriggered(bool checked);
 };
 
 #endif // MAINWINDOW_H
