@@ -130,16 +130,20 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
             p->set("real_time", realtime);
         if (ui->formatCombo->currentIndex() > 0)
             p->set("f", ui->formatCombo->currentText().toAscii().constData());
-        if (ui->disableAudioCheckbox->isChecked())
+        if (ui->disableAudioCheckbox->isChecked()) {
             p->set("an", 1);
+            p->set("audio_off", 1);
+        }
         else {
             if (ui->audioCodecCombo->currentIndex() > 0)
                 p->set("acodec", ui->audioCodecCombo->currentText().toAscii().constData());
             p->set("ar", ui->sampleRateCombo->currentText().toAscii().constData());
             p->set("ab", ui->audioBitrateCombo->currentText().toAscii().constData());
         }
-        if (ui->disableVideoCheckbox->isChecked())
+        if (ui->disableVideoCheckbox->isChecked()) {
             p->set("vn", 1);
+            p->set("video_off", 1);
+        }
         else {
             if (ui->videoCodecCombo->currentIndex() > 0)
                 p->set("vcodec", ui->videoCodecCombo->currentText().toAscii().constData());
@@ -178,6 +182,17 @@ void EncodeDock::collectProperties(QDomElement& node, int realtime)
 
 MeltJob* EncodeDock::createMeltJob(const QString& target, int realtime, int pass)
 {
+    // if image sequence, change filename to include number
+    QString mytarget = target;
+    if (!ui->disableVideoCheckbox->isChecked()) {
+        const QString& codec = ui->videoCodecCombo->currentText();
+        if (codec == "bmp" || codec == "dpx" || codec == "png" || codec == "ppm" ||
+                codec == "targa" || codec == "tiff" || (codec == "mjpeg" && ui->formatCombo->currentText() == "image2")) {
+            QFileInfo fi(mytarget);
+            mytarget = QString("%1/%2-%05d.%3").arg(fi.path()).arg(fi.baseName()).arg(fi.completeSuffix());
+        }
+    }
+
     // get temp filename
     QTemporaryFile tmp(QDir::tempPath().append("/shotcut-XXXXXX"));
     tmp.open();
@@ -197,10 +212,17 @@ MeltJob* EncodeDock::createMeltJob(const QString& target, int realtime, int pass
     QDomElement consumerNode = dom.createElement("consumer");
     dom.documentElement().appendChild(consumerNode);
     consumerNode.setAttribute("mlt_service", "avformat");
-    consumerNode.setAttribute("target", target);
+    consumerNode.setAttribute("target", mytarget);
     collectProperties(consumerNode, realtime);
     if (pass == 1 || pass == 2)
         consumerNode.setAttribute("pass", pass);
+    if (pass == 1) {
+        consumerNode.setAttribute("fastfirstpass", 1);
+        consumerNode.removeAttribute("acodec");
+        consumerNode.setAttribute("an", 1);
+    }
+    else
+        consumerNode.removeAttribute("fastfirstpass");
 
     // save new xml
     f1.open(QIODevice::WriteOnly);
