@@ -62,6 +62,7 @@ MainWindow::MainWindow(QWidget *parent)
     // These use the icon theme on Linux, with fallbacks to the icons specified in QtDesigner for other platforms.
     ui->actionOpen->setIcon(QIcon::fromTheme("document-open", ui->actionOpen->icon()));
     ui->actionSave->setIcon(QIcon::fromTheme("document-save", ui->actionSave->icon()));
+    ui->actionEncode->setIcon(QIcon::fromTheme("media-record", ui->actionEncode->icon()));
 
     // Connect UI signals.
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openVideo()));
