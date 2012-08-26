@@ -156,7 +156,9 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
             p->set("progressive", ui->scanModeCombo->currentIndex());
             p->set("top_field_first", ui->fieldOrderCombo->currentIndex());
             p->set("r", ui->fpsSpinner->value());
-            if (ui->videoCodecThreadsSpinner->value() == 0 && ui->videoCodecCombo->currentText() != "libx264")
+            if (ui->videoCodecCombo->currentText() == "prores")
+                p->set("threads", 1);
+            else if (ui->videoCodecThreadsSpinner->value() == 0 && ui->videoCodecCombo->currentText() != "libx264")
                 p->set("threads", QThread::idealThreadCount() - 1);
             else
                 p->set("threads", ui->videoCodecThreadsSpinner->value());
