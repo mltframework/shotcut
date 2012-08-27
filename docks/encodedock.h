@@ -66,6 +66,8 @@ private:
     Ui::EncodeDock *ui;
     Mlt::Properties *m_presets;
     MeltJob* m_immediateJob;
+    QString m_extension;
+    Mlt::Properties *m_profiles;
 
     void loadPresets();
     Mlt::Properties* collectProperties(int realtime);

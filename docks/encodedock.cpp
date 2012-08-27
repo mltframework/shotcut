@@ -29,7 +29,8 @@ EncodeDock::EncodeDock(QWidget *parent) :
     QDockWidget(parent),
     ui(new Ui::EncodeDock),
     m_presets(Mlt::Repository::presets()),
-    m_immediateJob(0)
+    m_immediateJob(0),
+    m_profiles(Mlt::Profile::list())
 {
     ui->setupUi(this);
 #ifdef Q_WS_X11
@@ -73,6 +74,7 @@ EncodeDock::~EncodeDock()
 {
     delete ui;
     delete m_presets;
+    delete m_profiles;
 }
 
 void EncodeDock::onProducerOpened()
@@ -100,9 +102,27 @@ void EncodeDock::loadPresets()
                 for (int j = 0; j < m_presets->count(); j++) {
                     QString name(m_presets->get_name(j));
                     if (name.startsWith(prefix)) {
-                        name.remove(0, prefix.length());
+                        Mlt::Properties preset((mlt_properties) m_presets->get_data(name.toAscii().constData()));
+                        if (preset.get_int("meta.preset.hidden"))
+                            continue;
+                        if (preset.get("meta.preset.name"))
+                            name = QString::fromUtf8(preset.get("meta.preset.name"));
+                        else {
+                            // use relative path and filename
+                            name.remove(0, prefix.length());
+                            QStringList textParts = name.split('/');
+                            if (textParts.count() > 1) {
+                                // if the path is a profile name, then change it to "preset (profile)"
+                                QString profile = textParts.at(0);
+                                textParts.removeFirst();
+                                if (m_profiles->get_data(profile.toAscii().constData()))
+                                    name = QString("%1 (%2)").arg(textParts.join("/")).arg(profile);
+                            }
+                        }
                         QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(name));
                         item->setData(0, Qt::UserRole, QString(m_presets->get_name(j)));
+                        if (preset.get("meta.preset.note"))
+                            item->setToolTip(0, QString("<p>%1</p>").arg(QString::fromUtf8(preset.get("meta.preset.note"))));
                     }
                 }
             }
@@ -300,19 +320,24 @@ void EncodeDock::on_presetsTree_currentItemChanged(QTreeWidgetItem *current, QTr
             QStringList other;
             QStringList textParts = current->text(0).split('/');
             if (textParts.count() > 1) {
-                Mlt::Profile p(textParts.at(0).toAscii().constData());
-                ui->widthSpinner->setValue(p.width());
-                ui->heightSpinner->setValue(p.height());
-                ui->aspectNumSpinner->setValue(p.display_aspect_num());
-                ui->aspectDenSpinner->setValue(p.display_aspect_den());
-                ui->scanModeCombo->setCurrentIndex(p.progressive());
-                ui->fpsSpinner->setValue(p.fps());
+                QString folder = textParts.at(0);
+                if (m_profiles->get_data(folder.toAscii().constData())) {
+                    // only set these fields if the folder is a profile
+                    Mlt::Profile p(folder.toAscii().constData());
+                    ui->widthSpinner->setValue(p.width());
+                    ui->heightSpinner->setValue(p.height());
+                    ui->aspectNumSpinner->setValue(p.display_aspect_num());
+                    ui->aspectDenSpinner->setValue(p.display_aspect_den());
+                    ui->scanModeCombo->setCurrentIndex(p.progressive());
+                    ui->fpsSpinner->setValue(p.fps());
+                }
             }
 //            ui->formatCombo->setCurrentIndex(0);
 //            ui->audioCodecCombo->setCurrentIndex(0);
             ui->disableAudioCheckbox->setChecked(preset->get_int("an"));
 //            ui->videoCodecCombo->setCurrentIndex(0);
             ui->disableVideoCheckbox->setChecked(preset->get_int("vn"));
+            m_extension.clear();
             for (int i = 0; i < preset->count(); i++) {
                 QString name(preset->get_name(i));
                 if (name == "f") {
@@ -374,7 +399,10 @@ void EncodeDock::on_presetsTree_currentItemChanged(QTreeWidgetItem *current, QTr
                 }
                 else if (name == "pass")
                     ui->dualPassCheckbox->setChecked(true);
-                else if (name != "an" && name != "vn" && name != "threads")
+                else if (name == "meta.preset.extension")
+                    m_extension = preset->get("meta.preset.extension");
+                else if (name != "an" && name != "vn" && name != "threads"
+                         && !name.startsWith("meta.preset."))
                     other.append(QString("%1=%2").arg(name).arg(preset->get(i)));
             }
             ui->advancedTextEdit->setPlainText(other.join("\n"));
@@ -400,11 +428,21 @@ void EncodeDock::on_encodeButton_clicked()
     QString settingKey("encode/path");
     QString directory(settings.value(settingKey,
         QDesktopServices::storageLocation(QDesktopServices::MoviesLocation)).toString());
+    if (!m_extension.isEmpty()) {
+        directory += "/.";
+        directory += m_extension;
+    }
     QString outputFilename = QFileDialog::getSaveFileName(this,
         seekable? tr("Encode to File") : tr("Capture to File"), directory);
     if (!outputFilename.isEmpty()) {
+        QFileInfo fi(outputFilename);
         MLT.pause();
-        settings.setValue(settingKey, QFileInfo(outputFilename).path());
+        settings.setValue(settingKey, fi.path());
+        if (!m_extension.isEmpty()) {
+            if (fi.suffix().isEmpty())
+                outputFilename += '.';
+                outputFilename += m_extension;
+        }
         if (seekable)
             // Batch encode
             enqueueMelt(outputFilename);
