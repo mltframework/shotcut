@@ -62,7 +62,16 @@ private slots:
 
     void on_stopCaptureButton_clicked();
 
+    void on_videoRateControlCombo_activated(int index);
+
+    void on_audioRateControlCombo_activated(int index);
+
 private:
+    enum {
+        RateControlAverage = 0,
+        RateControlConstant,
+        RateControlQuality
+    };
     Ui::EncodeDock *ui;
     Mlt::Properties *m_presets;
     MeltJob* m_immediateJob;

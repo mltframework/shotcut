@@ -25,6 +25,10 @@
 #include <QtGui>
 #include <QtXml>
 
+// formulas to map absolute value ranges to percentages as int
+#define TO_ABSOLUTE(min, max, rel) ((min) + ((max) - (min)) * (rel) / 100)
+#define TO_RELATIVE(min, max, abs) (100 * ((abs) - (min)) / ((max) - (min)))
+
 EncodeDock::EncodeDock(QWidget *parent) :
     QDockWidget(parent),
     ui(new Ui::EncodeDock),
@@ -158,7 +162,21 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
             if (ui->audioCodecCombo->currentIndex() > 0)
                 p->set("acodec", ui->audioCodecCombo->currentText().toAscii().constData());
             p->set("ar", ui->sampleRateCombo->currentText().toAscii().constData());
-            p->set("ab", ui->audioBitrateCombo->currentText().toAscii().constData());
+            if (ui->audioRateControlCombo->currentIndex() == RateControlAverage
+                    || ui->audioRateControlCombo->currentIndex() == RateControlConstant) {
+                p->set("ab", ui->audioBitrateCombo->currentText().toAscii().constData());
+            }
+            else {
+                const QString& acodec = ui->audioCodecCombo->currentText();
+                int aq = ui->audioQualitySpinner->value();
+                if (acodec == "libmp3lame")
+                    aq = TO_ABSOLUTE(9, 0, aq);
+                else if (acodec == "libvorbis" || acodec == "vorbis")
+                    aq = TO_ABSOLUTE(0, 10, aq);
+                else
+                    aq = TO_ABSOLUTE(0, 500, aq);
+                p->set("aq", aq);
+            }
         }
         if (ui->disableVideoCheckbox->isChecked()) {
             p->set("vn", 1);
@@ -167,7 +185,28 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
         else {
             if (ui->videoCodecCombo->currentIndex() > 0)
                 p->set("vcodec", ui->videoCodecCombo->currentText().toAscii().constData());
-            p->set("vb", ui->videoBitrateCombo->currentText().toAscii().constData());
+            if (ui->videoRateControlCombo->currentIndex() == RateControlAverage) {
+                p->set("vb", ui->videoBitrateCombo->currentText().toAscii().constData());
+            }
+            else if (ui->videoRateControlCombo->currentIndex() == RateControlConstant) {
+                const QString& b = ui->videoBitrateCombo->currentText();
+                p->set("vb", b.toAscii().constData());
+                p->set("vminrate", b.toAscii().constData());
+                p->set("vmaxrate", b.toAscii().constData());
+                //bufsize = vb * secs
+                int vb = p->get_int("vb");
+                if (b.endsWith('k')) vb *= 1000;
+                if (b.endsWith('M')) vb *= 1000000;
+                p->set("vbufsize", int(vb * ui->videoBufferSizeSpinner->value()));
+            }
+            else { // RateControlQuality
+                const QString& vcodec = ui->videoCodecCombo->currentText();
+                int vq = ui->videoQualitySpinner->value();
+                if (vcodec == "libx264")
+                    p->set("crf", TO_ABSOLUTE(51, 0, vq));
+                else
+                    p->set("qscale", TO_ABSOLUTE(31, 1, vq));
+            }
             p->set("g", ui->gopSpinner->value());
             p->set("bf", ui->bFramesSpinner->value());
             p->set("width", ui->widthSpinner->value());
@@ -182,7 +221,7 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                 p->set("threads", QThread::idealThreadCount() - 1);
             else
                 p->set("threads", ui->videoCodecThreadsSpinner->value());
-            if (ui->dualPassCheckbox->isChecked())
+            if (ui->dualPassCheckbox->isEnabled() && ui->dualPassCheckbox->isChecked())
                 p->set("pass", 1);
         }
         foreach (QString line, ui->advancedTextEdit->toPlainText().split("\n"))
@@ -266,7 +305,7 @@ void EncodeDock::runMelt(const QString& target, int realtime)
 
 void EncodeDock::enqueueMelt(const QString& target, int realtime)
 {
-    int pass = ui->dualPassCheckbox->isChecked()? 1 : 0;
+    int pass = ui->dualPassCheckbox->isEnabled() && ui->dualPassCheckbox->isChecked()? 1 : 0;
     MeltJob* job = createMeltJob(target, realtime, pass);
     if (job) {
         JOBS.add(job);
@@ -317,8 +356,13 @@ void EncodeDock::on_presetsTree_currentItemChanged(QTreeWidgetItem *current, QTr
             preset = new Mlt::Properties((mlt_properties) m_presets->get_data(name.toAscii().constData()));
         }
         if (preset->is_valid()) {
+            int audioQuality;
+            int videoQuality;
+            double videoBufferSize;
+            int videoBitrate;
             QStringList other;
             QStringList textParts = current->text(0).split('/');
+
             if (textParts.count() > 1) {
                 QString folder = textParts.at(0);
                 if (m_profiles->get_data(folder.toAscii().constData())) {
@@ -332,10 +376,7 @@ void EncodeDock::on_presetsTree_currentItemChanged(QTreeWidgetItem *current, QTr
                     ui->fpsSpinner->setValue(p.fps());
                 }
             }
-//            ui->formatCombo->setCurrentIndex(0);
-//            ui->audioCodecCombo->setCurrentIndex(0);
             ui->disableAudioCheckbox->setChecked(preset->get_int("an"));
-//            ui->videoCodecCombo->setCurrentIndex(0);
             ui->disableVideoCheckbox->setChecked(preset->get_int("vn"));
             m_extension.clear();
             for (int i = 0; i < preset->count(); i++) {
@@ -359,8 +400,10 @@ void EncodeDock::on_presetsTree_currentItemChanged(QTreeWidgetItem *current, QTr
                     ui->sampleRateCombo->lineEdit()->setText(preset->get("ar"));
                 else if (name == "ab")
                     ui->audioBitrateCombo->lineEdit()->setText(preset->get("ab"));
-                else if (name == "vb")
+                else if (name == "vb") {
                     ui->videoBitrateCombo->lineEdit()->setText(preset->get("vb"));
+                    videoBitrate = preset->get_int("vb");
+                }
                 else if (name == "g")
                     ui->gopSpinner->setValue(preset->get_int("g"));
                 else if (name == "bf")
@@ -399,6 +442,31 @@ void EncodeDock::on_presetsTree_currentItemChanged(QTreeWidgetItem *current, QTr
                 }
                 else if (name == "pass")
                     ui->dualPassCheckbox->setChecked(true);
+                else if (name == "aq") {
+                    ui->audioRateControlCombo->setCurrentIndex(RateControlQuality);
+                    audioQuality = preset->get_int("aq");
+                }
+                else if (name == "vq") {
+                    ui->videoRateControlCombo->setCurrentIndex(RateControlQuality);
+                    videoQuality = preset->get_int("vq");
+                }
+                else if (name == "qscale") {
+                    ui->videoRateControlCombo->setCurrentIndex(RateControlQuality);
+                    videoQuality = preset->get_int("qscale");
+                }
+                else if (name == "crf") {
+                    ui->videoRateControlCombo->setCurrentIndex(RateControlQuality);
+                    ui->videoQualitySpinner->setValue(preset->get_int("crf"));
+                }
+                else if (name == "bufsize") {
+                    // traditionally this means video only
+                    ui->videoRateControlCombo->setCurrentIndex(RateControlConstant);
+                    videoBufferSize = preset->get_double("bufsize");
+                }
+                else if (name == "vbufsize") {
+                    ui->videoRateControlCombo->setCurrentIndex(RateControlConstant);
+                    videoBufferSize = preset->get_int("vbufsize");
+                }
                 else if (name == "meta.preset.extension")
                     m_extension = preset->get("meta.preset.extension");
                 else if (name != "an" && name != "vn" && name != "threads"
@@ -406,6 +474,36 @@ void EncodeDock::on_presetsTree_currentItemChanged(QTreeWidgetItem *current, QTr
                     other.append(QString("%1=%2").arg(name).arg(preset->get(i)));
             }
             ui->advancedTextEdit->setPlainText(other.join("\n"));
+
+            // normalize the buffer size and quality settings
+            // quality depends on codec
+            if (ui->audioRateControlCombo->currentIndex() == RateControlQuality) {
+                const QString& acodec = ui->audioCodecCombo->currentText();
+                if (acodec == "libmp3lame") // 0 (best) - 9 (worst)
+                    ui->audioQualitySpinner->setValue(TO_RELATIVE(9, 0, audioQuality));
+                if (acodec == "libvorbis" || acodec == "vorbis") // 0 (worst) - 10 (best)
+                    ui->audioQualitySpinner->setValue(TO_RELATIVE(0, 10, audioQuality));
+                else
+                    // aac: 0 (worst) - 500 (best)
+                    ui->audioQualitySpinner->setValue(TO_RELATIVE(0, 500, audioQuality));
+            }
+            if (ui->videoRateControlCombo->currentIndex() == RateControlQuality) {
+                const QString& vcodec = ui->videoCodecCombo->currentText();
+                //val = min + (max - min) * paramval;
+                if (vcodec == "libx264") // 0 (best, 100%) -51 (worst)
+                    ui->videoQualitySpinner->setValue(TO_RELATIVE(51, 0, videoQuality));
+                else // 1 (best, NOT 100%) - 31 (worst)
+                    ui->videoQualitySpinner->setValue(TO_RELATIVE(31, 1, videoQuality));
+            }
+            // buffer size depends on bitrate
+            else if (ui->videoRateControlCombo->currentIndex() == RateControlConstant) {
+                const QString& b = ui->videoBitrateCombo->currentText();
+                if (b.endsWith('k')) videoBitrate *= 1000;
+                if (b.endsWith('M')) videoBitrate *= 1000000;
+                ui->videoBufferSizeSpinner->setValue(videoBufferSize/videoBitrate);
+            }
+            on_audioRateControlCombo_activated(ui->audioRateControlCombo->currentIndex());
+            on_videoRateControlCombo_activated(ui->videoRateControlCombo->currentIndex());
         }
         delete preset;
     }
@@ -609,4 +707,46 @@ void EncodeDock::on_stopCaptureButton_clicked()
     ui->stopCaptureButton->hide();
     if (m_immediateJob)
         m_immediateJob->stop();
+}
+
+void EncodeDock::on_videoRateControlCombo_activated(int index)
+{
+    switch (index) {
+    case RateControlAverage:
+        ui->videoBitrateCombo->setEnabled(true);
+        ui->videoBufferSizeSpinner->setEnabled(false);
+        ui->videoQualitySpinner->setEnabled(false);
+        ui->dualPassCheckbox->setEnabled(true);
+        break;
+    case RateControlConstant:
+        ui->videoBitrateCombo->setEnabled(true);
+        ui->videoBufferSizeSpinner->setEnabled(true);
+        ui->videoQualitySpinner->setEnabled(false);
+        ui->dualPassCheckbox->setEnabled(false);
+        break;
+    case RateControlQuality:
+        ui->videoBitrateCombo->setEnabled(false);
+        ui->videoBufferSizeSpinner->setEnabled(false);
+        ui->videoQualitySpinner->setEnabled(true);
+        ui->dualPassCheckbox->setEnabled(false);
+        break;
+    }
+}
+
+void EncodeDock::on_audioRateControlCombo_activated(int index)
+{
+    switch (index) {
+    case RateControlAverage:
+        ui->audioBitrateCombo->setEnabled(true);
+        ui->audioQualitySpinner->setEnabled(false);
+        break;
+    case RateControlConstant:
+        ui->audioBitrateCombo->setEnabled(true);
+        ui->audioQualitySpinner->setEnabled(false);
+        break;
+    case RateControlQuality:
+        ui->audioBitrateCombo->setEnabled(false);
+        ui->audioQualitySpinner->setEnabled(true);
+        break;
+    }
 }
