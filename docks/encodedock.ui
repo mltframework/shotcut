@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>352</width>
-    <height>641</height>
+    <width>350</width>
+    <height>639</height>
    </rect>
   </property>
   <property name="windowIcon">
@@ -44,8 +44,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>352</width>
-         <height>550</height>
+         <width>350</width>
+         <height>548</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -715,8 +715,8 @@
                      <item>
                       <widget class="QPushButton" name="reloadSignalButton">
                        <property name="toolTip">
-                        <string>Load all of the signal mode values from the current
-project or the player's current signal mode</string>
+                        <string>Reload all of the values from the project
+or player's current video mode</string>
                        </property>
                        <property name="icon">
                         <iconset resource="../resources.qrc">

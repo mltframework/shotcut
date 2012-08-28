@@ -660,7 +660,7 @@ void Player::onVideoWidgetContextMenu(const QPoint& pos)
         sub->addActions(ui->externalGroup->actions());
     };
 
-    sub = menu.addMenu(tr("Signal mode"));
+    sub = menu.addMenu(tr("Video mode"));
     sub->addActions(ui->profileGroup->actions());
 
     menu.addAction(ui->actionJack);
