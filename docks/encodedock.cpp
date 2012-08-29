@@ -193,11 +193,7 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                 p->set("vb", b.toAscii().constData());
                 p->set("vminrate", b.toAscii().constData());
                 p->set("vmaxrate", b.toAscii().constData());
-                //bufsize = vb * secs
-                int vb = p->get_int("vb");
-                if (b.endsWith('k')) vb *= 1000;
-                if (b.endsWith('M')) vb *= 1000000;
-                p->set("vbufsize", int(vb * ui->videoBufferSizeSpinner->value()));
+                p->set("vbufsize", int(ui->videoBufferSizeSpinner->value() * 8 * 1024));
             }
             else { // RateControlQuality
                 const QString& vcodec = ui->videoCodecCombo->currentText();
@@ -337,6 +333,17 @@ void EncodeDock::encode(const QString& target)
     MLT.play();
 }
 
+static double getBufferSize(Mlt::Properties* preset, const char* property)
+{
+    double size = preset->get_double(property);
+    const QString& s = preset->get(property);
+    // evaluate suffix
+    if (s.endsWith('k')) size *= 1000;
+    if (s.endsWith('M')) size *= 1000000;
+    // convert to KiB
+    return size / 1024 / 8;
+}
+
 void EncodeDock::on_presetsTree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
 {
     if (!current || !current->parent())
@@ -358,8 +365,6 @@ void EncodeDock::on_presetsTree_currentItemChanged(QTreeWidgetItem *current, QTr
         if (preset->is_valid()) {
             int audioQuality;
             int videoQuality;
-            double videoBufferSize;
-            int videoBitrate;
             QStringList other;
             QStringList textParts = current->text(0).split('/');
 
@@ -400,10 +405,8 @@ void EncodeDock::on_presetsTree_currentItemChanged(QTreeWidgetItem *current, QTr
                     ui->sampleRateCombo->lineEdit()->setText(preset->get("ar"));
                 else if (name == "ab")
                     ui->audioBitrateCombo->lineEdit()->setText(preset->get("ab"));
-                else if (name == "vb") {
+                else if (name == "vb")
                     ui->videoBitrateCombo->lineEdit()->setText(preset->get("vb"));
-                    videoBitrate = preset->get_int("vb");
-                }
                 else if (name == "g")
                     ui->gopSpinner->setValue(preset->get_int("g"));
                 else if (name == "bf")
@@ -461,11 +464,11 @@ void EncodeDock::on_presetsTree_currentItemChanged(QTreeWidgetItem *current, QTr
                 else if (name == "bufsize") {
                     // traditionally this means video only
                     ui->videoRateControlCombo->setCurrentIndex(RateControlConstant);
-                    videoBufferSize = preset->get_double("bufsize");
+                    ui->videoBufferSizeSpinner->setValue(getBufferSize(preset, "bufsize"));
                 }
                 else if (name == "vbufsize") {
                     ui->videoRateControlCombo->setCurrentIndex(RateControlConstant);
-                    videoBufferSize = preset->get_int("vbufsize");
+                    ui->videoBufferSizeSpinner->setValue(getBufferSize(preset, "vbufsize"));
                 }
                 else if (name == "meta.preset.extension")
                     m_extension = preset->get("meta.preset.extension");
@@ -475,7 +478,7 @@ void EncodeDock::on_presetsTree_currentItemChanged(QTreeWidgetItem *current, QTr
             }
             ui->advancedTextEdit->setPlainText(other.join("\n"));
 
-            // normalize the buffer size and quality settings
+            // normalize the quality settings
             // quality depends on codec
             if (ui->audioRateControlCombo->currentIndex() == RateControlQuality) {
                 const QString& acodec = ui->audioCodecCombo->currentText();
@@ -494,13 +497,6 @@ void EncodeDock::on_presetsTree_currentItemChanged(QTreeWidgetItem *current, QTr
                     ui->videoQualitySpinner->setValue(TO_RELATIVE(51, 0, videoQuality));
                 else // 1 (best, NOT 100%) - 31 (worst)
                     ui->videoQualitySpinner->setValue(TO_RELATIVE(31, 1, videoQuality));
-            }
-            // buffer size depends on bitrate
-            else if (ui->videoRateControlCombo->currentIndex() == RateControlConstant) {
-                const QString& b = ui->videoBitrateCombo->currentText();
-                if (b.endsWith('k')) videoBitrate *= 1000;
-                if (b.endsWith('M')) videoBitrate *= 1000000;
-                ui->videoBufferSizeSpinner->setValue(videoBufferSize/videoBitrate);
             }
             on_audioRateControlCombo_activated(ui->audioRateControlCombo->currentIndex());
             on_videoRateControlCombo_activated(ui->videoRateControlCombo->currentIndex());

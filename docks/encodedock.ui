@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>350</width>
-    <height>639</height>
+    <width>294</width>
+    <height>662</height>
    </rect>
   </property>
   <property name="windowIcon">
@@ -44,8 +44,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>350</width>
-         <height>548</height>
+         <width>294</width>
+         <height>571</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -166,7 +166,7 @@
             <item>
              <widget class="QTabWidget" name="tabWidget">
               <property name="currentIndex">
-               <number>0</number>
+               <number>1</number>
               </property>
               <property name="usesScrollButtons">
                <bool>false</bool>
@@ -179,6 +179,9 @@
                 <string>Audio</string>
                </attribute>
                <layout class="QGridLayout" name="gridLayout">
+                <property name="verticalSpacing">
+                 <number>3</number>
+                </property>
                 <item row="1" column="1">
                  <layout class="QHBoxLayout" name="horizontalLayout_4">
                   <item>
@@ -511,7 +514,7 @@
               </widget>
               <widget class="QWidget" name="modeTab">
                <attribute name="title">
-                <string>Video Mode</string>
+                <string>Video</string>
                </attribute>
                <layout class="QGridLayout" name="gridLayout_6">
                 <property name="margin">
@@ -520,10 +523,70 @@
                 <item row="1" column="0">
                  <widget class="QWidget" name="widget" native="true">
                   <layout class="QGridLayout" name="gridLayout_2">
+                   <property name="verticalSpacing">
+                    <number>3</number>
+                   </property>
                    <item row="0" column="0">
                     <widget class="QLabel" name="label_22">
                      <property name="text">
                       <string>Resolution</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="2" column="1" colspan="2">
+                    <layout class="QHBoxLayout" name="horizontalLayout_9">
+                     <property name="spacing">
+                      <number>2</number>
+                     </property>
+                     <item>
+                      <widget class="QComboBox" name="scanModeCombo">
+                       <property name="currentIndex">
+                        <number>1</number>
+                       </property>
+                       <item>
+                        <property name="text">
+                         <string>Interlaced</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Progressive</string>
+                        </property>
+                       </item>
+                      </widget>
+                     </item>
+                     <item>
+                      <spacer name="horizontalSpacer_9">
+                       <property name="orientation">
+                        <enum>Qt::Horizontal</enum>
+                       </property>
+                       <property name="sizeHint" stdset="0">
+                        <size>
+                         <width>40</width>
+                         <height>20</height>
+                        </size>
+                       </property>
+                      </spacer>
+                     </item>
+                    </layout>
+                   </item>
+                   <item row="1" column="0">
+                    <widget class="QLabel" name="label_13">
+                     <property name="text">
+                      <string>Aspect ratio</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="3" column="0">
+                    <widget class="QLabel" name="label_10">
+                     <property name="text">
+                      <string>Frames/sec</string>
                      </property>
                      <property name="alignment">
                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -583,15 +646,62 @@
                      </item>
                     </layout>
                    </item>
-                   <item row="1" column="0">
-                    <widget class="QLabel" name="label_13">
+                   <item row="4" column="0">
+                    <widget class="QLabel" name="label_15">
                      <property name="text">
-                      <string>Aspect ratio</string>
+                      <string>Field order</string>
                      </property>
                      <property name="alignment">
                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                      </property>
                     </widget>
+                   </item>
+                   <item row="2" column="0">
+                    <widget class="QLabel" name="label_14">
+                     <property name="text">
+                      <string>Scan mode</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="9" column="0">
+                    <spacer name="verticalSpacer_2">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>40</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item row="3" column="1" colspan="2">
+                    <layout class="QHBoxLayout" name="horizontalLayout_16">
+                     <item>
+                      <widget class="QDoubleSpinBox" name="fpsSpinner">
+                       <property name="value">
+                        <double>25.000000000000000</double>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <spacer name="horizontalSpacer_16">
+                       <property name="orientation">
+                        <enum>Qt::Horizontal</enum>
+                       </property>
+                       <property name="sizeHint" stdset="0">
+                        <size>
+                         <width>40</width>
+                         <height>20</height>
+                        </size>
+                       </property>
+                      </spacer>
+                     </item>
+                    </layout>
                    </item>
                    <item row="1" column="1" colspan="2">
                     <layout class="QHBoxLayout" name="horizontalLayout_8">
@@ -646,109 +756,6 @@
                      </item>
                     </layout>
                    </item>
-                   <item row="2" column="0">
-                    <widget class="QLabel" name="label_14">
-                     <property name="text">
-                      <string>Scan mode</string>
-                     </property>
-                     <property name="alignment">
-                      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="2" column="1" colspan="2">
-                    <layout class="QHBoxLayout" name="horizontalLayout_9">
-                     <property name="spacing">
-                      <number>2</number>
-                     </property>
-                     <item>
-                      <widget class="QComboBox" name="scanModeCombo">
-                       <property name="currentIndex">
-                        <number>1</number>
-                       </property>
-                       <item>
-                        <property name="text">
-                         <string>Interlaced</string>
-                        </property>
-                       </item>
-                       <item>
-                        <property name="text">
-                         <string>Progressive</string>
-                        </property>
-                       </item>
-                      </widget>
-                     </item>
-                     <item>
-                      <spacer name="horizontalSpacer_9">
-                       <property name="orientation">
-                        <enum>Qt::Horizontal</enum>
-                       </property>
-                       <property name="sizeHint" stdset="0">
-                        <size>
-                         <width>40</width>
-                         <height>20</height>
-                        </size>
-                       </property>
-                      </spacer>
-                     </item>
-                    </layout>
-                   </item>
-                   <item row="3" column="0">
-                    <widget class="QLabel" name="label_10">
-                     <property name="text">
-                      <string>Frames/sec</string>
-                     </property>
-                     <property name="alignment">
-                      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="3" column="1" colspan="2">
-                    <layout class="QHBoxLayout" name="horizontalLayout_16">
-                     <item>
-                      <widget class="QDoubleSpinBox" name="fpsSpinner">
-                       <property name="value">
-                        <double>25.000000000000000</double>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QPushButton" name="reloadSignalButton">
-                       <property name="toolTip">
-                        <string>Reload all of the values from the project
-or player's current video mode</string>
-                       </property>
-                       <property name="icon">
-                        <iconset resource="../resources.qrc">
-                         <normaloff>:/icons/icons/view-refresh.png</normaloff>:/icons/icons/view-refresh.png</iconset>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <spacer name="horizontalSpacer_16">
-                       <property name="orientation">
-                        <enum>Qt::Horizontal</enum>
-                       </property>
-                       <property name="sizeHint" stdset="0">
-                        <size>
-                         <width>40</width>
-                         <height>20</height>
-                        </size>
-                       </property>
-                      </spacer>
-                     </item>
-                    </layout>
-                   </item>
-                   <item row="4" column="0">
-                    <widget class="QLabel" name="label_15">
-                     <property name="text">
-                      <string>Field order</string>
-                     </property>
-                     <property name="alignment">
-                      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                     </property>
-                    </widget>
-                   </item>
                    <item row="4" column="1" colspan="2">
                     <layout class="QHBoxLayout" name="horizontalLayout_10">
                      <item>
@@ -780,18 +787,37 @@ or player's current video mode</string>
                      </item>
                     </layout>
                    </item>
-                   <item row="5" column="0">
-                    <spacer name="verticalSpacer_2">
-                     <property name="orientation">
-                      <enum>Qt::Vertical</enum>
-                     </property>
-                     <property name="sizeHint" stdset="0">
-                      <size>
-                       <width>20</width>
-                       <height>40</height>
-                      </size>
-                     </property>
-                    </spacer>
+                   <item row="5" column="1">
+                    <layout class="QHBoxLayout" name="horizontalLayout_21">
+                     <item>
+                      <widget class="QPushButton" name="reloadSignalButton">
+                       <property name="toolTip">
+                        <string>Reload all of the values from the project
+or player's current video mode</string>
+                       </property>
+                       <property name="text">
+                        <string>Reload</string>
+                       </property>
+                       <property name="icon">
+                        <iconset resource="../resources.qrc">
+                         <normaloff>:/icons/icons/view-refresh.png</normaloff>:/icons/icons/view-refresh.png</iconset>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <spacer name="horizontalSpacer_21">
+                       <property name="orientation">
+                        <enum>Qt::Horizontal</enum>
+                       </property>
+                       <property name="sizeHint" stdset="0">
+                        <size>
+                         <width>40</width>
+                         <height>20</height>
+                        </size>
+                       </property>
+                      </spacer>
+                     </item>
+                    </layout>
                    </item>
                   </layout>
                  </widget>
@@ -800,7 +826,7 @@ or player's current video mode</string>
               </widget>
               <widget class="QWidget" name="videoTab">
                <attribute name="title">
-                <string>Video Codec</string>
+                <string>Codec</string>
                </attribute>
                <layout class="QGridLayout" name="gridLayout_3">
                 <property name="verticalSpacing">
@@ -1231,21 +1257,18 @@ codecs. However, not all codecs are multi-threaded.</string>
                     <property name="enabled">
                      <bool>false</bool>
                     </property>
-                    <property name="decimals">
-                     <number>2</number>
-                    </property>
-                    <property name="singleStep">
-                     <double>0.100000000000000</double>
+                    <property name="maximum">
+                     <double>9999.000000000000000</double>
                     </property>
                     <property name="value">
-                     <double>1.000000000000000</double>
+                     <double>224.000000000000000</double>
                     </property>
                    </widget>
                   </item>
                   <item>
                    <widget class="QLabel" name="label_6">
                     <property name="text">
-                     <string>seconds</string>
+                     <string>KiB</string>
                     </property>
                    </widget>
                   </item>
@@ -1419,8 +1442,8 @@ codecs. However, not all codecs are multi-threaded.</string>
   <tabstop>aspectDenSpinner</tabstop>
   <tabstop>scanModeCombo</tabstop>
   <tabstop>fpsSpinner</tabstop>
-  <tabstop>reloadSignalButton</tabstop>
   <tabstop>fieldOrderCombo</tabstop>
+  <tabstop>reloadSignalButton</tabstop>
   <tabstop>videoCodecCombo</tabstop>
   <tabstop>videoRateControlCombo</tabstop>
   <tabstop>videoBitrateCombo</tabstop>
@@ -1435,6 +1458,14 @@ codecs. However, not all codecs are multi-threaded.</string>
   <tabstop>encodeButton</tabstop>
   <tabstop>streamButton</tabstop>
   <tabstop>stopCaptureButton</tabstop>
+  <tabstop>aspectNumSpinner</tabstop>
+  <tabstop>aspectDenSpinner</tabstop>
+  <tabstop>fpsSpinner</tabstop>
+  <tabstop>widthSpinner</tabstop>
+  <tabstop>heightSpinner</tabstop>
+  <tabstop>scanModeCombo</tabstop>
+  <tabstop>reloadSignalButton</tabstop>
+  <tabstop>fieldOrderCombo</tabstop>
  </tabstops>
  <resources>
   <include location="../resources.qrc"/>
