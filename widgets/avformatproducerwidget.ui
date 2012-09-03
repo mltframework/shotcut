@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>331</width>
-    <height>553</height>
+    <width>329</width>
+    <height>551</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -39,11 +39,22 @@
    </item>
    <item>
     <widget class="QPlainTextEdit" name="notesTextEdit">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>60</height>
+      </size>
+     </property>
      <property name="focusPolicy">
       <enum>Qt::ClickFocus</enum>
      </property>
      <property name="tabChangesFocus">
       <bool>true</bool>
+     </property>
+     <property name="plainText">
+      <string>one
+two
+three</string>
      </property>
     </widget>
    </item>

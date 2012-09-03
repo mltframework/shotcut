@@ -337,3 +337,8 @@ void AvformatProducerWidget::on_actionCopyFullFilePath_triggered()
 {
     qApp->clipboard()->setText(MLT.producer()->get("resource"));
 }
+
+void AvformatProducerWidget::on_notesTextEdit_textChanged()
+{
+    m_producer->set("meta.attr.comment.markup", ui->notesTextEdit->toPlainText().toUtf8().constData());
+}

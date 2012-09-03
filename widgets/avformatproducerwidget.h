@@ -69,6 +69,8 @@ private slots:
 
     void on_actionCopyFullFilePath_triggered();
 
+    void on_notesTextEdit_textChanged();
+
 private:
     Ui::AvformatProducerWidget *ui;
     int m_defaultDuration;
