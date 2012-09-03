@@ -146,13 +146,13 @@ void JobQueue::cleanup()
 
 MeltJob* JobQueue::add(MeltJob* job)
 {
-    int row = JOBS.rowCount();
+    int row = rowCount();
     QList<QStandardItem*> items;
     items << new QStandardItem(job->objectName());
     items << new QStandardItem(tr("pending"));
-    JOBS.appendRow(items);
+    appendRow(items);
     job->setParent(this);
-    job->setModelIndex(JOBS.index(row, COLUMN_STATUS));
+    job->setModelIndex(index(row, COLUMN_STATUS));
     connect(job, SIGNAL(messageAvailable(MeltJob*)), this, SLOT(onMessageAvailable(MeltJob*)));
     connect(job, SIGNAL(finished(MeltJob*, bool)), this, SLOT(onFinished(MeltJob*, bool)));
     m_mutex.lock();
@@ -169,7 +169,7 @@ void JobQueue::onMessageAvailable(MeltJob* job)
     QString msg = job->readLine();
 //    qDebug() << msg;
     if (msg.contains("percentage:")) {
-        QStandardItem* item = JOBS.itemFromIndex(job->modelIndex());
+        QStandardItem* item = itemFromIndex(job->modelIndex());
         if (item) {
             uint percent = msg.mid(msg.indexOf("percentage:") + 11).toUInt();
             item->setText(QString("%1%").arg(percent));
@@ -182,7 +182,7 @@ void JobQueue::onMessageAvailable(MeltJob* job)
 
 void JobQueue::onFinished(MeltJob* job, bool isSuccess)
 {
-    QStandardItem* item = JOBS.itemFromIndex(job->modelIndex());
+    QStandardItem* item = itemFromIndex(job->modelIndex());
     if (item) {
         if (isSuccess)
             item->setText(tr("done"));
