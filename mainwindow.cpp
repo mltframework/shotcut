@@ -159,6 +159,7 @@ void MainWindow::open(const QString& url, const Mlt::Properties* properties)
         if (props && props->is_valid())
             mlt_properties_inherit(MLT.producer()->get_properties(), props->get_properties());
         open(MLT.producer());
+        m_recentDock->add(url.toUtf8().constData());
     }
     else {
         ui->statusBar->showMessage(tr("Failed to open ") + url, STATUS_TIMEOUT_MS);
@@ -338,13 +339,11 @@ void MainWindow::onProducerOpened()
         AvformatProducerWidget* avw = new AvformatProducerWidget(this);
         w = avw;
         connect(avw, SIGNAL(producerReopened()), m_player, SLOT(onProducerOpened()));
-        m_recentDock->add(resource);
     }
     else if (service == "pixbuf" || service == "qimage") {
         ImageProducerWidget* avw = new ImageProducerWidget(this);
         w = avw;
         connect(avw, SIGNAL(producerReopened()), m_player, SLOT(onProducerOpened()));
-        m_recentDock->add(resource);
     }
     else if (service == "decklink" || resource.contains("decklink"))
         w = new DecklinkProducerWidget(this);
@@ -404,6 +403,7 @@ bool MainWindow::on_actionSave_As_triggered()
         MLT.saveXML(filename);
         setCurrentFile(filename);
         showStatusMessage(tr("Saved %1").arg(m_currentFile));
+        m_recentDock->add(filename);
     }
     return filename.isEmpty();
 }
