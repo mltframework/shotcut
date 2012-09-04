@@ -44,20 +44,19 @@ int SDLWidget::reconfigure(bool isMulti)
     int error = 0;
 
     QString serviceName = property("mlt_service").toString();
-    if (m_consumer && !m_consumer->is_stopped())
-        m_consumer->stop();
-    delete m_consumer;
-    if (serviceName.isEmpty())
+    if (!m_consumer || !m_consumer->is_valid()) {
+        if (serviceName.isEmpty())
 #if defined(Q_WS_WIN)
-        // sdl_preview does not work good on Windows
-        serviceName = "sdl";
+            // sdl_preview does not work good on Windows
+            serviceName = "sdl";
 #else
-        serviceName = "sdl_preview";
+            serviceName = "sdl_preview";
 #endif
-    if (isMulti)
-        m_consumer = new Mlt::FilteredConsumer(profile(), "multi");
-    else
-        m_consumer = new Mlt::FilteredConsumer(profile(), serviceName.toAscii().constData());
+        if (isMulti)
+            m_consumer = new Mlt::FilteredConsumer(profile(), "multi");
+        else
+            m_consumer = new Mlt::FilteredConsumer(profile(), serviceName.toAscii().constData());
+    }
     if (m_consumer->is_valid()) {
         // Connect the producer to the consumer - tell it to "run" later
         m_consumer->connect(*m_producer);

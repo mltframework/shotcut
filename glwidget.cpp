@@ -216,10 +216,12 @@ int GLWidget::open(Mlt::Producer* producer, bool isMulti)
     int error = Controller::open(producer, isMulti);
 
     if (!error) {
+        bool reconnect = !m_consumer || !m_consumer->is_valid();
         error = reconfigure(isMulti);
         if (!error) {
-            connect(this, SIGNAL(frameReceived(Mlt::QFrame)),
-                    this, SLOT(showFrame(Mlt::QFrame)), Qt::UniqueConnection);
+            if (reconnect)
+                connect(this, SIGNAL(frameReceived(Mlt::QFrame)),
+                        this, SLOT(showFrame(Mlt::QFrame)), Qt::UniqueConnection);
             resizeGL(width(), height());
         }
     }
@@ -232,21 +234,20 @@ int GLWidget::reconfigure(bool isMulti)
 
     // use SDL for audio, OpenGL for video
     QString serviceName = property("mlt_service").toString();
-    if (m_consumer && !m_consumer->is_stopped())
-        m_consumer->stop();
-    delete m_consumer;
-    if (serviceName.isEmpty()) {
-        m_consumer = new Mlt::FilteredConsumer(profile(), "sdl_audio");
-        if (m_consumer->is_valid())
-            serviceName = "sdl_audio";
+    if (!m_consumer || !m_consumer->is_valid()) {
+        if (serviceName.isEmpty()) {
+            m_consumer = new Mlt::FilteredConsumer(profile(), "sdl_audio");
+            if (m_consumer->is_valid())
+                serviceName = "sdl_audio";
+            else
+                serviceName = "rtaudio";
+            delete m_consumer;
+        }
+        if (isMulti)
+            m_consumer = new Mlt::FilteredConsumer(profile(), "multi");
         else
-            serviceName = "rtaudio";
-        delete m_consumer;
+            m_consumer = new Mlt::FilteredConsumer(profile(), serviceName.toAscii().constData());
     }
-    if (isMulti)
-        m_consumer = new Mlt::FilteredConsumer(profile(), "multi");
-    else
-        m_consumer = new Mlt::FilteredConsumer(profile(), serviceName.toAscii().constData());
     if (m_consumer->is_valid()) {
         // Connect the producer to the consumer - tell it to "run" later
         m_consumer->connect(*m_producer);

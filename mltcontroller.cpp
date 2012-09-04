@@ -102,6 +102,12 @@ Controller& Controller::singleton(QWidget* parent)
 Controller::~Controller()
 {
     close();
+    delete m_consumer;
+    m_consumer = 0;
+    delete m_volumeFilter;
+    m_volumeFilter = 0;
+    delete m_jackFilter;
+    m_jackFilter = 0;
     delete m_profile;
     // TODO: this is commented out because it causes crash on closing queued QFrames.
 //    Mlt::Factory::close();
@@ -152,14 +158,8 @@ void Controller::close()
 {
     if (m_consumer)
         m_consumer->stop();
-    delete m_consumer;
-    m_consumer = 0;
     delete m_producer;
     m_producer = 0;
-    delete m_volumeFilter;
-    m_volumeFilter = 0;
-    delete m_jackFilter;
-    m_jackFilter = 0;
 }
 
 void Controller::play(double speed)
