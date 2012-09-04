@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>329</width>
-    <height>551</height>
+    <width>327</width>
+    <height>549</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -52,9 +52,7 @@
       <bool>true</bool>
      </property>
      <property name="plainText">
-      <string>one
-two
-three</string>
+      <string/>
      </property>
     </widget>
    </item>
