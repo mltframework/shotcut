@@ -773,7 +773,7 @@ void Player::on_actionHyper_triggered(bool checked)
 void Player::on_actionJack_triggered(bool checked)
 {
     m_settings.setValue("player/jack", checked);
-    if (checked && !MLT.enableJack(checked)) {
+    if (!MLT.enableJack(checked)) {
         ui->actionJack->setChecked(false);
         m_settings.setValue("player/jack", false);
         QMessageBox::warning(this, qApp->applicationName(),
