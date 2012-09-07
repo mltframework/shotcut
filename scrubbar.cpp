@@ -62,7 +62,7 @@ int ScrubBar::position() const
 
 void ScrubBar::setInPoint(int in)
 {
-    m_in = qMax(in, 0);
+    m_in = qMax(in, -1);
     updatePixmap();
     emit inChanged(in);
 }
