@@ -33,6 +33,7 @@ class Player;
 class RecentDock;
 class EncodeDock;
 class JobsDock;
+class PlaylistDock;
 
 class MainWindow : public QMainWindow
 {
@@ -65,13 +66,16 @@ private:
     RecentDock* m_recentDock;
     EncodeDock* m_encodeDock;
     JobsDock* m_jobsDock;
+    PlaylistDock* m_playlistDock;
     QString m_currentFile;
     bool m_jobsVisible;
 
 public slots:
     void open(const QString& url, const Mlt::Properties* = 0);
     void openVideo();
+    void openCut(void*, int in, int out);
     void showStatusMessage(QString);
+    void seekPlaylist(int start);
 
 private slots:
     void on_actionAbout_Shotcut_triggered();
@@ -85,6 +89,8 @@ private slots:
     void onJobsVisibilityChanged(bool checked);
     void onRecentDockTriggered(bool checked);
     void onPropertiesDockTriggered(bool checked);
+    void onPlaylistDockTriggered(bool checked);
+    void onPlaylistEmptied();
 };
 
 #endif // MAINWINDOW_H

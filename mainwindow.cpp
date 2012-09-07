@@ -41,8 +41,10 @@
 #include "docks/encodedock.h"
 #include "docks/jobsdock.h"
 #include "jobqueue.h"
+#include "docks/playlistdock.h"
 
 #include <QtGui>
+#include <QDebug>
 
 static const int STATUS_TIMEOUT_MS = 3000;
 
@@ -82,6 +84,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Add the docks.
     m_propertiesDock = new QDockWidget(tr("Properties"));
+    m_propertiesDock->hide();
     m_propertiesDock->setObjectName("propertiesDock");
     m_propertiesDock->setWindowIcon(QIcon((":/icons/icons/view-form.png")));
     m_propertiesDock->toggleViewAction()->setIcon(QIcon::fromTheme("view-form", m_propertiesDock->windowIcon()));
@@ -91,12 +94,26 @@ MainWindow::MainWindow(QWidget *parent)
     connect(m_propertiesDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onPropertiesDockTriggered(bool)));
 
     m_recentDock = new RecentDock(this);
+    m_recentDock->hide();
     addDockWidget(Qt::LeftDockWidgetArea, m_recentDock);
-    tabifyDockWidget(m_recentDock, m_propertiesDock);
     ui->menuView->addAction(m_recentDock->toggleViewAction());
     ui->mainToolBar->addAction(m_recentDock->toggleViewAction());
     connect(m_recentDock, SIGNAL(itemActivated(QString)), this, SLOT(open(QString)));
     connect(m_recentDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onRecentDockTriggered(bool)));
+
+    m_playlistDock = new PlaylistDock(this);
+    m_playlistDock->hide();
+    addDockWidget(Qt::LeftDockWidgetArea, m_playlistDock);
+    ui->menuView->addAction(m_playlistDock->toggleViewAction());
+    connect(m_playlistDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onPlaylistDockTriggered(bool)));
+    connect(m_playlistDock, SIGNAL(clipOpened(void*,int,int)), this, SLOT(openCut(void*, int, int)));
+    connect(m_playlistDock, SIGNAL(itemActivated(int)), this, SLOT(seekPlaylist(int)));
+    connect(m_playlistDock, SIGNAL(playlistEmptied()), this, SLOT(onPlaylistEmptied()));
+    connect(m_playlistDock, SIGNAL(showStatusMessage(QString)), this, SLOT(showStatusMessage(QString)));
+
+    tabifyDockWidget(m_recentDock, m_propertiesDock);
+    tabifyDockWidget(m_propertiesDock, m_playlistDock);
+    m_recentDock->raise();
 
     m_encodeDock = new EncodeDock(this);
     m_encodeDock->hide();
@@ -116,7 +133,7 @@ MainWindow::MainWindow(QWidget *parent)
     m_jobsDock = new JobsDock(this);
     m_jobsDock->hide();
     addDockWidget(Qt::RightDockWidgetArea, m_jobsDock);
-    tabifyDockWidget(m_jobsDock, m_encodeDock);
+    tabifyDockWidget(m_encodeDock, m_jobsDock);
     ui->menuView->addAction(m_jobsDock->toggleViewAction());
     connect(&JOBS, SIGNAL(jobAdded()), m_jobsDock, SLOT(show()));
     connect(&JOBS, SIGNAL(jobAdded()), m_jobsDock, SLOT(raise()));
@@ -185,9 +202,40 @@ void MainWindow::openVideo()
     }
 }
 
+void MainWindow::openCut(void* producer, int in, int out)
+{
+    double speed = MLT.producer()? MLT.producer()->get_speed(): 0;
+    open((Mlt::Producer*) producer);
+    m_player->setIn(in);
+    m_player->setOut(out);
+    MLT.seek(in);
+    if (speed == 0)
+        m_player->pause();
+    else
+        m_player->play(speed);
+}
+
 void MainWindow::showStatusMessage(QString message)
 {
     ui->statusBar->showMessage(message, STATUS_TIMEOUT_MS);
+}
+
+void MainWindow::seekPlaylist(int start)
+{
+    double speed = MLT.producer()? MLT.producer()->get_speed(): 0;
+    // we bypass this->open() to prevent sending producerOpened signal to self, which causes to reload playlist
+    if ((void*) MLT.producer()->get_producer() != (void*) m_playlistDock->model()->playlist()->get_playlist())
+        MLT.open(new Mlt::Producer(*(m_playlistDock->model()->playlist())));
+    m_player->setIn(-1);
+    m_player->setOut(-1);
+    // since we do not emit producerOpened, these components need updating
+    m_player->onProducerOpened();
+    m_encodeDock->onProducerOpened();
+    if (speed == 0)
+        m_player->pause();
+    else
+        m_player->play(speed);
+    MLT.seek(start);
 }
 
 void MainWindow::readSettings()
@@ -359,6 +407,11 @@ void MainWindow::onProducerOpened()
         w = new PlasmaWidget(this);
     else if (service == "frei0r.test_pat_B")
         w = new ColorBarsWidget(this);
+    else if (resource == "<playlist>") {
+        m_playlistDock->model()->load();
+        m_player->setIn(-1);
+        m_player->setOut(-1);
+    }
     if (w) {
         dynamic_cast<AbstractProducerWidget*>(w)->setProducer(MLT.producer());
         if (-1 != w->metaObject()->indexOfSignal("producerChanged()"))
@@ -461,4 +514,18 @@ void MainWindow::onPropertiesDockTriggered(bool checked)
 {
     if (checked)
         m_propertiesDock->raise();
+}
+
+void MainWindow::onPlaylistDockTriggered(bool checked)
+{
+    if (checked)
+        m_playlistDock->raise();
+}
+
+void MainWindow::onPlaylistEmptied()
+{
+    MLT.profile().set_explicit(false);
+    open("color:");
+    m_player->pause();
+    m_player->seek(0);
 }

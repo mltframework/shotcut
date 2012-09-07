@@ -33,9 +33,15 @@ class PlaylistDock : public QDockWidget
 public:
     explicit PlaylistDock(QWidget *parent = 0);
     ~PlaylistDock();
+    PlaylistModel* model() {
+        return &m_model;
+    }
 
 signals:
-    void itemActivated(void* producer, int in, int out);
+    void clipOpened(void* producer, int in, int out);
+    void itemActivated(int start);
+    void playlistEmptied();
+    void showStatusMessage(QString);
 
 private slots:
     void on_menuButton_clicked();
@@ -52,7 +58,15 @@ private slots:
 
     void on_removeButton_clicked();
 
-    void on_tableView_activated(const QModelIndex &index);
+    void on_actionOpen_triggered();
+
+    void on_tableView_customContextMenuRequested(const QPoint &pos);
+
+    void on_tableView_doubleClicked(const QModelIndex &index);
+
+    void on_actionGoto_triggered();
+
+    void on_actionRemoveAll_triggered();
 
 private:
     Ui::PlaylistDock *ui;
