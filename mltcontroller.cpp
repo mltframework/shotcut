@@ -138,7 +138,7 @@ int Controller::open(const char* url)
     m_producer = new Mlt::Producer(profile(), url);
     if (m_producer->is_valid()) {
         double fps = profile().fps();
-        if (!profile().get_profile()->is_explicit)
+        if (!profile().is_explicit())
             profile().from_producer(*m_producer);
         if (profile().fps() != fps) {
             // reopen with the correct fps
@@ -234,7 +234,7 @@ bool Controller::enableJack(bool enable)
 		if (m_jackFilter->is_valid()) {
 			m_consumer->attach(*m_jackFilter);
 			m_consumer->set("audio_off", 1);
-			if (m_producer && m_producer->get_int("seekable")) {
+			if (isSeekable()) {
 				m_jackFilter->listen("jack-started", this, (mlt_listener) on_jack_started);
 				m_jackFilter->listen("jack-stopped", this, (mlt_listener) on_jack_stopped);
 			}
@@ -378,7 +378,7 @@ QString Controller::resource() const
     if (!m_producer)
         return resource;
     resource = QString(m_producer->get("resource"));
-    if (resource == "<tractor>") {
+    if (m_producer->type() == tractor_type) {
         Mlt::Tractor tractor((mlt_tractor) m_producer->get_service());
         Mlt::Multitrack* multitrack = tractor.multitrack();
         if (multitrack->is_valid()) {
@@ -390,6 +390,17 @@ QString Controller::resource() const
         delete multitrack;
     }
     return resource;
+}
+
+bool Controller::isSeekable()
+{
+    bool seekable = false;
+    if (m_producer) {
+        seekable = m_producer->get_int("seekable");
+        if (!seekable && m_producer->get("mlt_type"))
+            seekable = !strcmp(m_producer->get("mlt_type"), "mlt_producer");
+    }
+    return seekable;
 }
 
 } // namespace

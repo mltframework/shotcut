@@ -83,7 +83,7 @@ EncodeDock::~EncodeDock()
 
 void EncodeDock::onProducerOpened()
 {
-    if (MLT.producer()->get_int("seekable"))
+    if (MLT.isSeekable())
         ui->encodeButton->setText(tr("Encode File"));
     else
         ui->encodeButton->setText(tr("Capture File"));
@@ -517,7 +517,7 @@ void EncodeDock::on_encodeButton_clicked()
         ui->streamButton->setDisabled(false);
         return;
     }
-    bool seekable = MLT.producer()->get_int("seekable");
+    bool seekable = MLT.isSeekable();
     QSettings settings;
     QString settingKey("encode/path");
     QString directory(settings.value(settingKey,
@@ -602,7 +602,7 @@ void EncodeDock::on_streamButton_clicked()
         MLT.pause();
         ui->dualPassCheckbox->setChecked(false);
         ui->streamButton->setText(tr("Stop Stream"));
-        if (MLT.producer()->get_int("seekable"))
+        if (MLT.isSeekable())
             // Stream in background
             runMelt(url, 1);
         else if (MLT.producer()->get_int("shotcut_bgcapture")) {
@@ -689,7 +689,7 @@ void EncodeDock::on_removePresetButton_clicked()
 
 void EncodeDock::onFinished(MeltJob* job, bool isSuccess)
 {
-    if (!MLT.producer()->get_int("seekable"))
+    if (!MLT.isSeekable())
         ui->encodeButton->setText(tr("Capture File"));
     ui->streamButton->setText(tr("Stream"));
     m_immediateJob = 0;

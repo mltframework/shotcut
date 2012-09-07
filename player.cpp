@@ -498,7 +498,7 @@ void Player::togglePlayPaused()
     if (ui->actionPlay->icon().cacheKey() == m_playIcon.cacheKey())
         play();
     else if (MLT.producer() && (
-             MLT.producer()->get_int("seekable") ||
+             MLT.isSeekable() ||
                  // generators can pause and show property changes
                  QString(MLT.producer()->get("mlt_service")) == "color" ||
                  QString(MLT.producer()->get("mlt_service")).startsWith("frei0r.")))
@@ -509,7 +509,7 @@ void Player::togglePlayPaused()
 
 void Player::seek(int position)
 {
-    if (MLT.producer()->get_int("seekable")) {
+    if (MLT.isSeekable()) {
         emit seeked();
         if (position >= 0) {
             if (m_seekPosition == SEEK_INACTIVE)
@@ -522,7 +522,7 @@ void Player::seek(int position)
 void Player::onProducerOpened()
 {
     int len = MLT.producer()->get_length();
-    bool seekable = MLT.producer()->get_int("seekable");
+    bool seekable = MLT.isSeekable();
 
     MLT.producer()->set("ignore_points", 1);
     m_scrubber->setFramerate(MLT.profile().fps());
@@ -608,7 +608,7 @@ void Player::on_actionSkipPrevious_triggered()
 
 void Player::on_actionRewind_triggered()
 {
-    if (MLT.producer()->get_int("seekable")) {
+    if (MLT.isSeekable()) {
         if (MLT.producer()->get_speed() >= 0)
             play(-1.0);
         else
@@ -618,7 +618,7 @@ void Player::on_actionRewind_triggered()
 
 void Player::on_actionFastForward_triggered()
 {
-    if (MLT.producer()->get_int("seekable")) {
+    if (MLT.isSeekable()) {
         if (MLT.producer()->get_speed() <= 0)
             play();
         else

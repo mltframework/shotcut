@@ -81,6 +81,7 @@ public:
         return m_consumer;
     }
     QString resource() const;
+    bool isSeekable();
 
 protected:
     Mlt::Repository* m_repo;
