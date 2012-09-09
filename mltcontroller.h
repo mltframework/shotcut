@@ -82,6 +82,9 @@ public:
     }
     QString resource() const;
     bool isSeekable();
+    const QString& URL() const {
+        return m_url;
+    }
 
 protected:
     Mlt::Repository* m_repo;
@@ -92,6 +95,7 @@ private:
     Mlt::Profile* m_profile;
     Mlt::Filter* m_volumeFilter;
     Mlt::Filter* m_jackFilter;
+    QString m_url;
 
     static void on_jack_started(mlt_properties owner, void* object, mlt_position *position);
     void onJackStarted(int position);

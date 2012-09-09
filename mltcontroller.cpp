@@ -145,6 +145,7 @@ int Controller::open(const char* url)
             delete m_producer;
             m_producer = new Mlt::Producer(profile(), url);
         }
+        m_url = QString::fromUtf8(url);
     }
     else {
         delete m_producer;
@@ -160,6 +161,7 @@ void Controller::close()
         m_consumer->stop();
     delete m_producer;
     m_producer = 0;
+    m_url.clear();
 }
 
 void Controller::play(double speed)
