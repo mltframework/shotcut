@@ -295,16 +295,20 @@ void Controller::refreshConsumer()
         m_consumer->set("refresh", 1);
 }
 
-QString Controller::saveXML(const QString& filename)
+QString Controller::saveXML(const QString& filename, Service* service)
 {
     Mlt::Consumer c(profile(), "xml", filename.toUtf8().constData());
-    Mlt::Service s(m_producer->get_service());
-    int ignore = s.get_int("ignore_points");
+    if (!service && m_producer)
+        service = new Mlt::Service(*m_producer);
+    if (!service || !service->is_valid())
+        return "";
+    int ignore = service->get_int("ignore_points");
     if (ignore)
-        s.set("ignore_points", 0);
-    c.connect(s);
+        service->set("ignore_points", 0);
+    c.connect(*service);
     c.start();
-    s.set("ignore_points", ignore);
+    if (ignore)
+        service->set("ignore_points", ignore);
     return QString::fromUtf8(c.get(filename.toUtf8().constData()));
 }
 
