@@ -529,8 +529,10 @@ void Player::onProducerOpened()
     m_scrubber->setScale(len);
     if (seekable) {
         m_durationLabel->setText(MLT.producer()->get_length_time());
-        m_scrubber->setInPoint(MLT.producer()->get_in());
-        m_scrubber->setOutPoint(MLT.producer()->get_out());
+        m_previousIn = MLT.producer()->get_in();
+        m_scrubber->setInPoint(m_previousIn);
+        m_previousOut = MLT.producer()->get_out();
+        m_scrubber->setOutPoint(m_previousOut);
         m_scrubber->show();
     }
     else {
@@ -574,14 +576,18 @@ void Player::onInChanged(int in)
 {
     if (MLT.producer())
         MLT.producer()->set("in", in);
-    emit inChanged(in);
+    if (in != m_previousIn)
+        emit inChanged(in);
+    m_previousIn = in;
 }
 
 void Player::onOutChanged(int out)
 {
     if (MLT.producer())
         MLT.producer()->set("out", out);
-    emit outChanged(out);
+    if (out != m_previousOut)
+        emit outChanged(out);
+    m_previousOut = out;
 }
 
 void Player::on_actionSkipNext_triggered()

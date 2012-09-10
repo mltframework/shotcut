@@ -87,6 +87,8 @@ private:
     QSlider* m_volumeSlider;
     AudioSignal* m_audioSignal;
     int m_seekPosition;
+    int m_previousIn;
+    int m_previousOut;
 
 private slots:
     void onInChanged(int in);
