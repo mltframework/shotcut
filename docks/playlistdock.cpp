@@ -76,9 +76,22 @@ void PlaylistDock::on_menuButton_clicked()
 
 void PlaylistDock::on_actionInsertCut_triggered()
 {
-    if (MLT.producer()) {
+    if (MLT.producer() && MLT.producer()->is_valid()) {
         QModelIndex index = ui->tableView->currentIndex();
-        m_model.insert(MLT.producer(), index.row());
+        if (MLT.producer()->type() == playlist_type)
+            emit showStatusMessage(tr("You cannot insert a playlist into a playlist!"));
+        else if (MLT.isSeekable())
+            m_model.insert(MLT.producer(), index.row());
+        else {
+            DurationDialog dialog(this);
+            dialog.setDuration(MLT.profile().fps() * 5);
+            if (dialog.exec() == QDialog::Accepted) {
+                MLT.producer()->set_in_and_out(0, dialog.duration() - 1);
+                if (MLT.producer()->get("mlt_service") && !strcmp(MLT.producer()->get("mlt_service"), "avformat"))
+                    MLT.producer()->set("mlt_service", "avformat-novalidate");
+                m_model.insert(MLT.producer(), index.row());
+            }
+        }
     }
 }
 
