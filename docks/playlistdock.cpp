@@ -58,9 +58,6 @@ void PlaylistDock::on_menuButton_clicked()
     QMenu menu(this);
     menu.addAction(ui->actionGoto);
     menu.addAction(ui->actionOpen);
-    menu.addAction(ui->actionRemove);
-    menu.addAction(ui->actionRemoveAll);
-
     QModelIndex index = ui->tableView->currentIndex();
     if (index.isValid()) {
         Mlt::ClipInfo* info = m_model.playlist()->clip_info(index.row());
@@ -70,6 +67,9 @@ void PlaylistDock::on_menuButton_clicked()
         }
         delete info;
     }
+    menu.addAction(ui->actionRemove);
+    menu.addSeparator();
+    menu.addAction(ui->actionRemoveAll);
     menu.addAction(ui->actionClose);
     menu.exec(mapToGlobal(pos));
 }
@@ -180,8 +180,6 @@ void PlaylistDock::on_tableView_customContextMenuRequested(const QPoint &pos)
     QMenu menu(this);
     menu.addAction(ui->actionGoto);
     menu.addAction(ui->actionOpen);
-    menu.addAction(ui->actionRemove);
-
     QModelIndex index = ui->tableView->currentIndex();
     if (index.isValid()) {
         Mlt::ClipInfo* info = m_model.playlist()->clip_info(index.row());
@@ -191,6 +189,7 @@ void PlaylistDock::on_tableView_customContextMenuRequested(const QPoint &pos)
         }
         delete info;
     }
+    menu.addAction(ui->actionRemove);
     menu.exec(mapToGlobal(pos));
 }
 
@@ -223,9 +222,13 @@ void PlaylistDock::on_actionClose_triggered()
 void PlaylistDock::onPlaylistCreated()
 {
     ui->removeButton->setEnabled(true);
+    ui->menuButton->setEnabled(true);
+    ui->stackedWidget->setCurrentIndex(1);
 }
 
 void PlaylistDock::onPlaylistCleared()
 {
     ui->removeButton->setEnabled(false);
+    ui->menuButton->setEnabled(false);
+    ui->stackedWidget->setCurrentIndex(0);
 }
