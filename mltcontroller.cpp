@@ -344,33 +344,23 @@ int Controller::setProfile(const QString& profile_name)
     bool reopen = m_consumer != 0;
     double speed = m_producer? m_producer->get_speed(): 0;
     const char* position = m_producer? m_producer->frame_time() : 0;
-    double gain = m_volumeFilter? m_volumeFilter->get_double("gain") : 1.0;
-    bool jackEnabled = m_jackFilter != 0;
 
     if (m_consumer)
         m_consumer->stop();
-    delete m_consumer;
-    m_consumer = 0;
-    delete m_volumeFilter;
-    m_volumeFilter = 0;
-    delete m_jackFilter;
-    m_jackFilter= 0;
-    delete m_profile;
 
-    m_profile = new Mlt::Profile(profile_name.toAscii().constData());
-    if (!profile_name.isEmpty())
-        m_profile->set_explicit(1);
+    Mlt::Profile tmp(profile_name.toAscii().constData());
+    m_profile->set_colorspace(tmp.colorspace());
+    m_profile->set_frame_rate(tmp.frame_rate_num(), tmp.frame_rate_den());
+    m_profile->set_height(tmp.height());
+    m_profile->set_progressive(tmp.progressive());
+    m_profile->set_sample_aspect(tmp.sample_aspect_num(), tmp.sample_aspect_den());
+    m_profile->set_width(tmp.width());
+    m_profile->get_profile()->display_aspect_num = tmp.display_aspect_num();
+    m_profile->get_profile()->display_aspect_den = tmp.display_aspect_den();
+    m_profile->set_explicit(!profile_name.isEmpty());
 
     if (reopen) {
-        Mlt::Consumer c(profile(), "xml", "xml-string");
-        Mlt::Service s(m_producer->get_service());
-        c.connect(s);
-        c.start();
-        m_producer = new Mlt::Producer(profile(), "xml-string", c.get("xml-string"));
-        this->open(m_producer);
-        enableJack(jackEnabled);
-        setVolume(gain);
-        if (m_producer)
+        if (!open(new Mlt::Producer(m_producer)))
             m_producer->seek(position);
         play(speed);
     }
