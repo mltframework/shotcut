@@ -187,6 +187,11 @@ void MainWindow::open(const QString& url, const Mlt::Properties* properties)
         // let the new project change the profile
         MLT.profile().set_explicit(false);
     }
+    else if (!m_playlistDock->model()->playlist()) {
+        if (!continueModified())
+            return;
+        setCurrentFile("");
+    }
     if (!MLT.open(url.toUtf8().constData())) {
         Mlt::Properties* props = const_cast<Mlt::Properties*>(properties);
         if (props && props->is_valid())
