@@ -74,7 +74,7 @@ MainWindow::MainWindow(QWidget *parent)
     this->setAcceptDrops(true);
 
     // Add the player widget.
-    QLayout* layout = new QVBoxLayout(ui->centralWidget);
+    QLayout* layout = new QVBoxLayout(ui->playerPage);
     layout->setObjectName("centralWidgetLayout");
     layout->setMargin(0);
     m_player = new Player(this);
@@ -386,6 +386,7 @@ void MainWindow::onProducerOpened()
     QString resource(MLT.resource());
     QWidget* w = 0;
 
+    ui->stackedWidget->setCurrentIndex(1);
     delete m_propertiesDock->widget();
 
     // TODO: make a producer widget for avformat file sources
