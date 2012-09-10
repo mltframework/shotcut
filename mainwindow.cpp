@@ -434,6 +434,8 @@ void MainWindow::onProducerOpened()
         if (m_playlistDock->model()->playlist()) {
             m_player->setIn(-1);
             m_player->setOut(-1);
+            m_playlistDock->setVisible(true);
+            m_playlistDock->raise();
         }
     }
     if (QString(MLT.producer()->get("xml")) == "was here")
