@@ -52,6 +52,8 @@ signals:
     void seeked();
     void showStatusMessage(QString);
     void audioSamplesSignal(const QVector<int16_t>&, const int&, const int&, const int&);
+    void inChanged(int);
+    void outChanged(int);
 
 public slots:
     void play(double speed = 1.0);
@@ -63,6 +65,7 @@ public slots:
     void onShowFrame(Mlt::QFrame frame);
     void onVolumeChanged(int);
     void onCaptureStateChanged(bool);
+    void resetProfile();
 
 protected:
     void resizeEvent(QResizeEvent* event);

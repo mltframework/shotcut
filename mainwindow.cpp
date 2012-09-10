@@ -81,6 +81,8 @@ MainWindow::MainWindow(QWidget *parent)
     layout->addWidget(m_player);
     connect(this, SIGNAL(producerOpened()), m_player, SLOT(onProducerOpened()));
     connect(m_player, SIGNAL(showStatusMessage(QString)), this, SLOT(showStatusMessage(QString)));
+    connect(m_player, SIGNAL(inChanged(int)), this, SLOT(onCutModified()));
+    connect(m_player, SIGNAL(outChanged(int)), this, SLOT(onCutModified()));
 
     // Add the docks.
     m_propertiesDock = new QDockWidget(tr("Properties"));
@@ -108,8 +110,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(m_playlistDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onPlaylistDockTriggered(bool)));
     connect(m_playlistDock, SIGNAL(clipOpened(void*,int,int)), this, SLOT(openCut(void*, int, int)));
     connect(m_playlistDock, SIGNAL(itemActivated(int)), this, SLOT(seekPlaylist(int)));
-    connect(m_playlistDock, SIGNAL(playlistEmptied()), this, SLOT(onPlaylistEmptied()));
     connect(m_playlistDock, SIGNAL(showStatusMessage(QString)), this, SLOT(showStatusMessage(QString)));
+    connect(m_playlistDock->model(), SIGNAL(created()), this, SLOT(onPlaylistCreated()));
+    connect(m_playlistDock->model(), SIGNAL(cleared()), this, SLOT(onPlaylistCleared()));
+    connect(m_playlistDock->model(), SIGNAL(closed()), this, SLOT(onPlaylistClosed()));
+    connect(m_playlistDock->model(), SIGNAL(modified()), this, SLOT(onPlaylistModified()));
 
     tabifyDockWidget(m_recentDock, m_propertiesDock);
     tabifyDockWidget(m_propertiesDock, m_playlistDock);
@@ -171,6 +176,16 @@ void MainWindow::open(Mlt::Producer* producer)
 
 void MainWindow::open(const QString& url, const Mlt::Properties* properties)
 {
+    if (url.endsWith(".mlt") || url.endsWith(".xml")) {
+        // only check for a modified project when loading a project, not a simple producer
+        if (!continueModified())
+            return;
+        // close existing project
+        if (m_playlistDock->model()->playlist())
+            m_playlistDock->model()->close();
+        // let the new project change the profile
+        MLT.profile().set_explicit(false);
+    }
     if (!MLT.open(url.toUtf8().constData())) {
         Mlt::Properties* props = const_cast<Mlt::Properties*>(properties);
         if (props && props->is_valid())
@@ -409,9 +424,13 @@ void MainWindow::onProducerOpened()
         w = new ColorBarsWidget(this);
     else if (resource == "<playlist>") {
         m_playlistDock->model()->load();
-        m_player->setIn(-1);
-        m_player->setOut(-1);
+        if (m_playlistDock->model()->playlist()) {
+            m_player->setIn(-1);
+            m_player->setOut(-1);
+        }
     }
+    if (QString(MLT.producer()->get("xml")) == "was here")
+        setCurrentFile(MLT.URL());
     if (w) {
         dynamic_cast<AbstractProducerWidget*>(w)->setProducer(MLT.producer());
         if (-1 != w->metaObject()->indexOfSignal("producerChanged()"))
@@ -437,7 +456,10 @@ bool MainWindow::on_actionSave_triggered()
     if (m_currentFile.isEmpty()) {
         return on_actionSave_As_triggered();
     } else {
-        MLT.saveXML(m_currentFile);
+        if (m_playlistDock->model()->playlist())
+            MLT.saveXML(m_currentFile, m_playlistDock->model()->playlist());
+        else
+            MLT.saveXML(m_currentFile);
         setCurrentFile(m_currentFile);
         showStatusMessage(tr("Saved %1").arg(m_currentFile));
         return true;
@@ -453,7 +475,10 @@ bool MainWindow::on_actionSave_As_triggered()
         QDesktopServices::storageLocation(QDesktopServices::MoviesLocation)).toString());
     QString filename = QFileDialog::getSaveFileName(this, tr("Save XML"), directory, tr("MLT XML (*.mlt)"));
     if (!filename.isEmpty()) {
-        MLT.saveXML(filename);
+        if (m_playlistDock->model()->playlist())
+            MLT.saveXML(filename, m_playlistDock->model()->playlist());
+        else
+            MLT.saveXML(filename);
         setCurrentFile(filename);
         showStatusMessage(tr("Saved %1").arg(m_currentFile));
         m_recentDock->add(filename);
@@ -522,10 +547,33 @@ void MainWindow::onPlaylistDockTriggered(bool checked)
         m_playlistDock->raise();
 }
 
-void MainWindow::onPlaylistEmptied()
+void MainWindow::onPlaylistCreated()
 {
-    MLT.profile().set_explicit(false);
-    open("color:");
+    setCurrentFile("");
+}
+
+void MainWindow::onPlaylistCleared()
+{
+    open(new Mlt::Producer(MLT.profile(), "color:"));
     m_player->pause();
     m_player->seek(0);
+    setWindowModified(true);
+}
+
+void MainWindow::onPlaylistClosed()
+{
+    m_player->resetProfile();
+    onPlaylistCleared();
+    setCurrentFile("");
+}
+
+void MainWindow::onPlaylistModified()
+{
+    setWindowModified(true);
+}
+
+void MainWindow::onCutModified()
+{
+    if (!m_playlistDock->model()->playlist())
+        setWindowModified(true);
 }

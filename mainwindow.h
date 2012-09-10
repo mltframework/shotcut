@@ -43,6 +43,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void open(Mlt::Producer* producer);
+    bool continueModified();
 
 signals:
     void producerOpened();
@@ -52,7 +53,6 @@ protected:
     void dragEnterEvent(QDragEnterEvent*);
     void dropEvent(QDropEvent*);
     void closeEvent(QCloseEvent*);
-    bool continueModified();
 
 private:
     void readSettings();
@@ -90,7 +90,11 @@ private slots:
     void onRecentDockTriggered(bool checked);
     void onPropertiesDockTriggered(bool checked);
     void onPlaylistDockTriggered(bool checked);
-    void onPlaylistEmptied();
+    void onPlaylistCreated();
+    void onPlaylistCleared();
+    void onPlaylistClosed();
+    void onPlaylistModified();
+    void onCutModified();
 };
 
 #endif // MAINWINDOW_H

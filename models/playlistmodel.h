@@ -46,6 +46,10 @@ public:
     }
 
 signals:
+    void created();
+    void cleared();
+    void closed();
+    void modified();
 
 public slots:
     void clear();
@@ -56,6 +60,7 @@ public slots:
     void update(int row, int in, int out);
     void appendBlank(int frames);
     void insertBlank(int frames, int row);
+    void close();
 
 private:
     Mlt::Playlist* m_playlist;

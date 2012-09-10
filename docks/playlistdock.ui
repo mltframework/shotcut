@@ -182,6 +182,11 @@ selected cut.</string>
     <string>Remove all items from the playlist</string>
    </property>
   </action>
+  <action name="actionClose">
+   <property name="text">
+    <string>Close</string>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="../resources.qrc"/>

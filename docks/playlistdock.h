@@ -40,7 +40,6 @@ public:
 signals:
     void clipOpened(void* producer, int in, int out);
     void itemActivated(int start);
-    void playlistEmptied();
     void showStatusMessage(QString);
 
 private slots:
@@ -67,6 +66,8 @@ private slots:
     void on_actionGoto_triggered();
 
     void on_actionRemoveAll_triggered();
+
+    void on_actionClose_triggered();
 
 private:
     Ui::PlaylistDock *ui;

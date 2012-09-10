@@ -19,6 +19,7 @@
 #include "playlistdock.h"
 #include "ui_playlistdock.h"
 #include "dialogs/durationdialog.h"
+#include "mainwindow.h"
 #include <QtGui/QMenu>
 #include <QDebug>
 
@@ -49,7 +50,23 @@ PlaylistDock::~PlaylistDock()
 void PlaylistDock::on_menuButton_clicked()
 {
     QPoint pos = ui->menuButton->mapToParent(QPoint(0, 0));
-    on_tableView_customContextMenuRequested(pos);
+    QMenu menu(this);
+    menu.addAction(ui->actionGoto);
+    menu.addAction(ui->actionOpen);
+    menu.addAction(ui->actionRemove);
+    menu.addAction(ui->actionRemoveAll);
+
+    QModelIndex index = ui->tableView->currentIndex();
+    if (index.isValid()) {
+        Mlt::ClipInfo* info = m_model.playlist()->clip_info(index.row());
+        if (info && info->resource && MLT.producer()->get("resource")
+                && !strcmp(info->resource, MLT.producer()->get("resource"))) {
+            menu.addAction(ui->actionUpdate);
+        }
+        delete info;
+    }
+    menu.addAction(ui->actionClose);
+    menu.exec(mapToGlobal(pos));
 }
 
 void PlaylistDock::on_actionInsertCut_triggered()
@@ -134,13 +151,11 @@ void PlaylistDock::on_removeButton_clicked()
     int count = m_model.playlist()->count();
     if (count == 0) {
         ui->removeButton->setEnabled(false);
-        emit playlistEmptied();
         return;
     }
     Mlt::ClipInfo* i = m_model.playlist()->clip_info(
                 index.row() >= count? count-1 : index.row());
     if (i) {
-//        Mlt::Producer* p = new Mlt::Producer(m_model.playlist().get_producer());
         emit itemActivated(i->start);
         delete i;
     }
@@ -164,8 +179,16 @@ void PlaylistDock::on_tableView_customContextMenuRequested(const QPoint &pos)
     menu.addAction(ui->actionGoto);
     menu.addAction(ui->actionOpen);
     menu.addAction(ui->actionRemove);
-    menu.addAction(ui->actionRemoveAll);
-    menu.addAction(ui->actionUpdate);
+
+    QModelIndex index = ui->tableView->currentIndex();
+    if (index.isValid()) {
+        Mlt::ClipInfo* info = m_model.playlist()->clip_info(index.row());
+        if (info && info->resource && MLT.producer()->get("resource")
+                && !strcmp(info->resource, MLT.producer()->get("resource"))) {
+            menu.addAction(ui->actionUpdate);
+        }
+        delete info;
+    }
     menu.exec(mapToGlobal(pos));
 }
 
@@ -173,8 +196,7 @@ void PlaylistDock::on_tableView_doubleClicked(const QModelIndex &index)
 {
     Mlt::ClipInfo* i = m_model.playlist()->clip_info(index.row());
     if (i) {
-        //Mlt::Producer* p = new Mlt::Producer(m_model.playlist().get_producer());
-        emit itemActivated(i->start); // i->start + i->frame_count
+        emit itemActivated(i->start);
         delete i;
         ui->removeButton->setEnabled(true);
     }
@@ -187,6 +209,12 @@ void PlaylistDock::on_actionGoto_triggered()
 
 void PlaylistDock::on_actionRemoveAll_triggered()
 {
-    m_model.playlist()->clear();
-    emit playlistEmptied();
+    m_model.clear();
+}
+
+void PlaylistDock::on_actionClose_triggered()
+{
+    MainWindow* main = qobject_cast<MainWindow*>(qApp->activeWindow());
+    if (main && main->continueModified())
+        m_model.close();
 }

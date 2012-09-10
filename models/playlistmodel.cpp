@@ -84,7 +84,7 @@ Qt::DropActions PlaylistModel::supportedDropActions() const
 bool PlaylistModel::insertRows(int row, int count, const QModelIndex& parent)
 {
     m_dropRow = row;
-    return false;
+    return true;
 }
 
 bool PlaylistModel::removeRows(int row, int count, const QModelIndex& parent)
@@ -95,6 +95,7 @@ bool PlaylistModel::removeRows(int row, int count, const QModelIndex& parent)
     m_playlist->move(row, m_dropRow);
     endMoveRows();
     m_dropRow = -1;
+    emit modified();
     return true;
 }
 
@@ -110,19 +111,29 @@ Qt::ItemFlags PlaylistModel::flags(const QModelIndex &index) const
 void PlaylistModel::clear()
 {
     if (!m_playlist) return;
-    beginRemoveRows(QModelIndex(), 0, rowCount());
+    beginRemoveRows(QModelIndex(), 0, rowCount() - 1);
     m_playlist->clear();
-    delete m_playlist;
-    m_playlist = 0;
     endRemoveRows();
+    emit cleared();
 }
 
 void PlaylistModel::load()
 {
-    clear();
+    if (m_playlist) {
+        beginRemoveRows(QModelIndex(), 0, rowCount() - 1);
+        m_playlist->clear();
+        endRemoveRows();
+        delete m_playlist;
+    }
     m_playlist = new Mlt::Playlist(*MLT.producer());
+    if (!m_playlist->is_valid()) {
+        delete m_playlist;
+        m_playlist = 0;
+        return;
+    }
     beginInsertRows(QModelIndex(), 0, m_playlist->count() - 1);
     endInsertRows();
+    // do not let opening a clip change the profile!
     MLT.profile().set_explicit(true);
 }
 
@@ -133,6 +144,7 @@ void PlaylistModel::append(Mlt::Producer* producer)
     beginInsertRows(QModelIndex(), count, count);
     m_playlist->append(*producer, producer->get_in(), producer->get_out());
     endInsertRows();
+    emit modified();
 }
 
 void PlaylistModel::insert(Mlt::Producer* producer, int row)
@@ -141,6 +153,7 @@ void PlaylistModel::insert(Mlt::Producer* producer, int row)
     beginInsertRows(QModelIndex(), row, row);
     m_playlist->insert(*producer, row, producer->get_in(), producer->get_out());
     endInsertRows();
+    emit modified();
 }
 
 void PlaylistModel::remove(int row)
@@ -149,12 +162,17 @@ void PlaylistModel::remove(int row)
     beginRemoveRows(QModelIndex(), row, row);
     m_playlist->remove(row);
     endRemoveRows();
+    if (m_playlist->count() == 0)
+        emit cleared();
+    else
+        emit modified();
 }
 
 void PlaylistModel::update(int row, int in, int out)
 {
     if (!m_playlist) return;
     m_playlist->resize_clip(row, in, out);
+    emit modified();
 }
 
 void PlaylistModel::appendBlank(int frames)
@@ -164,6 +182,7 @@ void PlaylistModel::appendBlank(int frames)
     beginInsertRows(QModelIndex(), count, count);
     m_playlist->blank(frames);
     endInsertRows();
+    emit modified();
 }
 
 void PlaylistModel::insertBlank(int frames, int row)
@@ -172,12 +191,24 @@ void PlaylistModel::insertBlank(int frames, int row)
     beginInsertRows(QModelIndex(), row, row);
     m_playlist->insert_blank(row, frames);
     endInsertRows();
+    emit modified();
+}
+
+void PlaylistModel::close()
+{
+    if (!m_playlist) return;
+    clear();
+    delete m_playlist;
+    m_playlist = 0;
+    emit closed();
 }
 
 void PlaylistModel::createIfNeeded()
 {
     if (!m_playlist) {
         m_playlist = new Mlt::Playlist(MLT.profile());
+        // do not let opening a clip change the profile!
         MLT.profile().set_explicit(true);
+        emit created();
     }
 }

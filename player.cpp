@@ -574,12 +574,14 @@ void Player::onInChanged(int in)
 {
     if (MLT.producer())
         MLT.producer()->set("in", in);
+    emit inChanged(in);
 }
 
 void Player::onOutChanged(int out)
 {
     if (MLT.producer())
         MLT.producer()->set("out", out);
+    emit outChanged(out);
 }
 
 void Player::on_actionSkipNext_triggered()
@@ -880,4 +882,9 @@ void Player::onCaptureStateChanged(bool active)
         MLT.videoWidget()->disconnect(SIGNAL(customContextMenuRequested(QPoint)));
     else
         connect(MLT.videoWidget(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onVideoWidgetContextMenu(QPoint)));
+}
+
+void Player::resetProfile()
+{
+    MLT.setProfile(m_settings.value("player/profile").toString());
 }
