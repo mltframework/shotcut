@@ -89,7 +89,7 @@ void PlaylistDock::on_actionAppendCut_triggered()
             DurationDialog dialog(this);
             dialog.setDuration(MLT.profile().fps() * 5);
             if (dialog.exec() == QDialog::Accepted) {
-                MLT.producer()->set_in_and_out(0, dialog.duration());
+                MLT.producer()->set_in_and_out(0, dialog.duration() - 1);
                 if (MLT.producer()->get("mlt_service") && !strcmp(MLT.producer()->get("mlt_service"), "avformat"))
                     MLT.producer()->set("mlt_service", "avformat-novalidate");
                 m_model.append(MLT.producer());
@@ -133,9 +133,9 @@ void PlaylistDock::on_actionUpdate_triggered()
         else {
             // change the duration
             DurationDialog dialog(this);
-            dialog.setDuration(info->frame_count - 1);
+            dialog.setDuration(info->frame_count);
             if (dialog.exec() == QDialog::Accepted)
-                m_model.update(index.row(), 0, dialog.duration());
+                m_model.update(index.row(), 0, dialog.duration() - 1);
         }
     }
     else {

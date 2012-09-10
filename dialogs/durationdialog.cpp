@@ -38,5 +38,5 @@ void DurationDialog::setDuration(int frames)
 
 int DurationDialog::duration() const
 {
-    ui->spinBox->value();
+    return ui->spinBox->value();
 }

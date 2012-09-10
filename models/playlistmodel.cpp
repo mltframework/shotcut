@@ -180,7 +180,7 @@ void PlaylistModel::appendBlank(int frames)
     createIfNeeded();
     int count = m_playlist->count();
     beginInsertRows(QModelIndex(), count, count);
-    m_playlist->blank(frames);
+    m_playlist->blank(frames - 1);
     endInsertRows();
     emit modified();
 }
@@ -189,7 +189,7 @@ void PlaylistModel::insertBlank(int frames, int row)
 {
     createIfNeeded();
     beginInsertRows(QModelIndex(), row, row);
-    m_playlist->insert_blank(row, frames);
+    m_playlist->insert_blank(row, frames - 1);
     endInsertRows();
     emit modified();
 }
