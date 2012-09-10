@@ -107,6 +107,7 @@ MainWindow::MainWindow(QWidget *parent)
     m_playlistDock->hide();
     addDockWidget(Qt::LeftDockWidgetArea, m_playlistDock);
     ui->menuView->addAction(m_playlistDock->toggleViewAction());
+    ui->mainToolBar->addAction(m_playlistDock->toggleViewAction());
     connect(m_playlistDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onPlaylistDockTriggered(bool)));
     connect(m_playlistDock, SIGNAL(clipOpened(void*,int,int)), this, SLOT(openCut(void*, int, int)));
     connect(m_playlistDock, SIGNAL(itemActivated(int)), this, SLOT(seekPlaylist(int)));

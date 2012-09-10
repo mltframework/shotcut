@@ -28,6 +28,7 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     ui(new Ui::PlaylistDock)
 {
     ui->setupUi(this);
+    toggleViewAction()->setIcon(QIcon::fromTheme("view-media-playlist", windowIcon()));
     ui->tableView->setModel(&m_model);
     QMenu* menu = new QMenu(this);
     menu->addAction(ui->actionAppendCut);

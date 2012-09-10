@@ -10,6 +10,10 @@
     <height>282</height>
    </rect>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../resources.qrc">
+    <normaloff>:/icons/icons/view-media-playlist.png</normaloff>:/icons/icons/view-media-playlist.png</iconset>
+  </property>
   <property name="windowTitle">
    <string>Playlist</string>
   </property>

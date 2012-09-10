@@ -18,5 +18,6 @@
         <file>icons/format-justify-fill.png</file>
         <file>icons/view-form.png</file>
         <file>icons/document-open-recent.png</file>
+        <file>icons/view-media-playlist.png</file>
     </qresource>
 </RCC>
