@@ -83,7 +83,11 @@ void AvformatProducerWidget::onFrameReceived(Mlt::QFrame)
         m_defaultDuration = m_producer->get_length();
 
     QString s = QString::fromUtf8(m_producer->get("resource"));
-    ui->filenameLabel->setText(ui->filenameLabel->fontMetrics().elidedText(s, Qt::ElideLeft, width() - 30));
+    QString name = s;
+    if (s.startsWith('/'))
+        // Use basename instead.
+        name = QFileInfo(s).fileName();
+    ui->filenameLabel->setText(ui->filenameLabel->fontMetrics().elidedText(name, Qt::ElideLeft, width() - 30));
     ui->filenameLabel->setToolTip(s);
     ui->notesTextEdit->setPlainText(QString::fromUtf8(m_producer->get("meta.attr.comment.markup")));
     ui->durationSpinBox->setValue(m_producer->get_length());
