@@ -69,6 +69,10 @@ private slots:
 
     void on_actionClose_triggered();
 
+    void onPlaylistCreated();
+
+    void onPlaylistCleared();
+
 private:
     Ui::PlaylistDock *ui;
     PlaylistModel m_model;

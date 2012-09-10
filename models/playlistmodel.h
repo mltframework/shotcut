@@ -50,6 +50,7 @@ signals:
     void cleared();
     void closed();
     void modified();
+    void loaded();
 
 public slots:
     void clear();

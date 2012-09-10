@@ -135,6 +135,7 @@ void PlaylistModel::load()
     endInsertRows();
     // do not let opening a clip change the profile!
     MLT.profile().set_explicit(true);
+    emit loaded();
 }
 
 void PlaylistModel::append(Mlt::Producer* producer)

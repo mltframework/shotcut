@@ -41,6 +41,10 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     ui->tableView->setDropIndicatorShown(true);
     ui->tableView->setDragDropOverwriteMode(false);
     connect(ui->actionRemove, SIGNAL(triggered()), this, SLOT(on_removeButton_clicked()));
+    connect(&m_model, SIGNAL(cleared()), this, SLOT(onPlaylistCleared()));
+    connect(&m_model, SIGNAL(created()), this, SLOT(onPlaylistCreated()));
+    connect(&m_model, SIGNAL(loaded()), this, SLOT(onPlaylistCreated()));
+    connect(&m_model, SIGNAL(modified()), this, SLOT(onPlaylistCreated()));
 }
 
 PlaylistDock::~PlaylistDock()
@@ -150,10 +154,7 @@ void PlaylistDock::on_removeButton_clicked()
     if (!index.isValid()) return;
     m_model.remove(index.row());
     int count = m_model.playlist()->count();
-    if (count == 0) {
-        ui->removeButton->setEnabled(false);
-        return;
-    }
+    if (count == 0) return;
     Mlt::ClipInfo* i = m_model.playlist()->clip_info(
                 index.row() >= count? count-1 : index.row());
     if (i) {
@@ -199,7 +200,6 @@ void PlaylistDock::on_tableView_doubleClicked(const QModelIndex &index)
     if (i) {
         emit itemActivated(i->start);
         delete i;
-        ui->removeButton->setEnabled(true);
     }
 }
 
@@ -218,4 +218,14 @@ void PlaylistDock::on_actionClose_triggered()
     MainWindow* main = qobject_cast<MainWindow*>(qApp->activeWindow());
     if (main && main->continueModified())
         m_model.close();
+}
+
+void PlaylistDock::onPlaylistCreated()
+{
+    ui->removeButton->setEnabled(true);
+}
+
+void PlaylistDock::onPlaylistCleared()
+{
+    ui->removeButton->setEnabled(false);
 }
