@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>327</width>
+    <width>331</width>
     <height>549</height>
    </rect>
   </property>
@@ -384,12 +384,12 @@
           <widget class="QComboBox" name="fieldOrderComboBox">
            <item>
             <property name="text">
-             <string>Bottom field first</string>
+             <string>Bottom Field First</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>Top field first</string>
+             <string>Top Field First</string>
             </property>
            </item>
           </widget>

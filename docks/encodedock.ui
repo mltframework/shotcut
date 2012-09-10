@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>294</width>
+    <width>347</width>
     <height>662</height>
    </rect>
   </property>
@@ -44,8 +44,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>294</width>
-         <height>571</height>
+         <width>353</width>
+         <height>525</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -434,12 +434,12 @@
                    <widget class="QComboBox" name="audioRateControlCombo">
                     <item>
                      <property name="text">
-                      <string>Average bitrate</string>
+                      <string>Average Bitrate</string>
                      </property>
                     </item>
                     <item>
                      <property name="text">
-                      <string>Constant bitrate</string>
+                      <string>Constant Bitrate</string>
                      </property>
                     </item>
                     <item>
@@ -762,12 +762,12 @@
                       <widget class="QComboBox" name="fieldOrderCombo">
                        <item>
                         <property name="text">
-                         <string>Bottom field first</string>
+                         <string>Bottom Field First</string>
                         </property>
                        </item>
                        <item>
                         <property name="text">
-                         <string>Top field first</string>
+                         <string>Top Field First</string>
                         </property>
                        </item>
                       </widget>
@@ -1210,12 +1210,12 @@ codecs. However, not all codecs are multi-threaded.</string>
                    <widget class="QComboBox" name="videoRateControlCombo">
                     <item>
                      <property name="text">
-                      <string>Average bitrate</string>
+                      <string>Average Bitrate</string>
                      </property>
                     </item>
                     <item>
                      <property name="text">
-                      <string>Constant bitrate</string>
+                      <string>Constant Bitrate</string>
                      </property>
                     </item>
                     <item>

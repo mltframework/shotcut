@@ -25,7 +25,7 @@ DecklinkProducerWidget::DecklinkProducerWidget(QWidget *parent) :
     ui(new Ui::DecklinkProducerWidget)
 {
     ui->setupUi(this);
-    ui->profileCombo->addItem(tr("Detect automatically"), "auto");
+    ui->profileCombo->addItem(tr("Detect Automatically"), "auto");
     ui->profileCombo->addItem("HD 720p 50 fps", "atsc_720p_50");
     ui->profileCombo->addItem("HD 720p 59.94 fps", "atsc_720p_5994");
     ui->profileCombo->addItem("HD 720p 60 fps", "atsc_720p_60");

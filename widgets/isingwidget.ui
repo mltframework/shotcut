@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>422</width>
+    <width>458</width>
     <height>296</height>
    </rect>
   </property>
@@ -110,7 +110,7 @@
      <item>
       <widget class="QGroupBox" name="groupBox_3">
        <property name="title">
-        <string>Border growth</string>
+        <string>Border Growth</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_7">
         <item>
@@ -178,7 +178,7 @@
      <item>
       <widget class="QGroupBox" name="groupBox_2">
        <property name="title">
-        <string>Spontaneous growth</string>
+        <string>Spontaneous Growth</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_8">
         <item>

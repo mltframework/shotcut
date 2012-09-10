@@ -39,7 +39,7 @@ p, li { white-space: pre-wrap; }
 &lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Double-click&lt;/span&gt; a playlist item to load the playlist into the player.&lt;/li&gt;
 &lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The player seeks to the beginning of whichever item you &lt;span style=&quot; font-weight:600;&quot;&gt;double-click&lt;/span&gt;.&lt;/li&gt;
 &lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;You can freely preview clips without necessarily adding them to the playlist or closing it.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;To trim or adjust a playlist entry choose &lt;span style=&quot; font-weight:600;&quot;&gt;Open as clip&lt;/span&gt; from the context menu, make the changes, and then choose &lt;span style=&quot; font-weight:600;&quot;&gt;Update&lt;/span&gt;.&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;To trim or adjust a playlist entry choose &lt;span style=&quot; font-weight:600;&quot;&gt;Open As Clip&lt;/span&gt; from the context menu, make the changes, and then choose &lt;span style=&quot; font-weight:600;&quot;&gt;Update&lt;/span&gt;.&lt;/li&gt;
 &lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;To encode a playlist, it must be loaded in the player!&lt;/li&gt;
 &lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Drag-n-drop&lt;/span&gt; to rearrange the items.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
@@ -170,7 +170,7 @@ selected cut.</string>
   </widget>
   <action name="actionInsertCut">
    <property name="text">
-    <string>Insert cut</string>
+    <string>Insert Cut</string>
    </property>
   </action>
   <action name="actionAppendCut">
@@ -179,17 +179,17 @@ selected cut.</string>
      <normaloff>:/icons/icons/list-add.png</normaloff>:/icons/icons/list-add.png</iconset>
    </property>
    <property name="text">
-    <string>Append cut</string>
+    <string>Append Cut</string>
    </property>
   </action>
   <action name="actionInsertBlank">
    <property name="text">
-    <string>Insert blank</string>
+    <string>Insert Blank</string>
    </property>
   </action>
   <action name="actionAppendBlank">
    <property name="text">
-    <string>Append blank</string>
+    <string>Append Blank</string>
    </property>
   </action>
   <action name="actionUpdate">
@@ -199,7 +199,7 @@ selected cut.</string>
   </action>
   <action name="actionOpen">
    <property name="text">
-    <string>Open as clip</string>
+    <string>Open As Clip</string>
    </property>
    <property name="toolTip">
     <string>Open the cut in the player</string>
@@ -220,7 +220,7 @@ selected cut.</string>
   </action>
   <action name="actionRemoveAll">
    <property name="text">
-    <string>Remove all</string>
+    <string>Remove All</string>
    </property>
    <property name="toolTip">
     <string>Remove all items from the playlist</string>

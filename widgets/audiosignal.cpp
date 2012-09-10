@@ -37,7 +37,7 @@ AudioSignal::AudioSignal(QWidget *parent): QWidget(parent)
     setMinimumWidth(fontMetrics().width("-60") + 20);
     dbscale << 5 << 0 << -5 << -10 << -15 << -20 << -25 << -30 << -35 << -40 << -50 << -60;
     setContextMenuPolicy(Qt::ActionsContextMenu);
-    m_aMonitoringEnabled = new QAction(tr("Monitor audio signal"), this);
+    m_aMonitoringEnabled = new QAction(tr("Monitor Audio Signal"), this);
     m_aMonitoringEnabled->setCheckable(true);
     m_aMonitoringEnabled->setChecked(true);
     connect(m_aMonitoringEnabled, SIGNAL(toggled(bool)), this, SLOT(slotSwitchAudioMonitoring(bool)));

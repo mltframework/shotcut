@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>386</width>
-    <height>307</height>
+    <height>366</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -81,7 +81,7 @@ Most users do not need to change this.</string>
     <widget class="QComboBox" name="positionComboBox">
      <item>
       <property name="text">
-       <string>Center under mouse</string>
+       <string>Center Under Mouse</string>
       </property>
      </item>
      <item>
@@ -91,7 +91,7 @@ Most users do not need to change this.</string>
      </item>
      <item>
       <property name="text">
-       <string>Follow mouse</string>
+       <string>Follow Mouse</string>
       </property>
      </item>
     </widget>

@@ -135,7 +135,7 @@ the list. This does not stop a currently running job. Right-
   </widget>
   <action name="actionStopJob">
    <property name="text">
-    <string>Stop this Job</string>
+    <string>Stop This Job</string>
    </property>
    <property name="toolTip">
     <string>Stop the currently selected job</string>
@@ -175,7 +175,7 @@ the list. This does not stop a currently running job. Right-
   </action>
   <action name="actionOpenFolder">
    <property name="text">
-    <string>Show in Folder</string>
+    <string>Show In Folder</string>
    </property>
   </action>
  </widget>
