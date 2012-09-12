@@ -39,10 +39,16 @@ signals:
      * @param position the frame number of this frame representing time
      */
     void frameReceived(Mlt::QFrame);
+    void dragStarted();
 
 public slots:
 
 private:
+    QPoint m_dragStart;
+
+protected:
+    void mousePressEvent(QMouseEvent *);
+    void mouseMoveEvent(QMouseEvent *);
     static void on_frame_show(mlt_consumer, void* self, mlt_frame frame);
 
 };

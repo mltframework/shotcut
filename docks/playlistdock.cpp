@@ -37,14 +37,16 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     menu->addAction(ui->actionInsertBlank);
     ui->addButton->setMenu(menu);
     ui->addButton->setDefaultAction(ui->actionAppendCut);
-    ui->tableView->setDragDropMode(QAbstractItemView::InternalMove);
+    ui->tableView->setDragDropMode(QAbstractItemView::DragDrop);
     ui->tableView->setDropIndicatorShown(true);
     ui->tableView->setDragDropOverwriteMode(false);
+    ui->tableView->setAcceptDrops(true);
     connect(ui->actionRemove, SIGNAL(triggered()), this, SLOT(on_removeButton_clicked()));
     connect(&m_model, SIGNAL(cleared()), this, SLOT(onPlaylistCleared()));
     connect(&m_model, SIGNAL(created()), this, SLOT(onPlaylistCreated()));
     connect(&m_model, SIGNAL(loaded()), this, SLOT(onPlaylistCreated()));
     connect(&m_model, SIGNAL(modified()), this, SLOT(onPlaylistCreated()));
+    connect(&m_model, SIGNAL(dropped(const QMimeData*,int)), this, SLOT(onDropped(const QMimeData*,int)));
 }
 
 PlaylistDock::~PlaylistDock()
@@ -76,23 +78,7 @@ void PlaylistDock::on_menuButton_clicked()
 
 void PlaylistDock::on_actionInsertCut_triggered()
 {
-    if (MLT.producer() && MLT.producer()->is_valid()) {
-        QModelIndex index = ui->tableView->currentIndex();
-        if (MLT.producer()->type() == playlist_type)
-            emit showStatusMessage(tr("You cannot insert a playlist into a playlist!"));
-        else if (MLT.isSeekable())
-            m_model.insert(MLT.producer(), index.row());
-        else {
-            DurationDialog dialog(this);
-            dialog.setDuration(MLT.profile().fps() * 5);
-            if (dialog.exec() == QDialog::Accepted) {
-                MLT.producer()->set_in_and_out(0, dialog.duration() - 1);
-                if (MLT.producer()->get("mlt_service") && !strcmp(MLT.producer()->get("mlt_service"), "avformat"))
-                    MLT.producer()->set("mlt_service", "avformat-novalidate");
-                m_model.insert(MLT.producer(), index.row());
-            }
-        }
-    }
+    onDropped(0, ui->tableView->currentIndex().row());
 }
 
 void PlaylistDock::on_actionAppendCut_triggered()
@@ -244,4 +230,32 @@ void PlaylistDock::onPlaylistCleared()
     ui->removeButton->setEnabled(false);
     ui->menuButton->setEnabled(false);
     ui->stackedWidget->setCurrentIndex(0);
+}
+
+void PlaylistDock::onDropped(const QMimeData *data, int row)
+{
+    if (!data || data->data("application/mlt+xml").isEmpty()) {
+        if (MLT.producer() && MLT.producer()->is_valid()) {
+            if (MLT.producer()->type() == playlist_type)
+                emit showStatusMessage(tr("You cannot insert a playlist into a playlist!"));
+            else if (MLT.isSeekable())
+                m_model.insert(MLT.producer(), row);
+            else {
+                DurationDialog dialog(this);
+                dialog.setDuration(MLT.profile().fps() * 5);
+                if (dialog.exec() == QDialog::Accepted) {
+                    MLT.producer()->set_in_and_out(0, dialog.duration() - 1);
+                    if (MLT.producer()->get("mlt_service") && !strcmp(MLT.producer()->get("mlt_service"), "avformat"))
+                        MLT.producer()->set("mlt_service", "avformat-novalidate");
+                    m_model.insert(MLT.producer(), row);
+                }
+            }
+        }
+    }
+}
+
+void PlaylistDock::onPlayerDragStarted()
+{
+    if (isVisible())
+        ui->stackedWidget->setCurrentIndex(1);
 }

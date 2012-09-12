@@ -18,7 +18,7 @@
 
 #include "sdlwidget.h"
 #include <Mlt.h>
-#include <QVariant>
+#include <QtGui>
 
 using namespace Mlt;
 
@@ -98,6 +98,26 @@ int SDLWidget::reconfigure(bool isMulti)
         Controller::close();
     }
     return error;
+}
+
+void SDLWidget::mousePressEvent(QMouseEvent* event)
+{
+    if (event->button() == Qt::LeftButton)
+        m_dragStart = event->pos();
+    emit dragStarted();
+}
+
+void SDLWidget::mouseMoveEvent(QMouseEvent* event)
+{
+    if (!(event->buttons() & Qt::LeftButton))
+        return;
+    if ((event->pos() - m_dragStart).manhattanLength() < QApplication::startDragDistance())
+        return;
+    QDrag *drag = new QDrag(this);
+   QMimeData *mimeData = new QMimeData;
+    mimeData->setData("application/mlt+xml", "");
+    drag->setMimeData(mimeData);
+    drag->exec(Qt::MoveAction);
 }
 
 // MLT consumer-frame-show event handler

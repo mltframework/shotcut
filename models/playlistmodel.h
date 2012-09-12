@@ -20,6 +20,8 @@
 #define PLAYLISTMODEL_H
 
 #include <QAbstractTableModel>
+#include <QtCore/qmimedata.h>
+#include <QtCore/QStringList>
 #include "mltcontroller.h"
 
 class PlaylistModel : public QAbstractTableModel
@@ -40,6 +42,8 @@ public:
     bool insertRows(int row, int count, const QModelIndex & parent = QModelIndex());
     bool removeRows(int row, int count, const QModelIndex & parent = QModelIndex());
     Qt::ItemFlags flags(const QModelIndex &index) const;
+    QStringList mimeTypes() const;
+    bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent);
     Mlt::Playlist* playlist()
     {
         return m_playlist;
@@ -51,6 +55,7 @@ signals:
     void closed();
     void modified();
     void loaded();
+    void dropped(const QMimeData *data, int row);
 
 public slots:
     void clear();

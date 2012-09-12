@@ -99,6 +99,25 @@ bool PlaylistModel::removeRows(int row, int count, const QModelIndex& parent)
     return true;
 }
 
+QStringList PlaylistModel::mimeTypes() const
+{
+    QStringList ls = QAbstractTableModel::mimeTypes();
+    ls.append("application/mlt+xml");
+    return ls;
+}
+
+bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
+{
+    if (data->hasFormat("application/mlt+xml")) {
+        emit dropped(data, row);
+        return true;
+    }
+    else if (action == Qt::MoveAction)
+        return QAbstractTableModel::dropMimeData(data, action, row, column, parent);
+    else
+        return false;
+}
+
 Qt::ItemFlags PlaylistModel::flags(const QModelIndex &index) const
 {
     Qt::ItemFlags defaults = QAbstractTableModel::flags(index);

@@ -148,6 +148,21 @@ MainWindow::MainWindow(QWidget *parent)
     // Connect signals.
     connect(this, SIGNAL(producerOpened()), this, SLOT(onProducerOpened()));
 
+    // connect video widget signals
+#if defined(Q_WS_MAC) || defined(Q_WS_WIN)
+    Mlt::GLWidget* videoWidget = (Mlt::GLWidget*) &(MLT);
+    connect(videoWidget, SIGNAL(dragStarted()), m_playlistDock, SLOT(onPlayerDragStarted()));
+#else
+    if (m_settings.value("player/opengl", true).toBool()) {
+        Mlt::GLWidget* videoWidget = (Mlt::GLWidget*) &(MLT);
+        connect(videoWidget, SIGNAL(dragStarted()), m_playlistDock, SLOT(onPlayerDragStarted()));
+    }
+    else {
+        Mlt::SDLWidget* videoWidget = (Mlt::SDLWidget*) &(MLT);
+        connect(videoWidget, SIGNAL(dragStarted()), m_playlistDock, SLOT(onPlayerDragStarted()));
+    }
+#endif
+
     readSettings();
     setFocus();
     setCurrentFile("");

@@ -73,6 +73,10 @@ private slots:
 
     void onPlaylistCleared();
 
+    void onDropped(const QMimeData *data, int row);
+
+    void onPlayerDragStarted();
+
 private:
     Ui::PlaylistDock *ui;
     PlaylistModel m_model;

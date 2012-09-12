@@ -49,6 +49,7 @@ signals:
      * @param frame a Mlt::QFrame from which to get a QImage
      */
     void frameReceived(Mlt::QFrame frame);
+    void dragStarted();
 
 private:
     int x, y, w, h;
@@ -56,12 +57,15 @@ private:
     GLuint m_texture[3];
     double m_display_ratio;
     QGLShaderProgram m_shader;
+    QPoint m_dragStart;
 
 protected:
     void initializeGL();
     void resizeGL(int width, int height);
     void resizeEvent(QResizeEvent* event);
     void paintGL();
+    void mousePressEvent(QMouseEvent *);
+    void mouseMoveEvent(QMouseEvent *);
 
     static void on_frame_show(mlt_consumer, void* self, mlt_frame frame);
 };

@@ -167,6 +167,26 @@ void GLWidget::paintGL()
     }
 }
 
+void GLWidget::mousePressEvent(QMouseEvent* event)
+{
+    if (event->button() == Qt::LeftButton)
+        m_dragStart = event->pos();
+    emit dragStarted();
+}
+
+void GLWidget::mouseMoveEvent(QMouseEvent* event)
+{
+    if (!(event->buttons() & Qt::LeftButton))
+        return;
+    if ((event->pos() - m_dragStart).manhattanLength() < QApplication::startDragDistance())
+        return;
+    QDrag *drag = new QDrag(this);
+    QMimeData *mimeData = new QMimeData;
+    mimeData->setData("application/mlt+xml", "");
+    drag->setMimeData(mimeData);
+    drag->exec(Qt::MoveAction);
+}
+
 void GLWidget::showFrame(Mlt::QFrame frame)
 {
     if (frame.frame()->get_int("rendered")) {
