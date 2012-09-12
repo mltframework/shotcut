@@ -42,6 +42,8 @@
 #include "docks/jobsdock.h"
 #include "jobqueue.h"
 #include "docks/playlistdock.h"
+#include "glwidget.h"
+#include "sdlwidget.h"
 
 #include <QtGui>
 #include <QDebug>
