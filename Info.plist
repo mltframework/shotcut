@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist SYSTEM "file://localhost/System/Library/DTDs/PropertyList.dtd">
+<plist version="0.9">
+<dict>
+	<key>CFBundleIconFile</key>
+	<string>shotcut.icns</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleGetInfoString</key>
+	<string>Shotcut, Copyright 2011-2012 Meltytech, LLC</string>
+	<key>CFBundleSignature</key>
+	<string>scut</string>
+	<key>CFBundleExecutable</key>
+	<string>Shotcut</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.Meltytech.Shotcut</string>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+	<key>NSHighResolutionCapable</key>
+	<true/>
+</dict>
+</plist>

@@ -113,11 +113,13 @@ OTHER_FILES += \
     shotcut.rc \
     scripts/build-shotcut.sh \
     icons/shotcut.icns \
-    scripts/shotcut.nsi
+    scripts/shotcut.nsi \
+    Info.plist
 
 mac {
     TARGET = Shotcut
     ICON = icons/shotcut.icns
+    QMAKE_INFO_PLIST = Info.plist
 }
 win32 {
     INCLUDEPATH += include/mlt++ include/mlt
@@ -137,3 +139,4 @@ isEmpty(SHOTCUT_VERSION) {
     SHOTCUT_VERSION = $$system(date "+%y.%m.%d")
 }
 DEFINES += SHOTCUT_VERSION=\\\"$$SHOTCUT_VERSION\\\"
+
