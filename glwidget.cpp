@@ -304,6 +304,8 @@ int GLWidget::reconfigure(bool isMulti)
             m_consumer->set("deinterlace_method", property("deinterlace_method").toString().toAscii().constData());
             m_consumer->set("buffer", 1);
             m_consumer->set("scrub_audio", 1);
+            // tell the render thread that we will be fetching yuv420p
+            m_consumer->set("mlt_image_format", "yuv420p");
         }
     }
     else {
