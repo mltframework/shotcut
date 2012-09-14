@@ -77,6 +77,8 @@ private slots:
 
     void onPlayerDragStarted();
 
+    void on_addButton_clicked();
+
 private:
     Ui::PlaylistDock *ui;
     PlaylistModel m_model;

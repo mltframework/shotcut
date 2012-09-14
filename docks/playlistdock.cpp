@@ -30,13 +30,6 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     ui->setupUi(this);
     toggleViewAction()->setIcon(QIcon::fromTheme("view-media-playlist", windowIcon()));
     ui->tableView->setModel(&m_model);
-    QMenu* menu = new QMenu(this);
-    menu->addAction(ui->actionAppendCut);
-    menu->addAction(ui->actionAppendBlank);
-    menu->addAction(ui->actionInsertCut);
-    menu->addAction(ui->actionInsertBlank);
-    ui->addButton->setMenu(menu);
-    ui->addButton->setDefaultAction(ui->actionAppendCut);
     ui->tableView->setDragDropMode(QAbstractItemView::DragDrop);
     ui->tableView->setDropIndicatorShown(true);
     ui->tableView->setDragDropOverwriteMode(false);
@@ -58,19 +51,23 @@ void PlaylistDock::on_menuButton_clicked()
 {
     QPoint pos = ui->menuButton->mapToParent(QPoint(0, 0));
     QMenu menu(this);
-    menu.addAction(ui->actionGoto);
-    menu.addAction(ui->actionOpen);
     QModelIndex index = ui->tableView->currentIndex();
     if (index.isValid()) {
+        menu.addAction(ui->actionGoto);
+        if (MLT.producer()->type() != playlist_type)
+            menu.addAction(ui->actionInsertCut);
+        menu.addAction(ui->actionOpen);
+
         Mlt::ClipInfo* info = m_model.playlist()->clip_info(index.row());
         if (info && info->resource && MLT.producer()->get("resource")
                 && !strcmp(info->resource, MLT.producer()->get("resource"))) {
             menu.addAction(ui->actionUpdate);
         }
         delete info;
+
+        menu.addAction(ui->actionRemove);
+        menu.addSeparator();
     }
-    menu.addAction(ui->actionRemove);
-    menu.addSeparator();
     menu.addAction(ui->actionRemoveAll);
     menu.addAction(ui->actionClose);
     menu.exec(mapToGlobal(pos));
@@ -176,20 +173,24 @@ void PlaylistDock::on_actionOpen_triggered()
 
 void PlaylistDock::on_tableView_customContextMenuRequested(const QPoint &pos)
 {
-    QMenu menu(this);
-    menu.addAction(ui->actionGoto);
-    menu.addAction(ui->actionOpen);
     QModelIndex index = ui->tableView->currentIndex();
     if (index.isValid()) {
+        QMenu menu(this);
+        menu.addAction(ui->actionGoto);
+        if (MLT.producer()->type() != playlist_type)
+            menu.addAction(ui->actionInsertCut);
+        menu.addAction(ui->actionOpen);
+
         Mlt::ClipInfo* info = m_model.playlist()->clip_info(index.row());
         if (info && info->resource && MLT.producer()->get("resource")
                 && !strcmp(info->resource, MLT.producer()->get("resource"))) {
             menu.addAction(ui->actionUpdate);
         }
         delete info;
+
+        menu.addAction(ui->actionRemove);
+        menu.exec(mapToGlobal(pos));
     }
-    menu.addAction(ui->actionRemove);
-    menu.exec(mapToGlobal(pos));
 }
 
 void PlaylistDock::on_tableView_doubleClicked(const QModelIndex &index)
@@ -258,4 +259,9 @@ void PlaylistDock::onPlayerDragStarted()
 {
     if (isVisible())
         ui->stackedWidget->setCurrentIndex(1);
+}
+
+void PlaylistDock::on_addButton_clicked()
+{
+    on_actionAppendCut_triggered();
 }
