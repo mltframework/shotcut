@@ -30,6 +30,8 @@
 #include "glwidget.h"
 #if defined(Q_WS_X11)
 #include <GL/glu.h>
+#elif defined(Q_WS_MAC)
+#include <glu.h>
 #endif
 #if defined(Q_WS_WIN) && !defined(glActiveTexture)
 #define glActiveTexture GLeeFuncPtr_glActiveTexture
