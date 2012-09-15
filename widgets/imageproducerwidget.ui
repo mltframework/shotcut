@@ -108,7 +108,7 @@
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QSpinBox" name="durationSpinBox">
+      <widget class="TimeSpinBox" name="durationSpinBox">
        <property name="maximumSize">
         <size>
          <width>150</width>
@@ -126,9 +126,6 @@
        </property>
        <property name="keyboardTracking">
         <bool>false</bool>
-       </property>
-       <property name="suffix">
-        <string> frames</string>
        </property>
        <property name="maximum">
         <number>2147483647</number>
@@ -285,6 +282,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>TimeSpinBox</class>
+   <extends>QSpinBox</extends>
+   <header>widgets/timespinbox.h</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>widthLineEdit</tabstop>
   <tabstop>heightLineEdit</tabstop>
