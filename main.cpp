@@ -19,24 +19,45 @@
 #include <QtGui>
 #include "mainwindow.h"
 
-int main(int argc, char *argv[])
+class Application : public QApplication
 {
-    QApplication a(argc, argv);
-    QDir dir(QApplication::applicationDirPath());
-    dir.cd("lib");
-    dir.cd("qt4");
-    QCoreApplication::addLibraryPath(dir.absolutePath());
-    a.setOrganizationName("Meltytech");
-    a.setOrganizationDomain("meltytech.com");
-    a.setApplicationName("Shotcut");
-    a.setApplicationVersion(SHOTCUT_VERSION);
+public:
+    MainWindow* mainWindow;
+
+    Application(int &argc, char **argv)
+        : QApplication(argc, argv)
+    {
+        QDir dir(applicationDirPath());
+        dir.cd("lib");
+        dir.cd("qt4");
+        addLibraryPath(dir.absolutePath());
+        setOrganizationName("Meltytech");
+        setOrganizationDomain("meltytech.com");
+        setApplicationName("Shotcut");
+        setApplicationVersion(SHOTCUT_VERSION);
+        mainWindow = new MainWindow;
+    }
+
+protected:
+    bool event(QEvent *event) {
+        if (event->type() == QEvent::FileOpen) {
+            QFileOpenEvent *openEvent = static_cast<QFileOpenEvent*>(event);
+            mainWindow->open(openEvent->file());
+            return true;
+        }
+        else return QApplication::event(event);
+    }
+};
+
+int main(int argc, char **argv)
+{
+    Application a(argc, argv);
     QSplashScreen splash(QPixmap(":/icons/icons/shotcut-logo-640.png"));
     splash.showMessage(a.tr("Loading plugins..."), Qt::AlignHCenter | Qt::AlignBottom);
     splash.show();
-    MainWindow w;
-    splash.finish(&w);
-    w.show();
+    splash.finish(a.mainWindow);
+    a.mainWindow->show();
     if (argc > 1)
-        w.open(argv[1]);
+        a.mainWindow->open(argv[1]);
     return a.exec();
 }

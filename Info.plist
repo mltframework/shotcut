@@ -18,5 +18,26 @@
 	<string>NSApplication</string>
 	<key>NSHighResolutionCapable</key>
 	<true/>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>mlt</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>shotcut.icns</string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>text/mlt+xml</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>MLT XML File</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSIsAppleDefaultForType</key>
+			<true/>
+		</dict>
+	</array>
 </dict>
 </plist>
