@@ -17,7 +17,7 @@
  */
 
 #include "playlistmodel.h"
-#include <QDebug>
+#include <QtCore/QFileInfo>
 
 PlaylistModel::PlaylistModel(QObject *parent)
     : QAbstractTableModel(parent)
@@ -54,6 +54,9 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
             if (result == "<producer>" && m_clipInfo.producer
                     && m_clipInfo.producer->is_valid() && m_clipInfo.producer->get("mlt_service"))
                 result = QString::fromUtf8(m_clipInfo.producer->get("mlt_service"));
+            // Use basename for display
+            if (role == Qt::DisplayRole && result.startsWith('/'))
+                result = QFileInfo(result).fileName();
             return result;
         }
     }
