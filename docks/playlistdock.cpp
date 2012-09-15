@@ -235,7 +235,14 @@ void PlaylistDock::onPlaylistCleared()
 
 void PlaylistDock::onDropped(const QMimeData *data, int row)
 {
-    if (!data || data->data("application/mlt+xml").isEmpty()) {
+    if (data && data->hasUrls()) {
+        foreach (QUrl url, data->urls()) {
+            Mlt::Producer p(MLT.profile(), url.path().toUtf8().constData());
+            if (p.is_valid())
+                m_model.insert(&p, row);
+        }
+    }
+    else if (!data || data->data("application/mlt+xml").isEmpty()) {
         if (MLT.producer() && MLT.producer()->is_valid()) {
             if (MLT.producer()->type() == playlist_type)
                 emit showStatusMessage(tr("You cannot insert a playlist into a playlist!"));

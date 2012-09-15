@@ -78,7 +78,7 @@ QVariant PlaylistModel::headerData(int section, Qt::Orientation orientation, int
 
 Qt::DropActions PlaylistModel::supportedDropActions() const
 {
-    return Qt::MoveAction;
+    return Qt::MoveAction | Qt::LinkAction;
 }
 
 bool PlaylistModel::insertRows(int row, int count, const QModelIndex& parent)
@@ -103,12 +103,13 @@ QStringList PlaylistModel::mimeTypes() const
 {
     QStringList ls = QAbstractTableModel::mimeTypes();
     ls.append("application/mlt+xml");
+    ls.append("text/uri-list");
     return ls;
 }
 
 bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
 {
-    if (data->hasFormat("application/mlt+xml")) {
+    if (data->hasFormat("application/mlt+xml") || data->hasUrls()) {
         emit dropped(data, row);
         return true;
     }

@@ -117,7 +117,7 @@ void SDLWidget::mouseMoveEvent(QMouseEvent* event)
    QMimeData *mimeData = new QMimeData;
     mimeData->setData("application/mlt+xml", "");
     drag->setMimeData(mimeData);
-    drag->exec(Qt::MoveAction);
+    drag->exec(Qt::LinkAction);
 }
 
 // MLT consumer-frame-show event handler
