@@ -1589,7 +1589,7 @@ Name=Shotcut
 GenericName=Video Editor
 Comment=Video Editor
 Terminal=false
-Exec=sh -c "\$(dirname "%k")/.app/shotcut"
+Exec=sh -c "\$(dirname "%k")/.app/shotcut "%F""
 Icon=applications-multimedia
 End-of-desktop-file
   if test 0 != $? ; then
