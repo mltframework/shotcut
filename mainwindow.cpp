@@ -382,7 +382,21 @@ void MainWindow::dragEnterEvent(QDragEnterEvent *event)
 void MainWindow::dropEvent(QDropEvent *event)
 {
     const QMimeData *mimeData = event->mimeData();
-    if (mimeData->hasUrls()) {
+    if (mimeData->hasFormat("application/x-qabstractitemmodeldatalist")) {
+        QByteArray encoded = mimeData->data("application/x-qabstractitemmodeldatalist");
+        QDataStream stream(&encoded, QIODevice::ReadOnly);
+        QMap<int,  QVariant> roleDataMap;
+        while (!stream.atEnd()) {
+            int row, col;
+            stream >> row >> col >> roleDataMap;
+        }
+        if (roleDataMap.contains(Qt::ToolTipRole)) {
+            // DisplayRole is just basename, ToolTipRole contains full path
+            open(roleDataMap[Qt::ToolTipRole].toString());
+            event->acceptProposedAction();
+        }
+    }
+    else if (mimeData->hasUrls()) {
         open(mimeData->urls().at(0).path());
         event->acceptProposedAction();
     }

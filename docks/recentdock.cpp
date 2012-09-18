@@ -13,6 +13,8 @@ RecentDock::RecentDock(QWidget *parent) :
     toggleViewAction()->setIcon(QIcon::fromTheme("document-open-recent", windowIcon()));
     m_recent = m_settings.value("recent").toStringList();
     add(QString());
+    ui->listWidget->setDragEnabled(true);
+    ui->listWidget->setDragDropMode(QAbstractItemView::DragOnly);
 }
 
 RecentDock::~RecentDock()
