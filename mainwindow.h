@@ -37,7 +37,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    static MainWindow& singleton();
     ~MainWindow();
     void open(Mlt::Producer* producer);
     bool continueModified();
@@ -46,6 +46,7 @@ signals:
     void producerOpened();
 
 protected:
+    MainWindow();
     void keyPressEvent(QKeyEvent*);
     void dragEnterEvent(QDragEnterEvent*);
     void dropEvent(QDropEvent*);
@@ -93,5 +94,7 @@ private slots:
     void onPlaylistModified();
     void onCutModified();
 };
+
+#define MAIN MainWindow::singleton()
 
 #endif // MAINWINDOW_H

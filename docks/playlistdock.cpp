@@ -214,8 +214,7 @@ void PlaylistDock::on_actionRemoveAll_triggered()
 
 void PlaylistDock::on_actionClose_triggered()
 {
-    MainWindow* main = qobject_cast<MainWindow*>(qApp->activeWindow());
-    if (main && main->continueModified())
+    if (MAIN.continueModified())
         m_model.close();
 }
 

@@ -50,8 +50,8 @@
 
 static const int STATUS_TIMEOUT_MS = 3000;
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
+MainWindow::MainWindow()
+    : QMainWindow(0)
     , ui(new Ui::MainWindow)
 {
     // Create the UI.
@@ -168,6 +168,12 @@ MainWindow::MainWindow(QWidget *parent)
     readSettings();
     setFocus();
     setCurrentFile("");
+}
+
+MainWindow& MainWindow::singleton()
+{
+    static MainWindow* instance = new MainWindow;
+    return *instance;
 }
 
 MainWindow::~MainWindow()

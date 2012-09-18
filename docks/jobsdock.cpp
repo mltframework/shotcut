@@ -112,9 +112,8 @@ void JobsDock::on_actionOpen_triggered()
     QModelIndex index = ui->treeView->currentIndex();
     if (!index.isValid()) return;
     MeltJob* job = JOBS.jobFromIndex(index);
-    MainWindow* window = qobject_cast<MainWindow*>(qApp->activeWindow());
-    if (job && window)
-            window->open(job->objectName().toUtf8().constData());
+    if (job)
+        MAIN.open(job->objectName().toUtf8().constData());
 }
 
 void JobsDock::on_actionRun_triggered()

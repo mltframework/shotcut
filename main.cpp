@@ -35,7 +35,7 @@ public:
         setOrganizationDomain("meltytech.com");
         setApplicationName("Shotcut");
         setApplicationVersion(SHOTCUT_VERSION);
-        mainWindow = new MainWindow;
+        mainWindow = &MAIN;
     }
 
 protected:
