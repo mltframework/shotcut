@@ -178,6 +178,7 @@ MainWindow& MainWindow::singleton()
 
 MainWindow::~MainWindow()
 {
+    delete m_playlistDock;
     delete m_propertiesDock;
     delete m_recentDock;
     delete m_encodeDock;

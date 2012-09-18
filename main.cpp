@@ -38,6 +38,11 @@ public:
         mainWindow = &MAIN;
     }
 
+    ~Application()
+    {
+        delete mainWindow;
+    }
+
 protected:
     bool event(QEvent *event) {
         if (event->type() == QEvent::FileOpen) {
