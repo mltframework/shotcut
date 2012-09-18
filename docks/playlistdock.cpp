@@ -96,6 +96,9 @@ void PlaylistDock::on_actionAppendCut_triggered()
             }
         }
     }
+    else {
+        MAIN.openVideo();
+    }
 }
 
 void PlaylistDock::on_actionInsertBlank_triggered()
