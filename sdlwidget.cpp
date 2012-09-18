@@ -114,7 +114,7 @@ void SDLWidget::mouseMoveEvent(QMouseEvent* event)
     if ((event->pos() - m_dragStart).manhattanLength() < QApplication::startDragDistance())
         return;
     QDrag *drag = new QDrag(this);
-   QMimeData *mimeData = new QMimeData;
+    QMimeData *mimeData = new QMimeData;
     mimeData->setData("application/mlt+xml", "");
     drag->setMimeData(mimeData);
     drag->exec(Qt::LinkAction);
