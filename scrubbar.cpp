@@ -17,6 +17,7 @@
  */
 
 #include "scrubbar.h"
+#include "mltcontroller.h"
 #include <QtGui>
 
 static const int margin = 14;
@@ -32,7 +33,9 @@ ScrubBar::ScrubBar(QWidget *parent)
     , m_activeControl(CONTROL_NONE)
 {
     setMouseTracking(true);
-    setMinimumHeight(14);
+    setFont(QFont(font().family(), font().pointSize() - 2));
+    m_timecodeWidth = fontMetrics().width("00:00:00:00");
+    setMinimumHeight(fontMetrics().ascent() * 3/2);
 }
 
 void ScrubBar::setScale(int maximum)
@@ -40,13 +43,24 @@ void ScrubBar::setScale(int maximum)
     m_max = maximum;
     m_scale = (double) (width() - 2 * margin) / (double) maximum;
     if (m_scale == 0) m_scale = -1;
-    if (m_scale > 0.5)
-        m_interval = 1 * m_fps; // 1 second
-    else if (m_scale > 0.09)
-        m_interval = 5 * m_fps; // 5 seconds
-    else
-        m_interval = 60 * m_fps; // 60 seconds
-    m_interval *= m_scale;
+    m_secondsPerTick = qRound(double(m_timecodeWidth * 1.6) / m_scale / m_fps);
+    if (m_secondsPerTick > 3600)
+        // force to a multiple of one hour
+        m_secondsPerTick += 3600 - m_secondsPerTick % 3600;
+    else if (m_secondsPerTick > 300)
+        // force to a multiple of 5 minutes
+        m_secondsPerTick += 300 - m_secondsPerTick % 300;
+    else if (m_secondsPerTick > 60)
+        // force to a multiple of one minute
+        m_secondsPerTick += 60 - m_secondsPerTick % 60;
+    else if (m_secondsPerTick > 5)
+        // force to a multiple of 10 seconds
+        m_secondsPerTick += 10 - m_secondsPerTick % 10;
+    else if (m_secondsPerTick > 2)
+        // force to a multiple of 5 seconds
+        m_secondsPerTick += 5 - m_secondsPerTick % 5;
+    m_interval = qRound(double(m_secondsPerTick) * m_fps * m_scale);
+
     updatePixmap();
 }
 
@@ -114,6 +128,9 @@ void ScrubBar::mouseMoveEvent(QMouseEvent * event)
 {
     int x = event->x() - margin;
     int pos = x / m_scale;
+
+    // clamp
+    pos = (pos < 0)? 0 : (pos > m_max)? m_max : pos;
 
     if (event->buttons() & Qt::LeftButton) {
         if (m_activeControl == CONTROL_IN)
@@ -198,7 +215,8 @@ void ScrubBar::updatePixmap()
     m_pixmap = QPixmap(width(), height());
     m_pixmap.fill(palette().window().color());
     QPainter p(&m_pixmap);
-    int y = height() / 4;
+    int y = height() / 2;
+    p.setFont(font());
 
     // background color
     p.fillRect(margin, 0, width() - 2 * margin, height(), palette().base().color());
@@ -211,11 +229,19 @@ void ScrubBar::updatePixmap()
     }
 
     // draw time ticks
-    p.setPen(palette().light().color());
+    p.setPen(palette().text().color());
     if (m_interval > 2) {
+        for (int x = margin; x < width() - margin; x += m_interval)
+            p.drawLine(x, height() - 1 - y, x, height() - 1);
+    }
+
+    // draw timecode
+    if (m_interval > m_timecodeWidth) {
         int x = margin;
-        for (int i = 0; x < width() - margin; x = margin + ++i * m_interval)
-            p.drawLine(x, height() - 1 - y /*- y * !(i % 5)*/, x, height() - 1);
+        for (int i = 0; x < width() - margin - m_timecodeWidth; i++, x += m_interval) {
+            MLT.producer()->set("_shotcut_scrubbar", i * m_fps * m_secondsPerTick);
+            p.drawText(x + 2, height() - 1, MLT.producer()->get_time("_shotcut_scrubbar"));
+        }
     }
 
     p.end();

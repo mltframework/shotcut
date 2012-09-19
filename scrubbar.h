@@ -67,6 +67,8 @@ private:
     int m_out;
     enum controls m_activeControl;
     QPixmap m_pixmap;
+    int m_timecodeWidth;
+    int m_secondsPerTick;
 
     void updatePixmap();
 };
