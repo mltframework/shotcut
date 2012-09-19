@@ -27,9 +27,6 @@
       <property name="alternatingRowColors">
        <bool>true</bool>
       </property>
-      <property name="textElideMode">
-       <enum>Qt::ElideLeft</enum>
-      </property>
       <property name="spacing">
        <number>2</number>
       </property>

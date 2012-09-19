@@ -74,9 +74,6 @@ selected cut.</string>
           <property name="selectionBehavior">
            <enum>QAbstractItemView::SelectRows</enum>
           </property>
-          <property name="textElideMode">
-           <enum>Qt::ElideLeft</enum>
-          </property>
           <property name="horizontalScrollMode">
            <enum>QAbstractItemView::ScrollPerPixel</enum>
           </property>
