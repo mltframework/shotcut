@@ -36,7 +36,7 @@ ScrubBar::ScrubBar(QWidget *parent)
     , m_activeControl(CONTROL_NONE)
 {
     setMouseTracking(true);
-    setFont(QFont(font().family(), font().pointSize() - 2));
+    setFont(QFont(font().family(), font().pointSize() - (font().pointSize() > 10? 2 : 1)));
     m_timecodeWidth = fontMetrics().width("00:00:00:00");
     setMinimumHeight(fontMetrics().ascent() * 3/2);
 }
@@ -89,6 +89,12 @@ void ScrubBar::setOutPoint(int out)
     m_out = qMin(out, m_max);
     updatePixmap();
     emit outChanged(out);
+}
+
+void ScrubBar::setMarkers(const QList<int> &list)
+{
+    m_markers = list;
+    updatePixmap();
 }
 
 void ScrubBar::mousePressEvent(QMouseEvent * event)
@@ -233,6 +239,11 @@ void ScrubBar::updatePixmap()
     if (m_interval > 2) {
         for (int x = margin; x < width() - margin; x += m_interval)
             p.drawLine(x, height() - 1 - y, x, height() - 1);
+    }
+
+    // draw markers
+    foreach (int x, m_markers) {
+        p.fillRect(margin + x * m_scale - 1, 0, 2, height(), palette().highlight().color());
     }
 
     // draw timecode

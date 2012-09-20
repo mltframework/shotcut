@@ -118,6 +118,8 @@ MainWindow::MainWindow()
     connect(m_playlistDock->model(), SIGNAL(cleared()), this, SLOT(onPlaylistCleared()));
     connect(m_playlistDock->model(), SIGNAL(closed()), this, SLOT(onPlaylistClosed()));
     connect(m_playlistDock->model(), SIGNAL(modified()), this, SLOT(onPlaylistModified()));
+    connect(m_playlistDock->model(), SIGNAL(loaded()), this, SLOT(updateMarkers()));
+    connect(m_playlistDock->model(), SIGNAL(modified()), this, SLOT(updateMarkers()));
 
     tabifyDockWidget(m_recentDock, m_propertiesDock);
     tabifyDockWidget(m_propertiesDock, m_playlistDock);
@@ -623,4 +625,15 @@ void MainWindow::onCutModified()
 {
     if (!m_playlistDock->model()->playlist())
         setWindowModified(true);
+}
+
+void MainWindow::updateMarkers()
+{
+    if (m_playlistDock->model()->playlist()) {
+        QList<int> markers;
+        int n = m_playlistDock->model()->playlist()->count();
+        for (int i = 1; i < n; i++)
+            markers.append(m_playlistDock->model()->playlist()->clip_start(i));
+        m_player->setMarkers(markers);
+    }
 }

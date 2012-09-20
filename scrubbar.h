@@ -43,6 +43,10 @@ public:
     int position() const;
     void setInPoint(int in);
     void setOutPoint(int out);
+    void setMarkers(const QList<int>&);
+    QList<int> markers() const {
+        return m_markers;
+    }
 
 signals:
     void seeked(int);
@@ -69,6 +73,7 @@ private:
     QPixmap m_pixmap;
     int m_timecodeWidth;
     int m_secondsPerTick;
+    QList<int> m_markers;
 
     void updatePixmap();
 };

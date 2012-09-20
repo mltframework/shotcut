@@ -93,6 +93,7 @@ private slots:
     void onPlaylistClosed();
     void onPlaylistModified();
     void onCutModified();
+    void updateMarkers();
 };
 
 #define MAIN MainWindow::singleton()

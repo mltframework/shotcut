@@ -461,6 +461,11 @@ void Player::setOut(unsigned pos)
     m_scrubber->setOutPoint(pos);
 }
 
+void Player::setMarkers(const QList<int> &markers)
+{
+    m_scrubber->setMarkers(markers);
+}
+
 void Player::resizeEvent(QResizeEvent*)
 {
     MLT.onWindowResize();
@@ -593,7 +598,17 @@ void Player::onOutChanged(int out)
 void Player::on_actionSkipNext_triggered()
 {
     int pos = position();
-    if (pos < MLT.producer()->get_in())
+    if (m_previousIn == -1 && m_previousOut == -1) {
+        foreach (int x, m_scrubber->markers()) {
+            if (x > pos) {
+                MLT.seek(x);
+                emit showStatusMessage(ui->actionSkipNext->toolTip());
+                return;
+            }
+        }
+        MLT.seek(MLT.producer()->get_length() - 1);
+    }
+    else if (pos < MLT.producer()->get_in())
         MLT.seek(MLT.producer()->get_in());
     else if (pos >= MLT.producer()->get_out())
         MLT.seek(MLT.producer()->get_length() - 1);
@@ -605,7 +620,19 @@ void Player::on_actionSkipNext_triggered()
 void Player::on_actionSkipPrevious_triggered()
 {
     int pos = position();
-    if (pos > MLT.producer()->get_out())
+    if (m_previousIn == -1 && m_previousOut == -1) {
+        QList<int> markers = m_scrubber->markers();
+        int n = markers.count();
+        while (n--) {
+            if (markers[n] < pos) {
+                MLT.seek(markers[n]);
+                emit showStatusMessage(ui->actionSkipPrevious->toolTip());
+                return;
+            }
+        }
+        MLT.seek(0);
+    }
+    else if (pos > MLT.producer()->get_out())
         MLT.seek(MLT.producer()->get_out());
     else if (pos <= MLT.producer()->get_in())
         MLT.seek(0);

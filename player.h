@@ -43,6 +43,7 @@ public:
 
     void setIn(unsigned);
     void setOut(unsigned);
+    void setMarkers(const QList<int>&);
     unsigned position() const {
         return m_position;
     }
