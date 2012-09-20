@@ -21,6 +21,9 @@
 #include <QtGui>
 
 static const int margin = 14;
+#ifndef CLAMP
+#define CLAMP(x, min, max) (((x) < (min))? (min) : ((x) > (max))? (max) : (x))
+#endif
 
 ScrubBar::ScrubBar(QWidget *parent)
     : QWidget(parent)
@@ -94,7 +97,7 @@ void ScrubBar::mousePressEvent(QMouseEvent * event)
     int in = m_in * m_scale;
     int out = m_out * m_scale;
     int head = m_head * m_scale;
-    int pos = x / m_scale;
+    int pos = CLAMP(x / m_scale, 0, m_max);
 
     if (m_in > -1 && m_out > -1) {
         if (x >= in - 12 && x <= in + 6) {
@@ -127,10 +130,7 @@ void ScrubBar::mouseReleaseEvent(QMouseEvent * event)
 void ScrubBar::mouseMoveEvent(QMouseEvent * event)
 {
     int x = event->x() - margin;
-    int pos = x / m_scale;
-
-    // clamp
-    pos = (pos < 0)? 0 : (pos > m_max)? m_max : pos;
+    int pos = CLAMP(x / m_scale, 0, m_max);
 
     if (event->buttons() & Qt::LeftButton) {
         if (m_activeControl == CONTROL_IN)
