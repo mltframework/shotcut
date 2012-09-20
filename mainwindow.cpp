@@ -156,14 +156,17 @@ MainWindow::MainWindow()
 #if defined(Q_WS_MAC) || defined(Q_WS_WIN)
     Mlt::GLWidget* videoWidget = (Mlt::GLWidget*) &(MLT);
     connect(videoWidget, SIGNAL(dragStarted()), m_playlistDock, SLOT(onPlayerDragStarted()));
+    connect(videoWidget, SIGNAL(seekTo(int)), m_player, SLOT(seek(int)));
 #else
     if (m_settings.value("player/opengl", true).toBool()) {
         Mlt::GLWidget* videoWidget = (Mlt::GLWidget*) &(MLT);
         connect(videoWidget, SIGNAL(dragStarted()), m_playlistDock, SLOT(onPlayerDragStarted()));
+        connect(videoWidget, SIGNAL(seekTo(int)), m_player, SLOT(seek(int)));
     }
     else {
         Mlt::SDLWidget* videoWidget = (Mlt::SDLWidget*) &(MLT);
         connect(videoWidget, SIGNAL(dragStarted()), m_playlistDock, SLOT(onPlayerDragStarted()));
+        connect(videoWidget, SIGNAL(seekTo(int)), m_player, SLOT(seek(int)));
     }
 #endif
 

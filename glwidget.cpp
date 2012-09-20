@@ -53,6 +53,7 @@ GLWidget::GLWidget(QWidget *parent)
     m_texture[0] = m_texture[1] = m_texture[2] = 0;
     setAttribute(Qt::WA_PaintOnScreen);
     setAttribute(Qt::WA_OpaquePaintEvent);
+    setMouseTracking(true);
 }
 
 GLWidget::~GLWidget()
@@ -178,6 +179,10 @@ void GLWidget::mousePressEvent(QMouseEvent* event)
 
 void GLWidget::mouseMoveEvent(QMouseEvent* event)
 {
+    if (event->modifiers() == Qt::ShiftModifier && m_producer) {
+        emit seekTo(m_producer->get_length() * event->x() / width());
+        return;
+    }
     if (!(event->buttons() & Qt::LeftButton))
         return;
     if ((event->pos() - m_dragStart).manhattanLength() < QApplication::startDragDistance())

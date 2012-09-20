@@ -40,6 +40,7 @@ signals:
      */
     void frameReceived(Mlt::QFrame);
     void dragStarted();
+    void seekTo(int x);
 
 public slots:
 

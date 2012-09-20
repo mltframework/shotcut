@@ -50,6 +50,7 @@ signals:
      */
     void frameReceived(Mlt::QFrame frame);
     void dragStarted();
+    void seekTo(int x);
 
 private:
     int x, y, w, h;

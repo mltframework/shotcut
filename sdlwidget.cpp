@@ -28,6 +28,7 @@ SDLWidget::SDLWidget(QWidget *parent)
 {
     // Required for SDL embeddding
     parent->setAttribute(Qt::WA_NativeWindow);
+    setMouseTracking(true);
 }
 
 int SDLWidget::open(Mlt::Producer* producer, bool isMulti)
@@ -109,6 +110,10 @@ void SDLWidget::mousePressEvent(QMouseEvent* event)
 
 void SDLWidget::mouseMoveEvent(QMouseEvent* event)
 {
+    if (event->modifiers() == Qt::ShiftModifier && m_producer) {
+        emit seekTo(m_producer->get_length() * event->x() / width());
+        return;
+    }
     if (!(event->buttons() & Qt::LeftButton))
         return;
     if ((event->pos() - m_dragStart).manhattanLength() < QApplication::startDragDistance())
