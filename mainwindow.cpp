@@ -472,7 +472,13 @@ void MainWindow::onProducerOpened()
         w = new PlasmaWidget(this);
     else if (service == "frei0r.test_pat_B")
         w = new ColorBarsWidget(this);
-    else if (resource == "<playlist>") {
+    else if (resource == "<playlist>" ||
+             MLT.producer()->get_int("_original_type") == playlist_type) {
+        // In some versions of MLT, the resource property is the XML filename,
+        // but the Mlt::Producer(Service&) constructor will fail unless it detects
+        // the type as playlist, and mlt_service_identify() needs the resource
+        // property to say "<playlist>" to identify it as playlist type.
+        MLT.producer()->set("resource", "<playlist>");
         m_playlistDock->model()->load();
         if (m_playlistDock->model()->playlist()) {
             m_player->setIn(-1);
