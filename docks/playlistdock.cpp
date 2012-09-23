@@ -34,10 +34,11 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     ui->tableView->setDropIndicatorShown(true);
     ui->tableView->setDragDropOverwriteMode(false);
     ui->tableView->setAcceptDrops(true);
+    ui->tableView->resizeColumnToContents(0);
     connect(ui->actionRemove, SIGNAL(triggered()), this, SLOT(on_removeButton_clicked()));
     connect(&m_model, SIGNAL(cleared()), this, SLOT(onPlaylistCleared()));
     connect(&m_model, SIGNAL(created()), this, SLOT(onPlaylistCreated()));
-    connect(&m_model, SIGNAL(loaded()), this, SLOT(onPlaylistCreated()));
+    connect(&m_model, SIGNAL(loaded()), this, SLOT(onPlaylistLoaded()));
     connect(&m_model, SIGNAL(modified()), this, SLOT(onPlaylistCreated()));
     connect(&m_model, SIGNAL(dropped(const QMimeData*,int)), this, SLOT(onDropped(const QMimeData*,int)));
 }
@@ -226,6 +227,12 @@ void PlaylistDock::onPlaylistCreated()
     ui->removeButton->setEnabled(true);
     ui->menuButton->setEnabled(true);
     ui->stackedWidget->setCurrentIndex(1);
+}
+
+void PlaylistDock::onPlaylistLoaded()
+{
+    onPlaylistCreated();
+    ui->tableView->resizeColumnsToContents();
 }
 
 void PlaylistDock::onPlaylistCleared()

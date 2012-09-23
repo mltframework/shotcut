@@ -49,7 +49,10 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
         const Mlt::ClipInfo* info = &m_clipInfo;
         m_playlist->clip_info(index.row(),
                               const_cast<Mlt::ClipInfo*>(info));
-        if (index.column() == COLUMN_RESOURCE) {
+        switch (index.column()) {
+        case COLUMN_INDEX:
+            return QString::number(index.row() + 1);
+        case COLUMN_RESOURCE: {
             QString result = QString::fromUtf8(m_clipInfo.resource);
             if (result == "<producer>" && m_clipInfo.producer
                     && m_clipInfo.producer->is_valid() && m_clipInfo.producer->get("mlt_service"))
@@ -58,6 +61,25 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
             if (role == Qt::DisplayRole && result.startsWith('/'))
                 result = QFileInfo(result).fileName();
             return result;
+        }
+        case COLUMN_IN:
+            if (m_clipInfo.producer && m_clipInfo.producer->is_valid())
+                return m_clipInfo.producer->get_time("in");
+            else
+                return "";
+        case COLUMN_DURATION:
+            if (m_clipInfo.producer && m_clipInfo.producer->is_valid()) {
+                m_clipInfo.producer->set("_shotcut_time", m_clipInfo.frame_count);
+                return m_clipInfo.producer->get_time("_shotcut_time");
+            } else
+                return "";
+        case COLUMN_START:
+            if (m_clipInfo.producer && m_clipInfo.producer->is_valid()) {
+                m_clipInfo.producer->set("_shotcut_time", m_clipInfo.start);
+                return m_clipInfo.producer->get_time("_shotcut_time");
+            }
+            else
+                return "";
         }
     }
     default:
@@ -70,8 +92,16 @@ QVariant PlaylistModel::headerData(int section, Qt::Orientation orientation, int
     if (role == Qt::DisplayRole && orientation == Qt::Horizontal)
     {
         switch (section) {
+        case COLUMN_INDEX:
+            return tr("#");
         case COLUMN_RESOURCE:
-            return QString(tr("Clip"));
+            return tr("Clip");
+        case COLUMN_IN:
+            return tr("In");
+        case COLUMN_DURATION:
+            return tr("Duration");
+        case COLUMN_START:
+            return tr("Start");
         default:
             break;
         }
@@ -196,6 +226,7 @@ void PlaylistModel::update(int row, int in, int out)
 {
     if (!m_playlist) return;
     m_playlist->resize_clip(row, in, out);
+    emit dataChanged(createIndex(row, 0), createIndex(rowCount() - 1, COLUMN_COUNT - 1));
     emit modified();
 }
 

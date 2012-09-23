@@ -71,6 +71,8 @@ private slots:
 
     void onPlaylistCreated();
 
+    void onPlaylistLoaded();
+
     void onPlaylistCleared();
 
     void onDropped(const QMimeData *data, int row);

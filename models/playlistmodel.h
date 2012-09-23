@@ -23,13 +23,18 @@
 #include <QtCore/qmimedata.h>
 #include <QtCore/QStringList>
 #include "mltcontroller.h"
+#include "MltPlaylist.h"
 
 class PlaylistModel : public QAbstractTableModel
 {
     Q_OBJECT
 public:
     enum Columns {
-        COLUMN_RESOURCE = 0,
+        COLUMN_INDEX = 0,
+        COLUMN_RESOURCE,
+        COLUMN_IN,
+        COLUMN_DURATION,
+        COLUMN_START,
         COLUMN_COUNT
     };
     explicit PlaylistModel(QObject *parent = 0);
