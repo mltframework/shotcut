@@ -57,21 +57,27 @@ EncodeDock::EncodeDock(QWidget *parent) :
     c.set("vcodec", "list");
     c.start();
     c.stop();
+
     Mlt::Properties* p = new Mlt::Properties(c.get_data("f"));
     ui->formatCombo->addItem(tr("Automatic from extension"));
     for (int i = 0; i < p->count(); i++)
         ui->formatCombo->addItem(p->get(i));
     delete p;
+    ui->formatCombo->model()->sort(0);
+
     p = new Mlt::Properties(c.get_data("acodec"));
     ui->audioCodecCombo->addItem(tr("Default for format"));
     for (int i = 0; i < p->count(); i++)
         ui->audioCodecCombo->addItem(p->get(i));
     delete p;
+    ui->audioCodecCombo->model()->sort(0);
+
     p = new Mlt::Properties(c.get_data("vcodec"));
     ui->videoCodecCombo->addItem(tr("Default for format"));
     for (int i = 0; i < p->count(); i++)
         ui->videoCodecCombo->addItem(p->get(i));
     delete p;
+    ui->videoCodecCombo->model()->sort(0);
 }
 
 EncodeDock::~EncodeDock()
