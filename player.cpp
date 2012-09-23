@@ -196,7 +196,7 @@ public:
         const char* name = widget->objectName().toUtf8().constData();
         actionPlay->setText(QApplication::translate(name, "Play", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
-        actionPlay->setToolTip(QApplication::translate(name, "Start playback (K)", 0, QApplication::UnicodeUTF8));
+        actionPlay->setToolTip(QApplication::translate(name, "Start playback (L)", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
         actionPlay->setShortcut(QApplication::translate(name, "Space", 0, QApplication::UnicodeUTF8));
         actionPause->setText(QApplication::translate(name, "Pause", 0, QApplication::UnicodeUTF8));
@@ -486,7 +486,7 @@ void Player::pause()
     MLT.pause();
     ui->actionPlay->setIcon(m_playIcon);
     ui->actionPlay->setText(tr("Play"));
-    ui->actionPlay->setToolTip(tr("Start playback (K)"));
+    ui->actionPlay->setToolTip(tr("Start playback (L)"));
 //    forceResize();
 }
 
@@ -495,7 +495,7 @@ void Player::stop()
     MLT.stop();
     ui->actionPlay->setIcon(m_playIcon);
     ui->actionPlay->setText(tr("Play"));
-    ui->actionPlay->setToolTip(tr("Start playback (K)"));
+    ui->actionPlay->setToolTip(tr("Start playback (L)"));
 }
 
 void Player::togglePlayPaused()
