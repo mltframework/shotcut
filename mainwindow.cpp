@@ -635,7 +635,7 @@ void MainWindow::updateMarkers()
     if (m_playlistDock->model()->playlist()) {
         QList<int> markers;
         int n = m_playlistDock->model()->playlist()->count();
-        for (int i = 1; i < n; i++)
+        for (int i = 0; i < n; i++)
             markers.append(m_playlistDock->model()->playlist()->clip_start(i));
         m_player->setMarkers(markers);
     }

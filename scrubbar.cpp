@@ -223,6 +223,8 @@ void ScrubBar::updatePixmap()
     QPainter p(&m_pixmap);
     int y = height() / 2;
     p.setFont(font());
+    int markerWidth = fontMetrics().width("0") * 1.5;
+    int markerHeight = fontMetrics().ascent() + 2;
 
     // background color
     p.fillRect(margin, 0, width() - 2 * margin, height(), palette().base().color());
@@ -241,11 +243,6 @@ void ScrubBar::updatePixmap()
             p.drawLine(x, height() - 1 - y, x, height() - 1);
     }
 
-    // draw markers
-    foreach (int x, m_markers) {
-        p.fillRect(margin + x * m_scale - 1, 0, 2, height(), palette().highlight().color());
-    }
-
     // draw timecode
     if (m_interval > m_timecodeWidth) {
         int x = margin;
@@ -253,6 +250,15 @@ void ScrubBar::updatePixmap()
             MLT.producer()->set("_shotcut_scrubbar", i * m_fps * m_secondsPerTick);
             p.drawText(x + 2, height() - 1, MLT.producer()->get_time("_shotcut_scrubbar"));
         }
+    }
+
+    // draw markers
+    int i = 1;
+    foreach (int pos, m_markers) {
+        int x = margin + pos * m_scale;
+        p.fillRect(x - 1, 0, 2, height(), palette().highlight().color());
+        p.fillRect(x - markerWidth/2, 0, markerWidth, markerHeight, palette().highlight().color());
+        p.drawText(x - markerWidth/3, markerHeight - 2, QString::number(i++));
     }
 
     p.end();
