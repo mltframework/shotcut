@@ -541,9 +541,10 @@ void EncodeDock::on_encodeButton_clicked()
         MLT.pause();
         settings.setValue(settingKey, fi.path());
         if (!m_extension.isEmpty()) {
-            if (fi.suffix().isEmpty())
+            if (fi.suffix().isEmpty()) {
                 outputFilename += '.';
                 outputFilename += m_extension;
+            }
         }
         if (seekable)
             // Batch encode
