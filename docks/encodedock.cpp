@@ -471,6 +471,11 @@ void EncodeDock::on_presetsTree_currentItemChanged(QTreeWidgetItem *current, QTr
                     ui->videoRateControlCombo->setCurrentIndex(RateControlConstant);
                     ui->videoBufferSizeSpinner->setValue(getBufferSize(preset, "vbufsize"));
                 }
+                else if (name == "threads") {
+                    // TODO: should we save the thread count and restore it if preset is not 1?
+                    if (preset->get_int("threads") == 1)
+                        ui->videoCodecThreadsSpinner->setValue(1);
+                }
                 else if (name == "meta.preset.extension")
                     m_extension = preset->get("meta.preset.extension");
                 else if (name != "an" && name != "vn" && name != "threads"
