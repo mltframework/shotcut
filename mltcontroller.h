@@ -55,6 +55,7 @@ public:
     virtual int open(const char* url);
     virtual void close();
 
+    void closeConsumer();
     void play(double speed = 1.0);
     void pause();
     void stop();

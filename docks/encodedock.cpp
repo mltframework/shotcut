@@ -57,21 +57,27 @@ EncodeDock::EncodeDock(QWidget *parent) :
     c.set("vcodec", "list");
     c.start();
     c.stop();
+
     Mlt::Properties* p = new Mlt::Properties(c.get_data("f"));
     ui->formatCombo->addItem(tr("Automatic from extension"));
     for (int i = 0; i < p->count(); i++)
         ui->formatCombo->addItem(p->get(i));
     delete p;
+    ui->formatCombo->model()->sort(0);
+
     p = new Mlt::Properties(c.get_data("acodec"));
     ui->audioCodecCombo->addItem(tr("Default for format"));
     for (int i = 0; i < p->count(); i++)
         ui->audioCodecCombo->addItem(p->get(i));
     delete p;
+    ui->audioCodecCombo->model()->sort(0);
+
     p = new Mlt::Properties(c.get_data("vcodec"));
     ui->videoCodecCombo->addItem(tr("Default for format"));
     for (int i = 0; i < p->count(); i++)
         ui->videoCodecCombo->addItem(p->get(i));
     delete p;
+    ui->videoCodecCombo->model()->sort(0);
 }
 
 EncodeDock::~EncodeDock()
@@ -318,6 +324,7 @@ void EncodeDock::encode(const QString& target)
     bool isMulti = true;
     Mlt::Producer* producer = new Mlt::Producer(MLT.producer());
     double volume = MLT.volume();
+    MLT.closeConsumer();
     MLT.close();
     producer->seek(0);
     MLT.open(producer, isMulti);
@@ -470,6 +477,11 @@ void EncodeDock::on_presetsTree_currentItemChanged(QTreeWidgetItem *current, QTr
                     ui->videoRateControlCombo->setCurrentIndex(RateControlConstant);
                     ui->videoBufferSizeSpinner->setValue(getBufferSize(preset, "vbufsize"));
                 }
+                else if (name == "threads") {
+                    // TODO: should we save the thread count and restore it if preset is not 1?
+                    if (preset->get_int("threads") == 1)
+                        ui->videoCodecThreadsSpinner->setValue(1);
+                }
                 else if (name == "meta.preset.extension")
                     m_extension = preset->get("meta.preset.extension");
                 else if (name != "an" && name != "vn" && name != "threads"
@@ -511,7 +523,9 @@ void EncodeDock::on_encodeButton_clicked()
         return;
     if (ui->encodeButton->text() == tr("Stop Capture")) {
         bool isMulti = false;
+        MLT.closeConsumer();
         MLT.open(MLT.producer(), isMulti);
+        MLT.play();
         ui->encodeButton->setText(tr("Capture File"));
         emit captureStateChanged(false);
         ui->streamButton->setDisabled(false);
@@ -533,9 +547,10 @@ void EncodeDock::on_encodeButton_clicked()
         MLT.pause();
         settings.setValue(settingKey, fi.path());
         if (!m_extension.isEmpty()) {
-            if (fi.suffix().isEmpty())
+            if (fi.suffix().isEmpty()) {
                 outputFilename += '.';
                 outputFilename += m_extension;
+            }
         }
         if (seekable)
             // Batch encode
@@ -591,8 +606,12 @@ void EncodeDock::on_streamButton_clicked()
     }
     if (ui->streamButton->text() == tr("Stop Stream")) {
         bool isMulti = false;
+        MLT.closeConsumer();
         MLT.open(MLT.producer(), isMulti);
+        MLT.play();
         ui->streamButton->setText(tr("Stream"));
+        emit captureStateChanged(false);
+        emit ui->encodeButton->setDisabled(false);
         return;
     }
     QString url = QInputDialog::getText(this, tr("Stream"),
