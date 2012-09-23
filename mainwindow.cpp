@@ -364,7 +364,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         m_player->seek(m_player->position() + 10);
         break;
     case Qt::Key_K:
-        m_player->togglePlayPaused();
+        m_player->pause();
         break;
     case Qt::Key_I:
         m_player->setIn(m_player->position());
