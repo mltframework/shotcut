@@ -96,6 +96,7 @@ int SDLWidget::reconfigure(bool isMulti)
     else {
         // Cleanup on error
         error = 2;
+        Controller::closeConsumer();
         Controller::close();
     }
     return error;

@@ -318,6 +318,7 @@ void EncodeDock::encode(const QString& target)
     bool isMulti = true;
     Mlt::Producer* producer = new Mlt::Producer(MLT.producer());
     double volume = MLT.volume();
+    MLT.closeConsumer();
     MLT.close();
     producer->seek(0);
     MLT.open(producer, isMulti);
@@ -511,7 +512,9 @@ void EncodeDock::on_encodeButton_clicked()
         return;
     if (ui->encodeButton->text() == tr("Stop Capture")) {
         bool isMulti = false;
+        MLT.closeConsumer();
         MLT.open(MLT.producer(), isMulti);
+        MLT.play();
         ui->encodeButton->setText(tr("Capture File"));
         emit captureStateChanged(false);
         ui->streamButton->setDisabled(false);
@@ -591,8 +594,12 @@ void EncodeDock::on_streamButton_clicked()
     }
     if (ui->streamButton->text() == tr("Stop Stream")) {
         bool isMulti = false;
+        MLT.closeConsumer();
         MLT.open(MLT.producer(), isMulti);
+        MLT.play();
         ui->streamButton->setText(tr("Stream"));
+        emit captureStateChanged(false);
+        emit ui->encodeButton->setDisabled(false);
         return;
     }
     QString url = QInputDialog::getText(this, tr("Stream"),

@@ -102,12 +102,7 @@ Controller& Controller::singleton(QWidget* parent)
 Controller::~Controller()
 {
     close();
-    delete m_consumer;
-    m_consumer = 0;
-    delete m_volumeFilter;
-    m_volumeFilter = 0;
-    delete m_jackFilter;
-    m_jackFilter = 0;
+    closeConsumer();
     delete m_profile;
     // TODO: this is commented out because it causes crash on closing queued QFrames.
 //    Mlt::Factory::close();
@@ -160,11 +155,23 @@ int Controller::open(const char* url)
 
 void Controller::close()
 {
-    if (m_consumer)
+    if (m_consumer && !m_consumer->is_stopped())
         m_consumer->stop();
     delete m_producer;
     m_producer = 0;
     m_url.clear();
+}
+
+void Controller::closeConsumer()
+{
+    if (m_consumer && !m_consumer->is_stopped())
+        m_consumer->stop();
+    delete m_consumer;
+    m_consumer = 0;
+    delete m_volumeFilter;
+    m_volumeFilter = 0;
+    delete m_jackFilter;
+    m_jackFilter = 0;
 }
 
 void Controller::play(double speed)

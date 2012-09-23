@@ -318,8 +318,8 @@ int GLWidget::reconfigure(bool isMulti)
     else {
         // Cleanup on error
         error = 2;
-        delete m_consumer;
-        m_consumer = 0;
+        Controller::closeConsumer();
+        Controller::close();
     }
     return error;
 }
