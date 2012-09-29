@@ -281,6 +281,7 @@ void MainWindow::seekPlaylist(int start)
     // since we do not emit producerOpened, these components need updating
     m_player->onProducerOpened();
     m_encodeDock->onProducerOpened();
+    updateMarkers();
     if (speed == 0)
         m_player->pause();
     else

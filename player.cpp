@@ -532,6 +532,7 @@ void Player::onProducerOpened()
     MLT.producer()->set("ignore_points", 1);
     m_scrubber->setFramerate(MLT.profile().fps());
     m_scrubber->setScale(len);
+    m_scrubber->setMarkers(QList<int>());
     if (seekable) {
         m_durationLabel->setText(MLT.producer()->get_length_time());
         m_previousIn = MLT.producer()->get_in();

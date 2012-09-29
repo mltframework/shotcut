@@ -21,6 +21,7 @@
 #include <QtGui>
 
 static const int margin = 14;
+static const int selectionSize = 14;
 #ifndef CLAMP
 #define CLAMP(x, min, max) (((x) < (min))? (min) : ((x) > (max))? (max) : (x))
 #endif
@@ -38,7 +39,7 @@ ScrubBar::ScrubBar(QWidget *parent)
     setMouseTracking(true);
     setFont(QFont(font().family(), font().pointSize() - (font().pointSize() > 10? 2 : 1)));
     m_timecodeWidth = fontMetrics().width("00:00:00:00");
-    setMinimumHeight(fontMetrics().ascent() * 3/2);
+    setMinimumHeight(fontMetrics().height() + selectionSize);
 }
 
 void ScrubBar::setScale(int maximum)
@@ -178,7 +179,7 @@ void ScrubBar::paintEvent(QPaintEvent *e)
 
     // draw pointer
     QPolygon pa(3);
-    const int x = height() / 2 - 1;
+    const int x = selectionSize / 2 - 1;
     int head = margin + m_cursorPosition;
     pa.setPoints(3, head - x, 0, head + x, 0, head, x);
     p.setBrush(palette().text().color());
@@ -191,23 +192,23 @@ void ScrubBar::paintEvent(QPaintEvent *e)
     // draw in point
     if (m_in > -1) {
         const int in = margin + m_in * m_scale;
-        pa.setPoints(3, in - 7, 0, in - 7, height() - 1, in - 1, height() / 2);
+        pa.setPoints(3, in - selectionSize / 2, 0, in - selectionSize / 2, selectionSize - 1, in - 1, selectionSize / 2);
         p.setBrush(palette().text().color());
         p.setPen(Qt::NoPen);
         p.drawPolygon(pa);
         p.setPen(pen);
-        p.drawLine(in, 0, in, height() - 1);
+        p.drawLine(in, 0, in, selectionSize - 1);
     }
 
     // draw out point
     if (m_out > -1) {
         const int out = margin + m_out * m_scale;
-        pa.setPoints(3, out + 7, 0, out + 7, height() - 1, out, height() / 2);
+        pa.setPoints(3, out + selectionSize / 2, 0, out + selectionSize / 2, selectionSize - 1, out, selectionSize / 2);
         p.setBrush(palette().text().color());
         p.setPen(Qt::NoPen);
         p.drawPolygon(pa);
         p.setPen(pen);
-        p.drawLine(out, 0, out, height() - 1);
+        p.drawLine(out, 0, out, selectionSize - 1);
     }
 }
 
@@ -221,9 +222,7 @@ void ScrubBar::updatePixmap()
     m_pixmap = QPixmap(width(), height());
     m_pixmap.fill(palette().window().color());
     QPainter p(&m_pixmap);
-    int y = height() / 2;
     p.setFont(font());
-    int markerWidth = fontMetrics().width("0") * 1.5;
     int markerHeight = fontMetrics().ascent() + 2;
 
     // background color
@@ -233,14 +232,21 @@ void ScrubBar::updatePixmap()
     if (m_in > -1 && m_out > m_in) {
         const int in = m_in * m_scale;
         const int out = m_out * m_scale;
-        p.fillRect(margin + in, 0, out - in, height(), palette().highlight().color());
+        p.fillRect(margin + in, 0, out - in, selectionSize, palette().highlight().color());
     }
 
     // draw time ticks
     p.setPen(palette().text().color());
     if (m_interval > 2) {
-        for (int x = margin; x < width() - margin; x += m_interval)
-            p.drawLine(x, height() - 1 - y, x, height() - 1);
+        for (int x = margin; x < width() - margin; x += m_interval) {
+            p.drawLine(x, selectionSize, x, height() - 1);
+            if (x + m_interval / 4 < width() - margin)
+                p.drawLine(x + m_interval / 4,     height() - 3, x + m_interval / 4,     height() - 1);
+            if (x + m_interval / 2 < width() - margin)
+                p.drawLine(x + m_interval / 2,     height() - 7, x + m_interval / 2,     height() - 1);
+            if (x + m_interval * 3 / 4 < width() - margin)
+                p.drawLine(x + m_interval * 3 / 4, height() - 3, x + m_interval * 3 / 4, height() - 1);
+        }
     }
 
     // draw timecode
@@ -248,7 +254,7 @@ void ScrubBar::updatePixmap()
         int x = margin;
         for (int i = 0; x < width() - margin - m_timecodeWidth; i++, x += m_interval) {
             MLT.producer()->set("_shotcut_scrubbar", i * m_fps * m_secondsPerTick);
-            p.drawText(x + 2, height() - 1, MLT.producer()->get_time("_shotcut_scrubbar"));
+            p.drawText(x + 2, 14 + fontMetrics().ascent() - 2, MLT.producer()->get_time("_shotcut_scrubbar"));
         }
     }
 
@@ -256,9 +262,11 @@ void ScrubBar::updatePixmap()
     int i = 1;
     foreach (int pos, m_markers) {
         int x = margin + pos * m_scale;
-        p.fillRect(x - 1, 0, 2, height(), palette().highlight().color());
+        QString s = QString::number(i++);
+        int markerWidth = fontMetrics().width(s) * 1.5;
+        p.fillRect(x, 0, 1, height(), palette().highlight().color());
         p.fillRect(x - markerWidth/2, 0, markerWidth, markerHeight, palette().highlight().color());
-        p.drawText(x - markerWidth/3, markerHeight - 2, QString::number(i++));
+        p.drawText(x - markerWidth/3, markerHeight - 2, s);
     }
 
     p.end();
