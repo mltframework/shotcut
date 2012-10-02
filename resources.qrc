@@ -19,5 +19,7 @@
         <file>icons/view-form.png</file>
         <file>icons/document-open-recent.png</file>
         <file>icons/view-media-playlist.png</file>
+        <file>icons/player-volume.png</file>
+        <file>icons/media-playback-stop.png</file>
     </qresource>
 </RCC>

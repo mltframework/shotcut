@@ -155,7 +155,7 @@ double AudioSignal::valueToPixel(double in)
 
 void AudioSignal::paintEvent(QPaintEvent* /*e*/)
 {
-    if (!m_aMonitoringEnabled->isChecked()) {
+    if (!m_aMonitoringEnabled->isChecked() || !isVisible()) {
         return;
     }
     QPainter p(this);
@@ -213,7 +213,7 @@ void AudioSignal::paintEvent(QPaintEvent* /*e*/)
         for (int l=0;l<dbscale.size();l++){
             if (!horiz){
                 double xf = IEC_Scale(dbscale.at(l)) * h;
-                p.drawText(0, height() - xf + 2, QString().sprintf("%d",dbscale.at(l)));
+                p.drawText(0, height() - xf + 2, QString().sprintf("%s%d",dbscale.at(l)>=0?"  ":"",dbscale.at(l)));
             }else{
                 double xf = IEC_Scale(dbscale.at(l)) * (double) width();
                 p.drawText(xf*40/42-10,height()-2, QString().sprintf("%d",dbscale.at(l)));

@@ -278,10 +278,10 @@ Player::Player(QWidget *parent)
     readSettings();
 
     // Create a layout.
-    QVBoxLayout *layout = new QVBoxLayout(this);
-    layout->setObjectName("playerLayout");
-    layout->setMargin(0);
-    layout->setSpacing(0);
+    QVBoxLayout *vlayout = new QVBoxLayout(this);
+    vlayout->setObjectName("playerLayout");
+    vlayout->setMargin(0);
+    vlayout->setSpacing(4);
 
     // Create MLT video widget.
     MLT.videoWidget()->setProperty("mlt_service", ui->externalGroup->checkedAction()->data());
@@ -315,11 +315,12 @@ Player::Player(QWidget *parent)
 
     // Add the volume and signal level meter
     QWidget* tmp = new QWidget(this);
+    vlayout->addWidget(tmp, 10);
+    vlayout->addStretch();
     QHBoxLayout *hlayout = new QHBoxLayout(tmp);
-    hlayout->setSpacing(0);
+    hlayout->setSpacing(4);
     hlayout->setContentsMargins(0, 0, 0, 0);
     hlayout->addWidget(MLT.videoWidget(), 10);
-    hlayout->addSpacing(4);
     QVBoxLayout *volumeLayoutV = new QVBoxLayout;
     volumeLayoutV->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding));
     QHBoxLayout *volumeLayoutH = new QHBoxLayout;
@@ -340,22 +341,37 @@ Player::Player(QWidget *parent)
     connect(this, SIGNAL(audioSamplesSignal(const QVector<int16_t>&, const int&, const int&, const int&)),
                          m_audioSignal, SLOT(slotReceiveAudio(const QVector<int16_t>&, const int&, const int&, const int&)));
 
-    layout->addWidget(tmp, 10);
-    layout->addStretch();
+    QPushButton* muteButton = new QPushButton(this);
+    muteButton->setObjectName(QString::fromUtf8("muteButton"));
+    muteButton->setText(tr("Mute"));
+    muteButton->setToolTip(tr("Silence the audio"));
+    muteButton->setCheckable(true);
+    muteButton->setChecked(m_settings.value("player/muted", false).toBool());
+    volumeLayoutV->addWidget(muteButton);
+    m_savedVolume = MLT.volume();
+    connect(muteButton, SIGNAL(toggled(bool)), this, SLOT(onMuteButtonToggled(bool)));
+
+    QPushButton* volumeButton = new QPushButton(this);
+    volumeButton->setObjectName(QString::fromUtf8("volumeButton"));
+    volumeButton->setToolTip(tr("Show or hide the volume control"));
+    volumeButton->setIcon(QIcon::fromTheme("player-volume", QIcon(":/icons/icons/player-volume.png")));
+    volumeButton->setCheckable(true);
+    volumeButton->setChecked(m_settings.value("player/volume-visible", false).toBool());
+    onVolumeButtonToggled(volumeButton->isChecked());
+    volumeLayoutV->addWidget(volumeButton);
+    connect(volumeButton, SIGNAL(toggled(bool)), this, SLOT(onVolumeButtonToggled(bool)));
 
     // Add the scrub bar.
     m_scrubber = new ScrubBar(this);
     m_scrubber->setObjectName("scrubBar");
-    m_scrubber->hide();
-    layout->addSpacing(4);
-    layout->addWidget(m_scrubber);
-    layout->addSpacing(4);
+    m_scrubber->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
+    vlayout->addWidget(m_scrubber);
 
     // Add toolbar for transport controls.
     QToolBar* toolbar = new QToolBar(tr("Transport Controls"), this);
     int s = style()->pixelMetric(QStyle::PM_SmallIconSize);
     toolbar->setIconSize(QSize(s, s));
-    toolbar->setContentsMargins(0, 0, 5, 0);
+    toolbar->setContentsMargins(0, 0, 0, 0);
     QWidget *spacer = new QWidget(this);
     spacer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
     m_positionSpinner = new TimeSpinBox(this);
@@ -363,12 +379,23 @@ Player::Player(QWidget *parent)
     m_positionSpinner->setEnabled(false);
     m_positionSpinner->setKeyboardTracking(false);
     m_durationLabel = new QLabel(this);
-    m_durationLabel->setToolTip(tr("Duration"));
-    m_durationLabel->setText("0.000");
-    m_durationLabel->setAlignment(Qt::AlignRight);
-    m_durationLabel->setContentsMargins(0, 5, 0, 0);
+    m_durationLabel->setToolTip(tr("Total Duration"));
+    m_durationLabel->setText("/ 00:00:00:00");
+//    m_durationLabel->setContentsMargins(0, 5, 0, 0);
     m_durationLabel->setFixedWidth(m_positionSpinner->width());
+    m_inPointLabel = new QLabel(this);
+    m_inPointLabel->setText("--:--:--:--");
+    m_inPointLabel->setToolTip(tr("In Point"));
+    m_inPointLabel->setAlignment(Qt::AlignRight);
+    m_inPointLabel->setContentsMargins(0, 5, 0, 0);
+    m_inPointLabel->setFixedWidth(m_inPointLabel->width());
+    m_selectedLabel = new QLabel(this);
+    m_selectedLabel->setText("--:--:--:--");
+    m_selectedLabel->setToolTip(tr("Selected Duration"));
+//    m_selectedLabel->setContentsMargins(0, 5, 0, 0);
+    m_selectedLabel->setFixedWidth(m_selectedLabel->width());
     toolbar->addWidget(m_positionSpinner);
+    toolbar->addWidget(m_durationLabel);
     toolbar->addWidget(spacer);
     toolbar->addAction(ui->actionSkipPrevious);
     toolbar->addAction(ui->actionRewind);
@@ -378,8 +405,9 @@ Player::Player(QWidget *parent)
     spacer = new QWidget(this);
     spacer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
     toolbar->addWidget(spacer);
-    toolbar->addWidget(m_durationLabel);
-    layout->addWidget(toolbar);
+    toolbar->addWidget(m_inPointLabel);
+    toolbar->addWidget(m_selectedLabel);
+    vlayout->addWidget(toolbar);
 
     connect(ui->externalGroup, SIGNAL(triggered(QAction*)), this, SLOT(onExternalTriggered(QAction*)));
     connect(ui->profileGroup, SIGNAL(triggered(QAction*)), this, SLOT(onProfileTriggered(QAction*)));
@@ -451,13 +479,11 @@ void Player::readSettings()
 
 void Player::setIn(unsigned pos)
 {
-//    onInChanged(pos);
     m_scrubber->setInPoint(pos);
 }
 
 void Player::setOut(unsigned pos)
 {
-//    onOutChanged(pos);
     m_scrubber->setOutPoint(pos);
 }
 
@@ -475,10 +501,16 @@ void Player::play(double speed)
 {
     MLT.play(speed);
     // TODO: use stop icon for live sources
-    ui->actionPlay->setIcon(m_pauseIcon);
-    ui->actionPlay->setText(tr("Pause"));
-    ui->actionPlay->setToolTip(tr("Pause playback (K)"));
-//    forceResize();
+    if (MLT.isSeekable()) {
+        ui->actionPlay->setIcon(m_pauseIcon);
+        ui->actionPlay->setText(tr("Pause"));
+        ui->actionPlay->setToolTip(tr("Pause playback (K)"));
+    }
+    else {
+        ui->actionPlay->setIcon(QIcon::fromTheme("media-playback-stop", QIcon(":/icons/icons/media-playback-stop.png")));
+        ui->actionPlay->setText(tr("Stop"));
+        ui->actionPlay->setToolTip(tr("Stop playback (K)"));
+    }
 }
 
 void Player::pause()
@@ -487,7 +519,6 @@ void Player::pause()
     ui->actionPlay->setIcon(m_playIcon);
     ui->actionPlay->setText(tr("Play"));
     ui->actionPlay->setToolTip(tr("Start playback (L)"));
-//    forceResize();
 }
 
 void Player::stop()
@@ -534,20 +565,24 @@ void Player::onProducerOpened()
     m_scrubber->setScale(len);
     m_scrubber->setMarkers(QList<int>());
     if (seekable) {
-        m_durationLabel->setText(MLT.producer()->get_length_time());
+        m_durationLabel->setText(QString(MLT.producer()->get_length_time()).prepend("/ "));
         m_previousIn = MLT.producer()->get_in();
+        m_scrubber->setEnabled(true);
         m_scrubber->setInPoint(m_previousIn);
         m_previousOut = MLT.producer()->get_out();
         m_scrubber->setOutPoint(m_previousOut);
-        m_scrubber->show();
     }
     else {
-        m_durationLabel->setText(tr("Live"));
-        m_scrubber->hide();
+        m_durationLabel->setText(tr("Live").prepend("/ "));
+        m_scrubber->setDisabled(true);
+        m_scrubber->setMarkers(QList<int>());
+        m_inPointLabel->setText("--:--:--:-- /");
+        m_selectedLabel->setText("--:--:--:--");
     }
     m_positionSpinner->setEnabled(seekable);
     on_actionJack_triggered(ui->actionJack->isChecked());
     onVolumeChanged(m_volumeSlider->value());
+    onMuteButtonToggled(m_settings.value("player/muted", false).toBool());
 
     ui->actionPlay->setEnabled(true);
     ui->actionSkipPrevious->setEnabled(seekable);
@@ -578,6 +613,24 @@ void Player::onShowFrame(Mlt::QFrame frame)
     }
 }
 
+void Player::updateSelection()
+{
+    if (MLT.producer() && MLT.producer()->get_in() > 0) {
+        m_inPointLabel->setText(QString(MLT.producer()->get_time("in")).append(" /"));
+        MLT.producer()->set("_shotcut_selected", MLT.producer()->get_playtime());
+        m_selectedLabel->setText(MLT.producer()->get_time("_shotcut_selected"));
+    } else {
+        m_inPointLabel->setText("--:--:--:-- /");
+        if (MLT.producer() && MLT.resource() != "<playlist>" &&
+                MLT.producer()->get_out() < MLT.producer()->get_length() - 1) {
+            MLT.producer()->set("_shotcut_selected", MLT.producer()->get_playtime());
+            m_selectedLabel->setText(MLT.producer()->get_time("_shotcut_selected"));
+        } else if (!MLT.producer() || MLT.producer()->get_in() == 0) {
+            m_selectedLabel->setText("--:--:--:--");
+        }
+    }
+}
+
 void Player::onInChanged(int in)
 {
     if (MLT.producer())
@@ -585,6 +638,7 @@ void Player::onInChanged(int in)
     if (in != m_previousIn)
         emit inChanged(in);
     m_previousIn = in;
+    updateSelection();
 }
 
 void Player::onOutChanged(int out)
@@ -594,6 +648,7 @@ void Player::onOutChanged(int out)
     if (out != m_previousOut)
         emit outChanged(out);
     m_previousOut = out;
+    updateSelection();
 }
 
 void Player::on_actionSkipNext_triggered()
@@ -921,4 +976,22 @@ void Player::onCaptureStateChanged(bool active)
 void Player::resetProfile()
 {
     MLT.setProfile(m_settings.value("player/profile").toString());
+}
+
+void Player::onVolumeButtonToggled(bool checked)
+{
+    m_audioSignal->setVisible(checked);
+    m_volumeSlider->setVisible(checked);
+    m_settings.setValue("player/volume-visible", checked);
+}
+
+void Player::onMuteButtonToggled(bool checked)
+{
+    if (checked) {
+        m_savedVolume = MLT.volume();
+        MLT.setVolume(0);
+    } else {
+        MLT.setVolume(m_savedVolume);
+    }
+    m_settings.setValue("player/muted", checked);
 }

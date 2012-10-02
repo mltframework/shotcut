@@ -82,6 +82,8 @@ private:
     ScrubBar* m_scrubber;
     TimeSpinBox* m_positionSpinner;
     QLabel* m_durationLabel;
+    QLabel* m_inPointLabel;
+    QLabel* m_selectedLabel;
     unsigned m_position;
     QIcon m_playIcon;
     QIcon m_pauseIcon;
@@ -90,8 +92,10 @@ private:
     int m_seekPosition;
     int m_previousIn;
     int m_previousOut;
+    double m_savedVolume;
 
 private slots:
+    void updateSelection();
     void onInChanged(int in);
     void onOutChanged(int out);
     void on_actionSkipNext_triggered();
@@ -115,6 +119,8 @@ private slots:
     void on_actionJack_triggered(bool checked);
     void onExternalTriggered(QAction*);
     void onProfileTriggered(QAction*);
+    void onVolumeButtonToggled(bool checked);
+    void onMuteButtonToggled(bool checked);
 };
 
 #endif // PLAYER_H

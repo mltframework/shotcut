@@ -177,6 +177,8 @@ void ScrubBar::paintEvent(QPaintEvent *e)
     p.setClipRect(r);
     p.drawPixmap(QPointF(), m_pixmap);
 
+    if (!isEnabled()) return;
+
     // draw pointer
     QPolygon pa(3);
     const int x = selectionSize / 2 - 1;
@@ -224,6 +226,13 @@ void ScrubBar::updatePixmap()
     QPainter p(&m_pixmap);
     p.setFont(font());
     int markerHeight = fontMetrics().ascent() + 2;
+
+    if (!isEnabled()) {
+        p.fillRect(0, 0, width(), height(), palette().background().color());
+        p.end();
+        update();
+        return;
+    }
 
     // background color
     p.fillRect(margin, 0, width() - 2 * margin, height(), palette().base().color());
