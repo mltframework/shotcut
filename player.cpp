@@ -341,16 +341,6 @@ Player::Player(QWidget *parent)
     connect(this, SIGNAL(audioSamplesSignal(const QVector<int16_t>&, const int&, const int&, const int&)),
                          m_audioSignal, SLOT(slotReceiveAudio(const QVector<int16_t>&, const int&, const int&, const int&)));
 
-    QPushButton* muteButton = new QPushButton(this);
-    muteButton->setObjectName(QString::fromUtf8("muteButton"));
-    muteButton->setText(tr("Mute"));
-    muteButton->setToolTip(tr("Silence the audio"));
-    muteButton->setCheckable(true);
-    muteButton->setChecked(m_settings.value("player/muted", false).toBool());
-    volumeLayoutV->addWidget(muteButton);
-    m_savedVolume = MLT.volume();
-    connect(muteButton, SIGNAL(toggled(bool)), this, SLOT(onMuteButtonToggled(bool)));
-
     QPushButton* volumeButton = new QPushButton(this);
     volumeButton->setObjectName(QString::fromUtf8("volumeButton"));
     volumeButton->setToolTip(tr("Show or hide the volume control"));
@@ -360,6 +350,16 @@ Player::Player(QWidget *parent)
     onVolumeButtonToggled(volumeButton->isChecked());
     volumeLayoutV->addWidget(volumeButton);
     connect(volumeButton, SIGNAL(toggled(bool)), this, SLOT(onVolumeButtonToggled(bool)));
+
+    QPushButton* muteButton = new QPushButton(this);
+    muteButton->setObjectName(QString::fromUtf8("muteButton"));
+    muteButton->setText(tr("Mute"));
+    muteButton->setToolTip(tr("Silence the audio"));
+    muteButton->setCheckable(true);
+    muteButton->setChecked(m_settings.value("player/muted", false).toBool());
+    volumeLayoutV->addWidget(muteButton);
+    m_savedVolume = MLT.volume();
+    connect(muteButton, SIGNAL(toggled(bool)), this, SLOT(onMuteButtonToggled(bool)));
 
     // Add the scrub bar.
     m_scrubber = new ScrubBar(this);
