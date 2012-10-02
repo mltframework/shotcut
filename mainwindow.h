@@ -48,6 +48,7 @@ signals:
 protected:
     MainWindow();
     void keyPressEvent(QKeyEvent*);
+    void keyReleaseEvent(QKeyEvent *);
     void dragEnterEvent(QDragEnterEvent*);
     void dropEvent(QDropEvent*);
     void closeEvent(QCloseEvent*);
@@ -67,6 +68,7 @@ private:
     PlaylistDock* m_playlistDock;
     QString m_currentFile;
     bool m_jobsVisible;
+    bool m_isKKeyPressed;
 
 public slots:
     void open(const QString& url, const Mlt::Properties* = 0);

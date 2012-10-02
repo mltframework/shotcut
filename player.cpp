@@ -230,12 +230,10 @@ public:
 #ifndef QT_NO_TOOLTIP
         actionRewind->setToolTip(QApplication::translate(name, "Play quickly backwards (J)", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
-        actionRewind->setShortcut(QApplication::translate(name, "J", 0, QApplication::UnicodeUTF8));
         actionFastForward->setText(QApplication::translate(name, "Fast Forward", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
         actionFastForward->setToolTip(QApplication::translate(name, "Play quickly forwards (L)", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
-        actionFastForward->setShortcut(QApplication::translate(name, "L", 0, QApplication::UnicodeUTF8));
         actionRealtime->setText(QApplication::translate(name, "Realtime (frame dropping)", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
         actionRealtime->setToolTip(QApplication::translate(name, "Allow the player to drop video frames to try to play in realtime", 0, QApplication::UnicodeUTF8));
@@ -697,7 +695,7 @@ void Player::on_actionSkipPrevious_triggered()
     emit showStatusMessage(ui->actionSkipPrevious->toolTip());
 }
 
-void Player::on_actionRewind_triggered()
+void Player::rewind()
 {
     if (MLT.isSeekable()) {
         if (MLT.producer()->get_speed() >= 0)
@@ -707,7 +705,7 @@ void Player::on_actionRewind_triggered()
     }
 }
 
-void Player::on_actionFastForward_triggered()
+void Player::fastForward()
 {
     if (MLT.isSeekable()) {
         if (MLT.producer()->get_speed() <= 0)

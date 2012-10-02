@@ -53,6 +53,7 @@ static const int STATUS_TIMEOUT_MS = 3000;
 MainWindow::MainWindow()
     : QMainWindow(0)
     , ui(new Ui::MainWindow)
+    , m_isKKeyPressed(false)
 {
     // Create the UI.
     ui->setupUi(this);
@@ -364,8 +365,21 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
     case Qt::Key_PageDown:
         m_player->seek(m_player->position() + 10);
         break;
+    case Qt::Key_J:
+        if (m_isKKeyPressed)
+            m_player->seek(m_player->position() - 1);
+        else
+            m_player->rewind();
+        break;
     case Qt::Key_K:
         m_player->pause();
+        m_isKKeyPressed = true;
+        break;
+    case Qt::Key_L:
+        if (m_isKKeyPressed)
+            m_player->seek(m_player->position() + 1);
+        else
+            m_player->fastForward();
         break;
     case Qt::Key_I:
         if (MLT.isSeekable() && MLT.resource() != "<playlist>")
@@ -378,6 +392,14 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
     default:
         QMainWindow::keyPressEvent(event);
     }
+}
+
+void MainWindow::keyReleaseEvent(QKeyEvent* event)
+{
+    if (event->key() == Qt::Key_K)
+        m_isKKeyPressed = false;
+    else
+        QMainWindow::keyPressEvent(event);
 }
 
 // Drag-n-drop events

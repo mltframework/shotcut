@@ -67,6 +67,8 @@ public slots:
     void onVolumeChanged(int);
     void onCaptureStateChanged(bool);
     void resetProfile();
+    void rewind();
+    void fastForward();
 
 protected:
     void resizeEvent(QResizeEvent* event);
@@ -100,8 +102,6 @@ private slots:
     void onOutChanged(int out);
     void on_actionSkipNext_triggered();
     void on_actionSkipPrevious_triggered();
-    void on_actionRewind_triggered();
-    void on_actionFastForward_triggered();
     void onVideoWidgetContextMenu(const QPoint& pos);
 #ifdef Q_WS_X11
     void on_actionOpenGL_triggered(bool checked);
