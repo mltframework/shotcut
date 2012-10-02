@@ -712,6 +712,8 @@ void Player::fastForward()
             play();
         else
             MLT.producer()->set_speed(MLT.producer()->get_speed() * 2);
+    } else {
+        play();
     }
 }
 
