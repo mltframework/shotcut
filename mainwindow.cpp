@@ -368,10 +368,12 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         m_player->pause();
         break;
     case Qt::Key_I:
-        m_player->setIn(m_player->position());
+        if (MLT.isSeekable() && MLT.resource() != "<playlist>")
+            m_player->setIn(m_player->position());
         break;
     case Qt::Key_O:
-        m_player->setOut(m_player->position());
+        if (MLT.isSeekable() && MLT.resource() != "<playlist>")
+            m_player->setOut(m_player->position());
         break;
     default:
         QMainWindow::keyPressEvent(event);
@@ -504,9 +506,6 @@ void MainWindow::onProducerOpened()
 
 void MainWindow::onProducerChanged()
 {
-    // TODO: disable this until we have playlist support
-    // setWindowModified(true);
-
     MLT.refreshConsumer();
 }
 

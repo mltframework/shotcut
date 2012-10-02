@@ -564,6 +564,8 @@ void Player::onProducerOpened()
     m_scrubber->setFramerate(MLT.profile().fps());
     m_scrubber->setScale(len);
     m_scrubber->setMarkers(QList<int>());
+    m_inPointLabel->setText("--:--:--:-- /");
+    m_selectedLabel->setText("--:--:--:--");
     if (seekable) {
         m_durationLabel->setText(QString(MLT.producer()->get_length_time()).prepend("/ "));
         m_previousIn = MLT.producer()->get_in();
@@ -576,8 +578,6 @@ void Player::onProducerOpened()
         m_durationLabel->setText(tr("Live").prepend("/ "));
         m_scrubber->setDisabled(true);
         m_scrubber->setMarkers(QList<int>());
-        m_inPointLabel->setText("--:--:--:-- /");
-        m_selectedLabel->setText("--:--:--:--");
     }
     m_positionSpinner->setEnabled(seekable);
     on_actionJack_triggered(ui->actionJack->isChecked());
