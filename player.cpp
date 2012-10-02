@@ -334,6 +334,8 @@ Player::Player(QWidget *parent)
     hlayout->addLayout(volumeLayoutV);
     m_volumeSlider->setRange(0, 99);
     m_volumeSlider->setValue(m_settings.value("player/volume", VOLUME_KNEE).toInt());
+    onVolumeChanged(m_volumeSlider->value());
+    m_savedVolume = MLT.volume();
     m_volumeSlider->setToolTip(tr("Adjust the audio volume"));
     connect(m_volumeSlider, SIGNAL(valueChanged(int)), this, SLOT(onVolumeChanged(int)));
     connect(this, SIGNAL(audioSamplesSignal(const QVector<int16_t>&, const int&, const int&, const int&)),
@@ -356,7 +358,6 @@ Player::Player(QWidget *parent)
     muteButton->setCheckable(true);
     muteButton->setChecked(m_settings.value("player/muted", false).toBool());
     volumeLayoutV->addWidget(muteButton);
-    m_savedVolume = MLT.volume();
     connect(muteButton, SIGNAL(toggled(bool)), this, SLOT(onMuteButtonToggled(bool)));
 
     // Add the scrub bar.
@@ -378,14 +379,14 @@ Player::Player(QWidget *parent)
     m_positionSpinner->setKeyboardTracking(false);
     m_durationLabel = new QLabel(this);
     m_durationLabel->setToolTip(tr("Total Duration"));
-    m_durationLabel->setText("/ 00:00:00:00");
+    m_durationLabel->setText(" / 00:00:00:00");
 //    m_durationLabel->setContentsMargins(0, 5, 0, 0);
     m_durationLabel->setFixedWidth(m_positionSpinner->width());
     m_inPointLabel = new QLabel(this);
     m_inPointLabel->setText("--:--:--:--");
     m_inPointLabel->setToolTip(tr("In Point"));
     m_inPointLabel->setAlignment(Qt::AlignRight);
-    m_inPointLabel->setContentsMargins(0, 5, 0, 0);
+    m_inPointLabel->setContentsMargins(0, 4, 0, 0);
     m_inPointLabel->setFixedWidth(m_inPointLabel->width());
     m_selectedLabel = new QLabel(this);
     m_selectedLabel->setText("--:--:--:--");
@@ -562,10 +563,10 @@ void Player::onProducerOpened()
     m_scrubber->setFramerate(MLT.profile().fps());
     m_scrubber->setScale(len);
     m_scrubber->setMarkers(QList<int>());
-    m_inPointLabel->setText("--:--:--:-- /");
+    m_inPointLabel->setText("--:--:--:-- / ");
     m_selectedLabel->setText("--:--:--:--");
     if (seekable) {
-        m_durationLabel->setText(QString(MLT.producer()->get_length_time()).prepend("/ "));
+        m_durationLabel->setText(QString(MLT.producer()->get_length_time()).prepend(" / "));
         m_previousIn = MLT.producer()->get_in();
         m_scrubber->setEnabled(true);
         m_scrubber->setInPoint(m_previousIn);
@@ -573,7 +574,7 @@ void Player::onProducerOpened()
         m_scrubber->setOutPoint(m_previousOut);
     }
     else {
-        m_durationLabel->setText(tr("Live").prepend("/ "));
+        m_durationLabel->setText(tr("Live").prepend(" / "));
         m_scrubber->setDisabled(true);
         m_scrubber->setMarkers(QList<int>());
     }
@@ -614,11 +615,11 @@ void Player::onShowFrame(Mlt::QFrame frame)
 void Player::updateSelection()
 {
     if (MLT.producer() && MLT.producer()->get_in() > 0) {
-        m_inPointLabel->setText(QString(MLT.producer()->get_time("in")).append(" /"));
+        m_inPointLabel->setText(QString(MLT.producer()->get_time("in")).append(" / "));
         MLT.producer()->set("_shotcut_selected", MLT.producer()->get_playtime());
         m_selectedLabel->setText(MLT.producer()->get_time("_shotcut_selected"));
     } else {
-        m_inPointLabel->setText("--:--:--:-- /");
+        m_inPointLabel->setText("--:--:--:-- / ");
         if (MLT.producer() && MLT.resource() != "<playlist>" &&
                 MLT.producer()->get_out() < MLT.producer()->get_length() - 1) {
             MLT.producer()->set("_shotcut_selected", MLT.producer()->get_playtime());

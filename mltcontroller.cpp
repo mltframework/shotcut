@@ -78,6 +78,7 @@ Controller::Controller()
     , m_profile(new Mlt::Profile)
     , m_volumeFilter(0)
     , m_jackFilter(0)
+    , m_volume(1.0)
 {
 }
 
@@ -278,11 +279,12 @@ void Controller::setVolume(double volume)
         }
         m_volumeFilter->set("gain", volume);
     }
+    m_volume = volume;
 }
 
 double Controller::volume() const
 {
-    return m_volumeFilter? m_volumeFilter->get_double("gain") : 1.0;
+    return m_volumeFilter? m_volumeFilter->get_double("gain") : m_volume;
 }
 
 void Controller::onWindowResize()

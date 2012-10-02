@@ -97,6 +97,7 @@ private:
     Mlt::Filter* m_volumeFilter;
     Mlt::Filter* m_jackFilter;
     QString m_url;
+    double m_volume;
 
     static void on_jack_started(mlt_properties owner, void* object, mlt_position *position);
     void onJackStarted(int position);
