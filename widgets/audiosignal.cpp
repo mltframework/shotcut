@@ -31,7 +31,8 @@
 AudioSignal::AudioSignal(QWidget *parent): QWidget(parent)
 {
     const QFont& font = QWidget::font();
-    QWidget::setFont(QFont(font.family(), font.pointSize() - 2));
+    const int fontSize = font.pointSize() - (font.pointSize() > 10? 2 : (font.pointSize() > 8? 1 : 0));
+    QWidget::setFont(QFont(font.family(), fontSize));
     setMinimumHeight(300);
     setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     setMinimumWidth(fontMetrics().width("-60") + 20);

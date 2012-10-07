@@ -37,7 +37,8 @@ ScrubBar::ScrubBar(QWidget *parent)
     , m_activeControl(CONTROL_NONE)
 {
     setMouseTracking(true);
-    setFont(QFont(font().family(), font().pointSize() - (font().pointSize() > 10? 2 : 1)));
+    const int fontSize = font().pointSize() - (font().pointSize() > 10? 2 : (font().pointSize() > 8? 1 : 0));
+    setFont(QFont(font().family(), fontSize));
     m_timecodeWidth = fontMetrics().width("00:00:00:00");
     setMinimumHeight(fontMetrics().height() + selectionSize);
 }
