@@ -470,7 +470,7 @@ function set_globals {
   else
     CONFIG[2]="./configure --prefix=$FINAL_INSTALL_DIR"
   fi
-  CFLAGS_[2]=$CFLAGS
+  CFLAGS_[2]="$CFLAGS -O2"
   LDFLAGS_[2]=$LDFLAGS
 
   ####
