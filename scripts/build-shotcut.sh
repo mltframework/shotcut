@@ -1241,7 +1241,7 @@ function configure_compile_install_subproject {
         cmd install -c COPYING "$FINAL_INSTALL_DIR"
         cmd install -c scripts/shotcut.nsi "$FINAL_INSTALL_DIR"/..
         cmd install -d "$FINAL_INSTALL_DIR"/share/translations
-        cmd install -p -c translations/*.qm
+        cmd install -p -c translations/*.qm "$FINAL_INSTALL_DIR"/share/translations
         cat > "$FINAL_INSTALL_DIR"/README <<End-of-win32-README
 Shotcut README
 
