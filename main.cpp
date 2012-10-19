@@ -68,6 +68,9 @@ int main(int argc, char **argv)
     appDir.cd("Resources");
     appDir.cd("translations");
 #else
+#ifndef Q_WS_WIN
+    appDir.cdUp();
+#endif
     appDir.cd("share");
     appDir.cd("translations");
 #endif
