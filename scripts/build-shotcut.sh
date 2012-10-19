@@ -1265,7 +1265,7 @@ End-of-win32-README
         cmd install -p -c /usr/lib/libaudio.so* "$FINAL_INSTALL_DIR"/lib
         cmd cp -r /usr/lib/qt4/plugins/* "$FINAL_INSTALL_DIR"/lib/qt4
         cmd install -d "$FINAL_INSTALL_DIR"/share/translations
-        cmd install -p -c "$FINAL_INSTALL_DIR"/translations/*.qm
+        cmd install -p -c "$FINAL_INSTALL_DIR"/share/translations/*.qm
       fi
     else
       cmd make install || die "Unable to install $1"
