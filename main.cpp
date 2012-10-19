@@ -59,7 +59,6 @@ int main(int argc, char **argv)
     Application a(argc, argv);
 
     // Load translations
-    qDebug() << "Qt TranslationsPath=" << QLibraryInfo::location(QLibraryInfo::TranslationsPath);
     QTranslator qtTranslator;
     QTranslator shotcutTranslator;
     QDir appDir = a.applicationDirPath();
