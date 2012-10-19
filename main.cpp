@@ -63,15 +63,17 @@ int main(int argc, char **argv)
     QTranslator shotcutTranslator;
     QDir appDir = a.applicationDirPath();
     const QString locale = QLocale::system().name();
-#ifdef Q_WS_MAC
+#if defined(Q_WS_MAC)
     appDir.cdUp();
     appDir.cd("Resources");
     appDir.cd("translations");
-#else
-#ifndef Q_WS_WIN
-    appDir.cdUp();
-#endif
+#elif defined(Q_WS_WIN)
     appDir.cd("share");
+    appDir.cd("translations");
+#else
+    appDir.cdUp();
+    appDir.cd("share");
+    appDir.cd("shotcut");
     appDir.cd("translations");
 #endif
     if (qtTranslator.load("qt_" + locale, QLibraryInfo::location(QLibraryInfo::TranslationsPath)))

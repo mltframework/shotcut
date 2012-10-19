@@ -1260,12 +1260,13 @@ End-of-win32-README
       elif test "$TARGET_OS" != "Darwin"; then
         cmd install -c -m 755 shotcut "$FINAL_INSTALL_DIR"/bin
         cmd install -p -c COPYING "$FINAL_INSTALL_DIR"
-        cmd install -d "$FINAL_INSTALL_DIR"/lib/qt4
-        cmd install -p -c /usr/lib/libQt{Core,Gui,Xml,Svg}.so* "$FINAL_INSTALL_DIR"/lib
-        cmd install -p -c /usr/lib/libaudio.so* "$FINAL_INSTALL_DIR"/lib
-        cmd cp -r /usr/lib/qt4/plugins/* "$FINAL_INSTALL_DIR"/lib/qt4
-        cmd install -d "$FINAL_INSTALL_DIR"/share/translations
-        cmd install -p -c "$FINAL_INSTALL_DIR"/share/translations/*.qm
+        cmd install -d "$FINAL_INSTALL_DIR"/share/shotcut/translations
+        cmd install -p -c translations/*.qm "$FINAL_INSTALL_DIR"/share/shotcut/translations
+        # Skip over including Qt with distribution for now.
+        #cmd install -d "$FINAL_INSTALL_DIR"/lib/qt4
+        #cmd install -p -c /usr/lib/libQt{Core,Gui,Xml,Svg}.so* "$FINAL_INSTALL_DIR"/lib
+        #cmd install -p -c /usr/lib/libaudio.so* "$FINAL_INSTALL_DIR"/lib
+        #cmd cp -r /usr/lib/qt4/plugins/* "$FINAL_INSTALL_DIR"/lib/qt4
       fi
     else
       cmd make install || die "Unable to install $1"
