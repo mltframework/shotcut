@@ -116,6 +116,9 @@ OTHER_FILES += \
     scripts/shotcut.nsi \
     Info.plist
 
+TRANSLATIONS += \
+    translations/shotcut_cs.ts
+
 mac {
     TARGET = Shotcut
     ICON = icons/shotcut.icns

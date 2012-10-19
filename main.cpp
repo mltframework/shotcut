@@ -57,6 +57,28 @@ protected:
 int main(int argc, char **argv)
 {
     Application a(argc, argv);
+
+    // Load translations
+    qDebug() << "Qt TranslationsPath=" << QLibraryInfo::location(QLibraryInfo::TranslationsPath);
+    QTranslator qtTranslator;
+    QTranslator shotcutTranslator;
+    QDir appDir = a.applicationDirPath();
+    const QString locale = QLocale::system().name();
+#ifdef Q_WS_MAC
+    appDir.cdUp();
+    appDir.cd("Resources");
+    appDir.cd("translations");
+#else
+    appDir.cd("share");
+    appDir.cd("translations");
+#endif
+    if (qtTranslator.load("qt_" + locale, QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
+        a.installTranslator(&qtTranslator);
+    else if (qtTranslator.load("qt_" + locale, appDir.absolutePath()))
+        a.installTranslator(&qtTranslator);
+    if (shotcutTranslator.load("shotcut_" + locale, appDir.absolutePath()))
+        a.installTranslator(&shotcutTranslator);
+
     QSplashScreen splash(QPixmap(":/icons/icons/shotcut-logo-640.png"));
     splash.showMessage(a.tr("Loading plugins..."), Qt::AlignHCenter | Qt::AlignBottom);
     splash.show();

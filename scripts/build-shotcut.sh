@@ -1234,10 +1234,14 @@ function configure_compile_install_subproject {
     fi
   else
     if test "shotcut" = "$1" ; then
+      # Convert translations
+      cmd lrelease shotcut.pro
       if test "$TARGET_OS" = "Win32" ; then
         cmd install -c -m 755 release/shotcut.exe "$FINAL_INSTALL_DIR"
         cmd install -c COPYING "$FINAL_INSTALL_DIR"
         cmd install -c scripts/shotcut.nsi "$FINAL_INSTALL_DIR"/..
+        cmd install -d "$FINAL_INSTALL_DIR"/share/translations
+        cmd install -p -c translations/*.qm
         cat > "$FINAL_INSTALL_DIR"/README <<End-of-win32-README
 Shotcut README
 
@@ -1260,6 +1264,8 @@ End-of-win32-README
         cmd install -p -c /usr/lib/libQt{Core,Gui,Xml,Svg}.so* "$FINAL_INSTALL_DIR"/lib
         cmd install -p -c /usr/lib/libaudio.so* "$FINAL_INSTALL_DIR"/lib
         cmd cp -r /usr/lib/qt4/plugins/* "$FINAL_INSTALL_DIR"/lib/qt4
+        cmd install -d "$FINAL_INSTALL_DIR"/share/translations
+        cmd install -p -c translations/*.qm
       fi
     else
       cmd make install || die "Unable to install $1"
@@ -1394,6 +1400,18 @@ function deploy_osx
     cmd cp -Rn "/Applications/Qt Creator.app/Contents/Frameworks/QtGui.framework/Resources/qt_menu.nib" "$BUILD_DIR/Resources/"
   fi
 
+  # copy Qt translations
+  cmd mkdir "$BUILD_DIR/Resources/translations"
+  # try MacPorts first
+  if [ -d "/opt/local/share/qt4/translations" ]; then
+    cmd cp -Rn /opt/local/share/qt4/translations/qt_*.qm "$BUILD_DIR/Resources/translations/"
+  # try Qt Creator after that
+  elif [ -d "/Applications/Qt Creator.app/Contents/Resources/translations" ]; then
+    cmd cp -Rn "/Applications/Qt Creator.app/Contents/Resources/translations/qt_*.qm" "$BUILD_DIR/Resources/translations/"
+  fi
+  # copy Shotcut translations
+  cmd cp -Rn translations/*.qm "$BUILD_DIR/Resources/translations/"
+
   cmd cd "$BUILD_DIR/MacOS" || die "Unable to change directory to MacOS"
 
   log Copying supplementary executables
@@ -1489,6 +1507,7 @@ function deploy_win32
   cmd cp -p "$QTDIR"/bin/Qt{Core,Gui,OpenGL,Xml,Svg}4.dll .
   cmd mkdir lib/qt4
   cmd cp -pr "$QTDIR"/plugins/* lib/qt4
+  cmd cp -pr "$QTDIR"/translations/*.qm "$FINAL_INSTALL_DIR"/share/translations
   cmd tar -xjf "$HOME/ladspa_plugins-win-0.4.15.tar.bz2"
 
   log Making installer
