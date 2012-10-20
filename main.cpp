@@ -35,6 +35,32 @@ public:
         setOrganizationDomain("meltytech.com");
         setApplicationName("Shotcut");
         setApplicationVersion(SHOTCUT_VERSION);
+
+        // Load translations
+        QTranslator qtTranslator;
+        QTranslator shotcutTranslator;
+        const QString locale = "cs"; //QLocale::system().name();
+        dir = applicationDirPath();
+    #if defined(Q_WS_MAC)
+        dir.cdUp();
+        dir.cd("Resources");
+        dir.cd("translations");
+    #elif defined(Q_WS_WIN)
+        dir.cd("share");
+        dir.cd("translations");
+    #else
+        dir.cdUp();
+        dir.cd("share");
+        dir.cd("shotcut");
+        dir.cd("translations");
+    #endif
+        if (qtTranslator.load("qt_" + locale, QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
+            installTranslator(&qtTranslator);
+        else if (qtTranslator.load("qt_" + locale, dir.absolutePath()))
+            installTranslator(&qtTranslator);
+        if (shotcutTranslator.load("shotcut_" + locale, dir.absolutePath()))
+            installTranslator(&shotcutTranslator);
+
         mainWindow = &MAIN;
     }
 
@@ -57,32 +83,6 @@ protected:
 int main(int argc, char **argv)
 {
     Application a(argc, argv);
-
-    // Load translations
-    QTranslator qtTranslator;
-    QTranslator shotcutTranslator;
-    QDir appDir = a.applicationDirPath();
-    const QString locale = QLocale::system().name();
-#if defined(Q_WS_MAC)
-    appDir.cdUp();
-    appDir.cd("Resources");
-    appDir.cd("translations");
-#elif defined(Q_WS_WIN)
-    appDir.cd("share");
-    appDir.cd("translations");
-#else
-    appDir.cdUp();
-    appDir.cd("share");
-    appDir.cd("shotcut");
-    appDir.cd("translations");
-#endif
-    if (qtTranslator.load("qt_" + locale, QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
-        a.installTranslator(&qtTranslator);
-    else if (qtTranslator.load("qt_" + locale, appDir.absolutePath()))
-        a.installTranslator(&qtTranslator);
-    if (shotcutTranslator.load("shotcut_" + locale, appDir.absolutePath()))
-        a.installTranslator(&shotcutTranslator);
-
     QSplashScreen splash(QPixmap(":/icons/icons/shotcut-logo-640.png"));
     splash.showMessage(a.tr("Loading plugins..."), Qt::AlignHCenter | Qt::AlignBottom);
     splash.show();
