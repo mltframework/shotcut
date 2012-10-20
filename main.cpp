@@ -39,7 +39,7 @@ public:
         // Load translations
         QTranslator qtTranslator;
         QTranslator shotcutTranslator;
-        const QString locale = "cs"; //QLocale::system().name();
+        const QString locale = QLocale::system().name();
         dir = applicationDirPath();
     #if defined(Q_WS_MAC)
         dir.cdUp();
