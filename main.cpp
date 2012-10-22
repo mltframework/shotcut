@@ -23,6 +23,8 @@ class Application : public QApplication
 {
 public:
     MainWindow* mainWindow;
+    QTranslator qtTranslator;
+    QTranslator shotcutTranslator;
 
     Application(int &argc, char **argv)
         : QApplication(argc, argv)
@@ -37,8 +39,6 @@ public:
         setApplicationVersion(SHOTCUT_VERSION);
 
         // Load translations
-        QTranslator qtTranslator;
-        QTranslator shotcutTranslator;
         const QString locale = QLocale::system().name();
         dir = applicationDirPath();
     #if defined(Q_WS_MAC)
