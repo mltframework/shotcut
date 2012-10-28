@@ -76,6 +76,18 @@ MainWindow::MainWindow()
     // Accept drag-n-drop of files.
     this->setAcceptDrops(true);
 
+    // Setup the undo stack.
+    m_undoStack = new QUndoStack(this);
+    QAction *undoAction = m_undoStack->createUndoAction(this);
+    QAction *redoAction = m_undoStack->createRedoAction(this);
+    undoAction->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/icons/icons/edit-undo.png")));
+    redoAction->setIcon(QIcon::fromTheme("edit-redo", QIcon(":/icons/icons/edit-redo.png")));
+    ui->menuEdit->addAction(undoAction);
+    ui->menuEdit->addAction(redoAction);
+    ui->mainToolBar->addAction(undoAction);
+    ui->mainToolBar->addAction(redoAction);
+    ui->mainToolBar->addSeparator();
+
     // Add the player widget.
     QLayout* layout = new QVBoxLayout(ui->playerPage);
     layout->setObjectName("centralWidgetLayout");
@@ -88,7 +100,7 @@ MainWindow::MainWindow()
     connect(m_player, SIGNAL(outChanged(int)), this, SLOT(onCutModified()));
 
     // Add the docks.
-    m_propertiesDock = new QDockWidget(tr("Properties"));
+    m_propertiesDock = new QDockWidget(tr("Properties"), this);
     m_propertiesDock->hide();
     m_propertiesDock->setObjectName("propertiesDock");
     m_propertiesDock->setWindowIcon(QIcon((":/icons/icons/view-form.png")));
@@ -150,6 +162,20 @@ MainWindow::MainWindow()
     connect(&JOBS, SIGNAL(jobAdded()), m_jobsDock, SLOT(raise()));
     connect(m_jobsDock, SIGNAL(visibilityChanged(bool)), this, SLOT(onJobsVisibilityChanged(bool)));
 
+    m_historyDock = new QDockWidget(tr("History"), this);
+    m_historyDock->hide();
+    m_historyDock->setObjectName("historyDock");
+    m_historyDock->setWindowIcon(QIcon((":/icons/icons/view-history.png")));
+    m_historyDock->toggleViewAction()->setIcon(QIcon::fromTheme("view-history", m_historyDock->windowIcon()));
+    addDockWidget(Qt::RightDockWidgetArea, m_historyDock);
+    ui->menuView->addAction(m_historyDock->toggleViewAction());
+    ui->mainToolBar->addAction(m_historyDock->toggleViewAction());
+    connect(m_historyDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onHistoryDockTriggered(bool)));
+    connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_historyDock, SLOT(setDisabled(bool)));
+    QUndoView* undoView = new QUndoView(m_historyDock);
+    undoView->setObjectName("historyView");
+    m_historyDock->setWidget(undoView);
+
     // Connect signals.
     connect(this, SIGNAL(producerOpened()), this, SLOT(onProducerOpened()));
 
@@ -184,12 +210,6 @@ MainWindow& MainWindow::singleton()
 
 MainWindow::~MainWindow()
 {
-    delete m_playlistDock;
-    delete m_propertiesDock;
-    delete m_recentDock;
-    delete m_encodeDock;
-    delete m_jobsDock;
-    delete m_player;
     delete ui;
 }
 
@@ -584,6 +604,11 @@ bool MainWindow::continueModified()
     return true;
 }
 
+QUndoStack* MainWindow::undoStack() const
+{
+    return m_undoStack;
+}
+
 void MainWindow::on_actionEncode_triggered(bool checked)
 {
     m_encodeDock->setVisible(checked);
@@ -625,6 +650,12 @@ void MainWindow::onPlaylistDockTriggered(bool checked)
 {
     if (checked)
         m_playlistDock->raise();
+}
+
+void MainWindow::onHistoryDockTriggered(bool checked)
+{
+    if (checked)
+        m_historyDock->raise();
 }
 
 void MainWindow::onPlaylistCreated()

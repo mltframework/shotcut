@@ -21,5 +21,8 @@
         <file>icons/view-media-playlist.png</file>
         <file>icons/player-volume.png</file>
         <file>icons/media-playback-stop.png</file>
+        <file>icons/view-history.png</file>
+        <file>icons/edit-redo.png</file>
+        <file>icons/edit-undo.png</file>
     </qresource>
 </RCC>

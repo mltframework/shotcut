@@ -31,6 +31,7 @@ class RecentDock;
 class EncodeDock;
 class JobsDock;
 class PlaylistDock;
+class QUndoStack;
 
 class MainWindow : public QMainWindow
 {
@@ -41,6 +42,7 @@ public:
     ~MainWindow();
     void open(Mlt::Producer* producer);
     bool continueModified();
+    QUndoStack* undoStack() const;
 
 signals:
     void producerOpened();
@@ -69,6 +71,8 @@ private:
     QString m_currentFile;
     bool m_jobsVisible;
     bool m_isKKeyPressed;
+    QUndoStack* m_undoStack;
+    QDockWidget* m_historyDock;
 
 public slots:
     void open(const QString& url, const Mlt::Properties* = 0);
@@ -90,6 +94,7 @@ private slots:
     void onRecentDockTriggered(bool checked);
     void onPropertiesDockTriggered(bool checked);
     void onPlaylistDockTriggered(bool checked);
+    void onHistoryDockTriggered(bool checked);
     void onPlaylistCreated();
     void onPlaylistCleared();
     void onPlaylistClosed();
