@@ -80,11 +80,11 @@ public slots:
     void openCut(void*, int in, int out);
     void showStatusMessage(QString);
     void seekPlaylist(int start);
+    void onProducerOpened();
 
 private slots:
     void on_actionAbout_Shotcut_triggered();
     void on_actionOpenOther_triggered();
-    void onProducerOpened();
     void onProducerChanged();
     bool on_actionSave_triggered();
     bool on_actionSave_As_triggered();
@@ -101,6 +101,8 @@ private slots:
     void onPlaylistModified();
     void onCutModified();
     void updateMarkers();
+    void on_actionUndo_triggered();
+    void on_actionRedo_triggered();
 };
 
 #define MAIN MainWindow::singleton()

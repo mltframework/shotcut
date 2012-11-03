@@ -596,6 +596,19 @@ void Player::onProducerOpened()
     play();
 }
 
+void Player::onProducerModified()
+{
+    int len = MLT.producer()->get_length();
+    m_scrubber->setScale(len);
+    m_scrubber->setMarkers(QList<int>());
+    m_durationLabel->setText(QString(MLT.producer()->get_length_time()).prepend(" / "));
+    // TODO: seek to a good spot if needed (cur pos > len or paused)
+    if (MLT.producer()->get_speed() == 0)
+        seek(m_position);
+    else if (m_position >= len)
+        seek(len - 1);
+}
+
 void Player::onShowFrame(Mlt::QFrame frame)
 {
     if (MLT.producer() && MLT.producer()->is_valid()) {

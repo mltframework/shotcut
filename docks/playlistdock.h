@@ -20,6 +20,7 @@
 #define PLAYLISTDOCK_H
 
 #include <QDockWidget>
+#include <QtGui/QUndoCommand>
 #include "models/playlistmodel.h"
 
 namespace Ui {
@@ -85,5 +86,69 @@ private:
     Ui::PlaylistDock *ui;
     PlaylistModel m_model;
 };
+
+namespace Playlist
+{
+
+class AppendCommand : public QUndoCommand
+{
+public:
+    AppendCommand(PlaylistModel& model, const QString& xml, QUndoCommand * parent = 0);
+    void redo();
+    void undo();
+private:
+    PlaylistModel& m_model;
+    QString m_xml;
+};
+
+class InsertCommand : public QUndoCommand
+{
+public:
+    InsertCommand(PlaylistModel& model, const QString& xml, int row, QUndoCommand * parent = 0);
+    void redo();
+    void undo();
+private:
+    PlaylistModel& m_model;
+    QString m_xml;
+    int m_row;
+};
+
+class UpdateCommand : public QUndoCommand
+{
+public:
+    UpdateCommand(PlaylistModel& model, const QString& xml, int row, QUndoCommand * parent = 0);
+    void redo();
+    void undo();
+private:
+    PlaylistModel& m_model;
+    QString m_newXml;
+    QString m_oldXml;
+    int m_row;
+};
+
+class RemoveCommand : public QUndoCommand
+{
+public:
+    RemoveCommand(PlaylistModel& model, int row, QUndoCommand * parent = 0);
+    void redo();
+    void undo();
+private:
+    PlaylistModel& m_model;
+    QString m_xml;
+    int m_row;
+};
+
+class ClearCommand : public QUndoCommand
+{
+public:
+    ClearCommand(PlaylistModel& model, QUndoCommand * parent = 0);
+    void redo();
+    void undo();
+private:
+    PlaylistModel& m_model;
+    QString m_xml;
+};
+
+}
 
 #endif // PLAYLISTDOCK_H

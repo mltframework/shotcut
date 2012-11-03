@@ -84,9 +84,12 @@ MainWindow::MainWindow()
     redoAction->setIcon(QIcon::fromTheme("edit-redo", QIcon(":/icons/icons/edit-redo.png")));
     ui->menuEdit->addAction(undoAction);
     ui->menuEdit->addAction(redoAction);
-    ui->mainToolBar->addAction(undoAction);
-    ui->mainToolBar->addAction(redoAction);
-    ui->mainToolBar->addSeparator();
+    ui->actionUndo->setIcon(undoAction->icon());
+    ui->actionRedo->setIcon(redoAction->icon());
+    ui->actionUndo->setToolTip(undoAction->toolTip());
+    ui->actionRedo->setToolTip(redoAction->toolTip());
+    connect(m_undoStack, SIGNAL(canUndoChanged(bool)), ui->actionUndo, SLOT(setEnabled(bool)));
+    connect(m_undoStack, SIGNAL(canRedoChanged(bool)), ui->actionRedo, SLOT(setEnabled(bool)));
 
     // Add the player widget.
     QLayout* layout = new QVBoxLayout(ui->playerPage);
@@ -134,8 +137,24 @@ MainWindow::MainWindow()
     connect(m_playlistDock->model(), SIGNAL(loaded()), this, SLOT(updateMarkers()));
     connect(m_playlistDock->model(), SIGNAL(modified()), this, SLOT(updateMarkers()));
 
-    tabifyDockWidget(m_recentDock, m_propertiesDock);
-    tabifyDockWidget(m_propertiesDock, m_playlistDock);
+    m_historyDock = new QDockWidget(tr("History"), this);
+    m_historyDock->hide();
+    m_historyDock->setObjectName("historyDock");
+    m_historyDock->setWindowIcon(QIcon((":/icons/icons/view-history.png")));
+    m_historyDock->toggleViewAction()->setIcon(QIcon::fromTheme("view-history", m_historyDock->windowIcon()));
+    addDockWidget(Qt::LeftDockWidgetArea, m_historyDock);
+    ui->menuView->addAction(m_historyDock->toggleViewAction());
+    ui->mainToolBar->addAction(m_historyDock->toggleViewAction());
+    connect(m_historyDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onHistoryDockTriggered(bool)));
+    QUndoView* undoView = new QUndoView(m_undoStack, m_historyDock);
+    undoView->setObjectName("historyView");
+    m_historyDock->setWidget(undoView);
+    ui->actionUndo->setDisabled(true);
+    ui->actionRedo->setDisabled(true);
+
+    tabifyDockWidget(m_propertiesDock, m_recentDock);
+    tabifyDockWidget(m_recentDock, m_playlistDock);
+    tabifyDockWidget(m_playlistDock, m_historyDock);
     m_recentDock->raise();
 
     m_encodeDock = new EncodeDock(this);
@@ -152,6 +171,7 @@ MainWindow::MainWindow()
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), ui->actionOpenOther, SLOT(setDisabled(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), ui->actionExit, SLOT(setDisabled(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), this, SLOT(onCaptureStateChanged(bool)));
+    connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_historyDock, SLOT(setDisabled(bool)));
 
     m_jobsDock = new JobsDock(this);
     m_jobsDock->hide();
@@ -161,20 +181,6 @@ MainWindow::MainWindow()
     connect(&JOBS, SIGNAL(jobAdded()), m_jobsDock, SLOT(show()));
     connect(&JOBS, SIGNAL(jobAdded()), m_jobsDock, SLOT(raise()));
     connect(m_jobsDock, SIGNAL(visibilityChanged(bool)), this, SLOT(onJobsVisibilityChanged(bool)));
-
-    m_historyDock = new QDockWidget(tr("History"), this);
-    m_historyDock->hide();
-    m_historyDock->setObjectName("historyDock");
-    m_historyDock->setWindowIcon(QIcon((":/icons/icons/view-history.png")));
-    m_historyDock->toggleViewAction()->setIcon(QIcon::fromTheme("view-history", m_historyDock->windowIcon()));
-    addDockWidget(Qt::RightDockWidgetArea, m_historyDock);
-    ui->menuView->addAction(m_historyDock->toggleViewAction());
-    ui->mainToolBar->addAction(m_historyDock->toggleViewAction());
-    connect(m_historyDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onHistoryDockTriggered(bool)));
-    connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_historyDock, SLOT(setDisabled(bool)));
-    QUndoView* undoView = new QUndoView(m_historyDock);
-    undoView->setObjectName("historyView");
-    m_historyDock->setWidget(undoView);
 
     // Connect signals.
     connect(this, SIGNAL(producerOpened()), this, SLOT(onProducerOpened()));
@@ -308,6 +314,7 @@ void MainWindow::seekPlaylist(int start)
     else
         m_player->play(speed);
     MLT.seek(start);
+    m_player->setFocus();
 }
 
 void MainWindow::readSettings()
@@ -681,6 +688,8 @@ void MainWindow::onPlaylistClosed()
 void MainWindow::onPlaylistModified()
 {
     setWindowModified(true);
+    if ((void*) MLT.producer()->get_producer() == (void*) m_playlistDock->model()->playlist()->get_playlist())
+        m_player->onProducerModified();
 }
 
 void MainWindow::onCutModified()
@@ -698,4 +707,14 @@ void MainWindow::updateMarkers()
             markers.append(m_playlistDock->model()->playlist()->clip_start(i));
         m_player->setMarkers(markers);
     }
+}
+
+void MainWindow::on_actionUndo_triggered()
+{
+    m_undoStack->undo();
+}
+
+void MainWindow::on_actionRedo_triggered()
+{
+    m_undoStack->redo();
 }

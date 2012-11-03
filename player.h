@@ -63,6 +63,7 @@ public slots:
     void togglePlayPaused();
     void seek(int position);
     void onProducerOpened();
+    void onProducerModified();
     void onShowFrame(Mlt::QFrame frame);
     void onVolumeChanged(int);
     void onCaptureStateChanged(bool);

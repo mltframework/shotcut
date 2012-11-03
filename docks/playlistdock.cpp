@@ -85,7 +85,7 @@ void PlaylistDock::on_actionAppendCut_triggered()
         if (MLT.producer()->type() == playlist_type)
             emit showStatusMessage(tr("You cannot insert a playlist into a playlist!"));
         else if (MLT.isSeekable())
-            m_model.append(MLT.producer());
+            MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.saveXML("string")));
         else {
             DurationDialog dialog(this);
             dialog.setDuration(MLT.profile().fps() * 5);
@@ -93,7 +93,7 @@ void PlaylistDock::on_actionAppendCut_triggered()
                 MLT.producer()->set_in_and_out(0, dialog.duration() - 1);
                 if (MLT.producer()->get("mlt_service") && !strcmp(MLT.producer()->get("mlt_service"), "avformat"))
                     MLT.producer()->set("mlt_service", "avformat-novalidate");
-                m_model.append(MLT.producer());
+                MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.saveXML("string")));
             }
         }
     }
@@ -132,14 +132,18 @@ void PlaylistDock::on_actionUpdate_triggered()
     if (info->resource && MLT.producer()->get("resource")
             && !strcmp(info->resource, MLT.producer()->get("resource"))) {
         if (MLT.isSeekable()) {
-            m_model.update(index.row(), MLT.producer()->get_in(), MLT.producer()->get_out());
+            MAIN.undoStack()->push(new Playlist::UpdateCommand(m_model, MLT.saveXML("string"), index.row()));
         }
         else {
             // change the duration
             DurationDialog dialog(this);
             dialog.setDuration(info->frame_count);
-            if (dialog.exec() == QDialog::Accepted)
-                m_model.update(index.row(), 0, dialog.duration() - 1);
+            if (dialog.exec() == QDialog::Accepted) {
+                MLT.producer()->set_in_and_out(0, dialog.duration() - 1);
+                if (MLT.producer()->get("mlt_service") && !strcmp(MLT.producer()->get("mlt_service"), "avformat"))
+                    MLT.producer()->set("mlt_service", "avformat-novalidate");
+                MAIN.undoStack()->push(new Playlist::UpdateCommand(m_model, MLT.saveXML("string"), index.row()));
+            }
         }
     }
     else {
@@ -152,7 +156,7 @@ void PlaylistDock::on_removeButton_clicked()
 {
     QModelIndex index = ui->tableView->currentIndex();
     if (!index.isValid()) return;
-    m_model.remove(index.row());
+    MAIN.undoStack()->push(new Playlist::RemoveCommand(m_model, index.row()));
     int count = m_model.playlist()->count();
     if (count == 0) return;
     Mlt::ClipInfo* i = m_model.playlist()->clip_info(
@@ -213,7 +217,7 @@ void PlaylistDock::on_actionGoto_triggered()
 
 void PlaylistDock::on_actionRemoveAll_triggered()
 {
-    m_model.clear();
+    MAIN.undoStack()->push(new Playlist::ClearCommand(m_model));
 }
 
 void PlaylistDock::on_actionClose_triggered()
@@ -248,7 +252,7 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
         foreach (QUrl url, data->urls()) {
             Mlt::Producer p(MLT.profile(), url.path().toUtf8().constData());
             if (p.is_valid())
-                m_model.insert(&p, row);
+                MAIN.undoStack()->push(new Playlist::InsertCommand(m_model, MLT.saveXML("string", &p), row));
         }
     }
     else if (!data || data->data("application/mlt+xml").isEmpty()) {
@@ -256,7 +260,7 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
             if (MLT.producer()->type() == playlist_type)
                 emit showStatusMessage(tr("You cannot insert a playlist into a playlist!"));
             else if (MLT.isSeekable())
-                m_model.insert(MLT.producer(), row);
+                MAIN.undoStack()->push(new Playlist::InsertCommand(m_model, MLT.saveXML("string"), row));
             else {
                 DurationDialog dialog(this);
                 dialog.setDuration(MLT.profile().fps() * 5);
@@ -264,7 +268,7 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
                     MLT.producer()->set_in_and_out(0, dialog.duration() - 1);
                     if (MLT.producer()->get("mlt_service") && !strcmp(MLT.producer()->get("mlt_service"), "avformat"))
                         MLT.producer()->set("mlt_service", "avformat-novalidate");
-                    m_model.insert(MLT.producer(), row);
+                    MAIN.undoStack()->push(new Playlist::InsertCommand(m_model, MLT.saveXML("string"), row));
                 }
             }
         }
@@ -281,3 +285,121 @@ void PlaylistDock::on_addButton_clicked()
 {
     on_actionAppendCut_triggered();
 }
+
+namespace Playlist
+{
+
+AppendCommand::AppendCommand(PlaylistModel& model, const QString& xml, QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_xml(xml)
+{
+    setText(QObject::tr("Append playlist item %1").arg(m_model.rowCount() + 1));
+}
+
+void AppendCommand::redo()
+{
+    Mlt::Producer* producer = new Mlt::Producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
+    m_model.append(producer);
+    delete producer;
+}
+
+void AppendCommand::undo()
+{
+    m_model.remove(m_model.rowCount() - 1);
+}
+
+InsertCommand::InsertCommand(PlaylistModel& model, const QString& xml, int row, QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_xml(xml)
+    , m_row(row)
+{
+    setText(QObject::tr("Insert playist item %1").arg(row + 1));
+}
+
+void InsertCommand::redo()
+{
+    Mlt::Producer* producer = new Mlt::Producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
+    m_model.insert(producer, m_row);
+    delete producer;
+}
+
+void InsertCommand::undo()
+{
+    m_model.remove(m_row);
+}
+
+UpdateCommand::UpdateCommand(PlaylistModel& model, const QString& xml, int row, QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_newXml(xml)
+    , m_row(row)
+{
+    setText(QObject::tr("Update playlist item %1").arg(row + 1));
+    m_oldXml = MLT.saveXML("string", m_model.playlist()->get_clip(m_row));
+}
+
+void UpdateCommand::redo()
+{
+    Mlt::Producer* producer = new Mlt::Producer(MLT.profile(), "xml-string", m_newXml.toUtf8().constData());
+    m_model.remove(m_row);
+    m_model.insert(producer, m_row);
+    delete producer;
+}
+
+void UpdateCommand::undo()
+{
+    Mlt::Producer* producer = new Mlt::Producer(MLT.profile(), "xml-string", m_oldXml.toUtf8().constData());
+    m_model.remove(m_row);
+    m_model.insert(producer, m_row);
+    delete producer;
+}
+
+RemoveCommand::RemoveCommand(PlaylistModel& model, int row, QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_row(row)
+{
+    m_xml = MLT.saveXML("string", m_model.playlist()->get_clip(m_row));
+    setText(QObject::tr("Remove playlist item %1").arg(row));
+}
+
+void RemoveCommand::redo()
+{
+    m_model.remove(m_row);
+}
+
+void RemoveCommand::undo()
+{
+    Mlt::Producer* producer = new Mlt::Producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
+    m_model.insert(producer, m_row);
+    delete producer;
+}
+
+ClearCommand::ClearCommand(PlaylistModel& model, QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+{
+    m_xml = MLT.saveXML("string", m_model.playlist());
+    setText(QObject::tr("Clear playlist"));
+}
+
+void ClearCommand::redo()
+{
+    m_model.clear();
+}
+
+void ClearCommand::undo()
+{
+    m_model.close();
+    Mlt::Producer* producer = new Mlt::Producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
+    if (producer->is_valid()) {
+        producer->set("resource", "<playlist>");
+        MAIN.open(producer);
+        MLT.pause();
+        MAIN.seekPlaylist(0);
+    }
+}
+
+} // namespace Playlist
