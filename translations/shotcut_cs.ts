@@ -80,7 +80,7 @@
     <message>
         <location filename="../widgets/avformatproducerwidget.ui" line="112"/>
         <source>Video</source>
-        <translation>Video</translation>
+        <translation>Obraz</translation>
     </message>
     <message>
         <location filename="../widgets/avformatproducerwidget.ui" line="120"/>
@@ -167,7 +167,7 @@
     <message>
         <location filename="../widgets/avformatproducerwidget.ui" line="387"/>
         <source>Bottom Field First</source>
-        <translation>Nejprve spodní pole</translation>
+        <translation>Nejprve dolní pole</translation>
     </message>
     <message>
         <location filename="../widgets/avformatproducerwidget.ui" line="392"/>
@@ -177,7 +177,7 @@
     <message>
         <location filename="../widgets/avformatproducerwidget.ui" line="416"/>
         <source>Audio</source>
-        <translation>Audio</translation>
+        <translation>Zvuk</translation>
     </message>
     <message>
         <location filename="../widgets/avformatproducerwidget.ui" line="513"/>
@@ -370,7 +370,7 @@
     <message>
         <location filename="../docks/encodedock.ui" line="21"/>
         <source>Encode</source>
-        <translation>Zakódovat</translation>
+        <translation>Zakódování</translation>
     </message>
     <message>
         <location filename="../docks/encodedock.ui" line="71"/>
@@ -400,7 +400,7 @@
     <message>
         <location filename="../docks/encodedock.ui" line="179"/>
         <source>Video</source>
-        <translation>Video</translation>
+        <translation>Obraz</translation>
     </message>
     <message>
         <location filename="../docks/encodedock.ui" line="194"/>
@@ -410,7 +410,7 @@
     <message>
         <location filename="../docks/encodedock.ui" line="213"/>
         <source>Interlaced</source>
-        <translation>Prokládané</translation>
+        <translation>Prokládaný</translation>
     </message>
     <message>
         <location filename="../docks/encodedock.ui" line="218"/>
@@ -450,7 +450,7 @@
     <message>
         <location filename="../docks/encodedock.ui" line="427"/>
         <source>Bottom Field First</source>
-        <translation>Nejprve spodní pole</translation>
+        <translation>Nejprve dolní pole</translation>
     </message>
     <message>
         <location filename="../docks/encodedock.ui" line="432"/>
@@ -462,7 +462,7 @@
         <source>Reload all of the values from the project
 or player&apos;s current video mode</source>
         <translation>Nahrát znovu všechny hodnoty z projektu
-nebo nynějšího režimu videa přehrávače</translation>
+nebo nynějšího obrazového režimu přehrávače</translation>
     </message>
     <message>
         <location filename="../docks/encodedock.ui" line="461"/>
@@ -745,7 +745,7 @@ vícevláknové.</translation>
     <message>
         <location filename="../docks/encodedock.ui" line="1012"/>
         <source>Audio</source>
-        <translation>Audio</translation>
+        <translation>Zvuk</translation>
     </message>
     <message>
         <location filename="../docks/encodedock.ui" line="1030"/>
@@ -913,7 +913,7 @@ vícevláknové.</translation>
     <message>
         <location filename="../docks/encodedock.cpp" line="618"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
-        <translation>Zadat schéma síťového protokolu, adresu, přípojku a parametry jako adresu (URL):</translation>
+        <translation>Zadejte schéma síťového protokolu, adresu, přípojku a parametry jako adresu (URL):</translation>
     </message>
     <message>
         <location filename="../docks/encodedock.cpp" line="653"/>
@@ -1097,7 +1097,7 @@ tlačítkem myši na úkol k otevření nabídky pro zastavení nyní běžící
     <message>
         <location filename="../docks/jobsdock.ui" line="111"/>
         <source>Display a menu of additional actions</source>
-        <translation>Zobrazit nabídku dodatečných činností</translation>
+        <translation>Zobrazit nabídku dalších činností</translation>
     </message>
     <message>
         <location filename="../docks/jobsdock.ui" line="138"/>
@@ -1214,23 +1214,23 @@ p, li { white-space: pre-wrap; }
 &lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; Alt+Left&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;Alt+Right&lt;/span&gt; to jump between start, in, out, and end.&lt;/li&gt;&lt;/ul&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Right-click&lt;/span&gt; the video window to access its settings.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Update Shotcut whenever you like. We do not notify you about updates because new version are available almost daily.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;Průvodce rychlým spuštěním Shotcutu&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;Průvodce pro rychlý začátek práce v Shotcutu&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Otevřít soubory &lt;span style=&quot; font-weight:600;&quot;&gt;tažením a upuštěním&lt;/span&gt; kromě běžné nabídky a postupu přes panel s nástroji.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Použijte &lt;span style=&quot; font-weight:600;&quot;&gt;File&lt;/span&gt; &amp;gt; &lt;span style=&quot; font-weight:600;&quot;&gt;Otevřít jiné&lt;/span&gt; k otevření síťových proudů, zachytávání zařízení a generatorů.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Soubory MLT XML lze otevřít jako ukázku; takže můžete Shotcut použít na vyzkoušení svého XML.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesové zkratky k ovládání přesunu:&lt;/p&gt;
-&lt;ul type=&quot;circle&quot; style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;&quot;&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; J&lt;/span&gt;, &lt;span style=&quot; font-weight:600;&quot;&gt;K&lt;/span&gt;, a &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt; ovládají rychlost přehrávání a směr. Stiskněte opakovaně &lt;span style=&quot; font-weight:600;&quot;&gt;J&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt;, abyste se pohybovali rychleji.&lt;/li&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Otevřete soubory &lt;span style=&quot; font-weight:600;&quot;&gt;jejich přetažením a upuštěním&lt;/span&gt; vedle použití hlavní nabídky a nebo panelu s nástroji.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Použijte &lt;span style=&quot; font-weight:600;&quot;&gt;Soubor&lt;/span&gt; &amp;gt; &lt;span style=&quot; font-weight:600;&quot;&gt;Otevřít jiné&lt;/span&gt; k otevření síťových proudů, zařízení pro zachytávání a generatorů.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Soubory MLT XML lze otevřít jako záznam; takže můžete Shotcut použít na vyzkoušení svého XML.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesové zkratky pro ovládání pohybu záznamu:&lt;/p&gt;
+&lt;ul type=&quot;circle&quot; style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;&quot;&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; J&lt;/span&gt;, &lt;span style=&quot; font-weight:600;&quot;&gt;K&lt;/span&gt;, a &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt; ovládají rychlost přehrávání a směr. Stiskněte opakovaně &lt;span style=&quot; font-weight:600;&quot;&gt;J&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt;, abyste se v záznamu pohybovali rychleji.&lt;/li&gt;
 &lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; I&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;O&lt;/span&gt; nastavují vstupní a výstupní body.&lt;/li&gt;
 &lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Směrové klávesy &lt;span style=&quot; font-weight:600;&quot;&gt;šipka vlevo&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;šipka vpravo&lt;/span&gt; pro krokový postup snímek za snímkem.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesy &lt;span style=&quot; font-weight:600;&quot;&gt; Page Up&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;Page Down&lt;/span&gt; pro krokový postup 10 snímků.&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesy &lt;span style=&quot; font-weight:600;&quot;&gt; Page Up&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;Page Down&lt;/span&gt; pro krokový postup o 10 snímků.&lt;/li&gt;
 &lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesy &lt;span style=&quot; font-weight:600;&quot;&gt; Alt+šipka vlevo&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;Alt+šipka vpravo&lt;/span&gt; pro skákání mezi začátkem, vstupem, výstupem a koncem.&lt;/li&gt;&lt;/ul&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Klepnutí pravým tlačítkem myši&lt;/span&gt; na okno s videe pro přístoupení k jeho nastavení.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Aktualizujte program Shotcut, kdykoli chcete. O nových aktualizacích vám nebudeme dávat vědět, protože nové aktualizace jsou dostupné téměř denně.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Klepněte pravým tlačítkem myši&lt;/span&gt; na okno s obrazem, abyste se dostali k jeho nastavení.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Aktualizujte program Shotcut, kdykoli budete chtít. O nových aktualizacích vám nebudeme dávat vědět, protože nové aktualizace jsou dostupné téměř denně.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -1726,7 +1726,7 @@ Chcete uložit své změny?</translation>
     <message>
         <location filename="../player.cpp" line="751"/>
         <source>Deinterlacer</source>
-        <translation>Zrušení prokládání</translation>
+        <translation>Odstranění prokládání</translation>
     </message>
     <message>
         <location filename="../player.cpp" line="759"/>
@@ -1741,7 +1741,7 @@ Chcete uložit své změny?</translation>
     <message>
         <location filename="../player.cpp" line="772"/>
         <source>Video Mode</source>
-        <translation>Režim videa</translation>
+        <translation>Obrazový režim</translation>
     </message>
     <message>
         <location filename="../player.cpp" line="785"/>
@@ -1904,7 +1904,7 @@ po začátek vybraného střihu.</translation>
     <message>
         <location filename="../models/playlistmodel.cpp" line="100"/>
         <source>In</source>
-        <translation>Začátek</translation>
+        <translation>Začáteční bod</translation>
     </message>
     <message>
         <location filename="../models/playlistmodel.cpp" line="102"/>
@@ -1914,7 +1914,7 @@ po začátek vybraného střihu.</translation>
     <message>
         <location filename="../models/playlistmodel.cpp" line="104"/>
         <source>Start</source>
-        <translation>Spustit</translation>
+        <translation>Začátek</translation>
     </message>
 </context>
 <context>
@@ -1963,7 +1963,7 @@ po začátek vybraného střihu.</translation>
     <message>
         <location filename="../docks/recentdock.ui" line="18"/>
         <source>Recent</source>
-        <translation>Poslední</translation>
+        <translation>Naposledy otevřené</translation>
     </message>
 </context>
 <context>
