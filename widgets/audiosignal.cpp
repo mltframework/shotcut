@@ -57,6 +57,33 @@ bool AudioSignal::monitoringEnabled() const
     return m_aMonitoringEnabled->isChecked();
 }
 
+//----------------------------------------------------------------------------
+// IEC standard dB scaling -- as borrowed from meterbridge (c) Steve Harris
+
+static inline double IEC_Scale(double dB)
+{
+	double fScale = 1.0f;
+
+	if (dB < -70.0f)
+		fScale = 0.0f;
+	else if (dB < -60.0f)
+		fScale = (dB + 70.0f) * 0.0025f;
+	else if (dB < -50.0f)
+		fScale = (dB + 60.0f) * 0.005f + 0.025f;
+	else if (dB < -40.0)
+		fScale = (dB + 50.0f) * 0.0075f + 0.075f;
+	else if (dB < -30.0f)
+		fScale = (dB + 40.0f) * 0.015f + 0.15f;
+	else if (dB < -20.0f)
+		fScale = (dB + 30.0f) * 0.02f + 0.3f;
+	else if (dB < -0.001f || dB > 0.001f)  /* if (dB < 0.0f) */
+		fScale = (dB + 20.0f) * 0.025f + 0.5f;
+
+	return fScale;
+}
+
+#define DECIBEL(n) (log10(n) * 20.0)
+
 void AudioSignal::slotReceiveAudio(const QVector<int16_t>& data, int, int num_channels, int samples)
 {
     int num_samples = samples > 200 ? 200 : samples;
@@ -84,9 +111,9 @@ void AudioSignal::slotReceiveAudio(const QVector<int16_t>& data, int, int num_ch
         }
         //max amplitude = 40/42, 3to10  oversamples=41, more then 10 oversamples=42 
         if (over > 0.0)
-            channels << over;
+            channels << IEC_Scale(DECIBEL(over));
         else
-            channels << (val / num_samples * 40.0/42.0 / 127.0);
+            channels << IEC_Scale(DECIBEL(val / num_samples * 40.0/42.0 / 127.0));
     }
     showAudio(channels);
     m_timer.start(1000);
@@ -117,36 +144,6 @@ void AudioSignal::showAudio(const QVector<double>& arr)
     update();
 }
 
-//----------------------------------------------------------------------------
-// IEC standard dB scaling -- as borrowed from meterbridge (c) Steve Harris
-
-static inline double IEC_Scale(double dB)
-{
-	double fScale = 1.0f;
-
-	if (dB < -70.0f)
-		fScale = 0.0f;
-	else if (dB < -60.0f)
-		fScale = (dB + 70.0f) * 0.0025f;
-	else if (dB < -50.0f)
-		fScale = (dB + 60.0f) * 0.005f + 0.025f;
-	else if (dB < -40.0)
-		fScale = (dB + 50.0f) * 0.0075f + 0.075f;
-	else if (dB < -30.0f)
-		fScale = (dB + 40.0f) * 0.015f + 0.15f;
-	else if (dB < -20.0f)
-		fScale = (dB + 30.0f) * 0.02f + 0.3f;
-	else if (dB < -0.001f || dB > 0.001f)  /* if (dB < 0.0f) */
-		fScale = (dB + 20.0f) * 0.025f + 0.5f;
-
-	return fScale;
-}
-
-double AudioSignal::valueToPixel(double in)
-{
-	return IEC_Scale(log10(in) * 20.0);
-}
-
 void AudioSignal::paintEvent(QPaintEvent* /*e*/)
 {
     if (!m_aMonitoringEnabled->isChecked() || !isVisible())
@@ -160,8 +157,7 @@ void AudioSignal::paintEvent(QPaintEvent* /*e*/)
 
     //valpixel=1.0 for 127, 1.0+(1/40) for 1 short oversample, 1.0+(2/40) for longer oversample
     for (int i = 0; i < numchan; i++) {
-        double valpixel = valueToPixel(channels[i]);
-        int maxx =  h  * valpixel;
+        int maxx =  h  * channels[i];
         int xdelta = h / 42 ;
         int y2 = (showdb? width() - dbsize : width()) / numchan - 1;
         int y1 = (showdb? width() - dbsize : width()) *  i / numchan;
@@ -169,7 +165,7 @@ void AudioSignal::paintEvent(QPaintEvent* /*e*/)
         if (horiz) {
             dbsize = 9;
             showdb = height() > dbsize;
-            maxx = width() * valpixel;
+            maxx = width() * channels[i];
             xdelta = width() / 42;
             y2 = (showdb? height() - dbsize : height() ) / numchan - 1;
             y1 = (showdb? height() - dbsize : height() ) * i/numchan;
@@ -195,7 +191,7 @@ void AudioSignal::paintEvent(QPaintEvent* /*e*/)
                 maxx -= xdelta;
             }
         }
-        int xp = valueToPixel(peeks[i]) * (horiz? width() : h) - 2;
+        int xp = peeks[i] * (horiz? width() : h) - 2;
         p.fillRect(horiz? xp : y1 + dbsize, horiz? y1 : height() - xdelta - xp, horiz? 3 : y2, horiz? y2 : 3,
                    QBrush(Qt::black,Qt::SolidPattern));
     }
