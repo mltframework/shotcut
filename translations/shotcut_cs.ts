@@ -6,7 +6,7 @@
     <message>
         <location filename="../main.cpp" line="87"/>
         <source>Loading plugins...</source>
-        <translation type="unfinished"></translation>
+        <translation>Nahrávají se přídavné moduly...</translation>
     </message>
 </context>
 <context>
@@ -894,7 +894,7 @@ vícevláknové.</translation>
         <location filename="../docks/encodedock.cpp" line="104"/>
         <location filename="../docks/encodedock.cpp" line="110"/>
         <source>Stock</source>
-        <translation>Stock</translation>
+        <translation>Tovární</translation>
     </message>
     <message>
         <location filename="../docks/encodedock.cpp" line="524"/>
@@ -1228,7 +1228,7 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;Průvodce pro rychlý začátek práce v Shotcutu&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Otevřete soubory &lt;span style=&quot; font-weight:600;&quot;&gt;jejich přetažením a upuštěním&lt;/span&gt; vedle použití hlavní nabídky a nebo panelu s nástroji.&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Vedle použití hlavní nabídky nebo panelu s nástroji soubory otevřete&lt;span style=&quot; font-weight:600;&quot;&gt;jejich přetažením a upuštěním&lt;/span&gt; .&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Použijte &lt;span style=&quot; font-weight:600;&quot;&gt;Soubor&lt;/span&gt; &amp;gt; &lt;span style=&quot; font-weight:600;&quot;&gt;Otevřít jiné&lt;/span&gt; k otevření síťových proudů, zařízení pro zachytávání a generatorů.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Soubory MLT XML lze otevřít jako záznam; takže můžete Shotcut použít na vyzkoušení svého XML.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesové zkratky pro ovládání pohybu záznamu:&lt;/p&gt;
@@ -1441,7 +1441,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../mainwindow.cpp" line="351"/>
         <source>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;p&gt;Copyright &amp;copy; 2011-2012 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://qt.nokia.com/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;&lt;small&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
-        <translation>&lt;h1&gt;Shotcut verze %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; je svobodný editor videa, program s otevřeným zdrojovým kódem, pro více operačních systémů.&lt;/p&gt;&lt;p&gt;Autorské právo &amp;copy; 2011-2012 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licencováno pod &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Tento program hrdě používá následující projekty:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://qt.nokia.com/&quot;&gt;Qt&lt;/a&gt; aplikace a soustava uživatelského rozhraní&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimediální authoringová soustava&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimediální formát a knihovny s kodeky&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 enkodér&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 enkodér&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 enkodér&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; přídavné moduly pro video&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; přídavné moduly pro audio&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;Zdrojový kód používaný k sestavení tohoto programu lze stáhnout z &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;&lt;small&gt;Tento program je šířen v naději, že bude užitečný, ale BEZ JAKÉKOLI ZÁRUKY; také bez předpokládané záruky PRODEJNOSTI nebo POUŽITELNOSTI PRO NĚJAKÝ URČITÝ ÚČEL.&lt;/small&gt;</translation>
+        <translation>&lt;h1&gt;Shotcut verze %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; je svobodný editor videa. Je to program s otevřeným zdrojovým kódem. Je určen pro více operačních systémů.&lt;/p&gt;&lt;p&gt;Autorské právo &amp;copy; 2011-2012 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licencováno pod &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Tento program hrdě používá následující projekty:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://qt.nokia.com/&quot;&gt;Qt&lt;/a&gt;: užití Qt a uživatelské rozhraní&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt;: multimediální authoringová soustava&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt;: multimediální formát a knihovny s kodeky&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt;: enkodér H.264&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt;: enkodér VP8&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt;: enkodér MP3&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt;: přídavné moduly pro video&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt;: přídavné moduly pro audio&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;Zdrojový kód používaný k sestavení tohoto programu lze stáhnout z &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;&lt;small&gt;Tento program je šířen v naději, že bude užitečný, ale BEZ JAKÉKOLI ZÁRUKY; také bez předpokládané záruky PRODEJNOSTI nebo POUŽITELNOSTI PRO NĚJAKÝ URČITÝ ÚČEL.&lt;/small&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="571"/>
@@ -1707,7 +1707,7 @@ Chcete uložit své změny?</translation>
     <message>
         <location filename="../player.cpp" line="350"/>
         <source>Space</source>
-        <translation type="unfinished"></translation>
+        <translation>Mezerník</translation>
     </message>
     <message>
         <location filename="../player.cpp" line="351"/>
@@ -1724,37 +1724,37 @@ Chcete uložit své změny?</translation>
     <message>
         <location filename="../player.cpp" line="355"/>
         <source>Backspace</source>
-        <translation type="unfinished"></translation>
+        <translation>Backspace</translation>
     </message>
     <message>
         <location filename="../player.cpp" line="356"/>
         <source>Skip Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Skočit na další</translation>
     </message>
     <message>
         <location filename="../player.cpp" line="358"/>
         <source>Skip to the next point (Alt+Right)</source>
-        <translation type="unfinished"></translation>
+        <translation>Skočit na další bod (Alt+šipka vpravo)</translation>
     </message>
     <message>
         <location filename="../player.cpp" line="360"/>
         <source>Alt+Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+šipka vpravo</translation>
     </message>
     <message>
         <location filename="../player.cpp" line="361"/>
         <source>Skip Previous</source>
-        <translation type="unfinished"></translation>
+        <translation>Skočit na předchozí</translation>
     </message>
     <message>
         <location filename="../player.cpp" line="363"/>
         <source>Skip to the previous point (Alt+Left)</source>
-        <translation type="unfinished"></translation>
+        <translation>Skočit na předchozí bod (Alt+šipka vlevo)</translation>
     </message>
     <message>
         <location filename="../player.cpp" line="365"/>
         <source>Alt+Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+šipka vlevo</translation>
     </message>
     <message>
         <location filename="../player.cpp" line="366"/>
@@ -1764,87 +1764,87 @@ Chcete uložit své změny?</translation>
     <message>
         <location filename="../player.cpp" line="368"/>
         <source>Force the video preview to deinterlace if needed</source>
-        <translation type="unfinished"></translation>
+        <translation>V případě potřeby přinutit náhled videa ke zrušení prokládání</translation>
     </message>
     <message>
         <location filename="../player.cpp" line="370"/>
         <source>One Field (fast)</source>
-        <translation type="unfinished"></translation>
+        <translation>Jedno pole (rychlé)</translation>
     </message>
     <message>
         <location filename="../player.cpp" line="371"/>
         <source>Linear Blend (fast)</source>
-        <translation type="unfinished"></translation>
+        <translation>Lineární spojení (nejrychlejší)</translation>
     </message>
     <message>
         <location filename="../player.cpp" line="372"/>
         <source>YADIF - temporal only (good)</source>
-        <translation type="unfinished"></translation>
+        <translation>YADIF - pouze dočasné (dobré)</translation>
     </message>
     <message>
         <location filename="../player.cpp" line="373"/>
         <source>YADIF - temporal + spatial (best)</source>
-        <translation type="unfinished"></translation>
+        <translation>YADIF - dočasné + prostorové (nejlepší)</translation>
     </message>
     <message>
         <location filename="../player.cpp" line="374"/>
         <source>Nearest Neighbor (fast)</source>
-        <translation type="unfinished"></translation>
+        <translation>Nejbližžší soused (rychlé)</translation>
     </message>
     <message>
         <location filename="../player.cpp" line="375"/>
         <source>Bilinear (good)</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilineární (dobré)</translation>
     </message>
     <message>
         <location filename="../player.cpp" line="376"/>
         <source>Bicubic (better)</source>
-        <translation type="unfinished"></translation>
+        <translation>Bikubický (lepší)</translation>
     </message>
     <message>
         <location filename="../player.cpp" line="377"/>
         <source>Hyper/Lanczoz (best)</source>
-        <translation type="unfinished"></translation>
+        <translation>Hyper/Lanczoz (nejlepší)</translation>
     </message>
     <message>
         <location filename="../player.cpp" line="378"/>
         <source>Rewind</source>
-        <translation type="unfinished"></translation>
+        <translation>Přetočit</translation>
     </message>
     <message>
         <location filename="../player.cpp" line="380"/>
         <source>Play quickly backwards (J)</source>
-        <translation type="unfinished"></translation>
+        <translation>Přehrávat rychle dozadu (J)</translation>
     </message>
     <message>
         <location filename="../player.cpp" line="382"/>
         <source>Fast Forward</source>
-        <translation type="unfinished"></translation>
+        <translation>Rychle vpřed</translation>
     </message>
     <message>
         <location filename="../player.cpp" line="384"/>
         <source>Play quickly forwards (L)</source>
-        <translation type="unfinished"></translation>
+        <translation>Přehrávat rychle dopředu (L)</translation>
     </message>
     <message>
         <location filename="../player.cpp" line="386"/>
         <source>Realtime (frame dropping)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ve skutečném čase (zahazování snímků)</translation>
     </message>
     <message>
         <location filename="../player.cpp" line="388"/>
         <source>Allow the player to drop video frames to try to play in realtime</source>
-        <translation type="unfinished"></translation>
+        <translation>Dovolit přehrávači vynechávání snímků videa kvůli tomu, aby zkusil přehrávat ve skutečném čase</translation>
     </message>
     <message>
         <location filename="../player.cpp" line="391"/>
         <source>Use OpenGL</source>
-        <translation type="unfinished"></translation>
+        <translation>Použít OpenGL</translation>
     </message>
     <message>
         <location filename="../player.cpp" line="393"/>
         <source>Use JACK Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Použít JACK Audio</translation>
     </message>
     <message>
         <location filename="../player.cpp" line="479"/>
@@ -1899,7 +1899,7 @@ Chcete uložit své změny?</translation>
         <location filename="../player.cpp" line="750"/>
         <source>You must restart Shotcut to switch using OpenGL.
 Do you want to exit now?</source>
-        <translation>Musíte Shotcut spustit pro přepnutí kvůli používání OpenGL znovu.
+        <translation>Musíte Shotcut spustit kvůli přepnutí pro používání OpenGL znovu.
 Chcete jej ukončit nyní?</translation>
     </message>
     <message>
@@ -1915,7 +1915,7 @@ Ověřte, prosím, že je JACK nainstalován a běží.</translation>
     <message>
         <location filename="../docks/playlistdock.ui" line="18"/>
         <source>Playlist</source>
-        <translation>Seznam skladeb</translation>
+        <translation>Seznam záběrů</translation>
     </message>
     <message>
         <location filename="../docks/playlistdock.ui" line="35"/>
@@ -1933,11 +1933,11 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dvakrát klepněte&lt;/span&gt; na položku seznamu skladeb pro nahrání seznamu skladeb do přehrávače.&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dvakrát klepněte&lt;/span&gt; na položku v seznamu záběrů pro nahrání seznamu záběrů do přehrávače.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Přehrávač hledá po začátek kterékoli položky, na kterou &lt;span style=&quot; font-weight:600;&quot;&gt;dvakrát klepnete&lt;/span&gt;.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Můžete se volně dívat na záznamy, aniž byste je nutně přidali do seznamu skladeb nebo je zavřeli.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Pro zkrácení nebo upravení položky seznamu skladeb vyberte &lt;span style=&quot; font-weight:600;&quot;&gt;Otevřít jako záznam&lt;/span&gt; v nabídce souvisejících činností, udělejte změny, a pak vyberte &lt;span style=&quot; font-weight:600;&quot;&gt;Obnovit&lt;/span&gt;.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Aby byl seznam skladeb zakódován, musí být nahrán v přehrávači!&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Můžete se volně dívat na záznamy, aniž byste je nutně přidali do seznamu záběrů nebo je zavřeli.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Pro zkrácení nebo upravení položky seznamu záběrů vyberte &lt;span style=&quot; font-weight:600;&quot;&gt;Otevřít jako záznam&lt;/span&gt; v nabídce souvisejících činností, udělejte změny, a pak vyberte &lt;span style=&quot; font-weight:600;&quot;&gt;Obnovit&lt;/span&gt;.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Aby byl seznam záběrů zakódován, musí být nahrán v přehrávači!&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Táhněte a pusťte&lt;/span&gt; pro přeuspořádání položek.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -1946,18 +1946,18 @@ p, li { white-space: pre-wrap; }
 into the player and seek to the start of the
 selected cut.</source>
         <translation>Dvakrát klepněte na položku pro nahrání
-seznamu skladeb do přehrávače a hledání
-po začátek vybraného střihu.</translation>
+seznamu záběrů do přehrávače a hledání
+po začátek vybraného záběru.</translation>
     </message>
     <message>
         <location filename="../docks/playlistdock.ui" line="97"/>
         <source>Add something to the playlist</source>
-        <translation>Přidat něco do seznamu skladeb</translation>
+        <translation>Přidat něco do seznamu záběrů</translation>
     </message>
     <message>
         <location filename="../docks/playlistdock.ui" line="114"/>
         <source>Remove cut</source>
-        <translation>Odstranit střih</translation>
+        <translation>Odstranit záběr</translation>
     </message>
     <message>
         <location filename="../docks/playlistdock.ui" line="131"/>
@@ -1967,12 +1967,12 @@ po začátek vybraného střihu.</translation>
     <message>
         <location filename="../docks/playlistdock.ui" line="161"/>
         <source>Insert Cut</source>
-        <translation>Vložit střih</translation>
+        <translation>Vložit záběr</translation>
     </message>
     <message>
         <location filename="../docks/playlistdock.ui" line="170"/>
         <source>Append Cut</source>
-        <translation>Připojit střih</translation>
+        <translation>Připojit záběr</translation>
     </message>
     <message>
         <location filename="../docks/playlistdock.ui" line="175"/>
@@ -1997,7 +1997,7 @@ po začátek vybraného střihu.</translation>
     <message>
         <location filename="../docks/playlistdock.ui" line="193"/>
         <source>Open the cut in the player</source>
-        <translation>Otevřít střih v přehrávači</translation>
+        <translation>Otevřít záběr v přehrávači</translation>
     </message>
     <message>
         <location filename="../docks/playlistdock.ui" line="198"/>
@@ -2012,7 +2012,7 @@ po začátek vybraného střihu.</translation>
     <message>
         <location filename="../docks/playlistdock.ui" line="206"/>
         <source>Go to the start of this cut in the playlist</source>
-        <translation>Jít na začátek tohoto střihu v seznamu skladeb</translation>
+        <translation>Jít na začátek tohoto záběru v seznamu záběrů</translation>
     </message>
     <message>
         <location filename="../docks/playlistdock.ui" line="211"/>
@@ -2022,7 +2022,7 @@ po začátek vybraného střihu.</translation>
     <message>
         <location filename="../docks/playlistdock.ui" line="214"/>
         <source>Remove all items from the playlist</source>
-        <translation>Odstranit všechny položky ze seznamu skladeb</translation>
+        <translation>Odstranit všechny položky ze seznamu záběrů</translation>
     </message>
     <message>
         <location filename="../docks/playlistdock.ui" line="219"/>
@@ -2033,12 +2033,12 @@ po začátek vybraného střihu.</translation>
         <location filename="../docks/playlistdock.cpp" line="86"/>
         <location filename="../docks/playlistdock.cpp" line="261"/>
         <source>You cannot insert a playlist into a playlist!</source>
-        <translation>Nemůžete vložit seznam skladeb do seznamu skladeb!</translation>
+        <translation>Nemůžete vložit seznam záběrů do seznamu záběrů!</translation>
     </message>
     <message>
         <location filename="../docks/playlistdock.cpp" line="150"/>
         <source>This clip does not match the selected cut in the playlist!</source>
-        <translation>Tento záznam neodpovídá vybranému střihu v seznamu skladeb!</translation>
+        <translation>Tento záznam neodpovídá vybranému záběru v seznamu záběrů!</translation>
     </message>
 </context>
 <context>
@@ -2087,7 +2087,7 @@ po začátek vybraného střihu.</translation>
     <message>
         <location filename="../docks/playlistdock.cpp" line="297"/>
         <source>Append playlist item %1</source>
-        <translation>Připojit položku seznamu skladeb %1</translation>
+        <translation>Připojit položku seznamu záběrů %1</translation>
     </message>
     <message>
         <location filename="../docks/playlistdock.cpp" line="318"/>
@@ -2097,17 +2097,17 @@ po začátek vybraného střihu.</translation>
     <message>
         <location filename="../docks/playlistdock.cpp" line="339"/>
         <source>Update playlist item %1</source>
-        <translation>Obnovit položku seznamu skladeb %1</translation>
+        <translation>Obnovit položku seznamu záběrů %1</translation>
     </message>
     <message>
         <location filename="../docks/playlistdock.cpp" line="365"/>
         <source>Remove playlist item %1</source>
-        <translation>Odstranit položku seznamu skladeb %1</translation>
+        <translation>Odstranit položku seznamu záběrů %1</translation>
     </message>
     <message>
         <location filename="../docks/playlistdock.cpp" line="385"/>
         <source>Clear playlist</source>
-        <translation>Vyprázdnit seznam skladeb</translation>
+        <translation>Vyprázdnit seznam záběrů</translation>
     </message>
 </context>
 <context>
