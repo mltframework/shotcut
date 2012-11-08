@@ -1,5 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2010 by Marco Gittler (g.marco@freenet.de)              *
+ *   Copyright (C) 2012 by Dan Dennedy (dan@dennedy.org)                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -41,21 +42,21 @@ public:
 
 private:
     double valueToPixel(double in);
-	QTimer m_timer;
+    QTimer m_timer;
     QLabel* label;
-    QByteArray channels,peeks,peekage;
-	QList<int> dbscale;
+    QVector<double> channels, peeks, peekage;
+    QVector<int> dbscale;
     QAction *m_aMonitoringEnabled;
 
 protected:
     void paintEvent(QPaintEvent*);
 
 public slots:
-    void showAudio(const QByteArray);
+    void showAudio(const QVector<double>&);
     void slotReceiveAudio(const QVector<int16_t>&,int,int,int);
 private slots:
-     void slotSwitchAudioMonitoring(bool isOn);
-	void slotNoAudioTimeout();
+    void slotSwitchAudioMonitoring(bool isOn);
+    void slotNoAudioTimeout();
 
 signals:
     void updateAudioMonitoring();
