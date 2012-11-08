@@ -30,10 +30,8 @@ class QLabel;
 class TimeSpinBox;
 class AudioSignal;
 class QSlider;
-
-namespace Ui {
-    class Player;
-}
+class QAction;
+class QActionGroup;
 
 class Player : public QWidget
 {
@@ -75,12 +73,37 @@ protected:
     void resizeEvent(QResizeEvent* event);
 
 private:
+    void addProfile(QWidget* widget, const QString& desc, const QString& name);
+    void setupActions(QWidget* widget);
+    void retranslateUi(QWidget* widget);
     void readSettings();
     void changeDeinterlacer(bool checked, const char* method);
     void changeInterpolation(bool checked, const char* method);
     void showAudio(Mlt::Frame* frame);
 
-    Ui::Player* ui;
+    QAction *actionPlay;
+    QAction *actionPause;
+    QAction *actionSkipNext;
+    QAction *actionSkipPrevious;
+    QAction *actionProgressive;
+    QAction *actionOneField;
+    QAction *actionLinearBlend;
+    QAction *actionYadifTemporal;
+    QAction *actionYadifSpatial;
+    QAction *actionNearest;
+    QAction *actionBilinear;
+    QAction *actionBicubic;
+    QAction *actionHyper;
+    QAction *actionRewind;
+    QAction *actionFastForward;
+    QAction *actionRealtime;
+#ifdef Q_WS_X11
+    QAction *actionOpenGL;
+#endif
+    QActionGroup *externalGroup;
+    QActionGroup *profileGroup;
+    QAction *actionJack;
+
     QSettings m_settings;
     ScrubBar* m_scrubber;
     TimeSpinBox* m_positionSpinner;

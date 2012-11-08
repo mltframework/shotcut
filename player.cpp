@@ -26,252 +26,29 @@
 #define VOLUME_KNEE (88)
 #define SEEK_INACTIVE (-1)
 
-QT_BEGIN_NAMESPACE
-
-namespace Ui {
-class Player
-{
-public:
-    QAction *actionPlay;
-    QAction *actionPause;
-    QAction *actionSkipNext;
-    QAction *actionSkipPrevious;
-    QAction *actionProgressive;
-    QAction *actionOneField;
-    QAction *actionLinearBlend;
-    QAction *actionYadifTemporal;
-    QAction *actionYadifSpatial;
-    QAction *actionNearest;
-    QAction *actionBilinear;
-    QAction *actionBicubic;
-    QAction *actionHyper;
-    QAction *actionRewind;
-    QAction *actionFastForward;
-    QAction *actionRealtime;
-#ifdef Q_WS_X11
-    QAction *actionOpenGL;
-#endif
-    QActionGroup *externalGroup;
-    QActionGroup *profileGroup;
-    QAction *actionJack;
-
-    void addProfile(QWidget* widget, const QString& desc, const QString& name)
-    {
-        QAction* action = new QAction(desc, widget);
-        action->setCheckable(true);
-        action->setData(name);
-        profileGroup->addAction(action);
-    }
-
-    void setupActions(QWidget* widget)
-    {
-        actionPlay = new QAction(widget);
-        actionPlay->setObjectName(QString::fromUtf8("actionPlay"));
-        QIcon icon2;
-        icon2.addFile(QString::fromUtf8(":/icons/icons/media-playback-start.png"), QSize(), QIcon::Normal, QIcon::Off);
-        actionPlay->setIcon(icon2);
-        actionPause = new QAction(widget);
-        actionPause->setObjectName(QString::fromUtf8("actionPause"));
-        QIcon icon3;
-        icon3.addFile(QString::fromUtf8(":/icons/icons/media-playback-pause.png"), QSize(), QIcon::Normal, QIcon::Off);
-        actionPause->setIcon(icon3);
-        actionSkipNext = new QAction(widget);
-        actionSkipNext->setObjectName(QString::fromUtf8("actionSkipNext"));
-        QIcon icon4;
-        icon4.addFile(QString::fromUtf8(":/icons/icons/media-skip-forward.png"), QSize(), QIcon::Normal, QIcon::Off);
-        actionSkipNext->setIcon(icon4);
-        actionSkipPrevious = new QAction(widget);
-        actionSkipPrevious->setObjectName(QString::fromUtf8("actionSkipPrevious"));
-        QIcon icon5;
-        icon5.addFile(QString::fromUtf8(":/icons/icons/media-skip-backward.png"), QSize(), QIcon::Normal, QIcon::Off);
-        actionSkipPrevious->setIcon(icon5);
-        actionProgressive = new QAction(widget);
-        actionProgressive->setObjectName(QString::fromUtf8("actionProgressive"));
-        actionProgressive->setCheckable(true);
-        actionOneField = new QAction(widget);
-        actionOneField->setObjectName(QString::fromUtf8("actionOneField"));
-        actionOneField->setCheckable(true);
-        actionLinearBlend = new QAction(widget);
-        actionLinearBlend->setObjectName(QString::fromUtf8("actionLinearBlend"));
-        actionLinearBlend->setCheckable(true);
-        actionYadifTemporal = new QAction(widget);
-        actionYadifTemporal->setObjectName(QString::fromUtf8("actionYadifTemporal"));
-        actionYadifTemporal->setCheckable(true);
-        actionYadifSpatial = new QAction(widget);
-        actionYadifSpatial->setObjectName(QString::fromUtf8("actionYadifSpatial"));
-        actionYadifSpatial->setCheckable(true);
-        actionNearest = new QAction(widget);
-        actionNearest->setObjectName(QString::fromUtf8("actionNearest"));
-        actionNearest->setCheckable(true);
-        actionBilinear = new QAction(widget);
-        actionBilinear->setObjectName(QString::fromUtf8("actionBilinear"));
-        actionBilinear->setCheckable(true);
-        actionBicubic = new QAction(widget);
-        actionBicubic->setObjectName(QString::fromUtf8("actionBicubic"));
-        actionBicubic->setCheckable(true);
-        actionHyper = new QAction(widget);
-        actionHyper->setObjectName(QString::fromUtf8("actionHyper"));
-        actionHyper->setCheckable(true);
-        actionRewind = new QAction(widget);
-        actionRewind->setObjectName(QString::fromUtf8("actionRewind"));
-        QIcon icon6;
-        icon6.addFile(QString::fromUtf8(":/icons/icons/media-seek-backward.png"), QSize(), QIcon::Normal, QIcon::Off);
-        actionRewind->setIcon(icon6);
-        actionFastForward = new QAction(widget);
-        actionFastForward->setObjectName(QString::fromUtf8("actionFastForward"));
-        QIcon icon7;
-        icon7.addFile(QString::fromUtf8(":/icons/icons/media-seek-forward.png"), QSize(), QIcon::Normal, QIcon::Off);
-        actionFastForward->setIcon(icon7);
-        actionRealtime = new QAction(widget);
-        actionRealtime->setObjectName(QString::fromUtf8("actionRealtime"));
-        actionRealtime->setCheckable(true);
-#ifdef Q_WS_X11
-        actionOpenGL = new QAction(widget);
-        actionOpenGL->setObjectName(QString::fromUtf8("actionOpenGL"));
-        actionOpenGL->setCheckable(true);
-#endif
-        actionJack = new QAction(widget);
-        actionJack->setObjectName(QString::fromUtf8("actionJack"));
-        actionJack->setCheckable(true);
-
-        // Make a list of profiles
-        profileGroup = new QActionGroup(widget);
-        QAction* action = new QAction(widget);
-        const char* name = widget->objectName().toUtf8().constData();
-        action->setText(QApplication::translate(name, "Automatic", 0, QApplication::UnicodeUTF8));
-        action->setCheckable(true);
-        action->setData(QString());
-        profileGroup->addAction(action);
-        addProfile(widget, "HD 720p 50 fps", "atsc_720p_50");
-        addProfile(widget, "HD 720p 59.94 fps", "atsc_720p_5994");
-        addProfile(widget, "HD 720p 60 fps", "atsc_720p_60");
-        addProfile(widget, "HD 1080i 25 fps", "atsc_1080i_50");
-        addProfile(widget, "HD 1080i 29.97 fps", "atsc_1080i_5994");
-        addProfile(widget, "HD 1080p 23.98 fps", "atsc_1080p_2398");
-        addProfile(widget, "HD 1080p 24 fps", "atsc_1080p_24");
-        addProfile(widget, "HD 1080p 25 fps", "atsc_1080p_25");
-        addProfile(widget, "HD 1080p 29.97 fps", "atsc_1080p_2997");
-        addProfile(widget, "HD 1080p 30 fps", "atsc_1080p_30");
-        addProfile(widget, "SD NTSC", "dv_ntsc");
-        addProfile(widget, "SD PAL", "dv_pal");
-
-        // Make a list of the SDI and HDMI devices
-        externalGroup = new QActionGroup(widget);
-        action = new QAction(widget);
-        action->setText(QApplication::translate(name, "None", 0, QApplication::UnicodeUTF8));
-        action->setCheckable(true);
-        action->setData(QString());
-        externalGroup->addAction(action);
-#ifdef Q_WS_X11
-        Mlt::Consumer linsys(MLT.profile(), "sdi");
-        if (linsys.is_valid()) {
-            action = new QAction("DVEO VidPort", widget);
-            action->setCheckable(true);
-            action->setData(QString("sdi"));
-            externalGroup->addAction(action);
-        }
-#endif
-        Mlt::Profile profile;
-        Mlt::Consumer decklink(profile, "decklink:");
-        if (decklink.is_valid()) {
-            decklink.set("list_devices", 1);
-            int n = decklink.get_int("devices");
-            for (int i = 0; i < n; ++i) {
-                QString device(decklink.get(QString("device.%1").arg(i).toAscii().constData()));
-                if (!device.isEmpty()) {
-                    action = new QAction(device, widget);
-                    action->setCheckable(true);
-                    action->setData(QString("decklink:%1").arg(i));
-                    externalGroup->addAction(action);
-                }
-            }
-        }
-
-        retranslateUi(widget);
-        QMetaObject::connectSlotsByName(widget);
-    }
-
-    void retranslateUi(QWidget* widget)
-    {
-        const char* name = widget->objectName().toUtf8().constData();
-        actionPlay->setText(QApplication::translate(name, "Play", 0, QApplication::UnicodeUTF8));
-#ifndef QT_NO_TOOLTIP
-        actionPlay->setToolTip(QApplication::translate(name, "Start playback (L)", 0, QApplication::UnicodeUTF8));
-#endif // QT_NO_TOOLTIP
-        actionPlay->setShortcut(QApplication::translate(name, "Space", 0, QApplication::UnicodeUTF8));
-        actionPause->setText(QApplication::translate(name, "Pause", 0, QApplication::UnicodeUTF8));
-#ifndef QT_NO_TOOLTIP
-        actionPause->setToolTip(QApplication::translate(name, "Pause playback (K)", 0, QApplication::UnicodeUTF8));
-#endif // QT_NO_TOOLTIP
-        actionPause->setShortcut(QApplication::translate(name, "Backspace", 0, QApplication::UnicodeUTF8));
-        actionSkipNext->setText(QApplication::translate(name, "Skip Next", 0, QApplication::UnicodeUTF8));
-#ifndef QT_NO_TOOLTIP
-        actionSkipNext->setToolTip(QApplication::translate(name, "Skip to the next point (Alt+Right)", 0, QApplication::UnicodeUTF8));
-#endif // QT_NO_TOOLTIP
-        actionSkipNext->setShortcut(QApplication::translate(name, "Alt+Right", 0, QApplication::UnicodeUTF8));
-        actionSkipPrevious->setText(QApplication::translate(name, "Skip Previous", 0, QApplication::UnicodeUTF8));
-#ifndef QT_NO_TOOLTIP
-        actionSkipPrevious->setToolTip(QApplication::translate(name, "Skip to the previous point (Alt+Left)", 0, QApplication::UnicodeUTF8));
-#endif // QT_NO_TOOLTIP
-        actionSkipPrevious->setShortcut(QApplication::translate(name, "Alt+Left", 0, QApplication::UnicodeUTF8));
-        actionProgressive->setText(QApplication::translate(name, "Progressive", 0, QApplication::UnicodeUTF8));
-#ifndef QT_NO_TOOLTIP
-        actionProgressive->setToolTip(QApplication::translate(name, "Force the video preview to deinterlace if needed", 0, QApplication::UnicodeUTF8));
-#endif // QT_NO_TOOLTIP
-        actionOneField->setText(QApplication::translate(name, "One Field (fast)", 0, QApplication::UnicodeUTF8));
-        actionLinearBlend->setText(QApplication::translate(name, "Linear Blend (fast)", 0, QApplication::UnicodeUTF8));
-        actionYadifTemporal->setText(QApplication::translate(name, "YADIF - temporal only (good)", 0, QApplication::UnicodeUTF8));
-        actionYadifSpatial->setText(QApplication::translate(name, "YADIF - temporal + spatial (best)", 0, QApplication::UnicodeUTF8));
-        actionNearest->setText(QApplication::translate(name, "Nearest Neighbor (fast)", 0, QApplication::UnicodeUTF8));
-        actionBilinear->setText(QApplication::translate(name, "Bilinear (good)", 0, QApplication::UnicodeUTF8));
-        actionBicubic->setText(QApplication::translate(name, "Bicubic (better)", 0, QApplication::UnicodeUTF8));
-        actionHyper->setText(QApplication::translate(name, "Hyper/Lanczoz (best)", 0, QApplication::UnicodeUTF8));
-        actionRewind->setText(QApplication::translate(name, "Rewind", 0, QApplication::UnicodeUTF8));
-#ifndef QT_NO_TOOLTIP
-        actionRewind->setToolTip(QApplication::translate(name, "Play quickly backwards (J)", 0, QApplication::UnicodeUTF8));
-#endif // QT_NO_TOOLTIP
-        actionFastForward->setText(QApplication::translate(name, "Fast Forward", 0, QApplication::UnicodeUTF8));
-#ifndef QT_NO_TOOLTIP
-        actionFastForward->setToolTip(QApplication::translate(name, "Play quickly forwards (L)", 0, QApplication::UnicodeUTF8));
-#endif // QT_NO_TOOLTIP
-        actionRealtime->setText(QApplication::translate(name, "Realtime (frame dropping)", 0, QApplication::UnicodeUTF8));
-#ifndef QT_NO_TOOLTIP
-        actionRealtime->setToolTip(QApplication::translate(name, "Allow the player to drop video frames to try to play in realtime", 0, QApplication::UnicodeUTF8));
-#endif // QT_NO_TOOLTIP
-#ifdef Q_WS_X11
-        actionOpenGL->setText(QApplication::translate(name, "Use OpenGL", 0, QApplication::UnicodeUTF8));
-#endif
-        actionJack->setText(QApplication::translate(name, "Use JACK Audio", 0, QApplication::UnicodeUTF8));
-    }
-};
-} // namespace Ui
-
-QT_END_NAMESPACE
-
 Player::Player(QWidget *parent)
     : QWidget(parent)
-    , ui(new Ui::Player)
     , m_position(0)
     , m_seekPosition(SEEK_INACTIVE)
 {
     setObjectName("Player");
     Mlt::Controller::singleton(this);
 
-    ui->setupActions(this);
+    setupActions(this);
     // These use the icon theme on Linux, with fallbacks to the icons specified in QtDesigner for other platforms.
-    ui->actionPlay->setIcon(QIcon::fromTheme("media-playback-start", ui->actionPlay->icon()));
-    ui->actionPause->setIcon(QIcon::fromTheme("media-playback-pause", ui->actionPause->icon()));
-    ui->actionSkipNext->setIcon(QIcon::fromTheme("media-skip-forward", ui->actionSkipNext->icon()));
-    ui->actionSkipPrevious->setIcon(QIcon::fromTheme("media-skip-backward", ui->actionSkipPrevious->icon()));
-    ui->actionRewind->setIcon(QIcon::fromTheme("media-seek-backward", ui->actionRewind->icon()));
-    ui->actionFastForward->setIcon(QIcon::fromTheme("media-seek-forward", ui->actionFastForward->icon()));
-    ui->actionPlay->setEnabled(false);
-    ui->actionSkipPrevious->setEnabled(false);
-    ui->actionSkipNext->setEnabled(false);
-    ui->actionRewind->setEnabled(false);
-    ui->actionFastForward->setEnabled(false);
-    m_playIcon = ui->actionPlay->icon();
-    m_pauseIcon = ui->actionPause->icon();
+    actionPlay->setIcon(QIcon::fromTheme("media-playback-start", actionPlay->icon()));
+    actionPause->setIcon(QIcon::fromTheme("media-playback-pause", actionPause->icon()));
+    actionSkipNext->setIcon(QIcon::fromTheme("media-skip-forward", actionSkipNext->icon()));
+    actionSkipPrevious->setIcon(QIcon::fromTheme("media-skip-backward", actionSkipPrevious->icon()));
+    actionRewind->setIcon(QIcon::fromTheme("media-seek-backward", actionRewind->icon()));
+    actionFastForward->setIcon(QIcon::fromTheme("media-seek-forward", actionFastForward->icon()));
+    actionPlay->setEnabled(false);
+    actionSkipPrevious->setEnabled(false);
+    actionSkipNext->setEnabled(false);
+    actionRewind->setEnabled(false);
+    actionFastForward->setEnabled(false);
+    m_playIcon = actionPlay->icon();
+    m_pauseIcon = actionPause->icon();
 
     readSettings();
 
@@ -282,28 +59,28 @@ Player::Player(QWidget *parent)
     vlayout->setSpacing(4);
 
     // Create MLT video widget.
-    MLT.videoWidget()->setProperty("mlt_service", ui->externalGroup->checkedAction()->data());
-    MLT.setProfile(ui->profileGroup->checkedAction()->data().toString());
-    MLT.videoWidget()->setProperty("realtime", ui->actionRealtime->isChecked());
-    if (ui->externalGroup->checkedAction()->data().toString().isEmpty())
-        MLT.videoWidget()->setProperty("progressive", ui->actionProgressive->isChecked());
+    MLT.videoWidget()->setProperty("mlt_service", externalGroup->checkedAction()->data());
+    MLT.setProfile(profileGroup->checkedAction()->data().toString());
+    MLT.videoWidget()->setProperty("realtime", actionRealtime->isChecked());
+    if (externalGroup->checkedAction()->data().toString().isEmpty())
+        MLT.videoWidget()->setProperty("progressive", actionProgressive->isChecked());
     else {
         MLT.videoWidget()->setProperty("progressive", MLT.profile().progressive());
-        ui->actionProgressive->setEnabled(false);
+        actionProgressive->setEnabled(false);
     }
-    if (ui->actionOneField->isChecked())
+    if (actionOneField->isChecked())
         MLT.videoWidget()->setProperty("deinterlace_method", "onefield");
-    else if (ui->actionLinearBlend->isChecked())
+    else if (actionLinearBlend->isChecked())
         MLT.videoWidget()->setProperty("deinterlace_method", "linearblend");
-    else if (ui->actionYadifTemporal->isChecked())
+    else if (actionYadifTemporal->isChecked())
         MLT.videoWidget()->setProperty("deinterlace_method", "yadif-nospatial");
     else
         MLT.videoWidget()->setProperty("deinterlace_method", "yadif");
-    if (ui->actionNearest->isChecked())
+    if (actionNearest->isChecked())
         MLT.videoWidget()->setProperty("rescale", "nearest");
-    else if (ui->actionBilinear->isChecked())
+    else if (actionBilinear->isChecked())
         MLT.videoWidget()->setProperty("rescale", "bilinear");
-    else if (ui->actionBicubic->isChecked())
+    else if (actionBicubic->isChecked())
         MLT.videoWidget()->setProperty("rescale", "bicubic");
     else
         MLT.videoWidget()->setProperty("rescale", "hyper");
@@ -400,11 +177,11 @@ Player::Player(QWidget *parent)
     toolbar->addWidget(m_positionSpinner);
     toolbar->addWidget(m_durationLabel);
     toolbar->addWidget(spacer);
-    toolbar->addAction(ui->actionSkipPrevious);
-    toolbar->addAction(ui->actionRewind);
-    toolbar->addAction(ui->actionPlay);
-    toolbar->addAction(ui->actionFastForward);
-    toolbar->addAction(ui->actionSkipNext);
+    toolbar->addAction(actionSkipPrevious);
+    toolbar->addAction(actionRewind);
+    toolbar->addAction(actionPlay);
+    toolbar->addAction(actionFastForward);
+    toolbar->addAction(actionSkipNext);
     spacer = new QWidget(this);
     spacer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
     toolbar->addWidget(spacer);
@@ -412,12 +189,12 @@ Player::Player(QWidget *parent)
     toolbar->addWidget(m_selectedLabel);
     vlayout->addWidget(toolbar);
 
-    connect(ui->externalGroup, SIGNAL(triggered(QAction*)), this, SLOT(onExternalTriggered(QAction*)));
-    connect(ui->profileGroup, SIGNAL(triggered(QAction*)), this, SLOT(onProfileTriggered(QAction*)));
+    connect(externalGroup, SIGNAL(triggered(QAction*)), this, SLOT(onExternalTriggered(QAction*)));
+    connect(profileGroup, SIGNAL(triggered(QAction*)), this, SLOT(onProfileTriggered(QAction*)));
     connect(MLT.videoWidget(), SIGNAL(frameReceived(Mlt::QFrame)), this, SLOT(onShowFrame(Mlt::QFrame)));
     connect(MLT.videoWidget(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onVideoWidgetContextMenu(QPoint)));
-    connect(ui->actionPlay, SIGNAL(triggered()), this, SLOT(togglePlayPaused()));
-    connect(ui->actionPause, SIGNAL(triggered()), this, SLOT(pause()));
+    connect(actionPlay, SIGNAL(triggered()), this, SLOT(togglePlayPaused()));
+    connect(actionPause, SIGNAL(triggered()), this, SLOT(pause()));
     connect(m_scrubber, SIGNAL(seeked(int)), this, SLOT(seek(int)));
     connect(m_scrubber, SIGNAL(inChanged(int)), this, SLOT(onInChanged(int)));
     connect(m_scrubber, SIGNAL(outChanged(int)), this, SLOT(onOutChanged(int)));
@@ -428,37 +205,225 @@ Player::Player(QWidget *parent)
     setFocusPolicy(Qt::StrongFocus);
 }
 
+void Player::addProfile(QWidget* widget, const QString& desc, const QString& name)
+{
+    QAction* action = new QAction(desc, widget);
+    action->setCheckable(true);
+    action->setData(name);
+    profileGroup->addAction(action);
+}
+
+void Player::setupActions(QWidget* widget)
+{
+    actionPlay = new QAction(widget);
+    actionPlay->setObjectName(QString::fromUtf8("actionPlay"));
+    QIcon icon2;
+    icon2.addFile(QString::fromUtf8(":/icons/icons/media-playback-start.png"), QSize(), QIcon::Normal, QIcon::Off);
+    actionPlay->setIcon(icon2);
+    actionPause = new QAction(widget);
+    actionPause->setObjectName(QString::fromUtf8("actionPause"));
+    QIcon icon3;
+    icon3.addFile(QString::fromUtf8(":/icons/icons/media-playback-pause.png"), QSize(), QIcon::Normal, QIcon::Off);
+    actionPause->setIcon(icon3);
+    actionSkipNext = new QAction(widget);
+    actionSkipNext->setObjectName(QString::fromUtf8("actionSkipNext"));
+    QIcon icon4;
+    icon4.addFile(QString::fromUtf8(":/icons/icons/media-skip-forward.png"), QSize(), QIcon::Normal, QIcon::Off);
+    actionSkipNext->setIcon(icon4);
+    actionSkipPrevious = new QAction(widget);
+    actionSkipPrevious->setObjectName(QString::fromUtf8("actionSkipPrevious"));
+    QIcon icon5;
+    icon5.addFile(QString::fromUtf8(":/icons/icons/media-skip-backward.png"), QSize(), QIcon::Normal, QIcon::Off);
+    actionSkipPrevious->setIcon(icon5);
+    actionProgressive = new QAction(widget);
+    actionProgressive->setObjectName(QString::fromUtf8("actionProgressive"));
+    actionProgressive->setCheckable(true);
+    actionOneField = new QAction(widget);
+    actionOneField->setObjectName(QString::fromUtf8("actionOneField"));
+    actionOneField->setCheckable(true);
+    actionLinearBlend = new QAction(widget);
+    actionLinearBlend->setObjectName(QString::fromUtf8("actionLinearBlend"));
+    actionLinearBlend->setCheckable(true);
+    actionYadifTemporal = new QAction(widget);
+    actionYadifTemporal->setObjectName(QString::fromUtf8("actionYadifTemporal"));
+    actionYadifTemporal->setCheckable(true);
+    actionYadifSpatial = new QAction(widget);
+    actionYadifSpatial->setObjectName(QString::fromUtf8("actionYadifSpatial"));
+    actionYadifSpatial->setCheckable(true);
+    actionNearest = new QAction(widget);
+    actionNearest->setObjectName(QString::fromUtf8("actionNearest"));
+    actionNearest->setCheckable(true);
+    actionBilinear = new QAction(widget);
+    actionBilinear->setObjectName(QString::fromUtf8("actionBilinear"));
+    actionBilinear->setCheckable(true);
+    actionBicubic = new QAction(widget);
+    actionBicubic->setObjectName(QString::fromUtf8("actionBicubic"));
+    actionBicubic->setCheckable(true);
+    actionHyper = new QAction(widget);
+    actionHyper->setObjectName(QString::fromUtf8("actionHyper"));
+    actionHyper->setCheckable(true);
+    actionRewind = new QAction(widget);
+    actionRewind->setObjectName(QString::fromUtf8("actionRewind"));
+    QIcon icon6;
+    icon6.addFile(QString::fromUtf8(":/icons/icons/media-seek-backward.png"), QSize(), QIcon::Normal, QIcon::Off);
+    actionRewind->setIcon(icon6);
+    actionFastForward = new QAction(widget);
+    actionFastForward->setObjectName(QString::fromUtf8("actionFastForward"));
+    QIcon icon7;
+    icon7.addFile(QString::fromUtf8(":/icons/icons/media-seek-forward.png"), QSize(), QIcon::Normal, QIcon::Off);
+    actionFastForward->setIcon(icon7);
+    actionRealtime = new QAction(widget);
+    actionRealtime->setObjectName(QString::fromUtf8("actionRealtime"));
+    actionRealtime->setCheckable(true);
+#ifdef Q_WS_X11
+    actionOpenGL = new QAction(widget);
+    actionOpenGL->setObjectName(QString::fromUtf8("actionOpenGL"));
+    actionOpenGL->setCheckable(true);
+#endif
+    actionJack = new QAction(widget);
+    actionJack->setObjectName(QString::fromUtf8("actionJack"));
+    actionJack->setCheckable(true);
+
+    // Make a list of profiles
+    profileGroup = new QActionGroup(widget);
+    QAction* action = new QAction(widget);
+    const char* name = widget->objectName().toUtf8().constData();
+    action->setText(tr("Automatic"));
+    action->setCheckable(true);
+    action->setData(QString());
+    profileGroup->addAction(action);
+    addProfile(widget, "HD 720p 50 fps", "atsc_720p_50");
+    addProfile(widget, "HD 720p 59.94 fps", "atsc_720p_5994");
+    addProfile(widget, "HD 720p 60 fps", "atsc_720p_60");
+    addProfile(widget, "HD 1080i 25 fps", "atsc_1080i_50");
+    addProfile(widget, "HD 1080i 29.97 fps", "atsc_1080i_5994");
+    addProfile(widget, "HD 1080p 23.98 fps", "atsc_1080p_2398");
+    addProfile(widget, "HD 1080p 24 fps", "atsc_1080p_24");
+    addProfile(widget, "HD 1080p 25 fps", "atsc_1080p_25");
+    addProfile(widget, "HD 1080p 29.97 fps", "atsc_1080p_2997");
+    addProfile(widget, "HD 1080p 30 fps", "atsc_1080p_30");
+    addProfile(widget, "SD NTSC", "dv_ntsc");
+    addProfile(widget, "SD PAL", "dv_pal");
+
+    // Make a list of the SDI and HDMI devices
+    externalGroup = new QActionGroup(widget);
+    action = new QAction(widget);
+    action->setText(tr("None"));
+    action->setCheckable(true);
+    action->setData(QString());
+    externalGroup->addAction(action);
+#ifdef Q_WS_X11
+    Mlt::Consumer linsys(MLT.profile(), "sdi");
+    if (linsys.is_valid()) {
+        action = new QAction("DVEO VidPort", widget);
+        action->setCheckable(true);
+        action->setData(QString("sdi"));
+        externalGroup->addAction(action);
+    }
+#endif
+    Mlt::Profile profile;
+    Mlt::Consumer decklink(profile, "decklink:");
+    if (decklink.is_valid()) {
+        decklink.set("list_devices", 1);
+        int n = decklink.get_int("devices");
+        for (int i = 0; i < n; ++i) {
+            QString device(decklink.get(QString("device.%1").arg(i).toAscii().constData()));
+            if (!device.isEmpty()) {
+                action = new QAction(device, widget);
+                action->setCheckable(true);
+                action->setData(QString("decklink:%1").arg(i));
+                externalGroup->addAction(action);
+            }
+        }
+    }
+
+    retranslateUi(widget);
+    QMetaObject::connectSlotsByName(widget);
+}
+
+void Player::retranslateUi(QWidget* widget)
+{
+    actionPlay->setText(tr("Play"));
+#ifndef QT_NO_TOOLTIP
+    actionPlay->setToolTip(tr("Start playback (L)"));
+#endif // QT_NO_TOOLTIP
+    actionPlay->setShortcut(tr("Space"));
+    actionPause->setText(tr("Pause"));
+#ifndef QT_NO_TOOLTIP
+    actionPause->setToolTip(tr("Pause playback (K)"));
+#endif // QT_NO_TOOLTIP
+    actionPause->setShortcut(tr("Backspace"));
+    actionSkipNext->setText(tr("Skip Next"));
+#ifndef QT_NO_TOOLTIP
+    actionSkipNext->setToolTip(tr("Skip to the next point (Alt+Right)"));
+#endif // QT_NO_TOOLTIP
+    actionSkipNext->setShortcut(tr("Alt+Right"));
+    actionSkipPrevious->setText(tr("Skip Previous"));
+#ifndef QT_NO_TOOLTIP
+    actionSkipPrevious->setToolTip(tr("Skip to the previous point (Alt+Left)"));
+#endif // QT_NO_TOOLTIP
+    actionSkipPrevious->setShortcut(tr("Alt+Left"));
+    actionProgressive->setText(tr("Progressive"));
+#ifndef QT_NO_TOOLTIP
+    actionProgressive->setToolTip(tr("Force the video preview to deinterlace if needed"));
+#endif // QT_NO_TOOLTIP
+    actionOneField->setText(tr("One Field (fast)"));
+    actionLinearBlend->setText(tr("Linear Blend (fast)"));
+    actionYadifTemporal->setText(tr("YADIF - temporal only (good)"));
+    actionYadifSpatial->setText(tr("YADIF - temporal + spatial (best)"));
+    actionNearest->setText(tr("Nearest Neighbor (fast)"));
+    actionBilinear->setText(tr("Bilinear (good)"));
+    actionBicubic->setText(tr("Bicubic (better)"));
+    actionHyper->setText(tr("Hyper/Lanczoz (best)"));
+    actionRewind->setText(tr("Rewind"));
+#ifndef QT_NO_TOOLTIP
+    actionRewind->setToolTip(tr("Play quickly backwards (J)"));
+#endif // QT_NO_TOOLTIP
+    actionFastForward->setText(tr("Fast Forward"));
+#ifndef QT_NO_TOOLTIP
+    actionFastForward->setToolTip(tr("Play quickly forwards (L)"));
+#endif // QT_NO_TOOLTIP
+    actionRealtime->setText(tr("Realtime (frame dropping)"));
+#ifndef QT_NO_TOOLTIP
+    actionRealtime->setToolTip(tr("Allow the player to drop video frames to try to play in realtime"));
+#endif // QT_NO_TOOLTIP
+#ifdef Q_WS_X11
+    actionOpenGL->setText(tr("Use OpenGL"));
+#endif
+    actionJack->setText(tr("Use JACK Audio"));
+}
+
 void Player::readSettings()
 {
 #ifdef Q_WS_X11
-    ui->actionOpenGL->setChecked(m_settings.value("player/opengl", true).toBool());
+    actionOpenGL->setChecked(m_settings.value("player/opengl", true).toBool());
 #endif
-    ui->actionRealtime->setChecked(m_settings.value("player/realtime", true).toBool());
-    ui->actionProgressive->setChecked(m_settings.value("player/progressive", true).toBool());
-    ui->actionJack->setChecked(m_settings.value("player/jack", false).toBool());
+    actionRealtime->setChecked(m_settings.value("player/realtime", true).toBool());
+    actionProgressive->setChecked(m_settings.value("player/progressive", true).toBool());
+    actionJack->setChecked(m_settings.value("player/jack", false).toBool());
     QString deinterlacer = m_settings.value("player/deinterlacer", "onefield").toString();
     QString interpolation = m_settings.value("player/interpolation", "nearest").toString();
 
     if (deinterlacer == "onefield")
-        ui->actionOneField->setChecked(true);
+        actionOneField->setChecked(true);
     else if (deinterlacer == "linearblend")
-        ui->actionLinearBlend->setChecked(true);
+        actionLinearBlend->setChecked(true);
     else if (deinterlacer == "yadif-nospatial")
-        ui->actionYadifTemporal->setChecked(true);
+        actionYadifTemporal->setChecked(true);
     else
-        ui->actionYadifSpatial->setChecked(true);
+        actionYadifSpatial->setChecked(true);
 
     if (interpolation == "nearest")
-        ui->actionNearest->setChecked(true);
+        actionNearest->setChecked(true);
     else if (interpolation == "bilinear")
-        ui->actionBilinear->setChecked(true);
+        actionBilinear->setChecked(true);
     else if (interpolation == "bicubic")
-        ui->actionBicubic->setChecked(true);
+        actionBicubic->setChecked(true);
     else
-        ui->actionHyper->setChecked(true);
+        actionHyper->setChecked(true);
 
     QVariant external = m_settings.value("player/external", "");
-    foreach (QAction* a, ui->externalGroup->actions()) {
+    foreach (QAction* a, externalGroup->actions()) {
         if (a->data() == external) {
             a->setChecked(true);
             break;
@@ -469,7 +434,7 @@ void Player::readSettings()
     // Automatic not permitted for SDI/HDMI
     if (!external.toString().isEmpty() && profile.toString().isEmpty())
         profile = QVariant("atsc_720p_50");
-    foreach (QAction* a, ui->profileGroup->actions()) {
+    foreach (QAction* a, profileGroup->actions()) {
         // Automatic not permitted for SDI/HDMI
         if (a->data().toString().isEmpty() && !external.toString().isEmpty())
             a->setDisabled(true);
@@ -505,36 +470,36 @@ void Player::play(double speed)
     MLT.play(speed);
     // TODO: use stop icon for live sources
     if (MLT.isSeekable()) {
-        ui->actionPlay->setIcon(m_pauseIcon);
-        ui->actionPlay->setText(tr("Pause"));
-        ui->actionPlay->setToolTip(tr("Pause playback (K)"));
+        actionPlay->setIcon(m_pauseIcon);
+        actionPlay->setText(tr("Pause"));
+        actionPlay->setToolTip(tr("Pause playback (K)"));
     }
     else {
-        ui->actionPlay->setIcon(QIcon::fromTheme("media-playback-stop", QIcon(":/icons/icons/media-playback-stop.png")));
-        ui->actionPlay->setText(tr("Stop"));
-        ui->actionPlay->setToolTip(tr("Stop playback (K)"));
+        actionPlay->setIcon(QIcon::fromTheme("media-playback-stop", QIcon(":/icons/icons/media-playback-stop.png")));
+        actionPlay->setText(tr("Stop"));
+        actionPlay->setToolTip(tr("Stop playback (K)"));
     }
 }
 
 void Player::pause()
 {
     MLT.pause();
-    ui->actionPlay->setIcon(m_playIcon);
-    ui->actionPlay->setText(tr("Play"));
-    ui->actionPlay->setToolTip(tr("Start playback (L)"));
+    actionPlay->setIcon(m_playIcon);
+    actionPlay->setText(tr("Play"));
+    actionPlay->setToolTip(tr("Start playback (L)"));
 }
 
 void Player::stop()
 {
     MLT.stop();
-    ui->actionPlay->setIcon(m_playIcon);
-    ui->actionPlay->setText(tr("Play"));
-    ui->actionPlay->setToolTip(tr("Start playback (L)"));
+    actionPlay->setIcon(m_playIcon);
+    actionPlay->setText(tr("Play"));
+    actionPlay->setToolTip(tr("Start playback (L)"));
 }
 
 void Player::togglePlayPaused()
 {
-    if (ui->actionPlay->icon().cacheKey() == m_playIcon.cacheKey())
+    if (actionPlay->icon().cacheKey() == m_playIcon.cacheKey())
         play();
     else if (MLT.producer() && (
              MLT.isSeekable() ||
@@ -583,15 +548,15 @@ void Player::onProducerOpened()
         m_scrubber->setMarkers(QList<int>());
     }
     m_positionSpinner->setEnabled(seekable);
-    on_actionJack_triggered(ui->actionJack->isChecked());
+    on_actionJack_triggered(actionJack->isChecked());
     onVolumeChanged(m_volumeSlider->value());
     onMuteButtonToggled(m_settings.value("player/muted", false).toBool());
 
-    ui->actionPlay->setEnabled(true);
-    ui->actionSkipPrevious->setEnabled(seekable);
-    ui->actionSkipNext->setEnabled(seekable);
-    ui->actionRewind->setEnabled(seekable);
-    ui->actionFastForward->setEnabled(seekable);
+    actionPlay->setEnabled(true);
+    actionSkipPrevious->setEnabled(seekable);
+    actionSkipNext->setEnabled(seekable);
+    actionRewind->setEnabled(seekable);
+    actionFastForward->setEnabled(seekable);
 
     play();
 }
@@ -674,7 +639,7 @@ void Player::on_actionSkipNext_triggered()
         foreach (int x, m_scrubber->markers()) {
             if (x > pos) {
                 MLT.seek(x);
-                emit showStatusMessage(ui->actionSkipNext->toolTip());
+                emit showStatusMessage(actionSkipNext->toolTip());
                 return;
             }
         }
@@ -686,7 +651,7 @@ void Player::on_actionSkipNext_triggered()
         MLT.seek(MLT.producer()->get_length() - 1);
     else
         MLT.seek(MLT.producer()->get_out());
-    emit showStatusMessage(ui->actionSkipNext->toolTip());
+    emit showStatusMessage(actionSkipNext->toolTip());
 }
 
 void Player::on_actionSkipPrevious_triggered()
@@ -698,7 +663,7 @@ void Player::on_actionSkipPrevious_triggered()
         while (n--) {
             if (markers[n] < pos) {
                 MLT.seek(markers[n]);
-                emit showStatusMessage(ui->actionSkipPrevious->toolTip());
+                emit showStatusMessage(actionSkipPrevious->toolTip());
                 return;
             }
         }
@@ -710,7 +675,7 @@ void Player::on_actionSkipPrevious_triggered()
         MLT.seek(0);
     else
         MLT.seek(MLT.producer()->get_in());
-    emit showStatusMessage(ui->actionSkipPrevious->toolTip());
+    emit showStatusMessage(actionSkipPrevious->toolTip());
 }
 
 void Player::rewind()
@@ -742,37 +707,37 @@ void Player::onVideoWidgetContextMenu(const QPoint& pos)
     // Only offer the option to disable OpenGL if SDL is available.
     Mlt::Consumer* c = new Mlt::Consumer(MLT.profile(), "sdl");
     if (c->is_valid())
-        menu.addAction(ui->actionOpenGL);
+        menu.addAction(actionOpenGL);
     delete c;
 #endif
-    menu.addAction(ui->actionRealtime);
-    menu.addAction(ui->actionProgressive);
+    menu.addAction(actionRealtime);
+    menu.addAction(actionProgressive);
 
     QMenu* sub = menu.addMenu(tr("Deinterlacer"));
     QActionGroup deinterlacerGroup(sub);
-    deinterlacerGroup.addAction(ui->actionOneField);
-    deinterlacerGroup.addAction(ui->actionLinearBlend);
-    deinterlacerGroup.addAction(ui->actionYadifTemporal);
-    deinterlacerGroup.addAction(ui->actionYadifSpatial);
+    deinterlacerGroup.addAction(actionOneField);
+    deinterlacerGroup.addAction(actionLinearBlend);
+    deinterlacerGroup.addAction(actionYadifTemporal);
+    deinterlacerGroup.addAction(actionYadifSpatial);
     sub->addActions(deinterlacerGroup.actions());
 
     sub = menu.addMenu(tr("Interpolation"));
     QActionGroup scalerGroup(sub);
-    scalerGroup.addAction(ui->actionNearest);
-    scalerGroup.addAction(ui->actionBilinear);
-    scalerGroup.addAction(ui->actionBicubic);
-    scalerGroup.addAction(ui->actionHyper);
+    scalerGroup.addAction(actionNearest);
+    scalerGroup.addAction(actionBilinear);
+    scalerGroup.addAction(actionBicubic);
+    scalerGroup.addAction(actionHyper);
     sub->addActions(scalerGroup.actions());
 
-    if (ui->externalGroup->actions().count() > 1) {
+    if (externalGroup->actions().count() > 1) {
         sub = menu.addMenu(tr("Preview on SDI/HDMI"));
-        sub->addActions(ui->externalGroup->actions());
+        sub->addActions(externalGroup->actions());
     };
 
     sub = menu.addMenu(tr("Video Mode"));
-    sub->addActions(ui->profileGroup->actions());
+    sub->addActions(profileGroup->actions());
 
-    menu.addAction(ui->actionJack);
+    menu.addAction(actionJack);
 
     menu.exec(this->mapToGlobal(pos));
 }
@@ -883,7 +848,7 @@ void Player::on_actionJack_triggered(bool checked)
 {
     m_settings.setValue("player/jack", checked);
     if (!MLT.enableJack(checked)) {
-        ui->actionJack->setChecked(false);
+        actionJack->setChecked(false);
         m_settings.setValue("player/jack", false);
         QMessageBox::warning(this, qApp->applicationName(),
             tr("Failed to connect to JACK.\nPlease verify that JACK is installed and running."));
@@ -902,7 +867,7 @@ void Player::onExternalTriggered(QAction *action)
         profile = QVariant("atsc_720p_50");
         m_settings.setValue("player/profile", profile);
         MLT.setProfile(profile.toString());
-        foreach (QAction* a, ui->profileGroup->actions()) {
+        foreach (QAction* a, profileGroup->actions()) {
             if (a->data() == profile) {
                 a->setChecked(true);
                 break;
@@ -913,13 +878,13 @@ void Player::onExternalTriggered(QAction *action)
         MLT.consumerChanged();
     }
     // Automatic not permitted for SDI/HDMI
-    ui->profileGroup->actions().at(0)->setEnabled(!isExternal);
+    profileGroup->actions().at(0)->setEnabled(!isExternal);
 
     // Disable progressive option when SDI/HDMI
-    ui->actionProgressive->setEnabled(!isExternal);
+    actionProgressive->setEnabled(!isExternal);
     bool isProgressive = isExternal
             ? MLT.profile().progressive()
-            : ui->actionProgressive->isChecked();
+            : actionProgressive->isChecked();
     MLT.videoWidget()->setProperty("progressive", isProgressive);
     if (MLT.consumer()) {
         MLT.consumer()->stop();
@@ -984,7 +949,7 @@ void Player::onVolumeChanged(int volume)
 
 void Player::onCaptureStateChanged(bool active)
 {
-    ui->actionPlay->setDisabled(active);
+    actionPlay->setDisabled(active);
     if (active)
         MLT.videoWidget()->disconnect(SIGNAL(customContextMenuRequested(QPoint)));
     else

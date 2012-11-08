@@ -84,7 +84,7 @@ int main(int argc, char **argv)
 {
     Application a(argc, argv);
     QSplashScreen splash(QPixmap(":/icons/icons/shotcut-logo-640.png"));
-    splash.showMessage(a.tr("Loading plugins..."), Qt::AlignHCenter | Qt::AlignBottom);
+    splash.showMessage(QCoreApplication::translate("", "Loading plugins..."), Qt::AlignHCenter | Qt::AlignBottom);
     splash.show();
     splash.finish(a.mainWindow);
     a.mainWindow->show();

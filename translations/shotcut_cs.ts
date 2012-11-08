@@ -2,6 +2,14 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="cs_CZ">
 <context>
+    <name></name>
+    <message>
+        <location filename="../main.cpp" line="87"/>
+        <source>Loading plugins...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AddEncodePresetDialog</name>
     <message>
         <location filename="../dialogs/addencodepresetdialog.ui" line="14"/>
@@ -1642,116 +1650,260 @@ Chcete uložit své změny?</translation>
 <context>
     <name>Player</name>
     <message>
-        <location filename="../player.cpp" line="339"/>
+        <location filename="../player.cpp" line="116"/>
         <source>Adjust the audio volume</source>
         <translation>Upravit hlasitost zvuku</translation>
     </message>
     <message>
-        <location filename="../player.cpp" line="346"/>
+        <location filename="../player.cpp" line="123"/>
         <source>Show or hide the volume control</source>
         <translation>Ukázat nebo skrýt ovládání hlasitosti</translation>
     </message>
     <message>
-        <location filename="../player.cpp" line="356"/>
+        <location filename="../player.cpp" line="133"/>
         <source>Mute</source>
         <translation>Ztlumit</translation>
     </message>
     <message>
-        <location filename="../player.cpp" line="357"/>
+        <location filename="../player.cpp" line="134"/>
         <source>Silence the audio</source>
         <translation>Umlčet zvuk</translation>
     </message>
     <message>
-        <location filename="../player.cpp" line="370"/>
+        <location filename="../player.cpp" line="147"/>
         <source>Transport Controls</source>
         <translation>Ovládání přesunu</translation>
     </message>
     <message>
-        <location filename="../player.cpp" line="377"/>
+        <location filename="../player.cpp" line="154"/>
         <source>Current position</source>
         <translation>Nynější poloha</translation>
     </message>
     <message>
-        <location filename="../player.cpp" line="381"/>
+        <location filename="../player.cpp" line="158"/>
         <source>Total Duration</source>
         <translation>Celková doba trvání</translation>
     </message>
     <message>
-        <location filename="../player.cpp" line="387"/>
+        <location filename="../player.cpp" line="164"/>
         <source>In Point</source>
         <translation>Počáteční bod</translation>
     </message>
     <message>
-        <location filename="../player.cpp" line="397"/>
+        <location filename="../player.cpp" line="174"/>
         <source>Selected Duration</source>
         <translation>Vybraná doba trvání</translation>
     </message>
     <message>
-        <location filename="../player.cpp" line="509"/>
+        <location filename="../player.cpp" line="291"/>
+        <source>Automatic</source>
+        <translation>Automaticky</translation>
+    </message>
+    <message>
+        <location filename="../player.cpp" line="311"/>
+        <source>None</source>
+        <translation>Žádný</translation>
+    </message>
+    <message>
+        <location filename="../player.cpp" line="350"/>
+        <source>Space</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../player.cpp" line="351"/>
+        <location filename="../player.cpp" line="474"/>
         <source>Pause</source>
         <translation>Pozastavit</translation>
     </message>
     <message>
-        <location filename="../player.cpp" line="510"/>
+        <location filename="../player.cpp" line="353"/>
+        <location filename="../player.cpp" line="475"/>
         <source>Pause playback (K)</source>
         <translation>Pozastavit přehrávání (K)</translation>
     </message>
     <message>
-        <location filename="../player.cpp" line="514"/>
+        <location filename="../player.cpp" line="355"/>
+        <source>Backspace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../player.cpp" line="356"/>
+        <source>Skip Next</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../player.cpp" line="358"/>
+        <source>Skip to the next point (Alt+Right)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../player.cpp" line="360"/>
+        <source>Alt+Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../player.cpp" line="361"/>
+        <source>Skip Previous</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../player.cpp" line="363"/>
+        <source>Skip to the previous point (Alt+Left)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../player.cpp" line="365"/>
+        <source>Alt+Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../player.cpp" line="366"/>
+        <source>Progressive</source>
+        <translation>Progresivní</translation>
+    </message>
+    <message>
+        <location filename="../player.cpp" line="368"/>
+        <source>Force the video preview to deinterlace if needed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../player.cpp" line="370"/>
+        <source>One Field (fast)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../player.cpp" line="371"/>
+        <source>Linear Blend (fast)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../player.cpp" line="372"/>
+        <source>YADIF - temporal only (good)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../player.cpp" line="373"/>
+        <source>YADIF - temporal + spatial (best)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../player.cpp" line="374"/>
+        <source>Nearest Neighbor (fast)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../player.cpp" line="375"/>
+        <source>Bilinear (good)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../player.cpp" line="376"/>
+        <source>Bicubic (better)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../player.cpp" line="377"/>
+        <source>Hyper/Lanczoz (best)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../player.cpp" line="378"/>
+        <source>Rewind</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../player.cpp" line="380"/>
+        <source>Play quickly backwards (J)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../player.cpp" line="382"/>
+        <source>Fast Forward</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../player.cpp" line="384"/>
+        <source>Play quickly forwards (L)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../player.cpp" line="386"/>
+        <source>Realtime (frame dropping)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../player.cpp" line="388"/>
+        <source>Allow the player to drop video frames to try to play in realtime</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../player.cpp" line="391"/>
+        <source>Use OpenGL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../player.cpp" line="393"/>
+        <source>Use JACK Audio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../player.cpp" line="479"/>
         <source>Stop</source>
         <translation>Zastavit</translation>
     </message>
     <message>
-        <location filename="../player.cpp" line="515"/>
+        <location filename="../player.cpp" line="480"/>
         <source>Stop playback (K)</source>
         <translation>Zastavit přehrávání (K)</translation>
     </message>
     <message>
-        <location filename="../player.cpp" line="523"/>
-        <location filename="../player.cpp" line="531"/>
+        <location filename="../player.cpp" line="346"/>
+        <location filename="../player.cpp" line="488"/>
+        <location filename="../player.cpp" line="496"/>
         <source>Play</source>
         <translation>Přehrát</translation>
     </message>
     <message>
-        <location filename="../player.cpp" line="524"/>
-        <location filename="../player.cpp" line="532"/>
+        <location filename="../player.cpp" line="348"/>
+        <location filename="../player.cpp" line="489"/>
+        <location filename="../player.cpp" line="497"/>
         <source>Start playback (L)</source>
-        <translation>Spustit přehrávání (K)</translation>
+        <translation>Spustit přehrávání (L)</translation>
     </message>
     <message>
-        <location filename="../player.cpp" line="581"/>
+        <location filename="../player.cpp" line="546"/>
         <source>Live</source>
         <translation>Živě</translation>
     </message>
     <message>
-        <location filename="../player.cpp" line="751"/>
+        <location filename="../player.cpp" line="716"/>
         <source>Deinterlacer</source>
         <translation>Odstranění prokládání</translation>
     </message>
     <message>
-        <location filename="../player.cpp" line="759"/>
+        <location filename="../player.cpp" line="724"/>
         <source>Interpolation</source>
         <translation>Interpolace</translation>
     </message>
     <message>
-        <location filename="../player.cpp" line="768"/>
+        <location filename="../player.cpp" line="733"/>
         <source>Preview on SDI/HDMI</source>
         <translation>Náhled na  SDI/HDMI</translation>
     </message>
     <message>
-        <location filename="../player.cpp" line="772"/>
+        <location filename="../player.cpp" line="737"/>
         <source>Video Mode</source>
         <translation>Obrazový režim</translation>
     </message>
     <message>
-        <location filename="../player.cpp" line="785"/>
+        <location filename="../player.cpp" line="750"/>
         <source>You must restart Shotcut to switch using OpenGL.
 Do you want to exit now?</source>
         <translation>Musíte Shotcut spustit pro přepnutí kvůli používání OpenGL znovu.
 Chcete jej ukončit nyní?</translation>
     </message>
     <message>
-        <location filename="../player.cpp" line="889"/>
+        <location filename="../player.cpp" line="854"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>Nepodařilo se spojit se s JACKem.
