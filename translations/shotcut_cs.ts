@@ -58,7 +58,7 @@
 <context>
     <name>AudioSignal</name>
     <message>
-        <location filename="../widgets/audiosignal.cpp" line="41"/>
+        <location filename="../widgets/audiosignal.cpp" line="42"/>
         <source>Monitor Audio Signal</source>
         <translation>Sledovat zvukový signál</translation>
     </message>
@@ -1292,9 +1292,13 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;Pohled</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="93"/>
         <source>Edit</source>
-        <translation>Upravit</translation>
+        <translation type="obsolete">Upravit</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="93"/>
+        <source>&amp;Edit</source>
+        <translation>&amp;Upravit</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="103"/>
@@ -1398,13 +1402,21 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../mainwindow.ui" line="225"/>
-        <source>Undo</source>
-        <translation>Zpět</translation>
+        <source>&amp;Undo</source>
+        <translation>&amp;Zpět</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="234"/>
+        <source>&amp;Redo</source>
+        <translation>Z&amp;novu</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="obsolete">Zpět</translation>
+    </message>
+    <message>
         <source>Redo</source>
-        <translation>Znovu</translation>
+        <translation type="obsolete">Znovu</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="106"/>
