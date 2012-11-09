@@ -433,7 +433,7 @@
     <message>
         <location filename="../docks/encodedock.ui" line="251"/>
         <source>Frames/sec</source>
-        <translation>Snímky/s</translation>
+        <translation>Snímků za sekundu</translation>
     </message>
     <message>
         <location filename="../docks/encodedock.ui" line="279"/>
@@ -487,17 +487,17 @@ nebo nynějšího obrazového režimu přehrávače</translation>
     <message>
         <location filename="../docks/encodedock.ui" line="530"/>
         <source>GOP</source>
-        <translation>GOP</translation>
+        <translation>Skupina obrázků</translation>
     </message>
     <message>
         <location filename="../docks/encodedock.ui" line="542"/>
         <source>GOP = group of pictures, which is the maximum key frame interval</source>
-        <translation>GOP = skupina obrázků, což je největší interval pro klíčový snímek</translation>
+        <translation>Skupina obrázků (GOP = group of pictures), což je největší interval pro klíčový snímek</translation>
     </message>
     <message>
         <location filename="../docks/encodedock.ui" line="555"/>
         <source>frames</source>
-        <translation>snímky</translation>
+        <translation>snímků</translation>
     </message>
     <message>
         <location filename="../docks/encodedock.ui" line="579"/>
@@ -1298,7 +1298,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../mainwindow.ui" line="93"/>
         <source>&amp;Edit</source>
-        <translation>&amp;Upravit</translation>
+        <translation>Úp&amp;ravy</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="103"/>
@@ -1323,7 +1323,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../mainwindow.ui" line="142"/>
         <source>E&amp;xit</source>
-        <translation>&amp;Ukončit</translation>
+        <translation>U&amp;končit</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="145"/>
