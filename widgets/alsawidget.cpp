@@ -42,6 +42,8 @@ Mlt::Producer* AlsaWidget::producer(Mlt::Profile& profile)
         s = s.arg("default");
     else
         s = s.arg(ui->lineEdit->text());
+    if (ui->alsaChannelsSpinBox->value() > 0)
+        s += QString("?channels=%1").arg(ui->alsaChannelsSpinBox->value());
     return new Mlt::Producer(profile, s.toUtf8().constData());
 }
 
@@ -54,6 +56,7 @@ Mlt::Properties* AlsaWidget::getPreset() const
     else
         s = s.arg(ui->lineEdit->text());
     p->set("resource", s.toUtf8().constData());
+    p->set("channels", ui->alsaChannelsSpinBox->value());
     return p;
 }
 
@@ -63,6 +66,8 @@ void AlsaWidget::loadPreset(Mlt::Properties& p)
     int i = s.indexOf(':');
     if (i > -1)
         ui->lineEdit->setText(s.mid(i + 1));
+    if (p.get("channels"))
+        ui->alsaChannelsSpinBox->setValue(p.get_int("channels"));
 }
 
 void AlsaWidget::on_preset_selected(void* p)

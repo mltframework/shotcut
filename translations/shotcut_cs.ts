@@ -40,17 +40,22 @@
         <translation>Zvuk ALSA</translation>
     </message>
     <message>
-        <location filename="../widgets/alsawidget.ui" line="48"/>
+        <location filename="../widgets/alsawidget.ui" line="68"/>
         <source>PCM Device</source>
         <translation>Zařízení PCM</translation>
     </message>
     <message>
-        <location filename="../widgets/alsawidget.ui" line="58"/>
+        <location filename="../widgets/alsawidget.ui" line="78"/>
         <source>default</source>
         <translation>Výchozí</translation>
     </message>
     <message>
-        <location filename="../widgets/alsawidget.ui" line="78"/>
+        <location filename="../widgets/alsawidget.ui" line="85"/>
+        <source>Channels</source>
+        <translation>Kanály</translation>
+    </message>
+    <message>
+        <location filename="../widgets/alsawidget.ui" line="61"/>
         <source>Apply</source>
         <translation>Použít</translation>
     </message>
