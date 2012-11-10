@@ -42,11 +42,12 @@ Video4LinuxWidget::~Video4LinuxWidget()
 
 QString Video4LinuxWidget::URL() const
 {
-    QString s = QString("video4linux2:%1?width=%2&height=%3&framerate=%4")
+    QString s = QString("video4linux2:%1?width=%2&height=%3")
             .arg(ui->v4lLineEdit->text())
             .arg(ui->v4lWidthSpinBox->value())
-            .arg(ui->v4lHeightSpinBox->value())
-            .arg(ui->v4lFramerateSpinBox->value());
+            .arg(ui->v4lHeightSpinBox->value());
+    if (ui->v4lFramerateSpinBox->value() > 0)
+        s += QString("&framerate=%1").arg(ui->v4lFramerateSpinBox->value());
     if (ui->v4lStandardCombo->currentIndex() > 0)
         s += QString("&standard=") + ui->v4lStandardCombo->currentText();
     if (ui->v4lChannelSpinBox->value() > 0)
@@ -82,7 +83,8 @@ Mlt::Producer* Video4LinuxWidget::producer(Mlt::Profile& profile)
     p->set("device", ui->v4lLineEdit->text().toAscii().constData());
     p->set("width", ui->v4lWidthSpinBox->value());
     p->set("height", ui->v4lHeightSpinBox->value());
-    p->set("framerate", ui->v4lFramerateSpinBox->value());
+    if (ui->v4lFramerateSpinBox->value() > 0)
+        p->set("framerate", ui->v4lFramerateSpinBox->value());
     p->set("standard", ui->v4lStandardCombo->currentText().toAscii().constData());
     p->set("channel", ui->v4lChannelSpinBox->value());
     p->set("audio_ix", ui->v4lAudioComboBox->currentIndex());
