@@ -50,7 +50,7 @@ signals:
     void endOfStream();
     void seeked();
     void showStatusMessage(QString);
-    void audioSamplesSignal(const QVector<int16_t>&, const int&, const int&, const int&);
+    void audioLevels(const QVector<double>&);
     void inChanged(int);
     void outChanged(int);
 

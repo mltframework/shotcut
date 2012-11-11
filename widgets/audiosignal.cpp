@@ -82,39 +82,8 @@ static inline double IEC_Scale(double dB)
 	return fScale;
 }
 
-#define DECIBEL(n) (log10(n) * 20.0)
-
-void AudioSignal::slotReceiveAudio(const QVector<int16_t>& data, int, int num_channels, int samples)
+void AudioSignal::slotAudioLevels(const QVector<double>& channels)
 {
-    int num_samples = samples > 200 ? 200 : samples;
-    QVector<double> channels;
-    int num_oversample = 0;
-
-    for (int i = 0; i < num_channels; i++) {
-        long val = 0;
-        double over = 0.0;
-        for (int s = 0; s < num_samples; s++) {
-            int sample = abs(data[i + s * num_channels] / 128);
-            val += sample;
-            if (sample == 128)
-                num_oversample++;
-            else
-                num_oversample = 0;
-            // 10 samples @max => show max signal
-            if (num_oversample > 10) {
-                over = 1.0;
-                break;
-            }
-            //if 3 samples over max => 1 peak over 0 db (0db=40.0)
-            if (num_oversample > 3)
-                over = 41.0/42.0;
-        }
-        //max amplitude = 40/42, 3to10  oversamples=41, more then 10 oversamples=42 
-        if (over > 0.0)
-            channels << IEC_Scale(DECIBEL(over));
-        else
-            channels << IEC_Scale(DECIBEL(val / num_samples * 40.0/42.0 / 127.0));
-    }
     showAudio(channels);
     m_timer.start(1000);
 }

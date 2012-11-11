@@ -53,7 +53,8 @@ protected:
 
 public slots:
     void showAudio(const QVector<double>&);
-    void slotReceiveAudio(const QVector<int16_t>&,int,int,int);
+    void slotAudioLevels(const QVector<double>& channels);
+
 private slots:
     void slotSwitchAudioMonitoring(bool isOn);
     void slotNoAudioTimeout();

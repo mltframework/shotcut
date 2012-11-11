@@ -115,8 +115,7 @@ Player::Player(QWidget *parent)
     m_savedVolume = MLT.volume();
     m_volumeSlider->setToolTip(tr("Adjust the audio volume"));
     connect(m_volumeSlider, SIGNAL(valueChanged(int)), this, SLOT(onVolumeChanged(int)));
-    connect(this, SIGNAL(audioSamplesSignal(const QVector<int16_t>&, const int&, const int&, const int&)),
-                         m_audioSignal, SLOT(slotReceiveAudio(const QVector<int16_t>&, const int&, const int&, const int&)));
+    connect(this, SIGNAL(audioLevels(QVector<double>)), m_audioSignal, SLOT(slotAudioLevels(QVector<double>)));
 
     QPushButton* volumeButton = new QPushButton(this);
     volumeButton->setObjectName(QString::fromUtf8("volumeButton"));
@@ -903,17 +902,13 @@ void Player::showAudio(Mlt::Frame* frame)
 {
     if (frame->get_int("test_audio"))
         return;
-    mlt_audio_format format = mlt_audio_s16;
-    int frequency = 0;
-    int channels = 0;
-    int samples = 0;
-    int16_t* data = (int16_t*) frame->get_audio(format, frequency, channels, samples);
-
-    if (samples && data) {
-        QVector<int16_t> pcm(samples * channels);
-        memcpy(pcm.data(), data, samples * channels * sizeof(int16_t));
-        emit audioSamplesSignal(pcm, frequency, channels, samples);
+    QVector<double> channels;
+    int n = frame->get_int("audio_channels");
+    while (n--) {
+        QString s = QString("meta.media.audio_level.%1").arg(n);
+        channels << frame->get_double(s.toAscii().constData());
     }
+    emit audioLevels(channels);
 }
 
 //----------------------------------------------------------------------------

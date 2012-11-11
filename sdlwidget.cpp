@@ -92,6 +92,9 @@ int SDLWidget::reconfigure(bool isMulti)
             m_consumer->set("scrub_audio", 1);
 #endif
         }
+        Mlt::Filter* filter = new Mlt::Filter(profile(), "audiolevel");
+        if (filter->is_valid())
+            m_consumer->attach(*filter);
     }
     else {
         // Cleanup on error
