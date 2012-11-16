@@ -116,6 +116,10 @@ OTHER_FILES += \
 TRANSLATIONS += \
     ../translations/shotcut_cs.ts
 
+INCLUDEPATH = ../mvcp
+
+LIBS += -L../mvcp -lmvcp
+
 mac {
     TARGET = Shotcut
     ICON = icons/shotcut.icns
