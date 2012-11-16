@@ -520,7 +520,7 @@ function set_globals {
     CONFIG[7]="qmake -r"
   fi
   if test "$TARGET_OS" = "Win32" ; then
-    CONFIG[7]="${CONFIG[7]} -spec mingw-mkspec CONFIG+=link_pkgconfig PKGCONFIG+=mlt++ CONFIG-=debug"
+    CONFIG[7]="${CONFIG[7]} -spec mingw-mkspec CONFIG+=link_pkgconfig PKGCONFIG+=mlt++"
   fi
   CFLAGS_[7]=$CFLAGS
   LDFLAGS_[7]=$LDFLAGS
@@ -756,7 +756,7 @@ END_OF_CMAKE_RULES
 
 MAKEFILE_GENERATOR	= MINGW
 TEMPLATE		= app
-CONFIG			+= qt warn_on release link_prl copy_dir_files debug_and_release debug_and_release_target precompile_header
+CONFIG			+= qt warn_on release link_prl copy_dir_files precompile_header
 CONFIG			+= exceptions windows win32 rtti
 QT			+= core gui
 DEFINES			+= UNICODE
@@ -1237,7 +1237,7 @@ function configure_compile_install_subproject {
       # Convert translations
       cmd lrelease src/src.pro
       if test "$TARGET_OS" = "Win32" ; then
-        cmd install -c -m 755 release/shotcut.exe "$FINAL_INSTALL_DIR"
+        cmd install -c -m 755 src/shotcut.exe "$FINAL_INSTALL_DIR"
         cmd install -c COPYING "$FINAL_INSTALL_DIR"
         cmd install -c scripts/shotcut.nsi "$FINAL_INSTALL_DIR"/..
         cmd install -d "$FINAL_INSTALL_DIR"/share/translations
@@ -1258,7 +1258,7 @@ around, simply rename the Shotcut folder with the version number in the
 new name.
 End-of-win32-README
       elif test "$TARGET_OS" != "Darwin"; then
-        cmd install -c -m 755 shotcut "$FINAL_INSTALL_DIR"/bin
+        cmd install -c -m 755 src/shotcut "$FINAL_INSTALL_DIR"/bin
         cmd install -p -c COPYING "$FINAL_INSTALL_DIR"
         cmd install -d "$FINAL_INSTALL_DIR"/share/shotcut/translations
         cmd install -p -c translations/*.qm "$FINAL_INSTALL_DIR"/share/shotcut/translations
