@@ -36,6 +36,14 @@
 #include "mvcp_status.h"
 #include "mvcp_notifier.h"
 
+
+#ifndef PATH_MAX
+#define PATH_MAX (4096)
+#endif
+#ifndef NAME_MAX
+#define NAME_MAX (256)
+#endif
+
 #ifdef __cplusplus
 extern "C"
 {
