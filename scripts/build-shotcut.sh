@@ -1235,7 +1235,11 @@ function configure_compile_install_subproject {
   else
     if test "shotcut" = "$1" ; then
       # Convert translations
-      cmd lrelease src/src.pro
+      if [ "$(which lrelease-qt4)" != "" ]; then
+          cmd lrelease-qt4 src/src.pro
+      else
+          cmd lrelease src/src.pro
+      fi
       if test "$TARGET_OS" = "Win32" ; then
         cmd install -c -m 755 src/shotcut.exe "$FINAL_INSTALL_DIR"
         cmd install -c COPYING "$FINAL_INSTALL_DIR"
