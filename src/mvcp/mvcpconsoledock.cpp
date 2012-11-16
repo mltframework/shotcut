@@ -25,7 +25,8 @@
 
 MvcpConsoleDock::MvcpConsoleDock(QWidget *parent) :
     QDockWidget(parent),
-    ui(new Ui::MvcpConsoleDock)
+    ui(new Ui::MvcpConsoleDock),
+    m_parser(0)
 {
     ui->setupUi(this);
     m_console = new QConsole(this);
@@ -74,7 +75,7 @@ void MvcpConsoleDock::onCommandExecuted(QString command)
     }
     if (command.toLower() == "bye") {
         mvcp_parser_close(m_parser);
-        m_parser = NULL;
+        m_parser = 0;
         m_console->setPrompt("");
         m_console->reset();
         m_console->setDisabled(true);
