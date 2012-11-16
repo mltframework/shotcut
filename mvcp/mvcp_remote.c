@@ -158,8 +158,9 @@ static mvcp_response mvcp_remote_connect( mvcp_remote remote )
 
 	if ( !remote->connected )
 	{
+#ifndef WIN32
 		signal( SIGPIPE, SIG_IGN );
-
+#endif
 		remote->socket = mvcp_socket_init( remote->server, remote->port );
 		remote->status = mvcp_socket_init( remote->server, remote->port );
 
