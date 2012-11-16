@@ -29,6 +29,7 @@ MvcpConsoleDock::MvcpConsoleDock(QWidget *parent) :
 {
     ui->setupUi(this);
     m_console = new QConsole(this);
+    m_console->setDisabled(true);
     widget()->layout()->addWidget(m_console);
     connect(m_console, SIGNAL(commandExecuted(QString)), this, SLOT(onCommandExecuted(QString)));
 }
@@ -51,6 +52,7 @@ void MvcpConsoleDock::on_lineEdit_returnPressed()
         for (int index = 0; index < mvcp_response_count(response); index++)
             m_console->append(QString::fromUtf8(mvcp_response_get_line(response, index)).append('\n'));
         mvcp_response_close(response);
+        m_console->setEnabled(true);
         m_console->setPrompt("> ");
         m_console->setFocus();
     }
@@ -75,6 +77,7 @@ void MvcpConsoleDock::onCommandExecuted(QString command)
         m_parser = NULL;
         m_console->setPrompt("");
         m_console->reset();
+        m_console->setDisabled(true);
         ui->lineEdit->setFocus();
     }
 }
