@@ -20,8 +20,8 @@ SOURCES += \
     mvcp_util.c \
     mvcp_tokeniser.c \
     mvcp_status.c \
-    mvcp_socket.c \
     mvcp_response.c \
     mvcp_remote.c \
     mvcp_parser.c \
     mvcp_notifier.c
+

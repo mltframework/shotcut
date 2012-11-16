@@ -58,6 +58,9 @@ void MvcpConsoleDock::on_lineEdit_returnPressed()
 
 void MvcpConsoleDock::onCommandExecuted(QString command)
 {
+    if (!m_parser || command.isEmpty())
+        return;
+
     mvcp_response response = mvcp_parser_execute(m_parser,
         const_cast<char*>(command.toUtf8().constData()));
     if (response) {
@@ -72,5 +75,6 @@ void MvcpConsoleDock::onCommandExecuted(QString command)
         m_parser = NULL;
         m_console->setPrompt("");
         m_console->reset();
+        ui->lineEdit->setFocus();
     }
 }

@@ -1,4 +1,4 @@
-QT       += opengl xml
+QT       += opengl xml network
 
 TARGET = shotcut
 TEMPLATE = app
@@ -40,7 +40,8 @@ SOURCES += main.cpp\
     docks/playlistdock.cpp \
     dialogs/durationdialog.cpp \
     mvcp/qconsole.cpp \
-    mvcp/mvcpconsoledock.cpp
+    mvcp/mvcpconsoledock.cpp \
+    mvcp/mvcp_socket.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -148,3 +149,4 @@ isEmpty(SHOTCUT_VERSION) {
     SHOTCUT_VERSION = $$system(date "+%y.%m.%d")
 }
 DEFINES += SHOTCUT_VERSION=\\\"$$SHOTCUT_VERSION\\\"
+

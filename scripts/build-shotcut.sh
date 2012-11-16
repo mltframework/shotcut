@@ -1235,7 +1235,7 @@ function configure_compile_install_subproject {
   else
     if test "shotcut" = "$1" ; then
       # Convert translations
-      cmd lrelease shotcut.pro
+      cmd lrelease src/src.pro
       if test "$TARGET_OS" = "Win32" ; then
         cmd install -c -m 755 release/shotcut.exe "$FINAL_INSTALL_DIR"
         cmd install -c COPYING "$FINAL_INSTALL_DIR"
@@ -1390,7 +1390,7 @@ function deploy_osx
   log Changing directory to shotcut
   cmd cd shotcut || die "Unable to change to directory shotcut"
 
-  BUILD_DIR="Shotcut.app/Contents"
+  BUILD_DIR="src/Shotcut.app/Contents"
 
   # copy qt_menu.nib
   # try MacPorts first
@@ -1477,7 +1477,7 @@ function deploy_osx
   cmd rm "$dmg_name" 2>/dev/null
   cmd rm -rf staging 2>/dev/null
   cmd mkdir staging
-  cmd mv shotcut/Shotcut.app staging
+  cmd mv shotcut/src/Shotcut.app staging
   cmd ln -s /Applications staging
   cmd cp shotcut/COPYING staging
   sync
@@ -1505,7 +1505,7 @@ function deploy_win32
   cmd rm lib/*
   cmd rm -rf lib/pkgconfig
   cmd rm -rf share/doc share/man share/ffmpeg/examples share/aclocal share/glib-2.0 share/gtk-2.0 share/gtk-doc share/themes
-  cmd cp -p "$QTDIR"/bin/Qt{Core,Gui,OpenGL,Xml,Svg}4.dll .
+  cmd cp -p "$QTDIR"/bin/Qt{Core,Gui,OpenGL,Xml,Svg,Network}4.dll .
   cmd mkdir lib/qt4
   cmd cp -pr "$QTDIR"/plugins/* lib/qt4
   cmd cp -pr "$QTDIR"/translations/*.qm "$FINAL_INSTALL_DIR"/share/translations

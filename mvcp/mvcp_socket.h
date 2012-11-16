@@ -30,14 +30,7 @@ extern "C"
 /** Structure for socket.
 */
 
-typedef struct
-{
-	char *server;
-	int port;
-	int fd;
-	int no_close;
-}
-*mvcp_socket, mvcp_socket_t;
+typedef void *mvcp_socket;
 
 /** Remote parser API.
 */
