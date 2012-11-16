@@ -40,6 +40,7 @@
 #include "docks/recentdock.h"
 #include "docks/encodedock.h"
 #include "docks/jobsdock.h"
+#include "mvcp/mvcpconsoledock.h"
 #include "jobqueue.h"
 #include "docks/playlistdock.h"
 #include "glwidget.h"
@@ -181,6 +182,11 @@ MainWindow::MainWindow()
     connect(&JOBS, SIGNAL(jobAdded()), m_jobsDock, SLOT(show()));
     connect(&JOBS, SIGNAL(jobAdded()), m_jobsDock, SLOT(raise()));
     connect(m_jobsDock, SIGNAL(visibilityChanged(bool)), this, SLOT(onJobsVisibilityChanged(bool)));
+
+    QDockWidget* dock = new MvcpConsoleDock(this);
+    dock->hide();
+    addDockWidget(Qt::TopDockWidgetArea, dock);
+    ui->menuView->addAction(dock->toggleViewAction());
 
     // Connect signals.
     connect(this, SIGNAL(producerOpened()), this, SLOT(onProducerOpened()));

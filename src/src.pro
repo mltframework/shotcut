@@ -38,7 +38,9 @@ SOURCES += main.cpp\
     dialogs/textviewerdialog.cpp \
     models/playlistmodel.cpp \
     docks/playlistdock.cpp \
-    dialogs/durationdialog.cpp
+    dialogs/durationdialog.cpp \
+    mvcp/qconsole.cpp \
+    mvcp/mvcpconsoledock.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -74,7 +76,9 @@ HEADERS  += mainwindow.h \
     dialogs/textviewerdialog.h \
     models/playlistmodel.h \
     docks/playlistdock.h \
-    dialogs/durationdialog.h
+    dialogs/durationdialog.h \
+    mvcp/qconsole.h \
+    mvcp/mvcpconsoledock.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
@@ -100,7 +104,8 @@ FORMS    += mainwindow.ui \
     docks/jobsdock.ui \
     dialogs/textviewerdialog.ui \
     docks/playlistdock.ui \
-    dialogs/durationdialog.ui
+    dialogs/durationdialog.ui \
+    mvcp/mvcpconsoledock.ui
 
 RESOURCES += \
     resources.qrc
@@ -122,7 +127,7 @@ LIBS += -L../mvcp -lmvcp
 
 mac {
     TARGET = Shotcut
-    ICON = icons/shotcut.icns
+    ICON = ../icons/shotcut.icns
     QMAKE_INFO_PLIST = Info.plist
 }
 win32 {
@@ -143,4 +148,3 @@ isEmpty(SHOTCUT_VERSION) {
     SHOTCUT_VERSION = $$system(date "+%y.%m.%d")
 }
 DEFINES += SHOTCUT_VERSION=\\\"$$SHOTCUT_VERSION\\\"
-
