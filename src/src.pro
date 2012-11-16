@@ -124,7 +124,7 @@ TRANSLATIONS += \
 
 INCLUDEPATH = ../mvcp
 
-LIBS += -L../mvcp -lmvcp
+LIBS += -L../mvcp -lmvcp -lpthread
 
 mac {
     TARGET = Shotcut
