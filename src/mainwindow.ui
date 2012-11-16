@@ -82,6 +82,8 @@ p, li { white-space: pre-wrap; }
     </property>
     <addaction name="actionAbout_Shotcut"/>
     <addaction name="actionAbout_Qt"/>
+    <addaction name="actionFAQ"/>
+    <addaction name="actionForum"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -232,6 +234,16 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>&amp;Redo</string>
+   </property>
+  </action>
+  <action name="actionForum">
+   <property name="text">
+    <string>Forum...</string>
+   </property>
+  </action>
+  <action name="actionFAQ">
+   <property name="text">
+    <string>FAQ...</string>
    </property>
   </action>
  </widget>

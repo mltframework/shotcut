@@ -103,6 +103,8 @@ private slots:
     void updateMarkers();
     void on_actionUndo_triggered();
     void on_actionRedo_triggered();
+    void on_actionFAQ_triggered();
+    void on_actionForum_triggered();
 };
 
 #define MAIN MainWindow::singleton()

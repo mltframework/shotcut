@@ -718,3 +718,13 @@ void MainWindow::on_actionRedo_triggered()
 {
     m_undoStack->redo();
 }
+
+void MainWindow::on_actionFAQ_triggered()
+{
+    QDesktopServices::openUrl(QUrl("http://www.shotcut.org/bin/view/Shotcut/FrequentlyAskedQuestions"));
+}
+
+void MainWindow::on_actionForum_triggered()
+{
+    QDesktopServices::openUrl(QUrl("http://www.shotcut.org/bin/view/Shotcut/DiscussionForum"));
+}
