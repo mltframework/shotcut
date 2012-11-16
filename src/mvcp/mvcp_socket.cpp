@@ -71,7 +71,7 @@ int mvcp_socket_read_data( mvcp_socket connection, char *data, int length )
 {
     QTcpSocket* socket = (QTcpSocket*) connection;
     int used = -1;
-    if (socket) {
+    if (socket && socket->state() == QAbstractSocket::ConnectedState) {
         if (socket->waitForReadyRead(1000))
             used = socket->read(data, length);
         else
@@ -87,7 +87,7 @@ int mvcp_socket_write_data( mvcp_socket connection, const char *data, int length
 {
     QTcpSocket* socket = (QTcpSocket*) connection;
     int used = -1;
-    if (socket) {
+    if (socket && socket->state() == QAbstractSocket::ConnectedState) {
         used = socket->write(data, length);
         socket->waitForBytesWritten(1000);
     }
