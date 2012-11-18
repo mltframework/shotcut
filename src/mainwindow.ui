@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>842</width>
-    <height>545</height>
+    <width>840</width>
+    <height>543</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -34,7 +34,7 @@
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;Shotcut Quickstart Guide&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Open files by &lt;span style=&quot; font-weight:600;&quot;&gt;drag-n-drop&lt;/span&gt; in addition to the usual menu and toolbar methods.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Use &lt;span style=&quot; font-weight:600;&quot;&gt;File&lt;/span&gt; &amp;gt; &lt;span style=&quot; font-weight:600;&quot;&gt;Open Other&lt;/span&gt; to open network streams, capture devices, and generators.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;MLT XML files can be opened as a clip; so, you can use Shotcut to test your XML.&lt;/p&gt;
@@ -61,7 +61,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>842</width>
+     <width>840</width>
      <height>22</height>
     </rect>
    </property>
@@ -76,15 +76,6 @@ p, li { white-space: pre-wrap; }
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
-   <widget class="QMenu" name="menuHelp">
-    <property name="title">
-     <string>&amp;Help</string>
-    </property>
-    <addaction name="actionAbout_Shotcut"/>
-    <addaction name="actionAbout_Qt"/>
-    <addaction name="actionFAQ"/>
-    <addaction name="actionForum"/>
-   </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
      <string>&amp;View</string>
@@ -94,6 +85,16 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>&amp;Edit</string>
     </property>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="actionFAQ"/>
+    <addaction name="actionForum"/>
+    <addaction name="separator"/>
+    <addaction name="actionAbout_Shotcut"/>
+    <addaction name="actionAbout_Qt"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>

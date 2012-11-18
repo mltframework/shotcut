@@ -1209,7 +1209,6 @@ tlačítkem myši na úkol k otevření nabídky pro zastavení nyní běžící
         <translation>Shotcut</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="32"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -1227,7 +1226,7 @@ p, li { white-space: pre-wrap; }
 &lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; Alt+Left&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;Alt+Right&lt;/span&gt; to jump between start, in, out, and end.&lt;/li&gt;&lt;/ul&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Right-click&lt;/span&gt; the video window to access its settings.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Update Shotcut whenever you like. We do not notify you about updates because new version are available almost daily.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body&gt;
@@ -1287,12 +1286,12 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;Soubor</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="81"/>
+        <location filename="../src/mainwindow.ui" line="91"/>
         <source>&amp;Help</source>
         <translation>&amp;Nápověda</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="90"/>
+        <location filename="../src/mainwindow.ui" line="81"/>
         <source>&amp;View</source>
         <translation>&amp;Pohled</translation>
     </message>
@@ -1301,127 +1300,148 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Upravit</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="95"/>
+        <location filename="../src/mainwindow.ui" line="32"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;Shotcut Quickstart Guide&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Open files by &lt;span style=&quot; font-weight:600;&quot;&gt;drag-n-drop&lt;/span&gt; in addition to the usual menu and toolbar methods.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Use &lt;span style=&quot; font-weight:600;&quot;&gt;File&lt;/span&gt; &amp;gt; &lt;span style=&quot; font-weight:600;&quot;&gt;Open Other&lt;/span&gt; to open network streams, capture devices, and generators.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;MLT XML files can be opened as a clip; so, you can use Shotcut to test your XML.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Transport Control Keyboard Shortcuts:&lt;/p&gt;
+&lt;ul type=&quot;circle&quot; style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;&quot;&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; J&lt;/span&gt;, &lt;span style=&quot; font-weight:600;&quot;&gt;K&lt;/span&gt;, and &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt; control playback speed and direction. Tap &lt;span style=&quot; font-weight:600;&quot;&gt;J&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt; repeatedly to go faster.&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; I&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;O&lt;/span&gt; set the in and out points.&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt; L&lt;span style=&quot; font-weight:600;&quot;&gt;eft&lt;/span&gt; or R&lt;span style=&quot; font-weight:600;&quot;&gt;ight&lt;/span&gt; cursor keys step frame-by-frame.&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; Page Up&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;Page Down&lt;/span&gt; step 10 frames at-a-time.&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; Alt+Left&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;Alt+Right&lt;/span&gt; to jump between start, in, out, and end.&lt;/li&gt;&lt;/ul&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Right-click&lt;/span&gt; the video window to access its settings.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Update Shotcut whenever you like. We do not notify you about updates because new version are available almost daily.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="86"/>
         <source>&amp;Edit</source>
         <translation>Úp&amp;ravy</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="105"/>
+        <location filename="../src/mainwindow.ui" line="106"/>
         <source>Main</source>
         <translation>Hlavní</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="130"/>
+        <location filename="../src/mainwindow.ui" line="131"/>
         <source>&amp;Open File...</source>
         <translation>&amp;Otevřít soubor...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="133"/>
+        <location filename="../src/mainwindow.ui" line="134"/>
         <source>Open a video, audio or image file</source>
         <translation>Otevřít soubor s obrazem (video), zvukem (audio) nebo obrázkem</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="136"/>
+        <location filename="../src/mainwindow.ui" line="137"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="144"/>
+        <location filename="../src/mainwindow.ui" line="145"/>
         <source>E&amp;xit</source>
         <translation>U&amp;končit</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="147"/>
+        <location filename="../src/mainwindow.ui" line="148"/>
         <source>Quit the application</source>
         <translation>Ukončit program</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="150"/>
+        <location filename="../src/mainwindow.ui" line="151"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="155"/>
+        <location filename="../src/mainwindow.ui" line="156"/>
         <source>&amp;About Shotcut</source>
         <translation>O &amp;programu Shotcut</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="160"/>
+        <location filename="../src/mainwindow.ui" line="161"/>
         <source>About Qt</source>
         <translation>O Qt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="165"/>
+        <location filename="../src/mainwindow.ui" line="166"/>
         <source>Open Other...</source>
         <translation>Otevřít jiné...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="168"/>
+        <location filename="../src/mainwindow.ui" line="169"/>
         <source>Open a device, stream or generator</source>
         <translation>Otevřít zařízení, soubor nebo generátor</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="171"/>
+        <location filename="../src/mainwindow.ui" line="172"/>
         <source>Ctrl+Shift+O</source>
         <translation>Ctrl+Shift+O</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="183"/>
+        <location filename="../src/mainwindow.ui" line="184"/>
         <source>&amp;Save</source>
         <translation>&amp;Uložit</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="186"/>
+        <location filename="../src/mainwindow.ui" line="187"/>
         <source>Save project as a MLT XML file</source>
         <translation>Uložit projekt jako soubor MLT XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="189"/>
+        <location filename="../src/mainwindow.ui" line="190"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="197"/>
+        <location filename="../src/mainwindow.ui" line="198"/>
         <source>Save &amp;As...</source>
         <translation>Uložit &amp;jako...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="200"/>
+        <location filename="../src/mainwindow.ui" line="201"/>
         <source>Save project to a different MLT XML file</source>
         <translation>Uložit projekt do jiného souboru MLT XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="203"/>
+        <location filename="../src/mainwindow.ui" line="204"/>
         <source>Ctrl+Shift+S</source>
         <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="215"/>
+        <location filename="../src/mainwindow.ui" line="216"/>
         <source>Encode</source>
         <translation>Zakódování</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="218"/>
+        <location filename="../src/mainwindow.ui" line="219"/>
         <source>Toggle the Encode and Jobs panels</source>
         <translation>Přepnout panely Zakódování a Úkoly</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="227"/>
+        <location filename="../src/mainwindow.ui" line="228"/>
         <source>&amp;Undo</source>
         <translation>&amp;Zpět</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="236"/>
+        <location filename="../src/mainwindow.ui" line="237"/>
         <source>&amp;Redo</source>
         <translation>Z&amp;novu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="241"/>
+        <location filename="../src/mainwindow.ui" line="242"/>
         <source>Forum...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="246"/>
+        <location filename="../src/mainwindow.ui" line="247"/>
         <source>FAQ...</source>
         <translation type="unfinished"></translation>
     </message>
