@@ -78,8 +78,9 @@ int mvcp_notifier_wait( mvcp_notifier this, mvcp_status status )
 	timeout.tv_sec = now.tv_sec + 1;
 	timeout.tv_nsec = now.tv_usec * 1000;
 	pthread_mutex_lock( &this->mutex );
-	pthread_cond_timedwait( &this->cond, &this->mutex, &timeout );
-	mvcp_status_copy( status, &this->last );
+	error = pthread_cond_timedwait( &this->cond, &this->mutex, &timeout );
+	if ( !error )
+		mvcp_status_copy( status, &this->last );
 	pthread_mutex_unlock( &this->mutex );
 
 	return error;
@@ -93,8 +94,8 @@ void mvcp_notifier_put( mvcp_notifier this, mvcp_status status )
 	pthread_mutex_lock( &this->mutex );
 	mvcp_status_copy( &this->store[ status->unit ], status );
 	mvcp_status_copy( &this->last, status );
-	pthread_mutex_unlock( &this->mutex );
 	pthread_cond_broadcast( &this->cond );
+	pthread_mutex_unlock( &this->mutex );
 }
 
 /** Communicate a disconnected status for all units to all waiting.

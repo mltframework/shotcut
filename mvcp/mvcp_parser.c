@@ -33,6 +33,7 @@
 
 mvcp_response mvcp_parser_connect( mvcp_parser parser )
 {
+	parser->notifier = mvcp_notifier_init( );
 	return parser->connect( parser->real );
 }
 
