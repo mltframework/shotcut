@@ -22,6 +22,7 @@
 #include "mvcpconsoledock.h"
 #include "ui_mvcpconsoledock.h"
 #include "qconsole.h"
+#include "meltedclipsmodel.h"
 
 MvcpConsoleDock::MvcpConsoleDock(QWidget *parent) :
     QDockWidget(parent),
@@ -31,8 +32,9 @@ MvcpConsoleDock::MvcpConsoleDock(QWidget *parent) :
     ui->setupUi(this);
     m_console = new QConsole(this);
     m_console->setDisabled(true);
-    widget()->layout()->addWidget(m_console);
+    ui->splitter->addWidget(m_console);
     connect(m_console, SIGNAL(commandExecuted(QString)), this, SLOT(onCommandExecuted(QString)));
+    ui->treeView->setDisabled(true);
 }
 
 MvcpConsoleDock::~MvcpConsoleDock()
@@ -56,6 +58,8 @@ void MvcpConsoleDock::on_lineEdit_returnPressed()
         m_console->setEnabled(true);
         m_console->setPrompt("> ");
         m_console->setFocus();
+        ui->treeView->setEnabled(true);
+        ui->treeView->setModel(new MeltedClipsModel(mvcp_init(m_parser)));
     }
 }
 
@@ -80,5 +84,7 @@ void MvcpConsoleDock::onCommandExecuted(QString command)
         m_console->reset();
         m_console->setDisabled(true);
         ui->lineEdit->setFocus();
+        delete ui->treeView->model();
+        ui->treeView->setDisabled(true);
     }
 }
