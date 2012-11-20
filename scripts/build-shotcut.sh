@@ -1018,16 +1018,16 @@ As for Shotcut itself, its really as simple as:
 There is no make install target at this time. Just copy the executable
 (Shotcut.app on OS X) where needed.
 
-Then, there is the app bundling so that depencies can be located and Qt
+Then, there is the app bundling so that dependencies can be located and Qt
 plugins included. For that you really need to see the build script; it
-is fairly complicated espectially on OS X. On Linux, we just use a
+is fairly complicated especially on OS X. On Linux, we just use a
 common install prefix and the build script generates shell scripts to
 establish a redirected environment. On Windows, everything is relative
 to the directory containing the .exe. DLLs are in the same directory as
-the .exe, and the lib and share folders are subdirectories. On OS X, all
+the .exe, and the lib and share folders are sub-directories. On OS X, all
 dependencies need to be put into the correct locations in Shotcut.app,
 and a script modifies all dylibs to pull them in and make their
-interdependencies relative to the executable. If you are just building for
+inter-dependencies relative to the executable. If you are just building for
 yourself, you do not need to do that. You can just let Shotcut use
 the macports dependencies in /opt/local.
 END_OF_SRC_README
