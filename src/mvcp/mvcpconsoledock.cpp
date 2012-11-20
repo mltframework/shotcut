@@ -34,6 +34,7 @@ MvcpConsoleDock::MvcpConsoleDock(QWidget *parent) :
     m_console->setDisabled(true);
     ui->splitter->addWidget(m_console);
     connect(m_console, SIGNAL(commandExecuted(QString)), this, SLOT(onCommandExecuted(QString)));
+    ui->treeView->header()->setResizeMode(QHeaderView::ResizeToContents);
     ui->treeView->setDisabled(true);
 }
 

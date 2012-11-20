@@ -97,6 +97,13 @@ int MeltedClipsModel::columnCount(const QModelIndex &parent) const
 }
 QVariant MeltedClipsModel::data(const QModelIndex &index, int role) const
 {
+    if (role == Qt::TextAlignmentRole) {
+        if (index.column() == 1)
+            return Qt::AlignRight;
+        else
+            return Qt::AlignLeft;
+    }
+
     if (!index.isValid() || role != Qt::DisplayRole)
         return QVariant();
 
@@ -104,18 +111,19 @@ QVariant MeltedClipsModel::data(const QModelIndex &index, int role) const
     if (index.column() == 0) {
         return entry->name;
     } else if (!entry->isDirectory) {
-        unsigned x = entry->size / 1024 / 1024 / 1024;
-        if ( x > 0 )
-            return tr("%1 G").arg(x);
-        x = entry->size / 1024 / 1024;
-        if ( x > 0 )
-            return tr("%1 M").arg(x);
-        x = entry->size / 1024;
-        if ( x > 0 )
-            return tr("%1 K").arg(x);
-        return tr("%1").arg(entry->size);
+        float x = float(entry->size) / 1024 / 1024 / 1024;
+        if ( x > 1 )
+            return tr("%1 GiB").arg(x, 0, 'f', 1);
+        x = float(entry->size) / 1024 / 1024;
+        if ( x > 1 )
+            return tr("%1 MiB").arg(x, 0, 'f', 1);
+        x = float(entry->size) / 1024;
+        if ( x > 1 )
+            return tr("%1 KiB").arg(x, 0, 'f', 1);
+        return tr("%1 B").arg(entry->size);
     } else {
-        return QVariant();
+        int n = entry->children().count();
+        return QString("%2 %3").arg(n).arg((n == 1) ? tr("item") : tr("items"));
     }
 }
 
