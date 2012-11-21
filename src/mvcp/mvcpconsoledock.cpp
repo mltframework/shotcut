@@ -47,21 +47,7 @@ MvcpConsoleDock::~MvcpConsoleDock()
 
 void MvcpConsoleDock::on_lineEdit_returnPressed()
 {
-    QStringList address = ui->lineEdit->text().split(':');
-    int port = address.size() > 1 ? QString(address[1]).toInt() : 5250;
-    m_parser = mvcp_parser_init_remote(
-                const_cast<char*>(address[0].toUtf8().constData()), port);
-    mvcp_response response = mvcp_parser_connect( m_parser );
-    if (response) {
-        for (int index = 0; index < mvcp_response_count(response); index++)
-            m_console->append(QString::fromUtf8(mvcp_response_get_line(response, index)).append('\n'));
-        mvcp_response_close(response);
-        m_console->setEnabled(true);
-        m_console->setPrompt("> ");
-        m_console->setFocus();
-        ui->treeView->setEnabled(true);
-        ui->treeView->setModel(new MeltedClipsModel(mvcp_init(m_parser)));
-    }
+    ui->connectButton->setChecked(true);
 }
 
 void MvcpConsoleDock::onCommandExecuted(QString command)
@@ -78,7 +64,14 @@ void MvcpConsoleDock::onCommandExecuted(QString command)
         }
         mvcp_response_close(response);
     }
-    if (command.toLower() == "bye") {
+    QString s = command.toLower();
+    if (s == "bye" || s == "exit")
+        ui->connectButton->setChecked(false);
+}
+
+void MvcpConsoleDock::on_connectButton_toggled(bool checked)
+{
+    if (m_parser) {
         mvcp_parser_close(m_parser);
         m_parser = 0;
         m_console->setPrompt("");
@@ -87,5 +80,28 @@ void MvcpConsoleDock::onCommandExecuted(QString command)
         ui->lineEdit->setFocus();
         delete ui->treeView->model();
         ui->treeView->setDisabled(true);
+    }
+    if (checked) {
+        QStringList address = ui->lineEdit->text().split(':');
+        int port = address.size() > 1 ? QString(address[1]).toInt() : 5250;
+        m_parser = mvcp_parser_init_remote(
+                    const_cast<char*>(address[0].toUtf8().constData()), port);
+        mvcp_response response = mvcp_parser_connect( m_parser );
+        if (response) {
+            for (int index = 0; index < mvcp_response_count(response); index++)
+                m_console->append(QString::fromUtf8(mvcp_response_get_line(response, index)).append('\n'));
+            mvcp_response_close(response);
+            m_console->setEnabled(true);
+            m_console->setPrompt("> ");
+            m_console->setFocus();
+            ui->treeView->setEnabled(true);
+            ui->treeView->setModel(new MeltedClipsModel(mvcp_init(m_parser)));
+            ui->connectButton->setText(tr("Disconnect"));
+        }
+        else {
+            ui->connectButton->setDown(false);
+        }
+    } else {
+        ui->connectButton->setText(tr("Connect"));
     }
 }

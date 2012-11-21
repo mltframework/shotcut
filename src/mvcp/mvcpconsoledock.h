@@ -43,6 +43,7 @@ public:
 private slots:
     void on_lineEdit_returnPressed();
     void onCommandExecuted(QString);
+    void on_connectButton_toggled(bool checked);
 
 private:
     Ui::MvcpConsoleDock *ui;
