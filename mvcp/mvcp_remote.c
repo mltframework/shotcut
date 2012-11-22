@@ -107,10 +107,13 @@ static void *mvcp_remote_status_thread( void *arg )
 	int index = 0;
 
 	mvcp_socket_write_data( remote->status, "STATUS\r\n", 8 );
-
+	temp[ 0 ] = '\0';
 	while ( !remote->terminated && 
-			( length = mvcp_socket_read_data( remote->status, temp + offset, sizeof( temp ) ) ) >= 0 )
+			( length = mvcp_socket_read_data( remote->status, temp + offset, sizeof( temp ) - 1 ) ) >= 0 )
 	{
+		if ( length < 0 )
+			break;
+		temp[ length ] = '\0';
 		if ( strchr( temp, '\n' ) == NULL )
 		{
 			offset = length;
@@ -170,7 +173,7 @@ static mvcp_response mvcp_remote_connect( mvcp_remote remote )
 			mvcp_remote_read_response( remote->socket, response );
 		}
 
-		if ( response != NULL && mvcp_socket_connect( remote->status ) == 0 )
+		if ( 0 && response != NULL && mvcp_socket_connect( remote->status ) == 0 )
 		{
 			mvcp_response status_response = mvcp_response_init( );
 			mvcp_remote_read_response( remote->status, status_response );
@@ -289,7 +292,8 @@ static int mvcp_remote_read_response( mvcp_socket socket, mvcp_response response
 	int length;
 	int terminated = 0;
 
-	while ( !terminated && ( length = mvcp_socket_read_data( socket, temp, 10240 ) ) >= 0 )
+	temp[ 0 ] = '\0';
+	while ( !terminated && ( length = mvcp_socket_read_data( socket, temp, sizeof( temp ) - 1 ) ) >= 0 )
 	{
 		int position = 0;
 		temp[ length ] = '\0';
