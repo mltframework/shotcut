@@ -102,11 +102,11 @@ void MvcpConsoleDock::on_connectButton_toggled(bool checked)
             m_console->setEnabled(true);
             m_console->setPrompt("> ");
             m_console->setFocus();
-            ui->treeView->setEnabled(true);
             m_mvcp = new MvcpThread(address[0], port);
-            ui->treeView->setModel(new MeltedClipsModel(m_mvcp));
             ui->connectButton->setText(tr("Disconnect"));
             emit connected(m_mvcp);
+            ui->treeView->setModel(new MeltedClipsModel(m_mvcp));
+            ui->treeView->setEnabled(true);
         }
         else {
             ui->connectButton->setDown(false);
