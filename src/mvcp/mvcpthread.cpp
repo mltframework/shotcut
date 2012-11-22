@@ -98,8 +98,9 @@ void MvcpThread::uls()
         m_cond.wakeOne();
 }
 
-void MvcpThread::do_uls(mvcp amvcp, QObject*)
+void MvcpThread::do_uls(mvcp amvcp, QObject* parameters)
 {
+    delete parameters;
     mvcp_units units = mvcp_units_init(amvcp);
     QStringList unitList;
     for (int i = 0; i < mvcp_units_count(units); i++) {
@@ -159,6 +160,7 @@ void MvcpThread::do_usta(mvcp a_mvcp, QObject* parameters)
 {
     mvcp_status_t status;
     mvcp_unit_status(a_mvcp, parameters->property("unit").toInt(), &status);
+    delete parameters;
     QString s;
     switch (status.status) {
     case unit_unknown:      s = tr("unknown"); break;

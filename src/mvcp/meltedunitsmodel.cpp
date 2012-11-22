@@ -88,6 +88,8 @@ void MeltedUnitsModel::onDisconnected()
     m_timer = 0;
     emit beginRemoveRows(QModelIndex(), 0, rowCount() - 1);
     m_mvcp = 0;
+    foreach (QObject* o, m_units)
+        delete o;
     m_units.clear();
     emit endRemoveRows();
 }
