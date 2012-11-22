@@ -51,6 +51,7 @@ public:
                 mvcp_dir_get(dir, i, &entry);
                 new MvcpEntry(i, entry.name, entry.full, entry.dir, entry.size, this);
             }
+            mvcp_dir_close(dir);
         }
     }
 
@@ -70,6 +71,7 @@ MeltedClipsModel::MeltedClipsModel(mvcp a_mvcp, QObject *parent)
 
 MeltedClipsModel::~MeltedClipsModel()
 {
+    delete m_root;
 }
 
 QStringList MeltedClipsModel::mimeTypes() const
