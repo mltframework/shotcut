@@ -42,7 +42,9 @@ SOURCES += main.cpp\
     mvcp/qconsole.cpp \
     mvcp/mvcpconsoledock.cpp \
     mvcp/mvcp_socket.cpp \
-    mvcp/meltedclipsmodel.cpp
+    mvcp/meltedclipsmodel.cpp \
+    mvcp/meltedunitsmodel.cpp \
+    mvcp/mvcpthread.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -81,7 +83,9 @@ HEADERS  += mainwindow.h \
     dialogs/durationdialog.h \
     mvcp/qconsole.h \
     mvcp/mvcpconsoledock.h \
-    mvcp/meltedclipsmodel.h
+    mvcp/meltedclipsmodel.h \
+    mvcp/meltedunitsmodel.h \
+    mvcp/mvcpthread.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \

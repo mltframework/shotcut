@@ -23,11 +23,13 @@
 #include "ui_mvcpconsoledock.h"
 #include "qconsole.h"
 #include "meltedclipsmodel.h"
+#include "meltedunitsmodel.h"
 
-MvcpConsoleDock::MvcpConsoleDock(QWidget *parent) :
-    QDockWidget(parent),
-    ui(new Ui::MvcpConsoleDock),
-    m_parser(0)
+MvcpConsoleDock::MvcpConsoleDock(QWidget *parent)
+    : QDockWidget(parent)
+    , ui(new Ui::MvcpConsoleDock)
+    , m_parser(0)
+    , m_mvcp(0)
 {
     ui->setupUi(this);
     m_console = new QConsole(this);
@@ -36,6 +38,10 @@ MvcpConsoleDock::MvcpConsoleDock(QWidget *parent) :
     connect(m_console, SIGNAL(commandExecuted(QString)), this, SLOT(onCommandExecuted(QString)));
     ui->treeView->header()->setResizeMode(QHeaderView::ResizeToContents);
     ui->treeView->setDisabled(true);
+    MeltedUnitsModel* unitsModel = new MeltedUnitsModel(this);
+    ui->unitsTableView->setModel(unitsModel);
+    connect(this, SIGNAL(connected(MvcpThread*)), unitsModel, SLOT(onConnected(MvcpThread*)));
+    connect(this, SIGNAL(disconnected()), unitsModel, SLOT(onDisconnected()));
 }
 
 MvcpConsoleDock::~MvcpConsoleDock()
@@ -72,6 +78,8 @@ void MvcpConsoleDock::onCommandExecuted(QString command)
 void MvcpConsoleDock::on_connectButton_toggled(bool checked)
 {
     if (m_parser) {
+        delete m_mvcp;
+        m_mvcp = 0;
         mvcp_parser_close(m_parser);
         m_parser = 0;
         m_console->setPrompt("");
@@ -83,7 +91,7 @@ void MvcpConsoleDock::on_connectButton_toggled(bool checked)
     }
     if (checked) {
         QStringList address = ui->lineEdit->text().split(':');
-        int port = address.size() > 1 ? QString(address[1]).toInt() : 5250;
+        quint16 port = address.size() > 1 ? QString(address[1]).toUInt() : 5250;
         m_parser = mvcp_parser_init_remote(
                     const_cast<char*>(address[0].toUtf8().constData()), port);
         mvcp_response response = mvcp_parser_connect( m_parser );
@@ -95,13 +103,16 @@ void MvcpConsoleDock::on_connectButton_toggled(bool checked)
             m_console->setPrompt("> ");
             m_console->setFocus();
             ui->treeView->setEnabled(true);
-            ui->treeView->setModel(new MeltedClipsModel(mvcp_init(m_parser)));
+            m_mvcp = new MvcpThread(address[0], port);
+            ui->treeView->setModel(new MeltedClipsModel(m_mvcp));
             ui->connectButton->setText(tr("Disconnect"));
+            emit connected(m_mvcp);
         }
         else {
             ui->connectButton->setDown(false);
         }
     } else {
         ui->connectButton->setText(tr("Connect"));
+        emit disconnected();
     }
 }

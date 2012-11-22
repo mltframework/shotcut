@@ -21,52 +21,15 @@
 
 #include "meltedclipsmodel.h"
 
-class MvcpEntry : public QObject
-{
-public:
-    explicit MvcpEntry(int row,
-                       const char* name,
-                       const char* fullname,
-                       bool isDirectory,
-                       unsigned long long size,
-                       QObject* parent = 0)
-        : QObject(parent)
-        , row(row)
-        , name(QString::fromUtf8(name))
-        , isDirectory(isDirectory)
-        , size(size)
-    {
-        setObjectName(QString::fromUtf8(fullname));
-        if (this->name.endsWith('/'))
-            this->name.chop(1);
-    }
-
-    void fetch(mvcp a_mvcp)
-    {
-        if (isDirectory && children().size() == 0) {
-            mvcp_dir dir = mvcp_dir_init(a_mvcp, objectName().toUtf8().constData());
-            int n = mvcp_dir_count(dir);
-            for (int i = 0; i < n; i++) {
-                mvcp_dir_entry_t entry;
-                mvcp_dir_get(dir, i, &entry);
-                new MvcpEntry(i, entry.name, entry.full, entry.dir, entry.size, this);
-            }
-            mvcp_dir_close(dir);
-        }
-    }
-
-    int row;
-    QString name;
-    bool isDirectory;
-    unsigned long long size;
-};
-
-MeltedClipsModel::MeltedClipsModel(mvcp a_mvcp, QObject *parent)
+MeltedClipsModel::MeltedClipsModel(MvcpThread* mvcp, QObject *parent)
     : QAbstractItemModel(parent)
-    , m_mvcp(a_mvcp)
-    , m_root(new MvcpEntry(0, "/", "/", true, 0))
+    , m_mvcp(mvcp)
+    , m_root(new QObject)
 {
-    m_root->fetch(m_mvcp);
+    connect(m_mvcp, SIGNAL(clsResult(QObject*, QObjectList*)), this, SLOT(onClsResult(QObject*, QObjectList*)));
+    m_root->setObjectName("/");
+    m_root->setProperty("dir", true);
+    fetch(m_root, m_rootIndex);
 }
 
 MeltedClipsModel::~MeltedClipsModel()
@@ -86,11 +49,11 @@ int MeltedClipsModel::rowCount(const QModelIndex &parent) const
     if (parent.column() > 0)
         return 0;
 
-    MvcpEntry* parentEntry = m_root;
+    QObject* parentObject = m_root;
     if (parent.isValid())
-        parentEntry = (MvcpEntry*) parent.internalPointer();
-    parentEntry->fetch(m_mvcp);
-    return parentEntry->children().size();
+        parentObject = (QObject*) parent.internalPointer();
+    fetch(parentObject, parent);
+    return parentObject->children().size();
 }
 
 int MeltedClipsModel::columnCount(const QModelIndex &parent) const
@@ -109,22 +72,23 @@ QVariant MeltedClipsModel::data(const QModelIndex &index, int role) const
     if (!index.isValid() || role != Qt::DisplayRole)
         return QVariant();
 
-    MvcpEntry* entry = (MvcpEntry*) index.internalPointer();
+    QObject* o = (QObject*) index.internalPointer();
     if (index.column() == 0) {
-        return entry->name;
-    } else if (!entry->isDirectory) {
-        float x = float(entry->size) / 1024 / 1024 / 1024;
+        return o->property("name");
+    } else if (!o->property("dir").toBool()) {
+        float size = o->property("size").toFloat();
+        float x = size / 1024 / 1024 / 1024;
         if ( x > 1 )
             return tr("%1 GiB").arg(x, 0, 'f', 1);
-        x = float(entry->size) / 1024 / 1024;
+        x = size / 1024 / 1024;
         if ( x > 1 )
             return tr("%1 MiB").arg(x, 0, 'f', 1);
-        x = float(entry->size) / 1024;
+        x = size / 1024;
         if ( x > 1 )
             return tr("%1 KiB").arg(x, 0, 'f', 1);
-        return tr("%1 B").arg(entry->size);
+        return tr("%1 B").arg(size);
     } else {
-        int n = entry->children().count();
+        int n = o->children().size();
         return QString("%2 %3").arg(n).arg((n == 1) ? tr("item") : tr("items"));
     }
 }
@@ -150,11 +114,14 @@ QModelIndex MeltedClipsModel::index(int row, int column, const QModelIndex &pare
     if (!hasIndex(row, column, parent))
         return QModelIndex();
 
-    MvcpEntry* parentEntry = const_cast<MvcpEntry*>(m_root);
+    QObject* parentObject = const_cast<QObject*>(m_root);
     if (parent.isValid())
-        parentEntry = (MvcpEntry*) parent.internalPointer();
-    parentEntry->fetch(m_mvcp);
-    return createIndex(row, column, parentEntry->children().at(row));
+        parentObject = (QObject*) parent.internalPointer();
+    fetch(parentObject, parent);
+    if (row < parentObject->children().size())
+        return createIndex(row, column, parentObject->children().at(row));
+    else
+        return QModelIndex();
 }
 
 QModelIndex MeltedClipsModel::parent(const QModelIndex &index) const
@@ -162,11 +129,11 @@ QModelIndex MeltedClipsModel::parent(const QModelIndex &index) const
     if (!index.isValid() || !index.internalPointer())
         return QModelIndex();
 
-    MvcpEntry* child = (MvcpEntry*) index.internalPointer();
-    MvcpEntry* parent = (MvcpEntry*) child->parent();
+    QObject* child = (QObject*) index.internalPointer();
+    QObject* parent = (QObject*) child->parent();
     if (!parent || parent == m_root)
         return QModelIndex();
-    return createIndex(parent->row, 0, parent);
+    return createIndex(parent->property("row").toInt(), 0, parent);
 }
 
 bool MeltedClipsModel::hasChildren(const QModelIndex &parent) const
@@ -174,8 +141,47 @@ bool MeltedClipsModel::hasChildren(const QModelIndex &parent) const
     if (!parent.isValid()) {
         return true;
     } else {
-        MvcpEntry* parentEntry = (MvcpEntry*) parent.internalPointer();
-        parentEntry->fetch(m_mvcp);
-        return parentEntry->children().size() > 0;
+        QObject* parentObject = (QObject*) parent.internalPointer();
+        fetch(parentObject, parent);
+        return parentObject->property("dir").toBool();
     }
+}
+
+void MeltedClipsModel::fetch(QObject *parent, const QModelIndex& index) const
+{
+    if (!parent->property("dir").toBool())
+        return;
+    QVariant fetched = parent->property("fetched");
+    if (fetched.isValid() && fetched.toBool())
+        return;
+    parent->setProperty("fetched", true);
+
+    QMutexLocker locker(const_cast<QMutex*>(&m_mutex));
+    QList<QModelIndex> *pending = (QList<QModelIndex>*) &m_pending;
+    pending->append(index);
+    m_mvcp->cls(parent->objectName(), parent);
+}
+
+void MeltedClipsModel::onClsResult(QObject* parent, QObjectList* results)
+{
+    if (!results->isEmpty()) {
+        m_mutex.lock();
+        const QModelIndex& index = m_pending.takeFirst();
+        int n = results->size();
+
+        for (int i = 0; i < n; i++) {
+            QObject* o = results->takeFirst();
+            QObject* child = new QObject(parent);
+            child->setObjectName(o->objectName());
+            child->setProperty("row", i);
+            child->setProperty("name", o->property("name"));
+            child->setProperty("dir", o->property("dir"));
+            child->setProperty("size", o->property("size"));
+            delete o;
+        }
+        m_mutex.unlock();
+        beginInsertRows(index, 0, n - 1);
+        endInsertRows();
+    }
+    delete results;
 }

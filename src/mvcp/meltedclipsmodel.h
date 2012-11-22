@@ -22,18 +22,14 @@
 #ifndef MELTEDCLIPSMODEL_H
 #define MELTEDCLIPSMODEL_H
 
-#include <QAbstractItemModel>
-#include <QtCore/qmimedata.h>
-#include <QtCore/QStringList>
-#include <mvcp.h>
-
-class MvcpEntry;
+#include <QtCore>
+#include "mvcpthread.h"
 
 class MeltedClipsModel : public QAbstractItemModel
 {
     Q_OBJECT
 public:
-    explicit MeltedClipsModel(mvcp a_mvcp, QObject *parent = 0);
+    explicit MeltedClipsModel(MvcpThread* mvcp, QObject *parent = 0);
     ~MeltedClipsModel();
 
     QStringList mimeTypes() const;
@@ -49,8 +45,16 @@ public:
     bool hasChildren(const QModelIndex &parent) const;
 
 private:
-    mvcp m_mvcp;
-    MvcpEntry* m_root;
+    MvcpThread* m_mvcp;
+    QModelIndex m_rootIndex;
+    QObject* m_root;
+    QMutex m_mutex;
+    QList<QModelIndex> m_pending;
+
+    void fetch(QObject* parent, const QModelIndex& index) const;
+
+private slots:
+    void onClsResult(QObject* parent, QObjectList* results);
 };
 
 #endif // MELTEDCLIPSMODEL_H

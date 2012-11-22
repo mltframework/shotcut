@@ -19,41 +19,42 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef MVCPCONSOLEDOCK_H
-#define MVCPCONSOLEDOCK_H
+#ifndef MELTEDUNITSMODEL_H
+#define MELTEDUNITSMODEL_H
 
-#include <QDockWidget>
-#include <mvcp_remote.h>
+#include <QAbstractTableModel>
 #include "mvcpthread.h"
 
-class QConsole;
+class QTimer;
 
-namespace Ui {
-    class MvcpConsoleDock;
-}
-
-class MvcpConsoleDock : public QDockWidget
+class MeltedUnitsModel : public QAbstractTableModel
 {
     Q_OBJECT
-
 public:
-    explicit MvcpConsoleDock(QWidget *parent = 0);
-    ~MvcpConsoleDock();
+    explicit MeltedUnitsModel(QObject *parent = 0);
+    ~MeltedUnitsModel();
+
+    int rowCount(const QModelIndex& parent = QModelIndex()) const;
+    int columnCount(const QModelIndex& parent = QModelIndex()) const;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
+    QVariant headerData(int section, Qt::Orientation orientation, int role) const;
 
 signals:
-    void connected(MvcpThread*);
     void disconnected();
 
-private slots:
-    void on_lineEdit_returnPressed();
-    void onCommandExecuted(QString);
-    void on_connectButton_toggled(bool checked);
+public slots:
+    void onConnected(MvcpThread*);
+    void onDisconnected();
+    void onTimeout();
 
 private:
-    Ui::MvcpConsoleDock *ui;
-    QConsole* m_console;
-    mvcp_parser m_parser;
     MvcpThread* m_mvcp;
+    QObjectList m_units;
+    QTimer* m_timer;
+
+private slots:
+    void onUlsResult(QStringList);
+    void onUstaResult(QObject*);
 };
 
-#endif // MVCPCONSOLEDOCK_H
+#endif // MELTEDUNITSMODEL_H
