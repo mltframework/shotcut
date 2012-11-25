@@ -16,44 +16,44 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "meltedunitdock.h"
-#include "ui_meltedunitdock.h"
+#include "meltedplaylistdock.h"
+#include "ui_meltedplaylistdock.h"
 
-MeltedUnitDock::MeltedUnitDock(QWidget *parent) :
+MeltedPlaylistDock::MeltedPlaylistDock(QWidget *parent) :
     QDockWidget(parent),
-    ui(new Ui::MeltedUnitDock)
+    ui(new Ui::MeltedPlaylistDock)
 {
     ui->setupUi(this);
     ui->tableView->setModel(&m_model);
     connect(&m_model, SIGNAL(loaded()), ui->tableView, SLOT(resizeColumnsToContents()));
 }
 
-MeltedUnitDock::~MeltedUnitDock()
+MeltedPlaylistDock::~MeltedPlaylistDock()
 {
     delete ui;
 }
 
-QAbstractItemModel *MeltedUnitDock::playlistModel() const
+QAbstractItemModel *MeltedPlaylistDock::playlistModel() const
 {
     return (QAbstractItemModel*) &m_model;
 }
 
-void MeltedUnitDock::onConnected(const QString &address, quint16 port, quint8 unit)
+void MeltedPlaylistDock::onConnected(const QString &address, quint16 port, quint8 unit)
 {
     m_model.onConnected(address, port, unit);
 }
 
-void MeltedUnitDock::onDisconnected()
+void MeltedPlaylistDock::onDisconnected()
 {
     m_model.onDisconnected();
 }
 
-void MeltedUnitDock::onUnitChanged(quint8 unit)
+void MeltedPlaylistDock::onUnitChanged(quint8 unit)
 {
     m_model.onUnitChanged(unit);
 }
 
-void MeltedUnitDock::on_tableView_doubleClicked(const QModelIndex &index)
+void MeltedPlaylistDock::on_tableView_doubleClicked(const QModelIndex &index)
 {
     m_model.gotoClip(index.row());
 }

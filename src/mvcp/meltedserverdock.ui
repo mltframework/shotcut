@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MvcpConsoleDock</class>
- <widget class="QDockWidget" name="MvcpConsoleDock">
+ <class>MeltedServerDock</class>
+ <widget class="QDockWidget" name="MeltedServerDock">
   <property name="geometry">
    <rect>
     <x>0</x>

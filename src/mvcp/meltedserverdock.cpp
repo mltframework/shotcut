@@ -19,15 +19,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "mvcpconsoledock.h"
-#include "ui_mvcpconsoledock.h"
+#include "meltedserverdock.h"
+#include "ui_meltedserverdock.h"
 #include "qconsole.h"
 #include "meltedclipsmodel.h"
 #include "meltedunitsmodel.h"
 
-MvcpConsoleDock::MvcpConsoleDock(QWidget *parent)
+MeltedServerDock::MeltedServerDock(QWidget *parent)
     : QDockWidget(parent)
-    , ui(new Ui::MvcpConsoleDock)
+    , ui(new Ui::MeltedServerDock)
     , m_parser(0)
     , m_mvcp(0)
 {
@@ -45,24 +45,24 @@ MvcpConsoleDock::MvcpConsoleDock(QWidget *parent)
     connect(this, SIGNAL(disconnected()), unitsModel, SLOT(onDisconnected()));
 }
 
-MvcpConsoleDock::~MvcpConsoleDock()
+MeltedServerDock::~MeltedServerDock()
 {
     if (m_parser)
         mvcp_parser_close(m_parser);
     delete ui;
 }
 
-QAbstractItemModel *MvcpConsoleDock::unitsModel() const
+QAbstractItemModel *MeltedServerDock::unitsModel() const
 {
     return ui->unitsTableView->model();
 }
 
-void MvcpConsoleDock::on_lineEdit_returnPressed()
+void MeltedServerDock::on_lineEdit_returnPressed()
 {
     ui->connectButton->setChecked(true);
 }
 
-void MvcpConsoleDock::onCommandExecuted(QString command)
+void MeltedServerDock::onCommandExecuted(QString command)
 {
     if (!m_parser || command.isEmpty())
         return;
@@ -81,7 +81,7 @@ void MvcpConsoleDock::onCommandExecuted(QString command)
         ui->connectButton->setChecked(false);
 }
 
-void MvcpConsoleDock::on_connectButton_toggled(bool checked)
+void MeltedServerDock::on_connectButton_toggled(bool checked)
 {
     if (m_parser) {
         delete m_mvcp;
@@ -124,17 +124,17 @@ void MvcpConsoleDock::on_connectButton_toggled(bool checked)
     }
 }
 
-void MvcpConsoleDock::on_unitsTableView_clicked(const QModelIndex &index)
+void MeltedServerDock::on_unitsTableView_clicked(const QModelIndex &index)
 {
     emit unitActivated(index.row());
 }
 
-void MvcpConsoleDock::on_unitsTableView_doubleClicked(const QModelIndex &index)
+void MeltedServerDock::on_unitsTableView_doubleClicked(const QModelIndex &index)
 {
     emit unitOpened(index.row());
 }
 
-void MvcpConsoleDock::on_consoleButton_clicked(bool checked)
+void MeltedServerDock::on_consoleButton_clicked(bool checked)
 {
     m_console->setVisible(checked);
     if (checked)

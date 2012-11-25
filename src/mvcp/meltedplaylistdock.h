@@ -23,16 +23,16 @@
 #include "meltedplaylistmodel.h"
 
 namespace Ui {
-class MeltedUnitDock;
+class MeltedPlaylistDock;
 }
 
-class MeltedUnitDock : public QDockWidget
+class MeltedPlaylistDock : public QDockWidget
 {
     Q_OBJECT
     
 public:
-    explicit MeltedUnitDock(QWidget *parent = 0);
-    ~MeltedUnitDock();
+    explicit MeltedPlaylistDock(QWidget *parent = 0);
+    ~MeltedPlaylistDock();
     QAbstractItemModel* playlistModel() const;
     
 public slots:
@@ -44,7 +44,7 @@ private slots:
     void on_tableView_doubleClicked(const QModelIndex &index);
 
 private:
-    Ui::MeltedUnitDock *ui;
+    Ui::MeltedPlaylistDock *ui;
     MeltedPlaylistModel m_model;
 };
 

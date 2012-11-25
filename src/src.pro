@@ -42,13 +42,13 @@ SOURCES += main.cpp\
     docks/playlistdock.cpp \
     dialogs/durationdialog.cpp \
     mvcp/qconsole.cpp \
-    mvcp/mvcpconsoledock.cpp \
     mvcp/mvcp_socket.cpp \
     mvcp/meltedclipsmodel.cpp \
     mvcp/meltedunitsmodel.cpp \
     mvcp/mvcpthread.cpp \
     mvcp/meltedplaylistmodel.cpp \
-    mvcp/meltedunitdock.cpp
+    mvcp/meltedplaylistdock.cpp \
+    mvcp/meltedserverdock.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -86,12 +86,12 @@ HEADERS  += mainwindow.h \
     docks/playlistdock.h \
     dialogs/durationdialog.h \
     mvcp/qconsole.h \
-    mvcp/mvcpconsoledock.h \
     mvcp/meltedclipsmodel.h \
     mvcp/meltedunitsmodel.h \
     mvcp/mvcpthread.h \
     mvcp/meltedplaylistmodel.h \
-    mvcp/meltedunitdock.h
+    mvcp/meltedplaylistdock.h \
+    mvcp/meltedserverdock.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
@@ -118,8 +118,8 @@ FORMS    += mainwindow.ui \
     dialogs/textviewerdialog.ui \
     docks/playlistdock.ui \
     dialogs/durationdialog.ui \
-    mvcp/mvcpconsoledock.ui \
-    mvcp/meltedunitdock.ui
+    mvcp/meltedserverdock.ui \
+    mvcp/meltedplaylistdock.ui
 
 RESOURCES += \
     resources.qrc

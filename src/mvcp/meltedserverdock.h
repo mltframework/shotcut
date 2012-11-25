@@ -30,16 +30,16 @@
 class QConsole;
 
 namespace Ui {
-    class MvcpConsoleDock;
+    class MeltedServerDock;
 }
 
-class MvcpConsoleDock : public QDockWidget
+class MeltedServerDock : public QDockWidget
 {
     Q_OBJECT
 
 public:
-    explicit MvcpConsoleDock(QWidget *parent = 0);
-    ~MvcpConsoleDock();
+    explicit MeltedServerDock(QWidget *parent = 0);
+    ~MeltedServerDock();
     QAbstractItemModel *unitsModel() const;
 
 signals:
@@ -58,7 +58,7 @@ private slots:
     void on_consoleButton_clicked(bool checked);
 
 private:
-    Ui::MvcpConsoleDock *ui;
+    Ui::MeltedServerDock *ui;
     QConsole* m_console;
     mvcp_parser m_parser;
     MvcpThread* m_mvcp;

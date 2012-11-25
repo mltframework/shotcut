@@ -40,12 +40,12 @@
 #include "docks/recentdock.h"
 #include "docks/encodedock.h"
 #include "docks/jobsdock.h"
-#include "mvcp/mvcpconsoledock.h"
-#include "mvcp/meltedunitdock.h"
 #include "jobqueue.h"
 #include "docks/playlistdock.h"
 #include "glwidget.h"
 #include "sdlwidget.h"
+#include "mvcp/meltedserverdock.h"
+#include "mvcp/meltedplaylistdock.h"
 #include "mvcp/meltedunitsmodel.h"
 #include "mvcp/meltedplaylistmodel.h"
 
@@ -186,22 +186,22 @@ MainWindow::MainWindow()
     connect(&JOBS, SIGNAL(jobAdded()), m_jobsDock, SLOT(raise()));
     connect(m_jobsDock, SIGNAL(visibilityChanged(bool)), this, SLOT(onJobsVisibilityChanged(bool)));
 
-    MvcpConsoleDock* meltedServerDock = new MvcpConsoleDock(this);
+    MeltedServerDock* meltedServerDock = new MeltedServerDock(this);
     meltedServerDock->hide();
     addDockWidget(Qt::TopDockWidgetArea, meltedServerDock);
     ui->menuView->addAction(meltedServerDock->toggleViewAction());
 
-    MeltedUnitDock* meltedUnitDock = new MeltedUnitDock(this);
-    meltedUnitDock->hide();
-    addDockWidget(Qt::TopDockWidgetArea, meltedUnitDock);
-    splitDockWidget(meltedServerDock, meltedUnitDock, Qt::Horizontal);
-    ui->menuView->addAction(meltedUnitDock->toggleViewAction());
-    connect(meltedServerDock, SIGNAL(connected(QString, quint16)), meltedUnitDock, SLOT(onConnected(QString,quint16)));
-    connect(meltedServerDock, SIGNAL(disconnected()), meltedUnitDock, SLOT(onDisconnected()));
-    connect(meltedServerDock, SIGNAL(unitActivated(quint8)), meltedUnitDock, SLOT(onUnitChanged(quint8)));
+    MeltedPlaylistDock* meltedPlaylistDock = new MeltedPlaylistDock(this);
+    meltedPlaylistDock->hide();
+    addDockWidget(Qt::TopDockWidgetArea, meltedPlaylistDock);
+    splitDockWidget(meltedServerDock, meltedPlaylistDock, Qt::Horizontal);
+    ui->menuView->addAction(meltedPlaylistDock->toggleViewAction());
+    connect(meltedServerDock, SIGNAL(connected(QString, quint16)), meltedPlaylistDock, SLOT(onConnected(QString,quint16)));
+    connect(meltedServerDock, SIGNAL(disconnected()), meltedPlaylistDock, SLOT(onDisconnected()));
+    connect(meltedServerDock, SIGNAL(unitActivated(quint8)), meltedPlaylistDock, SLOT(onUnitChanged(quint8)));
 
     MeltedUnitsModel* unitsModel = (MeltedUnitsModel*) meltedServerDock->unitsModel();
-    MeltedPlaylistModel* playlistModel = (MeltedPlaylistModel*) meltedUnitDock->playlistModel();
+    MeltedPlaylistModel* playlistModel = (MeltedPlaylistModel*) meltedPlaylistDock->playlistModel();
     connect(unitsModel, SIGNAL(clipIndexChanged(quint8, int)), playlistModel, SLOT(onClipIndexChanged(quint8, int)));
     connect(unitsModel, SIGNAL(generationChanged(quint8)), playlistModel, SLOT(onGenerationChanged(quint8)));
 
