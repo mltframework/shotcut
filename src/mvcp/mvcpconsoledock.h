@@ -47,15 +47,16 @@ signals:
     void connected(QString address, quint16 port);
     void disconnected();
     void unitActivated(quint8);
+    void unitOpened(quint8);
 
 private slots:
     void on_lineEdit_returnPressed();
     void onCommandExecuted(QString);
     void on_connectButton_toggled(bool checked);
-    void on_unitsTableView_activated(const QModelIndex &index);
-
+    void on_unitsTableView_clicked(const QModelIndex &index);
+    void on_unitsTableView_doubleClicked(const QModelIndex &index);
     void on_consoleButton_clicked(bool checked);
-    
+
 private:
     Ui::MvcpConsoleDock *ui;
     QConsole* m_console;

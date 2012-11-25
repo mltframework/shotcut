@@ -124,9 +124,14 @@ void MvcpConsoleDock::on_connectButton_toggled(bool checked)
     }
 }
 
-void MvcpConsoleDock::on_unitsTableView_activated(const QModelIndex &index)
+void MvcpConsoleDock::on_unitsTableView_clicked(const QModelIndex &index)
 {
     emit unitActivated(index.row());
+}
+
+void MvcpConsoleDock::on_unitsTableView_doubleClicked(const QModelIndex &index)
+{
+    emit unitOpened(index.row());
 }
 
 void MvcpConsoleDock::on_consoleButton_clicked(bool checked)
@@ -135,3 +140,4 @@ void MvcpConsoleDock::on_consoleButton_clicked(bool checked)
     if (checked)
         m_console->setFocus();
 }
+
