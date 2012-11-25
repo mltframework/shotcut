@@ -52,3 +52,8 @@ void MeltedUnitDock::onUnitChanged(quint8 unit)
 {
     m_model.onUnitChanged(unit);
 }
+
+void MeltedUnitDock::on_tableView_doubleClicked(const QModelIndex &index)
+{
+    m_model.gotoClip(index.row());
+}

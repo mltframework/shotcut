@@ -38,6 +38,13 @@ public:
         COLUMN_OUT,
         COLUMN_COUNT
     };
+
+    enum MvcpCommands {
+        MVCP_IGNORE,
+        MVCP_LIST,
+        MVCP_GOTO
+    };
+
     explicit MeltedPlaylistModel(QObject *parent = 0);
     ~MeltedPlaylistModel();
 
@@ -51,6 +58,8 @@ public:
 //    Qt::ItemFlags flags(const QModelIndex &index) const;
 //    QStringList mimeTypes() const;
 //    bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent);
+
+    void gotoClip(int);
 
 signals:
     void loaded();
@@ -73,6 +82,7 @@ private:
     mvcp_list m_list;
     mvcp_response m_response;
     int m_index;
+    QList<int> m_commands;
 };
 
 #endif // MELTEDPLAYLISTMODEL_H

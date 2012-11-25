@@ -92,8 +92,9 @@ QVariant MeltedPlaylistModel::data(const QModelIndex &index, int role) const
         if (index.row() == m_index && index.column() == COLUMN_ACTIVE)
             return Qt::Checked;
     default:
-        return QVariant();
+        break;
     }
+    return QVariant();
 }
 
 QVariant MeltedPlaylistModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -126,13 +127,20 @@ QVariant MeltedPlaylistModel::headerData(int section, Qt::Orientation orientatio
     return QVariant();
 }
 
+void MeltedPlaylistModel::gotoClip(int index)
+{
+    m_commands << MVCP_GOTO;
+    m_socket.write(QString("GOTO U%1 0 %2\r\n").arg(m_unit).arg(index).toAscii());
+    onClipIndexChanged(m_unit, index);
+}
+
 void MeltedPlaylistModel::onConnected(const QString &address, quint16 port, quint8 unit)
 {
     connect(&m_socket, SIGNAL(readyRead()), this, SLOT(readResponse()));
-    m_socket.connectToHost(address, port);
-//    connect(&m_socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(onSocketError(QAbstractSocket::SocketError)));
     m_unit = unit;
+    m_commands << MVCP_IGNORE;
     m_response = mvcp_response_init();
+    m_socket.connectToHost(address, port);
 }
 
 void MeltedPlaylistModel::onDisconnected()
@@ -144,6 +152,7 @@ void MeltedPlaylistModel::onDisconnected()
         beginRemoveRows(QModelIndex(), 0, mvcp_list_count(m_list) - 1);
     mvcp_list_close(m_list);
     m_list = 0;
+    mvcp_response_close(m_response);
     m_response = 0;
     if (update)
         endRemoveRows();
@@ -151,9 +160,7 @@ void MeltedPlaylistModel::onDisconnected()
 
 void MeltedPlaylistModel::refresh()
 {
-    if (m_response)
-        mvcp_response_close(m_response);
-    m_response = mvcp_response_init();
+    m_commands << MVCP_LIST;
     m_socket.write(QString("LIST U%1\r\n").arg(m_unit).toAscii());
 }
 
@@ -165,7 +172,6 @@ void MeltedPlaylistModel::onUnitChanged(quint8 unit)
         beginRemoveRows(QModelIndex(), 0, mvcp_list_count(m_list) - 1);
     mvcp_list_close(m_list);
     m_list = 0;
-    m_response = 0;
     if (update)
         endRemoveRows();
     refresh();
@@ -190,18 +196,13 @@ void MeltedPlaylistModel::onGenerationChanged(quint8 unit)
 void MeltedPlaylistModel::readResponse()
 {
     QByteArray data = m_socket.readAll();
-    if (data.size() > 0)
+    if (data.size() > 0 && m_response)
     {
         mvcp_response_write(m_response, data.constData(), data.size());
         int position = mvcp_response_count(m_response) - 1;
-        if (position < 0 || data[data.size() - 1] != '\n')
-            return;
-        int terminated = 0;
-        switch(mvcp_response_get_error_code(m_response))
-        {
-        case 100:
-            //refresh();
-            break;
+        int terminated = position < 0 || data[data.size() - 1] != '\n';
+        if (!terminated)
+        switch(mvcp_response_get_error_code(m_response)) {
         case 201:
         case 500:
             terminated = !strcmp(mvcp_response_get_line(m_response, position), "");
@@ -214,13 +215,27 @@ void MeltedPlaylistModel::readResponse()
             break;
         }
         if (terminated) {
-            m_list = (mvcp_list) calloc(1, sizeof(*m_list));
-            m_list->response = m_response;
-            if (mvcp_response_count(m_response ) >= 2)
-                m_list->generation = atoi(mvcp_response_get_line(m_response, 1));
-            beginInsertRows(QModelIndex(), 0, mvcp_list_count(m_list) - 1);
-            endInsertRows();
-            emit loaded();
+            int command = m_commands.isEmpty()? MVCP_IGNORE : m_commands.takeFirst();
+            switch (command) {
+            case MVCP_LIST: {
+                m_list = (mvcp_list) calloc(1, sizeof(*m_list));
+                m_list->response = mvcp_response_clone(m_response);
+                if (mvcp_response_count(m_response ) >= 2)
+                    m_list->generation = atoi(mvcp_response_get_line(m_response, 1));
+                beginInsertRows(QModelIndex(), 0, mvcp_list_count(m_list) - 1);
+                endInsertRows();
+                emit loaded();
+                break;
+            }
+            case MVCP_GOTO:
+                m_commands << MVCP_IGNORE;
+                m_socket.write(QString("PLAY U%1 1000\r\n").arg(m_unit).toAscii());
+                break;
+            default:
+                break;
+            }
+            mvcp_response_close(m_response);
+            m_response = mvcp_response_init();
         }
     }
 }

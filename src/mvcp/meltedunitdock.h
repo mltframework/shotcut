@@ -40,6 +40,9 @@ public slots:
     void onDisconnected();
     void onUnitChanged(quint8 unit);
 
+private slots:
+    void on_tableView_doubleClicked(const QModelIndex &index);
+
 private:
     Ui::MeltedUnitDock *ui;
     MeltedPlaylistModel m_model;
