@@ -118,6 +118,18 @@ void MeltedUnitsModel::onUstaResult(QObject* unit)
     quint8 i = unit->property("unit").toUInt();
     if (i < m_units.size()) {
         m_units[i]->setProperty("status", unit->property("status"));
+        // Inform others like the MeltedPlaylistModel when the currently playing clip has changed.
+        if (!m_units[i]->property("clip_index").isValid() ||
+                m_units[i]->property("clip_index") != unit->property("clip_index")) {
+            m_units[i]->setProperty("clip_index", unit->property("clip_index"));
+            emit clipIndexChanged(i, m_units[i]->property("clip_index").toInt());
+        }
+        // Inform others like the MeltedPlaylistModel when the playlist has changed.
+        if (!m_units[i]->property("generation").isValid() ||
+                m_units[i]->property("generation") != unit->property("generation")) {
+            m_units[i]->setProperty("generation", unit->property("generation"));
+            emit generationChanged(i);
+        }
         emit dataChanged(createIndex(i, 1), createIndex(i, 1));
     }
     delete unit;

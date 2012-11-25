@@ -41,6 +41,8 @@ public:
 
 signals:
     void disconnected();
+    void clipIndexChanged(quint8 unit, int index);
+    void generationChanged(quint8 unit);
 
 public slots:
     void onConnected(MvcpThread*);

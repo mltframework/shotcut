@@ -34,6 +34,7 @@ MvcpConsoleDock::MvcpConsoleDock(QWidget *parent)
     ui->setupUi(this);
     m_console = new QConsole(this);
     m_console->setDisabled(true);
+    m_console->hide();
     ui->splitter->addWidget(m_console);
     connect(m_console, SIGNAL(commandExecuted(QString)), this, SLOT(onCommandExecuted(QString)));
     ui->treeView->header()->setResizeMode(QHeaderView::ResizeToContents);
@@ -49,6 +50,11 @@ MvcpConsoleDock::~MvcpConsoleDock()
     if (m_parser)
         mvcp_parser_close(m_parser);
     delete ui;
+}
+
+QAbstractItemModel *MvcpConsoleDock::unitsModel() const
+{
+    return ui->unitsTableView->model();
 }
 
 void MvcpConsoleDock::on_lineEdit_returnPressed()
@@ -105,14 +111,27 @@ void MvcpConsoleDock::on_connectButton_toggled(bool checked)
             m_mvcp = new MvcpThread(address[0], port);
             ui->connectButton->setText(tr("Disconnect"));
             emit connected(m_mvcp);
+            emit connected(address[0], port);
             ui->treeView->setModel(new MeltedClipsModel(m_mvcp));
             ui->treeView->setEnabled(true);
         }
         else {
-            ui->connectButton->setDown(false);
+            ui->connectButton->setChecked(false);
         }
     } else {
         ui->connectButton->setText(tr("Connect"));
         emit disconnected();
     }
+}
+
+void MvcpConsoleDock::on_unitsTableView_activated(const QModelIndex &index)
+{
+    emit unitActivated(index.row());
+}
+
+void MvcpConsoleDock::on_consoleButton_clicked(bool checked)
+{
+    m_console->setVisible(checked);
+    if (checked)
+        m_console->setFocus();
 }

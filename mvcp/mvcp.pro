@@ -1,6 +1,7 @@
 TEMPLATE = lib
 
 CONFIG += staticlib
+CONFIG += create_prl
 
 DEFINES += MVCP_EMBEDDED
 

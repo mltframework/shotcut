@@ -1,3 +1,5 @@
+CONFIG   += link_prl
+
 QT       += opengl xml network
 
 TARGET = shotcut
@@ -44,7 +46,9 @@ SOURCES += main.cpp\
     mvcp/mvcp_socket.cpp \
     mvcp/meltedclipsmodel.cpp \
     mvcp/meltedunitsmodel.cpp \
-    mvcp/mvcpthread.cpp
+    mvcp/mvcpthread.cpp \
+    mvcp/meltedplaylistmodel.cpp \
+    mvcp/meltedunitdock.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -85,7 +89,9 @@ HEADERS  += mainwindow.h \
     mvcp/mvcpconsoledock.h \
     mvcp/meltedclipsmodel.h \
     mvcp/meltedunitsmodel.h \
-    mvcp/mvcpthread.h
+    mvcp/mvcpthread.h \
+    mvcp/meltedplaylistmodel.h \
+    mvcp/meltedunitdock.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
@@ -112,7 +118,8 @@ FORMS    += mainwindow.ui \
     dialogs/textviewerdialog.ui \
     docks/playlistdock.ui \
     dialogs/durationdialog.ui \
-    mvcp/mvcpconsoledock.ui
+    mvcp/mvcpconsoledock.ui \
+    mvcp/meltedunitdock.ui
 
 RESOURCES += \
     resources.qrc

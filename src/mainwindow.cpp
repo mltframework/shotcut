@@ -41,10 +41,13 @@
 #include "docks/encodedock.h"
 #include "docks/jobsdock.h"
 #include "mvcp/mvcpconsoledock.h"
+#include "mvcp/meltedunitdock.h"
 #include "jobqueue.h"
 #include "docks/playlistdock.h"
 #include "glwidget.h"
 #include "sdlwidget.h"
+#include "mvcp/meltedunitsmodel.h"
+#include "mvcp/meltedplaylistmodel.h"
 
 #include <QtGui>
 #include <QDebug>
@@ -183,10 +186,23 @@ MainWindow::MainWindow()
     connect(&JOBS, SIGNAL(jobAdded()), m_jobsDock, SLOT(raise()));
     connect(m_jobsDock, SIGNAL(visibilityChanged(bool)), this, SLOT(onJobsVisibilityChanged(bool)));
 
-    QDockWidget* dock = new MvcpConsoleDock(this);
-    dock->hide();
-    addDockWidget(Qt::TopDockWidgetArea, dock);
-    ui->menuView->addAction(dock->toggleViewAction());
+    MvcpConsoleDock* meltedServerDock = new MvcpConsoleDock(this);
+    meltedServerDock->hide();
+    addDockWidget(Qt::TopDockWidgetArea, meltedServerDock);
+    ui->menuView->addAction(meltedServerDock->toggleViewAction());
+
+    MeltedUnitDock* meltedUnitDock = new MeltedUnitDock(this);
+    meltedUnitDock->hide();
+    addDockWidget(Qt::TopDockWidgetArea, meltedUnitDock);
+    ui->menuView->addAction(meltedUnitDock->toggleViewAction());
+    connect(meltedServerDock, SIGNAL(connected(QString, quint16)), meltedUnitDock, SLOT(onConnected(QString,quint16)));
+    connect(meltedServerDock, SIGNAL(disconnected()), meltedUnitDock, SLOT(onDisconnected()));
+    connect(meltedServerDock, SIGNAL(unitActivated(quint8)), meltedUnitDock, SLOT(onUnitChanged(quint8)));
+
+    MeltedUnitsModel* unitsModel = (MeltedUnitsModel*) meltedServerDock->unitsModel();
+    MeltedPlaylistModel* playlistModel = (MeltedPlaylistModel*) meltedUnitDock->playlistModel();
+    connect(unitsModel, SIGNAL(clipIndexChanged(quint8, int)), playlistModel, SLOT(onClipIndexChanged(quint8, int)));
+    connect(unitsModel, SIGNAL(generationChanged(quint8)), playlistModel, SLOT(onGenerationChanged(quint8)));
 
     // Connect signals.
     connect(this, SIGNAL(producerOpened()), this, SLOT(onProducerOpened()));

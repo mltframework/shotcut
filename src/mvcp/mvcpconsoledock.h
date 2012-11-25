@@ -23,6 +23,7 @@
 #define MVCPCONSOLEDOCK_H
 
 #include <QDockWidget>
+#include <QtCore/QModelIndex>
 #include <mvcp_remote.h>
 #include "mvcpthread.h"
 
@@ -39,16 +40,22 @@ class MvcpConsoleDock : public QDockWidget
 public:
     explicit MvcpConsoleDock(QWidget *parent = 0);
     ~MvcpConsoleDock();
+    QAbstractItemModel *unitsModel() const;
 
 signals:
     void connected(MvcpThread*);
+    void connected(QString address, quint16 port);
     void disconnected();
+    void unitActivated(quint8);
 
 private slots:
     void on_lineEdit_returnPressed();
     void onCommandExecuted(QString);
     void on_connectButton_toggled(bool checked);
+    void on_unitsTableView_activated(const QModelIndex &index);
 
+    void on_consoleButton_clicked(bool checked);
+    
 private:
     Ui::MvcpConsoleDock *ui;
     QConsole* m_console;

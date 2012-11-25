@@ -177,5 +177,7 @@ void MvcpThread::do_usta(mvcp a_mvcp, QObject* parameters)
     result->setProperty("status", s);
     result->setProperty("clip", QString::fromUtf8(status.clip));
     result->setProperty("position", status.position);
+    result->setProperty("generation", status.generation);
+    result->setProperty("clip_index", status.clip_index);
     emit ustaResult(result);
 }

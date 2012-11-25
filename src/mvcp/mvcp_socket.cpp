@@ -72,7 +72,7 @@ int mvcp_socket_read_data( mvcp_socket connection, char *data, int length )
     QTcpSocket* socket = (QTcpSocket*) connection;
     int used = -1;
     if (socket && socket->state() == QAbstractSocket::ConnectedState) {
-        if (socket->waitForReadyRead(1000))
+        if (socket->bytesAvailable() > 0 || socket->waitForReadyRead(1000))
             used = socket->read(data, length);
         else
             used = 0;
