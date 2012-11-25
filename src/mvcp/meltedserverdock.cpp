@@ -24,6 +24,8 @@
 #include "qconsole.h"
 #include "meltedclipsmodel.h"
 #include "meltedunitsmodel.h"
+#include <QtGui/QCompleter>
+#include <QtGui/QStringListModel>
 
 MeltedServerDock::MeltedServerDock(QWidget *parent)
     : QDockWidget(parent)
@@ -32,17 +34,31 @@ MeltedServerDock::MeltedServerDock(QWidget *parent)
     , m_mvcp(0)
 {
     ui->setupUi(this);
+
+    // setup console
     m_console = new QConsole(this);
     m_console->setDisabled(true);
     m_console->hide();
     ui->splitter->addWidget(m_console);
     connect(m_console, SIGNAL(commandExecuted(QString)), this, SLOT(onCommandExecuted(QString)));
+
+    // setup clips tree
     ui->treeView->header()->setResizeMode(QHeaderView::ResizeToContents);
     ui->treeView->setDisabled(true);
+
+    // setup units table
     MeltedUnitsModel* unitsModel = new MeltedUnitsModel(this);
     ui->unitsTableView->setModel(unitsModel);
     connect(this, SIGNAL(connected(MvcpThread*)), unitsModel, SLOT(onConnected(MvcpThread*)));
     connect(this, SIGNAL(disconnected()), unitsModel, SLOT(onDisconnected()));
+
+    // setup server field
+    QStringList servers = m_settings.value("melted/servers").toStringList();
+    QCompleter* completer = new QCompleter(servers, this);
+    ui->lineEdit->setCompleter(completer);
+    completer->setCaseSensitivity(Qt::CaseInsensitive);
+    if (!servers.isEmpty())
+        ui->lineEdit->setText(servers[0]);
 }
 
 MeltedServerDock::~MeltedServerDock()
@@ -59,7 +75,18 @@ QAbstractItemModel *MeltedServerDock::unitsModel() const
 
 void MeltedServerDock::on_lineEdit_returnPressed()
 {
-    ui->connectButton->setChecked(true);
+    QString s = ui->lineEdit->text();
+    if (!s.isEmpty()) {
+        ui->connectButton->setChecked(true);
+        QStringList servers = m_settings.value("melted/servers").toStringList();
+        servers.removeOne(s);
+        servers.prepend(s);
+        while (servers.count() > 20)
+            servers.removeLast();
+        m_settings.setValue("melted/servers", servers);
+        QCompleter* completer = ui->lineEdit->completer();
+        completer->setModel(new QStringListModel(servers, completer));
+    }
 }
 
 void MeltedServerDock::onCommandExecuted(QString command)
