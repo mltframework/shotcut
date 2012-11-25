@@ -194,6 +194,7 @@ MainWindow::MainWindow()
     MeltedUnitDock* meltedUnitDock = new MeltedUnitDock(this);
     meltedUnitDock->hide();
     addDockWidget(Qt::TopDockWidgetArea, meltedUnitDock);
+    splitDockWidget(meltedServerDock, meltedUnitDock, Qt::Horizontal);
     ui->menuView->addAction(meltedUnitDock->toggleViewAction());
     connect(meltedServerDock, SIGNAL(connected(QString, quint16)), meltedUnitDock, SLOT(onConnected(QString,quint16)));
     connect(meltedServerDock, SIGNAL(disconnected()), meltedUnitDock, SLOT(onDisconnected()));
