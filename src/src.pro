@@ -142,7 +142,7 @@ LIBS += -L../mvcp -lmvcp -lpthread
 mac {
     TARGET = Shotcut
     ICON = ../icons/shotcut.icns
-    QMAKE_INFO_PLIST = Info.plist
+    QMAKE_INFO_PLIST = ../Info.plist
 }
 win32 {
     INCLUDEPATH += include/mlt++ include/mlt
