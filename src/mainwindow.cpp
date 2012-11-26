@@ -199,9 +199,13 @@ MainWindow::MainWindow()
     connect(meltedServerDock, SIGNAL(connected(QString, quint16)), meltedPlaylistDock, SLOT(onConnected(QString,quint16)));
     connect(meltedServerDock, SIGNAL(disconnected()), meltedPlaylistDock, SLOT(onDisconnected()));
     connect(meltedServerDock, SIGNAL(unitActivated(quint8)), meltedPlaylistDock, SLOT(onUnitChanged(quint8)));
+    connect(meltedPlaylistDock, SIGNAL(appendRequested()), meltedServerDock, SLOT(onAppendRequested()));
+    connect(meltedServerDock, SIGNAL(append(QString)), meltedPlaylistDock, SLOT(onAppend(QString)));
+    connect(meltedPlaylistDock, SIGNAL(insertRequested(int)), meltedServerDock, SLOT(onInsertRequested(int)));
+    connect(meltedServerDock, SIGNAL(insert(QString,int)), meltedPlaylistDock, SLOT(onInsert(QString,int)));
 
     MeltedUnitsModel* unitsModel = (MeltedUnitsModel*) meltedServerDock->unitsModel();
-    MeltedPlaylistModel* playlistModel = (MeltedPlaylistModel*) meltedPlaylistDock->playlistModel();
+    MeltedPlaylistModel* playlistModel = (MeltedPlaylistModel*) meltedPlaylistDock->model();
     connect(unitsModel, SIGNAL(clipIndexChanged(quint8, int)), playlistModel, SLOT(onClipIndexChanged(quint8, int)));
     connect(unitsModel, SIGNAL(generationChanged(quint8)), playlistModel, SLOT(onGenerationChanged(quint8)));
 

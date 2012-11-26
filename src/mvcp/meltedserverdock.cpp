@@ -45,6 +45,7 @@ MeltedServerDock::MeltedServerDock(QWidget *parent)
     // setup clips tree
     ui->treeView->header()->setResizeMode(QHeaderView::ResizeToContents);
     ui->treeView->setDisabled(true);
+    ui->treeView->setDragEnabled(true);
 
     // setup units table
     MeltedUnitsModel* unitsModel = new MeltedUnitsModel(this);
@@ -71,6 +72,11 @@ MeltedServerDock::~MeltedServerDock()
 QAbstractItemModel *MeltedServerDock::unitsModel() const
 {
     return ui->unitsTableView->model();
+}
+
+QAbstractItemModel *MeltedServerDock::clipsModel() const
+{
+    return ui->treeView->model();
 }
 
 void MeltedServerDock::on_lineEdit_returnPressed()
@@ -119,7 +125,6 @@ void MeltedServerDock::on_connectButton_toggled(bool checked)
         m_console->reset();
         m_console->setDisabled(true);
         ui->lineEdit->setFocus();
-        delete ui->treeView->model();
         ui->treeView->setDisabled(true);
     }
     if (checked) {
@@ -136,11 +141,11 @@ void MeltedServerDock::on_connectButton_toggled(bool checked)
             m_console->setPrompt("> ");
             m_console->setFocus();
             m_mvcp = new MvcpThread(address[0], port);
-            ui->connectButton->setText(tr("Disconnect"));
-            emit connected(m_mvcp);
-            emit connected(address[0], port);
             ui->treeView->setModel(new MeltedClipsModel(m_mvcp));
             ui->treeView->setEnabled(true);
+            emit connected(m_mvcp);
+            emit connected(address[0], port);
+            ui->connectButton->setText(tr("Disconnect"));
         }
         else {
             ui->connectButton->setChecked(false);
@@ -168,3 +173,14 @@ void MeltedServerDock::on_consoleButton_clicked(bool checked)
         m_console->setFocus();
 }
 
+void MeltedServerDock::onAppendRequested()
+{
+    if (ui->treeView->currentIndex().isValid())
+        emit append(clipsModel()->data(ui->treeView->currentIndex(), Qt::UserRole).toString());
+}
+
+void MeltedServerDock::onInsertRequested(int row)
+{
+    if (ui->treeView->currentIndex().isValid())
+        emit insert(clipsModel()->data(ui->treeView->currentIndex(), Qt::UserRole).toString(), row);
+}

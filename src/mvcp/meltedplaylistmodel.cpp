@@ -29,12 +29,17 @@ MeltedPlaylistModel::MeltedPlaylistModel(QObject *parent)
     , m_list(0)
     , m_response(0)
     , m_index(-1)
+    , m_dropRow(-1)
 {
+    setSupportedDragActions(Qt::MoveAction);
 }
 
 MeltedPlaylistModel::~MeltedPlaylistModel()
 {
-    onDisconnected();
+    mvcp_list_close(m_list);
+    m_list = 0;
+    mvcp_response_close(m_response);
+    m_response = 0;
 }
 
 int MeltedPlaylistModel::rowCount(const QModelIndex &parent) const
@@ -127,11 +132,85 @@ QVariant MeltedPlaylistModel::headerData(int section, Qt::Orientation orientatio
     return QVariant();
 }
 
+Qt::DropActions MeltedPlaylistModel::supportedDropActions() const
+{
+    return Qt::MoveAction | Qt::CopyAction;
+}
+
+bool MeltedPlaylistModel::insertRows(int row, int count, const QModelIndex &parent)
+{
+    if (!m_list) return false;
+    if (m_dropRow == -1)
+        m_dropRow = row;
+    return true;
+}
+
+bool MeltedPlaylistModel::removeRows(int row, int count, const QModelIndex &parent)
+{
+    if (!m_list) return false;
+    if (row == m_dropRow) return false;
+    emit moveClip(row, m_dropRow);
+    m_dropRow = -1;
+    return true;
+}
+
+Qt::ItemFlags MeltedPlaylistModel::flags(const QModelIndex &index) const
+{
+    Qt::ItemFlags defaults = QAbstractTableModel::flags(index);
+    if (index.isValid())
+        return Qt::ItemIsDragEnabled | defaults;
+    else
+        return Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled | defaults;
+}
+
+QStringList MeltedPlaylistModel::mimeTypes() const
+{
+    QStringList ls = QAbstractTableModel::mimeTypes();
+    ls.append("application/mvcp+path");
+    return ls;
+}
+
+bool MeltedPlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
+{
+    if (data->hasFormat("application/mvcp+path")) {
+        emit dropped(QString::fromUtf8(data->data("application/mvcp+path")), row);
+        return true;
+    }
+    else if (action == Qt::MoveAction)
+        return QAbstractTableModel::dropMimeData(data, action, row, column, parent);
+    else
+        return false;
+}
+
 void MeltedPlaylistModel::gotoClip(int index)
 {
     m_commands << MVCP_GOTO;
     m_socket.write(QString("GOTO U%1 0 %2\r\n").arg(m_unit).arg(index).toAscii());
     onClipIndexChanged(m_unit, index);
+}
+
+void MeltedPlaylistModel::append(const QString &clip, int in, int out, bool notify)
+{
+    m_commands.append(notify? MVCP_APND : MVCP_IGNORE);
+    m_socket.write(QString("APND U%1 \"%2\" %3 %4\r\n").arg(m_unit).arg(clip).arg(in).arg(out).toUtf8());
+}
+
+void MeltedPlaylistModel::remove(int row, bool notify)
+{
+    m_commands.append(notify? MVCP_REMOVE : MVCP_IGNORE);
+    m_socket.write(QString("REMOVE U%1 %2\r\n").arg(m_unit).arg(row).toAscii());
+}
+
+void MeltedPlaylistModel::insert(const QString &clip, int row, int in, int out, bool notify)
+{
+    m_commands.append(notify? MVCP_INSERT : MVCP_IGNORE);
+    m_socket.write(QString("INSERT U%1 \"%2\" %3 %4 %5\r\n").arg(m_unit).arg(clip).arg(row).arg(in).arg(out).toUtf8());
+}
+
+void MeltedPlaylistModel::move(int from, int to, bool notify)
+{
+    m_commands.append(notify? MVCP_MOVE : MVCP_IGNORE);
+    m_socket.write(QString("MOVE U%1 %2 %3\r\n").arg(m_unit).arg(from).arg(to).toAscii());
 }
 
 void MeltedPlaylistModel::onConnected(const QString &address, quint16 port, quint8 unit)
@@ -147,7 +226,7 @@ void MeltedPlaylistModel::onDisconnected()
 {
     m_socket.disconnect(this);
     m_socket.disconnectFromHost();
-    bool update = m_list;
+    bool update = (m_list != 0);
     if (update)
         beginRemoveRows(QModelIndex(), 0, mvcp_list_count(m_list) - 1);
     mvcp_list_close(m_list);
@@ -200,9 +279,11 @@ void MeltedPlaylistModel::readResponse()
     {
         mvcp_response_write(m_response, data.constData(), data.size());
         int position = mvcp_response_count(m_response) - 1;
-        int terminated = position < 0 || data[data.size() - 1] != '\n';
-        if (!terminated)
-        switch(mvcp_response_get_error_code(m_response)) {
+        if (position < 0 || data[data.size() - 1] != '\n')
+            return;
+        int terminated = 0;
+        int status = mvcp_response_get_error_code(m_response);
+        switch(status) {
         case 201:
         case 500:
             terminated = !strcmp(mvcp_response_get_line(m_response, position), "");
@@ -230,6 +311,13 @@ void MeltedPlaylistModel::readResponse()
             case MVCP_GOTO:
                 m_commands << MVCP_IGNORE;
                 m_socket.write(QString("PLAY U%1 1000\r\n").arg(m_unit).toAscii());
+                break;
+            case MVCP_APND:
+            case MVCP_REMOVE:
+            case MVCP_INSERT:
+            case MVCP_MOVE:
+                if (status == 200)
+                    emit success();
                 break;
             default:
                 break;

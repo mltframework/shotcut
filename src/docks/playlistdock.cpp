@@ -41,6 +41,7 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     connect(&m_model, SIGNAL(loaded()), this, SLOT(onPlaylistLoaded()));
     connect(&m_model, SIGNAL(modified()), this, SLOT(onPlaylistCreated()));
     connect(&m_model, SIGNAL(dropped(const QMimeData*,int)), this, SLOT(onDropped(const QMimeData*,int)));
+    connect(&m_model, SIGNAL(moveClip(int,int)), SLOT(onMoveClip(int,int)));
 }
 
 PlaylistDock::~PlaylistDock()
@@ -275,6 +276,11 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
     }
 }
 
+void PlaylistDock::onMoveClip(int from, int to)
+{
+    MAIN.undoStack()->push(new Playlist::MoveCommand(m_model, from, to));
+}
+
 void PlaylistDock::onPlayerDragStarted()
 {
     if (isVisible())
@@ -400,6 +406,25 @@ void ClearCommand::undo()
         MLT.pause();
         MAIN.seekPlaylist(0);
     }
+}
+
+MoveCommand::MoveCommand(PlaylistModel &model, int from, int to, QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_from(from)
+    , m_to(to)
+{
+    setText(QObject::tr("Move item from %1 to %2").arg(from + 1).arg(to + 1));
+}
+
+void MoveCommand::redo()
+{
+    m_model.move(m_from, m_to);
+}
+
+void MoveCommand::undo()
+{
+    m_model.move(m_to, m_from);
 }
 
 } // namespace Playlist

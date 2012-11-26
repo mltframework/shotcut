@@ -78,6 +78,8 @@ private slots:
 
     void onDropped(const QMimeData *data, int row);
 
+    void onMoveClip(int from, int to);
+
     void onPlayerDragStarted();
 
     void on_addButton_clicked();
@@ -136,6 +138,18 @@ private:
     PlaylistModel& m_model;
     QString m_xml;
     int m_row;
+};
+
+class MoveCommand : public QUndoCommand
+{
+public:
+    MoveCommand(PlaylistModel& model, int from, int to, QUndoCommand * parent = 0);
+    void redo();
+    void undo();
+private:
+    PlaylistModel& m_model;
+    int m_from;
+    int m_to;
 };
 
 class ClearCommand : public QUndoCommand

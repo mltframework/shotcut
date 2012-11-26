@@ -39,9 +39,17 @@ MeltedClipsModel::~MeltedClipsModel()
 
 QStringList MeltedClipsModel::mimeTypes() const
 {
-    QStringList ls = QAbstractItemModel::mimeTypes();
-    ls.append("text/uri-list");
+    QStringList ls;
+    ls.append("application/mvcp+path");
     return ls;
+}
+
+QMimeData *MeltedClipsModel::mimeData(const QModelIndexList &indexes) const
+{
+    QMimeData* mimeData = new QMimeData;
+    QObject* o = (QObject*) indexes[0].internalPointer();
+    mimeData->setData("application/mvcp+path", o->objectName().toUtf8());
+    return mimeData;
 }
 
 int MeltedClipsModel::rowCount(const QModelIndex &parent) const
@@ -67,6 +75,10 @@ QVariant MeltedClipsModel::data(const QModelIndex &index, int role) const
             return Qt::AlignRight;
         else
             return Qt::AlignLeft;
+    }
+    else if (role == Qt::UserRole && index.isValid()) {
+        QObject* o = (QObject*) index.internalPointer();
+        return o->objectName();
     }
 
     if (!index.isValid() || role != Qt::DisplayRole)
@@ -96,7 +108,7 @@ QVariant MeltedClipsModel::data(const QModelIndex &index, int role) const
 Qt::ItemFlags MeltedClipsModel::flags(const QModelIndex &index) const
 {
     if (index.isValid())
-        return QAbstractItemModel::flags(index);
+        return Qt::ItemIsDragEnabled | QAbstractItemModel::flags(index);
     else
         return 0;
 }

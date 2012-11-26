@@ -20,6 +20,7 @@
 #define MELTEDUNITDOCK_H
 
 #include <QDockWidget>
+#include <QtGui/QUndoCommand>
 #include "meltedplaylistmodel.h"
 
 namespace Ui {
@@ -33,19 +34,149 @@ class MeltedPlaylistDock : public QDockWidget
 public:
     explicit MeltedPlaylistDock(QWidget *parent = 0);
     ~MeltedPlaylistDock();
-    QAbstractItemModel* playlistModel() const;
-    
+    QAbstractItemModel* model() const;
+
+signals:
+    void appendRequested();
+    void insertRequested(int row);
+
 public slots:
     void onConnected(const QString& address, quint16 port = 5250, quint8 unit = 0);
     void onDisconnected();
     void onUnitChanged(quint8 unit);
 
+protected:
+    void keyPressEvent(QKeyEvent *);
+
 private slots:
+    void on_tableView_clicked(const QModelIndex &index);
+
     void on_tableView_doubleClicked(const QModelIndex &index);
+
+    void onDropped(QString clip, int row);
+
+    void onAppend(QString clip);
+
+    void onInsert(QString clip, int row);
+
+    void onMoveClip(int from, int to);
+
+    void onSuccess();
+
+    void on_tableView_customContextMenuRequested(const QPoint &pos);
+    
+    void on_addButton_clicked();
+    
+    void on_removeButton_clicked();
+    
+    void on_menuButton_clicked();
+    
+    void on_actionInsertCut_triggered();
+    
+    void on_actionOpen_triggered();
+    
+    void on_actionGoto_triggered();
+    
+    void on_actionRemoveAll_triggered();
+    
+    void on_actionWipe_triggered();
+    
+    void on_actionClean_triggered();
 
 private:
     Ui::MeltedPlaylistDock *ui;
     MeltedPlaylistModel m_model;
+    QList<QUndoCommand*> m_operations;
 };
 
-#endif // MELTEDUNITDOCK_H
+namespace MeltedPlaylist
+{
+
+class AppendCommand : public QUndoCommand
+{
+public:
+    AppendCommand(MeltedPlaylistModel& model, const QString& clip, int in = -1, int out = -1, QUndoCommand * parent = 0);
+    void redo();
+    void undo();
+private:
+    MeltedPlaylistModel& m_model;
+    QString m_clip;
+    int m_in;
+    int m_out;
+    bool m_skip;
+};
+
+class InsertCommand : public QUndoCommand
+{
+public:
+    InsertCommand(MeltedPlaylistModel& model, const QString& clip, int row, int in = -1, int out = -1, QUndoCommand * parent = 0);
+    void redo();
+    void undo();
+private:
+    MeltedPlaylistModel& m_model;
+    QString m_clip;
+    int m_row;
+    int m_in;
+    int m_out;
+    bool m_skip;
+};
+
+class SetInCommand : public QUndoCommand
+{
+public:
+    SetInCommand(MeltedPlaylistModel& model, const QString& clip, int row, int in, QUndoCommand * parent = 0);
+    void redo();
+    void undo();
+private:
+    MeltedPlaylistModel& m_model;
+    QString m_clip;
+    int m_row;
+    int m_old;
+    int m_new;
+};
+
+class SetOutCommand : public QUndoCommand
+{
+public:
+    SetOutCommand(MeltedPlaylistModel& model, const QString& clip, int row, int out, QUndoCommand * parent = 0);
+    void redo();
+    void undo();
+private:
+    MeltedPlaylistModel& m_model;
+    QString m_clip;
+    int m_row;
+    int m_old;
+    int m_new;
+};
+
+class RemoveCommand : public QUndoCommand
+{
+public:
+    RemoveCommand(MeltedPlaylistModel& model, QString& clip, int row, int in = -1, int out = -1, QUndoCommand * parent = 0);
+    void redo();
+    void undo();
+private:
+    MeltedPlaylistModel& m_model;
+    QString m_clip;
+    int m_row;
+    int m_in;
+    int m_out;
+    bool m_skip;
+};
+
+class MoveCommand : public QUndoCommand
+{
+public:
+    MoveCommand(MeltedPlaylistModel& model, QString& clip, int from, int to, QUndoCommand * parent = 0);
+    void redo();
+    void undo();
+private:
+    MeltedPlaylistModel& m_model;
+    int m_from;
+    int m_to;
+    bool m_skip;
+};
+
+} // namespace MeltedPlaylist
+
+#endif // MELTEDPLAYLISTDOCK_H

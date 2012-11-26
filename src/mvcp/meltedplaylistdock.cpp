@@ -18,14 +18,28 @@
 
 #include "meltedplaylistdock.h"
 #include "ui_meltedplaylistdock.h"
+#include "mainwindow.h"
+#include <QtCore/QMimeData>
+#include <QtCore/QFileInfo>
+#include <QtGui/QKeyEvent>
+#include <QtGui/QMenu>
 
-MeltedPlaylistDock::MeltedPlaylistDock(QWidget *parent) :
-    QDockWidget(parent),
-    ui(new Ui::MeltedPlaylistDock)
+MeltedPlaylistDock::MeltedPlaylistDock(QWidget *parent)
+    : QDockWidget(parent)
+    , ui(new Ui::MeltedPlaylistDock)
 {
     ui->setupUi(this);
     ui->tableView->setModel(&m_model);
+    ui->tableView->setDragDropMode(QAbstractItemView::DragDrop);
+    ui->tableView->setDropIndicatorShown(true);
+    ui->tableView->setDragDropOverwriteMode(false);
+    ui->tableView->setAcceptDrops(true);
     connect(&m_model, SIGNAL(loaded()), ui->tableView, SLOT(resizeColumnsToContents()));
+    connect(&m_model, SIGNAL(dropped(QString,int)), this, SLOT(onDropped(QString,int)));
+    connect(&m_model, SIGNAL(moveClip(int,int)), this, SLOT(onMoveClip(int,int)));
+    connect(&m_model, SIGNAL(success()), this, SLOT(onSuccess()));
+    connect(ui->actionAppendCut, SIGNAL(triggered()), this, SLOT(on_addButton_clicked()));
+    connect(ui->actionRemove, SIGNAL(triggered()), this, SLOT(on_removeButton_clicked()));
 }
 
 MeltedPlaylistDock::~MeltedPlaylistDock()
@@ -33,7 +47,7 @@ MeltedPlaylistDock::~MeltedPlaylistDock()
     delete ui;
 }
 
-QAbstractItemModel *MeltedPlaylistDock::playlistModel() const
+QAbstractItemModel *MeltedPlaylistDock::model() const
 {
     return (QAbstractItemModel*) &m_model;
 }
@@ -53,7 +67,236 @@ void MeltedPlaylistDock::onUnitChanged(quint8 unit)
     m_model.onUnitChanged(unit);
 }
 
+void MeltedPlaylistDock::keyPressEvent(QKeyEvent *ev)
+{
+    if (ui->tableView->currentIndex().isValid())
+    if (ev->key() == Qt::Key_Backspace || ev->key() == Qt::Key_Delete)
+        on_removeButton_clicked();
+}
+
+void MeltedPlaylistDock::on_tableView_clicked(const QModelIndex &index)
+{
+    ui->removeButton->setEnabled(true);
+}
+
 void MeltedPlaylistDock::on_tableView_doubleClicked(const QModelIndex &index)
 {
     m_model.gotoClip(index.row());
 }
+
+void MeltedPlaylistDock::onDropped(QString clip, int row)
+{
+    if (row == -1)
+        onAppend(clip);
+    else
+        onInsert(clip, row);
+}
+
+void MeltedPlaylistDock::onAppend(QString clip)
+{
+    m_operations.append(new MeltedPlaylist::AppendCommand(m_model, clip));
+    m_model.append(clip);
+}
+
+void MeltedPlaylistDock::onInsert(QString clip, int row)
+{
+    m_operations.append(new MeltedPlaylist::InsertCommand(m_model, clip, row));
+    m_model.insert(clip, row);
+}
+
+void MeltedPlaylistDock::onMoveClip(int from, int to)
+{
+    QString clip = m_model.data(m_model.index(from, MeltedPlaylistModel::COLUMN_RESOURCE), Qt::ToolTipRole).toString();
+    m_operations.append(new MeltedPlaylist::MoveCommand(m_model, clip, from, to));
+    m_model.move(from, to);
+}
+
+void MeltedPlaylistDock::onSuccess()
+{
+    if (!m_operations.isEmpty())
+        MAIN.undoStack()->push(m_operations.takeFirst());
+}
+
+void MeltedPlaylistDock::on_tableView_customContextMenuRequested(const QPoint &pos)
+{
+    QModelIndex index = ui->tableView->currentIndex();
+    if (index.isValid()) {
+        QMenu menu(this);
+        menu.addAction(ui->actionGoto);
+        menu.addAction(ui->actionInsertCut);
+        menu.addAction(ui->actionOpen);
+        menu.addAction(ui->actionRemove);
+        menu.exec(mapToGlobal(pos));
+    }
+}
+
+void MeltedPlaylistDock::on_addButton_clicked()
+{
+    emit appendRequested();
+}
+
+void MeltedPlaylistDock::on_removeButton_clicked()
+{
+    int row = ui->tableView->currentIndex().row();
+    QString clip = m_model.data(m_model.index(row, MeltedPlaylistModel::COLUMN_RESOURCE), Qt::ToolTipRole).toString();
+    int in = m_model.data(m_model.index(row, MeltedPlaylistModel::COLUMN_IN), Qt::DisplayRole).toInt();
+    int out = m_model.data(m_model.index(row, MeltedPlaylistModel::COLUMN_OUT), Qt::DisplayRole).toInt();
+    m_operations.append(new MeltedPlaylist::RemoveCommand(m_model, clip, row, in, out));
+    m_model.remove(row);
+}
+
+void MeltedPlaylistDock::on_menuButton_clicked()
+{
+    QPoint pos = ui->menuButton->mapToParent(QPoint(0, 0));
+    QMenu menu(this);
+    QModelIndex index = ui->tableView->currentIndex();
+    if (index.isValid()) {
+        menu.addAction(ui->actionGoto);
+        menu.addAction(ui->actionInsertCut);
+        menu.addAction(ui->actionOpen);
+        menu.addAction(ui->actionRemove);
+        menu.addSeparator();
+    }
+    menu.addAction(ui->actionRemoveAll);
+    menu.addAction(ui->actionClean);
+    menu.addAction(ui->actionWipe);
+    menu.exec(mapToGlobal(pos));
+}
+
+void MeltedPlaylistDock::on_actionInsertCut_triggered()
+{
+    if (ui->tableView->currentIndex().isValid()) {
+        emit insertRequested(ui->tableView->currentIndex().row());
+    }
+}
+
+void MeltedPlaylistDock::on_actionOpen_triggered()
+{
+    // TODO: open this clip in the player for adjusting in/out without seeking melted unit.
+}
+
+void MeltedPlaylistDock::on_actionGoto_triggered()
+{
+    on_tableView_doubleClicked(ui->tableView->currentIndex());
+}
+
+void MeltedPlaylistDock::on_actionRemoveAll_triggered()
+{
+    
+}
+
+void MeltedPlaylistDock::on_actionWipe_triggered()
+{
+    
+}
+
+void MeltedPlaylistDock::on_actionClean_triggered()
+{
+    
+}
+
+namespace MeltedPlaylist
+{
+
+AppendCommand::AppendCommand(MeltedPlaylistModel &model, const QString &clip, int in, int out, QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_clip(clip)
+    , m_in(in)
+    , m_out(out)
+    , m_skip(true)
+{
+    QFileInfo fi(m_clip);
+    setText(QObject::tr("Append %1").arg(fi.fileName()));
+}
+
+void AppendCommand::redo()
+{
+    if (m_skip)
+        m_skip = false;
+    else
+        m_model.append(m_clip, m_in, m_out, false);
+}
+
+void AppendCommand::undo()
+{
+    m_model.remove(m_model.rowCount() - 1, false);
+}
+
+RemoveCommand::RemoveCommand(MeltedPlaylistModel &model, QString &clip, int row, int in, int out, QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_clip(clip)
+    , m_row(row)
+    , m_in(in)
+    , m_out(out)
+    , m_skip(true)
+{
+    QFileInfo fi(m_clip);
+    setText(QObject::tr("Remove %1 at %2").arg(fi.fileName()).arg(row + 1));
+}
+
+void RemoveCommand::redo()
+{
+    if (m_skip)
+        m_skip = false;
+    else
+        m_model.remove(m_row, false);
+}
+
+void RemoveCommand::undo()
+{
+    m_model.insert(m_clip, m_row, m_in, m_out, false);
+}
+
+InsertCommand::InsertCommand(MeltedPlaylistModel &model, const QString &clip, int row, int in, int out, QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_clip(clip)
+    , m_row(row)
+    , m_in(in)
+    , m_out(out)
+    , m_skip(true)
+{
+    QFileInfo fi(m_clip);
+    setText(QObject::tr("Insert %1 at %2").arg(fi.fileName()).arg(row + 1));
+}
+
+void InsertCommand::redo()
+{
+    if (m_skip)
+        m_skip = false;
+    else
+        m_model.insert(m_clip, m_row, m_in, m_out, false);
+}
+
+void InsertCommand::undo()
+{
+    m_model.remove(m_row, false);
+}
+
+MoveCommand::MoveCommand(MeltedPlaylistModel &model, QString &clip, int from, int to, QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_from(from)
+    , m_to(to)
+    , m_skip(true)
+{
+    QFileInfo fi(clip);
+    setText(QObject::tr("Move %1 from %2 to %3").arg(fi.fileName()).arg(from + 1).arg(to + 1));
+}
+
+void MoveCommand::redo()
+{
+    if (m_skip)
+        m_skip = false;
+    else
+        m_model.move(m_from, m_to, false);
+}
+
+void MoveCommand::undo()
+{
+    m_model.move(m_to, m_from, false);
+}
+
+} // namespace MeltedPlaylist

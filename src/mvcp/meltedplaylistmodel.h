@@ -24,6 +24,8 @@
 
 #include <QtCore/QAbstractTableModel>
 #include <QtNetwork/QTcpSocket>
+#include <QtCore/QStringList>
+#include <QtCore/QMimeData>
 #include <mvcp.h>
 
 class MeltedPlaylistModel : public QAbstractTableModel
@@ -42,7 +44,11 @@ public:
     enum MvcpCommands {
         MVCP_IGNORE,
         MVCP_LIST,
-        MVCP_GOTO
+        MVCP_GOTO,
+        MVCP_APND,
+        MVCP_REMOVE,
+        MVCP_INSERT,
+        MVCP_MOVE
     };
 
     explicit MeltedPlaylistModel(QObject *parent = 0);
@@ -52,17 +58,24 @@ public:
     int columnCount(const QModelIndex& parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
-//    Qt::DropActions supportedDropActions() const;
-//    bool insertRows(int row, int count, const QModelIndex & parent = QModelIndex());
-//    bool removeRows(int row, int count, const QModelIndex & parent = QModelIndex());
-//    Qt::ItemFlags flags(const QModelIndex &index) const;
-//    QStringList mimeTypes() const;
-//    bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent);
+    Qt::DropActions supportedDropActions() const;
+    bool insertRows(int row, int count, const QModelIndex & parent = QModelIndex());
+    bool removeRows(int row, int count, const QModelIndex & parent = QModelIndex());
+    Qt::ItemFlags flags(const QModelIndex &index) const;
+    QStringList mimeTypes() const;
+    bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent);
 
     void gotoClip(int);
+    void append(const QString& clip, int in = -1, int out = -1, bool notify = true);
+    void remove(int row, bool notify = true);
+    void insert(const QString& clip, int row, int in = -1, int out = -1, bool notify = true);
+    void move(int from, int to, bool notify = true);
 
 signals:
     void loaded();
+    void dropped(QString clip, int row);
+    void moveClip(int from, int to);
+    void success();
 
 public slots:
     void onConnected(const QString& address, quint16 port = 5250, quint8 unit = 0);
@@ -83,6 +96,7 @@ private:
     mvcp_response m_response;
     int m_index;
     QList<int> m_commands;
+    int m_dropRow;
 };
 
 #endif // MELTEDPLAYLISTMODEL_H

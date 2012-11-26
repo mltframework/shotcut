@@ -29,6 +29,7 @@ PlaylistModel::PlaylistModel(QObject *parent)
 PlaylistModel::~PlaylistModel()
 {
     delete m_playlist;
+    m_playlist = 0;
 }
 
 int PlaylistModel::rowCount(const QModelIndex& /*parent*/) const
@@ -116,7 +117,9 @@ Qt::DropActions PlaylistModel::supportedDropActions() const
 
 bool PlaylistModel::insertRows(int row, int count, const QModelIndex& parent)
 {
-    m_dropRow = row;
+    if (!m_playlist) return false;
+    if (m_dropRow == -1)
+        m_dropRow = row;
     return true;
 }
 
@@ -124,11 +127,8 @@ bool PlaylistModel::removeRows(int row, int count, const QModelIndex& parent)
 {
     if (!m_playlist) return false;
     if (row == m_dropRow) return false;
-    beginMoveRows(parent, row, row, parent, m_dropRow);
-    m_playlist->move(row, m_dropRow);
-    endMoveRows();
+    emit moveClip(row, m_dropRow);
     m_dropRow = -1;
-    emit modified();
     return true;
 }
 
@@ -256,6 +256,15 @@ void PlaylistModel::close()
     delete m_playlist;
     m_playlist = 0;
     emit closed();
+}
+
+void PlaylistModel::move(int from, int to)
+{
+    if (!m_playlist) return;
+    m_playlist->move(from, to);
+    emit dataChanged(createIndex(from, 0), createIndex(from, COLUMN_COUNT - 1));
+    emit dataChanged(createIndex(to, 0), createIndex(to, COLUMN_COUNT - 1));
+    emit modified();
 }
 
 void PlaylistModel::createIfNeeded()

@@ -61,6 +61,7 @@ signals:
     void modified();
     void loaded();
     void dropped(const QMimeData *data, int row);
+    void moveClip(int from, int to);
 
 public slots:
     void clear();
@@ -72,6 +73,7 @@ public slots:
     void appendBlank(int frames);
     void insertBlank(int frames, int row);
     void close();
+    void move(int from, int to);
 
 private:
     Mlt::Playlist* m_playlist;

@@ -41,7 +41,8 @@ class MeltedServerDock : public QDockWidget
 public:
     explicit MeltedServerDock(QWidget *parent = 0);
     ~MeltedServerDock();
-    QAbstractItemModel *unitsModel() const;
+    QAbstractItemModel* unitsModel() const;
+    QAbstractItemModel* clipsModel() const;
 
 signals:
     void connected(MvcpThread*);
@@ -49,6 +50,12 @@ signals:
     void disconnected();
     void unitActivated(quint8);
     void unitOpened(quint8);
+    void append(QString clip);
+    void insert(QString clip, int row);
+
+public slots:
+    void onAppendRequested();
+    void onInsertRequested(int row);
 
 private slots:
     void on_lineEdit_returnPressed();
