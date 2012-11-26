@@ -70,6 +70,9 @@ public:
     void remove(int row, bool notify = true);
     void insert(const QString& clip, int row, int in = -1, int out = -1, bool notify = true);
     void move(int from, int to, bool notify = true);
+    void wipe();
+    void clean();
+    void clear();
 
 signals:
     void loaded();

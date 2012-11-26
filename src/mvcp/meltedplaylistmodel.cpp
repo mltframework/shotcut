@@ -213,6 +213,24 @@ void MeltedPlaylistModel::move(int from, int to, bool notify)
     m_socket.write(QString("MOVE U%1 %2 %3\r\n").arg(m_unit).arg(from).arg(to).toAscii());
 }
 
+void MeltedPlaylistModel::wipe()
+{
+    m_commands << MVCP_IGNORE;
+    m_socket.write(QString("WIPE U%1\r\n").arg(m_unit).toAscii());
+}
+
+void MeltedPlaylistModel::clean()
+{
+    m_commands << MVCP_IGNORE;
+    m_socket.write(QString("CLEAN U%1\r\n").arg(m_unit).toAscii());
+}
+
+void MeltedPlaylistModel::clear()
+{
+    m_commands << MVCP_IGNORE;
+    m_socket.write(QString("CLEAR U%1\r\n").arg(m_unit).toAscii());
+}
+
 void MeltedPlaylistModel::onConnected(const QString &address, quint16 port, quint8 unit)
 {
     connect(&m_socket, SIGNAL(readyRead()), this, SLOT(readResponse()));
@@ -226,15 +244,12 @@ void MeltedPlaylistModel::onDisconnected()
 {
     m_socket.disconnect(this);
     m_socket.disconnectFromHost();
-    bool update = (m_list != 0);
-    if (update)
-        beginRemoveRows(QModelIndex(), 0, mvcp_list_count(m_list) - 1);
+    beginResetModel();
     mvcp_list_close(m_list);
     m_list = 0;
     mvcp_response_close(m_response);
     m_response = 0;
-    if (update)
-        endRemoveRows();
+    endResetModel();
 }
 
 void MeltedPlaylistModel::refresh()
@@ -247,12 +262,10 @@ void MeltedPlaylistModel::onUnitChanged(quint8 unit)
 {
     m_unit = unit;
     bool update = m_list;
-    if (update)
-        beginRemoveRows(QModelIndex(), 0, mvcp_list_count(m_list) - 1);
+    beginResetModel();
     mvcp_list_close(m_list);
     m_list = 0;
-    if (update)
-        endRemoveRows();
+    endResetModel();
     refresh();
 }
 
