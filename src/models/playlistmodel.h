@@ -69,7 +69,7 @@ public slots:
     void append(Mlt::Producer*);
     void insert(Mlt::Producer*, int row);
     void remove(int row);
-    void update(int row, int in, int out);
+    void update(int row, Mlt::Producer* producer);
     void appendBlank(int frames);
     void insertBlank(int frames, int row);
     void close();

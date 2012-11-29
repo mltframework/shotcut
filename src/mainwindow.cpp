@@ -590,12 +590,10 @@ bool MainWindow::on_actionSave_triggered()
     if (m_currentFile.isEmpty()) {
         return on_actionSave_As_triggered();
     } else {
-        if (m_playlistDock->model()->playlist())
-            MLT.saveXML(m_currentFile, m_playlistDock->model()->playlist());
-        else
-            MLT.saveXML(m_currentFile);
+        saveXML(m_currentFile);
         setCurrentFile(m_currentFile);
         showStatusMessage(tr("Saved %1").arg(m_currentFile));
+        m_undoStack->setClean();
         return true;
     }
 }
@@ -609,12 +607,10 @@ bool MainWindow::on_actionSave_As_triggered()
         QDesktopServices::storageLocation(QDesktopServices::MoviesLocation)).toString());
     QString filename = QFileDialog::getSaveFileName(this, tr("Save XML"), directory, tr("MLT XML (*.mlt)"));
     if (!filename.isEmpty()) {
-        if (m_playlistDock->model()->playlist())
-            MLT.saveXML(filename, m_playlistDock->model()->playlist());
-        else
-            MLT.saveXML(filename);
+        saveXML(filename);
         setCurrentFile(filename);
         showStatusMessage(tr("Saved %1").arg(m_currentFile));
+        m_undoStack->setClean();
         m_recentDock->add(filename);
     }
     return filename.isEmpty();
@@ -710,6 +706,7 @@ void MainWindow::onPlaylistClosed()
     m_player->resetProfile();
     onPlaylistCleared();
     setCurrentFile("");
+    m_undoStack->clear();
 }
 
 void MainWindow::onPlaylistModified()
@@ -754,4 +751,17 @@ void MainWindow::on_actionFAQ_triggered()
 void MainWindow::on_actionForum_triggered()
 {
     QDesktopServices::openUrl(QUrl("http://www.shotcut.org/bin/view/Shotcut/DiscussionForum"));
+}
+
+void MainWindow::saveXML(const QString &filename)
+{
+    if (m_playlistDock->model()->playlist()) {
+        int in = MLT.producer()->get_in();
+        int out = MLT.producer()->get_out();
+        MLT.producer()->set_in_and_out(0, MLT.producer()->get_length() - 1);
+        MLT.saveXML(filename, m_playlistDock->model()->playlist());
+        MLT.producer()->set_in_and_out(in, out);
+    } else {
+        MLT.saveXML(filename);
+    }
 }

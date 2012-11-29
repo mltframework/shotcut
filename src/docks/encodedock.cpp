@@ -20,7 +20,8 @@
 #include "ui_encodedock.h"
 #include "dialogs/addencodepresetdialog.h"
 #include "jobqueue.h"
-#include <mltcontroller.h>
+#include "mltcontroller.h"
+#include "mainwindow.h"
 #include <QtDebug>
 #include <QtGui>
 #include <QtXml>
@@ -262,7 +263,7 @@ MeltJob* EncodeDock::createMeltJob(const QString& target, int realtime, int pass
     QString tmpName = tmp.fileName();
     tmp.close();
     tmpName.append(".mlt");
-    MLT.saveXML(tmpName);
+    MAIN.saveXML(tmpName);
 
     // parse xml
     QFile f1(tmpName);

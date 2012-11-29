@@ -269,14 +269,16 @@ void ScrubBar::updatePixmap()
     }
 
     // draw markers
-    int i = 1;
-    foreach (int pos, m_markers) {
-        int x = margin + pos * m_scale;
-        QString s = QString::number(i++);
-        int markerWidth = fontMetrics().width(s) * 1.5;
-        p.fillRect(x, 0, 1, height(), palette().highlight().color());
-        p.fillRect(x - markerWidth/2, 0, markerWidth, markerHeight, palette().highlight().color());
-        p.drawText(x - markerWidth/3, markerHeight - 2, s);
+    if (m_in < 0 && m_out < 0) {
+        int i = 1;
+        foreach (int pos, m_markers) {
+            int x = margin + pos * m_scale;
+            QString s = QString::number(i++);
+            int markerWidth = fontMetrics().width(s) * 1.5;
+            p.fillRect(x, 0, 1, height(), palette().highlight().color());
+            p.fillRect(x - markerWidth/2, 0, markerWidth, markerHeight, palette().highlight().color());
+            p.drawText(x - markerWidth/3, markerHeight - 2, s);
+        }
     }
 
     p.end();

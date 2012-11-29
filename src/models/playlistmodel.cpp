@@ -64,9 +64,10 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
             return result;
         }
         case COLUMN_IN:
-            if (m_clipInfo.producer && m_clipInfo.producer->is_valid())
-                return m_clipInfo.producer->get_time("in");
-            else
+            if (m_clipInfo.producer && m_clipInfo.producer->is_valid()) {
+                m_clipInfo.producer->set("_shotcut_time", m_clipInfo.frame_in);
+                return m_clipInfo.producer->get_time("_shotcut_time");
+            } else
                 return "";
         case COLUMN_DURATION:
             if (m_clipInfo.producer && m_clipInfo.producer->is_valid()) {
@@ -195,8 +196,9 @@ void PlaylistModel::append(Mlt::Producer* producer)
 {
     createIfNeeded();
     int count = m_playlist->count();
-    beginInsertRows(QModelIndex(), count, count);
+    beginInsertRows(QModelIndex(), count - 1, count - 1);
     m_playlist->append(*producer, producer->get_in(), producer->get_out());
+    producer->set_in_and_out(0, producer->get_length() - 1);
     endInsertRows();
     emit modified();
 }
@@ -206,6 +208,7 @@ void PlaylistModel::insert(Mlt::Producer* producer, int row)
     createIfNeeded();
     beginInsertRows(QModelIndex(), row, row);
     m_playlist->insert(*producer, row, producer->get_in(), producer->get_out());
+    producer->set_in_and_out(0, producer->get_length() - 1);
     endInsertRows();
     emit modified();
 }
@@ -222,11 +225,13 @@ void PlaylistModel::remove(int row)
         emit modified();
 }
 
-void PlaylistModel::update(int row, int in, int out)
+void PlaylistModel::update(int row, Mlt::Producer* producer)
 {
     if (!m_playlist) return;
-    m_playlist->resize_clip(row, in, out);
-    emit dataChanged(createIndex(row, 0), createIndex(rowCount() - 1, COLUMN_COUNT - 1));
+    m_playlist->remove(row);
+    m_playlist->insert(*producer, row, producer->get_in(), producer->get_out());
+    producer->set_in_and_out(0, producer->get_length() - 1);
+    emit dataChanged(createIndex(row, 0), createIndex(row, COLUMN_COUNT - 1));
     emit modified();
 }
 

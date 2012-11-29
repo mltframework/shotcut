@@ -43,6 +43,7 @@ public:
     void open(Mlt::Producer* producer);
     bool continueModified();
     QUndoStack* undoStack() const;
+    void saveXML(const QString& filename);
 
 signals:
     void producerOpened();
