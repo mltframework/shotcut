@@ -319,6 +319,7 @@ QString Controller::saveXML(const QString& filename, Service* service)
     int ignore = service->get_int("ignore_points");
     if (ignore)
         service->set("ignore_points", 0);
+    c.set("time_format", "clock");
     c.connect(*service);
     c.start();
     if (ignore)
