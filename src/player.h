@@ -38,7 +38,7 @@ class Player : public QWidget
     Q_OBJECT
 public:
     explicit Player(QWidget *parent = 0);
-
+    void connectTransport(const TransportControllable*);
     void setIn(unsigned);
     void setOut(unsigned);
     void setMarkers(const QList<int>&);
@@ -53,6 +53,14 @@ signals:
     void audioLevels(const QVector<double>&);
     void inChanged(int);
     void outChanged(int);
+    void played(double speed);
+    void paused();
+    void stopped();
+    void seeked(int position);
+    void rewound();
+    void fastForwarded();
+    void previousSought(int currentPosition);
+    void nextSought(int currentPosition);
 
 public slots:
     void play(double speed = 1.0);
@@ -110,7 +118,7 @@ private:
     QLabel* m_durationLabel;
     QLabel* m_inPointLabel;
     QLabel* m_selectedLabel;
-    unsigned m_position;
+    int m_position;
     QIcon m_playIcon;
     QIcon m_pauseIcon;
     QSlider* m_volumeSlider;
@@ -119,6 +127,8 @@ private:
     int m_previousIn;
     int m_previousOut;
     double m_savedVolume;
+    int m_duration;
+    bool m_isSeekable;
 
 private slots:
     void updateSelection();

@@ -117,6 +117,12 @@ int Controller::open(Mlt::Producer* producer, bool)
         close();
     if (producer && producer->is_valid()) {
         m_producer = producer;
+        // In some versions of MLT, the resource property is the XML filename,
+        // but the Mlt::Producer(Service&) constructor will fail unless it detects
+        // the type as playlist, and mlt_service_identify() needs the resource
+        // property to say "<playlist>" to identify it as playlist type.
+        if (isPlaylist())
+            m_producer->set("resource", "<playlist>");
     }
     else {
         // Cleanup on error
@@ -404,12 +410,124 @@ QString Controller::resource() const
 bool Controller::isSeekable()
 {
     bool seekable = false;
-    if (m_producer) {
+    if (m_producer && m_producer->is_valid()) {
         seekable = m_producer->get_int("seekable");
         if (!seekable && m_producer->get("mlt_type"))
             seekable = !strcmp(m_producer->get("mlt_type"), "mlt_producer");
+        if (!seekable) {
+            QString service(m_producer->get("mlt_service"));
+            seekable = service == "color" || service.startsWith("frei0r.");
+        }
     }
     return seekable;
+}
+
+bool Controller::isPlaylist() const
+{
+    return m_producer && m_producer->is_valid() &&
+            (m_producer->get_int("_original_type") == playlist_type || resource() == "<playlist>");
+}
+
+void Controller::rewind()
+{
+    if (!m_producer || !m_producer->is_valid())
+        return;
+    if (m_producer->get_speed() >= 0)
+        play(-1.0);
+    else
+        m_producer->set_speed(m_producer->get_speed() * 2);
+}
+
+void Controller::fastForward()
+{
+    if (!m_producer || !m_producer->is_valid())
+        return;
+    if (m_producer->get_speed() <= 0)
+        play();
+    else
+        m_producer->set_speed(m_producer->get_speed() * 2);
+}
+
+void Controller::previous(int currentPosition)
+{
+    if (currentPosition > m_producer->get_out())
+        seek(MLT.producer()->get_out());
+    else if (currentPosition <= m_producer->get_in())
+        seek(0);
+    else
+        seek(m_producer->get_in());
+}
+
+void Controller::next(int currentPosition)
+{
+    if (currentPosition < m_producer->get_in())
+        seek(m_producer->get_in());
+    else if (currentPosition >= m_producer->get_out())
+        seek(m_producer->get_length() - 1);
+    else
+        seek(m_producer->get_out());
+}
+
+void Controller::setIn(int in)
+{
+    if (m_producer && m_producer->is_valid())
+        m_producer->set("in", in);
+}
+
+void Controller::setOut(int out)
+{
+    if (m_producer && m_producer->is_valid())
+        m_producer->set("out", out);
+}
+
+void TransportControl::play(double speed)
+{
+    MLT.play(speed);
+}
+
+void TransportControl::pause()
+{
+    MLT.pause();
+}
+
+void TransportControl::stop()
+{
+    MLT.stop();
+}
+
+void TransportControl::seek(int position)
+{
+    MLT.seek(position);
+}
+
+void TransportControl::rewind()
+{
+    MLT.rewind();
+}
+
+void TransportControl::fastForward()
+{
+    MLT.fastForward();
+}
+
+void TransportControl::previous(int currentPosition)
+{
+    MLT.previous(currentPosition);
+}
+
+void TransportControl::next(int currentPosition)
+{
+    MLT.next(currentPosition);
+}
+
+void TransportControl::setIn(int in)
+{
+    MLT.setIn(in);
+}
+
+void TransportControl::setOut(int out)
+{
+    MLT.setOut(out);
 }
 
 } // namespace

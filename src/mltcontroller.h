@@ -21,6 +21,7 @@
 
 #include <QImage>
 #include <Mlt.h>
+#include "transportcontrol.h"
 
 // forward declarations
 class QWidget;
@@ -38,6 +39,22 @@ public:
     QImage image();
 private:
     Frame* m_frame;
+};
+
+class TransportControl : public TransportControllable
+{
+    Q_OBJECT
+public slots:
+    void play(double speed = 1.0);
+    void pause();
+    void stop();
+    void seek(int position);
+    void rewind();
+    void fastForward();
+    void previous(int currentPosition);
+    void next(int currentPosition);
+    void setIn(int);
+    void setOut(int);
 };
 
 class Controller
@@ -68,6 +85,15 @@ public:
     QString saveXML(const QString& filename, Service* service = 0);
     int consumerChanged();
     int setProfile(const QString& profile_name);
+    QString resource() const;
+    bool isSeekable();
+    bool isPlaylist() const;
+    void rewind();
+    void fastForward();
+    void previous(int currentPosition);
+    void next(int currentPosition);
+    void setIn(int);
+    void setOut(int);
 
     Mlt::Repository* repository() const {
         return m_repo;
@@ -81,10 +107,11 @@ public:
     Mlt::Consumer* consumer() const {
         return m_consumer;
     }
-    QString resource() const;
-    bool isSeekable();
     const QString& URL() const {
         return m_url;
+    }
+    const TransportControllable* transportControl() const {
+        return &m_transportControl;
     }
 
 protected:
@@ -98,6 +125,7 @@ private:
     Mlt::Filter* m_jackFilter;
     QString m_url;
     double m_volume;
+    TransportControl m_transportControl;
 
     static void on_jack_started(mlt_properties owner, void* object, mlt_position *position);
     void onJackStarted(int position);

@@ -100,6 +100,7 @@ MainWindow::MainWindow()
     layout->setObjectName("centralWidgetLayout");
     layout->setMargin(0);
     m_player = new Player(this);
+    m_player->connectTransport(MLT.transportControl());
     layout->addWidget(m_player);
     connect(this, SIGNAL(producerOpened()), m_player, SLOT(onProducerOpened()));
     connect(m_player, SIGNAL(showStatusMessage(QString)), this, SLOT(showStatusMessage(QString)));
@@ -436,11 +437,11 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_player->fastForward();
         break;
     case Qt::Key_I:
-        if (MLT.isSeekable() && MLT.resource() != "<playlist>")
+        if (MLT.isSeekable() && !MLT.isPlaylist())
             m_player->setIn(m_player->position());
         break;
     case Qt::Key_O:
-        if (MLT.isSeekable() && MLT.resource() != "<playlist>")
+        if (MLT.isSeekable() && !MLT.isPlaylist())
             m_player->setOut(m_player->position());
         break;
     default:
@@ -551,13 +552,7 @@ void MainWindow::onProducerOpened()
         w = new PlasmaWidget(this);
     else if (service == "frei0r.test_pat_B")
         w = new ColorBarsWidget(this);
-    else if (resource == "<playlist>" ||
-             MLT.producer()->get_int("_original_type") == playlist_type) {
-        // In some versions of MLT, the resource property is the XML filename,
-        // but the Mlt::Producer(Service&) constructor will fail unless it detects
-        // the type as playlist, and mlt_service_identify() needs the resource
-        // property to say "<playlist>" to identify it as playlist type.
-        MLT.producer()->set("resource", "<playlist>");
+    else if (MLT.isPlaylist()) {
         m_playlistDock->model()->load();
         if (m_playlistDock->model()->playlist()) {
             m_player->setIn(-1);

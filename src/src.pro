@@ -91,7 +91,8 @@ HEADERS  += mainwindow.h \
     mvcp/mvcpthread.h \
     mvcp/meltedplaylistmodel.h \
     mvcp/meltedplaylistdock.h \
-    mvcp/meltedserverdock.h
+    mvcp/meltedserverdock.h \
+    transportcontrol.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \

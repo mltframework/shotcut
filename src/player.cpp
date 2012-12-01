@@ -204,6 +204,20 @@ Player::Player(QWidget *parent)
     setFocusPolicy(Qt::StrongFocus);
 }
 
+void Player::connectTransport(const TransportControllable* receiver)
+{
+    connect(this, SIGNAL(played(double)), receiver, SLOT(play(double)));
+    connect(this, SIGNAL(paused()), receiver, SLOT(pause()));
+    connect(this, SIGNAL(stopped()), receiver, SLOT(stop()));
+    connect(this, SIGNAL(seeked(int)), receiver, SLOT(seek(int)));
+    connect(this, SIGNAL(rewound()), receiver, SLOT(rewind()));
+    connect(this, SIGNAL(fastForwarded()), receiver, SLOT(fastForward()));
+    connect(this, SIGNAL(previousSought(int)), receiver, SLOT(previous(int)));
+    connect(this, SIGNAL(nextSought(int)), receiver, SLOT(next(int)));
+    connect(this, SIGNAL(inChanged(int)), receiver, SLOT(setIn(int)));
+    connect(this, SIGNAL(outChanged(int)), receiver, SLOT(setOut(int)));
+}
+
 void Player::addProfile(QWidget* widget, const QString& desc, const QString& name)
 {
     QAction* action = new QAction(desc, widget);
@@ -286,7 +300,6 @@ void Player::setupActions(QWidget* widget)
     // Make a list of profiles
     profileGroup = new QActionGroup(widget);
     QAction* action = new QAction(widget);
-    const char* name = widget->objectName().toUtf8().constData();
     action->setText(tr("Automatic"));
     action->setCheckable(true);
     action->setData(QString());
@@ -466,9 +479,8 @@ void Player::resizeEvent(QResizeEvent*)
 
 void Player::play(double speed)
 {
-    MLT.play(speed);
-    // TODO: use stop icon for live sources
-    if (MLT.isSeekable()) {
+    emit played(speed);
+    if (m_isSeekable) {
         actionPlay->setIcon(m_pauseIcon);
         actionPlay->setText(tr("Pause"));
         actionPlay->setToolTip(tr("Pause playback (K)"));
@@ -482,7 +494,7 @@ void Player::play(double speed)
 
 void Player::pause()
 {
-    MLT.pause();
+    emit paused();
     actionPlay->setIcon(m_playIcon);
     actionPlay->setText(tr("Play"));
     actionPlay->setToolTip(tr("Start playback (L)"));
@@ -490,7 +502,7 @@ void Player::pause()
 
 void Player::stop()
 {
-    MLT.stop();
+    emit stopped();
     actionPlay->setIcon(m_playIcon);
     actionPlay->setText(tr("Play"));
     actionPlay->setToolTip(tr("Start playback (L)"));
@@ -500,11 +512,7 @@ void Player::togglePlayPaused()
 {
     if (actionPlay->icon().cacheKey() == m_playIcon.cacheKey())
         play();
-    else if (MLT.producer() && (
-             MLT.isSeekable() ||
-                 // generators can pause and show property changes
-                 QString(MLT.producer()->get("mlt_service")) == "color" ||
-                 QString(MLT.producer()->get("mlt_service")).startsWith("frei0r.")))
+    else if (m_isSeekable)
         pause();
     else
         stop();
@@ -512,28 +520,27 @@ void Player::togglePlayPaused()
 
 void Player::seek(int position)
 {
-    if (MLT.isSeekable()) {
+    if (m_isSeekable) {
         emit seeked();
         if (position >= 0) {
             if (m_seekPosition == SEEK_INACTIVE)
-                MLT.seek(qMin(position, MLT.producer()->get_length() - 1));
-            m_seekPosition = qMin(position, MLT.producer()->get_length() - 1);
+                emit seeked(qMin(position, m_duration - 1));
+            m_seekPosition = qMin(position, m_duration - 1);
         }
     }
 }
 
 void Player::onProducerOpened()
 {
-    int len = MLT.producer()->get_length();
-    bool seekable = MLT.isSeekable();
-
+    m_duration = MLT.producer()->get_length();
+    m_isSeekable = MLT.isSeekable();
     MLT.producer()->set("ignore_points", 1);
     m_scrubber->setFramerate(MLT.profile().fps());
-    m_scrubber->setScale(len);
+    m_scrubber->setScale(m_duration);
     m_scrubber->setMarkers(QList<int>());
     m_inPointLabel->setText("--:--:--:-- / ");
     m_selectedLabel->setText("--:--:--:--");
-    if (seekable) {
+    if (m_isSeekable) {
         m_durationLabel->setText(QString(MLT.producer()->get_length_time()).prepend(" / "));
         m_previousIn = MLT.producer()->get_in();
         m_scrubber->setEnabled(true);
@@ -546,49 +553,49 @@ void Player::onProducerOpened()
         m_scrubber->setDisabled(true);
         m_scrubber->setMarkers(QList<int>());
     }
-    m_positionSpinner->setEnabled(seekable);
+    m_positionSpinner->setEnabled(m_isSeekable);
     on_actionJack_triggered(actionJack->isChecked());
     onVolumeChanged(m_volumeSlider->value());
     onMuteButtonToggled(m_settings.value("player/muted", false).toBool());
 
     actionPlay->setEnabled(true);
-    actionSkipPrevious->setEnabled(seekable);
-    actionSkipNext->setEnabled(seekable);
-    actionRewind->setEnabled(seekable);
-    actionFastForward->setEnabled(seekable);
+    actionSkipPrevious->setEnabled(m_isSeekable);
+    actionSkipNext->setEnabled(m_isSeekable);
+    actionRewind->setEnabled(m_isSeekable);
+    actionFastForward->setEnabled(m_isSeekable);
 
     play();
 }
 
 void Player::onProducerModified()
 {
-    int len = MLT.producer()->get_length();
-    m_scrubber->setScale(len);
+    m_duration = MLT.producer()->get_length();
+    m_isSeekable = MLT.isSeekable();
+    m_scrubber->setScale(m_duration);
     m_scrubber->setMarkers(QList<int>());
     m_durationLabel->setText(QString(MLT.producer()->get_length_time()).prepend(" / "));
-    // TODO: seek to a good spot if needed (cur pos > len or paused)
     if (MLT.producer()->get_speed() == 0)
         seek(m_position);
-    else if (m_position >= len)
-        seek(len - 1);
+    else if (m_position >= m_duration)
+        seek(m_duration - 1);
 }
 
 void Player::onShowFrame(Mlt::QFrame frame)
 {
     if (MLT.producer() && MLT.producer()->is_valid()) {
         int position = frame.frame()->get_position();
-        if (position < MLT.producer()->get_length()) {
+        if (position < m_duration) {
             m_position = position;
             m_positionSpinner->blockSignals(true);
             m_positionSpinner->setValue(position);
             m_positionSpinner->blockSignals(false);
             m_scrubber->onSeek(position);
         }
-        if (position >= MLT.producer()->get_length() - 1)
+        if (position >= m_duration)
             emit endOfStream();
         showAudio(frame.frame());
         if (m_seekPosition != SEEK_INACTIVE)
-            MLT.seek(m_seekPosition);
+            emit seeked(m_seekPosition);
         m_seekPosition = SEEK_INACTIVE;
     }
 }
@@ -601,8 +608,8 @@ void Player::updateSelection()
         m_selectedLabel->setText(MLT.producer()->get_time("_shotcut_selected"));
     } else {
         m_inPointLabel->setText("--:--:--:-- / ");
-        if (MLT.producer() && MLT.resource() != "<playlist>" &&
-                MLT.producer()->get_out() < MLT.producer()->get_length() - 1) {
+        if (MLT.producer() && !MLT.isPlaylist() &&
+                MLT.producer()->get_out() < m_duration - 1) {
             MLT.producer()->set("_shotcut_selected", MLT.producer()->get_playtime());
             m_selectedLabel->setText(MLT.producer()->get_time("_shotcut_selected"));
         } else if (!MLT.producer() || MLT.producer()->get_in() == 0) {
@@ -613,8 +620,6 @@ void Player::updateSelection()
 
 void Player::onInChanged(int in)
 {
-    if (MLT.producer())
-        MLT.producer()->set("in", in);
     if (in != m_previousIn)
         emit inChanged(in);
     m_previousIn = in;
@@ -623,8 +628,6 @@ void Player::onInChanged(int in)
 
 void Player::onOutChanged(int out)
 {
-    if (MLT.producer())
-        MLT.producer()->set("out", out);
     if (out != m_previousOut)
         emit outChanged(out);
     m_previousOut = out;
@@ -633,70 +636,52 @@ void Player::onOutChanged(int out)
 
 void Player::on_actionSkipNext_triggered()
 {
-    int pos = position();
+    emit showStatusMessage(actionSkipNext->toolTip());
     if (m_previousIn == -1 && m_previousOut == -1) {
         foreach (int x, m_scrubber->markers()) {
-            if (x > pos) {
-                MLT.seek(x);
-                emit showStatusMessage(actionSkipNext->toolTip());
+            if (x > m_position) {
+                emit seeked(x);
                 return;
             }
         }
-        MLT.seek(MLT.producer()->get_length() - 1);
+        emit seeked(m_duration - 1);
     }
-    else if (pos < MLT.producer()->get_in())
-        MLT.seek(MLT.producer()->get_in());
-    else if (pos >= MLT.producer()->get_out())
-        MLT.seek(MLT.producer()->get_length() - 1);
-    else
-        MLT.seek(MLT.producer()->get_out());
-    emit showStatusMessage(actionSkipNext->toolTip());
+    else {
+        emit nextSought(m_position);
+    }
 }
 
 void Player::on_actionSkipPrevious_triggered()
 {
-    int pos = position();
+    emit showStatusMessage(actionSkipPrevious->toolTip());
     if (m_previousIn == -1 && m_previousOut == -1) {
         QList<int> markers = m_scrubber->markers();
         int n = markers.count();
         while (n--) {
-            if (markers[n] < pos) {
-                MLT.seek(markers[n]);
-                emit showStatusMessage(actionSkipPrevious->toolTip());
+            if (markers[n] < m_position) {
+                emit seeked(markers[n]);
                 return;
             }
         }
-        MLT.seek(0);
+        emit seeked(0);
     }
-    else if (pos > MLT.producer()->get_out())
-        MLT.seek(MLT.producer()->get_out());
-    else if (pos <= MLT.producer()->get_in())
-        MLT.seek(0);
-    else
-        MLT.seek(MLT.producer()->get_in());
-    emit showStatusMessage(actionSkipPrevious->toolTip());
+    else {
+        emit previousSought(m_position);
+    }
 }
 
 void Player::rewind()
 {
-    if (MLT.isSeekable()) {
-        if (MLT.producer()->get_speed() >= 0)
-            play(-1.0);
-        else
-            MLT.producer()->set_speed(MLT.producer()->get_speed() * 2);
-    }
+    if (m_isSeekable)
+        emit rewound();
 }
 
 void Player::fastForward()
 {
-    if (MLT.isSeekable()) {
-        if (MLT.producer()->get_speed() <= 0)
-            play();
-        else
-            MLT.producer()->set_speed(MLT.producer()->get_speed() * 2);
-    } else {
+    if (m_isSeekable)
+        emit fastForwarded();
+    else
         play();
-    }
 }
 
 void Player::onVideoWidgetContextMenu(const QPoint& pos)
