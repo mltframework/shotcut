@@ -89,10 +89,13 @@ void MeltedUnitsModel::onConnected(const QString &address, quint16 port, quint8 
 
 void MeltedUnitsModel::onDisconnected()
 {
-    emit beginRemoveRows(QModelIndex(), 0, rowCount() - 1);
+    m_socket.disconnect(this);
+    m_socket.disconnectFromHost();
     m_mvcp = 0;
-    mvcp_tokeniser_close(m_tokeniser);
+    if (m_tokeniser)
+        mvcp_tokeniser_close(m_tokeniser);
     m_tokeniser = 0;
+    emit beginRemoveRows(QModelIndex(), 0, rowCount() - 1);
     foreach (QObject* o, m_units)
         delete o;
     m_units.clear();
@@ -131,10 +134,12 @@ void MeltedUnitsModel::readResponse()
             m_data.clear();
             for (int i = 0; i < mvcp_tokeniser_count(m_tokeniser); i++) {
                 char* line = mvcp_tokeniser_get_string(m_tokeniser, i);
+                if (!line || strlen(line) <= 1 || !strcmp(line, "100 VTR Ready\r"))
+                    continue;
                 if (line[strlen(line) - 1] == '\r') {
                     mvcp_util_chomp(line);
                     mvcp_status_parse(&status, line);
-                    if (status.status != unit_undefined && status.unit < m_units.size()) {
+                    if (status.status != unit_unknown && status.unit < m_units.size()) {
                         // Refresh the status table cell if changed
                         if (!m_units[status.unit]->property("unit_status").isValid() ||
                                 m_units[status.unit]->property("unit_status").toInt() != status.status) {
