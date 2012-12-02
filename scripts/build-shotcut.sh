@@ -317,7 +317,7 @@ function set_globals {
   # REPOLOCS Array holds the repo urls
   REPOLOCS[0]="git://git.videolan.org/ffmpeg.git"
   REPOLOCS[1]="git://github.com/mltframework/mlt.git"
-  REPOLOCS[2]="git://code.dyne.org/frei0r.git"
+  REPOLOCS[2]="git://github.com/ddennedy/frei0r.git"
   REPOLOCS[3]="git://git.videolan.org/x264.git"
   REPOLOCS[4]="http://git.chromium.org/webm/libvpx.git"
   REPOLOCS[5]="git://github.com/mltframework/swfdec.git"
