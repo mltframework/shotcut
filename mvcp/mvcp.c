@@ -719,7 +719,7 @@ mvcp_error_code mvcp_list_get( mvcp_list list, int index, mvcp_list_entry entry 
 		mvcp_tokeniser tokeniser = mvcp_tokeniser_init( );
 		mvcp_tokeniser_parse_new( tokeniser, line, " " );
 
-		if ( mvcp_tokeniser_count( tokeniser ) > 0 )
+		if ( mvcp_tokeniser_count( tokeniser ) > 6 )
 		{
 			entry->clip = atoi( mvcp_tokeniser_get_string( tokeniser, 0 ) );
 			mvcp_util_strip( mvcp_tokeniser_get_string( tokeniser, 1 ), '\"' );
@@ -729,6 +729,10 @@ mvcp_error_code mvcp_list_get( mvcp_list list, int index, mvcp_list_entry entry 
 			entry->max = atol( mvcp_tokeniser_get_string( tokeniser, 4 ) );
 			entry->size = atol( mvcp_tokeniser_get_string( tokeniser, 5 ) );
 			entry->fps = atof( mvcp_tokeniser_get_string( tokeniser, 6 ) );
+		}
+		else
+		{
+			error = mvcp_unknown_error;
 		}
 		mvcp_tokeniser_close( tokeniser );
 	}
