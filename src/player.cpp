@@ -547,7 +547,8 @@ void Player::onProducerOpened()
     MLT.producer()->set("ignore_points", 1);
     m_scrubber->setFramerate(MLT.profile().fps());
     m_scrubber->setScale(m_duration);
-    m_scrubber->setMarkers(QList<int>());
+    if (!MLT.isPlaylist())
+        m_scrubber->setMarkers(QList<int>());
     m_inPointLabel->setText("--:--:--:-- / ");
     m_selectedLabel->setText("--:--:--:--");
     if (m_isSeekable) {
@@ -561,7 +562,6 @@ void Player::onProducerOpened()
     else {
         m_durationLabel->setText(tr("Live").prepend(" / "));
         m_scrubber->setDisabled(true);
-        m_scrubber->setMarkers(QList<int>());
     }
     m_positionSpinner->setEnabled(m_isSeekable);
     on_actionJack_triggered(actionJack->isChecked());
