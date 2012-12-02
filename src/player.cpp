@@ -652,6 +652,12 @@ void Player::onShowFrame(int position, double fps, int in, int out, int length, 
             actionPlay->setToolTip(tr("Start playback (L)"));
         }
     }
+    m_previousIn = in;
+    m_previousOut = out;
+    m_scrubber->blockSignals(true);
+    setIn(in);
+    setOut(out);
+    m_scrubber->blockSignals(false);
 }
 
 void Player::onShowFrame(Mlt::QFrame frame)
