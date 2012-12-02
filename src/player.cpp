@@ -206,6 +206,16 @@ Player::Player(QWidget *parent)
 
 void Player::connectTransport(const TransportControllable* receiver)
 {
+    disconnect(SIGNAL(played(double)));
+    disconnect(SIGNAL(paused()));
+    disconnect(SIGNAL(stopped()));
+    disconnect(SIGNAL(seeked(int)));
+    disconnect(SIGNAL(rewound()));
+    disconnect(SIGNAL(fastForwarded()));
+    disconnect(SIGNAL(previousSought(int)));
+    disconnect(SIGNAL(nextSought(int)));
+    disconnect(SIGNAL(inChanged(int)));
+    disconnect(SIGNAL(outChanged(int)));
     connect(this, SIGNAL(played(double)), receiver, SLOT(play(double)));
     connect(this, SIGNAL(paused()), receiver, SLOT(pause()));
     connect(this, SIGNAL(stopped()), receiver, SLOT(stop()));
@@ -567,6 +577,36 @@ void Player::onProducerOpened()
     play();
 }
 
+void Player::onMeltedUnitOpened()
+{
+    m_duration = MLT.producer()->get_length();
+    m_isSeekable = true;
+    MLT.producer()->set("ignore_points", 1);
+    m_scrubber->setFramerate(MLT.profile().fps());
+    m_scrubber->setScale(m_duration);
+    m_scrubber->setMarkers(QList<int>());
+    m_inPointLabel->setText("--:--:--:-- / ");
+    m_selectedLabel->setText("--:--:--:--");
+    m_durationLabel->setText(QString(MLT.producer()->get_length_time()).prepend(" / "));
+    m_previousIn = MLT.producer()->get_in();
+    m_scrubber->setEnabled(true);
+    m_scrubber->setInPoint(m_previousIn);
+    m_previousOut = MLT.producer()->get_out();
+    m_scrubber->setOutPoint(m_previousOut);
+    m_positionSpinner->setEnabled(m_isSeekable);
+    on_actionJack_triggered(actionJack->isChecked());
+    onVolumeChanged(m_volumeSlider->value());
+    onMuteButtonToggled(m_settings.value("player/muted", false).toBool());
+    actionPlay->setEnabled(true);
+    actionSkipPrevious->setEnabled(m_isSeekable);
+    actionSkipNext->setEnabled(m_isSeekable);
+    actionRewind->setEnabled(m_isSeekable);
+    actionFastForward->setEnabled(m_isSeekable);
+    setIn(-1);
+    setOut(-1);
+    setFocus();
+}
+
 void Player::onProducerModified()
 {
     m_duration = MLT.producer()->get_length();
@@ -580,24 +620,26 @@ void Player::onProducerModified()
         seek(m_duration - 1);
 }
 
+void Player::onShowFrame(int position)
+{
+    if (position < m_duration) {
+        m_position = position;
+        m_positionSpinner->blockSignals(true);
+        m_positionSpinner->setValue(position);
+        m_positionSpinner->blockSignals(false);
+        m_scrubber->onSeek(position);
+    }
+    if (position >= m_duration)
+        emit endOfStream();
+    if (m_seekPosition != SEEK_INACTIVE)
+        emit seeked(m_seekPosition);
+    m_seekPosition = SEEK_INACTIVE;
+}
+
 void Player::onShowFrame(Mlt::QFrame frame)
 {
-    if (MLT.producer() && MLT.producer()->is_valid()) {
-        int position = frame.frame()->get_position();
-        if (position < m_duration) {
-            m_position = position;
-            m_positionSpinner->blockSignals(true);
-            m_positionSpinner->setValue(position);
-            m_positionSpinner->blockSignals(false);
-            m_scrubber->onSeek(position);
-        }
-        if (position >= m_duration)
-            emit endOfStream();
-        showAudio(frame.frame());
-        if (m_seekPosition != SEEK_INACTIVE)
-            emit seeked(m_seekPosition);
-        m_seekPosition = SEEK_INACTIVE;
-    }
+    onShowFrame(frame.frame()->get_position());
+    showAudio(frame.frame());
 }
 
 void Player::updateSelection()
@@ -637,7 +679,7 @@ void Player::onOutChanged(int out)
 void Player::on_actionSkipNext_triggered()
 {
     emit showStatusMessage(actionSkipNext->toolTip());
-    if (m_previousIn == -1 && m_previousOut == -1) {
+    if (m_scrubber->markers().size() > 0) {
         foreach (int x, m_scrubber->markers()) {
             if (x > m_position) {
                 emit seeked(x);
@@ -654,7 +696,7 @@ void Player::on_actionSkipNext_triggered()
 void Player::on_actionSkipPrevious_triggered()
 {
     emit showStatusMessage(actionSkipPrevious->toolTip());
-    if (m_previousIn == -1 && m_previousOut == -1) {
+    if (m_scrubber->markers().size() > 0) {
         QList<int> markers = m_scrubber->markers();
         int n = markers.count();
         while (n--) {

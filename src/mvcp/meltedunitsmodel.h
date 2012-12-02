@@ -43,6 +43,7 @@ signals:
     void disconnected();
     void clipIndexChanged(quint8 unit, int index);
     void generationChanged(quint8 unit);
+    void positionUpdated(quint8 unit, int position);
 
 public slots:
     void onConnected(MvcpThread*);

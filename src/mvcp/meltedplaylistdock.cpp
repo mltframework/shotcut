@@ -28,6 +28,7 @@
 MeltedPlaylistDock::MeltedPlaylistDock(QWidget *parent)
     : QDockWidget(parent)
     , ui(new Ui::MeltedPlaylistDock)
+    , m_transportControl(new MeltedPlaylist::TransportControl(m_model))
 {
     ui->setupUi(this);
     ui->tableView->setModel(&m_model);
@@ -45,12 +46,18 @@ MeltedPlaylistDock::MeltedPlaylistDock(QWidget *parent)
 
 MeltedPlaylistDock::~MeltedPlaylistDock()
 {
+    delete m_transportControl;
     delete ui;
 }
 
 QAbstractItemModel *MeltedPlaylistDock::model() const
 {
     return (QAbstractItemModel*) &m_model;
+}
+
+const TransportControllable *MeltedPlaylistDock::transportControl() const
+{
+    return m_transportControl;
 }
 
 void MeltedPlaylistDock::onConnected(const QString &address, quint16 port, quint8 unit)
@@ -222,6 +229,59 @@ void MeltedPlaylistDock::on_actionClean_triggered()
 namespace MeltedPlaylist
 {
 
+TransportControl::TransportControl(MeltedPlaylistModel &model)
+    : m_model(model)
+{
+}
+
+void TransportControl::play(double speed)
+{
+    m_model.play(speed);
+}
+
+void TransportControl::pause()
+{
+    m_model.pause();
+}
+
+void TransportControl::stop()
+{
+    m_model.stop();
+}
+
+void TransportControl::seek(int position)
+{
+    m_model.seek(position);
+}
+
+void TransportControl::rewind()
+{
+    m_model.rewind();
+}
+
+void TransportControl::fastForward()
+{
+    m_model.fastForward();
+}
+
+void TransportControl::previous(int currentPosition)
+{
+    m_model.previous();
+}
+
+void TransportControl::next(int currentPosition)
+{
+    m_model.next();
+}
+
+void TransportControl::setIn(int)
+{
+}
+
+void TransportControl::setOut(int)
+{
+}
+
 AppendCommand::AppendCommand(MeltedPlaylistModel &model, const QString &clip, int in, int out, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
@@ -323,4 +383,4 @@ void MoveCommand::undo()
     m_model.move(m_to, m_from, false);
 }
 
-} // namespace MeltedPlaylist
+}  // namespace MeltedPlaylist

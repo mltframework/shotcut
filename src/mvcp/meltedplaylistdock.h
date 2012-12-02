@@ -22,9 +22,14 @@
 #include <QDockWidget>
 #include <QtGui/QUndoCommand>
 #include "meltedplaylistmodel.h"
+#include "transportcontrol.h"
 
 namespace Ui {
 class MeltedPlaylistDock;
+}
+
+namespace MeltedPlaylist {
+class TransportControl;
 }
 
 class MeltedPlaylistDock : public QDockWidget
@@ -35,6 +40,7 @@ public:
     explicit MeltedPlaylistDock(QWidget *parent = 0);
     ~MeltedPlaylistDock();
     QAbstractItemModel* model() const;
+    const TransportControllable* transportControl() const;
 
 signals:
     void appendRequested();
@@ -87,10 +93,33 @@ private:
     Ui::MeltedPlaylistDock *ui;
     MeltedPlaylistModel m_model;
     QList<QUndoCommand*> m_operations;
+    MeltedPlaylist::TransportControl* m_transportControl;
 };
 
 namespace MeltedPlaylist
 {
+
+class TransportControl : public TransportControllable
+{
+    Q_OBJECT
+public:
+    explicit TransportControl(MeltedPlaylistModel& model);
+
+public slots:
+    void play(double speed = 1.0);
+    void pause();
+    void stop();
+    void seek(int position);
+    void rewind();
+    void fastForward();
+    void previous(int currentPosition);
+    void next(int currentPosition);
+    void setIn(int);
+    void setOut(int);
+
+private:
+    MeltedPlaylistModel& m_model;
+};
 
 class AppendCommand : public QUndoCommand
 {

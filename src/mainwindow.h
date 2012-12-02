@@ -32,6 +32,8 @@ class EncodeDock;
 class JobsDock;
 class PlaylistDock;
 class QUndoStack;
+class MeltedPlaylistDock;
+class MeltedServerDock;
 
 class MainWindow : public QMainWindow
 {
@@ -74,6 +76,8 @@ private:
     bool m_isKKeyPressed;
     QUndoStack* m_undoStack;
     QDockWidget* m_historyDock;
+    MeltedServerDock* m_meltedServerDock;
+    MeltedPlaylistDock* m_meltedPlaylistDock;
 
 public slots:
     void open(const QString& url, const Mlt::Properties* = 0);
@@ -106,6 +110,7 @@ private slots:
     void on_actionRedo_triggered();
     void on_actionFAQ_triggered();
     void on_actionForum_triggered();
+    void onMeltedUnitOpened();
 };
 
 #define MAIN MainWindow::singleton()

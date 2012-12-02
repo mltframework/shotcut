@@ -231,6 +231,54 @@ void MeltedPlaylistModel::clear()
     m_socket.write(QString("CLEAR U%1\r\n").arg(m_unit).toAscii());
 }
 
+void MeltedPlaylistModel::play(double speed)
+{
+    m_commands << MVCP_IGNORE;
+    m_socket.write(QString("PLAY U%1 %2\r\n").arg(m_unit).arg(1000 * speed).toAscii());
+}
+
+void MeltedPlaylistModel::pause()
+{
+    m_commands << MVCP_IGNORE;
+    m_socket.write(QString("PAUSE U%1\r\n").arg(m_unit).toAscii());
+}
+
+void MeltedPlaylistModel::stop()
+{
+    m_commands << MVCP_IGNORE;
+    m_socket.write(QString("STOP U%1\r\n").arg(m_unit).toAscii());
+}
+
+void MeltedPlaylistModel::seek(int position)
+{
+    m_commands << MVCP_IGNORE;
+    m_socket.write(QString("GOTO U%1 %2\r\n").arg(m_unit).arg(position).toAscii());
+}
+
+void MeltedPlaylistModel::rewind()
+{
+    m_commands << MVCP_IGNORE;
+    m_socket.write(QString("REW U%1\r\n").arg(m_unit).toAscii());
+}
+
+void MeltedPlaylistModel::fastForward()
+{
+    m_commands << MVCP_IGNORE;
+    m_socket.write(QString("FF U%1\r\n").arg(m_unit).toAscii());
+}
+
+void MeltedPlaylistModel::previous()
+{
+    m_commands << MVCP_IGNORE;
+    m_socket.write(QString("GOTO U%1 0 -1\r\n").arg(m_unit).toAscii());
+}
+
+void MeltedPlaylistModel::next()
+{
+    m_commands << MVCP_IGNORE;
+    m_socket.write(QString("GOTO U%1 0 +1\r\n").arg(m_unit).toAscii());
+}
+
 void MeltedPlaylistModel::onConnected(const QString &address, quint16 port, quint8 unit)
 {
     connect(&m_socket, SIGNAL(readyRead()), this, SLOT(readResponse()));

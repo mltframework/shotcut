@@ -131,6 +131,7 @@ void MeltedUnitsModel::onUstaResult(QObject* unit)
             emit generationChanged(i);
         }
         emit dataChanged(createIndex(i, 1), createIndex(i, 1));
+        emit positionUpdated(i, unit->property("position").toInt());
     }
     delete unit;
 }

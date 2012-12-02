@@ -52,6 +52,7 @@ signals:
     void unitOpened(quint8);
     void append(QString clip);
     void insert(QString clip, int row);
+    void positionUpdated(int);
 
 public slots:
     void onAppendRequested();
@@ -64,6 +65,7 @@ private slots:
     void on_unitsTableView_clicked(const QModelIndex &index);
     void on_unitsTableView_doubleClicked(const QModelIndex &index);
     void on_consoleButton_clicked(bool checked);
+    void onPositionUpdated(quint8 unit, int position);
 
 private:
     Ui::MeltedServerDock *ui;

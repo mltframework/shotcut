@@ -73,6 +73,14 @@ public:
     void wipe();
     void clean();
     void clear();
+    void play(double speed);
+    void pause();
+    void stop();
+    void seek(int position);
+    void rewind();
+    void fastForward();
+    void previous();
+    void next();
 
 signals:
     void loaded();

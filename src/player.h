@@ -69,7 +69,9 @@ public slots:
     void togglePlayPaused();
     void seek(int position);
     void onProducerOpened();
+    void onMeltedUnitOpened();
     void onProducerModified();
+    void onShowFrame(int position);
     void onShowFrame(Mlt::QFrame frame);
     void onVolumeChanged(int);
     void onCaptureStateChanged(bool);

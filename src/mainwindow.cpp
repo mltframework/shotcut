@@ -76,6 +76,7 @@ MainWindow::MainWindow()
     // Connect UI signals.
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openVideo()));
     connect(ui->actionAbout_Qt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
+    connect(this, SIGNAL(producerOpened()), this, SLOT(onProducerOpened()));
 
     // Accept drag-n-drop of files.
     this->setAcceptDrops(true);
@@ -100,7 +101,6 @@ MainWindow::MainWindow()
     layout->setObjectName("centralWidgetLayout");
     layout->setMargin(0);
     m_player = new Player(this);
-    m_player->connectTransport(MLT.transportControl());
     layout->addWidget(m_player);
     connect(this, SIGNAL(producerOpened()), m_player, SLOT(onProducerOpened()));
     connect(m_player, SIGNAL(showStatusMessage(QString)), this, SLOT(showStatusMessage(QString)));
@@ -187,31 +187,30 @@ MainWindow::MainWindow()
     connect(&JOBS, SIGNAL(jobAdded()), m_jobsDock, SLOT(raise()));
     connect(m_jobsDock, SIGNAL(visibilityChanged(bool)), this, SLOT(onJobsVisibilityChanged(bool)));
 
-    MeltedServerDock* meltedServerDock = new MeltedServerDock(this);
-    meltedServerDock->hide();
-    addDockWidget(Qt::TopDockWidgetArea, meltedServerDock);
-    ui->menuView->addAction(meltedServerDock->toggleViewAction());
+    m_meltedServerDock = new MeltedServerDock(this);
+    m_meltedServerDock->hide();
+    addDockWidget(Qt::TopDockWidgetArea, m_meltedServerDock);
+    ui->menuView->addAction(m_meltedServerDock->toggleViewAction());
 
-    MeltedPlaylistDock* meltedPlaylistDock = new MeltedPlaylistDock(this);
-    meltedPlaylistDock->hide();
-    addDockWidget(Qt::TopDockWidgetArea, meltedPlaylistDock);
-    splitDockWidget(meltedServerDock, meltedPlaylistDock, Qt::Horizontal);
-    ui->menuView->addAction(meltedPlaylistDock->toggleViewAction());
-    connect(meltedServerDock, SIGNAL(connected(QString, quint16)), meltedPlaylistDock, SLOT(onConnected(QString,quint16)));
-    connect(meltedServerDock, SIGNAL(disconnected()), meltedPlaylistDock, SLOT(onDisconnected()));
-    connect(meltedServerDock, SIGNAL(unitActivated(quint8)), meltedPlaylistDock, SLOT(onUnitChanged(quint8)));
-    connect(meltedPlaylistDock, SIGNAL(appendRequested()), meltedServerDock, SLOT(onAppendRequested()));
-    connect(meltedServerDock, SIGNAL(append(QString)), meltedPlaylistDock, SLOT(onAppend(QString)));
-    connect(meltedPlaylistDock, SIGNAL(insertRequested(int)), meltedServerDock, SLOT(onInsertRequested(int)));
-    connect(meltedServerDock, SIGNAL(insert(QString,int)), meltedPlaylistDock, SLOT(onInsert(QString,int)));
+    m_meltedPlaylistDock = new MeltedPlaylistDock(this);
+    m_meltedPlaylistDock->hide();
+    addDockWidget(Qt::TopDockWidgetArea, m_meltedPlaylistDock);
+    splitDockWidget(m_meltedServerDock, m_meltedPlaylistDock, Qt::Horizontal);
+    ui->menuView->addAction(m_meltedPlaylistDock->toggleViewAction());
+    connect(m_meltedServerDock, SIGNAL(connected(QString, quint16)), m_meltedPlaylistDock, SLOT(onConnected(QString,quint16)));
+    connect(m_meltedServerDock, SIGNAL(disconnected()), m_meltedPlaylistDock, SLOT(onDisconnected()));
+    connect(m_meltedServerDock, SIGNAL(unitActivated(quint8)), m_meltedPlaylistDock, SLOT(onUnitChanged(quint8)));
+    connect(m_meltedPlaylistDock, SIGNAL(appendRequested()), m_meltedServerDock, SLOT(onAppendRequested()));
+    connect(m_meltedServerDock, SIGNAL(append(QString)), m_meltedPlaylistDock, SLOT(onAppend(QString)));
+    connect(m_meltedPlaylistDock, SIGNAL(insertRequested(int)), m_meltedServerDock, SLOT(onInsertRequested(int)));
+    connect(m_meltedServerDock, SIGNAL(insert(QString,int)), m_meltedPlaylistDock, SLOT(onInsert(QString,int)));
+    connect(m_meltedServerDock, SIGNAL(unitOpened(quint8)), this, SLOT(onMeltedUnitOpened()));
+    connect(m_meltedServerDock, SIGNAL(unitOpened(quint8)), m_player, SLOT(onMeltedUnitOpened()));
 
-    MeltedUnitsModel* unitsModel = (MeltedUnitsModel*) meltedServerDock->unitsModel();
-    MeltedPlaylistModel* playlistModel = (MeltedPlaylistModel*) meltedPlaylistDock->model();
+    MeltedUnitsModel* unitsModel = (MeltedUnitsModel*) m_meltedServerDock->unitsModel();
+    MeltedPlaylistModel* playlistModel = (MeltedPlaylistModel*) m_meltedPlaylistDock->model();
     connect(unitsModel, SIGNAL(clipIndexChanged(quint8, int)), playlistModel, SLOT(onClipIndexChanged(quint8, int)));
     connect(unitsModel, SIGNAL(generationChanged(quint8)), playlistModel, SLOT(onGenerationChanged(quint8)));
-
-    // Connect signals.
-    connect(this, SIGNAL(producerOpened()), this, SLOT(onProducerOpened()));
 
     // connect video widget signals
 #if defined(Q_WS_MAC) || defined(Q_WS_WIN)
@@ -514,6 +513,8 @@ void MainWindow::onProducerOpened()
     QString resource(MLT.resource());
     QWidget* w = 0;
 
+    m_meltedServerDock->disconnect(SIGNAL(positionUpdated(int)));
+    m_player->connectTransport(MLT.transportControl());
     ui->stackedWidget->setCurrentIndex(1);
     delete m_propertiesDock->widget();
 
@@ -759,4 +760,16 @@ void MainWindow::saveXML(const QString &filename)
     } else {
         MLT.saveXML(filename);
     }
+}
+
+void MainWindow::onMeltedUnitOpened()
+{
+    Mlt::Producer* producer = new Mlt::Producer(MLT.profile(), "color:");
+    MLT.open(producer);
+    MLT.play(0);
+    ui->stackedWidget->setCurrentIndex(1);
+    delete m_propertiesDock->widget();
+    m_player->connectTransport(m_meltedPlaylistDock->transportControl());
+    connect(m_meltedServerDock, SIGNAL(positionUpdated(int)), m_player, SLOT(onShowFrame(int)));
+    onProducerChanged();
 }
