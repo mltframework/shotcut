@@ -52,7 +52,7 @@ MeltedServerDock::MeltedServerDock(QWidget *parent)
     ui->unitsTableView->setModel(unitsModel);
     connect(this, SIGNAL(connected(MvcpThread*)), unitsModel, SLOT(onConnected(MvcpThread*)));
     connect(this, SIGNAL(disconnected()), unitsModel, SLOT(onDisconnected()));
-    connect(unitsModel, SIGNAL(positionUpdated(quint8,int)), this, SLOT(onPositionUpdated(quint8,int)));
+    connect(unitsModel, SIGNAL(positionUpdated(quint8,int,double,int,int,int,bool)), this, SLOT(onPositionUpdated(quint8,int,double,int,int,int,bool)));
 
     // setup server field
     QStringList servers = m_settings.value("melted/servers").toStringList();
@@ -174,10 +174,10 @@ void MeltedServerDock::on_consoleButton_clicked(bool checked)
         m_console->setFocus();
 }
 
-void MeltedServerDock::onPositionUpdated(quint8 unit, int position)
+void MeltedServerDock::onPositionUpdated(quint8 unit, int position, double fps, int in, int out, int length, bool isPlaying)
 {
     if (unit == ui->unitsTableView->currentIndex().row())
-        emit positionUpdated(position);
+        emit positionUpdated(position, fps, in, out, length, isPlaying);
 }
 
 void MeltedServerDock::onAppendRequested()

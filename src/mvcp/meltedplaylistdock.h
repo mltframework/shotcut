@@ -114,8 +114,8 @@ public slots:
     void fastForward();
     void previous(int currentPosition);
     void next(int currentPosition);
-    void setIn(int);
-    void setOut(int);
+    void setIn(int in);
+    void setOut(int out);
 
 private:
     MeltedPlaylistModel& m_model;

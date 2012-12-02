@@ -209,6 +209,7 @@ MainWindow::MainWindow()
 
     MeltedUnitsModel* unitsModel = (MeltedUnitsModel*) m_meltedServerDock->unitsModel();
     MeltedPlaylistModel* playlistModel = (MeltedPlaylistModel*) m_meltedPlaylistDock->model();
+    connect(m_meltedServerDock, SIGNAL(connected(QString,quint16)), unitsModel, SLOT(onConnected(QString,quint16)));
     connect(unitsModel, SIGNAL(clipIndexChanged(quint8, int)), playlistModel, SLOT(onClipIndexChanged(quint8, int)));
     connect(unitsModel, SIGNAL(generationChanged(quint8)), playlistModel, SLOT(onGenerationChanged(quint8)));
 
@@ -513,7 +514,7 @@ void MainWindow::onProducerOpened()
     QString resource(MLT.resource());
     QWidget* w = 0;
 
-    m_meltedServerDock->disconnect(SIGNAL(positionUpdated(int)));
+    m_meltedServerDock->disconnect(SIGNAL(positionUpdated(int,double,int,int,int,bool)));
     m_player->connectTransport(MLT.transportControl());
     ui->stackedWidget->setCurrentIndex(1);
     delete m_propertiesDock->widget();
@@ -770,6 +771,6 @@ void MainWindow::onMeltedUnitOpened()
     ui->stackedWidget->setCurrentIndex(1);
     delete m_propertiesDock->widget();
     m_player->connectTransport(m_meltedPlaylistDock->transportControl());
-    connect(m_meltedServerDock, SIGNAL(positionUpdated(int)), m_player, SLOT(onShowFrame(int)));
+    connect(m_meltedServerDock, SIGNAL(positionUpdated(int,double,int,int,int,bool)), m_player, SLOT(onShowFrame(int,double,int,int,int,bool)));
     onProducerChanged();
 }

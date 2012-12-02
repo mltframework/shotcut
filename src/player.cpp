@@ -30,6 +30,7 @@ Player::Player(QWidget *parent)
     : QWidget(parent)
     , m_position(0)
     , m_seekPosition(SEEK_INACTIVE)
+    , m_isMeltedPlaying(-1)
 {
     setObjectName("Player");
     Mlt::Controller::singleton(this);
@@ -579,6 +580,7 @@ void Player::onProducerOpened()
 
 void Player::onMeltedUnitOpened()
 {
+    m_isMeltedPlaying = -1; // unknown
     m_duration = MLT.producer()->get_length();
     m_isSeekable = true;
     MLT.producer()->set("ignore_points", 1);
@@ -620,8 +622,41 @@ void Player::onProducerModified()
         seek(m_duration - 1);
 }
 
-void Player::onShowFrame(int position)
+void Player::onShowFrame(int position, double fps, int in, int out, int length, bool isPlaying)
 {
+    m_duration = length;
+    MLT.producer()->set("length", length);
+    m_durationLabel->setText(QString(MLT.producer()->get_length_time()).prepend(" / "));
+    m_scrubber->setFramerate(fps);
+    m_scrubber->setScale(m_duration);
+    if (position < m_duration) {
+        m_position = position;
+        m_positionSpinner->blockSignals(true);
+        m_positionSpinner->setValue(position);
+        m_positionSpinner->blockSignals(false);
+        m_scrubber->onSeek(position);
+    }
+    if (m_seekPosition != SEEK_INACTIVE)
+        emit seeked(m_seekPosition);
+    m_seekPosition = SEEK_INACTIVE;
+    if (m_isMeltedPlaying == -1 || isPlaying != m_isMeltedPlaying) {
+        m_isMeltedPlaying = isPlaying;
+        if (isPlaying) {
+            actionPlay->setIcon(m_pauseIcon);
+            actionPlay->setText(tr("Pause"));
+            actionPlay->setToolTip(tr("Pause playback (K)"));
+        }
+        else {
+            actionPlay->setIcon(m_playIcon);
+            actionPlay->setText(tr("Play"));
+            actionPlay->setToolTip(tr("Start playback (L)"));
+        }
+    }
+}
+
+void Player::onShowFrame(Mlt::QFrame frame)
+{
+    int position = frame.frame()->get_position();
     if (position < m_duration) {
         m_position = position;
         m_positionSpinner->blockSignals(true);
@@ -634,11 +669,6 @@ void Player::onShowFrame(int position)
     if (m_seekPosition != SEEK_INACTIVE)
         emit seeked(m_seekPosition);
     m_seekPosition = SEEK_INACTIVE;
-}
-
-void Player::onShowFrame(Mlt::QFrame frame)
-{
-    onShowFrame(frame.frame()->get_position());
     showAudio(frame.frame());
 }
 

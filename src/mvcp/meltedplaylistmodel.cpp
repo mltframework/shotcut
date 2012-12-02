@@ -279,6 +279,18 @@ void MeltedPlaylistModel::next()
     m_socket.write(QString("GOTO U%1 0 +1\r\n").arg(m_unit).toAscii());
 }
 
+void MeltedPlaylistModel::setIn(int in)
+{
+    m_commands << MVCP_IGNORE;
+    m_socket.write(QString("SIN U%1 %2\r\n").arg(m_unit).arg(in).toAscii());
+}
+
+void MeltedPlaylistModel::setOut(int out)
+{
+    m_commands << MVCP_IGNORE;
+    m_socket.write(QString("SOUT U%1 %2\r\n").arg(m_unit).arg(out).toAscii());
+}
+
 void MeltedPlaylistModel::onConnected(const QString &address, quint16 port, quint8 unit)
 {
     connect(&m_socket, SIGNAL(readyRead()), this, SLOT(readResponse()));

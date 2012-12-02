@@ -81,6 +81,8 @@ public:
     void fastForward();
     void previous();
     void next();
+    void setIn(int in);
+    void setOut(int out);
 
 signals:
     void loaded();

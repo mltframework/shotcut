@@ -22,8 +22,10 @@
 #ifndef MELTEDUNITSMODEL_H
 #define MELTEDUNITSMODEL_H
 
-#include <QAbstractTableModel>
+#include <QtCore/QAbstractTableModel>
+#include <QtNetwork/QTcpSocket>
 #include "mvcpthread.h"
+#include <mvcp_tokeniser.h>
 
 class QTimer;
 
@@ -43,21 +45,28 @@ signals:
     void disconnected();
     void clipIndexChanged(quint8 unit, int index);
     void generationChanged(quint8 unit);
-    void positionUpdated(quint8 unit, int position);
+    void positionUpdated(quint8 unit, int position, double fps, int in, int out, int length, bool isPlaying);
 
 public slots:
     void onConnected(MvcpThread*);
+    void onConnected(const QString& address, quint16 port = 5250, quint8 unit = 0);
     void onDisconnected();
-    void onTimeout();
+
+private slots:
+    void onSocketConnected();
+    void readResponse();
 
 private:
     MvcpThread* m_mvcp;
+    QTcpSocket m_socket;
     QObjectList m_units;
-    QTimer* m_timer;
+    mvcp_tokeniser m_tokeniser;
+    QByteArray m_data;
+
+    QString decodeStatus(unit_status status);
 
 private slots:
     void onUlsResult(QStringList);
-    void onUstaResult(QObject*);
 };
 
 #endif // MELTEDUNITSMODEL_H

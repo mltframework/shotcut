@@ -71,7 +71,7 @@ public slots:
     void onProducerOpened();
     void onMeltedUnitOpened();
     void onProducerModified();
-    void onShowFrame(int position);
+    void onShowFrame(int position, double fps, int in, int out, int length, bool isPlaying);
     void onShowFrame(Mlt::QFrame frame);
     void onVolumeChanged(int);
     void onCaptureStateChanged(bool);
@@ -131,6 +131,7 @@ private:
     double m_savedVolume;
     int m_duration;
     bool m_isSeekable;
+    int m_isMeltedPlaying;
 
 private slots:
     void updateSelection();

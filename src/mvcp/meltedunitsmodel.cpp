@@ -21,12 +21,13 @@
 
 #include "meltedunitsmodel.h"
 #include <QtCore/QTimer>
+#include <mvcp_util.h>
 #include <QDebug>
 
 MeltedUnitsModel::MeltedUnitsModel(QObject *parent)
     : QAbstractTableModel(parent)
     , m_mvcp(0)
-    , m_timer(0)
+    , m_tokeniser(0)
 {
 }
 
@@ -75,28 +76,97 @@ void MeltedUnitsModel::onConnected(MvcpThread *a_mvcp)
 {
     m_mvcp = a_mvcp;
     connect(m_mvcp, SIGNAL(ulsResult(QStringList)), this, SLOT(onUlsResult(QStringList)));
-    connect(m_mvcp, SIGNAL(ustaResult(QObject*)), this, SLOT(onUstaResult(QObject*)));
     m_mvcp->uls();
-    m_timer = new QTimer(this);
-    connect(m_timer, SIGNAL(timeout()), this, SLOT(onTimeout()));
-    m_timer->start(1000);
+}
+
+void MeltedUnitsModel::onConnected(const QString &address, quint16 port, quint8 unit)
+{
+    m_tokeniser = mvcp_tokeniser_init();
+    connect(&m_socket, SIGNAL(readyRead()), this, SLOT(readResponse()));
+    connect(&m_socket, SIGNAL(connected()), this, SLOT(onSocketConnected()));
+    m_socket.connectToHost(address, port);
 }
 
 void MeltedUnitsModel::onDisconnected()
 {
-    delete m_timer;
-    m_timer = 0;
     emit beginRemoveRows(QModelIndex(), 0, rowCount() - 1);
     m_mvcp = 0;
+    mvcp_tokeniser_close(m_tokeniser);
+    m_tokeniser = 0;
     foreach (QObject* o, m_units)
         delete o;
     m_units.clear();
     emit endRemoveRows();
 }
 
-void MeltedUnitsModel::onTimeout()
+void MeltedUnitsModel::onSocketConnected()
 {
-    if (m_mvcp) m_mvcp->uls();
+    m_socket.write(QString("STATUS\r\n").toAscii());
+}
+
+QString MeltedUnitsModel::decodeStatus(unit_status status)
+{
+    switch (status) {
+    case unit_unknown:      return tr("unknown");
+    case unit_undefined:    return tr("undefined");
+    case unit_offline:      return tr("offline");
+    case unit_not_loaded:   return tr("unloaded");
+    case unit_stopped:      return tr("stopped");
+    case unit_playing:      return tr("playing");
+    case unit_paused:       return tr("paused");
+    case unit_disconnected: return tr("disconnected");
+    }
+    return QString();
+}
+
+void MeltedUnitsModel::readResponse()
+{
+    QByteArray data = m_socket.readAll();
+    if (data.size() > 0 && m_tokeniser)
+    {
+        mvcp_status_t status;
+        m_data.append(data);
+        if (m_data.contains('\n')) {
+            mvcp_tokeniser_parse_new(m_tokeniser, const_cast<char*>(m_data.constData()), "\n");
+            m_data.clear();
+            for (int i = 0; i < mvcp_tokeniser_count(m_tokeniser); i++) {
+                char* line = mvcp_tokeniser_get_string(m_tokeniser, i);
+                if (line[strlen(line) - 1] == '\r') {
+                    mvcp_util_chomp(line);
+                    mvcp_status_parse(&status, line);
+                    if (status.status != unit_undefined && status.unit < m_units.size()) {
+                        // Refresh the status table cell if changed
+                        if (!m_units[status.unit]->property("unit_status").isValid() ||
+                                m_units[status.unit]->property("unit_status").toInt() != status.status) {
+                            m_units[status.unit]->setProperty("unit_status", status.status);
+                            m_units[status.unit]->setProperty("status", decodeStatus(status.status));
+                            emit dataChanged(createIndex(status.unit, 1), createIndex(status.unit, 1));
+                        }
+                        // Inform others like the MeltedPlaylistModel when the currently playing clip has changed.
+                        if (!m_units[status.unit]->property("clip_index").isValid() ||
+                                m_units[status.unit]->property("clip_index").toInt() != status.clip_index) {
+                            m_units[status.unit]->setProperty("clip_index", status.clip_index);
+                            emit clipIndexChanged(status.unit, status.clip_index);
+                        }
+                        // Inform others like the MeltedPlaylistModel when the playlist has changed.
+                        if (!m_units[status.unit]->property("generation").isValid() ||
+                                m_units[status.unit]->property("generation").toInt() != status.generation) {
+                            m_units[status.unit]->setProperty("generation", status.generation);
+                            emit generationChanged(status.unit);
+                        }
+                        emit positionUpdated(status.unit, status.position, status.fps,
+                            status.in, status.out, status.length, status.status == unit_playing);
+                    }
+                    else if (status.unit >= m_units.size() && m_units.size() > 0) {
+                        m_mvcp->uls();
+                    }
+                }
+                else {
+                    m_data.append(line, strlen(line));
+                }
+            }
+        }
+    }
 }
 
 void MeltedUnitsModel::onUlsResult(QStringList units)
@@ -109,29 +179,5 @@ void MeltedUnitsModel::onUlsResult(QStringList units)
         }
         m_units[i]->setObjectName(units[i]);
         emit dataChanged(createIndex(i, 0), createIndex(i, 0));
-        m_mvcp->usta(i);
     }
-}
-
-void MeltedUnitsModel::onUstaResult(QObject* unit)
-{
-    quint8 i = unit->property("unit").toUInt();
-    if (i < m_units.size()) {
-        m_units[i]->setProperty("status", unit->property("status"));
-        // Inform others like the MeltedPlaylistModel when the currently playing clip has changed.
-        if (!m_units[i]->property("clip_index").isValid() ||
-                m_units[i]->property("clip_index") != unit->property("clip_index")) {
-            m_units[i]->setProperty("clip_index", unit->property("clip_index"));
-            emit clipIndexChanged(i, m_units[i]->property("clip_index").toInt());
-        }
-        // Inform others like the MeltedPlaylistModel when the playlist has changed.
-        if (!m_units[i]->property("generation").isValid() ||
-                m_units[i]->property("generation") != unit->property("generation")) {
-            m_units[i]->setProperty("generation", unit->property("generation"));
-            emit generationChanged(i);
-        }
-        emit dataChanged(createIndex(i, 1), createIndex(i, 1));
-        emit positionUpdated(i, unit->property("position").toInt());
-    }
-    delete unit;
 }
