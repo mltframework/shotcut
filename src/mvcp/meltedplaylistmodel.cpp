@@ -381,10 +381,6 @@ void MeltedPlaylistModel::readResponse()
                 emit loaded();
                 break;
             }
-            case MVCP_GOTO:
-                m_commands << MVCP_IGNORE;
-                m_socket.write(QString("PLAY U%1 1000\r\n").arg(m_unit).toAscii());
-                break;
             case MVCP_APND:
             case MVCP_REMOVE:
             case MVCP_INSERT:
