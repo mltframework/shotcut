@@ -28,6 +28,7 @@ MeltedUnitsModel::MeltedUnitsModel(QObject *parent)
     : QAbstractTableModel(parent)
     , m_mvcp(0)
     , m_tokeniser(0)
+    , m_statusSent(false)
 {
 }
 
@@ -103,11 +104,6 @@ void MeltedUnitsModel::onDisconnected()
     emit endRemoveRows();
 }
 
-void MeltedUnitsModel::onSocketConnected()
-{
-    m_socket.write(QString("STATUS\r\n").toAscii());
-}
-
 QString MeltedUnitsModel::decodeStatus(unit_status status)
 {
     switch (status) {
@@ -163,7 +159,7 @@ void MeltedUnitsModel::readResponse()
                         emit positionUpdated(status.unit, status.position, status.fps,
                             status.in, status.out, status.length, status.status == unit_playing);
                     }
-                    else if (status.unit >= m_units.size() && m_units.size() > 0) {
+                    else if (status.unit >= m_units.size()) {
                         m_mvcp->uls();
                     }
                 }
@@ -185,5 +181,9 @@ void MeltedUnitsModel::onUlsResult(QStringList units)
         }
         m_units[i]->setObjectName(units[i]);
         emit dataChanged(createIndex(i, 0), createIndex(i, 0));
+    }
+    if (!m_statusSent && m_socket.state() == QAbstractSocket::ConnectedState) {
+        m_socket.write(QString("STATUS\r\n").toAscii());
+        m_statusSent = true;
     }
 }

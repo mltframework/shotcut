@@ -53,7 +53,6 @@ public slots:
     void onDisconnected();
 
 private slots:
-    void onSocketConnected();
     void readResponse();
 
 private:
@@ -62,6 +61,7 @@ private:
     QObjectList m_units;
     mvcp_tokeniser m_tokeniser;
     QByteArray m_data;
+    bool m_statusSent;
 
     QString decodeStatus(unit_status status);
 
