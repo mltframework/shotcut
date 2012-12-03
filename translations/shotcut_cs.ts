@@ -852,15 +852,15 @@ vícevláknové.</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1373"/>
-        <location filename="../src/docks/encodedock.cpp" line="93"/>
+        <location filename="../src/docks/encodedock.cpp" line="94"/>
         <source>Encode File</source>
         <translation>Zakódovat soubor</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1380"/>
-        <location filename="../src/docks/encodedock.cpp" line="612"/>
-        <location filename="../src/docks/encodedock.cpp" line="617"/>
-        <location filename="../src/docks/encodedock.cpp" line="713"/>
+        <location filename="../src/docks/encodedock.cpp" line="613"/>
+        <location filename="../src/docks/encodedock.cpp" line="618"/>
+        <location filename="../src/docks/encodedock.cpp" line="714"/>
         <source>Stream</source>
         <translation>Proud</translation>
     </message>
@@ -870,76 +870,76 @@ vícevláknové.</translation>
         <translation>Zastavit zachytávání obrazovky</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="62"/>
+        <location filename="../src/docks/encodedock.cpp" line="63"/>
         <source>Automatic from extension</source>
         <translation>Automaticky podle přípony</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="69"/>
-        <location filename="../src/docks/encodedock.cpp" line="76"/>
+        <location filename="../src/docks/encodedock.cpp" line="70"/>
+        <location filename="../src/docks/encodedock.cpp" line="77"/>
         <source>Default for format</source>
         <translation>Výchozí pro formát</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="95"/>
-        <location filename="../src/docks/encodedock.cpp" line="529"/>
-        <location filename="../src/docks/encodedock.cpp" line="712"/>
+        <location filename="../src/docks/encodedock.cpp" line="96"/>
+        <location filename="../src/docks/encodedock.cpp" line="530"/>
+        <location filename="../src/docks/encodedock.cpp" line="713"/>
         <source>Capture File</source>
         <translation>Zachytit soubor</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="101"/>
-        <location filename="../src/docks/encodedock.cpp" line="140"/>
-        <location filename="../src/docks/encodedock.cpp" line="361"/>
-        <location filename="../src/docks/encodedock.cpp" line="680"/>
+        <location filename="../src/docks/encodedock.cpp" line="102"/>
+        <location filename="../src/docks/encodedock.cpp" line="141"/>
+        <location filename="../src/docks/encodedock.cpp" line="362"/>
+        <location filename="../src/docks/encodedock.cpp" line="681"/>
         <source>Custom</source>
         <translation>Vlastní</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="104"/>
-        <location filename="../src/docks/encodedock.cpp" line="110"/>
+        <location filename="../src/docks/encodedock.cpp" line="105"/>
+        <location filename="../src/docks/encodedock.cpp" line="111"/>
         <source>Stock</source>
         <translation>Tovární</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="524"/>
-        <location filename="../src/docks/encodedock.cpp" line="567"/>
+        <location filename="../src/docks/encodedock.cpp" line="525"/>
+        <location filename="../src/docks/encodedock.cpp" line="568"/>
         <source>Stop Capture</source>
         <translation>Zastavit zachytávání</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="544"/>
+        <location filename="../src/docks/encodedock.cpp" line="545"/>
         <source>Encode to File</source>
         <translation>Zakódovat do souboru</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="544"/>
+        <location filename="../src/docks/encodedock.cpp" line="545"/>
         <source>Capture to File</source>
         <translation>Zachytit do souboru</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="607"/>
-        <location filename="../src/docks/encodedock.cpp" line="623"/>
+        <location filename="../src/docks/encodedock.cpp" line="608"/>
+        <location filename="../src/docks/encodedock.cpp" line="624"/>
         <source>Stop Stream</source>
         <translation>Zastavit proud</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="618"/>
+        <location filename="../src/docks/encodedock.cpp" line="619"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>Zadejte schéma síťového protokolu, adresu, přípojku a parametry jako adresu (URL):</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="653"/>
+        <location filename="../src/docks/encodedock.cpp" line="654"/>
         <source>Add Encode Preset</source>
         <translation>Přidat přednastavení zakódování</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="697"/>
+        <location filename="../src/docks/encodedock.cpp" line="698"/>
         <source>Delete Preset</source>
         <translation>Smazat přednastavení</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="698"/>
+        <location filename="../src/docks/encodedock.cpp" line="699"/>
         <source>Are you sure you want to delete</source>
         <translation>Opravdu chcete smazat</translation>
     </message>
@@ -1454,60 +1454,60 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Znovu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="107"/>
+        <location filename="../src/mainwindow.cpp" line="111"/>
         <source>Properties</source>
         <translation>Vlastnosti</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="141"/>
+        <location filename="../src/mainwindow.cpp" line="145"/>
         <source>History</source>
         <translation>Historie</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="231"/>
-        <location filename="../src/mainwindow.cpp" line="233"/>
-        <location filename="../src/mainwindow.cpp" line="265"/>
+        <location filename="../src/mainwindow.cpp" line="259"/>
+        <location filename="../src/mainwindow.cpp" line="261"/>
+        <location filename="../src/mainwindow.cpp" line="293"/>
         <source>Failed to open </source>
         <translation>Nepodařilo se otevřít</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="274"/>
+        <location filename="../src/mainwindow.cpp" line="302"/>
         <source>Open File</source>
         <translation>Otevřít soubor</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="351"/>
+        <location filename="../src/mainwindow.cpp" line="379"/>
         <source>%1[*] - %2</source>
         <translation>%1[*] - %2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="356"/>
+        <location filename="../src/mainwindow.cpp" line="384"/>
         <source>About Shotcut</source>
         <translation>O programu Shotcut</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="357"/>
+        <location filename="../src/mainwindow.cpp" line="385"/>
         <source>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;p&gt;Copyright &amp;copy; 2011-2012 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://qt.nokia.com/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;&lt;small&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
         <translation>&lt;h1&gt;Shotcut verze %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; je svobodný editor videa. Je to program s otevřeným zdrojovým kódem. Je určen pro více operačních systémů.&lt;/p&gt;&lt;p&gt;Autorské právo &amp;copy; 2011-2012 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licencováno pod &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Tento program hrdě používá následující projekty:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://qt.nokia.com/&quot;&gt;Qt&lt;/a&gt;: užití Qt a uživatelské rozhraní&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt;: multimediální authoringová soustava&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt;: multimediální formát a knihovny s kodeky&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt;: enkodér H.264&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt;: enkodér VP8&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt;: enkodér MP3&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt;: přídavné moduly pro video&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt;: přídavné moduly pro audio&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;Zdrojový kód používaný k sestavení tohoto programu lze stáhnout z &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;&lt;small&gt;Tento program je šířen v naději, že bude užitečný, ale BEZ JAKÉKOLI ZÁRUKY; také bez předpokládané záruky PRODEJNOSTI nebo POUŽITELNOSTI PRO NĚJAKÝ URČITÝ ÚČEL.&lt;/small&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="577"/>
-        <location filename="../src/mainwindow.cpp" line="596"/>
+        <location filename="../src/mainwindow.cpp" line="598"/>
+        <location filename="../src/mainwindow.cpp" line="615"/>
         <source>Saved %1</source>
         <translation>Uloženo %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="589"/>
+        <location filename="../src/mainwindow.cpp" line="611"/>
         <source>Save XML</source>
         <translation>Uložit XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="589"/>
+        <location filename="../src/mainwindow.cpp" line="611"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="606"/>
+        <location filename="../src/mainwindow.cpp" line="626"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>Projekt byl změněn.
@@ -1515,15 +1515,351 @@ Chcete uložit své změny?</translation>
     </message>
 </context>
 <context>
-    <name>MvcpConsoleDock</name>
+    <name>MeltedClipsModel</name>
     <message>
-        <location filename="../src/mvcp/mvcpconsoledock.ui" line="14"/>
-        <source>MVCP Console</source>
+        <location filename="../src/mvcp/meltedclipsmodel.cpp" line="94"/>
+        <source>%1 GiB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mvcp/mvcpconsoledock.ui" line="21"/>
+        <location filename="../src/mvcp/meltedclipsmodel.cpp" line="97"/>
+        <source>%1 MiB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedclipsmodel.cpp" line="100"/>
+        <source>%1 KiB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedclipsmodel.cpp" line="101"/>
+        <source>%1 B</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedclipsmodel.cpp" line="104"/>
+        <source>item</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedclipsmodel.cpp" line="104"/>
+        <source>items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedclipsmodel.cpp" line="119"/>
+        <source>Clip</source>
+        <translation type="unfinished">Záznam</translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedclipsmodel.cpp" line="119"/>
+        <source>Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MeltedPlaylistDock</name>
+    <message>
+        <location filename="../src/mvcp/meltedplaylistdock.ui" line="14"/>
+        <source>Melted Playlist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedplaylistdock.ui" line="45"/>
+        <source>Add something to the playlist</source>
+        <translation type="unfinished">Přidat něco do seznamu záběrů</translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedplaylistdock.ui" line="62"/>
+        <source>Remove cut</source>
+        <translation type="unfinished">Odstranit záběr</translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedplaylistdock.ui" line="76"/>
+        <source>Display a menu of additional actions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedplaylistdock.ui" line="106"/>
+        <source>Insert Cut</source>
+        <translation type="unfinished">Vložit záběr</translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedplaylistdock.ui" line="115"/>
+        <source>Append Cut</source>
+        <translation type="unfinished">Připojit záběr</translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedplaylistdock.ui" line="120"/>
+        <source>Open As Clip</source>
+        <translation type="unfinished">Otevřít jako záznam</translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedplaylistdock.ui" line="123"/>
+        <source>Open the cut in the player</source>
+        <translation type="unfinished">Otevřít záběr v přehrávači</translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedplaylistdock.ui" line="128"/>
+        <source>Remove</source>
+        <translation type="unfinished">Odstranit</translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedplaylistdock.ui" line="133"/>
+        <source>Goto</source>
+        <translation type="unfinished">Jít na</translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedplaylistdock.ui" line="136"/>
+        <source>Go to the start of this cut in the playlist</source>
+        <translation type="unfinished">Jít na začátek tohoto záběru v seznamu záběrů</translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedplaylistdock.ui" line="141"/>
+        <source>Remove All</source>
+        <translation type="unfinished">Odstranit vše</translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedplaylistdock.ui" line="144"/>
+        <source>Remove all items from the playlist</source>
+        <translation type="unfinished">Odstranit všechny položky ze seznamu záběrů</translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedplaylistdock.ui" line="149"/>
+        <source>Wipe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedplaylistdock.ui" line="152"/>
+        <source>Remove all items before the currently playing clip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedplaylistdock.ui" line="157"/>
+        <source>Clean</source>
+        <translation type="unfinished">Uklidit</translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedplaylistdock.ui" line="160"/>
+        <source>Remove all items except the currently playing clip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedplaylistdock.cpp" line="194"/>
+        <source>&quot;Remove All&quot; will remove all of clips in the playlist.
+
+IMPORTANT: You cannot Undo this action!
+
+Do you want to continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedplaylistdock.cpp" line="206"/>
+        <source>&quot;Wipe&quot; will remove all of clips in the playlist
+before the currently playing clip.
+
+IMPORTANT: You cannot Undo this action!
+
+Do you want to continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedplaylistdock.cpp" line="219"/>
+        <source>&quot;Clean&quot; will remove all of clips in the playlist
+except the currently playing clip.
+
+IMPORTANT: You cannot Undo this action!
+
+Do you want to continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MeltedPlaylistModel</name>
+    <message>
+        <location filename="../src/mvcp/meltedplaylistmodel.cpp" line="112"/>
+        <source>#</source>
+        <translation type="unfinished">Číslo</translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedplaylistmodel.cpp" line="114"/>
+        <source>Clip</source>
+        <translation type="unfinished">Záznam</translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedplaylistmodel.cpp" line="116"/>
+        <source>In</source>
+        <translation type="unfinished">Začátek záběru</translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedplaylistmodel.cpp" line="118"/>
+        <source>Out</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MeltedServerDock</name>
+    <message>
+        <location filename="../src/mvcp/meltedserverdock.ui" line="14"/>
+        <source>Melted Server</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedserverdock.ui" line="23"/>
         <source>Enter the server address and press Enter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedserverdock.ui" line="30"/>
+        <location filename="../src/mvcp/meltedserverdock.cpp" line="157"/>
+        <source>Connect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedserverdock.ui" line="55"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Single-click&lt;/span&gt; a unit to open its playlist.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Double-click&lt;/span&gt; a unit to control it in the player, or &lt;span style=&quot; font-weight:600;&quot;&gt;right-click&lt;/span&gt; the unit for transport control actions.&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Single-click&lt;/span&gt; a playlist item to select it for edit operations (e.g. Insert).&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Double-click&lt;/span&gt; a playlist item to seek the unit to it.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Drag-n-drop&lt;/span&gt; from the server&apos;s clips tree to the playlist, or &lt;span style=&quot; font-weight:600;&quot;&gt;single-click&lt;/span&gt; a clip to select it for use with &lt;span style=&quot; font-weight:600;&quot;&gt;Add&lt;/span&gt; and &lt;span style=&quot; font-weight:600;&quot;&gt;Insert&lt;/span&gt; actions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedserverdock.ui" line="145"/>
+        <source>Console</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedserverdock.ui" line="171"/>
+        <source>Play</source>
+        <translation type="unfinished">Přehrát</translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedserverdock.ui" line="176"/>
+        <source>Pause</source>
+        <translation type="unfinished">Pozastavit</translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedserverdock.ui" line="181"/>
+        <source>Stop</source>
+        <translation type="unfinished">Zastavit</translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedserverdock.ui" line="186"/>
+        <source>Rewind</source>
+        <translation type="unfinished">Přetočit</translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedserverdock.ui" line="191"/>
+        <source>Fast Forward</source>
+        <translation type="unfinished">Rychle vpřed</translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedserverdock.cpp" line="150"/>
+        <source>Disconnect</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MeltedUnitsModel</name>
+    <message>
+        <location filename="../src/mvcp/meltedunitsmodel.cpp" line="71"/>
+        <source>Unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedunitsmodel.cpp" line="71"/>
+        <source>Status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedunitsmodel.cpp" line="110"/>
+        <source>unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedunitsmodel.cpp" line="111"/>
+        <source>undefined</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedunitsmodel.cpp" line="112"/>
+        <source>offline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedunitsmodel.cpp" line="113"/>
+        <source>unloaded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedunitsmodel.cpp" line="114"/>
+        <source>stopped</source>
+        <translation type="unfinished">Zastaveno</translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedunitsmodel.cpp" line="115"/>
+        <source>playing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedunitsmodel.cpp" line="116"/>
+        <source>paused</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedunitsmodel.cpp" line="117"/>
+        <source>disconnected</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MvcpThread</name>
+    <message>
+        <location filename="../src/mvcp/mvcpthread.cpp" line="166"/>
+        <source>unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/mvcpthread.cpp" line="167"/>
+        <source>undefined</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/mvcpthread.cpp" line="168"/>
+        <source>offline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/mvcpthread.cpp" line="169"/>
+        <source>unloaded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/mvcpthread.cpp" line="170"/>
+        <source>stopped</source>
+        <translation type="unfinished">Zastaveno</translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/mvcpthread.cpp" line="171"/>
+        <source>playing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/mvcpthread.cpp" line="172"/>
+        <source>paused</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/mvcpthread.cpp" line="173"/>
+        <source>disconnected</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1710,260 +2046,264 @@ Chcete uložit své změny?</translation>
 <context>
     <name>Player</name>
     <message>
-        <location filename="../src/player.cpp" line="116"/>
+        <location filename="../src/player.cpp" line="117"/>
         <source>Adjust the audio volume</source>
         <translation>Upravit hlasitost zvuku</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="122"/>
+        <location filename="../src/player.cpp" line="123"/>
         <source>Show or hide the volume control</source>
         <translation>Ukázat nebo skrýt ovládání hlasitosti</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="132"/>
+        <location filename="../src/player.cpp" line="133"/>
         <source>Mute</source>
         <translation>Ztlumit</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="133"/>
+        <location filename="../src/player.cpp" line="134"/>
         <source>Silence the audio</source>
         <translation>Umlčet zvuk</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="146"/>
+        <location filename="../src/player.cpp" line="147"/>
         <source>Transport Controls</source>
         <translation>Ovládání přesunu</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="153"/>
+        <location filename="../src/player.cpp" line="154"/>
         <source>Current position</source>
         <translation>Nynější poloha</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="157"/>
+        <location filename="../src/player.cpp" line="158"/>
         <source>Total Duration</source>
         <translation>Celková doba trvání</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="163"/>
+        <location filename="../src/player.cpp" line="164"/>
         <source>In Point</source>
         <translation>Počáteční bod</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="173"/>
+        <location filename="../src/player.cpp" line="174"/>
         <source>Selected Duration</source>
         <translation>Vybraná doba trvání</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="290"/>
+        <location filename="../src/player.cpp" line="314"/>
         <source>Automatic</source>
         <translation>Automaticky</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="310"/>
+        <location filename="../src/player.cpp" line="334"/>
         <source>None</source>
         <translation>Žádný</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="349"/>
+        <location filename="../src/player.cpp" line="373"/>
         <source>Space</source>
         <translation>Mezerník</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="350"/>
-        <location filename="../src/player.cpp" line="473"/>
+        <location filename="../src/player.cpp" line="374"/>
+        <location filename="../src/player.cpp" line="496"/>
+        <location filename="../src/player.cpp" line="646"/>
         <source>Pause</source>
         <translation>Pozastavit</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="352"/>
-        <location filename="../src/player.cpp" line="474"/>
+        <location filename="../src/player.cpp" line="376"/>
+        <location filename="../src/player.cpp" line="497"/>
+        <location filename="../src/player.cpp" line="647"/>
         <source>Pause playback (K)</source>
         <translation>Pozastavit přehrávání (K)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="354"/>
+        <location filename="../src/player.cpp" line="378"/>
         <source>Backspace</source>
         <translation>Backspace</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="355"/>
+        <location filename="../src/player.cpp" line="379"/>
         <source>Skip Next</source>
         <translation>Skočit na další</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="357"/>
+        <location filename="../src/player.cpp" line="381"/>
         <source>Skip to the next point (Alt+Right)</source>
         <translation>Skočit na další bod (Alt+šipka vpravo)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="359"/>
+        <location filename="../src/player.cpp" line="383"/>
         <source>Alt+Right</source>
         <translation>Alt+šipka vpravo</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="360"/>
+        <location filename="../src/player.cpp" line="384"/>
         <source>Skip Previous</source>
         <translation>Skočit na předchozí</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="362"/>
+        <location filename="../src/player.cpp" line="386"/>
         <source>Skip to the previous point (Alt+Left)</source>
         <translation>Skočit na předchozí bod (Alt+šipka vlevo)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="364"/>
+        <location filename="../src/player.cpp" line="388"/>
         <source>Alt+Left</source>
         <translation>Alt+šipka vlevo</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="365"/>
+        <location filename="../src/player.cpp" line="389"/>
         <source>Progressive</source>
         <translation>Progresivní</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="367"/>
+        <location filename="../src/player.cpp" line="391"/>
         <source>Force the video preview to deinterlace if needed</source>
         <translation>V případě potřeby přinutit náhled videa ke zrušení prokládání</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="369"/>
+        <location filename="../src/player.cpp" line="393"/>
         <source>One Field (fast)</source>
         <translation>Jedno pole (rychlé)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="370"/>
+        <location filename="../src/player.cpp" line="394"/>
         <source>Linear Blend (fast)</source>
         <translation>Lineární spojení (nejrychlejší)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="371"/>
+        <location filename="../src/player.cpp" line="395"/>
         <source>YADIF - temporal only (good)</source>
         <translation>YADIF - pouze dočasné (dobré)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="372"/>
+        <location filename="../src/player.cpp" line="396"/>
         <source>YADIF - temporal + spatial (best)</source>
         <translation>YADIF - dočasné + prostorové (nejlepší)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="373"/>
+        <location filename="../src/player.cpp" line="397"/>
         <source>Nearest Neighbor (fast)</source>
         <translation>Nejbližší soused (rychlé)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="374"/>
+        <location filename="../src/player.cpp" line="398"/>
         <source>Bilinear (good)</source>
         <translation>Bilineární (dobré)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="375"/>
+        <location filename="../src/player.cpp" line="399"/>
         <source>Bicubic (better)</source>
         <translation>Bikubická (lepší)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="376"/>
+        <location filename="../src/player.cpp" line="400"/>
         <source>Hyper/Lanczoz (best)</source>
         <translation>Hyper/Lanczoz (nejlepší)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="377"/>
+        <location filename="../src/player.cpp" line="401"/>
         <source>Rewind</source>
         <translation>Přetočit</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="379"/>
+        <location filename="../src/player.cpp" line="403"/>
         <source>Play quickly backwards (J)</source>
         <translation>Přehrávat rychle dozadu (J)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="381"/>
+        <location filename="../src/player.cpp" line="405"/>
         <source>Fast Forward</source>
         <translation>Rychle vpřed</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="383"/>
+        <location filename="../src/player.cpp" line="407"/>
         <source>Play quickly forwards (L)</source>
         <translation>Přehrávat rychle dopředu (L)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="385"/>
+        <location filename="../src/player.cpp" line="409"/>
         <source>Realtime (frame dropping)</source>
         <translation>Ve skutečném čase (zahazování snímků)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="387"/>
+        <location filename="../src/player.cpp" line="411"/>
         <source>Allow the player to drop video frames to try to play in realtime</source>
         <translation>Dovolit přehrávači vynechávání snímků videa kvůli tomu, aby zkusil přehrávat ve skutečném čase</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="390"/>
+        <location filename="../src/player.cpp" line="414"/>
         <source>Use OpenGL</source>
         <translation>Použít OpenGL</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="392"/>
+        <location filename="../src/player.cpp" line="416"/>
         <source>Use JACK Audio</source>
         <translation>Použít JACK Audio</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="478"/>
+        <location filename="../src/player.cpp" line="501"/>
         <source>Stop</source>
         <translation>Zastavit</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="479"/>
+        <location filename="../src/player.cpp" line="502"/>
         <source>Stop playback (K)</source>
         <translation>Zastavit přehrávání (K)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="345"/>
-        <location filename="../src/player.cpp" line="487"/>
-        <location filename="../src/player.cpp" line="495"/>
+        <location filename="../src/player.cpp" line="369"/>
+        <location filename="../src/player.cpp" line="510"/>
+        <location filename="../src/player.cpp" line="518"/>
+        <location filename="../src/player.cpp" line="651"/>
         <source>Play</source>
         <translation>Přehrát</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="347"/>
-        <location filename="../src/player.cpp" line="488"/>
-        <location filename="../src/player.cpp" line="496"/>
+        <location filename="../src/player.cpp" line="371"/>
+        <location filename="../src/player.cpp" line="511"/>
+        <location filename="../src/player.cpp" line="519"/>
+        <location filename="../src/player.cpp" line="652"/>
         <source>Start playback (L)</source>
         <translation>Spustit přehrávání (L)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="545"/>
+        <location filename="../src/player.cpp" line="564"/>
         <source>Live</source>
         <translation>Živě</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="715"/>
+        <location filename="../src/player.cpp" line="778"/>
         <source>Deinterlacer</source>
         <translation>Odstranění prokládání</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="723"/>
+        <location filename="../src/player.cpp" line="786"/>
         <source>Interpolation</source>
         <translation>Interpolace</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="732"/>
+        <location filename="../src/player.cpp" line="795"/>
         <source>Preview on SDI/HDMI</source>
         <translation>Náhled na  SDI/HDMI</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="736"/>
+        <location filename="../src/player.cpp" line="799"/>
         <source>Video Mode</source>
         <translation>Obrazový režim</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="749"/>
+        <location filename="../src/player.cpp" line="812"/>
         <source>You must restart Shotcut to switch using OpenGL.
 Do you want to exit now?</source>
         <translation>Musíte Shotcut spustit kvůli přepnutí pro používání OpenGL znovu.
 Chcete jej ukončit nyní?</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="853"/>
+        <location filename="../src/player.cpp" line="916"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>Nepodařilo se spojit se s JACKem.
@@ -2090,13 +2430,13 @@ po začátek vybraného záběru.</translation>
         <translation>Zavřít</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="86"/>
-        <location filename="../src/docks/playlistdock.cpp" line="261"/>
+        <location filename="../src/docks/playlistdock.cpp" line="87"/>
+        <location filename="../src/docks/playlistdock.cpp" line="266"/>
         <source>You cannot insert a playlist into a playlist!</source>
         <translation>Nemůžete vložit seznam záběrů do seznamu záběrů!</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="150"/>
+        <location filename="../src/docks/playlistdock.cpp" line="151"/>
         <source>This clip does not match the selected cut in the playlist!</source>
         <translation>Tento záznam neodpovídá vybranému záběru v seznamu záběrů!</translation>
     </message>
@@ -2104,27 +2444,27 @@ po začátek vybraného záběru.</translation>
 <context>
     <name>PlaylistModel</name>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="96"/>
+        <location filename="../src/models/playlistmodel.cpp" line="98"/>
         <source>#</source>
         <translation>Číslo</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="98"/>
+        <location filename="../src/models/playlistmodel.cpp" line="100"/>
         <source>Clip</source>
         <translation>Záznam</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="100"/>
+        <location filename="../src/models/playlistmodel.cpp" line="102"/>
         <source>In</source>
         <translation>Začátek záběru</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="102"/>
+        <location filename="../src/models/playlistmodel.cpp" line="104"/>
         <source>Duration</source>
         <translation>Doba trvání</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="104"/>
+        <location filename="../src/models/playlistmodel.cpp" line="106"/>
         <source>Start</source>
         <translation>Začátek</translation>
     </message>
@@ -2228,29 +2568,54 @@ po začátek vybraného záběru.</translation>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="297"/>
+        <location filename="../src/docks/playlistdock.cpp" line="313"/>
         <source>Append playlist item %1</source>
         <translation>Připojit položku seznamu záběrů %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="318"/>
+        <location filename="../src/docks/playlistdock.cpp" line="334"/>
         <source>Insert playist item %1</source>
         <translation>Vložit položku seznamu skladeb %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="339"/>
+        <location filename="../src/docks/playlistdock.cpp" line="355"/>
         <source>Update playlist item %1</source>
         <translation>Obnovit položku seznamu záběrů %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="365"/>
+        <location filename="../src/docks/playlistdock.cpp" line="379"/>
         <source>Remove playlist item %1</source>
         <translation>Odstranit položku seznamu záběrů %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="385"/>
+        <location filename="../src/docks/playlistdock.cpp" line="399"/>
         <source>Clear playlist</source>
         <translation>Vyprázdnit seznam záběrů</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/playlistdock.cpp" line="425"/>
+        <source>Move item from %1 to %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedplaylistdock.cpp" line="298"/>
+        <source>Append %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedplaylistdock.cpp" line="324"/>
+        <source>Remove %1 at %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedplaylistdock.cpp" line="350"/>
+        <source>Insert %1 at %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mvcp/meltedplaylistdock.cpp" line="374"/>
+        <source>Move %1 from %2 to %3</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
