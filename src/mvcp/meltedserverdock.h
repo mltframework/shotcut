@@ -43,6 +43,11 @@ public:
     ~MeltedServerDock();
     QAbstractItemModel* unitsModel() const;
     QAbstractItemModel* clipsModel() const;
+    QAction* actionFastForward() const;
+    QAction* actionPause() const;
+    QAction* actionPlay() const;
+    QAction* actionRewind() const;
+    QAction* actionStop() const;
 
 signals:
     void connected(MvcpThread*);
@@ -66,6 +71,8 @@ private slots:
     void on_unitsTableView_doubleClicked(const QModelIndex &index);
     void on_consoleButton_clicked(bool checked);
     void onPositionUpdated(quint8 unit, int position, double fps, int in, int out, int length, bool isPlaying);
+
+    void on_unitsTableView_customContextMenuRequested(const QPoint &pos);
 
 private:
     Ui::MeltedServerDock *ui;

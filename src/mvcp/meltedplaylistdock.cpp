@@ -132,7 +132,7 @@ void MeltedPlaylistDock::on_tableView_customContextMenuRequested(const QPoint &p
         QMenu menu(this);
         menu.addAction(ui->actionGoto);
         menu.addAction(ui->actionInsertCut);
-        menu.addAction(ui->actionOpen);
+//        menu.addAction(ui->actionOpen);
         menu.addAction(ui->actionRemove);
         menu.exec(mapToGlobal(pos));
     }
@@ -161,7 +161,7 @@ void MeltedPlaylistDock::on_menuButton_clicked()
     if (index.isValid()) {
         menu.addAction(ui->actionGoto);
         menu.addAction(ui->actionInsertCut);
-        menu.addAction(ui->actionOpen);
+//        menu.addAction(ui->actionOpen);
         menu.addAction(ui->actionRemove);
         menu.addSeparator();
     }

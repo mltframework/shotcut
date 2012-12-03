@@ -146,12 +146,14 @@ void MeltedServerDock::on_connectButton_toggled(bool checked)
             ui->treeView->setEnabled(true);
             emit connected(m_mvcp);
             emit connected(address[0], port);
+            ui->stackedWidget->setCurrentIndex(1);
             ui->connectButton->setText(tr("Disconnect"));
         }
         else {
             ui->connectButton->setChecked(false);
         }
     } else {
+        ui->stackedWidget->setCurrentIndex(0);
         ui->connectButton->setText(tr("Connect"));
         emit disconnected();
     }
@@ -190,4 +192,43 @@ void MeltedServerDock::onInsertRequested(int row)
 {
     if (ui->treeView->currentIndex().isValid())
         emit insert(clipsModel()->data(ui->treeView->currentIndex(), Qt::UserRole).toString(), row);
+}
+
+void MeltedServerDock::on_unitsTableView_customContextMenuRequested(const QPoint &pos)
+{
+    QModelIndex index = ui->unitsTableView->currentIndex();
+    if (index.isValid()) {
+        QMenu menu(this);
+        menu.addAction(ui->actionFast_Forward);
+        menu.addAction(ui->actionPause);
+        menu.addAction(ui->actionPlay);
+        menu.addAction(ui->actionRewind);
+        menu.addAction(ui->actionStop);
+        menu.exec(mapToGlobal(pos));
+    }
+}
+
+QAction* MeltedServerDock::actionFastForward() const
+{
+    return ui->actionFast_Forward;
+}
+
+QAction * MeltedServerDock::actionPause() const
+{
+    return ui->actionPause;
+}
+
+QAction * MeltedServerDock::actionPlay() const
+{
+    return ui->actionPlay;
+}
+
+QAction * MeltedServerDock::actionRewind() const
+{
+    return ui->actionRewind;
+}
+
+QAction * MeltedServerDock::actionStop() const
+{
+    return ui->actionStop;
 }
