@@ -83,8 +83,8 @@ void MeltedUnitsModel::onConnected(MvcpThread *a_mvcp)
 void MeltedUnitsModel::onConnected(const QString &address, quint16 port, quint8 unit)
 {
     m_tokeniser = mvcp_tokeniser_init();
+    m_statusSent = false;
     connect(&m_socket, SIGNAL(readyRead()), this, SLOT(readResponse()));
-    connect(&m_socket, SIGNAL(connected()), this, SLOT(onSocketConnected()));
     m_socket.connectToHost(address, port);
 }
 
@@ -159,7 +159,7 @@ void MeltedUnitsModel::readResponse()
                         emit positionUpdated(status.unit, status.position, status.fps,
                             status.in, status.out, status.length, status.status == unit_playing);
                     }
-                    else if (status.unit >= m_units.size()) {
+                    else if (status.status != unit_unknown && status.unit >= m_units.size()) {
                         m_mvcp->uls();
                     }
                 }
@@ -182,7 +182,7 @@ void MeltedUnitsModel::onUlsResult(QStringList units)
         m_units[i]->setObjectName(units[i]);
         emit dataChanged(createIndex(i, 0), createIndex(i, 0));
     }
-    if (!m_statusSent && m_socket.state() == QAbstractSocket::ConnectedState) {
+    if (!m_statusSent) {
         m_socket.write(QString("STATUS\r\n").toAscii());
         m_statusSent = true;
     }
