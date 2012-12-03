@@ -92,9 +92,10 @@ void MeltedUnitsModel::onDisconnected()
     m_socket.disconnect(this);
     m_socket.disconnectFromHost();
     m_mvcp = 0;
-    if (m_tokeniser)
+    if (m_tokeniser) {
         mvcp_tokeniser_close(m_tokeniser);
-    m_tokeniser = 0;
+        m_tokeniser = 0;
+    }
     emit beginRemoveRows(QModelIndex(), 0, rowCount() - 1);
     foreach (QObject* o, m_units)
         delete o;

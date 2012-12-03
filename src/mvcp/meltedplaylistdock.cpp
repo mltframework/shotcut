@@ -276,14 +276,14 @@ void TransportControl::next(int currentPosition)
 
 void TransportControl::setIn(int in)
 {
-//    if (in > 0)
-//        m_model.setIn(in);
+    if (in > 0)
+        m_model.setIn(in);
 }
 
 void TransportControl::setOut(int out)
 {
-//    if (out > 0)
-//        m_model.setOut(out);
+    if (out > 0)
+        m_model.setOut(out);
 }
 
 AppendCommand::AppendCommand(MeltedPlaylistModel &model, const QString &clip, int in, int out, QUndoCommand *parent)

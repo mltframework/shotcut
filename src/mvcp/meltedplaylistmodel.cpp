@@ -30,6 +30,7 @@ MeltedPlaylistModel::MeltedPlaylistModel(QObject *parent)
     , m_response(0)
     , m_index(-1)
     , m_dropRow(-1)
+    , m_tokeniser(0)
 {
     setSupportedDragActions(Qt::MoveAction);
 }
@@ -297,6 +298,7 @@ void MeltedPlaylistModel::onConnected(const QString &address, quint16 port, quin
     m_unit = unit;
     m_commands << MVCP_IGNORE;
     m_response = mvcp_response_init();
+    m_tokeniser = mvcp_tokeniser_init();
     m_socket.connectToHost(address, port);
 }
 
@@ -309,6 +311,10 @@ void MeltedPlaylistModel::onDisconnected()
     m_list = 0;
     mvcp_response_close(m_response);
     m_response = 0;
+    if (m_tokeniser) {
+        mvcp_tokeniser_close(m_tokeniser);
+        m_tokeniser = 0;
+    }
     endResetModel();
 }
 
@@ -348,51 +354,64 @@ void MeltedPlaylistModel::onGenerationChanged(quint8 unit)
 void MeltedPlaylistModel::readResponse()
 {
     QByteArray data = m_socket.readAll();
-    if (data.size() > 0 && m_response)
-    {
-        mvcp_response_write(m_response, data.constData(), data.size());
-        int position = mvcp_response_count(m_response) - 1;
-        if (position < 0 || data[data.size() - 1] != '\n')
+    if (data.size() > 0 && m_tokeniser) {
+        m_data.append(data);
+        if (!m_data.contains('\n'))
             return;
-        int terminated = 0;
-        int status = mvcp_response_get_error_code(m_response);
-        switch(status) {
-        case 201:
-        case 500:
-            terminated = !strcmp(mvcp_response_get_line(m_response, position), "");
-            break;
-        case 202:
-            terminated = mvcp_response_count(m_response) >= 2;
-            break;
-        default:
-            terminated = 1;
-            break;
-        }
-        if (terminated) {
-            int command = m_commands.isEmpty()? MVCP_IGNORE : m_commands.takeFirst();
-            switch (command) {
-            case MVCP_LIST: {
-                m_list = (mvcp_list) calloc(1, sizeof(*m_list));
-                m_list->response = mvcp_response_clone(m_response);
-                if (mvcp_response_count(m_response ) >= 2)
-                    m_list->generation = atoi(mvcp_response_get_line(m_response, 1));
-                beginInsertRows(QModelIndex(), 0, mvcp_list_count(m_list) - 1);
-                endInsertRows();
-                emit loaded();
+        // There can be multiple responses in the same data block, so we use a
+        // tokeniser feeding into the mvcp_response.
+        mvcp_tokeniser_parse_new(m_tokeniser, const_cast<char*>(m_data.constData()), "\n");
+        m_data.clear();
+
+        for (int i = 0; i < mvcp_tokeniser_count(m_tokeniser); i++) {
+            char* line = mvcp_tokeniser_get_string(m_tokeniser, i);
+            // mvcp_response_write() looks for line feeds
+            if (line[strlen(line) - 1] == '\r')
+                line[strlen(line) - 1] = '\n';
+            mvcp_response_write(m_response, line, strlen(line));
+            int last_line = mvcp_response_count(m_response) - 1;
+            if (last_line < 0)
+                continue;
+            int terminated = 0;
+            int status = mvcp_response_get_error_code(m_response);
+            switch(status) {
+            case 201:
+            case 500:
+                terminated = !strcmp(mvcp_response_get_line(m_response, last_line), "");
                 break;
-            }
-            case MVCP_APND:
-            case MVCP_REMOVE:
-            case MVCP_INSERT:
-            case MVCP_MOVE:
-                if (status == 200)
-                    emit success();
+            case 202:
+                terminated = last_line >= 1;
                 break;
             default:
+                terminated = 1;
                 break;
             }
-            mvcp_response_close(m_response);
-            m_response = mvcp_response_init();
+            if (terminated) {
+                int command = m_commands.isEmpty()? MVCP_IGNORE : m_commands.takeFirst();
+                switch (command) {
+                case MVCP_LIST: {
+                    m_list = (mvcp_list) calloc(1, sizeof(*m_list));
+                    m_list->response = mvcp_response_clone(m_response);
+                    if (mvcp_response_count(m_response ) >= 2)
+                        m_list->generation = atoi(mvcp_response_get_line(m_response, 1));
+                    beginInsertRows(QModelIndex(), 0, mvcp_list_count(m_list) - 1);
+                    endInsertRows();
+                    emit loaded();
+                    break;
+                }
+                case MVCP_APND:
+                case MVCP_REMOVE:
+                case MVCP_INSERT:
+                case MVCP_MOVE:
+                    if (status == 200)
+                        emit success();
+                    break;
+                default:
+                    break;
+                }
+                mvcp_response_close(m_response);
+                m_response = mvcp_response_init();
+            }
         }
     }
 }

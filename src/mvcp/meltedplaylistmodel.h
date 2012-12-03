@@ -27,6 +27,7 @@
 #include <QtCore/QStringList>
 #include <QtCore/QMimeData>
 #include <mvcp.h>
+#include <mvcp_tokeniser.h>
 
 class MeltedPlaylistModel : public QAbstractTableModel
 {
@@ -110,6 +111,8 @@ private:
     int m_index;
     QList<int> m_commands;
     int m_dropRow;
+    QByteArray m_data;
+    mvcp_tokeniser m_tokeniser;
 };
 
 #endif // MELTEDPLAYLISTMODEL_H
