@@ -1318,7 +1318,23 @@ p, li { white-space: pre-wrap; }
 &lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; Alt+Left&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;Alt+Right&lt;/span&gt; to jump between start, in, out, and end.&lt;/li&gt;&lt;/ul&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Right-click&lt;/span&gt; the video window to access its settings.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Update Shotcut whenever you like. We do not notify you about updates because new version are available almost daily.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;Průvodce pro rychlý začátek práce v Shotcutu&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Vedle použití hlavní nabídky nebo panelu s nástroji soubory otevřete &lt;span style=&quot; font-weight:600;&quot;&gt;jejich přetažením a upuštěním&lt;/span&gt;.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Použijte &lt;span style=&quot; font-weight:600;&quot;&gt;Soubor&lt;/span&gt; -&amp;gt; &lt;span style=&quot; font-weight:600;&quot;&gt;Otevřít jiné&lt;/span&gt; k otevření síťových proudů, zařízení pro zachytávání a generatorů.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Soubory MLT XML lze otevřít jako záznam; takže můžete Shotcut použít na vyzkoušení svého XML.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesové zkratky pro ovládání pohybu záznamu:&lt;/p&gt;
+&lt;ul type=&quot;circle&quot; style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;&quot;&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesy&lt;span style=&quot; font-weight:600;&quot;&gt; J&lt;/span&gt;, &lt;span style=&quot; font-weight:600;&quot;&gt;K&lt;/span&gt; a &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt; ovládají rychlost přehrávání a směr. Stiskněte opakovaně &lt;span style=&quot; font-weight:600;&quot;&gt;J&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt;, abyste se v záznamu pohybovali rychleji.&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesy&lt;span style=&quot; font-weight:600;&quot;&gt; I&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;O&lt;/span&gt; nastavují začáteční a koncové body záběru.&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Směrové klávesy &lt;span style=&quot; font-weight:600;&quot;&gt;šipka vlevo&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;šipka vpravo&lt;/span&gt; pro krokový postup snímek za snímkem.&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesy &lt;span style=&quot; font-weight:600;&quot;&gt; Page Up&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;Page Down&lt;/span&gt; pro krokový postup o 10 snímků.&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesy &lt;span style=&quot; font-weight:600;&quot;&gt; Alt+šipka vlevo&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;Alt+šipka vpravo&lt;/span&gt; pro skákání mezi začátkem, začátečním bodem záběru, koncovým bodem záběru a koncem.&lt;/li&gt;&lt;/ul&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Klepněte pravým tlačítkem myši&lt;/span&gt; na okno s obrazem, abyste se dostali k jeho nastavení.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Aktualizujte program Shotcut, kdykoli budete chtít. O nových aktualizacích vám nebudeme dávat vědět, protože nové aktualizace jsou dostupné téměř denně.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="86"/>
@@ -1438,12 +1454,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.ui" line="242"/>
         <source>Forum...</source>
-        <translation type="unfinished"></translation>
+        <translation>Fórum...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="247"/>
         <source>FAQ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Často kladené otázky...</translation>
     </message>
     <message>
         <source>Undo</source>
@@ -1519,42 +1535,42 @@ Chcete uložit své změny?</translation>
     <message>
         <location filename="../src/mvcp/meltedclipsmodel.cpp" line="94"/>
         <source>%1 GiB</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 GiB</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedclipsmodel.cpp" line="97"/>
         <source>%1 MiB</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 MiB</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedclipsmodel.cpp" line="100"/>
         <source>%1 KiB</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 KiB</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedclipsmodel.cpp" line="101"/>
         <source>%1 B</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 B</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedclipsmodel.cpp" line="104"/>
         <source>item</source>
-        <translation type="unfinished"></translation>
+        <translation>položka</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedclipsmodel.cpp" line="104"/>
         <source>items</source>
-        <translation type="unfinished"></translation>
+        <translation>položek</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedclipsmodel.cpp" line="119"/>
         <source>Clip</source>
-        <translation type="unfinished">Záznam</translation>
+        <translation>Záznam</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedclipsmodel.cpp" line="119"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Velikost</translation>
     </message>
 </context>
 <context>
@@ -1562,87 +1578,87 @@ Chcete uložit své změny?</translation>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="14"/>
         <source>Melted Playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozpuštěný seznam záběrů</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="45"/>
         <source>Add something to the playlist</source>
-        <translation type="unfinished">Přidat něco do seznamu záběrů</translation>
+        <translation>Přidat něco do seznamu záběrů</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="62"/>
         <source>Remove cut</source>
-        <translation type="unfinished">Odstranit záběr</translation>
+        <translation>Odstranit záběr</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="76"/>
         <source>Display a menu of additional actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobrazit nabídku dodatečných činností</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="106"/>
         <source>Insert Cut</source>
-        <translation type="unfinished">Vložit záběr</translation>
+        <translation>Vložit záběr</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="115"/>
         <source>Append Cut</source>
-        <translation type="unfinished">Připojit záběr</translation>
+        <translation>Připojit záběr</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="120"/>
         <source>Open As Clip</source>
-        <translation type="unfinished">Otevřít jako záznam</translation>
+        <translation>Otevřít jako záznam</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="123"/>
         <source>Open the cut in the player</source>
-        <translation type="unfinished">Otevřít záběr v přehrávači</translation>
+        <translation>Otevřít záběr v přehrávači</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="128"/>
         <source>Remove</source>
-        <translation type="unfinished">Odstranit</translation>
+        <translation>Odstranit</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="133"/>
         <source>Goto</source>
-        <translation type="unfinished">Jít na</translation>
+        <translation>Jít na</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="136"/>
         <source>Go to the start of this cut in the playlist</source>
-        <translation type="unfinished">Jít na začátek tohoto záběru v seznamu záběrů</translation>
+        <translation>Jít na začátek tohoto záběru v seznamu záběrů</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="141"/>
         <source>Remove All</source>
-        <translation type="unfinished">Odstranit vše</translation>
+        <translation>Odstranit vše</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="144"/>
         <source>Remove all items from the playlist</source>
-        <translation type="unfinished">Odstranit všechny položky ze seznamu záběrů</translation>
+        <translation>Odstranit všechny položky ze seznamu záběrů</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="149"/>
         <source>Wipe</source>
-        <translation type="unfinished"></translation>
+        <translation>Vymazat</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="152"/>
         <source>Remove all items before the currently playing clip</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstranit všechny položky před nyní přehrávaným záznamem</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="157"/>
         <source>Clean</source>
-        <translation type="unfinished">Uklidit</translation>
+        <translation>Uklidit</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="160"/>
         <source>Remove all items except the currently playing clip</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstranit všechny položky kromě nyní přehrávaného záznamu</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.cpp" line="194"/>
@@ -1651,7 +1667,11 @@ Chcete uložit své změny?</translation>
 IMPORTANT: You cannot Undo this action!
 
 Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Příkaz Odstranit vše odstraní všechny záznamy v seznamu záběrů.
+
+DŮLEŽITÉ: Tento krok nelze vrátit zpět!
+
+Chcete pokračovat?</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.cpp" line="206"/>
@@ -1661,7 +1681,12 @@ before the currently playing clip.
 IMPORTANT: You cannot Undo this action!
 
 Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Příkaz Vymazat odstraní všechny záznamy v seznamu záběrů
+před nyní přehrávaným záznamem.
+
+DŮLEŽITÉ: Tento krok nelze vrátit zpět!
+
+Chcete pokračovat?</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.cpp" line="219"/>
@@ -1671,7 +1696,12 @@ except the currently playing clip.
 IMPORTANT: You cannot Undo this action!
 
 Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Příkaz Uklidit odstraní všechny záznamy v seznamu záběrů
+kromě nyní přehrávaného záznamu.
+
+DŮLEŽITÉ: Tento krok nelze vrátit zpět!
+
+Chcete pokračovat?</translation>
     </message>
 </context>
 <context>
@@ -1679,22 +1709,22 @@ Do you want to continue?</source>
     <message>
         <location filename="../src/mvcp/meltedplaylistmodel.cpp" line="112"/>
         <source>#</source>
-        <translation type="unfinished">Číslo</translation>
+        <translation>Č.</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistmodel.cpp" line="114"/>
         <source>Clip</source>
-        <translation type="unfinished">Záznam</translation>
+        <translation>Záznam</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistmodel.cpp" line="116"/>
         <source>In</source>
-        <translation type="unfinished">Začátek záběru</translation>
+        <translation>Začátek záběru</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistmodel.cpp" line="118"/>
         <source>Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Konec záběru</translation>
     </message>
 </context>
 <context>
@@ -1702,18 +1732,18 @@ Do you want to continue?</source>
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="14"/>
         <source>Melted Server</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozpuštěný server</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="23"/>
         <source>Enter the server address and press Enter</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadejte adresu serveru a stiskněte klávesu Enter</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="30"/>
         <location filename="../src/mvcp/meltedserverdock.cpp" line="157"/>
         <source>Connect</source>
-        <translation type="unfinished"></translation>
+        <translation>Spojit</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="55"/>
@@ -1729,42 +1759,53 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Double-click&lt;/span&gt; a playlist item to seek the unit to it.&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Drag-n-drop&lt;/span&gt; from the server&apos;s clips tree to the playlist, or &lt;span style=&quot; font-weight:600;&quot;&gt;single-click&lt;/span&gt; a clip to select it for use with &lt;span style=&quot; font-weight:600;&quot;&gt;Add&lt;/span&gt; and &lt;span style=&quot; font-weight:600;&quot;&gt;Insert&lt;/span&gt; actions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Jedno klepnutí&lt;/span&gt; na jednotku pro otevření jejího seznamu záběrů&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dvojí klepnutí&lt;/span&gt; na jednotku pro její ovládání v přehrávači, nebo &lt;span style=&quot; font-weight:600;&quot;&gt;Klepnutí pravým tlačítkem myši&lt;/span&gt; na jednotku pro zobrazení nabídky činností pro pohyb v záznamu.&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Jedno klepnutí&lt;/span&gt; na položku v seznamu záběrů pro její vybrání pro operace úprav (např. Vložit).&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dvojí klepnutí&lt;/span&gt; na položku v seznamu záběrů pro hledání jednotky k ní.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Táhněte a pusťte&lt;/span&gt; ze stromu se záznamy serveru na seznam záběrů, nebo na záznam &lt;span style=&quot; font-weight:600;&quot;&gt;jednou klepněte&lt;/span&gt; pro jeho vybrání pro použití s činnostmi &lt;span style=&quot; font-weight:600;&quot;&gt;Přidat&lt;/span&gt; a &lt;span style=&quot; font-weight:600;&quot;&gt;Vložit&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="145"/>
         <source>Console</source>
-        <translation type="unfinished"></translation>
+        <translation>Konzole</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="171"/>
         <source>Play</source>
-        <translation type="unfinished">Přehrát</translation>
+        <translation>Přehrát</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="176"/>
         <source>Pause</source>
-        <translation type="unfinished">Pozastavit</translation>
+        <translation>Pozastavit</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="181"/>
         <source>Stop</source>
-        <translation type="unfinished">Zastavit</translation>
+        <translation>Zastavit</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="186"/>
         <source>Rewind</source>
-        <translation type="unfinished">Přetočit</translation>
+        <translation>Přetočit</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="191"/>
         <source>Fast Forward</source>
-        <translation type="unfinished">Rychle vpřed</translation>
+        <translation>Rychle vpřed</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedserverdock.cpp" line="150"/>
         <source>Disconnect</source>
-        <translation type="unfinished"></translation>
+        <translation>Odpojit</translation>
     </message>
 </context>
 <context>
@@ -1772,52 +1813,52 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mvcp/meltedunitsmodel.cpp" line="71"/>
         <source>Unit</source>
-        <translation type="unfinished"></translation>
+        <translation>Jednotka</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedunitsmodel.cpp" line="71"/>
         <source>Status</source>
-        <translation type="unfinished"></translation>
+        <translation>Stav</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedunitsmodel.cpp" line="110"/>
         <source>unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Neznámý</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedunitsmodel.cpp" line="111"/>
         <source>undefined</source>
-        <translation type="unfinished"></translation>
+        <translation>Nestanoveno</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedunitsmodel.cpp" line="112"/>
         <source>offline</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepřipojeno</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedunitsmodel.cpp" line="113"/>
         <source>unloaded</source>
-        <translation type="unfinished"></translation>
+        <translation>Nenahráno</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedunitsmodel.cpp" line="114"/>
         <source>stopped</source>
-        <translation type="unfinished">Zastaveno</translation>
+        <translation>Zastaveno</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedunitsmodel.cpp" line="115"/>
         <source>playing</source>
-        <translation type="unfinished"></translation>
+        <translation>Přehráváno</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedunitsmodel.cpp" line="116"/>
         <source>paused</source>
-        <translation type="unfinished"></translation>
+        <translation>Pozastaveno</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedunitsmodel.cpp" line="117"/>
         <source>disconnected</source>
-        <translation type="unfinished"></translation>
+        <translation>Odpojeno</translation>
     </message>
 </context>
 <context>
@@ -1825,42 +1866,42 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mvcp/mvcpthread.cpp" line="166"/>
         <source>unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Neznámý</translation>
     </message>
     <message>
         <location filename="../src/mvcp/mvcpthread.cpp" line="167"/>
         <source>undefined</source>
-        <translation type="unfinished"></translation>
+        <translation>Nestanoveno</translation>
     </message>
     <message>
         <location filename="../src/mvcp/mvcpthread.cpp" line="168"/>
         <source>offline</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepřipojeno</translation>
     </message>
     <message>
         <location filename="../src/mvcp/mvcpthread.cpp" line="169"/>
         <source>unloaded</source>
-        <translation type="unfinished"></translation>
+        <translation>Nenahráno</translation>
     </message>
     <message>
         <location filename="../src/mvcp/mvcpthread.cpp" line="170"/>
         <source>stopped</source>
-        <translation type="unfinished">Zastaveno</translation>
+        <translation>Zastaveno</translation>
     </message>
     <message>
         <location filename="../src/mvcp/mvcpthread.cpp" line="171"/>
         <source>playing</source>
-        <translation type="unfinished"></translation>
+        <translation>Přehráváno</translation>
     </message>
     <message>
         <location filename="../src/mvcp/mvcpthread.cpp" line="172"/>
         <source>paused</source>
-        <translation type="unfinished"></translation>
+        <translation>Pozastaveno</translation>
     </message>
     <message>
         <location filename="../src/mvcp/mvcpthread.cpp" line="173"/>
         <source>disconnected</source>
-        <translation type="unfinished"></translation>
+        <translation>Odpojeno</translation>
     </message>
 </context>
 <context>
@@ -2487,82 +2528,82 @@ po začátek vybraného záběru.</translation>
     <message>
         <location filename="../src/mvcp/qconsole.cpp" line="757"/>
         <source>Undo</source>
-        <translation type="unfinished">Zpět</translation>
+        <translation>Zpět</translation>
     </message>
     <message>
         <location filename="../src/mvcp/qconsole.cpp" line="758"/>
         <source>Ctrl+Z</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Z</translation>
     </message>
     <message>
         <location filename="../src/mvcp/qconsole.cpp" line="759"/>
         <source>Redo</source>
-        <translation type="unfinished">Znovu</translation>
+        <translation>Znovu</translation>
     </message>
     <message>
         <location filename="../src/mvcp/qconsole.cpp" line="760"/>
         <source>Ctrl+Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Y</translation>
     </message>
     <message>
         <location filename="../src/mvcp/qconsole.cpp" line="761"/>
         <source>Cut</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyjmout</translation>
     </message>
     <message>
         <location filename="../src/mvcp/qconsole.cpp" line="762"/>
         <source>Ctrl+X</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+X</translation>
     </message>
     <message>
         <location filename="../src/mvcp/qconsole.cpp" line="763"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopírovat</translation>
     </message>
     <message>
         <location filename="../src/mvcp/qconsole.cpp" line="764"/>
         <source>Ctrl+Ins</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Insert</translation>
     </message>
     <message>
         <location filename="../src/mvcp/qconsole.cpp" line="765"/>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>Vložit</translation>
     </message>
     <message>
         <location filename="../src/mvcp/qconsole.cpp" line="766"/>
         <source>Ctrl+V</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+V</translation>
     </message>
     <message>
         <location filename="../src/mvcp/qconsole.cpp" line="767"/>
         <source>Delete</source>
-        <translation type="unfinished">Smazat</translation>
+        <translation>Smazat</translation>
     </message>
     <message>
         <location filename="../src/mvcp/qconsole.cpp" line="768"/>
         <source>Del</source>
-        <translation type="unfinished"></translation>
+        <translation>Klávesa Delete</translation>
     </message>
     <message>
         <location filename="../src/mvcp/qconsole.cpp" line="769"/>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>Vybrat vše</translation>
     </message>
     <message>
         <location filename="../src/mvcp/qconsole.cpp" line="770"/>
         <source>Ctrl+A</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+A</translation>
     </message>
     <message>
         <location filename="../src/mvcp/qconsole.cpp" line="835"/>
         <source>:\</source>
-        <translation type="unfinished"></translation>
+        <translation>:\</translation>
     </message>
     <message>
         <location filename="../src/mvcp/qconsole.cpp" line="837"/>
         <source>/</source>
-        <translation type="unfinished"></translation>
+        <translation>/</translation>
     </message>
 </context>
 <context>
@@ -2595,27 +2636,27 @@ po začátek vybraného záběru.</translation>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="425"/>
         <source>Move item from %1 to %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Přesunout položku z %1 do %2</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.cpp" line="298"/>
         <source>Append %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Připojit %1</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.cpp" line="324"/>
         <source>Remove %1 at %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstranit %1 v %2</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.cpp" line="350"/>
         <source>Insert %1 at %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Vložit %1 v %2</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.cpp" line="374"/>
         <source>Move %1 from %2 to %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Přesunout %1 z %2 do %3</translation>
     </message>
 </context>
 <context>
