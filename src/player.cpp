@@ -195,6 +195,8 @@ Player::Player(QWidget *parent)
     connect(MLT.videoWidget(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onVideoWidgetContextMenu(QPoint)));
     connect(actionPlay, SIGNAL(triggered()), this, SLOT(togglePlayPaused()));
     connect(actionPause, SIGNAL(triggered()), this, SLOT(pause()));
+    connect(actionFastForward, SIGNAL(triggered()), this, SLOT(fastForward()));
+    connect(actionRewind, SIGNAL(triggered()), this, SLOT(rewind()));
     connect(m_scrubber, SIGNAL(seeked(int)), this, SLOT(seek(int)));
     connect(m_scrubber, SIGNAL(inChanged(int)), this, SLOT(onInChanged(int)));
     connect(m_scrubber, SIGNAL(outChanged(int)), this, SLOT(onOutChanged(int)));
