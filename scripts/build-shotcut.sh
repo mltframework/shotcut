@@ -1194,8 +1194,10 @@ function configure_compile_install_subproject {
   # Special post-configure hack for ffmpeg/Win32
   if test "ffmpeg" = "$1" -a "$TARGET_OS" = "Win32" ; then
     log "Need to remove lib.exe from config.mak for $1"
-    grep -v SLIB_EXTRA_CMD config.mak | grep -v SLIB_INSTALL_EXTRA_SHLIB > config.new &&
-      mv config.new config.mak
+    grep -v SLIB_INSTALL_EXTRA_SHLIB > config.new &&
+    sed '/SLIB_EXTRA_CMD/ c\
+SLIB_EXTRA_CMD=-"mv $$(@:$(SLIBSUF)=.orig.def) $$(@:$(SLIBSUF)=.def)"
+' config.new > config.mak
   fi
 
   # Special hack for mlt, post-configure
