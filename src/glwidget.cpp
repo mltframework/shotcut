@@ -314,10 +314,10 @@ int GLWidget::reconfigure(bool isMulti)
             // tell the render thread that we will be fetching yuv420p
 //            m_consumer->set("mlt_image_format", "yuv420p");
 
-            Mlt::Filter* filter = new Mlt::Filter(profile(), "audiolevel");
-            if (filter->is_valid())
-                m_consumer->attach(*filter);
-            delete filter;
+//            Mlt::Filter* filter = new Mlt::Filter(profile(), "audiolevel");
+//            if (filter->is_valid())
+//                m_consumer->attach(*filter);
+//            delete filter;
         }
     }
     else {
