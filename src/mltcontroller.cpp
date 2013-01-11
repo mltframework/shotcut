@@ -171,7 +171,7 @@ void Controller::close()
 
 void Controller::closeConsumer()
 {
-    if (m_consumer && !m_consumer->is_stopped())
+    if (m_consumer)
         m_consumer->stop();
     delete m_consumer;
     m_consumer = 0;
