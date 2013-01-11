@@ -899,9 +899,7 @@ function get_subproject {
           # No git repo
           debug "No git repo, need to check out"
           feedback_status "Cloning git sources for $1"
-          if test "$REVISION" = "" ; then
-              DEPTH="--depth 1"
-          fi
+          test "$REVISION" = "" && DEPTH="--depth 1"
           cmd git --no-pager clone $DEPTH $REPOLOC || die "Unable to git clone source for $1 from $REPOLOC"
           cmd cd $1 || die "Unable to change to directory $1"
           cmd git checkout $REVISION || die "Unable to git checkout $REVISION"
