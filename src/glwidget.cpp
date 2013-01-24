@@ -22,13 +22,9 @@
 #include <QtGui>
 #if defined(Q_WS_WIN)
 #include "GLee/GLee.h"
-#include <GL/glu.h>
 #endif
 #include <Mlt.h>
 #include "glwidget.h"
-#if defined(Q_WS_WIN) && !defined(glActiveTexture)
-#define glActiveTexture GLeeFuncPtr_glActiveTexture
-#endif
 #include <QDebug>
 
 #define check_error() { int err = glGetError(); if (err != GL_NO_ERROR) { fprintf(stderr, "GL error 0x%x at %s:%d\n", err, __FILE__, __LINE__); exit(1); } }

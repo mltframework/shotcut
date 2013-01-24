@@ -149,7 +149,6 @@ win32 {
     INCLUDEPATH += include/mlt++ include/mlt
     LIBS += -Llib -lmlt++ -lmlt
     RC_FILE = shotcut.rc
-    SOURCES += GLee/GLee.c
     HEADERS += GLee/GLee.h
 } else {
     CONFIG += link_pkgconfig
