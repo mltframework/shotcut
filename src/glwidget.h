@@ -21,10 +21,13 @@
 
 #include <QGLWidget>
 #include <QSemaphore>
-#include <QtOpenGL/QGLShaderProgram>
+#include <QMutex>
+#include <QtOpenGL>
 #include "mltcontroller.h"
 
 namespace Mlt {
+
+class Filter;
 
 class GLWidget : public QGLWidget, public Controller
 {
@@ -36,6 +39,7 @@ public:
 
     QSize minimumSizeHint() const;
     QSize sizeHint() const;
+    void startGlsl();
     int open(Mlt::Producer*, bool isMulti = false);
     int reconfigure(bool isMulti);
     QWidget* videoWidget() { return this; }
@@ -59,6 +63,9 @@ private:
     double m_display_ratio;
     QGLShaderProgram m_shader;
     QPoint m_dragStart;
+    Filter* m_glslManager;
+    QGLWidget* m_renderContext;
+    QGLFramebufferObject* m_fbo;
 
 protected:
     void initializeGL();

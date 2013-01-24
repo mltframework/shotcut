@@ -24,7 +24,6 @@
 #include "GLee/GLee.h"
 #include <GL/glu.h>
 #endif
-#include <QtOpenGL>
 #include <QPalette>
 #include <Mlt.h>
 #include "glwidget.h"
@@ -36,9 +35,9 @@
 #if defined(Q_WS_WIN) && !defined(glActiveTexture)
 #define glActiveTexture GLeeFuncPtr_glActiveTexture
 #endif
-#ifndef GL_TEXTURE_RECTANGLE_EXT
-#define GL_TEXTURE_RECTANGLE_EXT GL_TEXTURE_RECTANGLE_NV
-#endif
+
+#include <QDebug>
+#define check_error() { int err = glGetError(); if (err != GL_NO_ERROR) { fprintf(stderr, "GL error 0x%x at %s:%d\n", err, __FILE__, __LINE__); exit(1); } }
 
 using namespace Mlt;
 
@@ -49,18 +48,31 @@ GLWidget::GLWidget(QWidget *parent)
     , m_image_width(0)
     , m_image_height(0)
     , m_display_ratio(4.0/3.0)
+    , m_glslManager(0)
+    , m_fbo(0)
 {
     m_texture[0] = m_texture[1] = m_texture[2] = 0;
     setAttribute(Qt::WA_PaintOnScreen);
     setAttribute(Qt::WA_OpaquePaintEvent);
     setMouseTracking(true);
+    m_glslManager = new Filter(profile(), "glsl.manager");
+    if (m_glslManager && !m_glslManager->is_valid()) {
+        delete m_glslManager;
+        m_glslManager = 0;
+    }
+    m_renderContext = new QGLWidget(this, this);
+    m_renderContext->resize(0, 0);
+
+    mlt_log_set_level(MLT_LOG_VERBOSE);
 }
 
 GLWidget::~GLWidget()
 {
     makeCurrent();
-    if (m_texture[0])
+    if (m_texture[0] && !m_glslManager)
         glDeleteTextures(3, m_texture);
+    delete m_fbo;
+    delete m_glslManager;
 }
 
 QSize GLWidget::minimumSizeHint() const
@@ -75,16 +87,19 @@ QSize GLWidget::sizeHint() const
 
 void GLWidget::initializeGL()
 {
+    qDebug() << __FUNCTION__;
     QPalette palette;
     qglClearColor(palette.color(QPalette::Window));
     glShadeModel(GL_FLAT);
+    glEnable(GL_TEXTURE_RECTANGLE_ARB);
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_CULL_FACE);
     glDisable(GL_LIGHTING);
     glDisable(GL_DITHER);
     glDisable(GL_BLEND);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    m_shader.addShaderFromSourceCode(QGLShader::Fragment,
+    if (!m_glslManager) {
+        m_shader.addShaderFromSourceCode(QGLShader::Fragment,
         "#extension GL_ARB_texture_rectangle : enable\n"
         "uniform sampler2DRect Ytex, Utex, Vtex;"
         "void main(void) {"
@@ -106,11 +121,13 @@ void GLWidget::initializeGL()
 
         "  gl_FragColor = vec4(r, g, b, 1.0);"
         "}");
-    m_shader.bind();
+        m_shader.bind();
+    }
 }
 
 void GLWidget::resizeGL(int width, int height)
 {
+    qDebug() << __FUNCTION__;
     double this_aspect = (double) width / height;
 
     // Special case optimisation to negate odd effect of sample aspect ratio
@@ -134,12 +151,14 @@ void GLWidget::resizeGL(int width, int height)
     x = (width - w) / 2;
     y = (height - h) / 2;
 
-    glViewport(0, 0, width, height);
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluOrtho2D(0, width, height, 0);
-    glMatrixMode(GL_MODELVIEW);
-    glClear(GL_COLOR_BUFFER_BIT);
+    if (isValid()) {
+        glViewport(0, 0, width, height);
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        glOrtho(0, width, height, 0, -1.0, 1.0);
+        glMatrixMode(GL_MODELVIEW);
+        glClear(GL_COLOR_BUFFER_BIT);
+    }
 }
 
 void GLWidget::resizeEvent(QResizeEvent* event)
@@ -150,12 +169,11 @@ void GLWidget::resizeEvent(QResizeEvent* event)
 void GLWidget::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    if (m_texture[0])
-    {
-#ifdef Q_WS_MAC
-        glClear(GL_COLOR_BUFFER_BIT);
-#endif
-        glEnable(GL_TEXTURE_RECTANGLE_EXT);
+    if (m_texture[0]) {
+        if (m_glslManager && m_fbo) {
+            glBindTexture(GL_TEXTURE_RECTANGLE_ARB, m_fbo->texture());
+            check_error();
+        }
         glBegin(GL_QUADS);
             glTexCoord2i(0, 0);
             glVertex2i  (x, y);
@@ -166,7 +184,7 @@ void GLWidget::paintGL()
             glTexCoord2i(0, m_image_height);
             glVertex2i  (x, y + h);
         glEnd();
-        glDisable(GL_TEXTURE_RECTANGLE_EXT);
+        check_error();
     }
 }
 
@@ -194,45 +212,103 @@ void GLWidget::mouseMoveEvent(QMouseEvent* event)
     drag->exec(Qt::LinkAction);
 }
 
+void GLWidget::startGlsl()
+{
+    qDebug() << __FUNCTION__ << "valid?" << m_renderContext->isValid();
+    if (m_glslManager && m_renderContext && m_renderContext->isValid()) {
+        m_renderContext->makeCurrent();
+        m_glslManager->fire_event("init glsl");
+    }
+}
+
+static void onThreadStarted(mlt_properties owner, GLWidget* self)
+{
+    self->startGlsl();
+}
+
 void GLWidget::showFrame(Mlt::QFrame frame)
 {
     if (frame.frame()->get_int("rendered")) {
         m_image_width = 0;
         m_image_height = 0;
         mlt_image_format format = mlt_image_yuv420p;
-        const uint8_t* image = frame.frame()->get_image(format, m_image_width, m_image_height);
-
-        // Copy each plane of YUV to a texture bound to shader program˙.
         makeCurrent();
-        if (m_texture[0])
-            glDeleteTextures(3, m_texture);
-        glPixelStorei  (GL_UNPACK_ROW_LENGTH, m_image_width);
-        glGenTextures  (3, m_texture);
+        if (m_glslManager) {
+            format = mlt_image_glsl_texture;
+            const GLuint* textureId = (GLuint*) frame.frame()->get_image(format, m_image_width, m_image_height);
+            m_texture[0] = *textureId;
 
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture  (GL_TEXTURE_RECTANGLE_EXT, m_texture[0]);
-        m_shader.setUniformValue(m_shader.uniformLocation("Ytex"), 0);
-        glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameterf(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexImage2D   (GL_TEXTURE_RECTANGLE_EXT, 0, GL_LUMINANCE, m_image_width, m_image_height, 0,
-                        GL_LUMINANCE, GL_UNSIGNED_BYTE, image);
+            if (!m_fbo || m_fbo->width() != m_image_width || m_fbo->height() != m_image_height) {
+                delete m_fbo;
+                m_fbo = new QGLFramebufferObject(m_image_width, m_image_height, GL_TEXTURE_RECTANGLE_ARB);
+            }
+            glPushAttrib(GL_VIEWPORT_BIT);
+            glMatrixMode(GL_PROJECTION);
+            glPushMatrix();
 
-        glActiveTexture(GL_TEXTURE1);
-        glBindTexture  (GL_TEXTURE_RECTANGLE_EXT, m_texture[1]);
-        m_shader.setUniformValue(m_shader.uniformLocation("Utex"), 1);
-        glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameterf(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexImage2D   (GL_TEXTURE_RECTANGLE_EXT, 0, GL_LUMINANCE, m_image_width/2, m_image_height/4, 0,
-                        GL_LUMINANCE, GL_UNSIGNED_BYTE, image + m_image_width * m_image_height);
+            glBindFramebuffer( GL_FRAMEBUFFER, m_fbo->handle());
+            check_error();
 
-        glActiveTexture(GL_TEXTURE2);
-        glBindTexture  (GL_TEXTURE_RECTANGLE_EXT, m_texture[2]);
-        m_shader.setUniformValue(m_shader.uniformLocation("Vtex"), 2);
-        glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameterf(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexImage2D   (GL_TEXTURE_RECTANGLE_EXT, 0, GL_LUMINANCE, m_image_width/2, m_image_height/4, 0,
-                        GL_LUMINANCE, GL_UNSIGNED_BYTE, image + m_image_width * m_image_height + m_image_width/2 * m_image_height/2);
+            glViewport( 0, 0, m_image_width, m_image_height );
+            glMatrixMode( GL_PROJECTION );
+            glLoadIdentity();
+            glOrtho(0.0, m_image_width, 0.0, m_image_height, -1.0, 1.0);
+            glMatrixMode( GL_MODELVIEW );
+            glLoadIdentity();
 
+            glActiveTexture( GL_TEXTURE0 );
+            check_error();
+            glBindTexture( GL_TEXTURE_RECTANGLE_ARB, m_texture[0]);
+            check_error();
+
+            glBegin( GL_QUADS );
+                glTexCoord2i( 0, 0 );                           glVertex2i( 0, 0 );
+                glTexCoord2i( 0, m_image_height );              glVertex2i( 0, m_image_height );
+                glTexCoord2i( m_image_width, m_image_height );  glVertex2i( m_image_width, m_image_height );
+                glTexCoord2i( m_image_width, 0 );               glVertex2i( m_image_width, 0 );
+            glEnd();
+            check_error();
+
+            glBindFramebuffer( GL_FRAMEBUFFER, 0 );
+            check_error();
+            glMatrixMode(GL_PROJECTION);
+            glPopMatrix();
+            glMatrixMode(GL_MODELVIEW);
+            glPopAttrib();
+        }
+        else {
+            const uint8_t* image = frame.frame()->get_image(format, m_image_width, m_image_height);
+
+            // Copy each plane of YUV to a texture bound to shader program˙.
+            if (m_texture[0])
+                glDeleteTextures(3, m_texture);
+            glPixelStorei  (GL_UNPACK_ROW_LENGTH, m_image_width);
+            glGenTextures  (3, m_texture);
+
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture  (GL_TEXTURE_RECTANGLE_EXT, m_texture[0]);
+            m_shader.setUniformValue(m_shader.uniformLocation("Ytex"), 0);
+            glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            glTexParameterf(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            glTexImage2D   (GL_TEXTURE_RECTANGLE_EXT, 0, GL_LUMINANCE, m_image_width, m_image_height, 0,
+                            GL_LUMINANCE, GL_UNSIGNED_BYTE, image);
+
+            glActiveTexture(GL_TEXTURE1);
+            glBindTexture  (GL_TEXTURE_RECTANGLE_EXT, m_texture[1]);
+            m_shader.setUniformValue(m_shader.uniformLocation("Utex"), 1);
+            glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            glTexParameterf(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            glTexImage2D   (GL_TEXTURE_RECTANGLE_EXT, 0, GL_LUMINANCE, m_image_width/2, m_image_height/4, 0,
+                            GL_LUMINANCE, GL_UNSIGNED_BYTE, image + m_image_width * m_image_height);
+
+            glActiveTexture(GL_TEXTURE2);
+            glBindTexture  (GL_TEXTURE_RECTANGLE_EXT, m_texture[2]);
+            m_shader.setUniformValue(m_shader.uniformLocation("Vtex"), 2);
+            glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            glTexParameterf(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            glTexImage2D   (GL_TEXTURE_RECTANGLE_EXT, 0, GL_LUMINANCE, m_image_width/2, m_image_height/4, 0,
+                            GL_LUMINANCE, GL_UNSIGNED_BYTE, image + m_image_width * m_image_height + m_image_width/2 * m_image_height/2);
+        }
         glDraw();
     }
     showFrameSemaphore.release();
@@ -311,8 +387,11 @@ int GLWidget::reconfigure(bool isMulti)
             m_consumer->set("deinterlace_method", property("deinterlace_method").toString().toAscii().constData());
             m_consumer->set("buffer", 1);
             m_consumer->set("scrub_audio", 1);
+            m_consumer->listen("consumer-thread-started", this, (mlt_listener) onThreadStarted);
             // tell the render thread that we will be fetching yuv420p
 //            m_consumer->set("mlt_image_format", "yuv420p");
+            if (m_glslManager)
+                m_consumer->set("mlt_image_format", "glsl");
 
             Mlt::Filter* filter = new Mlt::Filter(profile(), "audiolevel");
             if (filter->is_valid())
