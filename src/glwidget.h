@@ -19,17 +19,17 @@
 #ifndef GLWIDGET_H
 #define GLWIDGET_H
 
-#include <QGLWidget>
 #include <QSemaphore>
-#include <QMutex>
 #include <QtOpenGL>
+#include <QtCore/QMutex>
+#include <QtCore/QWaitCondition>
 #include "mltcontroller.h"
 
 namespace Mlt {
 
 class Filter;
 
-class GLWidget : public QGLWidget, public Controller
+class GLWidget : public QGLWidget, public Controller, protected QGLFunctions
 {
     Q_OBJECT
 
@@ -66,6 +66,8 @@ private:
     Filter* m_glslManager;
     QGLWidget* m_renderContext;
     QGLFramebufferObject* m_fbo;
+    QMutex m_mutex;
+    QWaitCondition m_condition;
 
 protected:
     void initializeGL();

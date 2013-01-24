@@ -18,6 +18,9 @@
 
 #include <QtGui>
 #include "mainwindow.h"
+#ifdef Q_WS_X11
+#include <X11/Xlib.h>
+#endif
 
 class Application : public QApplication
 {
@@ -82,6 +85,9 @@ protected:
 
 int main(int argc, char **argv)
 {
+#ifdef Q_WS_X11
+    XInitThreads();
+#endif
     Application a(argc, argv);
     QSplashScreen splash(QPixmap(":/icons/icons/shotcut-logo-640.png"));
     splash.showMessage(QCoreApplication::translate("", "Loading plugins..."), Qt::AlignHCenter | Qt::AlignBottom);

@@ -156,7 +156,7 @@ win32 {
     PKGCONFIG += mlt++
 }
 unix:!mac {
-    LIBS += -lGLU
+    LIBS += -lX11
 }
 
 isEmpty(SHOTCUT_VERSION) {
