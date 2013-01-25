@@ -43,6 +43,9 @@ signals:
     void itemActivated(int start);
     void showStatusMessage(QString);
 
+public slots:
+    void on_actionOpen_triggered();
+
 private slots:
     void on_menuButton_clicked();
 
@@ -57,8 +60,6 @@ private slots:
     void on_actionUpdate_triggered();
 
     void on_removeButton_clicked();
-
-    void on_actionOpen_triggered();
 
     void on_tableView_customContextMenuRequested(const QPoint &pos);
 

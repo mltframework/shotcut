@@ -491,6 +491,9 @@ void MainWindow::dropEvent(QDropEvent *event)
         open(mimeData->urls().at(0).path());
         event->acceptProposedAction();
     }
+    else if (mimeData->hasFormat("application/mlt+xml")) {
+        m_playlistDock->on_actionOpen_triggered();
+    }
 }
 
 void MainWindow::closeEvent(QCloseEvent* event)

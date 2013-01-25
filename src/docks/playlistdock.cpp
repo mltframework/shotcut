@@ -34,6 +34,7 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     ui->tableView->setDropIndicatorShown(true);
     ui->tableView->setDragDropOverwriteMode(false);
     ui->tableView->setAcceptDrops(true);
+    ui->tableView->setDefaultDropAction(Qt::MoveAction);
     ui->tableView->resizeColumnToContents(0);
     connect(ui->actionRemove, SIGNAL(triggered()), this, SLOT(on_removeButton_clicked()));
     connect(&m_model, SIGNAL(cleared()), this, SLOT(onPlaylistCleared()));
