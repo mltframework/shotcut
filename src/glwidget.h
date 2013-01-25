@@ -68,6 +68,7 @@ private:
     QGLFramebufferObject* m_fbo;
     QMutex m_mutex;
     QWaitCondition m_condition;
+    bool m_isInitialized;
 
 protected:
     void initializeGL();

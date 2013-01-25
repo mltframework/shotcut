@@ -40,6 +40,7 @@ GLWidget::GLWidget(QWidget *parent)
     , m_display_ratio(4.0/3.0)
     , m_glslManager(0)
     , m_fbo(0)
+    , m_isInitialized(false)
 {
     m_texture[0] = m_texture[1] = m_texture[2] = 0;
     setAttribute(Qt::WA_PaintOnScreen);
@@ -115,6 +116,7 @@ void GLWidget::initializeGL()
         m_shader.bind();
     }
     m_condition.wakeAll();
+    m_isInitialized = true;
 }
 
 void GLWidget::resizeGL(int width, int height)
@@ -207,9 +209,11 @@ void GLWidget::mouseMoveEvent(QMouseEvent* event)
 void GLWidget::startGlsl()
 {
     qDebug() << __FUNCTION__ << "valid?" << m_renderContext->isValid();
-    m_mutex.lock();
-    m_condition.wait(&m_mutex);
-    m_mutex.unlock();
+    if (!m_isInitialized) {
+        m_mutex.lock();
+        m_condition.wait(&m_mutex);
+        m_mutex.unlock();
+    }
     if (m_glslManager && m_renderContext && m_renderContext->isValid()) {
         m_renderContext->makeCurrent();
         m_glslManager->fire_event("init glsl");
