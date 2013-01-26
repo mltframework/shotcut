@@ -37,6 +37,7 @@ public:
     PlaylistModel* model() {
         return &m_model;
     }
+    int position();
 
 signals:
     void clipOpened(void* producer, int in, int out);
@@ -44,22 +45,24 @@ signals:
     void showStatusMessage(QString);
 
 public slots:
+    void incrementIndex();
+    void decrementIndex();
+    void setIndex(int row);
+    void moveClipUp();
+    void moveClipDown();
     void on_actionOpen_triggered();
+    void on_actionInsertCut_triggered();
+    void on_actionUpdate_triggered();
+    void on_removeButton_clicked();
 
 private slots:
     void on_menuButton_clicked();
-
-    void on_actionInsertCut_triggered();
 
     void on_actionAppendCut_triggered();
 
     void on_actionInsertBlank_triggered();
 
     void on_actionAppendBlank_triggered();
-
-    void on_actionUpdate_triggered();
-
-    void on_removeButton_clicked();
 
     void on_tableView_customContextMenuRequested(const QPoint &pos);
 

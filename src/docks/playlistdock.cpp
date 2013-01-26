@@ -50,6 +50,59 @@ PlaylistDock::~PlaylistDock()
     delete ui;
 }
 
+int PlaylistDock::position()
+{
+    QModelIndex index = ui->tableView->currentIndex();
+    if (index.isValid()) {
+        Mlt::ClipInfo* i = m_model.playlist()->clip_info(index.row());
+        if (i) return i->start;
+    }
+    else return -1;
+}
+
+void PlaylistDock::incrementIndex()
+{
+    QModelIndex index = ui->tableView->currentIndex();
+    if (!index.isValid())
+        index = m_model.createIndex(0, 0);
+    else
+        index = m_model.incrementIndex(index);
+    if (index.isValid())
+        ui->tableView->setCurrentIndex(index);
+}
+
+void PlaylistDock::decrementIndex()
+{
+    QModelIndex index = ui->tableView->currentIndex();
+    if (!index.isValid())
+        index = m_model.createIndex(0, 0);
+    else
+        index = m_model.decrementIndex(index);
+    if (index.isValid())
+        ui->tableView->setCurrentIndex(index);
+}
+
+void PlaylistDock::setIndex(int row)
+{
+    QModelIndex index = m_model.createIndex(row, 0);
+    if (index.isValid())
+        ui->tableView->setCurrentIndex(index);
+}
+
+void PlaylistDock::moveClipUp()
+{
+    int row = ui->tableView->currentIndex().row();
+    if (row > 0)
+        MAIN.undoStack()->push(new Playlist::MoveCommand(m_model, row, row - 1));
+}
+
+void PlaylistDock::moveClipDown()
+{
+    int row = ui->tableView->currentIndex().row();
+    if (row + 1 < m_model.rowCount())
+        MAIN.undoStack()->push(new Playlist::MoveCommand(m_model, row, row + 1));
+}
+
 void PlaylistDock::on_menuButton_clicked()
 {
     QPoint pos = ui->menuButton->mapToParent(QPoint(0, 0));

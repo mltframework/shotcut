@@ -87,6 +87,8 @@ MainWindow::MainWindow()
     QAction *redoAction = m_undoStack->createRedoAction(this);
     undoAction->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/icons/icons/edit-undo.png")));
     redoAction->setIcon(QIcon::fromTheme("edit-redo", QIcon(":/icons/icons/edit-redo.png")));
+    undoAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+Z", 0, QApplication::UnicodeUTF8));
+    redoAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+Z", 0, QApplication::UnicodeUTF8));
     ui->menuEdit->addAction(undoAction);
     ui->menuEdit->addAction(redoAction);
     ui->actionUndo->setIcon(undoAction->icon());
@@ -449,6 +451,99 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
     case Qt::Key_O:
         if (MLT.isSeekable() && !MLT.isPlaylist())
             m_player->setOut(m_player->position());
+        break;
+    case Qt::Key_V: // Avid Splice In
+        m_playlistDock->show();
+        m_playlistDock->raise();
+        m_playlistDock->on_actionInsertCut_triggered();
+        break;
+    case Qt::Key_B: // Avid Overwrite
+        m_playlistDock->show();
+        m_playlistDock->raise();
+        m_playlistDock->on_actionUpdate_triggered();
+        break;
+    case Qt::Key_Escape: // Avid Toggle Active Monitor
+        if (MLT.isPlaylist())
+            m_playlistDock->on_actionOpen_triggered();
+        else if (m_playlistDock->position() >= 0) {
+            m_playlistDock->show();
+            seekPlaylist(m_playlistDock->position());
+        }
+    case Qt::Key_Up:
+        m_playlistDock->show();
+        m_playlistDock->raise();
+        if (event->modifiers() == Qt::ControlModifier)
+            m_playlistDock->moveClipUp();
+        m_playlistDock->decrementIndex();
+        break;
+    case Qt::Key_Down:
+        m_playlistDock->show();
+        m_playlistDock->raise();
+        if (event->modifiers() == Qt::ControlModifier)
+            m_playlistDock->moveClipDown();
+        m_playlistDock->incrementIndex();
+        break;
+    case Qt::Key_1:
+        m_playlistDock->show();
+        m_playlistDock->raise();
+        m_playlistDock->setIndex(0);
+        break;
+    case Qt::Key_2:
+        m_playlistDock->show();
+        m_playlistDock->raise();
+        m_playlistDock->setIndex(1);
+        break;
+    case Qt::Key_3:
+        m_playlistDock->show();
+        m_playlistDock->raise();
+        m_playlistDock->setIndex(2);
+        break;
+    case Qt::Key_4:
+        m_playlistDock->show();
+        m_playlistDock->raise();
+        m_playlistDock->setIndex(3);
+        break;
+    case Qt::Key_5:
+        m_playlistDock->show();
+        m_playlistDock->raise();
+        m_playlistDock->setIndex(4);
+        break;
+    case Qt::Key_6:
+        m_playlistDock->show();
+        m_playlistDock->raise();
+        m_playlistDock->setIndex(5);
+        break;
+    case Qt::Key_7:
+        m_playlistDock->show();
+        m_playlistDock->raise();
+        m_playlistDock->setIndex(6);
+        break;
+    case Qt::Key_8:
+        m_playlistDock->show();
+        m_playlistDock->raise();
+        m_playlistDock->setIndex(7);
+        break;
+    case Qt::Key_9:
+        m_playlistDock->show();
+        m_playlistDock->raise();
+        m_playlistDock->setIndex(8);
+        break;
+    case Qt::Key_0:
+        m_playlistDock->show();
+        m_playlistDock->raise();
+        m_playlistDock->setIndex(9);
+        break;
+    case Qt::Key_X: // Avid Extract
+    case Qt::Key_Backspace:
+    case Qt::Key_Delete:
+        m_playlistDock->show();
+        m_playlistDock->raise();
+        m_playlistDock->on_removeButton_clicked();
+        break;
+    case Qt::Key_Enter: // Seek to current playlist item
+    case Qt::Key_Return:
+        if (m_playlistDock->position() >= 0)
+            seekPlaylist(m_playlistDock->position());
         break;
     default:
         QMainWindow::keyPressEvent(event);
