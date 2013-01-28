@@ -469,6 +469,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_playlistDock->show();
             seekPlaylist(m_playlistDock->position());
         }
+        break;
     case Qt::Key_Up:
         m_playlistDock->show();
         m_playlistDock->raise();
@@ -588,6 +589,7 @@ void MainWindow::dropEvent(QDropEvent *event)
     }
     else if (mimeData->hasFormat("application/mlt+xml")) {
         m_playlistDock->on_actionOpen_triggered();
+        event->acceptProposedAction();
     }
 }
 
