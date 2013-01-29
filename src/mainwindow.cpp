@@ -722,12 +722,18 @@ bool MainWindow::on_actionSave_As_triggered()
 bool MainWindow::continueModified()
 {
     if (isWindowModified()) {
-        int r = QMessageBox::warning(this, qApp->applicationName(),
+        QMessageBox dialog(QMessageBox::Warning,
+                                     qApp->applicationName(),
                                      tr("The project has been modified.\n"
                                         "Do you want to save your changes?"),
-                                     QMessageBox::Yes | QMessageBox::Default,
-                                     QMessageBox::No,
-                                     QMessageBox::Cancel | QMessageBox::Escape);
+                                     QMessageBox::No |
+                                     QMessageBox::Cancel |
+                                     QMessageBox::Yes,
+                                     this);
+        dialog.setWindowModality(Qt::WindowModal);
+        dialog.setDefaultButton(QMessageBox::Yes);
+        dialog.setEscapeButton(QMessageBox::Cancel);
+        int r = dialog.exec();
         if (r == QMessageBox::Yes) {
             return on_actionSave_triggered();
         } else if (r == QMessageBox::Cancel) {

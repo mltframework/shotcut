@@ -77,8 +77,14 @@ void ServicePresetWidget::saveDefaultPreset(Mlt::Properties& properties)
 
 void ServicePresetWidget::savePreset(Mlt::Properties* properties)
 {
-    QString preset = QInputDialog::getText(this, tr("Save Preset"), tr("Name:") );
-    if (!preset.isNull()) {
+    QInputDialog dialog(this);
+    dialog.setInputMode(QInputDialog::TextInput);
+    dialog.setWindowTitle(tr("Save Preset"));
+    dialog.setLabelText(tr("Name:"));
+    dialog.setWindowModality(Qt::WindowModal);
+    int r = dialog.exec();
+    QString preset = dialog.textValue();
+    if (r == QDialog::Accepted && !preset.isEmpty()) {
         QDir dir(QDesktopServices::storageLocation(QDesktopServices::DataLocation));
 
         if (!dir.exists())
@@ -124,9 +130,17 @@ void ServicePresetWidget::on_savePresetButton_clicked()
 void ServicePresetWidget::on_deletePresetButton_clicked()
 {
     QString preset = ui->presetCombo->currentText();
-    int result = QMessageBox::question(this, tr("Delete Preset"),
-                                       tr("Are you sure you want to delete") + " " + preset + "?",
-                                       QMessageBox::No | QMessageBox::Yes, QMessageBox::No);
+    QMessageBox dialog(QMessageBox::Question,
+                       tr("Delete Preset"),
+                       tr("Are you sure you want to delete") + " " + preset + "?",
+                       QMessageBox::No | QMessageBox::Yes,
+                       this);
+    dialog.setDefaultButton(QMessageBox::Yes);
+    dialog.setEscapeButton(QMessageBox::No);
+    dialog.setWindowModality(Qt::WindowModal);
+    dialog.setDefaultButton(QMessageBox::Yes);
+    dialog.setEscapeButton(QMessageBox::Cancel);
+    int result = dialog.exec();
     if (result == QMessageBox::Yes) {
         QDir dir(QDesktopServices::storageLocation(QDesktopServices::DataLocation));
 

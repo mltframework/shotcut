@@ -615,10 +615,15 @@ void EncodeDock::on_streamButton_clicked()
         emit ui->encodeButton->setDisabled(false);
         return;
     }
-    QString url = QInputDialog::getText(this, tr("Stream"),
-        tr("Enter the network protocol scheme, address, port, and parameters as an URL:"),
-        QLineEdit::Normal, "udp://224.224.224.224:1234?pkt_size=1316&reuse=1");
-    if (!url.isEmpty()) {
+    QInputDialog dialog(this);
+    dialog.setInputMode(QInputDialog::TextInput);
+    dialog.setWindowTitle(tr("Stream"));
+    dialog.setLabelText(tr("Enter the network protocol scheme, address, port, and parameters as an URL:"));
+    dialog.setTextValue("udp://224.224.224.224:1234?pkt_size=1316&reuse=1");
+    dialog.setWindowModality(Qt::WindowModal);
+    int r = dialog.exec();
+    QString url = dialog.textValue();
+    if (r == QDialog::Accepted && !url.isEmpty()) {
         MLT.pause();
         ui->dualPassCheckbox->setChecked(false);
         ui->streamButton->setText(tr("Stop Stream"));
@@ -695,9 +700,17 @@ void EncodeDock::on_addPresetButton_clicked()
 void EncodeDock::on_removePresetButton_clicked()
 {
     QString preset(ui->presetsTree->currentItem()->text(0));
-    int result = QMessageBox::question(this, tr("Delete Preset"),
-                                       tr("Are you sure you want to delete") + " " + preset + "?",
-                                       QMessageBox::No | QMessageBox::Yes, QMessageBox::No);
+    QMessageBox dialog(QMessageBox::Question,
+                       tr("Delete Preset"),
+                       tr("Are you sure you want to delete") + " " + preset + "?",
+                       QMessageBox::No | QMessageBox::Yes,
+                       this);
+    dialog.setDefaultButton(QMessageBox::Yes);
+    dialog.setEscapeButton(QMessageBox::No);
+    dialog.setWindowModality(Qt::WindowModal);
+    dialog.setDefaultButton(QMessageBox::Yes);
+    dialog.setEscapeButton(QMessageBox::Cancel);
+    int result = dialog.exec();
     if (result == QMessageBox::Yes) {
         QDir dir(QDesktopServices::storageLocation(QDesktopServices::DataLocation));
         if (dir.cd("presets") && dir.cd("encode")) {
