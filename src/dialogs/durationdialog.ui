@@ -2,12 +2,15 @@
 <ui version="4.0">
  <class>DurationDialog</class>
  <widget class="QDialog" name="DurationDialog">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>187</width>
-    <height>74</height>
+    <width>209</width>
+    <height>101</height>
    </rect>
   </property>
   <property name="windowTitle">
