@@ -196,8 +196,13 @@ void Controller::play(double speed)
 
 void Controller::pause()
 {
-    if (m_producer)
-        m_producer->pause();
+    if (m_producer && m_producer->get_speed() != 0) {
+        Event *event = m_consumer->setup_wait_for("consumer-sdl-paused");
+        int result = m_producer->set_speed(0);
+        if (result == 0 && m_consumer->is_valid() && !m_consumer->is_stopped())
+            m_consumer->wait_for(event);
+        delete event;
+    }
     if (m_jackFilter)
         m_jackFilter->fire_event("jack-stop");
 }
@@ -236,7 +241,13 @@ void Controller::on_jack_stopped(mlt_properties, void* object, mlt_position *pos
 void Controller::onJackStopped(int position)
 {
     if (m_producer) {
-        m_producer->pause();
+        if (m_producer->get_speed() != 0) {
+            Event *event = m_consumer->setup_wait_for("consumer-sdl-paused");
+            int result = m_producer->set_speed(0);
+            if (result == 0 && m_consumer->is_valid() && !m_consumer->is_stopped())
+                m_consumer->wait_for(event);
+            delete event;
+        }
         m_producer->seek(position);
     }
     if (m_consumer)
@@ -317,19 +328,18 @@ void Controller::refreshConsumer()
 
 QString Controller::saveXML(const QString& filename, Service* service)
 {
-    Mlt::Consumer c(profile(), "xml", filename.toUtf8().constData());
-    if (!service && m_producer)
-        service = new Mlt::Service(*m_producer);
-    if (!service || !service->is_valid())
+    Consumer c(profile(), "xml", filename.toUtf8().constData());
+    Service s(service? service->get_service() : m_producer->get_service());
+    if (!s.is_valid())
         return "";
-    int ignore = service->get_int("ignore_points");
+    int ignore = s.get_int("ignore_points");
     if (ignore)
-        service->set("ignore_points", 0);
+        s.set("ignore_points", 0);
     c.set("time_format", "clock");
-    c.connect(*service);
+    c.connect(s);
     c.start();
     if (ignore)
-        service->set("ignore_points", ignore);
+        s.set("ignore_points", ignore);
     return QString::fromUtf8(c.get(filename.toUtf8().constData()));
 }
 
