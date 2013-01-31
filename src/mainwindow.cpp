@@ -155,6 +155,8 @@ MainWindow::MainWindow()
     connect(m_historyDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onHistoryDockTriggered(bool)));
     QUndoView* undoView = new QUndoView(m_undoStack, m_historyDock);
     undoView->setObjectName("historyView");
+    undoView->setAlternatingRowColors(true);
+    undoView->setSpacing(2);
     m_historyDock->setWidget(undoView);
     ui->actionUndo->setDisabled(true);
     ui->actionRedo->setDisabled(true);
