@@ -47,7 +47,6 @@ EncodeDock::EncodeDock(QWidget *parent) :
     toggleViewAction()->setIcon(QIcon::fromTheme("media-record", windowIcon()));
     ui->addPresetButton->setIcon(QIcon::fromTheme("list-add", ui->addPresetButton->icon()));
     ui->removePresetButton->setIcon(QIcon::fromTheme("list-remove", ui->removePresetButton->icon()));
-    ui->reloadSignalButton->setIcon(QIcon::fromTheme("view-refresh", ui->reloadSignalButton->icon()));
 
     loadPresets();
 
@@ -573,7 +572,7 @@ void EncodeDock::on_encodeButton_clicked()
     }
 }
 
-void EncodeDock::on_reloadSignalButton_clicked()
+void EncodeDock::onProfileChanged()
 {
     int width = MLT.profile().width();
     int height = MLT.profile().height();

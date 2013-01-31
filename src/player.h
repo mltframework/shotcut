@@ -61,6 +61,7 @@ signals:
     void fastForwarded();
     void previousSought(int currentPosition);
     void nextSought(int currentPosition);
+    void profileChanged();
 
 public slots:
     void play(double speed = 1.0);

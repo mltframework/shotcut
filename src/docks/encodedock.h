@@ -45,13 +45,12 @@ signals:
 
 public slots:
     void onProducerOpened();
+    void onProfileChanged();
 
 private slots:
     void on_presetsTree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
 
     void on_encodeButton_clicked();
-
-    void on_reloadSignalButton_clicked();
 
     void on_streamButton_clicked();
 

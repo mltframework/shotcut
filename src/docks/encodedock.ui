@@ -349,7 +349,7 @@
                      </property>
                     </widget>
                    </item>
-                   <item row="9" column="0">
+                   <item row="8" column="0">
                     <spacer name="verticalSpacer_2">
                      <property name="orientation">
                       <enum>Qt::Vertical</enum>
@@ -457,38 +457,6 @@
                      </item>
                      <item>
                       <spacer name="horizontalSpacer_10">
-                       <property name="orientation">
-                        <enum>Qt::Horizontal</enum>
-                       </property>
-                       <property name="sizeHint" stdset="0">
-                        <size>
-                         <width>40</width>
-                         <height>20</height>
-                        </size>
-                       </property>
-                      </spacer>
-                     </item>
-                    </layout>
-                   </item>
-                   <item row="5" column="1">
-                    <layout class="QHBoxLayout" name="horizontalLayout_21">
-                     <item>
-                      <widget class="QPushButton" name="reloadSignalButton">
-                       <property name="toolTip">
-                        <string>Reload all of the values from the project
-or player's current video mode</string>
-                       </property>
-                       <property name="text">
-                        <string>Reload</string>
-                       </property>
-                       <property name="icon">
-                        <iconset resource="../resources.qrc">
-                         <normaloff>:/icons/icons/view-refresh.png</normaloff>:/icons/icons/view-refresh.png</iconset>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <spacer name="horizontalSpacer_21">
                        <property name="orientation">
                         <enum>Qt::Horizontal</enum>
                        </property>
@@ -1470,7 +1438,6 @@ codecs. However, not all codecs are multi-threaded.</string>
   <tabstop>scanModeCombo</tabstop>
   <tabstop>fpsSpinner</tabstop>
   <tabstop>fieldOrderCombo</tabstop>
-  <tabstop>reloadSignalButton</tabstop>
   <tabstop>videoCodecCombo</tabstop>
   <tabstop>videoRateControlCombo</tabstop>
   <tabstop>videoBitrateCombo</tabstop>
@@ -1491,7 +1458,6 @@ codecs. However, not all codecs are multi-threaded.</string>
   <tabstop>widthSpinner</tabstop>
   <tabstop>heightSpinner</tabstop>
   <tabstop>scanModeCombo</tabstop>
-  <tabstop>reloadSignalButton</tabstop>
   <tabstop>fieldOrderCombo</tabstop>
  </tabstops>
  <resources>

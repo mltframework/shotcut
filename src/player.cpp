@@ -577,6 +577,8 @@ void Player::onProducerOpened()
     actionRewind->setEnabled(m_isSeekable);
     actionFastForward->setEnabled(m_isSeekable);
 
+    if (!MLT.profile().is_explicit())
+        emit profileChanged();
     play();
 }
 
@@ -931,6 +933,7 @@ void Player::onExternalTriggered(QAction *action)
         profile = QVariant("atsc_720p_50");
         m_settings.setValue("player/profile", profile);
         MLT.setProfile(profile.toString());
+        emit profileChanged();
         foreach (QAction* a, profileGroup->actions()) {
             if (a->data() == profile) {
                 a->setChecked(true);
@@ -961,6 +964,7 @@ void Player::onProfileTriggered(QAction *action)
 {
     m_settings.setValue("player/profile", action->data());
     MLT.setProfile(action->data().toString());
+    emit profileChanged();
 }
 
 void Player::showAudio(Mlt::Frame* frame)
@@ -1019,6 +1023,7 @@ void Player::onCaptureStateChanged(bool active)
 void Player::resetProfile()
 {
     MLT.setProfile(m_settings.value("player/profile").toString());
+    emit profileChanged();
 }
 
 void Player::onVolumeButtonToggled(bool checked)
