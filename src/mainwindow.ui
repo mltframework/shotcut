@@ -80,6 +80,8 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>&amp;View</string>
     </property>
+    <addaction name="actionEnter_Full_Screen"/>
+    <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -245,6 +247,18 @@ p, li { white-space: pre-wrap; }
   <action name="actionFAQ">
    <property name="text">
     <string>FAQ...</string>
+   </property>
+  </action>
+  <action name="actionEnter_Full_Screen">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/icons/view-fullscreen.png</normaloff>:/icons/icons/view-fullscreen.png</iconset>
+   </property>
+   <property name="text">
+    <string>Enter Full Screen</string>
+   </property>
+   <property name="shortcut">
+    <string>Meta+Ctrl+F</string>
    </property>
   </action>
  </widget>

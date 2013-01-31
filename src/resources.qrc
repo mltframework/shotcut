@@ -24,5 +24,6 @@
         <file>../icons/view-history.png</file>
         <file>../icons/edit-redo.png</file>
         <file>../icons/edit-undo.png</file>
+        <file>../icons/view-fullscreen.png</file>
     </qresource>
 </RCC>

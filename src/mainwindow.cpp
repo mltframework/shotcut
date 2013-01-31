@@ -239,6 +239,12 @@ MainWindow::MainWindow()
     }
 #endif
 
+    // Add fullscreen action to toolbar
+//    QWidget* spacer = new QWidget(this);
+//    spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+//    ui->mainToolBar->addWidget(spacer);
+    ui->mainToolBar->addAction(ui->actionEnter_Full_Screen);
+
     readSettings();
     setFocus();
     setCurrentFile("");
@@ -367,6 +373,8 @@ void MainWindow::readSettings()
 
 void MainWindow::writeSettings()
 {
+    if (isFullScreen())
+        showNormal();
     m_settings.setValue("geometry", saveGeometry());
     m_settings.setValue("windowState", saveState());
 }
@@ -891,4 +899,15 @@ void MainWindow::onMeltedUnitActivated()
 {
     m_meltedPlaylistDock->setVisible(true);
     m_meltedPlaylistDock->raise();
+}
+
+void MainWindow::on_actionEnter_Full_Screen_triggered()
+{
+    if (isFullScreen()) {
+        showNormal();
+        ui->actionEnter_Full_Screen->setText(tr("Enter Full Screen"));
+    } else {
+        showFullScreen();
+        ui->actionEnter_Full_Screen->setText(tr("Exit Full Screen"));
+    }
 }

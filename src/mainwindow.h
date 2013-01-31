@@ -112,6 +112,7 @@ private slots:
     void on_actionForum_triggered();
     void onMeltedUnitOpened();
     void onMeltedUnitActivated();
+    void on_actionEnter_Full_Screen_triggered();
 };
 
 #define MAIN MainWindow::singleton()
