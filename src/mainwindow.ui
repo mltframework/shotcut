@@ -261,7 +261,7 @@ p, li { white-space: pre-wrap; }
     <string>Enter Full Screen</string>
    </property>
    <property name="shortcut">
-    <string>Meta+Ctrl+F</string>
+    <string>Ctrl+Shift+F</string>
    </property>
   </action>
   <action name="actionProperties">
