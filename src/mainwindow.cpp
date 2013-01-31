@@ -77,6 +77,7 @@ MainWindow::MainWindow()
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openVideo()));
     connect(ui->actionAbout_Qt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
     connect(this, SIGNAL(producerOpened()), this, SLOT(onProducerOpened()));
+    connect(ui->actionFullscreen, SIGNAL(triggered()), this, SLOT(on_actionEnter_Full_Screen_triggered()));
 
     // Accept drag-n-drop of files.
     this->setAcceptDrops(true);
@@ -172,7 +173,6 @@ MainWindow::MainWindow()
     m_encodeDock->hide();
     addDockWidget(Qt::RightDockWidgetArea, m_encodeDock);
     ui->menuView->addAction(m_encodeDock->toggleViewAction());
-    ui->mainToolBar->addAction(ui->actionEncode);
     connect(this, SIGNAL(producerOpened()), m_encodeDock, SLOT(onProducerOpened()));
     connect(ui->actionEncode, SIGNAL(triggered()), this, SLOT(onEncodeTriggered()));
     connect(m_encodeDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onEncodeTriggered(bool)));
