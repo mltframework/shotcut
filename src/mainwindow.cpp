@@ -115,25 +115,26 @@ MainWindow::MainWindow()
     m_propertiesDock->setObjectName("propertiesDock");
     m_propertiesDock->setWindowIcon(QIcon((":/icons/icons/view-form.png")));
     m_propertiesDock->toggleViewAction()->setIcon(QIcon::fromTheme("view-form", m_propertiesDock->windowIcon()));
+    ui->actionProperties->setIcon(QIcon::fromTheme("view-form", m_propertiesDock->windowIcon()));
     addDockWidget(Qt::LeftDockWidgetArea, m_propertiesDock);
     ui->menuView->addAction(m_propertiesDock->toggleViewAction());
-    ui->mainToolBar->addAction(m_propertiesDock->toggleViewAction());
     connect(m_propertiesDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onPropertiesDockTriggered(bool)));
+    connect(ui->actionProperties, SIGNAL(triggered()), this, SLOT(onPropertiesDockTriggered()));
 
     m_recentDock = new RecentDock(this);
     m_recentDock->hide();
     addDockWidget(Qt::LeftDockWidgetArea, m_recentDock);
     ui->menuView->addAction(m_recentDock->toggleViewAction());
-    ui->mainToolBar->addAction(m_recentDock->toggleViewAction());
     connect(m_recentDock, SIGNAL(itemActivated(QString)), this, SLOT(open(QString)));
     connect(m_recentDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onRecentDockTriggered(bool)));
+    connect(ui->actionRecent, SIGNAL(triggered()), this, SLOT(onRecentDockTriggered()));
 
     m_playlistDock = new PlaylistDock(this);
     m_playlistDock->hide();
     addDockWidget(Qt::LeftDockWidgetArea, m_playlistDock);
     ui->menuView->addAction(m_playlistDock->toggleViewAction());
-    ui->mainToolBar->addAction(m_playlistDock->toggleViewAction());
     connect(m_playlistDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onPlaylistDockTriggered(bool)));
+    connect(ui->actionPlaylist, SIGNAL(triggered()), this, SLOT(onPlaylistDockTriggered()));
     connect(m_playlistDock, SIGNAL(clipOpened(void*,int,int)), this, SLOT(openCut(void*, int, int)));
     connect(m_playlistDock, SIGNAL(itemActivated(int)), this, SLOT(seekPlaylist(int)));
     connect(m_playlistDock, SIGNAL(showStatusMessage(QString)), this, SLOT(showStatusMessage(QString)));
@@ -149,10 +150,11 @@ MainWindow::MainWindow()
     m_historyDock->setObjectName("historyDock");
     m_historyDock->setWindowIcon(QIcon((":/icons/icons/view-history.png")));
     m_historyDock->toggleViewAction()->setIcon(QIcon::fromTheme("view-history", m_historyDock->windowIcon()));
+    ui->actionHistory->setIcon(QIcon::fromTheme("view-history", m_historyDock->windowIcon()));
     addDockWidget(Qt::LeftDockWidgetArea, m_historyDock);
     ui->menuView->addAction(m_historyDock->toggleViewAction());
-    ui->mainToolBar->addAction(m_historyDock->toggleViewAction());
     connect(m_historyDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onHistoryDockTriggered(bool)));
+    connect(ui->actionHistory, SIGNAL(triggered()), this, SLOT(onHistoryDockTriggered()));
     QUndoView* undoView = new QUndoView(m_undoStack, m_historyDock);
     undoView->setObjectName("historyView");
     undoView->setAlternatingRowColors(true);
@@ -172,7 +174,9 @@ MainWindow::MainWindow()
     ui->menuView->addAction(m_encodeDock->toggleViewAction());
     ui->mainToolBar->addAction(ui->actionEncode);
     connect(this, SIGNAL(producerOpened()), m_encodeDock, SLOT(onProducerOpened()));
-    connect(m_encodeDock, SIGNAL(visibilityChanged(bool)), ui->actionEncode, SLOT(setChecked(bool)));
+    connect(ui->actionEncode, SIGNAL(triggered()), this, SLOT(onEncodeTriggered()));
+    connect(m_encodeDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onEncodeTriggered(bool)));
+    connect(m_encodeDock, SIGNAL(visibilityChanged(bool)), this, SLOT(onEncodeVisibilityChanged(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_player, SLOT(onCaptureStateChanged(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_propertiesDock, SLOT(setDisabled(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_recentDock, SLOT(setDisabled(bool)));
@@ -189,7 +193,7 @@ MainWindow::MainWindow()
     ui->menuView->addAction(m_jobsDock->toggleViewAction());
     connect(&JOBS, SIGNAL(jobAdded()), m_jobsDock, SLOT(show()));
     connect(&JOBS, SIGNAL(jobAdded()), m_jobsDock, SLOT(raise()));
-    connect(m_jobsDock, SIGNAL(visibilityChanged(bool)), this, SLOT(onJobsVisibilityChanged(bool)));
+    connect(m_jobsDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onJobsVisibilityChanged(bool)));
 
     m_meltedServerDock = new MeltedServerDock(this);
     m_meltedServerDock->hide();
@@ -240,12 +244,6 @@ MainWindow::MainWindow()
         connect(videoWidget, SIGNAL(seekTo(int)), m_player, SLOT(seek(int)));
     }
 #endif
-
-    // Add fullscreen action to toolbar
-//    QWidget* spacer = new QWidget(this);
-//    spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-//    ui->mainToolBar->addWidget(spacer);
-    ui->mainToolBar->addAction(ui->actionEnter_Full_Screen);
 
     readSettings();
     setFocus();
@@ -758,7 +756,7 @@ QUndoStack* MainWindow::undoStack() const
     return m_undoStack;
 }
 
-void MainWindow::on_actionEncode_triggered(bool checked)
+void MainWindow::onEncodeTriggered(bool checked)
 {
     m_encodeDock->setVisible(checked);
     if (checked) {
@@ -778,33 +776,49 @@ void MainWindow::onCaptureStateChanged(bool started)
         showMinimized();
 }
 
+void MainWindow::onEncodeVisibilityChanged(bool checked)
+{
+    if (m_encodeDock->isHidden())
+        m_jobsDock->hide();
+}
+
 void MainWindow::onJobsVisibilityChanged(bool checked)
 {
     m_jobsVisible = checked;
+    if (checked)
+        m_jobsDock->raise();
 }
 
 void MainWindow::onRecentDockTriggered(bool checked)
 {
-    if (checked)
+    if (checked) {
+        m_recentDock->show();
         m_recentDock->raise();
+    }
 }
 
 void MainWindow::onPropertiesDockTriggered(bool checked)
 {
-    if (checked)
+    if (checked) {
+        m_propertiesDock->show();
         m_propertiesDock->raise();
+    }
 }
 
 void MainWindow::onPlaylistDockTriggered(bool checked)
 {
-    if (checked)
+    if (checked) {
+        m_playlistDock->show();
         m_playlistDock->raise();
+    }
 }
 
 void MainWindow::onHistoryDockTriggered(bool checked)
 {
-    if (checked)
+    if (checked) {
+        m_historyDock->show();
         m_historyDock->raise();
+    }
 }
 
 void MainWindow::onPlaylistCreated()
