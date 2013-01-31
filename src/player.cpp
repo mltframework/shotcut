@@ -473,11 +473,15 @@ void Player::readSettings()
 void Player::setIn(unsigned pos)
 {
     m_scrubber->setInPoint(pos);
+    if (pos >= m_previousOut)
+        setOut(m_duration - 1);
 }
 
 void Player::setOut(unsigned pos)
 {
     m_scrubber->setOutPoint(pos);
+    if (pos <= m_previousIn)
+        setIn(0);
 }
 
 void Player::setMarkers(const QList<int> &markers)
