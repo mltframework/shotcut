@@ -19,6 +19,9 @@
   </property>
   <widget class="QWidget" name="dockWidgetContents">
    <layout class="QHBoxLayout" name="horizontalLayout">
+    <property name="margin">
+     <number>0</number>
+    </property>
     <item>
      <widget class="QListWidget" name="listWidget">
       <property name="horizontalScrollBarPolicy">

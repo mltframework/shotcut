@@ -19,13 +19,10 @@
   </property>
   <widget class="QWidget" name="dockWidgetContents">
    <layout class="QVBoxLayout" name="verticalLayout_2">
-    <property name="leftMargin">
+    <property name="spacing">
      <number>0</number>
     </property>
-    <property name="topMargin">
-     <number>0</number>
-    </property>
-    <property name="rightMargin">
+    <property name="margin">
      <number>0</number>
     </property>
     <item>
@@ -42,11 +39,11 @@
          <x>0</x>
          <y>0</y>
          <width>232</width>
-         <height>199</height>
+         <height>221</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
-        <property name="bottomMargin">
+        <property name="margin">
          <number>0</number>
         </property>
         <item>
@@ -80,6 +77,9 @@
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>6</number>
+      </property>
       <item>
        <widget class="QPushButton" name="pauseButton">
         <property name="toolTip">
