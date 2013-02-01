@@ -470,17 +470,17 @@ void Player::readSettings()
     }
 }
 
-void Player::setIn(unsigned pos)
+void Player::setIn(int pos)
 {
     m_scrubber->setInPoint(pos);
-    if (pos >= m_previousOut)
+    if (pos >= 0 && pos >= m_previousOut)
         setOut(m_duration - 1);
 }
 
-void Player::setOut(unsigned pos)
+void Player::setOut(int pos)
 {
     m_scrubber->setOutPoint(pos);
-    if (pos <= m_previousIn)
+    if (pos >= 0 && pos <= m_previousIn)
         setIn(0);
 }
 

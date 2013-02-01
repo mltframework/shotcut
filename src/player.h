@@ -39,10 +39,10 @@ class Player : public QWidget
 public:
     explicit Player(QWidget *parent = 0);
     void connectTransport(const TransportControllable*);
-    void setIn(unsigned);
-    void setOut(unsigned);
+    void setIn(int);
+    void setOut(int);
     void setMarkers(const QList<int>&);
-    unsigned position() const {
+    int position() const {
         return m_position;
     }
 
