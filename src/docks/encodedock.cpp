@@ -158,7 +158,7 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
     if (p && p->is_valid()) {
         if (realtime)
             p->set("real_time", realtime);
-        if (ui->formatCombo->currentIndex() > 0)
+        if (ui->formatCombo->currentText() != tr("Automatic from extension"))
             p->set("f", ui->formatCombo->currentText().toAscii().constData());
         if (ui->disableAudioCheckbox->isChecked()) {
             p->set("an", 1);
@@ -373,10 +373,11 @@ void EncodeDock::on_presetsTree_currentItemChanged(QTreeWidgetItem *current, QTr
             int audioQuality;
             int videoQuality;
             QStringList other;
-            QStringList textParts = current->text(0).split('/');
+            QStringList textParts = name.split('/');
 
-            if (textParts.count() > 1) {
-                QString folder = textParts.at(0);
+            if (textParts.count() > 3) {
+                // textParts = ['consumer', 'avformat', profile, preset].
+                QString folder = textParts.at(2);
                 if (m_profiles->get_data(folder.toAscii().constData())) {
                     // only set these fields if the folder is a profile
                     Mlt::Profile p(folder.toAscii().constData());
