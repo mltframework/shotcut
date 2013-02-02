@@ -421,7 +421,7 @@ bool Controller::isSeekable()
 {
     bool seekable = false;
     if (m_producer && m_producer->is_valid()) {
-        if (m_producer->get_int("force_seekable")) {
+        if (m_producer->get("force_seekable")) {
             seekable = m_producer->get_int("force_seekable");
         } else {
             seekable = m_producer->get_int("seekable");
