@@ -306,7 +306,7 @@ p, li { white-space: pre-wrap; }
      <normaloff>:/icons/icons/view-fullscreen.png</normaloff>:/icons/icons/view-fullscreen.png</iconset>
    </property>
    <property name="text">
-    <string>Fullscreen</string>
+    <string>Full Screen</string>
    </property>
   </action>
  </widget>

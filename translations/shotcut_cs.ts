@@ -856,9 +856,9 @@ vícevláknové.</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1372"/>
-        <location filename="../src/docks/encodedock.cpp" line="612"/>
-        <location filename="../src/docks/encodedock.cpp" line="619"/>
-        <location filename="../src/docks/encodedock.cpp" line="726"/>
+        <location filename="../src/docks/encodedock.cpp" line="613"/>
+        <location filename="../src/docks/encodedock.cpp" line="620"/>
+        <location filename="../src/docks/encodedock.cpp" line="727"/>
         <source>Stream</source>
         <translation>Proud</translation>
     </message>
@@ -869,6 +869,7 @@ vícevláknové.</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="62"/>
+        <location filename="../src/docks/encodedock.cpp" line="161"/>
         <source>Automatic from extension</source>
         <translation>Automaticky podle přípony</translation>
     </message>
@@ -880,8 +881,8 @@ vícevláknové.</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="95"/>
-        <location filename="../src/docks/encodedock.cpp" line="529"/>
-        <location filename="../src/docks/encodedock.cpp" line="725"/>
+        <location filename="../src/docks/encodedock.cpp" line="530"/>
+        <location filename="../src/docks/encodedock.cpp" line="726"/>
         <source>Capture File</source>
         <translation>Zachytit soubor</translation>
     </message>
@@ -889,7 +890,7 @@ vícevláknové.</translation>
         <location filename="../src/docks/encodedock.cpp" line="101"/>
         <location filename="../src/docks/encodedock.cpp" line="140"/>
         <location filename="../src/docks/encodedock.cpp" line="361"/>
-        <location filename="../src/docks/encodedock.cpp" line="685"/>
+        <location filename="../src/docks/encodedock.cpp" line="686"/>
         <source>Custom</source>
         <translation>Vlastní</translation>
     </message>
@@ -900,44 +901,44 @@ vícevláknové.</translation>
         <translation>Tovární</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="524"/>
-        <location filename="../src/docks/encodedock.cpp" line="567"/>
+        <location filename="../src/docks/encodedock.cpp" line="525"/>
+        <location filename="../src/docks/encodedock.cpp" line="568"/>
         <source>Stop Capture</source>
         <translation>Zastavit zachytávání</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="544"/>
+        <location filename="../src/docks/encodedock.cpp" line="545"/>
         <source>Encode to File</source>
         <translation>Zakódovat do souboru</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="544"/>
+        <location filename="../src/docks/encodedock.cpp" line="545"/>
         <source>Capture to File</source>
         <translation>Zachytit do souboru</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="607"/>
-        <location filename="../src/docks/encodedock.cpp" line="628"/>
+        <location filename="../src/docks/encodedock.cpp" line="608"/>
+        <location filename="../src/docks/encodedock.cpp" line="629"/>
         <source>Stop Stream</source>
         <translation>Zastavit proud</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="620"/>
+        <location filename="../src/docks/encodedock.cpp" line="621"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>Zadejte schéma síťového protokolu, adresu, přípojku a parametry jako adresu (URL):</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="658"/>
+        <location filename="../src/docks/encodedock.cpp" line="659"/>
         <source>Add Encode Preset</source>
         <translation>Přidat přednastavení zakódování</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="703"/>
+        <location filename="../src/docks/encodedock.cpp" line="704"/>
         <source>Delete Preset</source>
         <translation>Smazat přednastavení</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="704"/>
+        <location filename="../src/docks/encodedock.cpp" line="705"/>
         <source>Are you sure you want to delete</source>
         <translation>Opravdu chcete smazat</translation>
     </message>
@@ -1452,7 +1453,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="309"/>
-        <source>Fullscreen</source>
+        <source>Full Screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
