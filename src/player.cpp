@@ -569,6 +569,8 @@ void Player::onProducerOpened()
     else {
         m_durationLabel->setText(tr("Live").prepend(" / "));
         m_scrubber->setDisabled(true);
+        // cause scrubber redraw
+        m_scrubber->setScale(m_duration);
     }
     m_positionSpinner->setEnabled(m_isSeekable);
     on_actionJack_triggered(actionJack->isChecked());
