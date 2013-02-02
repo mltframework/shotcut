@@ -57,6 +57,28 @@ QString Video4LinuxWidget::URL() const
 
 Mlt::Producer* Video4LinuxWidget::producer(Mlt::Profile& profile)
 {
+    if (!profile.is_explicit()) {
+        Mlt::Profile ntscProfile("dv_ntsc");
+        Mlt::Profile palProfile("dv_pal");
+        if (ui->v4lWidthSpinBox->value() == ntscProfile.width() && ui->v4lHeightSpinBox->value() == ntscProfile.height()) {
+            profile.set_sample_aspect(ntscProfile.sample_aspect_num(), ntscProfile.sample_aspect_den());
+            profile.set_progressive(ntscProfile.progressive());
+            profile.set_colorspace(ntscProfile.colorspace());
+            profile.set_frame_rate(ntscProfile.frame_rate_num(), ntscProfile.frame_rate_den());
+        } else if (ui->v4lWidthSpinBox->value() == palProfile.width() && ui->v4lHeightSpinBox->value() == palProfile.height()) {
+            profile.set_sample_aspect(palProfile.sample_aspect_num(), palProfile.sample_aspect_den());
+            profile.set_progressive(palProfile.progressive());
+            profile.set_colorspace(palProfile.colorspace());
+            profile.set_frame_rate(palProfile.frame_rate_num(), palProfile.frame_rate_den());
+        } else {
+            profile.set_width(ui->v4lWidthSpinBox->value());
+            profile.set_height(ui->v4lHeightSpinBox->value());
+            profile.set_sample_aspect(1, 1);
+            profile.set_progressive(1);
+            profile.set_colorspace(601);
+            profile.set_frame_rate(ui->v4lFramerateSpinBox->value() * 10000, 10000);
+        }
+    }
     Mlt::Producer* p = new Mlt::Producer(profile, URL().toAscii().constData());
     if (!p->is_valid()) {
         delete p;
@@ -68,6 +90,7 @@ Mlt::Producer* Video4LinuxWidget::producer(Mlt::Profile& profile)
     else if (m_audioWidget) {
         Mlt::Producer* audio = dynamic_cast<AbstractProducerWidget*>(m_audioWidget)->producer(profile);
         Mlt::Tractor* tractor = new Mlt::Tractor;
+        tractor->set("_profile", profile.get_profile(), 0);
         tractor->set_track(*p, 0);
         delete p;
         tractor->set_track(*audio, 1);
@@ -88,6 +111,7 @@ Mlt::Producer* Video4LinuxWidget::producer(Mlt::Profile& profile)
     p->set("standard", ui->v4lStandardCombo->currentText().toAscii().constData());
     p->set("channel", ui->v4lChannelSpinBox->value());
     p->set("audio_ix", ui->v4lAudioComboBox->currentIndex());
+    p->set("force_seekable", 0);
     return p;
 }
 
