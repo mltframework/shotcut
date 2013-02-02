@@ -147,6 +147,7 @@ void X11grabWidget::loadPreset(Mlt::Properties& p)
     ui->drawMouseCheckBox->setChecked(p.get_int("draw_mouse"));
     ui->positionComboBox->setCurrentIndex(p.get_int("follow_mouse") + 1);
     ui->audioComboBox->setCurrentIndex(p.get_int("audio_ix"));
+    on_audioComboBox_activated(p.get_int("audio_ix"));
     ui->backgroundCheckBox->setChecked(p.get_int("shotcut_bgcapture"));
 }
 

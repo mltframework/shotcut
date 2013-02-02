@@ -143,6 +143,7 @@ void Video4LinuxWidget::loadPreset(Mlt::Properties& p)
     }
     ui->v4lChannelSpinBox->setValue(p.get_int("channel"));
     ui->v4lAudioComboBox->setCurrentIndex(p.get_int("audio_ix"));
+    on_v4lAudioComboBox_activated(p.get_int("audio_ix"));
 }
 
 void Video4LinuxWidget::on_v4lAudioComboBox_activated(int index)
