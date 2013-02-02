@@ -421,12 +421,16 @@ bool Controller::isSeekable()
 {
     bool seekable = false;
     if (m_producer && m_producer->is_valid()) {
-        seekable = m_producer->get_int("seekable");
-        if (!seekable && m_producer->get("mlt_type"))
-            seekable = !strcmp(m_producer->get("mlt_type"), "mlt_producer");
-        if (!seekable) {
-            QString service(m_producer->get("mlt_service"));
-            seekable = service == "color" || service.startsWith("frei0r.");
+        if (m_producer->get_int("force_seekable")) {
+            seekable = m_producer->get_int("force_seekable");
+        } else {
+            seekable = m_producer->get_int("seekable");
+            if (!seekable && m_producer->get("mlt_type"))
+                seekable = !strcmp(m_producer->get("mlt_type"), "mlt_producer");
+            if (!seekable) {
+                QString service(m_producer->get("mlt_service"));
+                seekable = service == "color" || service.startsWith("frei0r.");
+            }
         }
     }
     return seekable;

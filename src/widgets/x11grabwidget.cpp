@@ -108,6 +108,7 @@ Mlt::Producer* X11grabWidget::producer(Mlt::Profile& profile)
     p->set("follow_mouse", ui->positionComboBox->currentIndex() - 1);
     p->set("audio_ix", ui->audioComboBox->currentIndex());
     p->set("shotcut_bgcapture", ui->backgroundCheckBox->isChecked()? 1: 0);
+    p->set("force_seekable", 0);
     return p;
 }
 
