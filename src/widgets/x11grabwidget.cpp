@@ -63,6 +63,14 @@ void X11grabWidget::on_audioComboBox_activated(int index)
 
 QString X11grabWidget::URL(Mlt::Profile& profile) const
 {
+    if (!profile.is_explicit()) {
+        profile.set_width(ui->widthSpinBox->value());
+        profile.set_height(ui->heightSpinBox->value());
+        profile.set_sample_aspect(1, 1);
+        profile.set_progressive(1);
+        profile.set_colorspace(709);
+        profile.set_frame_rate(25, 1);
+    }
     QString s = QString("x11grab:%1+%2,%3?width=%4&height=%5&framerate=%6&show_region=%7&draw_mouse=%8&follow_mouse=%9")
             .arg(ui->lineEdit->text())
             .arg(ui->xSpinBox->value())
@@ -87,7 +95,7 @@ Mlt::Producer* X11grabWidget::producer(Mlt::Profile& profile)
     else if (m_audioWidget) {
         Mlt::Producer* audio = dynamic_cast<AbstractProducerWidget*>(m_audioWidget)->producer(profile);
         Mlt::Tractor* tractor = new Mlt::Tractor;
-        tractor->set("_profile", &MLT.profile(), 0);
+        tractor->set("_profile", profile.get_profile(), 0);
         tractor->set_track(*p, 0);
         delete p;
         tractor->set_track(*audio, 1);
