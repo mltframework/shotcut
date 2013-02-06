@@ -93,13 +93,14 @@ private slots:
     void onProducerChanged();
     bool on_actionSave_triggered();
     bool on_actionSave_As_triggered();
-    void on_actionEncode_triggered(bool checked);
+    void onEncodeTriggered(bool checked = true);
     void onCaptureStateChanged(bool started);
-    void onJobsVisibilityChanged(bool checked);
-    void onRecentDockTriggered(bool checked);
-    void onPropertiesDockTriggered(bool checked);
-    void onPlaylistDockTriggered(bool checked);
-    void onHistoryDockTriggered(bool checked);
+    void onEncodeVisibilityChanged(bool);
+    void onJobsVisibilityChanged(bool);
+    void onRecentDockTriggered(bool checked = true);
+    void onPropertiesDockTriggered(bool checked = true);
+    void onPlaylistDockTriggered(bool checked = true);
+    void onHistoryDockTriggered(bool checked = true);
     void onPlaylistCreated();
     void onPlaylistCleared();
     void onPlaylistClosed();
@@ -112,6 +113,7 @@ private slots:
     void on_actionForum_triggered();
     void onMeltedUnitOpened();
     void onMeltedUnitActivated();
+    void on_actionEnter_Full_Screen_triggered();
 };
 
 #define MAIN MainWindow::singleton()

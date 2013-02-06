@@ -80,6 +80,8 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>&amp;View</string>
     </property>
+    <addaction name="actionEnter_Full_Screen"/>
+    <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -120,6 +122,12 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionUndo"/>
    <addaction name="actionRedo"/>
    <addaction name="separator"/>
+   <addaction name="actionProperties"/>
+   <addaction name="actionRecent"/>
+   <addaction name="actionPlaylist"/>
+   <addaction name="actionHistory"/>
+   <addaction name="actionEncode"/>
+   <addaction name="actionFullscreen"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen">
@@ -205,9 +213,6 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
   <action name="actionEncode">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
    <property name="icon">
     <iconset resource="resources.qrc">
      <normaloff>:/icons/icons/media-record.png</normaloff>:/icons/icons/media-record.png</iconset>
@@ -216,7 +221,7 @@ p, li { white-space: pre-wrap; }
     <string>Encode</string>
    </property>
    <property name="toolTip">
-    <string>Toggle the Encode and Jobs panels</string>
+    <string>Show the Encode and Jobs panels</string>
    </property>
   </action>
   <action name="actionUndo">
@@ -245,6 +250,63 @@ p, li { white-space: pre-wrap; }
   <action name="actionFAQ">
    <property name="text">
     <string>FAQ...</string>
+   </property>
+  </action>
+  <action name="actionEnter_Full_Screen">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/icons/view-fullscreen.png</normaloff>:/icons/icons/view-fullscreen.png</iconset>
+   </property>
+   <property name="text">
+    <string>Enter Full Screen</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+F</string>
+   </property>
+  </action>
+  <action name="actionProperties">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/icons/view-form.png</normaloff>:/icons/icons/view-form.png</iconset>
+   </property>
+   <property name="text">
+    <string>Properties</string>
+   </property>
+  </action>
+  <action name="actionRecent">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/icons/document-open-recent.png</normaloff>:/icons/icons/document-open-recent.png</iconset>
+   </property>
+   <property name="text">
+    <string>Recent</string>
+   </property>
+  </action>
+  <action name="actionPlaylist">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/icons/view-media-playlist.png</normaloff>:/icons/icons/view-media-playlist.png</iconset>
+   </property>
+   <property name="text">
+    <string>Playlist</string>
+   </property>
+  </action>
+  <action name="actionHistory">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/icons/view-history.png</normaloff>:/icons/icons/view-history.png</iconset>
+   </property>
+   <property name="text">
+    <string>History</string>
+   </property>
+  </action>
+  <action name="actionFullscreen">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/icons/view-fullscreen.png</normaloff>:/icons/icons/view-fullscreen.png</iconset>
+   </property>
+   <property name="text">
+    <string>Full Screen</string>
    </property>
   </action>
  </widget>

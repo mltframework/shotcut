@@ -18,6 +18,7 @@
 
 #include "playlistmodel.h"
 #include <QtCore/QFileInfo>
+#include <QtCore/QUrl>
 
 PlaylistModel::PlaylistModel(QObject *parent)
     : QAbstractTableModel(parent)
@@ -113,7 +114,7 @@ QVariant PlaylistModel::headerData(int section, Qt::Orientation orientation, int
 
 Qt::DropActions PlaylistModel::supportedDropActions() const
 {
-    return Qt::MoveAction | Qt::LinkAction;
+    return Qt::CopyAction | Qt::MoveAction | Qt::LinkAction;
 }
 
 bool PlaylistModel::insertRows(int row, int count, const QModelIndex& parent)
@@ -141,16 +142,44 @@ QStringList PlaylistModel::mimeTypes() const
     return ls;
 }
 
+QMimeData *PlaylistModel::mimeData(const QModelIndexList &indexes) const
+{
+    QMimeData *mimeData = new QMimeData;
+    mimeData->setData("application/mlt+xml", "");
+    return mimeData;
+}
+
 bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
 {
+    // Dragged from player or file manager
     if (data->hasFormat("application/mlt+xml") || data->hasUrls()) {
         emit dropped(data, row);
         return true;
     }
-    else if (action == Qt::MoveAction)
+    // Internal reorder
+    else if (action == Qt::MoveAction) {
         return QAbstractTableModel::dropMimeData(data, action, row, column, parent);
-    else
-        return false;
+    }
+    // Dragged from Recent dock
+    else if (data->hasFormat("application/x-qabstractitemmodeldatalist")) {
+        QByteArray encoded = data->data("application/x-qabstractitemmodeldatalist");
+        QDataStream stream(&encoded, QIODevice::ReadOnly);
+        QMap<int,  QVariant> roleDataMap;
+        while (!stream.atEnd()) {
+            int row, col;
+            stream >> row >> col >> roleDataMap;
+        }
+        if (roleDataMap.contains(Qt::ToolTipRole)) {
+            QMimeData *mimeData = new QMimeData;
+            QList<QUrl> urls;
+            // DisplayRole is just basename, ToolTipRole contains full path
+            urls.append(roleDataMap[Qt::ToolTipRole].toUrl());
+            mimeData->setUrls(urls);
+            emit dropped(mimeData, row);
+            return true;
+        }
+    }
+    return false;
 }
 
 Qt::ItemFlags PlaylistModel::flags(const QModelIndex &index) const
@@ -160,6 +189,27 @@ Qt::ItemFlags PlaylistModel::flags(const QModelIndex &index) const
         return Qt::ItemIsDragEnabled | defaults;
     else
         return Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled | defaults;
+}
+
+QModelIndex PlaylistModel::incrementIndex(const QModelIndex& index) const
+{
+    if (index.row() + 1 < rowCount())
+        return createIndex(index.row() + 1, index.column());
+    else
+        return QModelIndex();
+}
+
+QModelIndex PlaylistModel::decrementIndex(const QModelIndex& index) const
+{
+    if (index.row() > 0)
+        return createIndex(index.row() -1, index.column());
+    else
+        return QModelIndex();
+}
+
+QModelIndex PlaylistModel::createIndex(int row, int column) const
+{
+    return QAbstractTableModel::createIndex(row, column);
 }
 
 void PlaylistModel::clear()

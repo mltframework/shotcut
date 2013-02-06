@@ -77,6 +77,7 @@ MainWindow::MainWindow()
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openVideo()));
     connect(ui->actionAbout_Qt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
     connect(this, SIGNAL(producerOpened()), this, SLOT(onProducerOpened()));
+    connect(ui->actionFullscreen, SIGNAL(triggered()), this, SLOT(on_actionEnter_Full_Screen_triggered()));
 
     // Accept drag-n-drop of files.
     this->setAcceptDrops(true);
@@ -87,6 +88,8 @@ MainWindow::MainWindow()
     QAction *redoAction = m_undoStack->createRedoAction(this);
     undoAction->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/icons/icons/edit-undo.png")));
     redoAction->setIcon(QIcon::fromTheme("edit-redo", QIcon(":/icons/icons/edit-redo.png")));
+    undoAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+Z", 0, QApplication::UnicodeUTF8));
+    redoAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+Z", 0, QApplication::UnicodeUTF8));
     ui->menuEdit->addAction(undoAction);
     ui->menuEdit->addAction(redoAction);
     ui->actionUndo->setIcon(undoAction->icon());
@@ -113,25 +116,26 @@ MainWindow::MainWindow()
     m_propertiesDock->setObjectName("propertiesDock");
     m_propertiesDock->setWindowIcon(QIcon((":/icons/icons/view-form.png")));
     m_propertiesDock->toggleViewAction()->setIcon(QIcon::fromTheme("view-form", m_propertiesDock->windowIcon()));
+    ui->actionProperties->setIcon(QIcon::fromTheme("view-form", m_propertiesDock->windowIcon()));
     addDockWidget(Qt::LeftDockWidgetArea, m_propertiesDock);
     ui->menuView->addAction(m_propertiesDock->toggleViewAction());
-    ui->mainToolBar->addAction(m_propertiesDock->toggleViewAction());
     connect(m_propertiesDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onPropertiesDockTriggered(bool)));
+    connect(ui->actionProperties, SIGNAL(triggered()), this, SLOT(onPropertiesDockTriggered()));
 
     m_recentDock = new RecentDock(this);
     m_recentDock->hide();
     addDockWidget(Qt::LeftDockWidgetArea, m_recentDock);
     ui->menuView->addAction(m_recentDock->toggleViewAction());
-    ui->mainToolBar->addAction(m_recentDock->toggleViewAction());
     connect(m_recentDock, SIGNAL(itemActivated(QString)), this, SLOT(open(QString)));
     connect(m_recentDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onRecentDockTriggered(bool)));
+    connect(ui->actionRecent, SIGNAL(triggered()), this, SLOT(onRecentDockTriggered()));
 
     m_playlistDock = new PlaylistDock(this);
     m_playlistDock->hide();
     addDockWidget(Qt::LeftDockWidgetArea, m_playlistDock);
     ui->menuView->addAction(m_playlistDock->toggleViewAction());
-    ui->mainToolBar->addAction(m_playlistDock->toggleViewAction());
     connect(m_playlistDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onPlaylistDockTriggered(bool)));
+    connect(ui->actionPlaylist, SIGNAL(triggered()), this, SLOT(onPlaylistDockTriggered()));
     connect(m_playlistDock, SIGNAL(clipOpened(void*,int,int)), this, SLOT(openCut(void*, int, int)));
     connect(m_playlistDock, SIGNAL(itemActivated(int)), this, SLOT(seekPlaylist(int)));
     connect(m_playlistDock, SIGNAL(showStatusMessage(QString)), this, SLOT(showStatusMessage(QString)));
@@ -147,12 +151,15 @@ MainWindow::MainWindow()
     m_historyDock->setObjectName("historyDock");
     m_historyDock->setWindowIcon(QIcon((":/icons/icons/view-history.png")));
     m_historyDock->toggleViewAction()->setIcon(QIcon::fromTheme("view-history", m_historyDock->windowIcon()));
+    ui->actionHistory->setIcon(QIcon::fromTheme("view-history", m_historyDock->windowIcon()));
     addDockWidget(Qt::LeftDockWidgetArea, m_historyDock);
     ui->menuView->addAction(m_historyDock->toggleViewAction());
-    ui->mainToolBar->addAction(m_historyDock->toggleViewAction());
     connect(m_historyDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onHistoryDockTriggered(bool)));
+    connect(ui->actionHistory, SIGNAL(triggered()), this, SLOT(onHistoryDockTriggered()));
     QUndoView* undoView = new QUndoView(m_undoStack, m_historyDock);
     undoView->setObjectName("historyView");
+    undoView->setAlternatingRowColors(true);
+    undoView->setSpacing(2);
     m_historyDock->setWidget(undoView);
     ui->actionUndo->setDisabled(true);
     ui->actionRedo->setDisabled(true);
@@ -166,9 +173,10 @@ MainWindow::MainWindow()
     m_encodeDock->hide();
     addDockWidget(Qt::RightDockWidgetArea, m_encodeDock);
     ui->menuView->addAction(m_encodeDock->toggleViewAction());
-    ui->mainToolBar->addAction(ui->actionEncode);
     connect(this, SIGNAL(producerOpened()), m_encodeDock, SLOT(onProducerOpened()));
-    connect(m_encodeDock, SIGNAL(visibilityChanged(bool)), ui->actionEncode, SLOT(setChecked(bool)));
+    connect(ui->actionEncode, SIGNAL(triggered()), this, SLOT(onEncodeTriggered()));
+    connect(m_encodeDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onEncodeTriggered(bool)));
+    connect(m_encodeDock, SIGNAL(visibilityChanged(bool)), this, SLOT(onEncodeVisibilityChanged(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_player, SLOT(onCaptureStateChanged(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_propertiesDock, SLOT(setDisabled(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_recentDock, SLOT(setDisabled(bool)));
@@ -177,6 +185,8 @@ MainWindow::MainWindow()
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), ui->actionExit, SLOT(setDisabled(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), this, SLOT(onCaptureStateChanged(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_historyDock, SLOT(setDisabled(bool)));
+    connect(m_player, SIGNAL(profileChanged()), m_encodeDock, SLOT(onProfileChanged()));
+    m_encodeDock->onProfileChanged();
 
     m_jobsDock = new JobsDock(this);
     m_jobsDock->hide();
@@ -185,7 +195,7 @@ MainWindow::MainWindow()
     ui->menuView->addAction(m_jobsDock->toggleViewAction());
     connect(&JOBS, SIGNAL(jobAdded()), m_jobsDock, SLOT(show()));
     connect(&JOBS, SIGNAL(jobAdded()), m_jobsDock, SLOT(raise()));
-    connect(m_jobsDock, SIGNAL(visibilityChanged(bool)), this, SLOT(onJobsVisibilityChanged(bool)));
+    connect(m_jobsDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onJobsVisibilityChanged(bool)));
 
     m_meltedServerDock = new MeltedServerDock(this);
     m_meltedServerDock->hide();
@@ -365,6 +375,8 @@ void MainWindow::readSettings()
 
 void MainWindow::writeSettings()
 {
+    if (isFullScreen())
+        showNormal();
     m_settings.setValue("geometry", saveGeometry());
     m_settings.setValue("windowState", saveState());
 }
@@ -450,6 +462,100 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         if (MLT.isSeekable() && !MLT.isPlaylist())
             m_player->setOut(m_player->position());
         break;
+    case Qt::Key_V: // Avid Splice In
+        m_playlistDock->show();
+        m_playlistDock->raise();
+        m_playlistDock->on_actionInsertCut_triggered();
+        break;
+    case Qt::Key_B: // Avid Overwrite
+        m_playlistDock->show();
+        m_playlistDock->raise();
+        m_playlistDock->on_actionUpdate_triggered();
+        break;
+    case Qt::Key_Escape: // Avid Toggle Active Monitor
+        if (MLT.isPlaylist())
+            m_playlistDock->on_actionOpen_triggered();
+        else if (m_playlistDock->position() >= 0) {
+            m_playlistDock->show();
+            seekPlaylist(m_playlistDock->position());
+        }
+        break;
+    case Qt::Key_Up:
+        m_playlistDock->show();
+        m_playlistDock->raise();
+        if (event->modifiers() == Qt::ControlModifier)
+            m_playlistDock->moveClipUp();
+        m_playlistDock->decrementIndex();
+        break;
+    case Qt::Key_Down:
+        m_playlistDock->show();
+        m_playlistDock->raise();
+        if (event->modifiers() == Qt::ControlModifier)
+            m_playlistDock->moveClipDown();
+        m_playlistDock->incrementIndex();
+        break;
+    case Qt::Key_1:
+        m_playlistDock->show();
+        m_playlistDock->raise();
+        m_playlistDock->setIndex(0);
+        break;
+    case Qt::Key_2:
+        m_playlistDock->show();
+        m_playlistDock->raise();
+        m_playlistDock->setIndex(1);
+        break;
+    case Qt::Key_3:
+        m_playlistDock->show();
+        m_playlistDock->raise();
+        m_playlistDock->setIndex(2);
+        break;
+    case Qt::Key_4:
+        m_playlistDock->show();
+        m_playlistDock->raise();
+        m_playlistDock->setIndex(3);
+        break;
+    case Qt::Key_5:
+        m_playlistDock->show();
+        m_playlistDock->raise();
+        m_playlistDock->setIndex(4);
+        break;
+    case Qt::Key_6:
+        m_playlistDock->show();
+        m_playlistDock->raise();
+        m_playlistDock->setIndex(5);
+        break;
+    case Qt::Key_7:
+        m_playlistDock->show();
+        m_playlistDock->raise();
+        m_playlistDock->setIndex(6);
+        break;
+    case Qt::Key_8:
+        m_playlistDock->show();
+        m_playlistDock->raise();
+        m_playlistDock->setIndex(7);
+        break;
+    case Qt::Key_9:
+        m_playlistDock->show();
+        m_playlistDock->raise();
+        m_playlistDock->setIndex(8);
+        break;
+    case Qt::Key_0:
+        m_playlistDock->show();
+        m_playlistDock->raise();
+        m_playlistDock->setIndex(9);
+        break;
+    case Qt::Key_X: // Avid Extract
+    case Qt::Key_Backspace:
+    case Qt::Key_Delete:
+        m_playlistDock->show();
+        m_playlistDock->raise();
+        m_playlistDock->on_removeButton_clicked();
+        break;
+    case Qt::Key_Enter: // Seek to current playlist item
+    case Qt::Key_Return:
+        if (m_playlistDock->position() >= 0)
+            seekPlaylist(m_playlistDock->position());
+        break;
     default:
         QMainWindow::keyPressEvent(event);
     }
@@ -489,6 +595,10 @@ void MainWindow::dropEvent(QDropEvent *event)
     }
     else if (mimeData->hasUrls()) {
         open(mimeData->urls().at(0).path());
+        event->acceptProposedAction();
+    }
+    else if (mimeData->hasFormat("application/mlt+xml")) {
+        m_playlistDock->on_actionOpen_triggered();
         event->acceptProposedAction();
     }
 }
@@ -622,12 +732,18 @@ bool MainWindow::on_actionSave_As_triggered()
 bool MainWindow::continueModified()
 {
     if (isWindowModified()) {
-        int r = QMessageBox::warning(this, qApp->applicationName(),
+        QMessageBox dialog(QMessageBox::Warning,
+                                     qApp->applicationName(),
                                      tr("The project has been modified.\n"
                                         "Do you want to save your changes?"),
-                                     QMessageBox::Yes | QMessageBox::Default,
-                                     QMessageBox::No,
-                                     QMessageBox::Cancel | QMessageBox::Escape);
+                                     QMessageBox::No |
+                                     QMessageBox::Cancel |
+                                     QMessageBox::Yes,
+                                     this);
+        dialog.setWindowModality(Qt::WindowModal);
+        dialog.setDefaultButton(QMessageBox::Yes);
+        dialog.setEscapeButton(QMessageBox::Cancel);
+        int r = dialog.exec();
         if (r == QMessageBox::Yes) {
             return on_actionSave_triggered();
         } else if (r == QMessageBox::Cancel) {
@@ -642,7 +758,7 @@ QUndoStack* MainWindow::undoStack() const
     return m_undoStack;
 }
 
-void MainWindow::on_actionEncode_triggered(bool checked)
+void MainWindow::onEncodeTriggered(bool checked)
 {
     m_encodeDock->setVisible(checked);
     if (checked) {
@@ -662,33 +778,49 @@ void MainWindow::onCaptureStateChanged(bool started)
         showMinimized();
 }
 
+void MainWindow::onEncodeVisibilityChanged(bool checked)
+{
+    if (m_encodeDock->isHidden())
+        m_jobsDock->hide();
+}
+
 void MainWindow::onJobsVisibilityChanged(bool checked)
 {
     m_jobsVisible = checked;
+    if (checked)
+        m_jobsDock->raise();
 }
 
 void MainWindow::onRecentDockTriggered(bool checked)
 {
-    if (checked)
+    if (checked) {
+        m_recentDock->show();
         m_recentDock->raise();
+    }
 }
 
 void MainWindow::onPropertiesDockTriggered(bool checked)
 {
-    if (checked)
+    if (checked) {
+        m_propertiesDock->show();
         m_propertiesDock->raise();
+    }
 }
 
 void MainWindow::onPlaylistDockTriggered(bool checked)
 {
-    if (checked)
+    if (checked) {
+        m_playlistDock->show();
         m_playlistDock->raise();
+    }
 }
 
 void MainWindow::onHistoryDockTriggered(bool checked)
 {
-    if (checked)
+    if (checked) {
+        m_historyDock->show();
         m_historyDock->raise();
+    }
 }
 
 void MainWindow::onPlaylistCreated()
@@ -785,4 +917,15 @@ void MainWindow::onMeltedUnitActivated()
 {
     m_meltedPlaylistDock->setVisible(true);
     m_meltedPlaylistDock->raise();
+}
+
+void MainWindow::on_actionEnter_Full_Screen_triggered()
+{
+    if (isFullScreen()) {
+        showNormal();
+        ui->actionEnter_Full_Screen->setText(tr("Enter Full Screen"));
+    } else {
+        showFullScreen();
+        ui->actionEnter_Full_Screen->setText(tr("Exit Full Screen"));
+    }
 }

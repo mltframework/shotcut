@@ -83,7 +83,7 @@ void GLWidget::initializeGL()
     initializeGLFunctions();
     qglClearColor(palette.color(QPalette::Window));
     glShadeModel(GL_FLAT);
-    glEnable(GL_TEXTURE_RECTANGLE_ARB);
+    glEnable(GL_TEXTURE_2D);
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_CULL_FACE);
     glDisable(GL_LIGHTING);
@@ -92,16 +92,15 @@ void GLWidget::initializeGL()
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     if (!m_glslManager) {
         m_shader.addShaderFromSourceCode(QGLShader::Fragment,
-        "#extension GL_ARB_texture_rectangle : enable\n"
-        "uniform sampler2DRect Ytex, Utex, Vtex;"
+        "uniform sampler2D Ytex, Utex, Vtex;"
         "void main(void) {"
         "  float r, g, b;"
         "  vec4 txl, ux, vx;"
         "  float nx = gl_TexCoord[0].x;"
         "  float ny = gl_TexCoord[0].y;"
-        "  float y = texture2DRect(Ytex, vec2(nx, ny)).r;"
-        "  float u = texture2DRect(Utex, vec2(nx/2.0, ny/4.0)).r;"
-        "  float v = texture2DRect(Vtex, vec2(nx/2.0, ny/4.0)).r;"
+        "  float y = texture2D(Ytex, vec2(nx, ny)).r;"
+        "  float u = texture2D(Utex, vec2(nx, ny)).r;"
+        "  float v = texture2D(Vtex, vec2(nx, ny)).r;"
 
         "  y = 1.1643 * (y - 0.0625);"
         "  u = u - 0.5;"
@@ -165,20 +164,19 @@ void GLWidget::paintGL()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     if (m_texture[0]) {
         if (m_glslManager && m_fbo) {
-            glBindTexture(GL_TEXTURE_RECTANGLE_ARB, m_fbo->texture());
+            glBindTexture(GL_TEXTURE_2D, m_fbo->texture());
             check_error();
         }
         glBegin(GL_QUADS);
             glTexCoord2i(0, 0);
             glVertex2i  (x, y);
-            glTexCoord2i(m_image_width, 0);
+            glTexCoord2i(1, 0);
             glVertex2i  (x + w, y);
-            glTexCoord2i(m_image_width, m_image_height);
+            glTexCoord2i(1, 1);
             glVertex2i  (x + w, y + h);
-            glTexCoord2i(0, m_image_height);
+            glTexCoord2i(0, 1);
             glVertex2i  (x, y + h);
         glEnd();
-        check_error();
     }
 }
 
@@ -239,7 +237,7 @@ void GLWidget::showFrame(Mlt::QFrame frame)
 
             if (!m_fbo || m_fbo->width() != m_image_width || m_fbo->height() != m_image_height) {
                 delete m_fbo;
-                m_fbo = new QGLFramebufferObject(m_image_width, m_image_height, GL_TEXTURE_RECTANGLE_ARB);
+                m_fbo = new QGLFramebufferObject(m_image_width, m_image_height, GL_TEXTURE_2D);
             }
             glPushAttrib(GL_VIEWPORT_BIT);
             glMatrixMode(GL_PROJECTION);
@@ -257,7 +255,7 @@ void GLWidget::showFrame(Mlt::QFrame frame)
 
             glActiveTexture( GL_TEXTURE0 );
             check_error();
-            glBindTexture( GL_TEXTURE_RECTANGLE_ARB, m_texture[0]);
+            glBindTexture( GL_TEXTURE_2D, m_texture[0]);
             check_error();
 
             glBegin( GL_QUADS );
@@ -285,27 +283,27 @@ void GLWidget::showFrame(Mlt::QFrame frame)
             glGenTextures  (3, m_texture);
 
             glActiveTexture(GL_TEXTURE0);
-            glBindTexture  (GL_TEXTURE_RECTANGLE_ARB, m_texture[0]);
+            glBindTexture  (GL_TEXTURE_2D, m_texture[0]);
             m_shader.setUniformValue(m_shader.uniformLocation("Ytex"), 0);
-            glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            glTexParameterf(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-            glTexImage2D   (GL_TEXTURE_RECTANGLE_ARB, 0, GL_LUMINANCE, m_image_width, m_image_height, 0,
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            glTexImage2D   (GL_TEXTURE_2D, 0, GL_LUMINANCE, m_image_width, m_image_height, 0,
                             GL_LUMINANCE, GL_UNSIGNED_BYTE, image);
 
             glActiveTexture(GL_TEXTURE1);
-            glBindTexture  (GL_TEXTURE_RECTANGLE_ARB, m_texture[1]);
+            glBindTexture  (GL_TEXTURE_2D, m_texture[1]);
             m_shader.setUniformValue(m_shader.uniformLocation("Utex"), 1);
-            glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            glTexParameterf(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-            glTexImage2D   (GL_TEXTURE_RECTANGLE_ARB, 0, GL_LUMINANCE, m_image_width/2, m_image_height/4, 0,
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            glTexImage2D   (GL_TEXTURE_2D, 0, GL_LUMINANCE, m_image_width/2, m_image_height/4, 0,
                             GL_LUMINANCE, GL_UNSIGNED_BYTE, image + m_image_width * m_image_height);
 
             glActiveTexture(GL_TEXTURE2);
-            glBindTexture  (GL_TEXTURE_RECTANGLE_ARB, m_texture[2]);
+            glBindTexture  (GL_TEXTURE_2D, m_texture[2]);
             m_shader.setUniformValue(m_shader.uniformLocation("Vtex"), 2);
-            glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            glTexParameterf(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-            glTexImage2D   (GL_TEXTURE_RECTANGLE_ARB, 0, GL_LUMINANCE, m_image_width/2, m_image_height/4, 0,
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            glTexImage2D   (GL_TEXTURE_2D, 0, GL_LUMINANCE, m_image_width/2, m_image_height/4, 0,
                             GL_LUMINANCE, GL_UNSIGNED_BYTE, image + m_image_width * m_image_height + m_image_width/2 * m_image_height/2);
         }
         glDraw();

@@ -190,38 +190,58 @@ void MeltedPlaylistDock::on_actionGoto_triggered()
 
 void MeltedPlaylistDock::on_actionRemoveAll_triggered()
 {
-    int r = QMessageBox::warning(this, qApp->applicationName(),
-                                 tr("\"Remove All\" will remove all of clips in the playlist.\n\n"
-                                    "IMPORTANT: You cannot Undo this action!\n\n"
-                                    "Do you want to continue?"),
-                                 QMessageBox::Yes | QMessageBox::Default,
-                                 QMessageBox::No | QMessageBox::Escape);
+    QMessageBox dialog(QMessageBox::Warning,
+                       qApp->applicationName(),
+                        tr("\"Remove All\" will remove all of clips in the playlist.\n\n"
+                           "IMPORTANT: You cannot Undo this action!\n\n"
+                           "Do you want to continue?"),
+                        QMessageBox::No | QMessageBox::Yes,
+                        this);
+    dialog.setDefaultButton(QMessageBox::Yes);
+    dialog.setEscapeButton(QMessageBox::No);
+    dialog.setWindowModality(Qt::WindowModal);
+    dialog.setDefaultButton(QMessageBox::Yes);
+    dialog.setEscapeButton(QMessageBox::Cancel);
+    int r = dialog.exec();
     if (r == QMessageBox::Yes)
         m_model.clear();
 }
 
 void MeltedPlaylistDock::on_actionWipe_triggered()
 {
-    int r = QMessageBox::warning(this, qApp->applicationName(),
-                                 tr("\"Wipe\" will remove all of clips in the playlist\n"
-                                    "before the currently playing clip.\n\n"
-                                    "IMPORTANT: You cannot Undo this action!\n\n"
-                                    "Do you want to continue?"),
-                                 QMessageBox::Yes | QMessageBox::Default,
-                                 QMessageBox::No | QMessageBox::Escape);
+    QMessageBox dialog(QMessageBox::Warning,
+                       qApp->applicationName(),
+                        tr("\"Remove All\" will remove all of clips in the playlist.\n\n"
+                           "IMPORTANT: You cannot Undo this action!\n\n"
+                           "Do you want to continue?"),
+                        QMessageBox::No | QMessageBox::Yes,
+                        this);
+    dialog.setDefaultButton(QMessageBox::Yes);
+    dialog.setEscapeButton(QMessageBox::No);
+    dialog.setWindowModality(Qt::WindowModal);
+    dialog.setDefaultButton(QMessageBox::Yes);
+    dialog.setEscapeButton(QMessageBox::Cancel);
+    int r = dialog.exec();
     if (r == QMessageBox::Yes)
         m_model.wipe();
 }
 
 void MeltedPlaylistDock::on_actionClean_triggered()
 {
-    int r = QMessageBox::warning(this, qApp->applicationName(),
-                                 tr("\"Clean\" will remove all of clips in the playlist\n"
-                                    "except the currently playing clip.\n\n"
-                                    "IMPORTANT: You cannot Undo this action!\n\n"
-                                    "Do you want to continue?"),
-                                 QMessageBox::Yes | QMessageBox::Default,
-                                 QMessageBox::No | QMessageBox::Escape);
+    QMessageBox dialog(QMessageBox::Warning,
+                       qApp->applicationName(),
+                       tr("\"Clean\" will remove all of clips in the playlist\n"
+                          "except the currently playing clip.\n\n"
+                          "IMPORTANT: You cannot Undo this action!\n\n"
+                          "Do you want to continue?"),
+                        QMessageBox::No | QMessageBox::Yes,
+                        this);
+    dialog.setDefaultButton(QMessageBox::Yes);
+    dialog.setEscapeButton(QMessageBox::No);
+    dialog.setWindowModality(Qt::WindowModal);
+    dialog.setDefaultButton(QMessageBox::Yes);
+    dialog.setEscapeButton(QMessageBox::Cancel);
+    int r = dialog.exec();
     if (r == QMessageBox::Yes)
         m_model.clean();
 }
