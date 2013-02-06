@@ -36,9 +36,6 @@
 #if defined(Q_WS_WIN) && !defined(glActiveTexture)
 #define glActiveTexture GLeeFuncPtr_glActiveTexture
 #endif
-#ifndef GL_TEXTURE_RECTANGLE_EXT
-#define GL_TEXTURE_RECTANGLE_EXT GL_TEXTURE_RECTANGLE_NV
-#endif
 
 using namespace Mlt;
 
@@ -85,16 +82,15 @@ void GLWidget::initializeGL()
     glDisable(GL_BLEND);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     m_shader.addShaderFromSourceCode(QGLShader::Fragment,
-        "#extension GL_ARB_texture_rectangle : enable\n"
-        "uniform sampler2DRect Ytex, Utex, Vtex;"
+        "uniform sampler2D Ytex, Utex, Vtex;"
         "void main(void) {"
         "  float r, g, b;"
         "  vec4 txl, ux, vx;"
         "  float nx = gl_TexCoord[0].x;"
         "  float ny = gl_TexCoord[0].y;"
-        "  float y = texture2DRect(Ytex, vec2(nx, ny)).r;"
-        "  float u = texture2DRect(Utex, vec2(nx/2.0, ny/4.0)).r;"
-        "  float v = texture2DRect(Vtex, vec2(nx/2.0, ny/4.0)).r;"
+        "  float y = texture2D(Ytex, vec2(nx, ny)).r;"
+        "  float u = texture2D(Utex, vec2(nx, ny)).r;"
+        "  float v = texture2D(Vtex, vec2(nx, ny)).r;"
 
         "  y = 1.1643 * (y - 0.0625);"
         "  u = u - 0.5;"
@@ -152,21 +148,18 @@ void GLWidget::paintGL()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     if (m_texture[0])
     {
-#ifdef Q_WS_MAC
-        glClear(GL_COLOR_BUFFER_BIT);
-#endif
-        glEnable(GL_TEXTURE_RECTANGLE_EXT);
+        glEnable(GL_TEXTURE_2D);
         glBegin(GL_QUADS);
             glTexCoord2i(0, 0);
             glVertex2i  (x, y);
-            glTexCoord2i(m_image_width, 0);
+            glTexCoord2i(1, 0);
             glVertex2i  (x + w, y);
-            glTexCoord2i(m_image_width, m_image_height);
+            glTexCoord2i(1, 1);
             glVertex2i  (x + w, y + h);
-            glTexCoord2i(0, m_image_height);
+            glTexCoord2i(0, 1);
             glVertex2i  (x, y + h);
         glEnd();
-        glDisable(GL_TEXTURE_RECTANGLE_EXT);
+        glDisable(GL_TEXTURE_2D);
     }
 }
 
@@ -210,27 +203,27 @@ void GLWidget::showFrame(Mlt::QFrame frame)
         glGenTextures  (3, m_texture);
 
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture  (GL_TEXTURE_RECTANGLE_EXT, m_texture[0]);
+        glBindTexture  (GL_TEXTURE_2D, m_texture[0]);
         m_shader.setUniformValue(m_shader.uniformLocation("Ytex"), 0);
-        glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameterf(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexImage2D   (GL_TEXTURE_RECTANGLE_EXT, 0, GL_LUMINANCE, m_image_width, m_image_height, 0,
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexImage2D   (GL_TEXTURE_2D, 0, GL_LUMINANCE, m_image_width, m_image_height, 0,
                         GL_LUMINANCE, GL_UNSIGNED_BYTE, image);
 
         glActiveTexture(GL_TEXTURE1);
-        glBindTexture  (GL_TEXTURE_RECTANGLE_EXT, m_texture[1]);
+        glBindTexture  (GL_TEXTURE_2D, m_texture[1]);
         m_shader.setUniformValue(m_shader.uniformLocation("Utex"), 1);
-        glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameterf(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexImage2D   (GL_TEXTURE_RECTANGLE_EXT, 0, GL_LUMINANCE, m_image_width/2, m_image_height/4, 0,
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexImage2D   (GL_TEXTURE_2D, 0, GL_LUMINANCE, m_image_width/2, m_image_height/4, 0,
                         GL_LUMINANCE, GL_UNSIGNED_BYTE, image + m_image_width * m_image_height);
 
         glActiveTexture(GL_TEXTURE2);
-        glBindTexture  (GL_TEXTURE_RECTANGLE_EXT, m_texture[2]);
+        glBindTexture  (GL_TEXTURE_2D, m_texture[2]);
         m_shader.setUniformValue(m_shader.uniformLocation("Vtex"), 2);
-        glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameterf(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexImage2D   (GL_TEXTURE_RECTANGLE_EXT, 0, GL_LUMINANCE, m_image_width/2, m_image_height/4, 0,
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexImage2D   (GL_TEXTURE_2D, 0, GL_LUMINANCE, m_image_width/2, m_image_height/4, 0,
                         GL_LUMINANCE, GL_UNSIGNED_BYTE, image + m_image_width * m_image_height + m_image_width/2 * m_image_height/2);
 
         glDraw();
