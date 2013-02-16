@@ -51,8 +51,10 @@ GLWidget::GLWidget(QWidget *parent)
         delete m_glslManager;
         m_glslManager = 0;
     }
-    m_renderContext = new QGLWidget(this, this);
-    m_renderContext->resize(0, 0);
+    if (m_glslManager) {
+        m_renderContext = new QGLWidget(this, this);
+        m_renderContext->resize(0, 0);
+    }
 
     mlt_log_set_level(MLT_LOG_VERBOSE);
 }
@@ -259,10 +261,10 @@ void GLWidget::showFrame(Mlt::QFrame frame)
             check_error();
 
             glBegin( GL_QUADS );
-                glTexCoord2i( 0, 0 );                           glVertex2i( 0, 0 );
-                glTexCoord2i( 0, m_image_height );              glVertex2i( 0, m_image_height );
-                glTexCoord2i( m_image_width, m_image_height );  glVertex2i( m_image_width, m_image_height );
-                glTexCoord2i( m_image_width, 0 );               glVertex2i( m_image_width, 0 );
+                glTexCoord2i( 0, 0 ); glVertex2i( 0, 0 );
+                glTexCoord2i( 0, 1 ); glVertex2i( 0, m_image_height );
+                glTexCoord2i( 1, 1 ); glVertex2i( m_image_width, m_image_height );
+                glTexCoord2i( 1, 0 ); glVertex2i( m_image_width, 0 );
             glEnd();
             check_error();
 
@@ -384,11 +386,15 @@ int GLWidget::reconfigure(bool isMulti)
             m_consumer->set("deinterlace_method", property("deinterlace_method").toString().toAscii().constData());
             m_consumer->set("buffer", 1);
             m_consumer->set("scrub_audio", 1);
-            m_consumer->listen("consumer-thread-started", this, (mlt_listener) onThreadStarted);
-            // tell the render thread that we will be fetching yuv420p
-//            m_consumer->set("mlt_image_format", "yuv420p");
-            if (m_glslManager)
+            if (m_glslManager) {
+                if (!m_isInitialized)
+                    m_consumer->listen("consumer-thread-started", this, (mlt_listener) onThreadStarted);
                 m_consumer->set("mlt_image_format", "glsl");
+            } else {
+                // tell the render thread that we will be fetching yuv420p
+                // Not working yet in MLT.
+//                m_consumer->set("mlt_image_format", "yuv420p");
+            }
 
             Mlt::Filter* filter = new Mlt::Filter(profile(), "audiolevel");
             if (filter->is_valid())
