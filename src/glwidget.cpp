@@ -349,6 +349,11 @@ int GLWidget::reconfigure(bool isMulti)
             m_consumer = new Mlt::FilteredConsumer(profile(), "multi");
         else
             m_consumer = new Mlt::FilteredConsumer(profile(), serviceName.toAscii().constData());
+
+        Mlt::Filter* filter = new Mlt::Filter(profile(), "audiolevel");
+        if (filter->is_valid())
+            m_consumer->attach(*filter);
+        delete filter;
     }
     if (m_consumer->is_valid()) {
         // Connect the producer to the consumer - tell it to "run" later
@@ -395,11 +400,6 @@ int GLWidget::reconfigure(bool isMulti)
                 // Not working yet in MLT.
 //                m_consumer->set("mlt_image_format", "yuv420p");
             }
-
-            Mlt::Filter* filter = new Mlt::Filter(profile(), "audiolevel");
-            if (filter->is_valid())
-                m_consumer->attach(*filter);
-            delete filter;
         }
     }
     else {
