@@ -48,6 +48,27 @@ EncodeDock::EncodeDock(QWidget *parent) :
     ui->addPresetButton->setIcon(QIcon::fromTheme("list-add", ui->addPresetButton->icon()));
     ui->removePresetButton->setIcon(QIcon::fromTheme("list-remove", ui->removePresetButton->icon()));
 
+#ifdef Q_WS_WIN
+    // Add splitter handle decoration for Windows.
+    QSplitterHandle *handle = ui->splitter->handle(1);
+    QHBoxLayout *layout = new QHBoxLayout(handle);
+    QVBoxLayout *vbox = new QVBoxLayout;
+    ui->splitter->setHandleWidth(7);
+    handle->setLayout(layout);
+    layout->setSpacing(0);
+    layout->setMargin(0);
+    layout->addStretch();
+    layout->addLayout(vbox);
+    for (int i = 0; i < 2; i++) {
+        QFrame *line = new QFrame(handle);
+        line->setMinimumSize(15, 1);
+        line->setMaximumSize(15, 1);
+        line->setFrameShape(QFrame::StyledPanel);
+        vbox->addWidget(line);
+    }
+    layout->addStretch();
+#endif
+
     loadPresets();
 
     // populate the combos
