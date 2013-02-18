@@ -63,8 +63,6 @@ public:
             installTranslator(&qtTranslator);
         if (shotcutTranslator.load("shotcut_" + locale, dir.absolutePath()))
             installTranslator(&shotcutTranslator);
-
-        mainWindow = &MAIN;
     }
 
     ~Application()
@@ -92,8 +90,10 @@ int main(int argc, char **argv)
     QSplashScreen splash(QPixmap(":/icons/icons/shotcut-logo-640.png"));
     splash.showMessage(QCoreApplication::translate("", "Loading plugins..."), Qt::AlignHCenter | Qt::AlignBottom);
     splash.show();
-    splash.finish(a.mainWindow);
+    a.processEvents();
+    a.mainWindow = &MAIN;
     a.mainWindow->show();
+    splash.finish(a.mainWindow);
     if (argc > 1)
         a.mainWindow->open(argv[1]);
     return a.exec();

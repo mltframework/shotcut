@@ -170,14 +170,10 @@ void GLWidget::paintGL()
             check_error();
         }
         glBegin(GL_QUADS);
-            glTexCoord2i(0, 0);
-            glVertex2i  (x, y);
-            glTexCoord2i(1, 0);
-            glVertex2i  (x + w, y);
-            glTexCoord2i(1, 1);
-            glVertex2i  (x + w, y + h);
-            glTexCoord2i(0, 1);
-            glVertex2i  (x, y + h);
+            glTexCoord2i(0, 0); glVertex2i(x, y);
+            glTexCoord2i(1, 0); glVertex2i(x + w, y);
+            glTexCoord2i(1, 1); glVertex2i(x + w, y + h);
+            glTexCoord2i(0, 1); glVertex2i(x, y + h);
         glEnd();
     }
 }

@@ -105,7 +105,7 @@ Player::Player(QWidget *parent)
     m_volumeSlider = new QSlider(Qt::Vertical);
     m_audioSignal = new AudioSignal(this);
     m_volumeSlider->setMinimumHeight(m_audioSignal->minimumHeight());
-    m_volumeSlider->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+    m_volumeSlider->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     volumeLayoutH->addWidget(m_volumeSlider);
     volumeLayoutH->addWidget(m_audioSignal);
     volumeLayoutV->addLayout(volumeLayoutH);
