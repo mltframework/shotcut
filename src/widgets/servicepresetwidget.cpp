@@ -138,8 +138,6 @@ void ServicePresetWidget::on_deletePresetButton_clicked()
     dialog.setDefaultButton(QMessageBox::Yes);
     dialog.setEscapeButton(QMessageBox::No);
     dialog.setWindowModality(Qt::WindowModal);
-    dialog.setDefaultButton(QMessageBox::Yes);
-    dialog.setEscapeButton(QMessageBox::Cancel);
     int result = dialog.exec();
     if (result == QMessageBox::Yes) {
         QDir dir(QDesktopServices::storageLocation(QDesktopServices::DataLocation));
