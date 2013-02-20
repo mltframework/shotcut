@@ -34,7 +34,6 @@ Player::Player(QWidget *parent)
 {
     setObjectName("Player");
     Mlt::Controller::singleton(this);
-
     setupActions(this);
     // These use the icon theme on Linux, with fallbacks to the icons specified in QtDesigner for other platforms.
     actionPlay->setIcon(QIcon::fromTheme("media-playback-start", actionPlay->icon()));
@@ -51,43 +50,11 @@ Player::Player(QWidget *parent)
     m_playIcon = actionPlay->icon();
     m_pauseIcon = actionPause->icon();
 
-    readSettings();
-
     // Create a layout.
     QVBoxLayout *vlayout = new QVBoxLayout(this);
     vlayout->setObjectName("playerLayout");
     vlayout->setMargin(0);
     vlayout->setSpacing(4);
-
-    // Create MLT video widget.
-    MLT.videoWidget()->setProperty("mlt_service", externalGroup->checkedAction()->data());
-    MLT.setProfile(profileGroup->checkedAction()->data().toString());
-    MLT.videoWidget()->setProperty("realtime", actionRealtime->isChecked());
-    if (externalGroup->checkedAction()->data().toString().isEmpty())
-        MLT.videoWidget()->setProperty("progressive", actionProgressive->isChecked());
-    else {
-        MLT.videoWidget()->setProperty("progressive", MLT.profile().progressive());
-        actionProgressive->setEnabled(false);
-    }
-    if (actionOneField->isChecked())
-        MLT.videoWidget()->setProperty("deinterlace_method", "onefield");
-    else if (actionLinearBlend->isChecked())
-        MLT.videoWidget()->setProperty("deinterlace_method", "linearblend");
-    else if (actionYadifTemporal->isChecked())
-        MLT.videoWidget()->setProperty("deinterlace_method", "yadif-nospatial");
-    else
-        MLT.videoWidget()->setProperty("deinterlace_method", "yadif");
-    if (actionNearest->isChecked())
-        MLT.videoWidget()->setProperty("rescale", "nearest");
-    else if (actionBilinear->isChecked())
-        MLT.videoWidget()->setProperty("rescale", "bilinear");
-    else if (actionBicubic->isChecked())
-        MLT.videoWidget()->setProperty("rescale", "bicubic");
-    else
-        MLT.videoWidget()->setProperty("rescale", "hyper");
-    MLT.videoWidget()->setContentsMargins(0, 0, 0, 0);
-    MLT.videoWidget()->setContextMenuPolicy(Qt::CustomContextMenu);
-    MLT.videoWidget()->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 
     // Add the volume and signal level meter
     QWidget* tmp = new QWidget(this);
@@ -189,10 +156,7 @@ Player::Player(QWidget *parent)
     toolbar->addWidget(m_selectedLabel);
     vlayout->addWidget(toolbar);
 
-    connect(externalGroup, SIGNAL(triggered(QAction*)), this, SLOT(onExternalTriggered(QAction*)));
-    connect(profileGroup, SIGNAL(triggered(QAction*)), this, SLOT(onProfileTriggered(QAction*)));
     connect(MLT.videoWidget(), SIGNAL(frameReceived(Mlt::QFrame)), this, SLOT(onShowFrame(Mlt::QFrame)));
-    connect(MLT.videoWidget(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onVideoWidgetContextMenu(QPoint)));
     connect(actionPlay, SIGNAL(triggered()), this, SLOT(togglePlayPaused()));
     connect(actionPause, SIGNAL(triggered()), this, SLOT(pause()));
     connect(actionFastForward, SIGNAL(triggered()), this, SLOT(fastForward()));
@@ -231,14 +195,6 @@ void Player::connectTransport(const TransportControllable* receiver)
     connect(this, SIGNAL(outChanged(int)), receiver, SLOT(setOut(int)));
 }
 
-void Player::addProfile(QWidget* widget, const QString& desc, const QString& name)
-{
-    QAction* action = new QAction(desc, widget);
-    action->setCheckable(true);
-    action->setData(name);
-    profileGroup->addAction(action);
-}
-
 void Player::setupActions(QWidget* widget)
 {
     actionPlay = new QAction(widget);
@@ -261,33 +217,6 @@ void Player::setupActions(QWidget* widget)
     QIcon icon5;
     icon5.addFile(QString::fromUtf8(":/icons/icons/media-skip-backward.png"), QSize(), QIcon::Normal, QIcon::Off);
     actionSkipPrevious->setIcon(icon5);
-    actionProgressive = new QAction(widget);
-    actionProgressive->setObjectName(QString::fromUtf8("actionProgressive"));
-    actionProgressive->setCheckable(true);
-    actionOneField = new QAction(widget);
-    actionOneField->setObjectName(QString::fromUtf8("actionOneField"));
-    actionOneField->setCheckable(true);
-    actionLinearBlend = new QAction(widget);
-    actionLinearBlend->setObjectName(QString::fromUtf8("actionLinearBlend"));
-    actionLinearBlend->setCheckable(true);
-    actionYadifTemporal = new QAction(widget);
-    actionYadifTemporal->setObjectName(QString::fromUtf8("actionYadifTemporal"));
-    actionYadifTemporal->setCheckable(true);
-    actionYadifSpatial = new QAction(widget);
-    actionYadifSpatial->setObjectName(QString::fromUtf8("actionYadifSpatial"));
-    actionYadifSpatial->setCheckable(true);
-    actionNearest = new QAction(widget);
-    actionNearest->setObjectName(QString::fromUtf8("actionNearest"));
-    actionNearest->setCheckable(true);
-    actionBilinear = new QAction(widget);
-    actionBilinear->setObjectName(QString::fromUtf8("actionBilinear"));
-    actionBilinear->setCheckable(true);
-    actionBicubic = new QAction(widget);
-    actionBicubic->setObjectName(QString::fromUtf8("actionBicubic"));
-    actionBicubic->setCheckable(true);
-    actionHyper = new QAction(widget);
-    actionHyper->setObjectName(QString::fromUtf8("actionHyper"));
-    actionHyper->setCheckable(true);
     actionRewind = new QAction(widget);
     actionRewind->setObjectName(QString::fromUtf8("actionRewind"));
     QIcon icon6;
@@ -298,70 +227,6 @@ void Player::setupActions(QWidget* widget)
     QIcon icon7;
     icon7.addFile(QString::fromUtf8(":/icons/icons/media-seek-forward.png"), QSize(), QIcon::Normal, QIcon::Off);
     actionFastForward->setIcon(icon7);
-    actionRealtime = new QAction(widget);
-    actionRealtime->setObjectName(QString::fromUtf8("actionRealtime"));
-    actionRealtime->setCheckable(true);
-#ifdef Q_WS_X11
-    actionOpenGL = new QAction(widget);
-    actionOpenGL->setObjectName(QString::fromUtf8("actionOpenGL"));
-    actionOpenGL->setCheckable(true);
-#endif
-    actionJack = new QAction(widget);
-    actionJack->setObjectName(QString::fromUtf8("actionJack"));
-    actionJack->setCheckable(true);
-
-    // Make a list of profiles
-    profileGroup = new QActionGroup(widget);
-    QAction* action = new QAction(widget);
-    action->setText(tr("Automatic"));
-    action->setCheckable(true);
-    action->setData(QString());
-    profileGroup->addAction(action);
-    addProfile(widget, "HD 720p 50 fps", "atsc_720p_50");
-    addProfile(widget, "HD 720p 59.94 fps", "atsc_720p_5994");
-    addProfile(widget, "HD 720p 60 fps", "atsc_720p_60");
-    addProfile(widget, "HD 1080i 25 fps", "atsc_1080i_50");
-    addProfile(widget, "HD 1080i 29.97 fps", "atsc_1080i_5994");
-    addProfile(widget, "HD 1080p 23.98 fps", "atsc_1080p_2398");
-    addProfile(widget, "HD 1080p 24 fps", "atsc_1080p_24");
-    addProfile(widget, "HD 1080p 25 fps", "atsc_1080p_25");
-    addProfile(widget, "HD 1080p 29.97 fps", "atsc_1080p_2997");
-    addProfile(widget, "HD 1080p 30 fps", "atsc_1080p_30");
-    addProfile(widget, "SD NTSC", "dv_ntsc");
-    addProfile(widget, "SD PAL", "dv_pal");
-
-    // Make a list of the SDI and HDMI devices
-    externalGroup = new QActionGroup(widget);
-    action = new QAction(widget);
-    action->setText(tr("None"));
-    action->setCheckable(true);
-    action->setData(QString());
-    externalGroup->addAction(action);
-#ifdef Q_WS_X11
-    Mlt::Consumer linsys(MLT.profile(), "sdi");
-    if (linsys.is_valid()) {
-        action = new QAction("DVEO VidPort", widget);
-        action->setCheckable(true);
-        action->setData(QString("sdi"));
-        externalGroup->addAction(action);
-    }
-#endif
-    Mlt::Profile profile;
-    Mlt::Consumer decklink(profile, "decklink:");
-    if (decklink.is_valid()) {
-        decklink.set("list_devices", 1);
-        int n = decklink.get_int("devices");
-        for (int i = 0; i < n; ++i) {
-            QString device(decklink.get(QString("device.%1").arg(i).toAscii().constData()));
-            if (!device.isEmpty()) {
-                action = new QAction(device, widget);
-                action->setCheckable(true);
-                action->setData(QString("decklink:%1").arg(i));
-                externalGroup->addAction(action);
-            }
-        }
-    }
-
     retranslateUi(widget);
     QMetaObject::connectSlotsByName(widget);
 }
@@ -388,18 +253,6 @@ void Player::retranslateUi(QWidget* widget)
     actionSkipPrevious->setToolTip(tr("Skip to the previous point (Alt+Left)"));
 #endif // QT_NO_TOOLTIP
     actionSkipPrevious->setShortcut(tr("Alt+Left"));
-    actionProgressive->setText(tr("Progressive"));
-#ifndef QT_NO_TOOLTIP
-    actionProgressive->setToolTip(tr("Force the video preview to deinterlace if needed"));
-#endif // QT_NO_TOOLTIP
-    actionOneField->setText(tr("One Field (fast)"));
-    actionLinearBlend->setText(tr("Linear Blend (fast)"));
-    actionYadifTemporal->setText(tr("YADIF - temporal only (good)"));
-    actionYadifSpatial->setText(tr("YADIF - temporal + spatial (best)"));
-    actionNearest->setText(tr("Nearest Neighbor (fast)"));
-    actionBilinear->setText(tr("Bilinear (good)"));
-    actionBicubic->setText(tr("Bicubic (better)"));
-    actionHyper->setText(tr("Hyper/Lanczoz (best)"));
     actionRewind->setText(tr("Rewind"));
 #ifndef QT_NO_TOOLTIP
     actionRewind->setToolTip(tr("Play quickly backwards (J)"));
@@ -408,66 +261,6 @@ void Player::retranslateUi(QWidget* widget)
 #ifndef QT_NO_TOOLTIP
     actionFastForward->setToolTip(tr("Play quickly forwards (L)"));
 #endif // QT_NO_TOOLTIP
-    actionRealtime->setText(tr("Realtime (frame dropping)"));
-#ifndef QT_NO_TOOLTIP
-    actionRealtime->setToolTip(tr("Allow the player to drop video frames to try to play in realtime"));
-#endif // QT_NO_TOOLTIP
-#ifdef Q_WS_X11
-    actionOpenGL->setText(tr("Use OpenGL"));
-#endif
-    actionJack->setText(tr("Use JACK Audio"));
-}
-
-void Player::readSettings()
-{
-#ifdef Q_WS_X11
-    actionOpenGL->setChecked(m_settings.value("player/opengl", true).toBool());
-#endif
-    actionRealtime->setChecked(m_settings.value("player/realtime", true).toBool());
-    actionProgressive->setChecked(m_settings.value("player/progressive", true).toBool());
-    actionJack->setChecked(m_settings.value("player/jack", false).toBool());
-    QString deinterlacer = m_settings.value("player/deinterlacer", "onefield").toString();
-    QString interpolation = m_settings.value("player/interpolation", "nearest").toString();
-
-    if (deinterlacer == "onefield")
-        actionOneField->setChecked(true);
-    else if (deinterlacer == "linearblend")
-        actionLinearBlend->setChecked(true);
-    else if (deinterlacer == "yadif-nospatial")
-        actionYadifTemporal->setChecked(true);
-    else
-        actionYadifSpatial->setChecked(true);
-
-    if (interpolation == "nearest")
-        actionNearest->setChecked(true);
-    else if (interpolation == "bilinear")
-        actionBilinear->setChecked(true);
-    else if (interpolation == "bicubic")
-        actionBicubic->setChecked(true);
-    else
-        actionHyper->setChecked(true);
-
-    QVariant external = m_settings.value("player/external", "");
-    foreach (QAction* a, externalGroup->actions()) {
-        if (a->data() == external) {
-            a->setChecked(true);
-            break;
-        }
-    }
-
-    QVariant profile = m_settings.value("player/profile", "");
-    // Automatic not permitted for SDI/HDMI
-    if (!external.toString().isEmpty() && profile.toString().isEmpty())
-        profile = QVariant("atsc_720p_50");
-    foreach (QAction* a, profileGroup->actions()) {
-        // Automatic not permitted for SDI/HDMI
-        if (a->data().toString().isEmpty() && !external.toString().isEmpty())
-            a->setDisabled(true);
-        if (a->data() == profile) {
-            a->setChecked(true);
-            break;
-        }
-    }
 }
 
 void Player::setIn(int pos)
@@ -573,7 +366,6 @@ void Player::onProducerOpened()
         m_scrubber->setScale(m_duration);
     }
     m_positionSpinner->setEnabled(m_isSeekable);
-    on_actionJack_triggered(actionJack->isChecked());
     onVolumeChanged(m_volumeSlider->value());
     onMuteButtonToggled(m_settings.value("player/muted", false).toBool());
 
@@ -606,7 +398,6 @@ void Player::onMeltedUnitOpened()
     m_previousOut = MLT.producer()->get_out();
     m_scrubber->setOutPoint(m_previousOut);
     m_positionSpinner->setEnabled(m_isSeekable);
-    on_actionJack_triggered(actionJack->isChecked());
     onVolumeChanged(m_volumeSlider->value());
     onMuteButtonToggled(m_settings.value("player/muted", false).toBool());
     actionPlay->setEnabled(true);
@@ -770,207 +561,6 @@ void Player::fastForward()
         emit fastForwarded();
     else
         play();
-}
-
-void Player::onVideoWidgetContextMenu(const QPoint& pos)
-{
-    QMenu menu(this);
-#ifdef Q_WS_X11
-    // Only offer the option to disable OpenGL if SDL is available.
-    Mlt::Consumer* c = new Mlt::Consumer(MLT.profile(), "sdl");
-    if (c->is_valid())
-        menu.addAction(actionOpenGL);
-    delete c;
-#endif
-    menu.addAction(actionRealtime);
-    menu.addAction(actionProgressive);
-
-    QMenu* sub = menu.addMenu(tr("Deinterlacer"));
-    QActionGroup deinterlacerGroup(sub);
-    deinterlacerGroup.addAction(actionOneField);
-    deinterlacerGroup.addAction(actionLinearBlend);
-    deinterlacerGroup.addAction(actionYadifTemporal);
-    deinterlacerGroup.addAction(actionYadifSpatial);
-    sub->addActions(deinterlacerGroup.actions());
-
-    sub = menu.addMenu(tr("Interpolation"));
-    QActionGroup scalerGroup(sub);
-    scalerGroup.addAction(actionNearest);
-    scalerGroup.addAction(actionBilinear);
-    scalerGroup.addAction(actionBicubic);
-    scalerGroup.addAction(actionHyper);
-    sub->addActions(scalerGroup.actions());
-
-    if (externalGroup->actions().count() > 1) {
-        sub = menu.addMenu(tr("Preview on SDI/HDMI"));
-        sub->addActions(externalGroup->actions());
-    };
-
-    sub = menu.addMenu(tr("Video Mode"));
-    sub->addActions(profileGroup->actions());
-
-    menu.addAction(actionJack);
-
-    menu.exec(this->mapToGlobal(pos));
-}
-
-#ifdef Q_WS_X11
-void Player::on_actionOpenGL_triggered(bool checked)
-{
-    m_settings.setValue("player/opengl", checked);
-    int r = QMessageBox::information(this, qApp->applicationName(),
-                                 tr("You must restart Shotcut to switch using OpenGL.\n"
-                                    "Do you want to exit now?"),
-                                 QMessageBox::Yes | QMessageBox::Default,
-                                 QMessageBox::No | QMessageBox::Escape);
-    if (r == QMessageBox::Yes)
-        QApplication::closeAllWindows();
-}
-#endif
-
-void Player::on_actionRealtime_triggered(bool checked)
-{
-    MLT.videoWidget()->setProperty("realtime", checked);
-    if (MLT.consumer()) {
-        MLT.consumer()->stop();
-        MLT.consumer()->set("real_time", checked? 1 : -1);
-        MLT.consumer()->start();
-    }
-    m_settings.setValue("player/realtime", checked);
-}
-
-void Player::on_actionProgressive_triggered(bool checked)
-{
-    MLT.videoWidget()->setProperty("progressive", checked);
-    if (MLT.consumer() && !MLT.profile().progressive()) {
-        MLT.consumer()->stop();
-        MLT.consumer()->set("progressive", checked);
-        MLT.consumer()->start();
-    }
-    m_settings.setValue("player/progressive", checked);
-}
-
-void Player::changeDeinterlacer(bool checked, const char* method)
-{
-    if (checked) {
-        MLT.videoWidget()->setProperty("deinterlace_method", method);
-        if (MLT.consumer()) {
-            MLT.consumer()->stop();
-            MLT.consumer()->set("deinterlace_method", method);
-            MLT.consumer()->start();
-        }
-    }
-    m_settings.setValue("player/deinterlacer", method);
-}
-
-void Player::on_actionOneField_triggered(bool checked)
-{
-    changeDeinterlacer(checked, "onefield");
-}
-
-void Player::on_actionLinearBlend_triggered(bool checked)
-{
-    changeDeinterlacer(checked, "linearblend");
-}
-
-void Player::on_actionYadifTemporal_triggered(bool checked)
-{
-    changeDeinterlacer(checked, "yadif-nospatial");
-}
-
-void Player::on_actionYadifSpatial_triggered(bool checked)
-{
-    changeDeinterlacer(checked, "yadif");
-}
-
-void Player::changeInterpolation(bool checked, const char* method)
-{
-    if (checked) {
-        MLT.videoWidget()->setProperty("rescale", method);
-        if (MLT.consumer()) {
-            MLT.consumer()->stop();
-            MLT.consumer()->set("rescale", method);
-            MLT.consumer()->start();
-        }
-    }
-    m_settings.setValue("player/interpolation", method);
-}
-
-void Player::on_actionNearest_triggered(bool checked)
-{
-    changeInterpolation(checked, "nearest");
-}
-
-void Player::on_actionBilinear_triggered(bool checked)
-{
-    changeInterpolation(checked, "bilinear");
-}
-
-void Player::on_actionBicubic_triggered(bool checked)
-{
-    changeInterpolation(checked, "bicubic");
-}
-
-void Player::on_actionHyper_triggered(bool checked)
-{
-    changeInterpolation(checked, "hyper");
-}
-
-void Player::on_actionJack_triggered(bool checked)
-{
-    m_settings.setValue("player/jack", checked);
-    if (!MLT.enableJack(checked)) {
-        actionJack->setChecked(false);
-        m_settings.setValue("player/jack", false);
-        QMessageBox::warning(this, qApp->applicationName(),
-            tr("Failed to connect to JACK.\nPlease verify that JACK is installed and running."));
-    }
-}
-
-void Player::onExternalTriggered(QAction *action)
-{
-    bool isExternal = !action->data().toString().isEmpty();
-    m_settings.setValue("player/external", action->data());
-    MLT.videoWidget()->setProperty("mlt_service", action->data());
-
-    QVariant profile = m_settings.value("player/profile", "");
-    // Automatic not permitted for SDI/HDMI
-    if (isExternal && profile.toString().isEmpty()) {
-        profile = QVariant("atsc_720p_50");
-        m_settings.setValue("player/profile", profile);
-        MLT.setProfile(profile.toString());
-        emit profileChanged();
-        foreach (QAction* a, profileGroup->actions()) {
-            if (a->data() == profile) {
-                a->setChecked(true);
-                break;
-            }
-        }
-    }
-    else {
-        MLT.consumerChanged();
-    }
-    // Automatic not permitted for SDI/HDMI
-    profileGroup->actions().at(0)->setEnabled(!isExternal);
-
-    // Disable progressive option when SDI/HDMI
-    actionProgressive->setEnabled(!isExternal);
-    bool isProgressive = isExternal
-            ? MLT.profile().progressive()
-            : actionProgressive->isChecked();
-    MLT.videoWidget()->setProperty("progressive", isProgressive);
-    if (MLT.consumer()) {
-        MLT.consumer()->stop();
-        MLT.consumer()->set("progressive", isProgressive);
-        MLT.consumer()->start();
-    }
-}
-
-void Player::onProfileTriggered(QAction *action)
-{
-    m_settings.setValue("player/profile", action->data());
-    MLT.setProfile(action->data().toString());
-    emit profileChanged();
 }
 
 void Player::showAudio(Mlt::Frame* frame)

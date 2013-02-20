@@ -98,9 +98,54 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionAbout_Shotcut"/>
     <addaction name="actionAbout_Qt"/>
    </widget>
+   <widget class="QMenu" name="menuSettings">
+    <property name="title">
+     <string>Settings</string>
+    </property>
+    <widget class="QMenu" name="menuDeinterlacer">
+     <property name="title">
+      <string>Deinterlacer</string>
+     </property>
+     <addaction name="actionOneField"/>
+     <addaction name="actionLinearBlend"/>
+     <addaction name="actionYadifTemporal"/>
+     <addaction name="actionYadifSpatial"/>
+    </widget>
+    <widget class="QMenu" name="menuInterpolation">
+     <property name="title">
+      <string>Interpolation</string>
+     </property>
+     <addaction name="actionNearest"/>
+     <addaction name="actionBilinear"/>
+     <addaction name="actionBicubic"/>
+     <addaction name="actionHyper"/>
+    </widget>
+    <widget class="QMenu" name="menuProfile">
+     <property name="title">
+      <string>Video Mode</string>
+     </property>
+     <addaction name="actionProfileAutomatic"/>
+    </widget>
+    <widget class="QMenu" name="menuExternal">
+     <property name="title">
+      <string>Preview on SDI/HDMI</string>
+     </property>
+     <addaction name="actionExternalNone"/>
+    </widget>
+    <addaction name="actionOpenGL"/>
+    <addaction name="actionGPU"/>
+    <addaction name="actionJack"/>
+    <addaction name="actionRealtime"/>
+    <addaction name="actionProgressive"/>
+    <addaction name="menuDeinterlacer"/>
+    <addaction name="menuInterpolation"/>
+    <addaction name="menuExternal"/>
+    <addaction name="menuProfile"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
    <addaction name="menuView"/>
+   <addaction name="menuSettings"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
@@ -310,6 +355,147 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Full Screen</string>
+   </property>
+  </action>
+  <action name="actionRealtime">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Realtime (frame dropping)</string>
+   </property>
+  </action>
+  <action name="actionProgressive">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Progressive</string>
+   </property>
+  </action>
+  <action name="actionGPU">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>GPU Processing</string>
+   </property>
+  </action>
+  <action name="actionOneField">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>One Field (fast)</string>
+   </property>
+  </action>
+  <action name="actionLinearBlend">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Linear Blend (fast)</string>
+   </property>
+  </action>
+  <action name="actionYadifTemporal">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>YADIF - temporal only (good)</string>
+   </property>
+  </action>
+  <action name="actionYadifSpatial">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>YADIF - temporal + spatial (best)</string>
+   </property>
+  </action>
+  <action name="actionNearest">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Nearest Neighbor (fast)</string>
+   </property>
+  </action>
+  <action name="actionBilinear">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Bilinear (good)</string>
+   </property>
+  </action>
+  <action name="actionBicubic">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Bicubic (better)</string>
+   </property>
+  </action>
+  <action name="actionHyper">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Hyper/Lanczoz (best)</string>
+   </property>
+  </action>
+  <action name="actionOpenGL">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Use OpenGL</string>
+   </property>
+  </action>
+  <action name="actionProfileAutomatic">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Automatic</string>
+   </property>
+  </action>
+  <action name="actionExternalNone">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>None</string>
+   </property>
+  </action>
+  <action name="actionJack">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Use JACK Audio</string>
    </property>
   </action>
  </widget>

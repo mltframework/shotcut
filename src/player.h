@@ -31,7 +31,6 @@ class TimeSpinBox;
 class AudioSignal;
 class QSlider;
 class QAction;
-class QActionGroup;
 
 class Player : public QWidget
 {
@@ -84,36 +83,16 @@ protected:
     void resizeEvent(QResizeEvent* event);
 
 private:
-    void addProfile(QWidget* widget, const QString& desc, const QString& name);
     void setupActions(QWidget* widget);
     void retranslateUi(QWidget* widget);
-    void readSettings();
-    void changeDeinterlacer(bool checked, const char* method);
-    void changeInterpolation(bool checked, const char* method);
     void showAudio(Mlt::Frame* frame);
 
     QAction *actionPlay;
     QAction *actionPause;
     QAction *actionSkipNext;
     QAction *actionSkipPrevious;
-    QAction *actionProgressive;
-    QAction *actionOneField;
-    QAction *actionLinearBlend;
-    QAction *actionYadifTemporal;
-    QAction *actionYadifSpatial;
-    QAction *actionNearest;
-    QAction *actionBilinear;
-    QAction *actionBicubic;
-    QAction *actionHyper;
     QAction *actionRewind;
     QAction *actionFastForward;
-    QAction *actionRealtime;
-#ifdef Q_WS_X11
-    QAction *actionOpenGL;
-#endif
-    QActionGroup *externalGroup;
-    QActionGroup *profileGroup;
-    QAction *actionJack;
 
     QSettings m_settings;
     ScrubBar* m_scrubber;
@@ -140,23 +119,6 @@ private slots:
     void onOutChanged(int out);
     void on_actionSkipNext_triggered();
     void on_actionSkipPrevious_triggered();
-    void onVideoWidgetContextMenu(const QPoint& pos);
-#ifdef Q_WS_X11
-    void on_actionOpenGL_triggered(bool checked);
-#endif
-    void on_actionRealtime_triggered(bool checked);
-    void on_actionProgressive_triggered(bool checked);
-    void on_actionOneField_triggered(bool checked);
-    void on_actionLinearBlend_triggered(bool checked);
-    void on_actionYadifTemporal_triggered(bool checked);
-    void on_actionYadifSpatial_triggered(bool checked);
-    void on_actionNearest_triggered(bool checked);
-    void on_actionBilinear_triggered(bool checked);
-    void on_actionBicubic_triggered(bool checked);
-    void on_actionHyper_triggered(bool checked);
-    void on_actionJack_triggered(bool checked);
-    void onExternalTriggered(QAction*);
-    void onProfileTriggered(QAction*);
     void onVolumeButtonToggled(bool checked);
     void onMuteButtonToggled(bool checked);
 };

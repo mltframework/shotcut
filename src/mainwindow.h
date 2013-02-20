@@ -34,6 +34,7 @@ class PlaylistDock;
 class QUndoStack;
 class MeltedPlaylistDock;
 class MeltedServerDock;
+class QActionGroup;
 
 class MainWindow : public QMainWindow
 {
@@ -49,6 +50,7 @@ public:
 
 signals:
     void producerOpened();
+    void profileChanged();
 
 protected:
     MainWindow();
@@ -59,9 +61,15 @@ protected:
     void closeEvent(QCloseEvent*);
 
 private:
-    void readSettings();
+    void setupSettingsMenu();
+    void addProfile(QActionGroup* actionGroup, const QString& desc, const QString& name);
+    void readPlayerSettings();
+    void readWindowSettings();
     void writeSettings();
+    void configureVideoWidget();
     void setCurrentFile(const QString &filename);
+    void changeDeinterlacer(bool checked, const char* method);
+    void changeInterpolation(bool checked, const char* method);
 
     Ui::MainWindow* ui;
     QSettings m_settings;
@@ -78,6 +86,8 @@ private:
     QDockWidget* m_historyDock;
     MeltedServerDock* m_meltedServerDock;
     MeltedPlaylistDock* m_meltedPlaylistDock;
+    QActionGroup* m_profileGroup;
+    QActionGroup* m_externalGroup;
 
 public slots:
     void open(const QString& url, const Mlt::Properties* = 0);
@@ -86,6 +96,7 @@ public slots:
     void showStatusMessage(QString);
     void seekPlaylist(int start);
     void onProducerOpened();
+    void onGpuNotSupported();
 
 private slots:
     void on_actionAbout_Shotcut_triggered();
@@ -114,6 +125,21 @@ private slots:
     void onMeltedUnitOpened();
     void onMeltedUnitActivated();
     void on_actionEnter_Full_Screen_triggered();
+    void on_actionOpenGL_triggered(bool checked);
+    void on_actionRealtime_triggered(bool checked);
+    void on_actionProgressive_triggered(bool checked);
+    void on_actionOneField_triggered(bool checked);
+    void on_actionLinearBlend_triggered(bool checked);
+    void on_actionYadifTemporal_triggered(bool checked);
+    void on_actionYadifSpatial_triggered(bool checked);
+    void on_actionNearest_triggered(bool checked);
+    void on_actionBilinear_triggered(bool checked);
+    void on_actionBicubic_triggered(bool checked);
+    void on_actionHyper_triggered(bool checked);
+    void on_actionJack_triggered(bool checked);
+    void on_actionGPU_triggered(bool checked);
+    void onExternalTriggered(QAction*);
+    void onProfileTriggered(QAction*);
 };
 
 #define MAIN MainWindow::singleton()

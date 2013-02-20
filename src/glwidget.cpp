@@ -46,8 +46,10 @@ GLWidget::GLWidget(QWidget *parent)
     setAttribute(Qt::WA_PaintOnScreen);
     setAttribute(Qt::WA_OpaquePaintEvent);
     setMouseTracking(true);
-    m_glslManager = new Filter(profile(), "glsl.manager");
-    if (m_glslManager && !m_glslManager->is_valid()) {
+    QSettings settings;
+    if (settings.value("player/gpu", true).toBool())
+        m_glslManager = new Filter(profile(), "glsl.manager");
+    if ((m_glslManager && !m_glslManager->is_valid())) {
         delete m_glslManager;
         m_glslManager = 0;
     }
@@ -82,6 +84,10 @@ void GLWidget::initializeGL()
 {
     qDebug() << __FUNCTION__;
     QPalette palette;
+    QSettings settings;
+
+    if (settings.value("player/gpu", true).toBool() && !m_glslManager)
+        emit gpuNotSupported();
     initializeGLFunctions();
     qglClearColor(palette.color(QPalette::Window));
     glShadeModel(GL_FLAT);
@@ -213,6 +219,13 @@ void GLWidget::startGlsl()
     if (m_glslManager && m_renderContext && m_renderContext->isValid()) {
         m_renderContext->makeCurrent();
         m_glslManager->fire_event("init glsl");
+        if (!m_glslManager->get_int("glsl_supported")) {
+            delete m_glslManager;
+            m_glslManager = 0;
+            // Need to destroy MLT global reference to prevent filters from trying to use GPU.
+            mlt_properties_set_data(mlt_global_properties(), "glslManager", NULL, 0, NULL, NULL);
+            emit gpuNotSupported();
+        }
     }
 }
 
@@ -392,9 +405,7 @@ int GLWidget::reconfigure(bool isMulti)
                     m_consumer->listen("consumer-thread-started", this, (mlt_listener) onThreadStarted);
                 m_consumer->set("mlt_image_format", "glsl");
             } else {
-                // tell the render thread that we will be fetching yuv420p
-                // Not working yet in MLT.
-//                m_consumer->set("mlt_image_format", "yuv420p");
+                m_consumer->set("mlt_image_format", "yuv422");
             }
         }
     }

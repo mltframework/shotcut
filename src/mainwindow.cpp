@@ -109,6 +109,9 @@ MainWindow::MainWindow()
     connect(m_player, SIGNAL(showStatusMessage(QString)), this, SLOT(showStatusMessage(QString)));
     connect(m_player, SIGNAL(inChanged(int)), this, SLOT(onCutModified()));
     connect(m_player, SIGNAL(outChanged(int)), this, SLOT(onCutModified()));
+    setupSettingsMenu();
+    readPlayerSettings();
+    configureVideoWidget();
 
     // Add the docks.
     m_propertiesDock = new QDockWidget(tr("Properties"), this);
@@ -186,6 +189,7 @@ MainWindow::MainWindow()
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), this, SLOT(onCaptureStateChanged(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_historyDock, SLOT(setDisabled(bool)));
     connect(m_player, SIGNAL(profileChanged()), m_encodeDock, SLOT(onProfileChanged()));
+    connect(this, SIGNAL(profileChanged()), m_encodeDock, SLOT(onProfileChanged()));
     m_encodeDock->onProfileChanged();
 
     m_jobsDock = new JobsDock(this);
@@ -234,20 +238,24 @@ MainWindow::MainWindow()
     Mlt::GLWidget* videoWidget = (Mlt::GLWidget*) &(MLT);
     connect(videoWidget, SIGNAL(dragStarted()), m_playlistDock, SLOT(onPlayerDragStarted()));
     connect(videoWidget, SIGNAL(seekTo(int)), m_player, SLOT(seek(int)));
+    connect(videoWidget, SIGNAL(gpuNotSupported()), this, SLOT(onGpuNotSupported()));
 #else
     if (m_settings.value("player/opengl", true).toBool()) {
         Mlt::GLWidget* videoWidget = (Mlt::GLWidget*) &(MLT);
         connect(videoWidget, SIGNAL(dragStarted()), m_playlistDock, SLOT(onPlayerDragStarted()));
         connect(videoWidget, SIGNAL(seekTo(int)), m_player, SLOT(seek(int)));
+        connect(videoWidget, SIGNAL(gpuNotSupported()), m_player, SLOT(onGpuNotSupported()));
     }
     else {
         Mlt::SDLWidget* videoWidget = (Mlt::SDLWidget*) &(MLT);
         connect(videoWidget, SIGNAL(dragStarted()), m_playlistDock, SLOT(onPlayerDragStarted()));
         connect(videoWidget, SIGNAL(seekTo(int)), m_player, SLOT(seek(int)));
+        m_player->onGpuNotSupported();
     }
 #endif
 
-    readSettings();
+    readWindowSettings();
+
     setFocus();
     setCurrentFile("");
 }
@@ -261,6 +269,84 @@ MainWindow& MainWindow::singleton()
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::setupSettingsMenu()
+{
+    ui->actionOpenGL->setVisible(false);
+    QActionGroup* deinterlaceGroup = new QActionGroup(this);
+    deinterlaceGroup->addAction(ui->actionOneField);
+    deinterlaceGroup->addAction(ui->actionLinearBlend);
+    deinterlaceGroup->addAction(ui->actionYadifTemporal);
+    deinterlaceGroup->addAction(ui->actionYadifSpatial);
+    QActionGroup* interpolationGroup = new QActionGroup(this);
+    interpolationGroup->addAction(ui->actionNearest);
+    interpolationGroup->addAction(ui->actionBilinear);
+    interpolationGroup->addAction(ui->actionBicubic);
+    interpolationGroup->addAction(ui->actionHyper);
+    m_profileGroup = new QActionGroup(this);
+    m_profileGroup->addAction(ui->actionProfileAutomatic);
+    ui->actionProfileAutomatic->setData(QString());
+    addProfile(m_profileGroup, "HD 720p 50 fps", "atsc_720p_50");
+    addProfile(m_profileGroup, "HD 720p 59.94 fps", "atsc_720p_5994");
+    addProfile(m_profileGroup, "HD 720p 60 fps", "atsc_720p_60");
+    addProfile(m_profileGroup, "HD 1080i 25 fps", "atsc_1080i_50");
+    addProfile(m_profileGroup, "HD 1080i 29.97 fps", "atsc_1080i_5994");
+    addProfile(m_profileGroup, "HD 1080p 23.98 fps", "atsc_1080p_2398");
+    addProfile(m_profileGroup, "HD 1080p 24 fps", "atsc_1080p_24");
+    addProfile(m_profileGroup, "HD 1080p 25 fps", "atsc_1080p_25");
+    addProfile(m_profileGroup, "HD 1080p 29.97 fps", "atsc_1080p_2997");
+    addProfile(m_profileGroup, "HD 1080p 30 fps", "atsc_1080p_30");
+    addProfile(m_profileGroup, "SD NTSC", "dv_ntsc");
+    addProfile(m_profileGroup, "SD PAL", "dv_pal");
+#ifndef Q_WS_X11
+    delete ui->actionOpenGL;
+    ui->actionOpenGL = 0;
+#endif
+    // Add the SDI and HDMI devices to the Settings menu.
+    m_externalGroup = new QActionGroup(this);
+    ui->actionExternalNone->setData(QString());
+#ifdef Q_WS_X11
+    Mlt::Consumer linsys(MLT.profile(), "sdi");
+    if (linsys.is_valid()) {
+        action = new QAction("DVEO VidPort", this);
+        action->setCheckable(true);
+        action->setData(QString("sdi"));
+        m_externalGroup->addAction(action);
+    }
+#endif
+    Mlt::Profile profile;
+    Mlt::Consumer decklink(profile, "decklink:");
+    if (decklink.is_valid()) {
+        decklink.set("list_devices", 1);
+        int n = decklink.get_int("devices");
+        for (int i = 0; i < n; ++i) {
+            QString device(decklink.get(QString("device.%1").arg(i).toAscii().constData()));
+            if (!device.isEmpty()) {
+                QAction* action = new QAction(device, this);
+                action->setCheckable(true);
+                action->setData(QString("decklink:%1").arg(i));
+                m_externalGroup->addAction(action);
+            }
+        }
+    }
+    if (m_externalGroup->actions().count() > 1)
+        ui->menuExternal->addActions(m_externalGroup->actions());
+    else {
+        delete ui->menuExternal;
+        ui->menuExternal = 0;
+    }
+    connect(m_externalGroup, SIGNAL(triggered(QAction*)), this, SLOT(onExternalTriggered(QAction*)));
+    connect(m_profileGroup, SIGNAL(triggered(QAction*)), this, SLOT(onProfileTriggered(QAction*)));
+}
+
+void MainWindow::addProfile(QActionGroup* actionGroup, const QString& desc, const QString& name)
+{
+    QAction* action = new QAction(desc, this);
+    action->setCheckable(true);
+    action->setData(name);
+    actionGroup->addAction(action);
+    ui->menuProfile->addAction(action);
 }
 
 void MainWindow::open(Mlt::Producer* producer)
@@ -350,6 +436,7 @@ void MainWindow::seekPlaylist(int start)
     m_player->setIn(-1);
     m_player->setOut(-1);
     // since we do not emit producerOpened, these components need updating
+    on_actionJack_triggered(ui->actionJack->isChecked());
     m_player->onProducerOpened();
     m_encodeDock->onProducerOpened();
     updateMarkers();
@@ -361,7 +448,61 @@ void MainWindow::seekPlaylist(int start)
     m_player->setFocus();
 }
 
-void MainWindow::readSettings()
+void MainWindow::readPlayerSettings()
+{
+#ifdef Q_WS_X11
+    ui->actionOpenGL->setChecked(m_settings.value("player/opengl", true).toBool());
+#endif
+    ui->actionRealtime->setChecked(m_settings.value("player/realtime", true).toBool());
+    ui->actionProgressive->setChecked(m_settings.value("player/progressive", true).toBool());
+    ui->actionJack->setChecked(m_settings.value("player/jack", false).toBool());
+    ui->actionGPU->setChecked(m_settings.value("player/gpu", false).toBool());
+    MLT.videoWidget()->setProperty("gpu", ui->actionGPU->isChecked());
+    QString deinterlacer = m_settings.value("player/deinterlacer", "onefield").toString();
+    QString interpolation = m_settings.value("player/interpolation", "nearest").toString();
+
+    if (deinterlacer == "onefield")
+        ui->actionOneField->setChecked(true);
+    else if (deinterlacer == "linearblend")
+        ui->actionLinearBlend->setChecked(true);
+    else if (deinterlacer == "yadif-nospatial")
+        ui->actionYadifTemporal->setChecked(true);
+    else
+        ui->actionYadifSpatial->setChecked(true);
+
+    if (interpolation == "nearest")
+        ui->actionNearest->setChecked(true);
+    else if (interpolation == "bilinear")
+        ui->actionBilinear->setChecked(true);
+    else if (interpolation == "bicubic")
+        ui->actionBicubic->setChecked(true);
+    else
+        ui->actionHyper->setChecked(true);
+
+    QVariant external = m_settings.value("player/external", "");
+    foreach (QAction* a, m_externalGroup->actions()) {
+        if (a->data() == external) {
+            a->setChecked(true);
+            break;
+        }
+    }
+
+    QVariant profile = m_settings.value("player/profile", "");
+    // Automatic not permitted for SDI/HDMI
+    if (!external.toString().isEmpty() && profile.toString().isEmpty())
+        profile = QVariant("atsc_720p_50");
+    foreach (QAction* a, m_profileGroup->actions()) {
+        // Automatic not permitted for SDI/HDMI
+        if (a->data().toString().isEmpty() && !external.toString().isEmpty())
+            a->setDisabled(true);
+        if (a->data() == profile) {
+            a->setChecked(true);
+            break;
+        }
+    }
+}
+
+void MainWindow::readWindowSettings()
 {
     restoreGeometry(m_settings.value("geometry").toByteArray());
 #if defined(Q_WS_MAC)
@@ -379,6 +520,38 @@ void MainWindow::writeSettings()
         showNormal();
     m_settings.setValue("geometry", saveGeometry());
     m_settings.setValue("windowState", saveState());
+}
+
+void MainWindow::configureVideoWidget()
+{
+    MLT.videoWidget()->setProperty("mlt_service",
+        ui->menuExternal? m_externalGroup->checkedAction()->data() : QString());
+    MLT.setProfile(m_profileGroup->checkedAction()->data().toString());
+    MLT.videoWidget()->setProperty("realtime", ui->actionRealtime->isChecked());
+    if (!ui->menuExternal || m_externalGroup->checkedAction()->data().toString().isEmpty())
+        MLT.videoWidget()->setProperty("progressive", ui->actionProgressive->isChecked());
+    else {
+        MLT.videoWidget()->setProperty("progressive", MLT.profile().progressive());
+        ui->actionProgressive->setEnabled(false);
+    }
+    if (ui->actionOneField->isChecked())
+        MLT.videoWidget()->setProperty("deinterlace_method", "onefield");
+    else if (ui->actionLinearBlend->isChecked())
+        MLT.videoWidget()->setProperty("deinterlace_method", "linearblend");
+    else if (ui->actionYadifTemporal->isChecked())
+        MLT.videoWidget()->setProperty("deinterlace_method", "yadif-nospatial");
+    else
+        MLT.videoWidget()->setProperty("deinterlace_method", "yadif");
+    if (ui->actionNearest->isChecked())
+        MLT.videoWidget()->setProperty("rescale", "nearest");
+    else if (ui->actionBilinear->isChecked())
+        MLT.videoWidget()->setProperty("rescale", "bilinear");
+    else if (ui->actionBicubic->isChecked())
+        MLT.videoWidget()->setProperty("rescale", "bicubic");
+    else
+        MLT.videoWidget()->setProperty("rescale", "hyper");
+    MLT.videoWidget()->setContentsMargins(0, 0, 0, 0);
+    MLT.videoWidget()->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 }
 
 void MainWindow::setCurrentFile(const QString &filename)
@@ -691,6 +864,7 @@ void MainWindow::onProducerOpened()
         m_propertiesDock->setWidget(scroll);
     }
     onProducerChanged();
+    on_actionJack_triggered(ui->actionJack->isChecked());
 }
 
 void MainWindow::onProducerChanged()
@@ -909,7 +1083,8 @@ void MainWindow::onMeltedUnitOpened()
     ui->stackedWidget->setCurrentIndex(1);
     delete m_propertiesDock->widget();
     m_player->connectTransport(m_meltedPlaylistDock->transportControl());
-    connect(m_meltedServerDock, SIGNAL(positionUpdated(int,double,int,int,int,bool)), m_player, SLOT(onShowFrame(int,double,int,int,int,bool)));
+    connect(m_meltedServerDock, SIGNAL(positionUpdated(int,double,int,int,int,bool)),
+            m_player, SLOT(onShowFrame(int,double,int,int,int,bool)));
     onProducerChanged();
 }
 
@@ -928,4 +1103,186 @@ void MainWindow::on_actionEnter_Full_Screen_triggered()
         showFullScreen();
         ui->actionEnter_Full_Screen->setText(tr("Exit Full Screen"));
     }
+}
+
+void MainWindow::onGpuNotSupported()
+{
+    m_settings.setValue("player/gpu", false);
+    ui->actionGPU->setChecked(false);
+    ui->actionGPU->setDisabled(true);
+    showStatusMessage(tr("GPU Processing is not supported"));
+}
+
+void MainWindow::on_actionOpenGL_triggered(bool checked)
+{
+    m_settings.setValue("player/opengl", checked);
+    int r = QMessageBox::information(this, qApp->applicationName(),
+                                 tr("You must restart Shotcut to switch using OpenGL.\n"
+                                    "Do you want to exit now?"),
+                                 QMessageBox::Yes | QMessageBox::Default,
+                                 QMessageBox::No | QMessageBox::Escape);
+    if (r == QMessageBox::Yes)
+        QApplication::closeAllWindows();
+}
+
+void MainWindow::on_actionRealtime_triggered(bool checked)
+{
+    MLT.videoWidget()->setProperty("realtime", checked);
+    if (MLT.consumer()) {
+        MLT.consumer()->stop();
+        MLT.consumer()->set("real_time", checked? 1 : -1);
+        MLT.consumer()->start();
+    }
+    m_settings.setValue("player/realtime", checked);
+}
+
+void MainWindow::on_actionProgressive_triggered(bool checked)
+{
+    MLT.videoWidget()->setProperty("progressive", checked);
+    if (MLT.consumer() && !MLT.profile().progressive()) {
+        MLT.consumer()->stop();
+        MLT.consumer()->set("progressive", checked);
+        MLT.consumer()->start();
+    }
+    m_settings.setValue("player/progressive", checked);
+}
+
+void MainWindow::changeDeinterlacer(bool checked, const char* method)
+{
+    if (checked) {
+        MLT.videoWidget()->setProperty("deinterlace_method", method);
+        if (MLT.consumer()) {
+            MLT.consumer()->stop();
+            MLT.consumer()->set("deinterlace_method", method);
+            MLT.consumer()->start();
+        }
+    }
+    m_settings.setValue("player/deinterlacer", method);
+}
+
+void MainWindow::on_actionOneField_triggered(bool checked)
+{
+    changeDeinterlacer(checked, "onefield");
+}
+
+void MainWindow::on_actionLinearBlend_triggered(bool checked)
+{
+    changeDeinterlacer(checked, "linearblend");
+}
+
+void MainWindow::on_actionYadifTemporal_triggered(bool checked)
+{
+    changeDeinterlacer(checked, "yadif-nospatial");
+}
+
+void MainWindow::on_actionYadifSpatial_triggered(bool checked)
+{
+    changeDeinterlacer(checked, "yadif");
+}
+
+void MainWindow::changeInterpolation(bool checked, const char* method)
+{
+    if (checked) {
+        MLT.videoWidget()->setProperty("rescale", method);
+        if (MLT.consumer()) {
+            MLT.consumer()->stop();
+            MLT.consumer()->set("rescale", method);
+            MLT.consumer()->start();
+        }
+    }
+    m_settings.setValue("player/interpolation", method);
+}
+
+void MainWindow::on_actionNearest_triggered(bool checked)
+{
+    changeInterpolation(checked, "nearest");
+}
+
+void MainWindow::on_actionBilinear_triggered(bool checked)
+{
+    changeInterpolation(checked, "bilinear");
+}
+
+void MainWindow::on_actionBicubic_triggered(bool checked)
+{
+    changeInterpolation(checked, "bicubic");
+}
+
+void MainWindow::on_actionHyper_triggered(bool checked)
+{
+    changeInterpolation(checked, "hyper");
+}
+
+void MainWindow::on_actionJack_triggered(bool checked)
+{
+    m_settings.setValue("player/jack", checked);
+    if (!MLT.enableJack(checked)) {
+        ui->actionJack->setChecked(false);
+        m_settings.setValue("player/jack", false);
+        QMessageBox::warning(this, qApp->applicationName(),
+            tr("Failed to connect to JACK.\nPlease verify that JACK is installed and running."));
+    }
+}
+
+void MainWindow::on_actionGPU_triggered(bool checked)
+{
+    m_settings.setValue("player/gpu", checked);
+    MLT.videoWidget()->setProperty("gpu", checked);
+    QMessageBox dialog(QMessageBox::Information,
+                       qApp->applicationName(),
+                       tr("You must restart Shotcut to switch using GPU processing.\n"
+                          "Do you want to exit now?"),
+                       QMessageBox::No | QMessageBox::Yes,
+                       this);
+    dialog.setDefaultButton(QMessageBox::Yes);
+    dialog.setEscapeButton(QMessageBox::No);
+    dialog.setWindowModality(Qt::WindowModal);
+    if (dialog.exec() == QMessageBox::Yes)
+        QApplication::closeAllWindows();
+}
+
+void MainWindow::onExternalTriggered(QAction *action)
+{
+    bool isExternal = !action->data().toString().isEmpty();
+    m_settings.setValue("player/external", action->data());
+    MLT.videoWidget()->setProperty("mlt_service", action->data());
+
+    QVariant profile = m_settings.value("player/profile", "");
+    // Automatic not permitted for SDI/HDMI
+    if (isExternal && profile.toString().isEmpty()) {
+        profile = QVariant("atsc_720p_50");
+        m_settings.setValue("player/profile", profile);
+        MLT.setProfile(profile.toString());
+        emit profileChanged();
+        foreach (QAction* a, m_profileGroup->actions()) {
+            if (a->data() == profile) {
+                a->setChecked(true);
+                break;
+            }
+        }
+    }
+    else {
+        MLT.consumerChanged();
+    }
+    // Automatic not permitted for SDI/HDMI
+    m_profileGroup->actions().at(0)->setEnabled(!isExternal);
+
+    // Disable progressive option when SDI/HDMI
+    ui->actionProgressive->setEnabled(!isExternal);
+    bool isProgressive = isExternal
+            ? MLT.profile().progressive()
+            : ui->actionProgressive->isChecked();
+    MLT.videoWidget()->setProperty("progressive", isProgressive);
+    if (MLT.consumer()) {
+        MLT.consumer()->stop();
+        MLT.consumer()->set("progressive", isProgressive);
+        MLT.consumer()->start();
+    }
+}
+
+void MainWindow::onProfileTriggered(QAction *action)
+{
+    m_settings.setValue("player/profile", action->data());
+    MLT.setProfile(action->data().toString());
+    emit profileChanged();
 }

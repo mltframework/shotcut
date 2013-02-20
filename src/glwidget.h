@@ -55,6 +55,7 @@ signals:
     void frameReceived(Mlt::QFrame frame);
     void dragStarted();
     void seekTo(int x);
+    void gpuNotSupported();
 
 private:
     int x, y, w, h;
