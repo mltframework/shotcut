@@ -250,7 +250,7 @@ MainWindow::MainWindow()
         Mlt::SDLWidget* videoWidget = (Mlt::SDLWidget*) &(MLT);
         connect(videoWidget, SIGNAL(dragStarted()), m_playlistDock, SLOT(onPlayerDragStarted()));
         connect(videoWidget, SIGNAL(seekTo(int)), m_player, SLOT(seek(int)));
-        m_player->onGpuNotSupported();
+        onGpuNotSupported();
     }
 #endif
 
@@ -306,10 +306,11 @@ void MainWindow::setupSettingsMenu()
     // Add the SDI and HDMI devices to the Settings menu.
     m_externalGroup = new QActionGroup(this);
     ui->actionExternalNone->setData(QString());
+    m_externalGroup->addAction(ui->actionExternalNone);
 #ifdef Q_WS_X11
     Mlt::Consumer linsys(MLT.profile(), "sdi");
     if (linsys.is_valid()) {
-        action = new QAction("DVEO VidPort", this);
+        QAction* action = new QAction("DVEO VidPort", this);
         action->setCheckable(true);
         action->setData(QString("sdi"));
         m_externalGroup->addAction(action);
