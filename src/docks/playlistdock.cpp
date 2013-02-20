@@ -52,12 +52,13 @@ PlaylistDock::~PlaylistDock()
 
 int PlaylistDock::position()
 {
+    int result = -1;
     QModelIndex index = ui->tableView->currentIndex();
     if (index.isValid()) {
         Mlt::ClipInfo* i = m_model.playlist()->clip_info(index.row());
-        if (i) return i->start;
+        if (i) result = i->start;
     }
-    else return -1;
+    return result;
 }
 
 void PlaylistDock::incrementIndex()
