@@ -244,7 +244,7 @@ MainWindow::MainWindow()
         Mlt::GLWidget* videoWidget = (Mlt::GLWidget*) &(MLT);
         connect(videoWidget, SIGNAL(dragStarted()), m_playlistDock, SLOT(onPlayerDragStarted()));
         connect(videoWidget, SIGNAL(seekTo(int)), m_player, SLOT(seek(int)));
-        connect(videoWidget, SIGNAL(gpuNotSupported()), m_player, SLOT(onGpuNotSupported()));
+        connect(videoWidget, SIGNAL(gpuNotSupported()), this, SLOT(onGpuNotSupported()));
     }
     else {
         Mlt::SDLWidget* videoWidget = (Mlt::SDLWidget*) &(MLT);
