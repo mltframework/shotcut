@@ -47,7 +47,7 @@ GLWidget::GLWidget(QWidget *parent)
     setAttribute(Qt::WA_OpaquePaintEvent);
     setMouseTracking(true);
     QSettings settings;
-    if (settings.value("player/gpu", true).toBool())
+    if (settings.value("player/gpu", false).toBool())
         m_glslManager = new Filter(profile(), "glsl.manager");
     if ((m_glslManager && !m_glslManager->is_valid())) {
         delete m_glslManager;
@@ -86,7 +86,7 @@ void GLWidget::initializeGL()
     QPalette palette;
     QSettings settings;
 
-    if (settings.value("player/gpu", true).toBool() && !m_glslManager)
+    if (settings.value("player/gpu", false).toBool() && !m_glslManager)
         emit gpuNotSupported();
     initializeGLFunctions();
     qglClearColor(palette.color(QPalette::Window));
