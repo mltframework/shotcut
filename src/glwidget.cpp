@@ -234,6 +234,16 @@ static void onThreadStarted(mlt_properties owner, GLWidget* self)
     self->startGlsl();
 }
 
+void GLWidget::stopGlsl()
+{
+    m_renderContext->doneCurrent();
+}
+
+static void onThreadStopped(mlt_properties owner, GLWidget* self)
+{
+    self->stopGlsl();
+}
+
 void GLWidget::showFrame(Mlt::QFrame frame)
 {
     if (frame.frame()->get_int("rendered")) {
@@ -401,8 +411,10 @@ int GLWidget::reconfigure(bool isMulti)
             m_consumer->set("buffer", 1);
             m_consumer->set("scrub_audio", 1);
             if (m_glslManager) {
-                if (!m_isInitialized)
+                if (!m_isInitialized) {
                     m_consumer->listen("consumer-thread-started", this, (mlt_listener) onThreadStarted);
+                    m_consumer->listen("consumer-thread-stopped", this, (mlt_listener) onThreadStopped);
+                }
                 m_consumer->set("mlt_image_format", "glsl");
             } else {
                 m_consumer->set("mlt_image_format", "yuv422");

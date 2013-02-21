@@ -40,6 +40,7 @@ public:
     QSize minimumSizeHint() const;
     QSize sizeHint() const;
     void startGlsl();
+    void stopGlsl();
     int open(Mlt::Producer*, bool isMulti = false);
     int reconfigure(bool isMulti);
     QWidget* videoWidget() { return this; }
