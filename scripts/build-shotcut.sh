@@ -26,9 +26,9 @@ CREATE_STARTUP_SCRIPT=1
 ENABLE_FREI0R=1
 FREI0R_HEAD=1
 FREI0R_REVISION=
-ENABLE_SWFDEC=0
-SWFDEC_HEAD=
-SWFDEC_REVISION=
+ENABLE_MOVIT=1
+MOVIT_HEAD=1
+MOVIT_REVISION=
 X264_HEAD=0
 X264_REVISION=remotes/origin/stable
 LIBVPX_HEAD=1
@@ -142,7 +142,7 @@ function to_key {
     libvpx)
       echo 4
     ;;
-    swfdec)
+    movit)
       echo 5
     ;;
     lame)
@@ -297,8 +297,8 @@ function set_globals {
   if test "$ENABLE_FREI0R" = 1 ; then
       SUBDIRS="frei0r $SUBDIRS"
   fi
-  if test "$ENABLE_SWFDEC" = 1 && test "$SWFDEC_HEAD" = 1 -o "$SWFDEC_REVISION" != ""; then
-      SUBDIRS="swfdec $SUBDIRS"
+  if test "$ENABLE_MOVIT" = 1 && test "$MOVIT_HEAD" = 1 -o "$MOVIT_REVISION" != ""; then
+      SUBDIRS="movit $SUBDIRS"
   fi
   if test "$FFMPEG_SUPPORT_H264" = 1 && test "$X264_HEAD" = 1 -o "$X264_REVISION" != ""; then
       SUBDIRS="x264 $SUBDIRS"
@@ -315,12 +315,12 @@ function set_globals {
   debug "SUBDIRS = $SUBDIRS"
 
   # REPOLOCS Array holds the repo urls
-  REPOLOCS[0]="git://git.videolan.org/ffmpeg.git"
+  REPOLOCS[0]="git://source.ffmpeg.org/ffmpeg.git"
   REPOLOCS[1]="git://github.com/mltframework/mlt.git"
   REPOLOCS[2]="git://github.com/ddennedy/frei0r.git"
   REPOLOCS[3]="git://git.videolan.org/x264.git"
   REPOLOCS[4]="http://git.chromium.org/webm/libvpx.git"
-  REPOLOCS[5]="git://github.com/mltframework/swfdec.git"
+  REPOLOCS[5]="http://git.sesse.net/movit/"
   REPOLOCS[6]="http://downloads.sourceforge.net/project/lame/lame/3.98.4/lame-3.98.4.tar.gz"
   REPOLOCS[7]="git://github.com/mltframework/shotcut.git"
   REPOLOCS[8]="http://ftp.de.debian.org/debian/pool/main/s/swh-plugins/swh-plugins_0.4.15+1.orig.tar.gz"
@@ -360,8 +360,8 @@ function set_globals {
     REVISIONS[4]="$LIBVPX_REVISION"
   fi
   REVISIONS[5]=""
-  if test 0 = "$SWFDEC_HEAD" -a "$SWFDEC_REVISION" ; then
-    REVISIONS[5]="$SWFDEC_REVISION"
+  if test 0 = "$MOVIT_HEAD" -a "$MOVIT_REVISION" ; then
+    REVISIONS[5]="$MOVIT_REVISION"
   fi
   REVISIONS[6]="lame-3.98.4"
   REVISIONS[7]=""
@@ -410,6 +410,8 @@ function set_globals {
     export CXXFLAGS="$CFLAGS"
     export LDFLAGS="-L$FINAL_INSTALL_DIR/bin -L$FINAL_INSTALL_DIR/lib"
     export QTDIR="$HOME/qt/4.8.1"
+  else
+    export RANLIB=ranlib
   fi
 
   #####
@@ -496,8 +498,11 @@ function set_globals {
   LDFLAGS_[4]=$LDFLAGS
 
   #####
-  # swfdec
-  CONFIG[5]="./configure --prefix=$FINAL_INSTALL_DIR --disable-gtk --disable-gstreamer"
+  # movit
+  CONFIG[5]="./autogen.sh --prefix=$FINAL_INSTALL_DIR"
+  if test "$TARGET_OS" = "Win32" ; then
+    CONFIG[5]="${CONFIG[5]} --host=x86-w64-mingw32"
+  fi
   CFLAGS_[5]=$CFLAGS
   LDFLAGS_[5]=$LDFLAGS
 
@@ -520,7 +525,7 @@ function set_globals {
     CONFIG[7]="qmake -r"
   fi
   if test "$TARGET_OS" = "Win32" ; then
-    CONFIG[7]="${CONFIG[7]} -spec mingw-mkspec CONFIG+=link_pkgconfig PKGCONFIG+=mlt++"
+    CONFIG[7]="${CONFIG[7]} -spec mingw-mkspec CONFIG+=debug CONFIG+=link_pkgconfig PKGCONFIG+=mlt++"
   fi
   CFLAGS_[7]=$CFLAGS
   LDFLAGS_[7]=$LDFLAGS
@@ -613,8 +618,8 @@ function prepare_feedback {
       debug Adding 1 step for get frei0r
       NUMSTEPS=$(( $NUMSTEPS + 1 ))
     fi
-    if test 1 = "$ENABLE_SWFDEC" ; then
-      debug Adding 1 step for get swfdec
+    if test 1 = "$ENABLE_MOVIT" ; then
+      debug Adding 1 step for get movit
       NUMSTEPS=$(( $NUMSTEPS + 1 ))
     fi
   fi
@@ -625,8 +630,8 @@ function prepare_feedback {
       debug Adding 1 step for clean frei0r
       NUMSTEPS=$(( $NUMSTEPS + 1 ))
     fi
-    if test 1 = "$ENABLE_SWFDEC" ; then
-      debug Adding 1 step for clean swfdec
+    if test 1 = "$ENABLE_MOVIT" ; then
+      debug Adding 1 step for clean movit
       NUMSTEPS=$(( $NUMSTEPS + 1 ))
     fi
   fi   
@@ -637,8 +642,8 @@ function prepare_feedback {
       debug Adding 3 steps for compile-install frei0r
       NUMSTEPS=$(( $NUMSTEPS + 3 ))
     fi
-    if test 1 = "$ENABLE_SWFDEC" ; then
-      debug Adding 3 steps for compile-install swfdec
+    if test 1 = "$ENABLE_MOVIT" ; then
+      debug Adding 3 steps for compile-install movit
       NUMSTEPS=$(( $NUMSTEPS + 3 ))
     fi
   fi
@@ -1178,22 +1183,15 @@ function configure_compile_install_subproject {
     fi
   fi
 
-  # Special hack for swfdec
-  if test "swfdec" = "$1" ; then
-    debug "Need to create configure for $1"
-    cmd autoreconf -i || die "Unable to create configure file for $1"
-    if test ! -e configure ; then
-      die "Unable to confirm presence of configure file for $1"
-    fi
-  fi
-
   cmd `lookup CONFIG $1` || die "Unable to configure $1"
   feedback_progress Done configuring $1
 
   # Special post-configure hack for ffmpeg/Win32
-  if test "ffmpeg" = "$1" -a "$TARGET_OS" = "Win32" ; then
+  # Disabled for now - no longer seems to be a problem.
+  #if test "ffmpeg" = "$1" -a "$TARGET_OS" = "Win32" ; then
+  if test ; then
     log "Need to remove lib.exe from config.mak for $1"
-    grep -v SLIB_INSTALL_EXTRA_SHLIB > config.new &&
+    grep -v SLIB_INSTALL_EXTRA_SHLIB config.mak > config.new &&
     sed '/SLIB_EXTRA_CMD/ c\
 SLIB_EXTRA_CMD=-"mv $$(@:$(SLIBSUF)=.orig.def) $$(@:$(SLIBSUF)=.def)"
 ' config.new > config.mak
@@ -1206,7 +1204,11 @@ SLIB_EXTRA_CMD=-"mv $$(@:$(SLIBSUF)=.orig.def) $$(@:$(SLIBSUF)=.def)"
   
   # Compile
   feedback_status Building $1 - this could take some time
-  cmd make -j$MAKEJ || die "Unable to build $1"
+  if test "movit" = "$1" ; then
+    cmd make -j$MAKEJ RANLIB="$RANLIB" libmovit.a || die "Unable to build $1"
+  else
+    cmd make -j$MAKEJ || die "Unable to build $1"
+  fi
   feedback_progress Done building $1
 
   # Install
@@ -1510,7 +1512,7 @@ function deploy_win32
   cmd rm lib/*
   cmd rm -rf lib/pkgconfig
   cmd rm -rf share/doc share/man share/ffmpeg/examples share/aclocal share/glib-2.0 share/gtk-2.0 share/gtk-doc share/themes
-  cmd cp -p "$QTDIR"/bin/Qt{Core,Gui,OpenGL,Xml,Svg,Network}4.dll .
+  cmd cp -p "$QTDIR"/bin/Qt{Core,Gui,OpenGL,Xml,Svg,Network}d4.dll .
   cmd mkdir lib/qt4
   cmd cp -pr "$QTDIR"/plugins/* lib/qt4
   cmd cp -pr "$QTDIR"/translations/*.qm "$FINAL_INSTALL_DIR"/share/translations
