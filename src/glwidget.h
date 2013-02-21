@@ -71,6 +71,8 @@ private:
     QMutex m_mutex;
     QWaitCondition m_condition;
     bool m_isInitialized;
+    Event* m_threadStartEvent;
+    Event* m_threadStopEvent;
 
 protected:
     void initializeGL();

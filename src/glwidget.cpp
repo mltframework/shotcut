@@ -41,6 +41,8 @@ GLWidget::GLWidget(QWidget *parent)
     , m_glslManager(0)
     , m_fbo(0)
     , m_isInitialized(false)
+    , m_threadStartEvent(0)
+    , m_threadStopEvent(0)
 {
     m_texture[0] = m_texture[1] = m_texture[2] = 0;
     setAttribute(Qt::WA_PaintOnScreen);
@@ -68,6 +70,8 @@ GLWidget::~GLWidget()
         glDeleteTextures(3, m_texture);
     delete m_fbo;
     delete m_glslManager;
+    delete m_threadStartEvent;
+    delete m_threadStopEvent;
 }
 
 QSize GLWidget::minimumSizeHint() const
@@ -373,6 +377,10 @@ int GLWidget::reconfigure(bool isMulti)
         if (filter->is_valid())
             m_consumer->attach(*filter);
         delete filter;
+        delete m_threadStartEvent;
+        m_threadStartEvent = 0;
+        delete m_threadStopEvent;
+        m_threadStopEvent = 0;
     }
     if (m_consumer->is_valid()) {
         // Connect the producer to the consumer - tell it to "run" later
@@ -411,10 +419,10 @@ int GLWidget::reconfigure(bool isMulti)
             m_consumer->set("buffer", 1);
             m_consumer->set("scrub_audio", 1);
             if (m_glslManager) {
-                if (!m_isInitialized) {
-                    m_consumer->listen("consumer-thread-started", this, (mlt_listener) onThreadStarted);
-                    m_consumer->listen("consumer-thread-stopped", this, (mlt_listener) onThreadStopped);
-                }
+                if (!m_threadStartEvent)
+                    m_threadStartEvent = m_consumer->listen("consumer-thread-started", this, (mlt_listener) onThreadStarted);
+                if (!m_threadStopEvent)
+                    m_threadStopEvent = m_consumer->listen("consumer-thread-stopped", this, (mlt_listener) onThreadStopped);
                 m_consumer->set("mlt_image_format", "glsl");
             } else {
                 m_consumer->set("mlt_image_format", "yuv422");
