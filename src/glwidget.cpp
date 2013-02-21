@@ -25,7 +25,6 @@
 #endif
 #include <Mlt.h>
 #include "glwidget.h"
-#include <QDebug>
 
 #define check_error() { int err = glGetError(); if (err != GL_NO_ERROR) { fprintf(stderr, "GL error 0x%x at %s:%d\n", err, __FILE__, __LINE__); exit(1); } }
 
@@ -59,8 +58,6 @@ GLWidget::GLWidget(QWidget *parent)
         m_renderContext = new QGLWidget(this, this);
         m_renderContext->resize(0, 0);
     }
-
-    mlt_log_set_level(MLT_LOG_VERBOSE);
 }
 
 GLWidget::~GLWidget()
@@ -86,7 +83,6 @@ QSize GLWidget::sizeHint() const
 
 void GLWidget::initializeGL()
 {
-    qDebug() << __FUNCTION__;
     QPalette palette;
     QSettings settings;
 
@@ -132,7 +128,6 @@ void GLWidget::initializeGL()
 
 void GLWidget::resizeGL(int width, int height)
 {
-    qDebug() << __FUNCTION__;
     double this_aspect = (double) width / height;
 
     // Special case optimisation to negate odd effect of sample aspect ratio
@@ -214,7 +209,6 @@ void GLWidget::mouseMoveEvent(QMouseEvent* event)
 
 void GLWidget::startGlsl()
 {
-    qDebug() << __FUNCTION__ << "valid?" << m_renderContext->isValid();
     if (!m_isInitialized) {
         m_mutex.lock();
         m_condition.wait(&m_mutex);
