@@ -502,8 +502,10 @@ function set_globals {
   CONFIG[5]="./autogen.sh --prefix=$FINAL_INSTALL_DIR"
   if test "$TARGET_OS" = "Win32" ; then
     CONFIG[5]="${CONFIG[5]} --host=x86-w64-mingw32"
+    CFLAGS_[5]="$CFLAGS"
+  else
+    CFLAGS_[5]="$CFLAGS -fPIC"
   fi
-  CFLAGS_[5]=$CFLAGS
   LDFLAGS_[5]=$LDFLAGS
 
   #####
