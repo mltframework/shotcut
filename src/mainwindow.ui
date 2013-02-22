@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>840</width>
-    <height>543</height>
+    <width>838</width>
+    <height>541</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -44,7 +44,7 @@ p, li { white-space: pre-wrap; }
 &lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt; L&lt;span style=&quot; font-weight:600;&quot;&gt;eft&lt;/span&gt; or R&lt;span style=&quot; font-weight:600;&quot;&gt;ight&lt;/span&gt; cursor keys step frame-by-frame.&lt;/li&gt;
 &lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; Page Up&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;Page Down&lt;/span&gt; step 10 frames at-a-time.&lt;/li&gt;
 &lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; Alt+Left&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;Alt+Right&lt;/span&gt; to jump between start, in, out, and end.&lt;/li&gt;&lt;/ul&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Right-click&lt;/span&gt; the video window to access its settings.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Hold down &lt;span style=&quot; font-weight:600;&quot;&gt;Shift&lt;/span&gt; to make the mouse movement over the video window scrub/skim.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Update Shotcut whenever you like. We do not notify you about updates because new version are available almost daily.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
          </widget>
@@ -61,7 +61,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>840</width>
+     <width>838</width>
      <height>22</height>
     </rect>
    </property>
@@ -152,11 +152,11 @@ p, li { white-space: pre-wrap; }
    <property name="windowTitle">
     <string>Main</string>
    </property>
-   <property name="Movable">
-    <bool>false</bool>
-   </property>
    <property name="toolButtonStyle">
     <enum>Qt::ToolButtonFollowStyle</enum>
+   </property>
+   <property name="Movable" stdset="0">
+    <bool>false</bool>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
