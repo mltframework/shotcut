@@ -293,7 +293,7 @@ function set_globals {
 
   # Subdirs list, for number of common operations
   # Note, the function to_key depends on this
-  SUBDIRS="ffmpeg mlt shotcut"
+  SUBDIRS="FFmpeg mlt shotcut"
   if test "$ENABLE_FREI0R" = 1 ; then
       SUBDIRS="frei0r $SUBDIRS"
   fi
@@ -315,7 +315,7 @@ function set_globals {
   debug "SUBDIRS = $SUBDIRS"
 
   # REPOLOCS Array holds the repo urls
-  REPOLOCS[0]="git://source.ffmpeg.org/ffmpeg.git"
+  REPOLOCS[0]="git://github.com/FFmpeg/FFmpeg.git"
   REPOLOCS[1]="git://github.com/mltframework/mlt.git"
   REPOLOCS[2]="git://github.com/ddennedy/frei0r.git"
   REPOLOCS[3]="git://git.videolan.org/x264.git"
@@ -704,7 +704,7 @@ function make_clean_dir {
   feedback_status "Cleaning out sources for $1"
   cmd pushd .
   # Special hack for ffmpeg, it sometimes requires distclean to work.
-  if test "ffmpeg" = "$1" ; then
+  if test "FFmpeg" = "$1" ; then
       cmd cd $1 && cmd make distclean
   else
       cmd cd $1 && cmd make clean
@@ -1192,7 +1192,7 @@ function configure_compile_install_subproject {
 
   # Special post-configure hack for ffmpeg/Win32
   # Disabled for now - no longer seems to be a problem.
-  #if test "ffmpeg" = "$1" -a "$TARGET_OS" = "Win32" ; then
+  #if test "FFmpeg" = "$1" -a "$TARGET_OS" = "Win32" ; then
   if test ; then
     log "Need to remove lib.exe from config.mak for $1"
     grep -v SLIB_INSTALL_EXTRA_SHLIB config.mak > config.new &&
@@ -1209,7 +1209,8 @@ SLIB_EXTRA_CMD=-"mv $$(@:$(SLIBSUF)=.orig.def) $$(@:$(SLIBSUF)=.def)"
   # Compile
   feedback_status Building $1 - this could take some time
   if test "movit" = "$1" ; then
-    cmd make -j$MAKEJ RANLIB="$RANLIB" CXXFLAGS="$CFLAGS" libmovit.a || die "Unable to build $1"
+    export CXXFLAGS="$CFLAGS"
+    cmd make -j$MAKEJ RANLIB="$RANLIB" libmovit.a || die "Unable to build $1"
   else
     cmd make -j$MAKEJ || die "Unable to build $1"
   fi
