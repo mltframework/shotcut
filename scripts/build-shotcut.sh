@@ -1486,6 +1486,10 @@ function deploy_osx
     fixlibs "$lib"
   done
 
+  # Movit shaders
+  log Copying Movit shaders
+  cmd cp -R $FINAL_INSTALL_DIR/share/movit share
+
   popd
 
   # build DMG
@@ -1589,6 +1593,7 @@ export MLT_REPOSITORY="\$INSTALL_DIR/lib/mlt"
 export MLT_DATA="\$INSTALL_DIR/share/mlt"
 export MLT_PROFILES_PATH="\$INSTALL_DIR/share/mlt/profiles"
 export FREI0R_PATH="\$INSTALL_DIR/lib/frei0r-1":/usr/lib/frei0r-1:/usr/local/lib/frei0r-1:/opt/local/lib/frei0r-1
+export MLT_MOVIT_PATH="\$INSTALL_DIR/share/movit"
 "\$INSTALL_DIR/bin/melt" \$@
 End-of-melt-wrapper
   if test 0 != $? ; then
@@ -1609,6 +1614,7 @@ export MLT_REPOSITORY="\$INSTALL_DIR/lib/mlt"
 export MLT_DATA="\$INSTALL_DIR/share/mlt"
 export MLT_PROFILES_PATH="\$INSTALL_DIR/share/mlt/profiles"
 export FREI0R_PATH="\$INSTALL_DIR/lib/frei0r-1":/usr/lib/frei0r-1:/usr/local/lib/frei0r-1:/opt/local/lib/frei0r-1
+export MLT_MOVIT_PATH="\$INSTALL_DIR/share/movit"
 "\$INSTALL_DIR/bin/shotcut" \$@
 End-of-shotcut-wrapper
   if test 0 != $? ; then
