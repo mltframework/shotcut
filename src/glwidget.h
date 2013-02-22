@@ -20,7 +20,9 @@
 #define GLWIDGET_H
 
 #include <QSemaphore>
-#include <QtOpenGL>
+#include <QtOpenGL/QGLWidget>
+#include <QtOpenGL/QGLShaderProgram>
+#include <QtOpenGL/QGLFramebufferObject>
 #include <QtCore/QMutex>
 #include <QtCore/QWaitCondition>
 #include "mltcontroller.h"
@@ -29,7 +31,7 @@ namespace Mlt {
 
 class Filter;
 
-class GLWidget : public QGLWidget, public Controller, protected QGLFunctions
+class GLWidget : public QGLWidget, public Controller
 {
     Q_OBJECT
 
