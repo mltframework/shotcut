@@ -1279,11 +1279,18 @@ End-of-win32-README
         cmd install -p -c COPYING "$FINAL_INSTALL_DIR"
         cmd install -d "$FINAL_INSTALL_DIR"/share/shotcut/translations
         cmd install -p -c translations/*.qm "$FINAL_INSTALL_DIR"/share/shotcut/translations
-        # Skip over including Qt with distribution for now.
+        # Skip over including Qt with bundle for now.
         #cmd install -d "$FINAL_INSTALL_DIR"/lib/qt4
-        #cmd install -p -c /usr/lib/libQt{Core,Gui,Xml,Svg}.so* "$FINAL_INSTALL_DIR"/lib
+        #cmd install -p -c /usr/lib/libQt{Core,Gui,OpenGL,Xml,Svg}.so* "$FINAL_INSTALL_DIR"/lib
         #cmd install -p -c /usr/lib/libaudio.so* "$FINAL_INSTALL_DIR"/lib
         #cmd cp -r /usr/lib/qt4/plugins/* "$FINAL_INSTALL_DIR"/lib/qt4
+        log Copying some libs from system
+        GLEWLIB=$(ldd "$FINAL_INSTALL_DIR"/bin/shotcut | awk '/GLEW/ {print $3}')
+        log GLEWLIB=$GLEWLIB
+        cmd install -c "$GLEWLIB" "$FINAL_INSTALL_DIR"/lib
+        SOXLIB=$(ldd "$FINAL_INSTALL_DIR"/lib/mlt/libmltsox.so | awk '/libsox/ {print $3}')
+        log SOXLIB=$SOXLIB
+        cmd install -c "$SOXLIB" "$FINAL_INSTALL_DIR"/lib
       fi
     else
       cmd make install || die "Unable to install $1"
