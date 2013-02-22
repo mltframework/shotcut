@@ -97,11 +97,13 @@ void MeltedUnitsModel::onDisconnected()
         mvcp_tokeniser_close(m_tokeniser);
         m_tokeniser = 0;
     }
-    emit beginRemoveRows(QModelIndex(), 0, rowCount() - 1);
-    foreach (QObject* o, m_units)
-        delete o;
-    m_units.clear();
-    emit endRemoveRows();
+    if (rowCount() > 0) {
+        emit beginRemoveRows(QModelIndex(), 0, rowCount() - 1);
+        foreach (QObject* o, m_units)
+            delete o;
+        m_units.clear();
+        emit endRemoveRows();
+    }
 }
 
 QString MeltedUnitsModel::decodeStatus(unit_status status)
