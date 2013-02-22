@@ -1173,6 +1173,7 @@ function configure_compile_install_subproject {
 
   # Configure
   feedback_status Configuring $1
+
   # Special hack for libvpx
   if test "libvpx" = "$1" ; then
     cmd make clean
@@ -1185,6 +1186,11 @@ function configure_compile_install_subproject {
     if test ! -e configure ; then
       die "Unable to confirm presence of configure file for $1"
     fi
+  fi
+
+  # Special hack for movit
+  if test "movit" = "$1" ; then
+    export CXXFLAGS="$CFLAGS"
   fi
 
   cmd `lookup CONFIG $1` || die "Unable to configure $1"
@@ -1209,7 +1215,6 @@ SLIB_EXTRA_CMD=-"mv $$(@:$(SLIBSUF)=.orig.def) $$(@:$(SLIBSUF)=.def)"
   # Compile
   feedback_status Building $1 - this could take some time
   if test "movit" = "$1" ; then
-    export CXXFLAGS="$CFLAGS"
     cmd make -j$MAKEJ RANLIB="$RANLIB" libmovit.a || die "Unable to build $1"
   else
     cmd make -j$MAKEJ || die "Unable to build $1"
