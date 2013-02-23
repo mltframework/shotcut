@@ -392,7 +392,7 @@ function set_globals {
   elif test "$TARGET_OS" = "Win32" ; then
     FINAL_INSTALL_DIR="$INSTALL_DIR/Shotcut"
   else
-    FINAL_INSTALL_DIR="$INSTALL_DIR/Shotcut/.app"
+    FINAL_INSTALL_DIR="$INSTALL_DIR/Shotcut/Shotcut.app"
   fi
   debug "Using install dir FINAL_INSTALL_DIR=$FINAL_INSTALL_DIR"
 
@@ -1639,7 +1639,7 @@ Name=Shotcut
 GenericName=Video Editor
 Comment=Video Editor
 Terminal=false
-Exec=sh -c "\$(dirname "%k")/.app/shotcut "%F""
+Exec=sh -c "\$(dirname "%k")/Shotcut.app/shotcut "%F""
 Icon=applications-multimedia
 End-of-desktop-file
   if test 0 != $? ; then
@@ -1654,11 +1654,11 @@ End-of-desktop-file
   tarball="$INSTALL_DIR/shotcut.tar.bz2"
   cmd rm "$tarball" 2>/dev/null
   cmd pushd "$INSTALL_DIR"
-  cmd rm -rf Shotcut/.app/include
-  cmd rm Shotcut/.app/lib/*.a
-  cmd rm -rf Shotcut/.app/lib/pkgconfig
-  cmd rm -rf Shotcut/.app/share/doc
-  cmd rm -rf Shotcut/.app/share/man
+  cmd rm -rf Shotcut/Shotcut.app/include
+  cmd rm Shotcut/Shotcut.app/lib/*.a
+  cmd rm -rf Shotcut/Shotcut.app/lib/pkgconfig
+  cmd rm -rf Shotcut/Shotcut.app/share/doc
+  cmd rm -rf Shotcut/Shotcut.app/share/man
   cmd tar -cjvf "$tarball" Shotcut
   cmd rm -rf Shotcut
   popd
