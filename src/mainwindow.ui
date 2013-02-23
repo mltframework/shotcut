@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>838</width>
-    <height>541</height>
+    <width>836</width>
+    <height>539</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -61,7 +61,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>838</width>
+     <width>836</width>
      <height>22</height>
     </rect>
    </property>
@@ -384,7 +384,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>GPU Processing</string>
+    <string>GPU Processing (experimental)</string>
    </property>
   </action>
   <action name="actionOneField">
