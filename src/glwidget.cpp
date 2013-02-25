@@ -35,6 +35,7 @@ GLWidget::GLWidget(QWidget *parent)
     , m_image_width(0)
     , m_image_height(0)
     , m_display_ratio(4.0/3.0)
+    , m_shader(0)
     , m_glslManager(0)
     , m_fbo(0)
     , m_isInitialized(false)
@@ -57,6 +58,7 @@ GLWidget::GLWidget(QWidget *parent)
         m_renderContext = new QGLWidget(this, this);
         m_renderContext->resize(0, 0);
     }
+    mlt_log_set_level(MLT_LOG_DEBUG);
 }
 
 GLWidget::~GLWidget()
@@ -97,29 +99,6 @@ void GLWidget::initializeGL()
     glDisable(GL_DITHER);
     glDisable(GL_BLEND);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    m_shader.addShaderFromSourceCode(QGLShader::Fragment,
-    "uniform sampler2D Ytex, Utex, Vtex;"
-    "void main(void) {"
-    "  float r, g, b;"
-    "  vec4 txl, ux, vx;"
-    "  float nx = gl_TexCoord[0].x;"
-    "  float ny = gl_TexCoord[0].y;"
-    "  float y = texture2D(Ytex, vec2(nx, ny)).r;"
-    "  float u = texture2D(Utex, vec2(nx, ny)).r;"
-    "  float v = texture2D(Vtex, vec2(nx, ny)).r;"
-
-    "  y = 1.1643 * (y - 0.0625);"
-    "  u = u - 0.5;"
-    "  v = v - 0.5;"
-
-    "  r = y + 1.5958  * v;"
-    "  g = y - 0.39173 * u - 0.81290 * v;"
-    "  b = y + 2.017   * u;"
-
-    "  gl_FragColor = vec4(r, g, b, 1.0);"
-    "}");
-    if (!m_glslManager)
-        m_shader.bind();
     m_condition.wakeAll();
     m_isInitialized = true;
 }
@@ -203,6 +182,48 @@ void GLWidget::mouseMoveEvent(QMouseEvent* event)
     mimeData->setData("application/mlt+xml", "");
     drag->setMimeData(mimeData);
     drag->exec(Qt::LinkAction);
+}
+
+void GLWidget::createShader()
+{
+    if (!m_shader) {
+        makeCurrent();
+        m_shader = new QGLShaderProgram(this);
+        m_shader->addShaderFromSourceCode(QGLShader::Fragment,
+        "uniform sampler2D Ytex, Utex, Vtex;"
+        "void main(void) {"
+        "  float r, g, b;"
+        "  vec4 txl, ux, vx;"
+        "  float nx = gl_TexCoord[0].x;"
+        "  float ny = gl_TexCoord[0].y;"
+        "  float y = texture2D(Ytex, vec2(nx, ny)).r;"
+        "  float u = texture2D(Utex, vec2(nx, ny)).r;"
+        "  float v = texture2D(Vtex, vec2(nx, ny)).r;"
+
+        "  y = 1.1643 * (y - 0.0625);"
+        "  u = u - 0.5;"
+        "  v = v - 0.5;"
+
+        "  r = y + 1.5958  * v;"
+        "  g = y - 0.39173 * u - 0.81290 * v;"
+        "  b = y + 2.017   * u;"
+
+        "  gl_FragColor = vec4(r, g, b, 1.0);"
+        "}");
+        m_shader->bind();
+        doneCurrent();
+    }
+}
+
+void GLWidget::destroyShader()
+{
+    if (m_shader) {
+        makeCurrent();
+        m_shader->release();
+        delete m_shader;
+        m_shader = 0;
+        doneCurrent();
+    }
 }
 
 void GLWidget::startGlsl()
@@ -300,7 +321,7 @@ void GLWidget::showFrame(Mlt::QFrame frame)
 
             glActiveTexture(GL_TEXTURE0);
             glBindTexture  (GL_TEXTURE_2D, m_texture[0]);
-            m_shader.setUniformValue(m_shader.uniformLocation("Ytex"), 0);
+            m_shader->setUniformValue(m_shader->uniformLocation("Ytex"), 0);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
             glTexImage2D   (GL_TEXTURE_2D, 0, GL_LUMINANCE, m_image_width, m_image_height, 0,
@@ -308,7 +329,7 @@ void GLWidget::showFrame(Mlt::QFrame frame)
 
             glActiveTexture(GL_TEXTURE1);
             glBindTexture  (GL_TEXTURE_2D, m_texture[1]);
-            m_shader.setUniformValue(m_shader.uniformLocation("Utex"), 1);
+            m_shader->setUniformValue(m_shader->uniformLocation("Utex"), 1);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
             glTexImage2D   (GL_TEXTURE_2D, 0, GL_LUMINANCE, m_image_width/2, m_image_height/4, 0,
@@ -316,7 +337,7 @@ void GLWidget::showFrame(Mlt::QFrame frame)
 
             glActiveTexture(GL_TEXTURE2);
             glBindTexture  (GL_TEXTURE_2D, m_texture[2]);
-            m_shader.setUniformValue(m_shader.uniformLocation("Vtex"), 2);
+            m_shader->setUniformValue(m_shader->uniformLocation("Vtex"), 2);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
             glTexImage2D   (GL_TEXTURE_2D, 0, GL_LUMINANCE, m_image_width/2, m_image_height/4, 0,
@@ -419,14 +440,10 @@ int GLWidget::reconfigure(bool isMulti)
             if (!serviceName.startsWith("decklink") && !isMulti)
                 m_consumer->set("mlt_image_format", "glsl");
             m_image_format = mlt_image_glsl_texture;
-            makeCurrent();
-            m_shader.release();
-            doneCurrent();
+            destroyShader();
         } else {
             m_image_format = mlt_image_yuv420p;
-            makeCurrent();
-            m_shader.bind();
-            doneCurrent();
+            createShader();
         }
     }
     else {

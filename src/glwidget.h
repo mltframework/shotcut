@@ -65,7 +65,7 @@ private:
     int m_image_width, m_image_height;
     GLuint m_texture[3];
     double m_display_ratio;
-    QGLShaderProgram m_shader;
+    QGLShaderProgram* m_shader;
     QPoint m_dragStart;
     Filter* m_glslManager;
     QGLWidget* m_renderContext;
@@ -84,6 +84,8 @@ protected:
     void paintGL();
     void mousePressEvent(QMouseEvent *);
     void mouseMoveEvent(QMouseEvent *);
+    void createShader();
+    void destroyShader();
 
     static void on_frame_show(mlt_consumer, void* self, mlt_frame frame);
 };
