@@ -610,10 +610,6 @@ void Player::onVolumeChanged(int volume)
 void Player::onCaptureStateChanged(bool active)
 {
     actionPlay->setDisabled(active);
-    if (active)
-        MLT.videoWidget()->disconnect(SIGNAL(customContextMenuRequested(QPoint)));
-    else
-        connect(MLT.videoWidget(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onVideoWidgetContextMenu(QPoint)));
 }
 
 void Player::resetProfile()
