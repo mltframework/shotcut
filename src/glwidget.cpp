@@ -40,6 +40,7 @@ GLWidget::GLWidget(QWidget *parent)
     , m_isInitialized(false)
     , m_threadStartEvent(0)
     , m_threadStopEvent(0)
+    , m_image_format(mlt_image_yuv422)
 {
     m_texture[0] = m_texture[1] = m_texture[2] = 0;
     setAttribute(Qt::WA_PaintOnScreen);
@@ -96,30 +97,29 @@ void GLWidget::initializeGL()
     glDisable(GL_DITHER);
     glDisable(GL_BLEND);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    if (!m_glslManager) {
-        m_shader.addShaderFromSourceCode(QGLShader::Fragment,
-        "uniform sampler2D Ytex, Utex, Vtex;"
-        "void main(void) {"
-        "  float r, g, b;"
-        "  vec4 txl, ux, vx;"
-        "  float nx = gl_TexCoord[0].x;"
-        "  float ny = gl_TexCoord[0].y;"
-        "  float y = texture2D(Ytex, vec2(nx, ny)).r;"
-        "  float u = texture2D(Utex, vec2(nx, ny)).r;"
-        "  float v = texture2D(Vtex, vec2(nx, ny)).r;"
+    m_shader.addShaderFromSourceCode(QGLShader::Fragment,
+    "uniform sampler2D Ytex, Utex, Vtex;"
+    "void main(void) {"
+    "  float r, g, b;"
+    "  vec4 txl, ux, vx;"
+    "  float nx = gl_TexCoord[0].x;"
+    "  float ny = gl_TexCoord[0].y;"
+    "  float y = texture2D(Ytex, vec2(nx, ny)).r;"
+    "  float u = texture2D(Utex, vec2(nx, ny)).r;"
+    "  float v = texture2D(Vtex, vec2(nx, ny)).r;"
 
-        "  y = 1.1643 * (y - 0.0625);"
-        "  u = u - 0.5;"
-        "  v = v - 0.5;"
+    "  y = 1.1643 * (y - 0.0625);"
+    "  u = u - 0.5;"
+    "  v = v - 0.5;"
 
-        "  r = y + 1.5958  * v;"
-        "  g = y - 0.39173 * u - 0.81290 * v;"
-        "  b = y + 2.017   * u;"
+    "  r = y + 1.5958  * v;"
+    "  g = y - 0.39173 * u - 0.81290 * v;"
+    "  b = y + 2.017   * u;"
 
-        "  gl_FragColor = vec4(r, g, b, 1.0);"
-        "}");
+    "  gl_FragColor = vec4(r, g, b, 1.0);"
+    "}");
+    if (!m_glslManager)
         m_shader.bind();
-    }
     m_condition.wakeAll();
     m_isInitialized = true;
 }
@@ -168,7 +168,7 @@ void GLWidget::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     if (m_texture[0]) {
-        if (m_glslManager && m_fbo) {
+        if (m_glslManager && m_fbo && m_image_format == mlt_image_glsl_texture) {
             glBindTexture(GL_TEXTURE_2D, m_fbo->texture());
             check_error();
         }
@@ -232,6 +232,7 @@ static void onThreadStarted(mlt_properties owner, GLWidget* self)
 
 void GLWidget::stopGlsl()
 {
+    m_texture[0] = 0;
     m_renderContext->doneCurrent();
 }
 
@@ -245,11 +246,9 @@ void GLWidget::showFrame(Mlt::QFrame frame)
     if (frame.frame()->get_int("rendered")) {
         m_image_width = 0;
         m_image_height = 0;
-        mlt_image_format format = mlt_image_yuv420p;
         makeCurrent();
-        if (m_glslManager) {
-            format = mlt_image_glsl_texture;
-            const GLuint* textureId = (GLuint*) frame.frame()->get_image(format, m_image_width, m_image_height);
+        if (m_glslManager && m_image_format == mlt_image_glsl_texture) {
+            const GLuint* textureId = (GLuint*) frame.frame()->get_image(m_image_format, m_image_width, m_image_height);
             m_texture[0] = *textureId;
 
             if (!m_fbo || m_fbo->width() != m_image_width || m_fbo->height() != m_image_height) {
@@ -291,7 +290,7 @@ void GLWidget::showFrame(Mlt::QFrame frame)
             glPopAttrib();
         }
         else {
-            const uint8_t* image = frame.frame()->get_image(format, m_image_width, m_image_height);
+            const uint8_t* image = frame.frame()->get_image(m_image_format, m_image_width, m_image_height);
 
             // Copy each plane of YUV to a texture bound to shader program˙.
             if (m_texture[0])
@@ -396,6 +395,17 @@ int GLWidget::reconfigure(bool isMulti)
             m_consumer->set("0.rescale", property("rescale").toString().toAscii().constData());
             m_consumer->set("0.deinterlace_method", property("deinterlace_method").toString().toAscii().constData());
             m_consumer->set("0.buffer", 1);
+            if (m_glslManager) {
+                if (!m_threadStartEvent)
+                    m_threadStartEvent = m_consumer->listen("consumer-thread-started", this, (mlt_listener) onThreadStarted);
+                if (!m_threadStopEvent)
+                    m_threadStopEvent = m_consumer->listen("consumer-thread-stopped", this, (mlt_listener) onThreadStopped);
+            }
+            m_consumer->set("mlt_image_format", "yuv422");
+            m_image_format = mlt_image_yuv420p;
+            makeCurrent();
+            m_shader.bind();
+            doneCurrent();
         }
         else {
             if (serviceName == "sdl_audio")
@@ -416,8 +426,16 @@ int GLWidget::reconfigure(bool isMulti)
                 if (!m_threadStopEvent)
                     m_threadStopEvent = m_consumer->listen("consumer-thread-stopped", this, (mlt_listener) onThreadStopped);
                 m_consumer->set("mlt_image_format", "glsl");
+                m_image_format = mlt_image_glsl_texture;
+                makeCurrent();
+                m_shader.release();
+                doneCurrent();
             } else {
                 m_consumer->set("mlt_image_format", "yuv422");
+                m_image_format = mlt_image_yuv420p;
+                makeCurrent();
+                m_shader.bind();
+                doneCurrent();
             }
         }
     }

@@ -75,6 +75,7 @@ private:
     bool m_isInitialized;
     Event* m_threadStartEvent;
     Event* m_threadStopEvent;
+    mlt_image_format m_image_format;
 
 protected:
     void initializeGL();
