@@ -58,7 +58,6 @@ GLWidget::GLWidget(QWidget *parent)
         m_renderContext = new QGLWidget(this, this);
         m_renderContext->resize(0, 0);
     }
-    mlt_log_set_level(MLT_LOG_DEBUG);
 }
 
 GLWidget::~GLWidget()
