@@ -379,6 +379,7 @@ int GLWidget::reconfigure(bool isMulti)
         // Make an event handler for when a frame's image should be displayed
         m_consumer->listen("consumer-frame-show", this, (mlt_listener) on_frame_show);
         m_consumer->set("real_time", property("realtime").toBool()? 1 : -1);
+        m_consumer->set("mlt_image_format", "yuv422");
         m_display_ratio = profile().dar();
 
         if (isMulti) {
@@ -395,17 +396,6 @@ int GLWidget::reconfigure(bool isMulti)
             m_consumer->set("0.rescale", property("rescale").toString().toAscii().constData());
             m_consumer->set("0.deinterlace_method", property("deinterlace_method").toString().toAscii().constData());
             m_consumer->set("0.buffer", 1);
-            if (m_glslManager) {
-                if (!m_threadStartEvent)
-                    m_threadStartEvent = m_consumer->listen("consumer-thread-started", this, (mlt_listener) onThreadStarted);
-                if (!m_threadStopEvent)
-                    m_threadStopEvent = m_consumer->listen("consumer-thread-stopped", this, (mlt_listener) onThreadStopped);
-            }
-            m_consumer->set("mlt_image_format", "yuv422");
-            m_image_format = mlt_image_yuv420p;
-            makeCurrent();
-            m_shader.bind();
-            doneCurrent();
         }
         else {
             if (serviceName == "sdl_audio")
@@ -420,23 +410,23 @@ int GLWidget::reconfigure(bool isMulti)
             m_consumer->set("deinterlace_method", property("deinterlace_method").toString().toAscii().constData());
             m_consumer->set("buffer", 1);
             m_consumer->set("scrub_audio", 1);
-            if (m_glslManager) {
-                if (!m_threadStartEvent)
-                    m_threadStartEvent = m_consumer->listen("consumer-thread-started", this, (mlt_listener) onThreadStarted);
-                if (!m_threadStopEvent)
-                    m_threadStopEvent = m_consumer->listen("consumer-thread-stopped", this, (mlt_listener) onThreadStopped);
+        }
+        if (m_glslManager) {
+            if (!m_threadStartEvent)
+                m_threadStartEvent = m_consumer->listen("consumer-thread-started", this, (mlt_listener) onThreadStarted);
+            if (!m_threadStopEvent)
+                m_threadStopEvent = m_consumer->listen("consumer-thread-stopped", this, (mlt_listener) onThreadStopped);
+            if (!serviceName.startsWith("decklink") && !isMulti)
                 m_consumer->set("mlt_image_format", "glsl");
-                m_image_format = mlt_image_glsl_texture;
-                makeCurrent();
-                m_shader.release();
-                doneCurrent();
-            } else {
-                m_consumer->set("mlt_image_format", "yuv422");
-                m_image_format = mlt_image_yuv420p;
-                makeCurrent();
-                m_shader.bind();
-                doneCurrent();
-            }
+            m_image_format = mlt_image_glsl_texture;
+            makeCurrent();
+            m_shader.release();
+            doneCurrent();
+        } else {
+            m_image_format = mlt_image_yuv420p;
+            makeCurrent();
+            m_shader.bind();
+            doneCurrent();
         }
     }
     else {
