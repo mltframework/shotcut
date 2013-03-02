@@ -48,7 +48,8 @@ SOURCES += main.cpp\
     mvcp/mvcpthread.cpp \
     mvcp/meltedplaylistmodel.cpp \
     mvcp/meltedplaylistdock.cpp \
-    mvcp/meltedserverdock.cpp
+    mvcp/meltedserverdock.cpp \
+    widgets/colorwheel.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -92,7 +93,8 @@ HEADERS  += mainwindow.h \
     mvcp/meltedplaylistmodel.h \
     mvcp/meltedplaylistdock.h \
     mvcp/meltedserverdock.h \
-    transportcontrol.h
+    transportcontrol.h \
+    widgets/colorwheel.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
