@@ -124,7 +124,7 @@ void ColorWheel::mouseReleaseEvent(QMouseEvent *event)
 void ColorWheel::resizeEvent(QResizeEvent *event)
 {
     m_image = QImage(event->size(), QImage::Format_ARGB32_Premultiplied);
-    m_image.fill(palette().background().color());
+    m_image.fill(palette().background().color().rgb());
 
     drawWheel();
     drawSlider();
@@ -148,7 +148,7 @@ void ColorWheel::drawWheel()
     int r = wheelSize();
     QPainter painter(&m_image);
     painter.setRenderHint(QPainter::Antialiasing);
-    m_image.fill(Qt::transparent);
+    m_image.fill(); // transparent
 
     QConicalGradient conicalGradient;
     conicalGradient.setColorAt(0.0, Qt::red);
