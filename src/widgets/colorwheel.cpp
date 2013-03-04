@@ -148,7 +148,7 @@ void ColorWheel::drawWheel()
     int r = wheelSize();
     QPainter painter(&m_image);
     painter.setRenderHint(QPainter::Antialiasing);
-    m_image.fill(); // transparent
+    m_image.fill(0); // transparent
 
     QConicalGradient conicalGradient;
     conicalGradient.setColorAt(0.0, Qt::red);
