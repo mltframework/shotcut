@@ -408,7 +408,7 @@ function set_globals {
     export RANLIB=${CROSS}ranlib
     export CFLAGS="-DHAVE_STRUCT_TIMESPEC -I$FINAL_INSTALL_DIR/include"
     export CXXFLAGS="$CFLAGS"
-    export LDFLAGS="-L$FINAL_INSTALL_DIR/bin -L$FINAL_INSTALL_DIR/lib"
+    export LDFLAGS="-L$FINAL_INSTALL_DIR/bin -L$FINAL_INSTALL_DIR/lib -static-libgcc -static-libstdc++"
     export QTDIR="$HOME/qt/4.8.1"
   else
     export RANLIB=ranlib
@@ -815,7 +815,7 @@ QMAKE_RUN_CXX_IMP	= \$(CXX) -c \$(CXXFLAGS) \$(INCPATH) -o \$@ \$<
 
 QMAKE_LINK		= i686-w64-mingw32-g++
 QMAKE_LINK_C		= i686-w64-mingw32-gcc
-QMAKE_LFLAGS		= -mthreads -Wl,-enable-stdcall-fixup -Wl,-enable-auto-import -Wl,-enable-runtime-pseudo-reloc -mwindows
+QMAKE_LFLAGS		= -mthreads -Wl,-enable-stdcall-fixup -Wl,-enable-auto-import -Wl,-enable-runtime-pseudo-reloc -mwindows -static-libgcc -static-libstdc++
 QMAKE_LFLAGS_EXCEPTIONS_ON = -mthreads
 QMAKE_LFLAGS_EXCEPTIONS_OFF =
 QMAKE_LFLAGS_RELEASE	= -Wl,-s
