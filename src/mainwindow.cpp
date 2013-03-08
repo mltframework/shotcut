@@ -48,6 +48,7 @@
 #include "mvcp/meltedplaylistdock.h"
 #include "mvcp/meltedunitsmodel.h"
 #include "mvcp/meltedplaylistmodel.h"
+#include "docks/filtersdock.h"
 
 #include <QtGui>
 #include <QDebug>
@@ -66,12 +67,15 @@ MainWindow::MainWindow()
 #endif
     setCorner(Qt::TopLeftCorner, Qt::LeftDockWidgetArea);
     setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
+    setCorner(Qt::BottomLeftCorner, Qt::LeftDockWidgetArea);
+    setCorner(Qt::BottomRightCorner, Qt::RightDockWidgetArea);
     setDockNestingEnabled(true);
 
     // These use the icon theme on Linux, with fallbacks to the icons specified in QtDesigner for other platforms.
     ui->actionOpen->setIcon(QIcon::fromTheme("document-open", ui->actionOpen->icon()));
     ui->actionSave->setIcon(QIcon::fromTheme("document-save", ui->actionSave->icon()));
     ui->actionEncode->setIcon(QIcon::fromTheme("media-record", ui->actionEncode->icon()));
+    ui->actionFilters->setIcon(QIcon::fromTheme("view-filter", ui->actionFilters->icon()));
 
     // Connect UI signals.
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openVideo()));
@@ -149,6 +153,15 @@ MainWindow::MainWindow()
     connect(m_playlistDock->model(), SIGNAL(loaded()), this, SLOT(updateMarkers()));
     connect(m_playlistDock->model(), SIGNAL(modified()), this, SLOT(updateMarkers()));
 
+    m_filtersDock = new FiltersDock(this);
+    m_filtersDock->hide();
+    addDockWidget(Qt::BottomDockWidgetArea, m_filtersDock);
+    ui->menuView->addAction(m_filtersDock->toggleViewAction());
+    connect(m_filtersDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onFiltersDockTriggered(bool)));
+    connect(ui->actionFilters, SIGNAL(triggered()), this, SLOT(onFiltersDockTriggered()));
+    connect(this, SIGNAL(producerOpened()), m_filtersDock, SLOT(onProducerOpened()));
+    connect(m_filtersDock->model(), SIGNAL(changed()), this, SLOT(onCutModified()));
+
     m_historyDock = new QDockWidget(tr("History"), this);
     m_historyDock->hide();
     m_historyDock->setObjectName("historyDock");
@@ -183,6 +196,7 @@ MainWindow::MainWindow()
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_player, SLOT(onCaptureStateChanged(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_propertiesDock, SLOT(setDisabled(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_recentDock, SLOT(setDisabled(bool)));
+    connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_filtersDock, SLOT(setDisabled(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), ui->actionOpen, SLOT(setDisabled(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), ui->actionOpenOther, SLOT(setDisabled(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), ui->actionExit, SLOT(setDisabled(bool)));
@@ -440,6 +454,7 @@ void MainWindow::seekPlaylist(int start)
     on_actionJack_triggered(ui->actionJack->isChecked());
     m_player->onProducerOpened();
     m_encodeDock->onProducerOpened();
+    m_filtersDock->onProducerOpened();
     updateMarkers();
     if (speed == 0)
         m_player->pause();
@@ -998,6 +1013,14 @@ void MainWindow::onHistoryDockTriggered(bool checked)
     }
 }
 
+void MainWindow::onFiltersDockTriggered(bool checked)
+{
+    if (checked) {
+        m_filtersDock->show();
+        m_filtersDock->raise();
+    }
+}
+
 void MainWindow::onPlaylistCreated()
 {
     setCurrentFile("");
@@ -1228,7 +1251,6 @@ void MainWindow::on_actionJack_triggered(bool checked)
 void MainWindow::on_actionGPU_triggered(bool checked)
 {
     m_settings.setValue("player/gpu", checked);
-    MLT.videoWidget()->setProperty("gpu", checked);
     QMessageBox dialog(QMessageBox::Information,
                        qApp->applicationName(),
                        tr("You must restart Shotcut to switch using GPU processing.\n"

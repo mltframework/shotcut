@@ -35,6 +35,7 @@ class QUndoStack;
 class MeltedPlaylistDock;
 class MeltedServerDock;
 class QActionGroup;
+class FiltersDock;
 
 class MainWindow : public QMainWindow
 {
@@ -88,6 +89,7 @@ private:
     MeltedPlaylistDock* m_meltedPlaylistDock;
     QActionGroup* m_profileGroup;
     QActionGroup* m_externalGroup;
+    FiltersDock* m_filtersDock;
 
 public slots:
     void open(const QString& url, const Mlt::Properties* = 0);
@@ -112,6 +114,7 @@ private slots:
     void onPropertiesDockTriggered(bool checked = true);
     void onPlaylistDockTriggered(bool checked = true);
     void onHistoryDockTriggered(bool checked = true);
+    void onFiltersDockTriggered(bool checked = true);
     void onPlaylistCreated();
     void onPlaylistCleared();
     void onPlaylistClosed();

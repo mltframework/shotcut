@@ -25,5 +25,6 @@
         <file>../icons/edit-redo.png</file>
         <file>../icons/edit-undo.png</file>
         <file>../icons/view-fullscreen.png</file>
+        <file>../icons/view-filter.png</file>
     </qresource>
 </RCC>

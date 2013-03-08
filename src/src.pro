@@ -49,7 +49,9 @@ SOURCES += main.cpp\
     mvcp/meltedplaylistmodel.cpp \
     mvcp/meltedplaylistdock.cpp \
     mvcp/meltedserverdock.cpp \
-    widgets/colorwheel.cpp
+    widgets/colorwheel.cpp \
+    models/attachedfiltersmodel.cpp \
+    docks/filtersdock.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -94,7 +96,10 @@ HEADERS  += mainwindow.h \
     mvcp/meltedplaylistdock.h \
     mvcp/meltedserverdock.h \
     transportcontrol.h \
-    widgets/colorwheel.h
+    widgets/colorwheel.h \
+    filters/attachedfiltersmodel.h \
+    models/attachedfiltersmodel.h \
+    docks/filtersdock.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
@@ -122,7 +127,8 @@ FORMS    += mainwindow.ui \
     docks/playlistdock.ui \
     dialogs/durationdialog.ui \
     mvcp/meltedserverdock.ui \
-    mvcp/meltedplaylistdock.ui
+    mvcp/meltedplaylistdock.ui \
+    docks/filtersdock.ui
 
 RESOURCES += \
     resources.qrc
