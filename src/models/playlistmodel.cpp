@@ -246,7 +246,7 @@ void PlaylistModel::append(Mlt::Producer* producer)
 {
     createIfNeeded();
     int count = m_playlist->count();
-    beginInsertRows(QModelIndex(), count - 1, count - 1);
+    beginInsertRows(QModelIndex(), count, count);
     m_playlist->append(*producer, producer->get_in(), producer->get_out());
     producer->set_in_and_out(0, producer->get_length() - 1);
     endInsertRows();
