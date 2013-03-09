@@ -19,36 +19,47 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef ATTACHEDFILTERSMODEL_H
-#define ATTACHEDFILTERSMODEL_H
+#ifndef MOVITGLOWFILTER_H
+#define MOVITGLOWFILTER_H
 
-#include <QAbstractListModel>
+#include <QWidget>
 #include <mlt++/MltFilter.h>
 
-class AttachedFiltersModel : public QAbstractListModel
+namespace Ui {
+class MovitGlowFilter;
+}
+
+class MovitGlowFilter : public QWidget
 {
     Q_OBJECT
+    
 public:
-    explicit AttachedFiltersModel(QObject *parent = 0);
-
-    Mlt::Filter* filterForRow(int row) const;
-    int rowCount(const QModelIndex &parent = QModelIndex()) const;
-    Qt::ItemFlags flags(const QModelIndex &index) const;
-    QVariant data(const QModelIndex &index, int role) const;
-    bool setData(const QModelIndex& index, const QVariant& value, int role = Qt::EditRole);
- 
-signals:
-    void changed();
-
-public slots:
-    Mlt::Filter* add(const QString& name);
-    void remove(int row);
-    void reset();
+    explicit MovitGlowFilter(Mlt::Filter filter, bool setDefaults = false, QWidget *parent = 0);
+    ~MovitGlowFilter();
+    
+private slots:
+    void on_radiusSpinBox_valueChanged(double arg1);
+    
+    void on_blurMixSpinBox_valueChanged(double arg1);
+    
+    void on_highlightCutoffSpinBox_valueChanged(double arg1);
+    
+    void on_radiusDefaultButton_clicked();
+    
+    void on_blurMixDefaultButton_clicked();
+    
+    void on_cutoffDefaultButton_clicked();
+    
+    void on_preset_selected(void* p);
+    
+    void on_preset_saveClicked();
 
 private:
-    int m_rows;
-
-    void calculateRows();
+    Ui::MovitGlowFilter *ui;
+    Mlt::Filter m_filter;
+    double m_radiusDefault;
+    double m_blurMixDefault;
+    double m_cutoffDefault;
 };
 
-#endif // ATTACHEDFILTERSMODEL_H
+#endif // MOVITGLOWFILTER_H

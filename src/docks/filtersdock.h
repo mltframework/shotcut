@@ -62,6 +62,8 @@ private slots:
     
     void on_actionVignette_triggered();
     
+    void on_listView_clicked(const QModelIndex &index);
+    
 private:
     Ui::FiltersDock *ui;
     AttachedFiltersModel m_model;

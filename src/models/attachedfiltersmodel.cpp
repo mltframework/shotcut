@@ -44,7 +44,7 @@ void AttachedFiltersModel::calculateRows()
     }
 }
 
-Mlt::Filter* AttachedFiltersModel::nthFilter(int n) const
+Mlt::Filter* AttachedFiltersModel::filterForRow(int row) const
 {
     Mlt::Filter* result = 0;
     Mlt::Producer* producer = MLT.producer();
@@ -54,7 +54,7 @@ Mlt::Filter* AttachedFiltersModel::nthFilter(int n) const
         for (int i = 0; i < count; i++) {
             Mlt::Filter* filter = producer->filter(i);
             if (filter && filter->is_valid() && !filter->get_int("_loader")) {
-                if (j == n) {
+                if (j == row) {
                     result = filter;
                     break;
                 }
@@ -86,7 +86,7 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
         return QVariant();
     switch (role ) {
     case Qt::DisplayRole: {
-            Mlt::Filter* filter = nthFilter(index.row());
+            Mlt::Filter* filter = filterForRow(index.row());
             QVariant result;
             if (filter && filter->is_valid() && filter->get("mlt_service"))
                 result = QString::fromUtf8(filter->get("mlt_service"));
@@ -106,7 +106,7 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
             return result;
         }
     case Qt::CheckStateRole: {
-            Mlt::Filter* filter = nthFilter(index.row());
+            Mlt::Filter* filter = filterForRow(index.row());
             QVariant result = Qt::Unchecked;
             if (filter && filter->is_valid() && !filter->get_int("disable"))
                 result = Qt::Checked;
@@ -123,7 +123,7 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
 bool AttachedFiltersModel::setData(const QModelIndex& index, const QVariant& value, int role)
 {
     if (role == Qt::CheckStateRole) {
-        Mlt::Filter* filter = nthFilter(index.row());
+        Mlt::Filter* filter = filterForRow(index.row());
         if (filter && filter->is_valid()) {
             double speed = MLT.producer()->get_speed();
             MLT.consumer()->stop();
@@ -138,35 +138,36 @@ bool AttachedFiltersModel::setData(const QModelIndex& index, const QVariant& val
     return false;
 }
 
-void AttachedFiltersModel::add(const QString& name)
+Mlt::Filter *AttachedFiltersModel::add(const QString& name)
 {
-    Mlt::Filter filter(MLT.profile(), name.toUtf8().constData());
-    if (filter.is_valid()) {
+    Mlt::Filter* filter = new Mlt::Filter(MLT.profile(), name.toUtf8().constData());
+    if (filter->is_valid()) {
         int count = rowCount();
         double speed = MLT.producer()->get_speed();
         MLT.consumer()->stop();
 
         if (name == "frei0r.glow") {
-            filter.set("Blur", 0.5);
+            filter->set("Blur", 0.5);
         }
         else if (name == "frei0r.sharpness") {
-            filter.set("Amount", 0.5);
-            filter.set("Size", 0.5);
+            filter->set("Amount", 0.5);
+            filter->set("Size", 0.5);
         }
 
         beginInsertRows(QModelIndex(), count, count);
-        MLT.producer()->attach(filter);
+        MLT.producer()->attach(*filter);
         m_rows++;
         endInsertRows();
 
         MLT.play(speed);
         emit changed();
     }
+    return filter;
 }
 
 void AttachedFiltersModel::remove(int row)
 {
-    Mlt::Filter* filter = nthFilter(row);
+    Mlt::Filter* filter = filterForRow(row);
     if (filter && filter->is_valid()) {
         double speed = MLT.producer()->get_speed();
         MLT.consumer()->stop();

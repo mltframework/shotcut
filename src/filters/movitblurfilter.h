@@ -19,36 +19,33 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef ATTACHEDFILTERSMODEL_H
-#define ATTACHEDFILTERSMODEL_H
+#ifndef MOVITBLURFILTER_H
+#define MOVITBLURFILTER_H
 
-#include <QAbstractListModel>
+#include <QWidget>
 #include <mlt++/MltFilter.h>
 
-class AttachedFiltersModel : public QAbstractListModel
+namespace Ui {
+class MovitBlurFilter;
+}
+
+class MovitBlurFilter : public QWidget
 {
     Q_OBJECT
+    
 public:
-    explicit AttachedFiltersModel(QObject *parent = 0);
+    explicit MovitBlurFilter(Mlt::Filter filter, bool setDefaults = false, QWidget *parent = 0);
+    ~MovitBlurFilter();
 
-    Mlt::Filter* filterForRow(int row) const;
-    int rowCount(const QModelIndex &parent = QModelIndex()) const;
-    Qt::ItemFlags flags(const QModelIndex &index) const;
-    QVariant data(const QModelIndex &index, int role) const;
-    bool setData(const QModelIndex& index, const QVariant& value, int role = Qt::EditRole);
- 
-signals:
-    void changed();
-
-public slots:
-    Mlt::Filter* add(const QString& name);
-    void remove(int row);
-    void reset();
-
+private slots:
+    void on_doubleSpinBox_valueChanged(double arg1);
+    
+    void on_pushButton_clicked();
+    
 private:
-    int m_rows;
-
-    void calculateRows();
+    Ui::MovitBlurFilter *ui;
+    Mlt::Filter m_filter;
+    double m_radiusDefault;
 };
 
-#endif // ATTACHEDFILTERSMODEL_H
+#endif // MOVITBLURFILTER_H

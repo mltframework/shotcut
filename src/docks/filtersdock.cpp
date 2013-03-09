@@ -25,6 +25,8 @@
 #include <QtGui/QMenu>
 #include <QtCore/QSettings>
 #include "mainwindow.h"
+#include "filters/movitblurfilter.h"
+#include "filters/movitglowfilter.h"
 
 FiltersDock::FiltersDock(QWidget *parent) :
     QDockWidget(parent),
@@ -80,18 +82,25 @@ void FiltersDock::on_removeButton_clicked()
     QModelIndex index = ui->listView->currentIndex();
     if (index.isValid()) {
         m_model.remove(index.row());
+        delete ui->scrollArea->widget();
     }
 }
 
 void FiltersDock::on_actionBlur_triggered()
 {
-    m_model.add(m_isGPU? "movit.blur" : "boxblur");
+    Mlt::Filter* filter = m_model.add(m_isGPU? "movit.blur" : "boxblur");
+    if (filter && filter->is_valid()) {
+        if (m_isGPU)
+            ui->scrollArea->setWidget(new MovitBlurFilter(*filter, true));
+    }
+    delete filter;
     ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
 }
 
 void FiltersDock::on_actionMirror_triggered()
 {
     m_model.add(m_isGPU? "movit.mirror": "mirror:flip");
+    delete ui->scrollArea->widget();
     ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
 }
 
@@ -108,7 +117,11 @@ void FiltersDock::on_actionDiffusion_triggered()
 
 void FiltersDock::on_actionGlow_triggered()
 {
-    m_model.add(m_isGPU? "movit.glow" : "frei0r.glow");
+    Mlt::Filter* filter = m_model.add(m_isGPU? "movit.glow" : "frei0r.glow");
+    if (filter && filter->is_valid()) {
+        if (m_isGPU)
+            ui->scrollArea->setWidget(new MovitGlowFilter(*filter, true));
+    }
     ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
 }
 
@@ -122,4 +135,19 @@ void FiltersDock::on_actionVignette_triggered()
 {
     m_model.add(m_isGPU? "movit.vignette" : "vignette");
     ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
+}
+
+void FiltersDock::on_listView_clicked(const QModelIndex &index)
+{
+    Mlt::Filter* filter = m_model.filterForRow(index.row());
+    if (filter && filter->is_valid()) {
+        QString name = filter->get("mlt_service");
+        if (name == "movit.blur")
+            ui->scrollArea->setWidget(new MovitBlurFilter(*filter));
+        else if (name == "movit.glow")
+            ui->scrollArea->setWidget(new MovitGlowFilter(*filter));
+        else
+            delete ui->scrollArea->widget();
+    }
+    delete filter;
 }
