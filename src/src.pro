@@ -58,7 +58,8 @@ SOURCES += main.cpp\
     filters/frei0rcoloradjwidget.cpp \
     filters/boxblurfilter.cpp \
     filters/frei0rglowfilter.cpp \
-    filters/cropfilter.cpp
+    filters/cropfilter.cpp \
+    filters/saturationfilter.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -113,7 +114,8 @@ HEADERS  += mainwindow.h \
     filters/frei0rcoloradjwidget.h \
     filters/boxblurfilter.h \
     filters/frei0rglowfilter.h \
-    filters/cropfilter.h
+    filters/cropfilter.h \
+    filters/saturationfilter.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
@@ -149,7 +151,8 @@ FORMS    += mainwindow.ui \
     filters/frei0rcoloradjwidget.ui \
     filters/boxblurfilter.ui \
     filters/frei0rglowfilter.ui \
-    filters/cropfilter.ui
+    filters/cropfilter.ui \
+    filters/saturationfilter.ui
 
 RESOURCES += \
     resources.qrc

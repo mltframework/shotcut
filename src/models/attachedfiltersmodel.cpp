@@ -103,6 +103,8 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
                 result = tr("Glow");
             else if (result == "movit.mirror" || result == "mirror")
                 result = tr("Mirror");
+            else if (result == "movit.saturation" || result == "frei0r.saturat0r")
+                result = tr("Saturation");
             else if (result == "movit.sharpen" || result == "frei0r.sharpness")
                 result = tr("Sharpen");
             else if (result == "movit.vignette" || result == "vignette")

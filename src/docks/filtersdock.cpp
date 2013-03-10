@@ -32,6 +32,7 @@
 #include "filters/boxblurfilter.h"
 #include "filters/frei0rglowfilter.h"
 #include "filters/cropfilter.h"
+#include "filters/saturationfilter.h"
 
 FiltersDock::FiltersDock(QWidget *parent) :
     QDockWidget(parent),
@@ -116,6 +117,8 @@ void FiltersDock::on_listView_clicked(const QModelIndex &index)
             ui->scrollArea->setWidget(new Frei0rGlowFilter(*filter));
         else if (name == "crop")
             ui->scrollArea->setWidget(new CropFilter(*filter));
+        else if (name == "frei0r.saturat0r" || name == "movit.saturation")
+            ui->scrollArea->setWidget(new SaturationFilter(*filter));
         else
             delete ui->scrollArea->widget();
     }
@@ -217,7 +220,7 @@ void FiltersDock::on_actionSizePosition_triggered()
 void FiltersDock::on_actionSaturation_triggered()
 {
     Mlt::Filter* filter = m_model.add(m_isGPU? "movit.saturation": "frei0r.saturat0r");
-    delete ui->scrollArea->widget();
+    ui->scrollArea->setWidget(new SaturationFilter(*filter, true));
     delete filter;
     ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
 }
