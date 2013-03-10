@@ -1839,8 +1839,12 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="458"/>
+        <source>Hyper/Lanczos (best)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Hyper/Lanczoz (best)</source>
-        <translation type="unfinished">Hyper/Lanczoz (nejlepší)</translation>
+        <translation type="obsolete">Hyper/Lanczoz (nejlepší)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="469"/>
@@ -3286,10 +3290,14 @@ po začátek vybraného záběru.</translation>
         <translation>Smazat</translation>
     </message>
     <message>
+        <source>&lt;defaults&gt;</source>
+        <translation type="obsolete">&lt;výchozí&gt;</translation>
+    </message>
+    <message>
         <location filename="../src/widgets/servicepresetwidget.cpp" line="74"/>
         <location filename="../src/widgets/servicepresetwidget.cpp" line="75"/>
-        <source>&lt;defaults&gt;</source>
-        <translation>&lt;výchozí&gt;</translation>
+        <source>(defaults)</source>
+        <translation>(výchozí)</translation>
     </message>
     <message>
         <location filename="../src/widgets/servicepresetwidget.cpp" line="82"/>
