@@ -33,6 +33,7 @@
 #include "filters/frei0rglowfilter.h"
 #include "filters/cropfilter.h"
 #include "filters/saturationfilter.h"
+#include "filters/movitsharpenfilter.h"
 
 FiltersDock::FiltersDock(QWidget *parent) :
     QDockWidget(parent),
@@ -83,7 +84,7 @@ void FiltersDock::on_addButton_clicked()
     menu.addAction(ui->actionMirror);
     menu.addAction(ui->actionSaturation);
     menu.addAction(ui->actionSharpen);
-    menu.addAction(ui->actionSizePosition);
+//    menu.addAction(ui->actionSizePosition);
     menu.addAction(ui->actionVignette);
     menu.addAction(ui->actionWhiteBalance);
     menu.exec(mapToGlobal(pos));
@@ -119,6 +120,8 @@ void FiltersDock::on_listView_clicked(const QModelIndex &index)
             ui->scrollArea->setWidget(new CropFilter(*filter));
         else if (name == "frei0r.saturat0r" || name == "movit.saturation")
             ui->scrollArea->setWidget(new SaturationFilter(*filter));
+        else if (name == "movit.sharpen")
+            ui->scrollArea->setWidget(new MovitSharpenFilter(*filter));
         else
             delete ui->scrollArea->widget();
     }
@@ -175,7 +178,12 @@ void FiltersDock::on_actionGlow_triggered()
 void FiltersDock::on_actionSharpen_triggered()
 {
     Mlt::Filter* filter = m_model.add(m_isGPU? "movit.sharpen" : "frei0r.sharpness");
-    delete ui->scrollArea->widget();
+    if (filter && filter->is_valid()) {
+        if (m_isGPU)
+            ui->scrollArea->setWidget(new MovitSharpenFilter(*filter, true));
+        else
+            delete ui->scrollArea->widget();
+    }
     delete filter;
     ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
 }
