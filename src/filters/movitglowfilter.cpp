@@ -37,12 +37,12 @@ MovitGlowFilter::MovitGlowFilter(Mlt::Filter filter, bool setDefaults, QWidget *
         ui->radiusSpinBox->setValue(m_radiusDefault);
         ui->blurMixSpinBox->setValue(m_blurMixDefault);
         ui->highlightCutoffSpinBox->setValue(m_cutoffDefault);
+        ui->preset->saveDefaultPreset(m_filter);
     } else {
         ui->radiusSpinBox->setValue(m_filter.get_double("radius"));
         ui->blurMixSpinBox->setValue(m_filter.get_double("blur_mix"));
         ui->highlightCutoffSpinBox->setValue(m_filter.get_double("highlight_cutoff"));
     }
-    ui->preset->saveDefaultPreset(m_filter);
     ui->preset->loadPresets();
 }
 

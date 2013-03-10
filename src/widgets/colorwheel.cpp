@@ -81,7 +81,7 @@ QSize ColorWheel::sizeHint () const
 }
 QSize ColorWheel::minimumSizeHint () const
 {
-    return QSize(30,30);
+    return QSize(100, 100);
 }
 
 void ColorWheel::mousePressEvent(QMouseEvent *event)

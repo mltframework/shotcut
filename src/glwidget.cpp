@@ -268,6 +268,7 @@ void GLWidget::showFrame(Mlt::QFrame frame)
         m_image_height = 0;
         makeCurrent();
         if (m_glslManager && m_image_format == mlt_image_glsl_texture) {
+            frame.frame()->set("movit.convert.use_texture", 1);
             const GLuint* textureId = (GLuint*) frame.frame()->get_image(m_image_format, m_image_width, m_image_height);
             m_texture[0] = *textureId;
 

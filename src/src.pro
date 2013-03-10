@@ -53,7 +53,11 @@ SOURCES += main.cpp\
     models/attachedfiltersmodel.cpp \
     docks/filtersdock.cpp \
     filters/movitblurfilter.cpp \
-    filters/movitglowfilter.cpp
+    filters/movitglowfilter.cpp \
+    filters/movitcolorfilter.cpp \
+    filters/frei0rcoloradjwidget.cpp \
+    filters/boxblurfilter.cpp \
+    filters/frei0rglowfilter.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -103,7 +107,11 @@ HEADERS  += mainwindow.h \
     models/attachedfiltersmodel.h \
     docks/filtersdock.h \
     filters/movitblurfilter.h \
-    filters/movitglowfilter.h
+    filters/movitglowfilter.h \
+    filters/movitcolorfilter.h \
+    filters/frei0rcoloradjwidget.h \
+    filters/boxblurfilter.h \
+    filters/frei0rglowfilter.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
@@ -134,7 +142,11 @@ FORMS    += mainwindow.ui \
     mvcp/meltedplaylistdock.ui \
     docks/filtersdock.ui \
     filters/movitblurfilter.ui \
-    filters/movitglowfilter.ui
+    filters/movitglowfilter.ui \
+    filters/movitcolorfilter.ui \
+    filters/frei0rcoloradjwidget.ui \
+    filters/boxblurfilter.ui \
+    filters/frei0rglowfilter.ui
 
 RESOURCES += \
     resources.qrc

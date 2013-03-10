@@ -93,6 +93,10 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
             delete filter;
             if (result == "movit.blur" || result == "boxblur")
                 result = tr("Blur");
+            else if (result == "movit.lift_gamma_gain" || result == "frei0r.coloradj_RGB")
+                result = tr("Color Grading");
+            else if (result == "crop")
+                result = tr("Crop");
             else if (result == "movit.diffusion")
                 result = tr("Diffusion");
             else if (result == "movit.glow" || result == "frei0r.glow")
@@ -103,6 +107,8 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
                 result = tr("Sharpen");
             else if (result == "movit.vignette" || result == "vignette")
                 result = tr("Vignette");
+            else if (result == "movit.white_balance" || result == "frei0r.colgate")
+                result = tr("White Balance");
             return result;
         }
     case Qt::CheckStateRole: {
@@ -146,10 +152,7 @@ Mlt::Filter *AttachedFiltersModel::add(const QString& name)
         double speed = MLT.producer()->get_speed();
         MLT.consumer()->stop();
 
-        if (name == "frei0r.glow") {
-            filter->set("Blur", 0.5);
-        }
-        else if (name == "frei0r.sharpness") {
+        if (name == "frei0r.sharpness") {
             filter->set("Amount", 0.5);
             filter->set("Size", 0.5);
         }

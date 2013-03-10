@@ -27,6 +27,10 @@
 #include "mainwindow.h"
 #include "filters/movitblurfilter.h"
 #include "filters/movitglowfilter.h"
+#include "filters/movitcolorfilter.h"
+#include "filters/frei0rcoloradjwidget.h"
+#include "filters/boxblurfilter.h"
+#include "filters/frei0rglowfilter.h"
 
 FiltersDock::FiltersDock(QWidget *parent) :
     QDockWidget(parent),
@@ -53,6 +57,7 @@ void FiltersDock::onModelChanged()
 
 void FiltersDock::onProducerOpened()
 {
+    delete ui->scrollArea->widget();
     m_model.reset();
     onModelChanged();
     if (MLT.isPlaylist()) {
@@ -69,11 +74,16 @@ void FiltersDock::on_addButton_clicked()
     QPoint pos = ui->addButton->mapToParent(QPoint(0, 0));
     QMenu menu(this);
     menu.addAction(ui->actionBlur);
+    menu.addAction(ui->actionColorGrading);
+    menu.addAction(ui->actionCrop);
     if (m_isGPU) menu.addAction(ui->actionDiffusion);
     menu.addAction(ui->actionGlow);
     menu.addAction(ui->actionMirror);
+    menu.addAction(ui->actionSaturation);
     menu.addAction(ui->actionSharpen);
+    menu.addAction(ui->actionSizePosition);
     menu.addAction(ui->actionVignette);
+    menu.addAction(ui->actionWhiteBalance);
     menu.exec(mapToGlobal(pos));
 }
 
@@ -86,12 +96,37 @@ void FiltersDock::on_removeButton_clicked()
     }
 }
 
+void FiltersDock::on_listView_clicked(const QModelIndex &index)
+{
+    Mlt::Filter* filter = m_model.filterForRow(index.row());
+    if (filter && filter->is_valid()) {
+        QString name = filter->get("mlt_service");
+        if (name == "movit.blur")
+            ui->scrollArea->setWidget(new MovitBlurFilter(*filter));
+        else if (name == "movit.glow")
+            ui->scrollArea->setWidget(new MovitGlowFilter(*filter));
+        else if (name == "movit.lift_gamma_gain")
+            ui->scrollArea->setWidget(new MovitColorFilter(*filter));
+        else if (name == "frei0r.coloradj_RGB")
+            ui->scrollArea->setWidget(new Frei0rColoradjWidget(*filter));
+        else if (name == "boxblur")
+            ui->scrollArea->setWidget(new BoxblurFilter(*filter));
+        else if (name == "frei0r.glow")
+            ui->scrollArea->setWidget(new Frei0rGlowFilter(*filter));
+        else
+            delete ui->scrollArea->widget();
+    }
+    delete filter;
+}
+
 void FiltersDock::on_actionBlur_triggered()
 {
     Mlt::Filter* filter = m_model.add(m_isGPU? "movit.blur" : "boxblur");
     if (filter && filter->is_valid()) {
         if (m_isGPU)
             ui->scrollArea->setWidget(new MovitBlurFilter(*filter, true));
+        else
+            ui->scrollArea->setWidget(new BoxblurFilter(*filter, true));
     }
     delete filter;
     ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
@@ -99,8 +134,9 @@ void FiltersDock::on_actionBlur_triggered()
 
 void FiltersDock::on_actionMirror_triggered()
 {
-    m_model.add(m_isGPU? "movit.mirror": "mirror:flip");
+    Mlt::Filter* filter = m_model.add(m_isGPU? "movit.mirror": "mirror:flip");
     delete ui->scrollArea->widget();
+    delete filter;
     ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
 }
 
@@ -111,7 +147,9 @@ void FiltersDock::on_listView_doubleClicked(const QModelIndex &index)
 
 void FiltersDock::on_actionDiffusion_triggered()
 {
-    m_model.add("movit.diffusion");
+    Mlt::Filter* filter = m_model.add("movit.diffusion");
+    delete ui->scrollArea->widget();
+    delete filter;
     ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
 }
 
@@ -121,33 +159,70 @@ void FiltersDock::on_actionGlow_triggered()
     if (filter && filter->is_valid()) {
         if (m_isGPU)
             ui->scrollArea->setWidget(new MovitGlowFilter(*filter, true));
+        else
+            ui->scrollArea->setWidget(new Frei0rGlowFilter(*filter, true));
     }
+    delete filter;
     ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
 }
 
 void FiltersDock::on_actionSharpen_triggered()
 {
-    m_model.add(m_isGPU? "movit.sharpen" : "frei0r.sharpness");
+    Mlt::Filter* filter = m_model.add(m_isGPU? "movit.sharpen" : "frei0r.sharpness");
+    delete ui->scrollArea->widget();
+    delete filter;
     ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
 }
 
 void FiltersDock::on_actionVignette_triggered()
 {
-    m_model.add(m_isGPU? "movit.vignette" : "vignette");
+    Mlt::Filter* filter = m_model.add(m_isGPU? "movit.vignette" : "vignette");
+    delete ui->scrollArea->widget();
+    delete filter;
     ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
 }
 
-void FiltersDock::on_listView_clicked(const QModelIndex &index)
+void FiltersDock::on_actionCrop_triggered()
 {
-    Mlt::Filter* filter = m_model.filterForRow(index.row());
+    Mlt::Filter* filter = m_model.add("crop");
+    delete ui->scrollArea->widget();
+    delete filter;
+    ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
+}
+
+void FiltersDock::on_actionColorGrading_triggered()
+{
+    Mlt::Filter* filter = m_model.add(m_isGPU? "movit.lift_gamma_gain": "frei0r.coloradj_RGB");
     if (filter && filter->is_valid()) {
-        QString name = filter->get("mlt_service");
-        if (name == "movit.blur")
-            ui->scrollArea->setWidget(new MovitBlurFilter(*filter));
-        else if (name == "movit.glow")
-            ui->scrollArea->setWidget(new MovitGlowFilter(*filter));
+        if (m_isGPU)
+            ui->scrollArea->setWidget(new MovitColorFilter(*filter, true));
         else
-            delete ui->scrollArea->widget();
+            ui->scrollArea->setWidget(new Frei0rColoradjWidget(*filter, true));
     }
     delete filter;
+    ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
+}
+
+void FiltersDock::on_actionSizePosition_triggered()
+{
+    Mlt::Filter* filter = m_model.add(m_isGPU? "movit.rect": "affine");
+    delete ui->scrollArea->widget();
+    delete filter;
+    ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
+}
+
+void FiltersDock::on_actionSaturation_triggered()
+{
+    Mlt::Filter* filter = m_model.add(m_isGPU? "movit.saturation": "frei0r.saturat0r");
+    delete ui->scrollArea->widget();
+    delete filter;
+    ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
+}
+
+void FiltersDock::on_actionWhiteBalance_triggered()
+{
+    Mlt::Filter* filter = m_model.add(m_isGPU? "movit.white_balance": "frei0r.colgate");
+    delete ui->scrollArea->widget();
+    delete filter;
+    ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
 }

@@ -46,8 +46,11 @@ public slots:
 
 private slots:
     void on_addButton_clicked();
+    
     void on_removeButton_clicked();
-
+    
+    void on_listView_clicked(const QModelIndex &index);
+    
     void on_actionBlur_triggered();
     
     void on_actionMirror_triggered();
@@ -62,7 +65,15 @@ private slots:
     
     void on_actionVignette_triggered();
     
-    void on_listView_clicked(const QModelIndex &index);
+    void on_actionCrop_triggered();
+    
+    void on_actionColorGrading_triggered();
+    
+    void on_actionSizePosition_triggered();
+    
+    void on_actionSaturation_triggered();
+    
+    void on_actionWhiteBalance_triggered();
     
 private:
     Ui::FiltersDock *ui;
