@@ -455,7 +455,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Hyper/Lanczoz (best)</string>
+    <string>Hyper/Lanczos (best)</string>
    </property>
   </action>
   <action name="actionOpenGL">
