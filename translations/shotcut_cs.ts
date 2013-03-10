@@ -4,7 +4,7 @@
 <context>
     <name></name>
     <message>
-        <location filename="../src/main.cpp" line="87"/>
+        <location filename="../src/main.cpp" line="91"/>
         <source>Loading plugins...</source>
         <translation>Nahrávají se přídavné moduly...</translation>
     </message>
@@ -58,6 +58,59 @@
         <location filename="../src/widgets/alsawidget.ui" line="61"/>
         <source>Apply</source>
         <translation>Použít</translation>
+    </message>
+</context>
+<context>
+    <name>AttachedFiltersModel</name>
+    <message>
+        <location filename="../src/models/attachedfiltersmodel.cpp" line="95"/>
+        <source>Blur</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/models/attachedfiltersmodel.cpp" line="97"/>
+        <source>Color Grading</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/models/attachedfiltersmodel.cpp" line="99"/>
+        <source>Crop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/models/attachedfiltersmodel.cpp" line="101"/>
+        <source>Diffusion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/models/attachedfiltersmodel.cpp" line="103"/>
+        <source>Glow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/models/attachedfiltersmodel.cpp" line="105"/>
+        <source>Mirror</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/models/attachedfiltersmodel.cpp" line="107"/>
+        <source>Saturation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/models/attachedfiltersmodel.cpp" line="109"/>
+        <source>Sharpen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/models/attachedfiltersmodel.cpp" line="111"/>
+        <source>Vignette</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/models/attachedfiltersmodel.cpp" line="113"/>
+        <source>White Balance</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -252,6 +305,24 @@
     </message>
 </context>
 <context>
+    <name>BoxblurFilter</name>
+    <message>
+        <location filename="../src/filters/boxblurfilter.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">Formulář</translation>
+    </message>
+    <message>
+        <location filename="../src/filters/boxblurfilter.ui" line="20"/>
+        <source>Width</source>
+        <translation type="unfinished">Šířka</translation>
+    </message>
+    <message>
+        <location filename="../src/filters/boxblurfilter.ui" line="58"/>
+        <source>Height</source>
+        <translation type="unfinished">Výška</translation>
+    </message>
+</context>
+<context>
     <name>ColorBarsWidget</name>
     <message>
         <location filename="../src/widgets/colorbarswidget.ui" line="14"/>
@@ -330,6 +401,53 @@
         <location filename="../src/widgets/colorproducerwidget.ui" line="61"/>
         <source>#00000000</source>
         <translation>#00000000</translation>
+    </message>
+</context>
+<context>
+    <name>CropFilter</name>
+    <message>
+        <location filename="../src/filters/cropfilter.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">Formulář</translation>
+    </message>
+    <message>
+        <location filename="../src/filters/cropfilter.ui" line="20"/>
+        <source>Center Bias</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/filters/cropfilter.ui" line="48"/>
+        <location filename="../src/filters/cropfilter.ui" line="72"/>
+        <location filename="../src/filters/cropfilter.ui" line="96"/>
+        <location filename="../src/filters/cropfilter.ui" line="120"/>
+        <location filename="../src/filters/cropfilter.ui" line="144"/>
+        <source> px</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/filters/cropfilter.ui" line="156"/>
+        <source>Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/filters/cropfilter.ui" line="166"/>
+        <source>Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/filters/cropfilter.ui" line="176"/>
+        <source>Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/filters/cropfilter.ui" line="186"/>
+        <source>Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/filters/cropfilter.ui" line="196"/>
+        <source>Center</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -850,15 +968,15 @@ vícevláknové.</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1365"/>
-        <location filename="../src/docks/encodedock.cpp" line="93"/>
+        <location filename="../src/docks/encodedock.cpp" line="114"/>
         <source>Encode File</source>
         <translation>Zakódovat soubor</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1372"/>
-        <location filename="../src/docks/encodedock.cpp" line="613"/>
-        <location filename="../src/docks/encodedock.cpp" line="620"/>
-        <location filename="../src/docks/encodedock.cpp" line="727"/>
+        <location filename="../src/docks/encodedock.cpp" line="634"/>
+        <location filename="../src/docks/encodedock.cpp" line="641"/>
+        <location filename="../src/docks/encodedock.cpp" line="746"/>
         <source>Stream</source>
         <translation>Proud</translation>
     </message>
@@ -868,79 +986,247 @@ vícevláknové.</translation>
         <translation>Zastavit zachytávání obrazovky</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="62"/>
-        <location filename="../src/docks/encodedock.cpp" line="161"/>
+        <location filename="../src/docks/encodedock.cpp" line="83"/>
+        <location filename="../src/docks/encodedock.cpp" line="182"/>
         <source>Automatic from extension</source>
         <translation>Automaticky podle přípony</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="69"/>
-        <location filename="../src/docks/encodedock.cpp" line="76"/>
+        <location filename="../src/docks/encodedock.cpp" line="90"/>
+        <location filename="../src/docks/encodedock.cpp" line="97"/>
         <source>Default for format</source>
         <translation>Výchozí pro formát</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="95"/>
-        <location filename="../src/docks/encodedock.cpp" line="530"/>
-        <location filename="../src/docks/encodedock.cpp" line="726"/>
+        <location filename="../src/docks/encodedock.cpp" line="116"/>
+        <location filename="../src/docks/encodedock.cpp" line="551"/>
+        <location filename="../src/docks/encodedock.cpp" line="745"/>
         <source>Capture File</source>
         <translation>Zachytit soubor</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="101"/>
-        <location filename="../src/docks/encodedock.cpp" line="140"/>
-        <location filename="../src/docks/encodedock.cpp" line="361"/>
-        <location filename="../src/docks/encodedock.cpp" line="686"/>
+        <location filename="../src/docks/encodedock.cpp" line="122"/>
+        <location filename="../src/docks/encodedock.cpp" line="161"/>
+        <location filename="../src/docks/encodedock.cpp" line="382"/>
+        <location filename="../src/docks/encodedock.cpp" line="707"/>
         <source>Custom</source>
         <translation>Vlastní</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="104"/>
-        <location filename="../src/docks/encodedock.cpp" line="110"/>
+        <location filename="../src/docks/encodedock.cpp" line="125"/>
+        <location filename="../src/docks/encodedock.cpp" line="131"/>
         <source>Stock</source>
         <translation>Tovární</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="525"/>
-        <location filename="../src/docks/encodedock.cpp" line="568"/>
+        <location filename="../src/docks/encodedock.cpp" line="546"/>
+        <location filename="../src/docks/encodedock.cpp" line="589"/>
         <source>Stop Capture</source>
         <translation>Zastavit zachytávání</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="545"/>
+        <location filename="../src/docks/encodedock.cpp" line="566"/>
         <source>Encode to File</source>
         <translation>Zakódovat do souboru</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="545"/>
+        <location filename="../src/docks/encodedock.cpp" line="566"/>
         <source>Capture to File</source>
         <translation>Zachytit do souboru</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="608"/>
         <location filename="../src/docks/encodedock.cpp" line="629"/>
+        <location filename="../src/docks/encodedock.cpp" line="650"/>
         <source>Stop Stream</source>
         <translation>Zastavit proud</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="621"/>
+        <location filename="../src/docks/encodedock.cpp" line="642"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>Zadejte schéma síťového protokolu, adresu, přípojku a parametry jako adresu (URL):</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="659"/>
+        <location filename="../src/docks/encodedock.cpp" line="680"/>
         <source>Add Encode Preset</source>
         <translation>Přidat přednastavení zakódování</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="704"/>
+        <location filename="../src/docks/encodedock.cpp" line="725"/>
         <source>Delete Preset</source>
         <translation>Smazat přednastavení</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="705"/>
+        <location filename="../src/docks/encodedock.cpp" line="726"/>
         <source>Are you sure you want to delete</source>
         <translation>Opravdu chcete smazat</translation>
+    </message>
+</context>
+<context>
+    <name>FiltersDock</name>
+    <message>
+        <location filename="../src/docks/filtersdock.ui" line="18"/>
+        <source>Filters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filtersdock.ui" line="59"/>
+        <source>Add something to the playlist</source>
+        <translation type="unfinished">Přidat něco do seznamu záběrů</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filtersdock.ui" line="76"/>
+        <source>Remove cut</source>
+        <translation type="unfinished">Odstranit záběr</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filtersdock.ui" line="130"/>
+        <source>Blur</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filtersdock.ui" line="135"/>
+        <source>Mirror</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filtersdock.ui" line="140"/>
+        <source>Diffusion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filtersdock.ui" line="145"/>
+        <source>Glow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filtersdock.ui" line="150"/>
+        <source>Sharpen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filtersdock.ui" line="155"/>
+        <source>Vignette</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filtersdock.ui" line="160"/>
+        <source>Crop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filtersdock.ui" line="163"/>
+        <source>Remove bad edges or black bars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filtersdock.ui" line="168"/>
+        <source>Color Grading</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filtersdock.ui" line="171"/>
+        <source>Correct, alter, or enhance the color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filtersdock.ui" line="176"/>
+        <source>Size and Position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filtersdock.ui" line="181"/>
+        <source>Saturation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filtersdock.ui" line="186"/>
+        <source>White Balance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filtersdock.cpp" line="70"/>
+        <source>Filters can only be applied to clips.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Frei0rColoradjWidget</name>
+    <message>
+        <location filename="../src/filters/frei0rcoloradjwidget.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">Formulář</translation>
+    </message>
+    <message>
+        <location filename="../src/filters/frei0rcoloradjwidget.ui" line="42"/>
+        <source>Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/filters/frei0rcoloradjwidget.ui" line="53"/>
+        <source>Add Constant</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/filters/frei0rcoloradjwidget.ui" line="58"/>
+        <source>Change Gamma</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/filters/frei0rcoloradjwidget.ui" line="63"/>
+        <source>Multiply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/filters/frei0rcoloradjwidget.ui" line="86"/>
+        <source>Keep Luma</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Frei0rGlowFilter</name>
+    <message>
+        <location filename="../src/filters/frei0rglowfilter.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">Formulář</translation>
+    </message>
+    <message>
+        <location filename="../src/filters/frei0rglowfilter.ui" line="22"/>
+        <source>Blur</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/filters/frei0rglowfilter.ui" line="29"/>
+        <source> %</source>
+        <translation type="unfinished"> %</translation>
+    </message>
+    <message>
+        <location filename="../src/filters/frei0rglowfilter.ui" line="42"/>
+        <source>Reset to default</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Frei0rSharpnessFilter</name>
+    <message>
+        <location filename="../src/filters/frei0rsharpnessfilter.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">Formulář</translation>
+    </message>
+    <message>
+        <location filename="../src/filters/frei0rsharpnessfilter.ui" line="20"/>
+        <source>Amount</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/filters/frei0rsharpnessfilter.ui" line="48"/>
+        <location filename="../src/filters/frei0rsharpnessfilter.ui" line="108"/>
+        <source> %</source>
+        <translation type="unfinished"> %</translation>
+    </message>
+    <message>
+        <location filename="../src/filters/frei0rsharpnessfilter.ui" line="80"/>
+        <source>Size</source>
+        <translation type="unfinished">Velikost</translation>
     </message>
 </context>
 <context>
@@ -1299,7 +1585,6 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Upravit</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="32"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -1317,7 +1602,7 @@ p, li { white-space: pre-wrap; }
 &lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; Alt+Left&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;Alt+Right&lt;/span&gt; to jump between start, in, out, and end.&lt;/li&gt;&lt;/ul&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Right-click&lt;/span&gt; the video window to access its settings.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Update Shotcut whenever you like. We do not notify you about updates because new version are available almost daily.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body&gt;
@@ -1336,124 +1621,255 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Aktualizujte program Shotcut, kdykoli budete chtít. O nových aktualizacích vám nebudeme dávat vědět, protože nové aktualizace jsou dostupné téměř denně.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
+        <location filename="../src/mainwindow.ui" line="32"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;Shotcut Quickstart Guide&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Open files by &lt;span style=&quot; font-weight:600;&quot;&gt;drag-n-drop&lt;/span&gt; in addition to the usual menu and toolbar methods.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Use &lt;span style=&quot; font-weight:600;&quot;&gt;File&lt;/span&gt; &amp;gt; &lt;span style=&quot; font-weight:600;&quot;&gt;Open Other&lt;/span&gt; to open network streams, capture devices, and generators.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;MLT XML files can be opened as a clip; so, you can use Shotcut to test your XML.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Transport Control Keyboard Shortcuts:&lt;/p&gt;
+&lt;ul type=&quot;circle&quot; style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;&quot;&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; J&lt;/span&gt;, &lt;span style=&quot; font-weight:600;&quot;&gt;K&lt;/span&gt;, and &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt; control playback speed and direction. Tap &lt;span style=&quot; font-weight:600;&quot;&gt;J&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt; repeatedly to go faster.&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; I&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;O&lt;/span&gt; set the in and out points.&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt; L&lt;span style=&quot; font-weight:600;&quot;&gt;eft&lt;/span&gt; or R&lt;span style=&quot; font-weight:600;&quot;&gt;ight&lt;/span&gt; cursor keys step frame-by-frame.&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; Page Up&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;Page Down&lt;/span&gt; step 10 frames at-a-time.&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; Alt+Left&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;Alt+Right&lt;/span&gt; to jump between start, in, out, and end.&lt;/li&gt;&lt;/ul&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Hold down &lt;span style=&quot; font-weight:600;&quot;&gt;Shift&lt;/span&gt; to make the mouse movement over the video window scrub/skim.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Update Shotcut whenever you like. We do not notify you about updates because new version are available almost daily.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/mainwindow.ui" line="88"/>
         <source>&amp;Edit</source>
         <translation>Úp&amp;ravy</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="108"/>
+        <location filename="../src/mainwindow.ui" line="103"/>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="107"/>
+        <source>Deinterlacer</source>
+        <translation type="unfinished">Odstranění prokládání</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="116"/>
+        <source>Interpolation</source>
+        <translation type="unfinished">Interpolace</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="125"/>
+        <source>Video Mode</source>
+        <translation type="unfinished">Obrazový režim</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="131"/>
+        <source>Preview on SDI/HDMI</source>
+        <translation type="unfinished">Náhled na  SDI/HDMI</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="153"/>
         <source>Main</source>
         <translation>Hlavní</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="139"/>
+        <location filename="../src/mainwindow.ui" line="188"/>
         <source>&amp;Open File...</source>
         <translation>&amp;Otevřít soubor...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="142"/>
+        <location filename="../src/mainwindow.ui" line="191"/>
         <source>Open a video, audio or image file</source>
         <translation>Otevřít soubor s obrazem (video), zvukem (audio) nebo obrázkem</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="145"/>
+        <location filename="../src/mainwindow.ui" line="194"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="153"/>
+        <location filename="../src/mainwindow.ui" line="202"/>
         <source>E&amp;xit</source>
         <translation>U&amp;končit</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="156"/>
+        <location filename="../src/mainwindow.ui" line="205"/>
         <source>Quit the application</source>
         <translation>Ukončit program</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="159"/>
+        <location filename="../src/mainwindow.ui" line="208"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="164"/>
+        <location filename="../src/mainwindow.ui" line="213"/>
         <source>&amp;About Shotcut</source>
         <translation>O &amp;programu Shotcut</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="169"/>
+        <location filename="../src/mainwindow.ui" line="218"/>
         <source>About Qt</source>
         <translation>O Qt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="174"/>
+        <location filename="../src/mainwindow.ui" line="223"/>
         <source>Open Other...</source>
         <translation>Otevřít jiné...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="177"/>
+        <location filename="../src/mainwindow.ui" line="226"/>
         <source>Open a device, stream or generator</source>
         <translation>Otevřít zařízení, soubor nebo generátor</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="180"/>
+        <location filename="../src/mainwindow.ui" line="229"/>
         <source>Ctrl+Shift+O</source>
         <translation>Ctrl+Shift+O</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="192"/>
+        <location filename="../src/mainwindow.ui" line="241"/>
         <source>&amp;Save</source>
         <translation>&amp;Uložit</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="195"/>
+        <location filename="../src/mainwindow.ui" line="244"/>
         <source>Save project as a MLT XML file</source>
         <translation>Uložit projekt jako soubor MLT XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="198"/>
+        <location filename="../src/mainwindow.ui" line="247"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="206"/>
+        <location filename="../src/mainwindow.ui" line="255"/>
         <source>Save &amp;As...</source>
         <translation>Uložit &amp;jako...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="209"/>
+        <location filename="../src/mainwindow.ui" line="258"/>
         <source>Save project to a different MLT XML file</source>
         <translation>Uložit projekt do jiného souboru MLT XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="212"/>
+        <location filename="../src/mainwindow.ui" line="261"/>
         <source>Ctrl+Shift+S</source>
         <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="221"/>
+        <location filename="../src/mainwindow.ui" line="270"/>
         <source>Encode</source>
         <translation>Zakódování</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="224"/>
+        <location filename="../src/mainwindow.ui" line="273"/>
         <source>Show the Encode and Jobs panels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="261"/>
-        <location filename="../src/mainwindow.cpp" line="926"/>
+        <location filename="../src/mainwindow.ui" line="310"/>
+        <location filename="../src/mainwindow.cpp" line="1125"/>
         <source>Enter Full Screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="264"/>
+        <location filename="../src/mainwindow.ui" line="313"/>
         <source>Ctrl+Shift+F</source>
         <translation>Ctrl+Shift+F</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="309"/>
+        <location filename="../src/mainwindow.ui" line="358"/>
         <source>Full Screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="369"/>
+        <source>Realtime (frame dropping)</source>
+        <translation type="unfinished">Ve skutečném čase (zahazování snímků)</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="380"/>
+        <source>Progressive</source>
+        <translation type="unfinished">Progresivní</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="388"/>
+        <source>GPU Processing (experimental)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="399"/>
+        <source>One Field (fast)</source>
+        <translation type="unfinished">Jedno pole (rychlé)</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="407"/>
+        <source>Linear Blend (fast)</source>
+        <translation type="unfinished">Lineární spojení (nejrychlejší)</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="415"/>
+        <source>YADIF - temporal only (good)</source>
+        <translation type="unfinished">YADIF - pouze dočasné (dobré)</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="423"/>
+        <source>YADIF - temporal + spatial (best)</source>
+        <translation type="unfinished">YADIF - dočasné + prostorové (nejlepší)</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="434"/>
+        <source>Nearest Neighbor (fast)</source>
+        <translation type="unfinished">Nejbližší soused (rychlé)</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="442"/>
+        <source>Bilinear (good)</source>
+        <translation type="unfinished">Bilineární (dobré)</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="450"/>
+        <source>Bicubic (better)</source>
+        <translation type="unfinished">Bikubická (lepší)</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="458"/>
+        <source>Hyper/Lanczoz (best)</source>
+        <translation type="unfinished">Hyper/Lanczoz (nejlepší)</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="469"/>
+        <source>Use OpenGL</source>
+        <translation type="unfinished">Použít OpenGL</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="480"/>
+        <source>Automatic</source>
+        <translation type="unfinished">Automaticky</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="491"/>
+        <source>None</source>
+        <translation type="unfinished">Žádný</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="499"/>
+        <source>Use JACK Audio</source>
+        <translation type="unfinished">Použít JACK Audio</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="508"/>
+        <source>Filters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="511"/>
+        <source>Modify the video image or audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1461,22 +1877,22 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Přepnout panely Zakódování a Úkoly</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="233"/>
+        <location filename="../src/mainwindow.ui" line="282"/>
         <source>&amp;Undo</source>
         <translation>&amp;Zpět</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="242"/>
+        <location filename="../src/mainwindow.ui" line="291"/>
         <source>&amp;Redo</source>
         <translation>Z&amp;novu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="247"/>
+        <location filename="../src/mainwindow.ui" line="296"/>
         <source>Forum...</source>
         <translation>Fórum...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="252"/>
+        <location filename="../src/mainwindow.ui" line="301"/>
         <source>FAQ...</source>
         <translation>Často kladené otázky...</translation>
     </message>
@@ -1489,90 +1905,115 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Znovu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="273"/>
-        <location filename="../src/mainwindow.cpp" line="114"/>
+        <location filename="../src/mainwindow.ui" line="322"/>
+        <location filename="../src/mainwindow.cpp" line="121"/>
         <source>Properties</source>
         <translation>Vlastnosti</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="282"/>
+        <location filename="../src/mainwindow.ui" line="331"/>
         <source>Recent</source>
         <translation>Naposledy otevřené</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="291"/>
+        <location filename="../src/mainwindow.ui" line="340"/>
         <source>Playlist</source>
         <translation>Seznam záběrů</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="300"/>
-        <location filename="../src/mainwindow.cpp" line="149"/>
+        <location filename="../src/mainwindow.ui" line="349"/>
+        <location filename="../src/mainwindow.cpp" line="165"/>
         <source>History</source>
         <translation>Historie</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="91"/>
+        <location filename="../src/mainwindow.cpp" line="95"/>
         <source>Ctrl+Z</source>
         <translation>Ctrl+Z</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="92"/>
+        <location filename="../src/mainwindow.cpp" line="96"/>
         <source>Ctrl+Shift+Z</source>
         <translation>Ctrl+Shift+Z</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="269"/>
-        <location filename="../src/mainwindow.cpp" line="271"/>
-        <location filename="../src/mainwindow.cpp" line="303"/>
+        <location filename="../src/mainwindow.cpp" line="370"/>
+        <location filename="../src/mainwindow.cpp" line="372"/>
+        <location filename="../src/mainwindow.cpp" line="404"/>
         <source>Failed to open </source>
         <translation>Nepodařilo se otevřít</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="312"/>
+        <location filename="../src/mainwindow.cpp" line="413"/>
         <source>Open File</source>
         <translation>Otevřít soubor</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="391"/>
+        <location filename="../src/mainwindow.cpp" line="580"/>
         <source>%1[*] - %2</source>
         <translation>%1[*] - %2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="396"/>
+        <location filename="../src/mainwindow.cpp" line="585"/>
         <source>About Shotcut</source>
         <translation>O programu Shotcut</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="397"/>
+        <location filename="../src/mainwindow.cpp" line="586"/>
         <source>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;p&gt;Copyright &amp;copy; 2011-2012 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://qt.nokia.com/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;&lt;small&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
         <translation>&lt;h1&gt;Shotcut verze %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; je svobodný editor videa. Je to program s otevřeným zdrojovým kódem. Je určen pro více operačních systémů.&lt;/p&gt;&lt;p&gt;Autorské právo &amp;copy; 2011-2012 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licencováno pod &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Tento program hrdě používá následující projekty:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://qt.nokia.com/&quot;&gt;Qt&lt;/a&gt;: užití Qt a uživatelské rozhraní&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt;: multimediální authoringová soustava&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt;: multimediální formát a knihovny s kodeky&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt;: enkodér H.264&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt;: enkodér VP8&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt;: enkodér MP3&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt;: přídavné moduly pro video&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt;: přídavné moduly pro audio&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;Zdrojový kód používaný k sestavení tohoto programu lze stáhnout z &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;&lt;small&gt;Tento program je šířen v naději, že bude užitečný, ale BEZ JAKÉKOLI ZÁRUKY; také bez předpokládané záruky PRODEJNOSTI nebo POUŽITELNOSTI PRO NĚJAKÝ URČITÝ ÚČEL.&lt;/small&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="708"/>
-        <location filename="../src/mainwindow.cpp" line="725"/>
+        <location filename="../src/mainwindow.cpp" line="898"/>
+        <location filename="../src/mainwindow.cpp" line="915"/>
         <source>Saved %1</source>
         <translation>Uloženo %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="721"/>
+        <location filename="../src/mainwindow.cpp" line="911"/>
         <source>Save XML</source>
         <translation>Uložit XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="721"/>
+        <location filename="../src/mainwindow.cpp" line="911"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="737"/>
+        <location filename="../src/mainwindow.cpp" line="927"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>Projekt byl změněn.
 Chcete uložit své změny?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="929"/>
+        <location filename="../src/mainwindow.cpp" line="1128"/>
         <source>Exit Full Screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1137"/>
+        <source>GPU Processing is not supported</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1144"/>
+        <source>You must restart Shotcut to switch using OpenGL.
+Do you want to exit now?</source>
+        <translation type="unfinished">Musíte Shotcut spustit kvůli přepnutí pro používání OpenGL znovu.
+Chcete jej ukončit nyní?</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1247"/>
+        <source>Failed to connect to JACK.
+Please verify that JACK is installed and running.</source>
+        <translation type="unfinished">Nepodařilo se spojit se s JACKem.
+Ověřte, prosím, že je JACK nainstalován a běží.</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1256"/>
+        <source>You must restart Shotcut to switch using GPU processing.
+Do you want to exit now?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1708,7 +2149,7 @@ Chcete uložit své změny?</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.cpp" line="195"/>
-        <location filename="../src/mvcp/meltedplaylistdock.cpp" line="214"/>
+        <location filename="../src/mvcp/meltedplaylistdock.cpp" line="212"/>
         <source>&quot;Remove All&quot; will remove all of clips in the playlist.
 
 IMPORTANT: You cannot Undo this action!
@@ -1735,7 +2176,7 @@ DŮLEŽITÉ: Tento krok nelze vrátit zpět!
 Chcete pokračovat?</translation>
     </message>
     <message>
-        <location filename="../src/mvcp/meltedplaylistdock.cpp" line="233"/>
+        <location filename="../src/mvcp/meltedplaylistdock.cpp" line="229"/>
         <source>&quot;Clean&quot; will remove all of clips in the playlist
 except the currently playing clip.
 
@@ -1867,44 +2308,157 @@ p, li { white-space: pre-wrap; }
         <translation>Stav</translation>
     </message>
     <message>
-        <location filename="../src/mvcp/meltedunitsmodel.cpp" line="110"/>
+        <location filename="../src/mvcp/meltedunitsmodel.cpp" line="112"/>
         <source>unknown</source>
         <translation>Neznámý</translation>
     </message>
     <message>
-        <location filename="../src/mvcp/meltedunitsmodel.cpp" line="111"/>
+        <location filename="../src/mvcp/meltedunitsmodel.cpp" line="113"/>
         <source>undefined</source>
         <translation>Nestanoveno</translation>
     </message>
     <message>
-        <location filename="../src/mvcp/meltedunitsmodel.cpp" line="112"/>
+        <location filename="../src/mvcp/meltedunitsmodel.cpp" line="114"/>
         <source>offline</source>
         <translation>Nepřipojeno</translation>
     </message>
     <message>
-        <location filename="../src/mvcp/meltedunitsmodel.cpp" line="113"/>
+        <location filename="../src/mvcp/meltedunitsmodel.cpp" line="115"/>
         <source>unloaded</source>
         <translation>Nenahráno</translation>
     </message>
     <message>
-        <location filename="../src/mvcp/meltedunitsmodel.cpp" line="114"/>
+        <location filename="../src/mvcp/meltedunitsmodel.cpp" line="116"/>
         <source>stopped</source>
         <translation>Zastaveno</translation>
     </message>
     <message>
-        <location filename="../src/mvcp/meltedunitsmodel.cpp" line="115"/>
+        <location filename="../src/mvcp/meltedunitsmodel.cpp" line="117"/>
         <source>playing</source>
         <translation>Přehráváno</translation>
     </message>
     <message>
-        <location filename="../src/mvcp/meltedunitsmodel.cpp" line="116"/>
+        <location filename="../src/mvcp/meltedunitsmodel.cpp" line="118"/>
         <source>paused</source>
         <translation>Pozastaveno</translation>
     </message>
     <message>
-        <location filename="../src/mvcp/meltedunitsmodel.cpp" line="117"/>
+        <location filename="../src/mvcp/meltedunitsmodel.cpp" line="119"/>
         <source>disconnected</source>
         <translation>Odpojeno</translation>
+    </message>
+</context>
+<context>
+    <name>MovitBlurFilter</name>
+    <message>
+        <location filename="../src/filters/movitblurfilter.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">Formulář</translation>
+    </message>
+    <message>
+        <location filename="../src/filters/movitblurfilter.ui" line="22"/>
+        <source>Radius</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/filters/movitblurfilter.ui" line="39"/>
+        <source>Reset to default</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MovitColorFilter</name>
+    <message>
+        <location filename="../src/filters/movitcolorfilter.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">Formulář</translation>
+    </message>
+    <message>
+        <location filename="../src/filters/movitcolorfilter.ui" line="42"/>
+        <source>Shadows (Lift)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/filters/movitcolorfilter.ui" line="72"/>
+        <source>Highlights (Gain)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/filters/movitcolorfilter.ui" line="82"/>
+        <source>Midtones (Gamma)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MovitGlowFilter</name>
+    <message>
+        <location filename="../src/filters/movitglowfilter.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">Formulář</translation>
+    </message>
+    <message>
+        <location filename="../src/filters/movitglowfilter.ui" line="42"/>
+        <source>Radius</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/filters/movitglowfilter.ui" line="64"/>
+        <location filename="../src/filters/movitglowfilter.ui" line="111"/>
+        <location filename="../src/filters/movitglowfilter.ui" line="158"/>
+        <source>Reset to default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/filters/movitglowfilter.ui" line="89"/>
+        <source>Highlight Blurriness</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/filters/movitglowfilter.ui" line="136"/>
+        <source>Highlight Cutoff</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MovitSharpenFilter</name>
+    <message>
+        <location filename="../src/filters/movitsharpenfilter.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">Formulář</translation>
+    </message>
+    <message>
+        <location filename="../src/filters/movitsharpenfilter.ui" line="20"/>
+        <source>Matrix Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/filters/movitsharpenfilter.ui" line="45"/>
+        <location filename="../src/filters/movitsharpenfilter.ui" line="76"/>
+        <location filename="../src/filters/movitsharpenfilter.ui" line="127"/>
+        <location filename="../src/filters/movitsharpenfilter.ui" line="193"/>
+        <location filename="../src/filters/movitsharpenfilter.ui" line="259"/>
+        <source>Reset to default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/filters/movitsharpenfilter.ui" line="98"/>
+        <source>Circle Radius</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/filters/movitsharpenfilter.ui" line="108"/>
+        <source>Gaussian Radius</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/filters/movitsharpenfilter.ui" line="149"/>
+        <source>Correlation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/filters/movitsharpenfilter.ui" line="215"/>
+        <source>Noise Level</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2133,267 +2687,245 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>Player</name>
     <message>
-        <location filename="../src/player.cpp" line="117"/>
+        <location filename="../src/player.cpp" line="84"/>
         <source>Adjust the audio volume</source>
         <translation>Upravit hlasitost zvuku</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="123"/>
+        <location filename="../src/player.cpp" line="90"/>
         <source>Show or hide the volume control</source>
         <translation>Ukázat nebo skrýt ovládání hlasitosti</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="133"/>
+        <location filename="../src/player.cpp" line="100"/>
         <source>Mute</source>
         <translation>Ztlumit</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="134"/>
+        <location filename="../src/player.cpp" line="101"/>
         <source>Silence the audio</source>
         <translation>Umlčet zvuk</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="147"/>
+        <location filename="../src/player.cpp" line="114"/>
         <source>Transport Controls</source>
         <translation>Ovládání přesunu</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="154"/>
+        <location filename="../src/player.cpp" line="121"/>
         <source>Current position</source>
         <translation>Nynější poloha</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="158"/>
+        <location filename="../src/player.cpp" line="125"/>
         <source>Total Duration</source>
         <translation>Celková doba trvání</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="164"/>
+        <location filename="../src/player.cpp" line="131"/>
         <source>In Point</source>
         <translation>Počáteční bod</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="174"/>
+        <location filename="../src/player.cpp" line="141"/>
         <source>Selected Duration</source>
         <translation>Vybraná doba trvání</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="316"/>
         <source>Automatic</source>
-        <translation>Automaticky</translation>
+        <translation type="obsolete">Automaticky</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="336"/>
         <source>None</source>
-        <translation>Žádný</translation>
+        <translation type="obsolete">Žádný</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="375"/>
+        <location filename="../src/player.cpp" line="240"/>
         <source>Space</source>
         <translation>Mezerník</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="376"/>
-        <location filename="../src/player.cpp" line="502"/>
-        <location filename="../src/player.cpp" line="654"/>
+        <location filename="../src/player.cpp" line="241"/>
+        <location filename="../src/player.cpp" line="295"/>
+        <location filename="../src/player.cpp" line="447"/>
         <source>Pause</source>
         <translation>Pozastavit</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="378"/>
-        <location filename="../src/player.cpp" line="503"/>
-        <location filename="../src/player.cpp" line="655"/>
+        <location filename="../src/player.cpp" line="243"/>
+        <location filename="../src/player.cpp" line="296"/>
+        <location filename="../src/player.cpp" line="448"/>
         <source>Pause playback (K)</source>
         <translation>Pozastavit přehrávání (K)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="380"/>
+        <location filename="../src/player.cpp" line="245"/>
         <source>Backspace</source>
         <translation>Backspace</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="381"/>
+        <location filename="../src/player.cpp" line="246"/>
         <source>Skip Next</source>
         <translation>Skočit na další</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="383"/>
+        <location filename="../src/player.cpp" line="248"/>
         <source>Skip to the next point (Alt+Right)</source>
         <translation>Skočit na další bod (Alt+šipka vpravo)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="385"/>
+        <location filename="../src/player.cpp" line="250"/>
         <source>Alt+Right</source>
         <translation>Alt+šipka vpravo</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="386"/>
+        <location filename="../src/player.cpp" line="251"/>
         <source>Skip Previous</source>
         <translation>Skočit na předchozí</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="388"/>
+        <location filename="../src/player.cpp" line="253"/>
         <source>Skip to the previous point (Alt+Left)</source>
         <translation>Skočit na předchozí bod (Alt+šipka vlevo)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="390"/>
+        <location filename="../src/player.cpp" line="255"/>
         <source>Alt+Left</source>
         <translation>Alt+šipka vlevo</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="391"/>
         <source>Progressive</source>
-        <translation>Progresivní</translation>
+        <translation type="obsolete">Progresivní</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="393"/>
         <source>Force the video preview to deinterlace if needed</source>
-        <translation>V případě potřeby přinutit náhled videa ke zrušení prokládání</translation>
+        <translation type="obsolete">V případě potřeby přinutit náhled videa ke zrušení prokládání</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="395"/>
         <source>One Field (fast)</source>
-        <translation>Jedno pole (rychlé)</translation>
+        <translation type="obsolete">Jedno pole (rychlé)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="396"/>
         <source>Linear Blend (fast)</source>
-        <translation>Lineární spojení (nejrychlejší)</translation>
+        <translation type="obsolete">Lineární spojení (nejrychlejší)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="397"/>
         <source>YADIF - temporal only (good)</source>
-        <translation>YADIF - pouze dočasné (dobré)</translation>
+        <translation type="obsolete">YADIF - pouze dočasné (dobré)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="398"/>
         <source>YADIF - temporal + spatial (best)</source>
-        <translation>YADIF - dočasné + prostorové (nejlepší)</translation>
+        <translation type="obsolete">YADIF - dočasné + prostorové (nejlepší)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="399"/>
         <source>Nearest Neighbor (fast)</source>
-        <translation>Nejbližší soused (rychlé)</translation>
+        <translation type="obsolete">Nejbližší soused (rychlé)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="400"/>
         <source>Bilinear (good)</source>
-        <translation>Bilineární (dobré)</translation>
+        <translation type="obsolete">Bilineární (dobré)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="401"/>
         <source>Bicubic (better)</source>
-        <translation>Bikubická (lepší)</translation>
+        <translation type="obsolete">Bikubická (lepší)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="402"/>
         <source>Hyper/Lanczoz (best)</source>
-        <translation>Hyper/Lanczoz (nejlepší)</translation>
+        <translation type="obsolete">Hyper/Lanczoz (nejlepší)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="403"/>
+        <location filename="../src/player.cpp" line="256"/>
         <source>Rewind</source>
         <translation>Přetočit</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="405"/>
+        <location filename="../src/player.cpp" line="258"/>
         <source>Play quickly backwards (J)</source>
         <translation>Přehrávat rychle dozadu (J)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="407"/>
+        <location filename="../src/player.cpp" line="260"/>
         <source>Fast Forward</source>
         <translation>Rychle vpřed</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="409"/>
+        <location filename="../src/player.cpp" line="262"/>
         <source>Play quickly forwards (L)</source>
         <translation>Přehrávat rychle dopředu (L)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="411"/>
         <source>Realtime (frame dropping)</source>
-        <translation>Ve skutečném čase (zahazování snímků)</translation>
+        <translation type="obsolete">Ve skutečném čase (zahazování snímků)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="413"/>
         <source>Allow the player to drop video frames to try to play in realtime</source>
-        <translation>Dovolit přehrávači vynechávání snímků videa kvůli tomu, aby zkusil přehrávat ve skutečném čase</translation>
+        <translation type="obsolete">Dovolit přehrávači vynechávání snímků videa kvůli tomu, aby zkusil přehrávat ve skutečném čase</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="416"/>
         <source>Use OpenGL</source>
-        <translation>Použít OpenGL</translation>
+        <translation type="obsolete">Použít OpenGL</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="418"/>
         <source>Use JACK Audio</source>
-        <translation>Použít JACK Audio</translation>
+        <translation type="obsolete">Použít JACK Audio</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="507"/>
+        <location filename="../src/player.cpp" line="300"/>
         <source>Stop</source>
         <translation>Zastavit</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="508"/>
+        <location filename="../src/player.cpp" line="301"/>
         <source>Stop playback (K)</source>
         <translation>Zastavit přehrávání (K)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="371"/>
-        <location filename="../src/player.cpp" line="516"/>
-        <location filename="../src/player.cpp" line="524"/>
-        <location filename="../src/player.cpp" line="659"/>
+        <location filename="../src/player.cpp" line="236"/>
+        <location filename="../src/player.cpp" line="309"/>
+        <location filename="../src/player.cpp" line="317"/>
+        <location filename="../src/player.cpp" line="452"/>
         <source>Play</source>
         <translation>Přehrát</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="373"/>
-        <location filename="../src/player.cpp" line="517"/>
-        <location filename="../src/player.cpp" line="525"/>
-        <location filename="../src/player.cpp" line="660"/>
+        <location filename="../src/player.cpp" line="238"/>
+        <location filename="../src/player.cpp" line="310"/>
+        <location filename="../src/player.cpp" line="318"/>
+        <location filename="../src/player.cpp" line="453"/>
         <source>Start playback (L)</source>
         <translation>Spustit přehrávání (L)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="570"/>
+        <location filename="../src/player.cpp" line="363"/>
         <source>Live</source>
         <translation>Živě</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="786"/>
         <source>Deinterlacer</source>
-        <translation>Odstranění prokládání</translation>
+        <translation type="obsolete">Odstranění prokládání</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="794"/>
         <source>Interpolation</source>
-        <translation>Interpolace</translation>
+        <translation type="obsolete">Interpolace</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="803"/>
         <source>Preview on SDI/HDMI</source>
-        <translation>Náhled na  SDI/HDMI</translation>
+        <translation type="obsolete">Náhled na  SDI/HDMI</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="807"/>
         <source>Video Mode</source>
-        <translation>Obrazový režim</translation>
+        <translation type="obsolete">Obrazový režim</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="820"/>
         <source>You must restart Shotcut to switch using OpenGL.
 Do you want to exit now?</source>
-        <translation>Musíte Shotcut spustit kvůli přepnutí pro používání OpenGL znovu.
+        <translation type="obsolete">Musíte Shotcut spustit kvůli přepnutí pro používání OpenGL znovu.
 Chcete jej ukončit nyní?</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="924"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
-        <translation>Nepodařilo se spojit se s JACKem.
+        <translation type="obsolete">Nepodařilo se spojit se s JACKem.
 Ověřte, prosím, že je JACK nainstalován a běží.</translation>
     </message>
 </context>
@@ -2517,13 +3049,13 @@ po začátek vybraného záběru.</translation>
         <translation>Zavřít</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="141"/>
-        <location filename="../src/docks/playlistdock.cpp" line="320"/>
+        <location filename="../src/docks/playlistdock.cpp" line="142"/>
+        <location filename="../src/docks/playlistdock.cpp" line="321"/>
         <source>You cannot insert a playlist into a playlist!</source>
         <translation>Nemůžete vložit seznam záběrů do seznamu záběrů!</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="205"/>
+        <location filename="../src/docks/playlistdock.cpp" line="206"/>
         <source>This clip does not match the selected cut in the playlist!</source>
         <translation>Tento záznam neodpovídá vybranému záběru v seznamu záběrů!</translation>
     </message>
@@ -2655,52 +3187,52 @@ po začátek vybraného záběru.</translation>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="367"/>
+        <location filename="../src/docks/playlistdock.cpp" line="368"/>
         <source>Append playlist item %1</source>
         <translation>Připojit položku seznamu záběrů %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="388"/>
+        <location filename="../src/docks/playlistdock.cpp" line="389"/>
         <source>Insert playist item %1</source>
         <translation>Vložit položku seznamu skladeb %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="409"/>
+        <location filename="../src/docks/playlistdock.cpp" line="410"/>
         <source>Update playlist item %1</source>
         <translation>Obnovit položku seznamu záběrů %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="433"/>
+        <location filename="../src/docks/playlistdock.cpp" line="434"/>
         <source>Remove playlist item %1</source>
         <translation>Odstranit položku seznamu záběrů %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="453"/>
+        <location filename="../src/docks/playlistdock.cpp" line="454"/>
         <source>Clear playlist</source>
         <translation>Vyprázdnit seznam záběrů</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="479"/>
+        <location filename="../src/docks/playlistdock.cpp" line="480"/>
         <source>Move item from %1 to %2</source>
         <translation>Přesunout položku z %1 do %2</translation>
     </message>
     <message>
-        <location filename="../src/mvcp/meltedplaylistdock.cpp" line="318"/>
+        <location filename="../src/mvcp/meltedplaylistdock.cpp" line="312"/>
         <source>Append %1</source>
         <translation>Připojit %1</translation>
     </message>
     <message>
-        <location filename="../src/mvcp/meltedplaylistdock.cpp" line="344"/>
+        <location filename="../src/mvcp/meltedplaylistdock.cpp" line="338"/>
         <source>Remove %1 at %2</source>
         <translation>Odstranit %1 v %2</translation>
     </message>
     <message>
-        <location filename="../src/mvcp/meltedplaylistdock.cpp" line="370"/>
+        <location filename="../src/mvcp/meltedplaylistdock.cpp" line="364"/>
         <source>Insert %1 at %2</source>
         <translation>Vložit %1 v %2</translation>
     </message>
     <message>
-        <location filename="../src/mvcp/meltedplaylistdock.cpp" line="394"/>
+        <location filename="../src/mvcp/meltedplaylistdock.cpp" line="388"/>
         <source>Move %1 from %2 to %3</source>
         <translation>Přesunout %1 z %2 do %3</translation>
     </message>
@@ -2711,6 +3243,24 @@ po začátek vybraného záběru.</translation>
         <location filename="../src/docks/recentdock.ui" line="18"/>
         <source>Recent</source>
         <translation>Naposledy otevřené</translation>
+    </message>
+</context>
+<context>
+    <name>SaturationFilter</name>
+    <message>
+        <location filename="../src/filters/saturationfilter.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">Formulář</translation>
+    </message>
+    <message>
+        <location filename="../src/filters/saturationfilter.ui" line="20"/>
+        <source>Saturation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/filters/saturationfilter.ui" line="73"/>
+        <source>Reset to default</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
