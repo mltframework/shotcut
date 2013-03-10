@@ -31,6 +31,7 @@
 #include "filters/frei0rcoloradjwidget.h"
 #include "filters/boxblurfilter.h"
 #include "filters/frei0rglowfilter.h"
+#include "filters/cropfilter.h"
 
 FiltersDock::FiltersDock(QWidget *parent) :
     QDockWidget(parent),
@@ -113,6 +114,8 @@ void FiltersDock::on_listView_clicked(const QModelIndex &index)
             ui->scrollArea->setWidget(new BoxblurFilter(*filter));
         else if (name == "frei0r.glow")
             ui->scrollArea->setWidget(new Frei0rGlowFilter(*filter));
+        else if (name == "crop")
+            ui->scrollArea->setWidget(new CropFilter(*filter));
         else
             delete ui->scrollArea->widget();
     }
@@ -185,7 +188,7 @@ void FiltersDock::on_actionVignette_triggered()
 void FiltersDock::on_actionCrop_triggered()
 {
     Mlt::Filter* filter = m_model.add("crop");
-    delete ui->scrollArea->widget();
+    ui->scrollArea->setWidget(new CropFilter(*filter, true));
     delete filter;
     ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
 }

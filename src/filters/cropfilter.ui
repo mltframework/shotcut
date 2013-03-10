@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CropFilter</class>
+ <widget class="QWidget" name="CropFilter">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>396</width>
+    <height>296</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QFormLayout" name="formLayout">
+   <item row="2" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Center Bias</string>
+     </property>
+     <property name="buddy">
+      <cstring>biasSpinner</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QSlider" name="biasSlider">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="maximum">
+        <number>4096</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="biasSpinner">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="suffix">
+        <string> px</string>
+       </property>
+       <property name="maximum">
+        <number>4096</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="4" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QSlider" name="topSlider">
+       <property name="maximum">
+        <number>4096</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="topSpinner">
+       <property name="suffix">
+        <string> px</string>
+       </property>
+       <property name="maximum">
+        <number>4096</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="6" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <widget class="QSlider" name="bottomSlider">
+       <property name="maximum">
+        <number>4096</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="bottomSpinner">
+       <property name="suffix">
+        <string> px</string>
+       </property>
+       <property name="maximum">
+        <number>4096</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="8" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout_5">
+     <item>
+      <widget class="QSlider" name="leftSlider">
+       <property name="maximum">
+        <number>4096</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="leftSpinner">
+       <property name="suffix">
+        <string> px</string>
+       </property>
+       <property name="maximum">
+        <number>4096</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="11" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout_6">
+     <item>
+      <widget class="QSlider" name="rightSlider">
+       <property name="maximum">
+        <number>4096</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="rightSpinner">
+       <property name="suffix">
+        <string> px</string>
+       </property>
+       <property name="maximum">
+        <number>4096</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Top</string>
+     </property>
+     <property name="buddy">
+      <cstring>topSpinner</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Bottom</string>
+     </property>
+     <property name="buddy">
+      <cstring>bottomSpinner</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="0">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Left</string>
+     </property>
+     <property name="buddy">
+      <cstring>leftSpinner</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="11" column="0">
+    <widget class="QLabel" name="label_5">
+     <property name="text">
+      <string>Right</string>
+     </property>
+     <property name="buddy">
+      <cstring>rightSpinner</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="2">
+    <widget class="QCheckBox" name="centerCheckBox">
+     <property name="text">
+      <string>Center</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="2">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="ServicePresetWidget" name="preset" native="true"/>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+  </layout>
+  <zorder>label</zorder>
+  <zorder>centerCheckBox</zorder>
+  <zorder>label_2</zorder>
+  <zorder>label_3</zorder>
+  <zorder>label_4</zorder>
+  <zorder>label_5</zorder>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ServicePresetWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/servicepresetwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>centerCheckBox</tabstop>
+  <tabstop>biasSlider</tabstop>
+  <tabstop>biasSpinner</tabstop>
+  <tabstop>topSlider</tabstop>
+  <tabstop>topSpinner</tabstop>
+  <tabstop>bottomSlider</tabstop>
+  <tabstop>bottomSpinner</tabstop>
+  <tabstop>leftSlider</tabstop>
+  <tabstop>leftSpinner</tabstop>
+  <tabstop>rightSlider</tabstop>
+  <tabstop>rightSpinner</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>biasSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>biasSpinner</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>126</x>
+     <y>71</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>352</x>
+     <y>71</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bottomSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>bottomSpinner</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>196</x>
+     <y>145</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>352</x>
+     <y>145</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>topSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>topSpinner</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>141</x>
+     <y>107</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>350</x>
+     <y>113</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>leftSpinner</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>leftSlider</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>333</x>
+     <y>186</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>246</x>
+     <y>183</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rightSpinner</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>rightSlider</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>343</x>
+     <y>228</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>257</x>
+     <y>224</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>leftSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>leftSpinner</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>155</x>
+     <y>179</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>348</x>
+     <y>182</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rightSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>rightSpinner</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>162</x>
+     <y>225</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>358</x>
+     <y>228</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>biasSpinner</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>biasSlider</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>367</x>
+     <y>70</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>215</x>
+     <y>72</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>topSpinner</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>topSlider</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>352</x>
+     <y>107</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>149</x>
+     <y>106</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bottomSpinner</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>bottomSlider</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>362</x>
+     <y>143</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>164</x>
+     <y>143</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>leftSpinner</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>leftSlider</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>374</x>
+     <y>176</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>146</x>
+     <y>187</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
