@@ -154,11 +154,6 @@ Mlt::Filter *AttachedFiltersModel::add(const QString& name)
         double speed = MLT.producer()->get_speed();
         MLT.consumer()->stop();
 
-        if (name == "frei0r.sharpness") {
-            filter->set("Amount", 0.5);
-            filter->set("Size", 0.5);
-        }
-
         beginInsertRows(QModelIndex(), count, count);
         MLT.producer()->attach(*filter);
         m_rows++;

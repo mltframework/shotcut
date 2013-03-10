@@ -60,7 +60,8 @@ SOURCES += main.cpp\
     filters/frei0rglowfilter.cpp \
     filters/cropfilter.cpp \
     filters/saturationfilter.cpp \
-    filters/movitsharpenfilter.cpp
+    filters/movitsharpenfilter.cpp \
+    filters/frei0rsharpnessfilter.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -117,7 +118,8 @@ HEADERS  += mainwindow.h \
     filters/frei0rglowfilter.h \
     filters/cropfilter.h \
     filters/saturationfilter.h \
-    filters/movitsharpenfilter.h
+    filters/movitsharpenfilter.h \
+    filters/frei0rsharpnessfilter.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
@@ -155,7 +157,8 @@ FORMS    += mainwindow.ui \
     filters/frei0rglowfilter.ui \
     filters/cropfilter.ui \
     filters/saturationfilter.ui \
-    filters/movitsharpenfilter.ui
+    filters/movitsharpenfilter.ui \
+    filters/frei0rsharpnessfilter.ui
 
 RESOURCES += \
     resources.qrc
