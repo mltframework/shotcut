@@ -37,6 +37,11 @@ Frei0rColoradjWidget::Frei0rColoradjWidget(Mlt::Filter filter, bool setDefaults,
         ui->keepLumaCheckBox->setChecked(m_defaultLuma);
         ui->wheel->setColor(m_defaultRGB);
         ui->preset->saveDefaultPreset(m_filter);
+        m_filter.set("Action", m_defaultAction);
+        m_filter.set("Keep luma", m_defaultLuma? 1 : 0);
+        m_filter.set("R", m_defaultRGB.redF());
+        m_filter.set("G", m_defaultRGB.greenF());
+        m_filter.set("B", m_defaultRGB.blueF());
     } else {
         ui->modeComboBox->setCurrentIndex(2 * filter.get_double("Action"));
         ui->keepLumaCheckBox->setChecked(filter.get_int("Keep luma"));

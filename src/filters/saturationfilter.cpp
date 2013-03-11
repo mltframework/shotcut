@@ -30,8 +30,11 @@ SaturationFilter::SaturationFilter(Mlt::Filter filter, bool setDefaults, QWidget
 {
     m_isMovit = QString(m_filter.get("mlt_service")).startsWith("movit.");
     ui->setupUi(this);
-    if (setDefaults)
+    if (setDefaults) {
         ui->doubleSpinBox->setValue(100.0);
+        if (!m_isMovit)
+            m_filter.set("Saturation", 0.125);
+    }
     else if (m_isMovit)
         ui->doubleSpinBox->setValue(m_filter.get_double("saturation") * 100.0);
     else
