@@ -29,8 +29,9 @@ Frei0rColoradjWidget::Frei0rColoradjWidget(Mlt::Filter filter, bool setDefaults,
     m_filter(filter)
 {
     ui->setupUi(this);
+    ui->keepLumaCheckBox->hide();
     m_defaultAction = 0.5;
-    m_defaultLuma = true;
+    m_defaultLuma = false;
     m_defaultRGB = QColor::fromRgbF(0.5, 0.5, 0.5);
     if (setDefaults) {
         ui->modeComboBox->setCurrentIndex(2 * m_defaultAction);

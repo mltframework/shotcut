@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>398</width>
-    <height>298</height>
+    <width>396</width>
+    <height>296</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -46,21 +46,21 @@
      <item>
       <widget class="QComboBox" name="modeComboBox">
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <item>
         <property name="text">
-         <string>Add Constant</string>
+         <string>Shadows (Lift)</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Change Gamma</string>
+         <string>Midtones (Gamma)</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Multiply</string>
+         <string>Highlights (Gain)</string>
         </property>
        </item>
       </widget>
