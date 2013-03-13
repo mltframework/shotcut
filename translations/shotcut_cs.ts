@@ -65,52 +65,52 @@
     <message>
         <location filename="../src/models/attachedfiltersmodel.cpp" line="95"/>
         <source>Blur</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozmazání</translation>
     </message>
     <message>
         <location filename="../src/models/attachedfiltersmodel.cpp" line="97"/>
         <source>Color Grading</source>
-        <translation type="unfinished"></translation>
+        <translation>Srovnání barev</translation>
     </message>
     <message>
         <location filename="../src/models/attachedfiltersmodel.cpp" line="99"/>
         <source>Crop</source>
-        <translation type="unfinished"></translation>
+        <translation>Ořezání</translation>
     </message>
     <message>
         <location filename="../src/models/attachedfiltersmodel.cpp" line="101"/>
         <source>Diffusion</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozptyl</translation>
     </message>
     <message>
         <location filename="../src/models/attachedfiltersmodel.cpp" line="103"/>
         <source>Glow</source>
-        <translation type="unfinished"></translation>
+        <translation>Záře</translation>
     </message>
     <message>
         <location filename="../src/models/attachedfiltersmodel.cpp" line="105"/>
         <source>Mirror</source>
-        <translation type="unfinished"></translation>
+        <translation>Zrcadlení</translation>
     </message>
     <message>
         <location filename="../src/models/attachedfiltersmodel.cpp" line="107"/>
         <source>Saturation</source>
-        <translation type="unfinished"></translation>
+        <translation>Sytost</translation>
     </message>
     <message>
         <location filename="../src/models/attachedfiltersmodel.cpp" line="109"/>
         <source>Sharpen</source>
-        <translation type="unfinished"></translation>
+        <translation>Zaostření</translation>
     </message>
     <message>
         <location filename="../src/models/attachedfiltersmodel.cpp" line="111"/>
         <source>Vignette</source>
-        <translation type="unfinished"></translation>
+        <translation>Neostré okraje</translation>
     </message>
     <message>
         <location filename="../src/models/attachedfiltersmodel.cpp" line="113"/>
         <source>White Balance</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyvážení bílé</translation>
     </message>
 </context>
 <context>
@@ -309,17 +309,17 @@
     <message>
         <location filename="../src/filters/boxblurfilter.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formulář</translation>
+        <translation>Formulář</translation>
     </message>
     <message>
         <location filename="../src/filters/boxblurfilter.ui" line="20"/>
         <source>Width</source>
-        <translation type="unfinished">Šířka</translation>
+        <translation>Šířka</translation>
     </message>
     <message>
-        <location filename="../src/filters/boxblurfilter.ui" line="58"/>
+        <location filename="../src/filters/boxblurfilter.ui" line="71"/>
         <source>Height</source>
-        <translation type="unfinished">Výška</translation>
+        <translation>Výška</translation>
     </message>
 </context>
 <context>
@@ -408,12 +408,12 @@
     <message>
         <location filename="../src/filters/cropfilter.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formulář</translation>
+        <translation>Formulář</translation>
     </message>
     <message>
         <location filename="../src/filters/cropfilter.ui" line="20"/>
         <source>Center Bias</source>
-        <translation type="unfinished"></translation>
+        <translation>Vychýlení středu</translation>
     </message>
     <message>
         <location filename="../src/filters/cropfilter.ui" line="48"/>
@@ -422,32 +422,32 @@
         <location filename="../src/filters/cropfilter.ui" line="120"/>
         <location filename="../src/filters/cropfilter.ui" line="144"/>
         <source> px</source>
-        <translation type="unfinished"></translation>
+        <translation> px</translation>
     </message>
     <message>
         <location filename="../src/filters/cropfilter.ui" line="156"/>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Nahoře</translation>
     </message>
     <message>
         <location filename="../src/filters/cropfilter.ui" line="166"/>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Dole</translation>
     </message>
     <message>
         <location filename="../src/filters/cropfilter.ui" line="176"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Vlevo</translation>
     </message>
     <message>
         <location filename="../src/filters/cropfilter.ui" line="186"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Vpravo</translation>
     </message>
     <message>
         <location filename="../src/filters/cropfilter.ui" line="196"/>
         <source>Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Střed</translation>
     </message>
 </context>
 <context>
@@ -1066,87 +1066,87 @@ vícevláknové.</translation>
     <message>
         <location filename="../src/docks/filtersdock.ui" line="18"/>
         <source>Filters</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtry</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.ui" line="59"/>
         <source>Add something to the playlist</source>
-        <translation type="unfinished">Přidat něco do seznamu záběrů</translation>
+        <translation>Přidat něco do seznamu záběrů</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.ui" line="76"/>
         <source>Remove cut</source>
-        <translation type="unfinished">Odstranit záběr</translation>
+        <translation>Odstranit záběr</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.ui" line="130"/>
         <source>Blur</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozmazání</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.ui" line="135"/>
         <source>Mirror</source>
-        <translation type="unfinished"></translation>
+        <translation>Zrcadlení</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.ui" line="140"/>
         <source>Diffusion</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozptyl</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.ui" line="145"/>
         <source>Glow</source>
-        <translation type="unfinished"></translation>
+        <translation>Záře</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.ui" line="150"/>
         <source>Sharpen</source>
-        <translation type="unfinished"></translation>
+        <translation>Zaostření</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.ui" line="155"/>
         <source>Vignette</source>
-        <translation type="unfinished"></translation>
+        <translation>Neostré okraje</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.ui" line="160"/>
         <source>Crop</source>
-        <translation type="unfinished"></translation>
+        <translation>Ořezání</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.ui" line="163"/>
         <source>Remove bad edges or black bars</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstranit špatné okraje anebo černé pruhy</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.ui" line="168"/>
         <source>Color Grading</source>
-        <translation type="unfinished"></translation>
+        <translation>Srovnání barev</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.ui" line="171"/>
         <source>Correct, alter, or enhance the color</source>
-        <translation type="unfinished"></translation>
+        <translation>Opravit, změnit nebo vylepšit barvu</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.ui" line="176"/>
         <source>Size and Position</source>
-        <translation type="unfinished"></translation>
+        <translation>Velikost a poloha</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.ui" line="181"/>
         <source>Saturation</source>
-        <translation type="unfinished"></translation>
+        <translation>Sytost</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.ui" line="186"/>
         <source>White Balance</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyvážení bílé</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.cpp" line="70"/>
         <source>Filters can only be applied to clips.</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtry lze použít jen na záznamy.</translation>
     </message>
 </context>
 <context>
@@ -1154,32 +1154,32 @@ vícevláknové.</translation>
     <message>
         <location filename="../src/filters/frei0rcoloradjwidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formulář</translation>
+        <translation>Formulář</translation>
     </message>
     <message>
         <location filename="../src/filters/frei0rcoloradjwidget.ui" line="42"/>
         <source>Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Režim</translation>
     </message>
     <message>
         <location filename="../src/filters/frei0rcoloradjwidget.ui" line="53"/>
-        <source>Add Constant</source>
-        <translation type="unfinished"></translation>
+        <source>Shadows (Lift)</source>
+        <translation>Stíny</translation>
     </message>
     <message>
         <location filename="../src/filters/frei0rcoloradjwidget.ui" line="58"/>
-        <source>Change Gamma</source>
-        <translation type="unfinished"></translation>
+        <source>Midtones (Gamma)</source>
+        <translation>Středové tóny (gamma)</translation>
     </message>
     <message>
         <location filename="../src/filters/frei0rcoloradjwidget.ui" line="63"/>
-        <source>Multiply</source>
-        <translation type="unfinished"></translation>
+        <source>Highlights (Gain)</source>
+        <translation>Světlá místa (zesílení)</translation>
     </message>
     <message>
         <location filename="../src/filters/frei0rcoloradjwidget.ui" line="86"/>
         <source>Keep Luma</source>
-        <translation type="unfinished"></translation>
+        <translation>Zachovat svítivost</translation>
     </message>
 </context>
 <context>
@@ -1187,22 +1187,22 @@ vícevláknové.</translation>
     <message>
         <location filename="../src/filters/frei0rglowfilter.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formulář</translation>
+        <translation>Formulář</translation>
     </message>
     <message>
-        <location filename="../src/filters/frei0rglowfilter.ui" line="22"/>
+        <location filename="../src/filters/frei0rglowfilter.ui" line="20"/>
         <source>Blur</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozmazání</translation>
     </message>
     <message>
         <location filename="../src/filters/frei0rglowfilter.ui" line="29"/>
         <source> %</source>
-        <translation type="unfinished"> %</translation>
+        <translation> %</translation>
     </message>
     <message>
         <location filename="../src/filters/frei0rglowfilter.ui" line="42"/>
         <source>Reset to default</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavit znovu na výchozí</translation>
     </message>
 </context>
 <context>
@@ -1210,23 +1210,23 @@ vícevláknové.</translation>
     <message>
         <location filename="../src/filters/frei0rsharpnessfilter.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formulář</translation>
+        <translation>Formulář</translation>
     </message>
     <message>
         <location filename="../src/filters/frei0rsharpnessfilter.ui" line="20"/>
         <source>Amount</source>
-        <translation type="unfinished"></translation>
+        <translation>Množství</translation>
     </message>
     <message>
         <location filename="../src/filters/frei0rsharpnessfilter.ui" line="48"/>
         <location filename="../src/filters/frei0rsharpnessfilter.ui" line="108"/>
         <source> %</source>
-        <translation type="unfinished"> %</translation>
+        <translation> %</translation>
     </message>
     <message>
         <location filename="../src/filters/frei0rsharpnessfilter.ui" line="80"/>
         <source>Size</source>
-        <translation type="unfinished">Velikost</translation>
+        <translation>Velikost</translation>
     </message>
 </context>
 <context>
@@ -1639,7 +1639,23 @@ p, li { white-space: pre-wrap; }
 &lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; Alt+Left&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;Alt+Right&lt;/span&gt; to jump between start, in, out, and end.&lt;/li&gt;&lt;/ul&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Hold down &lt;span style=&quot; font-weight:600;&quot;&gt;Shift&lt;/span&gt; to make the mouse movement over the video window scrub/skim.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Update Shotcut whenever you like. We do not notify you about updates because new version are available almost daily.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;Průvodce pro rychlý začátek práce v Shotcutu&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Vedle použití hlavní nabídky nebo panelu s nástroji soubory otevřete &lt;span style=&quot; font-weight:600;&quot;&gt;jejich přetažením a upuštěním&lt;/span&gt;.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Použijte &lt;span style=&quot; font-weight:600;&quot;&gt;Soubor&lt;/span&gt; -&amp;gt; &lt;span style=&quot; font-weight:600;&quot;&gt;Otevřít jiné&lt;/span&gt; k otevření síťových proudů, zařízení pro zachytávání a generatorů.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Soubory MLT XML lze otevřít jako záznam; takže můžete Shotcut použít na vyzkoušení svého XML.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesové zkratky pro ovládání pohybu záznamu:&lt;/p&gt;
+&lt;ul type=&quot;circle&quot; style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;&quot;&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesy&lt;span style=&quot; font-weight:600;&quot;&gt; J&lt;/span&gt;, &lt;span style=&quot; font-weight:600;&quot;&gt;K&lt;/span&gt; a &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt; ovládají rychlost přehrávání a směr. Stiskněte opakovaně &lt;span style=&quot; font-weight:600;&quot;&gt;J&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt;, abyste se v záznamu pohybovali rychleji.&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesy&lt;span style=&quot; font-weight:600;&quot;&gt; I&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;O&lt;/span&gt; nastavují začáteční a koncové body záběru.&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Směrové klávesy &lt;span style=&quot; font-weight:600;&quot;&gt;šipka vlevo&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;šipka vpravo&lt;/span&gt; pro krokový postup snímek za snímkem.&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesy &lt;span style=&quot; font-weight:600;&quot;&gt; Page Up&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;Page Down&lt;/span&gt; pro krokový postup o 10 snímků.&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesy &lt;span style=&quot; font-weight:600;&quot;&gt; Alt+šipka vlevo&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;Alt+šipka vpravo&lt;/span&gt; pro skákání mezi začátkem, začátečním bodem záběru, koncovým bodem záběru a koncem.&lt;/li&gt;&lt;/ul&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Podržte &lt;span style=&quot; font-weight:600;&quot;&gt;Shift&lt;/span&gt; aby se při pohybu myši nad oknem s obrazem stále hledalo.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Aktualizujte program Shotcut, kdykoli budete chtít. O nových aktualizacích vám nebudeme dávat vědět, protože nové aktualizace jsou dostupné téměř denně.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="88"/>
@@ -1649,27 +1665,27 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.ui" line="103"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavení</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="107"/>
         <source>Deinterlacer</source>
-        <translation type="unfinished">Odstranění prokládání</translation>
+        <translation>Odstranění prokládání</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="116"/>
         <source>Interpolation</source>
-        <translation type="unfinished">Interpolace</translation>
+        <translation>Interpolace</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="125"/>
         <source>Video Mode</source>
-        <translation type="unfinished">Obrazový režim</translation>
+        <translation>Obrazový režim</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="131"/>
         <source>Preview on SDI/HDMI</source>
-        <translation type="unfinished">Náhled na  SDI/HDMI</translation>
+        <translation>Náhled na  SDI/HDMI</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="153"/>
@@ -1769,13 +1785,13 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.ui" line="273"/>
         <source>Show the Encode and Jobs panels</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukázat panely Zakódování a Úkoly</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="310"/>
         <location filename="../src/mainwindow.cpp" line="1125"/>
         <source>Enter Full Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Vstoupit do zobrazení na celou obrazovku</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="313"/>
@@ -1785,62 +1801,62 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.ui" line="358"/>
         <source>Full Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Na celou obrazovku</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="369"/>
         <source>Realtime (frame dropping)</source>
-        <translation type="unfinished">Ve skutečném čase (zahazování snímků)</translation>
+        <translation>Ve skutečném čase (zahazování snímků)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="380"/>
         <source>Progressive</source>
-        <translation type="unfinished">Progresivní</translation>
+        <translation>Progresivní</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="388"/>
         <source>GPU Processing (experimental)</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpracování pomocí GPU (pokusné)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="399"/>
         <source>One Field (fast)</source>
-        <translation type="unfinished">Jedno pole (rychlé)</translation>
+        <translation>Jedno pole (rychlé)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="407"/>
         <source>Linear Blend (fast)</source>
-        <translation type="unfinished">Lineární spojení (nejrychlejší)</translation>
+        <translation>Lineární míchání (nejrychlejší)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="415"/>
         <source>YADIF - temporal only (good)</source>
-        <translation type="unfinished">YADIF - pouze dočasné (dobré)</translation>
+        <translation>YADIF - pouze dočasné (dobré)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="423"/>
         <source>YADIF - temporal + spatial (best)</source>
-        <translation type="unfinished">YADIF - dočasné + prostorové (nejlepší)</translation>
+        <translation>YADIF - dočasné + prostorové (nejlepší)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="434"/>
         <source>Nearest Neighbor (fast)</source>
-        <translation type="unfinished">Nejbližší soused (rychlé)</translation>
+        <translation>Nejbližší soused (rychlé)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="442"/>
         <source>Bilinear (good)</source>
-        <translation type="unfinished">Bilineární (dobré)</translation>
+        <translation>Bilineární (dobré)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="450"/>
         <source>Bicubic (better)</source>
-        <translation type="unfinished">Bikubická (lepší)</translation>
+        <translation>Bikubické (lepší)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="458"/>
         <source>Hyper/Lanczos (best)</source>
-        <translation type="unfinished"></translation>
+        <translation>Hyper/Lanczoz (nejlepší)</translation>
     </message>
     <message>
         <source>Hyper/Lanczoz (best)</source>
@@ -1849,32 +1865,32 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.ui" line="469"/>
         <source>Use OpenGL</source>
-        <translation type="unfinished">Použít OpenGL</translation>
+        <translation>Použít OpenGL</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="480"/>
         <source>Automatic</source>
-        <translation type="unfinished">Automaticky</translation>
+        <translation>Automaticky</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="491"/>
         <source>None</source>
-        <translation type="unfinished">Žádný</translation>
+        <translation>Žádný</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="499"/>
         <source>Use JACK Audio</source>
-        <translation type="unfinished">Použít JACK Audio</translation>
+        <translation>Použít JACK Audio</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="508"/>
         <source>Filters</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtry</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="511"/>
         <source>Modify the video image or audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Upravit obraz videa nebo zvuk</translation>
     </message>
     <message>
         <source>Toggle the Encode and Jobs panels</source>
@@ -1993,32 +2009,34 @@ Chcete uložit své změny?</translation>
     <message>
         <location filename="../src/mainwindow.cpp" line="1128"/>
         <source>Exit Full Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Opustit zobrazení na celou obrazovku</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1137"/>
         <source>GPU Processing is not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpracování pomocí GPU není podporováno</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1144"/>
         <source>You must restart Shotcut to switch using OpenGL.
 Do you want to exit now?</source>
-        <translation type="unfinished">Musíte Shotcut spustit kvůli přepnutí pro používání OpenGL znovu.
+        <translation>Musíte Shotcut spustit kvůli přepnutí pro používání OpenGL znovu.
 Chcete jej ukončit nyní?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1247"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
-        <translation type="unfinished">Nepodařilo se spojit se s JACKem.
+        <translation>Nepodařilo se spojit se s JACKem.
 Ověřte, prosím, že je JACK nainstalován a běží.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1256"/>
         <source>You must restart Shotcut to switch using GPU processing.
 Do you want to exit now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Musíte Shotcut spustit kvůli přepnutí pro používání
+zpracování pomocí GPU znovu.
+Chcete jej ukončit nyní?</translation>
     </message>
 </context>
 <context>
@@ -2357,17 +2375,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/filters/movitblurfilter.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formulář</translation>
+        <translation>Formulář</translation>
     </message>
     <message>
         <location filename="../src/filters/movitblurfilter.ui" line="22"/>
         <source>Radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Poloměr</translation>
     </message>
     <message>
         <location filename="../src/filters/movitblurfilter.ui" line="39"/>
         <source>Reset to default</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavit znovu na výchozí</translation>
     </message>
 </context>
 <context>
@@ -2375,22 +2393,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/filters/movitcolorfilter.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formulář</translation>
+        <translation>Formulář</translation>
     </message>
     <message>
         <location filename="../src/filters/movitcolorfilter.ui" line="42"/>
         <source>Shadows (Lift)</source>
-        <translation type="unfinished"></translation>
+        <translation>Stíny</translation>
     </message>
     <message>
         <location filename="../src/filters/movitcolorfilter.ui" line="72"/>
         <source>Highlights (Gain)</source>
-        <translation type="unfinished"></translation>
+        <translation>Světlá místa (zesílení)</translation>
     </message>
     <message>
         <location filename="../src/filters/movitcolorfilter.ui" line="82"/>
         <source>Midtones (Gamma)</source>
-        <translation type="unfinished"></translation>
+        <translation>Středové tóny (gamma)</translation>
     </message>
 </context>
 <context>
@@ -2398,29 +2416,29 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/filters/movitglowfilter.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formulář</translation>
+        <translation>Formulář</translation>
     </message>
     <message>
         <location filename="../src/filters/movitglowfilter.ui" line="42"/>
         <source>Radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Poloměr</translation>
     </message>
     <message>
         <location filename="../src/filters/movitglowfilter.ui" line="64"/>
-        <location filename="../src/filters/movitglowfilter.ui" line="111"/>
-        <location filename="../src/filters/movitglowfilter.ui" line="158"/>
+        <location filename="../src/filters/movitglowfilter.ui" line="124"/>
+        <location filename="../src/filters/movitglowfilter.ui" line="184"/>
         <source>Reset to default</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavit znovu na výchozí</translation>
     </message>
     <message>
-        <location filename="../src/filters/movitglowfilter.ui" line="89"/>
+        <location filename="../src/filters/movitglowfilter.ui" line="102"/>
         <source>Highlight Blurriness</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozmazanost světlého místa</translation>
     </message>
     <message>
-        <location filename="../src/filters/movitglowfilter.ui" line="136"/>
+        <location filename="../src/filters/movitglowfilter.ui" line="162"/>
         <source>Highlight Cutoff</source>
-        <translation type="unfinished"></translation>
+        <translation>Zastavení světlého místa</translation>
     </message>
 </context>
 <context>
@@ -2428,41 +2446,41 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/filters/movitsharpenfilter.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formulář</translation>
+        <translation>Formulář</translation>
     </message>
     <message>
         <location filename="../src/filters/movitsharpenfilter.ui" line="20"/>
         <source>Matrix Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Velikost matice</translation>
     </message>
     <message>
         <location filename="../src/filters/movitsharpenfilter.ui" line="45"/>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="76"/>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="127"/>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="193"/>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="259"/>
+        <location filename="../src/filters/movitsharpenfilter.ui" line="89"/>
+        <location filename="../src/filters/movitsharpenfilter.ui" line="153"/>
+        <location filename="../src/filters/movitsharpenfilter.ui" line="232"/>
+        <location filename="../src/filters/movitsharpenfilter.ui" line="298"/>
         <source>Reset to default</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavit znovu na výchozí</translation>
     </message>
     <message>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="98"/>
+        <location filename="../src/filters/movitsharpenfilter.ui" line="124"/>
         <source>Circle Radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Poloměr kruhu</translation>
     </message>
     <message>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="108"/>
+        <location filename="../src/filters/movitsharpenfilter.ui" line="134"/>
         <source>Gaussian Radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Gaussův poloměr</translation>
     </message>
     <message>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="149"/>
+        <location filename="../src/filters/movitsharpenfilter.ui" line="188"/>
         <source>Correlation</source>
-        <translation type="unfinished"></translation>
+        <translation>Souvztažnost</translation>
     </message>
     <message>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="215"/>
+        <location filename="../src/filters/movitsharpenfilter.ui" line="254"/>
         <source>Noise Level</source>
-        <translation type="unfinished"></translation>
+        <translation>Úroveň šumu</translation>
     </message>
 </context>
 <context>
@@ -3254,17 +3272,17 @@ po začátek vybraného záběru.</translation>
     <message>
         <location filename="../src/filters/saturationfilter.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formulář</translation>
+        <translation>Formulář</translation>
     </message>
     <message>
         <location filename="../src/filters/saturationfilter.ui" line="20"/>
         <source>Saturation</source>
-        <translation type="unfinished"></translation>
+        <translation>Sytost</translation>
     </message>
     <message>
         <location filename="../src/filters/saturationfilter.ui" line="73"/>
         <source>Reset to default</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavit znovu na výchozí</translation>
     </message>
 </context>
 <context>
