@@ -287,7 +287,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::setupSettingsMenu()
 {
-    ui->actionOpenGL->setVisible(false);
     QActionGroup* deinterlaceGroup = new QActionGroup(this);
     deinterlaceGroup->addAction(ui->actionOneField);
     deinterlaceGroup->addAction(ui->actionLinearBlend);
@@ -316,6 +315,12 @@ void MainWindow::setupSettingsMenu()
 #ifndef Q_WS_X11
     delete ui->actionOpenGL;
     ui->actionOpenGL = 0;
+#else
+    if (!m_settings.value("player/opengl", true).toBool()) {
+        ui->actionGPU->setChecked(false);
+        ui->actionGPU->setEnabled(false);
+        m_settings.setValue("player/gpu", false);
+    }
 #endif
     // Add the SDI and HDMI devices to the Settings menu.
     m_externalGroup = new QActionGroup(this);
