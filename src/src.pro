@@ -172,6 +172,7 @@ OTHER_FILES += \
     ../Info.plist
 
 TRANSLATIONS += \
+    ../translations/shotcut_en.ts \
     ../translations/shotcut_cs.ts
 
 INCLUDEPATH = ../mvcp
