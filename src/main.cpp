@@ -28,6 +28,7 @@ public:
     MainWindow* mainWindow;
     QTranslator qtTranslator;
     QTranslator shotcutTranslator;
+    QString resourceArg;
 
     Application(int &argc, char **argv)
         : QApplication(argc, argv)
@@ -63,6 +64,8 @@ public:
             installTranslator(&qtTranslator);
         if (shotcutTranslator.load("shotcut_" + locale, dir.absolutePath()))
             installTranslator(&shotcutTranslator);
+        if (argc > 1)
+            resourceArg = QString::fromUtf8(argv[1]);
     }
 
     ~Application()
@@ -74,7 +77,7 @@ protected:
     bool event(QEvent *event) {
         if (event->type() == QEvent::FileOpen) {
             QFileOpenEvent *openEvent = static_cast<QFileOpenEvent*>(event);
-            mainWindow->open(openEvent->file());
+            resourceArg = openEvent->file();
             return true;
         }
         else return QApplication::event(event);
@@ -90,11 +93,10 @@ int main(int argc, char **argv)
     QSplashScreen splash(QPixmap(":/icons/icons/shotcut-logo-640.png"));
     splash.showMessage(QCoreApplication::translate("", "Loading plugins..."), Qt::AlignHCenter | Qt::AlignBottom);
     splash.show();
-    a.processEvents();
     a.mainWindow = &MAIN;
     a.mainWindow->show();
     splash.finish(a.mainWindow);
-    if (argc > 1)
-        a.mainWindow->open(argv[1]);
+    if (!a.resourceArg.isEmpty())
+        a.mainWindow->open(a.resourceArg);
     return a.exec();
 }
