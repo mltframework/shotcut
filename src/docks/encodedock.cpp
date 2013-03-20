@@ -237,7 +237,24 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
             p->set("aspect", QString("@%1/%2").arg(ui->aspectNumSpinner->value()).arg(ui->aspectDenSpinner->value()).toAscii().constData());
             p->set("progressive", ui->scanModeCombo->currentIndex());
             p->set("top_field_first", ui->fieldOrderCombo->currentIndex());
-            p->set("r", ui->fpsSpinner->value());
+            if (qFloor(ui->fpsSpinner->value() * 10.0) == 239) {
+                p->set("frame_rate_num", 24000);
+                p->set("frame_rate_den", 1001);
+            }
+            else if (qFloor(ui->fpsSpinner->value() * 10.0) == 299) {
+                p->set("frame_rate_num", 30000);
+                p->set("frame_rate_den", 1001);
+            }
+            else if (qFloor(ui->fpsSpinner->value() * 10.0) == 479) {
+                p->set("frame_rate_num", 48000);
+                p->set("frame_rate_den", 1001);
+            }
+            else if (qFloor(ui->fpsSpinner->value() * 10.0) == 599) {
+                p->set("frame_rate_num", 60000);
+                p->set("frame_rate_den", 1001);
+            }
+            else
+                p->set("r", ui->fpsSpinner->value());
             if (ui->videoCodecCombo->currentText() == "prores")
                 p->set("threads", 1);
             else if (ui->videoCodecThreadsSpinner->value() == 0 && ui->videoCodecCombo->currentText() != "libx264")
@@ -797,4 +814,9 @@ void EncodeDock::on_audioRateControlCombo_activated(int index)
         ui->audioQualitySpinner->setEnabled(true);
         break;
     }
+}
+
+void EncodeDock::on_scanModeCombo_currentIndexChanged(int index)
+{
+    ui->fieldOrderCombo->setDisabled(index);
 }

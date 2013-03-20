@@ -65,6 +65,8 @@ private slots:
 
     void on_audioRateControlCombo_activated(int index);
 
+    void on_scanModeCombo_currentIndexChanged(int index);
+
 private:
     enum {
         RateControlAverage = 0,
