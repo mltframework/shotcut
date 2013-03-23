@@ -1,8 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="cs_CZ">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="cs_CZ" version="2.0">
 <context>
-    <name></name>
+    <name/>
     <message>
         <location filename="../src/main.cpp" line="91"/>
         <source>Loading plugins...</source>
@@ -40,6 +38,11 @@
         <translation>Zvuk ALSA</translation>
     </message>
     <message>
+        <location filename="../src/widgets/alsawidget.ui" line="61"/>
+        <source>Apply</source>
+        <translation>Použít</translation>
+    </message>
+    <message>
         <location filename="../src/widgets/alsawidget.ui" line="68"/>
         <source>PCM Device</source>
         <translation>Zařízení PCM</translation>
@@ -53,11 +56,6 @@
         <location filename="../src/widgets/alsawidget.ui" line="85"/>
         <source>Channels</source>
         <translation>Kanály</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/alsawidget.ui" line="61"/>
-        <source>Apply</source>
-        <translation>Použít</translation>
     </message>
 </context>
 <context>
@@ -587,16 +585,6 @@
         <location filename="../src/docks/encodedock.ui" line="453"/>
         <source>Top Field First</source>
         <translation>Nejprve horní pole</translation>
-    </message>
-    <message>
-        <source>Reload all of the values from the project
-or player&apos;s current video mode</source>
-        <translation type="obsolete">Nahrát znovu všechny hodnoty z projektu
-nebo nynějšího obrazového režimu přehrávače</translation>
-    </message>
-    <message>
-        <source>Reload</source>
-        <translation type="obsolete">Nahrát znovu</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="480"/>
@@ -1494,133 +1482,6 @@ tlačítkem myši na úkol k otevření nabídky pro zastavení nyní běžící
         <translation>Shotcut</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;Shotcut Quickstart Guide&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Open files by &lt;span style=&quot; font-weight:600;&quot;&gt;drag-n-drop&lt;/span&gt; in addition to the usual menu and toolbar methods.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Use &lt;span style=&quot; font-weight:600;&quot;&gt;File&lt;/span&gt; &amp;gt; &lt;span style=&quot; font-weight:600;&quot;&gt;Open Other&lt;/span&gt; to open network streams, capture devices, and generators.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;MLT XML files can be opened as a clip; so, you can use Shotcut to test your XML.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Transport Control Keyboard Shortcuts:&lt;/p&gt;
-&lt;ul type=&quot;circle&quot; style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;&quot;&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; J&lt;/span&gt;, &lt;span style=&quot; font-weight:600;&quot;&gt;K&lt;/span&gt;, and &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt; control playback speed and direction. Tap &lt;span style=&quot; font-weight:600;&quot;&gt;J&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt; repeatedly to go faster.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; I&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;O&lt;/span&gt; set the in and out points.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt; L&lt;span style=&quot; font-weight:600;&quot;&gt;eft&lt;/span&gt; or R&lt;span style=&quot; font-weight:600;&quot;&gt;ight&lt;/span&gt; cursor keys step frame-by-frame.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; Page Up&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;Page Down&lt;/span&gt; step 10 frames at-a-time.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; Alt+Left&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;Alt+Right&lt;/span&gt; to jump between start, in, out, and end.&lt;/li&gt;&lt;/ul&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Right-click&lt;/span&gt; the video window to access its settings.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Update Shotcut whenever you like. We do not notify you about updates because new version are available almost daily.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;Průvodce pro rychlý začátek práce v Shotcutu&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Vedle použití hlavní nabídky nebo panelu s nástroji soubory otevřete &lt;span style=&quot; font-weight:600;&quot;&gt;jejich přetažením a upuštěním&lt;/span&gt;.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Použijte &lt;span style=&quot; font-weight:600;&quot;&gt;Soubor&lt;/span&gt; -&amp;gt; &lt;span style=&quot; font-weight:600;&quot;&gt;Otevřít jiné&lt;/span&gt; k otevření síťových proudů, zařízení pro zachytávání a generatorů.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Soubory MLT XML lze otevřít jako záznam; takže můžete Shotcut použít na vyzkoušení svého XML.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesové zkratky pro ovládání pohybu záznamu:&lt;/p&gt;
-&lt;ul type=&quot;circle&quot; style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;&quot;&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesy&lt;span style=&quot; font-weight:600;&quot;&gt; J&lt;/span&gt;, &lt;span style=&quot; font-weight:600;&quot;&gt;K&lt;/span&gt; a &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt; ovládají rychlost přehrávání a směr. Stiskněte opakovaně &lt;span style=&quot; font-weight:600;&quot;&gt;J&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt;, abyste se v záznamu pohybovali rychleji.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesy&lt;span style=&quot; font-weight:600;&quot;&gt; I&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;O&lt;/span&gt; nastavují začáteční a koncové body záběru.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Směrové klávesy &lt;span style=&quot; font-weight:600;&quot;&gt;šipka vlevo&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;šipka vpravo&lt;/span&gt; pro krokový postup snímek za snímkem.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesy &lt;span style=&quot; font-weight:600;&quot;&gt; Page Up&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;Page Down&lt;/span&gt; pro krokový postup o 10 snímků.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesy &lt;span style=&quot; font-weight:600;&quot;&gt; Alt+šipka vlevo&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;Alt+šipka vpravo&lt;/span&gt; pro skákání mezi začátkem, vstupem, výstupem a koncem.&lt;/li&gt;&lt;/ul&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Klepněte pravým tlačítkem myši&lt;/span&gt; na okno s obrazem, abyste se dostali k jeho nastavení.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Aktualizujte program Shotcut, kdykoli budete chtít. O nových aktualizacích vám nebudeme dávat vědět, protože nové aktualizace jsou dostupné téměř denně.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Lucida Grande&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;Shotcut Quickstart Guide&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Open files by &lt;span style=&quot; font-weight:600;&quot;&gt;drag-n-drop&lt;/span&gt; in addition to the usual menu and toolbar methods.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Use &lt;span style=&quot; font-weight:600;&quot;&gt;File&lt;/span&gt; &amp;gt; &lt;span style=&quot; font-weight:600;&quot;&gt;Open Other&lt;/span&gt; to open network streams, capture devices, and generators.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;MLT XML files can be opened as a clip; so, you can use Shotcut to test your XML.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Transport Control Keyboard Shortcuts:&lt;/p&gt;
-&lt;ul type=&quot;circle&quot; style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;&quot;&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; J&lt;/span&gt;, &lt;span style=&quot; font-weight:600;&quot;&gt;K&lt;/span&gt;, and &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt; control playback speed and direction. Tap &lt;span style=&quot; font-weight:600;&quot;&gt;J&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt; repeatedly to go faster.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; I&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;O&lt;/span&gt; set the in and out points.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt; L&lt;span style=&quot; font-weight:600;&quot;&gt;eft&lt;/span&gt; or R&lt;span style=&quot; font-weight:600;&quot;&gt;ight&lt;/span&gt; cursor keys step frame-by-frame.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; Page Up&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;Page Down&lt;/span&gt; step 10 frames at-a-time.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; Alt+Left&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;Alt+Right&lt;/span&gt; to jump between start, in, out, and end.&lt;/li&gt;&lt;/ul&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Right-click&lt;/span&gt; the video window to access its settings.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Update Shotcut whenever you like. We do not notify you about updates because new version are available almost daily.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;Průvodce pro rychlý začátek práce v Shotcutu&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Otevřete soubory &lt;span style=&quot; font-weight:600;&quot;&gt;jejich přetažením a upuštěním&lt;/span&gt; vedle použití hlavní nabídky a nebo panelu s nástroji.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Použijte &lt;span style=&quot; font-weight:600;&quot;&gt;Soubor&lt;/span&gt; &amp;gt; &lt;span style=&quot; font-weight:600;&quot;&gt;Otevřít jiné&lt;/span&gt; k otevření síťových proudů, zařízení pro zachytávání a generatorů.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Soubory MLT XML lze otevřít jako záznam; takže můžete Shotcut použít na vyzkoušení svého XML.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesové zkratky pro ovládání pohybu záznamu:&lt;/p&gt;
-&lt;ul type=&quot;circle&quot; style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;&quot;&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; J&lt;/span&gt;, &lt;span style=&quot; font-weight:600;&quot;&gt;K&lt;/span&gt;, a &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt; ovládají rychlost přehrávání a směr. Stiskněte opakovaně &lt;span style=&quot; font-weight:600;&quot;&gt;J&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt;, abyste se v záznamu pohybovali rychleji.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; I&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;O&lt;/span&gt; nastavují vstupní a výstupní body.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Směrové klávesy &lt;span style=&quot; font-weight:600;&quot;&gt;šipka vlevo&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;šipka vpravo&lt;/span&gt; pro krokový postup snímek za snímkem.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesy &lt;span style=&quot; font-weight:600;&quot;&gt; Page Up&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;Page Down&lt;/span&gt; pro krokový postup o 10 snímků.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesy &lt;span style=&quot; font-weight:600;&quot;&gt; Alt+šipka vlevo&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;Alt+šipka vpravo&lt;/span&gt; pro skákání mezi začátkem, vstupem, výstupem a koncem.&lt;/li&gt;&lt;/ul&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Klepněte pravým tlačítkem myši&lt;/span&gt; na okno s videem, abyste se dostali k jeho nastavení.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Aktualizujte program Shotcut, kdykoli budete chtít. O nových aktualizacích vám nebudeme dávat vědět, protože nové aktualizace jsou dostupné téměř denně.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="70"/>
-        <source>&amp;File</source>
-        <translation>&amp;Soubor</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="93"/>
-        <source>&amp;Help</source>
-        <translation>&amp;Nápověda</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="81"/>
-        <source>&amp;View</source>
-        <translation>&amp;Pohled</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">Upravit</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;Shotcut Quickstart Guide&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Open files by &lt;span style=&quot; font-weight:600;&quot;&gt;drag-n-drop&lt;/span&gt; in addition to the usual menu and toolbar methods.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Use &lt;span style=&quot; font-weight:600;&quot;&gt;File&lt;/span&gt; &amp;gt; &lt;span style=&quot; font-weight:600;&quot;&gt;Open Other&lt;/span&gt; to open network streams, capture devices, and generators.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;MLT XML files can be opened as a clip; so, you can use Shotcut to test your XML.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Transport Control Keyboard Shortcuts:&lt;/p&gt;
-&lt;ul type=&quot;circle&quot; style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;&quot;&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; J&lt;/span&gt;, &lt;span style=&quot; font-weight:600;&quot;&gt;K&lt;/span&gt;, and &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt; control playback speed and direction. Tap &lt;span style=&quot; font-weight:600;&quot;&gt;J&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt; repeatedly to go faster.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; I&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;O&lt;/span&gt; set the in and out points.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt; L&lt;span style=&quot; font-weight:600;&quot;&gt;eft&lt;/span&gt; or R&lt;span style=&quot; font-weight:600;&quot;&gt;ight&lt;/span&gt; cursor keys step frame-by-frame.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; Page Up&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;Page Down&lt;/span&gt; step 10 frames at-a-time.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; Alt+Left&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;Alt+Right&lt;/span&gt; to jump between start, in, out, and end.&lt;/li&gt;&lt;/ul&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Right-click&lt;/span&gt; the video window to access its settings.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Update Shotcut whenever you like. We do not notify you about updates because new version are available almost daily.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;Průvodce pro rychlý začátek práce v Shotcutu&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Vedle použití hlavní nabídky nebo panelu s nástroji soubory otevřete &lt;span style=&quot; font-weight:600;&quot;&gt;jejich přetažením a upuštěním&lt;/span&gt;.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Použijte &lt;span style=&quot; font-weight:600;&quot;&gt;Soubor&lt;/span&gt; -&amp;gt; &lt;span style=&quot; font-weight:600;&quot;&gt;Otevřít jiné&lt;/span&gt; k otevření síťových proudů, zařízení pro zachytávání a generatorů.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Soubory MLT XML lze otevřít jako záznam; takže můžete Shotcut použít na vyzkoušení svého XML.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesové zkratky pro ovládání pohybu záznamu:&lt;/p&gt;
-&lt;ul type=&quot;circle&quot; style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;&quot;&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesy&lt;span style=&quot; font-weight:600;&quot;&gt; J&lt;/span&gt;, &lt;span style=&quot; font-weight:600;&quot;&gt;K&lt;/span&gt; a &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt; ovládají rychlost přehrávání a směr. Stiskněte opakovaně &lt;span style=&quot; font-weight:600;&quot;&gt;J&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt;, abyste se v záznamu pohybovali rychleji.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesy&lt;span style=&quot; font-weight:600;&quot;&gt; I&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;O&lt;/span&gt; nastavují začáteční a koncové body záběru.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Směrové klávesy &lt;span style=&quot; font-weight:600;&quot;&gt;šipka vlevo&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;šipka vpravo&lt;/span&gt; pro krokový postup snímek za snímkem.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesy &lt;span style=&quot; font-weight:600;&quot;&gt; Page Up&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;Page Down&lt;/span&gt; pro krokový postup o 10 snímků.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesy &lt;span style=&quot; font-weight:600;&quot;&gt; Alt+šipka vlevo&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;Alt+šipka vpravo&lt;/span&gt; pro skákání mezi začátkem, začátečním bodem záběru, koncovým bodem záběru a koncem.&lt;/li&gt;&lt;/ul&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Klepněte pravým tlačítkem myši&lt;/span&gt; na okno s obrazem, abyste se dostali k jeho nastavení.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Aktualizujte program Shotcut, kdykoli budete chtít. O nových aktualizacích vám nebudeme dávat vědět, protože nové aktualizace jsou dostupné téměř denně.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/mainwindow.ui" line="32"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -1654,13 +1515,28 @@ p, li { white-space: pre-wrap; }
 &lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Směrové klávesy &lt;span style=&quot; font-weight:600;&quot;&gt;šipka vlevo&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;šipka vpravo&lt;/span&gt; pro krokový postup snímek za snímkem.&lt;/li&gt;
 &lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesy &lt;span style=&quot; font-weight:600;&quot;&gt; Page Up&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;Page Down&lt;/span&gt; pro krokový postup o 10 snímků.&lt;/li&gt;
 &lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesy &lt;span style=&quot; font-weight:600;&quot;&gt; Alt+šipka vlevo&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;Alt+šipka vpravo&lt;/span&gt; pro skákání mezi začátkem, začátečním bodem záběru, koncovým bodem záběru a koncem.&lt;/li&gt;&lt;/ul&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Podržte &lt;span style=&quot; font-weight:600;&quot;&gt;Shift&lt;/span&gt; aby se při pohybu myši nad oknem s obrazem stále hledalo.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Držte klávesu &lt;span style=&quot; font-weight:600;&quot;&gt;Shift&lt;/span&gt;, aby se při pohybu myší nad oknem s obrazem doleva nebo doprava v záznamu neustále hledalo.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Aktualizujte program Shotcut, kdykoli budete chtít. O nových aktualizacích vám nebudeme dávat vědět, protože nové aktualizace jsou dostupné téměř denně.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="70"/>
+        <source>&amp;File</source>
+        <translation>&amp;Soubor</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="81"/>
+        <source>&amp;View</source>
+        <translation>&amp;Pohled</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="88"/>
         <source>&amp;Edit</source>
         <translation>Úp&amp;ravy</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="93"/>
+        <source>&amp;Help</source>
+        <translation>&amp;Nápověda</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="103"/>
@@ -1788,15 +1664,57 @@ p, li { white-space: pre-wrap; }
         <translation>Ukázat panely Zakódování a Úkoly</translation>
     </message>
     <message>
+        <location filename="../src/mainwindow.ui" line="282"/>
+        <source>&amp;Undo</source>
+        <translation>&amp;Zpět</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="291"/>
+        <source>&amp;Redo</source>
+        <translation>Z&amp;novu</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="296"/>
+        <source>Forum...</source>
+        <translation>Fórum...</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="301"/>
+        <source>FAQ...</source>
+        <translation>Často kladené otázky...</translation>
+    </message>
+    <message>
         <location filename="../src/mainwindow.ui" line="310"/>
         <location filename="../src/mainwindow.cpp" line="1125"/>
         <source>Enter Full Screen</source>
-        <translation>Vstoupit do zobrazení na celou obrazovku</translation>
+        <translation>Vstoupit do režimu na celou obrazovku</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="313"/>
         <source>Ctrl+Shift+F</source>
         <translation>Ctrl+Shift+F</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="322"/>
+        <location filename="../src/mainwindow.cpp" line="121"/>
+        <source>Properties</source>
+        <translation>Vlastnosti</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="331"/>
+        <source>Recent</source>
+        <translation>Naposledy otevřené</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="340"/>
+        <source>Playlist</source>
+        <translation>Seznam záběrů</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="349"/>
+        <location filename="../src/mainwindow.cpp" line="165"/>
+        <source>History</source>
+        <translation>Historie</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="358"/>
@@ -1841,26 +1759,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.ui" line="434"/>
         <source>Nearest Neighbor (fast)</source>
-        <translation>Nejbližší soused (rychlé)</translation>
+        <translation>Nejbližší soused (rychlá)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="442"/>
         <source>Bilinear (good)</source>
-        <translation>Bilineární (dobré)</translation>
+        <translation>Bilineární (dobrá)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="450"/>
         <source>Bicubic (better)</source>
-        <translation>Bikubické (lepší)</translation>
+        <translation>Bikubická (lepší)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="458"/>
         <source>Hyper/Lanczos (best)</source>
         <translation>Hyper/Lanczoz (nejlepší)</translation>
-    </message>
-    <message>
-        <source>Hyper/Lanczoz (best)</source>
-        <translation type="obsolete">Hyper/Lanczoz (nejlepší)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="469"/>
@@ -1891,60 +1805,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/mainwindow.ui" line="511"/>
         <source>Modify the video image or audio</source>
         <translation>Upravit obraz videa nebo zvuk</translation>
-    </message>
-    <message>
-        <source>Toggle the Encode and Jobs panels</source>
-        <translation type="obsolete">Přepnout panely Zakódování a Úkoly</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="282"/>
-        <source>&amp;Undo</source>
-        <translation>&amp;Zpět</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="291"/>
-        <source>&amp;Redo</source>
-        <translation>Z&amp;novu</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="296"/>
-        <source>Forum...</source>
-        <translation>Fórum...</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="301"/>
-        <source>FAQ...</source>
-        <translation>Často kladené otázky...</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="obsolete">Zpět</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="obsolete">Znovu</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="322"/>
-        <location filename="../src/mainwindow.cpp" line="121"/>
-        <source>Properties</source>
-        <translation>Vlastnosti</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="331"/>
-        <source>Recent</source>
-        <translation>Naposledy otevřené</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="340"/>
-        <source>Playlist</source>
-        <translation>Seznam záběrů</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="349"/>
-        <location filename="../src/mainwindow.cpp" line="165"/>
-        <source>History</source>
-        <translation>Historie</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="95"/>
@@ -2009,7 +1869,7 @@ Chcete uložit své změny?</translation>
     <message>
         <location filename="../src/mainwindow.cpp" line="1128"/>
         <source>Exit Full Screen</source>
-        <translation>Opustit zobrazení na celou obrazovku</translation>
+        <translation>Opustit režim na celou obrazovku</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1137"/>
@@ -2087,7 +1947,7 @@ Chcete jej ukončit nyní?</translation>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="14"/>
         <source>Melted Playlist</source>
-        <translation>Rozpuštěný seznam záběrů</translation>
+        <translation>Seznam záběrů videoserveru</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="45"/>
@@ -2184,20 +2044,6 @@ DŮLEŽITÉ: Tento krok nelze vrátit zpět!
 Chcete pokračovat?</translation>
     </message>
     <message>
-        <source>&quot;Wipe&quot; will remove all of clips in the playlist
-before the currently playing clip.
-
-IMPORTANT: You cannot Undo this action!
-
-Do you want to continue?</source>
-        <translation type="obsolete">Příkaz Vymazat odstraní všechny záznamy v seznamu záběrů
-před nyní přehrávaným záznamem.
-
-DŮLEŽITÉ: Tento krok nelze vrátit zpět!
-
-Chcete pokračovat?</translation>
-    </message>
-    <message>
         <location filename="../src/mvcp/meltedplaylistdock.cpp" line="229"/>
         <source>&quot;Clean&quot; will remove all of clips in the playlist
 except the currently playing clip.
@@ -2241,7 +2087,7 @@ Chcete pokračovat?</translation>
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="14"/>
         <source>Melted Server</source>
-        <translation>Rozpuštěný server</translation>
+        <translation>Videoserver</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="23"/>
@@ -2754,12 +2600,20 @@ p, li { white-space: pre-wrap; }
         <translation>Vybraná doba trvání</translation>
     </message>
     <message>
-        <source>Automatic</source>
-        <translation type="obsolete">Automaticky</translation>
+        <location filename="../src/player.cpp" line="236"/>
+        <location filename="../src/player.cpp" line="309"/>
+        <location filename="../src/player.cpp" line="317"/>
+        <location filename="../src/player.cpp" line="452"/>
+        <source>Play</source>
+        <translation>Přehrát</translation>
     </message>
     <message>
-        <source>None</source>
-        <translation type="obsolete">Žádný</translation>
+        <location filename="../src/player.cpp" line="238"/>
+        <location filename="../src/player.cpp" line="310"/>
+        <location filename="../src/player.cpp" line="318"/>
+        <location filename="../src/player.cpp" line="453"/>
+        <source>Start playback (L)</source>
+        <translation>Spustit přehrávání (L)</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="240"/>
@@ -2816,46 +2670,6 @@ p, li { white-space: pre-wrap; }
         <translation>Alt+šipka vlevo</translation>
     </message>
     <message>
-        <source>Progressive</source>
-        <translation type="obsolete">Progresivní</translation>
-    </message>
-    <message>
-        <source>Force the video preview to deinterlace if needed</source>
-        <translation type="obsolete">V případě potřeby přinutit náhled videa ke zrušení prokládání</translation>
-    </message>
-    <message>
-        <source>One Field (fast)</source>
-        <translation type="obsolete">Jedno pole (rychlé)</translation>
-    </message>
-    <message>
-        <source>Linear Blend (fast)</source>
-        <translation type="obsolete">Lineární spojení (nejrychlejší)</translation>
-    </message>
-    <message>
-        <source>YADIF - temporal only (good)</source>
-        <translation type="obsolete">YADIF - pouze dočasné (dobré)</translation>
-    </message>
-    <message>
-        <source>YADIF - temporal + spatial (best)</source>
-        <translation type="obsolete">YADIF - dočasné + prostorové (nejlepší)</translation>
-    </message>
-    <message>
-        <source>Nearest Neighbor (fast)</source>
-        <translation type="obsolete">Nejbližší soused (rychlé)</translation>
-    </message>
-    <message>
-        <source>Bilinear (good)</source>
-        <translation type="obsolete">Bilineární (dobré)</translation>
-    </message>
-    <message>
-        <source>Bicubic (better)</source>
-        <translation type="obsolete">Bikubická (lepší)</translation>
-    </message>
-    <message>
-        <source>Hyper/Lanczoz (best)</source>
-        <translation type="obsolete">Hyper/Lanczoz (nejlepší)</translation>
-    </message>
-    <message>
         <location filename="../src/player.cpp" line="256"/>
         <source>Rewind</source>
         <translation>Přetočit</translation>
@@ -2876,22 +2690,6 @@ p, li { white-space: pre-wrap; }
         <translation>Přehrávat rychle dopředu (L)</translation>
     </message>
     <message>
-        <source>Realtime (frame dropping)</source>
-        <translation type="obsolete">Ve skutečném čase (zahazování snímků)</translation>
-    </message>
-    <message>
-        <source>Allow the player to drop video frames to try to play in realtime</source>
-        <translation type="obsolete">Dovolit přehrávači vynechávání snímků videa kvůli tomu, aby zkusil přehrávat ve skutečném čase</translation>
-    </message>
-    <message>
-        <source>Use OpenGL</source>
-        <translation type="obsolete">Použít OpenGL</translation>
-    </message>
-    <message>
-        <source>Use JACK Audio</source>
-        <translation type="obsolete">Použít JACK Audio</translation>
-    </message>
-    <message>
         <location filename="../src/player.cpp" line="300"/>
         <source>Stop</source>
         <translation>Zastavit</translation>
@@ -2902,53 +2700,9 @@ p, li { white-space: pre-wrap; }
         <translation>Zastavit přehrávání (K)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="236"/>
-        <location filename="../src/player.cpp" line="309"/>
-        <location filename="../src/player.cpp" line="317"/>
-        <location filename="../src/player.cpp" line="452"/>
-        <source>Play</source>
-        <translation>Přehrát</translation>
-    </message>
-    <message>
-        <location filename="../src/player.cpp" line="238"/>
-        <location filename="../src/player.cpp" line="310"/>
-        <location filename="../src/player.cpp" line="318"/>
-        <location filename="../src/player.cpp" line="453"/>
-        <source>Start playback (L)</source>
-        <translation>Spustit přehrávání (L)</translation>
-    </message>
-    <message>
         <location filename="../src/player.cpp" line="363"/>
         <source>Live</source>
         <translation>Živě</translation>
-    </message>
-    <message>
-        <source>Deinterlacer</source>
-        <translation type="obsolete">Odstranění prokládání</translation>
-    </message>
-    <message>
-        <source>Interpolation</source>
-        <translation type="obsolete">Interpolace</translation>
-    </message>
-    <message>
-        <source>Preview on SDI/HDMI</source>
-        <translation type="obsolete">Náhled na  SDI/HDMI</translation>
-    </message>
-    <message>
-        <source>Video Mode</source>
-        <translation type="obsolete">Obrazový režim</translation>
-    </message>
-    <message>
-        <source>You must restart Shotcut to switch using OpenGL.
-Do you want to exit now?</source>
-        <translation type="obsolete">Musíte Shotcut spustit kvůli přepnutí pro používání OpenGL znovu.
-Chcete jej ukončit nyní?</translation>
-    </message>
-    <message>
-        <source>Failed to connect to JACK.
-Please verify that JACK is installed and running.</source>
-        <translation type="obsolete">Nepodařilo se spojit se s JACKem.
-Ověřte, prosím, že je JACK nainstalován a běží.</translation>
     </message>
 </context>
 <context>
@@ -3306,10 +3060,6 @@ po začátek vybraného záběru.</translation>
         <location filename="../src/widgets/servicepresetwidget.ui" line="52"/>
         <source>Delete</source>
         <translation>Smazat</translation>
-    </message>
-    <message>
-        <source>&lt;defaults&gt;</source>
-        <translation type="obsolete">&lt;výchozí&gt;</translation>
     </message>
     <message>
         <location filename="../src/widgets/servicepresetwidget.cpp" line="74"/>
