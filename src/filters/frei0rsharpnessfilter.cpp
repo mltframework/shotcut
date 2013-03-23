@@ -23,6 +23,9 @@
 #include "ui_frei0rsharpnessfilter.h"
 #include "mltcontroller.h"
 
+static const char* kParamAmount = "0";
+static const char* kParamSize = "1";
+
 Frei0rSharpnessFilter::Frei0rSharpnessFilter(Mlt::Filter filter, bool setDefaults, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Frei0rSharpnessFilter),
@@ -35,8 +38,8 @@ Frei0rSharpnessFilter::Frei0rSharpnessFilter(Mlt::Filter filter, bool setDefault
         ui->amountSpinner->setValue(m_defaultAmount * 100.0);
         ui->sizeSpinner->setValue(m_defaultSize * 100.0);
     } else {
-        ui->amountSpinner->setValue(m_filter.get_double("Amount") * 100.0);
-        ui->sizeSpinner->setValue(m_filter.get_double("Size") * 100.0);
+        ui->amountSpinner->setValue(m_filter.get_double(kParamAmount) * 100.0);
+        ui->sizeSpinner->setValue(m_filter.get_double(kParamSize) * 100.0);
     }
 }
 
@@ -48,14 +51,14 @@ Frei0rSharpnessFilter::~Frei0rSharpnessFilter()
 void Frei0rSharpnessFilter::on_amountSpinner_valueChanged(double arg1)
 {
     ui->amountSlider->setValue(10 * arg1);
-    m_filter.set("Amount", arg1 / 100.0);
+    m_filter.set(kParamAmount, arg1 / 100.0);
     MLT.refreshConsumer();
 }
 
 void Frei0rSharpnessFilter::on_sizeSpinner_valueChanged(double arg1)
 {
     ui->sizeSlider->setValue(10 * arg1);
-    m_filter.set("Size", arg1 / 100.0);
+    m_filter.set(kParamSize, arg1 / 100.0);
     MLT.refreshConsumer();
 }
 

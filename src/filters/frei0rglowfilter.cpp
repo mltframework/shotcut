@@ -23,6 +23,7 @@
 #include "ui_frei0rglowfilter.h"
 #include "mltcontroller.h"
 
+static const char* kParamBlur = "0";
 
 Frei0rGlowFilter::Frei0rGlowFilter(Mlt::Filter filter, bool setDefaults, QWidget *parent) :
     QWidget(parent),
@@ -34,7 +35,7 @@ Frei0rGlowFilter::Frei0rGlowFilter(Mlt::Filter filter, bool setDefaults, QWidget
     if (setDefaults) {
         ui->spinBox->setValue(m_defaultBlur);
     } else {
-        ui->spinBox->setValue(100 * m_filter.get_double("Blur"));
+        ui->spinBox->setValue(100 * m_filter.get_double(kParamBlur));
     }
 }
 
@@ -45,7 +46,7 @@ Frei0rGlowFilter::~Frei0rGlowFilter()
 
 void Frei0rGlowFilter::on_spinBox_valueChanged(int arg1)
 {
-    m_filter.set("Blur", double(arg1) / 100.0);
+    m_filter.set(kParamBlur, double(arg1) / 100.0);
     MLT.refreshConsumer();
 }
 

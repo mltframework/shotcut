@@ -23,6 +23,9 @@
 #include "ui_saturationfilter.h"
 #include "mltcontroller.h"
 
+static const char* kFrei0rParam = "0";
+static const char* kMovitParam = "saturation";
+
 SaturationFilter::SaturationFilter(Mlt::Filter filter, bool setDefaults, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SaturationFilter),
@@ -33,12 +36,12 @@ SaturationFilter::SaturationFilter(Mlt::Filter filter, bool setDefaults, QWidget
     if (setDefaults) {
         ui->doubleSpinBox->setValue(100.0);
         if (!m_isMovit)
-            m_filter.set("Saturation", 0.125);
+            m_filter.set(kFrei0rParam, 0.125);
     }
     else if (m_isMovit)
-        ui->doubleSpinBox->setValue(m_filter.get_double("saturation") * 100.0);
+        ui->doubleSpinBox->setValue(m_filter.get_double(kMovitParam) * 100.0);
     else
-        ui->doubleSpinBox->setValue(m_filter.get_double("Saturation") * 800.0);
+        ui->doubleSpinBox->setValue(m_filter.get_double(kFrei0rParam) * 800.0);
 }
 
 SaturationFilter::~SaturationFilter()
@@ -49,9 +52,9 @@ SaturationFilter::~SaturationFilter()
 void SaturationFilter::on_doubleSpinBox_valueChanged(double arg1)
 {
     if (m_isMovit)
-        m_filter.set("saturation", arg1 / 100.0);
+        m_filter.set(kMovitParam, arg1 / 100.0);
     else
-        m_filter.set("Saturation", arg1 / 800.0);
+        m_filter.set(kFrei0rParam, arg1 / 800.0);
     ui->horizontalSlider->setValue(10 * arg1);
     MLT.refreshConsumer();
 }

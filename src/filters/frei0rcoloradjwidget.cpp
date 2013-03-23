@@ -23,6 +23,15 @@
 #include "ui_frei0rcoloradjwidget.h"
 #include "mltcontroller.h"
 
+static const char* kParamRed = "0";
+static const char* kParamGreen = "1";
+static const char* kParamBlue = "2";
+static const char* kParamAction = "3";
+static const char* kParamKeepLuma = "4";
+static const char* kParamLumaFormula = "6";
+static const int kLumaFormula601 = 0;
+static const int kLumaFormula709 = 1;
+
 Frei0rColoradjWidget::Frei0rColoradjWidget(Mlt::Filter filter, bool setDefaults, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Frei0rColoradjWidget),
@@ -38,20 +47,21 @@ Frei0rColoradjWidget::Frei0rColoradjWidget(Mlt::Filter filter, bool setDefaults,
         ui->keepLumaCheckBox->setChecked(m_defaultLuma);
         ui->wheel->setColor(m_defaultRGB);
         ui->preset->saveDefaultPreset(m_filter);
-        m_filter.set("Action", m_defaultAction);
-        m_filter.set("Keep luma", m_defaultLuma? 1 : 0);
-        m_filter.set("R", m_defaultRGB.redF());
-        m_filter.set("G", m_defaultRGB.greenF());
-        m_filter.set("B", m_defaultRGB.blueF());
+        m_filter.set(kParamAction, m_defaultAction);
+        m_filter.set(kParamKeepLuma, m_defaultLuma? 1 : 0);
+        m_filter.set(kParamRed, m_defaultRGB.redF());
+        m_filter.set(kParamGreen, m_defaultRGB.greenF());
+        m_filter.set(kParamBlue, m_defaultRGB.blueF());
     } else {
-        ui->modeComboBox->setCurrentIndex(2 * filter.get_double("Action"));
-        ui->keepLumaCheckBox->setChecked(filter.get_int("Keep luma"));
-        ui->wheel->setColor(QColor::fromRgbF(filter.get_double("R"),
-                                             filter.get_double("G"),
-                                             filter.get_double("B")));
+        ui->modeComboBox->setCurrentIndex(2 * filter.get_double(kParamAction));
+        ui->keepLumaCheckBox->setChecked(filter.get_int(kParamKeepLuma));
+        ui->wheel->setColor(QColor::fromRgbF(filter.get_double(kParamRed),
+                                             filter.get_double(kParamGreen),
+                                             filter.get_double(kParamBlue)));
     }
     ui->preset->loadPresets();
-    m_filter.set("Luma formula", (MLT.profile().colorspace() == 709? 1 : 0));
+    m_filter.set(kParamLumaFormula,
+                 (MLT.profile().colorspace() == 709? kLumaFormula709 : kLumaFormula601));
 }
 
 Frei0rColoradjWidget::~Frei0rColoradjWidget()
@@ -62,14 +72,14 @@ Frei0rColoradjWidget::~Frei0rColoradjWidget()
 void Frei0rColoradjWidget::on_preset_selected(void* o)
 {
     Mlt::Properties p(((Mlt::Properties*) o)->get_properties());
-    if (p.get("Action"))
-        ui->modeComboBox->setCurrentIndex(2 * p.get_double("Action"));
-    if (p.get("Keep luma"))
-        ui->keepLumaCheckBox->setChecked(p.get_int("Keep luma"));
-    if (p.get("R") && p.get("G") && p.get("B"))
-        ui->wheel->changeColor(QColor::fromRgbF(p.get_double("R"),
-                                                p.get_double("G"),
-                                                p.get_double("B")));
+    if (p.get(kParamAction))
+        ui->modeComboBox->setCurrentIndex(2 * p.get_double(kParamAction));
+    if (p.get(kParamKeepLuma))
+        ui->keepLumaCheckBox->setChecked(p.get_int(kParamKeepLuma));
+    if (p.get(kParamRed) && p.get(kParamGreen) && p.get(kParamBlue))
+        ui->wheel->changeColor(QColor::fromRgbF(p.get_double(kParamRed),
+                                                p.get_double(kParamGreen),
+                                                p.get_double(kParamBlue)));
 }
 
 void Frei0rColoradjWidget::on_preset_saveClicked()
@@ -79,21 +89,21 @@ void Frei0rColoradjWidget::on_preset_saveClicked()
 
 void Frei0rColoradjWidget::on_wheel_colorChanged(const QColor &color)
 {
-    m_filter.set("R", color.redF());
-    m_filter.set("G", color.greenF());
-    m_filter.set("B", color.blueF());
+    m_filter.set(kParamRed, color.redF());
+    m_filter.set(kParamGreen, color.greenF());
+    m_filter.set(kParamBlue, color.blueF());
     MLT.refreshConsumer();
 }
 
 
 void Frei0rColoradjWidget::on_modeComboBox_currentIndexChanged(int index)
 {
-    m_filter.set("Action", double(index) / 2.0);
+    m_filter.set(kParamAction, double(index) / 2.0);
     MLT.refreshConsumer();
 }
 
 void Frei0rColoradjWidget::on_keepLumaCheckBox_toggled(bool checked)
 {
-    m_filter.set("Keep luma", (checked? 1 : 0));
+    m_filter.set(kParamKeepLuma, (checked? 1 : 0));
     MLT.refreshConsumer();
 }
