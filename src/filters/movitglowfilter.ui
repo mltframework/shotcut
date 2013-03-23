@@ -35,16 +35,22 @@
     </layout>
    </item>
    <item>
-    <layout class="QFormLayout" name="formLayout">
+    <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="0">
       <widget class="QLabel" name="label">
        <property name="text">
         <string>Radius</string>
        </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
       </widget>
      </item>
      <item row="0" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="spacing">
+        <number>0</number>
+       </property>
        <item>
         <widget class="QDoubleSpinBox" name="radiusSpinBox">
          <property name="decimals">
@@ -60,6 +66,12 @@
        </item>
        <item>
         <widget class="QPushButton" name="radiusDefaultButton">
+         <property name="maximumSize">
+          <size>
+           <width>24</width>
+           <height>24</height>
+          </size>
+         </property>
          <property name="toolTip">
           <string>Reset to default</string>
          </property>
@@ -101,10 +113,16 @@
        <property name="text">
         <string>Highlight Blurriness</string>
        </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
       </widget>
      </item>
      <item row="1" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <property name="spacing">
+        <number>0</number>
+       </property>
        <item>
         <widget class="QDoubleSpinBox" name="blurMixSpinBox">
          <property name="maximum">
@@ -120,6 +138,12 @@
        </item>
        <item>
         <widget class="QPushButton" name="blurMixDefaultButton">
+         <property name="maximumSize">
+          <size>
+           <width>24</width>
+           <height>24</height>
+          </size>
+         </property>
          <property name="toolTip">
           <string>Reset to default</string>
          </property>
@@ -161,10 +185,16 @@
        <property name="text">
         <string>Highlight Cutoff</string>
        </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
       </widget>
      </item>
      <item row="2" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <property name="spacing">
+        <number>0</number>
+       </property>
        <item>
         <widget class="QDoubleSpinBox" name="highlightCutoffSpinBox">
          <property name="maximum">
@@ -180,6 +210,12 @@
        </item>
        <item>
         <widget class="QPushButton" name="cutoffDefaultButton">
+         <property name="maximumSize">
+          <size>
+           <width>24</width>
+           <height>24</height>
+          </size>
+         </property>
          <property name="toolTip">
           <string>Reset to default</string>
          </property>

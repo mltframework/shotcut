@@ -13,16 +13,22 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <item>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Radius</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
     <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Radius</string>
-       </property>
-      </widget>
-     </item>
+     <property name="spacing">
+      <number>0</number>
+     </property>
      <item>
       <widget class="QDoubleSpinBox" name="doubleSpinBox">
        <property name="singleStep">
@@ -35,6 +41,12 @@
      </item>
      <item>
       <widget class="QPushButton" name="pushButton">
+       <property name="maximumSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
+       </property>
        <property name="toolTip">
         <string>Reset to default</string>
        </property>
@@ -68,7 +80,7 @@
      </item>
     </layout>
    </item>
-   <item>
+   <item row="1" column="1">
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>

@@ -7,22 +7,63 @@
     <x>0</x>
     <y>0</y>
     <width>396</width>
-    <height>296</height>
+    <height>304</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QFormLayout" name="formLayout">
-   <item row="2" column="0">
-    <widget class="QLabel" name="label">
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="3" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QSlider" name="topSlider">
+       <property name="maximum">
+        <number>4096</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="topSpinner">
+       <property name="suffix">
+        <string> px</string>
+       </property>
+       <property name="maximum">
+        <number>4096</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="0" colspan="2">
+    <widget class="QCheckBox" name="centerCheckBox">
      <property name="text">
-      <string>Center Bias</string>
-     </property>
-     <property name="buddy">
-      <cstring>biasSpinner</cstring>
+      <string>Center</string>
      </property>
     </widget>
+   </item>
+   <item row="0" column="0" colspan="2">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="ServicePresetWidget" name="preset" native="true"/>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
    </item>
    <item row="2" column="1">
     <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -54,79 +95,7 @@
      </item>
     </layout>
    </item>
-   <item row="4" column="1">
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
-     <item>
-      <widget class="QSlider" name="topSlider">
-       <property name="maximum">
-        <number>4096</number>
-       </property>
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QSpinBox" name="topSpinner">
-       <property name="suffix">
-        <string> px</string>
-       </property>
-       <property name="maximum">
-        <number>4096</number>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
    <item row="6" column="1">
-    <layout class="QHBoxLayout" name="horizontalLayout_4">
-     <item>
-      <widget class="QSlider" name="bottomSlider">
-       <property name="maximum">
-        <number>4096</number>
-       </property>
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QSpinBox" name="bottomSpinner">
-       <property name="suffix">
-        <string> px</string>
-       </property>
-       <property name="maximum">
-        <number>4096</number>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item row="8" column="1">
-    <layout class="QHBoxLayout" name="horizontalLayout_5">
-     <item>
-      <widget class="QSlider" name="leftSlider">
-       <property name="maximum">
-        <number>4096</number>
-       </property>
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QSpinBox" name="leftSpinner">
-       <property name="suffix">
-        <string> px</string>
-       </property>
-       <property name="maximum">
-        <number>4096</number>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item row="11" column="1">
     <layout class="QHBoxLayout" name="horizontalLayout_6">
      <item>
       <widget class="QSlider" name="rightSlider">
@@ -150,72 +119,131 @@
      </item>
     </layout>
    </item>
-   <item row="4" column="0">
-    <widget class="QLabel" name="label_2">
+   <item row="2" column="0">
+    <widget class="QLabel" name="label">
      <property name="text">
-      <string>Top</string>
+      <string>Center Bias</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
      <property name="buddy">
-      <cstring>topSpinner</cstring>
+      <cstring>biasSpinner</cstring>
      </property>
     </widget>
    </item>
    <item row="6" column="0">
-    <widget class="QLabel" name="label_3">
-     <property name="text">
-      <string>Bottom</string>
-     </property>
-     <property name="buddy">
-      <cstring>bottomSpinner</cstring>
-     </property>
-    </widget>
-   </item>
-   <item row="8" column="0">
-    <widget class="QLabel" name="label_4">
-     <property name="text">
-      <string>Left</string>
-     </property>
-     <property name="buddy">
-      <cstring>leftSpinner</cstring>
-     </property>
-    </widget>
-   </item>
-   <item row="11" column="0">
     <widget class="QLabel" name="label_5">
      <property name="text">
       <string>Right</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
      <property name="buddy">
       <cstring>rightSpinner</cstring>
      </property>
     </widget>
    </item>
-   <item row="1" column="0" colspan="2">
-    <widget class="QCheckBox" name="centerCheckBox">
-     <property name="text">
-      <string>Center</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="0" colspan="2">
-    <layout class="QHBoxLayout" name="horizontalLayout">
+   <item row="5" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout_5">
      <item>
-      <widget class="ServicePresetWidget" name="preset" native="true"/>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer">
+      <widget class="QSlider" name="leftSlider">
+       <property name="maximum">
+        <number>4096</number>
+       </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="leftSpinner">
+       <property name="suffix">
+        <string> px</string>
        </property>
-      </spacer>
+       <property name="maximum">
+        <number>4096</number>
+       </property>
+      </widget>
      </item>
     </layout>
+   </item>
+   <item row="5" column="0">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Left</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+     <property name="buddy">
+      <cstring>leftSpinner</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <widget class="QSlider" name="bottomSlider">
+       <property name="maximum">
+        <number>4096</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="bottomSpinner">
+       <property name="suffix">
+        <string> px</string>
+       </property>
+       <property name="maximum">
+        <number>4096</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Bottom</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+     <property name="buddy">
+      <cstring>bottomSpinner</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Top</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+     <property name="buddy">
+      <cstring>topSpinner</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="1">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
    </item>
   </layout>
   <zorder>label</zorder>
@@ -224,6 +252,7 @@
   <zorder>label_3</zorder>
   <zorder>label_4</zorder>
   <zorder>label_5</zorder>
+  <zorder>verticalSpacer</zorder>
  </widget>
  <customwidgets>
   <customwidget>
