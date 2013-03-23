@@ -366,8 +366,8 @@ void Player::onProducerOpened()
         m_scrubber->setScale(m_duration);
     }
     m_positionSpinner->setEnabled(m_isSeekable);
-    onVolumeChanged(m_volumeSlider->value());
     onMuteButtonToggled(m_settings.value("player/muted", false).toBool());
+    onVolumeChanged(m_volumeSlider->value());
 
     actionPlay->setEnabled(true);
     actionSkipPrevious->setEnabled(m_isSeekable);
