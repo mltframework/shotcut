@@ -27,15 +27,11 @@
 #include <QSpinBox>
 #include <QDesktopWidget>
 #include <QFrame>
-
-#include <KApplication>
-#include <KIcon>
-#include <KDebug>
-#include <KLocalizedString>
+#include <QApplication>
+#include <QIcon>
 
 #ifdef Q_WS_X11
 #include <X11/Xutil.h>
-#include <fixx11h.h>
 #endif 
 
 MyFrame::MyFrame(QWidget* parent) :
@@ -68,8 +64,9 @@ ColorPickerWidget::ColorPickerWidget(QWidget *parent) :
     layout->setContentsMargins(0, 0, 0, 0);
 
     QToolButton *button = new QToolButton(this);
-    button->setIcon(KIcon("color-picker"));
-    button->setToolTip("<p>" + i18n("Pick a color on the screen. By pressing the mouse button and then moving your mouse you can select a section of the screen from which to get an average color.") + "</p>");
+    QIcon icon(":/icons/icons/color-picker");
+    button->setIcon(QIcon::fromTheme("color-picker", icon));
+    button->setToolTip("<p>" + tr("Pick a color on the screen. By pressing the mouse button and then moving your mouse you can select a section of the screen from which to get an average color.") + "</p>");
     button->setAutoRaise(true);
     connect(button, SIGNAL(clicked()), this, SLOT(slotSetupEventFilter()));
 
@@ -99,7 +96,7 @@ void ColorPickerWidget::slotGetAverageColor()
 
     // only show message for larger rects because of the overhead displayMessage creates
     if (numPixel > 40000)
-        emit displayMessage(i18n("Requesting color information..."), 0);
+        emit displayMessage(tr("Requesting color information..."), 0);
 
     /*
      Only getting the image once for the whole rect
@@ -123,7 +120,7 @@ void ColorPickerWidget::slotGetAverageColor()
 
         // Warning: slows things down, so don't do it for every pixel (the inner for loop)
         if (numPixel > 40000)
-            emit displayMessage(i18n("Requesting color information..."), (int)(x * m_grabRect.height() / (qreal)numPixel * 100));
+            emit displayMessage(tr("Requesting color information..."), (int)(x * m_grabRect.height() / (qreal)numPixel * 100));
     }
 
 #ifdef Q_WS_X11
@@ -132,7 +129,7 @@ void ColorPickerWidget::slotGetAverageColor()
 #endif
 
     if (numPixel > 40000)
-        emit displayMessage(i18n("Calculated average color for rectangle."), -1);
+        emit displayMessage(tr("Calculated average color for rectangle."), -1);
 
     emit colorPicked(QColor(sumR / numPixel, sumG / numPixel, sumB / numPixel));
     emit disableCurrentFilter(false);
@@ -194,7 +191,8 @@ void ColorPickerWidget::slotSetupEventFilter()
     m_filterActive = true;
     setFocus();
     installEventFilter(this);
-    grabMouse(QCursor(KIcon("color-picker").pixmap(22, 22), 0, 21));
+    QIcon icon(":/icons/icons/color-picker.png");
+    grabMouse(QCursor(QIcon::fromTheme("color-picker", icon).pixmap(22, 22), 0, 21));
     grabKeyboard();
 }
 
@@ -259,5 +257,3 @@ QColor ColorPickerWidget::grabColor(const QPoint &p, bool destroyImage)
     }
 #endif
 }
-
-#include "colorpickerwidget.moc"
