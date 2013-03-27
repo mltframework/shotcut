@@ -61,7 +61,8 @@ SOURCES += main.cpp\
     filters/cropfilter.cpp \
     filters/saturationfilter.cpp \
     filters/movitsharpenfilter.cpp \
-    filters/frei0rsharpnessfilter.cpp
+    filters/frei0rsharpnessfilter.cpp \
+    widgets/colorpickerwidget.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -119,7 +120,8 @@ HEADERS  += mainwindow.h \
     filters/cropfilter.h \
     filters/saturationfilter.h \
     filters/movitsharpenfilter.h \
-    filters/frei0rsharpnessfilter.h
+    filters/frei0rsharpnessfilter.h \
+    widgets/colorpickerwidget.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
