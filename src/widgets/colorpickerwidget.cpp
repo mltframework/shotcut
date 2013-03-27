@@ -1,13 +1,4 @@
-/***************************************************************************
- *   Copyright (C) 2010 by Till Theato (root@ttill.de)                     *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+/*************************************************************************** *   Copyright (C) 2010 by Till Theato (root@ttill.de)                     * *                                                                         * *   This program is free software; you can redistribute it and/or modify  * *   it under the terms of the GNU General Public License as published by  * *   the Free Software Foundation; either version 2 of the License, or     * *   (at your option) any later version.                                   * *                                                                         * *   This program is distributed in the hope that it will be useful,       * *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
  *   GNU General Public License for more details.                          *
  *                                                                         *
@@ -31,7 +22,9 @@
 #include <QIcon>
 
 #ifdef Q_WS_X11
+#include <QX11Info>
 #include <X11/Xutil.h>
+#include "fixx11h.h"
 #endif 
 
 MyFrame::MyFrame(QWidget* parent) :
