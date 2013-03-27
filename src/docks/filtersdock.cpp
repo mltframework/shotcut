@@ -35,6 +35,7 @@
 #include "filters/saturationfilter.h"
 #include "filters/movitsharpenfilter.h"
 #include "filters/frei0rsharpnessfilter.h"
+#include "filters/whitebalancefilter.h"
 
 
 FiltersDock::FiltersDock(QWidget *parent) :
@@ -88,7 +89,7 @@ void FiltersDock::on_addButton_clicked()
     menu.addAction(ui->actionSharpen);
 //    menu.addAction(ui->actionSizePosition);
 //    menu.addAction(ui->actionVignette);
-//    menu.addAction(ui->actionWhiteBalance);
+    menu.addAction(ui->actionWhiteBalance);
     menu.exec(mapToGlobal(pos));
 }
 
@@ -126,6 +127,8 @@ void FiltersDock::on_listView_clicked(const QModelIndex &index)
             ui->scrollArea->setWidget(new MovitSharpenFilter(*filter));
         else if (name == "frei0r.sharpness")
             ui->scrollArea->setWidget(new Frei0rSharpnessFilter(*filter));
+        else if (name == "frei0r.colgate" || name == "movit.white_balance")
+            ui->scrollArea->setWidget(new WhiteBalanceFilter(*filter));
         else
             delete ui->scrollArea->widget();
     }
@@ -240,7 +243,7 @@ void FiltersDock::on_actionSaturation_triggered()
 void FiltersDock::on_actionWhiteBalance_triggered()
 {
     Mlt::Filter* filter = m_model.add(m_isGPU? "movit.white_balance": "frei0r.colgate");
-    delete ui->scrollArea->widget();
+    ui->scrollArea->setWidget(new WhiteBalanceFilter(*filter, true));
     delete filter;
     ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
 }
