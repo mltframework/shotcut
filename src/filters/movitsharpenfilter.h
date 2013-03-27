@@ -2,9 +2,6 @@
  * Copyright (c) 2013 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
- * GL shader based on BSD licensed code from Peter Bengtsson:
- * http://www.fourcc.org/source/YUV420P-OpenGL-GLSLang.c
- *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
