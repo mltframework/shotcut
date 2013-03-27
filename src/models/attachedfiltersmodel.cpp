@@ -21,6 +21,7 @@
 
 #include "attachedfiltersmodel.h"
 #include "mltcontroller.h"
+#include <QtCore/QSettings>
 
 AttachedFiltersModel::AttachedFiltersModel(QObject *parent)
     : QAbstractListModel(parent)
@@ -133,10 +134,15 @@ bool AttachedFiltersModel::setData(const QModelIndex& index, const QVariant& val
     if (role == Qt::CheckStateRole) {
         Mlt::Filter* filter = filterForRow(index.row());
         if (filter && filter->is_valid()) {
-            double speed = MLT.producer()->get_speed();
-            MLT.consumer()->stop();
+            QSettings settings;
             filter->set("disable", !filter->get_int("disable"));
-            MLT.play(speed);
+            // GPU processing requires that we restart the consumer for reasons
+            // internal to MLT and its integration of Movit.
+            if (settings.value("player/gpu", false).toBool()) {
+                double speed = MLT.producer()->get_speed();
+                MLT.consumer()->stop();
+                MLT.play(speed);
+            }
             emit changed();
             emit dataChanged(createIndex(index.row(), 0), createIndex(index.row(), 0));
         }
