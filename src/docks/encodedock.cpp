@@ -311,7 +311,11 @@ MeltJob* EncodeDock::createMeltJob(const QString& target, int realtime, int pass
 
     // add consumer element
     QDomElement consumerNode = dom.createElement("consumer");
-    dom.documentElement().appendChild(consumerNode);
+    QDomNodeList profiles = dom.elementsByTagName("profile");
+    if (profiles.isEmpty())
+        dom.documentElement().insertAfter(consumerNode, dom.documentElement());
+    else
+        dom.documentElement().insertAfter(consumerNode, profiles.at(profiles.length() - 1));
     consumerNode.setAttribute("mlt_service", "avformat");
     consumerNode.setAttribute("target", mytarget);
     collectProperties(consumerNode, realtime);
