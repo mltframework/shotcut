@@ -68,7 +68,9 @@ int SDLWidget::reconfigure(bool isMulti)
         m_consumer->connect(*m_producer);
         // Make an event handler for when a frame's image should be displayed
         m_consumer->listen("consumer-frame-show", this, (mlt_listener) on_frame_show);
-        m_consumer->set("real_time", property("realtime").toBool()? 1 : -1);
+        int threadCount = QThread::idealThreadCount();
+        threadCount = threadCount > 2? (threadCount > 3? 3 : 2) : 1;
+        m_consumer->set("real_time", property("realtime").toBool()? 1 : -threadCount);
 
         if (isMulti) {
             m_consumer->set("terminate_on_pause", 0);

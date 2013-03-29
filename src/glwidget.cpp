@@ -399,7 +399,13 @@ int GLWidget::reconfigure(bool isMulti)
         m_consumer->connect(*m_producer);
         // Make an event handler for when a frame's image should be displayed
         m_consumer->listen("consumer-frame-show", this, (mlt_listener) on_frame_show);
-        m_consumer->set("real_time", property("realtime").toBool()? 1 : -1);
+        if (m_glslManager) {
+            m_consumer->set("real_time", property("realtime").toBool()? 1 : -1);
+        } else {
+            int threadCount = QThread::idealThreadCount();
+            threadCount = threadCount > 2? (threadCount > 3? 3 : 2) : 1;
+            m_consumer->set("real_time", property("realtime").toBool()? 1 : -threadCount);
+        }
         m_consumer->set("mlt_image_format", "yuv422");
         m_display_ratio = profile().dar();
 

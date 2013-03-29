@@ -250,7 +250,7 @@ void Controller::onJackStopped(int position)
         }
         m_producer->seek(position);
     }
-    if (m_consumer)
+    if (m_consumer && m_consumer->get_int("real_time") >= -1)
         m_consumer->purge();
     refreshConsumer();
 }
@@ -313,7 +313,7 @@ void Controller::seek(int position)
 {
     if (m_producer)
         m_producer->seek(position);
-    if (m_consumer)
+    if (m_consumer && m_consumer->get_int("real_time") >= -1)
         m_consumer->purge();
     if (m_jackFilter)
         mlt_events_fire(m_jackFilter->get_properties(), "jack-seek", &position, NULL);
