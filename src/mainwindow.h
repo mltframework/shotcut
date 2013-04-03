@@ -52,6 +52,7 @@ public:
 signals:
     void producerOpened();
     void profileChanged();
+    void openFailed(QString);
 
 protected:
     MainWindow();
