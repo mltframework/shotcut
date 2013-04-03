@@ -415,12 +415,34 @@ void MainWindow::openVideo()
     QString settingKey("openPath");
     QString directory(m_settings.value(settingKey,
         QDesktopServices::storageLocation(QDesktopServices::MoviesLocation)).toString());
-    QString filename = QFileDialog::getOpenFileName(this, tr("Open File"), directory);
+    QStringList filenames = QFileDialog::getOpenFileNames(this, tr("Open File"), directory);
 
-    if (!filename.isNull()) {
-        m_settings.setValue(settingKey, QFileInfo(filename).path());
+    if (filenames.length() > 0) {
+        m_settings.setValue(settingKey, QFileInfo(filenames.first()).path());
         activateWindow();
-        open(filename);
+        if (filenames.length() > 1) {
+            PlaylistModel* model = m_playlistDock->model();
+            bool createPlaylist = !model->playlist();
+            m_playlistDock->show();
+            m_playlistDock->raise();
+            if (createPlaylist) {
+                model->createIfNeeded();
+                if (!MLT.producer())
+                    open(new Mlt::Producer(*(model->playlist())));
+            }
+            foreach (QString filename, filenames) {
+                Mlt::Producer p(MLT.profile(), filename.toUtf8().constData());
+                if (p.is_valid()) {
+                    if (createPlaylist)
+                        model->append(&p);
+                    else
+                        undoStack()->push(new Playlist::AppendCommand(*model, MLT.saveXML("string", &p)));
+                }
+            }
+        }
+        else {
+            open(filenames.first());
+        }
     }
     else {
         // If file invalid, then on some platforms the dialog messes up SDL.
