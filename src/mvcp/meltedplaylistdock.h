@@ -61,9 +61,9 @@ private slots:
 
     void onDropped(QString clip, int row);
 
-    void onAppend(QString clip);
+    void onAppend(QString clip, int in = -1, int out = -1);
 
-    void onInsert(QString clip, int row);
+    void onInsert(QString clip, int row, int in = -1, int out = -1);
 
     void onMoveClip(int from, int to);
 

@@ -52,9 +52,10 @@ signals:
     void disconnected();
     void unitActivated(quint8);
     void unitOpened(quint8);
-    void append(QString clip);
-    void insert(QString clip, int row);
+    void append(QString clip, int in = -1, int out = -1);
+    void insert(QString clip, int row, int in = -1, int out = -1);
     void positionUpdated(int position, double fps, int in, int out, int length, bool isPlaying);
+    void openLocal(QString resource);
 
 public slots:
     void onAppendRequested();
@@ -71,12 +72,19 @@ private slots:
 
     void on_unitsTableView_customContextMenuRequested(const QPoint &pos);
 
+    void on_actionMapClipsRoot_triggered();
+
+    void on_menuButton_clicked();
+
+    void on_treeView_doubleClicked(const QModelIndex &index);
+
 private:
     Ui::MeltedServerDock *ui;
     QConsole* m_console;
     mvcp_parser m_parser;
     MvcpThread* m_mvcp;
     QSettings m_settings;
+    QString m_mappedClipsRoot;
 };
 
 #endif // MVCPCONSOLEDOCK_H

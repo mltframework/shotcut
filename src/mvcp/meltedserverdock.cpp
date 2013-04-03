@@ -21,8 +21,10 @@
 #include "qconsole.h"
 #include "meltedclipsmodel.h"
 #include "meltedunitsmodel.h"
+#include "mltcontroller.h"
 #include <QtGui/QCompleter>
 #include <QtGui/QStringListModel>
+#include <QtGui/QFileDialog>
 
 MeltedServerDock::MeltedServerDock(QWidget *parent)
     : QDockWidget(parent)
@@ -124,6 +126,8 @@ void MeltedServerDock::on_connectButton_toggled(bool checked)
         m_console->setDisabled(true);
         ui->lineEdit->setFocus();
         ui->treeView->setDisabled(true);
+        ui->menuButton->setDisabled(true);
+        m_mappedClipsRoot = "";
     }
     if (checked) {
         QStringList address = ui->lineEdit->text().split(':');
@@ -145,6 +149,7 @@ void MeltedServerDock::on_connectButton_toggled(bool checked)
             emit connected(address[0], port);
             ui->stackedWidget->setCurrentIndex(1);
             ui->connectButton->setText(tr("Disconnect"));
+            ui->menuButton->setEnabled(true);
         }
         else {
             ui->connectButton->setChecked(false);
@@ -181,14 +186,30 @@ void MeltedServerDock::onPositionUpdated(quint8 unit, int position, double fps, 
 
 void MeltedServerDock::onAppendRequested()
 {
-    if (ui->treeView->currentIndex().isValid())
+    QString resource;
+    if (MLT.producer() && MLT.producer()->get("resource"))
+        resource = QString::fromUtf8(MLT.producer()->get("resource"));
+    if (!m_mappedClipsRoot.isEmpty() && resource.startsWith(m_mappedClipsRoot)) {
+        resource.remove(0, m_mappedClipsRoot.length());
+        emit append(resource, MLT.producer()->get_in(), MLT.producer()->get_out());
+    }
+    else if (ui->treeView->currentIndex().isValid()) {
         emit append(clipsModel()->data(ui->treeView->currentIndex(), Qt::UserRole).toString());
+    }
 }
 
 void MeltedServerDock::onInsertRequested(int row)
 {
-    if (ui->treeView->currentIndex().isValid())
+    QString resource;
+    if (MLT.producer() && MLT.producer()->get("resource"))
+        resource = QString::fromUtf8(MLT.producer()->get("resource"));
+    if (!m_mappedClipsRoot.isEmpty() && resource.startsWith(m_mappedClipsRoot)) {
+        resource.remove(0, m_mappedClipsRoot.length());
+        emit insert(resource, row, MLT.producer()->get_in(), MLT.producer()->get_out());
+    }
+    else if (ui->treeView->currentIndex().isValid()) {
         emit insert(clipsModel()->data(ui->treeView->currentIndex(), Qt::UserRole).toString(), row);
+    }
 }
 
 void MeltedServerDock::on_unitsTableView_customContextMenuRequested(const QPoint &pos)
@@ -228,4 +249,35 @@ QAction * MeltedServerDock::actionRewind() const
 QAction * MeltedServerDock::actionStop() const
 {
     return ui->actionStop;
+}
+
+void MeltedServerDock::on_actionMapClipsRoot_triggered()
+{
+    m_mappedClipsRoot = QFileDialog::getExistingDirectory(this, tr("Choose Directory"));
+}
+
+void MeltedServerDock::on_menuButton_clicked()
+{
+    QPoint pos = ui->menuButton->mapToParent(QPoint(0, 0));
+    QMenu menu(this);
+    QModelIndex index = ui->unitsTableView->currentIndex();
+    if (index.isValid()) {
+        menu.addAction(ui->actionFast_Forward);
+        menu.addAction(ui->actionPause);
+        menu.addAction(ui->actionPlay);
+        menu.addAction(ui->actionRewind);
+        menu.addAction(ui->actionStop);
+        menu.addSeparator();
+    }
+    menu.addAction(ui->actionMapClipsRoot);
+    menu.exec(mapToGlobal(pos));
+}
+
+void MeltedServerDock::on_treeView_doubleClicked(const QModelIndex &index)
+{
+    if (!m_mappedClipsRoot.isEmpty()) {
+        QString resource = clipsModel()->data(index, Qt::UserRole).toString();
+        resource.prepend(m_mappedClipsRoot);
+        emit openLocal(resource);
+    }
 }

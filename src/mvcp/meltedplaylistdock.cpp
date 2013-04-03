@@ -100,16 +100,16 @@ void MeltedPlaylistDock::onDropped(QString clip, int row)
         onInsert(clip, row);
 }
 
-void MeltedPlaylistDock::onAppend(QString clip)
+void MeltedPlaylistDock::onAppend(QString clip, int in, int out)
 {
     m_operations.append(new MeltedPlaylist::AppendCommand(m_model, clip));
-    m_model.append(clip);
+    m_model.append(clip, in, out);
 }
 
-void MeltedPlaylistDock::onInsert(QString clip, int row)
+void MeltedPlaylistDock::onInsert(QString clip, int row, int in, int out)
 {
     m_operations.append(new MeltedPlaylist::InsertCommand(m_model, clip, row));
-    m_model.insert(clip, row);
+    m_model.insert(clip, row, in, out);
 }
 
 void MeltedPlaylistDock::onMoveClip(int from, int to)

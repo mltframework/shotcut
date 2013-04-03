@@ -15,8 +15,24 @@
   </property>
   <widget class="QWidget" name="dockWidgetContents">
    <layout class="QVBoxLayout" name="verticalLayout_2">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="margin">
+     <number>0</number>
+    </property>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>6</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+       </widget>
+      </item>
       <item>
        <widget class="QLineEdit" name="lineEdit">
         <property name="placeholderText">
@@ -139,6 +155,9 @@ p, li { white-space: pre-wrap; }
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <property name="spacing">
+       <number>6</number>
+      </property>
       <item>
        <widget class="QPushButton" name="consoleButton">
         <property name="text">
@@ -146,6 +165,23 @@ p, li { white-space: pre-wrap; }
         </property>
         <property name="checkable">
          <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="menuButton">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="toolTip">
+         <string>Display a menu of additional actions</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../resources.qrc">
+          <normaloff>:/icons/icons/format-justify-fill.png</normaloff>:/icons/icons/format-justify-fill.png</iconset>
         </property>
        </widget>
       </item>
@@ -191,7 +227,14 @@ p, li { white-space: pre-wrap; }
     <string>Fast Forward</string>
    </property>
   </action>
+  <action name="actionMapClipsRoot">
+   <property name="text">
+    <string>Map Clips Root</string>
+   </property>
+  </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="../resources.qrc"/>
+ </resources>
  <connections/>
 </ui>
