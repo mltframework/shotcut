@@ -63,7 +63,7 @@ void FiltersDock::onProducerOpened()
     delete ui->scrollArea->widget();
     m_model.reset();
     onModelChanged();
-    if (MLT.isPlaylist()) {
+    if (MLT.isPlaylist() && this->isVisible()) {
         ui->addButton->setDisabled(true);
         MAIN.showStatusMessage(tr("Filters can only be applied to clips."));
     }

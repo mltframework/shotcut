@@ -788,7 +788,29 @@ void MainWindow::dropEvent(QDropEvent *event)
         }
     }
     else if (mimeData->hasUrls()) {
-        open(mimeData->urls().at(0).path());
+        if (mimeData->urls().length() > 1) {
+            PlaylistModel* model = m_playlistDock->model();
+            bool createPlaylist = !model->playlist();
+            m_playlistDock->show();
+            m_playlistDock->raise();
+            if (createPlaylist) {
+                model->createIfNeeded();
+                if (!MLT.producer())
+                    open(new Mlt::Producer(*(model->playlist())));
+            }
+            foreach (QUrl url, mimeData->urls()) {
+                Mlt::Producer p(MLT.profile(), url.path().toUtf8().constData());
+                if (p.is_valid()) {
+                    if (createPlaylist)
+                        model->append(&p);
+                    else
+                        undoStack()->push(new Playlist::AppendCommand(*model, MLT.saveXML("string", &p)));
+                }
+            }
+        }
+        else {
+            open(mimeData->urls().at(0).path());
+        }
         event->acceptProposedAction();
     }
     else if (mimeData->hasFormat("application/mlt+xml")) {

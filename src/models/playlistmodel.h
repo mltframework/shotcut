@@ -53,6 +53,7 @@ public:
     QModelIndex incrementIndex(const QModelIndex& index) const;
     QModelIndex decrementIndex(const QModelIndex& index) const;
     QModelIndex createIndex(int row, int column) const;
+    void createIfNeeded();
     Mlt::Playlist* playlist()
     {
         return m_playlist;
@@ -82,7 +83,6 @@ public slots:
 private:
     Mlt::Playlist* m_playlist;
     Mlt::ClipInfo m_clipInfo;
-    void createIfNeeded();
     int m_dropRow;
 };
 

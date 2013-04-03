@@ -40,7 +40,7 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     connect(&m_model, SIGNAL(cleared()), this, SLOT(onPlaylistCleared()));
     connect(&m_model, SIGNAL(created()), this, SLOT(onPlaylistCreated()));
     connect(&m_model, SIGNAL(loaded()), this, SLOT(onPlaylistLoaded()));
-    connect(&m_model, SIGNAL(modified()), this, SLOT(onPlaylistCreated()));
+    connect(&m_model, SIGNAL(modified()), this, SLOT(onPlaylistLoaded()));
     connect(&m_model, SIGNAL(dropped(const QMimeData*,int)), this, SLOT(onDropped(const QMimeData*,int)));
     connect(&m_model, SIGNAL(moveClip(int,int)), SLOT(onMoveClip(int,int)));
 }
