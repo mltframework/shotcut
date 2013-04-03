@@ -43,7 +43,7 @@ signals:
 
 public slots:
     void add(const QString&);
-    void onOpenFailed(const QString& s);
+    void remove(const QString& s);
 
 private:
     Ui::RecentDock *ui;

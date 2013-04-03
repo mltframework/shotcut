@@ -71,7 +71,7 @@ void RecentDock::on_listWidget_itemActivated(QListWidgetItem* i)
     emit itemActivated(i->toolTip());
 }
 
-void RecentDock::onOpenFailed(const QString &s)
+void RecentDock::remove(const QString &s)
 {
     m_recent.removeOne(s);
     add(QString());

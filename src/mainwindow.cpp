@@ -136,7 +136,7 @@ MainWindow::MainWindow()
     connect(m_recentDock, SIGNAL(itemActivated(QString)), this, SLOT(open(QString)));
     connect(m_recentDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onRecentDockTriggered(bool)));
     connect(ui->actionRecent, SIGNAL(triggered()), this, SLOT(onRecentDockTriggered()));
-    connect(this, SIGNAL(openFailed(QString)), m_recentDock, SLOT(onOpenFailed(QString)));
+    connect(this, SIGNAL(openFailed(QString)), m_recentDock, SLOT(remove(QString)));
 
     m_playlistDock = new PlaylistDock(this);
     m_playlistDock->hide();
