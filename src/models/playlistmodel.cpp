@@ -129,7 +129,10 @@ bool PlaylistModel::removeRows(int row, int count, const QModelIndex& parent)
 {
     if (!m_playlist) return false;
     if (row == m_dropRow) return false;
-    emit moveClip(row, m_dropRow);
+    if (row < m_dropRow)
+        emit moveClip(row, m_dropRow - 1);
+    else
+        emit moveClip(row, m_dropRow);
     m_dropRow = -1;
     return true;
 }
@@ -151,14 +154,15 @@ QMimeData *PlaylistModel::mimeData(const QModelIndexList &indexes) const
 
 bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
 {
-    // Dragged from player or file manager
-    if (data->hasFormat("application/mlt+xml") || data->hasUrls()) {
-        emit dropped(data, row);
+    // Internal reorder
+    if (action == Qt::MoveAction) {
+        m_dropRow = row;
         return true;
     }
-    // Internal reorder
-    else if (action == Qt::MoveAction) {
-        return QAbstractTableModel::dropMimeData(data, action, row, column, parent);
+    // Dragged from player or file manager
+    else if (data->hasFormat("application/mlt+xml") || data->hasUrls()) {
+        emit dropped(data, row);
+        return true;
     }
     // Dragged from Recent dock
     else if (data->hasFormat("application/x-qabstractitemmodeldatalist")) {
