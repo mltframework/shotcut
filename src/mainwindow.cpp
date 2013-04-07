@@ -1395,6 +1395,7 @@ void MainWindow::onProfileTriggered(QAction *action)
 void MainWindow::on_actionAddCustomProfile_triggered()
 {
     CustomProfileDialog dialog(this);
+    dialog.setWindowModality(Qt::WindowModal);
     if (dialog.exec() == QDialog::Accepted) {
         QDir dir(QDesktopServices::storageLocation(QDesktopServices::DataLocation));
         if (dir.cd("profiles")) {
