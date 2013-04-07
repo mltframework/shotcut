@@ -63,7 +63,8 @@ SOURCES += main.cpp\
     filters/movitsharpenfilter.cpp \
     filters/frei0rsharpnessfilter.cpp \
     widgets/colorpickerwidget.cpp \
-    filters/whitebalancefilter.cpp
+    filters/whitebalancefilter.cpp \
+    dialogs/customprofiledialog.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -123,7 +124,8 @@ HEADERS  += mainwindow.h \
     filters/movitsharpenfilter.h \
     filters/frei0rsharpnessfilter.h \
     widgets/colorpickerwidget.h \
-    filters/whitebalancefilter.h
+    filters/whitebalancefilter.h \
+    dialogs/customprofiledialog.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
@@ -163,7 +165,8 @@ FORMS    += mainwindow.ui \
     filters/saturationfilter.ui \
     filters/movitsharpenfilter.ui \
     filters/frei0rsharpnessfilter.ui \
-    filters/whitebalancefilter.ui
+    filters/whitebalancefilter.ui \
+    dialogs/customprofiledialog.ui
 
 RESOURCES += \
     resources.qrc

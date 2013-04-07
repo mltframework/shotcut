@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>834</width>
-    <height>537</height>
+    <width>832</width>
+    <height>535</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -61,7 +61,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>834</width>
+     <width>832</width>
      <height>22</height>
     </rect>
    </property>
@@ -509,6 +509,11 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip">
     <string>Modify the video image or audio</string>
+   </property>
+  </action>
+  <action name="actionAddCustomProfile">
+   <property name="text">
+    <string>Add...</string>
    </property>
   </action>
  </widget>

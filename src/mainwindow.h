@@ -64,7 +64,7 @@ protected:
 
 private:
     void setupSettingsMenu();
-    void addProfile(QActionGroup* actionGroup, const QString& desc, const QString& name);
+    QAction *addProfile(QActionGroup* actionGroup, const QString& desc, const QString& name);
     void readPlayerSettings();
     void readWindowSettings();
     void writeSettings();
@@ -91,6 +91,7 @@ private:
     QActionGroup* m_profileGroup;
     QActionGroup* m_externalGroup;
     FiltersDock* m_filtersDock;
+    QMenu* m_customProfileMenu;
 
 public slots:
     void open(const QString& url, const Mlt::Properties* = 0);
@@ -144,6 +145,7 @@ private slots:
     void on_actionGPU_triggered(bool checked);
     void onExternalTriggered(QAction*);
     void onProfileTriggered(QAction*);
+    void on_actionAddCustomProfile_triggered();
 };
 
 #define MAIN MainWindow::singleton()

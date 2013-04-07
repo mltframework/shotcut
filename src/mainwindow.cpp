@@ -49,6 +49,7 @@
 #include "mvcp/meltedunitsmodel.h"
 #include "mvcp/meltedplaylistmodel.h"
 #include "docks/filtersdock.h"
+#include "dialogs/customprofiledialog.h"
 
 #include <QtGui>
 #include <QDebug>
@@ -302,18 +303,47 @@ void MainWindow::setupSettingsMenu()
     m_profileGroup = new QActionGroup(this);
     m_profileGroup->addAction(ui->actionProfileAutomatic);
     ui->actionProfileAutomatic->setData(QString());
-    addProfile(m_profileGroup, "HD 720p 50 fps", "atsc_720p_50");
-    addProfile(m_profileGroup, "HD 720p 59.94 fps", "atsc_720p_5994");
-    addProfile(m_profileGroup, "HD 720p 60 fps", "atsc_720p_60");
-    addProfile(m_profileGroup, "HD 1080i 25 fps", "atsc_1080i_50");
-    addProfile(m_profileGroup, "HD 1080i 29.97 fps", "atsc_1080i_5994");
-    addProfile(m_profileGroup, "HD 1080p 23.98 fps", "atsc_1080p_2398");
-    addProfile(m_profileGroup, "HD 1080p 24 fps", "atsc_1080p_24");
-    addProfile(m_profileGroup, "HD 1080p 25 fps", "atsc_1080p_25");
-    addProfile(m_profileGroup, "HD 1080p 29.97 fps", "atsc_1080p_2997");
-    addProfile(m_profileGroup, "HD 1080p 30 fps", "atsc_1080p_30");
-    addProfile(m_profileGroup, "SD NTSC", "dv_ntsc");
-    addProfile(m_profileGroup, "SD PAL", "dv_pal");
+    ui->menuProfile->addAction(addProfile(m_profileGroup, "HD 720p 50 fps", "atsc_720p_50"));
+    ui->menuProfile->addAction(addProfile(m_profileGroup, "HD 720p 59.94 fps", "atsc_720p_5994"));
+    ui->menuProfile->addAction(addProfile(m_profileGroup, "HD 720p 60 fps", "atsc_720p_60"));
+    ui->menuProfile->addAction(addProfile(m_profileGroup, "HD 1080i 25 fps", "atsc_1080i_50"));
+    ui->menuProfile->addAction(addProfile(m_profileGroup, "HD 1080i 29.97 fps", "atsc_1080i_5994"));
+    ui->menuProfile->addAction(addProfile(m_profileGroup, "HD 1080p 23.98 fps", "atsc_1080p_2398"));
+    ui->menuProfile->addAction(addProfile(m_profileGroup, "HD 1080p 24 fps", "atsc_1080p_24"));
+    ui->menuProfile->addAction(addProfile(m_profileGroup, "HD 1080p 25 fps", "atsc_1080p_25"));
+    ui->menuProfile->addAction(addProfile(m_profileGroup, "HD 1080p 29.97 fps", "atsc_1080p_2997"));
+    ui->menuProfile->addAction(addProfile(m_profileGroup, "HD 1080p 30 fps", "atsc_1080p_30"));
+    ui->menuProfile->addAction(addProfile(m_profileGroup, "SD NTSC", "dv_ntsc"));
+    ui->menuProfile->addAction(addProfile(m_profileGroup, "SD PAL", "dv_pal"));
+    QMenu* menu = ui->menuProfile->addMenu(tr("Non-Broadcast"));
+    menu->addAction(addProfile(m_profileGroup, "HD 720p 23.98 fps", "atsc_720p_2398"));
+    menu->addAction(addProfile(m_profileGroup, "HD 720p 24 fps", "atsc_720p_24"));
+    menu->addAction(addProfile(m_profileGroup, "HD 720p 25 fps", "atsc_720p_25"));
+    menu->addAction(addProfile(m_profileGroup, "HD 720p 29.97 fps", "atsc_720p_2997"));
+    menu->addAction(addProfile(m_profileGroup, "HD 720p 30 fps", "atsc_720p_30"));
+    menu->addAction(addProfile(m_profileGroup, "HD 1080i 60 fps", "atsc_1080i_60"));
+    menu->addAction(addProfile(m_profileGroup, "HDV 1080i 25 fps", "hdv_1080_50i"));
+    menu->addAction(addProfile(m_profileGroup, "HDV 1080i 29.97 fps", "hdv_1080_60i"));
+    menu->addAction(addProfile(m_profileGroup, "HDV 1080p 25 fps", "hdv_1080_25p"));
+    menu->addAction(addProfile(m_profileGroup, "HDV 1080p 29.97 fps", "hdv_1080_30p"));
+    menu->addAction(addProfile(m_profileGroup, tr("DVD Widescreen NTSC"), "dv_ntsc_wide"));
+    menu->addAction(addProfile(m_profileGroup, tr("DVD Widescreen PAL"), "dv_pal_wide"));
+    menu->addAction(addProfile(m_profileGroup, "640x480 4:3 NTSC", "square_ntsc"));
+    menu->addAction(addProfile(m_profileGroup, "768x576 4:3 PAL", "square_pal"));
+    menu->addAction(addProfile(m_profileGroup, "854x480 16:9 NTSC", "square_ntsc_wide"));
+    menu->addAction(addProfile(m_profileGroup, "1024x576 16:9 PAL", "square_pal_wide"));
+    m_customProfileMenu = ui->menuProfile->addMenu(tr("Custom"));
+    m_customProfileMenu->addAction(ui->actionAddCustomProfile);
+    // Load custom profiles
+    QDir dir(QDesktopServices::storageLocation(QDesktopServices::DataLocation));
+    if (dir.cd("profiles")) {
+        QStringList profiles = dir.entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
+        if (profiles.length() > 0)
+            m_customProfileMenu->addSeparator();
+        foreach (QString name, profiles)
+            m_customProfileMenu->addAction(addProfile(m_profileGroup, name, dir.filePath(name)));
+    }
+
 #ifndef Q_WS_X11
     delete ui->actionOpenGL;
     ui->actionOpenGL = 0;
@@ -362,13 +392,13 @@ void MainWindow::setupSettingsMenu()
     connect(m_profileGroup, SIGNAL(triggered(QAction*)), this, SLOT(onProfileTriggered(QAction*)));
 }
 
-void MainWindow::addProfile(QActionGroup* actionGroup, const QString& desc, const QString& name)
+QAction* MainWindow::addProfile(QActionGroup* actionGroup, const QString& desc, const QString& name)
 {
     QAction* action = new QAction(desc, this);
     action->setCheckable(true);
     action->setData(name);
     actionGroup->addAction(action);
-    ui->menuProfile->addAction(action);
+    return action;
 }
 
 void MainWindow::open(Mlt::Producer* producer)
@@ -1360,4 +1390,21 @@ void MainWindow::onProfileTriggered(QAction *action)
     m_settings.setValue("player/profile", action->data());
     MLT.setProfile(action->data().toString());
     emit profileChanged();
+}
+
+void MainWindow::on_actionAddCustomProfile_triggered()
+{
+    CustomProfileDialog dialog(this);
+    if (dialog.exec() == QDialog::Accepted) {
+        QDir dir(QDesktopServices::storageLocation(QDesktopServices::DataLocation));
+        if (dir.cd("profiles")) {
+            QString name = dialog.profileName();
+            QStringList profiles = dir.entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
+            if (profiles.length() == 1)
+                m_customProfileMenu->addSeparator();
+            QAction* action = addProfile(m_profileGroup, name, dir.filePath(name));
+            action->setChecked(true);
+            m_customProfileMenu->addAction(action);
+        }
+    }
 }
