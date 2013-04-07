@@ -29,10 +29,14 @@ public:
     explicit AttachedFiltersModel(QObject *parent = 0);
 
     Mlt::Filter* filterForRow(int row) const;
+    int indexForRow(int row) const;
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     Qt::ItemFlags flags(const QModelIndex &index) const;
     QVariant data(const QModelIndex &index, int role) const;
     bool setData(const QModelIndex& index, const QVariant& value, int role = Qt::EditRole);
+    Qt::DropActions supportedDropActions() const;
+    bool insertRows(int row, int count, const QModelIndex &parent);
+    bool removeRows(int row, int count, const QModelIndex &parent);
  
 signals:
     void changed();
@@ -44,6 +48,7 @@ public slots:
 
 private:
     int m_rows;
+    int m_dropRow;
 
     void calculateRows();
 };

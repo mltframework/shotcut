@@ -44,6 +44,8 @@ FiltersDock::FiltersDock(QWidget *parent) :
     ui->setupUi(this);
     toggleViewAction()->setIcon(QIcon::fromTheme("view-filter", windowIcon()));
     ui->listView->setModel(&m_model);
+    ui->listView->setDragDropMode(QAbstractItemView::InternalMove);
+    ui->listView->setDropIndicatorShown(true);
     connect(model(), SIGNAL(changed()), this, SLOT(onModelChanged()));
 }
 

@@ -23,6 +23,7 @@
 AttachedFiltersModel::AttachedFiltersModel(QObject *parent)
     : QAbstractListModel(parent)
     , m_rows(0)
+    , m_dropRow(-1)
 {
 }
 
@@ -64,6 +65,28 @@ Mlt::Filter* AttachedFiltersModel::filterForRow(int row) const
     return result;
 }
 
+int AttachedFiltersModel::indexForRow(int row) const
+{
+    int result = -1;
+    Mlt::Producer* producer = MLT.producer();
+    if (producer && producer->is_valid()) {
+        int count = producer->filter_count();
+        int j = 0;
+        for (int i = 0; i < count; i++) {
+            Mlt::Filter* filter = producer->filter(i);
+            if (filter && filter->is_valid() && !filter->get_int("_loader")) {
+                if (j == row) {
+                    result = i;
+                    break;
+                }
+                j++;
+            }
+            delete filter;
+        }
+    }
+    return result;
+}
+
 int AttachedFiltersModel::rowCount(const QModelIndex &parent) const
 {
     if (MLT.producer() && MLT.producer()->is_valid())
@@ -74,7 +97,10 @@ int AttachedFiltersModel::rowCount(const QModelIndex &parent) const
 
 Qt::ItemFlags AttachedFiltersModel::flags(const QModelIndex &index) const
 {
-    return QAbstractListModel::flags(index) | Qt::ItemIsUserCheckable;
+    if (index.isValid())
+        return QAbstractListModel::flags(index) | Qt::ItemIsUserCheckable | Qt::ItemIsDragEnabled;
+    else
+        return QAbstractListModel::flags(index) | Qt::ItemIsDropEnabled;
 }
 
 QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
@@ -147,6 +173,44 @@ bool AttachedFiltersModel::setData(const QModelIndex& index, const QVariant& val
         return true;
     }
     return false;
+}
+
+Qt::DropActions AttachedFiltersModel::supportedDropActions() const
+{
+    return Qt::MoveAction;
+}
+
+bool AttachedFiltersModel::insertRows(int row, int count, const QModelIndex &parent)
+{
+    if (MLT.producer() && MLT.producer()->is_valid()) {
+        if (m_dropRow == -1)
+            m_dropRow = row;
+        return true;
+    } else {
+        return false;
+    }
+}
+
+bool AttachedFiltersModel::removeRows(int row, int count, const QModelIndex &parent)
+{
+    if (MLT.producer() && MLT.producer()->is_valid() && m_dropRow >= 0 && row != m_dropRow) {
+        MLT.producer()->move_filter(indexForRow(row), indexForRow(0) + m_dropRow);
+        QSettings settings;
+        // GPU processing requires that we restart the consumer for reasons
+        // internal to MLT and its integration of Movit.
+        if (settings.value("player/gpu", false).toBool()) {
+            double speed = MLT.producer()->get_speed();
+            MLT.consumer()->stop();
+            MLT.play(speed);
+        }
+        emit changed();
+        emit dataChanged(createIndex(row, 0), createIndex(row, 0));
+        emit dataChanged(createIndex(m_dropRow, 0), createIndex(m_dropRow, 0));
+        m_dropRow = -1;
+        return true;
+    } else {
+        return false;
+    }
 }
 
 Mlt::Filter *AttachedFiltersModel::add(const QString& name)
