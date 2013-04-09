@@ -54,23 +54,6 @@ Frame* QFrame::frame() const {
     return m_frame;
 }
 
-QImage QFrame::image()
-{
-    if (m_frame) {
-        int width = 0;
-        int height = 0;
-        // TODO: change the format if using a pixel shader
-        mlt_image_format format = mlt_image_rgb24a;
-        const uint8_t* image = m_frame->get_image(format, width, height);
-        QImage qimage(width, height, QImage::Format_ARGB32);
-        memcpy(qimage.scanLine(0), image, width * height * 4);
-        return qimage;
-    }
-    else {
-        return QImage();
-    }
-}
-
 Controller::Controller()
     : m_repo(Mlt::Factory::init())
     , m_producer(0)
@@ -105,8 +88,6 @@ Controller::~Controller()
     close();
     closeConsumer();
     delete m_profile;
-    // TODO: this is commented out because it causes crash on closing queued QFrames.
-//    Mlt::Factory::close();
 }
 
 int Controller::open(Mlt::Producer* producer, bool)
@@ -492,6 +473,28 @@ void Controller::setOut(int out)
 {
     if (m_producer && m_producer->is_valid())
         m_producer->set("out", out);
+}
+
+QImage Controller::image(Mlt::Frame* frame, int width, int height)
+{
+    QImage result(width, height, QImage::Format_ARGB32_Premultiplied);
+    if (frame->is_valid()) {
+        if (width > 0 && height > 0) {
+            frame->set("rescale.interp", "bicubic");
+            frame->set("deinterlace_method", "onefield");
+            frame->set("top_field_first", -1);
+        }
+        mlt_image_format format = mlt_image_rgb24a;
+        const uchar *image = frame->get_image(format, width, height);
+        if (image) {
+            result = QImage(width, height, QImage::Format_ARGB32_Premultiplied);
+            memcpy(result.scanLine(0), image, width * height * 4);
+            result = result.rgbSwapped();
+        }
+    } else {
+        result.fill(QColor(Qt::red).rgb());
+    }
+    return result;
 }
 
 void TransportControl::play(double speed)

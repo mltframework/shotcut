@@ -36,7 +36,6 @@ public:
     QFrame(const QFrame& qframe);
     ~QFrame();
     Frame* frame() const;
-    QImage image();
 private:
     Frame* m_frame;
 };
@@ -71,6 +70,7 @@ public:
     virtual int open(Mlt::Producer*, bool isMulti = false);
     virtual int open(const char* url);
     virtual void close();
+    virtual QImage image(Frame *frame, int width, int height);
 
     void closeConsumer();
     void play(double speed = 1.0);

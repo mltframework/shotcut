@@ -36,6 +36,7 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     ui->tableView->setAcceptDrops(true);
     ui->tableView->setDefaultDropAction(Qt::MoveAction);
     ui->tableView->resizeColumnToContents(0);
+
     connect(ui->actionRemove, SIGNAL(triggered()), this, SLOT(on_removeButton_clicked()));
     connect(&m_model, SIGNAL(cleared()), this, SLOT(onPlaylistCleared()));
     connect(&m_model, SIGNAL(created()), this, SLOT(onPlaylistCreated()));
@@ -43,6 +44,29 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     connect(&m_model, SIGNAL(modified()), this, SLOT(onPlaylistLoaded()));
     connect(&m_model, SIGNAL(dropped(const QMimeData*,int)), this, SLOT(onDropped(const QMimeData*,int)));
     connect(&m_model, SIGNAL(moveClip(int,int)), SLOT(onMoveClip(int,int)));
+
+    m_defaultRowHeight = ui->tableView->verticalHeader()->defaultSectionSize();
+    QString thumbs = m_settings.value("playlist/thumbnails", "small").toString();
+    if (thumbs == "wide") {
+        ui->actionLeftAndRight->setChecked(true);
+        on_actionLeftAndRight_triggered(true);
+    }
+    else if (thumbs == "tall") {
+        ui->actionTopAndBottom->setChecked(true);
+        on_actionTopAndBottom_triggered(true);
+    }
+    else if (thumbs == "small") {
+        ui->actionInOnlySmall->setChecked(true);
+        on_actionInOnlySmall_triggered(true);
+    }
+    else if (thumbs == "large") {
+        ui->actionInOnlyLarge->setChecked(true);
+        on_actionInOnlyLarge_triggered(true);
+    }
+    else {
+        ui->actionThumbnailsHidden->setChecked(true);
+        on_actionThumbnailsHidden_triggered(true);
+    }
 }
 
 PlaylistDock::~PlaylistDock()
@@ -127,6 +151,15 @@ void PlaylistDock::on_menuButton_clicked()
     }
     menu.addAction(ui->actionRemoveAll);
     menu.addAction(ui->actionClose);
+    menu.addSeparator();
+    QMenu* subMenu = menu.addMenu(tr("Thumbnails"));
+    QActionGroup group(this);
+    group.addAction(ui->actionThumbnailsHidden);
+    group.addAction(ui->actionInOnlyLarge);
+    group.addAction(ui->actionInOnlySmall);
+    group.addAction(ui->actionLeftAndRight);
+    group.addAction(ui->actionTopAndBottom);
+    subMenu->addActions(group.actions());
     menu.exec(mapToGlobal(pos));
 }
 
@@ -491,3 +524,52 @@ void MoveCommand::undo()
 }
 
 } // namespace Playlist
+
+void PlaylistDock::on_actionThumbnailsHidden_triggered(bool checked)
+{
+    if (checked) {
+        m_settings.setValue("playlist/thumbnails", "hidden");
+        ui->tableView->setColumnHidden(PlaylistModel::COLUMN_THUMBNAIL, true);
+        ui->tableView->verticalHeader()->setDefaultSectionSize(m_defaultRowHeight);
+    }
+}
+
+void PlaylistDock::on_actionLeftAndRight_triggered(bool checked)
+{
+    if (checked) {
+        m_settings.setValue("playlist/thumbnails", "wide");
+        ui->tableView->setColumnHidden(PlaylistModel::COLUMN_THUMBNAIL, false);
+        ui->tableView->verticalHeader()->setDefaultSectionSize(PlaylistModel::THUMBNAIL_HEIGHT);
+        ui->tableView->resizeColumnToContents(PlaylistModel::COLUMN_THUMBNAIL);
+    }
+}
+
+void PlaylistDock::on_actionTopAndBottom_triggered(bool checked)
+{
+    if (checked) {
+        m_settings.setValue("playlist/thumbnails", "tall");
+        ui->tableView->setColumnHidden(PlaylistModel::COLUMN_THUMBNAIL, false);
+        ui->tableView->verticalHeader()->setDefaultSectionSize(PlaylistModel::THUMBNAIL_HEIGHT * 2);
+        ui->tableView->resizeColumnToContents(PlaylistModel::COLUMN_THUMBNAIL);
+    }
+}
+
+void PlaylistDock::on_actionInOnlySmall_triggered(bool checked)
+{
+    if (checked) {
+        m_settings.setValue("playlist/thumbnails", "small");
+        ui->tableView->setColumnHidden(PlaylistModel::COLUMN_THUMBNAIL, false);
+        ui->tableView->verticalHeader()->setDefaultSectionSize(PlaylistModel::THUMBNAIL_HEIGHT);
+        ui->tableView->resizeColumnToContents(PlaylistModel::COLUMN_THUMBNAIL);
+    }
+}
+
+void PlaylistDock::on_actionInOnlyLarge_triggered(bool checked)
+{
+    if (checked) {
+        m_settings.setValue("playlist/thumbnails", "large");
+        ui->tableView->setColumnHidden(PlaylistModel::COLUMN_THUMBNAIL, false);
+        ui->tableView->verticalHeader()->setDefaultSectionSize(PlaylistModel::THUMBNAIL_HEIGHT * 2);
+        ui->tableView->resizeColumnToContents(PlaylistModel::COLUMN_THUMBNAIL);
+    }
+}

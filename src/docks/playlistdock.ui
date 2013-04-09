@@ -46,7 +46,6 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The player seeks to the beginning of whichever item you &lt;span style=&quot; font-weight:600;&quot;&gt;double-click&lt;/span&gt;.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;You can freely preview clips without necessarily adding them to the playlist or closing it.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;To trim or adjust a playlist entry choose &lt;span style=&quot; font-weight:600;&quot;&gt;Open As Clip&lt;/span&gt; from the context menu, make the changes, and then choose &lt;span style=&quot; font-weight:600;&quot;&gt;Update&lt;/span&gt;.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;To encode a playlist, it must be loaded in the player!&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Drag-n-drop&lt;/span&gt; to rearrange the items.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
          </widget>
@@ -226,6 +225,52 @@ selected cut.</string>
   <action name="actionClose">
    <property name="text">
     <string>Close</string>
+   </property>
+  </action>
+  <action name="actionThumbnailsHidden">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Hidden</string>
+   </property>
+  </action>
+  <action name="actionLeftAndRight">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>In and Out - Left/Right</string>
+   </property>
+   <property name="toolTip">
+    <string>In and Out - Left/Right</string>
+   </property>
+  </action>
+  <action name="actionTopAndBottom">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>In and Out - Top/Bottom</string>
+   </property>
+   <property name="toolTip">
+    <string>In and Out - Top/Bottom</string>
+   </property>
+  </action>
+  <action name="actionInOnlySmall">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>In Only - Small</string>
+   </property>
+  </action>
+  <action name="actionInOnlyLarge">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>In Only - Large</string>
    </property>
   </action>
  </widget>

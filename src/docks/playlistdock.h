@@ -21,6 +21,7 @@
 
 #include <QDockWidget>
 #include <QtGui/QUndoCommand>
+#include <QtCore/QSettings>
 #include "models/playlistmodel.h"
 
 namespace Ui {
@@ -88,9 +89,21 @@ private slots:
 
     void on_addButton_clicked();
 
+    void on_actionThumbnailsHidden_triggered(bool checked);
+
+    void on_actionLeftAndRight_triggered(bool checked);
+
+    void on_actionTopAndBottom_triggered(bool checked);
+
+    void on_actionInOnlySmall_triggered(bool checked);
+
+    void on_actionInOnlyLarge_triggered(bool checked);
+
 private:
     Ui::PlaylistDock *ui;
     PlaylistModel m_model;
+    int m_defaultRowHeight;
+    QSettings m_settings;
 };
 
 namespace Playlist

@@ -470,3 +470,30 @@ void GLWidget::on_frame_show(mlt_consumer, void* self, mlt_frame frame_ptr)
         emit widget->frameReceived(Mlt::QFrame(frame));
     }
 }
+
+QImage GLWidget::image(Mlt::Frame* frame, int width, int height)
+{
+    QImage result(width, height, QImage::Format_ARGB32_Premultiplied);
+    if (frame->is_valid()) {
+        double speed = producer()->get_speed();
+        mlt_image_format format = mlt_image_rgb24a;
+        if (width > 0 && height > 0) {
+            frame->set("rescale.interp", "nearest");
+            frame->set("deinterlace_method", "onefield");
+            frame->set("top_field_first", -1);
+        }
+        consumer()->stop();
+        startGlsl();
+        const uchar *image = frame->get_image(format, width, height);
+        if (image) {
+            result = QImage(width, height, QImage::Format_ARGB32_Premultiplied);
+            memcpy(result.scanLine(0), image, width * height * 4);
+            result = result.rgbSwapped();
+        }
+        play(speed);
+    }
+    else {
+        result.fill(QColor(Qt::red).rgb());
+    }
+    return result;
+}

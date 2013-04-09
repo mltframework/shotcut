@@ -19,6 +19,13 @@
 #include "playlistmodel.h"
 #include <QtCore/QFileInfo>
 #include <QtCore/QUrl>
+#include <QtGui/QImage>
+#include <QtGui/QColor>
+#include <QtGui/QPainter>
+#include <QtCore/QSettings>
+
+static const char* kThumbnailInProperty = "shotcut:thumbnail-in";
+static const char* kThumbnailOutProperty = "shotcut:thumbnail-out";
 
 PlaylistModel::PlaylistModel(QObject *parent)
     : QAbstractTableModel(parent)
@@ -83,11 +90,65 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
             }
             else
                 return "";
+        default:
+            break;
         }
+        break;
     }
+    case Qt::DecorationRole:
+        if (index.column() == COLUMN_THUMBNAIL) {
+            Mlt::Producer* producer = m_playlist->get_clip(index.row());
+            Mlt::Producer parent(producer->get_parent());
+            QImage image(THUMBNAIL_WIDTH, THUMBNAIL_HEIGHT, QImage::Format_ARGB32_Premultiplied);
+            image.fill(QColor(Qt::white).rgb());
+
+            if (parent.is_valid() && parent.get_data(kThumbnailInProperty) && parent.get_data(kThumbnailOutProperty)) {
+                int width = THUMBNAIL_HEIGHT * MLT.profile().dar();
+                QSettings settings;
+                QString setting = settings.value("playlist/thumbnails").toString();
+                if (setting == "wide")
+                    image = QImage(width * 2, THUMBNAIL_HEIGHT, QImage::Format_ARGB32_Premultiplied);
+                else if (setting == "tall")
+                    image = QImage(width, THUMBNAIL_HEIGHT * 2, QImage::Format_ARGB32_Premultiplied);
+                else if (setting == "large")
+                    image = QImage(width * 2, THUMBNAIL_HEIGHT * 2, QImage::Format_ARGB32_Premultiplied);
+                else
+                    image = QImage(width, THUMBNAIL_HEIGHT, QImage::Format_ARGB32_Premultiplied);
+                QPainter painter(&image);
+                image.fill(QColor(Qt::black).rgb());
+
+                // draw the in thumbnail
+                QImage* thumb = (QImage*) parent.get_data(kThumbnailInProperty);
+                QRect rect = thumb->rect();
+                if (setting != "large") {
+                    rect.setWidth(width);
+                    rect.setHeight(THUMBNAIL_HEIGHT);
+                }
+                painter.drawImage(rect, *thumb);
+
+                if (setting == "wide" || setting == "tall") {
+                    // draw the out thumbnail
+                    thumb = (QImage*) parent.get_data(kThumbnailOutProperty);
+                    if (setting == "wide") {
+                        rect.setWidth(width * 2);
+                        rect.setLeft(width);
+                    }
+                    else if (setting == "tall") {
+                        rect.setHeight(THUMBNAIL_HEIGHT * 2);
+                        rect.setTop(THUMBNAIL_HEIGHT);
+                    }
+                    painter.drawImage(rect, *thumb);
+                }
+                painter.end();
+            }
+            delete producer;
+            return image;
+        }
+        break;
     default:
-        return QVariant();
+        break;
     }
+    return QVariant();
 }
 
 QVariant PlaylistModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -97,6 +158,8 @@ QVariant PlaylistModel::headerData(int section, Qt::Orientation orientation, int
         switch (section) {
         case COLUMN_INDEX:
             return tr("#");
+        case COLUMN_THUMBNAIL:
+            return tr("Thumbnails");
         case COLUMN_RESOURCE:
             return tr("Clip");
         case COLUMN_IN:
@@ -249,6 +312,7 @@ void PlaylistModel::load()
 void PlaylistModel::append(Mlt::Producer* producer)
 {
     createIfNeeded();
+    makeThumbnail(producer);
     int count = m_playlist->count();
     beginInsertRows(QModelIndex(), count, count);
     m_playlist->append(*producer, producer->get_in(), producer->get_out());
@@ -260,6 +324,7 @@ void PlaylistModel::append(Mlt::Producer* producer)
 void PlaylistModel::insert(Mlt::Producer* producer, int row)
 {
     createIfNeeded();
+    makeThumbnail(producer);
     beginInsertRows(QModelIndex(), row, row);
     m_playlist->insert(*producer, row, producer->get_in(), producer->get_out());
     producer->set_in_and_out(0, producer->get_length() - 1);
@@ -282,6 +347,7 @@ void PlaylistModel::remove(int row)
 void PlaylistModel::update(int row, Mlt::Producer* producer)
 {
     if (!m_playlist) return;
+    makeThumbnail(producer);
     m_playlist->remove(row);
     m_playlist->insert(*producer, row, producer->get_in(), producer->get_out());
     producer->set_in_and_out(0, producer->get_length() - 1);
@@ -334,4 +400,29 @@ void PlaylistModel::createIfNeeded()
         MLT.profile().set_explicit(true);
         emit created();
     }
+}
+
+static void deleteQImage(QImage* image)
+{
+    delete image;
+}
+
+void PlaylistModel::makeThumbnail(Mlt::Producer *producer)
+{
+    int height = THUMBNAIL_HEIGHT * 2;
+    int width = height * MLT.profile().dar();
+
+    // render the in point thumbnail
+    producer->seek(0);
+    Mlt::Frame* frame = producer->get_frame();
+    QImage thumb = MLT.image(frame, width, height);
+    delete frame;
+    producer->set(kThumbnailInProperty, new QImage(thumb), 0, (mlt_destructor) deleteQImage, NULL);
+
+    // render the out point thumbnail
+    producer->seek(producer->get_playtime());
+    frame = producer->get_frame();
+    thumb = MLT.image(frame, width, height);
+    delete frame;
+    producer->set(kThumbnailOutProperty, new QImage(thumb), 0, (mlt_destructor) deleteQImage, NULL);
 }

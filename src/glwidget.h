@@ -46,6 +46,7 @@ public:
     int open(Mlt::Producer*, bool isMulti = false);
     int reconfigure(bool isMulti);
     QWidget* videoWidget() { return this; }
+    QImage image(Frame *frame, int width, int height);
     QSemaphore showFrameSemaphore;
 
 public slots:

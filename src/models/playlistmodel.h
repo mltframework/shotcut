@@ -31,12 +31,17 @@ class PlaylistModel : public QAbstractTableModel
 public:
     enum Columns {
         COLUMN_INDEX = 0,
+        COLUMN_THUMBNAIL,
         COLUMN_RESOURCE,
         COLUMN_IN,
         COLUMN_DURATION,
         COLUMN_START,
         COLUMN_COUNT
     };
+
+    static const int THUMBNAIL_WIDTH = 80;
+    static const int THUMBNAIL_HEIGHT = 45;
+
     explicit PlaylistModel(QObject *parent = 0);
     ~PlaylistModel();
     int rowCount(const QModelIndex& parent = QModelIndex()) const;
@@ -54,6 +59,7 @@ public:
     QModelIndex decrementIndex(const QModelIndex& index) const;
     QModelIndex createIndex(int row, int column) const;
     void createIfNeeded();
+    static void makeThumbnail(Mlt::Producer* producer);
     Mlt::Playlist* playlist()
     {
         return m_playlist;
