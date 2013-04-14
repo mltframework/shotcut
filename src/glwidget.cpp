@@ -361,8 +361,10 @@ void GLWidget::renderImage(Mlt::QProducer producer, int position, int width, int
     Mlt::Frame* frame = producer.producer()->get_frame();
     QImage image = Controller::image(frame, width, height);
     delete frame;
-    if (m_glslManager)
+    if (m_glslManager) {
+        this->makeCurrent();
         m_consumer->start();
+    }
     emit imageRendered(producer, position, image);
 }
 
