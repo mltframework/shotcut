@@ -831,8 +831,10 @@ void MainWindow::dropEvent(QDropEvent *event)
         }
     }
     else if (mimeData->hasUrls()) {
-        foreach (QUrl url, mimeData->urls())
-            m_multipleFiles.append(url.path());
+        if (mimeData->urls().length() > 1) {
+            foreach (QUrl url, mimeData->urls())
+                m_multipleFiles.append(url.path());
+        }
         open(mimeData->urls().first().path());
         event->acceptProposedAction();
     }
