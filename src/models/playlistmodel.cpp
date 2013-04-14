@@ -23,7 +23,7 @@
 #include <QtGui/QColor>
 #include <QtGui/QPainter>
 #include <QtCore/QThreadPool>
-#include <QDebug>
+#include <QtDebug>
 
 static const char* kThumbnailInProperty = "shotcut:thumbnail-in";
 static const char* kThumbnailOutProperty = "shotcut:thumbnail-out";
@@ -193,8 +193,7 @@ bool PlaylistModel::insertRows(int row, int count, const QModelIndex& parent)
 
 bool PlaylistModel::removeRows(int row, int count, const QModelIndex& parent)
 {
-    if (!m_playlist) return false;
-    if (row == m_dropRow) return false;
+    if (!m_playlist || row == m_dropRow || m_dropRow == -1 ) return false;
     if (row < m_dropRow)
         emit moveClip(row, m_dropRow - 1);
     else
