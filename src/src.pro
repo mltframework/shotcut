@@ -180,8 +180,9 @@ OTHER_FILES += \
     ../Info.plist
 
 TRANSLATIONS += \
-    ../translations/shotcut_en.ts \
     ../translations/shotcut_cs.ts \
+    ../translations/shotcut_de.ts \
+    ../translations/shotcut_en.ts \
     ../translations/shotcut_es.ts \
     ../translations/shotcut_fr.ts
 
