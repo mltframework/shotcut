@@ -22,6 +22,7 @@
 #include <QAbstractTableModel>
 #include <QtCore/qmimedata.h>
 #include <QtCore/QStringList>
+#include <QtCore/QSettings>
 #include "mltcontroller.h"
 #include "MltPlaylist.h"
 
@@ -59,7 +60,8 @@ public:
     QModelIndex decrementIndex(const QModelIndex& index) const;
     QModelIndex createIndex(int row, int column) const;
     void createIfNeeded();
-    static void makeThumbnail(Mlt::Producer* producer);
+    void makeThumbnail(Mlt::Producer* producer, int row = -1);
+    void refreshThumbnails();
     Mlt::Playlist* playlist()
     {
         return m_playlist;
@@ -73,6 +75,7 @@ signals:
     void loaded();
     void dropped(const QMimeData *data, int row);
     void moveClip(int from, int to);
+    void requestImage(Mlt::QProducer, int position, int width, int height);
 
 public slots:
     void clear();
@@ -85,11 +88,13 @@ public slots:
     void insertBlank(int frames, int row);
     void close();
     void move(int from, int to);
+    void updateThumbnail(Mlt::QProducer, int position, QImage image);
 
 private:
     Mlt::Playlist* m_playlist;
     Mlt::ClipInfo m_clipInfo;
     int m_dropRow;
+    QSettings m_settings;
 };
 
 #endif // PLAYLISTMODEL_H

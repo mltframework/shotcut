@@ -99,6 +99,7 @@ int SDLWidget::reconfigure(bool isMulti)
             m_consumer->set("scrub_audio", 1);
 #endif
         }
+        emit started();
     }
     else {
         // Cleanup on error

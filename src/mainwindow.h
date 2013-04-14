@@ -92,6 +92,7 @@ private:
     QActionGroup* m_externalGroup;
     FiltersDock* m_filtersDock;
     QMenu* m_customProfileMenu;
+    QStringList m_multipleFiles;
 
 public slots:
     void open(const QString& url, const Mlt::Properties* = 0);
@@ -146,6 +147,7 @@ private slots:
     void onExternalTriggered(QAction*);
     void onProfileTriggered(QAction*);
     void on_actionAddCustomProfile_triggered();
+    void processMultipleFiles();
 };
 
 #define MAIN MainWindow::singleton()

@@ -27,6 +27,7 @@
 class QWidget;
 namespace Mlt {
 
+// Wrapper to use Mlt::Frame in signals
 class QFrame : public QObject
 {
     Q_OBJECT
@@ -38,6 +39,20 @@ public:
     Frame* frame() const;
 private:
     Frame* m_frame;
+};
+
+// Wrapper to use Mlt::Producer in signals
+class QProducer : public QObject
+{
+    Q_OBJECT
+public:
+    QProducer(QObject *parent = 0);
+    QProducer(const Producer& producer);
+    QProducer(const QProducer& qproducer);
+    ~QProducer();
+    Producer* producer() const;
+private:
+    Producer* m_producer;
 };
 
 class TransportControl : public TransportControllable

@@ -242,6 +242,9 @@ void GLWidget::startGlsl()
             mlt_properties_set_data(mlt_global_properties(), "glslManager", NULL, 0, NULL, NULL);
             emit gpuNotSupported();
         }
+        else {
+            emit started();
+        }
     }
 }
 
@@ -348,6 +351,21 @@ void GLWidget::showFrame(Mlt::QFrame frame)
     showFrameSemaphore.release();
 }
 
+void GLWidget::renderImage(Mlt::QProducer producer, int position, int width, int height)
+{
+    if (m_glslManager) {
+        m_consumer->stop();
+        m_renderContext->makeCurrent();
+    }
+    producer.producer()->seek(position);
+    Mlt::Frame* frame = producer.producer()->get_frame();
+    QImage image = Controller::image(frame, width, height);
+    delete frame;
+    if (m_glslManager)
+        m_consumer->start();
+    emit imageRendered(producer, position, image);
+}
+
 int GLWidget::open(Mlt::Producer* producer, bool isMulti)
 {
     int error = Controller::open(producer, isMulti);
@@ -450,6 +468,7 @@ int GLWidget::reconfigure(bool isMulti)
         } else {
             m_image_format = mlt_image_yuv420p;
             createShader();
+            emit started();
         }
     }
     else {
@@ -469,31 +488,4 @@ void GLWidget::on_frame_show(mlt_consumer, void* self, mlt_frame frame_ptr)
         Frame frame(frame_ptr);
         emit widget->frameReceived(Mlt::QFrame(frame));
     }
-}
-
-QImage GLWidget::image(Mlt::Frame* frame, int width, int height)
-{
-    QImage result(width, height, QImage::Format_ARGB32_Premultiplied);
-    if (frame->is_valid()) {
-        double speed = producer()->get_speed();
-        mlt_image_format format = mlt_image_rgb24a;
-        if (width > 0 && height > 0) {
-            frame->set("rescale.interp", "nearest");
-            frame->set("deinterlace_method", "onefield");
-            frame->set("top_field_first", -1);
-        }
-        consumer()->stop();
-        startGlsl();
-        const uchar *image = frame->get_image(format, width, height);
-        if (image) {
-            result = QImage(width, height, QImage::Format_ARGB32_Premultiplied);
-            memcpy(result.scanLine(0), image, width * height * 4);
-            result = result.rgbSwapped();
-        }
-        play(speed);
-    }
-    else {
-        result.fill(QColor(Qt::red).rgb());
-    }
-    return result;
 }

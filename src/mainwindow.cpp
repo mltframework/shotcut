@@ -53,6 +53,7 @@
 
 #include <QtGui>
 #include <QDebug>
+#include <QtCore/QThreadPool>
 
 static const int STATUS_TIMEOUT_MS = 3000;
 
@@ -61,6 +62,8 @@ MainWindow::MainWindow()
     , ui(new Ui::MainWindow)
     , m_isKKeyPressed(false)
 {
+    QThreadPool::globalInstance()->setMaxThreadCount(1);
+
     // Create the UI.
     ui->setupUi(this);
 #ifndef Q_WS_X11
@@ -114,6 +117,7 @@ MainWindow::MainWindow()
     connect(m_player, SIGNAL(showStatusMessage(QString)), this, SLOT(showStatusMessage(QString)));
     connect(m_player, SIGNAL(inChanged(int)), this, SLOT(onCutModified()));
     connect(m_player, SIGNAL(outChanged(int)), this, SLOT(onCutModified()));
+    connect(MLT.videoWidget(), SIGNAL(started()), SLOT(processMultipleFiles()));
     setupSettingsMenu();
     readPlayerSettings();
     configureVideoWidget();
@@ -154,6 +158,10 @@ MainWindow::MainWindow()
     connect(m_playlistDock->model(), SIGNAL(modified()), this, SLOT(onPlaylistModified()));
     connect(m_playlistDock->model(), SIGNAL(loaded()), this, SLOT(updateMarkers()));
     connect(m_playlistDock->model(), SIGNAL(modified()), this, SLOT(updateMarkers()));
+    connect(m_playlistDock->model(), SIGNAL(requestImage(Mlt::QProducer,int,int,int)),
+            MLT.videoWidget(), SLOT(renderImage(Mlt::QProducer,int,int,int)));
+    connect(MLT.videoWidget(), SIGNAL(imageRendered(Mlt::QProducer,int,QImage)),
+            m_playlistDock->model(), SLOT(updateThumbnail(Mlt::QProducer,int,QImage)));
 
     m_filtersDock = new FiltersDock(this);
     m_filtersDock->hide();
@@ -453,29 +461,9 @@ void MainWindow::openVideo()
     if (filenames.length() > 0) {
         m_settings.setValue(settingKey, QFileInfo(filenames.first()).path());
         activateWindow();
-        if (filenames.length() > 1) {
-            PlaylistModel* model = m_playlistDock->model();
-            bool createPlaylist = !model->playlist();
-            m_playlistDock->show();
-            m_playlistDock->raise();
-            if (createPlaylist) {
-                model->createIfNeeded();
-                if (!MLT.producer())
-                    open(new Mlt::Producer(*(model->playlist())));
-            }
-            foreach (QString filename, filenames) {
-                Mlt::Producer p(MLT.profile(), filename.toUtf8().constData());
-                if (p.is_valid()) {
-                    if (createPlaylist)
-                        model->append(&p);
-                    else
-                        undoStack()->push(new Playlist::AppendCommand(*model, MLT.saveXML("string", &p)));
-                }
-            }
-        }
-        else {
-            open(filenames.first());
-        }
+        if (filenames.length() > 1)
+            m_multipleFiles = filenames;
+        open(filenames.first());
     }
     else {
         // If file invalid, then on some platforms the dialog messes up SDL.
@@ -843,29 +831,9 @@ void MainWindow::dropEvent(QDropEvent *event)
         }
     }
     else if (mimeData->hasUrls()) {
-        if (mimeData->urls().length() > 1) {
-            PlaylistModel* model = m_playlistDock->model();
-            bool createPlaylist = !model->playlist();
-            m_playlistDock->show();
-            m_playlistDock->raise();
-            if (createPlaylist) {
-                model->createIfNeeded();
-                if (!MLT.producer())
-                    open(new Mlt::Producer(*(model->playlist())));
-            }
-            foreach (QUrl url, mimeData->urls()) {
-                Mlt::Producer p(MLT.profile(), url.path().toUtf8().constData());
-                if (p.is_valid()) {
-                    if (createPlaylist)
-                        model->append(&p);
-                    else
-                        undoStack()->push(new Playlist::AppendCommand(*model, MLT.saveXML("string", &p)));
-                }
-            }
-        }
-        else {
-            open(mimeData->urls().at(0).path());
-        }
+        foreach (QUrl url, mimeData->urls())
+            m_multipleFiles.append(url.path());
+        open(mimeData->urls().first().path());
         event->acceptProposedAction();
     }
     else if (mimeData->hasFormat("application/mlt+xml")) {
@@ -1297,6 +1265,40 @@ void MainWindow::changeInterpolation(bool checked, const char* method)
         }
     }
     m_settings.setValue("player/interpolation", method);
+}
+
+class AppendTask : public QRunnable
+{
+public:
+    AppendTask(PlaylistModel* model, QString filename)
+        : QRunnable()
+        , model(model)
+        , filename(filename)
+    {
+    }
+    void run()
+    {
+        Mlt::Producer p(MLT.profile(), filename.toUtf8().constData());
+        if (p.is_valid())
+            MAIN.undoStack()->push(new Playlist::AppendCommand(*model, MLT.saveXML("string", &p)));
+    }
+private:
+    PlaylistModel* model;
+    QString filename;
+};
+
+void MainWindow::processMultipleFiles()
+{
+    if (m_multipleFiles.length() > 0) {
+        PlaylistModel* model = m_playlistDock->model();
+        m_playlistDock->show();
+        m_playlistDock->raise();
+        foreach (QString filename, m_multipleFiles) {
+            QThreadPool::globalInstance()->start(new AppendTask(model, filename));
+            m_recentDock->add(filename.toUtf8().constData());
+        }
+    }
+    m_multipleFiles.clear();
 }
 
 void MainWindow::on_actionNearest_triggered(bool checked)

@@ -54,6 +54,34 @@ Frame* QFrame::frame() const {
     return m_frame;
 }
 
+QProducer::QProducer(QObject *parent)
+    : QObject(parent)
+    , m_producer(0)
+{}
+
+QProducer::QProducer(const Producer& producer)
+    : QObject(0)
+{
+    Producer* p = const_cast<Producer*>(&producer);
+    m_producer = new Producer(p->get_producer());
+}
+
+QProducer::QProducer(const QProducer& qproducer)
+    : QObject(0)
+{
+    Producer* p = qproducer.producer();
+    m_producer = new Producer(p->get_producer());
+}
+
+QProducer::~QProducer() {
+    delete m_producer;
+}
+
+Producer* QProducer::producer() const {
+    return m_producer;
+}
+
+
 Controller::Controller()
     : m_repo(Mlt::Factory::init())
     , m_producer(0)
@@ -70,6 +98,7 @@ Controller& Controller::singleton(QWidget* parent)
     static Controller* instance = 0;
     if (!instance) {
         qRegisterMetaType<QFrame>("Mlt::QFrame");
+        qRegisterMetaType<QProducer>("Mlt::QProducer");
 #if defined(Q_WS_MAC) || defined(Q_WS_WIN)
         instance = new GLWidget(parent);
 #else
@@ -478,18 +507,18 @@ void Controller::setOut(int out)
 QImage Controller::image(Mlt::Frame* frame, int width, int height)
 {
     QImage result(width, height, QImage::Format_ARGB32_Premultiplied);
-    if (frame->is_valid()) {
+    if (frame && frame->is_valid()) {
         if (width > 0 && height > 0) {
-            frame->set("rescale.interp", "bicubic");
+            frame->set("rescale.interp", "bilinear");
             frame->set("deinterlace_method", "onefield");
             frame->set("top_field_first", -1);
         }
         mlt_image_format format = mlt_image_rgb24a;
         const uchar *image = frame->get_image(format, width, height);
         if (image) {
-            result = QImage(width, height, QImage::Format_ARGB32_Premultiplied);
-            memcpy(result.scanLine(0), image, width * height * 4);
-            result = result.rgbSwapped();
+            QImage temp(width, height, QImage::Format_ARGB32_Premultiplied);
+            memcpy(temp.scanLine(0), image, width * height * 4);
+            result = temp.rgbSwapped();
         }
     } else {
         result.fill(QColor(Qt::red).rgb());

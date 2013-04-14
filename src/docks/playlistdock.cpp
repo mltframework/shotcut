@@ -537,7 +537,9 @@ void PlaylistDock::on_actionThumbnailsHidden_triggered(bool checked)
 void PlaylistDock::on_actionLeftAndRight_triggered(bool checked)
 {
     if (checked) {
+        bool refreshThumbs = m_settings.value("playlist/thumbnails").toString() == "hidden";
         m_settings.setValue("playlist/thumbnails", "wide");
+        if (refreshThumbs) m_model.refreshThumbnails();
         ui->tableView->setColumnHidden(PlaylistModel::COLUMN_THUMBNAIL, false);
         ui->tableView->verticalHeader()->setDefaultSectionSize(PlaylistModel::THUMBNAIL_HEIGHT);
         ui->tableView->resizeColumnToContents(PlaylistModel::COLUMN_THUMBNAIL);
@@ -547,7 +549,9 @@ void PlaylistDock::on_actionLeftAndRight_triggered(bool checked)
 void PlaylistDock::on_actionTopAndBottom_triggered(bool checked)
 {
     if (checked) {
+        bool refreshThumbs = m_settings.value("playlist/thumbnails").toString() == "hidden";
         m_settings.setValue("playlist/thumbnails", "tall");
+        if (refreshThumbs) m_model.refreshThumbnails();
         ui->tableView->setColumnHidden(PlaylistModel::COLUMN_THUMBNAIL, false);
         ui->tableView->verticalHeader()->setDefaultSectionSize(PlaylistModel::THUMBNAIL_HEIGHT * 2);
         ui->tableView->resizeColumnToContents(PlaylistModel::COLUMN_THUMBNAIL);
@@ -557,7 +561,9 @@ void PlaylistDock::on_actionTopAndBottom_triggered(bool checked)
 void PlaylistDock::on_actionInOnlySmall_triggered(bool checked)
 {
     if (checked) {
+        bool refreshThumbs = m_settings.value("playlist/thumbnails").toString() == "hidden";
         m_settings.setValue("playlist/thumbnails", "small");
+        if (refreshThumbs) m_model.refreshThumbnails();
         ui->tableView->setColumnHidden(PlaylistModel::COLUMN_THUMBNAIL, false);
         ui->tableView->verticalHeader()->setDefaultSectionSize(PlaylistModel::THUMBNAIL_HEIGHT);
         ui->tableView->resizeColumnToContents(PlaylistModel::COLUMN_THUMBNAIL);
@@ -567,7 +573,9 @@ void PlaylistDock::on_actionInOnlySmall_triggered(bool checked)
 void PlaylistDock::on_actionInOnlyLarge_triggered(bool checked)
 {
     if (checked) {
+        bool refreshThumbs = m_settings.value("playlist/thumbnails").toString() == "hidden";
         m_settings.setValue("playlist/thumbnails", "large");
+        if (refreshThumbs) m_model.refreshThumbnails();
         ui->tableView->setColumnHidden(PlaylistModel::COLUMN_THUMBNAIL, false);
         ui->tableView->verticalHeader()->setDefaultSectionSize(PlaylistModel::THUMBNAIL_HEIGHT * 2);
         ui->tableView->resizeColumnToContents(PlaylistModel::COLUMN_THUMBNAIL);

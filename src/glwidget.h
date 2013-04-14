@@ -46,11 +46,11 @@ public:
     int open(Mlt::Producer*, bool isMulti = false);
     int reconfigure(bool isMulti);
     QWidget* videoWidget() { return this; }
-    QImage image(Frame *frame, int width, int height);
     QSemaphore showFrameSemaphore;
 
 public slots:
     void showFrame(Mlt::QFrame);
+    void renderImage(Mlt::QProducer, int position, int width, int height);
 
 signals:
     /** This method will be called each time a new frame is available.
@@ -60,6 +60,8 @@ signals:
     void dragStarted();
     void seekTo(int x);
     void gpuNotSupported();
+    void started();
+    void imageRendered(Mlt::QProducer, int position, QImage image);
 
 private:
     int x, y, w, h;

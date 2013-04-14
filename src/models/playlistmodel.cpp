@@ -22,7 +22,8 @@
 #include <QtGui/QImage>
 #include <QtGui/QColor>
 #include <QtGui/QPainter>
-#include <QtCore/QSettings>
+#include <QtCore/QThreadPool>
+#include <QDebug>
 
 static const char* kThumbnailInProperty = "shotcut:thumbnail-in";
 static const char* kThumbnailOutProperty = "shotcut:thumbnail-out";
@@ -99,21 +100,20 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
         if (index.column() == COLUMN_THUMBNAIL) {
             Mlt::Producer* producer = m_playlist->get_clip(index.row());
             Mlt::Producer parent(producer->get_parent());
-            QImage image(THUMBNAIL_WIDTH, THUMBNAIL_HEIGHT, QImage::Format_ARGB32_Premultiplied);
-            image.fill(QColor(Qt::white).rgb());
+            int width = THUMBNAIL_HEIGHT * MLT.profile().dar();
+            QString setting = m_settings.value("playlist/thumbnails").toString();
+            QImage image;
+
+            if (setting == "wide")
+                image = QImage(width * 2, THUMBNAIL_HEIGHT, QImage::Format_ARGB32_Premultiplied);
+            else if (setting == "tall")
+                image = QImage(width, THUMBNAIL_HEIGHT * 2, QImage::Format_ARGB32_Premultiplied);
+            else if (setting == "large")
+                image = QImage(width * 2, THUMBNAIL_HEIGHT * 2, QImage::Format_ARGB32_Premultiplied);
+            else
+                image = QImage(width, THUMBNAIL_HEIGHT, QImage::Format_ARGB32_Premultiplied);
 
             if (parent.is_valid() && parent.get_data(kThumbnailInProperty) && parent.get_data(kThumbnailOutProperty)) {
-                int width = THUMBNAIL_HEIGHT * MLT.profile().dar();
-                QSettings settings;
-                QString setting = settings.value("playlist/thumbnails").toString();
-                if (setting == "wide")
-                    image = QImage(width * 2, THUMBNAIL_HEIGHT, QImage::Format_ARGB32_Premultiplied);
-                else if (setting == "tall")
-                    image = QImage(width, THUMBNAIL_HEIGHT * 2, QImage::Format_ARGB32_Premultiplied);
-                else if (setting == "large")
-                    image = QImage(width * 2, THUMBNAIL_HEIGHT * 2, QImage::Format_ARGB32_Premultiplied);
-                else
-                    image = QImage(width, THUMBNAIL_HEIGHT, QImage::Format_ARGB32_Premultiplied);
                 QPainter painter(&image);
                 image.fill(QColor(Qt::black).rgb());
 
@@ -140,6 +140,9 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
                     painter.drawImage(rect, *thumb);
                 }
                 painter.end();
+            }
+            else {
+                image.fill(QColor(Qt::gray).rgb());
             }
             delete producer;
             return image;
@@ -392,6 +395,17 @@ void PlaylistModel::move(int from, int to)
     emit modified();
 }
 
+static void deleteQImage(QImage* image)
+{
+    delete image;
+}
+
+void PlaylistModel::updateThumbnail(Mlt::QProducer producer, int position, QImage image)
+{
+    producer.producer()->set(position == 0? kThumbnailInProperty : kThumbnailOutProperty,
+        new QImage(image), 0, (mlt_destructor) deleteQImage, NULL);
+}
+
 void PlaylistModel::createIfNeeded()
 {
     if (!m_playlist) {
@@ -402,27 +416,65 @@ void PlaylistModel::createIfNeeded()
     }
 }
 
-static void deleteQImage(QImage* image)
+void PlaylistModel::makeThumbnail(Mlt::Producer *producer, int row)
 {
-    delete image;
-}
-
-void PlaylistModel::makeThumbnail(Mlt::Producer *producer)
-{
-    int height = THUMBNAIL_HEIGHT * 2;
+    if (m_settings.value("playlist/thumbnails").toString() == "hidden")
+        return;
+    int height = PlaylistModel::THUMBNAIL_HEIGHT * 2;
     int width = height * MLT.profile().dar();
 
-    // render the in point thumbnail
-    producer->seek(0);
-    Mlt::Frame* frame = producer->get_frame();
-    QImage thumb = MLT.image(frame, width, height);
-    delete frame;
-    producer->set(kThumbnailInProperty, new QImage(thumb), 0, (mlt_destructor) deleteQImage, NULL);
+    if (m_settings.value("player/gpu").toBool()) {
+        emit requestImage(Mlt::QProducer(*producer), 0, width, height);
+        emit requestImage(Mlt::QProducer(*producer), producer->get_playtime(), width, height);
+    }
+    else {
+        // render the in point thumbnail
+        producer->seek(0);
+        Mlt::Frame* frame = producer->get_frame();
+        QImage thumb = MLT.image(frame, width, height);
+        delete frame;
+        producer->set(kThumbnailInProperty, new QImage(thumb), 0, (mlt_destructor) deleteQImage, NULL);
 
-    // render the out point thumbnail
-    producer->seek(producer->get_playtime());
-    frame = producer->get_frame();
-    thumb = MLT.image(frame, width, height);
-    delete frame;
-    producer->set(kThumbnailOutProperty, new QImage(thumb), 0, (mlt_destructor) deleteQImage, NULL);
+        // render the out point thumbnail
+        producer->seek(producer->get_playtime());
+        frame = producer->get_frame();
+        thumb = MLT.image(frame, width, height);
+        delete frame;
+        producer->set(kThumbnailOutProperty, new QImage(thumb), 0, (mlt_destructor) deleteQImage, NULL);
+        if (row >= 0)
+            emit dataChanged(createIndex(row, PlaylistModel::COLUMN_THUMBNAIL),
+                             createIndex(row, PlaylistModel::COLUMN_THUMBNAIL));
+    }
+}
+
+class UpdateThumbnailTask : public QRunnable
+{
+    PlaylistModel* m_model;
+    Mlt::Producer m_producer;
+    int m_row;
+public:
+    UpdateThumbnailTask(PlaylistModel* model, Mlt::Producer& producer, int row)
+        : QRunnable()
+        , m_model(model)
+        , m_producer(producer)
+        , m_row(row)
+    {}
+    void run() {
+        m_model->makeThumbnail(&m_producer, m_row);
+    }
+};
+
+void PlaylistModel::refreshThumbnails()
+{
+    if (m_playlist && m_playlist->is_valid()) {
+        for (int i = 0; i < m_playlist->count(); i++) {
+            Mlt::Producer* producer = m_playlist->get_clip(i);
+            if (producer && producer->is_valid()) {
+                Mlt::Producer parent(producer->get_parent());
+                QThreadPool::globalInstance()->start(
+                            new UpdateThumbnailTask(this, parent, i));
+            }
+            delete producer;
+        }
+    }
 }
