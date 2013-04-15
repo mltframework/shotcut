@@ -61,6 +61,7 @@ MainWindow::MainWindow()
     : QMainWindow(0)
     , ui(new Ui::MainWindow)
     , m_isKKeyPressed(false)
+    , m_isPlaylistLoaded(false)
 {
     QThreadPool::globalInstance()->setMaxThreadCount(1);
 
@@ -157,11 +158,15 @@ MainWindow::MainWindow()
     connect(m_playlistDock->model(), SIGNAL(closed()), this, SLOT(onPlaylistClosed()));
     connect(m_playlistDock->model(), SIGNAL(modified()), this, SLOT(onPlaylistModified()));
     connect(m_playlistDock->model(), SIGNAL(loaded()), this, SLOT(updateMarkers()));
+    if (!m_settings.value("player/gpu").toBool())
+        connect(m_playlistDock->model(), SIGNAL(loaded()), this, SLOT(updateThumbnails()));
     connect(m_playlistDock->model(), SIGNAL(modified()), this, SLOT(updateMarkers()));
-    connect(m_playlistDock->model(), SIGNAL(requestImage(Mlt::QProducer,int,int,int)),
+    if (m_settings.value("player/opengl").toBool()) {
+        connect(m_playlistDock->model(), SIGNAL(requestImage(Mlt::QProducer,int,int,int)),
             MLT.videoWidget(), SLOT(renderImage(Mlt::QProducer,int,int,int)));
-    connect(MLT.videoWidget(), SIGNAL(imageRendered(Mlt::QProducer,int,QImage)),
+        connect(MLT.videoWidget(), SIGNAL(imageRendered(Mlt::QProducer,int,QImage)),
             m_playlistDock->model(), SLOT(updateThumbnail(Mlt::QProducer,int,QImage)));
+    }
 
     m_filtersDock = new FiltersDock(this);
     m_filtersDock->hide();
@@ -876,7 +881,6 @@ void MainWindow::onProducerOpened()
     ui->stackedWidget->setCurrentIndex(1);
     delete m_propertiesDock->widget();
 
-    // TODO: make a producer widget for avformat file sources
     if (resource.startsWith("video4linux2:"))
         w = new Video4LinuxWidget(this);
     else if (resource.startsWith("pulse:"))
@@ -914,6 +918,7 @@ void MainWindow::onProducerOpened()
     else if (MLT.isPlaylist()) {
         m_playlistDock->model()->load();
         if (m_playlistDock->model()->playlist()) {
+            m_isPlaylistLoaded = true;
             m_player->setIn(-1);
             m_player->setOut(-1);
             m_playlistDock->setVisible(true);
@@ -1118,6 +1123,12 @@ void MainWindow::updateMarkers()
     }
 }
 
+void MainWindow::updateThumbnails()
+{
+    if (m_settings.value("playlist/thumbnails").toString() != "hidden")
+        m_playlistDock->model()->refreshThumbnails();
+}
+
 void MainWindow::on_actionUndo_triggered()
 {
     m_undoStack->undo();
@@ -1299,8 +1310,12 @@ void MainWindow::processMultipleFiles()
             QThreadPool::globalInstance()->start(new AppendTask(model, filename));
             m_recentDock->add(filename.toUtf8().constData());
         }
+        m_multipleFiles.clear();
     }
-    m_multipleFiles.clear();
+    if (m_isPlaylistLoaded && m_settings.value("player/gpu").toBool()) {
+        updateThumbnails();
+        m_isPlaylistLoaded = false;
+    }
 }
 
 void MainWindow::on_actionNearest_triggered(bool checked)

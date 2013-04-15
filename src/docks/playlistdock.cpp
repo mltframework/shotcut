@@ -537,7 +537,7 @@ void PlaylistDock::on_actionThumbnailsHidden_triggered(bool checked)
 void PlaylistDock::on_actionLeftAndRight_triggered(bool checked)
 {
     if (checked) {
-        bool refreshThumbs = m_settings.value("playlist/thumbnails").toString() == "hidden";
+        bool refreshThumbs = m_settings.value("playlist/thumbnails").toString() != "tall";
         m_settings.setValue("playlist/thumbnails", "wide");
         if (refreshThumbs) m_model.refreshThumbnails();
         ui->tableView->setColumnHidden(PlaylistModel::COLUMN_THUMBNAIL, false);
@@ -549,7 +549,7 @@ void PlaylistDock::on_actionLeftAndRight_triggered(bool checked)
 void PlaylistDock::on_actionTopAndBottom_triggered(bool checked)
 {
     if (checked) {
-        bool refreshThumbs = m_settings.value("playlist/thumbnails").toString() == "hidden";
+        bool refreshThumbs = m_settings.value("playlist/thumbnails").toString() != "wide";
         m_settings.setValue("playlist/thumbnails", "tall");
         if (refreshThumbs) m_model.refreshThumbnails();
         ui->tableView->setColumnHidden(PlaylistModel::COLUMN_THUMBNAIL, false);

@@ -113,7 +113,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
             else
                 image = QImage(width, THUMBNAIL_HEIGHT, QImage::Format_ARGB32_Premultiplied);
 
-            if (parent.is_valid() && parent.get_data(kThumbnailInProperty) && parent.get_data(kThumbnailOutProperty)) {
+            if (parent.is_valid() && parent.get_data(kThumbnailInProperty)) {
                 QPainter painter(&image);
                 image.fill(QColor(Qt::black).rgb());
 
@@ -126,7 +126,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
                 }
                 painter.drawImage(rect, *thumb);
 
-                if (setting == "wide" || setting == "tall") {
+                if ((setting == "wide" || setting == "tall") && parent.get_data(kThumbnailOutProperty)) {
                     // draw the out thumbnail
                     thumb = (QImage*) parent.get_data(kThumbnailOutProperty);
                     if (setting == "wide") {
@@ -417,14 +417,16 @@ void PlaylistModel::createIfNeeded()
 
 void PlaylistModel::makeThumbnail(Mlt::Producer *producer, int row)
 {
-    if (m_settings.value("playlist/thumbnails").toString() == "hidden")
+    QString setting = m_settings.value("playlist/thumbnails").toString();
+    if (setting == "hidden")
         return;
     int height = PlaylistModel::THUMBNAIL_HEIGHT * 2;
     int width = height * MLT.profile().dar();
 
     if (m_settings.value("player/gpu").toBool()) {
         emit requestImage(Mlt::QProducer(*producer), 0, width, height);
-        emit requestImage(Mlt::QProducer(*producer), producer->get_playtime(), width, height);
+        if (setting == "tall" || setting == "wide")
+            emit requestImage(Mlt::QProducer(*producer), producer->get_playtime(), width, height);
     }
     else {
         // render the in point thumbnail
@@ -434,16 +436,17 @@ void PlaylistModel::makeThumbnail(Mlt::Producer *producer, int row)
         delete frame;
         producer->set(kThumbnailInProperty, new QImage(thumb), 0, (mlt_destructor) deleteQImage, NULL);
 
-        // render the out point thumbnail
-        producer->seek(producer->get_playtime());
-        frame = producer->get_frame();
-        thumb = MLT.image(frame, width, height);
-        delete frame;
-        producer->set(kThumbnailOutProperty, new QImage(thumb), 0, (mlt_destructor) deleteQImage, NULL);
-        if (row >= 0)
-            emit dataChanged(createIndex(row, PlaylistModel::COLUMN_THUMBNAIL),
-                             createIndex(row, PlaylistModel::COLUMN_THUMBNAIL));
+        if (setting == "tall" || setting == "wide") {
+            // render the out point thumbnail
+            producer->seek(producer->get_playtime());
+            frame = producer->get_frame();
+            thumb = MLT.image(frame, width, height);
+            delete frame;
+            producer->set(kThumbnailOutProperty, new QImage(thumb), 0, (mlt_destructor) deleteQImage, NULL);
+        }
     }
+    if (row >= 0)
+        emit dataChanged(createIndex(row, COLUMN_THUMBNAIL), createIndex(row, COLUMN_THUMBNAIL));
 }
 
 class UpdateThumbnailTask : public QRunnable

@@ -93,6 +93,7 @@ private:
     FiltersDock* m_filtersDock;
     QMenu* m_customProfileMenu;
     QStringList m_multipleFiles;
+    bool m_isPlaylistLoaded;
 
 public slots:
     void open(const QString& url, const Mlt::Properties* = 0);
@@ -124,6 +125,7 @@ private slots:
     void onPlaylistModified();
     void onCutModified();
     void updateMarkers();
+    void updateThumbnails();
     void on_actionUndo_triggered();
     void on_actionRedo_triggered();
     void on_actionFAQ_triggered();
