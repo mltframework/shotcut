@@ -446,6 +446,7 @@ void MainWindow::open(const QString& url, const Mlt::Properties* properties)
         if (!continueModified())
             return;
         setCurrentFile("");
+        setWindowModified(false);
     }
     if (!MLT.open(url.toUtf8().constData())) {
         Mlt::Properties* props = const_cast<Mlt::Properties*>(properties);
@@ -631,7 +632,6 @@ void MainWindow::setCurrentFile(const QString &filename)
 {
     QString shownName = "Untitled";
     m_currentFile = filename;
-    setWindowModified(false);
     if (!m_currentFile.isEmpty())
         shownName = QFileInfo(m_currentFile).fileName();
     setWindowTitle(tr("%1[*] - %2").arg(shownName).arg(qApp->applicationName()));
@@ -956,6 +956,7 @@ bool MainWindow::on_actionSave_triggered()
     } else {
         saveXML(m_currentFile);
         setCurrentFile(m_currentFile);
+        setWindowModified(false);
         showStatusMessage(tr("Saved %1").arg(m_currentFile));
         m_undoStack->setClean();
         return true;
@@ -973,6 +974,7 @@ bool MainWindow::on_actionSave_As_triggered()
     if (!filename.isEmpty()) {
         saveXML(filename);
         setCurrentFile(filename);
+        setWindowModified(false);
         showStatusMessage(tr("Saved %1").arg(m_currentFile));
         m_undoStack->setClean();
         m_recentDock->add(filename);
@@ -1100,6 +1102,7 @@ void MainWindow::onPlaylistClosed()
     m_player->resetProfile();
     onPlaylistCleared();
     setCurrentFile("");
+    setWindowModified(false);
     m_undoStack->clear();
 }
 
