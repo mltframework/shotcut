@@ -423,6 +423,7 @@ void PlaylistModel::makeThumbnail(Mlt::Producer& producer, int in, int out, int 
     int width = height * MLT.profile().dar();
 
     if (m_settings.value("player/gpu").toBool()) {
+        // A negative value is used to indicate the in point to the updateThumbnail slot.
         emit requestImage(Mlt::QProducer(producer), -in, width, height);
         if (setting == "tall" || setting == "wide")
             emit requestImage(Mlt::QProducer(producer), out, width, height);
