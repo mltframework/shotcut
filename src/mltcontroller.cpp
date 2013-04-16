@@ -176,7 +176,6 @@ void Controller::close()
         m_consumer->stop();
     delete m_producer;
     m_producer = 0;
-    m_url.clear();
 }
 
 void Controller::closeConsumer()
