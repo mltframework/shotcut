@@ -56,44 +56,43 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
     switch (role) {
     case Qt::DisplayRole:
     case Qt::ToolTipRole: {
-        const Mlt::ClipInfo* info = &m_clipInfo;
-        m_playlist->clip_info(index.row(),
-                              const_cast<Mlt::ClipInfo*>(info));
+        const Mlt::ClipInfo* info = m_playlist->clip_info(index.row());
         switch (index.column()) {
         case COLUMN_INDEX:
             return QString::number(index.row() + 1);
         case COLUMN_RESOURCE: {
-            QString result = QString::fromUtf8(m_clipInfo.resource);
-            if (result == "<producer>" && m_clipInfo.producer
-                    && m_clipInfo.producer->is_valid() && m_clipInfo.producer->get("mlt_service"))
-                result = QString::fromUtf8(m_clipInfo.producer->get("mlt_service"));
+            QString result = QString::fromUtf8(info->resource);
+            if (result == "<producer>" && info->producer
+                    && info->producer->is_valid() && info->producer->get("mlt_service"))
+                result = QString::fromUtf8(info->producer->get("mlt_service"));
             // Use basename for display
             if (role == Qt::DisplayRole && result.startsWith('/'))
                 result = QFileInfo(result).fileName();
             return result;
         }
         case COLUMN_IN:
-            if (m_clipInfo.producer && m_clipInfo.producer->is_valid()) {
-                m_clipInfo.producer->set("_shotcut_time", m_clipInfo.frame_in);
-                return m_clipInfo.producer->get_time("_shotcut_time");
+            if (info->producer && info->producer->is_valid()) {
+                info->producer->set("_shotcut_time", info->frame_in);
+                return info->producer->get_time("_shotcut_time");
             } else
                 return "";
         case COLUMN_DURATION:
-            if (m_clipInfo.producer && m_clipInfo.producer->is_valid()) {
-                m_clipInfo.producer->set("_shotcut_time", m_clipInfo.frame_count);
-                return m_clipInfo.producer->get_time("_shotcut_time");
+            if (info->producer && info->producer->is_valid()) {
+                info->producer->set("_shotcut_time", info->frame_count);
+                return info->producer->get_time("_shotcut_time");
             } else
                 return "";
         case COLUMN_START:
-            if (m_clipInfo.producer && m_clipInfo.producer->is_valid()) {
-                m_clipInfo.producer->set("_shotcut_time", m_clipInfo.start);
-                return m_clipInfo.producer->get_time("_shotcut_time");
+            if (info->producer && info->producer->is_valid()) {
+                info->producer->set("_shotcut_time", info->start);
+                return info->producer->get_time("_shotcut_time");
             }
             else
                 return "";
         default:
             break;
         }
+        delete info;
         break;
     }
     case Qt::DecorationRole:
@@ -314,7 +313,7 @@ void PlaylistModel::load()
 void PlaylistModel::append(Mlt::Producer* producer)
 {
     createIfNeeded();
-    makeThumbnail(producer);
+    makeThumbnail(*producer, 0, producer->get_playtime());
     int count = m_playlist->count();
     beginInsertRows(QModelIndex(), count, count);
     m_playlist->append(*producer, producer->get_in(), producer->get_out());
@@ -326,7 +325,7 @@ void PlaylistModel::append(Mlt::Producer* producer)
 void PlaylistModel::insert(Mlt::Producer* producer, int row)
 {
     createIfNeeded();
-    makeThumbnail(producer);
+    makeThumbnail(*producer, 0, producer->get_playtime());
     beginInsertRows(QModelIndex(), row, row);
     m_playlist->insert(*producer, row, producer->get_in(), producer->get_out());
     producer->set_in_and_out(0, producer->get_length() - 1);
@@ -349,7 +348,7 @@ void PlaylistModel::remove(int row)
 void PlaylistModel::update(int row, Mlt::Producer* producer)
 {
     if (!m_playlist) return;
-    makeThumbnail(producer);
+    makeThumbnail(*producer, 0, producer->get_playtime());
     m_playlist->remove(row);
     m_playlist->insert(*producer, row, producer->get_in(), producer->get_out());
     producer->set_in_and_out(0, producer->get_length() - 1);
@@ -401,7 +400,7 @@ static void deleteQImage(QImage* image)
 
 void PlaylistModel::updateThumbnail(Mlt::QProducer producer, int position, QImage image)
 {
-    producer.producer()->set(position == 0? kThumbnailInProperty : kThumbnailOutProperty,
+    producer.producer()->set(position <= 0? kThumbnailInProperty : kThumbnailOutProperty,
         new QImage(image), 0, (mlt_destructor) deleteQImage, NULL);
 }
 
@@ -415,7 +414,7 @@ void PlaylistModel::createIfNeeded()
     }
 }
 
-void PlaylistModel::makeThumbnail(Mlt::Producer *producer, int row)
+void PlaylistModel::makeThumbnail(Mlt::Producer& producer, int in, int out, int row)
 {
     QString setting = m_settings.value("playlist/thumbnails").toString();
     if (setting == "hidden")
@@ -424,25 +423,25 @@ void PlaylistModel::makeThumbnail(Mlt::Producer *producer, int row)
     int width = height * MLT.profile().dar();
 
     if (m_settings.value("player/gpu").toBool()) {
-        emit requestImage(Mlt::QProducer(*producer), 0, width, height);
+        emit requestImage(Mlt::QProducer(producer), -in, width, height);
         if (setting == "tall" || setting == "wide")
-            emit requestImage(Mlt::QProducer(*producer), producer->get_playtime(), width, height);
+            emit requestImage(Mlt::QProducer(producer), out, width, height);
     }
     else {
         // render the in point thumbnail
-        producer->seek(0);
-        Mlt::Frame* frame = producer->get_frame();
+        producer.seek(in);
+        Mlt::Frame* frame = producer.get_frame();
         QImage thumb = MLT.image(frame, width, height);
         delete frame;
-        producer->set(kThumbnailInProperty, new QImage(thumb), 0, (mlt_destructor) deleteQImage, NULL);
+        producer.set(kThumbnailInProperty, new QImage(thumb), 0, (mlt_destructor) deleteQImage, NULL);
 
         if (setting == "tall" || setting == "wide") {
             // render the out point thumbnail
-            producer->seek(producer->get_playtime());
-            frame = producer->get_frame();
+            producer.seek(out);
+            frame = producer.get_frame();
             thumb = MLT.image(frame, width, height);
             delete frame;
-            producer->set(kThumbnailOutProperty, new QImage(thumb), 0, (mlt_destructor) deleteQImage, NULL);
+            producer.set(kThumbnailOutProperty, new QImage(thumb), 0, (mlt_destructor) deleteQImage, NULL);
         }
     }
     if (row >= 0)
@@ -453,16 +452,20 @@ class UpdateThumbnailTask : public QRunnable
 {
     PlaylistModel* m_model;
     Mlt::Producer m_producer;
+    int m_in;
+    int m_out;
     int m_row;
 public:
-    UpdateThumbnailTask(PlaylistModel* model, Mlt::Producer& producer, int row)
+    UpdateThumbnailTask(PlaylistModel* model, Mlt::Producer& producer, int in, int out, int row)
         : QRunnable()
         , m_model(model)
         , m_producer(producer)
+        , m_in(in)
+        , m_out(out)
         , m_row(row)
     {}
     void run() {
-        m_model->makeThumbnail(&m_producer, m_row);
+        m_model->makeThumbnail(m_producer, m_in, m_out, m_row);
     }
 };
 
@@ -470,13 +473,12 @@ void PlaylistModel::refreshThumbnails()
 {
     if (m_playlist && m_playlist->is_valid()) {
         for (int i = 0; i < m_playlist->count(); i++) {
-            Mlt::Producer* producer = m_playlist->get_clip(i);
-            if (producer && producer->is_valid()) {
-                Mlt::Producer parent(producer->get_parent());
+            Mlt::ClipInfo* info = m_playlist->clip_info(i);
+            if (info && info->producer && info->producer->is_valid()) {
                 QThreadPool::globalInstance()->start(
-                            new UpdateThumbnailTask(this, parent, i));
+                    new UpdateThumbnailTask(this, *info->producer, info->frame_in, info->frame_out, i));
             }
-            delete producer;
+            delete info;
         }
     }
 }

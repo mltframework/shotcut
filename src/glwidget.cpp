@@ -357,7 +357,7 @@ void GLWidget::renderImage(Mlt::QProducer producer, int position, int width, int
         m_consumer->stop();
         m_renderContext->makeCurrent();
     }
-    producer.producer()->seek(position);
+    producer.producer()->seek(qAbs(position));
     Mlt::Frame* frame = producer.producer()->get_frame();
     QImage image = Controller::image(frame, width, height);
     delete frame;

@@ -60,7 +60,7 @@ public:
     QModelIndex decrementIndex(const QModelIndex& index) const;
     QModelIndex createIndex(int row, int column) const;
     void createIfNeeded();
-    void makeThumbnail(Mlt::Producer* producer, int row = -1);
+    void makeThumbnail(Mlt::Producer &producer, int in, int out, int row = -1);
     void refreshThumbnails();
     Mlt::Playlist* playlist()
     {
@@ -92,7 +92,6 @@ public slots:
 
 private:
     Mlt::Playlist* m_playlist;
-    Mlt::ClipInfo m_clipInfo;
     int m_dropRow;
     QSettings m_settings;
 };

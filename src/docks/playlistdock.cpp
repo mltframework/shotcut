@@ -81,6 +81,7 @@ int PlaylistDock::position()
     if (index.isValid()) {
         Mlt::ClipInfo* i = m_model.playlist()->clip_info(index.row());
         if (i) result = i->start;
+        delete i;
     }
     return result;
 }
