@@ -157,7 +157,8 @@ int Controller::open(const char* url)
             delete m_producer;
             m_producer = new Mlt::Producer(profile(), url);
         }
-        m_url = QString::fromUtf8(url);
+        if (QString(m_producer->get("xml")) == "was here")
+            m_url = QString::fromUtf8(url);
         const char *service = m_producer->get("mlt_service");
         if (service && (!strcmp(service, "pixbuf") || !strcmp(service, "qimage")))
             m_producer->set("length", profile().fps() * 4);
