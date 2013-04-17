@@ -68,8 +68,8 @@ export LANG=C
 
 # User CFLAGS and LDFLAGS sometimes prevent more recent local headers.
 # Also, you can adjust some flags here.
-export CFLAGS=
-export CXXFLAGS=
+export CFLAGS=-DNDEBUG
+export CXXFLAGS=-DNDEBUG
 export LDFLAGS=
 
 ################################################################################
@@ -397,7 +397,7 @@ function set_globals {
   debug "Using install dir FINAL_INSTALL_DIR=$FINAL_INSTALL_DIR"
 
   # CONFIG Array holds the ./configure (or equiv) command for each project
-  # CFLAGS_ Array holds additional CFLAGS for the configure/make step of a given project 
+  # CFLAGS_ Array holds additional CFLAGS for the configure/make step of a given project
   # LDFLAGS_ Array holds additional LDFLAGS for the configure/make step of a given project
   if test "$TARGET_OS" = "Win32" ; then
     FFMPEG_SUPPORT_THEORA=0
