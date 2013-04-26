@@ -152,6 +152,12 @@ p, li { white-space: pre-wrap; }
    <property name="windowTitle">
     <string>Main</string>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>24</width>
+     <height>24</height>
+    </size>
+   </property>
    <property name="toolButtonStyle">
     <enum>Qt::ToolButtonFollowStyle</enum>
    </property>
