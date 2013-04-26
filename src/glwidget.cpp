@@ -443,7 +443,8 @@ int GLWidget::reconfigure(bool isMulti)
                 m_consumer->set("0.progressive", property("progressive").toBool());
             m_consumer->set("0.rescale", property("rescale").toString().toAscii().constData());
             m_consumer->set("0.deinterlace_method", property("deinterlace_method").toString().toAscii().constData());
-            m_consumer->set("0.buffer", 1);
+            m_consumer->set("0.buffer", 25);
+            m_consumer->set("0.prefill", 1);
         }
         else {
             if (serviceName == "sdl_audio")
@@ -456,7 +457,8 @@ int GLWidget::reconfigure(bool isMulti)
                 m_consumer->set("progressive", property("progressive").toBool());
             m_consumer->set("rescale", property("rescale").toString().toAscii().constData());
             m_consumer->set("deinterlace_method", property("deinterlace_method").toString().toAscii().constData());
-            m_consumer->set("buffer", 1);
+            m_consumer->set("buffer", 25);
+            m_consumer->set("prefill", 1);
             m_consumer->set("scrub_audio", 1);
         }
         if (m_glslManager) {

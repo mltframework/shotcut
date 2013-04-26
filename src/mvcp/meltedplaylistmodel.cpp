@@ -249,6 +249,7 @@ void MeltedPlaylistModel::stop()
 
 void MeltedPlaylistModel::seek(int position)
 {
+    pause();
     m_commands << MVCP_IGNORE;
     m_socket.write(QString("GOTO U%1 %2\r\n").arg(m_unit).arg(position).toAscii());
 }

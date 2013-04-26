@@ -82,6 +82,9 @@ int SDLWidget::reconfigure(bool isMulti)
                 m_consumer->set("progressive", property("progressive").toBool());
             m_consumer->set("0.rescale", property("rescale").toString().toAscii().constData());
             m_consumer->set("0.deinterlace_method", property("deinterlace_method").toString().toAscii().constData());
+            m_consumer->set("0.buffer", 25);
+            m_consumer->set("0.prefill", 1);
+            m_consumer->set("0.play.buffer", 1);
 #ifndef Q_WS_WIN
             m_consumer->set("0.scrub_audio", 1);
 #endif
@@ -95,6 +98,9 @@ int SDLWidget::reconfigure(bool isMulti)
                 m_consumer->set("progressive", property("progressive").toBool());
             m_consumer->set("rescale", property("rescale").toString().toAscii().constData());
             m_consumer->set("deinterlace_method", property("deinterlace_method").toString().toAscii().constData());
+            m_consumer->set("buffer", 25);
+            m_consumer->set("prefill", 1);
+            m_consumer->set("play.buffer", 1);
 #ifndef Q_WS_WIN
             m_consumer->set("scrub_audio", 1);
 #endif

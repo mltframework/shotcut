@@ -166,7 +166,6 @@ Player::Player(QWidget *parent)
     connect(m_scrubber, SIGNAL(outChanged(int)), this, SLOT(onOutChanged(int)));
     connect(m_positionSpinner, SIGNAL(valueChanged(int)), this, SLOT(seek(int)));
     connect(m_positionSpinner, SIGNAL(editingFinished()), this, SLOT(setFocus()));
-    connect(this, SIGNAL(seeked()), this, SLOT(pause()));
     connect(this, SIGNAL(endOfStream()), this, SLOT(pause()));
     setFocusPolicy(Qt::StrongFocus);
 }
@@ -338,6 +337,10 @@ void Player::seek(int position)
             m_seekPosition = qMin(position, m_duration - 1);
         }
     }
+    // Seek implies pause.
+    actionPlay->setIcon(m_playIcon);
+    actionPlay->setText(tr("Play"));
+    actionPlay->setToolTip(tr("Start playback (L)"));
 }
 
 void Player::onProducerOpened()

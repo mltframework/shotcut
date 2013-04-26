@@ -207,11 +207,11 @@ void Controller::play(double speed)
 void Controller::pause()
 {
     if (m_producer && m_producer->get_speed() != 0) {
-        Event *event = m_consumer->setup_wait_for("consumer-sdl-paused");
-        int result = m_producer->set_speed(0);
-        if (result == 0 && m_consumer->is_valid() && !m_consumer->is_stopped())
-            m_consumer->wait_for(event);
-        delete event;
+        m_producer->set_speed(0);
+        if (m_consumer->is_valid()) {
+            m_consumer->purge();
+            m_producer->seek(m_consumer->position() + 1);
+        }
     }
     if (m_jackFilter)
         m_jackFilter->fire_event("jack-stop");
@@ -321,10 +321,12 @@ void Controller::onWindowResize()
 
 void Controller::seek(int position)
 {
-    if (m_producer)
+    if (m_producer) {
+        m_producer->set_speed(0);
+        if (m_consumer && m_consumer->is_valid())
+            m_consumer->purge();
         m_producer->seek(position);
-    if (m_consumer && m_consumer->get_int("real_time") >= -1)
-        m_consumer->purge();
+    }
     if (m_jackFilter)
         mlt_events_fire(m_jackFilter->get_properties(), "jack-seek", &position, NULL);
     refreshConsumer();
