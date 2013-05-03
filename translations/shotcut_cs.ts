@@ -1901,7 +1901,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.cpp" line="318"/>
         <source>Non-Broadcast</source>
-        <translation type="unfinished"/>
+        <translation>Nestandardní</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="329"/>
@@ -2267,7 +2267,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="232"/>
         <source>Map Clips Root</source>
-        <translation type="unfinished"/>
+        <translation>Přeložit kořen záznamu</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedserverdock.cpp" line="151"/>
