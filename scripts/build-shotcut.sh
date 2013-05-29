@@ -321,7 +321,7 @@ function set_globals {
   REPOLOCS[3]="git://git.videolan.org/x264.git"
   REPOLOCS[4]="http://git.chromium.org/webm/libvpx.git"
   REPOLOCS[5]="http://git.sesse.net/movit/"
-  REPOLOCS[6]="http://downloads.sourceforge.net/project/lame/lame/3.98.4/lame-3.98.4.tar.gz"
+  REPOLOCS[6]="http://downloads.sourceforge.net/project/lame/lame/3.99/lame-3.99.5.tar.gz"
   REPOLOCS[7]="git://github.com/mltframework/shotcut.git"
   REPOLOCS[8]="http://ftp.de.debian.org/debian/pool/main/s/swh-plugins/swh-plugins_0.4.15+1.orig.tar.gz"
 
