@@ -363,7 +363,7 @@ function set_globals {
   if test 0 = "$MOVIT_HEAD" -a "$MOVIT_REVISION" ; then
     REVISIONS[5]="$MOVIT_REVISION"
   fi
-  REVISIONS[6]="lame-3.98.4"
+  REVISIONS[6]="lame-3.99.5"
   REVISIONS[7]=""
   if test 0 = "$SHOTCUT_HEAD" -a "$SHOTCUT_REVISION" ; then
     REVISIONS[7]="$SHOTCUT_REVISION"
