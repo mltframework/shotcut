@@ -41,6 +41,9 @@ public:
         setOrganizationDomain("meltytech.com");
         setApplicationName("Shotcut");
         setApplicationVersion(SHOTCUT_VERSION);
+#if defined(Q_WS_MAC)
+        setAttribute(Qt::AA_DontShowIconsInMenus);
+#endif
 
         // Load translations
         const QString locale = QLocale::system().name();
