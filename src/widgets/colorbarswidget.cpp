@@ -19,6 +19,8 @@
 #include "colorbarswidget.h"
 #include "ui_colorbarswidget.h"
 
+static const char* kParamType = "0";
+
 ColorBarsWidget::ColorBarsWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ColorBarsWidget)
@@ -34,27 +36,27 @@ ColorBarsWidget::~ColorBarsWidget()
 
 Mlt::Producer* ColorBarsWidget::producer(Mlt::Profile& profile)
 {
-    Mlt::Producer* p = new Mlt::Producer(profile, "frei0r.test_pat_B");
-    p->set("Type", ui->comboBox->currentIndex());
+    Mlt::Producer* p = new Mlt::Producer(profile, "blipflash");
+    p->set(kParamType, ui->comboBox->currentIndex());
     return p;
 }
 
 Mlt::Properties* ColorBarsWidget::getPreset() const
 {
     Mlt::Properties* p = new Mlt::Properties;
-    p->set("Type", ui->comboBox->currentIndex());
+    p->set(kParamType, ui->comboBox->currentIndex());
     return p;
 }
 
 void ColorBarsWidget::loadPreset(Mlt::Properties& p)
 {
-    ui->comboBox->setCurrentIndex(p.get_int("Type"));
+    ui->comboBox->setCurrentIndex(p.get_int(kParamType));
 }
 
 void ColorBarsWidget::on_comboBox_activated(int index)
 {
     if (m_producer) {
-        m_producer->set("Type", index);
+        m_producer->set(kParamType, index);
         emit producerChanged();
     }
 }

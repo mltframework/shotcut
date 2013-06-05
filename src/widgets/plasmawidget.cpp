@@ -19,6 +19,13 @@
 #include "plasmawidget.h"
 #include "ui_plasmawidget.h"
 
+static const char* kParamSpeed1 = "0";
+static const char* kParamSpeed2 = "1";
+static const char* kParamSpeed3 = "2";
+static const char* kParamSpeed4 = "3";
+static const char* kParamMove1  = "4";
+static const char* kParamMove2  = "5";
+
 PlasmaWidget::PlasmaWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::PlasmaWidget)
@@ -36,7 +43,7 @@ PlasmaWidget::~PlasmaWidget()
 void PlasmaWidget::on_speed1Dial_valueChanged(int value)
 {
     if (m_producer) {
-        m_producer->set("1_speed", value/100.0);
+        m_producer->set(kParamSpeed1, value/100.0);
         emit producerChanged();
     }
     ui->speed1Spinner->setValue(value/100.0);
@@ -50,7 +57,7 @@ void PlasmaWidget::on_speed1Spinner_valueChanged(double value)
 void PlasmaWidget::on_speed2Dial_valueChanged(int value)
 {
     if (m_producer) {
-        m_producer->set("2_speed", value/100.0);
+        m_producer->set(kParamSpeed2, value/100.0);
         emit producerChanged();
     }
     ui->speed2Spinner->setValue(value/100.0);
@@ -64,7 +71,7 @@ void PlasmaWidget::on_speed2Spinner_valueChanged(double value)
 void PlasmaWidget::on_speed3Dial_valueChanged(int value)
 {
     if (m_producer) {
-        m_producer->set("3_speed", value/100.0);
+        m_producer->set(kParamSpeed3, value/100.0);
         emit producerChanged();
     }
     ui->speed3Spinner->setValue(value/100.0);
@@ -78,7 +85,7 @@ void PlasmaWidget::on_speed3Spinner_valueChanged(double value)
 void PlasmaWidget::on_speed4Dial_valueChanged(int value)
 {
     if (m_producer) {
-        m_producer->set("4_speed", value/100.0);
+        m_producer->set(kParamSpeed4, value/100.0);
         emit producerChanged();
     }
     ui->speed4Spinner->setValue(value/100.0);
@@ -92,7 +99,7 @@ void PlasmaWidget::on_speed4Spinner_valueChanged(double value)
 void PlasmaWidget::on_move1Dial_valueChanged(int value)
 {
     if (m_producer) {
-        m_producer->set("1_move", value/100.0);
+        m_producer->set(kParamMove1, value/100.0);
         emit producerChanged();
     }
     ui->move1Spinner->setValue(value/100.0);
@@ -106,7 +113,7 @@ void PlasmaWidget::on_move1Spinner_valueChanged(double value)
 void PlasmaWidget::on_move2Dial_valueChanged(int value)
 {
     if (m_producer) {
-        m_producer->set("2_move", value/100.0);
+        m_producer->set(kParamMove2, value/100.0);
         emit producerChanged();
     }
     ui->move2Spinner->setValue(value/100.0);
@@ -120,35 +127,35 @@ void PlasmaWidget::on_move2Spinner_valueChanged(double value)
 Mlt::Producer* PlasmaWidget::producer(Mlt::Profile& profile)
 {
     Mlt::Producer* p = new Mlt::Producer(profile, "frei0r.plasma");
-    p->set("1_speed", ui->speed1Spinner->text().toAscii().constData());
-    p->set("2_speed", ui->speed2Spinner->text().toAscii().constData());
-    p->set("3_speed", ui->speed3Spinner->text().toAscii().constData());
-    p->set("4_speed", ui->speed4Spinner->text().toAscii().constData());
-    p->set("1_move", ui->move1Spinner->text().toAscii().constData());
-    p->set("2_move", ui->move2Spinner->text().toAscii().constData());
+    p->set(kParamSpeed1, ui->speed1Spinner->text().toAscii().constData());
+    p->set(kParamSpeed2, ui->speed2Spinner->text().toAscii().constData());
+    p->set(kParamSpeed3, ui->speed3Spinner->text().toAscii().constData());
+    p->set(kParamSpeed4, ui->speed4Spinner->text().toAscii().constData());
+    p->set(kParamMove1, ui->move1Spinner->text().toAscii().constData());
+    p->set(kParamMove2, ui->move2Spinner->text().toAscii().constData());
     return p;
 }
 
 Mlt::Properties* PlasmaWidget::getPreset() const
 {
     Mlt::Properties* p = new Mlt::Properties;
-    p->set("1_speed", ui->speed1Spinner->text().toAscii().constData());
-    p->set("2_speed", ui->speed2Spinner->text().toAscii().constData());
-    p->set("3_speed", ui->speed3Spinner->text().toAscii().constData());
-    p->set("4_speed", ui->speed4Spinner->text().toAscii().constData());
-    p->set("1_move", ui->move1Spinner->text().toAscii().constData());
-    p->set("2_move", ui->move2Spinner->text().toAscii().constData());
+    p->set(kParamSpeed1, ui->speed1Spinner->text().toAscii().constData());
+    p->set(kParamSpeed2, ui->speed2Spinner->text().toAscii().constData());
+    p->set(kParamSpeed3, ui->speed3Spinner->text().toAscii().constData());
+    p->set(kParamSpeed4, ui->speed4Spinner->text().toAscii().constData());
+    p->set(kParamMove1, ui->move1Spinner->text().toAscii().constData());
+    p->set(kParamMove2, ui->move2Spinner->text().toAscii().constData());
     return p;
 }
 
 void PlasmaWidget::loadPreset(Mlt::Properties& p)
 {
-    ui->speed1Spinner->setValue(p.get_double("1_speed"));
-    ui->speed2Spinner->setValue(p.get_double("2_speed"));
-    ui->speed3Spinner->setValue(p.get_double("3_speed"));
-    ui->speed4Spinner->setValue(p.get_double("4_speed"));
-    ui->move1Spinner->setValue(p.get_double("1_move"));
-    ui->move2Spinner->setValue(p.get_double("2_move"));
+    ui->speed1Spinner->setValue(p.get_double(kParamSpeed1));
+    ui->speed2Spinner->setValue(p.get_double(kParamSpeed2));
+    ui->speed3Spinner->setValue(p.get_double(kParamSpeed3));
+    ui->speed4Spinner->setValue(p.get_double(kParamSpeed4));
+    ui->move1Spinner->setValue(p.get_double(kParamMove1));
+    ui->move2Spinner->setValue(p.get_double(kParamMove2));
 }
 
 void PlasmaWidget::on_preset_selected(void* p)

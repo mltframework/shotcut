@@ -19,6 +19,9 @@
 #include "lissajouswidget.h"
 #include "ui_lissajouswidget.h"
 
+static const char* kParamRatioX = "0";
+static const char* kParamRatioY = "1";
+
 LissajousWidget::LissajousWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::LissajousWidget)
@@ -36,7 +39,7 @@ LissajousWidget::~LissajousWidget()
 void LissajousWidget::on_xratioDial_valueChanged(int value)
 {
     if (m_producer) {
-        m_producer->set("ratiox", value/100.0);
+        m_producer->set(kParamRatioX, value/100.0);
         emit producerChanged();
     }
     ui->xratioSpinner->setValue(value/100.0);
@@ -50,7 +53,7 @@ void LissajousWidget::on_xratioSpinner_valueChanged(double value)
 void LissajousWidget::on_yratioDial_valueChanged(int value)
 {
     if (m_producer) {
-        m_producer->set("ratioy", value/100.0);
+        m_producer->set(kParamRatioY, value/100.0);
         emit producerChanged();
     }
     ui->yratioSpinner->setValue(value/100.0);
@@ -64,23 +67,23 @@ void LissajousWidget::on_yratioSpinner_valueChanged(double value)
 Mlt::Producer* LissajousWidget::producer(Mlt::Profile& profile)
 {
     Mlt::Producer* p = new Mlt::Producer(profile, "frei0r.lissajous0r");
-    p->set("ratiox", ui->xratioSpinner->text().toAscii().constData());
-    p->set("ratioy", ui->yratioSpinner->text().toAscii().constData());
+    p->set(kParamRatioX, ui->xratioSpinner->text().toAscii().constData());
+    p->set(kParamRatioY, ui->yratioSpinner->text().toAscii().constData());
     return p;
 }
 
 Mlt::Properties* LissajousWidget::getPreset() const
 {
     Mlt::Properties* p = new Mlt::Properties;
-    p->set("ratiox", ui->xratioSpinner->text().toAscii().constData());
-    p->set("ratioy", ui->yratioSpinner->text().toAscii().constData());
+    p->set(kParamRatioX, ui->xratioSpinner->text().toAscii().constData());
+    p->set(kParamRatioY, ui->yratioSpinner->text().toAscii().constData());
     return p;
 }
 
 void LissajousWidget::loadPreset(Mlt::Properties& p)
 {
-    ui->xratioSpinner->setValue(p.get_double("ratiox"));
-    ui->yratioSpinner->setValue(p.get_double("ratioy"));
+    ui->xratioSpinner->setValue(p.get_double(kParamRatioX));
+    ui->yratioSpinner->setValue(p.get_double(kParamRatioY));
 }
 
 void LissajousWidget::on_preset_selected(void* p)
