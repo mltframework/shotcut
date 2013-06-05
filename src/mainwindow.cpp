@@ -1299,8 +1299,15 @@ public:
     void run()
     {
         Mlt::Producer p(MLT.profile(), filename.toUtf8().constData());
-        if (p.is_valid())
+        if (p.is_valid()) {
+            QString service(p.get("mlt_service"));
+            if (service == "pixbuf" || service == "qimage") {
+                p.set("ttl", 1);
+                p.set("length", qRound(MLT.profile().fps() * 4.0));
+                p.set("out", p.get_length() - 1);
+            }
             MAIN.undoStack()->push(new Playlist::AppendCommand(*model, MLT.saveXML("string", &p)));
+        }
     }
 private:
     PlaylistModel* model;
