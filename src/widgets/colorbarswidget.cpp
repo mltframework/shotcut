@@ -36,7 +36,7 @@ ColorBarsWidget::~ColorBarsWidget()
 
 Mlt::Producer* ColorBarsWidget::producer(Mlt::Profile& profile)
 {
-    Mlt::Producer* p = new Mlt::Producer(profile, "blipflash");
+    Mlt::Producer* p = new Mlt::Producer(profile, "frei0r.test_pat_B");
     p->set(kParamType, ui->comboBox->currentIndex());
     return p;
 }
