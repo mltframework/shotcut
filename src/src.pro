@@ -110,7 +110,6 @@ HEADERS  += mainwindow.h \
     mvcp/meltedserverdock.h \
     transportcontrol.h \
     widgets/colorwheel.h \
-    filters/attachedfiltersmodel.h \
     models/attachedfiltersmodel.h \
     docks/filtersdock.h \
     filters/movitblurfilter.h \
