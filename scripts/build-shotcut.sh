@@ -47,6 +47,9 @@ MLT_HEAD=1
 MLT_REVISION=
 SHOTCUT_HEAD=1
 SHOTCUT_REVISION=
+ENABLE_WEBVFX=1
+WEBVFX_HEAD=1
+WEBVFX_REVISION=
 # QT_INCLUDE_DIR="$(pkg-config --variable=prefix QtCore)/include"
 QT_INCLUDE_DIR=
 # QT_LIB_DIR="$(pkg-config --variable=prefix QtCore)/lib"
@@ -153,6 +156,9 @@ function to_key {
     ;;
     swh-plugins)
       echo 8
+    ;;
+    webvfx)
+      echo 9
     ;;
     *)
       echo UNKNOWN
@@ -312,6 +318,9 @@ function set_globals {
   if test "$ENABLE_SWH_PLUGINS" = "1" && test "$TARGET_OS" = "Darwin"; then
       SUBDIRS="swh-plugins $SUBDIRS"
   fi
+  if test "$ENABLE_WEBVFX" = "1" && test "$WEBVFX_HEAD" = 1 -o "$WEBVFX_REVISION" != ""; then
+      SUBDIRS="$SUBDIRS webvfx"
+  fi
   debug "SUBDIRS = $SUBDIRS"
 
   # REPOLOCS Array holds the repo urls
@@ -324,6 +333,7 @@ function set_globals {
   REPOLOCS[6]="http://downloads.sourceforge.net/project/lame/lame/3.99/lame-3.99.5.tar.gz"
   REPOLOCS[7]="git://github.com/mltframework/shotcut.git"
   REPOLOCS[8]="http://ftp.de.debian.org/debian/pool/main/s/swh-plugins/swh-plugins_0.4.15+1.orig.tar.gz"
+  REPOLOCS[9]="http://github.com/rectalogic/webvfx.git"
 
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
@@ -336,6 +346,7 @@ function set_globals {
   REPOTYPES[6]="http-tgz"
   REPOTYPES[7]="git"
   REPOTYPES[8]="http-tgz"
+  REPOTYPES[9]="git"
 
   # And, set up the revisions
   REVISIONS[0]=""
@@ -369,6 +380,10 @@ function set_globals {
     REVISIONS[7]="$SHOTCUT_REVISION"
   fi
   REVISIONS[8]="swh-plugins-0.4.15+1"
+  REVISIONS[9]=""
+  if test 0 = "$WEBVFX_HEAD" -a "$WEBVFX_REVISION" ; then
+    REVISIONS[9]="$WEBVFX_REVISION"
+  fi
 
   # Figure out the number of cores in the system. Used both by make and startup script
   if test "$TARGET_OS" = "Darwin"; then
@@ -540,6 +555,21 @@ function set_globals {
   CFLAGS_[8]="-march=nocona $CFLAGS"
   LDFLAGS_[8]=$LDFLAGS
 
+  #####
+  # WebVfx
+  if [ "$TARGET_OS" = "Darwin" ]; then
+    CONFIG[9]="qmake -r -spec macx-g++"
+  elif [ "$(which qmake-qt4)" != "" ]; then
+    CONFIG[9]="qmake-qt4 -r"
+  else
+    CONFIG[9]="qmake -r"
+  fi
+  if test "$TARGET_OS" = "Win32" ; then
+    CONFIG[9]="${CONFIG[9]} -spec mingw-mkspec CONFIG+=debug CONFIG+=link_pkgconfig PKGCONFIG+=mlt++"
+  fi
+  CONFIG[9]="${CONFIG[9]} PREFIX=$FINAL_INSTALL_DIR MLT_SOURCE=$(pwd)/src/mlt"
+  CFLAGS_[9]=$CFLAGS
+  LDFLAGS_[9]=$LDFLAGS
 }
 
 ######################################################################
@@ -626,6 +656,10 @@ function prepare_feedback {
       debug Adding 1 step for get movit
       NUMSTEPS=$(( $NUMSTEPS + 1 ))
     fi
+    if test 1 = "$ENABLE_WEBVFX" ; then
+      debug Adding 1 step for get webvfx
+      NUMSTEPS=$(( $NUMSTEPS + 1 ))
+    fi
   fi
   if test 1 = "$GET" -a 1 = "$SOURCES_CLEAN" ; then
     debug Adding 3 steps for clean on get
@@ -638,7 +672,11 @@ function prepare_feedback {
       debug Adding 1 step for clean movit
       NUMSTEPS=$(( $NUMSTEPS + 1 ))
     fi
-  fi   
+    if test 1 = "$ENABLE_WEBVFX" ; then
+      debug Adding 1 step for clean webvfx
+      NUMSTEPS=$(( $NUMSTEPS + 1 ))
+    fi
+  fi
   if test 1 = "$COMPILE_INSTALL" ; then
     debug Adding 9 steps for compile-install
     NUMSTEPS=$(( $NUMSTEPS + 9 ))
@@ -648,6 +686,10 @@ function prepare_feedback {
     fi
     if test 1 = "$ENABLE_MOVIT" ; then
       debug Adding 3 steps for compile-install movit
+      NUMSTEPS=$(( $NUMSTEPS + 3 ))
+    fi
+    if test 1 = "$ENABLE_WEBVFX" ; then
+      debug Adding 3 steps for compile-install webvfx
       NUMSTEPS=$(( $NUMSTEPS + 3 ))
     fi
   fi
@@ -1440,7 +1482,7 @@ function deploy_osx
   cmd cd "$BUILD_DIR/MacOS" || die "Unable to change directory to MacOS"
 
   log Copying supplementary executables
-  cmd cp -a $FINAL_INSTALL_DIR/bin/{melt,ffmpeg} .
+  cmd cp -a $FINAL_INSTALL_DIR/bin/{melt,ffmpeg,qmelt} .
   mkdir lib 2>/dev/null
   for exe in $(find . -perm +u+x -maxdepth 1); do
     log fixing library paths of executable "$exe"
