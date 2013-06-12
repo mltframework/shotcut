@@ -333,7 +333,7 @@ function set_globals {
   REPOLOCS[6]="http://downloads.sourceforge.net/project/lame/lame/3.99/lame-3.99.5.tar.gz"
   REPOLOCS[7]="git://github.com/mltframework/shotcut.git"
   REPOLOCS[8]="http://ftp.de.debian.org/debian/pool/main/s/swh-plugins/swh-plugins_0.4.15+1.orig.tar.gz"
-  REPOLOCS[9]="http://github.com/rectalogic/webvfx.git"
+  REPOLOCS[9]="http://github.com/ddennedy/webvfx.git"
 
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
