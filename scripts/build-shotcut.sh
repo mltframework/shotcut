@@ -795,9 +795,9 @@ set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 END_OF_CMAKE_RULES
 
-  elif test "shotcut" = "$1" -o "webvfx" = "$1" ; then
+  elif test "shotcut" = "$1" -or "webvfx" = "$1" ; then
       mkdir mingw-mkspec 2> /dev/null
-      debug "Create qmake mkspec for shotcut"
+      debug "Create qmake mkspec for $1"
       cat >mingw-mkspec/qmake.conf <<END_OF_QMAKE_SPEC
 #
 # qmake configuration for win32-g++
@@ -808,7 +808,7 @@ END_OF_CMAKE_RULES
 MAKEFILE_GENERATOR	= MINGW
 TEMPLATE		= app
 CONFIG			+= qt warn_on release link_prl copy_dir_files precompile_header
-CONFIG			+= exceptions windows win32 rtti
+CONFIG			+= win32
 QT			+= core gui
 DEFINES			+= UNICODE
 DEFINES			+= QT_LARGEFILE_SUPPORT
@@ -857,7 +857,7 @@ QMAKE_RUN_CXX_IMP	= \$(CXX) -c \$(CXXFLAGS) \$(INCPATH) -o \$@ \$<
 
 QMAKE_LINK		= i686-w64-mingw32-g++
 QMAKE_LINK_C		= i686-w64-mingw32-gcc
-QMAKE_LFLAGS		= -mthreads -Wl,-enable-stdcall-fixup -Wl,-enable-auto-import -Wl,-enable-runtime-pseudo-reloc -mwindows -static-libgcc -static-libstdc++
+QMAKE_LFLAGS		= -Wl,-enable-stdcall-fixup -Wl,-enable-auto-import -Wl,-enable-runtime-pseudo-reloc
 QMAKE_LFLAGS_EXCEPTIONS_ON = -mthreads
 QMAKE_LFLAGS_EXCEPTIONS_OFF =
 QMAKE_LFLAGS_RELEASE	= -Wl,-s
@@ -871,7 +871,7 @@ QMAKE_PREFIX_STATICLIB  = lib
 QMAKE_EXTENSION_STATICLIB = a
 
 
-QMAKE_LIBS		=
+QMAKE_LIBS              = -static-libgcc -static-libstdc++
 QMAKE_LIBS_CORE         = -lole32 -luuid -lws2_32 -ladvapi32 -lshell32 -luser32 -lkernel32
 QMAKE_LIBS_GUI          = -lgdi32 -lcomdlg32 -loleaut32 -limm32 -lwinmm -lwinspool -lws2_32 -lole32 -luuid -luser32 -ladvapi32
 QMAKE_LIBS_NETWORK      = -lws2_32
@@ -903,7 +903,6 @@ QMAKE_ZIP		= zip -r -9
 QMAKE_STRIP		= i686-w64-mingw32-strip
 QMAKE_STRIPFLAGS_LIB 	+= --strip-unneeded
 load(qt_config)
-      
 END_OF_QMAKE_SPEC
   fi
 }
@@ -1258,6 +1257,10 @@ SLIB_EXTRA_CMD=-"mv $$(@:$(SLIBSUF)=.orig.def) $$(@:$(SLIBSUF)=.def)"
   feedback_status Building $1 - this could take some time
   if test "movit" = "$1" ; then
     cmd make -j$MAKEJ RANLIB="$RANLIB" libmovit.a || die "Unable to build $1"
+  elif test "webvfx" = "$1" ; then
+    cmd make -j$MAKEJ -C webvfx || die "Unable to build $1/webvfx"
+    cmd make -j$MAKEJ -C mlt || die "Unable to build $1/mlt"
+    cmd make -j$MAKEJ -C mlt/qmelt || die "Unable to build $1/mlt/qmelt"
   else
     cmd make -j$MAKEJ || die "Unable to build $1"
   fi
@@ -1323,7 +1326,7 @@ End-of-win32-README
         cmd install -p -c translations/*.qm "$FINAL_INSTALL_DIR"/share/shotcut/translations
         # Skip over including Qt with bundle for now.
         #cmd install -d "$FINAL_INSTALL_DIR"/lib/qt4
-        #cmd install -p -c /usr/lib/libQt{Core,Gui,OpenGL,Xml,Svg}.so* "$FINAL_INSTALL_DIR"/lib
+        #cmd install -p -c /usr/lib/libQt{Core,Gui,OpenGL,Xml,Svg,Network,Declarative,WebKit,Script,Sql,XmlPatterns}.so* "$FINAL_INSTALL_DIR"/lib
         #cmd install -p -c /usr/lib/libaudio.so* "$FINAL_INSTALL_DIR"/lib
         #cmd cp -r /usr/lib/qt4/plugins/* "$FINAL_INSTALL_DIR"/lib/qt4
         log Copying some libs from system
@@ -1334,6 +1337,10 @@ End-of-win32-README
         log SOXLIB=$SOXLIB
         cmd install -c "$SOXLIB" "$FINAL_INSTALL_DIR"/lib
       fi
+    elif test "webvfx" = "$1" ; then
+      cmd make -C webvfx install || die "Unable to install $1/webvfx"
+      cmd make -C mlt install || die "Unable to install $1/mlt"
+      cmd make -C mlt/qmelt install || die "Unable to install $1/mlt/qmelt"
     else
       cmd make install || die "Unable to install $1"
     fi
@@ -1569,13 +1576,14 @@ function deploy_win32
 
   cmd mv bin/*.dll .
   cmd mv bin/ffmpeg.exe .
+  cmd mv bin/qmelt.exe .
   cmd rm -rf bin include etc man manifest src *.txt
   cmd mv README README.txt
   cmd mv COPYING COPYING.txt
   cmd rm lib/*
   cmd rm -rf lib/pkgconfig
   cmd rm -rf share/doc share/man share/ffmpeg/examples share/aclocal share/glib-2.0 share/gtk-2.0 share/gtk-doc share/themes
-  cmd cp -p "$QTDIR"/bin/Qt{Core,Gui,OpenGL,Xml,Svg,Network}d4.dll .
+  cmd cp -p "$QTDIR"/bin/Qt{Core,Gui,OpenGL,Xml,Svg,Network,Declarative,WebKit,Script,Sql,XmlPatterns}d4.dll .
   cmd mkdir lib/qt4
   cmd cp -pr "$QTDIR"/plugins/* lib/qt4
   cmd cp -pr "$QTDIR"/translations/*.qm "$FINAL_INSTALL_DIR"/share/translations

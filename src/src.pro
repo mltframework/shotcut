@@ -195,6 +195,7 @@ mac {
     QMAKE_INFO_PLIST = ../Info.plist
 }
 win32 {
+    CONFIG += windows rtti
     INCLUDEPATH += include/mlt++ include/mlt
     LIBS += -Llib -lmlt++ -lmlt -lglew32 -lopengl32
     RC_FILE = shotcut.rc
@@ -210,4 +211,3 @@ isEmpty(SHOTCUT_VERSION) {
     SHOTCUT_VERSION = $$system(date "+%y.%m.%d")
 }
 DEFINES += SHOTCUT_VERSION=\\\"$$SHOTCUT_VERSION\\\"
-
