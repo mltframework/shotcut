@@ -795,7 +795,7 @@ set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 END_OF_CMAKE_RULES
 
-  elif test "shotcut" = "$1" -or "webvfx" = "$1" ; then
+  elif test "shotcut" = "$1" -o "webvfx" = "$1" ; then
       mkdir mingw-mkspec 2> /dev/null
       debug "Create qmake mkspec for $1"
       cat >mingw-mkspec/qmake.conf <<END_OF_QMAKE_SPEC
