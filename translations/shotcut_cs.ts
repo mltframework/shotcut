@@ -1141,7 +1141,7 @@ vícevláknové.</translation>
     <message>
         <location filename="../src/docks/filtersdock.ui" line="76"/>
         <source>Remove cut</source>
-        <translation>Odstranit záběr</translation>
+        <translation>Odstranit střih</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.ui" line="130"/>
@@ -1211,7 +1211,7 @@ vícevláknové.</translation>
     <message>
         <location filename="../src/docks/filtersdock.cpp" line="70"/>
         <source>Filters can only be applied to clips.</source>
-        <translation>Filtry lze použít jen na záznamy.</translation>
+        <translation>Filtry lze použít jen na záběry.</translation>
     </message>
 </context>
 <context>
@@ -1585,7 +1585,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Vedle použití hlavní nabídky nebo panelu s nástroji soubory otevřete &lt;span style=&quot; font-weight:600;&quot;&gt;jejich přetažením a upuštěním&lt;/span&gt;.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Použijte &lt;span style=&quot; font-weight:600;&quot;&gt;Soubor&lt;/span&gt; -&amp;gt; &lt;span style=&quot; font-weight:600;&quot;&gt;Otevřít jiné&lt;/span&gt; k otevření síťových proudů, zařízení pro zachytávání a generatorů.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Soubory MLT XML lze otevřít jako záznam; takže můžete Shotcut použít na vyzkoušení svého XML.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Soubory MLT XML lze otevřít jako záběr; takže můžete Shotcut použít na vyzkoušení svého XML.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesové zkratky pro ovládání pohybu záznamu:&lt;/p&gt;
 &lt;ul type=&quot;circle&quot; style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;&quot;&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesy&lt;span style=&quot; font-weight:600;&quot;&gt; J&lt;/span&gt;, &lt;span style=&quot; font-weight:600;&quot;&gt;K&lt;/span&gt; a &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt; ovládají rychlost přehrávání a směr. Stiskněte opakovaně &lt;span style=&quot; font-weight:600;&quot;&gt;J&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt;, abyste se v záznamu pohybovali rychleji.&lt;/li&gt;
 &lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesy&lt;span style=&quot; font-weight:600;&quot;&gt; I&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;O&lt;/span&gt; nastavují začáteční a koncové body záběru.&lt;/li&gt;
@@ -2036,7 +2036,7 @@ Chcete jej ukončit nyní?</translation>
     <message>
         <location filename="../src/mvcp/meltedclipsmodel.cpp" line="116"/>
         <source>Clip</source>
-        <translation>Záznam</translation>
+        <translation>Záběr</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedclipsmodel.cpp" line="116"/>
@@ -2059,7 +2059,7 @@ Chcete jej ukončit nyní?</translation>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="71"/>
         <source>Remove cut</source>
-        <translation>Odstranit záběr</translation>
+        <translation>Odstranit střih</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="85"/>
@@ -2069,22 +2069,22 @@ Chcete jej ukončit nyní?</translation>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="115"/>
         <source>Insert Cut</source>
-        <translation>Vložit záběr</translation>
+        <translation>Vložit střih</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="124"/>
         <source>Append Cut</source>
-        <translation>Připojit záběr</translation>
+        <translation>Připojit střih</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="129"/>
         <source>Open As Clip</source>
-        <translation>Otevřít jako záznam</translation>
+        <translation>Otevřít jako záběr</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="132"/>
         <source>Open the cut in the player</source>
-        <translation>Otevřít záběr v přehrávači</translation>
+        <translation>Otevřít střih v přehrávači</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="137"/>
@@ -2099,7 +2099,7 @@ Chcete jej ukončit nyní?</translation>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="145"/>
         <source>Go to the start of this cut in the playlist</source>
-        <translation>Jít na začátek tohoto záběru v seznamu záběrů</translation>
+        <translation>Jít na začátek tohoto střihu v seznamu záběrů</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="150"/>
@@ -2119,7 +2119,7 @@ Chcete jej ukončit nyní?</translation>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="161"/>
         <source>Remove all items before the currently playing clip</source>
-        <translation>Odstranit všechny položky před nyní přehrávaným záznamem</translation>
+        <translation>Odstranit všechny položky před nyní přehrávaným záběrem</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="166"/>
@@ -2129,7 +2129,7 @@ Chcete jej ukončit nyní?</translation>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="169"/>
         <source>Remove all items except the currently playing clip</source>
-        <translation>Odstranit všechny položky kromě nyní přehrávaného záznamu</translation>
+        <translation>Odstranit všechny položky kromě nyní přehrávaného záběru</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.cpp" line="195"/>
@@ -2139,7 +2139,7 @@ Chcete jej ukončit nyní?</translation>
 IMPORTANT: You cannot Undo this action!
 
 Do you want to continue?</source>
-        <translation>Příkaz Odstranit vše odstraní všechny záznamy v seznamu záběrů.
+        <translation>Příkaz Odstranit vše odstraní všechny záběry v seznamu záběrů.
 
 DŮLEŽITÉ: Tento krok nelze vrátit zpět!
 
@@ -2153,8 +2153,8 @@ except the currently playing clip.
 IMPORTANT: You cannot Undo this action!
 
 Do you want to continue?</source>
-        <translation>Příkaz Uklidit odstraní všechny záznamy v seznamu záběrů
-kromě nyní přehrávaného záznamu.
+        <translation>Příkaz Uklidit odstraní všechny záběry v seznamu záběrů
+kromě nyní přehrávaného záběru.
 
 DŮLEŽITÉ: Tento krok nelze vrátit zpět!
 
@@ -2171,7 +2171,7 @@ Chcete pokračovat?</translation>
     <message>
         <location filename="../src/mvcp/meltedplaylistmodel.cpp" line="111"/>
         <source>Clip</source>
-        <translation>Záznam</translation>
+        <translation>Záběr</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistmodel.cpp" line="113"/>
@@ -2227,7 +2227,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dvojí klepnutí&lt;/span&gt; na položku v seznamu záběrů pro hledání jednotky k ní.&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Táhněte a pusťte&lt;/span&gt; ze stromu se záznamy serveru na seznam záběrů, nebo na záznam &lt;span style=&quot; font-weight:600;&quot;&gt;jednou klepněte&lt;/span&gt; pro jeho vybrání pro použití s činnostmi &lt;span style=&quot; font-weight:600;&quot;&gt;Přidat&lt;/span&gt; a &lt;span style=&quot; font-weight:600;&quot;&gt;Vložit&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Táhněte a pusťte&lt;/span&gt; ze stromu se záběry serveru na seznam záběrů, nebo na záběr &lt;span style=&quot; font-weight:600;&quot;&gt;jednou klepněte&lt;/span&gt; pro jeho vybrání pro použití s činnostmi &lt;span style=&quot; font-weight:600;&quot;&gt;Přidat&lt;/span&gt; a &lt;span style=&quot; font-weight:600;&quot;&gt;Vložit&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="164"/>
@@ -2267,7 +2267,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="232"/>
         <source>Map Clips Root</source>
-        <translation>Přeložit kořen záznamu</translation>
+        <translation>Přeložit kořen záběru</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedserverdock.cpp" line="151"/>
@@ -2846,8 +2846,8 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dvakrát klepněte&lt;/span&gt; na položku v seznamu záběrů pro nahrání seznamu záběrů do přehrávače.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Přehrávač hledá po začátek kterékoli položky, na kterou &lt;span style=&quot; font-weight:600;&quot;&gt;dvakrát klepnete&lt;/span&gt;.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Můžete se volně dívat na záznamy, aniž byste je nutně přidali do seznamu záběrů nebo je zavřeli.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Pro zkrácení nebo upravení položky seznamu záběrů vyberte &lt;span style=&quot; font-weight:600;&quot;&gt;Otevřít jako záznam&lt;/span&gt; v nabídce souvisejících činností, udělejte změny, a pak vyberte &lt;span style=&quot; font-weight:600;&quot;&gt;Obnovit&lt;/span&gt;.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Můžete se volně dívat na záběry, aniž byste je nutně přidali do seznamu záběrů nebo je zavřeli.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Pro zkrácení nebo upravení položky seznamu záběrů vyberte &lt;span style=&quot; font-weight:600;&quot;&gt;Otevřít jako záběr&lt;/span&gt; v nabídce souvisejících činností, udělejte změny, a pak vyberte &lt;span style=&quot; font-weight:600;&quot;&gt;Obnovit&lt;/span&gt;.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Táhněte a pusťte&lt;/span&gt; pro přeuspořádání položek.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -2857,7 +2857,7 @@ into the player and seek to the start of the
 selected cut.</source>
         <translation>Dvakrát klepněte na položku pro nahrání
 seznamu záběrů do přehrávače a hledání
-po začátek vybraného záběru.</translation>
+po začátek vybraného střihu.</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="105"/>
@@ -2867,7 +2867,7 @@ po začátek vybraného záběru.</translation>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="122"/>
         <source>Remove cut</source>
-        <translation>Odstranit záběr</translation>
+        <translation>Odstranit střih</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="139"/>
@@ -2877,12 +2877,12 @@ po začátek vybraného záběru.</translation>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="169"/>
         <source>Insert Cut</source>
-        <translation>Vložit záběr</translation>
+        <translation>Vložit střih</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="178"/>
         <source>Append Cut</source>
-        <translation>Připojit záběr</translation>
+        <translation>Připojit střih</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="183"/>
@@ -2902,12 +2902,12 @@ po začátek vybraného záběru.</translation>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="198"/>
         <source>Open As Clip</source>
-        <translation>Otevřít jako záznam</translation>
+        <translation>Otevřít jako záběr</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="201"/>
         <source>Open the cut in the player</source>
-        <translation>Otevřít záběr v přehrávači</translation>
+        <translation>Otevřít střih v přehrávači</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="206"/>
@@ -2922,7 +2922,7 @@ po začátek vybraného záběru.</translation>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="214"/>
         <source>Go to the start of this cut in the playlist</source>
-        <translation>Jít na začátek tohoto záběru v seznamu záběrů</translation>
+        <translation>Jít na začátek tohoto střihu v seznamu záběrů</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="219"/>
@@ -2980,7 +2980,7 @@ po začátek vybraného záběru.</translation>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="239"/>
         <source>This clip does not match the selected cut in the playlist!</source>
-        <translation>Tento záznam neodpovídá vybranému záběru v seznamu záběrů!</translation>
+        <translation>Tento záběr neodpovídá vybranému střihu v seznamu záběrů!</translation>
     </message>
 </context>
 <context>
@@ -2998,7 +2998,7 @@ po začátek vybraného záběru.</translation>
     <message>
         <location filename="../src/models/playlistmodel.cpp" line="164"/>
         <source>Clip</source>
-        <translation>Záznam</translation>
+        <translation>Záběr</translation>
     </message>
     <message>
         <location filename="../src/models/playlistmodel.cpp" line="166"/>

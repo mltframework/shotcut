@@ -4,7 +4,7 @@
     <message>
         <location filename="../src/main.cpp" line="94"/>
         <source>Loading plugins...</source>
-        <translation>Chargement des greffons...</translation>
+        <translation>Chargement des plugins ...</translation>
     </message>
 </context>
 <context>
@@ -129,12 +129,12 @@
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="26"/>
         <source>TextLabel</source>
-        <translation>ÉtiquetteSuivante</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="36"/>
         <source>Comments:</source>
-        <translation>Commentaires:</translation>
+        <translation>Commentaires :</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="64"/>
@@ -550,7 +550,7 @@
     <message>
         <location filename="../src/widgets/decklinkproducerwidget.ui" line="92"/>
         <source>Please be aware that not every card model supports automatic signal detection, and not all cards support all of the signal modes.</source>
-        <translation>Soyez conscient que certains modèle de carte ne prend pas en charge la détection automatique du signal, et que toutes les cartes ne prennent pas en charge tous les modes de signaux.</translation>
+        <translation>Soyez conscient que certains modèles de cartes ne prennent pas en charge la détection automatique du signal, et que toutes les cartes ne prennent pas en charge tous les modes de signaux.</translation>
     </message>
     <message>
         <location filename="../src/widgets/decklinkproducerwidget.cpp" line="28"/>
@@ -1434,7 +1434,9 @@ codecs. However, not all codecs are multi-threaded.</source>
         <source>Stop automatically processing the next pending job in
 the list. This does not stop a currently running job. Right-
 -click a job to open a menu to stop a currently running job.</source>
-        <translation>Arrêter automatiquement le traitement de la tâche suivante en attente dans⏎la liste. Ce qui n&apos;arrête pas la tache en cours d&apos;exécution. Cliquez-⏎droit sur une tâche pour ouvrir un menu pour arrêter une tâche en cours d&apos;exécution.</translation>
+        <translation>Arrêter automatiquement le traitement de la tâche suivante en attente dans
+la liste. Ce qui n&apos;arrête pas la tache en cours d&apos;exécution. Faire un
+Clique-droit sur une tâche pour ouvrir un menu, pour arrêter une tâche en cours d&apos;exécution.</translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="91"/>
@@ -1571,7 +1573,23 @@ p, li { white-space: pre-wrap; }
 &lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; Alt+Left&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;Alt+Right&lt;/span&gt; to jump between start, in, out, and end.&lt;/li&gt;&lt;/ul&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Hold down &lt;span style=&quot; font-weight:600;&quot;&gt;Shift&lt;/span&gt; to make the mouse movement over the video window scrub/skim.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Update Shotcut whenever you like. We do not notify you about updates because new version are available almost daily.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;⏎ &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;⏎ p, li { white-space: pre-wrap; }⏎ &lt;/style&gt;&lt;/head&gt;&lt;body&gt;⏎ &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;Guide de Démarrage Rapide&lt;/span&gt;&lt;/p&gt;⏎ &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;⏎ &lt;p style=&quot; margin-top:12px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Ouvrir des fichiers par &lt;span style=&quot; font-weight:600;&quot;&gt;glisser-déposer&lt;/span&gt; en supplément des méthodes ordinaires par le menu ou la barre d&apos;outils.&lt;/p&gt;⏎ &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Utiliser &lt;span style=&quot; font-weight:600;&quot;&gt;Fichier&lt;/span&gt; &amp;gt; &lt;span style=&quot; font-weight:600;&quot;&gt;Ouvrir Autre&lt;/span&gt; pour ouvrir des flux réseaux, des périphériques de capture, et des générateurs.&lt;/p&gt;⏎ &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Les fichiers MLT XML peuvent être ouverts comme un clip; donc vous pouvez utiliser Shotcut pour tester votre XML.&lt;/p&gt;⏎ &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Raccourcis clavier des commandes de transport :&lt;/p&gt;⏎ &lt;ul type=&quot;circle&quot; style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;&quot;&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; J&lt;/span&gt;, &lt;span style=&quot; font-weight:600;&quot;&gt;K&lt;/span&gt;, et &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt; pour contrôler la vitesse et la direction de lecture. Taper sur &lt;span style=&quot; font-weight:600;&quot;&gt;J&lt;/span&gt; ou &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt; plusieurs fois pour aller plus vite.&lt;/li&gt;⏎ &lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; I&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;O&lt;/span&gt; pour définir les points d&apos;entrées ou de sortie.&lt;/li&gt;⏎ &lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Les touches flèches &lt;span style=&quot; font-weight:600;&quot;&gt;Gauche&lt;/span&gt; ou &lt;span style=&quot; font-weight:600;&quot;&gt;Droite&lt;/span&gt;pour avancer image-par-image. &lt;/li&gt;⏎ &lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; Page Haut&lt;/span&gt; ou &lt;span style=&quot; font-weight:600;&quot;&gt;Page Bas&lt;/span&gt; pour se déplacer par 10 images à la fois.&lt;/li&gt;⏎ &lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; Alt+Gauche&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;Alt+Droite&lt;/span&gt; pour sauter au début, au point d&apos;entrée, de sortie ou à la fin.&lt;/li&gt;&lt;/ul&gt;⏎ &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Maintenir enfoncé &lt;span style=&quot; font-weight:600;&quot;&gt;Maj&lt;/span&gt; pour que la fenêtre vidéo suite les movements de la souris.&lt;/p&gt;⏎ &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Mettez à jour Shotcut autant de fois que vous souhaitez. Nous ne vous informons  pas des mises à jour car des nouvelles versions sont disponible quotidiennement.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+ &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+ p, li { white-space: pre-wrap; }
+ &lt;/style&gt;&lt;/head&gt;&lt;body&gt;
+ &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;Guide de Démarrage Rapide&lt;/span&gt;&lt;/p&gt;
+ &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+ &lt;p style=&quot; margin-top:12px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Ouvrir des fichiers par &lt;span style=&quot; font-weight:600;&quot;&gt;glisser-déposer&lt;/span&gt; en supplément des méthodes ordinaires par le menu ou la barre d&apos;outils.&lt;/p&gt;
+ &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Utiliser &lt;span style=&quot; font-weight:600;&quot;&gt;Fichier&lt;/span&gt; &amp;gt; &lt;span style=&quot; font-weight:600;&quot;&gt;Ouvrir Autre&lt;/span&gt; pour ouvrir des flux réseaux, des périphériques de capture, et des générateurs.&lt;/p&gt;
+ &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Les fichiers MLT XML peuvent être ouverts comme un clip; donc vous pouvez utiliser Shotcut pour tester votre XML.&lt;/p&gt;
+ &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Raccourcis clavier des commandes de transport :&lt;/p&gt;
+ &lt;ul type=&quot;circle&quot; style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;&quot;&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; J&lt;/span&gt;, &lt;span style=&quot; font-weight:600;&quot;&gt;K&lt;/span&gt;, et &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt; pour contrôler la vitesse et la direction de lecture. Taper sur &lt;span style=&quot; font-weight:600;&quot;&gt;J&lt;/span&gt; ou &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt; plusieurs fois pour aller plus vite.&lt;/li&gt;
+ &lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; I&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;O&lt;/span&gt; pour définir les points d&apos;entrées ou de sortie.&lt;/li&gt;
+ &lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Les touches flèches &lt;span style=&quot; font-weight:600;&quot;&gt;Gauche&lt;/span&gt; ou &lt;span style=&quot; font-weight:600;&quot;&gt;Droite&lt;/span&gt;pour avancer image-par-image. &lt;/li&gt;
+ &lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; Page Haut&lt;/span&gt; ou &lt;span style=&quot; font-weight:600;&quot;&gt;Page Bas&lt;/span&gt; pour se déplacer par 10 images à la fois.&lt;/li&gt;
+ &lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; Alt+Gauche&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;Alt+Droite&lt;/span&gt; pour sauter au début, au point d&apos;entrée, de sortie ou à la fin.&lt;/li&gt;&lt;/ul&gt;
+ &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Maintenir enfoncé &lt;span style=&quot; font-weight:600;&quot;&gt;Maj&lt;/span&gt; pour que la fenêtre vidéo suite les movements de la souris.&lt;/p&gt;
+ &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Mettez à jour Shotcut autant de fois que vous souhaitez. Nous ne vous informons  pas des mises à jour car des nouvelles versions sont disponible quotidiennement.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="70"/>
@@ -1943,7 +1961,8 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/mainwindow.cpp" line="1009"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
-        <translation>Ce projet a été modifié.⏎ Voulez-vous sauvegarder vos modifications ?</translation>
+        <translation>Ce projet a été modifié.
+Voulez-vous sauvegarder vos modifications ?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1210"/>
@@ -1959,19 +1978,22 @@ Do you want to save your changes?</source>
         <location filename="../src/mainwindow.cpp" line="1226"/>
         <source>You must restart Shotcut to switch using OpenGL.
 Do you want to exit now?</source>
-        <translation>Vous devez redémarrer Shotcut pour passer en OpenGL.⏎ Voulez-vous quitter maintenant ?</translation>
+        <translation>Vous devez redémarrer Shotcut pour passer en OpenGL.
+Voulez-vous quitter maintenant ?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1329"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
-        <translation>Échec de connexion à JACK.⏎ Merci de vérifier que JACK est installé et fonctionne.</translation>
+        <translation>Échec de connexion à JACK.
+Merci de vérifier que JACK est installé et fonctionne.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1338"/>
         <source>You must restart Shotcut to switch using GPU processing.
 Do you want to exit now?</source>
-        <translation>Vous devez redémarrer Shotcut pour passer en traitement GPU.⏎ Voulez-vous quitter maintenant ?</translation>
+        <translation>Vous devez redémarrer Shotcut pour passer en traitement GPU.
+Voulez-vous quitter maintenant ?</translation>
     </message>
 </context>
 <context>
@@ -2112,7 +2134,11 @@ Do you want to exit now?</source>
 IMPORTANT: You cannot Undo this action!
 
 Do you want to continue?</source>
-        <translation>&quot;Supprimer Tout&quot; enlever tous les clips de la liste de lecture.⏎ ⏎ATTENTION : Vous ne pouvez pas Annuler cette action !⏎ ⏎ Voulez-vous continuer ?</translation>
+        <translation>&quot;Supprimer Tout&quot; enlever tous les clips de la liste de lecture.
+
+ATTENTION : Vous ne pouvez pas Annuler cette action !
+
+Voulez-vous continuer ?</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.cpp" line="229"/>
@@ -2122,7 +2148,12 @@ except the currently playing clip.
 IMPORTANT: You cannot Undo this action!
 
 Do you want to continue?</source>
-        <translation>&quot;Nettoyer&quot;supprimer tout les clips de la liste de lecture⏎ sauf le clip en cours de lecture.⏎ ⏎ATTENTION : Vous ne pouvez pas Annuler cette action !⏎ ⏎ Voulez-vous continuer ?</translation>
+        <translation>&quot;Nettoyer&quot; supprimera tous les clips de la liste de lecture
+ sauf le clip en cours de lecture.
+
+ATTENTION : Vous ne pouvez pas Annuler cette action !
+
+Voulez-vous continuer ?</translation>
     </message>
 </context>
 <context>
@@ -2180,7 +2211,18 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Double-click&lt;/span&gt; a playlist item to seek the unit to it.&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Drag-n-drop&lt;/span&gt; from the server&apos;s clips tree to the playlist, or &lt;span style=&quot; font-weight:600;&quot;&gt;single-click&lt;/span&gt; a clip to select it for use with &lt;span style=&quot; font-weight:600;&quot;&gt;Add&lt;/span&gt; and &lt;span style=&quot; font-weight:600;&quot;&gt;Insert&lt;/span&gt; actions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;⏎ &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;⏎ p, li { white-space: pre-wrap; }⏎ &lt;/style&gt;&lt;/head&gt;&lt;body&gt;⏎ &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Simple-clique&lt;/span&gt; sur une unité pour ouvrir sa liste de lecture.&lt;/p&gt;⏎ &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;⏎ &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Double-clique&lt;/span&gt; sur une unité pour la contrôler dans le lecture, ou &lt;span style=&quot; font-weight:600;&quot;&gt;clique-droit&lt;/span&gt; pour des actions de commande de transport.&lt;br /&gt;&lt;/p&gt;⏎ &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Simple-clique&lt;/span&gt; sur un objet de la liste de lecture pour le sélectionnée pour des opérations d&apos;édition (par ex. Insérer).&lt;/p&gt;⏎ &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;⏎ &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Double-clique&lt;/span&gt; sur une liste de lecture pour se déplacer dans l&apos;unité.&lt;/p&gt;⏎ &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;⏎ &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Glisser-déposer&lt;/span&gt; from the server&apos;s clips tree to the playlist, or &lt;span style=&quot; font-weight:600;&quot;&gt;single-click&lt;/span&gt; de la racine du serveur de clip vers la liste de lecture, ou simple-clique sur un clip pour le sélectionner pour l&apos;utiliser avec les actions &lt;span style=&quot; font-weight:600;&quot;&gt;Ajouter&lt;/span&gt; et &lt;span style=&quot; font-weight:600;&quot;&gt; Insérer&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+ &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+ p, li { white-space: pre-wrap; }
+ &lt;/style&gt;&lt;/head&gt;&lt;body&gt;
+ &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Simple-clique&lt;/span&gt; sur une unité pour ouvrir sa liste de lecture.&lt;/p&gt;
+ &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+ &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Double-clique&lt;/span&gt; sur une unité pour la contrôler dans le lecture, ou &lt;span style=&quot; font-weight:600;&quot;&gt;clique-droit&lt;/span&gt; pour des actions de commande de transport.&lt;br /&gt;&lt;/p&gt;
+ &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Simple-clique&lt;/span&gt; sur un objet de la liste de lecture pour le sélectionnée pour des opérations d&apos;édition (par ex. Insérer).&lt;/p&gt;
+ &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+ &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Double-clique&lt;/span&gt; sur une liste de lecture pour se déplacer dans l&apos;unité.&lt;/p&gt;
+ &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+ &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Glisser-déposer&lt;/span&gt; from the server&apos;s clips tree to the playlist, or &lt;span style=&quot; font-weight:600;&quot;&gt;single-click&lt;/span&gt; de la racine du serveur de clip vers la liste de lecture, ou simple-clique sur un clip pour le sélectionner pour l&apos;utiliser avec les actions &lt;span style=&quot; font-weight:600;&quot;&gt;Ajouter&lt;/span&gt; et &lt;span style=&quot; font-weight:600;&quot;&gt; Insérer&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="164"/>
@@ -2800,7 +2842,9 @@ p, li { white-space: pre-wrap; }
         <source>Double-click an item to load the playlist
 into the player and seek to the start of the
 selected cut.</source>
-        <translation>Double-cliquer sur un objet pour charger la liste de lecture⏎ dans le lecteur et se placer au début de la⏎ coupe sélectionnée.</translation>
+        <translation>Double-cliquer sur un objet pour charger la liste de lecture
+dans le lecteur et se placer au début de la
+coupe sélectionnée.</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="105"/>
@@ -3497,7 +3541,10 @@ Most users do not need to change this.</source>
 It makes the capture run in the background, but
 you will not be able to simultaneously send
 the screen capture to SDI/HDMI in this mode.</source>
-        <translation>Utilisez cette fonction lorsque vous allez capturer Shotcut lui-même. ⏎ Il fait la capture en arrière-plan, mais ⏎ vous ne serez pas en mesure d&apos;envoyer simultanément ⏎ la capture d&apos;écran par SDI/HDMI dans ce mode.</translation>
+        <translation>Utilisez cette fonction lorsque vous allez capturer Shotcut lui-même. 
+Il fait la capture en arrière-plan, mais 
+ vous ne serez pas en mesure d&apos;envoyer simultanément 
+ la capture d&apos;écran par SDI/HDMI dans ce mode.</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="301"/>
