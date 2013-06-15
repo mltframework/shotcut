@@ -431,7 +431,7 @@ function set_globals {
 
   #####
   # ffmpeg
-  CONFIG[0]="./configure --prefix=$FINAL_INSTALL_DIR --disable-static --disable-doc --disable-ffserver --enable-gpl --enable-version3 --enable-shared --enable-debug --enable-pthreads --enable-runtime-cpudetect"
+  CONFIG[0]="./configure --prefix=$FINAL_INSTALL_DIR --disable-static --disable-doc --disable-ffserver --enable-gpl --enable-version3 --enable-shared --enable-pthreads --enable-runtime-cpudetect"
   if test 1 = "$FFMPEG_SUPPORT_THEORA" ; then
     CONFIG[0]="${CONFIG[0]} --enable-libtheora --enable-libvorbis"
   fi
@@ -544,7 +544,7 @@ function set_globals {
     CONFIG[7]="qmake -r"
   fi
   if test "$TARGET_OS" = "Win32" ; then
-    CONFIG[7]="${CONFIG[7]} -spec mingw-mkspec CONFIG+=debug CONFIG+=link_pkgconfig PKGCONFIG+=mlt++"
+    CONFIG[7]="${CONFIG[7]} -spec mingw-mkspec CONFIG+=link_pkgconfig PKGCONFIG+=mlt++"
   fi
   CFLAGS_[7]=$CFLAGS
   LDFLAGS_[7]=$LDFLAGS
@@ -565,7 +565,7 @@ function set_globals {
     CONFIG[9]="qmake -r"
   fi
   if test "$TARGET_OS" = "Win32" ; then
-    CONFIG[9]="${CONFIG[9]} -spec mingw-mkspec CONFIG+=debug CONFIG+=link_pkgconfig PKGCONFIG+=mlt++"
+    CONFIG[9]="${CONFIG[9]} -spec mingw-mkspec CONFIG+=link_pkgconfig PKGCONFIG+=mlt++"
   fi
   CONFIG[9]="${CONFIG[9]} PREFIX=$FINAL_INSTALL_DIR MLT_SOURCE=$(pwd)/src/mlt"
   CFLAGS_[9]=$CFLAGS
@@ -1583,7 +1583,7 @@ function deploy_win32
   cmd rm lib/*
   cmd rm -rf lib/pkgconfig
   cmd rm -rf share/doc share/man share/ffmpeg/examples share/aclocal share/glib-2.0 share/gtk-2.0 share/gtk-doc share/themes
-  cmd cp -p "$QTDIR"/bin/Qt{Core,Gui,OpenGL,Xml,Svg,Network,Declarative,WebKit,Script,Sql,XmlPatterns}d4.dll .
+  cmd cp -p "$QTDIR"/bin/Qt{Core,Gui,OpenGL,Xml,Svg,Network,Declarative,WebKit,Script,Sql,XmlPatterns}4.dll .
   cmd mkdir lib/qt4
   cmd cp -pr "$QTDIR"/plugins/* lib/qt4
   cmd cp -pr "$QTDIR"/translations/*.qm "$FINAL_INSTALL_DIR"/share/translations
