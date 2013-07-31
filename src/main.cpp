@@ -46,7 +46,8 @@ public:
 #endif
 
         // Load translations
-        const QString locale = QLocale::system().name();
+        QSettings settings;
+        const QString locale = settings.value("language", QLocale::system().name()).toString();
         dir = applicationDirPath();
     #if defined(Q_WS_MAC)
         dir.cdUp();

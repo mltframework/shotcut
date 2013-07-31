@@ -407,6 +407,41 @@ void MainWindow::setupSettingsMenu()
     }
     connect(m_externalGroup, SIGNAL(triggered(QAction*)), this, SLOT(onExternalTriggered(QAction*)));
     connect(m_profileGroup, SIGNAL(triggered(QAction*)), this, SLOT(onProfileTriggered(QAction*)));
+
+    // Setup the language menu actions
+    m_languagesGroup = new QActionGroup(this);
+    QAction* a = new QAction(QLocale::languageToString(QLocale::Chinese), m_languagesGroup);
+    a->setCheckable(true);
+    a->setData("zh");
+    a = new QAction(QLocale::languageToString(QLocale::Czech), m_languagesGroup);
+    a->setCheckable(true);
+    a->setData("cs");
+    ui->menuLanguage->addActions(m_languagesGroup->actions());
+    a = new QAction(QLocale::languageToString(QLocale::English), m_languagesGroup);
+    a->setCheckable(true);
+    a->setData("en");
+    ui->menuLanguage->addActions(m_languagesGroup->actions());
+    a = new QAction(QLocale::languageToString(QLocale::French), m_languagesGroup);
+    a->setCheckable(true);
+    a->setData("fr");
+    ui->menuLanguage->addActions(m_languagesGroup->actions());
+    a = new QAction(QLocale::languageToString(QLocale::German), m_languagesGroup);
+    a->setCheckable(true);
+    a->setData("de");
+    ui->menuLanguage->addActions(m_languagesGroup->actions());
+    a = new QAction(QLocale::languageToString(QLocale::Portuguese), m_languagesGroup);
+    a->setCheckable(true);
+    a->setData("pt");
+    ui->menuLanguage->addActions(m_languagesGroup->actions());
+    a = new QAction(QLocale::languageToString(QLocale::Spanish), m_languagesGroup);
+    a->setCheckable(true);
+    a->setData("es");
+    ui->menuLanguage->addActions(m_languagesGroup->actions());
+    const QString locale = m_settings.value("language", QLocale::system().name()).toString();
+    foreach (QAction* action, m_languagesGroup->actions())
+        if (locale.startsWith(action->data().toString()))
+            action->setChecked(true);
+    connect(m_languagesGroup, SIGNAL(triggered(QAction*)), this, SLOT(onLanguageTriggered(QAction*)));
 }
 
 QAction* MainWindow::addProfile(QActionGroup* actionGroup, const QString& desc, const QString& name)
@@ -1330,6 +1365,22 @@ void MainWindow::processMultipleFiles()
         updateThumbnails();
         m_isPlaylistLoaded = false;
     }
+}
+
+void MainWindow::onLanguageTriggered(QAction* action)
+{
+    m_settings.setValue("language", action->data());
+    QMessageBox dialog(QMessageBox::Information,
+                       qApp->applicationName(),
+                       tr("You must restart Shotcut to switch to the new language.\n"
+                          "Do you want to exit now?"),
+                       QMessageBox::No | QMessageBox::Yes,
+                       this);
+    dialog.setDefaultButton(QMessageBox::Yes);
+    dialog.setEscapeButton(QMessageBox::No);
+    dialog.setWindowModality(Qt::WindowModal);
+    if (dialog.exec() == QMessageBox::Yes)
+        QApplication::closeAllWindows();
 }
 
 void MainWindow::on_actionNearest_triggered(bool checked)

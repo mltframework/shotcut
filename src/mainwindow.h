@@ -94,6 +94,7 @@ private:
     QMenu* m_customProfileMenu;
     QStringList m_multipleFiles;
     bool m_isPlaylistLoaded;
+    QActionGroup* m_languagesGroup;
 
 public slots:
     void open(const QString& url, const Mlt::Properties* = 0);
@@ -150,6 +151,7 @@ private slots:
     void onProfileTriggered(QAction*);
     void on_actionAddCustomProfile_triggered();
     void processMultipleFiles();
+    void onLanguageTriggered(QAction*);
 };
 
 #define MAIN MainWindow::singleton()

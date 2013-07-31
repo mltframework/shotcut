@@ -132,6 +132,11 @@ p, li { white-space: pre-wrap; }
      </property>
      <addaction name="actionExternalNone"/>
     </widget>
+    <widget class="QMenu" name="menuLanguage">
+     <property name="title">
+      <string>Language</string>
+     </property>
+    </widget>
     <addaction name="actionOpenGL"/>
     <addaction name="actionGPU"/>
     <addaction name="actionJack"/>
@@ -141,6 +146,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="menuInterpolation"/>
     <addaction name="menuExternal"/>
     <addaction name="menuProfile"/>
+    <addaction name="menuLanguage"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
