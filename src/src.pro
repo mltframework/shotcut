@@ -183,7 +183,9 @@ TRANSLATIONS += \
     ../translations/shotcut_de.ts \
     ../translations/shotcut_en.ts \
     ../translations/shotcut_es.ts \
-    ../translations/shotcut_fr.ts
+    ../translations/shotcut_fr.ts \
+    ../translations/shotcut_pt.ts \
+    ../translations/shotcut_zh.ts
 
 INCLUDEPATH = ../mvcp
 
