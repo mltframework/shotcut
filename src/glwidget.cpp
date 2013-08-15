@@ -20,7 +20,6 @@
  */
 
 #include <QtWidgets>
-#include <QGLFunctions>
 #include <Mlt.h>
 #include "glwidget.h"
 
@@ -88,6 +87,7 @@ void GLWidget::initializeGL()
 
     if (settings.value("player/gpu", false).toBool() && !m_glslManager)
         emit gpuNotSupported();
+    initializeGLFunctions();
     qglClearColor(palette.color(QPalette::Window));
     glShadeModel(GL_FLAT);
     glEnable(GL_TEXTURE_2D);

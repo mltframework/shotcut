@@ -1,4 +1,13 @@
-/*************************************************************************** *   Copyright (C) 2010 by Till Theato (root@ttill.de)                     * *                                                                         * *   This program is free software; you can redistribute it and/or modify  * *   it under the terms of the GNU General Public License as published by  * *   the Free Software Foundation; either version 2 of the License, or     * *   (at your option) any later version.                                   * *                                                                         * *   This program is distributed in the hope that it will be useful,       * *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+/***************************************************************************
+ *   Copyright (C) 2010 by Till Theato (root@ttill.de)                     *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
  *   GNU General Public License for more details.                          *
  *                                                                         *
@@ -20,12 +29,17 @@
 #include <QFrame>
 #include <QApplication>
 #include <QIcon>
+#include <QEvent>
 
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+// KeyPress is defined in X.h
+const int QEventKeyPress = QEvent::KeyPress;
 #include <QX11Info>
+#include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include "fixx11h.h"
 #endif 
+
 
 MyFrame::MyFrame(QWidget* parent) :
     QFrame(parent)
@@ -117,7 +131,7 @@ void ColorPickerWidget::slotGetAverageColor()
     }
 
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    XDestroyImage(m_image);
+    XDestroyImage((XImage*) m_image);
     m_image = NULL;
 #endif
 
@@ -200,7 +214,7 @@ void ColorPickerWidget::closeEventFilter()
 bool ColorPickerWidget::eventFilter(QObject *object, QEvent *event)
 {
     // Close color picker on any key press
-    if (event->type() == QEvent::KeyPress || event->type() == QEvent::ShortcutOverride) {
+    if (event->type() == QEventKeyPress || event->type() == QEvent::ShortcutOverride) {
         closeEventFilter();
 	emit disableCurrentFilter(false);
         event->setAccepted(true);
@@ -224,12 +238,12 @@ QColor ColorPickerWidget::grabColor(const QPoint &p, bool destroyImage)
     if (m_image == NULL) {
         Window root = RootWindow(QX11Info::display(), QX11Info::appScreen());
         m_image = XGetImage(QX11Info::display(), root, p.x(), p.y(), 1, 1, -1, ZPixmap);
-        xpixel = XGetPixel(m_image, 0, 0);
+        xpixel = XGetPixel((XImage*) m_image, 0, 0);
     } else {
-        xpixel = XGetPixel(m_image, p.x(), p.y());
+        xpixel = XGetPixel((XImage*) m_image, p.x(), p.y());
     }
     if (destroyImage) {
-        XDestroyImage(m_image);
+        XDestroyImage((XImage*) m_image);
         m_image = 0;
     }
     XColor xcol;
