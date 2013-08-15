@@ -37,6 +37,7 @@
 #include "filters/movitsharpenfilter.h"
 #include "filters/frei0rsharpnessfilter.h"
 #include "filters/whitebalancefilter.h"
+#include "filters/webvfxfilter.h"
 #include "qmltypes/qmlfilter.h"
 #include "qmltypes/qmlmetadata.h"
 
@@ -75,6 +76,7 @@ QActionGroup *FiltersDock::availablefilters()
     //    if (m_isGPU) menu.append(ui->actionDiffusion);
         actions.append(ui->actionGlow);
         actions.append(ui->actionMirror);
+        if (!m_isGPU) actions.append(ui->actionOverlayHTML);
         actions.append(ui->actionSharpen);
     //    menu.append(ui->actionSizePosition);
     //    menu.append(ui->actionVignette);
@@ -188,6 +190,8 @@ void FiltersDock::on_listView_clicked(const QModelIndex &index)
             ui->scrollArea->setWidget(new Frei0rSharpnessFilter(*filter));
         else if (name == "frei0r.colgate" || name == "movit.white_balance")
             ui->scrollArea->setWidget(new WhiteBalanceFilter(*filter));
+        else if (name == "webvfx")
+            ui->scrollArea->setWidget(new WebvfxFilter(*filter));
         else {
             delete ui->scrollArea->widget();
             loadQuickPanel(qmlMetadataForService(name), index.row());
@@ -342,4 +346,13 @@ void FiltersDock::loadQuickPanel(const QmlMetadata* metadata, int row)
     QWidget* container = QWidget::createWindowContainer(qqview);
     container->setFocusPolicy(Qt::TabFocus);
     loadWidgetsPanel(container);
+}
+
+void FiltersDock::on_actionOverlayHTML_triggered()
+{
+    Mlt::Filter* filter = m_model.add("webvfx");
+    ui->scrollArea->setWidget(new WebvfxFilter(*filter));
+    filter->set("consumer", MLT.consumer()->get_service(), 0);
+    delete filter;
+    ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
 }

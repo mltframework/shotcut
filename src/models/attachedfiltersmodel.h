@@ -49,6 +49,7 @@ public slots:
 private:
     int m_rows;
     int m_dropRow;
+    int m_removeRow;
 
     void calculateRows();
 };

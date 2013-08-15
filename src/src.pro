@@ -65,7 +65,8 @@ SOURCES += main.cpp\
     filters/whitebalancefilter.cpp \
     dialogs/customprofiledialog.cpp \
     qmltypes/qmlfilter.cpp \
-    qmltypes/qmlmetadata.cpp
+    qmltypes/qmlmetadata.cpp \
+    filters/webvfxfilter.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -126,7 +127,8 @@ HEADERS  += mainwindow.h \
     filters/whitebalancefilter.h \
     dialogs/customprofiledialog.h \
     qmltypes/qmlfilter.h \
-    qmltypes/qmlmetadata.h
+    qmltypes/qmlmetadata.h \
+    filters/webvfxfilter.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
@@ -166,7 +168,8 @@ FORMS    += mainwindow.ui \
     filters/movitsharpenfilter.ui \
     filters/frei0rsharpnessfilter.ui \
     filters/whitebalancefilter.ui \
-    dialogs/customprofiledialog.ui
+    dialogs/customprofiledialog.ui \
+    filters/webvfxfilter.ui
 
 RESOURCES += \
     ../icons/resources.qrc

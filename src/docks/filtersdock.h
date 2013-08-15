@@ -80,6 +80,8 @@ private slots:
 
     void onActionTriggered(QAction* action);
 
+    void on_actionOverlayHTML_triggered();
+
 private:
     Ui::FiltersDock *ui;
     AttachedFiltersModel m_model;

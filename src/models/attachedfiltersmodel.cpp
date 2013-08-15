@@ -22,6 +22,8 @@
 #include "docks/filtersdock.h"
 #include "qmltypes/qmlmetadata.h"
 #include <QSettings>
+#include <QSettings>
+#include <QTimer>
 #include <QDebug>
 
 AttachedFiltersModel::AttachedFiltersModel(QObject *parent)
@@ -139,6 +141,8 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
                 result = tr("Glow");
             else if (result == "movit.mirror" || result == "mirror")
                 result = tr("Mirror");
+            else if (result == "webvfx")
+                result = tr("Overlay HTML");
             else if (result == "movit.sharpen" || result == "frei0r.sharpness")
                 result = tr("Sharpen");
             else if (result == "movit.vignette" || result == "vignette")

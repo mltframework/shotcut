@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>390</width>
-    <height>278</height>
+    <width>388</width>
+    <height>276</height>
    </rect>
   </property>
   <property name="windowIcon">
@@ -191,6 +191,14 @@
   <action name="actionWhiteBalance">
    <property name="text">
     <string>White Balance</string>
+   </property>
+  </action>
+  <action name="actionOverlayHTML">
+   <property name="text">
+    <string>Overlay HTML</string>
+   </property>
+   <property name="toolTip">
+    <string>Overlay HTML</string>
    </property>
   </action>
  </widget>
