@@ -22,7 +22,7 @@
 #include "jackproducerwidget.h"
 #include "alsawidget.h"
 #include "mltcontroller.h"
-#include <QtGui>
+#include <QtWidgets>
 
 X11grabWidget::X11grabWidget(QWidget *parent) :
     QWidget(parent),
@@ -86,7 +86,7 @@ QString X11grabWidget::URL(Mlt::Profile& profile) const
 
 Mlt::Producer* X11grabWidget::producer(Mlt::Profile& profile)
 {
-    Mlt::Producer* p = new Mlt::Producer(profile, URL(profile).toAscii().constData());
+    Mlt::Producer* p = new Mlt::Producer(profile, URL(profile).toLatin1().constData());
     if (!p->is_valid()) {
         delete p;
         p = new Mlt::Producer(profile, "color:");
@@ -106,7 +106,7 @@ Mlt::Producer* X11grabWidget::producer(Mlt::Profile& profile)
         p = new Mlt::Producer(tractor->get_producer());
         delete tractor;
     }
-    p->set("display", ui->lineEdit->text().toAscii().constData());
+    p->set("display", ui->lineEdit->text().toLatin1().constData());
     p->set("xpos", ui->xSpinBox->value());
     p->set("ypos", ui->ySpinBox->value());
     p->set("width", ui->widthSpinBox->value());
@@ -123,7 +123,7 @@ Mlt::Producer* X11grabWidget::producer(Mlt::Profile& profile)
 Mlt::Properties* X11grabWidget::getPreset() const
 {
     Mlt::Properties* p = new Mlt::Properties;
-    p->set("display", ui->lineEdit->text().toAscii().constData());
+    p->set("display", ui->lineEdit->text().toLatin1().constData());
     p->set("xpos", ui->xSpinBox->value());
     p->set("ypos", ui->ySpinBox->value());
     p->set("width", ui->widthSpinBox->value());

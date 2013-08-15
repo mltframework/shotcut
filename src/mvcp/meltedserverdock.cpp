@@ -22,9 +22,9 @@
 #include "meltedclipsmodel.h"
 #include "meltedunitsmodel.h"
 #include "mltcontroller.h"
-#include <QtGui/QCompleter>
-#include <QtGui/QStringListModel>
-#include <QtGui/QFileDialog>
+#include <QCompleter>
+#include <QStringListModel>
+#include <QFileDialog>
 
 MeltedServerDock::MeltedServerDock(QWidget *parent)
     : QDockWidget(parent)
@@ -42,7 +42,7 @@ MeltedServerDock::MeltedServerDock(QWidget *parent)
     connect(m_console, SIGNAL(commandExecuted(QString)), this, SLOT(onCommandExecuted(QString)));
 
     // setup clips tree
-    ui->treeView->header()->setResizeMode(QHeaderView::ResizeToContents);
+    ui->treeView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
     ui->treeView->setDisabled(true);
     ui->treeView->setDragEnabled(true);
 

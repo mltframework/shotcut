@@ -127,24 +127,24 @@ void PlasmaWidget::on_move2Spinner_valueChanged(double value)
 Mlt::Producer* PlasmaWidget::producer(Mlt::Profile& profile)
 {
     Mlt::Producer* p = new Mlt::Producer(profile, "frei0r.plasma");
-    p->set(kParamSpeed1, ui->speed1Spinner->text().toAscii().constData());
-    p->set(kParamSpeed2, ui->speed2Spinner->text().toAscii().constData());
-    p->set(kParamSpeed3, ui->speed3Spinner->text().toAscii().constData());
-    p->set(kParamSpeed4, ui->speed4Spinner->text().toAscii().constData());
-    p->set(kParamMove1, ui->move1Spinner->text().toAscii().constData());
-    p->set(kParamMove2, ui->move2Spinner->text().toAscii().constData());
+    p->set(kParamSpeed1, ui->speed1Spinner->text().toLatin1().constData());
+    p->set(kParamSpeed2, ui->speed2Spinner->text().toLatin1().constData());
+    p->set(kParamSpeed3, ui->speed3Spinner->text().toLatin1().constData());
+    p->set(kParamSpeed4, ui->speed4Spinner->text().toLatin1().constData());
+    p->set(kParamMove1, ui->move1Spinner->text().toLatin1().constData());
+    p->set(kParamMove2, ui->move2Spinner->text().toLatin1().constData());
     return p;
 }
 
 Mlt::Properties* PlasmaWidget::getPreset() const
 {
     Mlt::Properties* p = new Mlt::Properties;
-    p->set(kParamSpeed1, ui->speed1Spinner->text().toAscii().constData());
-    p->set(kParamSpeed2, ui->speed2Spinner->text().toAscii().constData());
-    p->set(kParamSpeed3, ui->speed3Spinner->text().toAscii().constData());
-    p->set(kParamSpeed4, ui->speed4Spinner->text().toAscii().constData());
-    p->set(kParamMove1, ui->move1Spinner->text().toAscii().constData());
-    p->set(kParamMove2, ui->move2Spinner->text().toAscii().constData());
+    p->set(kParamSpeed1, ui->speed1Spinner->text().toLatin1().constData());
+    p->set(kParamSpeed2, ui->speed2Spinner->text().toLatin1().constData());
+    p->set(kParamSpeed3, ui->speed3Spinner->text().toLatin1().constData());
+    p->set(kParamSpeed4, ui->speed4Spinner->text().toLatin1().constData());
+    p->set(kParamMove1, ui->move1Spinner->text().toLatin1().constData());
+    p->set(kParamMove2, ui->move2Spinner->text().toLatin1().constData());
     return p;
 }
 

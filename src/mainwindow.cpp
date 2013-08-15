@@ -51,9 +51,9 @@
 #include "docks/filtersdock.h"
 #include "dialogs/customprofiledialog.h"
 
-#include <QtGui>
+#include <QtWidgets>
 #include <QDebug>
-#include <QtCore/QThreadPool>
+#include <QThreadPool>
 
 static const int STATUS_TIMEOUT_MS = 3000;
 
@@ -67,7 +67,7 @@ MainWindow::MainWindow()
 
     // Create the UI.
     ui->setupUi(this);
-#ifndef Q_WS_X11
+#if defined(Q_OS_MAC) || defined(Q_OS_WIN)
     ui->mainToolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 #endif
     setCorner(Qt::TopLeftCorner, Qt::LeftDockWidgetArea);
@@ -97,8 +97,8 @@ MainWindow::MainWindow()
     QAction *redoAction = m_undoStack->createRedoAction(this);
     undoAction->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/icons/icons/edit-undo.png")));
     redoAction->setIcon(QIcon::fromTheme("edit-redo", QIcon(":/icons/icons/edit-redo.png")));
-    undoAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+Z", 0, QApplication::UnicodeUTF8));
-    redoAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+Z", 0, QApplication::UnicodeUTF8));
+    undoAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+Z", 0));
+    redoAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+Z", 0));
     ui->menuEdit->addAction(undoAction);
     ui->menuEdit->addAction(redoAction);
     ui->actionUndo->setIcon(undoAction->icon());
@@ -161,14 +161,14 @@ MainWindow::MainWindow()
     if (!m_settings.value("player/gpu").toBool())
         connect(m_playlistDock->model(), SIGNAL(loaded()), this, SLOT(updateThumbnails()));
     connect(m_playlistDock->model(), SIGNAL(modified()), this, SLOT(updateMarkers()));
-#ifdef Q_WS_X11
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     if (m_settings.value("player/opengl").toBool()) {
 #endif
         connect(m_playlistDock->model(), SIGNAL(requestImage(Mlt::QProducer,int,int,int)),
             MLT.videoWidget(), SLOT(renderImage(Mlt::QProducer,int,int,int)));
         connect(MLT.videoWidget(), SIGNAL(imageRendered(Mlt::QProducer,int,QImage)),
             m_playlistDock->model(), SLOT(updateThumbnail(Mlt::QProducer,int,QImage)));
-#ifdef Q_WS_X11
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     }
 #endif
 
@@ -268,7 +268,7 @@ MainWindow::MainWindow()
     connect(unitsModel, SIGNAL(generationChanged(quint8)), playlistModel, SLOT(onGenerationChanged(quint8)));
 
     // connect video widget signals
-#if defined(Q_WS_MAC) || defined(Q_WS_WIN)
+#if defined(Q_OS_MAC) || defined(Q_OS_WIN)
     Mlt::GLWidget* videoWidget = (Mlt::GLWidget*) &(MLT);
     connect(videoWidget, SIGNAL(dragStarted()), m_playlistDock, SLOT(onPlayerDragStarted()));
     connect(videoWidget, SIGNAL(seekTo(int)), m_player, SLOT(seek(int)));
@@ -352,7 +352,7 @@ void MainWindow::setupSettingsMenu()
     m_customProfileMenu = ui->menuProfile->addMenu(tr("Custom"));
     m_customProfileMenu->addAction(ui->actionAddCustomProfile);
     // Load custom profiles
-    QDir dir(QDesktopServices::storageLocation(QDesktopServices::DataLocation));
+    QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
     if (dir.cd("profiles")) {
         QStringList profiles = dir.entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
         if (profiles.length() > 0)
@@ -361,7 +361,7 @@ void MainWindow::setupSettingsMenu()
             m_customProfileMenu->addAction(addProfile(m_profileGroup, name, dir.filePath(name)));
     }
 
-#ifndef Q_WS_X11
+#if defined(Q_OS_MAC) || defined(Q_OS_WIN)
     delete ui->actionOpenGL;
     ui->actionOpenGL = 0;
 #else
@@ -375,7 +375,7 @@ void MainWindow::setupSettingsMenu()
     m_externalGroup = new QActionGroup(this);
     ui->actionExternalNone->setData(QString());
     m_externalGroup->addAction(ui->actionExternalNone);
-#ifdef Q_WS_X11
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     Mlt::Consumer linsys(MLT.profile(), "sdi");
     if (linsys.is_valid()) {
         QAction* action = new QAction("DVEO VidPort", this);
@@ -390,7 +390,7 @@ void MainWindow::setupSettingsMenu()
         decklink.set("list_devices", 1);
         int n = decklink.get_int("devices");
         for (int i = 0; i < n; ++i) {
-            QString device(decklink.get(QString("device.%1").arg(i).toAscii().constData()));
+            QString device(decklink.get(QString("device.%1").arg(i).toLatin1().constData()));
             if (!device.isEmpty()) {
                 QAction* action = new QAction(device, this);
                 action->setCheckable(true);
@@ -500,7 +500,7 @@ void MainWindow::openVideo()
 {
     QString settingKey("openPath");
     QString directory(m_settings.value(settingKey,
-        QDesktopServices::storageLocation(QDesktopServices::MoviesLocation)).toString());
+        QStandardPaths::standardLocations(QStandardPaths::MoviesLocation)).toString());
     QStringList filenames = QFileDialog::getOpenFileNames(this, tr("Open File"), directory);
 
     if (filenames.length() > 0) {
@@ -559,7 +559,7 @@ void MainWindow::seekPlaylist(int start)
 
 void MainWindow::readPlayerSettings()
 {
-#ifdef Q_WS_X11
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     ui->actionOpenGL->setChecked(m_settings.value("player/opengl", true).toBool());
 #endif
     ui->actionRealtime->setChecked(m_settings.value("player/realtime", true).toBool());
@@ -614,7 +614,7 @@ void MainWindow::readPlayerSettings()
 void MainWindow::readWindowSettings()
 {
     restoreGeometry(m_settings.value("geometry").toByteArray());
-#if defined(Q_WS_MAC)
+#if defined(Q_OS_MAC)
     QSize s = size();
     s.setHeight(s.height() + 38);
     resize(s);
@@ -1004,7 +1004,7 @@ bool MainWindow::on_actionSave_As_triggered()
         return true;
     QString settingKey("openPath");
     QString directory(m_settings.value(settingKey,
-        QDesktopServices::storageLocation(QDesktopServices::MoviesLocation)).toString());
+        QStandardPaths::standardLocations(QStandardPaths::MoviesLocation)).toString());
     QString filename = QFileDialog::getSaveFileName(this, tr("Save XML"), directory, tr("MLT XML (*.mlt)"));
     if (!filename.isEmpty()) {
         saveXML(filename);
@@ -1481,7 +1481,7 @@ void MainWindow::on_actionAddCustomProfile_triggered()
     CustomProfileDialog dialog(this);
     dialog.setWindowModality(Qt::WindowModal);
     if (dialog.exec() == QDialog::Accepted) {
-        QDir dir(QDesktopServices::storageLocation(QDesktopServices::DataLocation));
+        QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
         if (dir.cd("profiles")) {
             QString name = dialog.profileName();
             QStringList profiles = dir.entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);

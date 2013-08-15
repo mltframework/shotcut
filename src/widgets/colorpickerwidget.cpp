@@ -21,7 +21,7 @@
 #include <QApplication>
 #include <QIcon>
 
-#ifdef Q_WS_X11
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
 #include <QX11Info>
 #include <X11/Xutil.h>
 #include "fixx11h.h"
@@ -49,7 +49,7 @@ ColorPickerWidget::ColorPickerWidget(QWidget *parent) :
         QWidget(parent),
         m_filterActive(false)
 {
-#ifdef Q_WS_X11
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     m_image = NULL;
 #endif
 
@@ -95,7 +95,7 @@ void ColorPickerWidget::slotGetAverageColor()
      Only getting the image once for the whole rect
      results in a vast speed improvement.
     */
-#ifdef Q_WS_X11
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     Window root = RootWindow(QX11Info::display(), QX11Info::appScreen());
     m_image = XGetImage(QX11Info::display(), root, m_grabRect.x(), m_grabRect.y(), m_grabRect.width(), m_grabRect.height(), -1, ZPixmap);
 #else
@@ -116,7 +116,7 @@ void ColorPickerWidget::slotGetAverageColor()
             emit displayMessage(tr("Requesting color information..."), (int)(x * m_grabRect.height() / (qreal)numPixel * 100));
     }
 
-#ifdef Q_WS_X11
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     XDestroyImage(m_image);
     m_image = NULL;
 #endif
@@ -212,7 +212,7 @@ bool ColorPickerWidget::eventFilter(QObject *object, QEvent *event)
 
 QColor ColorPickerWidget::grabColor(const QPoint &p, bool destroyImage)
 {
-#ifdef Q_WS_X11
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     /*
      we use the X11 API directly in this case as we are not getting back a valid
      return from QPixmap::grabWindow in the case where the application is using

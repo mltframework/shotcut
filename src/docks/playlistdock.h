@@ -20,8 +20,8 @@
 #define PLAYLISTDOCK_H
 
 #include <QDockWidget>
-#include <QtGui/QUndoCommand>
-#include <QtCore/QSettings>
+#include <QUndoCommand>
+#include <QSettings>
 #include "models/playlistmodel.h"
 
 namespace Ui {

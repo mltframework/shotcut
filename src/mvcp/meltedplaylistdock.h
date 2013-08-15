@@ -20,7 +20,7 @@
 #define MELTEDUNITDOCK_H
 
 #include <QDockWidget>
-#include <QtGui/QUndoCommand>
+#include <QUndoCommand>
 #include "meltedplaylistmodel.h"
 #include "transportcontrol.h"
 

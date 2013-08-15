@@ -20,7 +20,7 @@
 #include "ui_avformatproducerwidget.h"
 #include "sdlwidget.h"
 #include <QtDebug>
-#include <QtGui>
+#include <QtWidgets>
 
 AvformatProducerWidget::AvformatProducerWidget(QWidget *parent)
     : QWidget(parent)
@@ -100,14 +100,14 @@ void AvformatProducerWidget::onFrameReceived(Mlt::QFrame)
                                 ui->audioTrackComboBox->count() == 0);
     for (int i = 0; i < n; i++) {
         QString key = QString("meta.media.%1.stream.type").arg(i);
-        QString streamType(m_producer->get(key.toAscii().constData()));
+        QString streamType(m_producer->get(key.toLatin1().constData()));
         if (streamType == "video") {
             key = QString("meta.media.%1.codec.name").arg(i);
-            QString codec(m_producer->get(key.toAscii().constData()));
+            QString codec(m_producer->get(key.toLatin1().constData()));
             key = QString("meta.media.%1.codec.width").arg(i);
-            QString width(m_producer->get(key.toAscii().constData()));
+            QString width(m_producer->get(key.toLatin1().constData()));
             key = QString("meta.media.%1.codec.height").arg(i);
-            QString height(m_producer->get(key.toAscii().constData()));
+            QString height(m_producer->get(key.toLatin1().constData()));
             QString name = QString("%1: %2x%3 %4")
                     .arg(videoIndex)
                     .arg(width)
@@ -120,11 +120,11 @@ void AvformatProducerWidget::onFrameReceived(Mlt::QFrame)
             }
             if (i == m_producer->get_int("video_index")) {
                 key = QString("meta.media.%1.codec.long_name").arg(i);
-                QString codec(m_producer->get(key.toAscii().constData()));
+                QString codec(m_producer->get(key.toLatin1().constData()));
                 ui->videoTableWidget->setItem(0, 1, new QTableWidgetItem(codec));
                 key = QString("meta.media.%1.codec.pix_fmt").arg(i);
                 ui->videoTableWidget->setItem(3, 1, new QTableWidgetItem(
-                    m_producer->get(key.toAscii().constData())));
+                    m_producer->get(key.toLatin1().constData())));
                 ui->videoTrackComboBox->setCurrentIndex(videoIndex);
             }
             ui->tabWidget->setTabEnabled(0, true);
@@ -132,11 +132,11 @@ void AvformatProducerWidget::onFrameReceived(Mlt::QFrame)
         }
         else if (streamType == "audio") {
             key = QString("meta.media.%1.codec.name").arg(i);
-            QString codec(m_producer->get(key.toAscii().constData()));
+            QString codec(m_producer->get(key.toLatin1().constData()));
             key = QString("meta.media.%1.codec.channels").arg(i);
-            QString channels(m_producer->get(key.toAscii().constData()));
+            QString channels(m_producer->get(key.toLatin1().constData()));
             key = QString("meta.media.%1.codec.sample_rate").arg(i);
-            QString sampleRate(m_producer->get(key.toAscii().constData()));
+            QString sampleRate(m_producer->get(key.toLatin1().constData()));
             QString name = QString("%1: %2 ch %3 KHz %4")
                     .arg(audioIndex)
                     .arg(channels)
@@ -149,13 +149,13 @@ void AvformatProducerWidget::onFrameReceived(Mlt::QFrame)
             }
             if (i == m_producer->get_int("audio_index")) {
                 key = QString("meta.media.%1.codec.long_name").arg(i);
-                QString codec(m_producer->get(key.toAscii().constData()));
+                QString codec(m_producer->get(key.toLatin1().constData()));
                 ui->audioTableWidget->setItem(0, 1, new QTableWidgetItem(codec));
                 ui->audioTableWidget->setItem(1, 1, new QTableWidgetItem(channels));
                 ui->audioTableWidget->setItem(2, 1, new QTableWidgetItem(sampleRate));
                 key = QString("meta.media.%1.codec.sample_fmt").arg(i);
                 ui->audioTableWidget->setItem(3, 1, new QTableWidgetItem(
-                    m_producer->get(key.toAscii().constData())));
+                    m_producer->get(key.toLatin1().constData())));
                 ui->audioTrackComboBox->setCurrentIndex(audioIndex);
             }
             ui->tabWidget->setTabEnabled(1, true);
@@ -262,7 +262,7 @@ void AvformatProducerWidget::on_scanComboBox_activated(int index)
         if (m_producer->get("force_progressive") || progressive != index)
             // We need to set these force_ properties as a string so they can be properly removed
             // by setting them NULL.
-            m_producer->set("force_progressive", QString::number(index).toAscii().constData());
+            m_producer->set("force_progressive", QString::number(index).toLatin1().constData());
         emit producerChanged();
         connect(MLT.videoWidget(), SIGNAL(frameReceived(Mlt::QFrame)), this, SLOT(onFrameReceived(Mlt::QFrame)));
     }
@@ -273,7 +273,7 @@ void AvformatProducerWidget::on_fieldOrderComboBox_activated(int index)
     if (m_producer) {
         int tff = m_producer->get_int("meta.media.top_field_first");
         if (m_producer->get("force_tff") || tff != index)
-            m_producer->set("force_tff", QString::number(index).toAscii().constData());
+            m_producer->set("force_tff", QString::number(index).toLatin1().constData());
         emit producerChanged();
         connect(MLT.videoWidget(), SIGNAL(frameReceived(Mlt::QFrame)), this, SLOT(onFrameReceived(Mlt::QFrame)));
     }
@@ -288,9 +288,9 @@ void AvformatProducerWidget::on_aspectNumSpinBox_valueChanged(int)
         if (m_producer->get_double("meta.media.sample_aspect_den") > 0)
             sar /= m_producer->get_double("meta.media.sample_aspect_den");
         if (m_producer->get("force_aspect_ratio") || new_sar != sar) {
-            m_producer->set("force_aspect_ratio", QString::number(new_sar).toAscii().constData());
-            m_producer->set("shotcut_aspect_num", ui->aspectNumSpinBox->text().toAscii().constData());
-            m_producer->set("shotcut_aspect_den", ui->aspectDenSpinBox->text().toAscii().constData());
+            m_producer->set("force_aspect_ratio", QString::number(new_sar).toLatin1().constData());
+            m_producer->set("shotcut_aspect_num", ui->aspectNumSpinBox->text().toLatin1().constData());
+            m_producer->set("shotcut_aspect_den", ui->aspectDenSpinBox->text().toLatin1().constData());
         }
         emit producerChanged();
         connect(MLT.videoWidget(), SIGNAL(frameReceived(Mlt::QFrame)), this, SLOT(onFrameReceived(Mlt::QFrame)));

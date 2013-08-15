@@ -20,8 +20,8 @@
 #define MVCPCONSOLEDOCK_H
 
 #include <QDockWidget>
-#include <QtCore/QModelIndex>
-#include <QtCore/QSettings>
+#include <QModelIndex>
+#include <QSettings>
 #include <mvcp_remote.h>
 #include "mvcpthread.h"
 

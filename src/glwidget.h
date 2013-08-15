@@ -20,11 +20,11 @@
 #define GLWIDGET_H
 
 #include <QSemaphore>
-#include <QtOpenGL/QGLWidget>
-#include <QtOpenGL/QGLShaderProgram>
-#include <QtOpenGL/QGLFramebufferObject>
-#include <QtCore/QMutex>
-#include <QtCore/QWaitCondition>
+#include <QGLWidget>
+#include <QGLShaderProgram>
+#include <QGLFramebufferObject>
+#include <QMutex>
+#include <QWaitCondition>
 #include "mltcontroller.h"
 
 namespace Mlt {

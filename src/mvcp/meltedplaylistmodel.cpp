@@ -17,7 +17,7 @@
  */
 
 #include "meltedplaylistmodel.h"
-#include <QtCore/QFileInfo>
+#include <QFileInfo>
 #include "mltcontroller.h"
 
 MeltedPlaylistModel::MeltedPlaylistModel(QObject *parent)
@@ -29,7 +29,8 @@ MeltedPlaylistModel::MeltedPlaylistModel(QObject *parent)
     , m_dropRow(-1)
     , m_tokeniser(0)
 {
-    setSupportedDragActions(Qt::MoveAction);
+    //XXX qt5
+//    setSupportedDragActions(Qt::MoveAction);
 }
 
 MeltedPlaylistModel::~MeltedPlaylistModel()
@@ -183,7 +184,7 @@ bool MeltedPlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction act
 void MeltedPlaylistModel::gotoClip(int index)
 {
     m_commands << MVCP_GOTO;
-    m_socket.write(QString("GOTO U%1 0 %2\r\n").arg(m_unit).arg(index).toAscii());
+    m_socket.write(QString("GOTO U%1 0 %2\r\n").arg(m_unit).arg(index).toLatin1());
     onClipIndexChanged(m_unit, index);
 }
 
@@ -196,7 +197,7 @@ void MeltedPlaylistModel::append(const QString &clip, int in, int out, bool noti
 void MeltedPlaylistModel::remove(int row, bool notify)
 {
     m_commands.append(notify? MVCP_REMOVE : MVCP_IGNORE);
-    m_socket.write(QString("REMOVE U%1 %2\r\n").arg(m_unit).arg(row).toAscii());
+    m_socket.write(QString("REMOVE U%1 %2\r\n").arg(m_unit).arg(row).toLatin1());
 }
 
 void MeltedPlaylistModel::insert(const QString &clip, int row, int in, int out, bool notify)
@@ -208,86 +209,86 @@ void MeltedPlaylistModel::insert(const QString &clip, int row, int in, int out, 
 void MeltedPlaylistModel::move(int from, int to, bool notify)
 {
     m_commands.append(notify? MVCP_MOVE : MVCP_IGNORE);
-    m_socket.write(QString("MOVE U%1 %2 %3\r\n").arg(m_unit).arg(from).arg(to).toAscii());
+    m_socket.write(QString("MOVE U%1 %2 %3\r\n").arg(m_unit).arg(from).arg(to).toLatin1());
 }
 
 void MeltedPlaylistModel::wipe()
 {
     m_commands << MVCP_IGNORE;
-    m_socket.write(QString("WIPE U%1\r\n").arg(m_unit).toAscii());
+    m_socket.write(QString("WIPE U%1\r\n").arg(m_unit).toLatin1());
 }
 
 void MeltedPlaylistModel::clean()
 {
     m_commands << MVCP_IGNORE;
-    m_socket.write(QString("CLEAN U%1\r\n").arg(m_unit).toAscii());
+    m_socket.write(QString("CLEAN U%1\r\n").arg(m_unit).toLatin1());
 }
 
 void MeltedPlaylistModel::clear()
 {
     m_commands << MVCP_IGNORE;
-    m_socket.write(QString("CLEAR U%1\r\n").arg(m_unit).toAscii());
+    m_socket.write(QString("CLEAR U%1\r\n").arg(m_unit).toLatin1());
 }
 
 void MeltedPlaylistModel::play(double speed)
 {
     m_commands << MVCP_IGNORE;
-    m_socket.write(QString("PLAY U%1 %2\r\n").arg(m_unit).arg(1000 * speed).toAscii());
+    m_socket.write(QString("PLAY U%1 %2\r\n").arg(m_unit).arg(1000 * speed).toLatin1());
 }
 
 void MeltedPlaylistModel::pause()
 {
     m_commands << MVCP_IGNORE;
-    m_socket.write(QString("PAUSE U%1\r\n").arg(m_unit).toAscii());
+    m_socket.write(QString("PAUSE U%1\r\n").arg(m_unit).toLatin1());
 }
 
 void MeltedPlaylistModel::stop()
 {
     m_commands << MVCP_IGNORE;
-    m_socket.write(QString("STOP U%1\r\n").arg(m_unit).toAscii());
+    m_socket.write(QString("STOP U%1\r\n").arg(m_unit).toLatin1());
 }
 
 void MeltedPlaylistModel::seek(int position)
 {
     pause();
     m_commands << MVCP_IGNORE;
-    m_socket.write(QString("GOTO U%1 %2\r\n").arg(m_unit).arg(position).toAscii());
+    m_socket.write(QString("GOTO U%1 %2\r\n").arg(m_unit).arg(position).toLatin1());
 }
 
 void MeltedPlaylistModel::rewind()
 {
     m_commands << MVCP_IGNORE;
-    m_socket.write(QString("REW U%1\r\n").arg(m_unit).toAscii());
+    m_socket.write(QString("REW U%1\r\n").arg(m_unit).toLatin1());
 }
 
 void MeltedPlaylistModel::fastForward()
 {
     m_commands << MVCP_IGNORE;
-    m_socket.write(QString("FF U%1\r\n").arg(m_unit).toAscii());
+    m_socket.write(QString("FF U%1\r\n").arg(m_unit).toLatin1());
 }
 
 void MeltedPlaylistModel::previous()
 {
     m_commands << MVCP_IGNORE;
-    m_socket.write(QString("GOTO U%1 0 -1\r\n").arg(m_unit).toAscii());
+    m_socket.write(QString("GOTO U%1 0 -1\r\n").arg(m_unit).toLatin1());
 }
 
 void MeltedPlaylistModel::next()
 {
     m_commands << MVCP_IGNORE;
-    m_socket.write(QString("GOTO U%1 0 +1\r\n").arg(m_unit).toAscii());
+    m_socket.write(QString("GOTO U%1 0 +1\r\n").arg(m_unit).toLatin1());
 }
 
 void MeltedPlaylistModel::setIn(int in)
 {
     m_commands << MVCP_IGNORE;
-    m_socket.write(QString("SIN U%1 %2\r\n").arg(m_unit).arg(in).toAscii());
+    m_socket.write(QString("SIN U%1 %2\r\n").arg(m_unit).arg(in).toLatin1());
 }
 
 void MeltedPlaylistModel::setOut(int out)
 {
     m_commands << MVCP_IGNORE;
-    m_socket.write(QString("SOUT U%1 %2\r\n").arg(m_unit).arg(out).toAscii());
+    m_socket.write(QString("SOUT U%1 %2\r\n").arg(m_unit).arg(out).toLatin1());
 }
 
 void MeltedPlaylistModel::onConnected(const QString &address, quint16 port, quint8 unit)
@@ -319,7 +320,7 @@ void MeltedPlaylistModel::onDisconnected()
 void MeltedPlaylistModel::refresh()
 {
     m_commands << MVCP_LIST;
-    m_socket.write(QString("LIST U%1\r\n").arg(m_unit).toAscii());
+    m_socket.write(QString("LIST U%1\r\n").arg(m_unit).toLatin1());
 }
 
 void MeltedPlaylistModel::onUnitChanged(quint8 unit)

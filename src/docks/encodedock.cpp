@@ -23,7 +23,7 @@
 #include "mltcontroller.h"
 #include "mainwindow.h"
 #include <QtDebug>
-#include <QtGui>
+#include <QtWidgets>
 #include <QtXml>
 
 // formulas to map absolute value ranges to percentages as int
@@ -38,7 +38,7 @@ EncodeDock::EncodeDock(QWidget *parent) :
     m_profiles(Mlt::Profile::list())
 {
     ui->setupUi(this);
-#ifdef Q_WS_X11
+#ifdef Q_OS_UNIX
     ui->stopCaptureButton->hide();
 #else
     delete ui->stopCaptureButton;
@@ -48,7 +48,7 @@ EncodeDock::EncodeDock(QWidget *parent) :
     ui->addPresetButton->setIcon(QIcon::fromTheme("list-add", ui->addPresetButton->icon()));
     ui->removePresetButton->setIcon(QIcon::fromTheme("list-remove", ui->removePresetButton->icon()));
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     // Add splitter handle decoration for Windows.
     QSplitterHandle *handle = ui->splitter->handle(1);
     QHBoxLayout *layout = new QHBoxLayout(handle);
@@ -133,7 +133,7 @@ void EncodeDock::loadPresets()
                 for (int j = 0; j < m_presets->count(); j++) {
                     QString name(m_presets->get_name(j));
                     if (name.startsWith(prefix)) {
-                        Mlt::Properties preset((mlt_properties) m_presets->get_data(name.toAscii().constData()));
+                        Mlt::Properties preset((mlt_properties) m_presets->get_data(name.toLatin1().constData()));
                         if (preset.get_int("meta.preset.hidden"))
                             continue;
                         if (preset.get("meta.preset.name"))
@@ -146,7 +146,7 @@ void EncodeDock::loadPresets()
                                 // if the path is a profile name, then change it to "preset (profile)"
                                 QString profile = textParts.at(0);
                                 textParts.removeFirst();
-                                if (m_profiles->get_data(profile.toAscii().constData()))
+                                if (m_profiles->get_data(profile.toLatin1().constData()))
                                     name = QString("%1 (%2)").arg(textParts.join("/")).arg(profile);
                             }
                         }
@@ -159,7 +159,7 @@ void EncodeDock::loadPresets()
             }
         }
         else if (group->text(0) == tr("Custom")) {
-            QDir dir(QDesktopServices::storageLocation(QDesktopServices::DataLocation));
+            QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
             if (dir.cd("presets") && dir.cd("encode")) {
                 QStringList entries = dir.entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
                 foreach (QString name, entries) {
@@ -180,18 +180,18 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
         if (realtime)
             p->set("real_time", realtime);
         if (ui->formatCombo->currentText() != tr("Automatic from extension"))
-            p->set("f", ui->formatCombo->currentText().toAscii().constData());
+            p->set("f", ui->formatCombo->currentText().toLatin1().constData());
         if (ui->disableAudioCheckbox->isChecked()) {
             p->set("an", 1);
             p->set("audio_off", 1);
         }
         else {
             if (ui->audioCodecCombo->currentIndex() > 0)
-                p->set("acodec", ui->audioCodecCombo->currentText().toAscii().constData());
-            p->set("ar", ui->sampleRateCombo->currentText().toAscii().constData());
+                p->set("acodec", ui->audioCodecCombo->currentText().toLatin1().constData());
+            p->set("ar", ui->sampleRateCombo->currentText().toLatin1().constData());
             if (ui->audioRateControlCombo->currentIndex() == RateControlAverage
                     || ui->audioRateControlCombo->currentIndex() == RateControlConstant) {
-                p->set("ab", ui->audioBitrateCombo->currentText().toAscii().constData());
+                p->set("ab", ui->audioBitrateCombo->currentText().toLatin1().constData());
             }
             else {
                 const QString& acodec = ui->audioCodecCombo->currentText();
@@ -211,15 +211,15 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
         }
         else {
             if (ui->videoCodecCombo->currentIndex() > 0)
-                p->set("vcodec", ui->videoCodecCombo->currentText().toAscii().constData());
+                p->set("vcodec", ui->videoCodecCombo->currentText().toLatin1().constData());
             if (ui->videoRateControlCombo->currentIndex() == RateControlAverage) {
-                p->set("vb", ui->videoBitrateCombo->currentText().toAscii().constData());
+                p->set("vb", ui->videoBitrateCombo->currentText().toLatin1().constData());
             }
             else if (ui->videoRateControlCombo->currentIndex() == RateControlConstant) {
                 const QString& b = ui->videoBitrateCombo->currentText();
-                p->set("vb", b.toAscii().constData());
-                p->set("vminrate", b.toAscii().constData());
-                p->set("vmaxrate", b.toAscii().constData());
+                p->set("vb", b.toLatin1().constData());
+                p->set("vminrate", b.toLatin1().constData());
+                p->set("vmaxrate", b.toLatin1().constData());
                 p->set("vbufsize", int(ui->videoBufferSizeSpinner->value() * 8 * 1024));
             }
             else { // RateControlQuality
@@ -234,7 +234,7 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
             p->set("bf", ui->bFramesSpinner->value());
             p->set("width", ui->widthSpinner->value());
             p->set("height", ui->heightSpinner->value());
-            p->set("aspect", QString("@%1/%2").arg(ui->aspectNumSpinner->value()).arg(ui->aspectDenSpinner->value()).toAscii().constData());
+            p->set("aspect", QString("@%1/%2").arg(ui->aspectNumSpinner->value()).arg(ui->aspectDenSpinner->value()).toLatin1().constData());
             p->set("progressive", ui->scanModeCombo->currentIndex());
             p->set("top_field_first", ui->fieldOrderCombo->currentIndex());
             if (qFloor(ui->fpsSpinner->value() * 10.0) == 239) {
@@ -375,7 +375,7 @@ void EncodeDock::encode(const QString& target)
     Mlt::Properties* p = collectProperties(-1);
     if (p && p->is_valid()) {
         for (int i = 0; i < p->count(); i++)
-            MLT.consumer()->set(QString("1.%1").arg(p->get_name(i)).toAscii().constData(), p->get(i));
+            MLT.consumer()->set(QString("1.%1").arg(p->get_name(i)).toLatin1().constData(), p->get(i));
     }
     delete p;
     MLT.setVolume(volume);
@@ -403,13 +403,13 @@ void EncodeDock::on_presetsTree_currentItemChanged(QTreeWidgetItem *current, QTr
         if (current->parent()->text(0) == tr("Custom")) {
             ui->removePresetButton->setEnabled(true);
             preset = new Mlt::Properties();
-            QDir dir(QDesktopServices::storageLocation(QDesktopServices::DataLocation));
+            QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
             if (dir.cd("presets") && dir.cd("encode"))
-                preset->load(dir.absoluteFilePath(name).toAscii().constData());
+                preset->load(dir.absoluteFilePath(name).toLatin1().constData());
         }
         else {
             ui->removePresetButton->setEnabled(false);
-            preset = new Mlt::Properties((mlt_properties) m_presets->get_data(name.toAscii().constData()));
+            preset = new Mlt::Properties((mlt_properties) m_presets->get_data(name.toLatin1().constData()));
         }
         if (preset->is_valid()) {
             int audioQuality;
@@ -420,9 +420,9 @@ void EncodeDock::on_presetsTree_currentItemChanged(QTreeWidgetItem *current, QTr
             if (textParts.count() > 3) {
                 // textParts = ['consumer', 'avformat', profile, preset].
                 QString folder = textParts.at(2);
-                if (m_profiles->get_data(folder.toAscii().constData())) {
+                if (m_profiles->get_data(folder.toLatin1().constData())) {
                     // only set these fields if the folder is a profile
-                    Mlt::Profile p(folder.toAscii().constData());
+                    Mlt::Profile p(folder.toLatin1().constData());
                     ui->widthSpinner->setValue(p.width());
                     ui->heightSpinner->setValue(p.height());
                     ui->aspectNumSpinner->setValue(p.display_aspect_num());
@@ -578,7 +578,7 @@ void EncodeDock::on_encodeButton_clicked()
     QSettings settings;
     QString settingKey("encode/path");
     QString directory(settings.value(settingKey,
-        QDesktopServices::storageLocation(QDesktopServices::MoviesLocation)).toString());
+        QStandardPaths::standardLocations(QStandardPaths::MoviesLocation)).toString());
     if (!m_extension.isEmpty()) {
         directory += "/.";
         directory += m_extension;
@@ -702,7 +702,7 @@ void EncodeDock::on_addPresetButton_clicked()
     dialog.setProperties(ls.join("\n"));
     if (dialog.exec() == QDialog::Accepted) {
         QString preset = dialog.presetName();
-        QDir dir(QDesktopServices::storageLocation(QDesktopServices::DataLocation));
+        QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
         QString subdir("encode");
 
         if (!preset.isEmpty()) {
@@ -752,7 +752,7 @@ void EncodeDock::on_removePresetButton_clicked()
     dialog.setWindowModality(Qt::WindowModal);
     int result = dialog.exec();
     if (result == QMessageBox::Yes) {
-        QDir dir(QDesktopServices::storageLocation(QDesktopServices::DataLocation));
+        QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
         if (dir.cd("presets") && dir.cd("encode")) {
             dir.remove(preset);
             ui->presetsTree->topLevelItem(0)->removeChild(ui->presetsTree->currentItem());

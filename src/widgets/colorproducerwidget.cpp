@@ -49,7 +49,7 @@ void ColorProducerWidget::on_colorButton_clicked()
                                       .arg((dialog.currentColor().value() < 150)? "white":"black")
                                       .arg(dialog.currentColor().name()));
         if (m_producer) {
-            m_producer->set("resource", ui->colorLabel->text().toAscii().constData());
+            m_producer->set("resource", ui->colorLabel->text().toLatin1().constData());
             emit producerChanged();
         }
     }
@@ -58,14 +58,14 @@ void ColorProducerWidget::on_colorButton_clicked()
 Mlt::Producer* ColorProducerWidget::producer(Mlt::Profile& profile)
 {
     Mlt::Producer* p = new Mlt::Producer(profile, "color:");
-    p->set("resource", ui->colorLabel->text().toAscii().constData());
+    p->set("resource", ui->colorLabel->text().toLatin1().constData());
     return p;
 }
 
 Mlt::Properties* ColorProducerWidget::getPreset() const
 {
     Mlt::Properties* p = new Mlt::Properties;
-    p->set("resource", ui->colorLabel->text().toAscii().constData());
+    p->set("resource", ui->colorLabel->text().toLatin1().constData());
     return p;
 }
 

@@ -20,7 +20,7 @@
 #define ATTACHEDFILTERSMODEL_H
 
 #include <QAbstractListModel>
-#include <mlt++/MltFilter.h>
+#include <MltFilter.h>
 
 class AttachedFiltersModel : public QAbstractListModel
 {

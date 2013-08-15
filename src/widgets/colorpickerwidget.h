@@ -27,7 +27,7 @@
 
 class QSpinBox;
 class QFrame;
-#ifdef Q_WS_X11
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
 #include <X11/Xlib.h>
 #endif
 
@@ -82,7 +82,7 @@ private:
     bool m_filterActive;
     QRect m_grabRect;
     QFrame *m_grabRectFrame;
-#ifdef Q_WS_X11
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     XImage *m_image;
 #else
     QImage m_image;

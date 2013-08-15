@@ -20,7 +20,7 @@
 #include "ui_openotherdialog.h"
 #include "mltcontroller.h"
 #include <Mlt.h>
-#include <QtGui>
+#include <QtWidgets>
 
 OpenOtherDialog::OpenOtherDialog(QWidget *parent) :
     QDialog(parent),
@@ -39,7 +39,7 @@ OpenOtherDialog::OpenOtherDialog(QWidget *parent) :
         QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("SDI/HDMI")));
         item->setData(0, Qt::UserRole, ui->decklinkTab->objectName());
     }
-#ifdef Q_WS_X11
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("Video4Linux")));
     item->setData(0, Qt::UserRole, ui->v4lTab->objectName());
     item = new QTreeWidgetItem(group, QStringList(tr("PulseAudio")));

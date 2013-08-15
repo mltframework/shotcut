@@ -18,7 +18,7 @@
 
 #include "attachedfiltersmodel.h"
 #include "mltcontroller.h"
-#include <QtCore/QSettings>
+#include <QSettings>
 
 AttachedFiltersModel::AttachedFiltersModel(QObject *parent)
     : QAbstractListModel(parent)

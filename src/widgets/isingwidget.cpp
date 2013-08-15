@@ -82,18 +82,18 @@ void IsingWidget::on_spontGrowthSpinner_valueChanged(double value)
 Mlt::Producer* IsingWidget::producer(Mlt::Profile& profile)
 {
     Mlt::Producer* p = new Mlt::Producer(profile, "frei0r.ising0r");
-    p->set(kParamTemperature, ui->tempSpinner->text().toAscii().constData());
-    p->set(kParamBorderGrowth, ui->borderGrowthSpinner->text().toAscii().constData());
-    p->set(kParamSpontaneous, ui->spontGrowthSpinner->text().toAscii().constData());
+    p->set(kParamTemperature, ui->tempSpinner->text().toLatin1().constData());
+    p->set(kParamBorderGrowth, ui->borderGrowthSpinner->text().toLatin1().constData());
+    p->set(kParamSpontaneous, ui->spontGrowthSpinner->text().toLatin1().constData());
     return p;
 }
 
 Mlt::Properties* IsingWidget::getPreset() const
 {
     Mlt::Properties* p = new Mlt::Properties;
-    p->set(kParamTemperature, ui->tempSpinner->text().toAscii().constData());
-    p->set(kParamBorderGrowth, ui->borderGrowthSpinner->text().toAscii().constData());
-    p->set(kParamSpontaneous, ui->spontGrowthSpinner->text().toAscii().constData());
+    p->set(kParamTemperature, ui->tempSpinner->text().toLatin1().constData());
+    p->set(kParamBorderGrowth, ui->borderGrowthSpinner->text().toLatin1().constData());
+    p->set(kParamSpontaneous, ui->spontGrowthSpinner->text().toLatin1().constData());
     return p;
 }
 

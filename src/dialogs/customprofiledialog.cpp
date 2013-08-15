@@ -19,8 +19,8 @@
 #include "customprofiledialog.h"
 #include "ui_customprofiledialog.h"
 #include "mltcontroller.h"
-#include <QtCore/QDir>
-#include <QtGui/QDesktopServices>
+#include <QDir>
+#include <QDesktopServices>
 
 CustomProfileDialog::CustomProfileDialog(QWidget *parent) :
     QDialog(parent),
@@ -51,7 +51,7 @@ void CustomProfileDialog::on_buttonBox_accepted()
     // Save it to a file
     if (ui->nameEdit->text().isEmpty())
         return;
-    QDir dir(QDesktopServices::storageLocation(QDesktopServices::DataLocation));
+    QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
     QString subdir("profiles");
     if (!dir.exists())
         dir.mkpath(dir.path());

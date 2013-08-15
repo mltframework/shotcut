@@ -18,7 +18,7 @@
 
 #include "scrubbar.h"
 #include "mltcontroller.h"
-#include <QtGui>
+#include <QtWidgets>
 
 static const int margin = 14;
 static const int selectionSize = 14;

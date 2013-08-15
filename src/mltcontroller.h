@@ -20,7 +20,7 @@
 #define MLTCONTROLLER_H
 
 #include <QImage>
-#include <mlt++/Mlt.h>
+#include <Mlt.h>
 #include "transportcontrol.h"
 
 // forward declarations

@@ -17,12 +17,12 @@
  */
 
 #include "playlistmodel.h"
-#include <QtCore/QFileInfo>
-#include <QtCore/QUrl>
-#include <QtGui/QImage>
-#include <QtGui/QColor>
-#include <QtGui/QPainter>
-#include <QtCore/QThreadPool>
+#include <QFileInfo>
+#include <QUrl>
+#include <QImage>
+#include <QColor>
+#include <QPainter>
+#include <QThreadPool>
 #include <QtDebug>
 
 static const char* kThumbnailInProperty = "shotcut:thumbnail-in";

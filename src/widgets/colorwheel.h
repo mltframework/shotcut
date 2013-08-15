@@ -19,9 +19,9 @@
 #ifndef COLORWHEEL_H
 #define COLORWHEEL_H
 
-#include <QtGui/QWidget>
-#include <QtGui/QPainter>
-#include <QtGui/QResizeEvent>
+#include <QWidget>
+#include <QPainter>
+#include <QResizeEvent>
 
 class ColorWheel : public QWidget
 {
