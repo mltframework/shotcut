@@ -209,6 +209,7 @@ win32 {
     RC_FILE = shotcut.rc
 }
 unix:!mac {
+    QT += x11extras
     CONFIG += link_pkgconfig
     PKGCONFIG += mlt++ glew
     LIBS += -lX11

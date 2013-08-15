@@ -27,10 +27,6 @@
 
 class QSpinBox;
 class QFrame;
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-#include <X11/Xlib.h>
-#endif
-
 
 class MyFrame : public QFrame
 {
@@ -83,7 +79,7 @@ private:
     QRect m_grabRect;
     QFrame *m_grabRectFrame;
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    XImage *m_image;
+    void *m_image; /// XImage*
 #else
     QImage m_image;
 #endif
