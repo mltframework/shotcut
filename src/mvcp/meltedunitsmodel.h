@@ -19,8 +19,8 @@
 #ifndef MELTEDUNITSMODEL_H
 #define MELTEDUNITSMODEL_H
 
-#include <QtCore/QAbstractTableModel>
-#include <QtNetwork/QTcpSocket>
+#include <QAbstractTableModel>
+#include <QTcpSocket>
 #include "mvcpthread.h"
 #include <mvcp_tokeniser.h>
 

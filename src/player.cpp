@@ -21,7 +21,7 @@
 #include "mainwindow.h"
 #include "widgets/timespinbox.h"
 #include "widgets/audiosignal.h"
-#include <QtGui>
+#include <QtWidgets>
 
 #define VOLUME_KNEE (88)
 #define SEEK_INACTIVE (-1)
@@ -130,7 +130,7 @@ Player::Player(QWidget *parent)
     m_inPointLabel->setText("--:--:--:--");
     m_inPointLabel->setToolTip(tr("In Point"));
     m_inPointLabel->setAlignment(Qt::AlignRight);
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MAC
     m_inPointLabel->setContentsMargins(0, 5, 0, 0);
 #else
     m_inPointLabel->setContentsMargins(0, 4, 0, 0);
@@ -574,7 +574,7 @@ void Player::showAudio(Mlt::Frame* frame)
     int n = frame->get_int("audio_channels");
     while (n--) {
         QString s = QString("meta.media.audio_level.%1").arg(n);
-        channels << frame->get_double(s.toAscii().constData());
+        channels << frame->get_double(s.toLatin1().constData());
     }
     emit audioLevels(channels);
 }

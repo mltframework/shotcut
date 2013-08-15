@@ -16,9 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QtGui>
+#include <QtWidgets>
 #include "mainwindow.h"
-#ifdef Q_WS_X11
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
 #include <X11/Xlib.h>
 #endif
 
@@ -35,13 +35,13 @@ public:
     {
         QDir dir(applicationDirPath());
         dir.cd("lib");
-        dir.cd("qt4");
+        dir.cd("qt5");
         addLibraryPath(dir.absolutePath());
         setOrganizationName("Meltytech");
         setOrganizationDomain("meltytech.com");
         setApplicationName("Shotcut");
         setApplicationVersion(SHOTCUT_VERSION);
-#if defined(Q_WS_MAC)
+#if defined(Q_OS_MAC)
         setAttribute(Qt::AA_DontShowIconsInMenus);
 #endif
 
@@ -49,11 +49,11 @@ public:
         QSettings settings;
         const QString locale = settings.value("language", QLocale::system().name()).toString();
         dir = applicationDirPath();
-    #if defined(Q_WS_MAC)
+    #if defined(Q_OS_MAC)
         dir.cdUp();
         dir.cd("Resources");
         dir.cd("translations");
-    #elif defined(Q_WS_WIN)
+    #elif defined(Q_OS_WIN)
         dir.cd("share");
         dir.cd("translations");
     #else
@@ -90,7 +90,7 @@ protected:
 
 int main(int argc, char **argv)
 {
-#ifdef Q_WS_X11
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     XInitThreads();
 #endif
     Application a(argc, argv);

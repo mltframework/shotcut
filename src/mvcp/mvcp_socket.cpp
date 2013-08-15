@@ -17,7 +17,7 @@
  */
 
 #include <mvcp_socket.h>
-#include <QtNetwork/QTcpSocket>
+#include <QTcpSocket>
 
 extern "C" {
 

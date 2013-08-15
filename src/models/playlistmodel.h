@@ -20,9 +20,9 @@
 #define PLAYLISTMODEL_H
 
 #include <QAbstractTableModel>
-#include <QtCore/qmimedata.h>
-#include <QtCore/QStringList>
-#include <QtCore/QSettings>
+#include <qmimedata.h>
+#include <QStringList>
+#include <QSettings>
 #include "mltcontroller.h"
 #include "MltPlaylist.h"
 

@@ -99,7 +99,7 @@ Controller& Controller::singleton(QWidget* parent)
     if (!instance) {
         qRegisterMetaType<QFrame>("Mlt::QFrame");
         qRegisterMetaType<QProducer>("Mlt::QProducer");
-#if defined(Q_WS_MAC) || defined(Q_WS_WIN)
+#if defined(Q_OS_MAC) || defined(Q_OS_WIN)
         instance = new GLWidget(parent);
 #else
         QSettings settings;
@@ -389,7 +389,7 @@ int Controller::setProfile(const QString& profile_name)
     if (m_consumer)
         m_consumer->stop();
 
-    Mlt::Profile tmp(profile_name.toAscii().constData());
+    Mlt::Profile tmp(profile_name.toLatin1().constData());
     m_profile->set_colorspace(tmp.colorspace());
     m_profile->set_frame_rate(tmp.frame_rate_num(), tmp.frame_rate_den());
     m_profile->set_height(tmp.height());

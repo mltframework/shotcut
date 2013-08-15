@@ -19,11 +19,11 @@
 #include "meltedplaylistdock.h"
 #include "ui_meltedplaylistdock.h"
 #include "mainwindow.h"
-#include <QtCore/QMimeData>
-#include <QtCore/QFileInfo>
-#include <QtGui/QKeyEvent>
-#include <QtGui/QMenu>
-#include <QtGui/QMessageBox>
+#include <QMimeData>
+#include <QFileInfo>
+#include <QKeyEvent>
+#include <QMenu>
+#include <QMessageBox>
 
 MeltedPlaylistDock::MeltedPlaylistDock(QWidget *parent)
     : QDockWidget(parent)

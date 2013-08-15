@@ -18,7 +18,7 @@
 
 #include "colorbarswidget.h"
 #include "ui_colorbarswidget.h"
-#include <mlt++/MltProfile.h>
+#include <MltProfile.h>
 
 static const char* kParamType = "0";
 static const char* kParamAspect = "1";

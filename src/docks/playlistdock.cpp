@@ -20,7 +20,7 @@
 #include "ui_playlistdock.h"
 #include "dialogs/durationdialog.h"
 #include "mainwindow.h"
-#include <QtGui/QMenu>
+#include <QMenu>
 #include <QDebug>
 
 PlaylistDock::PlaylistDock(QWidget *parent) :

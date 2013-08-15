@@ -18,7 +18,7 @@
 
 #include "sdlwidget.h"
 #include <Mlt.h>
-#include <QtGui>
+#include <QtWidgets>
 
 using namespace Mlt;
 
@@ -47,7 +47,7 @@ int SDLWidget::reconfigure(bool isMulti)
     QString serviceName = property("mlt_service").toString();
     if (!m_consumer || !m_consumer->is_valid()) {
         if (serviceName.isEmpty())
-#if defined(Q_WS_WIN)
+#if defined(Q_OS_WIN)
             // sdl_preview does not work good on Windows
             serviceName = "sdl";
 #else
@@ -56,7 +56,7 @@ int SDLWidget::reconfigure(bool isMulti)
         if (isMulti)
             m_consumer = new Mlt::FilteredConsumer(profile(), "multi");
         else
-            m_consumer = new Mlt::FilteredConsumer(profile(), serviceName.toAscii().constData());
+            m_consumer = new Mlt::FilteredConsumer(profile(), serviceName.toLatin1().constData());
 
         Mlt::Filter* filter = new Mlt::Filter(profile(), "audiolevel");
         if (filter->is_valid())
@@ -77,15 +77,15 @@ int SDLWidget::reconfigure(bool isMulti)
             // Embed the SDL window in our GUI.
             m_consumer->set("0.window_id", (int) this->winId());
             // Set the background color
-            m_consumer->set("0.window_background", palette().color(QPalette::Window).name().toAscii().constData());
+            m_consumer->set("0.window_background", palette().color(QPalette::Window).name().toLatin1().constData());
             if (!profile().progressive())
                 m_consumer->set("progressive", property("progressive").toBool());
-            m_consumer->set("0.rescale", property("rescale").toString().toAscii().constData());
-            m_consumer->set("0.deinterlace_method", property("deinterlace_method").toString().toAscii().constData());
+            m_consumer->set("0.rescale", property("rescale").toString().toLatin1().constData());
+            m_consumer->set("0.deinterlace_method", property("deinterlace_method").toString().toLatin1().constData());
             m_consumer->set("0.buffer", 25);
             m_consumer->set("0.prefill", 1);
             m_consumer->set("0.play.buffer", 1);
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
             m_consumer->set("0.scrub_audio", 1);
 #endif
         }
@@ -93,15 +93,15 @@ int SDLWidget::reconfigure(bool isMulti)
             // Embed the SDL window in our GUI.
             m_consumer->set("window_id", (int) this->winId());
             // Set the background color
-            m_consumer->set("window_background", palette().color(QPalette::Window).name().toAscii().constData());
+            m_consumer->set("window_background", palette().color(QPalette::Window).name().toLatin1().constData());
             if (!profile().progressive())
                 m_consumer->set("progressive", property("progressive").toBool());
-            m_consumer->set("rescale", property("rescale").toString().toAscii().constData());
-            m_consumer->set("deinterlace_method", property("deinterlace_method").toString().toAscii().constData());
+            m_consumer->set("rescale", property("rescale").toString().toLatin1().constData());
+            m_consumer->set("deinterlace_method", property("deinterlace_method").toString().toLatin1().constData());
             m_consumer->set("buffer", 25);
             m_consumer->set("prefill", 1);
             m_consumer->set("play.buffer", 1);
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
             m_consumer->set("scrub_audio", 1);
 #endif
         }

@@ -19,7 +19,7 @@
 #include "whitebalancefilter.h"
 #include "ui_whitebalancefilter.h"
 #include "mltcontroller.h"
-#include <QtCore/QSettings>
+#include <QSettings>
 
 static const char* kFrei0rNeutralParam = "0";
 static const char* kFrei0rTemperatureParam = "1";
@@ -40,9 +40,9 @@ WhiteBalanceFilter::WhiteBalanceFilter(Mlt::Filter &filter, bool setDefaults, QW
         ui->colorTemperatureSpinner->setValue(m_defaultTemperature);
         on_colorTemperatureSpinner_valueChanged(m_defaultTemperature);
         if (m_isMovit)
-            m_filter.set(kMovitNeutralParam, m_defaultColor.toAscii().constData());
+            m_filter.set(kMovitNeutralParam, m_defaultColor.toLatin1().constData());
         else
-            m_filter.set(kFrei0rNeutralParam, m_defaultColor.toAscii().constData());
+            m_filter.set(kFrei0rNeutralParam, m_defaultColor.toLatin1().constData());
     }
     else {
         if (m_isMovit)
@@ -60,9 +60,9 @@ WhiteBalanceFilter::~WhiteBalanceFilter()
 void WhiteBalanceFilter::on_colorPicker_colorPicked(const QColor &color)
 {
     if (m_isMovit)
-        m_filter.set(kMovitNeutralParam, color.name().toAscii().constData());
+        m_filter.set(kMovitNeutralParam, color.name().toLatin1().constData());
     else
-        m_filter.set(kFrei0rNeutralParam, color.name().toAscii().constData());
+        m_filter.set(kFrei0rNeutralParam, color.name().toLatin1().constData());
     MLT.refreshConsumer();
 }
 

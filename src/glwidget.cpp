@@ -19,8 +19,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QtGui>
-#include <GL/glew.h>
+#include <QtWidgets>
+#include <QGLFunctions>
 #include <Mlt.h>
 #include "glwidget.h"
 
@@ -88,7 +88,6 @@ void GLWidget::initializeGL()
 
     if (settings.value("player/gpu", false).toBool() && !m_glslManager)
         emit gpuNotSupported();
-    glewInit();
     qglClearColor(palette.color(QPalette::Window));
     glShadeModel(GL_FLAT);
     glEnable(GL_TEXTURE_2D);
@@ -404,7 +403,7 @@ int GLWidget::reconfigure(bool isMulti)
         if (isMulti)
             m_consumer = new Mlt::FilteredConsumer(profile(), "multi");
         else
-            m_consumer = new Mlt::FilteredConsumer(profile(), serviceName.toAscii().constData());
+            m_consumer = new Mlt::FilteredConsumer(profile(), serviceName.toLatin1().constData());
 
         Mlt::Filter* filter = new Mlt::Filter(profile(), "audiolevel");
         if (filter->is_valid())
@@ -432,31 +431,31 @@ int GLWidget::reconfigure(bool isMulti)
 
         if (isMulti) {
             m_consumer->set("terminate_on_pause", 0);
-            m_consumer->set("0", serviceName.toAscii().constData());
+            m_consumer->set("0", serviceName.toLatin1().constData());
             if (serviceName == "sdl_audio")
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
                 m_consumer->set("0.audio_buffer", 2048);
 #else
                 m_consumer->set("0.audio_buffer", 512);
 #endif
             if (!profile().progressive())
                 m_consumer->set("0.progressive", property("progressive").toBool());
-            m_consumer->set("0.rescale", property("rescale").toString().toAscii().constData());
-            m_consumer->set("0.deinterlace_method", property("deinterlace_method").toString().toAscii().constData());
+            m_consumer->set("0.rescale", property("rescale").toString().toLatin1().constData());
+            m_consumer->set("0.deinterlace_method", property("deinterlace_method").toString().toLatin1().constData());
             m_consumer->set("0.buffer", 25);
             m_consumer->set("0.prefill", 1);
         }
         else {
             if (serviceName == "sdl_audio")
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
                 m_consumer->set("audio_buffer", 2048);
 #else
                 m_consumer->set("audio_buffer", 512);
 #endif
             if (!profile().progressive())
                 m_consumer->set("progressive", property("progressive").toBool());
-            m_consumer->set("rescale", property("rescale").toString().toAscii().constData());
-            m_consumer->set("deinterlace_method", property("deinterlace_method").toString().toAscii().constData());
+            m_consumer->set("rescale", property("rescale").toString().toLatin1().constData());
+            m_consumer->set("deinterlace_method", property("deinterlace_method").toString().toLatin1().constData());
             m_consumer->set("buffer", 25);
             m_consumer->set("prefill", 1);
             m_consumer->set("scrub_audio", 1);

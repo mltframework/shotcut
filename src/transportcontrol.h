@@ -19,7 +19,7 @@
 #ifndef TRANSPORTCONTROL_H
 #define TRANSPORTCONTROL_H
 
-#include <QtCore/QObject>
+#include <QObject>
 
 class TransportControllable : public QObject
 {

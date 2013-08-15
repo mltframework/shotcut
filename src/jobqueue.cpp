@@ -17,7 +17,7 @@
  */
 
 #include "jobqueue.h"
-#include <QtGui>
+#include <QtWidgets>
 #include <QDebug>
 #include "mainwindow.h"
 
@@ -41,7 +41,7 @@ void MeltJob::start()
 {
     QString shotcutPath = qApp->applicationDirPath();
 //    QString shotcutPath("/Applications/Shotcut.app/Contents/MacOS");
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     QFileInfo meltPath(shotcutPath, "melt.exe");
 #else
     QFileInfo meltPath(shotcutPath, "melt");
@@ -51,7 +51,7 @@ void MeltJob::start()
     args << "-progress2";
     args << m_xml;
     qDebug() << meltPath.absoluteFilePath() << args;
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     QProcess::start(meltPath.absoluteFilePath(), args);
 #else
     args.prepend(meltPath.absoluteFilePath());

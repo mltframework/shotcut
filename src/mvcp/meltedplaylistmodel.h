@@ -19,10 +19,10 @@
 #ifndef MELTEDPLAYLISTMODEL_H
 #define MELTEDPLAYLISTMODEL_H
 
-#include <QtCore/QAbstractTableModel>
-#include <QtNetwork/QTcpSocket>
-#include <QtCore/QStringList>
-#include <QtCore/QMimeData>
+#include <QAbstractTableModel>
+#include <QTcpSocket>
+#include <QStringList>
+#include <QMimeData>
 #include <mvcp.h>
 #include <mvcp_tokeniser.h>
 

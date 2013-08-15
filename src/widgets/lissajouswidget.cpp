@@ -67,16 +67,16 @@ void LissajousWidget::on_yratioSpinner_valueChanged(double value)
 Mlt::Producer* LissajousWidget::producer(Mlt::Profile& profile)
 {
     Mlt::Producer* p = new Mlt::Producer(profile, "frei0r.lissajous0r");
-    p->set(kParamRatioX, ui->xratioSpinner->text().toAscii().constData());
-    p->set(kParamRatioY, ui->yratioSpinner->text().toAscii().constData());
+    p->set(kParamRatioX, ui->xratioSpinner->text().toLatin1().constData());
+    p->set(kParamRatioY, ui->yratioSpinner->text().toLatin1().constData());
     return p;
 }
 
 Mlt::Properties* LissajousWidget::getPreset() const
 {
     Mlt::Properties* p = new Mlt::Properties;
-    p->set(kParamRatioX, ui->xratioSpinner->text().toAscii().constData());
-    p->set(kParamRatioY, ui->yratioSpinner->text().toAscii().constData());
+    p->set(kParamRatioX, ui->xratioSpinner->text().toLatin1().constData());
+    p->set(kParamRatioY, ui->yratioSpinner->text().toLatin1().constData());
     return p;
 }
 

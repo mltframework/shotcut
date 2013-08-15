@@ -17,7 +17,7 @@
  */
 
 #include "meltedunitsmodel.h"
-#include <QtCore/QTimer>
+#include <QTimer>
 #include <mvcp_util.h>
 #include <QDebug>
 
@@ -182,7 +182,7 @@ void MeltedUnitsModel::onUlsResult(QStringList units)
         emit dataChanged(createIndex(i, 0), createIndex(i, 0));
     }
     if (!m_statusSent) {
-        m_socket.write(QString("STATUS\r\n").toAscii());
+        m_socket.write(QString("STATUS\r\n").toLatin1());
         m_statusSent = true;
     }
 }

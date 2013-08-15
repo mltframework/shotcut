@@ -19,8 +19,8 @@
 #include "filtersdock.h"
 #include "ui_filtersdock.h"
 #include "mltcontroller.h"
-#include <QtGui/QMenu>
-#include <QtCore/QSettings>
+#include <QMenu>
+#include <QSettings>
 #include "mainwindow.h"
 #include "filters/movitblurfilter.h"
 #include "filters/movitglowfilter.h"

@@ -20,7 +20,7 @@
 #define MOVITSHARPENFILTER_H
 
 #include <QWidget>
-#include <mlt++/MltFilter.h>
+#include <MltFilter.h>
 
 namespace Ui {
 class MovitSharpenFilter;

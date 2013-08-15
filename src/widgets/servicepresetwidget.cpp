@@ -18,10 +18,10 @@
 
 #include "servicepresetwidget.h"
 #include "ui_servicepresetwidget.h"
-#include <QtGui/QDesktopServices>
-#include <QtCore/QDir>
-#include <QtGui/QInputDialog>
-#include <QtGui/QMessageBox>
+#include <QStandardPaths>
+#include <QDir>
+#include <QInputDialog>
+#include <QMessageBox>
 
 ServicePresetWidget::ServicePresetWidget(QWidget *parent) :
     QWidget(parent),
@@ -41,7 +41,7 @@ void ServicePresetWidget::loadPresets()
 {
     // build the presets combo
     ui->presetCombo->clear();
-    QDir dir(QDesktopServices::storageLocation(QDesktopServices::DataLocation));
+    QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
     if (dir.cd("presets")) {
         ui->presetCombo->addItems(dir.entryList(QDir::Files));
         QStringList entries = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::Executable);
@@ -59,7 +59,7 @@ void ServicePresetWidget::loadPresets()
 
 void ServicePresetWidget::saveDefaultPreset(Mlt::Properties& properties)
 {
-    QDir dir(QDesktopServices::storageLocation(QDesktopServices::DataLocation));
+    QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
 
     if (!dir.exists())
         dir.mkpath(dir.path());
@@ -85,7 +85,7 @@ void ServicePresetWidget::savePreset(Mlt::Properties* properties)
     int r = dialog.exec();
     QString preset = dialog.textValue();
     if (r == QDialog::Accepted && !preset.isEmpty()) {
-        QDir dir(QDesktopServices::storageLocation(QDesktopServices::DataLocation));
+        QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
 
         if (!dir.exists())
             dir.mkpath(dir.path());
@@ -113,7 +113,7 @@ void ServicePresetWidget::savePreset(Mlt::Properties* properties)
 void ServicePresetWidget::on_presetCombo_activated(int index)
 {
     QString preset = ui->presetCombo->itemText(index);
-    QDir dir(QDesktopServices::storageLocation(QDesktopServices::DataLocation));
+    QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
     Mlt::Properties* properties = new Mlt::Properties;
 
     if (!dir.cd("presets") || !dir.cd(m_widgetName))
@@ -140,7 +140,7 @@ void ServicePresetWidget::on_deletePresetButton_clicked()
     dialog.setWindowModality(Qt::WindowModal);
     int result = dialog.exec();
     if (result == QMessageBox::Yes) {
-        QDir dir(QDesktopServices::storageLocation(QDesktopServices::DataLocation));
+        QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
 
         if (dir.cd("presets") && dir.cd(m_widgetName))
             QFile(dir.filePath(preset)).remove();

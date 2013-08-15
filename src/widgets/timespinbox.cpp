@@ -18,7 +18,7 @@
 
 #include "timespinbox.h"
 #include "mltcontroller.h"
-#include <QtGui/QRegExpValidator>
+#include <QRegExpValidator>
 
 TimeSpinBox::TimeSpinBox(QWidget *parent)
     : QSpinBox(parent)
@@ -38,7 +38,7 @@ QValidator::State TimeSpinBox::validate(QString &input, int &pos) const
 int TimeSpinBox::valueFromText(const QString &text) const
 {
     if (MLT.producer()) {
-        MLT.producer()->set("_shotcut_position", text.toAscii().constData());
+        MLT.producer()->set("_shotcut_position", text.toLatin1().constData());
         return MLT.producer()->get_int("_shotcut_position");
     }
     return 0;

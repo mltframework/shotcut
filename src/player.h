@@ -20,8 +20,8 @@
 #define PLAYER_H
 
 #include <QWidget>
-#include <QtGui/QIcon>
-#include <QtCore/QSettings>
+#include <QIcon>
+#include <QSettings>
 #include "mltcontroller.h"
 
 class ScrubBar;

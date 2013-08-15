@@ -22,7 +22,7 @@
 #include "jackproducerwidget.h"
 #include "alsawidget.h"
 #include "mltcontroller.h"
-#include <QtGui>
+#include <QtWidgets>
 
 Video4LinuxWidget::Video4LinuxWidget(QWidget *parent) :
     QWidget(parent),
@@ -79,12 +79,12 @@ Mlt::Producer* Video4LinuxWidget::producer(Mlt::Profile& profile)
             profile.set_frame_rate(ui->v4lFramerateSpinBox->value() * 10000, 10000);
         }
     }
-    Mlt::Producer* p = new Mlt::Producer(profile, URL().toAscii().constData());
+    Mlt::Producer* p = new Mlt::Producer(profile, URL().toLatin1().constData());
     if (!p->is_valid()) {
         delete p;
         p = new Mlt::Producer(profile, "color:");
         p->set("resource", QString("video4linux2:%1")
-               .arg(ui->v4lLineEdit->text()).toAscii().constData());
+               .arg(ui->v4lLineEdit->text()).toLatin1().constData());
         p->set("error", 1);
     }
     else if (m_audioWidget) {
@@ -101,14 +101,14 @@ Mlt::Producer* Video4LinuxWidget::producer(Mlt::Profile& profile)
         p = new Mlt::Producer(tractor->get_producer());
         delete tractor;
         p->set("resource", QString("video4linux2:%1")
-               .arg(ui->v4lLineEdit->text()).toAscii().constData());
+               .arg(ui->v4lLineEdit->text()).toLatin1().constData());
     }
-    p->set("device", ui->v4lLineEdit->text().toAscii().constData());
+    p->set("device", ui->v4lLineEdit->text().toLatin1().constData());
     p->set("width", ui->v4lWidthSpinBox->value());
     p->set("height", ui->v4lHeightSpinBox->value());
     if (ui->v4lFramerateSpinBox->value() > 0)
         p->set("framerate", ui->v4lFramerateSpinBox->value());
-    p->set("standard", ui->v4lStandardCombo->currentText().toAscii().constData());
+    p->set("standard", ui->v4lStandardCombo->currentText().toLatin1().constData());
     p->set("channel", ui->v4lChannelSpinBox->value());
     p->set("audio_ix", ui->v4lAudioComboBox->currentIndex());
     p->set("force_seekable", 0);
@@ -118,11 +118,11 @@ Mlt::Producer* Video4LinuxWidget::producer(Mlt::Profile& profile)
 Mlt::Properties* Video4LinuxWidget::getPreset() const
 {
     Mlt::Properties* p = new Mlt::Properties;
-    p->set("device", ui->v4lLineEdit->text().toAscii().constData());
+    p->set("device", ui->v4lLineEdit->text().toLatin1().constData());
     p->set("width", ui->v4lWidthSpinBox->value());
     p->set("height", ui->v4lHeightSpinBox->value());
     p->set("framerate", ui->v4lFramerateSpinBox->value());
-    p->set("standard", ui->v4lStandardCombo->currentText().toAscii().constData());
+    p->set("standard", ui->v4lStandardCombo->currentText().toLatin1().constData());
     p->set("channel", ui->v4lChannelSpinBox->value());
     p->set("audio_ix", ui->v4lAudioComboBox->currentIndex());
     return p;

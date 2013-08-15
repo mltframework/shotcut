@@ -18,7 +18,7 @@
 
 #include "imageproducerwidget.h"
 #include "ui_imageproducerwidget.h"
-#include <QtCore/QFileInfo>
+#include <QFileInfo>
 
 ImageProducerWidget::ImageProducerWidget(QWidget *parent) :
     QWidget(parent),
@@ -120,9 +120,9 @@ void ImageProducerWidget::on_aspectNumSpinBox_valueChanged(int)
             double(ui->aspectDenSpinBox->value());
         double sar = m_producer->get_double("aspect_ratio");
         if (m_producer->get("force_aspect_ratio") || new_sar != sar) {
-            m_producer->set("force_aspect_ratio", QString::number(new_sar).toAscii().constData());
-            m_producer->set("shotcut_aspect_num", ui->aspectNumSpinBox->text().toAscii().constData());
-            m_producer->set("shotcut_aspect_den", ui->aspectDenSpinBox->text().toAscii().constData());
+            m_producer->set("force_aspect_ratio", QString::number(new_sar).toLatin1().constData());
+            m_producer->set("shotcut_aspect_num", ui->aspectNumSpinBox->text().toLatin1().constData());
+            m_producer->set("shotcut_aspect_den", ui->aspectDenSpinBox->text().toLatin1().constData());
         }
         emit producerChanged();
     }
@@ -166,7 +166,7 @@ void ImageProducerWidget::on_sequenceCheckBox_clicked(bool checked)
         for (; i && name[i - 1].isDigit(); i--, count++)
             begin.prepend(name[i - 1]);
         if (count) {
-            m_producer->set("begin", begin.toAscii().constData());
+            m_producer->set("begin", begin.toLatin1().constData());
             name.replace(i, count, begin.prepend('%').append('d'));
             resource = info.path() + "/" + name;
             m_producer->set("resource", resource.toUtf8().constData());

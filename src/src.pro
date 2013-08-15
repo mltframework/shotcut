@@ -1,12 +1,12 @@
 CONFIG   += link_prl
 
-QT       += opengl xml network
+QT       += widgets opengl xml network
 
 TARGET = shotcut
 TEMPLATE = app
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
+    mainwindow.cpp \
     mltcontroller.cpp \
     sdlwidget.cpp \
     scrubbar.cpp \
@@ -195,17 +195,22 @@ mac {
     TARGET = Shotcut
     ICON = ../icons/shotcut.icns
     QMAKE_INFO_PLIST = ../Info.plist
+
+    # QMake from Qt 5.1.0 on OSX is messing with the environment in which it runs
+    # pkg-config such that the PKG_CONFIG_PATH env var is not set.
+    INCLUDEPATH += /opt/local/include/mlt++
+    INCLUDEPATH += /opt/local/include/mlt
+    LIBS += -L/opt/local/lib -lmlt++ -lmlt
 }
 win32 {
     CONFIG += windows rtti
     INCLUDEPATH += include/mlt++ include/mlt
     LIBS += -Llib -lmlt++ -lmlt -lglew32 -lopengl32
     RC_FILE = shotcut.rc
-} else {
-    CONFIG += link_pkgconfig
-    PKGCONFIG += mlt++ glew
 }
 unix:!mac {
+    CONFIG += link_pkgconfig
+    PKGCONFIG += mlt++ glew
     LIBS += -lX11
 }
 

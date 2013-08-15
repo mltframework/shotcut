@@ -19,7 +19,7 @@
  */
 
 #include "colorwheel.h"
-#include <QtCore/qmath.h>
+#include <qmath.h>
 
 ColorWheel::ColorWheel(QWidget *parent)
     : QWidget(parent)
