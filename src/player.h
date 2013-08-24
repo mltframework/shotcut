@@ -78,6 +78,7 @@ public slots:
     void resetProfile();
     void rewind();
     void fastForward();
+    void showPaused();
 
 protected:
     void resizeEvent(QResizeEvent* event);

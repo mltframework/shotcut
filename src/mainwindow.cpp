@@ -1242,6 +1242,11 @@ void MainWindow::onGpuNotSupported()
     showStatusMessage(tr("GPU Processing is not supported"));
 }
 
+void MainWindow::showPaused()
+{
+    m_player->showPaused();
+}
+
 void MainWindow::on_actionOpenGL_triggered(bool checked)
 {
     m_settings.setValue("player/opengl", checked);
