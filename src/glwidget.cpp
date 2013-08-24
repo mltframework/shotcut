@@ -36,6 +36,7 @@ GLWidget::GLWidget(QWidget *parent)
     , m_display_ratio(4.0/3.0)
     , m_shader(0)
     , m_glslManager(0)
+    , m_renderContext(0)
     , m_fbo(0)
     , m_isInitialized(false)
     , m_threadStartEvent(0)
@@ -53,10 +54,6 @@ GLWidget::GLWidget(QWidget *parent)
         delete m_glslManager;
         m_glslManager = 0;
     }
-    if (m_glslManager) {
-        m_renderContext = new QGLWidget(this, this);
-        m_renderContext->resize(0, 0);
-    }
 }
 
 GLWidget::~GLWidget()
@@ -68,6 +65,7 @@ GLWidget::~GLWidget()
     delete m_glslManager;
     delete m_threadStartEvent;
     delete m_threadStopEvent;
+    delete m_renderContext;
 }
 
 QSize GLWidget::minimumSizeHint() const
@@ -231,18 +229,24 @@ void GLWidget::startGlsl()
         m_condition.wait(&m_mutex);
         m_mutex.unlock();
     }
-    if (m_glslManager && m_renderContext && m_renderContext->isValid()) {
-        m_renderContext->makeCurrent();
-        m_glslManager->fire_event("init glsl");
-        if (!m_glslManager->get_int("glsl_supported")) {
-            delete m_glslManager;
-            m_glslManager = 0;
-            // Need to destroy MLT global reference to prevent filters from trying to use GPU.
-            mlt_properties_set_data(mlt_global_properties(), "glslManager", NULL, 0, NULL, NULL);
-            emit gpuNotSupported();
+    if (m_glslManager) {
+        if (!m_renderContext) {
+            m_renderContext = new QGLWidget(0, this);
+            m_renderContext->resize(0, 0);
         }
-        else {
-            emit started();
+        if (m_renderContext->isValid()) {
+            m_renderContext->makeCurrent();
+            m_glslManager->fire_event("init glsl");
+            if (!m_glslManager->get_int("glsl_supported")) {
+                delete m_glslManager;
+                m_glslManager = 0;
+                // Need to destroy MLT global reference to prevent filters from trying to use GPU.
+                mlt_properties_set_data(mlt_global_properties(), "glslManager", NULL, 0, NULL, NULL);
+                emit gpuNotSupported();
+            }
+            else {
+                emit started();
+            }
         }
     }
 }
@@ -254,8 +258,11 @@ static void onThreadStarted(mlt_properties owner, GLWidget* self)
 
 void GLWidget::stopGlsl()
 {
+    m_glslManager->fire_event("close glsl");
     m_texture[0] = 0;
     m_renderContext->doneCurrent();
+    delete m_renderContext;
+    m_renderContext = 0;
 }
 
 static void onThreadStopped(mlt_properties owner, GLWidget* self)
