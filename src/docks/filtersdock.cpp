@@ -96,6 +96,7 @@ void FiltersDock::on_removeButton_clicked()
 {
     QModelIndex index = ui->listView->currentIndex();
     if (index.isValid()) {
+        MAIN.showPaused();
         m_model.remove(index.row());
         delete ui->scrollArea->widget();
     }
@@ -138,6 +139,7 @@ void FiltersDock::on_actionBlur_triggered()
 {
     Mlt::Filter* filter = m_model.add(m_isGPU? "movit.blur" : "boxblur");
     if (filter && filter->is_valid()) {
+        MAIN.showPaused();
         if (m_isGPU)
             ui->scrollArea->setWidget(new MovitBlurFilter(*filter, true));
         else
@@ -150,6 +152,7 @@ void FiltersDock::on_actionBlur_triggered()
 void FiltersDock::on_actionMirror_triggered()
 {
     Mlt::Filter* filter = m_model.add(m_isGPU? "movit.mirror": "mirror:flip");
+    MAIN.showPaused();
     delete ui->scrollArea->widget();
     delete filter;
     ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
@@ -163,6 +166,7 @@ void FiltersDock::on_listView_doubleClicked(const QModelIndex &index)
 void FiltersDock::on_actionDiffusion_triggered()
 {
     Mlt::Filter* filter = m_model.add("movit.diffusion");
+    MAIN.showPaused();
     delete ui->scrollArea->widget();
     delete filter;
     ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
@@ -172,6 +176,7 @@ void FiltersDock::on_actionGlow_triggered()
 {
     Mlt::Filter* filter = m_model.add(m_isGPU? "movit.glow" : "frei0r.glow");
     if (filter && filter->is_valid()) {
+        MAIN.showPaused();
         if (m_isGPU)
             ui->scrollArea->setWidget(new MovitGlowFilter(*filter, true));
         else
@@ -185,6 +190,7 @@ void FiltersDock::on_actionSharpen_triggered()
 {
     Mlt::Filter* filter = m_model.add(m_isGPU? "movit.sharpen" : "frei0r.sharpness");
     if (filter && filter->is_valid()) {
+        MAIN.showPaused();
         if (m_isGPU)
             ui->scrollArea->setWidget(new MovitSharpenFilter(*filter, true));
         else
@@ -197,6 +203,7 @@ void FiltersDock::on_actionSharpen_triggered()
 void FiltersDock::on_actionVignette_triggered()
 {
     Mlt::Filter* filter = m_model.add(m_isGPU? "movit.vignette" : "vignette");
+    MAIN.showPaused();
     delete ui->scrollArea->widget();
     delete filter;
     ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
@@ -205,6 +212,7 @@ void FiltersDock::on_actionVignette_triggered()
 void FiltersDock::on_actionCrop_triggered()
 {
     Mlt::Filter* filter = m_model.add("crop");
+    MAIN.showPaused();
     ui->scrollArea->setWidget(new CropFilter(*filter, true));
     delete filter;
     ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
@@ -214,6 +222,7 @@ void FiltersDock::on_actionColorGrading_triggered()
 {
     Mlt::Filter* filter = m_model.add(m_isGPU? "movit.lift_gamma_gain": "frei0r.coloradj_RGB");
     if (filter && filter->is_valid()) {
+        MAIN.showPaused();
         if (m_isGPU)
             ui->scrollArea->setWidget(new MovitColorFilter(*filter, true));
         else
@@ -226,6 +235,7 @@ void FiltersDock::on_actionColorGrading_triggered()
 void FiltersDock::on_actionSizePosition_triggered()
 {
     Mlt::Filter* filter = m_model.add(m_isGPU? "movit.rect": "affine");
+    MAIN.showPaused();
     delete ui->scrollArea->widget();
     delete filter;
     ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
@@ -234,6 +244,7 @@ void FiltersDock::on_actionSizePosition_triggered()
 void FiltersDock::on_actionSaturation_triggered()
 {
     Mlt::Filter* filter = m_model.add(m_isGPU? "movit.saturation": "frei0r.saturat0r");
+    MAIN.showPaused();
     ui->scrollArea->setWidget(new SaturationFilter(*filter, true));
     delete filter;
     ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
@@ -242,6 +253,7 @@ void FiltersDock::on_actionSaturation_triggered()
 void FiltersDock::on_actionWhiteBalance_triggered()
 {
     Mlt::Filter* filter = m_model.add(m_isGPU? "movit.white_balance": "frei0r.colgate");
+    MAIN.showPaused();
     ui->scrollArea->setWidget(new WhiteBalanceFilter(*filter, true));
     delete filter;
     ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));

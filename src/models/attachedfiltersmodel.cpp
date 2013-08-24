@@ -157,15 +157,10 @@ bool AttachedFiltersModel::setData(const QModelIndex& index, const QVariant& val
     if (role == Qt::CheckStateRole) {
         Mlt::Filter* filter = filterForRow(index.row());
         if (filter && filter->is_valid()) {
-            QSettings settings;
+            double speed = MLT.producer()->get_speed();
+            MLT.pause();
             filter->set("disable", !filter->get_int("disable"));
-            // GPU processing requires that we restart the consumer for reasons
-            // internal to MLT and its integration of Movit.
-            if (settings.value("player/gpu", false).toBool()) {
-                double speed = MLT.producer()->get_speed();
-                MLT.consumer()->stop();
-                MLT.play(speed);
-            }
+            MLT.play(speed);
             emit changed();
             emit dataChanged(createIndex(index.row(), 0), createIndex(index.row(), 0));
         }
@@ -194,15 +189,8 @@ bool AttachedFiltersModel::insertRows(int row, int count, const QModelIndex &par
 bool AttachedFiltersModel::removeRows(int row, int count, const QModelIndex &parent)
 {
     if (MLT.producer() && MLT.producer()->is_valid() && m_dropRow >= 0 && row != m_dropRow) {
+        MLT.pause();
         MLT.producer()->move_filter(indexForRow(row), indexForRow(0) + m_dropRow);
-        QSettings settings;
-        // GPU processing requires that we restart the consumer for reasons
-        // internal to MLT and its integration of Movit.
-        if (settings.value("player/gpu", false).toBool()) {
-            double speed = MLT.producer()->get_speed();
-            MLT.consumer()->stop();
-            MLT.play(speed);
-        }
         emit changed();
         emit dataChanged(createIndex(row, 0), createIndex(row, 0));
         emit dataChanged(createIndex(m_dropRow, 0), createIndex(m_dropRow, 0));
@@ -218,15 +206,11 @@ Mlt::Filter *AttachedFiltersModel::add(const QString& name)
     Mlt::Filter* filter = new Mlt::Filter(MLT.profile(), name.toUtf8().constData());
     if (filter->is_valid()) {
         int count = rowCount();
-        double speed = MLT.producer()->get_speed();
-        MLT.consumer()->stop();
-
         beginInsertRows(QModelIndex(), count, count);
+        MLT.pause();
         MLT.producer()->attach(*filter);
         m_rows++;
         endInsertRows();
-
-        MLT.play(speed);
         emit changed();
     }
     return filter;
@@ -236,15 +220,11 @@ void AttachedFiltersModel::remove(int row)
 {
     Mlt::Filter* filter = filterForRow(row);
     if (filter && filter->is_valid()) {
-        double speed = MLT.producer()->get_speed();
-        MLT.consumer()->stop();
-
         beginRemoveRows(QModelIndex(), row, row);
+        MLT.pause();
         MLT.producer()->detach(*filter);
         m_rows--;
         endRemoveRows();
-
-        MLT.play(speed);
         emit changed();
     }
     delete filter;
