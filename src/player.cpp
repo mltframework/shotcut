@@ -304,9 +304,7 @@ void Player::play(double speed)
 void Player::pause()
 {
     emit paused();
-    actionPlay->setIcon(m_playIcon);
-    actionPlay->setText(tr("Play"));
-    actionPlay->setToolTip(tr("Start playback (L)"));
+    showPaused();
 }
 
 void Player::stop()
@@ -564,6 +562,13 @@ void Player::fastForward()
         emit fastForwarded();
     else
         play();
+}
+
+void Player::showPaused()
+{
+    actionPlay->setIcon(m_playIcon);
+    actionPlay->setText(tr("Play"));
+    actionPlay->setToolTip(tr("Start playback (L)"));
 }
 
 void Player::showAudio(Mlt::Frame* frame)
