@@ -284,12 +284,11 @@ MainWindow::MainWindow()
     setCurrentFile("");
 
 #ifdef WITH_LEAP
-    connect(&m_leapListener, SIGNAL(keyTap()), this, SLOT(setInToCurrent()));
-    connect(&m_leapListener, SIGNAL(screenTap()), this, SLOT(setOutToCurrent()));
-    connect(&m_leapListener, SIGNAL(swipeLeft()), this, SLOT(stepLeftOneSecond()));
-    connect(&m_leapListener, SIGNAL(swipeRight()), this, SLOT(stepRightOneSecond()));
-    connect(&m_leapListener, SIGNAL(clockwiseCircle()), this, SLOT(stepRightOneFrame()));
-    connect(&m_leapListener, SIGNAL(counterClockwiseCircle()), this, SLOT(stepLeftOneFrame()));
+    connect(&m_leapListener, SIGNAL(shuttle(float)), this, SLOT(onShuttle(float)));
+    connect(&m_leapListener, SIGNAL(jogRightFrame()), this, SLOT(stepRightOneFrame()));
+    connect(&m_leapListener, SIGNAL(jogRightSecond()), this, SLOT(stepRightOneSecond()));
+    connect(&m_leapListener, SIGNAL(jogLeftFrame()), this, SLOT(stepLeftOneFrame()));
+    connect(&m_leapListener, SIGNAL(jogLeftSecond()), this, SLOT(stepLeftOneSecond()));
 #endif
 }
 
@@ -1374,6 +1373,17 @@ void MainWindow::setOutToCurrent()
 {
     if (MLT.isSeekable() && !MLT.isPlaylist())
         m_player->setOut(m_player->position());
+}
+
+void MainWindow::onShuttle(float x)
+{
+    if (x == 0) {
+        m_player->pause();
+    } else if (x > 0) {
+        m_player->play(10.0 * x);
+    } else {
+        m_player->play(20.0 * x);
+    }
 }
 
 void MainWindow::on_actionOpenGL_triggered(bool checked)

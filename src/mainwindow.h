@@ -122,6 +122,7 @@ public slots:
     void stepRightOneSecond();
     void setInToCurrent();
     void setOutToCurrent();
+    void onShuttle(float x);
 
 private slots:
     void on_actionAbout_Shotcut_triggered();

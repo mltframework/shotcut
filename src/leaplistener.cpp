@@ -1,7 +1,27 @@
+/*
+ * Copyright (c) 2013 Meltytech, LLC
+ * Author: Dan Dennedy <dan@dennedy.org>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include "leaplistener.h"
 #include <QDebug>
 
 using namespace Leap;
+
+static const float BIG_CIRLCE_THRESHOLD = 70.0f;
 
 LeapListener::LeapListener(QObject *parent) :
     QObject(parent)
@@ -18,9 +38,8 @@ void LeapListener::onConnect(const Leap::Controller &controller)
 {
     Q_UNUSED(controller);
     m_controller.enableGesture(Gesture::TYPE_CIRCLE);
-    m_controller.enableGesture(Gesture::TYPE_KEY_TAP);
-    m_controller.enableGesture(Gesture::TYPE_SCREEN_TAP);
-    m_controller.enableGesture(Gesture::TYPE_SWIPE);
+//    m_controller.enableGesture(Gesture::TYPE_KEY_TAP);
+//    m_controller.enableGesture(Gesture::TYPE_SCREEN_TAP);
 }
 
 void LeapListener::onFocusGained(const Leap::Controller &controller)
@@ -34,6 +53,7 @@ void LeapListener::onFrame(const Leap::Controller &controller)
 
     // Get gestures
     const GestureList gestures = frame.gestures();
+    if (gestures.count())
     for (int g = 0; g < gestures.count(); ++g) {
         Gesture gesture = gestures[g];
 
@@ -60,27 +80,18 @@ void LeapListener::onFrame(const Leap::Controller &controller)
                       << ", progress: " << circle.progress()
                       << ", radius: " << circle.radius()
                       << ", angle " << sweptAngle * RAD_TO_DEG
-                      <<  ", " << clockwiseness << std::endl;
-            if (gesture.state() == Gesture::STATE_STOP) {
-                if (circle.pointable().direction().angleTo(circle.normal()) <= PI/4)
-                    emit clockwiseCircle();
+                      <<  ", " << clockwiseness
+                      << std::endl;
+            if (circle.pointable().direction().angleTo(circle.normal()) <= PI/4) {
+                if (circle.radius() < BIG_CIRLCE_THRESHOLD)
+                    emit jogRightFrame();
                 else
-                    emit counterClockwiseCircle();
-            }
-            break;
-        }
-        case Gesture::TYPE_SWIPE:
-        {
-            SwipeGesture swipe = gesture;
-            std::cerr << "Swipe id: " << gesture.id()
-                      << ", state: " << gesture.state()
-                      << ", direction: " << swipe.direction()
-                      << ", speed: " << swipe.speed() << std::endl;
-            if (gesture.state() == Gesture::STATE_STOP) {
-                if (swipe.direction().x > 0.5)
-                    emit swipeRight();
-                else if (swipe.direction().x < -0.5)
-                    emit swipeLeft();
+                    emit jogRightSecond();
+            } else {
+                if (circle.radius() < BIG_CIRLCE_THRESHOLD)
+                    emit jogLeftFrame();
+                else
+                    emit jogLeftSecond();
             }
             break;
         }
@@ -90,7 +101,8 @@ void LeapListener::onFrame(const Leap::Controller &controller)
             std::cerr << "Key Tap id: " << gesture.id()
                       << ", state: " << gesture.state()
                       << ", position: " << tap.position()
-                      << ", direction: " << tap.direction()<< std::endl;
+                      << ", direction: " << tap.direction()
+                      << std::endl;
             emit keyTap();
             break;
         }
@@ -100,13 +112,29 @@ void LeapListener::onFrame(const Leap::Controller &controller)
             std::cerr << "Screen Tap id: " << gesture.id()
                       << ", state: " << gesture.state()
                       << ", position: " << screentap.position()
-                      << ", direction: " << screentap.direction()<< std::endl;
+                      << ", direction: " << screentap.direction()
+                      << std::endl;
             emit screenTap();
             break;
         }
         default:
             std::cout << "Unknown gesture type." << std::endl;
             break;
+        }
+    }
+    else if (!frame.hands().empty()) {
+        // Get the first hand
+        const Hand hand = frame.hands()[0];
+
+        if (hand.fingers().count() == 0) {
+            const Vector palmPosition = frame.interactionBox().normalizePoint(hand.palmPosition());
+            std::cerr << "X: " << (1.0 - palmPosition.x)
+                      << " rotat prob: " << hand.rotationProbability(m_lastFrame)
+                      << " trans prob: " << hand.translationProbability(m_lastFrame)
+                      << std::endl;
+            emit shuttle(2.0f * (palmPosition.x - 0.5f));
+        } else {
+            emit shuttle(0);
         }
     }
     m_lastFrame = frame;
