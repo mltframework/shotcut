@@ -253,6 +253,14 @@ unix:!mac {
     LIBS += -lX11
 }
 
+# Add CONFIG+=leap to qmake execution to include support for Leap Motion control.
+CONFIG(leap) {
+    DEFINES += WITH_LEAP
+    SOURCES += leaplistener.cpp
+    HEADERS += leaplistener.h
+    LIBS += -lLeap
+}
+
 isEmpty(SHOTCUT_VERSION) {
     !win32:SHOTCUT_VERSION = $$system(date "+%y.%m.%d")
 }

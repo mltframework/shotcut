@@ -282,6 +282,15 @@ MainWindow::MainWindow()
 
     setFocus();
     setCurrentFile("");
+
+#ifdef WITH_LEAP
+    connect(&m_leapListener, SIGNAL(keyTap()), this, SLOT(setInToCurrent()));
+    connect(&m_leapListener, SIGNAL(screenTap()), this, SLOT(setOutToCurrent()));
+    connect(&m_leapListener, SIGNAL(swipeLeft()), this, SLOT(stepLeftOneSecond()));
+    connect(&m_leapListener, SIGNAL(swipeRight()), this, SLOT(stepRightOneSecond()));
+    connect(&m_leapListener, SIGNAL(clockwiseCircle()), this, SLOT(stepRightOneFrame()));
+    connect(&m_leapListener, SIGNAL(counterClockwiseCircle()), this, SLOT(stepLeftOneFrame()));
+#endif
 }
 
 MainWindow& MainWindow::singleton()
@@ -716,16 +725,16 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         m_player->seek(MLT.producer()->get_length() - 1);
         break;
     case Qt::Key_Left:
-        m_player->seek(m_player->position() - 1);
+        stepLeftOneFrame();
         break;
     case Qt::Key_Right:
-        m_player->seek(m_player->position() + 1);
+        stepRightOneFrame();
         break;
     case Qt::Key_PageUp:
-        m_player->seek(m_player->position() - qRound(MLT.profile().fps()));
+        stepLeftOneSecond();
         break;
     case Qt::Key_PageDown:
-        m_player->seek(m_player->position() + qRound(MLT.profile().fps()));
+        stepRightOneSecond();
         break;
     case Qt::Key_J:
         if (m_isKKeyPressed)
@@ -744,12 +753,10 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_player->fastForward();
         break;
     case Qt::Key_I:
-        if (MLT.isSeekable() && !MLT.isPlaylist())
-            m_player->setIn(m_player->position());
+        setInToCurrent();
         break;
     case Qt::Key_O:
-        if (MLT.isSeekable() && !MLT.isPlaylist())
-            m_player->setOut(m_player->position());
+        setOutToCurrent();
         break;
     case Qt::Key_V: // Avid Splice In
         m_playlistDock->show();
@@ -1335,6 +1342,38 @@ void MainWindow::editHTML(const QString &fileName)
         point -= halfSize;
         m_htmlEditor->move(point);
     }
+}
+
+void MainWindow::stepLeftOneFrame()
+{
+    m_player->seek(m_player->position() - 1);
+}
+
+void MainWindow::stepRightOneFrame()
+{
+    m_player->seek(m_player->position() + 1);
+}
+
+void MainWindow::stepLeftOneSecond()
+{
+    m_player->seek(m_player->position() - qRound(MLT.profile().fps()));
+}
+
+void MainWindow::stepRightOneSecond()
+{
+    m_player->seek(m_player->position() + qRound(MLT.profile().fps()));
+}
+
+void MainWindow::setInToCurrent()
+{
+    if (MLT.isSeekable() && !MLT.isPlaylist())
+        m_player->setIn(m_player->position());
+}
+
+void MainWindow::setOutToCurrent()
+{
+    if (MLT.isSeekable() && !MLT.isPlaylist())
+        m_player->setOut(m_player->position());
 }
 
 void MainWindow::on_actionOpenGL_triggered(bool checked)

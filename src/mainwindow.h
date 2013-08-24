@@ -22,6 +22,9 @@
 #include <QMainWindow>
 #include <QSettings>
 #include "mltcontroller.h"
+#ifdef WITH_LEAP
+#include "leaplistener.h"
+#endif
 
 namespace Ui {
     class MainWindow;
@@ -100,6 +103,9 @@ private:
     bool m_isPlaylistLoaded;
     QActionGroup* m_languagesGroup;
     HtmlEditor* m_htmlEditor;
+#ifdef WITH_LEAP
+    LeapListener m_leapListener;
+#endif
 
 public slots:
     void open(const QString& url, const Mlt::Properties* = 0);
@@ -110,6 +116,12 @@ public slots:
     void onProducerOpened();
     void onGpuNotSupported();
     void editHTML(const QString& fileName);
+    void stepLeftOneFrame();
+    void stepRightOneFrame();
+    void stepLeftOneSecond();
+    void stepRightOneSecond();
+    void setInToCurrent();
+    void setOutToCurrent();
 
 private slots:
     void on_actionAbout_Shotcut_triggered();
