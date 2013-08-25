@@ -124,14 +124,13 @@ Player::Player(QWidget *parent)
     m_durationLabel = new QLabel(this);
     m_durationLabel->setToolTip(tr("Total Duration"));
     m_durationLabel->setText(" / 00:00:00:00");
-//    m_durationLabel->setContentsMargins(0, 5, 0, 0);
     m_durationLabel->setFixedWidth(m_positionSpinner->width());
     m_inPointLabel = new QLabel(this);
     m_inPointLabel->setText("--:--:--:--");
     m_inPointLabel->setToolTip(tr("In Point"));
     m_inPointLabel->setAlignment(Qt::AlignRight);
 #ifdef Q_OS_MAC
-    m_inPointLabel->setContentsMargins(0, 5, 0, 0);
+    m_inPointLabel->setContentsMargins(0, 6, 0, 0);
 #else
     m_inPointLabel->setContentsMargins(0, 4, 0, 0);
 #endif
@@ -139,7 +138,6 @@ Player::Player(QWidget *parent)
     m_selectedLabel = new QLabel(this);
     m_selectedLabel->setText("--:--:--:--");
     m_selectedLabel->setToolTip(tr("Selected Duration"));
-//    m_selectedLabel->setContentsMargins(0, 5, 0, 0);
     m_selectedLabel->setFixedWidth(m_selectedLabel->width());
     toolbar->addWidget(m_positionSpinner);
     toolbar->addWidget(m_durationLabel);

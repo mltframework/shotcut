@@ -70,6 +70,12 @@ MainWindow::MainWindow()
 #if defined(Q_OS_MAC) || defined(Q_OS_WIN)
     ui->mainToolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 #endif
+#ifdef Q_OS_MAC
+    // Qt 5 on OS X supports the standard Full Screen window widget.
+    ui->mainToolBar->removeAction(ui->actionFullscreen);
+    // OS X has a standard Full Screen shortcut we should use.
+    ui->actionEnter_Full_Screen->setShortcut(QKeySequence((Qt::CTRL + Qt::META + Qt::Key_F)));
+#endif
     setCorner(Qt::TopLeftCorner, Qt::LeftDockWidgetArea);
     setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
     setCorner(Qt::BottomLeftCorner, Qt::LeftDockWidgetArea);
@@ -614,11 +620,6 @@ void MainWindow::readPlayerSettings()
 void MainWindow::readWindowSettings()
 {
     restoreGeometry(m_settings.value("geometry").toByteArray());
-#if defined(Q_OS_MAC)
-    QSize s = size();
-    s.setHeight(s.height() + 38);
-    resize(s);
-#endif
     restoreState(m_settings.value("windowState").toByteArray());
     m_jobsVisible = m_jobsDock->isVisible();
 }
