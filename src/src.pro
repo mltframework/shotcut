@@ -209,13 +209,13 @@ mac {
 win32 {
     CONFIG += windows rtti
     INCLUDEPATH += include/mlt++ include/mlt
-    LIBS += -Llib -lmlt++ -lmlt -lglew32 -lopengl32
+    LIBS += -Llib -lmlt++ -lmlt -lopengl32
     RC_FILE = shotcut.rc
 }
 unix:!mac {
     QT += x11extras
     CONFIG += link_pkgconfig
-    PKGCONFIG += mlt++ glew
+    PKGCONFIG += mlt++
     LIBS += -lX11
 }
 
