@@ -31,14 +31,14 @@
 #include <QIcon>
 #include <QEvent>
 
+const int QEventKeyPress = QEvent::KeyPress;
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
 // KeyPress is defined in X.h
-const int QEventKeyPress = QEvent::KeyPress;
 #include <QX11Info>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include "fixx11h.h"
-#endif 
+#endif
 
 
 MyFrame::MyFrame(QWidget* parent) :
