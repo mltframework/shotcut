@@ -266,7 +266,7 @@ static void onThreadStopped(mlt_properties owner, GLWidget* self)
 
 void GLWidget::showFrame(Mlt::QFrame frame)
 {
-    if (frame.frame()->get_int("rendered")) {
+    if (m_isInitialized && frame.frame()->get_int("rendered")) {
         m_image_width = 0;
         m_image_height = 0;
         makeCurrent();
