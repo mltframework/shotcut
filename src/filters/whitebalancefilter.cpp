@@ -70,12 +70,14 @@ void WhiteBalanceFilter::on_colorPicker_disableCurrentFilter(bool disable)
 {
     QSettings settings;
     m_filter.set("disable", disable);
-    // GPU processing requires that we restart the consumer for reasons
+    // GPU processing requires that we pause the consumer for reasons
     // internal to MLT and its integration of Movit.
     if (settings.value("player/gpu", false).toBool()) {
         double speed = MLT.producer()->get_speed();
-        MLT.consumer()->stop();
+        MLT.pause();
         MLT.play(speed);
+    } else {
+        MLT.refreshConsumer();
     }
 }
 
