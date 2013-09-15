@@ -53,6 +53,7 @@ int PlaylistModel::columnCount(const QModelIndex& /*parent*/) const
 
 QVariant PlaylistModel::data(const QModelIndex &index, int role) const
 {
+    if (!m_playlist) return QVariant();
     switch (role) {
     case Qt::DisplayRole:
     case Qt::ToolTipRole: {

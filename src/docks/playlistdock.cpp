@@ -78,7 +78,7 @@ int PlaylistDock::position()
 {
     int result = -1;
     QModelIndex index = ui->tableView->currentIndex();
-    if (index.isValid()) {
+    if (index.isValid() && m_model.playlist()) {
         Mlt::ClipInfo* i = m_model.playlist()->clip_info(index.row());
         if (i) result = i->start;
         delete i;
@@ -134,7 +134,7 @@ void PlaylistDock::on_menuButton_clicked()
     QPoint pos = ui->menuButton->mapToParent(QPoint(0, 0));
     QMenu menu(this);
     QModelIndex index = ui->tableView->currentIndex();
-    if (index.isValid()) {
+    if (index.isValid() && m_model.playlist()) {
         menu.addAction(ui->actionGoto);
         if (MLT.producer()->type() != playlist_type)
             menu.addAction(ui->actionInsertCut);
@@ -216,7 +216,7 @@ void PlaylistDock::on_actionAppendBlank_triggered()
 void PlaylistDock::on_actionUpdate_triggered()
 {
     QModelIndex index = ui->tableView->currentIndex();
-    if (!index.isValid()) return;
+    if (!index.isValid() || !m_model.playlist()) return;
     Mlt::ClipInfo* info = m_model.playlist()->clip_info(index.row());
     if (!info) return;
     if (info->resource && MLT.producer()->get("resource")
@@ -245,7 +245,7 @@ void PlaylistDock::on_actionUpdate_triggered()
 void PlaylistDock::on_removeButton_clicked()
 {
     QModelIndex index = ui->tableView->currentIndex();
-    if (!index.isValid()) return;
+    if (!index.isValid() || !m_model.playlist()) return;
     MAIN.undoStack()->push(new Playlist::RemoveCommand(m_model, index.row()));
     int count = m_model.playlist()->count();
     if (count == 0) return;
@@ -260,7 +260,7 @@ void PlaylistDock::on_removeButton_clicked()
 void PlaylistDock::on_actionOpen_triggered()
 {
     QModelIndex index = ui->tableView->currentIndex();
-    if (!index.isValid()) return;
+    if (!index.isValid() || !m_model.playlist()) return;
     Mlt::ClipInfo* i = m_model.playlist()->clip_info(index.row());
     if (i) {
         Mlt::Producer* p = new Mlt::Producer(i->producer);
@@ -272,7 +272,7 @@ void PlaylistDock::on_actionOpen_triggered()
 void PlaylistDock::on_tableView_customContextMenuRequested(const QPoint &pos)
 {
     QModelIndex index = ui->tableView->currentIndex();
-    if (index.isValid()) {
+    if (index.isValid() && m_model.playlist()) {
         QMenu menu(this);
         menu.addAction(ui->actionGoto);
         if (MLT.producer()->type() != playlist_type)
@@ -293,6 +293,7 @@ void PlaylistDock::on_tableView_customContextMenuRequested(const QPoint &pos)
 
 void PlaylistDock::on_tableView_doubleClicked(const QModelIndex &index)
 {
+    if (!m_model.playlist()) return;
     Mlt::ClipInfo* i = m_model.playlist()->clip_info(index.row());
     if (i) {
         emit itemActivated(i->start);
