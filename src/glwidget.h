@@ -65,7 +65,6 @@ public:
 
 public slots:
     void showFrame(Mlt::QFrame);
-    void renderImage(Mlt::QProducer, int position, int width, int height);
 
 signals:
     /** This method will be called each time a new frame is available.
@@ -76,7 +75,6 @@ signals:
     void seekTo(int x);
     void gpuNotSupported();
     void started();
-    void imageRendered(Mlt::QProducer, int position, QImage image);
     void paused();
 
 private:

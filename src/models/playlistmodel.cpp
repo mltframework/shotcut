@@ -24,15 +24,64 @@
 #include <QPainter>
 #include <QThreadPool>
 #include <QtDebug>
+#include <QApplication>
+#include <QPalette>
 
 static const char* kThumbnailInProperty = "shotcut:thumbnail-in";
 static const char* kThumbnailOutProperty = "shotcut:thumbnail-out";
+
+static void deleteQImage(QImage* image)
+{
+    delete image;
+}
+
+class UpdateThumbnailTask : public QRunnable
+{
+    PlaylistModel* m_model;
+    Mlt::Producer m_producer;
+    Mlt::Producer* m_tempProducer;
+    int m_in;
+    int m_out;
+    int m_row;
+public:
+    UpdateThumbnailTask(PlaylistModel* model, Mlt::Producer& producer, int in, int out, int row)
+        : QRunnable()
+        , m_model(model)
+        , m_producer(producer)
+        , m_in(in)
+        , m_out(out)
+        , m_row(row)
+    {
+        QString service = producer.get("mlt_service");
+        qDebug() << __FUNCTION__ << service << ":" << producer.get("resource");
+        qDebug() << MLT.saveXML("String", &producer);
+        if (service.startsWith("xml"))
+            service = "xml-nogl";
+        m_in = producer.get_in();
+        m_out = producer.get_out();
+        m_tempProducer = new Mlt::Producer(MLT.profile(), service.toUtf8().constData(), producer.get("resource"));
+    }
+    ~UpdateThumbnailTask()
+    {
+        delete m_tempProducer;
+    }
+    void run() {
+        m_model->makeThumbnail(*m_tempProducer, m_in, m_out, m_row);
+        QImage* image = (QImage*) m_tempProducer->get_data(kThumbnailInProperty);
+        if (image)
+            m_producer.set(kThumbnailInProperty, new QImage(*image), 0, (mlt_destructor) deleteQImage, NULL);
+        image = (QImage*) m_tempProducer->get_data(kThumbnailOutProperty);
+        if (image)
+            m_producer.set(kThumbnailOutProperty, new QImage(*image), 0, (mlt_destructor) deleteQImage, NULL);
+    }
+};
 
 PlaylistModel::PlaylistModel(QObject *parent)
     : QAbstractTableModel(parent)
     , m_playlist(0)
     , m_dropRow(-1)
 {
+    qRegisterMetaType<QVector<int> >("QVector<int>");
 }
 
 PlaylistModel::~PlaylistModel()
@@ -142,7 +191,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
                 painter.end();
             }
             else {
-                image.fill(QColor(Qt::gray).rgb());
+                image.fill(QApplication::palette().base().color().rgb());
             }
             delete producer;
             return image;
@@ -314,11 +363,11 @@ void PlaylistModel::load()
 void PlaylistModel::append(Mlt::Producer* producer)
 {
     createIfNeeded();
-    makeThumbnail(*producer, 0, producer->get_playtime());
     int count = m_playlist->count();
+    QThreadPool::globalInstance()->start(
+        new UpdateThumbnailTask(this, *producer, 0, producer->get_playtime(), count));
     beginInsertRows(QModelIndex(), count, count);
     m_playlist->append(*producer, producer->get_in(), producer->get_out());
-    producer->set_in_and_out(0, producer->get_length() - 1);
     endInsertRows();
     emit modified();
 }
@@ -326,10 +375,10 @@ void PlaylistModel::append(Mlt::Producer* producer)
 void PlaylistModel::insert(Mlt::Producer* producer, int row)
 {
     createIfNeeded();
-    makeThumbnail(*producer, 0, producer->get_playtime());
+    QThreadPool::globalInstance()->start(
+        new UpdateThumbnailTask(this, *producer, 0, producer->get_playtime(), row));
     beginInsertRows(QModelIndex(), row, row);
     m_playlist->insert(*producer, row, producer->get_in(), producer->get_out());
-    producer->set_in_and_out(0, producer->get_length() - 1);
     endInsertRows();
     emit modified();
 }
@@ -349,10 +398,10 @@ void PlaylistModel::remove(int row)
 void PlaylistModel::update(int row, Mlt::Producer* producer)
 {
     if (!m_playlist) return;
-    makeThumbnail(*producer, 0, producer->get_playtime());
+    QThreadPool::globalInstance()->start(
+        new UpdateThumbnailTask(this, *producer, 0, producer->get_playtime(), row));
     m_playlist->remove(row);
     m_playlist->insert(*producer, row, producer->get_in(), producer->get_out());
-    producer->set_in_and_out(0, producer->get_length() - 1);
     emit dataChanged(createIndex(row, 0), createIndex(row, COLUMN_COUNT - 1));
     emit modified();
 }
@@ -394,17 +443,6 @@ void PlaylistModel::move(int from, int to)
     emit modified();
 }
 
-static void deleteQImage(QImage* image)
-{
-    delete image;
-}
-
-void PlaylistModel::updateThumbnail(Mlt::QProducer producer, int position, QImage image)
-{
-    producer.producer()->set(position <= 0? kThumbnailInProperty : kThumbnailOutProperty,
-        new QImage(image), 0, (mlt_destructor) deleteQImage, NULL);
-}
-
 void PlaylistModel::createIfNeeded()
 {
     if (!m_playlist) {
@@ -415,7 +453,7 @@ void PlaylistModel::createIfNeeded()
     }
 }
 
-void PlaylistModel::makeThumbnail(Mlt::Producer& producer, int in, int out, int row)
+void PlaylistModel::makeThumbnail(Mlt::Producer producer, int in, int out, int row)
 {
     QString setting = m_settings.value("playlist/thumbnails").toString();
     if (setting == "hidden")
@@ -423,53 +461,24 @@ void PlaylistModel::makeThumbnail(Mlt::Producer& producer, int in, int out, int 
     int height = PlaylistModel::THUMBNAIL_HEIGHT * 2;
     int width = height * MLT.profile().dar();
 
-    if (m_settings.value("player/gpu").toBool()) {
-        // A negative value is used to indicate the in point to the updateThumbnail slot.
-        emit requestImage(Mlt::QProducer(producer), -in, width, height);
-        if (setting == "tall" || setting == "wide")
-            emit requestImage(Mlt::QProducer(producer), out, width, height);
-    }
-    else {
-        // render the in point thumbnail
-        producer.seek(in);
-        Mlt::Frame* frame = producer.get_frame();
-        QImage thumb = MLT.image(frame, width, height);
-        delete frame;
-        producer.set(kThumbnailInProperty, new QImage(thumb), 0, (mlt_destructor) deleteQImage, NULL);
+    // render the in point thumbnail
+    producer.seek(in);
+    Mlt::Frame* frame = producer.get_frame();
+    QImage thumb = MLT.image(frame, width, height);
+    delete frame;
+    producer.set(kThumbnailInProperty, new QImage(thumb), 0, (mlt_destructor) deleteQImage, NULL);
 
-        if (setting == "tall" || setting == "wide") {
-            // render the out point thumbnail
-            producer.seek(out);
-            frame = producer.get_frame();
-            thumb = MLT.image(frame, width, height);
-            delete frame;
-            producer.set(kThumbnailOutProperty, new QImage(thumb), 0, (mlt_destructor) deleteQImage, NULL);
-        }
+    if (setting == "tall" || setting == "wide") {
+        // render the out point thumbnail
+        producer.seek(out);
+        frame = producer.get_frame();
+        thumb = MLT.image(frame, width, height);
+        delete frame;
+        producer.set(kThumbnailOutProperty, new QImage(thumb), 0, (mlt_destructor) deleteQImage, NULL);
     }
     if (row >= 0)
         emit dataChanged(createIndex(row, COLUMN_THUMBNAIL), createIndex(row, COLUMN_THUMBNAIL));
 }
-
-class UpdateThumbnailTask : public QRunnable
-{
-    PlaylistModel* m_model;
-    Mlt::Producer m_producer;
-    int m_in;
-    int m_out;
-    int m_row;
-public:
-    UpdateThumbnailTask(PlaylistModel* model, Mlt::Producer& producer, int in, int out, int row)
-        : QRunnable()
-        , m_model(model)
-        , m_producer(producer)
-        , m_in(in)
-        , m_out(out)
-        , m_row(row)
-    {}
-    void run() {
-        m_model->makeThumbnail(m_producer, m_in, m_out, m_row);
-    }
-};
 
 void PlaylistModel::refreshThumbnails()
 {
