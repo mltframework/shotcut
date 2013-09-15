@@ -43,12 +43,12 @@ Frei0rColoradjWidget::Frei0rColoradjWidget(Mlt::Filter filter, bool setDefaults,
         ui->modeComboBox->setCurrentIndex(2 * m_defaultAction);
         ui->keepLumaCheckBox->setChecked(m_defaultLuma);
         ui->wheel->setColor(m_defaultRGB);
-        ui->preset->saveDefaultPreset(m_filter);
         m_filter.set(kParamAction, m_defaultAction);
         m_filter.set(kParamKeepLuma, m_defaultLuma? 1 : 0);
         m_filter.set(kParamRed, m_defaultRGB.redF());
         m_filter.set(kParamGreen, m_defaultRGB.greenF());
         m_filter.set(kParamBlue, m_defaultRGB.blueF());
+        ui->preset->saveDefaultPreset(m_filter);
     } else {
         ui->modeComboBox->setCurrentIndex(2 * filter.get_double(kParamAction));
         ui->keepLumaCheckBox->setChecked(filter.get_int(kParamKeepLuma));
