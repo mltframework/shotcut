@@ -288,6 +288,7 @@ MainWindow& MainWindow::singleton()
 
 MainWindow::~MainWindow()
 {
+    MLT.stop();
     delete ui;
 }
 
