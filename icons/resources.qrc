@@ -29,7 +29,6 @@
         <file>dark/32x32/view-media-playlist.png</file>
         <file>dark/32x32/window-close.png</file>
         <file>dark/index.theme</file>
-        <file>default-to-dark.sh</file>
         <file>light/16x16/edit-undo.png</file>
         <file>light/16x16/format-justify-fill.png</file>
         <file>light/16x16/list-add.png</file>
@@ -57,7 +56,6 @@
         <file>light/32x32/view-history.png</file>
         <file>light/32x32/window-close.png</file>
         <file>light/index.theme</file>
-        <file>mlt-logo-320.jpg</file>
         <file>oxygen/16x16/actions/edit-undo.png</file>
         <file>oxygen/16x16/actions/format-justify-fill.png</file>
         <file>oxygen/16x16/actions/list-add.png</file>
@@ -86,13 +84,8 @@
         <file>oxygen/32x32/actions/window-close.png</file>
         <file>oxygen/32x32/status/dialog-information.png</file>
         <file>oxygen/index.theme</file>
-        <file>resources.qrc</file>
-        <file>shotcut-logo-128.png</file>
-        <file>shotcut-logo-256.png</file>
-        <file>shotcut-logo-64.ico</file>
         <file>shotcut-logo-64.png</file>
         <file>shotcut-logo-640.png</file>
-        <file>shotcut.icns</file>
         <file>light/16x16/player-volume.png</file>
         <file>light/32x32/view-media-playlist.png</file>
     </qresource>
