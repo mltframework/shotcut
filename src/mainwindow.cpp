@@ -158,17 +158,6 @@ MainWindow::MainWindow()
     connect(m_playlistDock->model(), SIGNAL(loaded()), this, SLOT(updateMarkers()));
     if (!m_settings.value("player/gpu").toBool())
         connect(m_playlistDock->model(), SIGNAL(loaded()), this, SLOT(updateThumbnails()));
-    connect(m_playlistDock->model(), SIGNAL(modified()), this, SLOT(updateMarkers()));
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    if (m_settings.value("player/opengl").toBool()) {
-#endif
-        connect(m_playlistDock->model(), SIGNAL(requestImage(Mlt::QProducer,int,int,int)),
-            MLT.videoWidget(), SLOT(renderImage(Mlt::QProducer,int,int,int)));
-        connect(MLT.videoWidget(), SIGNAL(imageRendered(Mlt::QProducer,int,QImage)),
-            m_playlistDock->model(), SLOT(updateThumbnail(Mlt::QProducer,int,QImage)));
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    }
-#endif
 
     m_filtersDock = new FiltersDock(this);
     m_filtersDock->hide();

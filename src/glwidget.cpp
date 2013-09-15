@@ -361,24 +361,6 @@ void GLWidget::showFrame(Mlt::QFrame frame)
     showFrameSemaphore.release();
 }
 
-void GLWidget::renderImage(Mlt::QProducer producer, int position, int width, int height)
-{
-    if (m_glslManager) {
-        m_consumer->stop();
-        m_renderContext->makeCurrent();
-    }
-    // Position might be negative to indicate the in point on the imageRendered signal.
-    producer.producer()->seek(qAbs(position));
-    Mlt::Frame* frame = producer.producer()->get_frame();
-    QImage image = Controller::image(frame, width, height);
-    delete frame;
-    if (m_glslManager) {
-        this->makeCurrent();
-        m_consumer->start();
-    }
-    emit imageRendered(producer, position, image);
-}
-
 int GLWidget::open(Mlt::Producer* producer, bool isMulti)
 {
     int error = Controller::open(producer, isMulti);
