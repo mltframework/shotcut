@@ -24,11 +24,11 @@
 static const int MaxItems = 50;
 
 RecentDock::RecentDock(QWidget *parent) :
-    QDockWidget(parent),
+    Panel(tr("Recent"), parent),
     ui(new Ui::RecentDock)
 {
     ui->setupUi(this);
-    toggleViewAction()->setIcon(QIcon::fromTheme("document-open-recent", windowIcon()));
+    setWidget(ui->dockWidgetContents);
     m_recent = m_settings.value("recent").toStringList();
     add(QString());
     ui->listWidget->setDragEnabled(true);

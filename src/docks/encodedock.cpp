@@ -31,20 +31,20 @@
 #define TO_RELATIVE(min, max, abs) (100 * ((abs) - (min)) / ((max) - (min)))
 
 EncodeDock::EncodeDock(QWidget *parent) :
-    QDockWidget(parent),
+    Panel(tr("Encode"), parent),
     ui(new Ui::EncodeDock),
     m_presets(Mlt::Repository::presets()),
     m_immediateJob(0),
     m_profiles(Mlt::Profile::list())
 {
     ui->setupUi(this);
+    setWidget(ui->dockWidgetContents);
 #ifdef Q_OS_UNIX
     ui->stopCaptureButton->hide();
 #else
     delete ui->stopCaptureButton;
 #endif
     ui->videoCodecThreadsSpinner->setMaximum(QThread::idealThreadCount());
-    toggleViewAction()->setIcon(QIcon::fromTheme("media-record", windowIcon()));
     ui->addPresetButton->setIcon(QIcon::fromTheme("list-add", ui->addPresetButton->icon()));
     ui->removePresetButton->setIcon(QIcon::fromTheme("list-remove", ui->removePresetButton->icon()));
 

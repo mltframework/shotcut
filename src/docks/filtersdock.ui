@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>FiltersDock</class>
- <widget class="QDockWidget" name="FiltersDock">
+ <widget class="QWidget" name="FiltersDock">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -10,19 +10,17 @@
     <height>278</height>
    </rect>
   </property>
-  <property name="windowIcon">
-   <iconset resource="../resources.qrc">
-    <normaloff>:/icons/icons/view-filter.png</normaloff>:/icons/icons/view-filter.png</iconset>
-  </property>
-  <property name="windowTitle">
-   <string>Filters</string>
-  </property>
   <widget class="QWidget" name="dockWidgetContents">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>336</width>
+     <height>230</height>
+    </rect>
+   </property>
    <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,10">
     <property name="spacing">
-     <number>0</number>
-    </property>
-    <property name="margin">
      <number>0</number>
     </property>
     <item>
@@ -62,8 +60,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../resources.qrc">
-              <normaloff>:/icons/icons/list-add.png</normaloff>:/icons/icons/list-add.png</iconset>
+             <iconset theme="list-add"/>
             </property>
            </widget>
           </item>
@@ -79,8 +76,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../resources.qrc">
-              <normaloff>:/icons/icons/list-remove.png</normaloff>:/icons/icons/list-remove.png</iconset>
+             <iconset theme="list-remove"/>
             </property>
            </widget>
           </item>
@@ -116,8 +112,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>132</width>
-         <height>255</height>
+         <width>76</width>
+         <height>228</height>
         </rect>
        </property>
       </widget>
@@ -187,8 +183,6 @@
    </property>
   </action>
  </widget>
- <resources>
-  <include location="../resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

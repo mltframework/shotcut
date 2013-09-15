@@ -24,11 +24,11 @@
 #include "mainwindow.h"
 
 JobsDock::JobsDock(QWidget *parent) :
-    QDockWidget(parent),
+    Panel(tr("Jobs"), parent),
     ui(new Ui::JobsDock)
 {
     ui->setupUi(this);
-    toggleViewAction()->setIcon(QIcon::fromTheme("run-build", windowIcon()));
+    setWidget(ui->dockWidgetContents);
     ui->treeView->setModel(&JOBS);
     QHeaderView* header = ui->treeView->header();
     header->setStretchLastSection(false);

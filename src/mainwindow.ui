@@ -14,8 +14,8 @@
    <string>Shotcut</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="resources.qrc">
-    <normaloff>:/icons/icons/shotcut-logo-64.png</normaloff>:/icons/icons/shotcut-logo-64.png</iconset>
+   <iconset resource="../icons/resources.qrc">
+    <normaloff>:/icons/shotcut-logo-64.png</normaloff>:/icons/shotcut-logo-64.png</iconset>
   </property>
   <property name="unifiedTitleAndToolBarOnMac">
    <bool>true</bool>
@@ -51,7 +51,6 @@ p, li { white-space: pre-wrap; }
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="playerPage"/>
      </widget>
     </item>
    </layout>
@@ -82,6 +81,14 @@ p, li { white-space: pre-wrap; }
     </property>
     <addaction name="actionEnter_Full_Screen"/>
     <addaction name="separator"/>
+    <addaction name="actionProperties"/>
+    <addaction name="actionRecent"/>
+    <addaction name="actionPlaylist"/>
+    <addaction name="actionHistory"/>
+    <addaction name="actionFilters"/>
+    <addaction name="actionEncode"/>
+    <addaction name="actionJobs"/>
+    <addaction name="actionMeltedServer"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -137,6 +144,14 @@ p, li { white-space: pre-wrap; }
       <string>Language</string>
      </property>
     </widget>
+    <widget class="QMenu" name="menuTheme">
+     <property name="title">
+      <string>Theme</string>
+     </property>
+     <addaction name="actionSystemTheme"/>
+     <addaction name="actionFusionDark"/>
+     <addaction name="actionFusionLight"/>
+    </widget>
     <addaction name="actionOpenGL"/>
     <addaction name="actionGPU"/>
     <addaction name="actionJack"/>
@@ -147,6 +162,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="menuExternal"/>
     <addaction name="menuProfile"/>
     <addaction name="menuLanguage"/>
+    <addaction name="menuTheme"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -156,16 +172,22 @@ p, li { white-space: pre-wrap; }
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <property name="windowTitle">
-    <string>Main</string>
+    <string>Toolbar</string>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
    </property>
    <property name="iconSize">
     <size>
-     <width>24</width>
-     <height>24</height>
+     <width>16</width>
+     <height>16</height>
     </size>
    </property>
    <property name="toolButtonStyle">
     <enum>Qt::ToolButtonFollowStyle</enum>
+   </property>
+   <property name="floatable">
+    <bool>false</bool>
    </property>
    <property name="Movable" stdset="0">
     <bool>false</bool>
@@ -193,8 +215,9 @@ p, li { white-space: pre-wrap; }
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen">
    <property name="icon">
-    <iconset resource="resources.qrc">
-     <normaloff>:/icons/icons/document-open.png</normaloff>:/icons/icons/document-open.png</iconset>
+    <iconset theme="document-open">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>&amp;Open File...</string>
@@ -246,8 +269,9 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionSave">
    <property name="icon">
-    <iconset resource="resources.qrc">
-     <normaloff>:/icons/icons/document-save.png</normaloff>:/icons/icons/document-save.png</iconset>
+    <iconset theme="document-save">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>&amp;Save</string>
@@ -275,8 +299,9 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionEncode">
    <property name="icon">
-    <iconset resource="resources.qrc">
-     <normaloff>:/icons/icons/media-record.png</normaloff>:/icons/icons/media-record.png</iconset>
+    <iconset theme="media-record">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Encode</string>
@@ -287,8 +312,9 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionUndo">
    <property name="icon">
-    <iconset resource="resources.qrc">
-     <normaloff>:/icons/icons/edit-undo.png</normaloff>:/icons/icons/edit-undo.png</iconset>
+    <iconset theme="edit-undo">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>&amp;Undo</string>
@@ -296,8 +322,9 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionRedo">
    <property name="icon">
-    <iconset resource="resources.qrc">
-     <normaloff>:/icons/icons/edit-redo.png</normaloff>:/icons/icons/edit-redo.png</iconset>
+    <iconset theme="edit-redo">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>&amp;Redo</string>
@@ -315,8 +342,9 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionEnter_Full_Screen">
    <property name="icon">
-    <iconset resource="resources.qrc">
-     <normaloff>:/icons/icons/view-fullscreen.png</normaloff>:/icons/icons/view-fullscreen.png</iconset>
+    <iconset theme="view-fullscreen">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Enter Full Screen</string>
@@ -327,8 +355,9 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionProperties">
    <property name="icon">
-    <iconset resource="resources.qrc">
-     <normaloff>:/icons/icons/view-form.png</normaloff>:/icons/icons/view-form.png</iconset>
+    <iconset theme="dialog-information">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Properties</string>
@@ -336,8 +365,9 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionRecent">
    <property name="icon">
-    <iconset resource="resources.qrc">
-     <normaloff>:/icons/icons/document-open-recent.png</normaloff>:/icons/icons/document-open-recent.png</iconset>
+    <iconset theme="document-open-recent">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Recent</string>
@@ -345,8 +375,9 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionPlaylist">
    <property name="icon">
-    <iconset resource="resources.qrc">
-     <normaloff>:/icons/icons/view-media-playlist.png</normaloff>:/icons/icons/view-media-playlist.png</iconset>
+    <iconset theme="view-media-playlist">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Playlist</string>
@@ -354,8 +385,9 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionHistory">
    <property name="icon">
-    <iconset resource="resources.qrc">
-     <normaloff>:/icons/icons/view-history.png</normaloff>:/icons/icons/view-history.png</iconset>
+    <iconset theme="view-history">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>History</string>
@@ -363,8 +395,9 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionFullscreen">
    <property name="icon">
-    <iconset resource="resources.qrc">
-     <normaloff>:/icons/icons/view-fullscreen.png</normaloff>:/icons/icons/view-fullscreen.png</iconset>
+    <iconset theme="view-fullscreen">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Full Screen</string>
@@ -513,8 +546,9 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionFilters">
    <property name="icon">
-    <iconset resource="resources.qrc">
-     <normaloff>:/icons/icons/view-filter.png</normaloff>:/icons/icons/view-filter.png</iconset>
+    <iconset theme="view-filter">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Filters</string>
@@ -528,10 +562,63 @@ p, li { white-space: pre-wrap; }
     <string>Add...</string>
    </property>
   </action>
+  <action name="actionMeltedServer">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="network-connect">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Melted Server</string>
+   </property>
+  </action>
+  <action name="actionJobs">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="run-build">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Jobs</string>
+   </property>
+  </action>
+  <action name="actionSystemTheme">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>System</string>
+   </property>
+   <property name="toolTip">
+    <string>Use the user or platform style, colors, and icons.</string>
+   </property>
+  </action>
+  <action name="actionFusionDark">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Fusion Dark</string>
+   </property>
+  </action>
+  <action name="actionFusionLight">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Fusion Light</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="resources.qrc"/>
+  <include location="../icons/resources.qrc"/>
  </resources>
  <connections>
   <connection>

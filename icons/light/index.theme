@@ -1,0 +1,13 @@
+[Icon Theme]
+Name=light
+Directories=16x16,32x32
+
+[16x16]
+Size=16
+Context=Actions
+Type=Threshold
+
+[32x32]
+Size=32
+Context=Actions
+Type=Threshold

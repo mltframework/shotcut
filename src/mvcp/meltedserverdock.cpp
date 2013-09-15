@@ -27,7 +27,7 @@
 #include <QFileDialog>
 
 MeltedServerDock::MeltedServerDock(QWidget *parent)
-    : QDockWidget(parent)
+    : QWidget(parent)
     , ui(new Ui::MeltedServerDock)
     , m_parser(0)
     , m_mvcp(0)

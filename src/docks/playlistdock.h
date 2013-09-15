@@ -19,7 +19,7 @@
 #ifndef PLAYLISTDOCK_H
 #define PLAYLISTDOCK_H
 
-#include <QDockWidget>
+#include "widgets/panel.h"
 #include <QUndoCommand>
 #include <QSettings>
 #include "models/playlistmodel.h"
@@ -28,7 +28,7 @@ namespace Ui {
     class PlaylistDock;
 }
 
-class PlaylistDock : public QDockWidget
+class PlaylistDock : public Panel
 {
     Q_OBJECT
 

@@ -19,7 +19,7 @@
 #ifndef MVCPCONSOLEDOCK_H
 #define MVCPCONSOLEDOCK_H
 
-#include <QDockWidget>
+#include <QWidget>
 #include <QModelIndex>
 #include <QSettings>
 #include <mvcp_remote.h>
@@ -31,7 +31,7 @@ namespace Ui {
     class MeltedServerDock;
 }
 
-class MeltedServerDock : public QDockWidget
+class MeltedServerDock : public QWidget
 {
     Q_OBJECT
 

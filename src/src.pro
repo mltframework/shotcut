@@ -64,7 +64,8 @@ SOURCES += main.cpp\
     filters/frei0rsharpnessfilter.cpp \
     widgets/colorpickerwidget.cpp \
     filters/whitebalancefilter.cpp \
-    dialogs/customprofiledialog.cpp
+    dialogs/customprofiledialog.cpp \
+    widgets/panel.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -124,7 +125,8 @@ HEADERS  += mainwindow.h \
     filters/frei0rsharpnessfilter.h \
     widgets/colorpickerwidget.h \
     filters/whitebalancefilter.h \
-    dialogs/customprofiledialog.h
+    dialogs/customprofiledialog.h \
+    widgets/panel.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
@@ -168,7 +170,7 @@ FORMS    += mainwindow.ui \
     dialogs/customprofiledialog.ui
 
 RESOURCES += \
-    resources.qrc
+    ../icons/resources.qrc
 
 OTHER_FILES += \
     ../COPYING \
@@ -176,7 +178,9 @@ OTHER_FILES += \
     ../scripts/build-shotcut.sh \
     ../icons/shotcut.icns \
     ../scripts/shotcut.nsi \
-    ../Info.plist
+    ../Info.plist \
+    ../icons/dark/index.theme \
+    ../icons/light/index.theme
 
 TRANSLATIONS += \
     ../translations/shotcut_cs.ts \

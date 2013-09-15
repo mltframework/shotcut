@@ -19,14 +19,14 @@
 #ifndef FILTERSDOCK_H
 #define FILTERSDOCK_H
 
-#include <QDockWidget>
+#include "widgets/panel.h"
 #include "models/attachedfiltersmodel.h"
 
 namespace Ui {
 class FiltersDock;
 }
 
-class FiltersDock : public QDockWidget
+class FiltersDock : public Panel
 {
     Q_OBJECT
     

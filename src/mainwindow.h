@@ -36,6 +36,7 @@ class MeltedPlaylistDock;
 class MeltedServerDock;
 class QActionGroup;
 class FiltersDock;
+class Panel;
 
 class MainWindow : public QMainWindow
 {
@@ -48,6 +49,7 @@ public:
     bool continueModified();
     QUndoStack* undoStack() const;
     void saveXML(const QString& filename);
+    static void changeTheme(const QString& theme);
 
 signals:
     void producerOpened();
@@ -76,7 +78,7 @@ private:
     Ui::MainWindow* ui;
     QSettings m_settings;
     Player* m_player;
-    QDockWidget* m_propertiesDock;
+    Panel* m_propertiesDock;
     RecentDock* m_recentDock;
     EncodeDock* m_encodeDock;
     JobsDock* m_jobsDock;
@@ -85,7 +87,7 @@ private:
     bool m_jobsVisible;
     bool m_isKKeyPressed;
     QUndoStack* m_undoStack;
-    QDockWidget* m_historyDock;
+    Panel* m_historyDock;
     MeltedServerDock* m_meltedServerDock;
     MeltedPlaylistDock* m_meltedPlaylistDock;
     QActionGroup* m_profileGroup;
@@ -113,14 +115,8 @@ private slots:
     bool on_actionSave_triggered();
     bool on_actionSave_As_triggered();
     void onEncodeTriggered(bool checked = true);
-    void onCaptureStateChanged(bool started);
-    void onEncodeVisibilityChanged(bool);
     void onJobsVisibilityChanged(bool);
-    void onRecentDockTriggered(bool checked = true);
-    void onPropertiesDockTriggered(bool checked = true);
-    void onPlaylistDockTriggered(bool checked = true);
-    void onHistoryDockTriggered(bool checked = true);
-    void onFiltersDockTriggered(bool checked = true);
+    void onCaptureStateChanged(bool started);
     void onPlaylistCreated();
     void onPlaylistCleared();
     void onPlaylistClosed();
@@ -153,6 +149,9 @@ private slots:
     void on_actionAddCustomProfile_triggered();
     void processMultipleFiles();
     void onLanguageTriggered(QAction*);
+    void on_actionSystemTheme_triggered();
+    void on_actionFusionDark_triggered();
+    void on_actionFusionLight_triggered();
 };
 
 #define MAIN MainWindow::singleton()

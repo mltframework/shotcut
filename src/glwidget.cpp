@@ -101,6 +101,10 @@ void GLWidget::initializeGL()
 
 void GLWidget::resizeGL(int width, int height)
 {
+    // Following are needed to optimize video for retina Macs!
+    width *= devicePixelRatio();
+    height *= devicePixelRatio();
+
     double this_aspect = (double) width / height;
 
     // Special case optimisation to negate odd effect of sample aspect ratio

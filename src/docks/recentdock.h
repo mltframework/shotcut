@@ -19,7 +19,7 @@
 #ifndef RECENTDOCK_H
 #define RECENTDOCK_H
 
-#include <QDockWidget>
+#include "widgets/panel.h"
 #include <QSettings>
 
 namespace Ui {
@@ -29,7 +29,7 @@ namespace Ui {
 class QListWidget;
 class QListWidgetItem;
 
-class RecentDock : public QDockWidget
+class RecentDock : public Panel
 {
     Q_OBJECT
 

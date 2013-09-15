@@ -26,7 +26,7 @@
 #include <QMessageBox>
 
 MeltedPlaylistDock::MeltedPlaylistDock(QWidget *parent)
-    : QDockWidget(parent)
+    : QWidget(parent)
     , ui(new Ui::MeltedPlaylistDock)
     , m_transportControl(new MeltedPlaylist::TransportControl(m_model))
 {

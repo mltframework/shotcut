@@ -36,13 +36,13 @@
 
 
 FiltersDock::FiltersDock(QWidget *parent) :
-    QDockWidget(parent),
+    Panel(tr("Filters"), parent),
     ui(new Ui::FiltersDock)
 {
     QSettings settings;
     m_isGPU = settings.value("player/gpu", false).toBool();
     ui->setupUi(this);
-    toggleViewAction()->setIcon(QIcon::fromTheme("view-filter", windowIcon()));
+    setWidget(ui->dockWidgetContents);
     ui->listView->setModel(&m_model);
     ui->listView->setDragDropMode(QAbstractItemView::InternalMove);
     ui->listView->setDropIndicatorShown(true);

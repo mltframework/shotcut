@@ -50,6 +50,7 @@
 #include "mvcp/meltedplaylistmodel.h"
 #include "docks/filtersdock.h"
 #include "dialogs/customprofiledialog.h"
+#include "widgets/panel.h"
 
 #include <QtWidgets>
 #include <QDebug>
@@ -80,13 +81,6 @@ MainWindow::MainWindow()
     setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
     setCorner(Qt::BottomLeftCorner, Qt::LeftDockWidgetArea);
     setCorner(Qt::BottomRightCorner, Qt::RightDockWidgetArea);
-    setDockNestingEnabled(true);
-
-    // These use the icon theme on Linux, with fallbacks to the icons specified in QtDesigner for other platforms.
-    ui->actionOpen->setIcon(QIcon::fromTheme("document-open", ui->actionOpen->icon()));
-    ui->actionSave->setIcon(QIcon::fromTheme("document-save", ui->actionSave->icon()));
-    ui->actionEncode->setIcon(QIcon::fromTheme("media-record", ui->actionEncode->icon()));
-    ui->actionFilters->setIcon(QIcon::fromTheme("view-filter", ui->actionFilters->icon()));
 
     // Connect UI signals.
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openVideo()));
@@ -101,8 +95,8 @@ MainWindow::MainWindow()
     m_undoStack = new QUndoStack(this);
     QAction *undoAction = m_undoStack->createUndoAction(this);
     QAction *redoAction = m_undoStack->createRedoAction(this);
-    undoAction->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/icons/icons/edit-undo.png")));
-    redoAction->setIcon(QIcon::fromTheme("edit-redo", QIcon(":/icons/icons/edit-redo.png")));
+    undoAction->setIcon(QIcon::fromTheme("edit-undo"));
+    redoAction->setIcon(QIcon::fromTheme("edit-redo"));
     undoAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+Z", 0));
     redoAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+Z", 0));
     ui->menuEdit->addAction(undoAction);
@@ -114,48 +108,51 @@ MainWindow::MainWindow()
     connect(m_undoStack, SIGNAL(canUndoChanged(bool)), ui->actionUndo, SLOT(setEnabled(bool)));
     connect(m_undoStack, SIGNAL(canRedoChanged(bool)), ui->actionRedo, SLOT(setEnabled(bool)));
 
+    // Setup the sidebar splitters
+    QSplitter* hsplitter = new QSplitter(Qt::Horizontal);
+    hsplitter->setObjectName("hsplitter");
+    hsplitter->setHandleWidth(8);
+    centralWidget()->layout()->addWidget(hsplitter);
+    QSplitter* vsplitterLeft = new QSplitter(Qt::Vertical, hsplitter);
+    vsplitterLeft->setObjectName("vsplitterLeft");
+    vsplitterLeft->setHandleWidth(8);
+    QSplitter* vsplitterCenter = new QSplitter(Qt::Vertical, hsplitter);
+    vsplitterCenter->setObjectName("vsplitterCenter");
+    vsplitterCenter->setHandleWidth(8);
+    vsplitterCenter->addWidget(ui->stackedWidget);
+    QSplitter* vsplitterRight = new QSplitter(Qt::Vertical, hsplitter);
+    vsplitterRight->setObjectName("vsplitterRight");
+    vsplitterRight->setHandleWidth(8);
+
+
     // Add the player widget.
-    QLayout* layout = new QVBoxLayout(ui->playerPage);
-    layout->setObjectName("centralWidgetLayout");
-    layout->setMargin(0);
-    m_player = new Player(this);
-    layout->addWidget(m_player);
+    m_player = new Player;
+    ui->stackedWidget->addWidget(m_player);
     connect(this, SIGNAL(producerOpened()), m_player, SLOT(onProducerOpened()));
     connect(m_player, SIGNAL(showStatusMessage(QString)), this, SLOT(showStatusMessage(QString)));
     connect(m_player, SIGNAL(inChanged(int)), this, SLOT(onCutModified()));
     connect(m_player, SIGNAL(outChanged(int)), this, SLOT(onCutModified()));
     connect(MLT.videoWidget(), SIGNAL(started()), SLOT(processMultipleFiles()));
+
     setupSettingsMenu();
     readPlayerSettings();
     configureVideoWidget();
 
     // Add the docks.
-    m_propertiesDock = new QDockWidget(tr("Properties"), this);
+    m_propertiesDock = new Panel(tr("Properties"), vsplitterRight);
     m_propertiesDock->hide();
     m_propertiesDock->setObjectName("propertiesDock");
-    m_propertiesDock->setWindowIcon(QIcon((":/icons/icons/view-form.png")));
-    m_propertiesDock->toggleViewAction()->setIcon(QIcon::fromTheme("view-form", m_propertiesDock->windowIcon()));
-    ui->actionProperties->setIcon(QIcon::fromTheme("view-form", m_propertiesDock->windowIcon()));
-    addDockWidget(Qt::LeftDockWidgetArea, m_propertiesDock);
-    ui->menuView->addAction(m_propertiesDock->toggleViewAction());
-    connect(m_propertiesDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onPropertiesDockTriggered(bool)));
-    connect(ui->actionProperties, SIGNAL(triggered()), this, SLOT(onPropertiesDockTriggered()));
+    connect(ui->actionProperties, &QAction::triggered, m_propertiesDock, &QWidget::show);
 
-    m_recentDock = new RecentDock(this);
+    m_recentDock = new RecentDock(vsplitterLeft);
     m_recentDock->hide();
-    addDockWidget(Qt::LeftDockWidgetArea, m_recentDock);
-    ui->menuView->addAction(m_recentDock->toggleViewAction());
+    connect(ui->actionRecent, &QAction::triggered, m_recentDock, &QWidget::show);
     connect(m_recentDock, SIGNAL(itemActivated(QString)), this, SLOT(open(QString)));
-    connect(m_recentDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onRecentDockTriggered(bool)));
-    connect(ui->actionRecent, SIGNAL(triggered()), this, SLOT(onRecentDockTriggered()));
     connect(this, SIGNAL(openFailed(QString)), m_recentDock, SLOT(remove(QString)));
 
-    m_playlistDock = new PlaylistDock(this);
+    m_playlistDock = new PlaylistDock(vsplitterLeft);
     m_playlistDock->hide();
-    addDockWidget(Qt::LeftDockWidgetArea, m_playlistDock);
-    ui->menuView->addAction(m_playlistDock->toggleViewAction());
-    connect(m_playlistDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onPlaylistDockTriggered(bool)));
-    connect(ui->actionPlaylist, SIGNAL(triggered()), this, SLOT(onPlaylistDockTriggered()));
+    connect(ui->actionPlaylist, &QAction::triggered, m_playlistDock, &QWidget::show);
     connect(m_playlistDock, SIGNAL(clipOpened(void*,int,int)), this, SLOT(openCut(void*, int, int)));
     connect(m_playlistDock, SIGNAL(itemActivated(int)), this, SLOT(seekPlaylist(int)));
     connect(m_playlistDock, SIGNAL(showStatusMessage(QString)), this, SLOT(showStatusMessage(QString)));
@@ -178,26 +175,16 @@ MainWindow::MainWindow()
     }
 #endif
 
-    m_filtersDock = new FiltersDock(this);
+    m_filtersDock = new FiltersDock(vsplitterCenter);
     m_filtersDock->hide();
-    addDockWidget(Qt::BottomDockWidgetArea, m_filtersDock);
-    ui->menuView->addAction(m_filtersDock->toggleViewAction());
-    connect(m_filtersDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onFiltersDockTriggered(bool)));
-    connect(ui->actionFilters, SIGNAL(triggered()), this, SLOT(onFiltersDockTriggered()));
+    connect(ui->actionFilters, &QAction::triggered, m_filtersDock, &QWidget::show);
     connect(this, SIGNAL(producerOpened()), m_filtersDock, SLOT(onProducerOpened()));
     connect(m_filtersDock->model(), SIGNAL(changed()), this, SLOT(onCutModified()));
 
-    m_historyDock = new QDockWidget(tr("History"), this);
+    m_historyDock = new Panel(tr("History"), vsplitterRight);
     m_historyDock->hide();
-    m_historyDock->setObjectName("historyDock");
-    m_historyDock->setWindowIcon(QIcon((":/icons/icons/view-history.png")));
-    m_historyDock->toggleViewAction()->setIcon(QIcon::fromTheme("view-history", m_historyDock->windowIcon()));
-    ui->actionHistory->setIcon(QIcon::fromTheme("view-history", m_historyDock->windowIcon()));
-    addDockWidget(Qt::LeftDockWidgetArea, m_historyDock);
-    ui->menuView->addAction(m_historyDock->toggleViewAction());
-    connect(m_historyDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onHistoryDockTriggered(bool)));
-    connect(ui->actionHistory, SIGNAL(triggered()), this, SLOT(onHistoryDockTriggered()));
-    QUndoView* undoView = new QUndoView(m_undoStack, m_historyDock);
+    connect(ui->actionHistory, &QAction::triggered, m_historyDock, &QWidget::show);
+    QUndoView* undoView = new QUndoView(m_undoStack);
     undoView->setObjectName("historyView");
     undoView->setAlternatingRowColors(true);
     undoView->setSpacing(2);
@@ -205,19 +192,12 @@ MainWindow::MainWindow()
     ui->actionUndo->setDisabled(true);
     ui->actionRedo->setDisabled(true);
 
-    tabifyDockWidget(m_propertiesDock, m_recentDock);
-    tabifyDockWidget(m_recentDock, m_playlistDock);
-    tabifyDockWidget(m_playlistDock, m_historyDock);
-    m_recentDock->raise();
-
-    m_encodeDock = new EncodeDock(this);
+    m_encodeDock = new EncodeDock(vsplitterRight);
     m_encodeDock->hide();
-    addDockWidget(Qt::RightDockWidgetArea, m_encodeDock);
-    ui->menuView->addAction(m_encodeDock->toggleViewAction());
+    connect(ui->actionEncode, &QAction::triggered, m_encodeDock, &QWidget::show);
+    connect(ui->actionEncode, &QAction::triggered, this, &MainWindow::onEncodeTriggered);
+    connect(m_encodeDock, &Panel::closed, this, &MainWindow::onEncodeTriggered);
     connect(this, SIGNAL(producerOpened()), m_encodeDock, SLOT(onProducerOpened()));
-    connect(ui->actionEncode, SIGNAL(triggered()), this, SLOT(onEncodeTriggered()));
-    connect(m_encodeDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onEncodeTriggered(bool)));
-    connect(m_encodeDock, SIGNAL(visibilityChanged(bool)), this, SLOT(onEncodeVisibilityChanged(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_player, SLOT(onCaptureStateChanged(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_propertiesDock, SLOT(setDisabled(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_recentDock, SLOT(setDisabled(bool)));
@@ -231,25 +211,25 @@ MainWindow::MainWindow()
     connect(this, SIGNAL(profileChanged()), m_encodeDock, SLOT(onProfileChanged()));
     m_encodeDock->onProfileChanged();
 
-    m_jobsDock = new JobsDock(this);
+    m_jobsDock = new JobsDock(vsplitterRight);
     m_jobsDock->hide();
-    addDockWidget(Qt::RightDockWidgetArea, m_jobsDock);
-    tabifyDockWidget(m_encodeDock, m_jobsDock);
-    ui->menuView->addAction(m_jobsDock->toggleViewAction());
     connect(&JOBS, SIGNAL(jobAdded()), m_jobsDock, SLOT(show()));
     connect(&JOBS, SIGNAL(jobAdded()), m_jobsDock, SLOT(raise()));
-    connect(m_jobsDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onJobsVisibilityChanged(bool)));
+    connect(ui->actionJobs, &QAction::triggered, m_jobsDock, &QWidget::setVisible);
+    connect(ui->actionJobs, &QAction::triggered, this, &MainWindow::onJobsVisibilityChanged);
+    connect(m_jobsDock, &Panel::closed, ui->actionJobs, &QAction::setChecked);
+    connect(m_jobsDock, &Panel::closed, this, &MainWindow::onJobsVisibilityChanged);
 
-    m_meltedServerDock = new MeltedServerDock(this);
-    m_meltedServerDock->hide();
-    addDockWidget(Qt::TopDockWidgetArea, m_meltedServerDock);
-    ui->menuView->addAction(m_meltedServerDock->toggleViewAction());
+    QSplitter *splitterMelted = new QSplitter(Qt::Horizontal);
+    splitterMelted->setHandleWidth(8);
+    Panel *meltedPanel = new Panel(tr("Melted Server"), vsplitterCenter);
+    meltedPanel->setWidget(splitterMelted);
+    meltedPanel->hide();
+    connect(ui->actionMeltedServer, &QAction::triggered, meltedPanel, &QWidget::setVisible);
+    connect(meltedPanel, &Panel::closed, ui->actionMeltedServer, &QAction::setChecked);
 
-    m_meltedPlaylistDock = new MeltedPlaylistDock(this);
-    m_meltedPlaylistDock->hide();
-    addDockWidget(Qt::TopDockWidgetArea, m_meltedPlaylistDock);
-    splitDockWidget(m_meltedServerDock, m_meltedPlaylistDock, Qt::Horizontal);
-    ui->menuView->addAction(m_meltedPlaylistDock->toggleViewAction());
+    m_meltedServerDock = new MeltedServerDock(splitterMelted);
+    m_meltedPlaylistDock = new MeltedPlaylistDock(splitterMelted);
     connect(m_meltedServerDock, SIGNAL(connected(QString, quint16)), m_meltedPlaylistDock, SLOT(onConnected(QString,quint16)));
     connect(m_meltedServerDock, SIGNAL(disconnected()), m_meltedPlaylistDock, SLOT(onDisconnected()));
     connect(m_meltedServerDock, SIGNAL(unitActivated(quint8)), m_meltedPlaylistDock, SLOT(onUnitChanged(quint8)));
@@ -448,6 +428,19 @@ void MainWindow::setupSettingsMenu()
         if (locale.startsWith(action->data().toString()))
             action->setChecked(true);
     connect(m_languagesGroup, SIGNAL(triggered(QAction*)), this, SLOT(onLanguageTriggered(QAction*)));
+
+    // Setup the themes actions
+    QActionGroup* themeGroup = new QActionGroup(this);
+    themeGroup->addAction(ui->actionSystemTheme);
+    themeGroup->addAction(ui->actionFusionDark);
+    themeGroup->addAction(ui->actionFusionLight);
+    QString theme = m_settings.value("theme", "dark").toString();
+    if (theme == "dark")
+        ui->actionFusionDark->setChecked(true);
+    else if (theme == "light")
+        ui->actionFusionLight->setChecked(true);
+    else
+        ui->actionSystemTheme->setChecked(true);
 }
 
 QAction* MainWindow::addProfile(QActionGroup* actionGroup, const QString& desc, const QString& name)
@@ -543,6 +536,7 @@ void MainWindow::showStatusMessage(QString message)
 
 void MainWindow::seekPlaylist(int start)
 {
+    if (!m_playlistDock->model()->playlist()) return;
     double speed = MLT.producer()? MLT.producer()->get_speed(): 0;
     // we bypass this->open() to prevent sending producerOpened signal to self, which causes to reload playlist
     if ((void*) MLT.producer()->get_producer() != (void*) m_playlistDock->model()->playlist()->get_playlist())
@@ -621,6 +615,28 @@ void MainWindow::readWindowSettings()
 {
     restoreGeometry(m_settings.value("geometry").toByteArray());
     restoreState(m_settings.value("windowState").toByteArray());
+
+    QSplitter *hsplitter = (QSplitter*) centralWidget()->layout()->itemAt(0)->widget();
+    hsplitter->restoreState(m_settings.value("hsplitterState").toByteArray());
+    QSplitter *vsplitter = (QSplitter*) hsplitter->children().at(0);
+    vsplitter->restoreState(m_settings.value("vsplitterLeftState").toByteArray());
+    vsplitter = (QSplitter*) hsplitter->children().at(1);
+    vsplitter->restoreState(m_settings.value("vsplitterCenterState").toByteArray());
+    vsplitter = (QSplitter*) hsplitter->children().at(2);
+    vsplitter->restoreState(m_settings.value("vsplitterRightState").toByteArray());
+
+    m_propertiesDock->setVisible(m_settings.value("propertiesVisible").toBool());
+    m_recentDock->setVisible(m_settings.value("recentVisible").toBool());
+    m_playlistDock->setVisible(m_settings.value("playlistVisible").toBool());
+    m_historyDock->setVisible(m_settings.value("historyVisible").toBool());
+    m_filtersDock->setVisible(m_settings.value("filtersVisible").toBool());
+    m_encodeDock->setVisible(m_settings.value("encodeVisible").toBool());
+    m_jobsDock->setVisible(m_settings.value("jobsVisible").toBool());
+    ui->actionJobs->setChecked(m_settings.value("jobsVisible").toBool());
+    ui->actionMeltedServer->setChecked(m_settings.value("meltedVisible").toBool());
+    Panel* meltedPanel = (Panel*) m_meltedServerDock->parent()->parent();
+    meltedPanel->setVisible(m_settings.value("meltedVisible").toBool());
+
     m_jobsVisible = m_jobsDock->isVisible();
 }
 
@@ -630,6 +646,24 @@ void MainWindow::writeSettings()
         showNormal();
     m_settings.setValue("geometry", saveGeometry());
     m_settings.setValue("windowState", saveState());
+
+    QSplitter *hsplitter = (QSplitter*) centralWidget()->layout()->itemAt(0)->widget();
+    m_settings.setValue("hsplitterState", hsplitter->saveState());
+    QSplitter *vsplitter = (QSplitter*) hsplitter->children().at(0);
+    m_settings.setValue("vsplitterLeftState", vsplitter->saveState());
+    vsplitter = (QSplitter*) hsplitter->children().at(1);
+    m_settings.setValue("vsplitterCenterState", vsplitter->saveState());
+    vsplitter = (QSplitter*) hsplitter->children().at(2);
+    m_settings.setValue("vsplitterRightState", vsplitter->saveState());
+
+    m_settings.setValue("propertiesVisible", m_propertiesDock->isVisible());
+    m_settings.setValue("recentVisible", m_recentDock->isVisible());
+    m_settings.setValue("playlistVisible", m_playlistDock->isVisible());
+    m_settings.setValue("historyVisible", m_historyDock->isVisible());
+    m_settings.setValue("filtersVisible", m_filtersDock->isVisible());
+    m_settings.setValue("encodeVisible", m_encodeDock->isVisible());
+    m_settings.setValue("jobsVisible", m_jobsDock->isVisible());
+    m_settings.setValue("meltedVisible", m_meltedServerDock->isVisible());
 }
 
 void MainWindow::configureVideoWidget()
@@ -678,7 +712,7 @@ void MainWindow::on_actionAbout_Shotcut_triggered()
     QMessageBox::about(this, tr("About Shotcut"),
              tr("<h1>Shotcut version %1</h1>"
                 "<p><a href=\"http://www.shotcut.org/\">Shotcut</a> is a free, open source, cross platform video editor.</p>"
-                "<p>Copyright &copy; 2011-2013 <a href=\"http://www.meltytech.com/\">Meltytech</a>, LLC</p>"
+                "<small><p>Copyright &copy; 2011-2013 <a href=\"http://www.meltytech.com/\">Meltytech</a>, LLC</p>"
                 "<p>Licensed under the <a href=\"http://www.gnu.org/licenses/gpl.html\">GNU General Public License v3.0</a></p>"
                 "<p>This program proudly uses the following projects:<ul>"
                 "<li><a href=\"http://www.qt-project.org/\">Qt</a> application and UI framework</li>"
@@ -689,10 +723,12 @@ void MainWindow::on_actionAbout_Shotcut_triggered()
                 "<li><a href=\"http://lame.sourceforge.net/\">LAME</a> MP3 encoder</li>"
                 "<li><a href=\"http://www.dyne.org/software/frei0r/\">Frei0r</a> video plugins</li>"
                 "<li><a href=\"http://www.ladspa.org/\">LADSPA</a> audio plugins</li>"
+                "<li><a href=\"http://www.defaulticon.com/\">DefaultIcon</a> icon collection by <a href=\"http://www.interactivemania.com/\">interactivemania</a></li>"
+                "<li><a href=\"http://www.oxygen-icons.org/\">Oxygen</a> icon collection</li>"
                 "</ul></p>"
                 "<p>The source code used to build this program can be downloaded from "
                 "<a href=\"http://www.shotcut.org/\">shotcut.org</a>.</p>"
-                "<small>This program is distributed in the hope that it will be useful, "
+                "This program is distributed in the hope that it will be useful, "
                 "but WITHOUT ANY WARRANTY; without even the implied warranty of "
                 "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</small>"
                 ).arg(qApp->applicationVersion()));
@@ -971,7 +1007,7 @@ void MainWindow::onProducerOpened()
         dynamic_cast<AbstractProducerWidget*>(w)->setProducer(MLT.producer());
         if (-1 != w->metaObject()->indexOfSignal("producerChanged()"))
             connect(w, SIGNAL(producerChanged()), this, SLOT(onProducerChanged()));
-        QScrollArea* scroll = new QScrollArea(this);
+        QScrollArea* scroll = new QScrollArea;
         scroll->setWidgetResizable(true);
         scroll->setWidget(w);
         m_propertiesDock->setWidget(scroll);
@@ -1049,8 +1085,7 @@ QUndoStack* MainWindow::undoStack() const
 
 void MainWindow::onEncodeTriggered(bool checked)
 {
-    m_encodeDock->setVisible(checked);
-    if (checked) {
+    if (m_encodeDock->isVisible()) {
         m_jobsDock->setVisible(m_jobsVisible);
         m_encodeDock->raise();
     } else {
@@ -1060,64 +1095,16 @@ void MainWindow::onEncodeTriggered(bool checked)
     }
 }
 
+void MainWindow::onJobsVisibilityChanged(bool checked)
+{
+    m_jobsVisible = m_jobsDock->isHidden();
+}
+
 void MainWindow::onCaptureStateChanged(bool started)
 {
     if (started && MLT.resource().startsWith("x11grab:")
                 && !MLT.producer()->get_int("shotcut_bgcapture"))
         showMinimized();
-}
-
-void MainWindow::onEncodeVisibilityChanged(bool checked)
-{
-    if (m_encodeDock->isHidden())
-        m_jobsDock->hide();
-}
-
-void MainWindow::onJobsVisibilityChanged(bool checked)
-{
-    m_jobsVisible = checked;
-    if (checked)
-        m_jobsDock->raise();
-}
-
-void MainWindow::onRecentDockTriggered(bool checked)
-{
-    if (checked) {
-        m_recentDock->show();
-        m_recentDock->raise();
-    }
-}
-
-void MainWindow::onPropertiesDockTriggered(bool checked)
-{
-    if (checked) {
-        m_propertiesDock->show();
-        m_propertiesDock->raise();
-    }
-}
-
-void MainWindow::onPlaylistDockTriggered(bool checked)
-{
-    if (checked) {
-        m_playlistDock->show();
-        m_playlistDock->raise();
-    }
-}
-
-void MainWindow::onHistoryDockTriggered(bool checked)
-{
-    if (checked) {
-        m_historyDock->show();
-        m_historyDock->raise();
-    }
-}
-
-void MainWindow::onFiltersDockTriggered(bool checked)
-{
-    if (checked) {
-        m_filtersDock->show();
-        m_filtersDock->raise();
-    }
 }
 
 void MainWindow::onPlaylistCreated()
@@ -1202,6 +1189,38 @@ void MainWindow::saveXML(const QString &filename)
         MLT.producer()->set_in_and_out(in, out);
     } else {
         MLT.saveXML(filename);
+    }
+}
+
+void MainWindow::changeTheme(const QString &theme)
+{
+    if (theme == "dark") {
+        QApplication::setStyle("Fusion");
+        QPalette palette;
+        palette.setColor(QPalette::Window, QColor(50,50,50));
+        palette.setColor(QPalette::WindowText, QColor(220,220,220));
+        palette.setColor(QPalette::Base, QColor(35,35,35));
+        palette.setColor(QPalette::AlternateBase, QColor(31,31,31));
+        palette.setColor(QPalette::Highlight, QColor(23,92,118));
+        palette.setColor(QPalette::HighlightedText, Qt::white);
+        palette.setColor(QPalette::ToolTipBase, palette.color(QPalette::Highlight));
+        palette.setColor(QPalette::ToolTipText, palette.color(QPalette::WindowText));
+        palette.setColor(QPalette::Text, palette.color(QPalette::WindowText));
+        palette.setColor(QPalette::BrightText, Qt::red);
+        palette.setColor(QPalette::Button, palette.color(QPalette::Window));
+        palette.setColor(QPalette::ButtonText, palette.color(QPalette::WindowText));
+        palette.setColor(QPalette::Link, palette.color(QPalette::Highlight).lighter());
+        palette.setColor(QPalette::LinkVisited, palette.color(QPalette::Highlight));
+        QApplication::setPalette(palette);
+        QIcon::setThemeName("dark");
+    } else if (theme == "light") {
+        QStyle* style = QStyleFactory::create("Fusion");
+        QApplication::setStyle(style);
+        QApplication::setPalette(style->standardPalette());
+        QIcon::setThemeName("light");
+    } else {
+        QApplication::setStyle(qApp->property("system-style").toString());
+        QIcon::setThemeName("oxygen");
     }
 }
 
@@ -1498,4 +1517,23 @@ void MainWindow::on_actionAddCustomProfile_triggered()
             m_customProfileMenu->addAction(action);
         }
     }
+}
+
+void MainWindow::on_actionSystemTheme_triggered()
+{
+    changeTheme("system");
+    QApplication::setPalette(QApplication::style()->standardPalette());
+    m_settings.setValue("theme", "system");
+}
+
+void MainWindow::on_actionFusionDark_triggered()
+{
+    changeTheme("dark");
+    m_settings.setValue("theme", "dark");
+}
+
+void MainWindow::on_actionFusionLight_triggered()
+{
+    changeTheme("light");
+    m_settings.setValue("theme", "light");
 }

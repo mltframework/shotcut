@@ -19,13 +19,13 @@
 #ifndef JOBSDOCK_H
 #define JOBSDOCK_H
 
-#include <QDockWidget>
+#include "widgets/panel.h"
 
 namespace Ui {
     class JobsDock;
 }
 
-class JobsDock : public QDockWidget
+class JobsDock : public Panel
 {
     Q_OBJECT
 

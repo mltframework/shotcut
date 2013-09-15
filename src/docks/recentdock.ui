@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>RecentDock</class>
- <widget class="QDockWidget" name="RecentDock">
+ <widget class="QWidget" name="RecentDock">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -9,13 +9,6 @@
     <width>396</width>
     <height>296</height>
    </rect>
-  </property>
-  <property name="windowIcon">
-   <iconset resource="../resources.qrc">
-    <normaloff>:/icons/icons/document-open-recent.png</normaloff>:/icons/icons/document-open-recent.png</iconset>
-  </property>
-  <property name="windowTitle">
-   <string>Recent</string>
   </property>
   <widget class="QWidget" name="dockWidgetContents">
    <layout class="QHBoxLayout" name="horizontalLayout">
@@ -38,8 +31,5 @@
    </layout>
   </widget>
  </widget>
- <resources>
-  <include location="../resources.qrc"/>
- </resources>
  <connections/>
 </ui>

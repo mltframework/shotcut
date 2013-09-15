@@ -19,7 +19,7 @@
 #ifndef MELTEDUNITDOCK_H
 #define MELTEDUNITDOCK_H
 
-#include <QDockWidget>
+#include <QWidget>
 #include <QUndoCommand>
 #include "meltedplaylistmodel.h"
 #include "transportcontrol.h"
@@ -32,7 +32,7 @@ namespace MeltedPlaylist {
 class TransportControl;
 }
 
-class MeltedPlaylistDock : public QDockWidget
+class MeltedPlaylistDock : public QWidget
 {
     Q_OBJECT
     

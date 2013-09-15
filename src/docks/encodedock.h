@@ -19,7 +19,7 @@
 #ifndef ENCODEDOCK_H
 #define ENCODEDOCK_H
 
-#include <QDockWidget>
+#include "widgets/panel.h"
 #include <QDomElement>
 
 class QTreeWidgetItem;
@@ -32,7 +32,7 @@ namespace Mlt {
 }
 class MeltJob;
 
-class EncodeDock : public QDockWidget
+class EncodeDock : public Panel
 {
     Q_OBJECT
 

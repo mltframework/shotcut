@@ -22,13 +22,14 @@
 #include "mainwindow.h"
 #include <QMenu>
 #include <QDebug>
+#include <QUrl>
 
 PlaylistDock::PlaylistDock(QWidget *parent) :
-    QDockWidget(parent),
+    Panel(tr("Playlist"), parent),
     ui(new Ui::PlaylistDock)
 {
     ui->setupUi(this);
-    toggleViewAction()->setIcon(QIcon::fromTheme("view-media-playlist", windowIcon()));
+    setWidget(ui->dockWidgetContents);
     ui->tableView->setModel(&m_model);
     ui->tableView->setDragDropMode(QAbstractItemView::DragDrop);
     ui->tableView->setDropIndicatorShown(true);

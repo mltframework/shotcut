@@ -20,8 +20,8 @@
 #include "mltcontroller.h"
 #include <QtWidgets>
 
-static const int margin = 14;
-static const int selectionSize = 14;
+static const int margin = 14;        /// left and right margins
+static const int selectionSize = 14; /// the height of the top bar
 #ifndef CLAMP
 #define CLAMP(x, min, max) (((x) < (min))? (min) : ((x) > (max))? (max) : (x))
 #endif
@@ -38,14 +38,15 @@ ScrubBar::ScrubBar(QWidget *parent)
 {
     setMouseTracking(true);
     const int fontSize = font().pointSize() - (font().pointSize() > 10? 2 : (font().pointSize() > 8? 1 : 0));
-    setFont(QFont(font().family(), fontSize));
-    m_timecodeWidth = fontMetrics().width("00:00:00:00");
-    setMinimumHeight(fontMetrics().height() + selectionSize);
+    setFont(QFont(font().family(), fontSize * devicePixelRatio()));
+    m_timecodeWidth = fontMetrics().width("00:00:00:00") / devicePixelRatio();
+    setMinimumHeight(fontMetrics().height() / devicePixelRatio() + selectionSize);
 }
 
 void ScrubBar::setScale(int maximum)
 {
     m_max = maximum;
+    /// m_scale is the pixels per frame ratio
     m_scale = (double) (width() - 2 * margin) / (double) maximum;
     if (m_scale == 0) m_scale = -1;
     m_secondsPerTick = qRound(double(m_timecodeWidth * 1.6) / m_scale / m_fps);
@@ -64,6 +65,7 @@ void ScrubBar::setScale(int maximum)
     else if (m_secondsPerTick > 2)
         // force to a multiple of 5 seconds
         m_secondsPerTick += 5 - m_secondsPerTick % 5;
+    /// m_interval is the number of pixels per major tick to be labeled with time
     m_interval = qRound(double(m_secondsPerTick) * m_fps * m_scale);
 
     updatePixmap();
@@ -176,7 +178,7 @@ void ScrubBar::paintEvent(QPaintEvent *e)
     QPainter p(this);
     QRect r = e->rect();
     p.setClipRect(r);
-    p.drawPixmap(QPointF(), m_pixmap);
+    p.drawPixmap(0, 0, width(), height(), m_pixmap);
 
     if (!isEnabled()) return;
 
@@ -220,51 +222,69 @@ void ScrubBar::resizeEvent(QResizeEvent *)
     setScale(m_max);
 }
 
+bool ScrubBar::event(QEvent *event)
+{
+    QWidget::event(event);
+    if (event->type() == QEvent::PaletteChange || event->type() == QEvent::StyleChange)
+        updatePixmap();
+    return false;
+}
+
 void ScrubBar::updatePixmap()
 {
-    m_pixmap = QPixmap(width(), height());
+    const int ratio = devicePixelRatio();
+    const int l_width = width() * ratio;
+    const int l_height = height() * ratio;
+    const int l_margin = margin * ratio;
+    const int l_selectionSize = selectionSize * ratio;
+    const int l_interval = m_interval * ratio;
+    const int l_timecodeWidth = m_timecodeWidth * ratio;
+    m_pixmap = QPixmap(l_width, l_height);
     m_pixmap.fill(palette().window().color());
     QPainter p(&m_pixmap);
     p.setFont(font());
-    int markerHeight = fontMetrics().ascent() + 2;
+    const int markerHeight = fontMetrics().ascent() + 2 * ratio;
 
     if (!isEnabled()) {
-        p.fillRect(0, 0, width(), height(), palette().background().color());
+        p.fillRect(0, 0, l_width, l_height, palette().background().color());
         p.end();
         update();
         return;
     }
 
     // background color
-    p.fillRect(margin, 0, width() - 2 * margin, height(), palette().base().color());
+    p.fillRect(l_margin, 0, l_width - 2 * l_margin, l_height, palette().base().color());
 
     // selected region
     if (m_in > -1 && m_out > m_in) {
-        const int in = m_in * m_scale;
-        const int out = m_out * m_scale;
-        p.fillRect(margin + in, 0, out - in, selectionSize, palette().highlight().color());
+        const int in = m_in * m_scale * ratio;
+        const int out = m_out * m_scale * ratio;
+        p.fillRect(l_margin + in, 0, out - in, l_selectionSize, palette().highlight().color());
     }
 
     // draw time ticks
-    p.setPen(palette().text().color());
-    if (m_interval > 2) {
-        for (int x = margin; x < width() - margin; x += m_interval) {
-            p.drawLine(x, selectionSize, x, height() - 1);
-            if (x + m_interval / 4 < width() - margin)
-                p.drawLine(x + m_interval / 4,     height() - 3, x + m_interval / 4,     height() - 1);
-            if (x + m_interval / 2 < width() - margin)
-                p.drawLine(x + m_interval / 2,     height() - 7, x + m_interval / 2,     height() - 1);
-            if (x + m_interval * 3 / 4 < width() - margin)
-                p.drawLine(x + m_interval * 3 / 4, height() - 3, x + m_interval * 3 / 4, height() - 1);
+    QPen pen = QPen(palette().text().color());
+    pen.setWidth(ratio);
+    p.setPen(pen);
+    if (l_interval > 2) {
+        for (int x = l_margin; x < l_width - l_margin; x += l_interval) {
+            p.drawLine(x, l_selectionSize, x, l_height - 1);
+            if (x + l_interval / 4 < l_width - l_margin)
+                p.drawLine(x + l_interval / 4,     l_height - 3 * ratio, x + l_interval / 4,     l_height - 1);
+            if (x + l_interval / 2 < l_width - l_margin)
+                p.drawLine(x + l_interval / 2,     l_height - 7 * ratio, x + l_interval / 2,     l_height - 1);
+            if (x + l_interval * 3 / 4 < l_width - l_margin)
+                p.drawLine(x + l_interval * 3 / 4, l_height - 3 * ratio, x + l_interval * 3 / 4, l_height - 1);
         }
     }
 
     // draw timecode
-    if (m_interval > m_timecodeWidth) {
-        int x = margin;
-        for (int i = 0; x < width() - margin - m_timecodeWidth; i++, x += m_interval) {
-            MLT.producer()->set("_shotcut_scrubbar", i * m_fps * m_secondsPerTick);
-            p.drawText(x + 2, 14 + fontMetrics().ascent() - 2, MLT.producer()->get_time("_shotcut_scrubbar"));
+    if (l_interval > l_timecodeWidth && MLT.producer()) {
+        int x = l_margin;
+        for (int i = 0; x < l_width - l_margin - l_timecodeWidth; i++, x += l_interval) {
+            int y = l_selectionSize + fontMetrics().ascent() - 2 * ratio;
+            MLT.producer()->set("_shotcut_scrubbar", qRound(i * m_fps * m_secondsPerTick));
+            p.drawText(x + 2 * ratio, y, MLT.producer()->get_time("_shotcut_scrubbar"));
         }
     }
 
@@ -272,12 +292,12 @@ void ScrubBar::updatePixmap()
     if (m_in < 0 && m_out < 0) {
         int i = 1;
         foreach (int pos, m_markers) {
-            int x = margin + pos * m_scale;
+            int x = l_margin + pos * m_scale * ratio;
             QString s = QString::number(i++);
             int markerWidth = fontMetrics().width(s) * 1.5;
-            p.fillRect(x, 0, 1, height(), palette().highlight().color());
+            p.fillRect(x, 0, 1, l_height, palette().highlight().color());
             p.fillRect(x - markerWidth/2, 0, markerWidth, markerHeight, palette().highlight().color());
-            p.drawText(x - markerWidth/3, markerHeight - 2, s);
+            p.drawText(x - markerWidth/3, markerHeight - 2 * ratio, s);
         }
     }
 

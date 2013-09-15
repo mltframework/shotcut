@@ -41,6 +41,7 @@ public:
         setOrganizationDomain("meltytech.com");
         setApplicationName("Shotcut");
         setApplicationVersion(SHOTCUT_VERSION);
+        setAttribute(Qt::AA_UseHighDpiPixmaps);
 #if defined(Q_OS_MAC)
         setAttribute(Qt::AA_DontShowIconsInMenus);
 #endif
@@ -94,9 +95,15 @@ int main(int argc, char **argv)
     XInitThreads();
 #endif
     Application a(argc, argv);
-    QSplashScreen splash(QPixmap(":/icons/icons/shotcut-logo-640.png"));
+    QSplashScreen splash(QPixmap(":/icons/shotcut-logo-640.png"));
     splash.showMessage(QCoreApplication::translate("", "Loading plugins..."), Qt::AlignHCenter | Qt::AlignBottom);
     splash.show();
+
+    QSettings settings;
+    const QString theme = settings.value("theme", "dark").toString();
+    a.setProperty("system-style", a.style()->objectName());
+    MainWindow::changeTheme(theme);
+
     a.mainWindow = &MAIN;
     a.mainWindow->show();
     splash.finish(a.mainWindow);
