@@ -106,7 +106,6 @@ public slots:
     void seekPlaylist(int start);
     void onProducerOpened();
     void onGpuNotSupported();
-    void showPaused();
 
 private slots:
     void on_actionAbout_Shotcut_triggered();

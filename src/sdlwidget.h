@@ -31,6 +31,20 @@ public:
     explicit SDLWidget(QWidget *parent = 0);
     int open(Mlt::Producer*, bool isMulti = false);
     int reconfigure(bool isMulti);
+
+    void play(double speed = 1.0) {
+        Controller::play(speed);
+        if (speed == 0) emit paused();
+    }
+    void seek(int position) {
+        Controller::seek(position);
+        emit paused();
+    }
+    void pause() {
+        Controller::pause();
+        emit paused();
+    }
+
     QWidget* videoWidget() { return this; }
 
 signals:
@@ -42,6 +56,7 @@ signals:
     void dragStarted();
     void seekTo(int x);
     void started();
+    void paused();
 
 public slots:
 

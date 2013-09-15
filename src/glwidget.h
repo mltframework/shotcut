@@ -46,6 +46,20 @@ public:
     void stopGlsl();
     int open(Mlt::Producer*, bool isMulti = false);
     int reconfigure(bool isMulti);
+
+    void play(double speed = 1.0) {
+        Controller::play(speed);
+        if (speed == 0) emit paused();
+    }
+    void seek(int position) {
+        Controller::seek(position);
+        emit paused();
+    }
+    void pause() {
+        Controller::pause();
+        emit paused();
+    }
+
     QWidget* videoWidget() { return this; }
     QSemaphore showFrameSemaphore;
 
@@ -63,6 +77,7 @@ signals:
     void gpuNotSupported();
     void started();
     void imageRendered(Mlt::QProducer, int position, QImage image);
+    void paused();
 
 private:
     int x, y, w, h;

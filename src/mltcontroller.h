@@ -88,14 +88,14 @@ public:
     virtual QImage image(Frame *frame, int width, int height);
 
     void closeConsumer();
-    void play(double speed = 1.0);
-    void pause();
+    virtual void play(double speed = 1.0);
+    virtual void pause();
     void stop();
     bool enableJack(bool enable = true);
     void setVolume(double volume);
     double volume() const;
     void onWindowResize();
-    void seek(int position);
+    virtual void seek(int position);
     void refreshConsumer();
     QString saveXML(const QString& filename, Service* service = 0);
     int consumerChanged();
