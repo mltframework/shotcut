@@ -116,6 +116,8 @@ MainWindow::MainWindow()
     connect(m_player, SIGNAL(inChanged(int)), this, SLOT(onCutModified()));
     connect(m_player, SIGNAL(outChanged(int)), this, SLOT(onCutModified()));
     connect(MLT.videoWidget(), SIGNAL(started()), SLOT(processMultipleFiles()));
+    connect(MLT.videoWidget(), SIGNAL(paused()), m_player, SLOT(showPaused()));
+
     setupSettingsMenu();
     readPlayerSettings();
     configureVideoWidget();
@@ -1280,11 +1282,6 @@ void MainWindow::onGpuNotSupported()
     ui->actionGPU->setChecked(false);
     ui->actionGPU->setDisabled(true);
     showStatusMessage(tr("GPU Processing is not supported"));
-}
-
-void MainWindow::showPaused()
-{
-    m_player->showPaused();
 }
 
 void MainWindow::on_actionOpenGL_triggered(bool checked)
