@@ -790,68 +790,58 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         }
         break;
     case Qt::Key_Up:
-        m_playlistDock->show();
-        m_playlistDock->raise();
-        if (event->modifiers() == Qt::ControlModifier)
-            m_playlistDock->moveClipUp();
-        m_playlistDock->decrementIndex();
+        if (m_playlistDock->isVisible()) {
+            if (event->modifiers() == Qt::ControlModifier)
+                m_playlistDock->moveClipUp();
+            m_playlistDock->decrementIndex();
+        }
         break;
     case Qt::Key_Down:
-        m_playlistDock->show();
-        m_playlistDock->raise();
-        if (event->modifiers() == Qt::ControlModifier)
-            m_playlistDock->moveClipDown();
-        m_playlistDock->incrementIndex();
+        if (m_playlistDock->isVisible()) {
+            if (event->modifiers() == Qt::ControlModifier)
+                m_playlistDock->moveClipDown();
+            m_playlistDock->incrementIndex();
+        }
         break;
     case Qt::Key_1:
-        m_playlistDock->show();
-        m_playlistDock->raise();
-        m_playlistDock->setIndex(0);
+        if (m_playlistDock->isVisible())
+            m_playlistDock->setIndex(0);
         break;
     case Qt::Key_2:
-        m_playlistDock->show();
-        m_playlistDock->raise();
-        m_playlistDock->setIndex(1);
+        if (m_playlistDock->isVisible())
+            m_playlistDock->setIndex(1);
         break;
     case Qt::Key_3:
-        m_playlistDock->show();
-        m_playlistDock->raise();
-        m_playlistDock->setIndex(2);
+        if (m_playlistDock->isVisible())
+            m_playlistDock->setIndex(2);
         break;
     case Qt::Key_4:
-        m_playlistDock->show();
-        m_playlistDock->raise();
-        m_playlistDock->setIndex(3);
+        if (m_playlistDock->isVisible())
+            m_playlistDock->setIndex(3);
         break;
     case Qt::Key_5:
-        m_playlistDock->show();
-        m_playlistDock->raise();
-        m_playlistDock->setIndex(4);
+        if (m_playlistDock->isVisible())
+            m_playlistDock->setIndex(4);
         break;
     case Qt::Key_6:
-        m_playlistDock->show();
-        m_playlistDock->raise();
-        m_playlistDock->setIndex(5);
+        if (m_playlistDock->isVisible())
+            m_playlistDock->setIndex(5);
         break;
     case Qt::Key_7:
-        m_playlistDock->show();
-        m_playlistDock->raise();
-        m_playlistDock->setIndex(6);
+        if (m_playlistDock->isVisible())
+            m_playlistDock->setIndex(6);
         break;
     case Qt::Key_8:
-        m_playlistDock->show();
-        m_playlistDock->raise();
-        m_playlistDock->setIndex(7);
+        if (m_playlistDock->isVisible())
+            m_playlistDock->setIndex(7);
         break;
     case Qt::Key_9:
-        m_playlistDock->show();
-        m_playlistDock->raise();
-        m_playlistDock->setIndex(8);
+        if (m_playlistDock->isVisible())
+            m_playlistDock->setIndex(8);
         break;
     case Qt::Key_0:
-        m_playlistDock->show();
-        m_playlistDock->raise();
-        m_playlistDock->setIndex(9);
+        if (m_playlistDock->isVisible())
+            m_playlistDock->setIndex(9);
         break;
     case Qt::Key_X: // Avid Extract
     case Qt::Key_Backspace:
