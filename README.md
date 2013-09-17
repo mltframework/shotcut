@@ -6,6 +6,8 @@ Shotcut is a free, open source, cross-platform video editor. More informations a
 
 Implemented features can be seen here: http://www.shotcut.org/bin/view/Shotcut/Features. Planned features can be found here: http://www.shotcut.org/bin/view/Shotcut/Roadmap.
 
+![Shotcut screenshot](utils/screenshot.jpg "A Shotcut screenshot")
+
 # License
 
 Shotcut is under GPLv3. See COPYING [here](COPYING).
