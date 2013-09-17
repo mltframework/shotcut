@@ -1,1 +1,12 @@
 shotcut.pro.user
+*.so
+*.so.*
+*.o
+*.a
+ui_*.h
+moc_*.cpp
+qrc_*.cpp
+Makefile
+*.prl
+*.cache
+src/shotcut
