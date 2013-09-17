@@ -928,8 +928,11 @@ void MainWindow::onProducerOpened()
 
     m_meltedServerDock->disconnect(SIGNAL(positionUpdated(int,double,int,int,int,bool)));
     m_player->connectTransport(MLT.transportControl());
-    ui->stackedWidget->setCurrentIndex(1);
     delete m_propertiesDock->widget();
+
+    // Remove the help page.
+    if (ui->stackedWidget->count() > 1)
+        delete ui->stackedWidget->widget(0);
 
     if (resource.startsWith("video4linux2:"))
         w = new Video4LinuxWidget(this);
@@ -1252,7 +1255,9 @@ void MainWindow::onMeltedUnitOpened()
     Mlt::Producer* producer = new Mlt::Producer(MLT.profile(), "color:");
     MLT.open(producer);
     MLT.play(0);
-    ui->stackedWidget->setCurrentIndex(1);
+    // Remove the help page.
+    if (ui->stackedWidget->count() > 1)
+        delete ui->stackedWidget->widget(0);
     delete m_propertiesDock->widget();
     m_player->connectTransport(m_meltedPlaylistDock->transportControl());
     connect(m_meltedServerDock, SIGNAL(positionUpdated(int,double,int,int,int,bool)),
