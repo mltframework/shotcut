@@ -42,6 +42,7 @@ public:
         setApplicationName("Shotcut");
         setApplicationVersion(SHOTCUT_VERSION);
 #if defined(Q_OS_MAC)
+        setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
         setAttribute(Qt::AA_DontShowIconsInMenus);
 #endif
 
