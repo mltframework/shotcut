@@ -48,6 +48,7 @@ public:
     bool continueModified();
     QUndoStack* undoStack() const;
     void saveXML(const QString& filename);
+    static void changeTheme(const QString& theme);
 
 signals:
     void producerOpened();
@@ -153,6 +154,9 @@ private slots:
     void on_actionAddCustomProfile_triggered();
     void processMultipleFiles();
     void onLanguageTriggered(QAction*);
+    void on_actionSystemTheme_triggered();
+    void on_actionFusionDark_triggered();
+    void on_actionFusionLight_triggered();
 };
 
 #define MAIN MainWindow::singleton()

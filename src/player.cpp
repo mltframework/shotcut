@@ -35,18 +35,6 @@ Player::Player(QWidget *parent)
     setObjectName("Player");
     Mlt::Controller::singleton(this);
     setupActions(this);
-    // These use the icon theme on Linux, with fallbacks to the icons specified in QtDesigner for other platforms.
-    actionPlay->setIcon(QIcon::fromTheme("media-playback-start", actionPlay->icon()));
-    actionPause->setIcon(QIcon::fromTheme("media-playback-pause", actionPause->icon()));
-    actionSkipNext->setIcon(QIcon::fromTheme("media-skip-forward", actionSkipNext->icon()));
-    actionSkipPrevious->setIcon(QIcon::fromTheme("media-skip-backward", actionSkipPrevious->icon()));
-    actionRewind->setIcon(QIcon::fromTheme("media-seek-backward", actionRewind->icon()));
-    actionFastForward->setIcon(QIcon::fromTheme("media-seek-forward", actionFastForward->icon()));
-    actionPlay->setEnabled(false);
-    actionSkipPrevious->setEnabled(false);
-    actionSkipNext->setEnabled(false);
-    actionRewind->setEnabled(false);
-    actionFastForward->setEnabled(false);
     m_playIcon = actionPlay->icon();
     m_pauseIcon = actionPause->icon();
 
@@ -60,7 +48,7 @@ Player::Player(QWidget *parent)
     QWidget* tmp = new QWidget(this);
     vlayout->addWidget(tmp, 10);
     vlayout->addStretch();
-    QHBoxLayout *hlayout = new QHBoxLayout(tmp);
+    QHBoxLayout* hlayout = new QHBoxLayout(tmp);
     hlayout->setSpacing(4);
     hlayout->setContentsMargins(0, 0, 0, 0);
     hlayout->addWidget(MLT.videoWidget(), 10);
@@ -85,24 +73,32 @@ Player::Player(QWidget *parent)
     connect(m_volumeSlider, SIGNAL(valueChanged(int)), this, SLOT(onVolumeChanged(int)));
     connect(this, SIGNAL(audioLevels(QVector<double>)), m_audioSignal, SLOT(slotAudioLevels(QVector<double>)));
 
-    QPushButton* volumeButton = new QPushButton(this);
-    volumeButton->setObjectName(QString::fromUtf8("volumeButton"));
-    volumeButton->setToolTip(tr("Show or hide the volume control"));
-    volumeButton->setIcon(QIcon::fromTheme("player-volume", QIcon(":/icons/icons/player-volume.png")));
-    volumeButton->setCheckable(true);
-    volumeButton->setChecked(m_settings.value("player/volume-visible", false).toBool());
-    onVolumeButtonToggled(volumeButton->isChecked());
-    volumeLayoutV->addWidget(volumeButton);
-    connect(volumeButton, SIGNAL(toggled(bool)), this, SLOT(onVolumeButtonToggled(bool)));
+    // Add mute-volume buttons layout
+    volumeLayoutH = new QHBoxLayout;
+    volumeLayoutH->setContentsMargins(0, 0, 0, 0);
+    volumeLayoutH->setSpacing(0);
+    volumeLayoutV->addLayout(volumeLayoutH);
 
+    // Add mute button
     QPushButton* muteButton = new QPushButton(this);
     muteButton->setObjectName(QString::fromUtf8("muteButton"));
-    muteButton->setText(tr("Mute"));
+    muteButton->setIcon(QIcon::fromTheme("dialog-cancel"));
     muteButton->setToolTip(tr("Silence the audio"));
     muteButton->setCheckable(true);
     muteButton->setChecked(m_settings.value("player/muted", false).toBool());
-    volumeLayoutV->addWidget(muteButton);
+    volumeLayoutH->addWidget(muteButton);
     connect(muteButton, SIGNAL(toggled(bool)), this, SLOT(onMuteButtonToggled(bool)));
+
+    // Add volume button
+    QPushButton* volumeButton = new QPushButton(this);
+    volumeButton->setObjectName(QString::fromUtf8("volumeButton"));
+    volumeButton->setToolTip(tr("Show or hide the volume control"));
+    volumeButton->setIcon(QIcon::fromTheme("player-volume"));
+    volumeButton->setCheckable(true);
+    volumeButton->setChecked(m_settings.value("player/volume-visible", false).toBool());
+    onVolumeButtonToggled(volumeButton->isChecked());
+    volumeLayoutH->addWidget(volumeButton);
+    connect(volumeButton, SIGNAL(toggled(bool)), this, SLOT(onVolumeButtonToggled(bool)));
 
     // Add the scrub bar.
     m_scrubber = new ScrubBar(this);
@@ -130,7 +126,7 @@ Player::Player(QWidget *parent)
     m_inPointLabel->setToolTip(tr("In Point"));
     m_inPointLabel->setAlignment(Qt::AlignRight);
 #ifdef Q_OS_MAC
-    m_inPointLabel->setContentsMargins(0, 6, 0, 0);
+    m_inPointLabel->setContentsMargins(0, 5, 0, 0);
 #else
     m_inPointLabel->setContentsMargins(0, 4, 0, 0);
 #endif
@@ -196,34 +192,28 @@ void Player::setupActions(QWidget* widget)
 {
     actionPlay = new QAction(widget);
     actionPlay->setObjectName(QString::fromUtf8("actionPlay"));
-    QIcon icon2;
-    icon2.addFile(QString::fromUtf8(":/icons/icons/media-playback-start.png"), QSize(), QIcon::Normal, QIcon::Off);
-    actionPlay->setIcon(icon2);
+    actionPlay->setIcon(QIcon::fromTheme("media-playback-start"));
+    actionPlay->setDisabled(true);
     actionPause = new QAction(widget);
     actionPause->setObjectName(QString::fromUtf8("actionPause"));
-    QIcon icon3;
-    icon3.addFile(QString::fromUtf8(":/icons/icons/media-playback-pause.png"), QSize(), QIcon::Normal, QIcon::Off);
-    actionPause->setIcon(icon3);
+    actionPause->setIcon(QIcon::fromTheme("media-playback-pause"));
+    actionPause->setDisabled(true);
     actionSkipNext = new QAction(widget);
     actionSkipNext->setObjectName(QString::fromUtf8("actionSkipNext"));
-    QIcon icon4;
-    icon4.addFile(QString::fromUtf8(":/icons/icons/media-skip-forward.png"), QSize(), QIcon::Normal, QIcon::Off);
-    actionSkipNext->setIcon(icon4);
+    actionSkipNext->setIcon(QIcon::fromTheme("media-skip-forward"));
+    actionSkipNext->setDisabled(true);
     actionSkipPrevious = new QAction(widget);
     actionSkipPrevious->setObjectName(QString::fromUtf8("actionSkipPrevious"));
-    QIcon icon5;
-    icon5.addFile(QString::fromUtf8(":/icons/icons/media-skip-backward.png"), QSize(), QIcon::Normal, QIcon::Off);
-    actionSkipPrevious->setIcon(icon5);
+    actionSkipPrevious->setIcon(QIcon::fromTheme("media-skip-backward"));
+    actionSkipPrevious->setDisabled(true);
     actionRewind = new QAction(widget);
     actionRewind->setObjectName(QString::fromUtf8("actionRewind"));
-    QIcon icon6;
-    icon6.addFile(QString::fromUtf8(":/icons/icons/media-seek-backward.png"), QSize(), QIcon::Normal, QIcon::Off);
-    actionRewind->setIcon(icon6);
+    actionRewind->setIcon(QIcon::fromTheme("media-seek-backward"));
+    actionRewind->setDisabled(true);
     actionFastForward = new QAction(widget);
     actionFastForward->setObjectName(QString::fromUtf8("actionFastForward"));
-    QIcon icon7;
-    icon7.addFile(QString::fromUtf8(":/icons/icons/media-seek-forward.png"), QSize(), QIcon::Normal, QIcon::Off);
-    actionFastForward->setIcon(icon7);
+    actionFastForward->setIcon(QIcon::fromTheme("media-seek-forward"));
+    actionFastForward->setDisabled(true);
     retranslateUi(widget);
     QMetaObject::connectSlotsByName(widget);
 }

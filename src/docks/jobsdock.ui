@@ -11,8 +11,7 @@
    </rect>
   </property>
   <property name="windowIcon">
-   <iconset resource="../resources.qrc">
-    <normaloff>:/icons/icons/run-build.png</normaloff>:/icons/icons/run-build.png</iconset>
+   <iconset theme="run-build"/>
   </property>
   <property name="windowTitle">
    <string>Jobs</string>
@@ -22,7 +21,16 @@
     <property name="spacing">
      <number>0</number>
     </property>
-    <property name="margin">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
      <number>0</number>
     </property>
     <item>
@@ -39,11 +47,20 @@
          <x>0</x>
          <y>0</y>
          <width>232</width>
-         <height>221</height>
+         <height>225</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
-        <property name="margin">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
          <number>0</number>
         </property>
         <item>
@@ -111,8 +128,9 @@ the list. This does not stop a currently running job. Right-
          <string>Display a menu of additional actions</string>
         </property>
         <property name="icon">
-         <iconset resource="../resources.qrc">
-          <normaloff>:/icons/icons/format-justify-fill.png</normaloff>:/icons/icons/format-justify-fill.png</iconset>
+         <iconset theme="format-justify-fill">
+          <normaloff/>
+         </iconset>
         </property>
        </widget>
       </item>
@@ -179,8 +197,6 @@ the list. This does not stop a currently running job. Right-
    </property>
   </action>
  </widget>
- <resources>
-  <include location="../resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

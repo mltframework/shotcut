@@ -73,8 +73,7 @@
         <string>Reset to default</string>
        </property>
        <property name="icon">
-        <iconset resource="../resources.qrc">
-         <normaloff>:/icons/icons/edit-undo.png</normaloff>:/icons/icons/edit-undo.png</iconset>
+        <iconset theme="edit-undo"/>
        </property>
        <property name="iconSize">
         <size>
@@ -135,8 +134,7 @@
         <string>Reset to default</string>
        </property>
        <property name="icon">
-        <iconset resource="../resources.qrc">
-         <normaloff>:/icons/icons/edit-undo.png</normaloff>:/icons/icons/edit-undo.png</iconset>
+        <iconset theme="edit-undo"/>
        </property>
        <property name="iconSize">
         <size>
@@ -221,8 +219,7 @@
         <string>Reset to default</string>
        </property>
        <property name="icon">
-        <iconset resource="../resources.qrc">
-         <normaloff>:/icons/icons/edit-undo.png</normaloff>:/icons/icons/edit-undo.png</iconset>
+        <iconset theme="edit-undo"/>
        </property>
        <property name="iconSize">
         <size>
@@ -280,8 +277,7 @@
         <string>Reset to default</string>
        </property>
        <property name="icon">
-        <iconset resource="../resources.qrc">
-         <normaloff>:/icons/icons/edit-undo.png</normaloff>:/icons/icons/edit-undo.png</iconset>
+        <iconset theme="ediut-undo"/>
        </property>
        <property name="iconSize">
         <size>
@@ -333,8 +329,7 @@
         <string>Reset to default</string>
        </property>
        <property name="icon">
-        <iconset resource="../resources.qrc">
-         <normaloff>:/icons/icons/edit-undo.png</normaloff>:/icons/icons/edit-undo.png</iconset>
+        <iconset theme="edit-undo"/>
        </property>
        <property name="iconSize">
         <size>
@@ -425,8 +420,5 @@
   <tabstop>noiseLevelSpinner</tabstop>
   <tabstop>defaultNoiseLevelButton</tabstop>
  </tabstops>
- <resources>
-  <include location="../resources.qrc"/>
- </resources>
  <connections/>
 </ui>

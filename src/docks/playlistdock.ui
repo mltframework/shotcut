@@ -11,8 +11,9 @@
    </rect>
   </property>
   <property name="windowIcon">
-   <iconset resource="../resources.qrc">
-    <normaloff>:/icons/icons/view-media-playlist.png</normaloff>:/icons/icons/view-media-playlist.png</iconset>
+   <iconset theme="view-media-playlist">
+    <normaloff></normaloff>
+   </iconset>
   </property>
   <property name="windowTitle">
    <string>Playlist</string>
@@ -108,8 +109,13 @@ selected cut.</string>
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../resources.qrc">
-          <normaloff>:/icons/icons/list-add.png</normaloff>:/icons/icons/list-add.png</iconset>
+         <iconset theme="list-add"/>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -125,8 +131,7 @@ selected cut.</string>
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../resources.qrc">
-          <normaloff>:/icons/icons/list-remove.png</normaloff>:/icons/icons/list-remove.png</iconset>
+         <iconset theme="list-remove"/>
         </property>
        </widget>
       </item>
@@ -142,8 +147,7 @@ selected cut.</string>
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../resources.qrc">
-          <normaloff>:/icons/icons/format-justify-fill.png</normaloff>:/icons/icons/format-justify-fill.png</iconset>
+         <iconset theme="format-justify-fill"/>
         </property>
        </widget>
       </item>
@@ -171,8 +175,7 @@ selected cut.</string>
   </action>
   <action name="actionAppendCut">
    <property name="icon">
-    <iconset resource="../resources.qrc">
-     <normaloff>:/icons/icons/list-add.png</normaloff>:/icons/icons/list-add.png</iconset>
+    <iconset theme="list-add"/>
    </property>
    <property name="text">
     <string>Append Cut</string>
@@ -274,8 +277,5 @@ selected cut.</string>
    </property>
   </action>
  </widget>
- <resources>
-  <include location="../resources.qrc"/>
- </resources>
  <connections/>
 </ui>

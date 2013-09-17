@@ -82,12 +82,6 @@ MainWindow::MainWindow()
     setCorner(Qt::BottomRightCorner, Qt::RightDockWidgetArea);
     setDockNestingEnabled(true);
 
-    // These use the icon theme on Linux, with fallbacks to the icons specified in QtDesigner for other platforms.
-    ui->actionOpen->setIcon(QIcon::fromTheme("document-open", ui->actionOpen->icon()));
-    ui->actionSave->setIcon(QIcon::fromTheme("document-save", ui->actionSave->icon()));
-    ui->actionEncode->setIcon(QIcon::fromTheme("media-record", ui->actionEncode->icon()));
-    ui->actionFilters->setIcon(QIcon::fromTheme("view-filter", ui->actionFilters->icon()));
-
     // Connect UI signals.
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openVideo()));
     connect(ui->actionAbout_Qt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
@@ -101,8 +95,8 @@ MainWindow::MainWindow()
     m_undoStack = new QUndoStack(this);
     QAction *undoAction = m_undoStack->createUndoAction(this);
     QAction *redoAction = m_undoStack->createRedoAction(this);
-    undoAction->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/icons/icons/edit-undo.png")));
-    redoAction->setIcon(QIcon::fromTheme("edit-redo", QIcon(":/icons/icons/edit-redo.png")));
+    undoAction->setIcon(QIcon::fromTheme("edit-undo"));
+    redoAction->setIcon(QIcon::fromTheme("edit-redo"));
     undoAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+Z", 0));
     redoAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+Z", 0));
     ui->menuEdit->addAction(undoAction);
@@ -115,11 +109,8 @@ MainWindow::MainWindow()
     connect(m_undoStack, SIGNAL(canRedoChanged(bool)), ui->actionRedo, SLOT(setEnabled(bool)));
 
     // Add the player widget.
-    QLayout* layout = new QVBoxLayout(ui->playerPage);
-    layout->setObjectName("centralWidgetLayout");
-    layout->setMargin(0);
-    m_player = new Player(this);
-    layout->addWidget(m_player);
+    m_player = new Player;
+    ui->stackedWidget->addWidget(m_player);
     connect(this, SIGNAL(producerOpened()), m_player, SLOT(onProducerOpened()));
     connect(m_player, SIGNAL(showStatusMessage(QString)), this, SLOT(showStatusMessage(QString)));
     connect(m_player, SIGNAL(inChanged(int)), this, SLOT(onCutModified()));
@@ -133,9 +124,8 @@ MainWindow::MainWindow()
     m_propertiesDock = new QDockWidget(tr("Properties"), this);
     m_propertiesDock->hide();
     m_propertiesDock->setObjectName("propertiesDock");
-    m_propertiesDock->setWindowIcon(QIcon((":/icons/icons/view-form.png")));
-    m_propertiesDock->toggleViewAction()->setIcon(QIcon::fromTheme("view-form", m_propertiesDock->windowIcon()));
-    ui->actionProperties->setIcon(QIcon::fromTheme("view-form", m_propertiesDock->windowIcon()));
+    m_propertiesDock->setWindowIcon(ui->actionProperties->icon());
+    m_propertiesDock->toggleViewAction()->setIcon(ui->actionProperties->icon());
     addDockWidget(Qt::LeftDockWidgetArea, m_propertiesDock);
     ui->menuView->addAction(m_propertiesDock->toggleViewAction());
     connect(m_propertiesDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onPropertiesDockTriggered(bool)));
@@ -190,9 +180,8 @@ MainWindow::MainWindow()
     m_historyDock = new QDockWidget(tr("History"), this);
     m_historyDock->hide();
     m_historyDock->setObjectName("historyDock");
-    m_historyDock->setWindowIcon(QIcon((":/icons/icons/view-history.png")));
-    m_historyDock->toggleViewAction()->setIcon(QIcon::fromTheme("view-history", m_historyDock->windowIcon()));
-    ui->actionHistory->setIcon(QIcon::fromTheme("view-history", m_historyDock->windowIcon()));
+    m_historyDock->setWindowIcon(ui->actionHistory->icon());
+    m_historyDock->toggleViewAction()->setIcon(ui->actionHistory->icon());
     addDockWidget(Qt::LeftDockWidgetArea, m_historyDock);
     ui->menuView->addAction(m_historyDock->toggleViewAction());
     connect(m_historyDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onHistoryDockTriggered(bool)));
@@ -243,12 +232,14 @@ MainWindow::MainWindow()
     m_meltedServerDock = new MeltedServerDock(this);
     m_meltedServerDock->hide();
     addDockWidget(Qt::TopDockWidgetArea, m_meltedServerDock);
+    m_meltedServerDock->toggleViewAction()->setIcon(m_meltedServerDock->windowIcon());
     ui->menuView->addAction(m_meltedServerDock->toggleViewAction());
 
     m_meltedPlaylistDock = new MeltedPlaylistDock(this);
     m_meltedPlaylistDock->hide();
     addDockWidget(Qt::TopDockWidgetArea, m_meltedPlaylistDock);
     splitDockWidget(m_meltedServerDock, m_meltedPlaylistDock, Qt::Horizontal);
+    m_meltedPlaylistDock->toggleViewAction()->setIcon(m_meltedPlaylistDock->windowIcon());
     ui->menuView->addAction(m_meltedPlaylistDock->toggleViewAction());
     connect(m_meltedServerDock, SIGNAL(connected(QString, quint16)), m_meltedPlaylistDock, SLOT(onConnected(QString,quint16)));
     connect(m_meltedServerDock, SIGNAL(disconnected()), m_meltedPlaylistDock, SLOT(onDisconnected()));
@@ -448,6 +439,19 @@ void MainWindow::setupSettingsMenu()
         if (locale.startsWith(action->data().toString()))
             action->setChecked(true);
     connect(m_languagesGroup, SIGNAL(triggered(QAction*)), this, SLOT(onLanguageTriggered(QAction*)));
+
+    // Setup the themes actions
+    QActionGroup* themeGroup = new QActionGroup(this);
+    themeGroup->addAction(ui->actionSystemTheme);
+    themeGroup->addAction(ui->actionFusionDark);
+    themeGroup->addAction(ui->actionFusionLight);
+    QString theme = m_settings.value("theme", "dark").toString();
+    if (theme == "dark")
+        ui->actionFusionDark->setChecked(true);
+    else if (theme == "light")
+        ui->actionFusionLight->setChecked(true);
+    else
+        ui->actionSystemTheme->setChecked(true);
 }
 
 QAction* MainWindow::addProfile(QActionGroup* actionGroup, const QString& desc, const QString& name)
@@ -543,6 +547,7 @@ void MainWindow::showStatusMessage(QString message)
 
 void MainWindow::seekPlaylist(int start)
 {
+    if (!m_playlistDock->model()->playlist()) return;
     double speed = MLT.producer()? MLT.producer()->get_speed(): 0;
     // we bypass this->open() to prevent sending producerOpened signal to self, which causes to reload playlist
     if ((void*) MLT.producer()->get_producer() != (void*) m_playlistDock->model()->playlist()->get_playlist())
@@ -678,7 +683,7 @@ void MainWindow::on_actionAbout_Shotcut_triggered()
     QMessageBox::about(this, tr("About Shotcut"),
              tr("<h1>Shotcut version %1</h1>"
                 "<p><a href=\"http://www.shotcut.org/\">Shotcut</a> is a free, open source, cross platform video editor.</p>"
-                "<p>Copyright &copy; 2011-2013 <a href=\"http://www.meltytech.com/\">Meltytech</a>, LLC</p>"
+                "<small><p>Copyright &copy; 2011-2013 <a href=\"http://www.meltytech.com/\">Meltytech</a>, LLC</p>"
                 "<p>Licensed under the <a href=\"http://www.gnu.org/licenses/gpl.html\">GNU General Public License v3.0</a></p>"
                 "<p>This program proudly uses the following projects:<ul>"
                 "<li><a href=\"http://www.qt-project.org/\">Qt</a> application and UI framework</li>"
@@ -689,10 +694,12 @@ void MainWindow::on_actionAbout_Shotcut_triggered()
                 "<li><a href=\"http://lame.sourceforge.net/\">LAME</a> MP3 encoder</li>"
                 "<li><a href=\"http://www.dyne.org/software/frei0r/\">Frei0r</a> video plugins</li>"
                 "<li><a href=\"http://www.ladspa.org/\">LADSPA</a> audio plugins</li>"
+                "<li><a href=\"http://www.defaulticon.com/\">DefaultIcon</a> icon collection by <a href=\"http://www.interactivemania.com/\">interactivemania</a></li>"
+                "<li><a href=\"http://www.oxygen-icons.org/\">Oxygen</a> icon collection</li>"
                 "</ul></p>"
                 "<p>The source code used to build this program can be downloaded from "
                 "<a href=\"http://www.shotcut.org/\">shotcut.org</a>.</p>"
-                "<small>This program is distributed in the hope that it will be useful, "
+                "This program is distributed in the hope that it will be useful, "
                 "but WITHOUT ANY WARRANTY; without even the implied warranty of "
                 "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</small>"
                 ).arg(qApp->applicationVersion()));
@@ -971,7 +978,7 @@ void MainWindow::onProducerOpened()
         dynamic_cast<AbstractProducerWidget*>(w)->setProducer(MLT.producer());
         if (-1 != w->metaObject()->indexOfSignal("producerChanged()"))
             connect(w, SIGNAL(producerChanged()), this, SLOT(onProducerChanged()));
-        QScrollArea* scroll = new QScrollArea(this);
+        QScrollArea* scroll = new QScrollArea;
         scroll->setWidgetResizable(true);
         scroll->setWidget(w);
         m_propertiesDock->setWidget(scroll);
@@ -1202,6 +1209,38 @@ void MainWindow::saveXML(const QString &filename)
         MLT.producer()->set_in_and_out(in, out);
     } else {
         MLT.saveXML(filename);
+    }
+}
+
+void MainWindow::changeTheme(const QString &theme)
+{
+    if (theme == "dark") {
+        QApplication::setStyle("Fusion");
+        QPalette palette;
+        palette.setColor(QPalette::Window, QColor(50,50,50));
+        palette.setColor(QPalette::WindowText, QColor(220,220,220));
+        palette.setColor(QPalette::Base, QColor(35,35,35));
+        palette.setColor(QPalette::AlternateBase, QColor(31,31,31));
+        palette.setColor(QPalette::Highlight, QColor(23,92,118));
+        palette.setColor(QPalette::HighlightedText, Qt::white);
+        palette.setColor(QPalette::ToolTipBase, palette.color(QPalette::Highlight));
+        palette.setColor(QPalette::ToolTipText, palette.color(QPalette::WindowText));
+        palette.setColor(QPalette::Text, palette.color(QPalette::WindowText));
+        palette.setColor(QPalette::BrightText, Qt::red);
+        palette.setColor(QPalette::Button, palette.color(QPalette::Window));
+        palette.setColor(QPalette::ButtonText, palette.color(QPalette::WindowText));
+        palette.setColor(QPalette::Link, palette.color(QPalette::Highlight).lighter());
+        palette.setColor(QPalette::LinkVisited, palette.color(QPalette::Highlight));
+        QApplication::setPalette(palette);
+        QIcon::setThemeName("dark");
+    } else if (theme == "light") {
+        QStyle* style = QStyleFactory::create("Fusion");
+        QApplication::setStyle(style);
+        QApplication::setPalette(style->standardPalette());
+        QIcon::setThemeName("light");
+    } else {
+        QApplication::setStyle(qApp->property("system-style").toString());
+        QIcon::setThemeName("oxygen");
     }
 }
 
@@ -1498,4 +1537,23 @@ void MainWindow::on_actionAddCustomProfile_triggered()
             m_customProfileMenu->addAction(action);
         }
     }
+}
+
+void MainWindow::on_actionSystemTheme_triggered()
+{
+    changeTheme("system");
+    QApplication::setPalette(QApplication::style()->standardPalette());
+    m_settings.setValue("theme", "system");
+}
+
+void MainWindow::on_actionFusionDark_triggered()
+{
+    changeTheme("dark");
+    m_settings.setValue("theme", "dark");
+}
+
+void MainWindow::on_actionFusionLight_triggered()
+{
+    changeTheme("light");
+    m_settings.setValue("theme", "light");
 }

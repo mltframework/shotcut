@@ -11,8 +11,9 @@
    </rect>
   </property>
   <property name="windowIcon">
-   <iconset resource="../resources.qrc">
-    <normaloff>:/icons/icons/media-record.png</normaloff>:/icons/icons/media-record.png</iconset>
+   <iconset theme="media-record">
+    <normaloff/>
+   </iconset>
   </property>
   <property name="allowedAreas">
    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
@@ -51,14 +52,23 @@
          <x>0</x>
          <y>0</y>
          <width>347</width>
-         <height>566</height>
+         <height>570</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <property name="spacing">
          <number>0</number>
         </property>
-        <property name="margin">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
          <number>0</number>
         </property>
         <item>
@@ -110,8 +120,9 @@
                  <string>Add current settings as a new custom preset</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../resources.qrc">
-                  <normaloff>:/icons/icons/list-add.png</normaloff>:/icons/icons/list-add.png</iconset>
+                 <iconset theme="list-add">
+                  <normaloff/>
+                 </iconset>
                 </property>
                </widget>
               </item>
@@ -124,8 +135,9 @@
                  <string>Delete currently selected preset</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../resources.qrc">
-                  <normaloff>:/icons/icons/list-remove.png</normaloff>:/icons/icons/list-remove.png</iconset>
+                 <iconset theme="list-remove">
+                  <normaloff/>
+                 </iconset>
                 </property>
                </widget>
               </item>
@@ -200,7 +212,16 @@
                 <string>Video</string>
                </attribute>
                <layout class="QGridLayout" name="gridLayout_6">
-                <property name="margin">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
                  <number>0</number>
                 </property>
                 <item row="1" column="0">
@@ -1469,8 +1490,6 @@ codecs. However, not all codecs are multi-threaded.</string>
   <tabstop>scanModeCombo</tabstop>
   <tabstop>fieldOrderCombo</tabstop>
  </tabstops>
- <resources>
-  <include location="../resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
