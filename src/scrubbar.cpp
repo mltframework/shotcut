@@ -49,7 +49,7 @@ void ScrubBar::setScale(int maximum)
     /// m_scale is the pixels per frame ratio
     m_scale = (double) (width() - 2 * margin) / (double) maximum;
     if (m_scale == 0) m_scale = -1;
-    m_secondsPerTick = qRound(double(m_timecodeWidth * 1.6) / m_scale / m_fps);
+    m_secondsPerTick = qRound(double(m_timecodeWidth * 1.8) / m_scale / m_fps);
     if (m_secondsPerTick > 3600)
         // force to a multiple of one hour
         m_secondsPerTick += 3600 - m_secondsPerTick % 3600;
