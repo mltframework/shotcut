@@ -713,10 +713,10 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         m_player->seek(m_player->position() + 1);
         break;
     case Qt::Key_PageUp:
-        m_player->seek(m_player->position() - 10);
+        m_player->seek(m_player->position() - qRound(MLT.profile().fps()));
         break;
     case Qt::Key_PageDown:
-        m_player->seek(m_player->position() + 10);
+        m_player->seek(m_player->position() + qRound(MLT.profile().fps()));
         break;
     case Qt::Key_J:
         if (m_isKKeyPressed)
