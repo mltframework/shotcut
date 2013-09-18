@@ -53,8 +53,6 @@ public:
         , m_row(row)
     {
         QString service = producer.get("mlt_service");
-        qDebug() << __FUNCTION__ << service << ":" << producer.get("resource");
-        qDebug() << MLT.saveXML("String", &producer);
         if (service.startsWith("xml"))
             service = "xml-nogl";
         m_in = producer.get_in();
