@@ -226,9 +226,9 @@ isEmpty(SHOTCUT_VERSION) {
 }
 DEFINES += SHOTCUT_VERSION=\\\"$$SHOTCUT_VERSION\\\"
 
-isEmpty(PREFIX) {
-    message("PREFIX not set, using /usr/local. You can change this with 'qmake PREFIX=...'")
-    unix:PREFIX = /usr/local
+unix:!mac:isEmpty(PREFIX) {
+    message("Install PREFIX not set; using /usr/local. You can change this with 'qmake PREFIX=...'")
+    PREFIX = /usr/local
 }
 unix:target.path = $$PREFIX/bin
 win32:target.path = $$PREFIX
