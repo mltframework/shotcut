@@ -35,16 +35,19 @@ ScrubBar::ScrubBar(QWidget *parent)
     , m_in(-1)
     , m_out(-1)
     , m_activeControl(CONTROL_NONE)
+    , m_timecodeWidth(0)
 {
     setMouseTracking(true);
-    const int fontSize = font().pointSize() - (font().pointSize() > 10? 2 : (font().pointSize() > 8? 1 : 0));
-    setFont(QFont(font().family(), fontSize * devicePixelRatio()));
-    m_timecodeWidth = fontMetrics().width("00:00:00:00") / devicePixelRatio();
-    setMinimumHeight(fontMetrics().height() / devicePixelRatio() + selectionSize);
+    setMinimumHeight(fontMetrics().height() + selectionSize);
 }
 
 void ScrubBar::setScale(int maximum)
 {
+    if (!m_timecodeWidth) {
+        const int fontSize = font().pointSize() - (font().pointSize() > 10? 2 : (font().pointSize() > 8? 1 : 0));
+        setFont(QFont(font().family(), fontSize * devicePixelRatio()));
+        m_timecodeWidth = fontMetrics().width("00:00:00:00") / devicePixelRatio();
+    }
     m_max = maximum;
     /// m_scale is the pixels per frame ratio
     m_scale = (double) (width() - 2 * margin) / (double) maximum;
