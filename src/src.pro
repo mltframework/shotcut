@@ -225,3 +225,11 @@ isEmpty(SHOTCUT_VERSION) {
     !win32:SHOTCUT_VERSION = $$system(date "+%y.%m.%d")
 }
 DEFINES += SHOTCUT_VERSION=\\\"$$SHOTCUT_VERSION\\\"
+
+isEmpty(PREFIX) {
+    message("PREFIX not set, using /usr/local. You can change this with 'qmake PREFIX=...'")
+    unix:PREFIX = /usr/local
+}
+unix:target.path = $$PREFIX/bin
+win32:target.path = $$PREFIX
+INSTALLS += target
