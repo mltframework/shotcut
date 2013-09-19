@@ -222,6 +222,6 @@ unix:!mac {
 }
 
 isEmpty(SHOTCUT_VERSION) {
-    SHOTCUT_VERSION = $$system(date "+%y.%m.%d")
+    !win32:SHOTCUT_VERSION = $$system(date "+%y.%m.%d")
 }
 DEFINES += SHOTCUT_VERSION=\\\"$$SHOTCUT_VERSION\\\"
