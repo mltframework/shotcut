@@ -28,7 +28,7 @@ static const int selectionSize = 14; /// the height of the top bar
 
 ScrubBar::ScrubBar(QWidget *parent)
     : QWidget(parent)
-    , m_head(0)
+    , m_head(-1)
     , m_scale(-1)
     , m_fps(25)
     , m_max(1)
@@ -70,7 +70,7 @@ void ScrubBar::setScale(int maximum)
         m_secondsPerTick += 5 - m_secondsPerTick % 5;
     /// m_interval is the number of pixels per major tick to be labeled with time
     m_interval = qRound(double(m_secondsPerTick) * m_fps * m_scale);
-
+    m_head = -1;
     updatePixmap();
 }
 
@@ -194,8 +194,10 @@ void ScrubBar::paintEvent(QPaintEvent *e)
     p.setPen(Qt::NoPen);
     p.drawPolygon(pa);
     p.setPen(pen);
-    head = margin + m_head * m_scale;
-    p.drawLine(head, 0, head, height() - 1);
+    if (m_head >= 0) {
+        head = margin + m_head * m_scale;
+        p.drawLine(head, 0, head, height() - 1);
+    }
 
     // draw in point
     if (m_in > -1) {
