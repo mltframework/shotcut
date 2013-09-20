@@ -890,7 +890,16 @@ void MainWindow::dropEvent(QDropEvent *event)
             foreach (QUrl url, mimeData->urls())
                 m_multipleFiles.append(url.path());
         }
-        open(mimeData->urls().first().path());
+        QString path = mimeData->urls().first().url();
+        if (mimeData->urls().first().scheme() == "file")
+            path = mimeData->urls().first().url(QUrl::RemoveScheme);
+        if (path.length() > 2 && path.startsWith("///"))
+#ifdef Q_OS_WIN
+            path.remove(0, 3);
+#else
+            path.remove(0, 2);
+#endif
+        open(path);
         event->acceptProposedAction();
     }
     else if (mimeData->hasFormat("application/mlt+xml")) {
