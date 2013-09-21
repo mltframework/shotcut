@@ -85,7 +85,7 @@ void GLWidget::initializeGL()
 
     if (settings.value("player/gpu", false).toBool() && !m_glslManager)
         emit gpuNotSupported();
-    initializeGLFunctions();
+    initializeOpenGLFunctions();
     qglClearColor(palette.color(QPalette::Window));
     glShadeModel(GL_FLAT);
     glEnable(GL_TEXTURE_2D);
@@ -188,8 +188,8 @@ void GLWidget::createShader()
 {
     if (!m_shader) {
         makeCurrent();
-        m_shader = new QGLShaderProgram(this);
-        m_shader->addShaderFromSourceCode(QGLShader::Fragment,
+        m_shader = new QOpenGLShaderProgram(this);
+        m_shader->addShaderFromSourceCode(QOpenGLShader::Fragment,
         "uniform sampler2D Ytex, Utex, Vtex;"
         "void main(void) {"
         "  float r, g, b;"
@@ -287,7 +287,7 @@ void GLWidget::showFrame(Mlt::QFrame frame)
 
             if (!m_fbo || m_fbo->width() != m_image_width || m_fbo->height() != m_image_height) {
                 delete m_fbo;
-                m_fbo = new QGLFramebufferObject(m_image_width, m_image_height, GL_TEXTURE_2D);
+                m_fbo = new QOpenGLFramebufferObject(m_image_width, m_image_height, GL_TEXTURE_2D);
             }
             glPushAttrib(GL_VIEWPORT_BIT);
             glMatrixMode(GL_PROJECTION);

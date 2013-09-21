@@ -20,10 +20,10 @@
 #define GLWIDGET_H
 
 #include <QSemaphore>
-#include <QGLFunctions>
+#include <QOpenGLFunctions>
 #include <QGLWidget>
-#include <QGLShaderProgram>
-#include <QGLFramebufferObject>
+#include <QOpenGLShaderProgram>
+#include <QOpenGLFramebufferObject>
 #include <QMutex>
 #include <QWaitCondition>
 #include "mltcontroller.h"
@@ -32,7 +32,7 @@ namespace Mlt {
 
 class Filter;
 
-class GLWidget : public QGLWidget, public Controller, protected QGLFunctions
+class GLWidget : public QGLWidget, public Controller, protected QOpenGLFunctions
 {
     Q_OBJECT
 
@@ -82,11 +82,11 @@ private:
     int m_image_width, m_image_height;
     GLuint m_texture[3];
     double m_display_ratio;
-    QGLShaderProgram* m_shader;
+    QOpenGLShaderProgram* m_shader;
     QPoint m_dragStart;
     Filter* m_glslManager;
     QGLWidget* m_renderContext;
-    QGLFramebufferObject* m_fbo;
+    QOpenGLFramebufferObject* m_fbo;
     QMutex m_mutex;
     QWaitCondition m_condition;
     bool m_isInitialized;
