@@ -20,7 +20,7 @@ SOURCE_DIR="$INSTALL_DIR/src"
 ACTION_GET_COMPILE_INSTALL=1
 ACTION_GET_ONLY=0
 ACTION_COMPILE_INSTALL=1
-SOURCES_CLEAN=1
+SOURCES_CLEAN=0
 INSTALL_AS_ROOT=0
 CREATE_STARTUP_SCRIPT=1
 ENABLE_FREI0R=1
@@ -45,8 +45,8 @@ FFMPEG_SUPPORT_FAAC=0
 FFMPEG_ADDITIONAL_OPTIONS=
 MLT_HEAD=1
 MLT_REVISION=
-SHOTCUT_HEAD=1
-SHOTCUT_REVISION=
+SHOTCUT_HEAD=0
+SHOTCUT_REVISION="origin/qt5"
 ENABLE_WEBVFX=1
 WEBVFX_HEAD=1
 WEBVFX_REVISION=
@@ -411,9 +411,7 @@ function set_globals {
   fi
   debug "Using install dir FINAL_INSTALL_DIR=$FINAL_INSTALL_DIR"
 
-  # CONFIG Array holds the ./configure (or equiv) command for each project
-  # CFLAGS_ Array holds additional CFLAGS for the configure/make step of a given project
-  # LDFLAGS_ Array holds additional LDFLAGS for the configure/make step of a given project
+  # set global environment for all jobs
   if test "$TARGET_OS" = "Win32" ; then
     FFMPEG_SUPPORT_THEORA=0
     export CROSS=i686-w64-mingw32-
@@ -423,11 +421,29 @@ function set_globals {
     export RANLIB=${CROSS}ranlib
     export CFLAGS="-DHAVE_STRUCT_TIMESPEC -I$FINAL_INSTALL_DIR/include"
     export CXXFLAGS="$CFLAGS"
-    export LDFLAGS="-L$FINAL_INSTALL_DIR/bin -L$FINAL_INSTALL_DIR/lib -static-libgcc -static-libstdc++"
-    export QTDIR="$HOME/qt/4.8.1"
+    export LDFLAGS="-L$FINAL_INSTALL_DIR/bin -L$FINAL_INSTALL_DIR/lib"
+    export QTDIR="$HOME/Qt/5.1.1/mingw48_32"
+    export QMAKE="$HOME/Qt/5.1.1/gcc/bin/qmake"
+    export LRELEASE="$HOME/Qt/5.1.1/gcc/bin/lrelease"
+    export CMAKE_ROOT="${SOURCE_DIR}/frei0r/cmake"
+  elif test "$TARGET_OS" = "Darwin"; then
+    export QTDIR="$HOME/Qt/5.1.1/clang_64"
+    export RANLIB=ranlib
   else
+    if [ "$(uname -p)" = "x86_64" ]; then
+      export QTDIR="$HOME/Qt/5.1.1/gcc_64"
+    else
+      export QTDIR="$HOME/Qt/5.1.1/gcc"
+    fi
     export RANLIB=ranlib
   fi
+  export PATH="$FINAL_INSTALL_DIR/bin:$PATH"
+  export LD_RUN_PATH="$FINAL_INSTALL_DIR/lib"
+  export PKG_CONFIG_PATH="$FINAL_INSTALL_DIR/lib/pkgconfig:$PKG_CONFIG_PATH"
+
+  # CONFIG Array holds the ./configure (or equiv) command for each project
+  # CFLAGS_ Array holds additional CFLAGS for the configure/make step of a given project
+  # LDFLAGS_ Array holds additional LDFLAGS for the configure/make step of a given project
 
   #####
   # ffmpeg
@@ -476,7 +492,7 @@ function set_globals {
     CONFIG[1]="${CONFIG[1]} --disable-dv --disable-kino --disable-vorbis --gtk2-prefix=\"$FINAL_INSTALL_DIR\" --target-os=MinGW --target-arch=i686 --rename-melt=melt.exe"
   fi
   CFLAGS_[1]="-I$FINAL_INSTALL_DIR/include $CFLAGS"
-  [ "$TARGET_OS" = "Darwin" ] && CFLAGS_[1]="${CFLAGS_[1]} -DRELOCATABLE -DMELT_NOSDL"
+  [ "$TARGET_OS" = "Darwin" ] && CFLAGS_[1]="${CFLAGS_[1]} -I/opt/local/include -DRELOCATABLE -DMELT_NOSDL"
   [ "$TARGET_OS" = "Win32" ]  && CFLAGS_[1]="${CFLAGS_[1]} -DMELT_NOSDL"
   LDFLAGS_[1]="-L$FINAL_INSTALL_DIR/lib $LDFLAGS"
 
@@ -537,14 +553,13 @@ function set_globals {
   #####
   # shotcut 
   if [ "$TARGET_OS" = "Darwin" ]; then
-    CONFIG[7]="qmake -r -spec macx-g++"
-  elif [ "$(which qmake-qt4)" != "" ]; then
-    CONFIG[7]="qmake-qt4 -r"
+    CONFIG[7]="$QTDIR/bin/qmake -r -spec macx-g++ MLT_PREFIX=$FINAL_INSTALL_DIR"
+  elif [ "$TARGET_OS" = "Win32" ]; then
+    CONFIG[7]="$QMAKE -r -spec mingw CONFIG+=link_pkgconfig PKGCONFIG+=mlt++ LIBS+=-L${QTDIR}/lib SHOTCUT_VERSION=$(date '+%y.%m.%d')"
+  elif [ "$(which qmake-qt5)" != "" ]; then
+    CONFIG[7]="qmake-qt5 -r"
   else
-    CONFIG[7]="qmake -r"
-  fi
-  if test "$TARGET_OS" = "Win32" ; then
-    CONFIG[7]="${CONFIG[7]} -spec mingw-mkspec CONFIG+=link_pkgconfig PKGCONFIG+=mlt++"
+    CONFIG[7]="$QTDIR/bin/qmake -r"
   fi
   CFLAGS_[7]=$CFLAGS
   LDFLAGS_[7]=$LDFLAGS
@@ -558,14 +573,13 @@ function set_globals {
   #####
   # WebVfx
   if [ "$TARGET_OS" = "Darwin" ]; then
-    CONFIG[9]="qmake -r -spec macx-g++"
-  elif [ "$(which qmake-qt4)" != "" ]; then
-    CONFIG[9]="qmake-qt4 -r"
+    CONFIG[9]="$QTDIR/bin/qmake -r -spec macx-g++ MLT_PREFIX=$FINAL_INSTALL_DIR"
+  elif [ "$TARGET_OS" = "Win32" ]; then
+    CONFIG[9]="$QMAKE -r -spec mingw LIBS+=-L${QTDIR}/lib INCLUDEPATH+=$FINAL_INSTALL_DIR/include"
+  elif [ "$(which qmake-qt5)" != "" ]; then
+    CONFIG[9]="qmake-qt5 -r"
   else
-    CONFIG[9]="qmake -r"
-  fi
-  if test "$TARGET_OS" = "Win32" ; then
-    CONFIG[9]="${CONFIG[9]} -spec mingw-mkspec CONFIG+=link_pkgconfig PKGCONFIG+=mlt++"
+    CONFIG[9]="$QTDIR/bin/qmake -r"
   fi
   CONFIG[9]="${CONFIG[9]} PREFIX=$FINAL_INSTALL_DIR MLT_SOURCE=$(pwd)/src/mlt"
   CFLAGS_[9]=$CFLAGS
@@ -772,6 +786,11 @@ function clean_dirs {
 function get_win32_build {
  
   if test "frei0r" = "$1" ; then
+      debug "Fix cmake modules for frei0r"
+      cmd cp -r /usr/share/cmake-2.8/Modules cmake
+      cmd sed 's/-rdynamic//' cmake/Modules/Platform/Linux-GNU.cmake >/tmp/Linux-GNU.cmake
+      cmd mv /tmp/Linux-GNU.cmake cmake/Modules/Platform
+
       debug "Create cmake rules for frei0r"
       cat >my.cmake <<END_OF_CMAKE_RULES
 # the name of the target operating system
@@ -796,29 +815,29 @@ set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 END_OF_CMAKE_RULES
 
   elif test "shotcut" = "$1" -o "webvfx" = "$1" ; then
-      mkdir mingw-mkspec 2> /dev/null
+      mkdir -p mkspecs/mingw 2> /dev/null
       debug "Create qmake mkspec for $1"
-      cat >mingw-mkspec/qmake.conf <<END_OF_QMAKE_SPEC
+      cat >mkspecs/mingw/qmake.conf <<END_OF_QMAKE_SPEC
 #
 # qmake configuration for win32-g++
 #
 # Written for MinGW
 #
 
-MAKEFILE_GENERATOR	= MINGW
-TEMPLATE		= app
+MAKEFILE_GENERATOR    = MINGW
+TEMPLATE    	= app
 CONFIG			+= qt warn_on release link_prl copy_dir_files precompile_header
 CONFIG			+= win32
 QT			+= core gui
 DEFINES			+= UNICODE
-DEFINES			+= QT_LARGEFILE_SUPPORT
 DEFINES 		+= HAVE_STRUCT_TIMESPEC
 QMAKE_COMPILER_DEFINES  += __GNUC__ WIN32
 
 QMAKE_EXT_OBJ           = .o
 QMAKE_EXT_RES           = _res.o
 
-QMAKE_CC		= i686-w64-mingw32-gcc
+QMAKE_COMPILER          = gcc
+QMAKE_CC		= ${CROSS}gcc
 QMAKE_LEX		= flex
 QMAKE_LEXFLAGS		=
 QMAKE_YACC		= byacc
@@ -831,7 +850,7 @@ QMAKE_CFLAGS_RELEASE	= -O2
 QMAKE_CFLAGS_DEBUG	= -g
 QMAKE_CFLAGS_YACC	= -Wno-unused -Wno-parentheses
 
-QMAKE_CXX		= i686-w64-mingw32-g++
+QMAKE_CXX		= ${CROSS}g++
 QMAKE_CXXFLAGS		= \$\$QMAKE_CFLAGS
 QMAKE_CXXFLAGS_DEPS	= \$\$QMAKE_CFLAGS_DEPS
 QMAKE_CXXFLAGS_WARN_ON	= \$\$QMAKE_CFLAGS_WARN_ON
@@ -855,8 +874,8 @@ QMAKE_RUN_CC_IMP	= \$(CC) -c \$(CFLAGS) \$(INCPATH) -o \$@ \$<
 QMAKE_RUN_CXX		= \$(CXX) -c \$(CXXFLAGS) \$(INCPATH) -o \$obj \$src
 QMAKE_RUN_CXX_IMP	= \$(CXX) -c \$(CXXFLAGS) \$(INCPATH) -o \$@ \$<
 
-QMAKE_LINK		= i686-w64-mingw32-g++
-QMAKE_LINK_C		= i686-w64-mingw32-gcc
+QMAKE_LINK		= ${CROSS}g++
+QMAKE_LINK_C		= ${CROSS}gcc
 QMAKE_LFLAGS		= -Wl,-enable-stdcall-fixup -Wl,-enable-auto-import -Wl,-enable-runtime-pseudo-reloc
 QMAKE_LFLAGS_EXCEPTIONS_ON = -mthreads
 QMAKE_LFLAGS_EXCEPTIONS_OFF =
@@ -871,7 +890,7 @@ QMAKE_PREFIX_STATICLIB  = lib
 QMAKE_EXTENSION_STATICLIB = a
 
 
-QMAKE_LIBS              = -static-libgcc -static-libstdc++
+QMAKE_LIBS              =
 QMAKE_LIBS_CORE         = -lole32 -luuid -lws2_32 -ladvapi32 -lshell32 -luser32 -lkernel32
 QMAKE_LIBS_GUI          = -lgdi32 -lcomdlg32 -loleaut32 -limm32 -lwinmm -lwinspool -lws2_32 -lole32 -luuid -luser32 -ladvapi32
 QMAKE_LIBS_NETWORK      = -lws2_32
@@ -890,17 +909,12 @@ QMAKE_MKDIR		= mkdir -p
 QMAKE_DEL_DIR		= rmdir
 QMAKE_CHK_DIR_EXISTS = test -d
 
-QMAKE_MOC		= i686-pc-mingw32-moc
-QMAKE_UIC		= i686-pc-mingw32-uic
-QMAKE_IDC		= i686-pc-mingw32-idc
-QMAKE_RCC		= i686-pc-mingw32-rcc
-
 QMAKE_IDL		= midl
-QMAKE_LIB		= i686-w64-mingw32-ar -ru
-QMAKE_RC		= i686-w64-mingw32-windres
+QMAKE_LIB		= ${CROSS}ar -ru
+QMAKE_RC		= ${CROSS}windres
 QMAKE_ZIP		= zip -r -9
 
-QMAKE_STRIP		= i686-w64-mingw32-strip
+QMAKE_STRIP		= ${CROSS}strip
 QMAKE_STRIPFLAGS_LIB 	+= --strip-unneeded
 load(qt_config)
 END_OF_QMAKE_SPEC
@@ -1035,9 +1049,6 @@ function get_all_sources {
     get_subproject $DIR
   done
   feedback_status Done getting all sources
-  if test "$TARGET_OS" = "Win32" ; then
-    get_win32_prebuilt
-  fi
   if test "$TARGET_OS" = "Darwin" ; then
     feedback_status Making source archive
     cmd cd "$SOURCE_DIR"/..
@@ -1197,6 +1208,7 @@ function configure_compile_install_subproject {
   feedback_status Configuring, compiling, and installing $1
 
   OLDCFLAGS=$CFLAGS
+  OLDCXXFLAGS=$CXXFLAGS
   OLDLD_LIBRARY_PATH=$LD_LIBRARY_PATH
   cmd pushd .
 
@@ -1215,11 +1227,6 @@ function configure_compile_install_subproject {
   # Configure
   feedback_status Configuring $1
 
-  # Special hack for libvpx
-  if test "libvpx" = "$1" ; then
-    cmd make clean
-  fi
-
   # Special hack for frei0r
   if test "frei0r" = "$1" -a ! -e configure ; then
     debug "Need to create configure for $1"
@@ -1230,7 +1237,7 @@ function configure_compile_install_subproject {
   fi
 
   # Special hack for movit
-  if test "movit" = "$1" ; then
+  if test "movit" = "$1" -o "mlt" = "$1"; then
     export CXXFLAGS="$CFLAGS"
   fi
 
@@ -1293,8 +1300,10 @@ SLIB_EXTRA_CMD=-"mv $$(@:$(SLIBSUF)=.orig.def) $$(@:$(SLIBSUF)=.def)"
   else
     if test "shotcut" = "$1" ; then
       # Convert translations
-      if [ "$(which lrelease-qt4)" != "" ]; then
-          cmd lrelease-qt4 src/src.pro
+      if [ "$TARGET_OS" = "Win32" ]; then
+          cmd "$LRELEASE" src/src.pro
+      elif [ "$(which lrelease-qt5)" != "" ]; then
+          cmd lrelease-qt5 src/src.pro
       else
           cmd lrelease src/src.pro
       fi
@@ -1324,12 +1333,14 @@ End-of-win32-README
         cmd install -p -c COPYING "$FINAL_INSTALL_DIR"
         cmd install -d "$FINAL_INSTALL_DIR"/share/shotcut/translations
         cmd install -p -c translations/*.qm "$FINAL_INSTALL_DIR"/share/shotcut/translations
-        # Skip over including Qt with bundle for now.
-        #cmd install -d "$FINAL_INSTALL_DIR"/lib/qt4
-        #cmd install -p -c /usr/lib/libQt{Core,Gui,OpenGL,Xml,Svg,Network,Declarative,WebKit,Script,Sql,XmlPatterns}.so* "$FINAL_INSTALL_DIR"/lib
-        #cmd install -p -c /usr/lib/libaudio.so* "$FINAL_INSTALL_DIR"/lib
-        #cmd cp -r /usr/lib/qt4/plugins/* "$FINAL_INSTALL_DIR"/lib/qt4
+        cmd install -p -c "$QTDIR"/translations/qt_*.qm "$FINAL_INSTALL_DIR"/share/shotcut/translations
+        cmd install -p -c "$QTDIR"/lib/libQt5{Concurrent,Core,Declarative,Gui,Multimedia,MultimediaQuick,MultimediaWidgets,Network,OpenGL,PrintSupport,Qml,QmlParticles,Quick,Script,Sensors,Sql,Svg,V8,WebKit,WebKitWidgets,Widgets,Xml,XmlPatterns}.so* "$FINAL_INSTALL_DIR"/lib
+        cmd install -p -c "$QTDIR"/lib/lib{icudata,icui8n,icuuc}.so* "$FINAL_INSTALL_DIR"/lib
+        cmd install -d "$FINAL_INSTALL_DIR"/lib/qt5
+        cmd cp -pr "$QTDIR"/plugins/{accessible,iconengines,imageformats,mediaservice,platforms} "$FINAL_INSTALL_DIR"/lib/qt5
+
         log Copying some libs from system
+        #cmd install -p -c /usr/lib/libaudio.so* "$FINAL_INSTALL_DIR"/lib
         GLEWLIB=$(ldd "$FINAL_INSTALL_DIR"/bin/shotcut | awk '/GLEW/ {print $3}')
         log GLEWLIB=$GLEWLIB
         cmd install -c "$GLEWLIB" "$FINAL_INSTALL_DIR"/lib
@@ -1350,6 +1361,7 @@ End-of-win32-README
   # Reestablish
   cmd popd
   export CFLAGS=$OLDCFLAGS
+  export CXXFLAGS=$OLDCXXFLAGS
   export LD_LIBRARY_PATH=$OLDLD_LIBRARY_PATH
 }
 
@@ -1364,11 +1376,6 @@ function configure_compile_install_all {
   # Set some more vars for this operation
   log "Using install dir $FINAL_INSTALL_DIR"
   log "Found $CPUS cpus. Will use make -j $MAKEJ for compilation"
-
-  # set global settings for all jobs
-  export PATH="$FINAL_INSTALL_DIR/bin:$PATH"
-  export LD_RUN_PATH="$FINAL_INSTALL_DIR/lib"
-  export PKG_CONFIG_PATH="$FINAL_INSTALL_DIR/lib/pkgconfig:$PKG_CONFIG_PATH"
 
   log Changing to $SOURCE_DIR 
   cd $SOURCE_DIR || die "Unable to change to directory $SOURCE_DIR"
@@ -1431,7 +1438,7 @@ function fixlibs()
 {
   target=$(dirname "$1")/$(basename "$1")
   trace fixlibs $target
-  libs=$(otool -L "$target" | awk '/^\t\/opt\/local/ || /^\t\/Applications\// || /^\t\/Users\// {print $1}')
+  libs=$(otool -L "$target" | awk '/^\t\/opt\/local/ || /^\t\/Applications\// || /^\t\/Users\// || /^\tlibwebvfx/ {print $1}')
 
   # if the target is a lib, change its id
   #if [ $(echo "$1" | grep '\.dylib$') ] || [ $(echo "$1" | grep '\.so$') ]; then
@@ -1465,26 +1472,20 @@ function deploy_osx
 
   BUILD_DIR="src/Shotcut.app/Contents"
 
-  # copy qt_menu.nib
-  # try MacPorts first
-  if [ -d "/opt/local/lib/Resources/qt_menu.nib" ]; then
-    cmd cp -Rn /opt/local/lib/Resources/qt_menu.nib "$BUILD_DIR/Resources/"
-  # try Qt Creator after that
-  elif [ -d "/Applications/Qt Creator.app/Contents/Frameworks/QtGui.framework/Resources/qt_menu.nib" ]; then
-    cmd cp -Rn "/Applications/Qt Creator.app/Contents/Frameworks/QtGui.framework/Resources/qt_menu.nib" "$BUILD_DIR/Resources/"
-  fi
-
   # copy Qt translations
   cmd mkdir "$BUILD_DIR/Resources/translations"
-  # try MacPorts first
-  if [ -d "/opt/local/share/qt4/translations" ]; then
-    cmd cp -Rn /opt/local/share/qt4/translations/qt_*.qm "$BUILD_DIR/Resources/translations/"
+  # try QTDIR first
+  if [ -d "$QTDIR/translations" ]; then
+    cmd cp -Rn "$QTDIR/translations/qt_*.qm" "$BUILD_DIR/Resources/translations/"
   # try Qt Creator after that
   elif [ -d "/Applications/Qt Creator.app/Contents/Resources/translations" ]; then
     cmd cp -Rn "/Applications/Qt Creator.app/Contents/Resources/translations/qt_*.qm" "$BUILD_DIR/Resources/translations/"
   fi
   # copy Shotcut translations
   cmd cp -Rn translations/*.qm "$BUILD_DIR/Resources/translations/"
+
+  # This little guy helps Qt 5.1 apps find the Qt plugins!
+  cmd printf "[Paths]\nPlugins=MacOS/lib/qt5\n" > "$BUILD_DIR/Resources/qt.conf"
 
   cmd cd "$BUILD_DIR/MacOS" || die "Unable to change directory to MacOS"
 
@@ -1495,6 +1496,9 @@ function deploy_osx
     log fixing library paths of executable "$exe"
     fixlibs "$exe"
   done
+
+  # Copy webvfx here temporarily so it can be found by fixlibs.
+  cmd cp -p $FINAL_INSTALL_DIR/lib/libwebvfx*.dylib .
 
   # MLT plugins
   log Copying MLT plugins
@@ -1507,22 +1511,26 @@ function deploy_osx
     fixlibs "$lib"
   done
 
-  # Qt4 plugins
+  # Cleanup temporary libwebvfx.
+  cmd rm libwebvfx*.dylib
+
+  # Qt plugins
   log Copying Qt plugins
-  cmd mkdir -p lib/qt4 2>/dev/null
-  # try MacPorts first
-  if [ -d "/opt/local/share/qt4/plugins" ]; then
-    cmd cp -Rn "/opt/local/share/qt4/plugins"/{accessible,bearer,codecs,designer,graphicssystems,iconengines,imageformats,qmltooling,sceneformats,script,sqldrivers} lib/qt4
+  cmd mkdir -p lib/qt5 2>/dev/null
+  # try QTDIR first
+  if [ -d "$QTDIR/plugins" ]; then
+    cmd cp -Rn "$QTDIR/plugins"/{accessible,iconengines,imageformats,mediaservice,platforms} lib/qt5
   # try Qt Creator next
   elif [ -d "/Applications/Qt Creator.app/Contents/PlugIns" ]; then
-    cmd cp -Rn "/Applications/Qt Creator.app/Contents/PlugIns"/{accessible,bearer,codecs,designer,graphicssystems,iconengines,imageformats,qmltooling,sceneformats,script,sqldrivers} lib/qt4
+    cmd cp -Rn "/Applications/Qt Creator.app/Contents/PlugIns"/{accessible,iconengines,imageformats,mediaservice,platforms} lib/qt5
   fi
-  for dir in lib/qt4/*; do
+  for dir in lib/qt5/*; do
     for lib in $dir/*; do
       log fixing library paths of Qt plugin "$lib"
       fixlibs "$lib"
     done
   done
+
 
   # frei0r plugins
   log Copying frei0r plugins
@@ -1583,15 +1591,51 @@ function deploy_win32
   cmd rm lib/*
   cmd rm -rf lib/pkgconfig
   cmd rm -rf share/doc share/man share/ffmpeg/examples share/aclocal share/glib-2.0 share/gtk-2.0 share/gtk-doc share/themes
-  cmd cp -p "$QTDIR"/bin/Qt{Core,Gui,OpenGL,Xml,Svg,Network,Declarative,WebKit,Script,Sql,XmlPatterns}4.dll .
-  cmd mkdir lib/qt4
-  cmd cp -pr "$QTDIR"/plugins/* lib/qt4
-  cmd cp -pr "$QTDIR"/translations/*.qm "$FINAL_INSTALL_DIR"/share/translations
+  cmd cp -p "$QTDIR"/bin/Qt5{Concurrent,Core,Declarative,Gui,Multimedia,MultimediaQuick,MultimediaWidgets,Network,OpenGL,PrintSupport,Qml,QmlParticles,Quick,Script,Sensors,Sql,Svg,V8,WebKit,WebKitWidgets,Widgets,Xml,XmlPatterns}.dll .
+  cmd cp -p "$QTDIR"/bin/{icudt51,icuin51,icuuc51,libgcc_s_dw2-1,libstdc++-6,libwinpthread-1}.dll .
+  cmd mkdir lib/qt5
+  cmd cp -pr "$QTDIR"/plugins/{accessible,iconengines,imageformats,mediaservice,platforms} lib/qt5
+  cmd cp -pr "$QTDIR"/translations/qt_*.qm share/translations
   cmd tar -xjf "$HOME/ladspa_plugins-win-0.4.15.tar.bz2"
 
   log Making installer
   cmd cd ..
   cmd makensis shotcut.nsi
+
+  popd
+}
+
+function deploy_win32_sdk
+{
+  trace "Entering deploy_win32_sdk @ = $@"
+
+  pushd .
+
+  log Changing directory to $FINAL_INSTALL_DIR
+  cmd cd $FINAL_INSTALL_DIR || die "Unable to change to directory $FINAL_INSTALL_DIR"
+
+  cmd mv bin/*.dll .
+  cmd mv bin/*.exe .
+  cmd mv README README.txt
+  cmd mv COPYING COPYING.txt
+  cmd cp -p "$QTDIR"/bin/Qt5{Concurrent,Core,Declarative,Gui,Multimedia,MultimediaQuick,MultimediaWidgets,Network,OpenGL,PrintSupport,Qml,QmlParticles,Quick,Script,Sensors,Sql,Svg,V8,WebKit,WebKitWidgets,Widgets,Xml,XmlPatterns}.dll .
+  cmd cp -p "$QTDIR"/bin/{icudt51,icuin51,icuuc51,libgcc_s_dw2-1,libstdc++-6,libwinpthread-1}.dll .
+  cmd mkdir lib/qt5
+  cmd cp -pr "$QTDIR"/plugins/{accessible,iconengines,imageformats,mediaservice,platforms} lib/qt5
+  cmd cp -pr "$QTDIR"/translations/qt_*.qm share/translations
+  cmd tar -xjf "$HOME/ladspa_plugins-win-0.4.15.tar.bz2"
+
+  # Prepare src for archiving
+  pushd .
+  clean_dirs
+  popd
+  log Copying src
+  cmd -rf src 2> /dev/null
+  cmd cp -a $SOURCE_DIR .
+
+  log Creating archive
+  cmd cd ..
+  cmd zip -gr shotcut-sdk.zip Shotcut
 
   popd
 }
@@ -1725,6 +1769,9 @@ function perform_action {
   fi
   if test 1 = "$GET"; then
     get_all_sources
+  fi
+  if test "$TARGET_OS" = "Win32" ; then
+    get_win32_prebuilt
   fi
   if test 1 = "$COMPILE_INSTALL" ; then
     sys_info
