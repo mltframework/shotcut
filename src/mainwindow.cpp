@@ -359,6 +359,12 @@ void MainWindow::setupSettingsMenu()
         m_settings.setValue("player/gpu", false);
     }
 #endif
+#ifdef Q_OS_WIN
+    // GL shared context on separate thread is not working on Windows in Qt 5.1.1.
+    ui->menuSettings->removeAction(ui->actionGPU);
+    m_settings.setValue("player/gpu", false);
+#endif
+
     // Add the SDI and HDMI devices to the Settings menu.
     m_externalGroup = new QActionGroup(this);
     ui->actionExternalNone->setData(QString());
