@@ -1,6 +1,6 @@
 CONFIG   += link_prl
 
-QT       += widgets opengl xml network
+QT       += widgets opengl xml network qml quick
 
 TARGET = shotcut
 TEMPLATE = app
@@ -59,12 +59,13 @@ SOURCES += main.cpp\
     filters/boxblurfilter.cpp \
     filters/frei0rglowfilter.cpp \
     filters/cropfilter.cpp \
-    filters/saturationfilter.cpp \
     filters/movitsharpenfilter.cpp \
     filters/frei0rsharpnessfilter.cpp \
     widgets/colorpickerwidget.cpp \
     filters/whitebalancefilter.cpp \
-    dialogs/customprofiledialog.cpp
+    dialogs/customprofiledialog.cpp \
+    qmltypes/qmlfilter.cpp \
+    qmltypes/qmlmetadata.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -119,12 +120,13 @@ HEADERS  += mainwindow.h \
     filters/boxblurfilter.h \
     filters/frei0rglowfilter.h \
     filters/cropfilter.h \
-    filters/saturationfilter.h \
     filters/movitsharpenfilter.h \
     filters/frei0rsharpnessfilter.h \
     widgets/colorpickerwidget.h \
     filters/whitebalancefilter.h \
-    dialogs/customprofiledialog.h
+    dialogs/customprofiledialog.h \
+    qmltypes/qmlfilter.h \
+    qmltypes/qmlmetadata.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
@@ -161,7 +163,6 @@ FORMS    += mainwindow.ui \
     filters/boxblurfilter.ui \
     filters/frei0rglowfilter.ui \
     filters/cropfilter.ui \
-    filters/saturationfilter.ui \
     filters/movitsharpenfilter.ui \
     filters/frei0rsharpnessfilter.ui \
     filters/whitebalancefilter.ui \
@@ -178,7 +179,11 @@ OTHER_FILES += \
     ../scripts/shotcut.nsi \
     ../Info.plist \
     ../icons/dark/index.theme \
-    ../icons/light/index.theme
+    ../icons/light/index.theme \
+    qml/filters/saturation/meta_frei0r.qml \
+    qml/filters/saturation/ui_frei0r.qml \
+    qml/filters/saturation/meta_movit.qml \
+    qml/filters/saturation/ui_movit.qml
 
 TRANSLATIONS += \
     ../translations/shotcut_cs.ts \

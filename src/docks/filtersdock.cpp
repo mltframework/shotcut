@@ -21,6 +21,10 @@
 #include "mltcontroller.h"
 #include <QMenu>
 #include <QSettings>
+#include <QtQml>
+#include <QtQuick>
+#include <QtAlgorithms>
+#include <QActionGroup>
 #include "mainwindow.h"
 #include "filters/movitblurfilter.h"
 #include "filters/movitglowfilter.h"
@@ -33,7 +37,13 @@
 #include "filters/movitsharpenfilter.h"
 #include "filters/frei0rsharpnessfilter.h"
 #include "filters/whitebalancefilter.h"
+#include "qmltypes/qmlfilter.h"
+#include "qmltypes/qmlmetadata.h"
 
+static bool compareQAction(const QAction* a1, const QAction* a2)
+{
+    return a1->text().toLower() < a2->text().toLower();
+}
 
 FiltersDock::FiltersDock(QWidget *parent) :
     QDockWidget(parent),
@@ -42,11 +52,53 @@ FiltersDock::FiltersDock(QWidget *parent) :
     QSettings settings;
     m_isGPU = settings.value("player/gpu", false).toBool();
     ui->setupUi(this);
-    toggleViewAction()->setIcon(QIcon::fromTheme("view-filter", windowIcon()));
+    toggleViewAction()->setIcon(QIcon::fromTheme("qqview-filter", windowIcon()));
     ui->listView->setModel(&m_model);
     ui->listView->setDragDropMode(QAbstractItemView::InternalMove);
     ui->listView->setDropIndicatorShown(true);
     connect(model(), SIGNAL(changed()), this, SLOT(onModelChanged()));
+
+    QList<QAction*> actions;
+    actions.append(ui->actionBlur);
+    actions.append(ui->actionColorGrading);
+    actions.append(ui->actionCrop);
+//    if (m_isGPU) menu.append(ui->actionDiffusion);
+    actions.append(ui->actionGlow);
+    actions.append(ui->actionMirror);
+    actions.append(ui->actionSharpen);
+//    menu.append(ui->actionSizePosition);
+//    menu.append(ui->actionVignette);
+    actions.append(ui->actionWhiteBalance);
+
+    // Find all of the plugin filters.
+    qmlRegisterType<QmlMetadata>("org.shotcut.qml", 1, 0, "Metadata");
+    QQmlEngine engine;
+    QDir dir = qmlDir();
+    foreach (QString dirName, dir.entryList(QDir::AllDirs | QDir::NoDotAndDotDot | QDir::Executable)) {
+        QDir subdir = dir;
+        subdir.cd(dirName);
+        subdir.setFilter(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
+        subdir.setNameFilters(QStringList("meta*.qml"));
+        foreach (QString fileName, subdir.entryList()) {
+            QQmlComponent component(&engine, subdir.absoluteFilePath(fileName));
+            QmlMetadata *meta = qobject_cast<QmlMetadata*>(component.create());
+            if (meta && (meta->needsGPU() == m_isGPU)) {
+                // TODO: check mlt_service is available.
+                QAction* action = new QAction(meta->name(), this);
+                action->setProperty("shotcut:qml_filename", subdir.absoluteFilePath(meta->qmlFileName()));
+                action->setProperty("shotcut:mlt_service", meta->mlt_service());
+                actions << action;
+            } else if (!meta) {
+                qWarning() << component.errorString();
+            }
+            delete meta;
+        }
+    };
+    qSort(actions.begin(), actions.end(), compareQAction);
+    m_actions = new QActionGroup(this);
+    foreach (QAction* action, actions)
+        m_actions->addAction(action);
+    connect(m_actions, SIGNAL(triggered(QAction*)), SLOT(onActionTriggered(QAction*)));
 }
 
 FiltersDock::~FiltersDock()
@@ -62,7 +114,7 @@ void FiltersDock::onModelChanged()
 
 void FiltersDock::onProducerOpened()
 {
-    delete ui->scrollArea->widget();
+    loadWidgetsPanel();
     m_model.reset();
     onModelChanged();
     if (MLT.isPlaylist() && this->isVisible()) {
@@ -78,17 +130,7 @@ void FiltersDock::on_addButton_clicked()
 {
     QPoint pos = ui->addButton->mapToParent(QPoint(0, 0));
     QMenu menu(this);
-    menu.addAction(ui->actionBlur);
-    menu.addAction(ui->actionColorGrading);
-    menu.addAction(ui->actionCrop);
-//    if (m_isGPU) menu.addAction(ui->actionDiffusion);
-    menu.addAction(ui->actionGlow);
-    menu.addAction(ui->actionMirror);
-    menu.addAction(ui->actionSaturation);
-    menu.addAction(ui->actionSharpen);
-//    menu.addAction(ui->actionSizePosition);
-//    menu.addAction(ui->actionVignette);
-    menu.addAction(ui->actionWhiteBalance);
+    menu.addActions(m_actions->actions());
     menu.exec(mapToGlobal(pos));
 }
 
@@ -120,16 +162,22 @@ void FiltersDock::on_listView_clicked(const QModelIndex &index)
             ui->scrollArea->setWidget(new Frei0rGlowFilter(*filter));
         else if (name == "crop")
             ui->scrollArea->setWidget(new CropFilter(*filter));
-        else if (name == "frei0r.saturat0r" || name == "movit.saturation")
-            ui->scrollArea->setWidget(new SaturationFilter(*filter));
         else if (name == "movit.sharpen")
             ui->scrollArea->setWidget(new MovitSharpenFilter(*filter));
         else if (name == "frei0r.sharpness")
             ui->scrollArea->setWidget(new Frei0rSharpnessFilter(*filter));
         else if (name == "frei0r.colgate" || name == "movit.white_balance")
             ui->scrollArea->setWidget(new WhiteBalanceFilter(*filter));
-        else
+        else {
             delete ui->scrollArea->widget();
+            // See if it matches any of our plugin actions.
+            foreach(QAction* action, m_actions->actions()) {
+                if (action->property("shotcut:mlt_service") == name) {
+                    loadQuickPanel(QUrl::fromLocalFile(action->property("shotcut:qml_filename").toString()), index.row());
+                    break;
+                }
+            }
+        }
     }
     delete filter;
 }
@@ -231,18 +279,54 @@ void FiltersDock::on_actionSizePosition_triggered()
     ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
 }
 
-void FiltersDock::on_actionSaturation_triggered()
+void FiltersDock::on_actionWhiteBalance_triggered()
 {
-    Mlt::Filter* filter = m_model.add(m_isGPU? "movit.saturation": "frei0r.saturat0r");
-    ui->scrollArea->setWidget(new SaturationFilter(*filter, true));
+    Mlt::Filter* filter = m_model.add(m_isGPU? "movit.white_balance": "frei0r.colgate");
+    loadWidgetsPanel(new WhiteBalanceFilter(*filter, true));
     delete filter;
     ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
 }
 
-void FiltersDock::on_actionWhiteBalance_triggered()
+void FiltersDock::onActionTriggered(QAction* action)
 {
-    Mlt::Filter* filter = m_model.add(m_isGPU? "movit.white_balance": "frei0r.colgate");
-    ui->scrollArea->setWidget(new WhiteBalanceFilter(*filter, true));
-    delete filter;
-    ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
+    if (action->property("shotcut:qml_filename").isValid()) {
+        loadQuickPanel(QUrl::fromLocalFile(action->property("shotcut:qml_filename").toString()));
+        ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
+    }
+}
+
+QDir FiltersDock::qmlDir() const
+{
+    QDir dir(qApp->applicationDirPath());
+#if defined(Q_OS_MAC)
+    dir.cd("share");
+    dir.cd("shotcut");
+#elif !defined(Q_OS_WIN)
+    dir.cdUp();
+    dir.cd("share");
+    dir.cd("shotcut");
+#endif
+    dir.cd("qml");
+    dir.cd("filters");
+    return dir;
+}
+
+void FiltersDock::loadWidgetsPanel(QWidget *widget)
+{
+    delete ui->scrollArea->widget();
+    ui->scrollArea->setWidget(widget);
+}
+
+void FiltersDock::loadQuickPanel(const QUrl &url, int row)
+{
+    QQuickView* qqview = new QQuickView;
+//    qqview->engine()->addImportPath(":/qml/components");
+    qqview->engine()->rootContext()->setContextProperty("filter",
+        new QmlFilter(m_model, row, qqview));
+    qqview->setResizeMode(QQuickView::SizeRootObjectToView);
+    qqview->setColor(palette().window().color());
+    qqview->setSource(url);
+    QWidget* container = QWidget::createWindowContainer(qqview);
+    container->setFocusPolicy(Qt::TabFocus);
+    loadWidgetsPanel(container);
 }

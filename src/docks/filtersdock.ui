@@ -11,7 +11,9 @@
    </rect>
   </property>
   <property name="windowIcon">
-   <iconset theme="view-filter"/>
+   <iconset theme="view-filter">
+    <normaloff/>
+   </iconset>
   </property>
   <property name="windowTitle">
    <string>Filters</string>
@@ -127,7 +129,7 @@
          <x>0</x>
          <y>0</y>
          <width>132</width>
-         <height>256</height>
+         <height>259</height>
         </rect>
        </property>
       </widget>
@@ -184,11 +186,6 @@
   <action name="actionSizePosition">
    <property name="text">
     <string>Size and Position</string>
-   </property>
-  </action>
-  <action name="actionSaturation">
-   <property name="text">
-    <string>Saturation</string>
    </property>
   </action>
   <action name="actionWhiteBalance">

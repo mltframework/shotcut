@@ -20,11 +20,15 @@
 #define FILTERSDOCK_H
 
 #include <QDockWidget>
+#include <QDir>
+#include <QUrl>
 #include "models/attachedfiltersmodel.h"
 
 namespace Ui {
 class FiltersDock;
 }
+
+class QActionGroup;
 
 class FiltersDock : public QDockWidget
 {
@@ -68,14 +72,19 @@ private slots:
     
     void on_actionSizePosition_triggered();
     
-    void on_actionSaturation_triggered();
-    
     void on_actionWhiteBalance_triggered();
-    
+
+    void onActionTriggered(QAction* action);
+
 private:
     Ui::FiltersDock *ui;
     AttachedFiltersModel m_model;
     bool m_isGPU;
+    QActionGroup* m_actions;
+    
+    QDir qmlDir() const;
+    void loadWidgetsPanel(QWidget* widget = 0);
+    void loadQuickPanel(const QUrl &url, int row = -1);
 };
 
 #endif // FILTERSDOCK_H

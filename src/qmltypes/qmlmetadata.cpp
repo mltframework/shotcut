@@ -16,35 +16,34 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SATURATIONFILTER_H
-#define SATURATIONFILTER_H
+#include "qmlmetadata.h"
 
-#include <QWidget>
-#include <MltFilter.h>
-
-namespace Ui {
-class SaturationFilter;
+QmlMetadata::QmlMetadata(QObject *parent) :
+    QObject(parent)
+{
 }
 
-class SaturationFilter : public QWidget
+void QmlMetadata::setType(QmlMetadata::PluginType type)
 {
-    Q_OBJECT
-    
-public:
-    explicit SaturationFilter(Mlt::Filter filter, bool setDefaults = false, QWidget *parent = 0);
-    ~SaturationFilter();
-    
-private slots:
-    void on_doubleSpinBox_valueChanged(double arg1);
-    
-    void on_horizontalSlider_valueChanged(int value);
-    
-    void on_pushButton_clicked();
-    
-private:
-    Ui::SaturationFilter *ui;
-    Mlt::Filter m_filter;
-    bool m_isMovit;
-};
+    m_type = type;
+}
 
-#endif // SATURATIONFILTER_H
+void QmlMetadata::setName(const QString &name)
+{
+    m_name = name;
+}
+
+void QmlMetadata::set_mlt_service(const QString &service)
+{
+    m_mlt_service = service;
+}
+
+void QmlMetadata::setNeedsGPU(bool needs)
+{
+    m_needsGPU = needs;
+}
+
+void QmlMetadata::setQmlFileName(const QString &fileName)
+{
+    m_qmlFileName = fileName;
+}
