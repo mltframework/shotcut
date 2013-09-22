@@ -89,5 +89,6 @@
         <file>oxygen/16x16/actions/dialog-cancel.png</file>
         <file>dark/16x16/dialog-cancel.png</file>
         <file>light/16x16/dialog-cancel.png</file>
+        <file>oxygen/32x32/actions/color-picker.png</file>
     </qresource>
 </RCC>
