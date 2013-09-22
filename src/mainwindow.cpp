@@ -1315,9 +1315,8 @@ void MainWindow::on_actionRealtime_triggered(bool checked)
 {
     MLT.videoWidget()->setProperty("realtime", checked);
     if (MLT.consumer()) {
-        MLT.consumer()->stop();
         MLT.consumer()->set("real_time", checked? 1 : -1);
-        MLT.consumer()->start();
+        MLT.restart();
     }
     m_settings.setValue("player/realtime", checked);
 }
@@ -1326,9 +1325,8 @@ void MainWindow::on_actionProgressive_triggered(bool checked)
 {
     MLT.videoWidget()->setProperty("progressive", checked);
     if (MLT.consumer() && !MLT.profile().progressive()) {
-        MLT.consumer()->stop();
         MLT.consumer()->set("progressive", checked);
-        MLT.consumer()->start();
+        MLT.restart();
     }
     m_settings.setValue("player/progressive", checked);
 }
@@ -1338,9 +1336,8 @@ void MainWindow::changeDeinterlacer(bool checked, const char* method)
     if (checked) {
         MLT.videoWidget()->setProperty("deinterlace_method", method);
         if (MLT.consumer()) {
-            MLT.consumer()->stop();
             MLT.consumer()->set("deinterlace_method", method);
-            MLT.consumer()->start();
+            MLT.restart();
         }
     }
     m_settings.setValue("player/deinterlacer", method);
@@ -1371,9 +1368,8 @@ void MainWindow::changeInterpolation(bool checked, const char* method)
     if (checked) {
         MLT.videoWidget()->setProperty("rescale", method);
         if (MLT.consumer()) {
-            MLT.consumer()->stop();
             MLT.consumer()->set("rescale", method);
-            MLT.consumer()->start();
+            MLT.restart();
         }
     }
     m_settings.setValue("player/interpolation", method);
@@ -1520,9 +1516,8 @@ void MainWindow::onExternalTriggered(QAction *action)
             : ui->actionProgressive->isChecked();
     MLT.videoWidget()->setProperty("progressive", isProgressive);
     if (MLT.consumer()) {
-        MLT.consumer()->stop();
         MLT.consumer()->set("progressive", isProgressive);
-        MLT.consumer()->start();
+        MLT.restart();
     }
 }
 

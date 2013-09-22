@@ -99,7 +99,7 @@ public:
     void refreshConsumer();
     QString saveXML(const QString& filename, Service* service = 0);
     int consumerChanged();
-    int setProfile(const QString& profile_name);
+    void setProfile(const QString& profile_name);
     QString resource() const;
     bool isSeekable();
     bool isPlaylist() const;
@@ -109,6 +109,7 @@ public:
     void next(int currentPosition);
     void setIn(int);
     void setOut(int);
+    void restart();
 
     Mlt::Repository* repository() const {
         return m_repo;

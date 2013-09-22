@@ -380,16 +380,8 @@ int Controller::consumerChanged()
     return error;
 }
 
-int Controller::setProfile(const QString& profile_name)
+void Controller::setProfile(const QString& profile_name)
 {
-    int error = 0;
-    bool reopen = m_consumer != 0;
-    double speed = m_producer? m_producer->get_speed(): 0;
-    const char* position = m_producer? m_producer->frame_time() : 0;
-
-    if (m_consumer)
-        m_consumer->stop();
-
     Mlt::Profile tmp(profile_name.toLatin1().constData());
     m_profile->set_colorspace(tmp.colorspace());
     m_profile->set_frame_rate(tmp.frame_rate_num(), tmp.frame_rate_den());
@@ -400,14 +392,7 @@ int Controller::setProfile(const QString& profile_name)
     m_profile->get_profile()->display_aspect_num = tmp.display_aspect_num();
     m_profile->get_profile()->display_aspect_den = tmp.display_aspect_den();
     m_profile->set_explicit(!profile_name.isEmpty());
-
-    if (reopen) {
-        if (!open(new Mlt::Producer(m_producer)))
-            m_producer->seek(position);
-        play(speed);
-    }
-
-    return error;
+    restart();
 }
 
 QString Controller::resource() const
@@ -505,6 +490,28 @@ void Controller::setOut(int out)
 {
     if (m_producer && m_producer->is_valid())
         m_producer->set("out", out);
+}
+
+void Controller::restart()
+{
+    if (!m_consumer) return;
+    QSettings settings;
+    if (m_producer && m_producer->is_valid() &&
+        settings.value("player/gpu").toBool()) {
+        m_consumer->set("_shotcut_position", m_consumer->position());
+        const char* position = m_consumer->get_time("_shotcut_position");
+        double speed = m_producer->get_speed();
+        QString xml = saveXML("string");
+        close();
+        if (!open(new Mlt::Producer(profile(), "xml-string", xml.toUtf8().constData()))) {
+            m_producer->seek(position);
+            m_producer->set_speed(speed);
+            m_consumer->start();
+        }
+    } else {
+        m_consumer->stop();
+        m_consumer->start();
+    }
 }
 
 QImage Controller::image(Mlt::Frame* frame, int width, int height)
