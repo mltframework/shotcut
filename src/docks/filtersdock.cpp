@@ -47,7 +47,8 @@ static bool compareQAction(const QAction* a1, const QAction* a2)
 
 FiltersDock::FiltersDock(QWidget *parent) :
     QDockWidget(parent),
-    ui(new Ui::FiltersDock)
+    ui(new Ui::FiltersDock),
+    m_actions(0)
 {
     QSettings settings;
     m_isGPU = settings.value("player/gpu", false).toBool();
@@ -57,48 +58,6 @@ FiltersDock::FiltersDock(QWidget *parent) :
     ui->listView->setDragDropMode(QAbstractItemView::InternalMove);
     ui->listView->setDropIndicatorShown(true);
     connect(model(), SIGNAL(changed()), this, SLOT(onModelChanged()));
-
-    QList<QAction*> actions;
-    actions.append(ui->actionBlur);
-    actions.append(ui->actionColorGrading);
-    actions.append(ui->actionCrop);
-//    if (m_isGPU) menu.append(ui->actionDiffusion);
-    actions.append(ui->actionGlow);
-    actions.append(ui->actionMirror);
-    actions.append(ui->actionSharpen);
-//    menu.append(ui->actionSizePosition);
-//    menu.append(ui->actionVignette);
-    actions.append(ui->actionWhiteBalance);
-
-    // Find all of the plugin filters.
-    qmlRegisterType<QmlMetadata>("org.shotcut.qml", 1, 0, "Metadata");
-    QQmlEngine engine;
-    QDir dir = qmlDir();
-    foreach (QString dirName, dir.entryList(QDir::AllDirs | QDir::NoDotAndDotDot | QDir::Executable)) {
-        QDir subdir = dir;
-        subdir.cd(dirName);
-        subdir.setFilter(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
-        subdir.setNameFilters(QStringList("meta*.qml"));
-        foreach (QString fileName, subdir.entryList()) {
-            QQmlComponent component(&engine, subdir.absoluteFilePath(fileName));
-            QmlMetadata *meta = qobject_cast<QmlMetadata*>(component.create());
-            if (meta && (meta->needsGPU() == m_isGPU)) {
-                // TODO: check mlt_service is available.
-                QAction* action = new QAction(meta->name(), this);
-                action->setProperty("shotcut:qml_filename", subdir.absoluteFilePath(meta->qmlFileName()));
-                action->setProperty("shotcut:mlt_service", meta->mlt_service());
-                actions << action;
-            } else if (!meta) {
-                qWarning() << component.errorString();
-            }
-            delete meta;
-        }
-    };
-    qSort(actions.begin(), actions.end(), compareQAction);
-    m_actions = new QActionGroup(this);
-    foreach (QAction* action, actions)
-        m_actions->addAction(action);
-    connect(m_actions, SIGNAL(triggered(QAction*)), SLOT(onActionTriggered(QAction*)));
 }
 
 FiltersDock::~FiltersDock()
@@ -128,6 +87,49 @@ void FiltersDock::onProducerOpened()
 
 void FiltersDock::on_addButton_clicked()
 {
+    if (!m_actions) {
+        QList<QAction*> actions;
+        actions.append(ui->actionBlur);
+        actions.append(ui->actionColorGrading);
+        actions.append(ui->actionCrop);
+    //    if (m_isGPU) menu.append(ui->actionDiffusion);
+        actions.append(ui->actionGlow);
+        actions.append(ui->actionMirror);
+        actions.append(ui->actionSharpen);
+    //    menu.append(ui->actionSizePosition);
+    //    menu.append(ui->actionVignette);
+        actions.append(ui->actionWhiteBalance);
+
+        // Find all of the plugin filters.
+        qmlRegisterType<QmlMetadata>("org.shotcut.qml", 1, 0, "Metadata");
+        QQmlEngine engine;
+        QDir dir = qmlDir();
+        foreach (QString dirName, dir.entryList(QDir::AllDirs | QDir::NoDotAndDotDot | QDir::Executable)) {
+            QDir subdir = dir;
+            subdir.cd(dirName);
+            subdir.setFilter(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
+            subdir.setNameFilters(QStringList("meta*.qml"));
+            foreach (QString fileName, subdir.entryList()) {
+                QQmlComponent component(&engine, subdir.absoluteFilePath(fileName));
+                QmlMetadata *meta = qobject_cast<QmlMetadata*>(component.create());
+                if (meta && (meta->needsGPU() == m_isGPU)) {
+                    // TODO: check mlt_service is available.
+                    QAction* action = new QAction(meta->name(), this);
+                    action->setProperty("shotcut:qml_filename", subdir.absoluteFilePath(meta->qmlFileName()));
+                    action->setProperty("shotcut:mlt_service", meta->mlt_service());
+                    actions << action;
+                } else if (!meta) {
+                    qWarning() << component.errorString();
+                }
+                delete meta;
+            }
+        };
+        qSort(actions.begin(), actions.end(), compareQAction);
+        m_actions = new QActionGroup(this);
+        foreach (QAction* action, actions)
+            m_actions->addAction(action);
+        connect(m_actions, SIGNAL(triggered(QAction*)), SLOT(onActionTriggered(QAction*)));
+    }
     QPoint pos = ui->addButton->mapToParent(QPoint(0, 0));
     QMenu menu(this);
     menu.addActions(m_actions->actions());
