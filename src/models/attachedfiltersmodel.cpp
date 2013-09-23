@@ -19,6 +19,7 @@
 #include "attachedfiltersmodel.h"
 #include "mltcontroller.h"
 #include <QSettings>
+#include <QDebug>
 
 AttachedFiltersModel::AttachedFiltersModel(QObject *parent)
     : QAbstractListModel(parent)
@@ -110,11 +111,18 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
         return QVariant();
     switch (role ) {
     case Qt::DisplayRole: {
-            Mlt::Filter* filter = filterForRow(index.row());
             QVariant result;
-            if (filter && filter->is_valid() && filter->get("mlt_service"))
-                result = QString::fromUtf8(filter->get("mlt_service"));
+            Mlt::Filter* filter = filterForRow(index.row());
+            if (filter && filter->is_valid()) {
+                // Relabel by QML UI
+                if (filter->get("shotcut:name"))
+                    result = QString::fromUtf8(filter->get("shotcut:name"));
+                // Fallback is raw mlt_service name
+                else if (filter->get("mlt_service"))
+                    result = QString::fromUtf8(filter->get("mlt_service"));
+            }
             delete filter;
+            // Relabel for widgets UIs
             if (result == "movit.blur" || result == "boxblur")
                 result = tr("Blur");
             else if (result == "movit.lift_gamma_gain" || result == "frei0r.coloradj_RGB")
@@ -127,8 +135,6 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
                 result = tr("Glow");
             else if (result == "movit.mirror" || result == "mirror")
                 result = tr("Mirror");
-            else if (result == "movit.saturation" || result == "frei0r.saturat0r")
-                result = tr("Saturation");
             else if (result == "movit.sharpen" || result == "frei0r.sharpness")
                 result = tr("Sharpen");
             else if (result == "movit.vignette" || result == "vignette")
@@ -213,6 +219,7 @@ Mlt::Filter *AttachedFiltersModel::add(const QString& name)
         endInsertRows();
         emit changed();
     }
+    else qWarning() << "Failed to load filter" << name;
     return filter;
 }
 

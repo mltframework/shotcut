@@ -25,6 +25,7 @@
 #include <QtQuick>
 #include <QtAlgorithms>
 #include <QActionGroup>
+#include <QFileInfo>
 #include "mainwindow.h"
 #include "filters/movitblurfilter.h"
 #include "filters/movitglowfilter.h"
@@ -33,7 +34,6 @@
 #include "filters/boxblurfilter.h"
 #include "filters/frei0rglowfilter.h"
 #include "filters/cropfilter.h"
-#include "filters/saturationfilter.h"
 #include "filters/movitsharpenfilter.h"
 #include "filters/frei0rsharpnessfilter.h"
 #include "filters/whitebalancefilter.h"
@@ -321,8 +321,10 @@ void FiltersDock::loadQuickPanel(const QUrl &url, int row)
 {
     QQuickView* qqview = new QQuickView;
 //    qqview->engine()->addImportPath(":/qml/components");
-    qqview->engine()->rootContext()->setContextProperty("filter",
-        new QmlFilter(m_model, row, qqview));
+    QmlFilter* qmlFilter = new QmlFilter(m_model, row, qqview);
+    QFileInfo file(url.toLocalFile());
+    qmlFilter->setPath(file.absolutePath().append('/'));
+    qqview->engine()->rootContext()->setContextProperty("filter", qmlFilter);
     qqview->setResizeMode(QQuickView::SizeRootObjectToView);
     qqview->setColor(palette().window().color());
     qqview->setSource(url);

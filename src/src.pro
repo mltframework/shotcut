@@ -183,7 +183,10 @@ OTHER_FILES += \
     qml/filters/saturation/meta_frei0r.qml \
     qml/filters/saturation/ui_frei0r.qml \
     qml/filters/saturation/meta_movit.qml \
-    qml/filters/saturation/ui_movit.qml
+    qml/filters/saturation/ui_movit.qml \
+    qml/filters/webvfx_circular_frame/filter-demo.html \
+    qml/filters/webvfx_circular_frame/ui.qml \
+    qml/filters/webvfx_circular_frame/meta.qml
 
 TRANSLATIONS += \
     ../translations/shotcut_cs.ts \

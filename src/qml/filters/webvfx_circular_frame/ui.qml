@@ -19,22 +19,23 @@
 import QtQuick 2.1
 import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.0
+import QtQuick.Dialogs 1.0
 
 Rectangle {
     width: 400
     height: 200
     color: 'transparent'
-    property string saturationParameter: 'saturation'
     Component.onCompleted: {
         if (filter.isNew) {
             // Create the filter by specifying its Id
-            filter.mlt_service = 'movit.saturation'
-            filter.name = qsTr('Saturation')
+            filter.mlt_service = 'webvfx:' + filter.path + 'filter-demo.html'
+            filter.name = qsTr('Circular Frame')
             // Set default parameter values
-            slider.value = 100
+            slider.value = 50
+            colorSwatch.color = 'black'
         } else {
             // Initialize parameter values
-            slider.value = filter.get(saturationParameter) * slider.maximumValue
+            slider.value = filter.get('radius') * slider.maximumValue
         }
     }
 
@@ -46,16 +47,16 @@ Rectangle {
             anchors.fill: parent
             spacing: 8
     
-            Label { text: qsTr('Saturation') }
+            Label { text: qsTr('Radius') }
             Slider {
                 id: slider
                 Layout.fillWidth: true
                 Layout.minimumWidth: 100
                 minimumValue: 0
-                maximumValue: 800
+                maximumValue: 100
                 onValueChanged: {
                     spinner.value = value
-                    filter.set(saturationParameter, value / 100)
+                    filter.set('radius', value / maximumValue)
                 }
             }
             SpinBox {
@@ -63,18 +64,44 @@ Rectangle {
                 Layout.minimumWidth: 70
                 suffix: ' %'
                 minimumValue: 0
-                maximumValue: 800
+                maximumValue: 100
                 onValueChanged: slider.value = value
             }
             ToolButton {
                 id: undo
                 iconName: 'edit-undo'
                 tooltip: qsTr('Reset to default')
-                onClicked: slider.value = 100
+                onClicked: slider.value = 50
             }
         }
+
+        RowLayout {
+            Button {
+                text: qsTr('Color')
+                onClicked: colorDialog.visible = true
+            }
+            Rectangle {
+                id: colorSwatch
+                width: 20
+                height: 20
+                color: filter.get('color')
+            }
+        }
+
         Item {
             Layout.fillHeight: true;
+        }
+    }
+
+    ColorDialog {
+        id: colorDialog
+        title: qsTr("Please choose a color")
+        showAlphaChannel: false
+        onAccepted: {
+            // The "''+" hack converts the color into a string.
+            filter.set('color', ''+ colorDialog.color)
+            colorSwatch.color = colorDialog.color
+            console.log("You chose: " + colorDialog.color)
         }
     }
 }

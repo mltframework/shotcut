@@ -65,10 +65,19 @@ void QmlFilter::set(QString name, int value)
     MLT.refreshConsumer();
 }
 
-void QmlFilter::create(const QString &name)
+void QmlFilter::create(const QString &mlt_service)
 {
-    if (!m_filter) {
-        m_filter = m_model.add(name);
-        emit serviceNameChanged();
-    }
+    if (!m_filter)
+        m_filter = m_model.add(mlt_service);
+}
+
+void QmlFilter::setName(const QString &name)
+{
+    if (m_filter)
+        m_filter->set("shotcut:name", name.toUtf8().constData());
+}
+
+void QmlFilter::setPath(const QString &path)
+{
+    m_path = path;
 }
