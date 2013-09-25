@@ -309,14 +309,11 @@ void FiltersDock::onActionTriggered(QAction* action)
 QDir FiltersDock::qmlDir() const
 {
     QDir dir(qApp->applicationDirPath());
-#if defined(Q_OS_MAC)
-    dir.cd("share");
-    dir.cd("shotcut");
-#elif !defined(Q_OS_WIN)
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     dir.cdUp();
+#endif
     dir.cd("share");
     dir.cd("shotcut");
-#endif
     dir.cd("qml");
     dir.cd("filters");
     return dir;

@@ -1313,6 +1313,8 @@ SLIB_EXTRA_CMD=-"mv $$(@:$(SLIBSUF)=.orig.def) $$(@:$(SLIBSUF)=.def)"
         cmd install -c scripts/shotcut.nsi "$FINAL_INSTALL_DIR"/..
         cmd install -d "$FINAL_INSTALL_DIR"/share/translations
         cmd install -p -c translations/*.qm "$FINAL_INSTALL_DIR"/share/translations
+        cmd install -d "$FINAL_INSTALL_DIR"/share/shotcut
+        cmd cp -a src/qml "$FINAL_INSTALL_DIR"/share/shotcut
         cat > "$FINAL_INSTALL_DIR"/README <<End-of-win32-README
 Shotcut README
 
@@ -1333,6 +1335,7 @@ End-of-win32-README
         cmd install -p -c COPYING "$FINAL_INSTALL_DIR"
         cmd install -d "$FINAL_INSTALL_DIR"/share/shotcut/translations
         cmd install -p -c translations/*.qm "$FINAL_INSTALL_DIR"/share/shotcut/translations
+        cmd cp -a src/qml "$FINAL_INSTALL_DIR"/share/shotcut
         cmd install -p -c "$QTDIR"/translations/qt_*.qm "$FINAL_INSTALL_DIR"/share/shotcut/translations
         cmd install -p -c "$QTDIR"/lib/libQt5{Concurrent,Core,Declarative,Gui,Multimedia,MultimediaQuick,MultimediaWidgets,Network,OpenGL,PrintSupport,Qml,QmlParticles,Quick,Script,Sensors,Sql,Svg,V8,WebKit,WebKitWidgets,Widgets,Xml,XmlPatterns}.so* "$FINAL_INSTALL_DIR"/lib
         cmd install -p -c "$QTDIR"/lib/lib{icudata,icui8n,icuuc}.so* "$FINAL_INSTALL_DIR"/lib
@@ -1483,6 +1486,10 @@ function deploy_osx
   fi
   # copy Shotcut translations
   cmd cp -Rn translations/*.qm "$BUILD_DIR/Resources/translations/"
+
+  # copy Shotcut QML
+  cmd mkdir -p "$BUILD_DIR"/MacOS/share/shotcut/ 2>/dev/null
+  cmd cp -a src/qml "$BUILD_DIR"/MacOS/share/shotcut/
 
   # This little guy helps Qt 5.1 apps find the Qt plugins!
   cmd printf "[Paths]\nPlugins=MacOS/lib/qt5\n" > "$BUILD_DIR/Resources/qt.conf"
