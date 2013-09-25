@@ -1315,21 +1315,6 @@ SLIB_EXTRA_CMD=-"mv $$(@:$(SLIBSUF)=.orig.def) $$(@:$(SLIBSUF)=.def)"
         cmd install -p -c translations/*.qm "$FINAL_INSTALL_DIR"/share/translations
         cmd install -d "$FINAL_INSTALL_DIR"/share/shotcut
         cmd cp -a src/qml "$FINAL_INSTALL_DIR"/share/shotcut
-        cat > "$FINAL_INSTALL_DIR"/README <<End-of-win32-README
-Shotcut README
-
-To install Shotcut, simply extract/copy the Shotcut folder to anywhere you
-like such as the Desktop or C:\Program Files.
-
-To run Shotcut, simply open the Shotcut folder and double-click shotcut.exe.
-You might find it convenient to right-click shotcut.exe and choose Send to
-Desktop to add an icon to your desktop.
-
-To upgrade Shotcut, simply download a new zip file and extract it to the
-same location as the old one. If you want to keep more than one version
-around, simply rename the Shotcut folder with the version number in the
-new name.
-End-of-win32-README
       elif test "$TARGET_OS" != "Darwin"; then
         cmd install -c -m 755 src/shotcut "$FINAL_INSTALL_DIR"/bin
         cmd install -p -c COPYING "$FINAL_INSTALL_DIR"
@@ -1593,11 +1578,10 @@ function deploy_win32
   cmd mv bin/ffmpeg.exe .
   cmd mv bin/qmelt.exe .
   cmd rm -rf bin include etc man manifest src *.txt
-  cmd mv README README.txt
   cmd mv COPYING COPYING.txt
   cmd rm lib/*
   cmd rm -rf lib/pkgconfig
-  cmd rm -rf share/doc share/man share/ffmpeg/examples share/aclocal share/glib-2.0 share/gtk-2.0 share/gtk-doc share/themes
+  cmd rm -rf share/doc share/man share/ffmpeg/examples share/aclocal share/glib-2.0 share/gtk-2.0 share/gtk-doc share/themes share/locale
   cmd cp -p "$QTDIR"/bin/Qt5{Concurrent,Core,Declarative,Gui,Multimedia,MultimediaQuick,MultimediaWidgets,Network,OpenGL,PrintSupport,Qml,QmlParticles,Quick,Script,Sensors,Sql,Svg,V8,WebKit,WebKitWidgets,Widgets,Xml,XmlPatterns}.dll .
   cmd cp -p "$QTDIR"/bin/{icudt51,icuin51,icuuc51,libgcc_s_dw2-1,libstdc++-6,libwinpthread-1}.dll .
   cmd mkdir lib/qt5
@@ -1623,7 +1607,6 @@ function deploy_win32_sdk
 
   cmd mv bin/*.dll .
   cmd mv bin/*.exe .
-  cmd mv README README.txt
   cmd mv COPYING COPYING.txt
   cmd cp -p "$QTDIR"/bin/Qt5{Concurrent,Core,Declarative,Gui,Multimedia,MultimediaQuick,MultimediaWidgets,Network,OpenGL,PrintSupport,Qml,QmlParticles,Quick,Script,Sensors,Sql,Svg,V8,WebKit,WebKitWidgets,Widgets,Xml,XmlPatterns}.dll .
   cmd cp -p "$QTDIR"/bin/{icudt51,icuin51,icuuc51,libgcc_s_dw2-1,libstdc++-6,libwinpthread-1}.dll .
