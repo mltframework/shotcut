@@ -5,6 +5,5 @@ Metadata {
     type: Metadata.Filter
     name: qsTr("Circular Frame")
     mlt_service: "webvfx"
-    needsGPU: false
     qml: "ui.qml"
 }

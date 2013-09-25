@@ -18,8 +18,12 @@
 
 #include "qmlmetadata.h"
 
-QmlMetadata::QmlMetadata(QObject *parent) :
-    QObject(parent)
+QmlMetadata::QmlMetadata(QObject *parent)
+    : QObject(parent)
+    , m_type(Filter)
+    , m_needsGPU(false)
+    , m_qmlFileName("ui.qml")
+    , m_isAudio(false)
 {
 }
 
@@ -56,4 +60,9 @@ void QmlMetadata::setPath(const QDir &path)
 QString QmlMetadata::qmlFilePath() const
 {
     return m_path.absoluteFilePath(m_qmlFileName);
+}
+
+void QmlMetadata::setIsAudio(bool isAudio)
+{
+    m_isAudio = isAudio;
 }

@@ -32,6 +32,7 @@ class QmlMetadata : public QObject
     Q_PROPERTY(QString mlt_service READ mlt_service WRITE set_mlt_service)
     Q_PROPERTY(bool needsGPU READ needsGPU WRITE setNeedsGPU)
     Q_PROPERTY(QString qml READ qmlFileName WRITE setQmlFileName)
+    Q_PROPERTY(bool isAudio READ isAudio WRITE setIsAudio)
 
 public:
     enum PluginType {
@@ -55,6 +56,8 @@ public:
     QDir path() const { return m_path; }
     void setPath(const QDir& path);
     QString qmlFilePath() const;
+    bool isAudio() const { return m_isAudio; }
+    void setIsAudio(bool isAudio);
 
 private:
     PluginType m_type;
@@ -63,6 +66,7 @@ private:
     bool m_needsGPU;
     QString m_qmlFileName;
     QDir m_path;
+    bool m_isAudio;
 };
 
 #endif // QMLMETADATA_H

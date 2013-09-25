@@ -5,6 +5,5 @@ Metadata {
     type: Metadata.Filter
     name: qsTr("Saturation")
     mlt_service: "frei0r.saturat0r"
-    needsGPU: false
     qml: "ui_frei0r.qml"
 }

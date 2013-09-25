@@ -92,13 +92,15 @@ QActionGroup *FiltersDock::availablefilters()
             foreach (QString fileName, subdir.entryList()) {
                 QQmlComponent component(&engine, subdir.absoluteFilePath(fileName));
                 QmlMetadata *meta = qobject_cast<QmlMetadata*>(component.create());
-                if (meta && (meta->needsGPU() == m_isGPU)) {
-                    // TODO: check mlt_service is available.
-                    QAction* action = new QAction(meta->name(), this);
-                    meta->setParent(action);
-                    meta->setPath(subdir);
-                    actions << action;
-                    m_serviceActionMap[meta->mlt_service()] = action;
+                if (meta && (meta->isAudio() || (meta->needsGPU() == m_isGPU))) {
+                    // Check if mlt_service is available.
+                    if (MLT.repository()->filters()->get_data(meta->mlt_service().toLatin1().constData())) {
+                        QAction* action = new QAction(meta->name(), this);
+                        meta->setParent(action);
+                        meta->setPath(subdir);
+                        actions << action;
+                        m_serviceActionMap[meta->mlt_service()] = action;
+                    }
                 } else if (!meta) {
                     qWarning() << component.errorString();
                 }
