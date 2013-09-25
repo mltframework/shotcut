@@ -27,9 +27,7 @@ Rectangle {
     color: 'transparent'
     Component.onCompleted: {
         if (filter.isNew) {
-            // Create the filter by specifying its Id
-            filter.mlt_service = 'webvfx:' + filter.path + 'filter-demo.html'
-            filter.name = qsTr('Circular Frame')
+            filter.set('resource', filter.path + 'filter-demo.html')
             // Set default parameter values
             slider.value = 50
             colorSwatch.color = 'black'

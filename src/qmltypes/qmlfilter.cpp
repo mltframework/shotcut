@@ -19,21 +19,22 @@
 #include "qmlfilter.h"
 #include "mltcontroller.h"
 
-QmlFilter::QmlFilter(AttachedFiltersModel& model, int row, QObject *parent)
+QmlFilter::QmlFilter(AttachedFiltersModel& model, const QmlMetadata &metadata, int row, QObject *parent)
     : QObject(parent)
     , m_model(model)
-    , m_filter(row >= 0? model.filterForRow(row) : 0)
+    , m_metadata(metadata)
+    , m_path(m_metadata.path().absolutePath().append('/'))
+    , m_isNew(row < 0)
 {
+    if (m_isNew)
+        m_filter = m_model.add(m_metadata.mlt_service());
+    else
+        m_filter = model.filterForRow(row);
 }
 
 QmlFilter::~QmlFilter()
 {
     delete m_filter;
-}
-
-bool QmlFilter::isNew() const
-{
-    return !m_filter;
 }
 
 QString QmlFilter::get(QString name)
@@ -63,21 +64,4 @@ void QmlFilter::set(QString name, int value)
     if (!m_filter) return;
     m_filter->set(name.toUtf8().constData(), value);
     MLT.refreshConsumer();
-}
-
-void QmlFilter::create(const QString &mlt_service)
-{
-    if (!m_filter)
-        m_filter = m_model.add(mlt_service);
-}
-
-void QmlFilter::setName(const QString &name)
-{
-    if (m_filter)
-        m_filter->set("shotcut:name", name.toUtf8().constData());
-}
-
-void QmlFilter::setPath(const QString &path)
-{
-    m_path = path;
 }

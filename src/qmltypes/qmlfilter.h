@@ -24,36 +24,32 @@
 #include <QVariant>
 #include <MltFilter.h>
 #include "models/attachedfiltersmodel.h"
+#include "qmlmetadata.h"
 
 class QmlFilter : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(bool isNew READ isNew)
-    Q_PROPERTY(QString mlt_service WRITE create)
-    Q_PROPERTY(QString name WRITE setName)
-    Q_PROPERTY(QString path READ path WRITE setPath)
+    Q_PROPERTY(QString path READ path)
 
 public:
-    explicit QmlFilter(AttachedFiltersModel& model, int row, QObject *parent = 0);
+    explicit QmlFilter(AttachedFiltersModel& model, const QmlMetadata& metadata, int row, QObject *parent = 0);
     ~QmlFilter();
 
-    Q_INVOKABLE bool isNew() const;
+    bool isNew() const { return m_isNew; }
+
     Q_INVOKABLE QString get(QString name);
     Q_INVOKABLE void set(QString name, QString value);
     Q_INVOKABLE void set(QString name, double value);
     Q_INVOKABLE void set(QString name, int value);
     QString path() const { return m_path; }
 
-public slots:
-    void create(const QString& mlt_service);
-    void setName(const QString& name);
-    void setPath(const QString& path);
-
 private:
-    QString m_serviceName;
     AttachedFiltersModel& m_model;
+    const QmlMetadata& m_metadata;
     Mlt::Filter* m_filter;
     QString m_path;
+    bool m_isNew;
 };
 
 #endif // FILTER_H

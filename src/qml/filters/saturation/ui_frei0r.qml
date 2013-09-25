@@ -27,9 +27,6 @@ Rectangle {
     property string saturationParameter: '0'
     Component.onCompleted: {
         if (filter.isNew) {
-            // Create the filter by specifying its Id
-            filter.mlt_service = 'frei0r.saturat0r'
-            filter.name = qsTr('Saturation')
             // Set default parameter values
             slider.value = 100
         } else {

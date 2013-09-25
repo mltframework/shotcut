@@ -22,6 +22,7 @@
 #include <QDockWidget>
 #include <QDir>
 #include <QUrl>
+#include <QMap>
 #include "models/attachedfiltersmodel.h"
 
 namespace Ui {
@@ -29,6 +30,7 @@ class FiltersDock;
 }
 
 class QActionGroup;
+class QmlMetadata;
 
 class FiltersDock : public QDockWidget
 {
@@ -40,6 +42,8 @@ public:
     AttachedFiltersModel* model() {
         return &m_model;
     }
+    QActionGroup* availablefilters();
+    QmlMetadata* qmlMetadataForService(const QString& serviceName);
 
 public slots:
     void onModelChanged();
@@ -81,10 +85,11 @@ private:
     AttachedFiltersModel m_model;
     bool m_isGPU;
     QActionGroup* m_actions;
+    QMap<QString, QAction*> m_serviceActionMap;
     
     QDir qmlDir() const;
     void loadWidgetsPanel(QWidget* widget = 0);
-    void loadQuickPanel(const QUrl &url, int row = -1);
+    void loadQuickPanel(const QmlMetadata *metadata, int row = -1);
 };
 
 #endif // FILTERSDOCK_H

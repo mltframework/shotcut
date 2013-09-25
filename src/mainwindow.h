@@ -49,6 +49,7 @@ public:
     QUndoStack* undoStack() const;
     void saveXML(const QString& filename);
     static void changeTheme(const QString& theme);
+    FiltersDock* filtersDock() const { return m_filtersDock; }
 
 signals:
     void producerOpened();

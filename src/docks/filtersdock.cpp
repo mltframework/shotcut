@@ -65,27 +65,7 @@ FiltersDock::~FiltersDock()
     delete ui;
 }
 
-void FiltersDock::onModelChanged()
-{
-    MLT.refreshConsumer();
-    ui->removeButton->setEnabled(m_model.rowCount() > 0);
-}
-
-void FiltersDock::onProducerOpened()
-{
-    loadWidgetsPanel();
-    m_model.reset();
-    onModelChanged();
-    if (MLT.isPlaylist() && this->isVisible()) {
-        ui->addButton->setDisabled(true);
-        MAIN.showStatusMessage(tr("Filters can only be applied to clips."));
-    }
-    else {
-        ui->addButton->setEnabled(true);
-    }
-}
-
-void FiltersDock::on_addButton_clicked()
+QActionGroup *FiltersDock::availablefilters()
 {
     if (!m_actions) {
         QList<QAction*> actions;
@@ -115,13 +95,13 @@ void FiltersDock::on_addButton_clicked()
                 if (meta && (meta->needsGPU() == m_isGPU)) {
                     // TODO: check mlt_service is available.
                     QAction* action = new QAction(meta->name(), this);
-                    action->setProperty("shotcut:qml_filename", subdir.absoluteFilePath(meta->qmlFileName()));
-                    action->setProperty("shotcut:mlt_service", meta->mlt_service());
+                    meta->setParent(action);
+                    meta->setPath(subdir);
                     actions << action;
+                    m_serviceActionMap[meta->mlt_service()] = action;
                 } else if (!meta) {
                     qWarning() << component.errorString();
                 }
-                delete meta;
             }
         };
         qSort(actions.begin(), actions.end(), compareQAction);
@@ -130,9 +110,44 @@ void FiltersDock::on_addButton_clicked()
             m_actions->addAction(action);
         connect(m_actions, SIGNAL(triggered(QAction*)), SLOT(onActionTriggered(QAction*)));
     }
+    return m_actions;
+}
+
+QmlMetadata *FiltersDock::qmlMetadataForService(const QString &serviceName)
+{
+    availablefilters();
+    QAction* action = m_serviceActionMap.value(serviceName);
+    if (action && action->children().count())
+        return qobject_cast<QmlMetadata*>(action->children().first());
+    else
+        return 0;
+}
+
+void FiltersDock::onModelChanged()
+{
+    MLT.refreshConsumer();
+    ui->removeButton->setEnabled(m_model.rowCount() > 0);
+}
+
+void FiltersDock::onProducerOpened()
+{
+    loadWidgetsPanel();
+    m_model.reset();
+    onModelChanged();
+    if (MLT.isPlaylist() && this->isVisible()) {
+        ui->addButton->setDisabled(true);
+        MAIN.showStatusMessage(tr("Filters can only be applied to clips."));
+    }
+    else {
+        ui->addButton->setEnabled(true);
+    }
+}
+
+void FiltersDock::on_addButton_clicked()
+{
     QPoint pos = ui->addButton->mapToParent(QPoint(0, 0));
     QMenu menu(this);
-    menu.addActions(m_actions->actions());
+    menu.addActions(availablefilters()->actions());
     menu.exec(mapToGlobal(pos));
 }
 
@@ -172,13 +187,7 @@ void FiltersDock::on_listView_clicked(const QModelIndex &index)
             ui->scrollArea->setWidget(new WhiteBalanceFilter(*filter));
         else {
             delete ui->scrollArea->widget();
-            // See if it matches any of our plugin actions.
-            foreach(QAction* action, m_actions->actions()) {
-                if (action->property("shotcut:mlt_service") == name) {
-                    loadQuickPanel(QUrl::fromLocalFile(action->property("shotcut:qml_filename").toString()), index.row());
-                    break;
-                }
-            }
+            loadQuickPanel(qmlMetadataForService(name), index.row());
         }
     }
     delete filter;
@@ -291,8 +300,8 @@ void FiltersDock::on_actionWhiteBalance_triggered()
 
 void FiltersDock::onActionTriggered(QAction* action)
 {
-    if (action->property("shotcut:qml_filename").isValid()) {
-        loadQuickPanel(QUrl::fromLocalFile(action->property("shotcut:qml_filename").toString()));
+    if (action->children().count()) {
+        loadQuickPanel(qobject_cast<QmlMetadata*>(action->children().first()));
         ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
     }
 }
@@ -319,17 +328,16 @@ void FiltersDock::loadWidgetsPanel(QWidget *widget)
     ui->scrollArea->setWidget(widget);
 }
 
-void FiltersDock::loadQuickPanel(const QUrl &url, int row)
+void FiltersDock::loadQuickPanel(const QmlMetadata* metadata, int row)
 {
+    if (!metadata) return;
     QQuickView* qqview = new QQuickView;
 //    qqview->engine()->addImportPath(":/qml/components");
-    QmlFilter* qmlFilter = new QmlFilter(m_model, row, qqview);
-    QFileInfo file(url.toLocalFile());
-    qmlFilter->setPath(file.absolutePath().append('/'));
+    QmlFilter* qmlFilter = new QmlFilter(m_model, *metadata, row, qqview);
     qqview->engine()->rootContext()->setContextProperty("filter", qmlFilter);
     qqview->setResizeMode(QQuickView::SizeRootObjectToView);
     qqview->setColor(palette().window().color());
-    qqview->setSource(url);
+    qqview->setSource(QUrl::fromLocalFile(metadata->qmlFilePath()));
     QWidget* container = QWidget::createWindowContainer(qqview);
     container->setFocusPolicy(Qt::TabFocus);
     loadWidgetsPanel(container);

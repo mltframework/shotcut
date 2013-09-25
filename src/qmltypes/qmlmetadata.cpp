@@ -47,3 +47,13 @@ void QmlMetadata::setQmlFileName(const QString &fileName)
 {
     m_qmlFileName = fileName;
 }
+
+void QmlMetadata::setPath(const QDir &path)
+{
+    m_path = path;
+}
+
+QString QmlMetadata::qmlFilePath() const
+{
+    return m_path.absoluteFilePath(m_qmlFileName);
+}

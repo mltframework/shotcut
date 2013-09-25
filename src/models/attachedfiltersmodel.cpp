@@ -18,6 +18,9 @@
 
 #include "attachedfiltersmodel.h"
 #include "mltcontroller.h"
+#include "mainwindow.h"
+#include "docks/filtersdock.h"
+#include "qmltypes/qmlmetadata.h"
 #include <QSettings>
 #include <QDebug>
 
@@ -115,8 +118,9 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
             Mlt::Filter* filter = filterForRow(index.row());
             if (filter && filter->is_valid()) {
                 // Relabel by QML UI
-                if (filter->get("shotcut:name"))
-                    result = QString::fromUtf8(filter->get("shotcut:name"));
+                QmlMetadata* meta = MAIN.filtersDock()->qmlMetadataForService(filter->get("mlt_service"));
+                if (meta)
+                    result = meta->name();
                 // Fallback is raw mlt_service name
                 else if (filter->get("mlt_service"))
                     result = QString::fromUtf8(filter->get("mlt_service"));

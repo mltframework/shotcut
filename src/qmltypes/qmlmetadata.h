@@ -21,6 +21,7 @@
 
 #include <QObject>
 #include <QString>
+#include <QDir>
 
 class QmlMetadata : public QObject
 {
@@ -51,6 +52,9 @@ public:
     void setNeedsGPU(bool);
     QString qmlFileName() const { return m_qmlFileName; }
     void setQmlFileName(const QString&);
+    QDir path() const { return m_path; }
+    void setPath(const QDir& path);
+    QString qmlFilePath() const;
 
 private:
     PluginType m_type;
@@ -58,6 +62,7 @@ private:
     QString m_mlt_service;
     bool m_needsGPU;
     QString m_qmlFileName;
+    QDir m_path;
 };
 
 #endif // QMLMETADATA_H
