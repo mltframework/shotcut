@@ -31,6 +31,7 @@ class QmlFilter : public QObject
     Q_OBJECT
     Q_PROPERTY(bool isNew READ isNew)
     Q_PROPERTY(QString path READ path)
+    Q_PROPERTY(QStringList presets READ presets NOTIFY presetsChanged)
 
 public:
     explicit QmlFilter(AttachedFiltersModel& model, const QmlMetadata& metadata, int row, QObject *parent = 0);
@@ -43,6 +44,17 @@ public:
     Q_INVOKABLE void set(QString name, double value);
     Q_INVOKABLE void set(QString name, int value);
     QString path() const { return m_path; }
+    Q_INVOKABLE void loadPresets();
+    QStringList presets() const { return m_presets; }
+    /// returns the index of the new preset
+    Q_INVOKABLE int  savePreset(const QStringList& propertyNames, const QString& name = QString());
+    Q_INVOKABLE void deletePreset(const QString& name);
+
+public slots:
+    void preset(const QString& name);
+
+signals:
+    void presetsChanged();
 
 private:
     AttachedFiltersModel& m_model;
@@ -50,6 +62,7 @@ private:
     Mlt::Filter* m_filter;
     QString m_path;
     bool m_isNew;
+    QStringList m_presets;
 };
 
 #endif // FILTER_H

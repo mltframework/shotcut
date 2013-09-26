@@ -84,6 +84,7 @@ QActionGroup *FiltersDock::availablefilters()
         qmlRegisterType<QmlMetadata>("org.shotcut.qml", 1, 0, "Metadata");
         QQmlEngine engine;
         QDir dir = qmlDir();
+        dir.cd("filters");
         foreach (QString dirName, dir.entryList(QDir::AllDirs | QDir::NoDotAndDotDot | QDir::Executable)) {
             QDir subdir = dir;
             subdir.cd(dirName);
@@ -317,7 +318,6 @@ QDir FiltersDock::qmlDir() const
     dir.cd("share");
     dir.cd("shotcut");
     dir.cd("qml");
-    dir.cd("filters");
     return dir;
 }
 
@@ -331,7 +331,9 @@ void FiltersDock::loadQuickPanel(const QmlMetadata* metadata, int row)
 {
     if (!metadata) return;
     QQuickView* qqview = new QQuickView;
-//    qqview->engine()->addImportPath(":/qml/components");
+    QDir importPath = qmlDir();
+    importPath.cd("modules");
+    qqview->engine()->addImportPath(importPath.path());
     QmlFilter* qmlFilter = new QmlFilter(m_model, *metadata, row, qqview);
     qqview->engine()->rootContext()->setContextProperty("filter", qmlFilter);
     qqview->setResizeMode(QQuickView::SizeRootObjectToView);

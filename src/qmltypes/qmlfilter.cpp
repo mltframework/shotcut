@@ -18,6 +18,8 @@
 
 #include "qmlfilter.h"
 #include "mltcontroller.h"
+#include <QStandardPaths>
+#include <QDir>
 
 QmlFilter::QmlFilter(AttachedFiltersModel& model, const QmlMetadata &metadata, int row, QObject *parent)
     : QObject(parent)
@@ -63,5 +65,65 @@ void QmlFilter::set(QString name, int value)
 {
     if (!m_filter) return;
     m_filter->set(name.toUtf8().constData(), value);
+    MLT.refreshConsumer();
+}
+
+void QmlFilter::loadPresets()
+{
+    m_presets.clear();
+    QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
+    if (dir.cd("presets")) {
+        QStringList entries = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::Executable);
+        foreach (QString s, entries) {
+            if (s == m_metadata.mlt_service() && dir.cd(s)) {
+                m_presets.append(" ");
+                m_presets.append(dir.entryList(QDir::Files | QDir::Readable));
+                break;
+            }
+        }
+    }
+    emit presetsChanged();
+}
+
+int QmlFilter::savePreset(const QStringList &propertyNames, const QString &name)
+{
+    Mlt::Properties properties;
+    QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
+
+    properties.pass_list(*((Mlt::Properties*)m_filter), propertyNames.join('\t').toLatin1().constData());
+
+    if (!dir.exists())
+        dir.mkpath(dir.path());
+    if (!dir.cd("presets")) {
+        if (dir.mkdir("presets"))
+            dir.cd("presets");
+    }
+    if (!dir.cd(m_metadata.mlt_service())) {
+        if (dir.mkdir(m_metadata.mlt_service()))
+            dir.cd(m_metadata.mlt_service());
+    }
+    const QString preset = name.isEmpty()? tr("(defaults)") : name;
+    if (!QFile(dir.filePath(preset)).exists())
+        properties.save(dir.filePath(preset).toUtf8().constData());
+    loadPresets();
+    return m_presets.indexOf(name);
+}
+
+void QmlFilter::deletePreset(const QString &name)
+{
+    QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
+    if (dir.cd("presets") && dir.cd(m_metadata.mlt_service()))
+        QFile(dir.filePath(name)).remove();
+    m_presets.removeOne(name);
+    emit presetsChanged();
+}
+
+void QmlFilter::preset(const QString &name)
+{
+    QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
+
+    if (!dir.cd("presets") || !dir.cd(m_metadata.mlt_service()))
+        return;
+    m_filter->load(dir.filePath(name).toUtf8().constData());
     MLT.refreshConsumer();
 }

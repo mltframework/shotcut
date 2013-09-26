@@ -19,6 +19,7 @@
 import QtQuick 2.1
 import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.0
+import Shotcut.Controls 1.0
 
 Rectangle {
     width: 400
@@ -39,8 +40,14 @@ Rectangle {
         anchors.fill: parent
         anchors.margins: 8
 
+        Preset {
+            parameters: [saturationParameter]
+            onPresetSelected: {
+                slider.value = filter.get(saturationParameter) * slider.maximumValue
+            }
+        }
+
         RowLayout {
-            anchors.fill: parent
             spacing: 8
     
             Label { text: qsTr('Saturation') }

@@ -186,7 +186,9 @@ OTHER_FILES += \
     qml/filters/saturation/ui_movit.qml \
     qml/filters/webvfx_circular_frame/filter-demo.html \
     qml/filters/webvfx_circular_frame/ui.qml \
-    qml/filters/webvfx_circular_frame/meta.qml
+    qml/filters/webvfx_circular_frame/meta.qml \
+    qml/modules/Shotcut/Controls/qmldir \
+    qml/modules/Shotcut/Controls/Preset.qml
 
 TRANSLATIONS += \
     ../translations/shotcut_cs.ts \
