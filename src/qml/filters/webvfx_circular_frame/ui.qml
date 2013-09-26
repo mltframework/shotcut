@@ -65,11 +65,13 @@ Rectangle {
                 maximumValue: 100
                 onValueChanged: slider.value = value
             }
-            ToolButton {
+            Button {
                 id: undo
                 iconName: 'edit-undo'
                 tooltip: qsTr('Reset to default')
                 onClicked: slider.value = 50
+                implicitWidth: 20
+                implicitHeight: 20
             }
         }
 
