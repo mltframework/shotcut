@@ -63,6 +63,8 @@ private:
     QString m_path;
     bool m_isNew;
     QStringList m_presets;
+    
+    QString objectNameOrService();
 };
 
 #endif // FILTER_H

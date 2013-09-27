@@ -102,7 +102,10 @@ QActionGroup *FiltersDock::availablefilters()
                         meta->setParent(action);
                         meta->setPath(subdir);
                         actions << action;
-                        m_serviceActionMap[meta->mlt_service()] = action;
+                        if (!meta->objectName().isEmpty())
+                            m_objectNameActionMap[meta->objectName()] = action;
+                        else
+                            m_serviceActionMap[meta->mlt_service()] = action;
                     }
                 } else if (!meta) {
                     qWarning() << component.errorString();
@@ -118,10 +121,15 @@ QActionGroup *FiltersDock::availablefilters()
     return m_actions;
 }
 
-QmlMetadata *FiltersDock::qmlMetadataForService(const QString &serviceName)
+QmlMetadata *FiltersDock::qmlMetadataForService(Mlt::Service *service)
 {
     availablefilters();
-    QAction* action = m_serviceActionMap.value(serviceName);
+    if (service->get("shotcut:filter")) {
+        QAction* action = m_objectNameActionMap.value(service->get("shotcut:filter"));
+        if (action && action->children().count())
+            return qobject_cast<QmlMetadata*>(action->children().first());
+    }
+    QAction* action = m_serviceActionMap.value(service->get("mlt_service"));
     if (action && action->children().count())
         return qobject_cast<QmlMetadata*>(action->children().first());
     else
@@ -170,7 +178,10 @@ void FiltersDock::on_listView_clicked(const QModelIndex &index)
     Mlt::Filter* filter = m_model.filterForRow(index.row());
     if (filter && filter->is_valid()) {
         QString name = filter->get("mlt_service");
-        if (name == "movit.blur")
+        QmlMetadata* meta = qmlMetadataForService(filter);
+        if (meta)
+            loadQuickPanel(meta, index.row());
+        else if (name == "movit.blur")
             ui->scrollArea->setWidget(new MovitBlurFilter(*filter));
         else if (name == "movit.glow")
             ui->scrollArea->setWidget(new MovitGlowFilter(*filter));
@@ -192,10 +203,8 @@ void FiltersDock::on_listView_clicked(const QModelIndex &index)
             ui->scrollArea->setWidget(new WhiteBalanceFilter(*filter));
         else if (name == "webvfx")
             ui->scrollArea->setWidget(new WebvfxFilter(*filter));
-        else {
+        else
             delete ui->scrollArea->widget();
-            loadQuickPanel(qmlMetadataForService(name), index.row());
-        }
     }
     delete filter;
 }
@@ -352,6 +361,7 @@ void FiltersDock::on_actionOverlayHTML_triggered()
 {
     Mlt::Filter* filter = m_model.add("webvfx");
     ui->scrollArea->setWidget(new WebvfxFilter(*filter));
+    // This is needed for webvfx to prevent it from hanging app.
     filter->set("consumer", MLT.consumer()->get_service(), 0);
     delete filter;
     ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));

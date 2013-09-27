@@ -120,7 +120,7 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
             Mlt::Filter* filter = filterForRow(index.row());
             if (filter && filter->is_valid()) {
                 // Relabel by QML UI
-                QmlMetadata* meta = MAIN.filtersDock()->qmlMetadataForService(filter->get("mlt_service"));
+                QmlMetadata* meta = MAIN.filtersDock()->qmlMetadataForService(filter);
                 if (meta)
                     result = meta->name();
                 // Fallback is raw mlt_service name
@@ -215,10 +215,13 @@ bool AttachedFiltersModel::removeRows(int row, int count, const QModelIndex &par
     }
 }
 
-Mlt::Filter *AttachedFiltersModel::add(const QString& name)
+Mlt::Filter *AttachedFiltersModel::add(const QString& mlt_service, const QString& shotcutName)
 {
-    Mlt::Filter* filter = new Mlt::Filter(MLT.profile(), name.toUtf8().constData());
+    Mlt::Filter* filter = new Mlt::Filter(MLT.profile(), mlt_service.toUtf8().constData());
     if (filter->is_valid()) {
+        if (!shotcutName.isEmpty())
+            filter->set("shotcut:filter", shotcutName.toUtf8().constData());
+
         int count = rowCount();
         beginInsertRows(QModelIndex(), count, count);
         MLT.pause();
@@ -227,7 +230,7 @@ Mlt::Filter *AttachedFiltersModel::add(const QString& name)
         endInsertRows();
         emit changed();
     }
-    else qWarning() << "Failed to load filter" << name;
+    else qWarning() << "Failed to load filter" << mlt_service;
     return filter;
 }
 

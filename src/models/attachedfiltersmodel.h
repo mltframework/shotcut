@@ -42,7 +42,7 @@ signals:
     void changed();
 
 public slots:
-    Mlt::Filter* add(const QString& name);
+    Mlt::Filter* add(const QString& mlt_service, const QString& shotcutName = QString());
     void remove(int row);
     void reset();
 

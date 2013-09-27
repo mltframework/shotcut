@@ -43,7 +43,7 @@ public:
         return &m_model;
     }
     QActionGroup* availablefilters();
-    QmlMetadata* qmlMetadataForService(const QString& serviceName);
+    QmlMetadata* qmlMetadataForService(Mlt::Service *service);
 
 public slots:
     void onModelChanged();
@@ -88,6 +88,7 @@ private:
     bool m_isGPU;
     QActionGroup* m_actions;
     QMap<QString, QAction*> m_serviceActionMap;
+    QMap<QString, QAction*> m_objectNameActionMap;
     
     QDir qmlDir() const;
     void loadWidgetsPanel(QWidget* widget = 0);

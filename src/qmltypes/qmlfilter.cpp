@@ -28,10 +28,15 @@ QmlFilter::QmlFilter(AttachedFiltersModel& model, const QmlMetadata &metadata, i
     , m_path(m_metadata.path().absolutePath().append('/'))
     , m_isNew(row < 0)
 {
-    if (m_isNew)
-        m_filter = m_model.add(m_metadata.mlt_service());
-    else
+    if (m_isNew) {
+        m_filter = m_model.add(m_metadata.mlt_service(), m_metadata.objectName());
+        // This is needed for webvfx to prevent it from hanging app.
+        if (m_metadata.mlt_service() == "webvfx")
+            m_filter->set("consumer", MLT.consumer()->get_service(), 0);
+    }
+    else {
         m_filter = model.filterForRow(row);
+    }
 }
 
 QmlFilter::~QmlFilter()
@@ -75,7 +80,7 @@ void QmlFilter::loadPresets()
     if (dir.cd("presets")) {
         QStringList entries = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::Executable);
         foreach (QString s, entries) {
-            if (s == m_metadata.mlt_service() && dir.cd(s)) {
+            if (s == objectNameOrService() && dir.cd(s)) {
                 m_presets.append(" ");
                 m_presets.append(dir.entryList(QDir::Files | QDir::Readable));
                 break;
@@ -98,9 +103,9 @@ int QmlFilter::savePreset(const QStringList &propertyNames, const QString &name)
         if (dir.mkdir("presets"))
             dir.cd("presets");
     }
-    if (!dir.cd(m_metadata.mlt_service())) {
-        if (dir.mkdir(m_metadata.mlt_service()))
-            dir.cd(m_metadata.mlt_service());
+    if (!dir.cd(objectNameOrService())) {
+        if (dir.mkdir(objectNameOrService()))
+            dir.cd(objectNameOrService());
     }
     const QString preset = name.isEmpty()? tr("(defaults)") : name;
     if (!QFile(dir.filePath(preset)).exists())
@@ -112,7 +117,7 @@ int QmlFilter::savePreset(const QStringList &propertyNames, const QString &name)
 void QmlFilter::deletePreset(const QString &name)
 {
     QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
-    if (dir.cd("presets") && dir.cd(m_metadata.mlt_service()))
+    if (dir.cd("presets") && dir.cd(objectNameOrService()))
         QFile(dir.filePath(name)).remove();
     m_presets.removeOne(name);
     emit presetsChanged();
@@ -122,8 +127,13 @@ void QmlFilter::preset(const QString &name)
 {
     QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
 
-    if (!dir.cd("presets") || !dir.cd(m_metadata.mlt_service()))
+    if (!dir.cd("presets") || !dir.cd(objectNameOrService()))
         return;
     m_filter->load(dir.filePath(name).toUtf8().constData());
     MLT.refreshConsumer();
+}
+
+QString QmlFilter::objectNameOrService()
+{
+    return m_metadata.objectName().isEmpty()? m_metadata.mlt_service() : m_metadata.objectName();
 }
