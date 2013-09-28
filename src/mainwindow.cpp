@@ -568,10 +568,6 @@ void MainWindow::seekPlaylist(int start)
     m_encodeDock->onProducerOpened();
     m_filtersDock->onProducerOpened();
     updateMarkers();
-    if (speed == 0)
-        m_player->pause();
-    else
-        m_player->play(speed);
     MLT.seek(start);
     m_player->setFocus();
 }
