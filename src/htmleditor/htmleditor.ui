@@ -104,6 +104,12 @@
      <property name="windowTitle">
       <string>Standard</string>
      </property>
+     <property name="iconSize">
+      <size>
+       <width>16</width>
+       <height>16</height>
+      </size>
+     </property>
      <addaction name="actionFileSave"/>
      <addaction name="separator"/>
      <addaction name="actionEditUndo"/>
