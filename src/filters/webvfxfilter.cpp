@@ -39,8 +39,13 @@ WebvfxFilter::WebvfxFilter(Mlt::Filter filter, QWidget *parent) :
         resource.remove(0, 6);
     ui->fileLabel->setText(QFileInfo(resource).fileName());
     ui->fileLabel->setToolTip(resource);
-    ui->editButton->setDisabled(true);
-    ui->reloadButton->setDisabled(true);
+    if (resource.isEmpty()) {
+        ui->editButton->setDisabled(true);
+        ui->reloadButton->setDisabled(true);
+    } else {
+        ui->newButton->setDisabled(true);
+        ui->openButton->setDisabled(true);
+    }
     m_filter.set_in_and_out(0, MLT.producer()->get_playtime() - 1);
 }
 
