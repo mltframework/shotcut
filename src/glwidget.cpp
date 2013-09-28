@@ -101,10 +101,6 @@ void GLWidget::initializeGL()
 
 void GLWidget::resizeGL(int width, int height)
 {
-    // Following are needed to optimize video for retina Macs!
-    width *= devicePixelRatio();
-    height *= devicePixelRatio();
-
     double this_aspect = (double) width / height;
 
     // Special case optimisation to negate odd effect of sample aspect ratio
@@ -140,7 +136,10 @@ void GLWidget::resizeGL(int width, int height)
 
 void GLWidget::resizeEvent(QResizeEvent* event)
 {
-    resizeGL(event->size().width(), event->size().height());
+    // Following are needed to optimize video for retina Macs!
+    int width = event->size().width() * devicePixelRatio();
+    int height = event->size().height() * devicePixelRatio();
+    resizeGL(width, height);
 }
 
 void GLWidget::paintGL()
@@ -372,7 +371,7 @@ int GLWidget::open(Mlt::Producer* producer, bool isMulti)
             if (reconnect)
                 connect(this, SIGNAL(frameReceived(Mlt::QFrame)),
                         this, SLOT(showFrame(Mlt::QFrame)), Qt::UniqueConnection);
-            resizeGL(width(), height());
+            resizeGL(width() * devicePixelRatio(), height() * devicePixelRatio());
         }
     }
     return error;
