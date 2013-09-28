@@ -59,6 +59,8 @@ public:
         Controller::pause();
         emit paused();
     }
+    int displayWidth() const { return w / devicePixelRatio(); }
+    int displayHeight() const { return h / devicePixelRatio(); }
 
     QWidget* videoWidget() { return this; }
     QSemaphore showFrameSemaphore;

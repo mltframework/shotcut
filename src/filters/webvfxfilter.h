@@ -35,13 +35,20 @@ public:
     ~WebvfxFilter();
     
 private slots:
-    void on_fileButton_clicked();
-    
+    void on_openButton_clicked();
     void on_editButton_clicked();
+    void onHtmlClosed();
+    void on_reloadButton_clicked();
+
+    void on_webvfxCheckBox_clicked(bool checked);
+    
+    void on_newButton_clicked();
     
 private:
     Ui::WebvfxFilter *ui;
     Mlt::Filter m_filter;
+
+    void setFilterFileName(QString filename);
 };
 
 #endif // WEBVFXFILTER_H

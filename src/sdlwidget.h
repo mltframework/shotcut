@@ -44,6 +44,8 @@ public:
         Controller::pause();
         emit paused();
     }
+    int displayWidth() const { return width(); }
+    int displayHeight() const { return height(); }
 
     QWidget* videoWidget() { return this; }
 

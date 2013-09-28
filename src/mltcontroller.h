@@ -86,6 +86,8 @@ public:
     virtual int open(const char* url);
     virtual void close();
     virtual QImage image(Frame *frame, int width, int height);
+    virtual int displayWidth() const = 0;
+    virtual int displayHeight() const = 0;
 
     void closeConsumer();
     virtual void play(double speed = 1.0);

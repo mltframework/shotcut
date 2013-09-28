@@ -361,8 +361,6 @@ void FiltersDock::on_actionOverlayHTML_triggered()
 {
     Mlt::Filter* filter = m_model.add("webvfx");
     ui->scrollArea->setWidget(new WebvfxFilter(*filter));
-    // This is needed for webvfx to prevent it from hanging app.
-    filter->set("consumer", MLT.consumer()->get_service(), 0);
     delete filter;
     ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
 }

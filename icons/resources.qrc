@@ -87,5 +87,65 @@
         <file>dark/16x16/dialog-cancel.png</file>
         <file>light/16x16/dialog-cancel.png</file>
         <file>oxygen/32x32/actions/color-picker.png</file>
+        <file>oxygen/32x32/actions/edit-copy.png</file>
+        <file>oxygen/32x32/actions/edit-cut.png</file>
+        <file>oxygen/32x32/actions/edit-paste.png</file>
+        <file>oxygen/32x32/actions/edit-select-all.png</file>
+        <file>light/32x32/edit-copy.png</file>
+        <file>light/32x32/edit-cut.png</file>
+        <file>light/32x32/edit-paste.png</file>
+        <file>light/32x32/edit-select-all.png</file>
+        <file>oxygen/32x32/actions/format-indent-less.png</file>
+        <file>oxygen/32x32/actions/format-indent-more.png</file>
+        <file>oxygen/32x32/actions/format-justify-center.png</file>
+        <file>oxygen/32x32/actions/format-justify-left.png</file>
+        <file>oxygen/32x32/actions/format-justify-right.png</file>
+        <file>light/32x32/format-justify-left.png</file>
+        <file>light/32x32/format-justify-right.png</file>
+        <file>oxygen/32x32/actions/format-list-unordered.png</file>
+        <file>oxygen/32x32/actions/format-list-ordered.png</file>
+        <file>light/32x32/format-list-ordered.png</file>
+        <file>light/32x32/format-list-unordered.png</file>
+        <file>oxygen/32x32/actions/insert-text.png</file>
+        <file>oxygen/32x32/actions/insert-link.png</file>
+        <file>oxygen/32x32/actions/insert-image.png</file>
+        <file>light/32x32/insert-image.png</file>
+        <file>light/32x32/insert-link.png</file>
+        <file>light/32x32/insert-text.png</file>
+        <file>light/32x32/zoom-in.png</file>
+        <file>light/32x32/zoom-out.png</file>
+        <file>oxygen/32x32/actions/zoom-out.png</file>
+        <file>oxygen/32x32/actions/zoom-in.png</file>
+        <file>light/32x32/format-justify-center.png</file>
+        <file>light/32x32/format-indent-less.png</file>
+        <file>light/32x32/format-indent-more.png</file>
+        <file>oxygen/32x32/actions/format-text-bold.png</file>
+        <file>oxygen/32x32/actions/format-text-italic.png</file>
+        <file>oxygen/32x32/actions/format-text-strikethrough.png</file>
+        <file>oxygen/32x32/actions/format-text-underline.png</file>
+        <file>light/32x32/format-text-bold.png</file>
+        <file>light/32x32/format-text-italic.png</file>
+        <file>light/32x32/format-text-strikethrough.png</file>
+        <file>light/32x32/format-text-underline.png</file>
+        <file>dark/32x32/edit-copy.png</file>
+        <file>dark/32x32/edit-cut.png</file>
+        <file>dark/32x32/edit-paste.png</file>
+        <file>dark/32x32/edit-select-all.png</file>
+        <file>dark/32x32/format-indent-less.png</file>
+        <file>dark/32x32/format-indent-more.png</file>
+        <file>dark/32x32/format-justify-center.png</file>
+        <file>dark/32x32/format-justify-left.png</file>
+        <file>dark/32x32/format-justify-right.png</file>
+        <file>dark/32x32/format-list-ordered.png</file>
+        <file>dark/32x32/format-list-unordered.png</file>
+        <file>dark/32x32/format-text-bold.png</file>
+        <file>dark/32x32/format-text-italic.png</file>
+        <file>dark/32x32/format-text-strikethrough.png</file>
+        <file>dark/32x32/format-text-underline.png</file>
+        <file>dark/32x32/insert-image.png</file>
+        <file>dark/32x32/insert-link.png</file>
+        <file>dark/32x32/insert-text.png</file>
+        <file>dark/32x32/zoom-in.png</file>
+        <file>dark/32x32/zoom-out.png</file>
     </qresource>
 </RCC>

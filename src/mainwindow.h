@@ -36,6 +36,7 @@ class MeltedPlaylistDock;
 class MeltedServerDock;
 class QActionGroup;
 class FiltersDock;
+class HtmlEditor;
 
 class MainWindow : public QMainWindow
 {
@@ -50,6 +51,7 @@ public:
     void saveXML(const QString& filename);
     static void changeTheme(const QString& theme);
     FiltersDock* filtersDock() const { return m_filtersDock; }
+    HtmlEditor* htmlEditor() const { return m_htmlEditor; }
 
 signals:
     void producerOpened();
@@ -97,6 +99,7 @@ private:
     QStringList m_multipleFiles;
     bool m_isPlaylistLoaded;
     QActionGroup* m_languagesGroup;
+    HtmlEditor* m_htmlEditor;
 
 public slots:
     void open(const QString& url, const Mlt::Properties* = 0);
@@ -106,6 +109,7 @@ public slots:
     void seekPlaylist(int start);
     void onProducerOpened();
     void onGpuNotSupported();
+    void editHTML(const QString& fileName);
 
 private slots:
     void on_actionAbout_Shotcut_triggered();

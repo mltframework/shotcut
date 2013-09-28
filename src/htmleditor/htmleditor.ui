@@ -1,0 +1,624 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>HtmlEditor</class>
+ <widget class="QWidget" name="HtmlEditor">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>929</width>
+    <height>515</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>HTML Editor</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_4">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QMenuBar" name="menubar">
+     <widget class="QMenu" name="menu_Edit">
+      <property name="title">
+       <string>&amp;Edit</string>
+      </property>
+      <addaction name="actionEditUndo"/>
+      <addaction name="actionEditRedo"/>
+      <addaction name="separator"/>
+      <addaction name="actionEditCut"/>
+      <addaction name="actionEditCopy"/>
+      <addaction name="actionEditPaste"/>
+      <addaction name="separator"/>
+      <addaction name="actionEditSelectAll"/>
+      <addaction name="separator"/>
+      <addaction name="actionInsertImage"/>
+      <addaction name="actionCreateLink"/>
+      <addaction name="actionInsertHtml"/>
+     </widget>
+     <widget class="QMenu" name="menuF_ormat">
+      <property name="title">
+       <string>F&amp;ormat</string>
+      </property>
+      <widget class="QMenu" name="menuSt_yle">
+       <property name="title">
+        <string>St&amp;yle</string>
+       </property>
+       <addaction name="actionStyleParagraph"/>
+       <addaction name="actionStyleHeading1"/>
+       <addaction name="actionStyleHeading2"/>
+       <addaction name="actionStyleHeading3"/>
+       <addaction name="actionStyleHeading4"/>
+       <addaction name="actionStyleHeading5"/>
+       <addaction name="actionStyleHeading6"/>
+       <addaction name="actionStylePreformatted"/>
+       <addaction name="actionStyleAddress"/>
+      </widget>
+      <widget class="QMenu" name="menu_Align">
+       <property name="title">
+        <string>&amp;Align</string>
+       </property>
+       <addaction name="actionFormatAlignLeft"/>
+       <addaction name="actionFormatAlignCenter"/>
+       <addaction name="actionFormatAlignRight"/>
+       <addaction name="actionFormatAlignJustify"/>
+      </widget>
+      <addaction name="menuSt_yle"/>
+      <addaction name="menu_Align"/>
+      <addaction name="separator"/>
+      <addaction name="actionFormatBold"/>
+      <addaction name="actionFormatItalic"/>
+      <addaction name="actionFormatUnderline"/>
+      <addaction name="actionFormatStrikethrough"/>
+      <addaction name="separator"/>
+      <addaction name="actionFormatIncreaseIndent"/>
+      <addaction name="actionFormatDecreaseIndent"/>
+      <addaction name="separator"/>
+      <addaction name="actionFormatNumberedList"/>
+      <addaction name="actionFormatBulletedList"/>
+      <addaction name="separator"/>
+      <addaction name="actionFormatFontName"/>
+      <addaction name="actionFormatFontSize"/>
+      <addaction name="separator"/>
+      <addaction name="actionFormatTextColor"/>
+      <addaction name="actionFormatBackgroundColor"/>
+     </widget>
+     <addaction name="menu_Edit"/>
+     <addaction name="menuF_ormat"/>
+    </widget>
+   </item>
+   <item>
+    <widget class="QToolBar" name="standardToolBar">
+     <property name="windowTitle">
+      <string>Standard</string>
+     </property>
+     <addaction name="actionFileSave"/>
+     <addaction name="separator"/>
+     <addaction name="actionEditUndo"/>
+     <addaction name="actionEditRedo"/>
+     <addaction name="separator"/>
+     <addaction name="actionEditCut"/>
+     <addaction name="actionEditCopy"/>
+     <addaction name="actionEditPaste"/>
+     <addaction name="actionFormatBold"/>
+     <addaction name="actionFormatItalic"/>
+     <addaction name="separator"/>
+     <addaction name="actionFormatAlignLeft"/>
+     <addaction name="actionFormatAlignCenter"/>
+     <addaction name="actionFormatAlignRight"/>
+     <addaction name="separator"/>
+     <addaction name="actionFormatDecreaseIndent"/>
+     <addaction name="actionFormatIncreaseIndent"/>
+     <addaction name="separator"/>
+     <addaction name="actionFormatNumberedList"/>
+     <addaction name="actionFormatBulletedList"/>
+     <addaction name="separator"/>
+     <addaction name="actionInsertImage"/>
+     <addaction name="actionInsertHtml"/>
+     <addaction name="separator"/>
+     <addaction name="actionZoomOut"/>
+     <addaction name="actionZoomIn"/>
+    </widget>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QTabWidget" name="tabWidget">
+       <property name="tabPosition">
+        <enum>QTabWidget::South</enum>
+       </property>
+       <property name="tabShape">
+        <enum>QTabWidget::Rounded</enum>
+       </property>
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <property name="documentMode">
+        <bool>true</bool>
+       </property>
+       <widget class="QWidget" name="tab">
+        <attribute name="title">
+         <string>Tab 1</string>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QWebView" name="webView">
+           <property name="url">
+            <url>
+             <string>about:blank</string>
+            </url>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="tab_2">
+        <attribute name="title">
+         <string>Tab 2</string>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QPlainTextEdit" name="plainTextEdit">
+           <property name="frameShape">
+            <enum>QFrame::NoFrame</enum>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+  <action name="actionFileNew">
+   <property name="icon">
+    <iconset theme="document-new">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>&amp;New</string>
+   </property>
+  </action>
+  <action name="actionFileOpen">
+   <property name="icon">
+    <iconset theme="document-open">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Open...</string>
+   </property>
+  </action>
+  <action name="actionFileSave">
+   <property name="icon">
+    <iconset theme="document-save">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Save</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionFileSaveAs">
+   <property name="text">
+    <string>Save &amp;As...</string>
+   </property>
+  </action>
+  <action name="actionEditUndo">
+   <property name="icon">
+    <iconset theme="edit-undo">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Undo</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
+   </property>
+  </action>
+  <action name="actionEditRedo">
+   <property name="icon">
+    <iconset theme="edit-redo">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Redo</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Y</string>
+   </property>
+  </action>
+  <action name="actionEditCut">
+   <property name="icon">
+    <iconset theme="edit-cut">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Cu&amp;t</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
+   </property>
+  </action>
+  <action name="actionEditCopy">
+   <property name="icon">
+    <iconset theme="edit-copy">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Copy</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="actionEditPaste">
+   <property name="icon">
+    <iconset theme="edit-paste">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Paste</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+V</string>
+   </property>
+  </action>
+  <action name="actionEditSelectAll">
+   <property name="icon">
+    <iconset theme="edit-select-all">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Select A&amp;ll</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+A</string>
+   </property>
+  </action>
+  <action name="actionFormatBold">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="format-text-bold">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Bold</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+B</string>
+   </property>
+  </action>
+  <action name="actionFormatItalic">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="format-text-italic">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Italic</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+I</string>
+   </property>
+  </action>
+  <action name="actionFormatUnderline">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="format-text-underline">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Underline</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+U</string>
+   </property>
+  </action>
+  <action name="actionFormatStrikethrough">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="format-text-strikethrough">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Strikethrough</string>
+   </property>
+  </action>
+  <action name="actionFormatAlignLeft">
+   <property name="icon">
+    <iconset theme="format-justify-left">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Align &amp;Left</string>
+   </property>
+  </action>
+  <action name="actionFormatAlignCenter">
+   <property name="icon">
+    <iconset theme="format-justify-center">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Align &amp;Center</string>
+   </property>
+  </action>
+  <action name="actionFormatAlignRight">
+   <property name="icon">
+    <iconset theme="format-justify-right">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Align &amp;Right</string>
+   </property>
+  </action>
+  <action name="actionFormatAlignJustify">
+   <property name="icon">
+    <iconset theme="format-justify-fill">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Align &amp;Justify</string>
+   </property>
+  </action>
+  <action name="actionFormatIncreaseIndent">
+   <property name="icon">
+    <iconset theme="format-indent-more">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>I&amp;ncrease Indent</string>
+   </property>
+  </action>
+  <action name="actionFormatDecreaseIndent">
+   <property name="icon">
+    <iconset theme="format-indent-less">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Decrease Indent</string>
+   </property>
+  </action>
+  <action name="actionFormatBulletedList">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="format-list-unordered">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Bulle&amp;ted List</string>
+   </property>
+  </action>
+  <action name="actionFormatNumberedList">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="format-list-ordered">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Numbered List</string>
+   </property>
+  </action>
+  <action name="actionInsertImage">
+   <property name="icon">
+    <iconset theme="insert-image">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Insert &amp;Image...</string>
+   </property>
+  </action>
+  <action name="actionCreateLink">
+   <property name="icon">
+    <iconset theme="insert-link">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Create Link...</string>
+   </property>
+  </action>
+  <action name="actionZoomOut">
+   <property name="icon">
+    <iconset theme="zoom-out">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Zoom Out</string>
+   </property>
+  </action>
+  <action name="actionZoomIn">
+   <property name="icon">
+    <iconset theme="zoom-in">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Zoom In</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>E&amp;xit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="actionStyleParagraph">
+   <property name="text">
+    <string>&amp;Paragraph</string>
+   </property>
+  </action>
+  <action name="actionStyleHeading1">
+   <property name="text">
+    <string>Heading &amp;1</string>
+   </property>
+  </action>
+  <action name="actionStyleHeading2">
+   <property name="text">
+    <string>Heading &amp;2</string>
+   </property>
+  </action>
+  <action name="actionStyleHeading3">
+   <property name="text">
+    <string>Heading &amp;3</string>
+   </property>
+  </action>
+  <action name="actionStyleHeading4">
+   <property name="text">
+    <string>Heading &amp;4</string>
+   </property>
+  </action>
+  <action name="actionStyleHeading5">
+   <property name="text">
+    <string>Heading &amp;5</string>
+   </property>
+  </action>
+  <action name="actionStyleHeading6">
+   <property name="text">
+    <string>Heading &amp;6</string>
+   </property>
+  </action>
+  <action name="actionStylePreformatted">
+   <property name="text">
+    <string>Pre&amp;formatted</string>
+   </property>
+  </action>
+  <action name="actionStyleAddress">
+   <property name="text">
+    <string>&amp;Address</string>
+   </property>
+  </action>
+  <action name="actionFormatFontName">
+   <property name="text">
+    <string>&amp;Font Name...</string>
+   </property>
+  </action>
+  <action name="actionFormatTextColor">
+   <property name="text">
+    <string>Text &amp;Color...</string>
+   </property>
+  </action>
+  <action name="actionFormatBackgroundColor">
+   <property name="text">
+    <string>Bac&amp;kground Color...</string>
+   </property>
+  </action>
+  <action name="actionFormatFontSize">
+   <property name="text">
+    <string>Font Si&amp;ze...</string>
+   </property>
+  </action>
+  <action name="actionInsertHtml">
+   <property name="icon">
+    <iconset theme="insert-text">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Insert HTML...</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert HTML</string>
+   </property>
+  </action>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QWebView</class>
+   <extends>QWidget</extends>
+   <header>QtWebKitWidgets/QWebView</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

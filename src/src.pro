@@ -1,6 +1,6 @@
 CONFIG   += link_prl
 
-QT       += widgets opengl xml network qml quick
+QT       += widgets opengl xml network qml quick webkitwidgets
 
 TARGET = shotcut
 TEMPLATE = app
@@ -66,7 +66,9 @@ SOURCES += main.cpp\
     dialogs/customprofiledialog.cpp \
     qmltypes/qmlfilter.cpp \
     qmltypes/qmlmetadata.cpp \
-    filters/webvfxfilter.cpp
+    filters/webvfxfilter.cpp \
+    htmleditor/htmleditor.cpp \
+    htmleditor/highlighter.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -128,7 +130,9 @@ HEADERS  += mainwindow.h \
     dialogs/customprofiledialog.h \
     qmltypes/qmlfilter.h \
     qmltypes/qmlmetadata.h \
-    filters/webvfxfilter.h
+    filters/webvfxfilter.h \
+    htmleditor/htmleditor.h \
+    htmleditor/highlighter.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
@@ -169,7 +173,9 @@ FORMS    += mainwindow.ui \
     filters/frei0rsharpnessfilter.ui \
     filters/whitebalancefilter.ui \
     dialogs/customprofiledialog.ui \
-    filters/webvfxfilter.ui
+    filters/webvfxfilter.ui \
+    htmleditor/htmleditor.ui \
+    htmleditor/inserthtmldialog.ui
 
 RESOURCES += \
     ../icons/resources.qrc

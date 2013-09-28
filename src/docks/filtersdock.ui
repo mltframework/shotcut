@@ -66,7 +66,7 @@
              <bool>false</bool>
             </property>
             <property name="toolTip">
-             <string>Add something to the playlist</string>
+             <string>Add a filter</string>
             </property>
             <property name="text">
              <string/>
@@ -84,7 +84,7 @@
              <bool>false</bool>
             </property>
             <property name="toolTip">
-             <string>Remove cut</string>
+             <string>Remove selected filter</string>
             </property>
             <property name="text">
              <string/>
@@ -128,8 +128,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>132</width>
-         <height>259</height>
+         <width>130</width>
+         <height>257</height>
         </rect>
        </property>
       </widget>

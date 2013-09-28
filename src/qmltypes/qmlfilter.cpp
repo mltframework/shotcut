@@ -30,9 +30,6 @@ QmlFilter::QmlFilter(AttachedFiltersModel& model, const QmlMetadata &metadata, i
 {
     if (m_isNew) {
         m_filter = m_model.add(m_metadata.mlt_service(), m_metadata.objectName());
-        // This is needed for webvfx to prevent it from hanging app.
-        if (m_metadata.mlt_service() == "webvfx")
-            m_filter->set("consumer", MLT.consumer()->get_service(), 0);
     }
     else {
         m_filter = model.filterForRow(row);

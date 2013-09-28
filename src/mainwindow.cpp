@@ -50,6 +50,7 @@
 #include "mvcp/meltedplaylistmodel.h"
 #include "docks/filtersdock.h"
 #include "dialogs/customprofiledialog.h"
+#include "htmleditor/htmleditor.h"
 
 #include <QtWidgets>
 #include <QDebug>
@@ -62,6 +63,7 @@ MainWindow::MainWindow()
     , ui(new Ui::MainWindow)
     , m_isKKeyPressed(false)
     , m_isPlaylistLoaded(false)
+    , m_htmlEditor(0)
 {
     QThreadPool::globalInstance()->setMaxThreadCount(1);
 
@@ -290,6 +292,7 @@ MainWindow& MainWindow::singleton()
 
 MainWindow::~MainWindow()
 {
+    delete m_htmlEditor;
     delete ui;
 }
 
@@ -917,8 +920,12 @@ void MainWindow::dropEvent(QDropEvent *event)
 void MainWindow::closeEvent(QCloseEvent* event)
 {
     if (continueModified()) {
-        writeSettings();
-        event->accept();
+        if (!m_htmlEditor || m_htmlEditor->close()) {
+            writeSettings();
+            event->accept();
+        } else {
+            event->ignore();
+        }
     } else {
         event->ignore();
     }
@@ -1303,6 +1310,31 @@ void MainWindow::onGpuNotSupported()
     ui->actionGPU->setChecked(false);
     ui->actionGPU->setDisabled(true);
     showStatusMessage(tr("GPU Processing is not supported"));
+}
+
+void MainWindow::editHTML(const QString &fileName)
+{
+    bool isNew = !m_htmlEditor;
+    if (!m_htmlEditor) {
+        m_htmlEditor = new HtmlEditor;
+        m_htmlEditor->setWindowIcon(windowIcon());
+    }
+    m_htmlEditor->load(fileName);
+    m_htmlEditor->show();
+    m_htmlEditor->raise();
+    m_htmlEditor->changeZoom(100 * MLT.displayWidth() / MLT.profile().width());
+    m_htmlEditor->resizeWebView(MLT.displayWidth(), MLT.displayHeight());
+    if (isNew) {
+        // Center the new window over the main window.
+        QPoint point = pos();
+        QPoint halfSize(width(), height());
+        halfSize /= 2;
+        point += halfSize;
+        halfSize = QPoint(m_htmlEditor->width(), m_htmlEditor->height());
+        halfSize /= 2;
+        point -= halfSize;
+        m_htmlEditor->move(point);
+    }
 }
 
 void MainWindow::on_actionOpenGL_triggered(bool checked)
