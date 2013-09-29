@@ -258,6 +258,13 @@ CONFIG(leap) {
     DEFINES += WITH_LEAP
     SOURCES += leaplistener.cpp
     HEADERS += leaplistener.h
+    unix {
+        isEmpty(LEAP_PREFIX) {
+            LEAP_PREFIX = /usr/local
+        }
+        INCLUDEPATH += $$LEAP_PREFIX/include
+        LIBS += -L$$LEAP_PREFIX/lib
+    }
     LIBS += -lLeap
 }
 
