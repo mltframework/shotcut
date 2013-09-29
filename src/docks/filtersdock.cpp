@@ -76,7 +76,9 @@ QActionGroup *FiltersDock::availablefilters()
     //    if (m_isGPU) menu.append(ui->actionDiffusion);
         actions.append(ui->actionGlow);
         actions.append(ui->actionMirror);
+#ifndef Q_OS_WIN
         if (!m_isGPU) actions.append(ui->actionOverlayHTML);
+#endif
         actions.append(ui->actionSharpen);
     //    menu.append(ui->actionSizePosition);
     //    menu.append(ui->actionVignette);
@@ -96,6 +98,12 @@ QActionGroup *FiltersDock::availablefilters()
                 QQmlComponent component(&engine, subdir.absoluteFilePath(fileName));
                 QmlMetadata *meta = qobject_cast<QmlMetadata*>(component.create());
                 if (meta && (meta->isAudio() || (meta->needsGPU() == m_isGPU))) {
+#ifdef Q_OS_WIN
+                    if (meta->mlt_service() == "webvfx") {
+                        delete meta;
+                        continue;
+                    }
+#endif
                     // Check if mlt_service is available.
                     if (MLT.repository()->filters()->get_data(meta->mlt_service().toLatin1().constData())) {
                         QAction* action = new QAction(meta->name(), this);
