@@ -127,7 +127,7 @@ void ScrubBar::mousePressEvent(QMouseEvent * event)
             m_activeControl = CONTROL_HEAD;
             m_head = pos;
             const int offset = height() / 2;
-            const int x = qMin(x, head);
+            const int x = head;
             const int w = qAbs(x - head);
             update(margin + x - offset, 0, w + 2 * offset, height());
         }
@@ -153,7 +153,7 @@ void ScrubBar::mouseMoveEvent(QMouseEvent * event)
         else if (m_activeControl == CONTROL_HEAD) {
             const int head = m_head * m_scale;
             const int offset = height() / 2;
-            const int x = qMin(x, head);
+            const int x = head;
             const int w = qAbs(x - head);
             update(margin + x - offset, 0, w + 2 * offset, height());
             m_head = pos;
