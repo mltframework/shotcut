@@ -122,7 +122,7 @@ void LeapListener::onFrame(const Leap::Controller &controller)
             break;
         }
     }
-    else if (!frame.hands().empty()) {
+    else if (!frame.hands().isEmpty()) {
         // Get the first hand
         const Hand hand = frame.hands()[0];
 
