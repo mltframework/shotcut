@@ -1325,7 +1325,8 @@ SLIB_EXTRA_CMD=-"mv $$(@:$(SLIBSUF)=.orig.def) $$(@:$(SLIBSUF)=.def)"
         cmd install -p -c "$QTDIR"/lib/libQt5{Concurrent,Core,Declarative,Gui,Multimedia,MultimediaQuick,MultimediaWidgets,Network,OpenGL,PrintSupport,Qml,QmlParticles,Quick,Script,Sensors,Sql,Svg,V8,WebKit,WebKitWidgets,Widgets,Xml,XmlPatterns}.so* "$FINAL_INSTALL_DIR"/lib
         cmd install -p -c "$QTDIR"/lib/lib{icudata,icui8n,icuuc}.so* "$FINAL_INSTALL_DIR"/lib
         cmd install -d "$FINAL_INSTALL_DIR"/lib/qt5
-        cmd cp -pr "$QTDIR"/plugins/{accessible,iconengines,imageformats,mediaservice,platforms} "$FINAL_INSTALL_DIR"/lib/qt5
+        cmd cp -a "$QTDIR"/plugins/{accessible,iconengines,imageformats,mediaservice,platforms} "$FINAL_INSTALL_DIR"/lib/qt5
+        cmd cp -a "$QTDIR"/qml "$FINAL_INSTALL_DIR"/lib
 
         log Copying some libs from system
         #cmd install -p -c /usr/lib/libaudio.so* "$FINAL_INSTALL_DIR"/lib
@@ -1477,7 +1478,7 @@ function deploy_osx
   cmd cp -a src/qml "$BUILD_DIR"/MacOS/share/shotcut/
 
   # This little guy helps Qt 5.1 apps find the Qt plugins!
-  cmd printf "[Paths]\nPlugins=MacOS/lib/qt5\n" > "$BUILD_DIR/Resources/qt.conf"
+  cmd printf "[Paths]\nPlugins=MacOS/lib/qt5\nQml2Imports=MacOS/lib/qml\n" > "$BUILD_DIR/Resources/qt.conf"
 
   cmd cd "$BUILD_DIR/MacOS" || die "Unable to change directory to MacOS"
 
@@ -1523,6 +1524,18 @@ function deploy_osx
     done
   done
 
+  # Qt QML modules
+  log Copying Qt QML modules
+  # try QTDIR first
+  if [ -d "$QTDIR/qml" ]; then
+    cmd cp -a "$QTDIR/qml" lib
+  # try Qt Creator next
+  elif [ -d "/Applications/Qt Creator.app/Contents/Imports/qtquick2" ]; then
+    cmd cp -a "/Applications/Qt Creator.app/Contents/Imports/qtquick2" lib/qml
+  fi
+  for lib in $(find lib/qml -name '*.dylib'); do
+    fixlibs "$lib"
+  done
 
   # frei0r plugins
   log Copying frei0r plugins
@@ -1586,8 +1599,10 @@ function deploy_win32
   cmd cp -p "$QTDIR"/bin/{icudt51,icuin51,icuuc51,libgcc_s_dw2-1,libstdc++-6,libwinpthread-1}.dll .
   cmd mkdir lib/qt5
   cmd cp -pr "$QTDIR"/plugins/{accessible,iconengines,imageformats,mediaservice,platforms} lib/qt5
+  cmd cp -pr "$QTDIR"/qml lib
   cmd cp -pr "$QTDIR"/translations/qt_*.qm share/translations
   cmd tar -xjf "$HOME/ladspa_plugins-win-0.4.15.tar.bz2"
+  cmd printf "[Paths]\nPlugins=lib/qt5\nQml2Imports=lib/qml\n" > qt.conf
 
   log Making installer
   cmd cd ..
@@ -1612,8 +1627,10 @@ function deploy_win32_sdk
   cmd cp -p "$QTDIR"/bin/{icudt51,icuin51,icuuc51,libgcc_s_dw2-1,libstdc++-6,libwinpthread-1}.dll .
   cmd mkdir lib/qt5
   cmd cp -pr "$QTDIR"/plugins/{accessible,iconengines,imageformats,mediaservice,platforms} lib/qt5
+  cmd cp -pr "$QTDIR"/qml lib
   cmd cp -pr "$QTDIR"/translations/qt_*.qm share/translations
   cmd tar -xjf "$HOME/ladspa_plugins-win-0.4.15.tar.bz2"
+  cmd printf "[Paths]\nPlugins=lib/qt5\nQml2Imports=lib/qml\n" > "$BUILD_DIR/Resources/qt.conf"
 
   # Prepare src for archiving
   pushd .
@@ -1665,6 +1682,7 @@ export MLT_PROFILES_PATH="\$INSTALL_DIR/share/mlt/profiles"
 export FREI0R_PATH="\$INSTALL_DIR/lib/frei0r-1":/usr/lib/frei0r-1:/usr/local/lib/frei0r-1:/opt/local/lib/frei0r-1
 export MANPATH=\$MANPATH:"\$INSTALL_DIR/share/man"
 export PKG_CONFIG_PATH="\$INSTALL_DIR/lib/pkgconfig":\$PKG_CONFIG_PATH
+export QML2_IMPORT_PATH="\$INSTALL_DIR/lib/qml"
 End-of-environment-setup-template
   if test 0 != $? ; then
     die "Unable to create environment script"
@@ -1685,6 +1703,7 @@ export MLT_DATA="\$INSTALL_DIR/share/mlt"
 export MLT_PROFILES_PATH="\$INSTALL_DIR/share/mlt/profiles"
 export FREI0R_PATH="\$INSTALL_DIR/lib/frei0r-1":/usr/lib/frei0r-1:/usr/local/lib/frei0r-1:/opt/local/lib/frei0r-1
 export MLT_MOVIT_PATH="\$INSTALL_DIR/share/movit"
+export QML2_IMPORT_PATH="\$INSTALL_DIR/lib/qml"
 "\$INSTALL_DIR/bin/melt" \$@
 End-of-melt-wrapper
   if test 0 != $? ; then
@@ -1706,6 +1725,7 @@ export MLT_DATA="\$INSTALL_DIR/share/mlt"
 export MLT_PROFILES_PATH="\$INSTALL_DIR/share/mlt/profiles"
 export FREI0R_PATH="\$INSTALL_DIR/lib/frei0r-1":/usr/lib/frei0r-1:/usr/local/lib/frei0r-1:/opt/local/lib/frei0r-1
 export MLT_MOVIT_PATH="\$INSTALL_DIR/share/movit"
+export QML2_IMPORT_PATH="\$INSTALL_DIR/lib/qml"
 "\$INSTALL_DIR/bin/shotcut" \$@
 End-of-shotcut-wrapper
   if test 0 != $? ; then
