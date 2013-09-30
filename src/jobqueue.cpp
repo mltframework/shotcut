@@ -42,9 +42,9 @@ void MeltJob::start()
     QString shotcutPath = qApp->applicationDirPath();
 //    QString shotcutPath("/Applications/Shotcut.app/Contents/MacOS");
 #ifdef Q_OS_WIN
-    QFileInfo meltPath(shotcutPath, "melt.exe");
+    QFileInfo meltPath(shotcutPath, "qmelt.exe");
 #else
-    QFileInfo meltPath(shotcutPath, "melt");
+    QFileInfo meltPath(shotcutPath, "qmelt");
 #endif
     setReadChannel(QProcess::StandardError);
     QStringList args;
