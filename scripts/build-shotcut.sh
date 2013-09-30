@@ -581,7 +581,7 @@ function set_globals {
   else
     CONFIG[9]="$QTDIR/bin/qmake -r"
   fi
-  CONFIG[9]="${CONFIG[9]} PREFIX=$FINAL_INSTALL_DIR MLT_SOURCE=$SOURCE_DIR/src/mlt"
+  CONFIG[9]="${CONFIG[9]} PREFIX=$FINAL_INSTALL_DIR MLT_SOURCE=$SOURCE_DIR/mlt"
   CFLAGS_[9]=$CFLAGS
   LDFLAGS_[9]=$LDFLAGS
 }
