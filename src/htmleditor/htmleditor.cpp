@@ -468,10 +468,14 @@ void HtmlEditor::formatFontName()
 void HtmlEditor::formatFontSize()
 {
     bool ok = false;
-    int size = QInputDialog::getInt(this, tr("Font Size"), tr("Size in points:"), 48, 1, 1000, 1, &ok);
+    int size = QInputDialog::getInt(this, tr("Font Size"), tr("Size in points:"), 48, 0, 1000, 1, &ok);
     if (ok) {
         QWebFrame *frame = ui->webView->page()->mainFrame();
-        QString js = QString("setFontSize('%1pt')").arg(size);
+        QString js;
+        if (size)
+            js = QString("setFontSize('%1pt')").arg(size);
+        else
+            js = QString("setFontSize('')");
         frame->evaluateJavaScript(js);
     }
 }
