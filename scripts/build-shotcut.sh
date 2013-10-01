@@ -1323,7 +1323,7 @@ SLIB_EXTRA_CMD=-"mv $$(@:$(SLIBSUF)=.orig.def) $$(@:$(SLIBSUF)=.def)"
         cmd cp -a src/qml "$FINAL_INSTALL_DIR"/share/shotcut
         cmd install -p -c "$QTDIR"/translations/qt_*.qm "$FINAL_INSTALL_DIR"/share/shotcut/translations
         cmd install -p -c "$QTDIR"/lib/libQt5{Concurrent,Core,Declarative,Gui,Multimedia,MultimediaQuick,MultimediaWidgets,Network,OpenGL,PrintSupport,Qml,QmlParticles,Quick,Script,Sensors,Sql,Svg,V8,WebKit,WebKitWidgets,Widgets,Xml,XmlPatterns}.so* "$FINAL_INSTALL_DIR"/lib
-        cmd install -p -c "$QTDIR"/lib/lib{icudata,icui8n,icuuc}.so* "$FINAL_INSTALL_DIR"/lib
+        cmd install -p -c "$QTDIR"/lib/lib{icudata,icui18n,icuuc}.so* "$FINAL_INSTALL_DIR"/lib
         cmd install -d "$FINAL_INSTALL_DIR"/lib/qt5
         cmd cp -a "$QTDIR"/plugins/{accessible,iconengines,imageformats,mediaservice,platforms} "$FINAL_INSTALL_DIR"/lib/qt5
         cmd cp -a "$QTDIR"/qml "$FINAL_INSTALL_DIR"/lib
