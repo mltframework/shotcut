@@ -467,21 +467,13 @@ void HtmlEditor::formatFontName()
 
 void HtmlEditor::formatFontSize()
 {
-    QStringList sizes;
-    sizes << "xx-small";
-    sizes << "x-small";
-    sizes << "small";
-    sizes << "medium";
-    sizes << "large";
-    sizes << "x-large";
-    sizes << "xx-large";
-
     bool ok = false;
-    QString size = QInputDialog::getItem(this, tr("Font Size"), tr("Select font size:"),
-                                        sizes, sizes.indexOf("medium"), false, &ok);
-
-    if (ok)
-        execCommand("fontSize", QString::number(sizes.indexOf(size)));
+    int size = QInputDialog::getInt(this, tr("Font Size"), tr("Size in points:"), 48, 1, 1000, 1, &ok);
+    if (ok) {
+        QWebFrame *frame = ui->webView->page()->mainFrame();
+        QString js = QString("setFontSize('%1pt')").arg(size);
+        frame->evaluateJavaScript(js);
+    }
 }
 
 void HtmlEditor::formatTextColor()

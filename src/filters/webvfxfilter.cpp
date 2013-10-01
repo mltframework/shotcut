@@ -110,14 +110,16 @@ void WebvfxFilter::on_newButton_clicked()
     QString directory(settings.value(settingKey,
         QStandardPaths::standardLocations(QStandardPaths::MoviesLocation)).toString());
     QString filename = QFileDialog::getSaveFileName(this, tr("Open HTML File"), directory,
-        tr("HTML-Files (*.htm *.html);;All Files (*)"));
+        tr("HTML-Files (*.html *.htm);;All Files (*)"));
     activateWindow();
 
     if (!filename.isEmpty()) {
-        QFile file(filename);
-        file.open(QFile::WriteOnly);
-        file.write("<html></html>");
-        file.close();
+        QFile inFile(":/scripts/new.html");
+        QFile outfile(filename);
+        inFile.open(QFile::ReadOnly);
+        outfile.open(QFile::WriteOnly);
+        outfile.write(inFile.readAll());
+        outfile.close();
         setFilterFileName(filename);
     }
 }

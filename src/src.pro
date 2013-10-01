@@ -178,7 +178,8 @@ FORMS    += mainwindow.ui \
     htmleditor/inserthtmldialog.ui
 
 RESOURCES += \
-    ../icons/resources.qrc
+    ../icons/resources.qrc \
+    ../other-resources.qrc
 
 OTHER_FILES += \
     ../COPYING \

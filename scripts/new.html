@@ -1,0 +1,24 @@
+<html>
+  <head>
+    <script src="qrc:/scripts/jquery.js"></script>
+    <script src="qrc:/scripts/rangy-core.js"></script>
+    <script src="qrc:/scripts/rangy-cssclassapplier.js"></script>
+    <script type="text/javascript">
+        document.onload = function() {
+            rangy.init();
+        };
+
+        function setFontSize(size) {
+            var randomCssClass = "rangyTemp_" + (+new Date());
+            var classApplier = rangy.createCssClassApplier(randomCssClass, true);
+            classApplier.applyToSelection();
+
+            // Now use jQuery to add the CSS colour and remove the class
+            $("." + randomCssClass).css({"font-size": size}).removeClass(randomCssClass);
+        }
+    </script>
+  </head>
+
+  <body>
+  </body>
+</html>
