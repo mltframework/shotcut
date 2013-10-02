@@ -58,7 +58,7 @@ p, li { white-space: pre-wrap; }
      <x>0</x>
      <y>0</y>
      <width>832</width>
-     <height>22</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -204,9 +204,8 @@ p, li { white-space: pre-wrap; }
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen">
    <property name="icon">
-    <iconset theme="document-open">
-     <normaloff/>
-    </iconset>
+    <iconset theme="document-open" resource="../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/document-open.png</normaloff>:/icons/oxygen/32x32/actions/document-open.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Open File...</string>
@@ -258,9 +257,8 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionSave">
    <property name="icon">
-    <iconset theme="document-save">
-     <normaloff/>
-    </iconset>
+    <iconset theme="document-save" resource="../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/document-save.png</normaloff>:/icons/oxygen/32x32/actions/document-save.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Save</string>
@@ -288,9 +286,8 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionEncode">
    <property name="icon">
-    <iconset theme="media-record">
-     <normaloff/>
-    </iconset>
+    <iconset theme="media-record" resource="../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/media-record.png</normaloff>:/icons/oxygen/32x32/actions/media-record.png</iconset>
    </property>
    <property name="text">
     <string>Encode</string>
@@ -301,9 +298,8 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionUndo">
    <property name="icon">
-    <iconset theme="edit-undo">
-     <normaloff/>
-    </iconset>
+    <iconset theme="edit-undo" resource="../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/16x16/actions/edit-undo.png</normaloff>:/icons/oxygen/16x16/actions/edit-undo.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Undo</string>
@@ -311,9 +307,8 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionRedo">
    <property name="icon">
-    <iconset theme="edit-redo">
-     <normaloff/>
-    </iconset>
+    <iconset theme="edit-redo" resource="../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/edit-redo.png</normaloff>:/icons/oxygen/32x32/actions/edit-redo.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Redo</string>
@@ -331,9 +326,8 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionEnter_Full_Screen">
    <property name="icon">
-    <iconset theme="view-fullscreen">
-     <normaloff/>
-    </iconset>
+    <iconset theme="view-fullscreen" resource="../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/view-fullscreen.png</normaloff>:/icons/oxygen/32x32/actions/view-fullscreen.png</iconset>
    </property>
    <property name="text">
     <string>Enter Full Screen</string>
@@ -344,9 +338,8 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionProperties">
    <property name="icon">
-    <iconset theme="dialog-information">
-     <normaloff/>
-    </iconset>
+    <iconset theme="dialog-information" resource="../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/status/dialog-information.png</normaloff>:/icons/oxygen/32x32/status/dialog-information.png</iconset>
    </property>
    <property name="text">
     <string>Properties</string>
@@ -354,9 +347,8 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionRecent">
    <property name="icon">
-    <iconset theme="document-open-recent">
-     <normaloff/>
-    </iconset>
+    <iconset theme="document-open-recent" resource="../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/document-open-recent.png</normaloff>:/icons/oxygen/32x32/actions/document-open-recent.png</iconset>
    </property>
    <property name="text">
     <string>Recent</string>
@@ -364,9 +356,8 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionPlaylist">
    <property name="icon">
-    <iconset theme="view-media-playlist">
-     <normaloff/>
-    </iconset>
+    <iconset theme="view-media-playlist" resource="../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/view-media-playlist.png</normaloff>:/icons/oxygen/32x32/actions/view-media-playlist.png</iconset>
    </property>
    <property name="text">
     <string>Playlist</string>
@@ -374,9 +365,8 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionHistory">
    <property name="icon">
-    <iconset theme="view-history">
-     <normaloff/>
-    </iconset>
+    <iconset theme="view-history" resource="../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/view-history.png</normaloff>:/icons/oxygen/32x32/actions/view-history.png</iconset>
    </property>
    <property name="text">
     <string>History</string>
@@ -384,9 +374,8 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionFullscreen">
    <property name="icon">
-    <iconset theme="view-fullscreen">
-     <normaloff/>
-    </iconset>
+    <iconset theme="view-fullscreen" resource="../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/view-fullscreen.png</normaloff>:/icons/oxygen/32x32/actions/view-fullscreen.png</iconset>
    </property>
    <property name="text">
     <string>Full Screen</string>
@@ -535,9 +524,8 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionFilters">
    <property name="icon">
-    <iconset theme="view-filter">
-     <normaloff/>
-    </iconset>
+    <iconset theme="view-filter" resource="../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/view-filter.png</normaloff>:/icons/oxygen/32x32/actions/view-filter.png</iconset>
    </property>
    <property name="text">
     <string>Filters</string>

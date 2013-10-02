@@ -11,9 +11,8 @@
    </rect>
   </property>
   <property name="windowIcon">
-   <iconset theme="media-record">
-    <normaloff/>
-   </iconset>
+   <iconset theme="media-record" resource="../../icons/resources.qrc">
+    <normaloff>:/icons/oxygen/32x32/actions/media-record.png</normaloff>:/icons/oxygen/32x32/actions/media-record.png</iconset>
   </property>
   <property name="allowedAreas">
    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
@@ -52,7 +51,7 @@
          <x>0</x>
          <y>0</y>
          <width>347</width>
-         <height>570</height>
+         <height>589</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -120,9 +119,8 @@
                  <string>Add current settings as a new custom preset</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="list-add">
-                  <normaloff/>
-                 </iconset>
+                 <iconset theme="list-add" resource="../../icons/resources.qrc">
+                  <normaloff>:/icons/oxygen/16x16/actions/list-add.png</normaloff>:/icons/oxygen/16x16/actions/list-add.png</iconset>
                 </property>
                </widget>
               </item>
@@ -135,9 +133,8 @@
                  <string>Delete currently selected preset</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="list-remove">
-                  <normaloff/>
-                 </iconset>
+                 <iconset theme="list-remove" resource="../../icons/resources.qrc">
+                  <normaloff>:/icons/oxygen/16x16/actions/list-remove.png</normaloff>:/icons/oxygen/16x16/actions/list-remove.png</iconset>
                 </property>
                </widget>
               </item>
@@ -1490,6 +1487,8 @@ codecs. However, not all codecs are multi-threaded.</string>
   <tabstop>scanModeCombo</tabstop>
   <tabstop>fieldOrderCombo</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../../icons/resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

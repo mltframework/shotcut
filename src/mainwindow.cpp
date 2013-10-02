@@ -97,8 +97,8 @@ MainWindow::MainWindow()
     m_undoStack = new QUndoStack(this);
     QAction *undoAction = m_undoStack->createUndoAction(this);
     QAction *redoAction = m_undoStack->createRedoAction(this);
-    undoAction->setIcon(QIcon::fromTheme("edit-undo"));
-    redoAction->setIcon(QIcon::fromTheme("edit-redo"));
+    undoAction->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/icons/oxygen/16x16/actions/edit-undo.png")));
+    redoAction->setIcon(QIcon::fromTheme("edit-redo", QIcon(":/icons/oxygen/32x32/actions/edit-redo.png")));
     undoAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+Z", 0));
     redoAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+Z", 0));
     ui->menuEdit->addAction(undoAction);
@@ -1270,7 +1270,11 @@ void MainWindow::changeTheme(const QString &theme)
         QIcon::setThemeName("light");
     } else {
         QApplication::setStyle(qApp->property("system-style").toString());
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+        QIcon::setThemeName("");
+#else
         QIcon::setThemeName("oxygen");
+#endif
     }
 }
 

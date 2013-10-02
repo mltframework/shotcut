@@ -242,9 +242,8 @@
   </action>
   <action name="actionFileOpen">
    <property name="icon">
-    <iconset theme="document-open">
-     <normaloff/>
-    </iconset>
+    <iconset theme="document-open" resource="../../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/document-open.png</normaloff>:/icons/oxygen/32x32/actions/document-open.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Open...</string>
@@ -252,9 +251,8 @@
   </action>
   <action name="actionFileSave">
    <property name="icon">
-    <iconset theme="document-save">
-     <normaloff/>
-    </iconset>
+    <iconset theme="document-save" resource="../../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/document-save.png</normaloff>:/icons/oxygen/32x32/actions/document-save.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Save</string>
@@ -270,9 +268,8 @@
   </action>
   <action name="actionEditUndo">
    <property name="icon">
-    <iconset theme="edit-undo">
-     <normaloff/>
-    </iconset>
+    <iconset theme="edit-undo" resource="../../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/16x16/actions/edit-undo.png</normaloff>:/icons/oxygen/16x16/actions/edit-undo.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Undo</string>
@@ -283,9 +280,8 @@
   </action>
   <action name="actionEditRedo">
    <property name="icon">
-    <iconset theme="edit-redo">
-     <normaloff/>
-    </iconset>
+    <iconset theme="edit-redo" resource="../../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/edit-redo.png</normaloff>:/icons/oxygen/32x32/actions/edit-redo.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Redo</string>
@@ -296,9 +292,8 @@
   </action>
   <action name="actionEditCut">
    <property name="icon">
-    <iconset theme="edit-cut">
-     <normaloff/>
-    </iconset>
+    <iconset theme="edit-cut" resource="../../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/edit-cut.png</normaloff>:/icons/oxygen/32x32/actions/edit-cut.png</iconset>
    </property>
    <property name="text">
     <string>Cu&amp;t</string>
@@ -309,9 +304,8 @@
   </action>
   <action name="actionEditCopy">
    <property name="icon">
-    <iconset theme="edit-copy">
-     <normaloff/>
-    </iconset>
+    <iconset theme="edit-copy" resource="../../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/edit-copy.png</normaloff>:/icons/oxygen/32x32/actions/edit-copy.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Copy</string>
@@ -322,9 +316,8 @@
   </action>
   <action name="actionEditPaste">
    <property name="icon">
-    <iconset theme="edit-paste">
-     <normaloff/>
-    </iconset>
+    <iconset theme="edit-paste" resource="../../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/edit-paste.png</normaloff>:/icons/oxygen/32x32/actions/edit-paste.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Paste</string>
@@ -335,9 +328,8 @@
   </action>
   <action name="actionEditSelectAll">
    <property name="icon">
-    <iconset theme="edit-select-all">
-     <normaloff/>
-    </iconset>
+    <iconset theme="edit-select-all" resource="../../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/edit-select-all.png</normaloff>:/icons/oxygen/32x32/actions/edit-select-all.png</iconset>
    </property>
    <property name="text">
     <string>Select A&amp;ll</string>
@@ -351,9 +343,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset theme="format-text-bold">
-     <normaloff/>
-    </iconset>
+    <iconset theme="format-text-bold" resource="../../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/format-text-bold.png</normaloff>:/icons/oxygen/32x32/actions/format-text-bold.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Bold</string>
@@ -367,9 +358,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset theme="format-text-italic">
-     <normaloff/>
-    </iconset>
+    <iconset theme="format-text-italic" resource="../../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/format-text-italic.png</normaloff>:/icons/oxygen/32x32/actions/format-text-italic.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Italic</string>
@@ -383,9 +373,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset theme="format-text-underline">
-     <normaloff/>
-    </iconset>
+    <iconset theme="format-text-underline" resource="../../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/format-text-underline.png</normaloff>:/icons/oxygen/32x32/actions/format-text-underline.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Underline</string>
@@ -399,9 +388,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset theme="format-text-strikethrough">
-     <normaloff/>
-    </iconset>
+    <iconset theme="format-text-strikethrough" resource="../../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/format-text-strikethrough.png</normaloff>:/icons/oxygen/32x32/actions/format-text-strikethrough.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Strikethrough</string>
@@ -409,9 +397,8 @@
   </action>
   <action name="actionFormatAlignLeft">
    <property name="icon">
-    <iconset theme="format-justify-left">
-     <normaloff/>
-    </iconset>
+    <iconset theme="format-justify-left" resource="../../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/format-justify-left.png</normaloff>:/icons/oxygen/32x32/actions/format-justify-left.png</iconset>
    </property>
    <property name="text">
     <string>Align &amp;Left</string>
@@ -419,9 +406,8 @@
   </action>
   <action name="actionFormatAlignCenter">
    <property name="icon">
-    <iconset theme="format-justify-center">
-     <normaloff/>
-    </iconset>
+    <iconset theme="format-justify-center" resource="../../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/format-justify-center.png</normaloff>:/icons/oxygen/32x32/actions/format-justify-center.png</iconset>
    </property>
    <property name="text">
     <string>Align &amp;Center</string>
@@ -429,9 +415,8 @@
   </action>
   <action name="actionFormatAlignRight">
    <property name="icon">
-    <iconset theme="format-justify-right">
-     <normaloff/>
-    </iconset>
+    <iconset theme="format-justify-right" resource="../../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/format-justify-right.png</normaloff>:/icons/oxygen/32x32/actions/format-justify-right.png</iconset>
    </property>
    <property name="text">
     <string>Align &amp;Right</string>
@@ -439,9 +424,8 @@
   </action>
   <action name="actionFormatAlignJustify">
    <property name="icon">
-    <iconset theme="format-justify-fill">
-     <normaloff/>
-    </iconset>
+    <iconset theme="format-justify-fill" resource="../../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/16x16/actions/format-justify-fill.png</normaloff>:/icons/oxygen/16x16/actions/format-justify-fill.png</iconset>
    </property>
    <property name="text">
     <string>Align &amp;Justify</string>
@@ -449,9 +433,8 @@
   </action>
   <action name="actionFormatIncreaseIndent">
    <property name="icon">
-    <iconset theme="format-indent-more">
-     <normaloff/>
-    </iconset>
+    <iconset theme="format-indent-more" resource="../../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/format-indent-more.png</normaloff>:/icons/oxygen/32x32/actions/format-indent-more.png</iconset>
    </property>
    <property name="text">
     <string>I&amp;ncrease Indent</string>
@@ -459,9 +442,8 @@
   </action>
   <action name="actionFormatDecreaseIndent">
    <property name="icon">
-    <iconset theme="format-indent-less">
-     <normaloff/>
-    </iconset>
+    <iconset theme="format-indent-less" resource="../../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/format-indent-less.png</normaloff>:/icons/oxygen/32x32/actions/format-indent-less.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Decrease Indent</string>
@@ -472,9 +454,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset theme="format-list-unordered">
-     <normaloff/>
-    </iconset>
+    <iconset theme="format-list-unordered" resource="../../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/format-list-unordered.png</normaloff>:/icons/oxygen/32x32/actions/format-list-unordered.png</iconset>
    </property>
    <property name="text">
     <string>Bulle&amp;ted List</string>
@@ -485,9 +466,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset theme="format-list-ordered">
-     <normaloff/>
-    </iconset>
+    <iconset theme="format-list-ordered" resource="../../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/format-list-unordered.png</normaloff>:/icons/oxygen/32x32/actions/format-list-unordered.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Numbered List</string>
@@ -495,9 +475,8 @@
   </action>
   <action name="actionInsertImage">
    <property name="icon">
-    <iconset theme="insert-image">
-     <normaloff/>
-    </iconset>
+    <iconset theme="insert-image" resource="../../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/insert-image.png</normaloff>:/icons/oxygen/32x32/actions/insert-image.png</iconset>
    </property>
    <property name="text">
     <string>Insert &amp;Image...</string>
@@ -505,9 +484,8 @@
   </action>
   <action name="actionCreateLink">
    <property name="icon">
-    <iconset theme="insert-link">
-     <normaloff/>
-    </iconset>
+    <iconset theme="insert-link" resource="../../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/insert-link.png</normaloff>:/icons/oxygen/32x32/actions/insert-link.png</iconset>
    </property>
    <property name="text">
     <string>Create Link...</string>
@@ -515,9 +493,8 @@
   </action>
   <action name="actionZoomOut">
    <property name="icon">
-    <iconset theme="zoom-out">
-     <normaloff/>
-    </iconset>
+    <iconset theme="zoom-out" resource="../../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/zoom-out.png</normaloff>:/icons/oxygen/32x32/actions/zoom-out.png</iconset>
    </property>
    <property name="text">
     <string>Zoom Out</string>
@@ -525,9 +502,8 @@
   </action>
   <action name="actionZoomIn">
    <property name="icon">
-    <iconset theme="zoom-in">
-     <normaloff/>
-    </iconset>
+    <iconset theme="zoom-in" resource="../../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/zoom-in.png</normaloff>:/icons/oxygen/32x32/actions/zoom-in.png</iconset>
    </property>
    <property name="text">
     <string>Zoom In</string>
@@ -611,9 +587,8 @@
   </action>
   <action name="actionInsertHtml">
    <property name="icon">
-    <iconset theme="insert-text">
-     <normaloff/>
-    </iconset>
+    <iconset theme="insert-text" resource="../../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/insert-text.png</normaloff>:/icons/oxygen/32x32/actions/insert-text.png</iconset>
    </property>
    <property name="text">
     <string>Insert HTML...</string>
@@ -646,6 +621,8 @@
    <header>QtWebKitWidgets/QWebView</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../../icons/resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

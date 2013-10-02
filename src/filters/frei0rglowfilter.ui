@@ -51,14 +51,15 @@
         <string>Reset to default</string>
        </property>
        <property name="icon">
-        <iconset theme="edit-undo"/>
+        <iconset theme="edit-undo" resource="../../icons/resources.qrc">
+         <normaloff>:/icons/oxygen/16x16/actions/edit-undo.png</normaloff>:/icons/oxygen/16x16/actions/edit-undo.png</iconset>
        </property>
        <property name="iconSize">
         <size>
          <width>8</width>
          <height>8</height>
         </size>
-      </property>
+       </property>
        <property name="flat">
         <bool>true</bool>
        </property>
@@ -94,5 +95,8 @@
    </item>
   </layout>
  </widget>
+ <resources>
+  <include location="../../icons/resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

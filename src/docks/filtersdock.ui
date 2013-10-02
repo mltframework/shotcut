@@ -11,9 +11,8 @@
    </rect>
   </property>
   <property name="windowIcon">
-   <iconset theme="view-filter">
-    <normaloff/>
-   </iconset>
+   <iconset theme="view-filter" resource="../../icons/resources.qrc">
+    <normaloff>:/icons/oxygen/32x32/actions/view-filter.png</normaloff>:/icons/oxygen/32x32/actions/view-filter.png</iconset>
   </property>
   <property name="windowTitle">
    <string>Filters</string>
@@ -72,9 +71,8 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset theme="list-add">
-              <normaloff/>
-             </iconset>
+             <iconset theme="list-add" resource="../../icons/resources.qrc">
+              <normaloff>:/icons/oxygen/16x16/actions/list-add.png</normaloff>:/icons/oxygen/16x16/actions/list-add.png</iconset>
             </property>
            </widget>
           </item>
@@ -90,9 +88,8 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset theme="list-remove">
-              <normaloff/>
-             </iconset>
+             <iconset theme="list-remove" resource="../../icons/resources.qrc">
+              <normaloff>:/icons/oxygen/16x16/actions/list-remove.png</normaloff>:/icons/oxygen/16x16/actions/list-remove.png</iconset>
             </property>
            </widget>
           </item>
@@ -202,6 +199,8 @@
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../icons/resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

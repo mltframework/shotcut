@@ -11,7 +11,8 @@
    </rect>
   </property>
   <property name="windowIcon">
-   <iconset theme="view-media-playlist"/>
+   <iconset theme="view-media-playlist" resource="../../icons/resources.qrc">
+    <normaloff>:/icons/oxygen/32x32/actions/view-media-playlist.png</normaloff>:/icons/oxygen/32x32/actions/view-media-playlist.png</iconset>
   </property>
   <property name="windowTitle">
    <string>Melted Playlist</string>
@@ -69,7 +70,8 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="list-add"/>
+         <iconset theme="list-add" resource="../../icons/resources.qrc">
+          <normaloff>:/icons/oxygen/16x16/actions/list-add.png</normaloff>:/icons/oxygen/16x16/actions/list-add.png</iconset>
         </property>
        </widget>
       </item>
@@ -85,7 +87,8 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="list-remove"/>
+         <iconset theme="list-remove" resource="../../icons/resources.qrc">
+          <normaloff>:/icons/oxygen/16x16/actions/list-remove.png</normaloff>:/icons/oxygen/16x16/actions/list-remove.png</iconset>
         </property>
        </widget>
       </item>
@@ -98,7 +101,8 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="format-justify-fill"/>
+         <iconset theme="format-justify-fill" resource="../../icons/resources.qrc">
+          <normaloff>:/icons/oxygen/16x16/actions/format-justify-fill.png</normaloff>:/icons/oxygen/16x16/actions/format-justify-fill.png</iconset>
         </property>
        </widget>
       </item>
@@ -179,6 +183,8 @@
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../icons/resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

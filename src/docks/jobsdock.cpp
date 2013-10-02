@@ -28,7 +28,7 @@ JobsDock::JobsDock(QWidget *parent) :
     ui(new Ui::JobsDock)
 {
     ui->setupUi(this);
-    toggleViewAction()->setIcon(QIcon::fromTheme("run-build", windowIcon()));
+    toggleViewAction()->setIcon(windowIcon());
     ui->treeView->setModel(&JOBS);
     QHeaderView* header = ui->treeView->header();
     header->setStretchLastSection(false);

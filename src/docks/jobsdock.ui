@@ -11,7 +11,8 @@
    </rect>
   </property>
   <property name="windowIcon">
-   <iconset theme="run-build"/>
+   <iconset theme="run-build" resource="../../icons/resources.qrc">
+    <normaloff>:/icons/oxygen/32x32/actions/run-build.png</normaloff>:/icons/oxygen/32x32/actions/run-build.png</iconset>
   </property>
   <property name="windowTitle">
    <string>Jobs</string>
@@ -47,7 +48,7 @@
          <x>0</x>
          <y>0</y>
          <width>232</width>
-         <height>225</height>
+         <height>235</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -128,9 +129,8 @@ the list. This does not stop a currently running job. Right-
          <string>Display a menu of additional actions</string>
         </property>
         <property name="icon">
-         <iconset theme="format-justify-fill">
-          <normaloff/>
-         </iconset>
+         <iconset theme="format-justify-fill" resource="../../icons/resources.qrc">
+          <normaloff>:/icons/light/16x16/format-justify-fill.png</normaloff>:/icons/light/16x16/format-justify-fill.png</iconset>
         </property>
        </widget>
       </item>
@@ -197,6 +197,8 @@ the list. This does not stop a currently running job. Right-
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../icons/resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

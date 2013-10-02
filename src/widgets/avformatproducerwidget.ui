@@ -694,7 +694,8 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset theme="format-justify-fill"/>
+        <iconset theme="format-justify-fill" resource="../../icons/resources.qrc">
+         <normaloff>:/icons/oxygen/16x16/actions/format-justify-fill.png</normaloff>:/icons/oxygen/16x16/actions/format-justify-fill.png</iconset>
        </property>
       </widget>
      </item>
@@ -763,7 +764,9 @@
   <tabstop>menuButton</tabstop>
   <tabstop>notesTextEdit</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../../icons/resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>syncSlider</sender>

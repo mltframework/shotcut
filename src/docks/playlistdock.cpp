@@ -28,7 +28,7 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     ui(new Ui::PlaylistDock)
 {
     ui->setupUi(this);
-    toggleViewAction()->setIcon(QIcon::fromTheme("view-media-playlist", windowIcon()));
+    toggleViewAction()->setIcon(windowIcon());
     ui->tableView->setModel(&m_model);
     ui->tableView->setDragDropMode(QAbstractItemView::DragDrop);
     ui->tableView->setDropIndicatorShown(true);
