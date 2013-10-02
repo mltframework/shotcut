@@ -9,3 +9,4 @@ moc_*.cpp
 Makefile
 *.cache
 src/shotcut
+*.user
