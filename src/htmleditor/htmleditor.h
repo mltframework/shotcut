@@ -69,6 +69,7 @@ private:
     void execCommand(const QString&);
     void execCommand(const QString &cmd, const QString &arg);
     bool queryCommandState(const QString&);
+    QString qmlFilePath(const QString& fileName);
 
 private slots:
     void fileNew();
@@ -107,6 +108,10 @@ private slots:
     void adjustSource();
     void changeTab(int);
     void openLink(const QUrl&);
+    void on_actionTextOutline_triggered();
+    void formatTextOutline(const QString&);
+    void on_actionTextShadow_triggered();
+    void formatTextShadow(const QString&);
 
 private:
     Ui_HtmlEditor *ui;

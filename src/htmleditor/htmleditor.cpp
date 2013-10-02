@@ -30,6 +30,7 @@
 
 #include <QtWidgets>
 #include <QtWebKitWidgets>
+#include <QQuickView>
 
 #define FORWARD_ACTION(action1, action2) \
     connect(action1, SIGNAL(triggered()), \
@@ -47,10 +48,14 @@ HtmlEditor::HtmlEditor(QWidget *parent)
         , insertHtmlDialog(0)
 {
     ui->setupUi(this);
+
+    QPalette pal = ui->webView->page()->palette();
+    pal.setColor(QPalette::Base, Qt::gray);
+    ui->webView->page()->setPalette(pal);
+
     ui->tabWidget->setTabText(0, tr("WYSIWYG Editor"));
     ui->tabWidget->setTabText(1, tr("View Source"));
     connect(ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(changeTab(int)));
-    resize(600, 600);
 
     highlighter = new Highlighter(ui->plainTextEdit->document());
 
@@ -130,7 +135,7 @@ HtmlEditor::HtmlEditor(QWidget *parent)
     adjustActions();
     adjustSource();
     setWindowModified(false);
-    changeZoom(100);
+//    changeZoom(100);
 }
 
 HtmlEditor::~HtmlEditor()
@@ -364,6 +369,19 @@ bool HtmlEditor::queryCommandState(const QString &cmd)
     return result.toString().simplified().toLower() == "true";
 }
 
+QString HtmlEditor::qmlFilePath(const QString &fileName)
+{
+    QDir dir(qApp->applicationDirPath());
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    dir.cdUp();
+#endif
+    dir.cd("share");
+    dir.cd("shotcut");
+    dir.cd("qml");
+    dir.cd("htmleditor");
+    return dir.absoluteFilePath(fileName);
+}
+
 void HtmlEditor::styleParagraph()
 {
     execCommand("formatBlock", "p");
@@ -540,6 +558,40 @@ void HtmlEditor::openLink(const QUrl &url)
         QDesktopServices::openUrl(url);
 }
 
+void HtmlEditor::on_actionTextOutline_triggered()
+{
+    QQuickView* view = new QQuickView(QUrl::fromLocalFile(qmlFilePath("text_outline.qml")));
+    view->setTitle(tr("Text Outline"));
+    view->setColor(palette().window().color());
+    connect(view->rootObject(), SIGNAL(accepted(QString)), SLOT(formatTextOutline(QString)));
+    connect(view->engine(), SIGNAL(quit()), view, SLOT(close()));
+    view->show();
+}
+
+void HtmlEditor::formatTextOutline(const QString& outline)
+{
+    QWebFrame *frame = ui->webView->page()->mainFrame();
+    QString js = QString("formatTextOutline('%1')").arg(outline);
+    frame->evaluateJavaScript(js);
+}
+
+void HtmlEditor::on_actionTextShadow_triggered()
+{
+    QQuickView* view = new QQuickView(QUrl::fromLocalFile(qmlFilePath("text_shadow.qml")));
+    view->setTitle(tr("Text Shadow"));
+    view->setColor(palette().window().color());
+    connect(view->rootObject(), SIGNAL(accepted(QString)), SLOT(formatTextShadow(QString)));
+    connect(view->engine(), SIGNAL(quit()), view, SLOT(close()));
+    view->show();
+}
+
+void HtmlEditor::formatTextShadow(const QString& outline)
+{
+    QWebFrame *frame = ui->webView->page()->mainFrame();
+    QString js = QString("formatTextShadow('%1')").arg(outline);
+    frame->evaluateJavaScript(js);
+}
+
 void HtmlEditor::changeZoom(int percent)
 {
     ui->actionZoomOut->setEnabled(percent > 25);
@@ -574,7 +626,9 @@ bool HtmlEditor::load(const QString &f)
     ui->webView->page()->setContentEditable(true);
     ui->webView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
     connect(ui->webView, SIGNAL(linkClicked(QUrl)), SLOT(openLink(QUrl)));
-
+    const QString& html = ui->webView->page()->mainFrame()->toHtml();
+    ui->actionTextOutline->setEnabled(html.contains("formatTextOutline"));
+    ui->actionTextShadow->setEnabled(html.contains("formatTextShadow"));
     setCurrentFileName(f);
     return true;
 }

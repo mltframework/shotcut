@@ -198,7 +198,9 @@ OTHER_FILES += \
     qml/filters/webvfx_circular_frame/ui.qml \
     qml/filters/webvfx_circular_frame/meta.qml \
     qml/modules/Shotcut/Controls/qmldir \
-    qml/modules/Shotcut/Controls/Preset.qml
+    qml/modules/Shotcut/Controls/Preset.qml \
+    qml/htmleditor/text_outline.qml \
+    qml/htmleditor/text_shadow.qml
 
 lupdate_hack {
     SOURCES += \
@@ -210,7 +212,9 @@ lupdate_hack {
     qml/filters/webvfx_circular_frame/ui.qml \
     qml/filters/webvfx_circular_frame/meta.qml \
     qml/modules/Shotcut/Controls/qmldir \
-    qml/modules/Shotcut/Controls/Preset.qml
+    qml/modules/Shotcut/Controls/Preset.qml \
+    qml/htmleditor/text_outline.qml \
+    qml/htmleditor/text_shadow.qml
 }
 
 TRANSLATIONS += \

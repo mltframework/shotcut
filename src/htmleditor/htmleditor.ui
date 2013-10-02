@@ -94,6 +94,8 @@
       <addaction name="separator"/>
       <addaction name="actionFormatTextColor"/>
       <addaction name="actionFormatBackgroundColor"/>
+      <addaction name="actionTextOutline"/>
+      <addaction name="actionTextShadow"/>
      </widget>
      <addaction name="menu_Edit"/>
      <addaction name="menuF_ormat"/>
@@ -615,6 +617,22 @@
    </property>
    <property name="toolTip">
     <string>Insert HTML</string>
+   </property>
+  </action>
+  <action name="actionTextOutline">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Text Outline...</string>
+   </property>
+  </action>
+  <action name="actionTextShadow">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Text Shadow...</string>
    </property>
   </action>
  </widget>
