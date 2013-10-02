@@ -627,6 +627,7 @@ bool HtmlEditor::load(const QString &f)
     ui->webView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
     connect(ui->webView, SIGNAL(linkClicked(QUrl)), SLOT(openLink(QUrl)));
     const QString& html = ui->webView->page()->mainFrame()->toHtml();
+    ui->actionFormatFontSize->setEnabled(html.contains("setFontSize"));
     ui->actionTextOutline->setEnabled(html.contains("formatTextOutline"));
     ui->actionTextShadow->setEnabled(html.contains("formatTextShadow"));
     setCurrentFileName(f);
