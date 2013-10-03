@@ -1,4 +1,3 @@
-shotcut.pro.user
 *.o
 *.so
 ui_*.h
@@ -10,3 +9,4 @@ Makefile
 *.cache
 src/shotcut
 *.user
+*.qm
