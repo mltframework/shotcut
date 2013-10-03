@@ -1322,7 +1322,7 @@ SLIB_EXTRA_CMD=-"mv $$(@:$(SLIBSUF)=.orig.def) $$(@:$(SLIBSUF)=.def)"
         cmd install -p -c translations/*.qm "$FINAL_INSTALL_DIR"/share/shotcut/translations
         cmd cp -a src/qml "$FINAL_INSTALL_DIR"/share/shotcut
         cmd install -p -c "$QTDIR"/translations/qt_*.qm "$FINAL_INSTALL_DIR"/share/shotcut/translations
-        cmd install -p -c "$QTDIR"/lib/libQt5{Concurrent,Core,Declarative,Gui,Multimedia,MultimediaQuick,MultimediaWidgets,Network,OpenGL,PrintSupport,Qml,QmlParticles,Quick,Script,Sensors,Sql,Svg,V8,WebKit,WebKitWidgets,Widgets,Xml,XmlPatterns}.so* "$FINAL_INSTALL_DIR"/lib
+        cmd install -p -c "$QTDIR"/lib/libQt5{Concurrent,Core,Declarative,Gui,Multimedia,MultimediaQuick,MultimediaWidgets,Network,OpenGL,PrintSupport,Qml,QmlParticles,Quick,Script,Sensors,Sql,Svg,V8,WebKit,WebKitWidgets,Widgets,Xml,XmlPatterns,X11Extras,DBus}.so* "$FINAL_INSTALL_DIR"/lib
         cmd install -p -c "$QTDIR"/lib/lib{icudata,icui18n,icuuc}.so* "$FINAL_INSTALL_DIR"/lib
         cmd install -d "$FINAL_INSTALL_DIR"/lib/qt5
         cmd cp -a "$QTDIR"/plugins/{accessible,iconengines,imageformats,mediaservice,platforms} "$FINAL_INSTALL_DIR"/lib/qt5
@@ -1330,7 +1330,7 @@ SLIB_EXTRA_CMD=-"mv $$(@:$(SLIBSUF)=.orig.def) $$(@:$(SLIBSUF)=.def)"
 
         log Copying some libs from system
         #cmd install -p -c /usr/lib/libaudio.so* "$FINAL_INSTALL_DIR"/lib
-        GLEWLIB=$(ldd "$FINAL_INSTALL_DIR"/bin/shotcut | awk '/GLEW/ {print $3}')
+        GLEWLIB=$(ldd "$FINAL_INSTALL_DIR"/lib/mlt/libmltopengl.so | awk '/GLEW/ {print $3}')
         log GLEWLIB=$GLEWLIB
         cmd install -c "$GLEWLIB" "$FINAL_INSTALL_DIR"/lib
         SOXLIB=$(ldd "$FINAL_INSTALL_DIR"/lib/mlt/libmltsox.so | awk '/libsox/ {print $3}')
@@ -1686,6 +1686,7 @@ export MLT_PROFILES_PATH="\$INSTALL_DIR/share/mlt/profiles"
 export FREI0R_PATH="\$INSTALL_DIR/lib/frei0r-1":/usr/lib/frei0r-1:/usr/local/lib/frei0r-1:/opt/local/lib/frei0r-1
 export MANPATH=\$MANPATH:"\$INSTALL_DIR/share/man"
 export PKG_CONFIG_PATH="\$INSTALL_DIR/lib/pkgconfig":\$PKG_CONFIG_PATH
+export QT_PLUGIN_PATH="\$INSTALL_DIR/lib/qt5"
 export QML2_IMPORT_PATH="\$INSTALL_DIR/lib/qml"
 End-of-environment-setup-template
   if test 0 != $? ; then
@@ -1707,6 +1708,7 @@ export MLT_DATA="\$INSTALL_DIR/share/mlt"
 export MLT_PROFILES_PATH="\$INSTALL_DIR/share/mlt/profiles"
 export FREI0R_PATH="\$INSTALL_DIR/lib/frei0r-1":/usr/lib/frei0r-1:/usr/local/lib/frei0r-1:/opt/local/lib/frei0r-1
 export MLT_MOVIT_PATH="\$INSTALL_DIR/share/movit"
+export QT_PLUGIN_PATH="\$INSTALL_DIR/lib/qt5"
 export QML2_IMPORT_PATH="\$INSTALL_DIR/lib/qml"
 "\$INSTALL_DIR/bin/melt" \$@
 End-of-melt-wrapper
@@ -1729,6 +1731,7 @@ export MLT_DATA="\$INSTALL_DIR/share/mlt"
 export MLT_PROFILES_PATH="\$INSTALL_DIR/share/mlt/profiles"
 export FREI0R_PATH="\$INSTALL_DIR/lib/frei0r-1":/usr/lib/frei0r-1:/usr/local/lib/frei0r-1:/opt/local/lib/frei0r-1
 export MLT_MOVIT_PATH="\$INSTALL_DIR/share/movit"
+export QT_PLUGIN_PATH="\$INSTALL_DIR/lib/qt5"
 export QML2_IMPORT_PATH="\$INSTALL_DIR/lib/qml"
 "\$INSTALL_DIR/bin/shotcut" \$@
 End-of-shotcut-wrapper
