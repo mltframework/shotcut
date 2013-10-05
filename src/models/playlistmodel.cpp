@@ -58,6 +58,12 @@ public:
         m_in = producer.get_in();
         m_out = producer.get_out();
         m_tempProducer = new Mlt::Producer(MLT.profile(), service.toUtf8().constData(), producer.get("resource"));
+        if (m_tempProducer->is_valid()) {
+            Mlt::Filter scaler(MLT.profile(), "swscale");
+            Mlt::Filter converter(MLT.profile(), "avcolor_space");
+            m_tempProducer->attach(scaler);
+            m_tempProducer->attach(converter);
+        }
     }
     ~UpdateThumbnailTask()
     {
