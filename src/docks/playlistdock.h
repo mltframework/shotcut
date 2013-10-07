@@ -21,7 +21,6 @@
 
 #include <QDockWidget>
 #include <QUndoCommand>
-#include <QSettings>
 #include "models/playlistmodel.h"
 
 namespace Ui {
@@ -103,7 +102,6 @@ private:
     Ui::PlaylistDock *ui;
     PlaylistModel m_model;
     int m_defaultRowHeight;
-    QSettings m_settings;
 };
 
 namespace Playlist

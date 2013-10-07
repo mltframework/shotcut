@@ -20,6 +20,7 @@
 #include "ui_playlistdock.h"
 #include "dialogs/durationdialog.h"
 #include "mainwindow.h"
+#include "settings.h"
 #include <QMenu>
 #include <QDebug>
 
@@ -46,7 +47,7 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     connect(&m_model, SIGNAL(moveClip(int,int)), SLOT(onMoveClip(int,int)));
 
     m_defaultRowHeight = ui->tableView->verticalHeader()->defaultSectionSize();
-    QString thumbs = m_settings.value("playlist/thumbnails", "small").toString();
+    QString thumbs = Settings.playlistThumbnails();
     if (thumbs == "wide") {
         ui->actionLeftAndRight->setChecked(true);
         on_actionLeftAndRight_triggered(true);
@@ -530,7 +531,7 @@ void MoveCommand::undo()
 void PlaylistDock::on_actionThumbnailsHidden_triggered(bool checked)
 {
     if (checked) {
-        m_settings.setValue("playlist/thumbnails", "hidden");
+        Settings.setPlaylistThumbnails("hidden");
         ui->tableView->setColumnHidden(PlaylistModel::COLUMN_THUMBNAIL, true);
         ui->tableView->verticalHeader()->setDefaultSectionSize(m_defaultRowHeight);
     }
@@ -539,8 +540,8 @@ void PlaylistDock::on_actionThumbnailsHidden_triggered(bool checked)
 void PlaylistDock::on_actionLeftAndRight_triggered(bool checked)
 {
     if (checked) {
-        bool refreshThumbs = m_settings.value("playlist/thumbnails").toString() != "tall";
-        m_settings.setValue("playlist/thumbnails", "wide");
+        bool refreshThumbs = Settings.playlistThumbnails() != "tall";
+        Settings.setPlaylistThumbnails("wide");
         if (refreshThumbs) m_model.refreshThumbnails();
         ui->tableView->setColumnHidden(PlaylistModel::COLUMN_THUMBNAIL, false);
         ui->tableView->verticalHeader()->setDefaultSectionSize(PlaylistModel::THUMBNAIL_HEIGHT);
@@ -551,8 +552,8 @@ void PlaylistDock::on_actionLeftAndRight_triggered(bool checked)
 void PlaylistDock::on_actionTopAndBottom_triggered(bool checked)
 {
     if (checked) {
-        bool refreshThumbs = m_settings.value("playlist/thumbnails").toString() != "wide";
-        m_settings.setValue("playlist/thumbnails", "tall");
+        bool refreshThumbs = Settings.playlistThumbnails() != "wide";
+        Settings.setPlaylistThumbnails("tall");
         if (refreshThumbs) m_model.refreshThumbnails();
         ui->tableView->setColumnHidden(PlaylistModel::COLUMN_THUMBNAIL, false);
         ui->tableView->verticalHeader()->setDefaultSectionSize(PlaylistModel::THUMBNAIL_HEIGHT * 2);
@@ -563,8 +564,8 @@ void PlaylistDock::on_actionTopAndBottom_triggered(bool checked)
 void PlaylistDock::on_actionInOnlySmall_triggered(bool checked)
 {
     if (checked) {
-        bool refreshThumbs = m_settings.value("playlist/thumbnails").toString() == "hidden";
-        m_settings.setValue("playlist/thumbnails", "small");
+        bool refreshThumbs = Settings.playlistThumbnails() == "hidden";
+        Settings.setPlaylistThumbnails("small");
         if (refreshThumbs) m_model.refreshThumbnails();
         ui->tableView->setColumnHidden(PlaylistModel::COLUMN_THUMBNAIL, false);
         ui->tableView->verticalHeader()->setDefaultSectionSize(PlaylistModel::THUMBNAIL_HEIGHT);
@@ -575,8 +576,8 @@ void PlaylistDock::on_actionInOnlySmall_triggered(bool checked)
 void PlaylistDock::on_actionInOnlyLarge_triggered(bool checked)
 {
     if (checked) {
-        bool refreshThumbs = m_settings.value("playlist/thumbnails").toString() == "hidden";
-        m_settings.setValue("playlist/thumbnails", "large");
+        bool refreshThumbs = Settings.playlistThumbnails() == "hidden";
+        Settings.setPlaylistThumbnails("large");
         if (refreshThumbs) m_model.refreshThumbnails();
         ui->tableView->setColumnHidden(PlaylistModel::COLUMN_THUMBNAIL, false);
         ui->tableView->verticalHeader()->setDefaultSectionSize(PlaylistModel::THUMBNAIL_HEIGHT * 2);

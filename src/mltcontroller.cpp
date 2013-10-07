@@ -20,10 +20,10 @@
 #include <QWidget>
 #include <QPalette>
 #include <QMetaType>
-#include <QSettings>
 #include <Mlt.h>
 #include "glwidget.h"
 #include "sdlwidget.h"
+#include "settings.h"
 
 namespace Mlt {
 
@@ -102,8 +102,7 @@ Controller& Controller::singleton(QWidget* parent)
 #if defined(Q_OS_MAC) || defined(Q_OS_WIN)
         instance = new GLWidget(parent);
 #else
-        QSettings settings;
-        if (settings.value("player/opengl", true).toBool())
+        if (Settings.playerOpenGL())
             instance = new GLWidget(parent);
         else
             instance = new SDLWidget(parent);
@@ -495,9 +494,7 @@ void Controller::setOut(int out)
 void Controller::restart()
 {
     if (!m_consumer) return;
-    QSettings settings;
-    if (m_producer && m_producer->is_valid() &&
-        settings.value("player/gpu").toBool()) {
+    if (m_producer && m_producer->is_valid() && Settings.playerGPU()) {
         m_consumer->set("_shotcut_position", m_consumer->position());
         const char* position = m_consumer->get_time("_shotcut_position");
         double speed = m_producer->get_speed();

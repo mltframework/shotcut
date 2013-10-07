@@ -21,7 +21,6 @@
 
 #include <QDockWidget>
 #include <QModelIndex>
-#include <QSettings>
 #include <mvcp_remote.h>
 #include "mvcpthread.h"
 
@@ -83,7 +82,6 @@ private:
     QConsole* m_console;
     mvcp_parser m_parser;
     MvcpThread* m_mvcp;
-    QSettings m_settings;
     QString m_mappedClipsRoot;
 };
 

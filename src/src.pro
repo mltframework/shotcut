@@ -68,7 +68,8 @@ SOURCES += main.cpp\
     qmltypes/qmlmetadata.cpp \
     filters/webvfxfilter.cpp \
     htmleditor/htmleditor.cpp \
-    htmleditor/highlighter.cpp
+    htmleditor/highlighter.cpp \
+    settings.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -132,7 +133,8 @@ HEADERS  += mainwindow.h \
     qmltypes/qmlmetadata.h \
     filters/webvfxfilter.h \
     htmleditor/htmleditor.h \
-    htmleditor/highlighter.h
+    htmleditor/highlighter.h \
+    settings.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \

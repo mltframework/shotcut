@@ -21,8 +21,6 @@
 #include "mainwindow.h"
 #include "docks/filtersdock.h"
 #include "qmltypes/qmlmetadata.h"
-#include <QSettings>
-#include <QSettings>
 #include <QTimer>
 #include <QDebug>
 

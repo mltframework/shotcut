@@ -21,6 +21,7 @@
 #include "mainwindow.h"
 #include "widgets/timespinbox.h"
 #include "widgets/audiosignal.h"
+#include "settings.h"
 #include <QtWidgets>
 
 #define VOLUME_KNEE (88)
@@ -66,7 +67,7 @@ Player::Player(QWidget *parent)
     volumeLayoutV->addLayout(volumeLayoutH);
     hlayout->addLayout(volumeLayoutV);
     m_volumeSlider->setRange(0, 99);
-    m_volumeSlider->setValue(m_settings.value("player/volume", VOLUME_KNEE).toInt());
+    m_volumeSlider->setValue(Settings.playerVolume());
     onVolumeChanged(m_volumeSlider->value());
     m_savedVolume = MLT.volume();
     m_volumeSlider->setToolTip(tr("Adjust the audio volume"));
@@ -85,7 +86,7 @@ Player::Player(QWidget *parent)
     muteButton->setIcon(QIcon::fromTheme("dialog-cancel", QIcon(":/icons/oxygen/16x16/actions/dialog-cancel.png")));
     muteButton->setToolTip(tr("Silence the audio"));
     muteButton->setCheckable(true);
-    muteButton->setChecked(m_settings.value("player/muted", false).toBool());
+    muteButton->setChecked(Settings.playerMuted());
     volumeLayoutH->addWidget(muteButton);
     connect(muteButton, SIGNAL(toggled(bool)), this, SLOT(onMuteButtonToggled(bool)));
 
@@ -95,7 +96,7 @@ Player::Player(QWidget *parent)
     volumeButton->setToolTip(tr("Show or hide the volume control"));
     volumeButton->setIcon(QIcon::fromTheme("player-volume", QIcon(":/icons/oxygen/16x16/actions/player-volume.png")));
     volumeButton->setCheckable(true);
-    volumeButton->setChecked(m_settings.value("player/volume-visible", false).toBool());
+    volumeButton->setChecked(Settings.playerVolumeVisible());
     onVolumeButtonToggled(volumeButton->isChecked());
     volumeLayoutH->addWidget(volumeButton);
     connect(volumeButton, SIGNAL(toggled(bool)), this, SLOT(onVolumeButtonToggled(bool)));
@@ -355,7 +356,7 @@ void Player::onProducerOpened()
         m_scrubber->setScale(m_duration);
     }
     m_positionSpinner->setEnabled(m_isSeekable);
-    onMuteButtonToggled(m_settings.value("player/muted", false).toBool());
+    onMuteButtonToggled(Settings.playerMuted());
     onVolumeChanged(m_volumeSlider->value());
 
     actionPlay->setEnabled(true);
@@ -388,7 +389,7 @@ void Player::onMeltedUnitOpened()
     m_scrubber->setOutPoint(m_previousOut);
     m_positionSpinner->setEnabled(m_isSeekable);
     onVolumeChanged(m_volumeSlider->value());
-    onMuteButtonToggled(m_settings.value("player/muted", false).toBool());
+    onMuteButtonToggled(Settings.playerMuted());
     actionPlay->setEnabled(true);
     actionSkipPrevious->setEnabled(m_isSeekable);
     actionSkipNext->setEnabled(m_isSeekable);
@@ -600,7 +601,7 @@ void Player::onVolumeChanged(int volume)
     const double gain = double(volume) / VOLUME_KNEE;
     MLT.setVolume(gain);
     emit showStatusMessage(QString("%1 dB").arg(IEC_dB(gain)));
-    m_settings.setValue("player/volume", volume);
+    Settings.setPlayerVolume(volume);
 }
 
 void Player::onCaptureStateChanged(bool active)
@@ -610,7 +611,7 @@ void Player::onCaptureStateChanged(bool active)
 
 void Player::resetProfile()
 {
-    MLT.setProfile(m_settings.value("player/profile").toString());
+    MLT.setProfile(Settings.playerProfile());
     emit profileChanged();
 }
 
@@ -618,7 +619,7 @@ void Player::onVolumeButtonToggled(bool checked)
 {
     m_audioSignal->setVisible(checked);
     m_volumeSlider->setVisible(checked);
-    m_settings.setValue("player/volume-visible", checked);
+    Settings.setPlayerVolumeVisible(checked);
 }
 
 void Player::onMuteButtonToggled(bool checked)
@@ -629,5 +630,5 @@ void Player::onMuteButtonToggled(bool checked)
     } else {
         MLT.setVolume(m_savedVolume);
     }
-    m_settings.setValue("player/muted", checked);
+    Settings.setPlayerMuted(checked);
 }

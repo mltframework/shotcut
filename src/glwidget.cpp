@@ -22,6 +22,7 @@
 #include <QtWidgets>
 #include <Mlt.h>
 #include "glwidget.h"
+#include "settings.h"
 
 #define check_error() { int err = glGetError(); if (err != GL_NO_ERROR) { fprintf(stderr, "GL error 0x%x at %s:%d\n", err, __FILE__, __LINE__); exit(1); } }
 
@@ -47,8 +48,7 @@ GLWidget::GLWidget(QWidget *parent)
     setAttribute(Qt::WA_PaintOnScreen);
     setAttribute(Qt::WA_OpaquePaintEvent);
     setMouseTracking(true);
-    QSettings settings;
-    if (settings.value("player/gpu", false).toBool())
+    if (Settings.playerGPU())
         m_glslManager = new Filter(profile(), "glsl.manager");
     if ((m_glslManager && !m_glslManager->is_valid())) {
         delete m_glslManager;
@@ -81,9 +81,8 @@ QSize GLWidget::sizeHint() const
 void GLWidget::initializeGL()
 {
     QPalette palette;
-    QSettings settings;
 
-    if (settings.value("player/gpu", false).toBool() && !m_glslManager)
+    if (Settings.playerGPU() && !m_glslManager)
         emit gpuNotSupported();
     initializeOpenGLFunctions();
     qglClearColor(palette.color(QPalette::Window));

@@ -51,6 +51,7 @@
 #include "docks/filtersdock.h"
 #include "dialogs/customprofiledialog.h"
 #include "htmleditor/htmleditor.h"
+#include "settings.h"
 
 #include <QtWidgets>
 #include <QDebug>
@@ -158,7 +159,7 @@ MainWindow::MainWindow()
     connect(m_playlistDock->model(), SIGNAL(closed()), this, SLOT(onPlaylistClosed()));
     connect(m_playlistDock->model(), SIGNAL(modified()), this, SLOT(onPlaylistModified()));
     connect(m_playlistDock->model(), SIGNAL(loaded()), this, SLOT(updateMarkers()));
-    if (!m_settings.value("player/gpu").toBool())
+    if (!Settings.playerGPU())
         connect(m_playlistDock->model(), SIGNAL(loaded()), this, SLOT(updateThumbnails()));
 
     m_filtersDock = new FiltersDock(this);
@@ -264,7 +265,7 @@ MainWindow::MainWindow()
     connect(videoWidget, SIGNAL(seekTo(int)), m_player, SLOT(seek(int)));
     connect(videoWidget, SIGNAL(gpuNotSupported()), this, SLOT(onGpuNotSupported()));
 #else
-    if (m_settings.value("player/opengl", true).toBool()) {
+    if (Settings.playerOpenGL()) {
         Mlt::GLWidget* videoWidget = (Mlt::GLWidget*) &(MLT);
         connect(videoWidget, SIGNAL(dragStarted()), m_playlistDock, SLOT(onPlayerDragStarted()));
         connect(videoWidget, SIGNAL(seekTo(int)), m_player, SLOT(seek(int)));
@@ -364,16 +365,16 @@ void MainWindow::setupSettingsMenu()
     delete ui->actionOpenGL;
     ui->actionOpenGL = 0;
 #else
-    if (!m_settings.value("player/opengl", true).toBool()) {
+    if (!Settings.playerOpenGL()) {
         ui->actionGPU->setChecked(false);
         ui->actionGPU->setEnabled(false);
-        m_settings.setValue("player/gpu", false);
+        Settings.setPlayerGPU(false);
     }
 #endif
 #ifdef Q_OS_WIN
     // GL shared context on separate thread is not working on Windows in Qt 5.1.1.
     ui->menuSettings->removeAction(ui->actionGPU);
-    m_settings.setValue("player/gpu", false);
+    Settings.setPlayerGPU(false);
 #endif
 
     // Add the SDI and HDMI devices to the Settings menu.
@@ -442,7 +443,7 @@ void MainWindow::setupSettingsMenu()
     a->setCheckable(true);
     a->setData("es");
     ui->menuLanguage->addActions(m_languagesGroup->actions());
-    const QString locale = m_settings.value("language", QLocale::system().name()).toString();
+    const QString locale = Settings.language();
     foreach (QAction* action, m_languagesGroup->actions())
         if (locale.startsWith(action->data().toString()))
             action->setChecked(true);
@@ -453,10 +454,9 @@ void MainWindow::setupSettingsMenu()
     themeGroup->addAction(ui->actionSystemTheme);
     themeGroup->addAction(ui->actionFusionDark);
     themeGroup->addAction(ui->actionFusionLight);
-    QString theme = m_settings.value("theme", "dark").toString();
-    if (theme == "dark")
+    if (Settings.theme() == "dark")
         ui->actionFusionDark->setChecked(true);
-    else if (theme == "light")
+    else if (Settings.theme() == "light")
         ui->actionFusionLight->setChecked(true);
     else
         ui->actionSystemTheme->setChecked(true);
@@ -516,13 +516,10 @@ void MainWindow::open(const QString& url, const Mlt::Properties* properties)
 
 void MainWindow::openVideo()
 {
-    QString settingKey("openPath");
-    QString directory(m_settings.value(settingKey,
-        QStandardPaths::standardLocations(QStandardPaths::MoviesLocation)).toString());
-    QStringList filenames = QFileDialog::getOpenFileNames(this, tr("Open File"), directory);
+    QStringList filenames = QFileDialog::getOpenFileNames(this, tr("Open File"), Settings.openPath());
 
     if (filenames.length() > 0) {
-        m_settings.setValue(settingKey, QFileInfo(filenames.first()).path());
+        Settings.setOpenPath(QFileInfo(filenames.first()).path());
         activateWindow();
         if (filenames.length() > 1)
             m_multipleFiles = filenames;
@@ -556,7 +553,6 @@ void MainWindow::showStatusMessage(QString message)
 void MainWindow::seekPlaylist(int start)
 {
     if (!m_playlistDock->model()->playlist()) return;
-    double speed = MLT.producer()? MLT.producer()->get_speed(): 0;
     // we bypass this->open() to prevent sending producerOpened signal to self, which causes to reload playlist
     if ((void*) MLT.producer()->get_producer() != (void*) m_playlistDock->model()->playlist()->get_playlist())
         MLT.open(new Mlt::Producer(*(m_playlistDock->model()->playlist())));
@@ -575,15 +571,15 @@ void MainWindow::seekPlaylist(int start)
 void MainWindow::readPlayerSettings()
 {
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    ui->actionOpenGL->setChecked(m_settings.value("player/opengl", true).toBool());
+    ui->actionOpenGL->setChecked(Settings.playerOpenGL());
 #endif
-    ui->actionRealtime->setChecked(m_settings.value("player/realtime", true).toBool());
-    ui->actionProgressive->setChecked(m_settings.value("player/progressive", true).toBool());
-    ui->actionJack->setChecked(m_settings.value("player/jack", false).toBool());
-    ui->actionGPU->setChecked(m_settings.value("player/gpu", false).toBool());
+    ui->actionRealtime->setChecked(Settings.playerRealtime());
+    ui->actionProgressive->setChecked(Settings.playerProgressive());
+    ui->actionJack->setChecked(Settings.playerJACK());
+    ui->actionGPU->setChecked(Settings.playerGPU());
     MLT.videoWidget()->setProperty("gpu", ui->actionGPU->isChecked());
-    QString deinterlacer = m_settings.value("player/deinterlacer", "onefield").toString();
-    QString interpolation = m_settings.value("player/interpolation", "nearest").toString();
+    QString deinterlacer = Settings.playerDeinterlacer();
+    QString interpolation = Settings.playerInterpolation();
 
     if (deinterlacer == "onefield")
         ui->actionOneField->setChecked(true);
@@ -603,7 +599,7 @@ void MainWindow::readPlayerSettings()
     else
         ui->actionHyper->setChecked(true);
 
-    QVariant external = m_settings.value("player/external", "");
+    QString external = Settings.playerExternal();
     foreach (QAction* a, m_externalGroup->actions()) {
         if (a->data() == external) {
             a->setChecked(true);
@@ -611,15 +607,15 @@ void MainWindow::readPlayerSettings()
         }
     }
 
-    QVariant profile = m_settings.value("player/profile", "");
+    QString profile = Settings.playerProfile();
     // Automatic not permitted for SDI/HDMI
-    if (!external.toString().isEmpty() && profile.toString().isEmpty())
-        profile = QVariant("atsc_720p_50");
+    if (!external.isEmpty() && profile.isEmpty())
+        profile = "atsc_720p_50";
     foreach (QAction* a, m_profileGroup->actions()) {
         // Automatic not permitted for SDI/HDMI
-        if (a->data().toString().isEmpty() && !external.toString().isEmpty())
+        if (a->data().toString().isEmpty() && !external.isEmpty())
             a->setDisabled(true);
-        if (a->data() == profile) {
+        if (a->data().toString() == profile) {
             a->setChecked(true);
             break;
         }
@@ -628,8 +624,8 @@ void MainWindow::readPlayerSettings()
 
 void MainWindow::readWindowSettings()
 {
-    restoreGeometry(m_settings.value("geometry").toByteArray());
-    restoreState(m_settings.value("windowState").toByteArray());
+    restoreGeometry(Settings.windowGeometry());
+    restoreState(Settings.windowState());
     m_jobsVisible = m_jobsDock->isVisible();
 }
 
@@ -637,8 +633,8 @@ void MainWindow::writeSettings()
 {
     if (isFullScreen())
         showNormal();
-    m_settings.setValue("geometry", saveGeometry());
-    m_settings.setValue("windowState", saveState());
+    Settings.setWindowGeometry(saveGeometry());
+    Settings.setWindowState(saveState());
 }
 
 void MainWindow::configureVideoWidget()
@@ -1040,10 +1036,7 @@ bool MainWindow::on_actionSave_As_triggered()
 {
     if (!MLT.producer())
         return true;
-    QString settingKey("openPath");
-    QString directory(m_settings.value(settingKey,
-        QStandardPaths::standardLocations(QStandardPaths::MoviesLocation)).toString());
-    QString filename = QFileDialog::getSaveFileName(this, tr("Save XML"), directory, tr("MLT XML (*.mlt)"));
+    QString filename = QFileDialog::getSaveFileName(this, tr("Save XML"), Settings.openPath(), tr("MLT XML (*.mlt)"));
     if (!filename.isEmpty()) {
         saveXML(filename);
         setCurrentFile(filename);
@@ -1205,7 +1198,7 @@ void MainWindow::updateMarkers()
 
 void MainWindow::updateThumbnails()
 {
-    if (m_settings.value("playlist/thumbnails").toString() != "hidden")
+    if (Settings.playlistThumbnails() != "hidden")
         m_playlistDock->model()->refreshThumbnails();
 }
 
@@ -1312,7 +1305,7 @@ void MainWindow::on_actionEnter_Full_Screen_triggered()
 
 void MainWindow::onGpuNotSupported()
 {
-    m_settings.setValue("player/gpu", false);
+    Settings.setPlayerGPU(false);
     ui->actionGPU->setChecked(false);
     ui->actionGPU->setDisabled(true);
     showStatusMessage(tr("GPU Processing is not supported"));
@@ -1388,7 +1381,7 @@ void MainWindow::onShuttle(float x)
 
 void MainWindow::on_actionOpenGL_triggered(bool checked)
 {
-    m_settings.setValue("player/opengl", checked);
+    Settings.setPlayerOpenGL(checked);
     int r = QMessageBox::information(this, qApp->applicationName(),
                                  tr("You must restart Shotcut to switch using OpenGL.\n"
                                     "Do you want to exit now?"),
@@ -1405,7 +1398,7 @@ void MainWindow::on_actionRealtime_triggered(bool checked)
         MLT.consumer()->set("real_time", checked? 1 : -1);
         MLT.restart();
     }
-    m_settings.setValue("player/realtime", checked);
+    Settings.setPlayerRealtime(checked);
 }
 
 void MainWindow::on_actionProgressive_triggered(bool checked)
@@ -1415,7 +1408,7 @@ void MainWindow::on_actionProgressive_triggered(bool checked)
         MLT.consumer()->set("progressive", checked);
         MLT.restart();
     }
-    m_settings.setValue("player/progressive", checked);
+    Settings.setPlayerProgressive(checked);
 }
 
 void MainWindow::changeDeinterlacer(bool checked, const char* method)
@@ -1427,7 +1420,7 @@ void MainWindow::changeDeinterlacer(bool checked, const char* method)
             MLT.restart();
         }
     }
-    m_settings.setValue("player/deinterlacer", method);
+    Settings.setPlayerDeinterlacer(method);
 }
 
 void MainWindow::on_actionOneField_triggered(bool checked)
@@ -1459,7 +1452,7 @@ void MainWindow::changeInterpolation(bool checked, const char* method)
             MLT.restart();
         }
     }
-    m_settings.setValue("player/interpolation", method);
+    Settings.setPlayerInterpolation(method);
 }
 
 class AppendTask : public QRunnable
@@ -1501,7 +1494,7 @@ void MainWindow::processMultipleFiles()
         }
         m_multipleFiles.clear();
     }
-    if (m_isPlaylistLoaded && m_settings.value("player/gpu").toBool()) {
+    if (m_isPlaylistLoaded && Settings.playerGPU()) {
         updateThumbnails();
         m_isPlaylistLoaded = false;
     }
@@ -1509,7 +1502,7 @@ void MainWindow::processMultipleFiles()
 
 void MainWindow::onLanguageTriggered(QAction* action)
 {
-    m_settings.setValue("language", action->data());
+    Settings.setLanguage(action->data().toString());
     QMessageBox dialog(QMessageBox::Information,
                        qApp->applicationName(),
                        tr("You must restart Shotcut to switch to the new language.\n"
@@ -1545,10 +1538,10 @@ void MainWindow::on_actionHyper_triggered(bool checked)
 
 void MainWindow::on_actionJack_triggered(bool checked)
 {
-    m_settings.setValue("player/jack", checked);
+    Settings.setPlayerJACK(checked);
     if (!MLT.enableJack(checked)) {
         ui->actionJack->setChecked(false);
-        m_settings.setValue("player/jack", false);
+        Settings.setPlayerJACK(false);
         QMessageBox::warning(this, qApp->applicationName(),
             tr("Failed to connect to JACK.\nPlease verify that JACK is installed and running."));
     }
@@ -1556,7 +1549,7 @@ void MainWindow::on_actionJack_triggered(bool checked)
 
 void MainWindow::on_actionGPU_triggered(bool checked)
 {
-    m_settings.setValue("player/gpu", checked);
+    Settings.setPlayerGPU(checked);
     QMessageBox dialog(QMessageBox::Information,
                        qApp->applicationName(),
                        tr("You must restart Shotcut to switch using GPU processing.\n"
@@ -1573,15 +1566,15 @@ void MainWindow::on_actionGPU_triggered(bool checked)
 void MainWindow::onExternalTriggered(QAction *action)
 {
     bool isExternal = !action->data().toString().isEmpty();
-    m_settings.setValue("player/external", action->data());
+    Settings.setPlayerExternal(action->data().toString());
     MLT.videoWidget()->setProperty("mlt_service", action->data());
 
-    QVariant profile = m_settings.value("player/profile", "");
+    QString profile = Settings.playerProfile();
     // Automatic not permitted for SDI/HDMI
-    if (isExternal && profile.toString().isEmpty()) {
-        profile = QVariant("atsc_720p_50");
-        m_settings.setValue("player/profile", profile);
-        MLT.setProfile(profile.toString());
+    if (isExternal && profile.isEmpty()) {
+        profile = "atsc_720p_50";
+        Settings.setPlayerProfile(profile);
+        MLT.setProfile(profile);
         emit profileChanged();
         foreach (QAction* a, m_profileGroup->actions()) {
             if (a->data() == profile) {
@@ -1610,7 +1603,7 @@ void MainWindow::onExternalTriggered(QAction *action)
 
 void MainWindow::onProfileTriggered(QAction *action)
 {
-    m_settings.setValue("player/profile", action->data());
+    Settings.setPlayerProfile(action->data().toString());
     MLT.setProfile(action->data().toString());
     emit profileChanged();
 }
@@ -1637,17 +1630,17 @@ void MainWindow::on_actionSystemTheme_triggered()
 {
     changeTheme("system");
     QApplication::setPalette(QApplication::style()->standardPalette());
-    m_settings.setValue("theme", "system");
+    Settings.setTheme("system");
 }
 
 void MainWindow::on_actionFusionDark_triggered()
 {
     changeTheme("dark");
-    m_settings.setValue("theme", "dark");
+    Settings.setTheme("dark");
 }
 
 void MainWindow::on_actionFusionLight_triggered()
 {
     changeTheme("light");
-    m_settings.setValue("theme", "light");
+    Settings.setTheme("light");
 }

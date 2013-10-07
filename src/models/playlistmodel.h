@@ -22,7 +22,6 @@
 #include <QAbstractTableModel>
 #include <qmimedata.h>
 #include <QStringList>
-#include <QSettings>
 #include "mltcontroller.h"
 #include "MltPlaylist.h"
 
@@ -91,7 +90,6 @@ public slots:
 private:
     Mlt::Playlist* m_playlist;
     int m_dropRow;
-    QSettings m_settings;
 };
 
 #endif // PLAYLISTMODEL_H

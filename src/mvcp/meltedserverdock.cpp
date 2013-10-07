@@ -22,6 +22,7 @@
 #include "meltedclipsmodel.h"
 #include "meltedunitsmodel.h"
 #include "mltcontroller.h"
+#include "settings.h"
 #include <QCompleter>
 #include <QStringListModel>
 #include <QFileDialog>
@@ -54,7 +55,7 @@ MeltedServerDock::MeltedServerDock(QWidget *parent)
     connect(unitsModel, SIGNAL(positionUpdated(quint8,int,double,int,int,int,bool)), this, SLOT(onPositionUpdated(quint8,int,double,int,int,int,bool)));
 
     // setup server field
-    QStringList servers = m_settings.value("melted/servers").toStringList();
+    QStringList servers = Settings.meltedServers();
     QCompleter* completer = new QCompleter(servers, this);
     ui->lineEdit->setCompleter(completer);
     completer->setCaseSensitivity(Qt::CaseInsensitive);
@@ -84,12 +85,12 @@ void MeltedServerDock::on_lineEdit_returnPressed()
     QString s = ui->lineEdit->text();
     if (!s.isEmpty()) {
         ui->connectButton->setChecked(true);
-        QStringList servers = m_settings.value("melted/servers").toStringList();
+        QStringList servers = Settings.meltedServers();
         servers.removeOne(s);
         servers.prepend(s);
         while (servers.count() > 20)
             servers.removeLast();
-        m_settings.setValue("melted/servers", servers);
+        Settings.setMeltedServers(servers);
         QCompleter* completer = ui->lineEdit->completer();
         completer->setModel(new QStringListModel(servers, completer));
     }

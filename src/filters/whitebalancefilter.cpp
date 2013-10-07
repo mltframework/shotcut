@@ -19,7 +19,7 @@
 #include "whitebalancefilter.h"
 #include "ui_whitebalancefilter.h"
 #include "mltcontroller.h"
-#include <QSettings>
+#include "settings.h"
 
 static const char* kFrei0rNeutralParam = "0";
 static const char* kFrei0rTemperatureParam = "1";
@@ -68,11 +68,10 @@ void WhiteBalanceFilter::on_colorPicker_colorPicked(const QColor &color)
 
 void WhiteBalanceFilter::on_colorPicker_disableCurrentFilter(bool disable)
 {
-    QSettings settings;
     m_filter.set("disable", disable);
     // GPU processing requires that we pause the consumer for reasons
     // internal to MLT and its integration of Movit.
-    if (settings.value("player/gpu", false).toBool()) {
+    if (Settings.playerGPU()) {
         double speed = MLT.producer()->get_speed();
         MLT.pause();
         MLT.play(speed);

@@ -26,6 +26,7 @@
 #include <QtDebug>
 #include <QApplication>
 #include <QPalette>
+#include "settings.h"
 
 static const char* kThumbnailInProperty = "shotcut:thumbnail-in";
 static const char* kThumbnailOutProperty = "shotcut:thumbnail-out";
@@ -154,7 +155,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
             Mlt::Producer* producer = m_playlist->get_clip(index.row());
             Mlt::Producer parent(producer->get_parent());
             int width = THUMBNAIL_HEIGHT * MLT.profile().dar();
-            QString setting = m_settings.value("playlist/thumbnails").toString();
+            QString setting = Settings.playlistThumbnails();
             QImage image;
 
             if (setting == "wide")
@@ -459,7 +460,7 @@ void PlaylistModel::createIfNeeded()
 
 void PlaylistModel::makeThumbnail(Mlt::Producer producer, int in, int out, int row)
 {
-    QString setting = m_settings.value("playlist/thumbnails").toString();
+    QString setting = Settings.playlistThumbnails();
     if (setting == "hidden")
         return;
     int height = PlaylistModel::THUMBNAIL_HEIGHT * 2;

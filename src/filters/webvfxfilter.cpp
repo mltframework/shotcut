@@ -16,7 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QSettings>
 #include <QStandardPaths>
 #include <QFileDialog>
 #include <QFileInfo>
@@ -27,6 +26,7 @@
 #include "mltcontroller.h"
 #include "mainwindow.h"
 #include "htmleditor/htmleditor.h"
+#include "settings.h"
 
 WebvfxFilter::WebvfxFilter(Mlt::Filter filter, QWidget *parent) :
     QWidget(parent),
@@ -56,11 +56,7 @@ WebvfxFilter::~WebvfxFilter()
 
 void WebvfxFilter::on_openButton_clicked()
 {
-    QSettings settings;
-    QString settingKey("openPath");
-    QString directory(settings.value(settingKey,
-        QStandardPaths::standardLocations(QStandardPaths::MoviesLocation)).toString());
-    QString filename = QFileDialog::getOpenFileName(this, tr("Open HTML File"), directory,
+    QString filename = QFileDialog::getOpenFileName(this, tr("Open HTML File"), Settings.openPath(),
         tr("HTML-Files (*.htm *.html);;All Files (*)"));
     activateWindow();
     if (!filename.isEmpty())
@@ -105,11 +101,7 @@ void WebvfxFilter::on_webvfxCheckBox_clicked(bool checked)
 
 void WebvfxFilter::on_newButton_clicked()
 {
-    QSettings settings;
-    QString settingKey("openPath");
-    QString directory(settings.value(settingKey,
-        QStandardPaths::standardLocations(QStandardPaths::MoviesLocation)).toString());
-    QString filename = QFileDialog::getSaveFileName(this, tr("Open HTML File"), directory,
+    QString filename = QFileDialog::getSaveFileName(this, tr("Open HTML File"), Settings.openPath(),
         tr("HTML-Files (*.html *.htm);;All Files (*)"));
     activateWindow();
 
@@ -127,9 +119,7 @@ void WebvfxFilter::on_newButton_clicked()
 void WebvfxFilter::setFilterFileName(QString filename)
 {
     QFileInfo info(filename);
-    QSettings settings;
-    QString settingKey("openPath");
-    settings.setValue(settingKey, info.path());
+    Settings.setOpenPath(info.path());
     ui->newButton->setDisabled(true);
     ui->openButton->setDisabled(true);
     ui->fileLabel->setText(info.fileName());

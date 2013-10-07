@@ -17,8 +17,8 @@
  */
 
 #include "docks/recentdock.h"
+#include "settings.h"
 #include "ui_recentdock.h"
-#include <QSettings>
 #include <QFileInfo>
 
 static const int MaxItems = 50;
@@ -29,7 +29,7 @@ RecentDock::RecentDock(QWidget *parent) :
 {
     ui->setupUi(this);
     toggleViewAction()->setIcon(windowIcon());
-    m_recent = m_settings.value("recent").toStringList();
+    m_recent = Settings.recent();
     add(QString());
     ui->listWidget->setDragEnabled(true);
     ui->listWidget->setDragDropMode(QAbstractItemView::DragOnly);
@@ -63,7 +63,7 @@ void RecentDock::add(const QString &s)
         item->setToolTip(s);
         ui->listWidget->addItem(item);
     }
-    m_settings.setValue("recent", m_recent);
+    Settings.setRecent(m_recent);
 }
 
 void RecentDock::on_listWidget_itemActivated(QListWidgetItem* i)

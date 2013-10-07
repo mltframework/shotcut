@@ -18,6 +18,7 @@
 
 #include <QtWidgets>
 #include "mainwindow.h"
+#include "settings.h"
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
 #include <X11/Xlib.h>
 #endif
@@ -48,8 +49,7 @@ public:
 #endif
 
         // Load translations
-        QSettings settings;
-        const QString locale = settings.value("language", QLocale::system().name()).toString();
+        const QString locale = Settings.language();
         dir = applicationDirPath();
     #if defined(Q_OS_MAC)
         dir.cdUp();
@@ -100,10 +100,8 @@ int main(int argc, char **argv)
     splash.showMessage(QCoreApplication::translate("", "Loading plugins..."), Qt::AlignHCenter | Qt::AlignBottom);
     splash.show();
 
-    QSettings settings;
-    const QString theme = settings.value("theme", "dark").toString();
     a.setProperty("system-style", a.style()->objectName());
-    MainWindow::changeTheme(theme);
+    MainWindow::changeTheme(Settings.theme());
 
     a.mainWindow = &MAIN;
     a.mainWindow->show();

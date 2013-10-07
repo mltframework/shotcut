@@ -20,7 +20,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QSettings>
 #include "mltcontroller.h"
 #ifdef WITH_LEAP
 #include "leaplistener.h"
@@ -81,7 +80,6 @@ private:
     void changeInterpolation(bool checked, const char* method);
 
     Ui::MainWindow* ui;
-    QSettings m_settings;
     Player* m_player;
     QDockWidget* m_propertiesDock;
     RecentDock* m_recentDock;

@@ -22,6 +22,7 @@
 #include "jobqueue.h"
 #include "mltcontroller.h"
 #include "mainwindow.h"
+#include "settings.h"
 #include <QtDebug>
 #include <QtWidgets>
 #include <QtXml>
@@ -573,10 +574,7 @@ void EncodeDock::on_encodeButton_clicked()
         return;
     }
     bool seekable = MLT.isSeekable();
-    QSettings settings;
-    QString settingKey("encode/path");
-    QString directory(settings.value(settingKey,
-        QStandardPaths::standardLocations(QStandardPaths::MoviesLocation)).toString());
+    QString directory = Settings.encodePath();
     if (!m_extension.isEmpty()) {
         directory += "/.";
         directory += m_extension;
@@ -586,7 +584,7 @@ void EncodeDock::on_encodeButton_clicked()
     if (!outputFilename.isEmpty()) {
         QFileInfo fi(outputFilename);
         MLT.pause();
-        settings.setValue(settingKey, fi.path());
+        Settings.setEncodePath(fi.path());
         if (!m_extension.isEmpty()) {
             if (fi.suffix().isEmpty()) {
                 outputFilename += '.';

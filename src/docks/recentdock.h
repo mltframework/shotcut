@@ -20,7 +20,6 @@
 #define RECENTDOCK_H
 
 #include <QDockWidget>
-#include <QSettings>
 
 namespace Ui {
     class RecentDock;
@@ -47,7 +46,6 @@ public slots:
 
 private:
     Ui::RecentDock *ui;
-    QSettings m_settings;
     QStringList m_recent;
 
 private slots:

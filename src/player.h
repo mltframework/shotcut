@@ -21,7 +21,6 @@
 
 #include <QWidget>
 #include <QIcon>
-#include <QSettings>
 #include "mltcontroller.h"
 
 class ScrubBar;
@@ -95,7 +94,6 @@ private:
     QAction *actionRewind;
     QAction *actionFastForward;
 
-    QSettings m_settings;
     ScrubBar* m_scrubber;
     TimeSpinBox* m_positionSpinner;
     QLabel* m_durationLabel;
