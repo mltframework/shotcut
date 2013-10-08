@@ -79,6 +79,9 @@ Most users do not need to change this.</string>
    </item>
    <item row="4" column="1" colspan="4">
     <widget class="QComboBox" name="positionComboBox">
+     <property name="currentIndex">
+      <number>1</number>
+     </property>
      <item>
       <property name="text">
        <string>Center Under Mouse</string>
