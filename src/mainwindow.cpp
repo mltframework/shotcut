@@ -1038,6 +1038,9 @@ bool MainWindow::on_actionSave_As_triggered()
         return true;
     QString filename = QFileDialog::getSaveFileName(this, tr("Save XML"), Settings.openPath(), tr("MLT XML (*.mlt)"));
     if (!filename.isEmpty()) {
+        QFileInfo fi(filename);
+        if (fi.suffix() != "mlt")
+            filename += ".mlt";
         saveXML(filename);
         setCurrentFile(filename);
         setWindowModified(false);
