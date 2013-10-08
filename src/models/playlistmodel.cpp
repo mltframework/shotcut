@@ -56,8 +56,6 @@ public:
         QString service = producer.get("mlt_service");
         if (service.startsWith("xml"))
             service = "xml-nogl";
-        m_in = producer.get_in();
-        m_out = producer.get_out();
         m_tempProducer = new Mlt::Producer(MLT.profile(), service.toUtf8().constData(), producer.get("resource"));
         if (m_tempProducer->is_valid()) {
             Mlt::Filter scaler(MLT.profile(), "swscale");
@@ -369,10 +367,13 @@ void PlaylistModel::append(Mlt::Producer* producer)
 {
     createIfNeeded();
     int count = m_playlist->count();
+    int in = producer->get_in();
+    int out = producer->get_out();
+    producer->set_in_and_out(0, producer->get_length() - 1);
     QThreadPool::globalInstance()->start(
-        new UpdateThumbnailTask(this, *producer, 0, producer->get_playtime(), count));
+        new UpdateThumbnailTask(this, *producer, in, out, count));
     beginInsertRows(QModelIndex(), count, count);
-    m_playlist->append(*producer, producer->get_in(), producer->get_out());
+    m_playlist->append(*producer, in, out);
     endInsertRows();
     emit modified();
 }
@@ -380,10 +381,13 @@ void PlaylistModel::append(Mlt::Producer* producer)
 void PlaylistModel::insert(Mlt::Producer* producer, int row)
 {
     createIfNeeded();
+    int in = producer->get_in();
+    int out = producer->get_out();
+    producer->set_in_and_out(0, producer->get_length() - 1);
     QThreadPool::globalInstance()->start(
-        new UpdateThumbnailTask(this, *producer, 0, producer->get_playtime(), row));
+        new UpdateThumbnailTask(this, *producer, in, out, row));
     beginInsertRows(QModelIndex(), row, row);
-    m_playlist->insert(*producer, row, producer->get_in(), producer->get_out());
+    m_playlist->insert(*producer, row, in, out);
     endInsertRows();
     emit modified();
 }
@@ -403,10 +407,13 @@ void PlaylistModel::remove(int row)
 void PlaylistModel::update(int row, Mlt::Producer* producer)
 {
     if (!m_playlist) return;
+    int in = producer->get_in();
+    int out = producer->get_out();
+    producer->set_in_and_out(0, producer->get_length() - 1);
     QThreadPool::globalInstance()->start(
-        new UpdateThumbnailTask(this, *producer, 0, producer->get_playtime(), row));
+        new UpdateThumbnailTask(this, *producer, in, out, row));
     m_playlist->remove(row);
-    m_playlist->insert(*producer, row, producer->get_in(), producer->get_out());
+    m_playlist->insert(*producer, row, in, out);
     emit dataChanged(createIndex(row, 0), createIndex(row, COLUMN_COUNT - 1));
     emit modified();
 }
