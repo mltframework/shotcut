@@ -557,9 +557,11 @@ function set_globals {
   elif [ "$TARGET_OS" = "Win32" ]; then
     CONFIG[7]="$QMAKE -r -spec mingw CONFIG+=link_pkgconfig PKGCONFIG+=mlt++ LIBS+=-L${QTDIR}/lib SHOTCUT_VERSION=$(date '+%y.%m.%d')"
   elif [ "$(which qmake-qt5)" != "" ]; then
-    CONFIG[7]="qmake-qt5 -r"
+    CONFIG[7]="qmake-qt5 -r CONFIG+=leap"
+    LD_LIBRARY_PATH_[7]="/usr/local/lib"
   else
-    CONFIG[7]="$QTDIR/bin/qmake -r"
+    CONFIG[7]="$QTDIR/bin/qmake -r CONFIG+=leap"
+    LD_LIBRARY_PATH_[7]="/usr/local/lib"
   fi
   CFLAGS_[7]=$CFLAGS
   LDFLAGS_[7]=$LDFLAGS
@@ -1275,7 +1277,6 @@ SLIB_EXTRA_CMD=-"mv $$(@:$(SLIBSUF)=.orig.def) $$(@:$(SLIBSUF)=.def)"
 
   # Install
   feedback_status Installing $1
-  # This export is only for kdenlive, really, and only for the install step
   export LD_LIBRARY_PATH=`lookup LD_LIBRARY_PATH_ $1`
   log "LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
   if test "1" = "$NEED_SUDO" ; then
@@ -1315,6 +1316,7 @@ SLIB_EXTRA_CMD=-"mv $$(@:$(SLIBSUF)=.orig.def) $$(@:$(SLIBSUF)=.def)"
         cmd install -p -c translations/*.qm "$FINAL_INSTALL_DIR"/share/translations
         cmd install -d "$FINAL_INSTALL_DIR"/share/shotcut
         cmd cp -a src/qml "$FINAL_INSTALL_DIR"/share/shotcut
+
       elif test "$TARGET_OS" != "Darwin"; then
         cmd install -c -m 755 src/shotcut "$FINAL_INSTALL_DIR"/bin
         cmd install -p -c COPYING "$FINAL_INSTALL_DIR"
@@ -1336,6 +1338,9 @@ SLIB_EXTRA_CMD=-"mv $$(@:$(SLIBSUF)=.orig.def) $$(@:$(SLIBSUF)=.def)"
         SOXLIB=$(ldd "$FINAL_INSTALL_DIR"/lib/mlt/libmltsox.so | awk '/libsox/ {print $3}')
         log SOXLIB=$SOXLIB
         cmd install -c "$SOXLIB" "$FINAL_INSTALL_DIR"/lib
+        LEAPLIB=$(ldd "$FINAL_INSTALL_DIR"/bin/shotcut | awk '/Leap/ {print $3}')
+        log LEAPLIB=$LEAPLIB
+        cmd install -c "$LEAPLIB" "$FINAL_INSTALL_DIR"/lib
       fi
     elif test "webvfx" = "$1" ; then
       cmd make -C webvfx install || die "Unable to install $1/webvfx"
