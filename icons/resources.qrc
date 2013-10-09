@@ -147,5 +147,8 @@
         <file>dark/32x32/insert-text.png</file>
         <file>dark/32x32/zoom-in.png</file>
         <file>dark/32x32/zoom-out.png</file>
+        <file>oxygen/32x32/actions/edit-clear.png</file>
+        <file>dark/32x32/edit-clear.png</file>
+        <file>light/32x32/edit-clear.png</file>
     </qresource>
 </RCC>

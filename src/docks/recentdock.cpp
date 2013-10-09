@@ -21,7 +21,7 @@
 #include "ui_recentdock.h"
 #include <QFileInfo>
 
-static const int MaxItems = 50;
+static const int MaxItems = 100;
 
 RecentDock::RecentDock(QWidget *parent) :
     QDockWidget(parent),
@@ -30,9 +30,20 @@ RecentDock::RecentDock(QWidget *parent) :
     ui->setupUi(this);
     toggleViewAction()->setIcon(windowIcon());
     m_recent = Settings.recent();
-    add(QString());
     ui->listWidget->setDragEnabled(true);
     ui->listWidget->setDragDropMode(QAbstractItemView::DragOnly);
+    foreach (QString s, m_recent) {
+        QString name = s;
+        if (s.startsWith('/'))
+            // Use basename instead.
+            name = QFileInfo(s).fileName();
+        QStandardItem* item = new QStandardItem(name);
+        item->setToolTip(s);
+        m_model.appendRow(item);
+    }
+    m_proxyModel.setSourceModel(&m_model);
+    m_proxyModel.setFilterCaseSensitivity(Qt::CaseInsensitive);
+    ui->listWidget->setModel(&m_proxyModel);
 }
 
 RecentDock::~RecentDock()
@@ -40,39 +51,38 @@ RecentDock::~RecentDock()
     delete ui;
 }
 
-QListWidget* RecentDock::listWidget() const
-{
-    return ui->listWidget;
-}
-
 void RecentDock::add(const QString &s)
 {
-    if (!s.isEmpty()) {
-        m_recent.removeOne(s);
-        m_recent.prepend(s);
-        while (m_recent.count() > MaxItems)
-            m_recent.removeLast();
-    }
-    ui->listWidget->clear();
-    foreach (QString s, m_recent) {
-        QString name = s;
-        if (s.startsWith('/'))
-            // Use basename instead.
-            name = QFileInfo(s).fileName();
-        QListWidgetItem* item  = new QListWidgetItem(name);
-        item->setToolTip(s);
-        ui->listWidget->addItem(item);
-    }
+    QString name = s;
+    if (s.startsWith('/'))
+        // Use basename instead.
+        name = QFileInfo(s).fileName();
+    QStandardItem* item = m_model.findItems(name).first();
+    if (item)
+        m_model.removeRow(item->row());
+    item = new QStandardItem(name);
+    item->setToolTip(s);
+    m_model.insertRow(0, item);
+    m_recent.removeOne(s);
+    m_recent.prepend(s);
+    while (m_recent.count() > MaxItems)
+        m_recent.removeLast();
+    ui->listWidget->setCurrentIndex(m_model.index(0, 0));
     Settings.setRecent(m_recent);
 }
 
-void RecentDock::on_listWidget_itemActivated(QListWidgetItem* i)
+void RecentDock::on_listWidget_activated(const QModelIndex& i)
 {
-    emit itemActivated(i->toolTip());
+    emit itemActivated(m_recent[i.row()]);
 }
 
 void RecentDock::remove(const QString &s)
 {
     m_recent.removeOne(s);
     add(QString());
+}
+
+void RecentDock::on_lineEdit_textChanged(const QString& search)
+{
+    m_proxyModel.setFilterFixedString(search);
 }

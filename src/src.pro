@@ -69,7 +69,8 @@ SOURCES += main.cpp\
     filters/webvfxfilter.cpp \
     htmleditor/htmleditor.cpp \
     htmleditor/highlighter.cpp \
-    settings.cpp
+    settings.cpp \
+    widgets/lineeditclear.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -134,7 +135,8 @@ HEADERS  += mainwindow.h \
     filters/webvfxfilter.h \
     htmleditor/htmleditor.h \
     htmleditor/highlighter.h \
-    settings.h
+    settings.h \
+    widgets/lineeditclear.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \

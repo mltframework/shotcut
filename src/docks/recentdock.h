@@ -20,13 +20,12 @@
 #define RECENTDOCK_H
 
 #include <QDockWidget>
+#include <QStandardItemModel>
+#include <QSortFilterProxyModel>
 
 namespace Ui {
     class RecentDock;
 }
-
-class QListWidget;
-class QListWidgetItem;
 
 class RecentDock : public QDockWidget
 {
@@ -35,7 +34,6 @@ class RecentDock : public QDockWidget
 public:
     explicit RecentDock(QWidget *parent = 0);
     ~RecentDock();
-    QListWidget* listWidget() const;
 
 signals:
     void itemActivated(const QString& url);
@@ -47,9 +45,12 @@ public slots:
 private:
     Ui::RecentDock *ui;
     QStringList m_recent;
+    QStandardItemModel m_model;
+    QSortFilterProxyModel m_proxyModel;
 
 private slots:
-    void on_listWidget_itemActivated(QListWidgetItem* i);
+    void on_listWidget_activated(const QModelIndex& i);
+    void on_lineEdit_textChanged(const QString& search);
 };
 
 #endif // RECENTDOCK_H

@@ -18,7 +18,10 @@
    <string>Recent</string>
   </property>
   <widget class="QWidget" name="dockWidgetContents">
-   <layout class="QHBoxLayout" name="horizontalLayout">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="spacing">
+     <number>0</number>
+    </property>
     <property name="leftMargin">
      <number>0</number>
     </property>
@@ -32,9 +35,22 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="QListWidget" name="listWidget">
+     <widget class="LineEditClear" name="lineEdit">
+      <property name="toolTip">
+       <string>Show only files with name matching text</string>
+      </property>
+      <property name="placeholderText">
+       <string>search</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QListView" name="listWidget">
       <property name="horizontalScrollBarPolicy">
        <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+      <property name="editTriggers">
+       <set>QAbstractItemView::NoEditTriggers</set>
       </property>
       <property name="alternatingRowColors">
        <bool>true</bool>
@@ -47,6 +63,13 @@
    </layout>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>LineEditClear</class>
+   <extends>QLineEdit</extends>
+   <header>widgets/lineeditclear.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../../icons/resources.qrc"/>
  </resources>
