@@ -67,12 +67,12 @@ void RecentDock::add(const QString &s)
     m_recent.prepend(s);
     while (m_recent.count() > MaxItems)
         m_recent.removeLast();
-    ui->listWidget->setCurrentIndex(m_model.index(0, 0));
     Settings.setRecent(m_recent);
 }
 
 void RecentDock::on_listWidget_activated(const QModelIndex& i)
 {
+    ui->listWidget->setCurrentIndex(QModelIndex());
     emit itemActivated(m_recent[i.row()]);
 }
 
