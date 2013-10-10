@@ -79,25 +79,28 @@ EncodeDock::EncodeDock(QWidget *parent) :
     c.stop();
 
     Mlt::Properties* p = new Mlt::Properties(c.get_data("f"));
-    ui->formatCombo->addItem(tr("Automatic from extension"));
     for (int i = 0; i < p->count(); i++)
         ui->formatCombo->addItem(p->get(i));
     delete p;
     ui->formatCombo->model()->sort(0);
+    ui->formatCombo->insertItem(0, tr("Automatic from extension"));
+    ui->formatCombo->setCurrentIndex(0);
 
     p = new Mlt::Properties(c.get_data("acodec"));
-    ui->audioCodecCombo->addItem(tr("Default for format"));
     for (int i = 0; i < p->count(); i++)
         ui->audioCodecCombo->addItem(p->get(i));
     delete p;
     ui->audioCodecCombo->model()->sort(0);
+    ui->audioCodecCombo->insertItem(0, tr("Default for format"));
+    ui->audioCodecCombo->setCurrentIndex(0);
 
     p = new Mlt::Properties(c.get_data("vcodec"));
-    ui->videoCodecCombo->addItem(tr("Default for format"));
     for (int i = 0; i < p->count(); i++)
         ui->videoCodecCombo->addItem(p->get(i));
     delete p;
     ui->videoCodecCombo->model()->sort(0);
+    ui->videoCodecCombo->insertItem(0, tr("Default for format"));
+    ui->videoCodecCombo->setCurrentIndex(0);
 }
 
 EncodeDock::~EncodeDock()
@@ -178,7 +181,7 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
     if (p && p->is_valid()) {
         if (realtime)
             p->set("real_time", realtime);
-        if (ui->formatCombo->currentText() != tr("Automatic from extension"))
+        if (ui->formatCombo->currentIndex() != 0)
             p->set("f", ui->formatCombo->currentText().toLatin1().constData());
         if (ui->disableAudioCheckbox->isChecked()) {
             p->set("an", 1);
@@ -327,6 +330,10 @@ MeltJob* EncodeDock::createMeltJob(const QString& target, int realtime, int pass
     }
     else
         consumerNode.removeAttribute("fastfirstpass");
+    if (ui->formatCombo->currentIndex() == 0 &&
+            ui->audioCodecCombo->currentIndex() == 0 &&
+            (mytarget.endsWith(".mp4") || mytarget.endsWith(".mov")))
+        consumerNode.setAttribute("strict", "experimental");
 
     // save new xml
     f1.open(QIODevice::WriteOnly);
@@ -377,6 +384,10 @@ void EncodeDock::encode(const QString& target)
             MLT.consumer()->set(QString("1.%1").arg(p->get_name(i)).toLatin1().constData(), p->get(i));
     }
     delete p;
+    if (ui->formatCombo->currentIndex() == 0 &&
+            ui->audioCodecCombo->currentIndex() == 0 &&
+            (target.endsWith(".mp4") || target.endsWith(".mov")))
+        MLT.consumer()->set("1.strict", "experimental");
     MLT.setVolume(volume);
     MLT.play();
 }
