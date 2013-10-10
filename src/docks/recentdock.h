@@ -40,7 +40,7 @@ signals:
 
 public slots:
     void add(const QString&);
-    void remove(const QString& s);
+    QString remove(const QString& s);
 
 private:
     Ui::RecentDock *ui;

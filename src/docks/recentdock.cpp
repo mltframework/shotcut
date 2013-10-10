@@ -53,17 +53,10 @@ RecentDock::~RecentDock()
 
 void RecentDock::add(const QString &s)
 {
-    QString name = s;
-    if (s.startsWith('/'))
-        // Use basename instead.
-        name = QFileInfo(s).fileName();
-    QStandardItem* item = m_model.findItems(name).first();
-    if (item)
-        m_model.removeRow(item->row());
-    item = new QStandardItem(name);
+    QString name = remove(s);
+    QStandardItem* item = new QStandardItem(name);
     item->setToolTip(s);
     m_model.insertRow(0, item);
-    m_recent.removeOne(s);
     m_recent.prepend(s);
     while (m_recent.count() > MaxItems)
         m_recent.removeLast();
@@ -76,10 +69,17 @@ void RecentDock::on_listWidget_activated(const QModelIndex& i)
     emit itemActivated(m_recent[i.row()]);
 }
 
-void RecentDock::remove(const QString &s)
+QString RecentDock::remove(const QString &s)
 {
     m_recent.removeOne(s);
-    add(QString());
+    QString name = s;
+    if (s.startsWith('/'))
+        // Use basename instead.
+        name = QFileInfo(s).fileName();
+    QList<QStandardItem*> items = m_model.findItems(name);
+    if (items.count() > 0)
+        m_model.removeRow(items.first()->row());
+    return name;
 }
 
 void RecentDock::on_lineEdit_textChanged(const QString& search)
