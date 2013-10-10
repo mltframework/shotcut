@@ -406,9 +406,8 @@ AppendCommand::AppendCommand(PlaylistModel& model, const QString& xml, QUndoComm
 
 void AppendCommand::redo()
 {
-    Mlt::Producer* producer = new Mlt::Producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
+    Mlt::Producer producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
     m_model.append(producer);
-    delete producer;
 }
 
 void AppendCommand::undo()
@@ -427,9 +426,8 @@ InsertCommand::InsertCommand(PlaylistModel& model, const QString& xml, int row, 
 
 void InsertCommand::redo()
 {
-    Mlt::Producer* producer = new Mlt::Producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
+    Mlt::Producer producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
     m_model.insert(producer, m_row);
-    delete producer;
 }
 
 void InsertCommand::undo()
@@ -449,16 +447,14 @@ UpdateCommand::UpdateCommand(PlaylistModel& model, const QString& xml, int row, 
 
 void UpdateCommand::redo()
 {
-    Mlt::Producer* producer = new Mlt::Producer(MLT.profile(), "xml-string", m_newXml.toUtf8().constData());
+    Mlt::Producer producer(MLT.profile(), "xml-string", m_newXml.toUtf8().constData());
     m_model.update(m_row, producer);
-    delete producer;
 }
 
 void UpdateCommand::undo()
 {
-    Mlt::Producer* producer = new Mlt::Producer(MLT.profile(), "xml-string", m_oldXml.toUtf8().constData());
+    Mlt::Producer producer(MLT.profile(), "xml-string", m_oldXml.toUtf8().constData());
     m_model.update(m_row, producer);
-    delete producer;
 }
 
 RemoveCommand::RemoveCommand(PlaylistModel& model, int row, QUndoCommand *parent)
@@ -477,9 +473,8 @@ void RemoveCommand::redo()
 
 void RemoveCommand::undo()
 {
-    Mlt::Producer* producer = new Mlt::Producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
+    Mlt::Producer producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
     m_model.insert(producer, m_row);
-    delete producer;
 }
 
 ClearCommand::ClearCommand(PlaylistModel& model, QUndoCommand *parent)

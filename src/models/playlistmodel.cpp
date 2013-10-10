@@ -363,31 +363,31 @@ void PlaylistModel::load()
     emit loaded();
 }
 
-void PlaylistModel::append(Mlt::Producer* producer)
+void PlaylistModel::append(Mlt::Producer& producer)
 {
     createIfNeeded();
     int count = m_playlist->count();
-    int in = producer->get_in();
-    int out = producer->get_out();
-    producer->set_in_and_out(0, producer->get_length() - 1);
+    int in = producer.get_in();
+    int out = producer.get_out();
+    producer.set_in_and_out(0, producer.get_length() - 1);
     QThreadPool::globalInstance()->start(
-        new UpdateThumbnailTask(this, *producer, in, out, count));
+        new UpdateThumbnailTask(this, producer, in, out, count));
     beginInsertRows(QModelIndex(), count, count);
-    m_playlist->append(*producer, in, out);
+    m_playlist->append(producer, in, out);
     endInsertRows();
     emit modified();
 }
 
-void PlaylistModel::insert(Mlt::Producer* producer, int row)
+void PlaylistModel::insert(Mlt::Producer& producer, int row)
 {
     createIfNeeded();
-    int in = producer->get_in();
-    int out = producer->get_out();
-    producer->set_in_and_out(0, producer->get_length() - 1);
+    int in = producer.get_in();
+    int out = producer.get_out();
+    producer.set_in_and_out(0, producer.get_length() - 1);
     QThreadPool::globalInstance()->start(
-        new UpdateThumbnailTask(this, *producer, in, out, row));
+        new UpdateThumbnailTask(this, producer, in, out, row));
     beginInsertRows(QModelIndex(), row, row);
-    m_playlist->insert(*producer, row, in, out);
+    m_playlist->insert(producer, row, in, out);
     endInsertRows();
     emit modified();
 }
@@ -404,16 +404,16 @@ void PlaylistModel::remove(int row)
         emit modified();
 }
 
-void PlaylistModel::update(int row, Mlt::Producer* producer)
+void PlaylistModel::update(int row, Mlt::Producer& producer)
 {
     if (!m_playlist) return;
-    int in = producer->get_in();
-    int out = producer->get_out();
-    producer->set_in_and_out(0, producer->get_length() - 1);
+    int in = producer.get_in();
+    int out = producer.get_out();
+    producer.set_in_and_out(0, producer.get_length() - 1);
     QThreadPool::globalInstance()->start(
-        new UpdateThumbnailTask(this, *producer, in, out, row));
+        new UpdateThumbnailTask(this, producer, in, out, row));
     m_playlist->remove(row);
-    m_playlist->insert(*producer, row, in, out);
+    m_playlist->insert(producer, row, in, out);
     emit dataChanged(createIndex(row, 0), createIndex(row, COLUMN_COUNT - 1));
     emit modified();
 }

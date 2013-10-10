@@ -1180,6 +1180,7 @@ void MainWindow::onPlaylistModified()
     setWindowModified(true);
     if ((void*) MLT.producer()->get_producer() == (void*) m_playlistDock->model()->playlist()->get_playlist())
         m_player->onProducerModified();
+    updateMarkers();
 }
 
 void MainWindow::onCutModified()

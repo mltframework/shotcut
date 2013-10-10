@@ -78,10 +78,10 @@ signals:
 public slots:
     void clear();
     void load();
-    void append(Mlt::Producer*);
-    void insert(Mlt::Producer*, int row);
+    void append(Mlt::Producer&);
+    void insert(Mlt::Producer&, int row);
     void remove(int row);
-    void update(int row, Mlt::Producer* producer);
+    void update(int row, Mlt::Producer& producer);
     void appendBlank(int frames);
     void insertBlank(int frames, int row);
     void close();
