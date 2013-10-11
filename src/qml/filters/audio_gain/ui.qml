@@ -31,7 +31,7 @@ Rectangle {
             slider.value = 100
         } else {
             // Initialize parameter values
-            slider.value = filter.get(gainParameter) * slider.maximumValue / 10
+            slider.value = filter.get(gainParameter) * 100
         }
     }
 
@@ -50,7 +50,7 @@ Rectangle {
                 maximumValue: 300
                 onValueChanged: {
                     spinner.value = value
-                    filter.set(gainParameter, value / maximumValue * 10)
+                    filter.set(gainParameter, value / 100)
                 }
             }
             SpinBox {
