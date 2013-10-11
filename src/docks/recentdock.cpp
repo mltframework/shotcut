@@ -66,7 +66,7 @@ void RecentDock::add(const QString &s)
 void RecentDock::on_listWidget_activated(const QModelIndex& i)
 {
     ui->listWidget->setCurrentIndex(QModelIndex());
-    emit itemActivated(m_recent[i.row()]);
+    emit itemActivated(m_proxyModel.itemData(i)[Qt::ToolTipRole].toString());
 }
 
 QString RecentDock::remove(const QString &s)
