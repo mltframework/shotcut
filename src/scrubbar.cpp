@@ -189,7 +189,7 @@ void ScrubBar::paintEvent(QPaintEvent *e)
     QPolygon pa(3);
     const int x = selectionSize / 2 - 1;
     int head = margin + m_cursorPosition;
-    pa.setPoints(3, head - x, 0, head + x, 0, head, x);
+    pa.setPoints(3, head - x - 1, 0, head + x, 0, head, x);
     p.setBrush(palette().text().color());
     p.setPen(Qt::NoPen);
     p.drawPolygon(pa);
