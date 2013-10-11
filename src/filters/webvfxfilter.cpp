@@ -106,6 +106,9 @@ void WebvfxFilter::on_newButton_clicked()
     activateWindow();
 
     if (!filename.isEmpty()) {
+        QFileInfo info(filename);
+        if (info.suffix().isEmpty())
+            filename += ".html";
         QFile inFile(":/scripts/new.html");
         QFile outfile(filename);
         inFile.open(QFile::ReadOnly);
