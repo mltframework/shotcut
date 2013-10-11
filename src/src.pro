@@ -204,7 +204,9 @@ OTHER_FILES += \
     qml/modules/Shotcut/Controls/qmldir \
     qml/modules/Shotcut/Controls/Preset.qml \
     qml/htmleditor/text_outline.qml \
-    qml/htmleditor/text_shadow.qml
+    qml/htmleditor/text_shadow.qml \
+    qml/filters/audio_channelcopy/meta.qml \
+    qml/filters/audio_channelcopy/ui.qml
 
 lupdate_hack {
     SOURCES += \

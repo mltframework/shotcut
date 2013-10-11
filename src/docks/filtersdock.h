@@ -44,7 +44,7 @@ public:
     AttachedFiltersModel* model() {
         return &m_model;
     }
-    QActionGroup* availablefilters();
+    void availablefilters();
     QmlMetadata* qmlMetadataForService(Mlt::Service *service);
     static QDir qmlDir();
     void addActionToMap(const QmlMetadata *meta, QAction* action);
@@ -54,7 +54,9 @@ public slots:
     void onProducerOpened();
 
 private slots:
-    void on_addButton_clicked();
+    void on_addAudioButton_clicked();
+    
+    void on_addVideoButton_clicked();
     
     void on_removeButton_clicked();
     
@@ -89,7 +91,8 @@ private slots:
 private:
     Ui::FiltersDock *ui;
     AttachedFiltersModel m_model;
-    QActionGroup* m_actions;
+    QActionGroup* m_audioActions;
+    QActionGroup* m_videoActions;
     QMap<QString, QAction*> m_serviceActionMap;
     QMap<QString, QAction*> m_objectNameActionMap;
     QFuture<QActionList> m_filtersFuture;

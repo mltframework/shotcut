@@ -60,15 +60,32 @@
            <number>6</number>
           </property>
           <item>
-           <widget class="QPushButton" name="addButton">
+           <widget class="QPushButton" name="addAudioButton">
             <property name="enabled">
              <bool>false</bool>
             </property>
             <property name="toolTip">
-             <string>Add a filter</string>
+             <string>Add an audio filter</string>
             </property>
             <property name="text">
-             <string/>
+             <string>Audio</string>
+            </property>
+            <property name="icon">
+             <iconset theme="list-add" resource="../../icons/resources.qrc">
+              <normaloff>:/icons/oxygen/16x16/actions/list-add.png</normaloff>:/icons/oxygen/16x16/actions/list-add.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="addVideoButton">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="toolTip">
+             <string>Add a video filter</string>
+            </property>
+            <property name="text">
+             <string>Video</string>
             </property>
             <property name="icon">
              <iconset theme="list-add" resource="../../icons/resources.qrc">

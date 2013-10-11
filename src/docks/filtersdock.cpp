@@ -89,6 +89,7 @@ static QActionList getFilters(FiltersDock* dock, Ui::FiltersDock* ui)
                     QAction* action = new QAction(meta->name(), 0);
                     meta->setParent(action);
                     meta->setPath(subdir);
+                    action->setProperty("isAudio", meta->isAudio());
                     actions << action;
                     dock->addActionToMap(meta, action);
                 }
@@ -104,7 +105,8 @@ static QActionList getFilters(FiltersDock* dock, Ui::FiltersDock* ui)
 FiltersDock::FiltersDock(QWidget *parent) :
     QDockWidget(parent),
     ui(new Ui::FiltersDock),
-    m_actions(0)
+    m_audioActions(0),
+    m_videoActions(0)
 {
     ui->setupUi(this);
     toggleViewAction()->setIcon(windowIcon());
@@ -122,15 +124,20 @@ FiltersDock::~FiltersDock()
     delete ui;
 }
 
-QActionGroup *FiltersDock::availablefilters()
+void FiltersDock::availablefilters()
 {
-    if (!m_actions) {
-        m_actions = new QActionGroup(this);
-        foreach (QAction* action, m_filtersFuture.result())
-            m_actions->addAction(action);
-        connect(m_actions, SIGNAL(triggered(QAction*)), SLOT(onActionTriggered(QAction*)));
+    if (!m_videoActions) {
+        m_audioActions = new QActionGroup(this);
+        m_videoActions = new QActionGroup(this);
+        foreach (QAction* action, m_filtersFuture.result()) {
+            if (action->property("isAudio").isValid() && action->property("isAudio").toBool())
+                m_audioActions->addAction(action);
+            else
+                m_videoActions->addAction(action);
+        }
+        connect(m_audioActions, SIGNAL(triggered(QAction*)), SLOT(onActionTriggered(QAction*)));
+        connect(m_videoActions, SIGNAL(triggered(QAction*)), SLOT(onActionTriggered(QAction*)));
     }
-    return m_actions;
 }
 
 QmlMetadata *FiltersDock::qmlMetadataForService(Mlt::Service *service)
@@ -160,19 +167,31 @@ void FiltersDock::onProducerOpened()
     m_model.reset();
     onModelChanged();
     if (MLT.isPlaylist() && this->isVisible()) {
-        ui->addButton->setDisabled(true);
+        ui->addAudioButton->setDisabled(true);
+        ui->addVideoButton->setDisabled(true);
         MAIN.showStatusMessage(tr("Filters can only be applied to clips."));
     }
     else {
-        ui->addButton->setEnabled(true);
+        ui->addAudioButton->setEnabled(true);
+        ui->addVideoButton->setEnabled(true);
     }
 }
 
-void FiltersDock::on_addButton_clicked()
+void FiltersDock::on_addAudioButton_clicked()
 {
-    QPoint pos = ui->addButton->mapToParent(QPoint(0, 0));
+    availablefilters();
+    QPoint pos = ui->addAudioButton->mapToParent(QPoint(0, 0));
     QMenu menu(this);
-    menu.addActions(availablefilters()->actions());
+    menu.addActions(m_audioActions->actions());
+    menu.exec(mapToGlobal(pos));
+}
+
+void FiltersDock::on_addVideoButton_clicked()
+{
+    availablefilters();
+    QPoint pos = ui->addVideoButton->mapToParent(QPoint(0, 0));
+    QMenu menu(this);
+    menu.addActions(m_videoActions->actions());
     menu.exec(mapToGlobal(pos));
 }
 
