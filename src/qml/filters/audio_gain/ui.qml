@@ -24,14 +24,14 @@ Rectangle {
     width: 400
     height: 200
     color: 'transparent'
-    property string saturationParameter: '0'
+    property string gainParameter: 'gain'
     Component.onCompleted: {
         if (filter.isNew) {
             // Set default parameter values
             slider.value = 100
         } else {
             // Initialize parameter values
-            slider.value = filter.get(saturationParameter) * slider.maximumValue
+            slider.value = filter.get(gainParameter) * slider.maximumValue / 10
         }
     }
 
@@ -39,26 +39,18 @@ Rectangle {
         anchors.fill: parent
         anchors.margins: 8
 
-        Preset {
-            parameters: [saturationParameter]
-            onPresetSelected: {
-                slider.value = filter.get(saturationParameter) * slider.maximumValue
-            }
-        }
-
         RowLayout {
             spacing: 8
-    
-            Label { text: qsTr('Saturation') }
+            Label { text: qsTr('Gain') }
             Slider {
                 id: slider
                 Layout.fillWidth: true
                 Layout.minimumWidth: 100
                 minimumValue: 0
-                maximumValue: 800
+                maximumValue: 300
                 onValueChanged: {
                     spinner.value = value
-                    filter.set(saturationParameter, value / maximumValue)
+                    filter.set(gainParameter, value / maximumValue * 10)
                 }
             }
             SpinBox {
@@ -66,7 +58,8 @@ Rectangle {
                 Layout.minimumWidth: 70
                 suffix: ' %'
                 minimumValue: 0
-                maximumValue: 800
+                maximumValue: 300
+                decimals: 1
                 onValueChanged: slider.value = value
             }
             Button {

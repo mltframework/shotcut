@@ -206,7 +206,9 @@ OTHER_FILES += \
     qml/htmleditor/text_outline.qml \
     qml/htmleditor/text_shadow.qml \
     qml/filters/audio_channelcopy/meta.qml \
-    qml/filters/audio_channelcopy/ui.qml
+    qml/filters/audio_channelcopy/ui.qml \
+    qml/filters/audio_gain/meta.qml \
+    qml/filters/audio_gain/ui.qml
 
 lupdate_hack {
     SOURCES += \
@@ -220,7 +222,11 @@ lupdate_hack {
     qml/modules/Shotcut/Controls/qmldir \
     qml/modules/Shotcut/Controls/Preset.qml \
     qml/htmleditor/text_outline.qml \
-    qml/htmleditor/text_shadow.qml
+    qml/htmleditor/text_shadow.qml \
+    qml/filters/audio_channelcopy/meta.qml \
+    qml/filters/audio_channelcopy/ui.qml \
+    qml/filters/audio_gain/meta.qml \
+    qml/filters/audio_gain/ui.qml
 }
 
 TRANSLATIONS += \
