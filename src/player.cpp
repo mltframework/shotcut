@@ -560,6 +560,13 @@ void Player::showPaused()
     actionPlay->setToolTip(tr("Start playback (L)"));
 }
 
+void Player::showPlaying()
+{
+    actionPlay->setIcon(m_pauseIcon);
+    actionPlay->setText(tr("Pause"));
+    actionPlay->setToolTip(tr("Pause playback (K)"));
+}
+
 void Player::showAudio(Mlt::Frame* frame)
 {
     if (frame->get_int("test_audio"))

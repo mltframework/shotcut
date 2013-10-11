@@ -50,6 +50,7 @@ public:
     void play(double speed = 1.0) {
         Controller::play(speed);
         if (speed == 0) emit paused();
+        else emit playing();
     }
     void seek(int position) {
         Controller::seek(position);
@@ -78,6 +79,7 @@ signals:
     void gpuNotSupported();
     void started();
     void paused();
+    void playing();
 
 private:
     int x, y, w, h;

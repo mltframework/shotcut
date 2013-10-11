@@ -35,6 +35,7 @@ public:
     void play(double speed = 1.0) {
         Controller::play(speed);
         if (speed == 0) emit paused();
+        else emit playing();
     }
     void seek(int position) {
         Controller::seek(position);
@@ -59,6 +60,7 @@ signals:
     void seekTo(int x);
     void started();
     void paused();
+    void playing();
 
 public slots:
 

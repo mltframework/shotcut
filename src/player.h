@@ -78,6 +78,7 @@ public slots:
     void rewind();
     void fastForward();
     void showPaused();
+    void showPlaying();
 
 protected:
     void resizeEvent(QResizeEvent* event);

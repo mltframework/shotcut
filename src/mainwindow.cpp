@@ -120,6 +120,7 @@ MainWindow::MainWindow()
     connect(m_player, SIGNAL(outChanged(int)), this, SLOT(onCutModified()));
     connect(MLT.videoWidget(), SIGNAL(started()), SLOT(processMultipleFiles()));
     connect(MLT.videoWidget(), SIGNAL(paused()), m_player, SLOT(showPaused()));
+    connect(MLT.videoWidget(), SIGNAL(playing()), m_player, SLOT(showPlaying()));
 
     setupSettingsMenu();
     readPlayerSettings();
