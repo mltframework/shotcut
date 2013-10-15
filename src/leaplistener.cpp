@@ -21,7 +21,7 @@
 
 using namespace Leap;
 
-static const float BIG_CIRLCE_THRESHOLD = 70.0f;
+static const float BIG_CIRCLE_THRESHOLD = 70.0f;
 
 LeapListener::LeapListener(QObject *parent) :
     QObject(parent)
@@ -83,12 +83,12 @@ void LeapListener::onFrame(const Leap::Controller &controller)
                       <<  ", " << clockwiseness
                       << std::endl;
             if (circle.pointable().direction().angleTo(circle.normal()) <= PI/4) {
-                if (circle.radius() < BIG_CIRLCE_THRESHOLD)
+                if (circle.radius() < BIG_CIRCLE_THRESHOLD)
                     emit jogRightFrame();
                 else
                     emit jogRightSecond();
             } else {
-                if (circle.radius() < BIG_CIRLCE_THRESHOLD)
+                if (circle.radius() < BIG_CIRCLE_THRESHOLD)
                     emit jogLeftFrame();
                 else
                     emit jogLeftSecond();

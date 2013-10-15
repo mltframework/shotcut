@@ -5,6 +5,8 @@ QT       += widgets opengl xml network qml quick webkitwidgets
 TARGET = shotcut
 TEMPLATE = app
 
+include (../QWebSockets/qwebsockets.pri)
+
 SOURCES += main.cpp\
     mainwindow.cpp \
     mltcontroller.cpp \
@@ -70,7 +72,8 @@ SOURCES += main.cpp\
     htmleditor/htmleditor.cpp \
     htmleditor/highlighter.cpp \
     settings.cpp \
-    widgets/lineeditclear.cpp
+    widgets/lineeditclear.cpp \
+    leapnetworklistener.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -136,7 +139,8 @@ HEADERS  += mainwindow.h \
     htmleditor/htmleditor.h \
     htmleditor/highlighter.h \
     settings.h \
-    widgets/lineeditclear.h
+    widgets/lineeditclear.h \
+    leapnetworklistener.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
@@ -270,9 +274,9 @@ unix:!mac {
     LIBS += -lX11
 }
 
-# Add CONFIG+=leap to qmake execution to include support for Leap Motion control.
+# Add CONFIG+=leap to include support for Leap Motion via its library.
 CONFIG(leap) {
-    DEFINES += WITH_LEAP
+    DEFINES += WITH_LIBLEAP
     SOURCES += leaplistener.cpp
     HEADERS += leaplistener.h
     unix {

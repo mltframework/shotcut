@@ -1,0 +1,1 @@
+include ($$PWD/qwebsockets.pro)

@@ -21,7 +21,7 @@
 
 #include <QMainWindow>
 #include "mltcontroller.h"
-#ifdef WITH_LEAP
+#ifdef WITH_LIBLEAP
 #include "leaplistener.h"
 #endif
 
@@ -101,7 +101,7 @@ private:
     bool m_isPlaylistLoaded;
     QActionGroup* m_languagesGroup;
     HtmlEditor* m_htmlEditor;
-#ifdef WITH_LEAP
+#ifdef WITH_LIBLEAP
     LeapListener m_leapListener;
 #endif
 
