@@ -91,6 +91,6 @@ void AlsaWidget::setProducer(Mlt::Producer* producer)
 
 void AlsaWidget::on_applyButton_clicked()
 {
-    MLT.open(producer(MLT.profile()));
+    MLT.setProducer(producer(MLT.profile()));
     MLT.play();
 }

@@ -359,9 +359,9 @@ void GLWidget::showFrame(Mlt::QFrame frame)
     showFrameSemaphore.release();
 }
 
-int GLWidget::open(Mlt::Producer* producer, bool isMulti)
+int GLWidget::setProducer(Mlt::Producer* producer, bool isMulti)
 {
-    int error = Controller::open(producer, isMulti);
+    int error = Controller::setProducer(producer, isMulti);
 
     if (!error) {
         bool reconnect = !m_consumer || !m_consumer->is_valid();

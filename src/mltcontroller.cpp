@@ -118,7 +118,7 @@ Controller::~Controller()
     delete m_profile;
 }
 
-int Controller::open(Mlt::Producer* producer, bool)
+int Controller::setProducer(Mlt::Producer* producer, bool)
 {
     int error = 0;
 
@@ -500,7 +500,7 @@ void Controller::restart()
         double speed = m_producer->get_speed();
         QString xml = saveXML("string");
         close();
-        if (!open(new Mlt::Producer(profile(), "xml-string", xml.toUtf8().constData()))) {
+        if (!setProducer(new Mlt::Producer(profile(), "xml-string", xml.toUtf8().constData()))) {
             m_producer->seek(position);
             m_producer->set_speed(speed);
             m_consumer->start();

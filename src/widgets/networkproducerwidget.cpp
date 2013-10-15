@@ -74,6 +74,6 @@ void NetworkProducerWidget::setProducer(Mlt::Producer* producer)
 
 void NetworkProducerWidget::on_applyButton_clicked()
 {
-    MLT.open(producer(MLT.profile()));
+    MLT.setProducer(producer(MLT.profile()));
     MLT.play();
 }

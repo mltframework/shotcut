@@ -172,6 +172,6 @@ void X11grabWidget::setProducer(Mlt::Producer* producer)
 
 void X11grabWidget::on_applyButton_clicked()
 {
-    MLT.open(producer(MLT.profile()));
+    MLT.setProducer(producer(MLT.profile()));
     MLT.play();
 }

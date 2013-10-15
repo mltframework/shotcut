@@ -93,7 +93,7 @@ void ImageProducerWidget::reopen(Mlt::Producer* p)
     if (position > p->get_out())
         position = p->get_out();
     p->set("in", m_producer->get_in());
-    if (MLT.open(p)) {
+    if (MLT.setProducer(p)) {
         setProducer(0);
         return;
     }

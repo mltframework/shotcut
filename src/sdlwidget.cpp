@@ -31,9 +31,9 @@ SDLWidget::SDLWidget(QWidget *parent)
     setMouseTracking(true);
 }
 
-int SDLWidget::open(Mlt::Producer* producer, bool isMulti)
+int SDLWidget::setProducer(Mlt::Producer* producer, bool isMulti)
 {
-    int error = Controller::open(producer, isMulti);
+    int error = Controller::setProducer(producer, isMulti);
 
     if (!error)
         error = reconfigure(isMulti);

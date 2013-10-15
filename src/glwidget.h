@@ -44,7 +44,7 @@ public:
     QSize sizeHint() const;
     void startGlsl();
     void stopGlsl();
-    int open(Mlt::Producer*, bool isMulti = false);
+    int setProducer(Mlt::Producer*, bool isMulti = false);
     int reconfigure(bool isMulti);
 
     void play(double speed = 1.0) {

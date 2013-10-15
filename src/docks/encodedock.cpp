@@ -375,7 +375,7 @@ void EncodeDock::encode(const QString& target)
     MLT.closeConsumer();
     MLT.close();
     producer->seek(0);
-    MLT.open(producer, isMulti);
+    MLT.setProducer(producer, isMulti);
     MLT.consumer()->set("1", "avformat");
     MLT.consumer()->set("1.target", target.toUtf8().constData());
     Mlt::Properties* p = collectProperties(-1);
@@ -577,7 +577,7 @@ void EncodeDock::on_encodeButton_clicked()
     if (ui->encodeButton->text() == tr("Stop Capture")) {
         bool isMulti = false;
         MLT.closeConsumer();
-        MLT.open(MLT.producer(), isMulti);
+        MLT.setProducer(MLT.producer(), isMulti);
         MLT.play();
         ui->encodeButton->setText(tr("Capture File"));
         emit captureStateChanged(false);
@@ -657,7 +657,7 @@ void EncodeDock::on_streamButton_clicked()
     if (ui->streamButton->text() == tr("Stop Stream")) {
         bool isMulti = false;
         MLT.closeConsumer();
-        MLT.open(MLT.producer(), isMulti);
+        MLT.setProducer(MLT.producer(), isMulti);
         MLT.play();
         ui->streamButton->setText(tr("Stream"));
         emit captureStateChanged(false);

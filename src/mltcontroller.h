@@ -82,7 +82,7 @@ public:
     virtual ~Controller();
 
     virtual QWidget* videoWidget() = 0;
-    virtual int open(Mlt::Producer*, bool isMulti = false);
+    virtual int setProducer(Mlt::Producer*, bool isMulti = false);
     virtual int open(const char* url);
     virtual void close();
     virtual QImage image(Frame *frame, int width, int height);

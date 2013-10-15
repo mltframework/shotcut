@@ -487,7 +487,7 @@ void MainWindow::open(Mlt::Producer* producer)
     else if (producer->get_int("error"))
         ui->statusBar->showMessage(tr("Failed to open ") + producer->get("resource"), STATUS_TIMEOUT_MS);
     // no else here because open() will delete the producer if open fails
-    if (!MLT.open(producer))
+    if (!MLT.setProducer(producer))
         emit producerOpened();
     m_player->setFocus();
 }
@@ -564,7 +564,7 @@ void MainWindow::seekPlaylist(int start)
     if (!m_playlistDock->model()->playlist()) return;
     // we bypass this->open() to prevent sending producerOpened signal to self, which causes to reload playlist
     if ((void*) MLT.producer()->get_producer() != (void*) m_playlistDock->model()->playlist()->get_playlist())
-        MLT.open(new Mlt::Producer(*(m_playlistDock->model()->playlist())));
+        MLT.setProducer(new Mlt::Producer(*(m_playlistDock->model()->playlist())));
     m_player->setIn(-1);
     m_player->setOut(-1);
     // since we do not emit producerOpened, these components need updating
@@ -1287,7 +1287,7 @@ void MainWindow::changeTheme(const QString &theme)
 void MainWindow::onMeltedUnitOpened()
 {
     Mlt::Producer* producer = new Mlt::Producer(MLT.profile(), "color:");
-    MLT.open(producer);
+    MLT.setProducer(producer);
     MLT.play(0);
     // Remove the help page.
     if (ui->stackedWidget->count() > 1)
