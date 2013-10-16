@@ -1007,7 +1007,7 @@ void MainWindow::onProducerOpened()
             m_playlistDock->raise();
         }
     }
-    if (QString(MLT.producer()->get("xml")) == "was here")
+    if (!MLT.URL().isEmpty())
         setCurrentFile(MLT.URL());
     if (w) {
         dynamic_cast<AbstractProducerWidget*>(w)->setProducer(MLT.producer());
