@@ -126,12 +126,6 @@ int Controller::setProducer(Mlt::Producer* producer, bool)
         close();
     if (producer && producer->is_valid()) {
         m_producer = producer;
-        // In some versions of MLT, the resource property is the XML filename,
-        // but the Mlt::Producer(Service&) constructor will fail unless it detects
-        // the type as playlist, and mlt_service_identify() needs the resource
-        // property to say "<playlist>" to identify it as playlist type.
-        if (isPlaylist())
-            m_producer->set("resource", "<playlist>");
     }
     else {
         // Cleanup on error
@@ -156,7 +150,8 @@ int Controller::open(const char* url)
             delete m_producer;
             m_producer = new Mlt::Producer(profile(), url);
         }
-        if (QString(m_producer->get("xml")) == "was here")
+        if (QString(m_producer->get("xml")) == "was here" &&
+                    m_producer->get_int("_original_type") != tractor_type)
             m_url = QString::fromUtf8(url);
         const char *service = m_producer->get("mlt_service");
         if (service && (!strcmp(service, "pixbuf") || !strcmp(service, "qimage")))
@@ -400,17 +395,6 @@ QString Controller::resource() const
     if (!m_producer)
         return resource;
     resource = QString(m_producer->get("resource"));
-    if (m_producer->type() == tractor_type) {
-        Mlt::Tractor tractor((mlt_tractor) m_producer->get_service());
-        Mlt::Multitrack* multitrack = tractor.multitrack();
-        if (multitrack->is_valid()) {
-            Mlt::Producer* producer = multitrack->track(0);
-            if (producer->is_valid())
-                resource = QString(producer->get("resource"));
-            delete producer;
-        }
-        delete multitrack;
-    }
     return resource;
 }
 

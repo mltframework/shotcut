@@ -350,6 +350,11 @@ void PlaylistModel::load()
         endRemoveRows();
         delete m_playlist;
     }
+    // In some versions of MLT, the resource property is the XML filename,
+    // but the Mlt::Playlist(Service&) constructor will fail unless it detects
+    // the type as playlist, and mlt_service_identify() needs the resource
+    // property to say "<playlist>" to identify it as playlist type.
+    MLT.producer()->set("resource", "<playlist>");
     m_playlist = new Mlt::Playlist(*MLT.producer());
     if (!m_playlist->is_valid()) {
         delete m_playlist;
