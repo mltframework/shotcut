@@ -24,15 +24,13 @@ Rectangle {
     width: 400
     height: 200
     color: 'transparent'
-    property string fromParameter: 'from'
-    property string toParameter: 'to'
     Component.onCompleted: {
         if (filter.isNew) {
             // Set default parameter values
-            combo.currentIndex = 0
+            slider.value = 500
         } else {
             // Initialize parameter values
-            combo.currentIndex = filter.get(fromParameter)
+            slider.value = filter.get('start') * slider.maximumValue
         }
     }
 
@@ -42,14 +40,36 @@ Rectangle {
 
         RowLayout {
             spacing: 8
-            Label { text: qsTr('Copy from') }
-            ComboBox {
-                id: combo
-                model: [qsTr('Left to right'), qsTr('Right to left')]
-                onCurrentIndexChanged: {
-                    filter.set(fromParameter, currentIndex)
-                    filter.set(toParameter, 1 - currentIndex)
+    
+            Label { text: qsTr('Left') }
+            Slider {
+                id: slider
+                tickmarksEnabled: true
+                Layout.fillWidth: true
+                Layout.minimumWidth: 100
+                minimumValue: 0
+                maximumValue: 1000
+                onValueChanged: {
+                    spinner.value = value / maximumValue
+                    filter.set('start', value / maximumValue)
                 }
+            }
+            Label { text: qsTr('Right') }
+            SpinBox {
+                id: spinner
+                Layout.minimumWidth: 70
+                decimals: 2
+                minimumValue: 0
+                maximumValue: 1
+                onValueChanged: slider.value = value * slider.maximumValue
+            }
+            Button {
+                id: undo
+                iconName: 'edit-undo'
+                tooltip: qsTr('Reset to default')
+                onClicked: slider.value = 500
+                implicitWidth: 20
+                implicitHeight: 20
             }
         }
         Item {

@@ -212,7 +212,11 @@ OTHER_FILES += \
     qml/filters/audio_channelcopy/meta.qml \
     qml/filters/audio_channelcopy/ui.qml \
     qml/filters/audio_gain/meta.qml \
-    qml/filters/audio_gain/ui.qml
+    qml/filters/audio_gain/ui.qml \
+    qml/filters/audio_pan/meta.qml \
+    qml/filters/audio_pan/ui.qml \
+    qml/filters/audio_balance/meta.qml \
+    qml/filters/audio_balance/ui.qml
 
 lupdate_hack {
     SOURCES += \
@@ -230,7 +234,11 @@ lupdate_hack {
     qml/filters/audio_channelcopy/meta.qml \
     qml/filters/audio_channelcopy/ui.qml \
     qml/filters/audio_gain/meta.qml \
-    qml/filters/audio_gain/ui.qml
+    qml/filters/audio_gain/ui.qml \
+    qml/filters/audio_pan/meta.qml \
+    qml/filters/audio_pan/ui.qml \
+    qml/filters/audio_balance/meta.qml \
+    qml/filters/audio_balance/ui.qml
 }
 
 TRANSLATIONS += \

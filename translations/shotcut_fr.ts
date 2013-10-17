@@ -4421,6 +4421,16 @@ Il fait la capture en arrière-plan, mais
         <source>Gain</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../src/qml/filters/audio_balance/meta.qml" line="7"/>
+        <source>Balance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/audio_pan/meta.qml" line="7"/>
+        <source>Pan</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>meta_frei0r</name>
@@ -4529,7 +4539,9 @@ Il fait la capture en arrière-plan, mais
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/audio_balance/ui.qml" line="69"/>
         <location filename="../src/qml/filters/audio_gain/ui.qml" line="68"/>
+        <location filename="../src/qml/filters/audio_pan/ui.qml" line="79"/>
         <location filename="../src/qml/filters/webvfx_circular_frame/ui.qml" line="71"/>
         <source>Reset to default</source>
         <translation type="unfinished"></translation>
@@ -4545,26 +4557,38 @@ Il fait la capture en arrière-plan, mais
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="47"/>
-        <source>Copy From Channel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="50"/>
-        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="59"/>
+        <location filename="../src/qml/filters/audio_balance/ui.qml" line="44"/>
+        <location filename="../src/qml/filters/audio_pan/ui.qml" line="48"/>
+        <location filename="../src/qml/filters/audio_pan/ui.qml" line="55"/>
         <source>Left</source>
         <translation type="unfinished">Gauche</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="50"/>
-        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="59"/>
+        <location filename="../src/qml/filters/audio_balance/ui.qml" line="57"/>
+        <location filename="../src/qml/filters/audio_pan/ui.qml" line="48"/>
+        <location filename="../src/qml/filters/audio_pan/ui.qml" line="67"/>
         <source>Right</source>
         <translation type="unfinished">Droite</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="56"/>
-        <source>To Channel</source>
+        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="45"/>
+        <source>Copy from</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="48"/>
+        <source>Left to right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="48"/>
+        <source>Right to left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/audio_pan/ui.qml" line="45"/>
+        <source>Channel</source>
+        <translation type="unfinished">Canal</translation>
     </message>
 </context>
 <context>
