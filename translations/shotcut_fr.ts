@@ -531,6 +531,40 @@
     </message>
 </context>
 <context>
+    <name>DataProcessor</name>
+    <message>
+        <location filename="../QWebSockets/dataprocessor_p.cpp" line="663"/>
+        <source>Received Continuation frame, while there is nothing to continue.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../QWebSockets/dataprocessor_p.cpp" line="669"/>
+        <source>All data frames after the initial data frame must have opcode 0 (continuation).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../QWebSockets/dataprocessor_p.cpp" line="681"/>
+        <source>Received message is too big.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../QWebSockets/dataprocessor_p.cpp" line="692"/>
+        <location filename="../QWebSockets/dataprocessor_p.cpp" line="806"/>
+        <source>Invalid UTF-8 code encountered.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../QWebSockets/dataprocessor_p.cpp" line="785"/>
+        <source>Payload of close frame is too small.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../QWebSockets/dataprocessor_p.cpp" line="793"/>
+        <source>Invalid close code %1 detected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DecklinkProducerWidget</name>
     <message>
         <location filename="../src/widgets/decklinkproducerwidget.ui" line="14"/>
@@ -1156,72 +1190,87 @@ codecs. However, not all codecs are multi-threaded.</source>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.ui" line="68"/>
-        <source>Add a filter</source>
+        <source>Add an audio filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/docks/filtersdock.ui" line="71"/>
+        <source>Audio</source>
+        <translation type="unfinished">Audio</translation>
+    </message>
+    <message>
         <location filename="../src/docks/filtersdock.ui" line="85"/>
+        <source>Add a video filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filtersdock.ui" line="88"/>
+        <source>Video</source>
+        <translation type="unfinished">Vidéo</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filtersdock.ui" line="102"/>
         <source>Remove selected filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.ui" line="139"/>
+        <location filename="../src/docks/filtersdock.ui" line="156"/>
         <source>Blur</source>
         <translation>Flou</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.ui" line="144"/>
+        <location filename="../src/docks/filtersdock.ui" line="161"/>
         <source>Mirror</source>
         <translation>Miroir</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.ui" line="149"/>
+        <location filename="../src/docks/filtersdock.ui" line="166"/>
         <source>Diffusion</source>
         <translation>Diffusion</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.ui" line="154"/>
+        <location filename="../src/docks/filtersdock.ui" line="171"/>
         <source>Glow</source>
         <translation>Éclat</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.ui" line="159"/>
+        <location filename="../src/docks/filtersdock.ui" line="176"/>
         <source>Sharpen</source>
         <translation>Netteté</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.ui" line="164"/>
+        <location filename="../src/docks/filtersdock.ui" line="181"/>
         <source>Vignette</source>
         <translation>Portrait</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.ui" line="169"/>
+        <location filename="../src/docks/filtersdock.ui" line="186"/>
         <source>Crop</source>
         <translation>Rogner</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.ui" line="172"/>
+        <location filename="../src/docks/filtersdock.ui" line="189"/>
         <source>Remove bad edges or black bars</source>
         <translation>Enlever les mauvais bords ou les barres noires</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.ui" line="177"/>
+        <location filename="../src/docks/filtersdock.ui" line="194"/>
         <source>Color Grading</source>
         <translation>Étalonnage des Couleurs</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.ui" line="180"/>
+        <location filename="../src/docks/filtersdock.ui" line="197"/>
         <source>Correct, alter, or enhance the color</source>
         <translation>Corriger, alterer, ou améliorer les couleurs</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.ui" line="185"/>
+        <location filename="../src/docks/filtersdock.ui" line="202"/>
         <source>Size and Position</source>
         <translation>Taille et Position</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.ui" line="195"/>
-        <location filename="../src/docks/filtersdock.ui" line="198"/>
+        <location filename="../src/docks/filtersdock.ui" line="212"/>
+        <location filename="../src/docks/filtersdock.ui" line="215"/>
         <source>Overlay HTML</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1230,12 +1279,12 @@ codecs. However, not all codecs are multi-threaded.</source>
         <translation type="obsolete">Saturation</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.ui" line="190"/>
+        <location filename="../src/docks/filtersdock.ui" line="207"/>
         <source>White Balance</source>
         <translation>Balance des Blancs</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.cpp" line="164"/>
+        <location filename="../src/docks/filtersdock.cpp" line="172"/>
         <source>Filters can only be applied to clips.</source>
         <translation>Les filtres ne peuvent être appliqués qu&apos;aux clips.</translation>
     </message>
@@ -2244,7 +2293,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="333"/>
-        <location filename="../src/mainwindow.cpp" line="1303"/>
+        <location filename="../src/mainwindow.cpp" line="1312"/>
         <source>Enter Full Screen</source>
         <translation>Passer en Plein Écran</translation>
     </message>
@@ -2255,7 +2304,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="345"/>
-        <location filename="../src/mainwindow.cpp" line="129"/>
+        <location filename="../src/mainwindow.cpp" line="131"/>
         <source>Properties</source>
         <translation>Propriétés</translation>
     </message>
@@ -2271,7 +2320,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="372"/>
-        <location filename="../src/mainwindow.cpp" line="174"/>
+        <location filename="../src/mainwindow.cpp" line="176"/>
         <source>History</source>
         <translation>Historique</translation>
     </message>
@@ -2391,59 +2440,59 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="103"/>
+        <location filename="../src/mainwindow.cpp" line="104"/>
         <source>Ctrl+Z</source>
         <translation>Ctrl+Z</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="104"/>
+        <location filename="../src/mainwindow.cpp" line="105"/>
         <source>Ctrl+Shift+Z</source>
         <translation>Ctrl+Maj+Z</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="335"/>
+        <location filename="../src/mainwindow.cpp" line="344"/>
         <source>Non-Broadcast</source>
         <translation>Non-Broadcast</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="346"/>
+        <location filename="../src/mainwindow.cpp" line="355"/>
         <source>DVD Widescreen NTSC</source>
         <translation>DVD écran large NTSC</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="347"/>
+        <location filename="../src/mainwindow.cpp" line="356"/>
         <source>DVD Widescreen PAL</source>
         <translation>DVD écran large PAL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="352"/>
+        <location filename="../src/mainwindow.cpp" line="361"/>
         <source>Custom</source>
         <translation>Personnalisé</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="477"/>
-        <location filename="../src/mainwindow.cpp" line="479"/>
-        <location filename="../src/mainwindow.cpp" line="512"/>
+        <location filename="../src/mainwindow.cpp" line="486"/>
+        <location filename="../src/mainwindow.cpp" line="488"/>
+        <location filename="../src/mainwindow.cpp" line="521"/>
         <source>Failed to open </source>
         <translation>Impossible d&apos;ouvrir</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="519"/>
+        <location filename="../src/mainwindow.cpp" line="528"/>
         <source>Open File</source>
         <translation>Ouvrir un Fichier</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="678"/>
+        <location filename="../src/mainwindow.cpp" line="687"/>
         <source>%1[*] - %2</source>
         <translation>%1[*] - %2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="683"/>
+        <location filename="../src/mainwindow.cpp" line="692"/>
         <source>About Shotcut</source>
         <translation>À propos de Shotcut</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="684"/>
+        <location filename="../src/mainwindow.cpp" line="693"/>
         <source>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2013 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2452,60 +2501,60 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; est un logiciel de montage vidéo libre, en source ouverte et multiplateforme. &lt;/p&gt;&lt;p&gt;Copyright &amp;copy; 2011-2013 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Sous licence &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Ce programme utilise fièrement les programmes suivants:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; Application et Framework UI&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; Framework multimédia authoring&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; Libraries de formats et de codecs multimédia.&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; Encodeur H.264 &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; Encodeur VP8&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; Encodeur MP3&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; Greffons vidéo&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; Greffons audio&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;Le code source utilisé pour construire ce programme peut être téléchargé sur &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;&lt;small&gt;Ce programme est distribué dans l&apos;espoir qu&apos;il vous sera utile, but SANS AUCUNE GARANTIE; sans même la garantie implicite de COMMERCIALISÉ ou D&apos;ADAPTATION À UN USAGE PARTICULIER.&lt;/small&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1029"/>
-        <location filename="../src/mainwindow.cpp" line="1047"/>
+        <location filename="../src/mainwindow.cpp" line="1038"/>
+        <location filename="../src/mainwindow.cpp" line="1056"/>
         <source>Saved %1</source>
         <translation>Sauvegardé %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1039"/>
+        <location filename="../src/mainwindow.cpp" line="1048"/>
         <source>Save XML</source>
         <translation>Sauvegarder XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1039"/>
+        <location filename="../src/mainwindow.cpp" line="1048"/>
         <source>MLT XML (*.mlt)</source>
         <translation>XML MLT (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1059"/>
+        <location filename="../src/mainwindow.cpp" line="1068"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>Ce projet a été modifié.
 Voulez-vous sauvegarder vos modifications ?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1306"/>
+        <location filename="../src/mainwindow.cpp" line="1315"/>
         <source>Exit Full Screen</source>
         <translation>Sortir du Plein Écran</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1315"/>
+        <location filename="../src/mainwindow.cpp" line="1324"/>
         <source>GPU Processing is not supported</source>
         <translation>Le traitement GPU n&apos;est pas supporté</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1390"/>
+        <location filename="../src/mainwindow.cpp" line="1399"/>
         <source>You must restart Shotcut to switch using OpenGL.
 Do you want to exit now?</source>
         <translation>Vous devez redémarrer Shotcut pour passer en OpenGL.
 Voulez-vous quitter maintenant ?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1512"/>
+        <location filename="../src/mainwindow.cpp" line="1521"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to exit now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1550"/>
+        <location filename="../src/mainwindow.cpp" line="1559"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>Échec de connexion à JACK.
 Merci de vérifier que JACK est installé et fonctionne.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1559"/>
+        <location filename="../src/mainwindow.cpp" line="1568"/>
         <source>You must restart Shotcut to switch using GPU processing.
 Do you want to exit now?</source>
         <translation>Vous devez redémarrer Shotcut pour passer en traitement GPU.
@@ -2744,7 +2793,7 @@ p, li { white-space: pre-wrap; }
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Single-click&lt;/span&gt; a unit to open its playlist.&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Double-click&lt;/span&gt; a unit to control it in the player, or &lt;span style=&quot; font-weight:600;&quot;&gt;right-click&lt;/span&gt; the unit for transport control actions.&lt;br /&gt;&lt;/p&gt;
@@ -3268,6 +3317,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/player.cpp" line="229"/>
         <location filename="../src/player.cpp" line="283"/>
         <location filename="../src/player.cpp" line="437"/>
+        <location filename="../src/player.cpp" line="566"/>
         <source>Pause</source>
         <translation>Pause</translation>
     </message>
@@ -3275,6 +3325,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/player.cpp" line="231"/>
         <location filename="../src/player.cpp" line="284"/>
         <location filename="../src/player.cpp" line="438"/>
+        <location filename="../src/player.cpp" line="567"/>
         <source>Pause playback (K)</source>
         <translation>Mettre en pause la lecture (K)</translation>
     </message>
@@ -3740,6 +3791,138 @@ coupe sélectionnée.</translation>
         <location filename="../src/mvcp/meltedplaylistdock.cpp" line="388"/>
         <source>Move %1 from %2 to %3</source>
         <translation>Déplacer %1 de %2 à %3</translation>
+    </message>
+    <message>
+        <location filename="../QWebSockets/dataprocessor_p.cpp" line="328"/>
+        <source>Timeout when reading data from socket.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../QWebSockets/dataprocessor_p.cpp" line="393"/>
+        <source>Error occurred while reading from the network: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../QWebSockets/dataprocessor_p.cpp" line="405"/>
+        <source>Lengths smaller than 126 must be expressed as one byte.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../QWebSockets/dataprocessor_p.cpp" line="429"/>
+        <source>Something went wrong during reading from the network.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../QWebSockets/dataprocessor_p.cpp" line="443"/>
+        <source>Lengths smaller than 65536 (2^16) must be expressed as 2 bytes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../QWebSockets/dataprocessor_p.cpp" line="467"/>
+        <source>Error while reading from the network: %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../QWebSockets/dataprocessor_p.cpp" line="490"/>
+        <source>Maximum framesize exceeded.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../QWebSockets/dataprocessor_p.cpp" line="502"/>
+        <source>Some serious error occurred while reading from the network.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../QWebSockets/dataprocessor_p.cpp" line="563"/>
+        <source>Rsv field is non-zero</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../QWebSockets/dataprocessor_p.cpp" line="567"/>
+        <source>Used reserved opcode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../QWebSockets/dataprocessor_p.cpp" line="573"/>
+        <source>Controle frame is larger than 125 bytes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../QWebSockets/dataprocessor_p.cpp" line="577"/>
+        <source>Controle frames cannot be fragmented</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QWebSocketPrivate</name>
+    <message>
+        <location filename="../QWebSockets/qwebsocket_p.cpp" line="105"/>
+        <source>Connection closed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../QWebSockets/qwebsocket_p.cpp" line="564"/>
+        <source>Error writing bytes to socket: %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../QWebSockets/qwebsocket_p.cpp" line="576"/>
+        <source>Bytes written %1 != %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../QWebSockets/qwebsocket_p.cpp" line="705"/>
+        <location filename="../QWebSockets/qwebsocket_p.cpp" line="746"/>
+        <source>Invalid statusline in response: %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../QWebSockets/qwebsocket_p.cpp" line="741"/>
+        <source>Accept-Key received from server %1 does not match the client key %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../QWebSockets/qwebsocket_p.cpp" line="758"/>
+        <source>Handshake: Server requests a version that we don&apos;t support: %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../QWebSockets/qwebsocket_p.cpp" line="764"/>
+        <source>Unknown error condition encountered. Aborting connection.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../QWebSockets/qwebsocket_p.cpp" line="771"/>
+        <source>Unhandled http status code: %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QWebSocketServerPrivate</name>
+    <message>
+        <location filename="../QWebSockets/qwebsocketserver_p.cpp" line="58"/>
+        <source>Server closed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../QWebSockets/qwebsocketserver_p.cpp" line="335"/>
+        <source>Upgrading to websocket failed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../QWebSockets/qwebsocketserver_p.cpp" line="341"/>
+        <source>Cannot upgrade to websocket.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../QWebSockets/qwebsocketserver_p.cpp" line="347"/>
+        <source>Invalid response received.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../QWebSockets/qwebsocketserver_p.cpp" line="352"/>
+        <source>Closing socket because of invalid or unsupported request.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4228,6 +4411,16 @@ Il fait la capture en arrière-plan, mais
         <source>Circular Frame (HTML)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../src/qml/filters/audio_channelcopy/meta.qml" line="7"/>
+        <source>Copy Channel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/audio_gain/meta.qml" line="7"/>
+        <source>Gain</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>meta_frei0r</name>
@@ -4331,6 +4524,12 @@ Il fait la capture en arrière-plan, mais
         <translation type="unfinished">Rayon</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/audio_gain/ui.qml" line="44"/>
+        <source>Gain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/audio_gain/ui.qml" line="68"/>
         <location filename="../src/qml/filters/webvfx_circular_frame/ui.qml" line="71"/>
         <source>Reset to default</source>
         <translation type="unfinished"></translation>
@@ -4345,16 +4544,38 @@ Il fait la capture en arrière-plan, mais
         <source>Please choose a color</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="47"/>
+        <source>Copy From Channel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="50"/>
+        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="59"/>
+        <source>Left</source>
+        <translation type="unfinished">Gauche</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="50"/>
+        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="59"/>
+        <source>Right</source>
+        <translation type="unfinished">Droite</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="56"/>
+        <source>To Channel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ui_frei0r</name>
     <message>
-        <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="53"/>
+        <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="52"/>
         <source>Saturation</source>
         <translation type="unfinished">Saturation</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="76"/>
+        <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="75"/>
         <source>Reset to default</source>
         <translation type="unfinished"></translation>
     </message>
