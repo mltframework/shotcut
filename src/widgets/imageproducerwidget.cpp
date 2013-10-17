@@ -74,6 +74,7 @@ void ImageProducerWidget::setProducer(Mlt::Producer* p)
     if (m_producer->get_int("ttl"))
         ui->repeatSpinBox->setValue(m_producer->get_int("ttl"));
     ui->sequenceCheckBox->setChecked(m_producer->get_int("shotcut_sequence"));
+    ui->repeatSpinBox->setEnabled(m_producer->get_int("shotcut_sequence"));
 }
 
 void ImageProducerWidget::reopen(Mlt::Producer* p)
