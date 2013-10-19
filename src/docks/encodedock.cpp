@@ -751,7 +751,7 @@ void EncodeDock::on_removePresetButton_clicked()
     QString preset(ui->presetsTree->currentItem()->text(0));
     QMessageBox dialog(QMessageBox::Question,
                        tr("Delete Preset"),
-                       tr("Are you sure you want to delete") + " " + preset + "?",
+                       tr("Are you sure you want to delete %1?").arg(preset),
                        QMessageBox::No | QMessageBox::Yes,
                        this);
     dialog.setDefaultButton(QMessageBox::Yes);

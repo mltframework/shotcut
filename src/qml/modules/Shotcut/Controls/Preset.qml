@@ -125,7 +125,7 @@ RowLayout {
             anchors.margins: 10
             
             Label {
-                text: qsTr('Are you sure you want to delete ') + presetCombo.currentText + '?'
+                text: qsTr('Are you sure you want to delete %1?').arg(presetCombo.currentText)
                 wrapMode: Text.Wrap
             }
             

@@ -1170,8 +1170,12 @@ codecs. However, not all codecs are multi-threaded.</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="754"/>
+        <source>Are you sure you want to delete %1?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Are you sure you want to delete</source>
-        <translation>确定删除？</translation>
+        <translation type="obsolete">确定删除？</translation>
     </message>
 </context>
 <context>
@@ -3603,7 +3607,7 @@ selected cut.</source>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="128"/>
-        <source>Are you sure you want to delete </source>
+        <source>Are you sure you want to delete %1?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3974,8 +3978,12 @@ selected cut.</source>
     </message>
     <message>
         <location filename="../src/widgets/servicepresetwidget.cpp" line="135"/>
+        <source>Are you sure you want to delete %1?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Are you sure you want to delete</source>
-        <translation>确定删除？</translation>
+        <translation type="obsolete">确定删除？</translation>
     </message>
 </context>
 <context>
@@ -4501,7 +4509,7 @@ the screen capture to SDI/HDMI in this mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_balance/ui.qml" line="69"/>
+        <location filename="../src/qml/filters/audio_balance/ui.qml" line="68"/>
         <location filename="../src/qml/filters/audio_gain/ui.qml" line="68"/>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="79"/>
         <location filename="../src/qml/filters/webvfx_circular_frame/ui.qml" line="71"/>
@@ -4526,7 +4534,7 @@ the screen capture to SDI/HDMI in this mode.</source>
         <translation type="unfinished">左</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_balance/ui.qml" line="57"/>
+        <location filename="../src/qml/filters/audio_balance/ui.qml" line="56"/>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="48"/>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="67"/>
         <source>Right</source>
@@ -4556,12 +4564,12 @@ the screen capture to SDI/HDMI in this mode.</source>
 <context>
     <name>ui_frei0r</name>
     <message>
-        <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="52"/>
+        <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="53"/>
         <source>Saturation</source>
         <translation type="unfinished">饱和度</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="75"/>
+        <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="76"/>
         <source>Reset to default</source>
         <translation type="unfinished">重置到缺省</translation>
     </message>
