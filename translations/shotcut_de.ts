@@ -24,7 +24,7 @@
     <message>
         <location filename="../src/dialogs/addencodepresetdialog.ui" line="53"/>
         <source>Make final changes to the preset including removing items you do not want to include, or copy/paste the clipboard.</source>
-        <translation type="unfinished"></translation>
+        <translation>Endgültige Änderungen am Preset, sowie das Entfernen von Einträgen die Sie nicht inkludieren wollen anwenden, oder die Zwischenablage kopieren/einfügen.</translation>
     </message>
 </context>
 <context>
@@ -95,11 +95,7 @@
     <message>
         <location filename="../src/models/attachedfiltersmodel.cpp" line="143"/>
         <source>Overlay HTML</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Saturation</source>
-        <translation type="obsolete">Sättigung</translation>
+        <translation>Overlay HTML</translation>
     </message>
     <message>
         <location filename="../src/models/attachedfiltersmodel.cpp" line="145"/>
@@ -131,10 +127,6 @@
         <location filename="../src/widgets/avformatproducerwidget.ui" line="14"/>
         <source>Form</source>
         <translation>Formular</translation>
-    </message>
-    <message>
-        <source>TextLabel</source>
-        <translation type="obsolete">TextLabel</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="33"/>
@@ -375,7 +367,7 @@
     <message>
         <location filename="../src/widgets/colorbarswidget.ui" line="92"/>
         <source>FuBK</source>
-        <translation type="unfinished"></translation>
+        <translation>FuBK</translation>
     </message>
     <message>
         <location filename="../src/widgets/colorbarswidget.ui" line="97"/>
@@ -388,18 +380,18 @@
     <message>
         <location filename="../src/widgets/colorpickerwidget.cpp" line="75"/>
         <source>Pick a color on the screen. By pressing the mouse button and then moving your mouse you can select a section of the screen from which to get an average color.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wählen Sie eine Farbe auf dem Bildschirm. Während Sie den Knopf auf der Maus gedrückt halten, können Sie mit der Maus herumfahren um einen Bereich am Bildschrim auszuwählen, von dem dann der durchschnittliche Farbwert genommen wird.</translation>
     </message>
     <message>
         <location filename="../src/widgets/colorpickerwidget.cpp" line="105"/>
         <location filename="../src/widgets/colorpickerwidget.cpp" line="129"/>
         <source>Requesting color information...</source>
-        <translation type="unfinished"></translation>
+        <translation>Anfordern der Farbinformation...</translation>
     </message>
     <message>
         <location filename="../src/widgets/colorpickerwidget.cpp" line="138"/>
         <source>Calculated average color for rectangle.</source>
-        <translation type="unfinished"></translation>
+        <translation>Durschnittlicher Farbwert für Rechteck berechnet</translation>
     </message>
 </context>
 <context>
@@ -433,11 +425,6 @@
         <translation>Formular</translation>
     </message>
     <message>
-        <location filename="../src/filters/cropfilter.ui" line="125"/>
-        <source>Center Bias</source>
-        <translation>Ausrichtung Mitte</translation>
-    </message>
-    <message>
         <location filename="../src/filters/cropfilter.ui" line="32"/>
         <location filename="../src/filters/cropfilter.ui" line="89"/>
         <location filename="../src/filters/cropfilter.ui" line="113"/>
@@ -447,19 +434,14 @@
         <translation> px</translation>
     </message>
     <message>
-        <location filename="../src/filters/cropfilter.ui" line="225"/>
-        <source>Top</source>
-        <translation>Oben</translation>
+        <location filename="../src/filters/cropfilter.ui" line="44"/>
+        <source>Center</source>
+        <translation>Mitte</translation>
     </message>
     <message>
-        <location filename="../src/filters/cropfilter.ui" line="212"/>
-        <source>Bottom</source>
-        <translation>Unten</translation>
-    </message>
-    <message>
-        <location filename="../src/filters/cropfilter.ui" line="175"/>
-        <source>Left</source>
-        <translation>Links</translation>
+        <location filename="../src/filters/cropfilter.ui" line="125"/>
+        <source>Center Bias</source>
+        <translation>Ausrichtung Mitte</translation>
     </message>
     <message>
         <location filename="../src/filters/cropfilter.ui" line="138"/>
@@ -467,9 +449,19 @@
         <translation>Rechts</translation>
     </message>
     <message>
-        <location filename="../src/filters/cropfilter.ui" line="44"/>
-        <source>Center</source>
-        <translation>Mitte</translation>
+        <location filename="../src/filters/cropfilter.ui" line="175"/>
+        <source>Left</source>
+        <translation>Links</translation>
+    </message>
+    <message>
+        <location filename="../src/filters/cropfilter.ui" line="212"/>
+        <source>Bottom</source>
+        <translation>Unten</translation>
+    </message>
+    <message>
+        <location filename="../src/filters/cropfilter.ui" line="225"/>
+        <source>Top</source>
+        <translation>Oben</translation>
     </message>
 </context>
 <context>
@@ -477,7 +469,7 @@
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="14"/>
         <source>Add Custom Video Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Eigenen Videomodus hinzufügen</translation>
     </message>
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="29"/>
@@ -535,33 +527,33 @@
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="663"/>
         <source>Received Continuation frame, while there is nothing to continue.</source>
-        <translation type="unfinished"></translation>
+        <translation>Continuation-Frame erhalten. Es ist aber nichts fortzuführen (continue).</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="669"/>
         <source>All data frames after the initial data frame must have opcode 0 (continuation).</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle Daten-Frames nach dem anfänglichen Daten-Frame müssen den Opcode 0 haben (continuation).</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="681"/>
         <source>Received message is too big.</source>
-        <translation type="unfinished"></translation>
+        <translation>Empfangene Nachricht ist zu groß.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="692"/>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="806"/>
         <source>Invalid UTF-8 code encountered.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ungültiger UTF-8 Code gefunden.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="785"/>
         <source>Payload of close frame is too small.</source>
-        <translation type="unfinished"></translation>
+        <translation>Payload des Schlussframes ist zu klein.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="793"/>
         <source>Invalid close code %1 detected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ungültiger Schlusscode %1 erkannt.</translation>
     </message>
 </context>
 <context>
@@ -602,12 +594,12 @@
     <message>
         <location filename="../src/htmleditor/inserthtmldialog.ui" line="14"/>
         <source>Insert HTML</source>
-        <translation type="unfinished"></translation>
+        <translation>HTML einfügen</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/inserthtmldialog.ui" line="20"/>
         <source>HTML Code:</source>
-        <translation type="unfinished"></translation>
+        <translation>HTML Code:</translation>
     </message>
 </context>
 <context>
@@ -666,39 +658,9 @@
         <translation>Auflösung</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="475"/>
-        <source>Interlaced</source>
-        <translation>Zeilensprungverfahren</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="480"/>
-        <source>Progressive</source>
-        <translation>Vollbildverfahren</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="393"/>
-        <source>Aspect ratio</source>
-        <translation>Seitenverhältnis</translation>
-    </message>
-    <message>
         <location filename="../src/docks/encodedock.ui" line="289"/>
         <source>Frames/sec</source>
         <translation>Bilder/Sek.</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="421"/>
-        <source>x</source>
-        <translation>x</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="383"/>
-        <source>Field order</source>
-        <translation>Halbbild Reihenfolge</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="456"/>
-        <source>Scan mode</source>
-        <translation>Abtastmodus</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="317"/>
@@ -716,6 +678,36 @@
         <translation>Top Field First</translation>
     </message>
     <message>
+        <location filename="../src/docks/encodedock.ui" line="383"/>
+        <source>Field order</source>
+        <translation>Halbbild Reihenfolge</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.ui" line="393"/>
+        <source>Aspect ratio</source>
+        <translation>Seitenverhältnis</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.ui" line="421"/>
+        <source>x</source>
+        <translation>x</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.ui" line="456"/>
+        <source>Scan mode</source>
+        <translation>Abtastmodus</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.ui" line="475"/>
+        <source>Interlaced</source>
+        <translation>Zeilensprungverfahren</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.ui" line="480"/>
+        <source>Progressive</source>
+        <translation>Vollbildverfahren</translation>
+    </message>
+    <message>
         <location filename="../src/docks/encodedock.ui" line="507"/>
         <location filename="../src/docks/encodedock.ui" line="516"/>
         <location filename="../src/docks/encodedock.ui" line="1121"/>
@@ -725,7 +717,7 @@
     <message>
         <location filename="../src/docks/encodedock.ui" line="546"/>
         <source>GOP</source>
-        <translation type="unfinished"></translation>
+        <translation>GOP</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="558"/>
@@ -925,7 +917,9 @@ in temporal compression</source>
         <source>The recommended setting is 0 for the x264 codec and
 number of processor cores (including virtual) - 1 for other
 codecs. However, not all codecs are multi-threaded.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die empfohlene Einstellung ist 0 für den x264 Codec und
+die Anzahl der Prozessor-Kerne (inklusive virtuelle) - 1 für andere
+Codecs. Jedoch sind nicht alle Codecs Multithreading fähig.</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="856"/>
@@ -1139,7 +1133,7 @@ codecs. However, not all codecs are multi-threaded.</source>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="594"/>
         <source>Encode to File</source>
-        <translation type="unfinished"></translation>
+        <translation>In Datei enkodieren</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="594"/>
@@ -1170,11 +1164,7 @@ codecs. However, not all codecs are multi-threaded.</source>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="754"/>
         <source>Are you sure you want to delete %1?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Are you sure you want to delete</source>
-        <translation type="obsolete">Sind Sie sicher, dass Sie löschen wollen?</translation>
+        <translation>Sind Sie sicher, dass Sie %1 löschen wollen?</translation>
     </message>
 </context>
 <context>
@@ -1185,37 +1175,29 @@ codecs. However, not all codecs are multi-threaded.</source>
         <translation>Filter</translation>
     </message>
     <message>
-        <source>Add something to the playlist</source>
-        <translation type="obsolete">Etwas zur Wiedergabeliste hinzufügen</translation>
-    </message>
-    <message>
-        <source>Remove cut</source>
-        <translation type="obsolete">Schnitt entfernen</translation>
-    </message>
-    <message>
         <location filename="../src/docks/filtersdock.ui" line="68"/>
         <source>Add an audio filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Audio Filter hinzufügen</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.ui" line="71"/>
         <source>Audio</source>
-        <translation type="unfinished">Audio</translation>
+        <translation>Audio</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.ui" line="85"/>
         <source>Add a video filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Video Filter hinzufügen</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.ui" line="88"/>
         <source>Video</source>
-        <translation type="unfinished">Video</translation>
+        <translation>Video</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.ui" line="102"/>
         <source>Remove selected filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgewählter Filter entfernen</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.ui" line="156"/>
@@ -1273,19 +1255,15 @@ codecs. However, not all codecs are multi-threaded.</source>
         <translation>Größe und Position</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.ui" line="212"/>
-        <location filename="../src/docks/filtersdock.ui" line="215"/>
-        <source>Overlay HTML</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Saturation</source>
-        <translation type="obsolete">Sättigung</translation>
-    </message>
-    <message>
         <location filename="../src/docks/filtersdock.ui" line="207"/>
         <source>White Balance</source>
         <translation>Weißabgleich</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filtersdock.ui" line="212"/>
+        <location filename="../src/docks/filtersdock.ui" line="215"/>
+        <source>Overlay HTML</source>
+        <translation>Overlay HTML</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.cpp" line="172"/>
@@ -1308,17 +1286,17 @@ codecs. However, not all codecs are multi-threaded.</source>
     <message>
         <location filename="../src/filters/frei0rcoloradjwidget.ui" line="53"/>
         <source>Shadows (Lift)</source>
-        <translation type="unfinished"></translation>
+        <translation>Schatten (Anheben)</translation>
     </message>
     <message>
         <location filename="../src/filters/frei0rcoloradjwidget.ui" line="58"/>
         <source>Midtones (Gamma)</source>
-        <translation type="unfinished"></translation>
+        <translation>Midtones (Gamma)</translation>
     </message>
     <message>
         <location filename="../src/filters/frei0rcoloradjwidget.ui" line="63"/>
         <source>Highlights (Gain)</source>
-        <translation type="unfinished"></translation>
+        <translation>Highlights (Gain)</translation>
     </message>
     <message>
         <location filename="../src/filters/frei0rcoloradjwidget.ui" line="86"/>
@@ -1357,9 +1335,9 @@ codecs. However, not all codecs are multi-threaded.</source>
         <translation>Formular</translation>
     </message>
     <message>
-        <location filename="../src/filters/frei0rsharpnessfilter.ui" line="148"/>
-        <source>Amount</source>
-        <translation>Anteil</translation>
+        <location filename="../src/filters/frei0rsharpnessfilter.ui" line="20"/>
+        <source>Size</source>
+        <translation>Größe</translation>
     </message>
     <message>
         <location filename="../src/filters/frei0rsharpnessfilter.ui" line="51"/>
@@ -1368,9 +1346,9 @@ codecs. However, not all codecs are multi-threaded.</source>
         <translation> %</translation>
     </message>
     <message>
-        <location filename="../src/filters/frei0rsharpnessfilter.ui" line="20"/>
-        <source>Size</source>
-        <translation>Größe</translation>
+        <location filename="../src/filters/frei0rsharpnessfilter.ui" line="148"/>
+        <source>Amount</source>
+        <translation>Anteil</translation>
     </message>
 </context>
 <context>
@@ -1380,439 +1358,440 @@ codecs. However, not all codecs are multi-threaded.</source>
         <location filename="../src/htmleditor/htmleditor.cpp" line="153"/>
         <location filename="../src/htmleditor/htmleditor.cpp" line="655"/>
         <source>HTML Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>HTML Editor</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="36"/>
         <source>&amp;Edit</source>
-        <translation type="unfinished">&amp;Bearbeiten</translation>
+        <translation>&amp;Bearbeiten</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="53"/>
         <source>F&amp;ormat</source>
-        <translation type="unfinished"></translation>
+        <translation>F&amp;ormat</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="57"/>
         <source>St&amp;yle</source>
-        <translation type="unfinished"></translation>
+        <translation>Stil (&amp;y)</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="71"/>
         <source>&amp;Align</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ausrichten</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="107"/>
         <source>Standard</source>
-        <translation type="unfinished">Standard</translation>
+        <translation>Standard</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="173"/>
         <source>Tab 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Tab 1</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="192"/>
         <source>about:blank</source>
-        <translation type="unfinished"></translation>
+        <translation>about:blank</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="201"/>
         <source>Tab 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Tab 2</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="240"/>
         <source>&amp;New</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Neu</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="249"/>
         <source>&amp;Open...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Öffnen...</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="258"/>
         <source>&amp;Save</source>
-        <translation type="unfinished">&amp;Speichern</translation>
+        <translation>&amp;Speichern</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="261"/>
         <source>Ctrl+S</source>
-        <translation type="unfinished">Strg+S</translation>
+        <translation>Strg+S</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="266"/>
         <source>Save &amp;As...</source>
-        <translation type="unfinished">Speichern &amp;unter</translation>
+        <translation>Speichern &amp;unter</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="275"/>
         <source>&amp;Undo</source>
-        <translation type="unfinished">&amp;Rückgängig</translation>
+        <translation>&amp;Rückgängig</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="278"/>
         <source>Ctrl+Z</source>
-        <translation type="unfinished">Strg+Z</translation>
+        <translation>Strg+Z</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="287"/>
         <source>&amp;Redo</source>
-        <translation type="unfinished">&amp;Wiederherstellen</translation>
+        <translation>&amp;Wiederherstellen</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="290"/>
         <source>Ctrl+Y</source>
-        <translation type="unfinished">Strg+Y</translation>
+        <translation>Strg+Y</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="299"/>
         <source>Cu&amp;t</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausschneiden (&amp;t)</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="302"/>
         <source>Ctrl+X</source>
-        <translation type="unfinished">Strg+X</translation>
+        <translation>Strg+X</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="311"/>
         <source>&amp;Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Kopieren</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="314"/>
         <source>Ctrl+C</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+C</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="323"/>
         <source>&amp;Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Einfügen</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="326"/>
         <source>Ctrl+V</source>
-        <translation type="unfinished">Strg+V</translation>
+        <translation>Strg+V</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="335"/>
         <source>Select A&amp;ll</source>
-        <translation type="unfinished"></translation>
+        <translation>A&amp;lle auswählen</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="338"/>
         <source>Ctrl+A</source>
-        <translation type="unfinished">Strg+A</translation>
+        <translation>Strg+A</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="350"/>
         <source>&amp;Bold</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Fett</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="353"/>
         <source>Ctrl+B</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+B</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="365"/>
         <source>&amp;Italic</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Kursiv</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="368"/>
         <source>Ctrl+I</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+I</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="380"/>
         <source>&amp;Underline</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Unterstrichen</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="383"/>
         <source>Ctrl+U</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+U</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="395"/>
         <source>&amp;Strikethrough</source>
-        <translation type="unfinished"></translation>
+        <translation>Durch&amp;streichen</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="404"/>
         <source>Align &amp;Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausrichten &amp;Links</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="413"/>
         <source>Align &amp;Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausrichten Mitte (&amp;c)</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="422"/>
         <source>Align &amp;Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausrichten &amp;Rechts</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="431"/>
         <source>Align &amp;Justify</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausrichten Blocksatz (&amp;j)</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="440"/>
         <source>I&amp;ncrease Indent</source>
-        <translation type="unfinished"></translation>
+        <translation>Ei&amp;nrückung erhöhen</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="449"/>
         <source>&amp;Decrease Indent</source>
-        <translation type="unfinished"></translation>
+        <translation>Einrückung vermin&amp;dern</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="461"/>
         <source>Bulle&amp;ted List</source>
-        <translation type="unfinished"></translation>
+        <translation>Bulle&amp;t-Liste</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="473"/>
         <source>&amp;Numbered List</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nummerierte Liste</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="482"/>
         <source>Insert &amp;Image...</source>
-        <translation type="unfinished"></translation>
+        <translation>B&amp;ild einfügen...</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="491"/>
         <source>Create Link...</source>
-        <translation type="unfinished"></translation>
+        <translation>Link erstellen...</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="500"/>
         <source>Zoom Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Hineinzoomen</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="509"/>
         <source>Zoom In</source>
-        <translation type="unfinished"></translation>
+        <translation>Hinauszoomen</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="514"/>
         <source>E&amp;xit</source>
-        <translation type="unfinished">&amp;Beenden</translation>
+        <translation>&amp;Beenden</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="517"/>
         <source>Ctrl+Q</source>
-        <translation type="unfinished">Strg+Q</translation>
+        <translation>Strg+Q</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="522"/>
         <source>&amp;Paragraph</source>
-        <translation type="unfinished"></translation>
+        <translation>Absatz (&amp;p)</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="527"/>
         <source>Heading &amp;1</source>
-        <translation type="unfinished"></translation>
+        <translation>Überschrift &amp;1</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="532"/>
         <source>Heading &amp;2</source>
-        <translation type="unfinished"></translation>
+        <translation>Überschrift &amp;2</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="537"/>
         <source>Heading &amp;3</source>
-        <translation type="unfinished"></translation>
+        <translation>Überschrift &amp;3</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="542"/>
         <source>Heading &amp;4</source>
-        <translation type="unfinished"></translation>
+        <translation>Überschrift &amp;4</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="547"/>
         <source>Heading &amp;5</source>
-        <translation type="unfinished"></translation>
+        <translation>Überschrift &amp;5</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="552"/>
         <source>Heading &amp;6</source>
-        <translation type="unfinished"></translation>
+        <translation>Überschrift &amp;6</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="557"/>
         <source>Pre&amp;formatted</source>
-        <translation type="unfinished"></translation>
+        <translation>Vor&amp;formattiert</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="562"/>
         <source>&amp;Address</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Adresse</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="567"/>
         <source>&amp;Font Name...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Fontname...</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="572"/>
         <source>Text &amp;Color...</source>
-        <translation type="unfinished"></translation>
+        <translation>Textfarbe (&amp;c)...</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="577"/>
         <source>Bac&amp;kground Color...</source>
-        <translation type="unfinished"></translation>
+        <translation>Hintergrundfarbe (&amp;k)</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="585"/>
         <source>Font Si&amp;ze...</source>
-        <translation type="unfinished"></translation>
+        <translation>Schriftgröße (&amp;z)...</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="594"/>
         <source>Insert HTML...</source>
-        <translation type="unfinished"></translation>
+        <translation>HTML einfügen...</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="597"/>
         <source>Insert HTML</source>
-        <translation type="unfinished"></translation>
+        <translation>HTML einfügen</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="605"/>
         <source>Text Outline...</source>
-        <translation type="unfinished"></translation>
+        <translation>Text-Umriss...</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="613"/>
         <source>Text Shadow...</source>
-        <translation type="unfinished"></translation>
+        <translation>Text-Schatten...</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="56"/>
         <source>WYSIWYG Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>WYSIWYG Editor</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="57"/>
         <source>View Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Quelltext anzeigen</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="154"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>Das Dokument wurde modifiziert.
+Wollen Sie die Änderungen speichern?</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="191"/>
         <source>Open File...</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei öffnen...</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="192"/>
         <location filename="../src/htmleditor/htmleditor.cpp" line="220"/>
         <source>HTML-Files (*.htm *.html);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>HTML-Dateien (*.htm *.html);;Alle Dateien (*)</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="219"/>
         <source>Save as...</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichern unter...</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="232"/>
         <source>Common Graphics (*.png *.jpg *.jpeg *.gif);;</source>
-        <translation type="unfinished"></translation>
+        <translation>Allgemeine Graphiken (*.png *.jpg *.jpeg *.gif);;</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="233"/>
         <source>Portable Network Graphics (PNG) (*.png);;</source>
-        <translation type="unfinished"></translation>
+        <translation>Portable Network Graphics (PNG) (*.png);;</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="234"/>
         <source>JPEG (*.jpg *.jpeg);;</source>
-        <translation type="unfinished"></translation>
+        <translation>JPEG (*.jpg *.jpeg);;</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="235"/>
         <source>Graphics Interchange Format (*.gif);;</source>
-        <translation type="unfinished"></translation>
+        <translation>Graphics Interchange Format (*.gif);;</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="236"/>
         <source>All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle Dateien (*)</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="238"/>
         <source>Open image...</source>
-        <translation type="unfinished"></translation>
+        <translation>Bild öffnen...</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="285"/>
         <source>Create link</source>
-        <translation type="unfinished"></translation>
+        <translation>Link erstellen</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="286"/>
         <source>Enter URL</source>
-        <translation type="unfinished"></translation>
+        <translation>URL eingeben</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="479"/>
         <source>Font</source>
-        <translation type="unfinished"></translation>
+        <translation>Font</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="479"/>
         <source>Select font:</source>
-        <translation type="unfinished"></translation>
+        <translation>Font auswählen:</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="489"/>
         <source>Font Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Schriftgröße</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="489"/>
         <source>Size in points:</source>
-        <translation type="unfinished"></translation>
+        <translation>Größe in &quot;Points&quot;:</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="554"/>
         <source>Open %1 ?</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 öffnen ?</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="555"/>
         <source>Open link</source>
-        <translation type="unfinished"></translation>
+        <translation>Link öffnen</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="564"/>
         <source>Text Outline</source>
-        <translation type="unfinished"></translation>
+        <translation>Text-Umriss</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="581"/>
         <source>Text Shadow</source>
-        <translation type="unfinished"></translation>
+        <translation>Text-Schatten</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="655"/>
         <source>%1[*] - %2</source>
-        <translation type="unfinished">%1[*] - %2</translation>
+        <translation>%1[*] - %2</translation>
     </message>
 </context>
 <context>
@@ -2057,7 +2036,7 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/widgets/lissajouswidget.ui" line="26"/>
         <source>Lissajous</source>
-        <translation type="unfinished"></translation>
+        <translation>Lissajous</translation>
     </message>
     <message>
         <location filename="../src/widgets/lissajouswidget.ui" line="48"/>
@@ -2144,23 +2123,19 @@ p, li { white-space: pre-wrap; }
         <translation>Vorschau über SDI/HDMI</translation>
     </message>
     <message>
-        <source>Main</source>
-        <translation type="obsolete">Haupt</translation>
-    </message>
-    <message>
         <location filename="../src/mainwindow.ui" line="133"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Sprache</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="138"/>
         <source>Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Theme</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="164"/>
         <source>Toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Toolbar</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="211"/>
@@ -2255,7 +2230,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.ui" line="296"/>
         <source>Show the Encode and Jobs panels</source>
-        <translation type="unfinished"></translation>
+        <translation>Encode- und Job-Panels anzeigen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="305"/>
@@ -2408,7 +2383,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.ui" line="547"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>System</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="550"/>
@@ -2418,12 +2393,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.ui" line="558"/>
         <source>Fusion Dark</source>
-        <translation type="unfinished"></translation>
+        <translation>Fusion Dark</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="566"/>
         <source>Fusion Light</source>
-        <translation type="unfinished"></translation>
+        <translation>Fusion Light</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="104"/>
@@ -2438,7 +2413,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.cpp" line="344"/>
         <source>Non-Broadcast</source>
-        <translation type="unfinished"></translation>
+        <translation>Nicht-Broadcast</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="355"/>
@@ -2480,7 +2455,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.cpp" line="693"/>
         <source>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2013 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; ist ein freier, open source, Plattformunabhängiger video Editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2013 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Lizensiert unter der &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Dieses programm verwendet folgende Projekte:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;Der Quellcode aus dem diese Software gebaut wurde, kann unter &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt; heruntergeladen werden.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1038"/>
@@ -2525,7 +2500,8 @@ Wollen Sie Shotcut jetzt beenden?</translation>
         <location filename="../src/mainwindow.cpp" line="1521"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to exit now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Shotcut muss neu gestartet werden um die Sprache zu wechseln
+Wollen Sie Shotcut jetzt beenden?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1559"/>
@@ -2655,7 +2631,7 @@ Wollen Sie Shotcut jetzt beenden?</translation>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="171"/>
         <source>Wipe</source>
-        <translation type="unfinished"></translation>
+        <translation>Wipe</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="174"/>
@@ -2806,7 +2782,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mvcp/meltedserverdock.cpp" line="257"/>
         <source>Choose Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Verzeichnis wählen</translation>
     </message>
 </context>
 <context>
@@ -2839,7 +2815,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mvcp/meltedunitsmodel.cpp" line="112"/>
         <source>unloaded</source>
-        <translation type="unfinished"></translation>
+        <translation>entladen</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedunitsmodel.cpp" line="113"/>
@@ -2890,17 +2866,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/filters/movitcolorfilter.ui" line="42"/>
         <source>Shadows (Lift)</source>
-        <translation type="unfinished"></translation>
+        <translation>Schatten (Anheben)</translation>
     </message>
     <message>
         <location filename="../src/filters/movitcolorfilter.ui" line="72"/>
         <source>Highlights (Gain)</source>
-        <translation type="unfinished"></translation>
+        <translation>Highlights (Gain)</translation>
     </message>
     <message>
         <location filename="../src/filters/movitcolorfilter.ui" line="82"/>
         <source>Midtones (Gamma)</source>
-        <translation type="unfinished"></translation>
+        <translation>Midtones (Gamma)</translation>
     </message>
 </context>
 <context>
@@ -2925,12 +2901,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/filters/movitglowfilter.ui" line="114"/>
         <source>Highlight Blurriness</source>
-        <translation type="unfinished"></translation>
+        <translation>Highlight Weichzeichner-Intensität</translation>
     </message>
     <message>
         <location filename="../src/filters/movitglowfilter.ui" line="186"/>
         <source>Highlight Cutoff</source>
-        <translation type="unfinished"></translation>
+        <translation>Highlight Cutoff</translation>
     </message>
 </context>
 <context>
@@ -2941,9 +2917,9 @@ p, li { white-space: pre-wrap; }
         <translation>Formular</translation>
     </message>
     <message>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="394"/>
-        <source>Matrix Size</source>
-        <translation>Matrixgröße</translation>
+        <location filename="../src/filters/movitsharpenfilter.ui" line="20"/>
+        <source>Gaussian Radius</source>
+        <translation>Gauß&apos;scher Radius</translation>
     </message>
     <message>
         <location filename="../src/filters/movitsharpenfilter.ui" line="73"/>
@@ -2960,9 +2936,9 @@ p, li { white-space: pre-wrap; }
         <translation>Kreisradius</translation>
     </message>
     <message>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="20"/>
-        <source>Gaussian Radius</source>
-        <translation>Gauß&apos;scher Radius</translation>
+        <location filename="../src/filters/movitsharpenfilter.ui" line="190"/>
+        <source>Noise Level</source>
+        <translation>Rauschpegel</translation>
     </message>
     <message>
         <location filename="../src/filters/movitsharpenfilter.ui" line="381"/>
@@ -2970,9 +2946,9 @@ p, li { white-space: pre-wrap; }
         <translation>Korrelation</translation>
     </message>
     <message>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="190"/>
-        <source>Noise Level</source>
-        <translation>Rauschpegel</translation>
+        <location filename="../src/filters/movitsharpenfilter.ui" line="394"/>
+        <source>Matrix Size</source>
+        <translation>Matrixgröße</translation>
     </message>
 </context>
 <context>
@@ -2995,7 +2971,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mvcp/mvcpthread.cpp" line="166"/>
         <source>unloaded</source>
-        <translation type="unfinished"></translation>
+        <translation>entladen</translation>
     </message>
     <message>
         <location filename="../src/mvcp/mvcpthread.cpp" line="167"/>
@@ -3134,13 +3110,13 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/openotherdialog.cpp" line="66"/>
         <location filename="../src/openotherdialog.cpp" line="124"/>
         <source>Ising</source>
-        <translation type="unfinished"></translation>
+        <translation>Ising</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="70"/>
         <location filename="../src/openotherdialog.cpp" line="126"/>
         <source>Lissajous</source>
-        <translation type="unfinished"></translation>
+        <translation>Lissajous</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="74"/>
@@ -3206,18 +3182,14 @@ p, li { white-space: pre-wrap; }
         <translation>Lautstärke einstellen</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="96"/>
-        <source>Show or hide the volume control</source>
-        <translation>Lautstärkenregler anzeigen/verstecken</translation>
-    </message>
-    <message>
-        <source>Mute</source>
-        <translation type="obsolete">Stumm</translation>
-    </message>
-    <message>
         <location filename="../src/player.cpp" line="87"/>
         <source>Silence the audio</source>
         <translation>Den Ton deaktivieren</translation>
+    </message>
+    <message>
+        <location filename="../src/player.cpp" line="96"/>
+        <source>Show or hide the volume control</source>
+        <translation>Lautstärkenregler anzeigen/verstecken</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="111"/>
@@ -3237,7 +3209,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/player.cpp" line="127"/>
         <source>In Point</source>
-        <translation type="unfinished"></translation>
+        <translation>In-Punkt</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="137"/>
@@ -3265,7 +3237,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/player.cpp" line="228"/>
         <source>Space</source>
-        <translation type="unfinished"></translation>
+        <translation>Space-Taste</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="229"/>
@@ -3286,7 +3258,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/player.cpp" line="233"/>
         <source>Backspace</source>
-        <translation type="unfinished"></translation>
+        <translation>Backspace-Taste</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="234"/>
@@ -3379,7 +3351,7 @@ p, li { white-space: pre-wrap; }
         <source>Double-click an item to load the playlist
 into the player and seek to the start of the
 selected cut.</source>
-        <translation type="unfinished"></translation>
+        <translation>Doppelklicken Sie auf einen Eintrag um die Playlist im Player zu laden und zum Anfang des ausgewählten Schnitts zu spulen.</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="132"/>
@@ -3464,34 +3436,34 @@ selected cut.</source>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="269"/>
         <source>Hidden</source>
-        <translation type="unfinished"></translation>
+        <translation>Versteckt</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="277"/>
         <location filename="../src/docks/playlistdock.ui" line="280"/>
         <source>In and Out - Left/Right</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;In&quot; und &quot;Out&quot; - Links/Rechts</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="288"/>
         <location filename="../src/docks/playlistdock.ui" line="291"/>
         <source>In and Out - Top/Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;In&quot; und &quot;Out&quot; - Oben/Unten</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="299"/>
         <source>In Only - Small</source>
-        <translation type="unfinished"></translation>
+        <translation>Nur &quot;In&quot; - Klein</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="307"/>
         <source>In Only - Large</source>
-        <translation type="unfinished"></translation>
+        <translation>Nur &quot;In&quot; - Groß</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="157"/>
         <source>Thumbnails</source>
-        <translation type="unfinished"></translation>
+        <translation>Thumbnails</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="177"/>
@@ -3515,7 +3487,7 @@ selected cut.</source>
     <message>
         <location filename="../src/models/playlistmodel.cpp" line="217"/>
         <source>Thumbnails</source>
-        <translation type="unfinished"></translation>
+        <translation>Thumbnails</translation>
     </message>
     <message>
         <location filename="../src/models/playlistmodel.cpp" line="219"/>
@@ -3543,49 +3515,49 @@ selected cut.</source>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="39"/>
         <source>Preset</source>
-        <translation type="unfinished">Voreinstellung</translation>
+        <translation>Voreinstellung</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="53"/>
         <source>Save</source>
-        <translation type="unfinished">Speichern</translation>
+        <translation>Speichern</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="58"/>
         <source>Delete</source>
-        <translation type="unfinished">Löschen</translation>
+        <translation>Löschen</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="68"/>
         <source>Save Preset</source>
-        <translation type="unfinished">Voreinstellung speichern</translation>
+        <translation>Voreinstellung speichern</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="82"/>
         <source>Name:</source>
-        <translation type="unfinished">Name:</translation>
+        <translation>Name:</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="102"/>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="135"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="107"/>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="146"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="119"/>
         <source>Delete Preset</source>
-        <translation type="unfinished">Voreinstellung löschen</translation>
+        <translation>Voreinstellung löschen</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="128"/>
         <source>Are you sure you want to delete %1?</source>
-        <translation type="unfinished"></translation>
+        <translation>Sind Sie sicher, dass Sie %1 löschen wollen?</translation>
     </message>
 </context>
 <context>
@@ -3739,12 +3711,12 @@ selected cut.</source>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="328"/>
         <source>Timeout when reading data from socket.</source>
-        <translation type="unfinished"></translation>
+        <translation>Timeout während Daten vom Socket gelesen wurden.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="393"/>
         <source>Error occurred while reading from the network: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Lesen vom Netzwerk: %1</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="405"/>
@@ -3754,7 +3726,7 @@ selected cut.</source>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="429"/>
         <source>Something went wrong during reading from the network.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein Fehler trat auf, während vom Netzwerk gelesen wurde.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="443"/>
@@ -3764,37 +3736,37 @@ selected cut.</source>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="467"/>
         <source>Error while reading from the network: %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Lesen vom Netzwerk: %1.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="490"/>
         <source>Maximum framesize exceeded.</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximale Framegröße überschritten.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="502"/>
         <source>Some serious error occurred while reading from the network.</source>
-        <translation type="unfinished"></translation>
+        <translation>Schwerer Fehler beim Lesen vom Netzwerk.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="563"/>
         <source>Rsv field is non-zero</source>
-        <translation type="unfinished"></translation>
+        <translation>Rsv-Feld ist nicht Null</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="567"/>
         <source>Used reserved opcode</source>
-        <translation type="unfinished"></translation>
+        <translation>Reservierter Opcode wurde benutzt</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="573"/>
         <source>Controle frame is larger than 125 bytes</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontroll-Frame ist größer als 125 Bytes</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="577"/>
         <source>Controle frames cannot be fragmented</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontroll-Frames dürfen nicht fragmentiert sein</translation>
     </message>
 </context>
 <context>
@@ -3802,43 +3774,43 @@ selected cut.</source>
     <message>
         <location filename="../QWebSockets/qwebsocket_p.cpp" line="105"/>
         <source>Connection closed</source>
-        <translation type="unfinished"></translation>
+        <translation>Verbindung geschlossen</translation>
     </message>
     <message>
         <location filename="../QWebSockets/qwebsocket_p.cpp" line="564"/>
         <source>Error writing bytes to socket: %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Schreiben von Daten auf Socket: %1.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/qwebsocket_p.cpp" line="576"/>
         <source>Bytes written %1 != %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Geschriebene Bytes %1 != %2.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/qwebsocket_p.cpp" line="705"/>
         <location filename="../QWebSockets/qwebsocket_p.cpp" line="746"/>
         <source>Invalid statusline in response: %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ungültige Statuszeile in Antwort: %1.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/qwebsocket_p.cpp" line="741"/>
         <source>Accept-Key received from server %1 does not match the client key %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Accept-Key erhalten von Server %1 stimmt nicht mit dem Client-Key %2 überein.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/qwebsocket_p.cpp" line="758"/>
         <source>Handshake: Server requests a version that we don&apos;t support: %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Handshake: Server benötigt eine Version die nicht unterstützt wird: %1.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/qwebsocket_p.cpp" line="764"/>
         <source>Unknown error condition encountered. Aborting connection.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein unbekannter Fehler ist aufgetreten: Verbindung abgebrochen.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/qwebsocket_p.cpp" line="771"/>
         <source>Unhandled http status code: %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Unbehandelter HTTP Statuscode: %1.</translation>
     </message>
 </context>
 <context>
@@ -3846,27 +3818,27 @@ selected cut.</source>
     <message>
         <location filename="../QWebSockets/qwebsocketserver_p.cpp" line="58"/>
         <source>Server closed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Server geschlossen.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/qwebsocketserver_p.cpp" line="335"/>
         <source>Upgrading to websocket failed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Websocket-Erweiterung fehlgeschlagen.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/qwebsocketserver_p.cpp" line="341"/>
         <source>Cannot upgrade to websocket.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kann Websocket nicht erweitern.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/qwebsocketserver_p.cpp" line="347"/>
         <source>Invalid response received.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ungültige Antwort erhalten.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/qwebsocketserver_p.cpp" line="352"/>
         <source>Closing socket because of invalid or unsupported request.</source>
-        <translation type="unfinished"></translation>
+        <translation>Socket wird wegen ungültigem oder nicht-unterstützer Anfrage geschlossen.</translation>
     </message>
 </context>
 <context>
@@ -3874,7 +3846,7 @@ selected cut.</source>
     <message>
         <location filename="../src/qmltypes/qmlfilter.cpp" line="107"/>
         <source>(defaults)</source>
-        <translation type="unfinished">(Standardeinstellungen)</translation>
+        <translation>(Standardeinstellungen)</translation>
     </message>
 </context>
 <context>
@@ -3887,27 +3859,12 @@ selected cut.</source>
     <message>
         <location filename="../src/docks/recentdock.ui" line="40"/>
         <source>Show only files with name matching text</source>
-        <translation type="unfinished"></translation>
+        <translation>Nur Dateien mit übereinstimmendem Text anzeigen</translation>
     </message>
     <message>
         <location filename="../src/docks/recentdock.ui" line="43"/>
         <source>search</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>SaturationFilter</name>
-    <message>
-        <source>Form</source>
-        <translation type="obsolete">Formular</translation>
-    </message>
-    <message>
-        <source>Saturation</source>
-        <translation type="obsolete">Sättigung</translation>
-    </message>
-    <message>
-        <source>Reset to default</source>
-        <translation type="obsolete">Zurücksetzen</translation>
+        <translation>Suche</translation>
     </message>
 </context>
 <context>
@@ -3956,11 +3913,7 @@ selected cut.</source>
     <message>
         <location filename="../src/widgets/servicepresetwidget.cpp" line="135"/>
         <source>Are you sure you want to delete %1?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Are you sure you want to delete</source>
-        <translation type="obsolete">Sind Sie sicher, dass Sie löschen wollen?</translation>
+        <translation>Sind Sie sicher, dass Sie %1 löschen wollen?</translation>
     </message>
 </context>
 <context>
@@ -4109,63 +4062,63 @@ selected cut.</source>
     <message>
         <location filename="../src/filters/webvfxfilter.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formular</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="../src/filters/webvfxfilter.ui" line="33"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;For Advanced Users&lt;/span&gt;&lt;br/&gt;If you enable this, and you do not use the WebVfx JavaScript extension, your content will not render!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Für erfahrene Anwender&lt;/span&gt;&lt;br/&gt;Der Inhalt wird nur dargestellt, wenn die WebVfx JavaScript Erweiterung verwendet wird!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/filters/webvfxfilter.ui" line="36"/>
         <source>Use WebVfx JavaScript extension</source>
-        <translation type="unfinished"></translation>
+        <translation>WebVfx JavaScript Erweiterung verwenden</translation>
     </message>
     <message>
         <location filename="../src/filters/webvfxfilter.ui" line="56"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Bearbeiten</translation>
     </message>
     <message>
         <location filename="../src/filters/webvfxfilter.ui" line="70"/>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation>Neu</translation>
     </message>
     <message>
         <location filename="../src/filters/webvfxfilter.ui" line="77"/>
         <source>Open</source>
-        <translation type="unfinished">Öffnen</translation>
+        <translation>Öffnen</translation>
     </message>
     <message>
         <location filename="../src/filters/webvfxfilter.ui" line="84"/>
         <source>Reload</source>
-        <translation type="unfinished"></translation>
+        <translation>Neu laden</translation>
     </message>
     <message>
         <location filename="../src/filters/webvfxfilter.cpp" line="59"/>
         <location filename="../src/filters/webvfxfilter.cpp" line="104"/>
         <source>Open HTML File</source>
-        <translation type="unfinished"></translation>
+        <translation>HTML Datei öffnen</translation>
     </message>
     <message>
         <location filename="../src/filters/webvfxfilter.cpp" line="60"/>
         <source>HTML-Files (*.htm *.html);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>HTML-Dateien (*.htm *.html);;Alle Dateien (*)</translation>
     </message>
     <message>
         <location filename="../src/filters/webvfxfilter.cpp" line="90"/>
         <source>Comfirm Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Auswahl bestätigen</translation>
     </message>
     <message>
         <location filename="../src/filters/webvfxfilter.cpp" line="92"/>
         <source>Do you still want to use this?</source>
-        <translation type="unfinished"></translation>
+        <translation>Wollen Sie das noch verwenden?</translation>
     </message>
     <message>
         <location filename="../src/filters/webvfxfilter.cpp" line="105"/>
         <source>HTML-Files (*.html *.htm);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>HTML-Dateien (*.html *.htm);;Alle Dateien (*)</translation>
     </message>
 </context>
 <context>
@@ -4178,12 +4131,12 @@ selected cut.</source>
     <message>
         <location filename="../src/filters/whitebalancefilter.ui" line="20"/>
         <source>Neutral Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Neutrale Farbe</translation>
     </message>
     <message>
         <location filename="../src/filters/whitebalancefilter.ui" line="79"/>
         <source>Color Temperature</source>
-        <translation type="unfinished"></translation>
+        <translation>Farbtemperatur</translation>
     </message>
     <message>
         <location filename="../src/filters/whitebalancefilter.ui" line="94"/>
@@ -4248,7 +4201,7 @@ Die meisten Benutzer müssen diese Einstellung nicht verändern.</translation>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="118"/>
         <source>The horizontal coordinate from the left edge when using a fixed capture region.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die horizontale Koordinate vom linken Rand aus, wenn eine fixe Capture-Region verwendet wird</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="128"/>
@@ -4258,7 +4211,7 @@ Die meisten Benutzer müssen diese Einstellung nicht verändern.</translation>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="138"/>
         <source>The vertical coordinate from the top edge when using a fixed capture region.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die vertikale Koordinate vom oberen Rand aus, wenn eine fixe Capture-Region verwendet wird</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="148"/>
@@ -4356,27 +4309,27 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
     <message>
         <location filename="../src/qml/filters/webvfx_circular_frame/meta.qml" line="7"/>
         <source>Circular Frame (HTML)</source>
-        <translation type="unfinished"></translation>
+        <translation>Runder Rahmen (HTML)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/meta.qml" line="7"/>
         <source>Copy Channel</source>
-        <translation type="unfinished"></translation>
+        <translation>Kanal kopieren</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_gain/meta.qml" line="7"/>
         <source>Gain</source>
-        <translation type="unfinished"></translation>
+        <translation>Verstärkungsgrad</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_balance/meta.qml" line="7"/>
         <source>Balance</source>
-        <translation type="unfinished"></translation>
+        <translation>Balance (L/R)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_pan/meta.qml" line="7"/>
         <source>Pan</source>
-        <translation type="unfinished"></translation>
+        <translation>Panning (L/R)</translation>
     </message>
 </context>
 <context>
@@ -4384,7 +4337,7 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
     <message>
         <location filename="../src/qml/filters/saturation/meta_frei0r.qml" line="6"/>
         <source>Saturation</source>
-        <translation type="unfinished">Sättigung</translation>
+        <translation>Sättigung</translation>
     </message>
 </context>
 <context>
@@ -4392,7 +4345,7 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
     <message>
         <location filename="../src/qml/filters/saturation/meta_movit.qml" line="6"/>
         <source>Saturation</source>
-        <translation type="unfinished">Sättigung</translation>
+        <translation>Sättigung</translation>
     </message>
 </context>
 <context>
@@ -4400,32 +4353,32 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
     <message>
         <location filename="../src/qml/htmleditor/text_outline.qml" line="22"/>
         <source>Width</source>
-        <translation type="unfinished">Breite</translation>
+        <translation>Breite</translation>
     </message>
     <message>
         <location filename="../src/qml/htmleditor/text_outline.qml" line="34"/>
         <source>pixels</source>
-        <translation type="unfinished">Pixel</translation>
+        <translation>Pixel</translation>
     </message>
     <message>
         <location filename="../src/qml/htmleditor/text_outline.qml" line="37"/>
         <source>Color</source>
-        <translation type="unfinished">Farbe</translation>
+        <translation>Farbe</translation>
     </message>
     <message>
         <location filename="../src/qml/htmleditor/text_outline.qml" line="73"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../src/qml/htmleditor/text_outline.qml" line="85"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location filename="../src/qml/htmleditor/text_outline.qml" line="92"/>
         <source>Please choose a color</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte wählen Sie eine Farbe</translation>
     </message>
 </context>
 <context>
@@ -4433,44 +4386,44 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
     <message>
         <location filename="../src/qml/htmleditor/text_shadow.qml" line="22"/>
         <source>Horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>Horizontal</translation>
     </message>
     <message>
         <location filename="../src/qml/htmleditor/text_shadow.qml" line="34"/>
         <location filename="../src/qml/htmleditor/text_shadow.qml" line="49"/>
         <location filename="../src/qml/htmleditor/text_shadow.qml" line="64"/>
         <source>pixels</source>
-        <translation type="unfinished">Pixel</translation>
+        <translation>Pixel</translation>
     </message>
     <message>
         <location filename="../src/qml/htmleditor/text_shadow.qml" line="37"/>
         <source>Vertical</source>
-        <translation type="unfinished"></translation>
+        <translation>Vertical</translation>
     </message>
     <message>
         <location filename="../src/qml/htmleditor/text_shadow.qml" line="52"/>
         <source>Softness</source>
-        <translation type="unfinished"></translation>
+        <translation>Weichheit</translation>
     </message>
     <message>
         <location filename="../src/qml/htmleditor/text_shadow.qml" line="67"/>
         <source>Color</source>
-        <translation type="unfinished">Farbe</translation>
+        <translation>Farbe</translation>
     </message>
     <message>
         <location filename="../src/qml/htmleditor/text_shadow.qml" line="103"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../src/qml/htmleditor/text_shadow.qml" line="119"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location filename="../src/qml/htmleditor/text_shadow.qml" line="126"/>
         <source>Please choose a color</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte wählen Sie eine Farbe</translation>
     </message>
 </context>
 <context>
@@ -4478,12 +4431,12 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
     <message>
         <location filename="../src/qml/filters/webvfx_circular_frame/ui.qml" line="48"/>
         <source>Radius</source>
-        <translation type="unfinished">Radius</translation>
+        <translation>Radius</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_gain/ui.qml" line="44"/>
         <source>Gain</source>
-        <translation type="unfinished"></translation>
+        <translation>Verstärkungsgrad</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_balance/ui.qml" line="68"/>
@@ -4491,51 +4444,51 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="79"/>
         <location filename="../src/qml/filters/webvfx_circular_frame/ui.qml" line="71"/>
         <source>Reset to default</source>
-        <translation type="unfinished">Zurücksetzen</translation>
+        <translation>Zurücksetzen</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx_circular_frame/ui.qml" line="80"/>
         <source>Color</source>
-        <translation type="unfinished">Farbe</translation>
+        <translation>Farbe</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx_circular_frame/ui.qml" line="98"/>
         <source>Please choose a color</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte wählen Sie eine Farbe</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_balance/ui.qml" line="44"/>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="48"/>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="55"/>
         <source>Left</source>
-        <translation type="unfinished">Links</translation>
+        <translation>Links</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_balance/ui.qml" line="56"/>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="48"/>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="67"/>
         <source>Right</source>
-        <translation type="unfinished">Rechts</translation>
+        <translation>Rechts</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="45"/>
         <source>Copy from</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopieren von</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="48"/>
         <source>Left to right</source>
-        <translation type="unfinished"></translation>
+        <translation>Links nach Rechts</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="48"/>
         <source>Right to left</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechts nach Links</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="45"/>
         <source>Channel</source>
-        <translation type="unfinished">Kanal</translation>
+        <translation>Kanal</translation>
     </message>
 </context>
 <context>
@@ -4543,12 +4496,12 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
     <message>
         <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="53"/>
         <source>Saturation</source>
-        <translation type="unfinished">Sättigung</translation>
+        <translation>Sättigung</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="76"/>
         <source>Reset to default</source>
-        <translation type="unfinished">Zurücksetzen</translation>
+        <translation>Zurücksetzen</translation>
     </message>
 </context>
 <context>
@@ -4556,12 +4509,12 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
     <message>
         <location filename="../src/qml/filters/saturation/ui_movit.qml" line="46"/>
         <source>Saturation</source>
-        <translation type="unfinished">Sättigung</translation>
+        <translation>Sättigung</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/saturation/ui_movit.qml" line="69"/>
         <source>Reset to default</source>
-        <translation type="unfinished">Zurücksetzen</translation>
+        <translation>Zurücksetzen</translation>
     </message>
 </context>
 </TS>
