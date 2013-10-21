@@ -20,6 +20,7 @@
 #include <QtWidgets>
 #include <QDebug>
 #include "mainwindow.h"
+#include "settings.h"
 
 MeltJob::MeltJob(const QString& name, const QString& xml)
     : QProcess(0)
@@ -42,9 +43,9 @@ void MeltJob::start()
     QString shotcutPath = qApp->applicationDirPath();
 //    QString shotcutPath("/Applications/Shotcut.app/Contents/MacOS");
 #ifdef Q_OS_WIN
-    QFileInfo meltPath(shotcutPath, "qmelt.exe");
+    QFileInfo meltPath(shotcutPath, QString(Settings.playerGPU()? "melt.exe" : "qmelt.exe"));
 #else
-    QFileInfo meltPath(shotcutPath, "qmelt");
+    QFileInfo meltPath(shotcutPath, QString(Settings.playerGPU()? "melt" : "qmelt"));
 #endif
     setReadChannel(QProcess::StandardError);
     QStringList args;
