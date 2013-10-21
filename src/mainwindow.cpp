@@ -64,6 +64,8 @@ MainWindow::MainWindow()
     : QMainWindow(0)
     , ui(new Ui::MainWindow)
     , m_isKKeyPressed(false)
+    , m_keyerGroup(0)
+    , m_keyerMenu(0)
     , m_isPlaylistLoaded(false)
     , m_htmlEditor(0)
 {
@@ -411,6 +413,19 @@ void MainWindow::setupSettingsMenu()
                 action->setCheckable(true);
                 action->setData(QString("decklink:%1").arg(i));
                 m_externalGroup->addAction(action);
+
+                if (!m_keyerGroup) {
+                    m_keyerGroup = new QActionGroup(this);
+                    action = new QAction(tr("Off"), m_keyerGroup);
+                    action->setData(QVariant(0));
+                    action->setCheckable(true);
+                    action = new QAction(tr("Internal"), m_keyerGroup);
+                    action->setData(QVariant(1));
+                    action->setCheckable(true);
+                    action = new QAction(tr("External"), m_keyerGroup);
+                    action->setData(QVariant(2));
+                    action->setCheckable(true);
+                }
             }
         }
     }
@@ -419,6 +434,12 @@ void MainWindow::setupSettingsMenu()
     else {
         delete ui->menuExternal;
         ui->menuExternal = 0;
+    }
+    if (m_keyerGroup) {
+        m_keyerMenu = ui->menuExternal->addMenu(tr("DeckLink Keyer"));
+        m_keyerMenu->addActions(m_keyerGroup->actions());
+        m_keyerMenu->setDisabled(true);
+        connect(m_keyerGroup, SIGNAL(triggered(QAction*)), this, SLOT(onKeyerTriggered(QAction*)));
     }
     connect(m_externalGroup, SIGNAL(triggered(QAction*)), this, SLOT(onExternalTriggered(QAction*)));
     connect(m_profileGroup, SIGNAL(triggered(QAction*)), this, SLOT(onProfileTriggered(QAction*)));
@@ -612,6 +633,16 @@ void MainWindow::readPlayerSettings()
     foreach (QAction* a, m_externalGroup->actions()) {
         if (a->data() == external) {
             a->setChecked(true);
+            if (a->data().toString().startsWith("decklink") && m_keyerMenu)
+                m_keyerMenu->setEnabled(true);
+            break;
+        }
+    }
+
+    int keyer = Settings.playerKeyerMode();
+    foreach (QAction* a, m_keyerGroup->actions()) {
+        if (a->data() == keyer) {
+            a->setChecked(true);
             break;
         }
     }
@@ -674,6 +705,8 @@ void MainWindow::configureVideoWidget()
         MLT.videoWidget()->setProperty("rescale", "bicubic");
     else
         MLT.videoWidget()->setProperty("rescale", "hyper");
+    if (m_keyerGroup)
+        MLT.videoWidget()->setProperty("keyer", m_keyerGroup->checkedAction()->data());
     MLT.videoWidget()->setContentsMargins(0, 0, 0, 0);
     MLT.videoWidget()->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 }
@@ -1612,6 +1645,14 @@ void MainWindow::onExternalTriggered(QAction *action)
         MLT.consumer()->set("progressive", isProgressive);
         MLT.restart();
     }
+    m_keyerMenu->setEnabled(action->data().toString().startsWith("decklink"));
+}
+
+void MainWindow::onKeyerTriggered(QAction *action)
+{
+    MLT.videoWidget()->setProperty("keyer", action->data());
+    MLT.consumerChanged();
+    Settings.setPlayerKeyerMode(action->data().toInt());
 }
 
 void MainWindow::onProfileTriggered(QAction *action)

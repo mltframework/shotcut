@@ -95,8 +95,10 @@ private:
     MeltedPlaylistDock* m_meltedPlaylistDock;
     QActionGroup* m_profileGroup;
     QActionGroup* m_externalGroup;
+    QActionGroup* m_keyerGroup;
     FiltersDock* m_filtersDock;
     QMenu* m_customProfileMenu;
+    QMenu* m_keyerMenu;
     QStringList m_multipleFiles;
     bool m_isPlaylistLoaded;
     QActionGroup* m_languagesGroup;
@@ -165,6 +167,7 @@ private slots:
     void on_actionJack_triggered(bool checked);
     void on_actionGPU_triggered(bool checked);
     void onExternalTriggered(QAction*);
+    void onKeyerTriggered(QAction*);
     void onProfileTriggered(QAction*);
     void on_actionAddCustomProfile_triggered();
     void processMultipleFiles();

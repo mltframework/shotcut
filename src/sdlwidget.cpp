@@ -88,6 +88,8 @@ int SDLWidget::reconfigure(bool isMulti)
 #ifndef Q_OS_WIN
             m_consumer->set("0.scrub_audio", 1);
 #endif
+            if (property("keyer").isValid())
+                m_consumer->set("0.keyer", property("keyer").toInt());
         }
         else {
             // Embed the SDL window in our GUI.
@@ -104,6 +106,8 @@ int SDLWidget::reconfigure(bool isMulti)
 #ifndef Q_OS_WIN
             m_consumer->set("scrub_audio", 1);
 #endif
+            if (property("keyer").isValid())
+                m_consumer->set("keyer", property("keyer").toInt());
         }
         emit started();
     }

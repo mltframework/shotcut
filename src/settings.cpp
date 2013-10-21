@@ -166,6 +166,16 @@ void ShotcutSettings::setPlayerJACK(bool b)
     settings.setValue("player/jack", b);
 }
 
+int ShotcutSettings::playerKeyerMode() const
+{
+    return settings.value("player/keyer", 0).toInt();
+}
+
+void ShotcutSettings::setPlayerKeyerMode(int i)
+{
+    settings.setValue("player/keyer", i);
+}
+
 bool ShotcutSettings::playerMuted() const
 {
     return settings.value("player/muted", false).toBool();

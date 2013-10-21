@@ -59,6 +59,8 @@ public:
     void setPlayerOpenGL(bool);
     bool playerJACK() const;
     void setPlayerJACK(bool);
+    int playerKeyerMode() const;
+    void setPlayerKeyerMode(int);
     bool playerMuted() const;
     void setPlayerMuted(bool);
     QString playerProfile() const;
