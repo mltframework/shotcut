@@ -640,11 +640,13 @@ void MainWindow::readPlayerSettings()
         }
     }
 
-    int keyer = Settings.playerKeyerMode();
-    foreach (QAction* a, m_keyerGroup->actions()) {
-        if (a->data() == keyer) {
-            a->setChecked(true);
-            break;
+    if (m_keyerGroup) {
+        int keyer = Settings.playerKeyerMode();
+        foreach (QAction* a, m_keyerGroup->actions()) {
+            if (a->data() == keyer) {
+                a->setChecked(true);
+                break;
+            }
         }
     }
 
