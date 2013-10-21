@@ -37,6 +37,7 @@
 #include "widgets/x11grabwidget.h"
 #include "widgets/avformatproducerwidget.h"
 #include "widgets/imageproducerwidget.h"
+#include "widgets/webvfxproducer.h"
 #include "docks/recentdock.h"
 #include "docks/encodedock.h"
 #include "docks/jobsdock.h"
@@ -1030,6 +1031,8 @@ void MainWindow::onProducerOpened()
         w = new PlasmaWidget(this);
     else if (service == "frei0r.test_pat_B")
         w = new ColorBarsWidget(this);
+    else if (service == "webvfx")
+        w = new WebvfxProducer(this);
     else if (MLT.isPlaylist()) {
         m_playlistDock->model()->load();
         if (m_playlistDock->model()->playlist()) {

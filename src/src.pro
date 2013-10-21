@@ -73,7 +73,8 @@ SOURCES += main.cpp\
     htmleditor/highlighter.cpp \
     settings.cpp \
     widgets/lineeditclear.cpp \
-    leapnetworklistener.cpp
+    leapnetworklistener.cpp \
+    widgets/webvfxproducer.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -140,7 +141,8 @@ HEADERS  += mainwindow.h \
     htmleditor/highlighter.h \
     settings.h \
     widgets/lineeditclear.h \
-    leapnetworklistener.h
+    leapnetworklistener.h \
+    widgets/webvfxproducer.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
@@ -183,7 +185,8 @@ FORMS    += mainwindow.ui \
     dialogs/customprofiledialog.ui \
     filters/webvfxfilter.ui \
     htmleditor/htmleditor.ui \
-    htmleditor/inserthtmldialog.ui
+    htmleditor/inserthtmldialog.ui \
+    widgets/webvfxproducer.ui
 
 RESOURCES += \
     ../icons/resources.qrc \
