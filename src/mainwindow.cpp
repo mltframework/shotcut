@@ -1044,9 +1044,9 @@ void MainWindow::onProducerOpened()
             m_playlistDock->setVisible(true);
             m_playlistDock->raise();
         }
+        if (!MLT.URL().isEmpty())
+            setCurrentFile(MLT.URL());
     }
-    if (!MLT.URL().isEmpty())
-        setCurrentFile(MLT.URL());
     if (w) {
         dynamic_cast<AbstractProducerWidget*>(w)->setProducer(MLT.producer());
         if (-1 != w->metaObject()->indexOfSignal("producerChanged()"))
