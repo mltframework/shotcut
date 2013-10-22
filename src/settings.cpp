@@ -153,7 +153,7 @@ bool ShotcutSettings::playerOpenGL() const
 
 void ShotcutSettings::setPlayerOpenGL(bool b)
 {
-    settings.setValue("player./opengl", b);
+    settings.setValue("player/opengl", b);
 }
 
 bool ShotcutSettings::playerGPU() const
