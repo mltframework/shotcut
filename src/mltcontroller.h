@@ -112,6 +112,7 @@ public:
     void setIn(int);
     void setOut(int);
     void restart();
+    void resetURL();
 
     Mlt::Repository* repository() const {
         return m_repo;

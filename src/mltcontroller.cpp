@@ -150,8 +150,9 @@ int Controller::open(const char* url)
             delete m_producer;
             m_producer = new Mlt::Producer(profile(), url);
         }
-        if (QString(m_producer->get("xml")) == "was here" &&
-                    m_producer->get_int("_original_type") != tractor_type)
+        if (m_url.isEmpty() &&
+                QString(m_producer->get("xml")) == "was here" &&
+                m_producer->get_int("_original_type") != tractor_type)
             m_url = QString::fromUtf8(url);
         const char *service = m_producer->get("mlt_service");
         if (service && (!strcmp(service, "pixbuf") || !strcmp(service, "qimage")))
@@ -493,6 +494,11 @@ void Controller::restart()
         m_consumer->stop();
         m_consumer->start();
     }
+}
+
+void Controller::resetURL()
+{
+    m_url = QString();
 }
 
 QImage Controller::image(Mlt::Frame* frame, int width, int height)

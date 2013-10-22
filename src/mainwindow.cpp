@@ -525,12 +525,14 @@ void MainWindow::open(const QString& url, const Mlt::Properties* properties)
             m_playlistDock->model()->close();
         // let the new project change the profile
         MLT.profile().set_explicit(false);
+        setWindowModified(false);
     }
     else if (!m_playlistDock->model()->playlist()) {
         if (!continueModified())
             return;
         setCurrentFile("");
         setWindowModified(false);
+        MLT.resetURL();
     }
     if (!MLT.open(url.toUtf8().constData())) {
         Mlt::Properties* props = const_cast<Mlt::Properties*>(properties);
@@ -1044,9 +1046,9 @@ void MainWindow::onProducerOpened()
             m_playlistDock->setVisible(true);
             m_playlistDock->raise();
         }
-        if (!MLT.URL().isEmpty())
-            setCurrentFile(MLT.URL());
     }
+    if (!MLT.URL().isEmpty())
+        setCurrentFile(MLT.URL());
     if (w) {
         dynamic_cast<AbstractProducerWidget*>(w)->setProducer(MLT.producer());
         if (-1 != w->metaObject()->indexOfSignal("producerChanged()"))
@@ -1220,6 +1222,7 @@ void MainWindow::onPlaylistClosed()
     setCurrentFile("");
     setWindowModified(false);
     m_undoStack->clear();
+    MLT.resetURL();
 }
 
 void MainWindow::onPlaylistModified()
