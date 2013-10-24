@@ -1448,6 +1448,8 @@ void MainWindow::on_actionOpenGL_triggered(bool checked)
 void MainWindow::on_actionRealtime_triggered(bool checked)
 {
     MLT.videoWidget()->setProperty("realtime", checked);
+    if (Settings.playerGPU())
+        MLT.pause();
     if (MLT.consumer()) {
         int threadCount = QThread::idealThreadCount();
         threadCount = threadCount > 2? (threadCount > 3? 3 : 2) : 1;
@@ -1461,6 +1463,8 @@ void MainWindow::on_actionRealtime_triggered(bool checked)
 void MainWindow::on_actionProgressive_triggered(bool checked)
 {
     MLT.videoWidget()->setProperty("progressive", checked);
+    if (Settings.playerGPU())
+        MLT.pause();
     if (MLT.consumer()) {
         MLT.profile().set_progressive(checked);
         MLT.restart();
