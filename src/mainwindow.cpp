@@ -1462,7 +1462,7 @@ void MainWindow::on_actionProgressive_triggered(bool checked)
 {
     MLT.videoWidget()->setProperty("progressive", checked);
     if (MLT.consumer()) {
-        MLT.consumer()->set("progressive", checked);
+        MLT.profile().set_progressive(checked);
         MLT.restart();
     }
     Settings.setPlayerProgressive(checked);
