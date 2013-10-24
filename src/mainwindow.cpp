@@ -1449,7 +1449,10 @@ void MainWindow::on_actionRealtime_triggered(bool checked)
 {
     MLT.videoWidget()->setProperty("realtime", checked);
     if (MLT.consumer()) {
-        MLT.consumer()->set("real_time", checked? 1 : -1);
+        int threadCount = QThread::idealThreadCount();
+        threadCount = threadCount > 2? (threadCount > 3? 3 : 2) : 1;
+        threadCount = Settings.playerGPU()? 1 : threadCount;
+        MLT.consumer()->set("real_time", checked? 1 : -threadCount);
         MLT.restart();
     }
     Settings.setPlayerRealtime(checked);
