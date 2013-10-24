@@ -264,7 +264,8 @@ void PlaylistDock::on_actionOpen_triggered()
     if (!index.isValid() || !m_model.playlist()) return;
     Mlt::ClipInfo* i = m_model.playlist()->clip_info(index.row());
     if (i) {
-        Mlt::Producer* p = new Mlt::Producer(i->producer);
+        QString xml = MLT.saveXML("string", i->producer);
+        Mlt::Producer* p = new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
         emit clipOpened(p, i->frame_in, i->frame_out);
         delete i;
     }
