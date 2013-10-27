@@ -6,7 +6,7 @@
     <message>
         <location filename="../src/main.cpp" line="100"/>
         <source>Loading plugins...</source>
-        <translation>Cargando complementos</translation>
+        <translation>Cargando complementos...</translation>
     </message>
 </context>
 <context>
@@ -24,7 +24,7 @@
     <message>
         <location filename="../src/dialogs/addencodepresetdialog.ui" line="53"/>
         <source>Make final changes to the preset including removing items you do not want to include, or copy/paste the clipboard.</source>
-        <translation>Realice los cambios finales a la preselección incluyendo la eliminación de los elementos que no desee incluir o copiar / pegar en el portapapeles.</translation>
+        <translation>Realice los cambios finales a la preselección, como la eliminación de los elementos que no quiera incluir, o copiar/pegar en el portapapeles.</translation>
     </message>
 </context>
 <context>
@@ -98,10 +98,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Saturation</source>
-        <translation type="obsolete">Saturación</translation>
-    </message>
-    <message>
         <location filename="../src/models/attachedfiltersmodel.cpp" line="145"/>
         <source>Sharpen</source>
         <translation>Enfocar</translation>
@@ -131,10 +127,6 @@
         <location filename="../src/widgets/avformatproducerwidget.ui" line="14"/>
         <source>Form</source>
         <translation>Formulario</translation>
-    </message>
-    <message>
-        <source>TextLabel</source>
-        <translation type="obsolete">Etiqueta de texto</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="33"/>
@@ -388,7 +380,7 @@
     <message>
         <location filename="../src/widgets/colorpickerwidget.cpp" line="75"/>
         <source>Pick a color on the screen. By pressing the mouse button and then moving your mouse you can select a section of the screen from which to get an average color.</source>
-        <translation type="unfinished"></translation>
+        <translation>Señale un color en la pantalla. Si mantiene presionado el botón del ratón y luego mueve el ratón, puede seleccionar una sección rectangular de la pantalla, de la que puede obtener un color promedio.</translation>
     </message>
     <message>
         <location filename="../src/widgets/colorpickerwidget.cpp" line="105"/>
@@ -399,7 +391,7 @@
     <message>
         <location filename="../src/widgets/colorpickerwidget.cpp" line="138"/>
         <source>Calculated average color for rectangle.</source>
-        <translation type="unfinished"></translation>
+        <translation>Color promedio calculado para el área rectangular.</translation>
     </message>
 </context>
 <context>
@@ -433,11 +425,6 @@
         <translation>Formulario</translation>
     </message>
     <message>
-        <location filename="../src/filters/cropfilter.ui" line="125"/>
-        <source>Center Bias</source>
-        <translation>Centro</translation>
-    </message>
-    <message>
         <location filename="../src/filters/cropfilter.ui" line="32"/>
         <location filename="../src/filters/cropfilter.ui" line="89"/>
         <location filename="../src/filters/cropfilter.ui" line="113"/>
@@ -447,19 +434,14 @@
         <translation> píxeles</translation>
     </message>
     <message>
-        <location filename="../src/filters/cropfilter.ui" line="225"/>
-        <source>Top</source>
-        <translation>Arriba</translation>
+        <location filename="../src/filters/cropfilter.ui" line="44"/>
+        <source>Center</source>
+        <translation>Centro</translation>
     </message>
     <message>
-        <location filename="../src/filters/cropfilter.ui" line="212"/>
-        <source>Bottom</source>
-        <translation>Abajo</translation>
-    </message>
-    <message>
-        <location filename="../src/filters/cropfilter.ui" line="175"/>
-        <source>Left</source>
-        <translation>Izquierda</translation>
+        <location filename="../src/filters/cropfilter.ui" line="125"/>
+        <source>Center Bias</source>
+        <translation>Centro</translation>
     </message>
     <message>
         <location filename="../src/filters/cropfilter.ui" line="138"/>
@@ -467,9 +449,19 @@
         <translation>Derecha</translation>
     </message>
     <message>
-        <location filename="../src/filters/cropfilter.ui" line="44"/>
-        <source>Center</source>
-        <translation>Centro</translation>
+        <location filename="../src/filters/cropfilter.ui" line="175"/>
+        <source>Left</source>
+        <translation>Izquierda</translation>
+    </message>
+    <message>
+        <location filename="../src/filters/cropfilter.ui" line="212"/>
+        <source>Bottom</source>
+        <translation>Abajo</translation>
+    </message>
+    <message>
+        <location filename="../src/filters/cropfilter.ui" line="225"/>
+        <source>Top</source>
+        <translation>Arriba</translation>
     </message>
 </context>
 <context>
@@ -477,12 +469,12 @@
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="14"/>
         <source>Add Custom Video Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Agregar Modo de Video Personalizado</translation>
     </message>
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="29"/>
         <source>Colorspace</source>
-        <translation type="unfinished"></translation>
+        <translation>Espacio de color</translation>
     </message>
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="76"/>
@@ -666,39 +658,9 @@
         <translation>Resolución</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="475"/>
-        <source>Interlaced</source>
-        <translation>Entrelazado</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="480"/>
-        <source>Progressive</source>
-        <translation>Progresivo</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="393"/>
-        <source>Aspect ratio</source>
-        <translation>Proporción de aspecto</translation>
-    </message>
-    <message>
         <location filename="../src/docks/encodedock.ui" line="289"/>
         <source>Frames/sec</source>
         <translation>Cuadros por segundo</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="421"/>
-        <source>x</source>
-        <translation>x</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="383"/>
-        <source>Field order</source>
-        <translation>Orden de campos</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="456"/>
-        <source>Scan mode</source>
-        <translation>Modo de digitalización</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="317"/>
@@ -714,6 +676,36 @@
         <location filename="../src/docks/encodedock.ui" line="360"/>
         <source>Top Field First</source>
         <translation>Campo superior primero</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.ui" line="383"/>
+        <source>Field order</source>
+        <translation>Orden de campos</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.ui" line="393"/>
+        <source>Aspect ratio</source>
+        <translation>Proporción de aspecto</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.ui" line="421"/>
+        <source>x</source>
+        <translation>x</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.ui" line="456"/>
+        <source>Scan mode</source>
+        <translation>Modo de digitalización</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.ui" line="475"/>
+        <source>Interlaced</source>
+        <translation>Entrelazado</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.ui" line="480"/>
+        <source>Progressive</source>
+        <translation>Progresivo</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="507"/>
@@ -1172,10 +1164,6 @@ codecs. However, not all codecs are multi-threaded.</source>
         <source>Are you sure you want to delete %1?</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Are you sure you want to delete</source>
-        <translation type="obsolete">¿Está seguro que desea borrar?</translation>
-    </message>
 </context>
 <context>
     <name>FiltersDock</name>
@@ -1185,14 +1173,6 @@ codecs. However, not all codecs are multi-threaded.</source>
         <translation>Filtros</translation>
     </message>
     <message>
-        <source>Add something to the playlist</source>
-        <translation type="obsolete">Añadir algo a la lista de reproducción</translation>
-    </message>
-    <message>
-        <source>Remove cut</source>
-        <translation type="obsolete">Borrar corte</translation>
-    </message>
-    <message>
         <location filename="../src/docks/filtersdock.ui" line="68"/>
         <source>Add an audio filter</source>
         <translation type="unfinished"></translation>
@@ -1200,7 +1180,7 @@ codecs. However, not all codecs are multi-threaded.</source>
     <message>
         <location filename="../src/docks/filtersdock.ui" line="71"/>
         <source>Audio</source>
-        <translation type="unfinished">Audio</translation>
+        <translation>Audio</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.ui" line="85"/>
@@ -1210,7 +1190,7 @@ codecs. However, not all codecs are multi-threaded.</source>
     <message>
         <location filename="../src/docks/filtersdock.ui" line="88"/>
         <source>Video</source>
-        <translation type="unfinished">Video</translation>
+        <translation>Video</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.ui" line="102"/>
@@ -1273,22 +1253,18 @@ codecs. However, not all codecs are multi-threaded.</source>
         <translation>Tamaño y posición</translation>
     </message>
     <message>
+        <location filename="../src/docks/filtersdock.ui" line="207"/>
+        <source>White Balance</source>
+        <translation>Balance de blanco</translation>
+    </message>
+    <message>
         <location filename="../src/docks/filtersdock.ui" line="212"/>
         <location filename="../src/docks/filtersdock.ui" line="215"/>
         <source>Overlay HTML</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Saturation</source>
-        <translation type="obsolete">Saturación</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/filtersdock.ui" line="207"/>
-        <source>White Balance</source>
-        <translation>Balance de blanco</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/filtersdock.cpp" line="172"/>
+        <location filename="../src/docks/filtersdock.cpp" line="173"/>
         <source>Filters can only be applied to clips.</source>
         <translation>Los filtros sólo pueden ser aplicados a los clips.</translation>
     </message>
@@ -1357,9 +1333,9 @@ codecs. However, not all codecs are multi-threaded.</source>
         <translation>Formulario</translation>
     </message>
     <message>
-        <location filename="../src/filters/frei0rsharpnessfilter.ui" line="148"/>
-        <source>Amount</source>
-        <translation>Cantidad</translation>
+        <location filename="../src/filters/frei0rsharpnessfilter.ui" line="20"/>
+        <source>Size</source>
+        <translation>Tamaño</translation>
     </message>
     <message>
         <location filename="../src/filters/frei0rsharpnessfilter.ui" line="51"/>
@@ -1368,9 +1344,9 @@ codecs. However, not all codecs are multi-threaded.</source>
         <translation> %</translation>
     </message>
     <message>
-        <location filename="../src/filters/frei0rsharpnessfilter.ui" line="20"/>
-        <source>Size</source>
-        <translation>Tamaño</translation>
+        <location filename="../src/filters/frei0rsharpnessfilter.ui" line="148"/>
+        <source>Amount</source>
+        <translation>Cantidad</translation>
     </message>
 </context>
 <context>
@@ -1385,7 +1361,7 @@ codecs. However, not all codecs are multi-threaded.</source>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="36"/>
         <source>&amp;Edit</source>
-        <translation type="unfinished">&amp;Editar</translation>
+        <translation>&amp;Editar</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="53"/>
@@ -1405,7 +1381,7 @@ codecs. However, not all codecs are multi-threaded.</source>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="107"/>
         <source>Standard</source>
-        <translation type="unfinished">Estándar</translation>
+        <translation>Estándar</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="173"/>
@@ -1435,37 +1411,37 @@ codecs. However, not all codecs are multi-threaded.</source>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="258"/>
         <source>&amp;Save</source>
-        <translation type="unfinished">&amp;Guardar</translation>
+        <translation>&amp;Guardar</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="261"/>
         <source>Ctrl+S</source>
-        <translation type="unfinished">Ctrl+S</translation>
+        <translation>Ctrl+S</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="266"/>
         <source>Save &amp;As...</source>
-        <translation type="unfinished">&amp;Guardar como...</translation>
+        <translation>&amp;Guardar como...</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="275"/>
         <source>&amp;Undo</source>
-        <translation type="unfinished">&amp;Deesa</translation>
+        <translation>&amp;Deesa</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="278"/>
         <source>Ctrl+Z</source>
-        <translation type="unfinished">Ctrl+Z</translation>
+        <translation>Ctrl+Z</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="287"/>
         <source>&amp;Redo</source>
-        <translation type="unfinished">&amp;Rehacer</translation>
+        <translation>&amp;Rehacer</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="290"/>
         <source>Ctrl+Y</source>
-        <translation type="unfinished">Ctrl+Y</translation>
+        <translation>Ctrl+Y</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="299"/>
@@ -1475,7 +1451,7 @@ codecs. However, not all codecs are multi-threaded.</source>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="302"/>
         <source>Ctrl+X</source>
-        <translation type="unfinished">Ctrl+X</translation>
+        <translation>Ctrl+X</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="311"/>
@@ -1495,7 +1471,7 @@ codecs. However, not all codecs are multi-threaded.</source>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="326"/>
         <source>Ctrl+V</source>
-        <translation type="unfinished">Ctrl+V</translation>
+        <translation>Ctrl+V</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="335"/>
@@ -1505,7 +1481,7 @@ codecs. However, not all codecs are multi-threaded.</source>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="338"/>
         <source>Ctrl+A</source>
-        <translation type="unfinished">Ctrl+A</translation>
+        <translation>Ctrl+A</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="350"/>
@@ -1605,12 +1581,12 @@ codecs. However, not all codecs are multi-threaded.</source>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="514"/>
         <source>E&amp;xit</source>
-        <translation type="unfinished">&amp;Salir</translation>
+        <translation>&amp;Salir</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="517"/>
         <source>Ctrl+Q</source>
-        <translation type="unfinished">Ctrl+Q</translation>
+        <translation>Ctrl+Q</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="522"/>
@@ -1812,7 +1788,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="655"/>
         <source>%1[*] - %2</source>
-        <translation type="unfinished">%1[*] - %2</translation>
+        <translation>%1[*] - %2</translation>
     </message>
 </context>
 <context>
@@ -1927,22 +1903,22 @@ Do you want to save your changes?</source>
 <context>
     <name>JobQueue</name>
     <message>
-        <location filename="../src/jobqueue.cpp" line="152"/>
+        <location filename="../src/jobqueue.cpp" line="153"/>
         <source>pending</source>
         <translation>pendiente</translation>
     </message>
     <message>
-        <location filename="../src/jobqueue.cpp" line="188"/>
+        <location filename="../src/jobqueue.cpp" line="189"/>
         <source>done</source>
         <translation>hecho</translation>
     </message>
     <message>
-        <location filename="../src/jobqueue.cpp" line="190"/>
+        <location filename="../src/jobqueue.cpp" line="191"/>
         <source>stopped</source>
         <translation>detenido</translation>
     </message>
     <message>
-        <location filename="../src/jobqueue.cpp" line="192"/>
+        <location filename="../src/jobqueue.cpp" line="193"/>
         <source>failed</source>
         <translation>fallo</translation>
     </message>
@@ -2160,10 +2136,6 @@ p, li { white-space: pre-wrap; }
         <translation>Vista previa en SDI/HDMI</translation>
     </message>
     <message>
-        <source>Main</source>
-        <translation type="obsolete">Principal</translation>
-    </message>
-    <message>
         <location filename="../src/mainwindow.ui" line="133"/>
         <source>Language</source>
         <translation type="unfinished"></translation>
@@ -2295,7 +2267,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="333"/>
-        <location filename="../src/mainwindow.cpp" line="1348"/>
+        <location filename="../src/mainwindow.cpp" line="1353"/>
         <source>Enter Full Screen</source>
         <translation>Entrar a pantalla completa</translation>
     </message>
@@ -2454,17 +2426,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.cpp" line="347"/>
         <source>Non-Broadcast</source>
-        <translation type="unfinished"></translation>
+        <translation>Sin-Transmisión</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="358"/>
         <source>DVD Widescreen NTSC</source>
-        <translation type="unfinished"></translation>
+        <translation>Pantalla Ancha (Widescreen) DVD NTSC</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="359"/>
         <source>DVD Widescreen PAL</source>
-        <translation type="unfinished"></translation>
+        <translation>Pantalla Ancha (Widescreen) DVD PAL</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="364"/>
@@ -2494,85 +2466,85 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.cpp" line="508"/>
         <location filename="../src/mainwindow.cpp" line="510"/>
-        <location filename="../src/mainwindow.cpp" line="543"/>
+        <location filename="../src/mainwindow.cpp" line="545"/>
         <source>Failed to open </source>
         <translation>Error al abrir</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="550"/>
+        <location filename="../src/mainwindow.cpp" line="552"/>
         <source>Open File</source>
         <translation>Abrir archivos</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="721"/>
+        <location filename="../src/mainwindow.cpp" line="725"/>
         <source>%1[*] - %2</source>
         <translation>%1[*] - %2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="726"/>
+        <location filename="../src/mainwindow.cpp" line="730"/>
         <source>About Shotcut</source>
         <translation>&amp;Acerca de Shotcut</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="727"/>
+        <location filename="../src/mainwindow.cpp" line="731"/>
         <source>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2013 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1074"/>
-        <location filename="../src/mainwindow.cpp" line="1092"/>
+        <location filename="../src/mainwindow.cpp" line="1078"/>
+        <location filename="../src/mainwindow.cpp" line="1096"/>
         <source>Saved %1</source>
         <translation>Guardado %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1084"/>
+        <location filename="../src/mainwindow.cpp" line="1088"/>
         <source>Save XML</source>
         <translation>Guardar XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1084"/>
+        <location filename="../src/mainwindow.cpp" line="1088"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1104"/>
+        <location filename="../src/mainwindow.cpp" line="1108"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>Este proyecto ha sido modificado.
 ¿Desea guardar los cambios?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1351"/>
+        <location filename="../src/mainwindow.cpp" line="1356"/>
         <source>Exit Full Screen</source>
         <translation>Salir de la pantalla completa</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1360"/>
+        <location filename="../src/mainwindow.cpp" line="1365"/>
         <source>GPU Processing is not supported</source>
         <translation>El procesado GPU no está soportado</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1435"/>
+        <location filename="../src/mainwindow.cpp" line="1440"/>
         <source>You must restart Shotcut to switch using OpenGL.
 Do you want to exit now?</source>
         <translation>Debe reiniciar Shotcut para utilizar OpenGL.
 ¿Quiere salir ahora?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1557"/>
+        <location filename="../src/mainwindow.cpp" line="1567"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to exit now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1595"/>
+        <location filename="../src/mainwindow.cpp" line="1605"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>Error al conectar con JACK.
 Favor verifique que JACK esté instalado y funcionando.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1604"/>
+        <location filename="../src/mainwindow.cpp" line="1614"/>
         <source>You must restart Shotcut to switch using GPU processing.
 Do you want to exit now?</source>
         <translation>Debe reiniciar Shotcut para utilizar el procesado GPU.
@@ -2776,21 +2748,6 @@ Do you want to continue?</source>
         <translation>Conectar</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Single-click&lt;/span&gt; a unit to open its playlist.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Double-click&lt;/span&gt; a unit to control it in the player, or &lt;span style=&quot; font-weight:600;&quot;&gt;right-click&lt;/span&gt; the unit for transport control actions.&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Single-click&lt;/span&gt; a playlist item to select it for edit operations (e.g. Insert).&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Double-click&lt;/span&gt; a playlist item to seek the unit to it.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Drag-n-drop&lt;/span&gt; from the server&apos;s clips tree to the playlist, or &lt;span style=&quot; font-weight:600;&quot;&gt;single-click&lt;/span&gt; a clip to select it for use with &lt;span style=&quot; font-weight:600;&quot;&gt;Add&lt;/span&gt; and &lt;span style=&quot; font-weight:600;&quot;&gt;Insert&lt;/span&gt; actions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;⏎ &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;⏎ p, li { white-space: pre-wrap; }⏎ &lt;/style&gt;&lt;/head&gt;&lt;body&gt;⏎ &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Clic&lt;/span&gt; en una unidad para abrirla en la lista de reproducción.&lt;/p&gt;⏎ &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;⏎ &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Doble clic&lt;/span&gt; en una unidad para controlarla en el reproductor, o &lt;span style=&quot; font-weight:600;&quot;&gt;Clic derecho &lt;/span&gt; sobre la unidad para las acciones de control de transporte.&lt;br /&gt;&lt;/p&gt;⏎ &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Clic&lt;/span&gt; en un elemento de la lista de reproducción para seleccionarlo para operaciones de edición (p.e. Insertar).&lt;/p&gt;⏎ &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;⏎ &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Doble clic&lt;/span&gt; en un elemento de la lista de reproducción para buscar la unidad en él.&lt;/p&gt;⏎ &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;⏎ &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Arrastre y suelte &lt;/span&gt; desde el árbol de clips del servidor a la lista de reproducción, o &lt;span style=&quot; font-weight:600;&quot;&gt;haga clic una vez&lt;/span&gt; en un clip para seleccionarlo para usarlo con las acciones de &lt;span style=&quot; font-weight:600;&quot;&gt;Agregar&lt;/span&gt; e &lt;span style=&quot; font-weight:600;&quot;&gt;Insertar&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="93"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -2844,7 +2801,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="263"/>
         <source>Map Clips Root</source>
-        <translation type="unfinished"></translation>
+        <translation>Raiz del mapa de clips</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedserverdock.cpp" line="152"/>
@@ -2854,7 +2811,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mvcp/meltedserverdock.cpp" line="257"/>
         <source>Choose Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Elija un Directorio</translation>
     </message>
 </context>
 <context>
@@ -2989,9 +2946,9 @@ p, li { white-space: pre-wrap; }
         <translation>Formulario</translation>
     </message>
     <message>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="394"/>
-        <source>Matrix Size</source>
-        <translation>Tamaño de la matriz</translation>
+        <location filename="../src/filters/movitsharpenfilter.ui" line="20"/>
+        <source>Gaussian Radius</source>
+        <translation>Radio gaussiano</translation>
     </message>
     <message>
         <location filename="../src/filters/movitsharpenfilter.ui" line="73"/>
@@ -3008,9 +2965,9 @@ p, li { white-space: pre-wrap; }
         <translation>Radio del círculo</translation>
     </message>
     <message>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="20"/>
-        <source>Gaussian Radius</source>
-        <translation>Radio gaussiano</translation>
+        <location filename="../src/filters/movitsharpenfilter.ui" line="190"/>
+        <source>Noise Level</source>
+        <translation>Nivel de ruido</translation>
     </message>
     <message>
         <location filename="../src/filters/movitsharpenfilter.ui" line="381"/>
@@ -3018,9 +2975,9 @@ p, li { white-space: pre-wrap; }
         <translation>Correlación</translation>
     </message>
     <message>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="190"/>
-        <source>Noise Level</source>
-        <translation>Nivel de ruido</translation>
+        <location filename="../src/filters/movitsharpenfilter.ui" line="394"/>
+        <source>Matrix Size</source>
+        <translation>Tamaño de la matriz</translation>
     </message>
 </context>
 <context>
@@ -3254,18 +3211,14 @@ p, li { white-space: pre-wrap; }
         <translation>Ajustar el volumen del sonido</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="96"/>
-        <source>Show or hide the volume control</source>
-        <translation>Mostrar u ocultar el control del volumen</translation>
-    </message>
-    <message>
-        <source>Mute</source>
-        <translation type="obsolete">Silencio</translation>
-    </message>
-    <message>
         <location filename="../src/player.cpp" line="87"/>
         <source>Silence the audio</source>
         <translation>Silenciar el sonido</translation>
+    </message>
+    <message>
+        <location filename="../src/player.cpp" line="96"/>
+        <source>Show or hide the volume control</source>
+        <translation>Mostrar u ocultar el control del volumen</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="111"/>
@@ -3420,7 +3373,15 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;You can freely preview clips without necessarily adding them to the playlist or closing it.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;To trim or adjust a playlist entry choose &lt;span style=&quot; font-weight:600;&quot;&gt;Open As Clip&lt;/span&gt; from the context menu, make the changes, and then choose &lt;span style=&quot; font-weight:600;&quot;&gt;Update&lt;/span&gt;.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Drag-n-drop&lt;/span&gt; to rearrange the items.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Doble clic&lt;/span&gt; en un elemento de lista de reproducción para cargarla en el reproductor.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;El reproductor busca hasta el inicio de cualquier elemento en el que hizo &lt;span style=&quot; font-weight:600;&quot;&gt;doble clic&lt;/span&gt;.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Puede previsualizar libremente los clips sin necesidad de añadirlos a la lista de reproducción o de cerrarla.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Para recortar o ajustar una entrada de una lista de reproducción elegir &lt;span style=&quot;font-weight:600;&quot;&gt;Abrir como clip&lt;/span&gt; desde el menú contextual, hacer los cambios, y entonce elegir &lt;span style=&quot;font-weight:600;&quot;&gt;Actualizar&lt;/span&gt;.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Arrastre y suelte&lt;/span&gt; para reorganizar los elementos.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="93"/>
@@ -3512,38 +3473,38 @@ selected cut.</source>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="269"/>
         <source>Hidden</source>
-        <translation type="unfinished"></translation>
+        <translation>Invisible</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="277"/>
         <location filename="../src/docks/playlistdock.ui" line="280"/>
         <source>In and Out - Left/Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Entrada y salida - Izquierda/Derecha</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="288"/>
         <location filename="../src/docks/playlistdock.ui" line="291"/>
         <source>In and Out - Top/Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Entrada y salida - Arriba/Abajo</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="299"/>
         <source>In Only - Small</source>
-        <translation type="unfinished"></translation>
+        <translation>Sólo entrada - Corta</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="307"/>
         <source>In Only - Large</source>
-        <translation type="unfinished"></translation>
+        <translation>Sólo entrada - Larga</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="157"/>
         <source>Thumbnails</source>
-        <translation type="unfinished"></translation>
+        <translation>Miniaturas</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="177"/>
-        <location filename="../src/docks/playlistdock.cpp" line="357"/>
+        <location filename="../src/docks/playlistdock.cpp" line="358"/>
         <source>You cannot insert a playlist into a playlist!</source>
         <translation>¡No puede agregar una lista de reproducción a la lista de reproducción!</translation>
     </message>
@@ -3563,7 +3524,7 @@ selected cut.</source>
     <message>
         <location filename="../src/models/playlistmodel.cpp" line="217"/>
         <source>Thumbnails</source>
-        <translation type="unfinished"></translation>
+        <translation>Miniaturas</translation>
     </message>
     <message>
         <location filename="../src/models/playlistmodel.cpp" line="219"/>
@@ -3591,27 +3552,27 @@ selected cut.</source>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="39"/>
         <source>Preset</source>
-        <translation type="unfinished">Preseleccionado</translation>
+        <translation>Preseleccionado</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="53"/>
         <source>Save</source>
-        <translation type="unfinished">Guardar</translation>
+        <translation>Guardar</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="58"/>
         <source>Delete</source>
-        <translation type="unfinished">Borrar</translation>
+        <translation>Borrar</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="68"/>
         <source>Save Preset</source>
-        <translation type="unfinished">Guardar ajustes</translation>
+        <translation>Guardar ajustes</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="82"/>
         <source>Name:</source>
-        <translation type="unfinished">Nombre:</translation>
+        <translation>Nombre:</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="102"/>
@@ -3628,7 +3589,7 @@ selected cut.</source>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="119"/>
         <source>Delete Preset</source>
-        <translation type="unfinished">Borrar predefinición</translation>
+        <translation>Borrar predefinición</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="128"/>
@@ -3735,32 +3696,32 @@ selected cut.</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="404"/>
+        <location filename="../src/docks/playlistdock.cpp" line="405"/>
         <source>Append playlist item %1</source>
         <translation>Anexar elemento de la lista de reproducción %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="424"/>
+        <location filename="../src/docks/playlistdock.cpp" line="425"/>
         <source>Insert playist item %1</source>
         <translation>Insertar elemento de la lista de reproducción %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="444"/>
+        <location filename="../src/docks/playlistdock.cpp" line="445"/>
         <source>Update playlist item %1</source>
         <translation>Actualizar elemento de la lista de reproducción %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="466"/>
+        <location filename="../src/docks/playlistdock.cpp" line="467"/>
         <source>Remove playlist item %1</source>
         <translation>Borrar elemento de la lista de reproducción %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="485"/>
+        <location filename="../src/docks/playlistdock.cpp" line="486"/>
         <source>Clear playlist</source>
         <translation>Limpiar lista de reproducción</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="511"/>
+        <location filename="../src/docks/playlistdock.cpp" line="512"/>
         <source>Move item from %1 to %2</source>
         <translation>Mover elemento de %1 a %2</translation>
     </message>
@@ -3922,7 +3883,7 @@ selected cut.</source>
     <message>
         <location filename="../src/qmltypes/qmlfilter.cpp" line="107"/>
         <source>(defaults)</source>
-        <translation type="unfinished">(predeterminados)</translation>
+        <translation>(predeterminados)</translation>
     </message>
 </context>
 <context>
@@ -3941,21 +3902,6 @@ selected cut.</source>
         <location filename="../src/docks/recentdock.ui" line="43"/>
         <source>search</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>SaturationFilter</name>
-    <message>
-        <source>Form</source>
-        <translation type="obsolete">Formulario</translation>
-    </message>
-    <message>
-        <source>Saturation</source>
-        <translation type="obsolete">Saturación</translation>
-    </message>
-    <message>
-        <source>Reset to default</source>
-        <translation type="obsolete">Reestablecer a los valores predeterminados</translation>
     </message>
 </context>
 <context>
@@ -4005,10 +3951,6 @@ selected cut.</source>
         <location filename="../src/widgets/servicepresetwidget.cpp" line="135"/>
         <source>Are you sure you want to delete %1?</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Are you sure you want to delete</source>
-        <translation type="obsolete">¿Está seguro que desea borrar?</translation>
     </message>
 </context>
 <context>
@@ -4157,7 +4099,7 @@ selected cut.</source>
     <message>
         <location filename="../src/filters/webvfxfilter.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formulario</translation>
+        <translation>Formulario</translation>
     </message>
     <message>
         <location filename="../src/filters/webvfxfilter.ui" line="33"/>
@@ -4182,7 +4124,7 @@ selected cut.</source>
     <message>
         <location filename="../src/filters/webvfxfilter.ui" line="77"/>
         <source>Open</source>
-        <translation type="unfinished">Abrir</translation>
+        <translation>Abrir</translation>
     </message>
     <message>
         <location filename="../src/filters/webvfxfilter.ui" line="84"/>
@@ -4221,7 +4163,7 @@ selected cut.</source>
     <message>
         <location filename="../src/widgets/webvfxproducer.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formulario</translation>
+        <translation>Formulario</translation>
     </message>
     <message>
         <location filename="../src/widgets/webvfxproducer.ui" line="23"/>
@@ -4254,12 +4196,12 @@ selected cut.</source>
     <message>
         <location filename="../src/filters/whitebalancefilter.ui" line="20"/>
         <source>Neutral Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Color Neutral</translation>
     </message>
     <message>
         <location filename="../src/filters/whitebalancefilter.ui" line="79"/>
         <source>Color Temperature</source>
-        <translation type="unfinished"></translation>
+        <translation>Temperatura de Color</translation>
     </message>
     <message>
         <location filename="../src/filters/whitebalancefilter.ui" line="94"/>
@@ -4458,7 +4400,7 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../src/qml/filters/saturation/meta_frei0r.qml" line="6"/>
         <source>Saturation</source>
-        <translation type="unfinished">Saturación</translation>
+        <translation>Saturación</translation>
     </message>
 </context>
 <context>
@@ -4466,7 +4408,7 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../src/qml/filters/saturation/meta_movit.qml" line="6"/>
         <source>Saturation</source>
-        <translation type="unfinished">Saturación</translation>
+        <translation>Saturación</translation>
     </message>
 </context>
 <context>
@@ -4474,17 +4416,17 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../src/qml/htmleditor/text_outline.qml" line="22"/>
         <source>Width</source>
-        <translation type="unfinished">Ancho</translation>
+        <translation>Ancho</translation>
     </message>
     <message>
         <location filename="../src/qml/htmleditor/text_outline.qml" line="34"/>
         <source>pixels</source>
-        <translation type="unfinished">pixeles</translation>
+        <translation>pixeles</translation>
     </message>
     <message>
         <location filename="../src/qml/htmleditor/text_outline.qml" line="37"/>
         <source>Color</source>
-        <translation type="unfinished">Color</translation>
+        <translation>Color</translation>
     </message>
     <message>
         <location filename="../src/qml/htmleditor/text_outline.qml" line="73"/>
@@ -4514,7 +4456,7 @@ the screen capture to SDI/HDMI in this mode.</source>
         <location filename="../src/qml/htmleditor/text_shadow.qml" line="49"/>
         <location filename="../src/qml/htmleditor/text_shadow.qml" line="64"/>
         <source>pixels</source>
-        <translation type="unfinished">pixeles</translation>
+        <translation>pixeles</translation>
     </message>
     <message>
         <location filename="../src/qml/htmleditor/text_shadow.qml" line="37"/>
@@ -4529,7 +4471,7 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../src/qml/htmleditor/text_shadow.qml" line="67"/>
         <source>Color</source>
-        <translation type="unfinished">Color</translation>
+        <translation>Color</translation>
     </message>
     <message>
         <location filename="../src/qml/htmleditor/text_shadow.qml" line="103"/>
@@ -4552,7 +4494,7 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../src/qml/filters/webvfx_circular_frame/ui.qml" line="48"/>
         <source>Radius</source>
-        <translation type="unfinished">Radio</translation>
+        <translation>Radio</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_gain/ui.qml" line="44"/>
@@ -4565,12 +4507,12 @@ the screen capture to SDI/HDMI in this mode.</source>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="79"/>
         <location filename="../src/qml/filters/webvfx_circular_frame/ui.qml" line="71"/>
         <source>Reset to default</source>
-        <translation type="unfinished"></translation>
+        <translation>Reestablecer a los valores predeterminados</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx_circular_frame/ui.qml" line="80"/>
         <source>Color</source>
-        <translation type="unfinished">Color</translation>
+        <translation>Color</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx_circular_frame/ui.qml" line="98"/>
@@ -4582,14 +4524,14 @@ the screen capture to SDI/HDMI in this mode.</source>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="48"/>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="55"/>
         <source>Left</source>
-        <translation type="unfinished">Izquierda</translation>
+        <translation>Izquierda</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_balance/ui.qml" line="56"/>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="48"/>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="67"/>
         <source>Right</source>
-        <translation type="unfinished">Derecha</translation>
+        <translation>Derecha</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="45"/>
@@ -4609,7 +4551,7 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="45"/>
         <source>Channel</source>
-        <translation type="unfinished">Canales</translation>
+        <translation>Canales</translation>
     </message>
 </context>
 <context>
@@ -4617,12 +4559,12 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="53"/>
         <source>Saturation</source>
-        <translation type="unfinished">Saturación</translation>
+        <translation>Saturación</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="76"/>
         <source>Reset to default</source>
-        <translation type="unfinished"></translation>
+        <translation>Reestablecer a los valores predeterminados</translation>
     </message>
 </context>
 <context>
@@ -4630,12 +4572,12 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../src/qml/filters/saturation/ui_movit.qml" line="46"/>
         <source>Saturation</source>
-        <translation type="unfinished">Saturación</translation>
+        <translation>Saturación</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/saturation/ui_movit.qml" line="69"/>
         <source>Reset to default</source>
-        <translation type="unfinished"></translation>
+        <translation>Reestablecer a los valores predeterminados</translation>
     </message>
 </context>
 </TS>

@@ -527,33 +527,33 @@
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="663"/>
         <source>Received Continuation frame, while there is nothing to continue.</source>
-        <translation type="unfinished"></translation>
+        <translation>Přijat pokračovací snímek, i když není, co by pokračovalo.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="669"/>
         <source>All data frames after the initial data frame must have opcode 0 (continuation).</source>
-        <translation type="unfinished"></translation>
+        <translation>Všechny datové snímky po počátečním datovém snímku musí mít kód operace 0 (pokračování).</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="681"/>
         <source>Received message is too big.</source>
-        <translation type="unfinished"></translation>
+        <translation>Přijatá zpráva je příliš velká.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="692"/>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="806"/>
         <source>Invalid UTF-8 code encountered.</source>
-        <translation type="unfinished"></translation>
+        <translation>Narazilo se na neplatný kód UTF-8.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="785"/>
         <source>Payload of close frame is too small.</source>
-        <translation type="unfinished"></translation>
+        <translation>Užitečné zatížení uzavírajícího snímku je příliš malé.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="793"/>
         <source>Invalid close code %1 detected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Zjištěn neplatný kód závěru %1.</translation>
     </message>
 </context>
 <context>
@@ -1166,11 +1166,7 @@ vícevláknové.</translation>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="754"/>
         <source>Are you sure you want to delete %1?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Are you sure you want to delete</source>
-        <translation type="obsolete">Opravdu chcete smazat</translation>
+        <translation>Opravdu chcete smazat %1?</translation>
     </message>
 </context>
 <context>
@@ -1181,28 +1177,24 @@ vícevláknové.</translation>
         <translation>Filtry</translation>
     </message>
     <message>
-        <source>Add a filter</source>
-        <translation type="obsolete">Přidat filtr</translation>
-    </message>
-    <message>
         <location filename="../src/docks/filtersdock.ui" line="68"/>
         <source>Add an audio filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Přidat zvukový filtr</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.ui" line="71"/>
         <source>Audio</source>
-        <translation type="unfinished">Zvuk</translation>
+        <translation>Zvuk</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.ui" line="85"/>
         <source>Add a video filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Přidat obrazový filtr</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.ui" line="88"/>
         <source>Video</source>
-        <translation type="unfinished">Obraz</translation>
+        <translation>Obraz</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.ui" line="102"/>
@@ -1276,7 +1268,7 @@ vícevláknové.</translation>
         <translation>HTML překrytí</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.cpp" line="172"/>
+        <location filename="../src/docks/filtersdock.cpp" line="173"/>
         <source>Filters can only be applied to clips.</source>
         <translation>Filtry lze použít jen na záběry.</translation>
     </message>
@@ -1916,22 +1908,22 @@ Chcete uložit své změny?</translation>
 <context>
     <name>JobQueue</name>
     <message>
-        <location filename="../src/jobqueue.cpp" line="152"/>
+        <location filename="../src/jobqueue.cpp" line="153"/>
         <source>pending</source>
         <translation>Zbývá</translation>
     </message>
     <message>
-        <location filename="../src/jobqueue.cpp" line="188"/>
+        <location filename="../src/jobqueue.cpp" line="189"/>
         <source>done</source>
         <translation>Hotovo</translation>
     </message>
     <message>
-        <location filename="../src/jobqueue.cpp" line="190"/>
+        <location filename="../src/jobqueue.cpp" line="191"/>
         <source>stopped</source>
         <translation>Zastaveno</translation>
     </message>
     <message>
-        <location filename="../src/jobqueue.cpp" line="192"/>
+        <location filename="../src/jobqueue.cpp" line="193"/>
         <source>failed</source>
         <translation>Nepodařilo se</translation>
     </message>
@@ -2282,7 +2274,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="333"/>
-        <location filename="../src/mainwindow.cpp" line="1348"/>
+        <location filename="../src/mainwindow.cpp" line="1353"/>
         <source>Enter Full Screen</source>
         <translation>Vstoupit do režimu na celou obrazovku</translation>
     </message>
@@ -2461,17 +2453,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.cpp" line="420"/>
         <source>Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Vypnuto</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="423"/>
         <source>Internal</source>
-        <translation type="unfinished"></translation>
+        <translation>Vnitřní</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="426"/>
         <source>External</source>
-        <translation type="unfinished"></translation>
+        <translation>Vnější</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="440"/>
@@ -2481,86 +2473,86 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.cpp" line="508"/>
         <location filename="../src/mainwindow.cpp" line="510"/>
-        <location filename="../src/mainwindow.cpp" line="543"/>
+        <location filename="../src/mainwindow.cpp" line="545"/>
         <source>Failed to open </source>
         <translation>Nepodařilo se otevřít</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="550"/>
+        <location filename="../src/mainwindow.cpp" line="552"/>
         <source>Open File</source>
         <translation>Otevřít soubor</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="721"/>
+        <location filename="../src/mainwindow.cpp" line="725"/>
         <source>%1[*] - %2</source>
         <translation>%1[*] - %2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="726"/>
+        <location filename="../src/mainwindow.cpp" line="730"/>
         <source>About Shotcut</source>
         <translation>O programu Shotcut</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="727"/>
+        <location filename="../src/mainwindow.cpp" line="731"/>
         <source>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2013 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
         <translation>&lt;h1&gt;Verze Shotcutu %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; je svobodný, s otevřeným zdrojovým kódem, editor videa pro různé operační systémy.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Autorské právo &amp;copy; 2011-2013 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licencováno pod &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Tento program hrdě používá následující projekty:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; aplikace a systém pro uživatelské rozhraní&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimediální authoringový systém&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; knihovny multimediálních formátů a kodeků&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; kodér VP8&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; kodér MP3&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; přídavné moduly pro obraz (video)&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; přídavné moduly pro zvuk (audio)&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; sbírka ikon od &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; sbírka ikon&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;Zdrojový kód použitý k sestavení programu lze stáhnout z &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;Program je šířen s nadějí, že bude užitečný, ale BEZ JAKÉKOLI ZÁRUKY; bez předpokládané záruky PRODEJNOSTI nebo VHODNOSTI PRO URČITÝ ÚČEL.&lt;/small&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1074"/>
-        <location filename="../src/mainwindow.cpp" line="1092"/>
+        <location filename="../src/mainwindow.cpp" line="1078"/>
+        <location filename="../src/mainwindow.cpp" line="1096"/>
         <source>Saved %1</source>
         <translation>Uloženo %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1084"/>
+        <location filename="../src/mainwindow.cpp" line="1088"/>
         <source>Save XML</source>
         <translation>Uložit XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1084"/>
+        <location filename="../src/mainwindow.cpp" line="1088"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1104"/>
+        <location filename="../src/mainwindow.cpp" line="1108"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>Projekt byl změněn.
 Chcete uložit své změny?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1351"/>
+        <location filename="../src/mainwindow.cpp" line="1356"/>
         <source>Exit Full Screen</source>
         <translation>Opustit režim na celou obrazovku</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1360"/>
+        <location filename="../src/mainwindow.cpp" line="1365"/>
         <source>GPU Processing is not supported</source>
         <translation>Zpracování pomocí GPU není podporováno</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1435"/>
+        <location filename="../src/mainwindow.cpp" line="1440"/>
         <source>You must restart Shotcut to switch using OpenGL.
 Do you want to exit now?</source>
         <translation>Musíte Shotcut spustit kvůli přepnutí pro používání OpenGL znovu.
 Chcete jej ukončit nyní?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1557"/>
+        <location filename="../src/mainwindow.cpp" line="1567"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to exit now?</source>
         <translation>Musíte Shotcut spustit kvůli přepnutí rozhraní na nový jazyk znovu.
 Chcete jej ukončit nyní?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1595"/>
+        <location filename="../src/mainwindow.cpp" line="1605"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>Nepodařilo se spojit se s JACKem.
 Ověřte, prosím, že je JACK nainstalován a běží.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1604"/>
+        <location filename="../src/mainwindow.cpp" line="1614"/>
         <source>You must restart Shotcut to switch using GPU processing.
 Do you want to exit now?</source>
         <translation>Musíte Shotcut spustit kvůli přepnutí pro používání
@@ -2788,13 +2780,12 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Jedno klepnutí&lt;/span&gt; na jednotku pro otevření jejího seznamu skladeb.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;Dvojité klepnutí&lt;/span&gt; na jednotku pro její ovládání v přehrávači, nebo &lt;span style=&quot; font-weight:600;&quot;&gt;klepnutí pravým tlačítkem myši&lt;/span&gt; na jednotku pro činnosti spojené s ovládáním pohybu v ní.&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Jedno klepnutí&lt;/span&gt; na položku v seznamu skladeb pro její vybrání pro operace úprav (např. Vložit).&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dvojité klepnutí&lt;/span&gt; na jednotku pro její ovládání v přehrávači, nebo &lt;span style=&quot; font-weight:600;&quot;&gt;Klepnutí pravým tlačítkem myši&lt;/span&gt; na jednotku pro vyvolání činností pro pohyb v záznamu.&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Jedno klepnutí&lt;/span&gt; na položku seznamu skladeb pro její výběr pro operace úprav (např. Vložit).&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dvojité klepnutí&lt;/span&gt; na položku v seznamu skladeb pro pro prohledávání jednotky.&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dvojité klepnutí&lt;/span&gt; na položku seznamu skladeb pro hledání jednotky do ní.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Táhnout a pustit&lt;/span&gt; ze stromu se záběry serveru do seznamu skladeb, nebo &lt;span style=&quot; font-weight:600;&quot;&gt;jedno klepnutí&lt;/span&gt; na záběr pro jeho vybrání pro použití s činnostmi &lt;span style=&quot; font-weight:600;&quot;&gt;Přidat/span&gt; a &lt;span style=&quot; font-weight:600;&quot;&gt;Vložit&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Táhnout a pustit&lt;/span&gt; ze stromu se soubory serveru do seznamu skladeb, nebo &lt;span style=&quot; font-weight:600;&quot;&gt;jedno klepnutí&lt;/span&gt; na záběr pro jeho vybrání pro užití s činnostmi &lt;span style=&quot; font-weight:600;&quot;&gt;Přidat&lt;/span&gt; a &lt;span style=&quot; font-weight:600;&quot;&gt;Vložit&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="195"/>
@@ -3539,7 +3530,7 @@ po začátek vybraného střihu.</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="177"/>
-        <location filename="../src/docks/playlistdock.cpp" line="357"/>
+        <location filename="../src/docks/playlistdock.cpp" line="358"/>
         <source>You cannot insert a playlist into a playlist!</source>
         <translation>Nemůžete vložit seznam záběrů do seznamu záběrů!</translation>
     </message>
@@ -3629,11 +3620,7 @@ po začátek vybraného střihu.</translation>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="128"/>
         <source>Are you sure you want to delete %1?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Are you sure you want to delete </source>
-        <translation type="obsolete">Opravdu chcete smazat</translation>
+        <translation>Opravdu chcete smazat %1?</translation>
     </message>
 </context>
 <context>
@@ -3735,32 +3722,32 @@ po začátek vybraného střihu.</translation>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="404"/>
+        <location filename="../src/docks/playlistdock.cpp" line="405"/>
         <source>Append playlist item %1</source>
         <translation>Připojit položku seznamu záběrů %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="424"/>
+        <location filename="../src/docks/playlistdock.cpp" line="425"/>
         <source>Insert playist item %1</source>
         <translation>Vložit položku seznamu skladeb %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="444"/>
+        <location filename="../src/docks/playlistdock.cpp" line="445"/>
         <source>Update playlist item %1</source>
         <translation>Obnovit položku seznamu záběrů %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="466"/>
+        <location filename="../src/docks/playlistdock.cpp" line="467"/>
         <source>Remove playlist item %1</source>
         <translation>Odstranit položku seznamu záběrů %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="485"/>
+        <location filename="../src/docks/playlistdock.cpp" line="486"/>
         <source>Clear playlist</source>
         <translation>Vyprázdnit seznam záběrů</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="511"/>
+        <location filename="../src/docks/playlistdock.cpp" line="512"/>
         <source>Move item from %1 to %2</source>
         <translation>Přesunout položku z %1 do %2</translation>
     </message>
@@ -3787,62 +3774,62 @@ po začátek vybraného střihu.</translation>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="328"/>
         <source>Timeout when reading data from socket.</source>
-        <translation type="unfinished"></translation>
+        <translation>Překročení času při čtení dat ze zásuvky (socket).</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="393"/>
         <source>Error occurred while reading from the network: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Při čtení ze sítě se vyskytla chyba: %1</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="405"/>
         <source>Lengths smaller than 126 must be expressed as one byte.</source>
-        <translation type="unfinished"></translation>
+        <translation>Délky menší než 126 musí být vyjádřeny jako jeden byty.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="429"/>
         <source>Something went wrong during reading from the network.</source>
-        <translation type="unfinished"></translation>
+        <translation>Něco se během čtení ze sítě nepodařilo.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="443"/>
         <source>Lengths smaller than 65536 (2^16) must be expressed as 2 bytes.</source>
-        <translation type="unfinished"></translation>
+        <translation>Délky menší než 65536 (2^16) musí být vyjádřeny jako dva byty.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="467"/>
         <source>Error while reading from the network: %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba při čtení ze sítě: %1.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="490"/>
         <source>Maximum framesize exceeded.</source>
-        <translation type="unfinished"></translation>
+        <translation>Překročena největší možná velikost snímku.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="502"/>
         <source>Some serious error occurred while reading from the network.</source>
-        <translation type="unfinished"></translation>
+        <translation>Během čtení ze sítě se vyskytla vážná chyba.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="563"/>
         <source>Rsv field is non-zero</source>
-        <translation type="unfinished"></translation>
+        <translation>Pole Rsv je nenulové</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="567"/>
         <source>Used reserved opcode</source>
-        <translation type="unfinished"></translation>
+        <translation>Použit vyhrazený kód operace</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="573"/>
         <source>Controle frame is larger than 125 bytes</source>
-        <translation type="unfinished"></translation>
+        <translation>Řídící snímek je větší než 125 bytů</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="577"/>
         <source>Controle frames cannot be fragmented</source>
-        <translation type="unfinished"></translation>
+        <translation>Řídící snímky nelze rozkouskovat</translation>
     </message>
 </context>
 <context>
@@ -3850,17 +3837,17 @@ po začátek vybraného střihu.</translation>
     <message>
         <location filename="../QWebSockets/qwebsocket_p.cpp" line="105"/>
         <source>Connection closed</source>
-        <translation type="unfinished"></translation>
+        <translation>Spojení ukončeno</translation>
     </message>
     <message>
         <location filename="../QWebSockets/qwebsocket_p.cpp" line="564"/>
         <source>Error writing bytes to socket: %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba při zápisu bytů do zásuvky (socket): %1.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/qwebsocket_p.cpp" line="576"/>
         <source>Bytes written %1 != %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Zapsaných bytů %1 != %2.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/qwebsocket_p.cpp" line="705"/>
@@ -3881,7 +3868,7 @@ po začátek vybraného střihu.</translation>
     <message>
         <location filename="../QWebSockets/qwebsocket_p.cpp" line="764"/>
         <source>Unknown error condition encountered. Aborting connection.</source>
-        <translation type="unfinished"></translation>
+        <translation>Narazilo se na neznámou chybovou podmínku. Spojení přerušeno.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/qwebsocket_p.cpp" line="771"/>
@@ -3894,7 +3881,7 @@ po začátek vybraného střihu.</translation>
     <message>
         <location filename="../QWebSockets/qwebsocketserver_p.cpp" line="58"/>
         <source>Server closed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Server zavřen.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/qwebsocketserver_p.cpp" line="335"/>
@@ -3909,12 +3896,12 @@ po začátek vybraného střihu.</translation>
     <message>
         <location filename="../QWebSockets/qwebsocketserver_p.cpp" line="347"/>
         <source>Invalid response received.</source>
-        <translation type="unfinished"></translation>
+        <translation>Přijata neplatná odpověď.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/qwebsocketserver_p.cpp" line="352"/>
         <source>Closing socket because of invalid or unsupported request.</source>
-        <translation type="unfinished"></translation>
+        <translation>Zásuvka (socket) se zavírá z důvodu neplatného nebo nepodporovaného požadavku.</translation>
     </message>
 </context>
 <context>
@@ -3989,11 +3976,7 @@ po začátek vybraného střihu.</translation>
     <message>
         <location filename="../src/widgets/servicepresetwidget.cpp" line="135"/>
         <source>Are you sure you want to delete %1?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Are you sure you want to delete</source>
-        <translation type="obsolete">Opravdu chcete smazat</translation>
+        <translation>Opravdu chcete smazat %1?</translation>
     </message>
 </context>
 <context>
@@ -4206,27 +4189,27 @@ po začátek vybraného střihu.</translation>
     <message>
         <location filename="../src/widgets/webvfxproducer.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formulář</translation>
+        <translation>Formulář</translation>
     </message>
     <message>
         <location filename="../src/widgets/webvfxproducer.ui" line="23"/>
         <source>Make background transparent</source>
-        <translation type="unfinished"></translation>
+        <translation>Udělat pozadí průhledné</translation>
     </message>
     <message>
         <location filename="../src/widgets/webvfxproducer.ui" line="30"/>
         <source>Reload</source>
-        <translation type="unfinished">Nahrát znovu</translation>
+        <translation>Nahrát znovu</translation>
     </message>
     <message>
         <location filename="../src/widgets/webvfxproducer.ui" line="50"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;For Advanced Users&lt;/span&gt;&lt;br/&gt;If you enable this, and you do not use the WebVfx JavaScript extension, your content will not render!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Pro pokročilé uživatele&lt;/span&gt;&lt;br/&gt;Pokud toto povolíte, a nepoužíváte rozšíření WebVfx JavaScript, obsah se nevykreslí!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Pro pokročilé uživatele&lt;/span&gt;&lt;br/&gt;Pokud toto povolíte, a nepoužíváte rozšíření WebVfx JavaScript, obsah se nevykreslí!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/widgets/webvfxproducer.ui" line="53"/>
         <source>Use WebVfx JavaScript extension</source>
-        <translation type="unfinished">Použít rozšíření WebVfx JavaScript</translation>
+        <translation>Použít rozšíření WebVfx JavaScript</translation>
     </message>
 </context>
 <context>
@@ -4424,22 +4407,22 @@ obrazovky do SDI/HDMI.</translation>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/meta.qml" line="7"/>
         <source>Copy Channel</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopírovat kanál</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_gain/meta.qml" line="7"/>
         <source>Gain</source>
-        <translation type="unfinished"></translation>
+        <translation>Zesílení</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_balance/meta.qml" line="7"/>
         <source>Balance</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyvážení</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_pan/meta.qml" line="7"/>
         <source>Pan</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyvážení (panorama)</translation>
     </message>
 </context>
 <context>
@@ -4546,7 +4529,7 @@ obrazovky do SDI/HDMI.</translation>
     <message>
         <location filename="../src/qml/filters/audio_gain/ui.qml" line="44"/>
         <source>Gain</source>
-        <translation type="unfinished"></translation>
+        <translation>Zesílení</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_balance/ui.qml" line="68"/>
@@ -4571,34 +4554,34 @@ obrazovky do SDI/HDMI.</translation>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="48"/>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="55"/>
         <source>Left</source>
-        <translation type="unfinished">Vlevo</translation>
+        <translation>Vlevo</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_balance/ui.qml" line="56"/>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="48"/>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="67"/>
         <source>Right</source>
-        <translation type="unfinished">Vpravo</translation>
+        <translation>Vpravo</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="45"/>
         <source>Copy from</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopírovat z</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="48"/>
         <source>Left to right</source>
-        <translation type="unfinished"></translation>
+        <translation>Zleva doprava</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="48"/>
         <source>Right to left</source>
-        <translation type="unfinished"></translation>
+        <translation>Zprava doleva</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="45"/>
         <source>Channel</source>
-        <translation type="unfinished">Kanál</translation>
+        <translation>Kanál</translation>
     </message>
 </context>
 <context>
