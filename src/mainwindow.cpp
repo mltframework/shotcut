@@ -970,6 +970,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
         if (!m_htmlEditor || m_htmlEditor->close()) {
             writeSettings();
             event->accept();
+            qApp->quit();
         } else {
             event->ignore();
         }
