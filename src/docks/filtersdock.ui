@@ -142,8 +142,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>130</width>
-         <height>257</height>
+         <width>88</width>
+         <height>254</height>
         </rect>
        </property>
       </widget>
@@ -161,11 +161,6 @@
     <string>Mirror</string>
    </property>
   </action>
-  <action name="actionDiffusion">
-   <property name="text">
-    <string>Diffusion</string>
-   </property>
-  </action>
   <action name="actionGlow">
    <property name="text">
     <string>Glow</string>
@@ -174,11 +169,6 @@
   <action name="actionSharpen">
    <property name="text">
     <string>Sharpen</string>
-   </property>
-  </action>
-  <action name="actionVignette">
-   <property name="text">
-    <string>Vignette</string>
    </property>
   </action>
   <action name="actionCrop">
@@ -195,11 +185,6 @@
    </property>
    <property name="toolTip">
     <string>Correct, alter, or enhance the color</string>
-   </property>
-  </action>
-  <action name="actionSizePosition">
-   <property name="text">
-    <string>Size and Position</string>
    </property>
   </action>
   <action name="actionWhiteBalance">

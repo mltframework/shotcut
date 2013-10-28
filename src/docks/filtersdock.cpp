@@ -53,15 +53,12 @@ static QActionList getFilters(FiltersDock* dock, Ui::FiltersDock* ui)
     actions.append(ui->actionBlur);
     actions.append(ui->actionColorGrading);
     actions.append(ui->actionCrop);
-//    if (Settings.playerGPU()) menu.append(ui->actionDiffusion);
     actions.append(ui->actionGlow);
     actions.append(ui->actionMirror);
 #ifndef Q_OS_WIN
     if (!Settings.playerGPU()) actions.append(ui->actionOverlayHTML);
 #endif
     actions.append(ui->actionSharpen);
-//    menu.append(ui->actionSizePosition);
-//    menu.append(ui->actionVignette);
     actions.append(ui->actionWhiteBalance);
 
     // Find all of the plugin filters.
@@ -266,14 +263,6 @@ void FiltersDock::on_listView_doubleClicked(const QModelIndex &index)
     m_model.setData(index, true, Qt::CheckStateRole);
 }
 
-void FiltersDock::on_actionDiffusion_triggered()
-{
-    Mlt::Filter* filter = m_model.add("movit.diffusion");
-    delete ui->scrollArea->widget();
-    delete filter;
-    ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
-}
-
 void FiltersDock::on_actionGlow_triggered()
 {
     Mlt::Filter* filter = m_model.add(Settings.playerGPU()? "movit.glow" : "frei0r.glow");
@@ -300,14 +289,6 @@ void FiltersDock::on_actionSharpen_triggered()
     ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
 }
 
-void FiltersDock::on_actionVignette_triggered()
-{
-    Mlt::Filter* filter = m_model.add(Settings.playerGPU()? "movit.vignette" : "vignette");
-    delete ui->scrollArea->widget();
-    delete filter;
-    ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
-}
-
 void FiltersDock::on_actionCrop_triggered()
 {
     Mlt::Filter* filter = m_model.add("crop");
@@ -325,14 +306,6 @@ void FiltersDock::on_actionColorGrading_triggered()
         else
             ui->scrollArea->setWidget(new Frei0rColoradjWidget(*filter, true));
     }
-    delete filter;
-    ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
-}
-
-void FiltersDock::on_actionSizePosition_triggered()
-{
-    Mlt::Filter* filter = m_model.add(Settings.playerGPU()? "movit.rect": "affine");
-    delete ui->scrollArea->widget();
     delete filter;
     ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
 }

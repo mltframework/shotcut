@@ -133,8 +133,6 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
                 result = tr("Color Grading");
             else if (result == "crop")
                 result = tr("Crop");
-            else if (result == "movit.diffusion")
-                result = tr("Diffusion");
             else if (result == "movit.glow" || result == "frei0r.glow")
                 result = tr("Glow");
             else if (result == "movit.mirror" || result == "mirror")
@@ -143,8 +141,6 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
                 result = tr("Overlay HTML");
             else if (result == "movit.sharpen" || result == "frei0r.sharpness")
                 result = tr("Sharpen");
-            else if (result == "movit.vignette" || result == "vignette")
-                result = tr("Vignette");
             else if (result == "movit.white_balance" || result == "frei0r.colgate")
                 result = tr("White Balance");
             return result;

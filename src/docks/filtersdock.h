@@ -68,19 +68,13 @@ private slots:
     
     void on_listView_doubleClicked(const QModelIndex &index);
     
-    void on_actionDiffusion_triggered();
-    
     void on_actionGlow_triggered();
     
     void on_actionSharpen_triggered();
     
-    void on_actionVignette_triggered();
-    
     void on_actionCrop_triggered();
     
     void on_actionColorGrading_triggered();
-    
-    void on_actionSizePosition_triggered();
     
     void on_actionWhiteBalance_triggered();
 
