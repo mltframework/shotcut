@@ -676,8 +676,10 @@ void MainWindow::readWindowSettings()
 
 void MainWindow::writeSettings()
 {
+#ifndef Q_OS_MAC
     if (isFullScreen())
         showNormal();
+#endif
     Settings.setWindowGeometry(saveGeometry());
     Settings.setWindowState(saveState());
 }
