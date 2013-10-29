@@ -511,7 +511,7 @@ function set_globals {
   CONFIG[3]="./configure --prefix=$FINAL_INSTALL_DIR --disable-lavf --disable-ffms --disable-gpac --disable-swscale --enable-shared --disable-cli"
   CFLAGS_[3]=$CFLAGS
   if test "$TARGET_OS" = "Win32" ; then
-    CONFIG[3]="${CONFIG[3]} --enable-win32thread --host=i686-w64-mingw32 --cross-prefix=$CROSS"
+    CONFIG[3]="${CONFIG[3]} --enable-win32thread --host=i686-w64-mingw32 --cross-prefix=$CROSS --extra-cflags=-fno-aggressive-loop-optimizations"
   elif test "$TARGET_OS" = "Darwin" ; then
     CFLAGS_[3]="-I. -fno-common -read_only_relocs suppress ${CFLAGS_[3]}"
   fi
