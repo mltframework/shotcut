@@ -150,5 +150,11 @@
         <file>oxygen/32x32/actions/edit-clear.png</file>
         <file>dark/32x32/edit-clear.png</file>
         <file>light/32x32/edit-clear.png</file>
+        <file>dark/32x32/zoom-original.png</file>
+        <file>dark/32x32/zoom-fit-best.png</file>
+        <file>light/32x32/zoom-original.png</file>
+        <file>light/32x32/zoom-fit-best.png</file>
+        <file>oxygen/32x32/actions/zoom-original.png</file>
+        <file>oxygen/32x32/actions/zoom-fit-best.png</file>
     </qresource>
 </RCC>

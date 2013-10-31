@@ -30,6 +30,8 @@ class TimeSpinBox;
 class AudioSignal;
 class QSlider;
 class QAction;
+class QScrollArea;
+class QToolButton;
 
 class Player : public QWidget
 {
@@ -112,6 +114,13 @@ private:
     int m_duration;
     bool m_isSeekable;
     int m_isMeltedPlaying;
+    QScrollArea* m_scrollArea;
+    QToolButton* m_zoomButton;
+    QAction* m_zoomFitAction;
+    QAction* m_zoomOriginalAction;
+    QAction* m_zoomOutAction;
+    QAction* m_zoomInAction;
+    float m_zoomToggleFactor;
 
 private slots:
     void updateSelection();
@@ -121,6 +130,12 @@ private slots:
     void on_actionSkipPrevious_triggered();
     void onVolumeButtonToggled(bool checked);
     void onMuteButtonToggled(bool checked);
+    void setZoom(float factor, const QIcon &icon);
+    void zoomFit();
+    void zoomOriginal();
+    void zoomOut();
+    void zoomIn();
+    void toggleZoom(bool checked);
 };
 
 #endif // PLAYER_H

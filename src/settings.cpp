@@ -236,6 +236,16 @@ void ShotcutSettings::setPlayerVolumeVisible(bool b)
     settings.setValue("player/volume-visible", b);
 }
 
+float ShotcutSettings::playerZoom() const
+{
+    return settings.value("player/zoom", 0.0f).toFloat();
+}
+
+void ShotcutSettings::setPlayerZoom(float f)
+{
+    settings.setValue("player/zoom", f);
+}
+
 QString ShotcutSettings::playlistThumbnails() const
 {
     return settings.value("playlist/thumbnails", "small").toString();

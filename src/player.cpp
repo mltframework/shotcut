@@ -32,6 +32,7 @@ Player::Player(QWidget *parent)
     , m_position(0)
     , m_seekPosition(SEEK_INACTIVE)
     , m_isMeltedPlaying(-1)
+    , m_zoomToggleFactor(Settings.playerZoom() == 0.0f? 1.0f : Settings.playerZoom())
 {
     setObjectName("Player");
     Mlt::Controller::singleton(this);
@@ -52,7 +53,12 @@ Player::Player(QWidget *parent)
     QHBoxLayout* hlayout = new QHBoxLayout(tmp);
     hlayout->setSpacing(4);
     hlayout->setContentsMargins(0, 0, 0, 0);
-    hlayout->addWidget(MLT.videoWidget(), 10);
+    m_scrollArea = new QScrollArea;
+    m_scrollArea->setWidgetResizable(true);
+    m_scrollArea->setFrameShape(QFrame::NoFrame);
+    m_scrollArea->setAlignment(Qt::AlignCenter);
+    m_scrollArea->setWidget(MLT.videoWidget());
+    hlayout->addWidget(m_scrollArea, 10);
     QVBoxLayout *volumeLayoutV = new QVBoxLayout;
     volumeLayoutV->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding));
     QHBoxLayout *volumeLayoutH = new QHBoxLayout;
@@ -144,6 +150,28 @@ Player::Player(QWidget *parent)
     toolbar->addAction(actionPlay);
     toolbar->addAction(actionFastForward);
     toolbar->addAction(actionSkipNext);
+
+    m_zoomButton = new QToolButton;
+    QMenu* zoomMenu = new QMenu(this);
+    m_zoomFitAction = zoomMenu->addAction(
+        QIcon::fromTheme("zoom-fit-best", QIcon(":/icons/oxygen/16x16/actions/zoom-fit-best")),
+        tr("Zoom Fit"), this, SLOT(zoomFit()));
+    m_zoomOriginalAction = zoomMenu->addAction(
+        QIcon::fromTheme("zoom-original", QIcon(":/icons/oxygen/16x16/actions/zoom-original")),
+        tr("Zoom 100%"), this, SLOT(zoomOriginal()));
+    m_zoomOutAction = zoomMenu->addAction(
+        QIcon::fromTheme("zoom-out", QIcon(":/icons/oxygen/16x16/actions/zoom-out")),
+        tr("Zoom 50%"), this, SLOT(zoomOut()));
+    m_zoomInAction = zoomMenu->addAction(
+        QIcon::fromTheme("zoom-in", QIcon(":/icons/oxygen/16x16/actions/zoom-in")),
+        tr("Zoom 200%"), this, SLOT(zoomIn()));
+    connect(m_zoomButton, SIGNAL(toggled(bool)), SLOT(toggleZoom(bool)));
+    m_zoomButton->setMenu(zoomMenu);
+    m_zoomButton->setPopupMode(QToolButton::MenuButtonPopup);
+    m_zoomButton->setCheckable(true);
+    m_zoomButton->setToolTip(tr("Toggle zoom"));
+    toolbar->addWidget(m_zoomButton);
+
     spacer = new QWidget(this);
     spacer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
     toolbar->addWidget(spacer);
@@ -358,6 +386,7 @@ void Player::onProducerOpened()
     m_positionSpinner->setEnabled(m_isSeekable);
     onMuteButtonToggled(Settings.playerMuted());
     onVolumeChanged(m_volumeSlider->value());
+    toggleZoom(Settings.playerZoom() > 0.0f);
 
     actionPlay->setEnabled(true);
     actionSkipPrevious->setEnabled(m_isSeekable);
@@ -638,4 +667,56 @@ void Player::onMuteButtonToggled(bool checked)
         MLT.setVolume(m_savedVolume);
     }
     Settings.setPlayerMuted(checked);
+}
+
+void Player::setZoom(float factor, const QIcon& icon)
+{
+    Settings.setPlayerZoom(factor);
+    if (factor == 0.0f) {
+        m_scrollArea->setWidgetResizable(true);
+        m_zoomButton->setIcon(icon);
+        m_zoomButton->setChecked(false);
+    } else {
+        m_zoomToggleFactor = factor;
+        m_scrollArea->setWidgetResizable(false);
+        MLT.videoWidget()->resize(
+            qRound(factor * MLT.profile().width() * MLT.profile().sar()),
+            qRound(factor * MLT.profile().height()));
+        m_scrollArea->horizontalScrollBar()->setValue(m_scrollArea->horizontalScrollBar()->maximum() / 2);
+        m_scrollArea->verticalScrollBar()->setValue(m_scrollArea->verticalScrollBar()->maximum() / 2);
+        m_zoomButton->setIcon(icon);
+        m_zoomButton->setChecked(true);
+    }
+}
+
+void Player::zoomFit()
+{
+    setZoom(0.0f, m_zoomFitAction->icon());
+}
+
+void Player::zoomOriginal()
+{
+    setZoom(1.0f, m_zoomOriginalAction->icon());
+}
+
+void Player::zoomOut()
+{
+    setZoom(0.5f, m_zoomOutAction->icon());
+}
+
+void Player::zoomIn()
+{
+    setZoom(2.0f, m_zoomInAction->icon());
+}
+
+void Player::toggleZoom(bool checked)
+{
+    if (!checked || m_zoomToggleFactor == 0.0f)
+        zoomFit();
+    else if (m_zoomToggleFactor == 1.0f)
+        zoomOriginal();
+    else if (m_zoomToggleFactor == 0.5f)
+        zoomOut();
+    else if (m_zoomToggleFactor == 2.0f)
+        zoomIn();
 }

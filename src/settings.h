@@ -73,6 +73,8 @@ public:
     void setPlayerVolume(int);
     bool playerVolumeVisible() const;
     void setPlayerVolumeVisible(bool);
+    float playerZoom() const;
+    void setPlayerZoom(float);
 
     QString playlistThumbnails() const;
     void setPlaylistThumbnails(const QString&);
