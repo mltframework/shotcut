@@ -298,6 +298,11 @@ void Player::setMarkers(const QList<int> &markers)
     m_scrubber->setMarkers(markers);
 }
 
+QSize Player::videoSize() const
+{
+    return m_scrollArea->contentsRect().size();
+}
+
 void Player::resizeEvent(QResizeEvent*)
 {
     MLT.onWindowResize();

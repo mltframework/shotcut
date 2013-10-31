@@ -21,6 +21,7 @@
 
 #include <QWidget>
 #include <QIcon>
+#include <QSize>
 #include "mltcontroller.h"
 
 class ScrubBar;
@@ -42,6 +43,7 @@ public:
     void setIn(int);
     void setOut(int);
     void setMarkers(const QList<int>&);
+    QSize videoSize() const;
     int position() const {
         return m_position;
     }
