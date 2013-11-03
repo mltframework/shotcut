@@ -430,7 +430,7 @@ function set_globals {
     export QTDIR="$HOME/Qt/5.1.1/clang_64"
     export RANLIB=ranlib
   else
-    if [ "$(uname -p)" = "x86_64" ]; then
+    if [ "$(uname -m)" = "x86_64" ]; then
       export QTDIR="$HOME/Qt/5.1.1/gcc_64"
     else
       export QTDIR="$HOME/Qt/5.1.1/gcc"
