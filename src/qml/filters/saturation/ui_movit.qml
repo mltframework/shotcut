@@ -31,7 +31,7 @@ Rectangle {
             slider.value = 100
         } else {
             // Initialize parameter values
-            slider.value = filter.get(saturationParameter) * slider.maximumValue
+            slider.value = filter.get(saturationParameter) * 100
         }
     }
 
