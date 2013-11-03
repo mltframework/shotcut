@@ -1719,3 +1719,8 @@ void MainWindow::on_actionFusionLight_triggered()
     changeTheme("light");
     Settings.setTheme("light");
 }
+
+void MainWindow::on_actionTutorials_triggered()
+{
+    QDesktopServices::openUrl(QUrl("http://www.shotcut.org/bin/view/Shotcut/Tutorials"));
+}

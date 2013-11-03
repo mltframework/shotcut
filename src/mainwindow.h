@@ -175,6 +175,7 @@ private slots:
     void on_actionSystemTheme_triggered();
     void on_actionFusionDark_triggered();
     void on_actionFusionLight_triggered();
+    void on_actionTutorials_triggered();
 };
 
 #define MAIN MainWindow::singleton()

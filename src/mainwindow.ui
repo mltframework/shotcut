@@ -89,6 +89,7 @@ p, li { white-space: pre-wrap; }
      <string>&amp;Help</string>
     </property>
     <addaction name="actionFAQ"/>
+    <addaction name="actionTutorials"/>
     <addaction name="actionForum"/>
     <addaction name="separator"/>
     <addaction name="actionAbout_Shotcut"/>
@@ -564,6 +565,11 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Fusion Light</string>
+   </property>
+  </action>
+  <action name="actionTutorials">
+   <property name="text">
+    <string>Tutorials...</string>
    </property>
   </action>
  </widget>
