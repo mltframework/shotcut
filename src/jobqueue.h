@@ -55,6 +55,8 @@ public:
     void appendToLog(const QString&);
     QString log() const;
     QString xml() const;
+    QString label() const { return m_label; }
+    void setLabel(const QString& label);
 
 public slots:
     void stop();
@@ -69,6 +71,7 @@ private:
     bool m_ran;
     bool m_killed;
     QString m_log;
+    QString m_label;
 
 private slots:
     void onFinished(int exitCode, QProcess::ExitStatus exitStatus);

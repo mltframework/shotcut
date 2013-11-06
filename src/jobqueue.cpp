@@ -27,6 +27,7 @@ MeltJob::MeltJob(const QString& name, const QString& xml)
     , m_xml(xml)
     , m_ran(false)
     , m_killed(false)
+    , m_label(name)
 {
     setObjectName(name);
     connect(this, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(onFinished(int, QProcess::ExitStatus)));
@@ -100,6 +101,11 @@ QString MeltJob::xml() const
     return s;
 }
 
+void MeltJob::setLabel(const QString &label)
+{
+    m_label = label;
+}
+
 void MeltJob::stop()
 {
     terminate();
@@ -149,7 +155,7 @@ MeltJob* JobQueue::add(MeltJob* job)
 {
     int row = rowCount();
     QList<QStandardItem*> items;
-    items << new QStandardItem(job->objectName());
+    items << new QStandardItem(job->label());
     items << new QStandardItem(tr("pending"));
     appendRow(items);
     job->setParent(this);

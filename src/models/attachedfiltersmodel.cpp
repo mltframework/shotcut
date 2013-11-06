@@ -125,7 +125,6 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
                 else if (filter->get("mlt_service"))
                     result = QString::fromUtf8(filter->get("mlt_service"));
             }
-            delete filter;
             // Relabel for widgets UIs
             if (result == "movit.blur" || result == "boxblur")
                 result = tr("Blur");
@@ -143,6 +142,9 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
                 result = tr("Sharpen");
             else if (result == "movit.white_balance" || result == "frei0r.colgate")
                 result = tr("White Balance");
+            else if (result == "sox" && filter->get("use_peak"))
+                result = tr("Normalize");
+            delete filter;
             return result;
         }
     case Qt::CheckStateRole: {

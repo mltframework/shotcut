@@ -74,7 +74,8 @@ SOURCES += main.cpp\
     settings.cpp \
     widgets/lineeditclear.cpp \
     leapnetworklistener.cpp \
-    widgets/webvfxproducer.cpp
+    widgets/webvfxproducer.cpp \
+    filters/normalize.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -142,7 +143,8 @@ HEADERS  += mainwindow.h \
     settings.h \
     widgets/lineeditclear.h \
     leapnetworklistener.h \
-    widgets/webvfxproducer.h
+    widgets/webvfxproducer.h \
+    filters/normalize.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
@@ -186,7 +188,8 @@ FORMS    += mainwindow.ui \
     filters/webvfxfilter.ui \
     htmleditor/htmleditor.ui \
     htmleditor/inserthtmldialog.ui \
-    widgets/webvfxproducer.ui
+    widgets/webvfxproducer.ui \
+    filters/normalize.ui
 
 RESOURCES += \
     ../icons/resources.qrc \
