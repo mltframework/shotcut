@@ -49,6 +49,8 @@ NormalizeFilter::NormalizeFilter(Mlt::Filter filter, bool setDefaults, QWidget *
     }
     if (m_filter.get("effect") && QString::fromLatin1(m_filter.get("effect")).startsWith("vol "))
         ui->statusLabel->setText(tr("Analysis complete"));
+    else
+        ui->statusLabel->setText(tr("Click Analyze to use this filter."));
 }
 
 NormalizeFilter::~NormalizeFilter()
