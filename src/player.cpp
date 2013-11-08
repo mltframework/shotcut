@@ -57,6 +57,7 @@ Player::Player(QWidget *parent)
     m_scrollArea->setWidgetResizable(true);
     m_scrollArea->setFrameShape(QFrame::NoFrame);
     m_scrollArea->setAlignment(Qt::AlignCenter);
+    m_scrollArea->setFocusPolicy(Qt::NoFocus);
     m_scrollArea->setWidget(MLT.videoWidget());
     hlayout->addWidget(m_scrollArea, 10);
     QVBoxLayout *volumeLayoutV = new QVBoxLayout;
