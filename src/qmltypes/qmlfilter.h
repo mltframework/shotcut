@@ -26,6 +26,8 @@
 #include "models/attachedfiltersmodel.h"
 #include "qmlmetadata.h"
 
+class MeltJob;
+
 class QmlFilter : public QObject
 {
     Q_OBJECT
@@ -49,12 +51,14 @@ public:
     /// returns the index of the new preset
     Q_INVOKABLE int  savePreset(const QStringList& propertyNames, const QString& name = QString());
     Q_INVOKABLE void deletePreset(const QString& name);
+    Q_INVOKABLE void stabilizeVideo();
 
 public slots:
     void preset(const QString& name);
 
 signals:
     void presetsChanged();
+    void stabilizeFinished(bool isSuccess);
 
 private:
     AttachedFiltersModel& m_model;
@@ -65,6 +69,9 @@ private:
     QStringList m_presets;
     
     QString objectNameOrService();
+
+private slots:
+    void onStabilizeFinished(MeltJob* job, bool isSuccess);
 };
 
 #endif // FILTER_H

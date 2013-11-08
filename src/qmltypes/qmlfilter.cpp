@@ -18,8 +18,13 @@
 
 #include "qmlfilter.h"
 #include "mltcontroller.h"
+#include "jobqueue.h"
 #include <QStandardPaths>
 #include <QDir>
+#include <QIODevice>
+#include <QTemporaryFile>
+#include <QFile>
+#include <QtXml>
 
 QmlFilter::QmlFilter(AttachedFiltersModel& model, const QmlMetadata &metadata, int row, QObject *parent)
     : QObject(parent)
@@ -120,6 +125,62 @@ void QmlFilter::deletePreset(const QString &name)
     emit presetsChanged();
 }
 
+void QmlFilter::stabilizeVideo()
+{
+    // get temp filename for input xml
+    QTemporaryFile tmp(QDir::tempPath().append("/shotcut-XXXXXX"));
+    tmp.open();
+    QString tmpName = tmp.fileName();
+    tmp.close();
+    tmpName.append(".mlt");
+    m_filter->set("vectors", NULL, 0);
+    int disable = m_filter->get_int("disable");
+    m_filter->set("disable", 0);
+    MLT.saveXML(tmpName);
+    m_filter->set("disable", disable);
+
+    // get temp filename for output xml
+    QTemporaryFile tmpTarget(QDir::tempPath().append("/shotcut-XXXXXX"));
+    tmpTarget.open();
+    QString target = tmpTarget.fileName();
+    tmpTarget.close();
+    target.append(".mlt");
+
+    // parse xml
+    QFile f1(tmpName);
+    f1.open(QIODevice::ReadOnly);
+    QDomDocument dom(tmpName);
+    dom.setContent(&f1);
+    f1.close();
+
+    // add consumer element
+    QDomElement consumerNode = dom.createElement("consumer");
+    QDomNodeList profiles = dom.elementsByTagName("profile");
+    if (profiles.isEmpty())
+        dom.documentElement().insertAfter(consumerNode, dom.documentElement());
+    else
+        dom.documentElement().insertAfter(consumerNode, profiles.at(profiles.length() - 1));
+    consumerNode.setAttribute("mlt_service", "xml");
+    consumerNode.setAttribute("all", 1);
+    consumerNode.setAttribute("audio_off", 1);
+    consumerNode.setAttribute("no_meta", 1);
+    consumerNode.setAttribute("resource", target);
+
+    // save new xml
+    f1.open(QIODevice::WriteOnly);
+    QTextStream ts(&f1);
+    dom.save(ts, 2);
+    f1.close();
+
+    MeltJob* job = new MeltJob(target, tmpName);
+    if (job) {
+        connect(job, SIGNAL(finished(MeltJob*, bool)), SLOT(onStabilizeFinished(MeltJob*, bool)));
+        QFileInfo info(MLT.resource());
+        job->setLabel(tr("Stabilize %1").arg(info.fileName()));
+        JOBS.add(job);
+    }
+}
+
 void QmlFilter::preset(const QString &name)
 {
     QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
@@ -133,4 +194,45 @@ void QmlFilter::preset(const QString &name)
 QString QmlFilter::objectNameOrService()
 {
     return m_metadata.objectName().isEmpty()? m_metadata.mlt_service() : m_metadata.objectName();
+}
+
+void QmlFilter::onStabilizeFinished(MeltJob *job, bool isSuccess)
+{
+    QString fileName = job->objectName();
+
+    if (isSuccess) {
+        // parse the xml
+        QFile file(fileName);
+        file.open(QIODevice::ReadOnly);
+        QDomDocument dom(fileName);
+        dom.setContent(&file);
+        file.close();
+
+        QDomNodeList filters = dom.elementsByTagName("filter");
+        for (int i = 0; i < filters.size(); i++) {
+            QDomNode filterNode = filters.at(i);
+            bool found = false;
+
+            QDomNodeList properties = filterNode.toElement().elementsByTagName("property");
+            for (int j = 0; j < properties.size(); j++) {
+                QDomNode propertyNode = properties.at(j);
+                if (propertyNode.attributes().namedItem("name").toAttr().value() == "mlt_service"
+                        && propertyNode.toElement().text() == "videostab2") {
+                    found = true;
+                    break;
+                }
+            }
+            if (found) {
+                for (int j = 0; j < properties.size(); j++) {
+                    QDomNode propertyNode = properties.at(j);
+                    if (propertyNode.attributes().namedItem("name").toAttr().value() == "vectors") {
+                        m_filter->set("vectors", propertyNode.toElement().text().toLatin1().constData());
+                    }
+                }
+                break;
+            }
+        }
+    }
+    QFile::remove(fileName);
+    emit stabilizeFinished(isSuccess);
 }
