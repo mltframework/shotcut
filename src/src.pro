@@ -226,7 +226,10 @@ OTHER_FILES += \
     qml/filters/rotate/ui.qml \
     qml/filters/rotate/meta.qml \
     qml/filters/stabilize/meta.qml \
-    qml/filters/stabilize/ui.qml
+    qml/filters/stabilize/ui.qml \
+    qml/filters/audio_mono/meta.qml \
+    qml/filters/audio_swapchannels/meta.qml \
+    qml/filters/audio_swapchannels/ui.qml
 
 lupdate_hack {
     SOURCES += \
@@ -252,7 +255,10 @@ lupdate_hack {
     qml/filters/rotate/ui.qml \
     qml/filters/rotate/meta.qml \
     qml/filters/stabilize/meta.qml \
-    qml/filters/stabilize/ui.qml
+    qml/filters/stabilize/ui.qml \
+    qml/filters/audio_mono/meta.qml \
+    qml/filters/audio_swapchannels/meta.qml \
+    qml/filters/audio_swapchannels/ui.qml
 }
 
 TRANSLATIONS += \
