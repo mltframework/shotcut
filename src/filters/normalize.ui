@@ -24,29 +24,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QRadioButton" name="peakRadioButton">
-       <property name="toolTip">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The highest peak is raised to the maximum level (0 dBFS)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-       <property name="text">
-        <string>Peak</string>
-       </property>
-       <property name="checked">
-        <bool>false</bool>
-       </property>
-       <attribute name="buttonGroup">
-        <string notr="true">buttonGroup</string>
-       </attribute>
-      </widget>
-     </item>
-     <item>
       <widget class="QRadioButton" name="powerrRadioButton">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
        <property name="toolTip">
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The average perceived power level (using root mean square) is raised or lowered to -12 dBFS &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
@@ -55,6 +33,28 @@
        </property>
        <property name="checked">
         <bool>true</bool>
+       </property>
+       <attribute name="buttonGroup">
+        <string notr="true">buttonGroup</string>
+       </attribute>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="peakRadioButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="toolTip">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The highest peak is raised to the maximum level (0 dBFS)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="text">
+        <string>Peak</string>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
        </property>
        <attribute name="buttonGroup">
         <string notr="true">buttonGroup</string>
@@ -146,7 +146,6 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>peakRadioButton</tabstop>
   <tabstop>powerrRadioButton</tabstop>
   <tabstop>levelSpinBox</tabstop>
   <tabstop>analyzeButton</tabstop>
