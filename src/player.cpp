@@ -66,6 +66,7 @@ Player::Player(QWidget *parent)
     volumeLayoutH->setSpacing(0);
     volumeLayoutH->setContentsMargins(0, 0, 0, 0);
     m_volumeSlider = new QSlider(Qt::Vertical);
+    m_volumeSlider->setFocusPolicy(Qt::NoFocus);
     m_audioSignal = new AudioSignal(this);
     m_volumeSlider->setMinimumHeight(m_audioSignal->minimumHeight());
     m_volumeSlider->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -89,6 +90,7 @@ Player::Player(QWidget *parent)
 
     // Add mute button
     QPushButton* muteButton = new QPushButton(this);
+    muteButton->setFocusPolicy(Qt::NoFocus);
     muteButton->setObjectName(QString::fromUtf8("muteButton"));
     muteButton->setIcon(QIcon::fromTheme("dialog-cancel", QIcon(":/icons/oxygen/16x16/actions/dialog-cancel.png")));
     muteButton->setToolTip(tr("Silence the audio"));
@@ -99,6 +101,7 @@ Player::Player(QWidget *parent)
 
     // Add volume button
     QPushButton* volumeButton = new QPushButton(this);
+    volumeButton->setFocusPolicy(Qt::NoFocus);
     volumeButton->setObjectName(QString::fromUtf8("volumeButton"));
     volumeButton->setToolTip(tr("Show or hide the volume control"));
     volumeButton->setIcon(QIcon::fromTheme("player-volume", QIcon(":/icons/oxygen/16x16/actions/player-volume.png")));
@@ -110,6 +113,7 @@ Player::Player(QWidget *parent)
 
     // Add the scrub bar.
     m_scrubber = new ScrubBar(this);
+    m_scrubber->setFocusPolicy(Qt::NoFocus);
     m_scrubber->setObjectName("scrubBar");
     m_scrubber->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
     vlayout->addWidget(m_scrubber);
