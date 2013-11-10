@@ -255,3 +255,8 @@ void ShotcutSettings::setPlaylistThumbnails(const QString& s)
 {
     settings.setValue("playlist/thumbnails", s);
 }
+
+void ShotcutSettings::sync()
+{
+    settings.sync();
+}

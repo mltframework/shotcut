@@ -79,6 +79,8 @@ public:
     QString playlistThumbnails() const;
     void setPlaylistThumbnails(const QString&);
 
+    void sync();
+
 private:
     QSettings settings;
 };

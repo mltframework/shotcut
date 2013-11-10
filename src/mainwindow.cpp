@@ -682,6 +682,7 @@ void MainWindow::writeSettings()
 #endif
     Settings.setWindowGeometry(saveGeometry());
     Settings.setWindowState(saveState());
+    Settings.sync();
 }
 
 void MainWindow::configureVideoWidget()
