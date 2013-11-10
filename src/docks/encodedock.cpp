@@ -257,7 +257,7 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
             }
             else
                 p->set("r", ui->fpsSpinner->value());
-            if (ui->videoCodecCombo->currentText() == "prores")
+            if (ui->videoCodecCombo->currentText() == "prores" || ui->formatCombo->currentText() == "image2")
                 p->set("threads", 1);
             else if (ui->videoCodecThreadsSpinner->value() == 0 && ui->videoCodecCombo->currentText() != "libx264")
                 p->set("threads", QThread::idealThreadCount() - 1);
