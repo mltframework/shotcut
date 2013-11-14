@@ -54,6 +54,7 @@
 #include "htmleditor/htmleditor.h"
 #include "settings.h"
 #include "leapnetworklistener.h"
+#include "database.h"
 
 #include <QtWidgets>
 #include <QDebug>
@@ -71,6 +72,7 @@ MainWindow::MainWindow()
     , m_htmlEditor(0)
 {
     QThreadPool::globalInstance()->setMaxThreadCount(1);
+    Database::singleton(this);
 
     // Create the UI.
     ui->setupUi(this);

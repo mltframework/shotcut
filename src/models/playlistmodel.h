@@ -59,7 +59,7 @@ public:
     QModelIndex decrementIndex(const QModelIndex& index) const;
     QModelIndex createIndex(int row, int column) const;
     void createIfNeeded();
-    void makeThumbnail(Mlt::Producer producer, int in, int out, int row = -1);
+    void showThumbnail(int row);
     void refreshThumbnails();
     Mlt::Playlist* playlist()
     {

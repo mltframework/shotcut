@@ -1,6 +1,6 @@
 CONFIG   += link_prl
 
-QT       += widgets opengl xml network qml quick webkitwidgets
+QT       += widgets opengl xml network qml quick webkitwidgets sql
 
 TARGET = shotcut
 TEMPLATE = app
@@ -75,7 +75,8 @@ SOURCES += main.cpp\
     widgets/lineeditclear.cpp \
     leapnetworklistener.cpp \
     widgets/webvfxproducer.cpp \
-    filters/normalize.cpp
+    filters/normalize.cpp \
+    database.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -144,7 +145,8 @@ HEADERS  += mainwindow.h \
     widgets/lineeditclear.h \
     leapnetworklistener.h \
     widgets/webvfxproducer.h \
-    filters/normalize.h
+    filters/normalize.h \
+    database.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \

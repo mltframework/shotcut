@@ -26,7 +26,10 @@
 #include <QtDebug>
 #include <QApplication>
 #include <QPalette>
+#include <QCryptographicHash>
+
 #include "settings.h"
+#include "database.h"
 
 static const char* kThumbnailInProperty = "shotcut:thumbnail-in";
 static const char* kThumbnailOutProperty = "shotcut:thumbnail-out";
@@ -44,39 +47,98 @@ class UpdateThumbnailTask : public QRunnable
     int m_in;
     int m_out;
     int m_row;
+
 public:
     UpdateThumbnailTask(PlaylistModel* model, Mlt::Producer& producer, int in, int out, int row)
         : QRunnable()
         , m_model(model)
         , m_producer(producer)
+        , m_tempProducer(0)
         , m_in(in)
         , m_out(out)
         , m_row(row)
-    {
-        QString service = producer.get("mlt_service");
-        if (service.startsWith("xml"))
-            service = "xml-nogl";
-        m_tempProducer = new Mlt::Producer(MLT.profile(), service.toUtf8().constData(), producer.get("resource"));
-        if (m_tempProducer->is_valid()) {
-            Mlt::Filter scaler(MLT.profile(), "swscale");
-            Mlt::Filter converter(MLT.profile(), "avcolor_space");
-            m_tempProducer->attach(scaler);
-            m_tempProducer->attach(converter);
-        }
-    }
+    {}
+
     ~UpdateThumbnailTask()
     {
         delete m_tempProducer;
     }
-    void run() {
-        m_model->makeThumbnail(*m_tempProducer, m_in, m_out, m_row);
-        QImage* image = (QImage*) m_tempProducer->get_data(kThumbnailInProperty);
-        if (image)
-            m_producer.set(kThumbnailInProperty, new QImage(*image), 0, (mlt_destructor) deleteQImage, NULL);
-        image = (QImage*) m_tempProducer->get_data(kThumbnailOutProperty);
-        if (image)
-            m_producer.set(kThumbnailOutProperty, new QImage(*image), 0, (mlt_destructor) deleteQImage, NULL);
+
+    Mlt::Producer* tempProducer()
+    {
+        if (!m_tempProducer) {
+            QString service = m_producer.get("mlt_service");
+            if (service.startsWith("xml"))
+                service = "xml-nogl";
+            m_tempProducer = new Mlt::Producer(MLT.profile(), service.toUtf8().constData(), m_producer.get("resource"));
+            if (m_tempProducer->is_valid()) {
+                Mlt::Filter scaler(MLT.profile(), "swscale");
+                Mlt::Filter converter(MLT.profile(), "avcolor_space");
+                m_tempProducer->attach(scaler);
+                m_tempProducer->attach(converter);
+            }
+        }
+        return m_tempProducer;
     }
+
+    QString cacheKey(int frameNumber)
+    {
+        m_producer.set("_shotcut:thumbpos", frameNumber);
+        QString time = m_producer.get_time("_shotcut:thumbpos", mlt_time_clock);
+        // Reduce the precision to centiseconds to increase chance for cache hit
+        // without much loss of accuracy.
+        time = time.left(time.size() - 1);
+        QString key = QString("%1 %2")
+                .arg(m_producer.get("resource"))
+                .arg(time);
+        QCryptographicHash hash(QCryptographicHash::Sha1);
+        hash.addData(key.toUtf8());
+        return hash.result().toHex();
+    }
+
+    void run()
+    {
+        QString setting = Settings.playlistThumbnails();
+        if (setting == "hidden")
+            return;
+
+        QImage image = DB.getThumbnail(cacheKey(m_in));
+        if (image.isNull()) {
+            image = makeThumbnail(m_in);
+            m_producer.set(kThumbnailInProperty, new QImage(image), 0, (mlt_destructor) deleteQImage, NULL);
+            DB.putThumbnail(cacheKey(m_in), image);
+        } else {
+            m_producer.set(kThumbnailInProperty, new QImage(image), 0, (mlt_destructor) deleteQImage, NULL);
+        }
+        m_model->showThumbnail(m_row);
+
+        if (setting == "tall" || setting == "wide") {
+            image = DB.getThumbnail(cacheKey(m_out));
+            if (image.isNull()) {
+                image = makeThumbnail(m_out);
+                m_producer.set(kThumbnailOutProperty, new QImage(image), 0, (mlt_destructor) deleteQImage, NULL);
+                DB.putThumbnail(cacheKey(m_out), image);
+            } else {
+                m_producer.set(kThumbnailOutProperty, new QImage(image), 0, (mlt_destructor) deleteQImage, NULL);
+            }
+            m_model->showThumbnail(m_row);
+        }
+    }
+
+    QImage makeThumbnail(int frameNumber)
+    {
+        int height = PlaylistModel::THUMBNAIL_HEIGHT * 2;
+        int width = height * MLT.profile().dar();
+
+        tempProducer()->seek(frameNumber);
+        Mlt::Frame* frame = tempProducer()->get_frame();
+        QImage thumb = MLT.image(frame, width, height);
+        delete frame;
+        return thumb;
+    }
+
+signals:
+    void thumbnailUpdated(int row);
 };
 
 PlaylistModel::PlaylistModel(QObject *parent)
@@ -470,31 +532,9 @@ void PlaylistModel::createIfNeeded()
     }
 }
 
-void PlaylistModel::makeThumbnail(Mlt::Producer producer, int in, int out, int row)
+void PlaylistModel::showThumbnail(int row)
 {
-    QString setting = Settings.playlistThumbnails();
-    if (setting == "hidden")
-        return;
-    int height = PlaylistModel::THUMBNAIL_HEIGHT * 2;
-    int width = height * MLT.profile().dar();
-
-    // render the in point thumbnail
-    producer.seek(in);
-    Mlt::Frame* frame = producer.get_frame();
-    QImage thumb = MLT.image(frame, width, height);
-    delete frame;
-    producer.set(kThumbnailInProperty, new QImage(thumb), 0, (mlt_destructor) deleteQImage, NULL);
-
-    if (setting == "tall" || setting == "wide") {
-        // render the out point thumbnail
-        producer.seek(out);
-        frame = producer.get_frame();
-        thumb = MLT.image(frame, width, height);
-        delete frame;
-        producer.set(kThumbnailOutProperty, new QImage(thumb), 0, (mlt_destructor) deleteQImage, NULL);
-    }
-    if (row >= 0)
-        emit dataChanged(createIndex(row, COLUMN_THUMBNAIL), createIndex(row, COLUMN_THUMBNAIL));
+    emit dataChanged(createIndex(row, COLUMN_THUMBNAIL), createIndex(row, COLUMN_THUMBNAIL));
 }
 
 void PlaylistModel::refreshThumbnails()
