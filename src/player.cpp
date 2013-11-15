@@ -159,16 +159,16 @@ Player::Player(QWidget *parent)
     m_zoomButton = new QToolButton;
     QMenu* zoomMenu = new QMenu(this);
     m_zoomFitAction = zoomMenu->addAction(
-        QIcon::fromTheme("zoom-fit-best", QIcon(":/icons/oxygen/16x16/actions/zoom-fit-best")),
+        QIcon::fromTheme("zoom-fit-best", QIcon(":/icons/oxygen/32x32/actions/zoom-fit-best")),
         tr("Zoom Fit"), this, SLOT(zoomFit()));
     m_zoomOriginalAction = zoomMenu->addAction(
-        QIcon::fromTheme("zoom-original", QIcon(":/icons/oxygen/16x16/actions/zoom-original")),
+        QIcon::fromTheme("zoom-original", QIcon(":/icons/oxygen/32x32/actions/zoom-original")),
         tr("Zoom 100%"), this, SLOT(zoomOriginal()));
     m_zoomOutAction = zoomMenu->addAction(
-        QIcon::fromTheme("zoom-out", QIcon(":/icons/oxygen/16x16/actions/zoom-out")),
+        QIcon::fromTheme("zoom-out", QIcon(":/icons/oxygen/32x32/actions/zoom-out")),
         tr("Zoom 50%"), this, SLOT(zoomOut()));
     m_zoomInAction = zoomMenu->addAction(
-        QIcon::fromTheme("zoom-in", QIcon(":/icons/oxygen/16x16/actions/zoom-in")),
+        QIcon::fromTheme("zoom-in", QIcon(":/icons/oxygen/32x32/actions/zoom-in")),
         tr("Zoom 200%"), this, SLOT(zoomIn()));
     connect(m_zoomButton, SIGNAL(toggled(bool)), SLOT(toggleZoom(bool)));
     m_zoomButton->setMenu(zoomMenu);
