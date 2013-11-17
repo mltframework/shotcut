@@ -1249,7 +1249,7 @@ void MainWindow::onCutModified()
 
 void MainWindow::updateMarkers()
 {
-    if (m_playlistDock->model()->playlist()) {
+    if (m_playlistDock->model()->playlist() && MLT.isPlaylist()) {
         QList<int> markers;
         int n = m_playlistDock->model()->playlist()->count();
         for (int i = 0; i < n; i++)
