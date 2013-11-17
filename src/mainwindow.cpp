@@ -55,6 +55,7 @@
 #include "settings.h"
 #include "leapnetworklistener.h"
 #include "database.h"
+#include "widgets/gltestwidget.h"
 
 #include <QtWidgets>
 #include <QDebug>
@@ -71,6 +72,7 @@ MainWindow::MainWindow()
     , m_isPlaylistLoaded(false)
     , m_htmlEditor(0)
 {
+    new GLTestWidget(this);
     QThreadPool::globalInstance()->setMaxThreadCount(1);
     Database::singleton(this);
 

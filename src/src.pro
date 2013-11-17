@@ -76,7 +76,8 @@ SOURCES += main.cpp\
     leapnetworklistener.cpp \
     widgets/webvfxproducer.cpp \
     filters/normalize.cpp \
-    database.cpp
+    database.cpp \
+    widgets/gltestwidget.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -146,7 +147,8 @@ HEADERS  += mainwindow.h \
     leapnetworklistener.h \
     widgets/webvfxproducer.h \
     filters/normalize.h \
-    database.h
+    database.h \
+    widgets/gltestwidget.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
