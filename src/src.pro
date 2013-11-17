@@ -234,7 +234,9 @@ OTHER_FILES += \
     qml/filters/audio_mono/meta.qml \
     qml/filters/audio_swapchannels/meta.qml \
     qml/filters/audio_swapchannels/ui.qml \
-    qml/filters/invert/meta.qml
+    qml/filters/invert/meta.qml \
+    qml/filters/sepia/meta.qml \
+    qml/filters/sepia/ui.qml
 
 lupdate_hack {
     SOURCES += \
@@ -264,7 +266,9 @@ lupdate_hack {
     qml/filters/audio_mono/meta.qml \
     qml/filters/audio_swapchannels/meta.qml \
     qml/filters/audio_swapchannels/ui.qml \
-    qml/filters/invert/meta.qml
+    qml/filters/invert/meta.qml \
+    qml/filters/sepia/meta.qml \
+    qml/filters/sepia/ui.qml
 }
 
 TRANSLATIONS += \
