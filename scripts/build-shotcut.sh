@@ -1340,6 +1340,9 @@ SLIB_EXTRA_CMD=-"mv $$(@:$(SLIBSUF)=.orig.def) $$(@:$(SLIBSUF)=.def)"
         SOXLIB=$(ldd "$FINAL_INSTALL_DIR"/lib/mlt/libmltsox.so | awk '/libsox/ {print $3}')
         log SOXLIB=$SOXLIB
         cmd install -c "$SOXLIB" "$FINAL_INSTALL_DIR"/lib
+        PNGLIB=$(ldd "$SOXLIB" | awk '/libpng/ {print $3}')
+        log PNGLIB=$PNGLIB
+        cmd install -c "$PNGLIB" "$FINAL_INSTALL_DIR"/lib
         LEAPLIB=$(ldd "$FINAL_INSTALL_DIR"/bin/shotcut | awk '/Leap/ {print $3}')
         log LEAPLIB=$LEAPLIB
         cmd install -c "$LEAPLIB" "$FINAL_INSTALL_DIR"/lib
