@@ -25,6 +25,8 @@ RequestExecutionLevel admin
 
 XPStyle on
 
+SetCompressor lzma
+
 ;--------------------------------
 
 ; Pages
