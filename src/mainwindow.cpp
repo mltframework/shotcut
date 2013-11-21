@@ -516,6 +516,9 @@ void MainWindow::open(Mlt::Producer* producer)
     if (!MLT.setProducer(producer))
         emit producerOpened();
     m_player->setFocus();
+
+    // Needed on Windows. Upon first file open, window is deactivated, perhaps OpenGL-related.
+    activateWindow();
 }
 
 void MainWindow::open(const QString& url, const Mlt::Properties* properties)
