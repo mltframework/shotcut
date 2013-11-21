@@ -28,6 +28,7 @@ class Application : public QApplication
 public:
     MainWindow* mainWindow;
     QTranslator qtTranslator;
+    QTranslator qtBaseTranslator;
     QTranslator shotcutTranslator;
     QString resourceArg;
 
@@ -68,6 +69,10 @@ public:
             installTranslator(&qtTranslator);
         else if (qtTranslator.load("qt_" + locale, dir.absolutePath()))
             installTranslator(&qtTranslator);
+        if (qtBaseTranslator.load("qtbase_" + locale, QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
+            installTranslator(&qtBaseTranslator);
+        else if (qtBaseTranslator.load("qtbase_" + locale, dir.absolutePath()))
+            installTranslator(&qtBaseTranslator);
         if (shotcutTranslator.load("shotcut_" + locale, dir.absolutePath()))
             installTranslator(&shotcutTranslator);
         if (argc > 1)

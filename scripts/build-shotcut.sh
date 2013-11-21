@@ -1325,6 +1325,7 @@ SLIB_EXTRA_CMD=-"mv $$(@:$(SLIBSUF)=.orig.def) $$(@:$(SLIBSUF)=.def)"
         cmd install -p -c translations/*.qm "$FINAL_INSTALL_DIR"/share/shotcut/translations
         cmd cp -a src/qml "$FINAL_INSTALL_DIR"/share/shotcut
         cmd install -p -c "$QTDIR"/translations/qt_*.qm "$FINAL_INSTALL_DIR"/share/shotcut/translations
+        cmd install -p -c "$QTDIR"/translations/qtbase_*.qm "$FINAL_INSTALL_DIR"/share/shotcut/translations
         cmd install -p -c "$QTDIR"/lib/libQt5{Concurrent,Core,Declarative,Gui,Multimedia,MultimediaQuick,MultimediaWidgets,Network,OpenGL,PrintSupport,Qml,QmlParticles,Quick,Script,Sensors,Sql,Svg,V8,WebKit,WebKitWidgets,Widgets,Xml,XmlPatterns,X11Extras,DBus}.so* "$FINAL_INSTALL_DIR"/lib
         cmd install -p -c "$QTDIR"/lib/lib{icudata,icui18n,icuuc}.so* "$FINAL_INSTALL_DIR"/lib
         cmd install -d "$FINAL_INSTALL_DIR"/lib/qt5/sqldrivers
@@ -1476,9 +1477,11 @@ function deploy_osx
   # try QTDIR first
   if [ -d "$QTDIR/translations" ]; then
     cmd cp -Rn "$QTDIR/translations/qt_*.qm" "$BUILD_DIR/Resources/translations/"
+    cmd cp -Rn "$QTDIR/translations/qtbase_*.qm" "$BUILD_DIR/Resources/translations/"
   # try Qt Creator after that
   elif [ -d "/Applications/Qt Creator.app/Contents/Resources/translations" ]; then
     cmd cp -Rn "/Applications/Qt Creator.app/Contents/Resources/translations/qt_*.qm" "$BUILD_DIR/Resources/translations/"
+    cmd cp -Rn "/Applications/Qt Creator.app/Contents/Resources/translations/qtbase_*.qm" "$BUILD_DIR/Resources/translations/"
   fi
   # copy Shotcut translations
   cmd cp -Rn translations/*.qm "$BUILD_DIR/Resources/translations/"
@@ -1617,6 +1620,7 @@ function deploy_win32
   cmd cp -p "$QTDIR"/plugins/sqldrivers/qsqlite.dll lib/qt5/sqldrivers
   cmd cp -pr "$QTDIR"/qml lib
   cmd cp -pr "$QTDIR"/translations/qt_*.qm share/translations
+  cmd cp -pr "$QTDIR"/translations/qtbase_*.qm share/translations
   cmd tar -xjf "$HOME/ladspa_plugins-win-0.4.15.tar.bz2"
   cmd printf "[Paths]\nPlugins=lib/qt5\nQml2Imports=lib/qml\n" > qt.conf
 
@@ -1646,6 +1650,7 @@ function deploy_win32_sdk
   cmd cp -p "$QTDIR"/plugins/sqldrivers/qsqlite.dll lib/qt5/sqldrivers
   cmd cp -pr "$QTDIR"/qml lib
   cmd cp -pr "$QTDIR"/translations/qt_*.qm share/translations
+  cmd cp -pr "$QTDIR"/translations/qtbase_*.qm share/translations
   cmd tar -xjf "$HOME/ladspa_plugins-win-0.4.15.tar.bz2"
   cmd printf "[Paths]\nPlugins=lib/qt5\nQml2Imports=lib/qml\n" > "$BUILD_DIR/Resources/qt.conf"
 
