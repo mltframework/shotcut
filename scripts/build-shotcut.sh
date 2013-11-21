@@ -1476,15 +1476,15 @@ function deploy_osx
   cmd mkdir "$BUILD_DIR/Resources/translations"
   # try QTDIR first
   if [ -d "$QTDIR/translations" ]; then
-    cmd cp -Rn "$QTDIR/translations/qt_*.qm" "$BUILD_DIR/Resources/translations/"
-    cmd cp -Rn "$QTDIR/translations/qtbase_*.qm" "$BUILD_DIR/Resources/translations/"
+    cmd cp -p "$QTDIR"/translations/qt_*.qm "$BUILD_DIR/Resources/translations/"
+    cmd cp -p "$QTDIR"/translations/qtbase_*.qm "$BUILD_DIR/Resources/translations/"
   # try Qt Creator after that
   elif [ -d "/Applications/Qt Creator.app/Contents/Resources/translations" ]; then
-    cmd cp -Rn "/Applications/Qt Creator.app/Contents/Resources/translations/qt_*.qm" "$BUILD_DIR/Resources/translations/"
-    cmd cp -Rn "/Applications/Qt Creator.app/Contents/Resources/translations/qtbase_*.qm" "$BUILD_DIR/Resources/translations/"
+    cmd cp -p "/Applications/Qt Creator.app/Contents/Resources/translations/"qt_*.qm "$BUILD_DIR/Resources/translations/"
+    cmd cp -p "/Applications/Qt Creator.app/Contents/Resources/translations/"qtbase_*.qm "$BUILD_DIR/Resources/translations/"
   fi
   # copy Shotcut translations
-  cmd cp -Rn translations/*.qm "$BUILD_DIR/Resources/translations/"
+  cmd cp translations/*.qm "$BUILD_DIR/Resources/translations/"
 
   # copy Shotcut QML
   cmd mkdir -p "$BUILD_DIR"/MacOS/share/shotcut/ 2>/dev/null
@@ -1496,7 +1496,7 @@ function deploy_osx
   cmd cd "$BUILD_DIR/MacOS" || die "Unable to change directory to MacOS"
 
   log Copying supplementary executables
-  cmd cp -a $FINAL_INSTALL_DIR/bin/{melt,ffmpeg,qmelt} .
+  cmd cp -a "$FINAL_INSTALL_DIR"/bin/{melt,ffmpeg,qmelt} .
   mkdir lib 2>/dev/null
   for exe in $(find . -perm +u+x -maxdepth 1); do
     log fixing library paths of executable "$exe"
@@ -1504,14 +1504,14 @@ function deploy_osx
   done
 
   # Copy webvfx here temporarily so it can be found by fixlibs.
-  cmd cp -p $FINAL_INSTALL_DIR/lib/libwebvfx*.dylib .
+  cmd cp -p "$FINAL_INSTALL_DIR"/lib/libwebvfx*.dylib .
 
   # MLT plugins
   log Copying MLT plugins
   cmd mkdir -p lib/mlt 2>/dev/null
-  cmd cp $FINAL_INSTALL_DIR/lib/mlt/libmlt*.dylib lib/mlt
+  cmd cp "$FINAL_INSTALL_DIR"/lib/mlt/libmlt*.dylib lib/mlt
   cmd mkdir share 2>/dev/null
-  cmd cp -R $FINAL_INSTALL_DIR/share/mlt share
+  cmd cp -a "$FINAL_INSTALL_DIR"/share/mlt share
   for lib in lib/mlt/*; do
     log fixing library paths of "$lib"
     fixlibs "$lib"
@@ -1525,11 +1525,11 @@ function deploy_osx
   cmd mkdir -p lib/qt5/sqldrivers 2>/dev/null
   # try QTDIR first
   if [ -d "$QTDIR/plugins" ]; then
-    cmd cp -Rn "$QTDIR/plugins"/{accessible,iconengines,imageformats,mediaservice,platforms} lib/qt5
-    cmd cp -pn "$QTDIR/plugins/sqldrivers/libqsqlite.dylib" lib/qt5/sqldrivers
+    cmd cp -a "$QTDIR/plugins"/{accessible,iconengines,imageformats,mediaservice,platforms} lib/qt5
+    cmd cp -p "$QTDIR/plugins/sqldrivers/libqsqlite.dylib" lib/qt5/sqldrivers
   # try Qt Creator next
   elif [ -d "/Applications/Qt Creator.app/Contents/PlugIns" ]; then
-    cmd cp -Rn "/Applications/Qt Creator.app/Contents/PlugIns"/{accessible,iconengines,imageformats,mediaservice,platforms} lib/qt5
+    cmd cp -a "/Applications/Qt Creator.app/Contents/PlugIns"/{accessible,iconengines,imageformats,mediaservice,platforms} lib/qt5
   fi
   for dir in lib/qt5/*; do
     for lib in $dir/*; do
@@ -1554,7 +1554,7 @@ function deploy_osx
   # frei0r plugins
   log Copying frei0r plugins
   cmd mkdir lib/frei0r-1 2>/dev/null
-  cmd cp -Rn $FINAL_INSTALL_DIR/lib/frei0r-1 lib
+  cmd cp -a "$FINAL_INSTALL_DIR"/lib/frei0r-1 lib
   for lib in lib/frei0r-1/*; do
     log fixing library paths of frei0r plugin "$lib"
     fixlibs "$lib"
@@ -1563,7 +1563,7 @@ function deploy_osx
   # LADSPA plugins
   log Copying LADSPA plugins
   cmd mkdir lib/ladspa 2>/dev/null
-  cmd cp -Rn $FINAL_INSTALL_DIR/lib/ladspa/* lib/ladspa
+  cmd cp -a "$FINAL_INSTALL_DIR"/lib/ladspa/* lib/ladspa
   for lib in lib/ladspa/*; do
     log fixing library paths of LADSPA plugin "$lib"
     fixlibs "$lib"
@@ -1571,7 +1571,7 @@ function deploy_osx
 
   # Movit shaders
   log Copying Movit shaders
-  cmd cp -R $FINAL_INSTALL_DIR/share/movit share
+  cmd cp -a "$FINAL_INSTALL_DIR"/share/movit share
 
   # Leap Motion library
   cmd cp -p /usr/local/lib/libLeap.dylib lib
