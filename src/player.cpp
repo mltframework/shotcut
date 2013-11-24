@@ -32,6 +32,7 @@ Player::Player(QWidget *parent)
     , m_position(0)
     , m_seekPosition(SEEK_INACTIVE)
     , m_isMeltedPlaying(-1)
+    , m_scrollArea(0)
     , m_zoomToggleFactor(Settings.playerZoom() == 0.0f? 1.0f : Settings.playerZoom())
 {
     setObjectName("Player");
@@ -53,6 +54,9 @@ Player::Player(QWidget *parent)
     QHBoxLayout* hlayout = new QHBoxLayout(tmp);
     hlayout->setSpacing(4);
     hlayout->setContentsMargins(0, 0, 0, 0);
+#ifdef Q_OS_MAC
+    hlayout->addWidget(MLT.videoWidget(), 10);
+#else
     m_scrollArea = new QScrollArea;
     m_scrollArea->setWidgetResizable(true);
     m_scrollArea->setFrameShape(QFrame::NoFrame);
@@ -60,6 +64,7 @@ Player::Player(QWidget *parent)
     m_scrollArea->setFocusPolicy(Qt::NoFocus);
     m_scrollArea->setWidget(MLT.videoWidget());
     hlayout->addWidget(m_scrollArea, 10);
+#endif
     QVBoxLayout *volumeLayoutV = new QVBoxLayout;
     volumeLayoutV->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding));
     QHBoxLayout *volumeLayoutH = new QHBoxLayout;
@@ -309,7 +314,7 @@ void Player::setMarkers(const QList<int> &markers)
 
 QSize Player::videoSize() const
 {
-    return m_scrollArea->contentsRect().size();
+    return m_scrollArea? m_scrollArea->contentsRect().size() : MLT.videoWidget()->size();
 }
 
 void Player::resizeEvent(QResizeEvent*)
@@ -686,6 +691,8 @@ void Player::onMuteButtonToggled(bool checked)
 void Player::setZoom(float factor, const QIcon& icon)
 {
     Settings.setPlayerZoom(factor);
+    if (!m_scrollArea)
+        return;
     if (factor == 0.0f) {
         m_scrollArea->setWidgetResizable(true);
         m_zoomButton->setIcon(icon);
