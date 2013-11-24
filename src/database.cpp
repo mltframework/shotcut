@@ -62,8 +62,9 @@ Database &Database::singleton(QWidget *parent)
 
 Database::~Database()
 {
+    QString connection = QSqlDatabase::database().connectionName();
     QSqlDatabase::database().close();
-    QSqlDatabase::removeDatabase(QSqlDatabase::database().connectionName());
+    QSqlDatabase::removeDatabase(connection);
     instance = 0;
 }
 
