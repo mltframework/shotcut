@@ -141,12 +141,6 @@ Player::Player(QWidget *parent)
     m_inPointLabel = new QLabel(this);
     m_inPointLabel->setText("--:--:--:--");
     m_inPointLabel->setToolTip(tr("In Point"));
-    m_inPointLabel->setAlignment(Qt::AlignRight);
-#ifdef Q_OS_MAC
-    m_inPointLabel->setContentsMargins(0, 5, 0, 0);
-#else
-    m_inPointLabel->setContentsMargins(0, 4, 0, 0);
-#endif
     m_inPointLabel->setFixedWidth(m_inPointLabel->width());
     m_selectedLabel = new QLabel(this);
     m_selectedLabel->setText("--:--:--:--");
