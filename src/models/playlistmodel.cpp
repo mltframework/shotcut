@@ -27,6 +27,7 @@
 #include <QApplication>
 #include <QPalette>
 #include <QCryptographicHash>
+#include <QScopedPointer>
 
 #include "settings.h"
 #include "database.h"
@@ -171,7 +172,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
     switch (role) {
     case Qt::DisplayRole:
     case Qt::ToolTipRole: {
-        const Mlt::ClipInfo* info = m_playlist->clip_info(index.row());
+        QScopedPointer<Mlt::ClipInfo> info(m_playlist->clip_info(index.row()));
         switch (index.column()) {
         case COLUMN_INDEX:
             return QString::number(index.row() + 1);
@@ -207,12 +208,11 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
         default:
             break;
         }
-        delete info;
         break;
     }
     case Qt::DecorationRole:
         if (index.column() == COLUMN_THUMBNAIL) {
-            Mlt::Producer* producer = m_playlist->get_clip(index.row());
+            QScopedPointer<Mlt::Producer> producer(m_playlist->get_clip(index.row()));
             Mlt::Producer parent(producer->get_parent());
             int width = THUMBNAIL_HEIGHT * MLT.profile().dar();
             QString setting = Settings.playlistThumbnails();
@@ -258,7 +258,6 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
             else {
                 image.fill(QApplication::palette().base().color().rgb());
             }
-            delete producer;
             return image;
         }
         break;
