@@ -42,6 +42,7 @@
 #include "filters/normalize.h"
 #include "qmltypes/qmlfilter.h"
 #include "qmltypes/qmlmetadata.h"
+#include "qmltypes/qmlutilities.h"
 
 static bool compareQAction(const QAction* a1, const QAction* a2)
 {
@@ -69,7 +70,7 @@ static QActionList getFilters(FiltersDock* dock, Ui::FiltersDock* ui)
     // Find all of the plugin filters.
     qmlRegisterType<QmlMetadata>("org.shotcut.qml", 1, 0, "Metadata");
     QQmlEngine engine;
-    QDir dir = FiltersDock::qmlDir();
+    QDir dir = QmlUtilities::qmlDir();
     dir.cd("filters");
     foreach (QString dirName, dir.entryList(QDir::AllDirs | QDir::NoDotAndDotDot | QDir::Executable)) {
         QDir subdir = dir;
@@ -333,18 +334,6 @@ void FiltersDock::onActionTriggered(QAction* action)
     }
 }
 
-QDir FiltersDock::qmlDir()
-{
-    QDir dir(qApp->applicationDirPath());
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    dir.cdUp();
-#endif
-    dir.cd("share");
-    dir.cd("shotcut");
-    dir.cd("qml");
-    return dir;
-}
-
 void FiltersDock::addActionToMap(const QmlMetadata *meta, QAction *action)
 {
     if (!meta->objectName().isEmpty())
@@ -363,7 +352,7 @@ void FiltersDock::loadQuickPanel(const QmlMetadata* metadata, int row)
 {
     if (!metadata) return;
     QQuickView* qqview = new QQuickView;
-    QDir importPath = qmlDir();
+    QDir importPath = QmlUtilities::qmlDir();
     importPath.cd("modules");
     qqview->engine()->addImportPath(importPath.path());
     QmlFilter* qmlFilter = new QmlFilter(m_model, *metadata, row, qqview);

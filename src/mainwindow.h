@@ -39,6 +39,7 @@ class MeltedServerDock;
 class QActionGroup;
 class FiltersDock;
 class HtmlEditor;
+class TimelineDock;
 
 class MainWindow : public QMainWindow
 {
@@ -86,6 +87,7 @@ private:
     EncodeDock* m_encodeDock;
     JobsDock* m_jobsDock;
     PlaylistDock* m_playlistDock;
+    TimelineDock* m_timelineDock;
     QString m_currentFile;
     bool m_jobsVisible;
     bool m_isKKeyPressed;
@@ -137,6 +139,7 @@ private slots:
     void onRecentDockTriggered(bool checked = true);
     void onPropertiesDockTriggered(bool checked = true);
     void onPlaylistDockTriggered(bool checked = true);
+    void onTimelineDockTriggered(bool checked = true);
     void onHistoryDockTriggered(bool checked = true);
     void onFiltersDockTriggered(bool checked = true);
     void onPlaylistCreated();

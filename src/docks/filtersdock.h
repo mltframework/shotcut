@@ -46,7 +46,6 @@ public:
     }
     void availablefilters();
     QmlMetadata* qmlMetadataForService(Mlt::Service *service);
-    static QDir qmlDir();
     void addActionToMap(const QmlMetadata *meta, QAction* action);
 
 public slots:

@@ -56,6 +56,7 @@
 #include "leapnetworklistener.h"
 #include "database.h"
 #include "widgets/gltestwidget.h"
+#include "docks/timelinedock.h"
 
 #include <QtWidgets>
 #include <QDebug>
@@ -87,10 +88,6 @@ MainWindow::MainWindow()
     // OS X has a standard Full Screen shortcut we should use.
     ui->actionEnter_Full_Screen->setShortcut(QKeySequence((Qt::CTRL + Qt::META + Qt::Key_F)));
 #endif
-    setCorner(Qt::TopLeftCorner, Qt::LeftDockWidgetArea);
-    setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
-    setCorner(Qt::BottomLeftCorner, Qt::LeftDockWidgetArea);
-    setCorner(Qt::BottomRightCorner, Qt::RightDockWidgetArea);
     setDockNestingEnabled(true);
 
     // Connect UI signals.
@@ -170,6 +167,15 @@ MainWindow::MainWindow()
     connect(m_playlistDock->model(), SIGNAL(loaded()), this, SLOT(updateMarkers()));
     if (!Settings.playerGPU())
         connect(m_playlistDock->model(), SIGNAL(loaded()), this, SLOT(updateThumbnails()));
+
+    m_timelineDock = new TimelineDock(this);
+    m_timelineDock->hide();
+    addDockWidget(Qt::BottomDockWidgetArea, m_timelineDock);
+    ui->menuView->addAction(m_timelineDock->toggleViewAction());
+    connect(m_timelineDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onTimelineDockTriggered(bool)));
+    connect(this, SIGNAL(producerOpened()), m_timelineDock, SLOT(onProducerOpened()));
+    connect(m_player, SIGNAL(seeked(int)), m_timelineDock, SLOT(onSeeked(int)));
+    connect(m_timelineDock, SIGNAL(seeked(int)), m_player, SLOT(seek(int)));
 
     m_filtersDock = new FiltersDock(this);
     m_filtersDock->hide();
@@ -289,6 +295,11 @@ MainWindow::MainWindow()
 #endif
 
     readWindowSettings();
+    setCorner(Qt::TopLeftCorner, Qt::LeftDockWidgetArea);
+    setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
+    setCorner(Qt::BottomLeftCorner, Qt::BottomDockWidgetArea);
+    setCorner(Qt::BottomRightCorner, Qt::BottomDockWidgetArea);
+    setDockNestingEnabled(true);
 
     setFocus();
     setCurrentFile("");
@@ -1058,6 +1069,15 @@ void MainWindow::onProducerOpened()
             m_playlistDock->raise();
         }
     }
+    else if (MLT.isMultitrack()) {
+//        m_timelineDock->model().load();
+//        if (m_timelineDock->model().tractor()) {
+            m_player->setIn(-1);
+            m_player->setOut(-1);
+            m_timelineDock->setVisible(true);
+            m_timelineDock->raise();
+//        }
+    }
     if (!MLT.URL().isEmpty())
         setCurrentFile(MLT.URL());
     if (w) {
@@ -1194,6 +1214,14 @@ void MainWindow::onPlaylistDockTriggered(bool checked)
     if (checked) {
         m_playlistDock->show();
         m_playlistDock->raise();
+    }
+}
+
+void MainWindow::onTimelineDockTriggered(bool checked)
+{
+    if (checked) {
+        m_timelineDock->show();
+        m_timelineDock->raise();
     }
 }
 

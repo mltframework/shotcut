@@ -150,10 +150,11 @@ int Controller::open(const char* url)
             delete m_producer;
             m_producer = new Mlt::Producer(profile(), url);
         }
-        if (m_url.isEmpty() &&
-                QString(m_producer->get("xml")) == "was here" &&
-                m_producer->get_int("_original_type") != tractor_type)
-            m_url = QString::fromUtf8(url);
+        if (m_url.isEmpty() && QString(m_producer->get("xml")) == "was here") {
+            if (m_producer->get_int("_original_type") != tractor_type ||
+               (m_producer->get_int("_original_type") == tractor_type && m_producer->get("shotcut")))
+                m_url = QString::fromUtf8(url);
+        }
         const char *service = m_producer->get("mlt_service");
         if (service && (!strcmp(service, "pixbuf") || !strcmp(service, "qimage")))
             m_producer->set("length", profile().fps() * 4);
@@ -422,6 +423,13 @@ bool Controller::isPlaylist() const
 {
     return m_producer && m_producer->is_valid() &&
             (m_producer->get_int("_original_type") == playlist_type || resource() == "<playlist>");
+}
+
+bool Controller::isMultitrack() const
+{
+    return m_producer && m_producer->is_valid()
+        && (m_producer->get_int("_original_type") == tractor_type || resource() == "<tractor>")
+        && (m_producer->get("shotcut"));
 }
 
 void Controller::rewind()

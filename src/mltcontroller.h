@@ -105,6 +105,7 @@ public:
     QString resource() const;
     bool isSeekable();
     bool isPlaylist() const;
+    bool isMultitrack() const;
     void rewind();
     void fastForward();
     void previous(int currentPosition);

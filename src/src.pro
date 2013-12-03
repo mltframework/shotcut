@@ -77,7 +77,10 @@ SOURCES += main.cpp\
     widgets/webvfxproducer.cpp \
     filters/normalize.cpp \
     database.cpp \
-    widgets/gltestwidget.cpp
+    widgets/gltestwidget.cpp \
+    models/multitrackmodel.cpp \
+    docks/timelinedock.cpp \
+    qmltypes/qmlutilities.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -148,7 +151,10 @@ HEADERS  += mainwindow.h \
     widgets/webvfxproducer.h \
     filters/normalize.h \
     database.h \
-    widgets/gltestwidget.h
+    widgets/gltestwidget.h \
+    models/multitrackmodel.h \
+    docks/timelinedock.h \
+    qmltypes/qmlutilities.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
@@ -193,7 +199,8 @@ FORMS    += mainwindow.ui \
     htmleditor/htmleditor.ui \
     htmleditor/inserthtmldialog.ui \
     widgets/webvfxproducer.ui \
-    filters/normalize.ui
+    filters/normalize.ui \
+    docks/timelinedock.ui
 
 RESOURCES += \
     ../icons/resources.qrc \
@@ -237,7 +244,12 @@ OTHER_FILES += \
     qml/filters/invert/meta.qml \
     qml/filters/sepia/meta.qml \
     qml/filters/sepia/ui.qml \
-    qml/modules/Shotcut/Controls/UndoButton.qml
+    qml/modules/Shotcut/Controls/UndoButton.qml \
+    qml/timeline/timeline.qml \
+    qml/timeline/TrackHead.qml \
+    qml/timeline/Track.qml \
+    qml/timeline/Clip.qml \
+    qml/timeline/Ruler.qml
 
 lupdate_hack {
     SOURCES += \
@@ -270,7 +282,12 @@ lupdate_hack {
     qml/filters/invert/meta.qml \
     qml/filters/sepia/meta.qml \
     qml/filters/sepia/ui.qml \
-    qml/modules/Shotcut/Controls/UndoButton.qml
+    qml/modules/Shotcut/Controls/UndoButton.qml \
+    qml/timeline/timeline.qml \
+    qml/timeline/TrackHead.qml \
+    qml/timeline/Track.qml \
+    qml/timeline/Clip.qml \
+    qml/timeline/Ruler.qml
 }
 
 TRANSLATIONS += \
