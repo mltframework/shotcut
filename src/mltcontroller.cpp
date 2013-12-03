@@ -488,8 +488,7 @@ void Controller::restart()
 {
     if (!m_consumer) return;
     if (m_producer && m_producer->is_valid() && Settings.playerGPU()) {
-        m_consumer->set("_shotcut_position", m_consumer->position());
-        const char* position = m_consumer->get_time("_shotcut_position");
+        const char* position = m_consumer->frames_to_time(m_consumer->position());
         double speed = m_producer->get_speed();
         QString xml = saveXML("string");
         close();

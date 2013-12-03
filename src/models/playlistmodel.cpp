@@ -86,8 +86,7 @@ public:
 
     QString cacheKey(int frameNumber)
     {
-        m_producer.set("_shotcut:thumbpos", frameNumber);
-        QString time = m_producer.get_time("_shotcut:thumbpos", mlt_time_clock);
+        QString time = m_producer.frames_to_time(frameNumber, mlt_time_clock);
         // Reduce the precision to centiseconds to increase chance for cache hit
         // without much loss of accuracy.
         time = time.left(time.size() - 1);
@@ -190,20 +189,17 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
         }
         case COLUMN_IN:
             if (info->producer && info->producer->is_valid()) {
-                info->producer->set("_shotcut_time", info->frame_in);
-                return info->producer->get_time("_shotcut_time");
+                return info->producer->frames_to_time(info->frame_in);
             } else
                 return "";
         case COLUMN_DURATION:
             if (info->producer && info->producer->is_valid()) {
-                info->producer->set("_shotcut_time", info->frame_count);
-                return info->producer->get_time("_shotcut_time");
+                return info->producer->frames_to_time(info->frame_count);
             } else
                 return "";
         case COLUMN_START:
             if (info->producer && info->producer->is_valid()) {
-                info->producer->set("_shotcut_time", info->start);
-                return info->producer->get_time("_shotcut_time");
+                return info->producer->frames_to_time(info->start);
             }
             else
                 return "";

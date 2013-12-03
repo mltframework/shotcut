@@ -66,8 +66,7 @@ void TimelineDock::setPosition(int position)
 
 QString TimelineDock::timecode(int frames)
 {
-    MLT.producer()->set("_shotcut:timeline", frames);
-    return MLT.producer()->get_time("_shotcut:timeline", mlt_time_smpte);
+    return MLT.producer()->frames_to_time(frames, mlt_time_smpte);
 }
 
 void TimelineDock::onProducerOpened()

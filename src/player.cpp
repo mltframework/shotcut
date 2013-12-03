@@ -515,14 +515,12 @@ void Player::updateSelection()
 {
     if (MLT.producer() && MLT.producer()->get_in() > 0) {
         m_inPointLabel->setText(QString(MLT.producer()->get_time("in")).append(" / "));
-        MLT.producer()->set("_shotcut_selected", MLT.producer()->get_playtime());
-        m_selectedLabel->setText(MLT.producer()->get_time("_shotcut_selected"));
+        m_selectedLabel->setText(MLT.producer()->frames_to_time(MLT.producer()->get_playtime()));
     } else {
         m_inPointLabel->setText("--:--:--:-- / ");
         if (MLT.producer() && !MLT.isPlaylist() &&
                 MLT.producer()->get_out() < m_duration - 1) {
-            MLT.producer()->set("_shotcut_selected", MLT.producer()->get_playtime());
-            m_selectedLabel->setText(MLT.producer()->get_time("_shotcut_selected"));
+            m_selectedLabel->setText(MLT.producer()->frames_to_time(MLT.producer()->get_playtime()));
         } else if (!MLT.producer() || MLT.producer()->get_in() == 0) {
             m_selectedLabel->setText("--:--:--:--");
         }

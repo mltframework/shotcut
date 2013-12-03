@@ -288,8 +288,8 @@ void ScrubBar::updatePixmap()
         int x = l_margin;
         for (int i = 0; x < l_width - l_margin - l_timecodeWidth; i++, x += l_interval) {
             int y = l_selectionSize + fontMetrics().ascent() - 2 * ratio;
-            MLT.producer()->set("_shotcut_scrubbar", qRound(i * m_fps * m_secondsPerTick));
-            p.drawText(x + 2 * ratio, y, MLT.producer()->get_time("_shotcut_scrubbar"));
+            int frames = qRound(i * m_fps * m_secondsPerTick);
+            p.drawText(x + 2 * ratio, y, MLT.producer()->frames_to_time(frames));
         }
     }
 
