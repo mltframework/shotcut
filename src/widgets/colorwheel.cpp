@@ -63,7 +63,7 @@ QColor ColorWheel::colorForPoint(const QPoint &point)
         qreal yp = 2.0 * yf - 1.0;
         qreal rad = qMin(hypot(xp, yp), 1.0);
         qreal theta = qAtan2(yp, xp);
-        theta -= M_PI / 2.0;
+        theta -= 105.0 / 360.0 * 2.0 * M_PI;
         if (theta < 0.0)
             theta += 2.0 * M_PI;
         qreal hue = (theta * 180.0 / M_PI) / 360.0;
@@ -152,20 +152,20 @@ void ColorWheel::drawWheel()
     m_image.fill(0); // transparent
 
     QConicalGradient conicalGradient;
-    conicalGradient.setColorAt(0.0, Qt::red);
+    conicalGradient.setColorAt(        0.0, Qt::red);
     conicalGradient.setColorAt( 60.0/360.0, Qt::yellow);
-    conicalGradient.setColorAt(120.0/360.0, Qt::green);
+    conicalGradient.setColorAt(135.0/360.0, Qt::green);
     conicalGradient.setColorAt(180.0/360.0, Qt::cyan);
     conicalGradient.setColorAt(240.0/360.0, Qt::blue);
-    conicalGradient.setColorAt(300.0/360.0, Qt::magenta);
-    conicalGradient.setColorAt(1.0, Qt::red);
+    conicalGradient.setColorAt(315.0/360.0, Qt::magenta);
+    conicalGradient.setColorAt(        1.0, Qt::red);
 
     QRadialGradient radialGradient(0.0, 0.0, r/2);
     radialGradient.setColorAt(0.0, Qt::white);
     radialGradient.setColorAt(1.0, Qt::transparent);
 
     painter.translate(r / 2, r / 2);
-    painter.rotate(-90);
+    painter.rotate(-105);
 
     QBrush hueBrush(conicalGradient);
     painter.setPen(Qt::NoPen);
@@ -208,7 +208,7 @@ void ColorWheel::drawWheelDot(QPainter& painter)
     painter.setBrush(Qt::black);
     painter.translate(r, r);
     painter.rotate(360.0 - m_color.hue());
-    painter.rotate(-90);
+    painter.rotate(-105);
 //    r -= margin;
     painter.drawEllipse(QPointF(m_color.saturationF() * r, 0.0), 4, 4);
     painter.resetTransform();
