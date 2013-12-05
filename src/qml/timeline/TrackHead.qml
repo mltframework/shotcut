@@ -9,12 +9,7 @@ Rectangle {
     property alias isVideo: hideButton.visible
 
     SystemPalette { id: activePalette }
-
-    width: 100
-    height: 60
     color: activePalette.window
-//    border.width: 1
-//    border.color: 'black'
 
     Column {
         spacing: 6

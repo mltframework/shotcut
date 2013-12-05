@@ -9,12 +9,22 @@ Rectangle {
 
     SystemPalette { id: activePalette }
 
-    width: duration
+    width: clipDuration
     color: isBlank? 'transparent' : (isAudio? 'darkseagreen' : activePalette.highlight)
     border.color: 'black'
     border.width: isBlank? 0 : 1
-    height: 60
 
+    Text {
+        text: name
+        visible: !isBlank
+        font.pointSize: 8
+        anchors {
+            top: parent.top
+            left: parent.left
+            margins: 3
+        }
+        color: Qt.lighter('black')
+    }
     Text {
         text: name
         visible: !isBlank
@@ -24,6 +34,6 @@ Rectangle {
             left: parent.left
             margins: 2
         }
-        color: isAudio? Qt.lighter(activePalette.windowText) : activePalette.windowText
+        color: 'lightgray'
     }
 }
