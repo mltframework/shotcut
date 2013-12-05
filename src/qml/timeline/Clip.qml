@@ -9,10 +9,10 @@ Rectangle {
 
     SystemPalette { id: activePalette }
 
-    width: clipDuration
     color: isBlank? 'transparent' : (isAudio? 'darkseagreen' : activePalette.highlight)
     border.color: 'black'
     border.width: isBlank? 0 : 1
+    clip: true
 
     Text {
         text: name

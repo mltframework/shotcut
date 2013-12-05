@@ -8,7 +8,7 @@ Rectangle {
     SystemPalette { id: activePalette }
     color: activePalette.window
 
-    property int headerWidth: 100
+    property int headerWidth: 120
     property int trackHeight: 60
 
     Row {
@@ -32,6 +32,15 @@ Rectangle {
                         implicitHeight: 24
                         iconName: 'format-justify-fill'
                         onClicked: menu.popup()
+                    }
+                    Slider {
+                        id: scaleSlider
+                        orientation: Qt.Horizontal
+                        width: headerWidth - menuButton.width - 20
+                        minimumValue: 0.01
+                        maximumValue: 4.0
+                        value: 1.0
+                        onValueChanged: scrollIfNeeded()
                     }
                 }
             }
@@ -62,7 +71,7 @@ Rectangle {
         MouseArea {
             width: top.width - headerWidth
             height: top.height
-            onClicked: timeline.position = mouseX
+            onClicked: timeline.position = (scrollView.flickableItem.contentX + mouseX) / scaleSlider.value
 
             Column {
                 Flickable {
@@ -74,6 +83,7 @@ Rectangle {
                         id: ruler
                         width: tracksContainer.width
                         index: index
+                        timeScale: scaleSlider.value
                     }
                 }
                 ScrollView {
@@ -97,13 +107,13 @@ Rectangle {
                 color: activePalette.text
                 width: 1
                 height: top.height - scrollView.__horizontalScrollBar.height
-                x: timeline.position - scrollView.flickableItem.contentX
+                x: timeline.position * scaleSlider.value - scrollView.flickableItem.contentX
                 y: 0
             }
             Canvas {
                 id: cursor
                 visible: timeline.position > -1
-                x: timeline.position - 5 - scrollView.flickableItem.contentX
+                x: timeline.position * scaleSlider.value - scrollView.flickableItem.contentX - 5
                 y: 0
                 width: 11
                 height: 5
@@ -139,6 +149,22 @@ Rectangle {
             width: childrenRect.width
             color: (index % 2)? activePalette.alternateBase : activePalette.base
             z: 1
+            timeScale: scaleSlider.value
         }
+    }
+    
+    Connections {
+        target: timeline
+        onPositionChanged: scrollIfNeeded()
+    }
+
+    function scrollIfNeeded() {
+        var position = timeline.position * scaleSlider.value;
+        if (position > scrollView.width + scrollView.flickableItem.contentX - 50)
+            scrollView.flickableItem.contentX = position - scrollView.width + 50;
+        else if (position < 50)
+            scrollView.flickableItem.contentX = 0;
+        else if (position < scrollView.flickableItem.contentX + 50)
+            scrollView.flickableItem.contentX = position - 50;
     }
 }

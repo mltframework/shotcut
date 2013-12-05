@@ -5,6 +5,7 @@ Rectangle {
     id: trackTop
     property alias model: trackModel.model
     property alias rootIndex: trackModel.rootIndex
+    property real timeScale: 1.0
 
     DelegateModel {
         id: trackModel
@@ -14,6 +15,7 @@ Rectangle {
             clipDuration: duration
             isBlank: blank
             isAudio: audio
+            width: duration * timeScale
             height: trackTop.height
         }
     }
