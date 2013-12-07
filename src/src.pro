@@ -80,7 +80,8 @@ SOURCES += main.cpp\
     widgets/gltestwidget.cpp \
     models/multitrackmodel.cpp \
     docks/timelinedock.cpp \
-    qmltypes/qmlutilities.cpp
+    qmltypes/qmlutilities.cpp \
+    qmltypes/thumbnailprovider.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -154,7 +155,8 @@ HEADERS  += mainwindow.h \
     widgets/gltestwidget.h \
     models/multitrackmodel.h \
     docks/timelinedock.h \
-    qmltypes/qmlutilities.h
+    qmltypes/qmlutilities.h \
+    qmltypes/thumbnailprovider.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \

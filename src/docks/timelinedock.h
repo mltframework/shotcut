@@ -43,8 +43,8 @@ public:
 
 signals:
     void producerOpened();
+    void seeked(int position);
     void positionChanged();
-    void seeked(int);
 
 public slots:
     void onProducerOpened(void);

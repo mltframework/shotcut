@@ -20,6 +20,7 @@
 #include "ui_timelinedock.h"
 #include "qmltypes/qmlutilities.h"
 #include "models/multitrackmodel.h"
+#include "qmltypes/thumbnailprovider.h"
 
 #include <QtQml>
 #include <QtQuick>
@@ -39,6 +40,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     QDir importPath = QmlUtilities::qmlDir();
     importPath.cd("modules");
     qqview->engine()->addImportPath(importPath.path());
+    qqview->engine()->addImageProvider(QString("thumbnail"), new ThumbnailProvider);
     qqview->rootContext()->setContextProperty("timeline", this);
     qqview->rootContext()->setContextProperty("multitrack", &m_model);
     qqview->setResizeMode(QQuickView::SizeRootObjectToView);

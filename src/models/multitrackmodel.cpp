@@ -89,6 +89,10 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                     result = QFileInfo(result).fileName();
                 return result;
             }
+            case ServiceRole:
+                if (info->producer && info->producer->is_valid())
+                    return QString::fromUtf8(info->producer->get("mlt_service"));
+                break;
             case IsBlankRole:
                 return playlist.is_blank(index.row());
             case StartRole:
@@ -167,6 +171,7 @@ QHash<int, QByteArray> MultitrackModel::roleNames() const
     QHash<int, QByteArray> roles;
     roles[NameRole] = "name";
     roles[ResourceRole] = "resource";
+    roles[ServiceRole] = "mlt_service";
     roles[IsBlankRole] = "blank";
     roles[StartRole] = "start";
     roles[DurationRole] = "duration";

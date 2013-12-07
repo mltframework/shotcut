@@ -13,6 +13,9 @@ Rectangle {
             clipName: name
             clipResource: resource
             clipDuration: duration
+            mltService: mlt_service
+            inPoint: model.in
+            outPoint: model.out
             isBlank: blank
             isAudio: audio
             width: duration * timeScale
