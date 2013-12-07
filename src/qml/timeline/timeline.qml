@@ -1,7 +1,6 @@
 import QtQuick 2.0
 import QtQml.Models 2.1
 import QtQuick.Controls 1.0
-import QtQuick.Layouts 1.0
 
 Rectangle {
     id: top
@@ -10,6 +9,7 @@ Rectangle {
 
     property int headerWidth: 120
     property int trackHeight: 60
+    property real scaleFactor: 1.0
 
     Row {
         Column {
@@ -33,21 +33,12 @@ Rectangle {
                         iconName: 'format-justify-fill'
                         onClicked: menu.popup()
                     }
-                    Slider {
-                        id: scaleSlider
-                        orientation: Qt.Horizontal
-                        width: headerWidth - menuButton.width - 20
-                        minimumValue: 0.01
-                        maximumValue: 4.0
-                        value: 1.0
-                        onValueChanged: scrollIfNeeded()
-                    }
                 }
             }
             Flickable {
                 contentY: scrollView.flickableItem.contentY
                 width: headerWidth
-                height: top.height
+                height: trackHeaders.height
                 interactive: false
 
                 Column {
@@ -66,12 +57,38 @@ Rectangle {
                     }
                 }   
             }
+            Rectangle {
+                color: activePalette.window
+                height: top.height - trackHeaders.height - ruler.height + 4
+                width: headerWidth
+                Slider {
+                    id: scaleSlider
+                    orientation: Qt.Horizontal
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                        bottom: parent.bottom
+                        leftMargin: 4
+                        rightMargin: 4
+                    }
+                    minimumValue: 0.1
+                    maximumValue: 2.0
+                    value: 1.0
+                    stepSize: 0.2
+                    onValueChanged: {
+                        if (typeof scaleFactor != 'undefined')
+                            scaleFactor = (value <= 1.0) ? value : 1.0 + (value - 1.0) * 5.0
+                        if (typeof scrollIfNeeded != 'undefined')
+                            scrollIfNeeded()
+                    }
+                }
+            }
         }
 
         MouseArea {
             width: top.width - headerWidth
             height: top.height
-            onClicked: timeline.position = (scrollView.flickableItem.contentX + mouseX) / scaleSlider.value
+            onClicked: timeline.position = (scrollView.flickableItem.contentX + mouseX) / scaleFactor
 
             Column {
                 Flickable {
@@ -83,7 +100,7 @@ Rectangle {
                         id: ruler
                         width: tracksContainer.width
                         index: index
-                        timeScale: scaleSlider.value
+                        timeScale: scaleFactor
                     }
                 }
                 ScrollView {
@@ -107,13 +124,13 @@ Rectangle {
                 color: activePalette.text
                 width: 1
                 height: top.height - scrollView.__horizontalScrollBar.height
-                x: timeline.position * scaleSlider.value - scrollView.flickableItem.contentX
+                x: timeline.position * scaleFactor - scrollView.flickableItem.contentX
                 y: 0
             }
             Canvas {
                 id: cursor
                 visible: timeline.position > -1
-                x: timeline.position * scaleSlider.value - scrollView.flickableItem.contentX - 5
+                x: timeline.position * scaleFactor - scrollView.flickableItem.contentX - 5
                 y: 0
                 width: 11
                 height: 5
@@ -149,7 +166,7 @@ Rectangle {
             width: childrenRect.width
             color: (index % 2)? activePalette.alternateBase : activePalette.base
             z: 1
-            timeScale: scaleSlider.value
+            timeScale: scaleFactor
         }
     }
     
@@ -159,7 +176,7 @@ Rectangle {
     }
 
     function scrollIfNeeded() {
-        var position = timeline.position * scaleSlider.value;
+        var position = timeline.position * scaleFactor;
         if (position > scrollView.width + scrollView.flickableItem.contentX - 50)
             scrollView.flickableItem.contentX = position - scrollView.width + 50;
         else if (position < 50)
