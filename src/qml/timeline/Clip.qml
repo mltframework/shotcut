@@ -45,7 +45,7 @@ Rectangle {
         anchors.margins: parent.border.width
         height: (parent.height - parent.border.width * 2) / 2
         width: height * 16.0/9.0
-        source: isAudio? '' : 'image://thumbnail/' + mltService + '/' + clipResource + '#' + outPoint
+        source: (isAudio || isBlank)? '' : 'image://thumbnail/' + mltService + '/' + clipResource + '#' + outPoint
     }
 
     Image {
@@ -55,7 +55,7 @@ Rectangle {
         anchors.margins: parent.border.width
         height: (parent.height - parent.border.width * 2) / 2
         width: height * 16.0/9.0
-        source: isAudio? '' : 'image://thumbnail/' + mltService + '/' + clipResource + '#' + inPoint
+        source: (isAudio || isBlank)? '' : 'image://thumbnail/' + mltService + '/' + clipResource + '#' + inPoint
     }
 
     Canvas {
@@ -81,6 +81,7 @@ Rectangle {
 
     Rectangle {
         color: 'lightgray'
+        visible: !isBlank
         opacity: 0.7
         anchors.top: parent.top
         anchors.left: parent.left
