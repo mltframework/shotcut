@@ -8,7 +8,7 @@ Rectangle {
     color: activePalette.window
 
     property int headerWidth: 120
-    property int trackHeight: 60
+    property int trackHeight: 50
     property real scaleFactor: 1.0
 
     Row {
@@ -52,7 +52,7 @@ Rectangle {
                             isVideo: !audio
                             color: (index % 2)? activePalette.alternateBase : activePalette.base
                             width: headerWidth
-                            height: trackHeight
+                            height: audio? trackHeight : trackHeight * 2
                         }
                     }
                 }   
@@ -72,12 +72,11 @@ Rectangle {
                         rightMargin: 4
                     }
                     minimumValue: 0.1
-                    maximumValue: 2.0
-                    value: 1.0
-                    stepSize: 0.2
+                    maximumValue: 5.0
+                    value: 4.0
                     onValueChanged: {
                         if (typeof scaleFactor != 'undefined')
-                            scaleFactor = (value <= 1.0) ? value : 1.0 + (value - 1.0) * 5.0
+                            scaleFactor = (value <= 4) ? value / 4 : 1.0 + (value - 4) * 2
                         if (typeof scrollIfNeeded != 'undefined')
                             scrollIfNeeded()
                     }
@@ -137,7 +136,7 @@ Rectangle {
                 renderStrategy: Canvas.Threaded
                 onAvailableChanged: {
                     var cx = getContext('2d');
-                    cx.fillStyle   = activePalette.windowText;
+                    cx.fillStyle = activePalette.windowText;
                     cx.beginPath();
                     // Start from the top-left point.
                     cx.lineTo(width, 0);
@@ -163,7 +162,7 @@ Rectangle {
         Track {
             model: multitrack
             rootIndex: trackDelegateModel.modelIndex(index)
-            height: trackHeight
+            height: audio? trackHeight : trackHeight * 2
             width: childrenRect.width
             color: (index % 2)? activePalette.alternateBase : activePalette.base
             z: 1

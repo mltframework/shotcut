@@ -87,9 +87,12 @@ bool Database::putThumbnail(const QString& hash, const QImage& image)
     QByteArray ba;
     QBuffer buffer(&ba);
     buffer.open(QIODevice::WriteOnly);
-    image.save(&buffer, "BMP");
+    image.save(&buffer, "PNG");
 
     QSqlQuery query;
+    query.prepare("DELETE FROM thumbnails WHERE hash = :hash;");
+    query.bindValue(":hash", hash);
+    query.exec();
     query.prepare("INSERT INTO thumbnails VALUES (:hash, datetime('now'), :image);");
     query.bindValue(":hash", hash);
     query.bindValue(":image", ba);
@@ -107,7 +110,7 @@ QImage Database::getThumbnail(const QString &hash)
     query.prepare("SELECT image FROM thumbnails WHERE hash = :hash;");
     query.bindValue(":hash", hash);
     if (query.exec() && query.first()) {
-        result.loadFromData(query.value(0).toByteArray(), "BMP");
+        result.loadFromData(query.value(0).toByteArray(), "PNG");
         QSqlQuery update;
         update.prepare("UPDATE thumbnails SET accessed = datetime('now') WHERE hash = :hash ;");
         update.bindValue(":hash", hash);

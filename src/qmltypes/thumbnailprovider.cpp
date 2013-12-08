@@ -54,7 +54,6 @@ QImage ThumbnailProvider::requestImage(const QString &id, QSize *size, const QSi
             QString key = cacheKey(producer, frameNumber);
             result = DB.getThumbnail(key);
             if (result.isNull()) {
-        qDebug() << "mlt_service" << service << "resource" << resource << "frame" << frameNumber;
                 result = makeThumbnail(producer, frameNumber, requestedSize);
                 DB.putThumbnail(key, result);
             }

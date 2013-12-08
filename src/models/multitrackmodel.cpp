@@ -19,11 +19,18 @@
 #include "multitrackmodel.h"
 #include "mltcontroller.h"
 #include "mainwindow.h"
+#include "database.h"
 #include <QScopedPointer>
 #include <QFileInfo>
+#include <QThreadPool>
+#include <QPersistentModelIndex>
+#include <QCryptographicHash>
+#include <QRgb>
+
 #include <QtDebug>
 
 static const quintptr NO_PARENT_ID = quintptr(-1);
+static const char* kAudioLevelsProperty = "shotcut:audio-levels";
 
 MultitrackModel::MultitrackModel(QObject *parent)
     : QAbstractItemModel(parent)
@@ -69,6 +76,7 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
     if (!m_tractor || !index.isValid())
         return QVariant();
     if (index.parent().isValid()) {
+        // Get data for a clip.
         int i = m_trackList.at(index.internalId()).mlt_index;
         QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
         if (track) {
@@ -107,12 +115,17 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                 return info->fps;
             case IsAudioRole:
                 return m_trackList[index.internalId()].type == AudioTrackType;
+            case AudioLevels:
+                if (info->producer && info->producer->is_valid() && info->producer->get_data(kAudioLevelsProperty))
+                    return *((QVariantList*) info->producer->get_data(kAudioLevelsProperty));
+                break;
             default:
                 break;
             }
         }
     }
     else {
+        // Get data for a track.
         int i = m_trackList.at(index.row()).mlt_index;
         QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
         if (track) {
@@ -181,7 +194,15 @@ QHash<int, QByteArray> MultitrackModel::roleNames() const
     roles[IsMuteRole] = "mute";
     roles[IsHiddenRole] = "hidden";
     roles[IsAudioRole] = "audio";
+    roles[AudioLevels] = "audioLevels";
     return roles;
+}
+
+void MultitrackModel::audioLevelsReady(const QModelIndex& index)
+{
+    QVector<int> roles;
+    roles << AudioLevels;
+    emit dataChanged(index, index, roles);
 }
 
 void MultitrackModel::load()
@@ -209,6 +230,7 @@ void MultitrackModel::load()
     addBlackTrackIfNeeded();
     addMissingTransitions();
     refreshTrackList();
+    getAudioLevels();
     beginInsertRows(QModelIndex(), 0, m_trackList.count() - 1);
     endInsertRows();
     emit loaded();
@@ -267,6 +289,148 @@ void MultitrackModel::refreshTrackList()
                     t.name = QString("A%1").arg(a);
                 m_trackList.append(t);
 //                qDebug() << __FUNCTION__ << QString(track->get("id")) << i;
+            }
+        }
+    }
+}
+
+static void deleteQVariantList(QVariantList* list)
+{
+    delete list;
+}
+
+class AudioLevelsTask : public QRunnable
+{
+    Mlt::Producer m_producer;
+    MultitrackModel* m_model;
+    QPersistentModelIndex m_index;
+    Mlt::Producer* m_tempProducer;
+
+public:
+    AudioLevelsTask(Mlt::Producer& producer, MultitrackModel* model, const QModelIndex& index)
+        : QRunnable()
+        , m_producer(producer)
+        , m_model(model)
+        , m_index(index)
+        , m_tempProducer(0)
+    {
+    }
+
+    ~AudioLevelsTask()
+    {
+        delete m_tempProducer;
+    }
+
+    Mlt::Producer* tempProducer()
+    {
+        if (!m_tempProducer) {
+            QString service = m_producer.get("mlt_service");
+            if (service == "avformat")
+                service = "avformat-novalidate";
+            else if (service.startsWith("xml"))
+                service = "xml-nogl";
+            m_tempProducer = new Mlt::Producer(MLT.profile(), service.toUtf8().constData(), m_producer.get("resource"));
+            if (m_tempProducer->is_valid()) {
+                Mlt::Filter converter(MLT.profile(), "audioconvert");
+                Mlt::Filter levels(MLT.profile(), "audiolevel");
+                m_tempProducer->attach(converter);
+                m_tempProducer->attach(levels);
+            }
+            m_tempProducer->set_in_and_out(m_producer.get_in(), m_producer.get_out());
+        }
+        return m_tempProducer;
+    }
+
+    QString cacheKey()
+    {
+        QString timeIn = m_producer.frames_to_time(m_producer.get_in(), mlt_time_clock);
+        // Reduce the precision to centiseconds to increase chance for cache hit
+        // without much loss of accuracy.
+        timeIn = timeIn.left(timeIn.size() - 1);
+        QString timeOut = m_producer.frames_to_time(m_producer.get_out(), mlt_time_clock);
+        timeOut = timeOut.left(timeOut.size() - 1);
+        QString key = QString("%1 %2 %3")
+                .arg(m_producer.get("resource"))
+                .arg(timeIn)
+                .arg(timeOut);
+        QCryptographicHash hash(QCryptographicHash::Sha1);
+        hash.addData(key.toUtf8());
+        return hash.result().toHex();
+    }
+
+    void run()
+    {
+        int n = tempProducer()->get_playtime();
+        // 2 channels interleaved of uchar values
+        QVariantList* levels = new QVariantList;
+        QImage image = DB.getThumbnail(cacheKey());
+        if (image.isNull()) {
+            const char* key[2] = { "meta.media.audio_level.0", "meta.media.audio_level.1"};
+            // for each frame
+            for (int i = 0; i < n; i++) {
+                m_tempProducer->seek(i);
+                Mlt::Frame* frame = m_tempProducer->get_frame();
+                if (!frame->get_int("test_audio")) {
+                    if (frame && frame->is_valid()) {
+                        mlt_audio_format format = mlt_audio_s16;
+                        int frequency = 48000;
+                        // TODO: use project channel count
+                        int channels = 2;
+                        int samples = mlt_sample_calculator(m_producer.get_fps(), frequency, i);
+                        frame->get_audio(format, frequency, channels, samples);
+                        // for each channel
+                        for (int channel = 0; channel < channels; channel++)
+                            // Convert real to uint for caching as image.
+                            // Scale by 0.9 because values may exceed 1.0 to indicate clipping.
+                            *levels << 256 * qMin(frame->get_double(key[channel]) * 0.9, 1.0);
+                    }
+                }
+                delete frame;
+            }
+            // Put into an image for caching.
+            QImage image((levels->size() + 3) / 4, 1, QImage::Format_ARGB32);
+            for (int i = 0; i < image.width(); i ++) {
+                QRgb p; 
+                if ((4*i + 3) < levels->size()) {
+                    p = qRgba(levels->at(4*i).toInt(), levels->at(4*i+1).toInt(), levels->at(4*i+2).toInt(), levels->at(4*i+3).toInt());
+                } else {
+                    int r = levels->at(4*i).toInt();
+                    int g = (4*i+1) < levels->size() ? levels->at(4*i+1).toInt() : 0;
+                    int b = (4*i+2) < levels->size() ? levels->at(4*i+2).toInt() : 0;
+                    int a = 0;
+                    p = qRgba(r, g, b, a);
+                }
+                image.setPixel(i, 0, p);
+            }
+            DB.putThumbnail(cacheKey(), image);
+        } else {
+            // convert cached image
+            for (int i = 0; i < image.width(); i++) {
+                QRgb p = image.pixel(i, 0);
+                *levels << qRed(p);
+                *levels << qGreen(p);
+                *levels << qBlue(p);
+                *levels << qAlpha(p);
+            }
+        }
+        m_producer.set(kAudioLevelsProperty, levels, 0, (mlt_destructor) deleteQVariantList);
+        if (m_index.isValid())
+            m_model->audioLevelsReady(m_index);
+    }
+};
+
+void MultitrackModel::getAudioLevels()
+{
+    for (int trackIx = 0; trackIx < m_trackList.size(); trackIx++) {
+        int i = m_trackList.at(trackIx).mlt_index;
+        QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+        Mlt::Playlist playlist(*track);
+        for (int clipIx = 0; clipIx < playlist.count(); clipIx++) {
+            QScopedPointer<Mlt::Producer> clip(playlist.get_clip(clipIx));
+            if (clip && clip->is_valid() && !clip->is_blank() && clip->get_int("audio_index") > -1) {
+                QModelIndex index = createIndex(clipIx, 0, trackIx);
+                QThreadPool::globalInstance()->start(
+                    new AudioLevelsTask(clip->parent(), this, index));
             }
         }
     }

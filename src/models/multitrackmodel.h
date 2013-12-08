@@ -57,8 +57,9 @@ public:
         OutPointRole,  /// clip only
         FramerateRole, /// clip only
         IsMuteRole,    /// track only
-        IsHiddenRole,   /// track only
-        IsAudioRole
+        IsHiddenRole,  /// track only
+        IsAudioRole,
+        AudioLevels    /// clip only
     };
 
     explicit MultitrackModel(QObject *parent = 0);
@@ -74,6 +75,7 @@ public:
                       const QModelIndex &parent = QModelIndex()) const;
     QModelIndex parent(const QModelIndex &index) const;
     QHash<int, QByteArray> roleNames() const;
+    void audioLevelsReady(const QModelIndex &index);
 
 signals:
     void loaded();
@@ -86,6 +88,7 @@ private:
     Mlt::Tractor* m_tractor;
     TrackList m_trackList;
 
+    void getAudioLevels();
     void addBlackTrackIfNeeded();
     void addMissingTransitions();
 };

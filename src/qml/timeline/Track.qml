@@ -18,6 +18,7 @@ Rectangle {
             outPoint: model.out
             isBlank: blank
             isAudio: audio
+            audioLevels: model.audioLevels
             width: duration * timeScale
             height: trackTop.height
         }
