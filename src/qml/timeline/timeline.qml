@@ -119,7 +119,7 @@ Rectangle {
                 }
             }
             Rectangle {
-                id: playHead
+                id: cursor
                 visible: timeline.position > -1
                 color: activePalette.text
                 width: 1
@@ -128,19 +128,20 @@ Rectangle {
                 y: 0
             }
             Canvas {
-                id: cursor
+                id: playhead
                 visible: timeline.position > -1
                 x: timeline.position * scaleFactor - scrollView.flickableItem.contentX - 5
                 y: 0
                 width: 11
                 height: 5
-                onPaint:{
+                renderStrategy: Canvas.Threaded
+                onAvailableChanged: {
                     var cx = getContext('2d');
-                    cx.fillStyle   = activePalette.windowText
+                    cx.fillStyle   = activePalette.windowText;
                     cx.beginPath();
                     // Start from the top-left point.
-                    cx.lineTo(11, 0);
-                    cx.lineTo(5.5, 5);
+                    cx.lineTo(width, 0);
+                    cx.lineTo(width / 2.0, height);
                     cx.lineTo(0, 0);
                     cx.fill();
                     cx.closePath();
