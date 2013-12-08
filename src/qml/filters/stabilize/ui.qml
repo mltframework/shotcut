@@ -19,6 +19,7 @@
 import QtQuick 2.1
 import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.0
+import Shotcut.Controls 1.0
 
 Rectangle {
     width: 400
@@ -72,12 +73,8 @@ Rectangle {
                 decimals: 0
                 onValueChanged: shakinessSlider.value = value
             }
-            Button {
-                iconName: 'edit-undo'
-                tooltip: qsTr('Reset to default')
+            UndoButton {
                 onClicked: shakinessSlider.value = 4
-                implicitWidth: 20
-                implicitHeight: 20
             }
         }
 
@@ -105,12 +102,8 @@ Rectangle {
                 decimals: 0
                 onValueChanged: accuracySlider.value = value
             }
-            Button {
-                iconName: 'edit-undo'
-                tooltip: qsTr('Reset to default')
+            UndoButton {
                 onClicked: accuracySlider.value = 4
-                implicitWidth: 20
-                implicitHeight: 20
             }
         }
 
@@ -157,12 +150,8 @@ Rectangle {
                 suffix: ' %'
                 onValueChanged: zoomSlider.value = value
             }
-            Button {
-                iconName: 'edit-undo'
-                tooltip: qsTr('Reset to default')
+            UndoButton {
                 onClicked: zoomSlider.value = 0
-                implicitWidth: 20
-                implicitHeight: 20
             }
         }
 
@@ -189,12 +178,8 @@ Rectangle {
                 decimals: 2
                 onValueChanged: sharpenSlider.value = value
             }
-            Button {
-                iconName: 'edit-undo'
-                tooltip: qsTr('Reset to default')
+            UndoButton {
                 onClicked: sharpenSlider.value = 0.8
-                implicitWidth: 20
-                implicitHeight: 20
             }
         }
 

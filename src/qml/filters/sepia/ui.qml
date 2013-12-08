@@ -65,12 +65,8 @@ Rectangle {
                 maximumValue: 255
                 onValueChanged: sliderBlue.value = value
             }
-            Button {
-                iconName: 'edit-undo'
-                tooltip: qsTr('Reset to default')
+            UndoButton {
                 onClicked: sliderBlue.value = 75
-                implicitWidth: 20
-                implicitHeight: 20
             }
         }
 
@@ -96,12 +92,8 @@ Rectangle {
                 maximumValue: 255
                 onValueChanged: sliderRed.value = value
             }
-            Button {
-                iconName: 'edit-undo'
-                tooltip: qsTr('Reset to default')
+            UndoButton {
                 onClicked: sliderRed.value = 150
-                implicitWidth: 20
-                implicitHeight: 20
             }
         }
 

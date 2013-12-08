@@ -19,6 +19,7 @@
 import QtQuick 2.1
 import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.0
+import Shotcut.Controls 1.0
 
 Rectangle {
     width: 400
@@ -62,13 +63,8 @@ Rectangle {
                 decimals: 1
                 onValueChanged: slider.value = value
             }
-            Button {
-                id: undo
-                iconName: 'edit-undo'
-                tooltip: qsTr('Reset to default')
+            UndoButton {
                 onClicked: slider.value = 100
-                implicitWidth: 20
-                implicitHeight: 20
             }
         }
         Item {

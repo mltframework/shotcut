@@ -236,7 +236,8 @@ OTHER_FILES += \
     qml/filters/audio_swapchannels/ui.qml \
     qml/filters/invert/meta.qml \
     qml/filters/sepia/meta.qml \
-    qml/filters/sepia/ui.qml
+    qml/filters/sepia/ui.qml \
+    qml/modules/Shotcut/Controls/UndoButton.qml
 
 lupdate_hack {
     SOURCES += \
@@ -268,7 +269,8 @@ lupdate_hack {
     qml/filters/audio_swapchannels/ui.qml \
     qml/filters/invert/meta.qml \
     qml/filters/sepia/meta.qml \
-    qml/filters/sepia/ui.qml
+    qml/filters/sepia/ui.qml \
+    qml/modules/Shotcut/Controls/UndoButton.qml
 }
 
 TRANSLATIONS += \
