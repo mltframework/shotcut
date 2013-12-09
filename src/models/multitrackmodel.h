@@ -36,7 +36,6 @@ typedef struct {
     TrackType type;
     int number;
     int mlt_index;
-    QString name;
 } Track;
 
 typedef QList<Track> TrackList;
@@ -70,7 +69,6 @@ public:
     int rowCount(const QModelIndex &parent) const;
     int columnCount(const QModelIndex &parent) const;
     QVariant data(const QModelIndex &index, int role) const;
-//    Qt::ItemFlags flags(const QModelIndex &index) const;
     QModelIndex index(int row, int column,
                       const QModelIndex &parent = QModelIndex()) const;
     QModelIndex parent(const QModelIndex &index) const;
@@ -83,6 +81,9 @@ signals:
 public slots:
     void load();
     void refreshTrackList();
+    void setTrackName(int row, const QString &value);
+    void setTrackMute(int row, bool mute);
+    void setTrackHidden(int row, bool hidden);
 
 private:
     Mlt::Tractor* m_tractor;

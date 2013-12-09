@@ -345,6 +345,7 @@ QString Controller::saveXML(const QString& filename, Service* service)
         s.set("ignore_points", 0);
     c.set("time_format", "clock");
     c.set("no_meta", 1);
+    c.set("store", "shotcut");
     c.connect(s);
     c.start();
     if (ignore)

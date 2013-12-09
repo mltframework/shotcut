@@ -10,16 +10,16 @@ Rectangle {
     DelegateModel {
         id: trackModel
         Clip {
-            clipName: name
-            clipResource: resource
-            clipDuration: duration
-            mltService: mlt_service
+            clipName: model.name
+            clipResource: model.resource
+            clipDuration: model.duration
+            mltService: model.mlt_service
             inPoint: model.in
             outPoint: model.out
-            isBlank: blank
-            isAudio: audio
+            isBlank: model.blank
+            isAudio: model.audio
             audioLevels: model.audioLevels
-            width: duration * timeScale
+            width: model.duration * timeScale
             height: trackTop.height
         }
     }

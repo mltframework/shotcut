@@ -46,13 +46,24 @@ Rectangle {
                     Repeater {
                         model: multitrack
                         TrackHead {
-                            trackName: name
-                            isMute: mute
-                            isHidden: hidden
-                            isVideo: !audio
+                            trackName: model.name
+                            isMute: model.mute
+                            isHidden: model.hidden
+                            isVideo: !model.audio
                             color: (index % 2)? activePalette.alternateBase : activePalette.base
                             width: headerWidth
-                            height: audio? trackHeight : trackHeight * 2
+                            height: model.audio? trackHeight : trackHeight * 2
+                            onTrackNameChanged: {
+                                if (isEditing)
+                                    multitrack.setTrackName(index, trackName)
+                                isEditing = false
+                            }
+                            onMuteClicked: {
+                                multitrack.setTrackMute(index, isMute)
+                            }
+                            onHideClicked: {
+                                multitrack.setTrackHidden(index, isHidden)
+                            }
                         }
                     }
                 }   

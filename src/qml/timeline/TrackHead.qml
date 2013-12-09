@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.0
+import QtQuick.Controls.Styles 1.0
 import QtQuick.Layouts 1.0
 
 Rectangle {
@@ -7,11 +8,17 @@ Rectangle {
     property alias isMute: muteButton.checked
     property alias isHidden: hideButton.checked
     property alias isVideo: hideButton.visible
+    property bool isEditing: false
+    signal muteClicked()
+    signal hideClicked()
 
+    id: trackHeadTop
     SystemPalette { id: activePalette }
     color: activePalette.window
+    clip: true
 
     Column {
+        id: trackHeadColumn
         spacing: 6
         anchors {
             top: parent.top
@@ -19,30 +26,76 @@ Rectangle {
             margins: 4
         }
 
-        Text {
+        Label {
             text: trackName
             color: activePalette.windowText
+            width: trackHeadTop.width
+            elide: Qt.ElideRight
+            MouseArea {
+                height: parent.height
+                width: nameEdit.width
+                onClicked: {
+                    nameEdit.visible = true
+                    nameEdit.selectAll()
+                    isEditing = true
+                }
+            }
+            TextField {
+                id: nameEdit
+                visible: false
+                width: trackHeadTop.width - trackHeadColumn.anchors.margins * 2
+                text: trackName
+                onAccepted: {
+                    trackName = text
+                    visible = false
+                }
+                onFocusChanged: visible = focus
+            }
         }
         RowLayout {
-            spacing: 6
-            Button {
+            spacing: 0
+            CheckBox {
                 id: muteButton
-                checkable: true
-                iconName: 'dialog-cancel'
-                iconSource: 'qrc:/icons/oxygen/16x16/actions/dialog-cancel.png'
-                implicitWidth: 20
-                implicitHeight: 20
-                tooltip: checked? 'Muted' : 'Mute'
+                checked: isMute
+                style: CheckBoxStyle {
+                    indicator: Rectangle {
+                        implicitWidth: 16
+                        implicitHeight: 16
+                        radius: 2
+                        color: control.checked? activePalette.highlight : trackHeadTop.color
+                        border.color: activePalette.midlight
+                        border.width: 1
+                        Text {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            anchors.verticalCenter: parent.verticalCenter
+                            text: qsTr('M')
+                            color: control.checked? activePalette.highlightedText : activePalette.windowText
+                        }
+                    }
+                }
+                onClicked: muteClicked()
             }
-            Button {
+
+            CheckBox {
                 id: hideButton
-                checkable: true
-                checked: isBlind
-                iconName: 'list-remove'
-                iconSource: 'qrc:/icons/oxygen/16x16/actions/list-remove.png'
-                implicitWidth: 20
-                implicitHeight: 20
-                tooltip: checked? 'Hidden' : 'Hide'
+                checked: isHidden
+                style: CheckBoxStyle {
+                    indicator: Rectangle {
+                        implicitWidth: 16
+                        implicitHeight: 16
+                        radius: 2
+                        color: control.checked? activePalette.highlight : trackHeadTop.color
+                        border.color: activePalette.midlight
+                        border.width: 1
+                        Text {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            anchors.verticalCenter: parent.verticalCenter
+                            text: qsTr('H')
+                            color: control.checked? activePalette.highlightedText : activePalette.windowText
+                        }
+                    }
+                }
+                onClicked: hideClicked()
             }
         }
     }

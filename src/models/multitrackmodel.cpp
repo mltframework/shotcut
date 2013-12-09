@@ -31,6 +31,10 @@
 
 static const quintptr NO_PARENT_ID = quintptr(-1);
 static const char* kAudioLevelsProperty = "shotcut:audio-levels";
+static const char* kTrackNameProperty = "shotcut:name";
+static const char* kShotcutPlaylistProperty = "shotcut:playlist";
+static const char* kAudioTrackProperty = "shotcut:audio";
+static const char* kVideoTrackProperty = "shotcut:video";
 
 MultitrackModel::MultitrackModel(QObject *parent)
     : QAbstractItemModel(parent)
@@ -133,7 +137,7 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
             switch (role) {
             case NameRole:
             case Qt::DisplayRole:
-                return m_trackList.at(index.row()).name;
+                return track->get(kTrackNameProperty);
             case DurationRole:
                 return playlist.get_playtime();
             case IsMuteRole:
@@ -198,6 +202,64 @@ QHash<int, QByteArray> MultitrackModel::roleNames() const
     return roles;
 }
 
+void MultitrackModel::setTrackName(int row, const QString &value)
+{
+    if (row < m_trackList.size()) {
+        int i = m_trackList.at(row).mlt_index;
+        QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+        if (track) {
+            track->set(kTrackNameProperty, value.toUtf8().constData());
+
+            QModelIndex modelIndex = index(row, 0);
+            QVector<int> roles;
+            roles << NameRole;
+            emit dataChanged(modelIndex, modelIndex, roles);
+        }
+    }
+}
+
+void MultitrackModel::setTrackMute(int row, bool mute)
+{
+    if (row < m_trackList.size()) {
+        int i = m_trackList.at(row).mlt_index;
+        QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+        if (track) {
+            int hide = track->get_int("hide");
+            if (mute)
+                hide |= 2;
+            else
+                hide ^= 2;
+            track->set("hide", hide);
+
+            QModelIndex modelIndex = index(row, 0);
+            QVector<int> roles;
+            roles << IsMuteRole;
+            emit dataChanged(modelIndex, modelIndex, roles);
+        }
+    }
+}
+
+void MultitrackModel::setTrackHidden(int row, bool hidden)
+{
+    if (row < m_trackList.size()) {
+        int i = m_trackList.at(row).mlt_index;
+        QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+        if (track) {
+            int hide = track->get_int("hide");
+            if (hidden)
+                hide |= 1;
+            else
+                hide ^= 1;
+            track->set("hide", hide);
+
+            QModelIndex modelIndex = index(row, 0);
+            QVector<int> roles;
+            roles << IsHiddenRole;
+            emit dataChanged(modelIndex, modelIndex, roles);
+        }
+    }
+}
+
 void MultitrackModel::audioLevelsReady(const QModelIndex& index)
 {
     QVector<int> roles;
@@ -250,17 +312,18 @@ void MultitrackModel::refreshTrackList()
             continue;
         if (QString(track->get("id")) == "black_track")
             isKdenlive = true;
-        else if (!track->get("shotcut:playlist") && !track->get("shotcut:audio")) {
+        else if (!track->get(kShotcutPlaylistProperty) && !track->get(kAudioTrackProperty)) {
             int hide = track->get_int("hide");
              // hide: 0 = a/v, 2 = muted video track
-            if (track->get("shotcut:video") || hide == 0 || hide == 2) {
+            if (track->get(kVideoTrackProperty) || hide == 0 || hide == 2) {
                 Track t;
                 t.mlt_index = i;
                 t.type = VideoTrackType;
                 t.number = v++;
-                t.name = track->get("shotcut:name");
-                if (t.name.isEmpty())
-                    t.name = QString("V%1").arg(v);
+                QString trackName = track->get(kTrackNameProperty);
+                if (trackName.isEmpty())
+                    trackName = QString("V%1").arg(v);
+                track->set(kTrackNameProperty, trackName.toUtf8().constData());
                 m_trackList.prepend(t);
             }
         }
@@ -276,17 +339,18 @@ void MultitrackModel::refreshTrackList()
         else if (isKdenlive && QString(track->get("id")) == "playlist1")
             // In Kdenlive, playlist1 is a special audio mixdown track.
             continue;
-        else if (!track->get("shotcut:playlist") && !track->get("shotcut:video")) {
+        else if (!track->get(kShotcutPlaylistProperty) && !track->get(kVideoTrackProperty)) {
             int hide = track->get_int("hide");
             // hide: 1 = audio only track, 3 = muted audio-only track
-            if (track->get("shotcut:audio") || hide == 1 || hide == 3) {
+            if (track->get(kAudioTrackProperty) || hide == 1 || hide == 3) {
                 Track t;
                 t.mlt_index = i;
                 t.type = AudioTrackType;
                 t.number = a++;
-                t.name = track->get("shotcut:name");
-                if (t.name.isEmpty())
-                    t.name = QString("A%1").arg(a);
+                QString trackName = track->get(kTrackNameProperty);
+                if (trackName.isEmpty())
+                    trackName = QString("A%1").arg(a);
+                track->set(kTrackNameProperty, trackName.toUtf8().constData());
                 m_trackList.append(t);
 //                qDebug() << __FUNCTION__ << QString(track->get("id")) << i;
             }

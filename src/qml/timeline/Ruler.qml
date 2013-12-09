@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import QtQuick.Controls 1.0
 
 Rectangle {
     property int stepSize: 34
@@ -24,14 +25,13 @@ Rectangle {
     }
     Repeater {
         model: parent.width / stepSize / 4
-        Text {
+        Label {
             anchors.bottom: rulerTop.bottom
             anchors.bottomMargin: 2
             color: activePalette.windowText
             x: index * stepSize * 4 + 2
             text: timeline.timecode(index * stepSize * 4 / timeScale)
-            font.pixelSize: 10
-            smooth: false
+            font.pointSize: 7.5
         }
     }
 }
