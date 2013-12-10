@@ -10,13 +10,18 @@ Rectangle {
     property bool isBlank: false
     property bool isAudio: false
     property var audioLevels
+    property int clipIndex
+
+    signal clipSelected(int clipIndex)
 
     SystemPalette { id: activePalette }
 
-    color: isBlank? 'transparent' : (isAudio? 'darkseagreen' : activePalette.highlight)
+    id: clipTop
+    color: isBlank? 'transparent' : (isAudio? 'darkseagreen' : Qt.darker(activePalette.highlight))
     border.color: 'black'
     border.width: isBlank? 0 : 1
     clip: true
+    state: 'normal'
 
     onAudioLevelsChanged: {
         if (typeof audioLevels == 'undefined') return;
@@ -103,5 +108,41 @@ Rectangle {
             leftMargin: parent.border.width + (isAudio? 0 : inThumbnail.width) + 1
         }
         color: 'black'
+    }
+
+    states: [
+        State {
+            name: 'normal'
+            PropertyChanges {
+                target: clipTop
+                border.color: 'black'
+            }
+        },
+        State {
+            name: 'selected'
+            PropertyChanges {
+                target: clipTop
+                border.color: activePalette.highlight
+                color: isBlank? 'transparent' : (isAudio? Qt.lighter('darkseagreen') : activePalette.highlight)
+            }
+        }
+    ]
+
+    transitions: [
+        Transition {
+            to: '*'
+            ColorAnimation { target: clipTop; duration: 50 }
+        }
+    ]
+
+    MouseArea {
+        anchors.fill: parent
+        enabled: !isBlank
+        propagateComposedEvents: true
+        onClicked: {
+            parent.state = 'selected'
+            parent.clipSelected(clipIndex)
+            mouse.accepted = false
+        }
     }
 }

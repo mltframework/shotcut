@@ -36,6 +36,7 @@ Rectangle {
                 }
             }
             Flickable {
+                // Non-slider scroll area for the track headers.
                 contentY: scrollView.flickableItem.contentY
                 width: headerWidth
                 height: trackHeaders.height
@@ -102,6 +103,7 @@ Rectangle {
 
             Column {
                 Flickable {
+                    // Non-slider scroll area for the Ruler.
                     contentX: scrollView.flickableItem.contentX
                     width: top.width - headerWidth
                     height: ruler.height
@@ -122,8 +124,21 @@ Rectangle {
                         width: tracksContainer.width + headerWidth
                         height: trackHeaders.height + 30 // 30 is padding
                         Column {
+                            // These make the striped background for the tracks.
+                            // It is important that these are not part of the track visual hierarchy;
+                            // otherwise, the clips will be obscured by the Track's background.
+                            Repeater {
+                                model: multitrack
+                                delegate: Rectangle {
+                                    width: tracksContainer.width
+                                    color: (index % 2)? activePalette.alternateBase : activePalette.base
+                                    height: audio? trackHeight : trackHeight * 2
+                                }
+                            }
+                        }
+                        Column {
                             id: tracksContainer
-                            Repeater { model: trackDelegateModel }
+                            Repeater { id: tracksRepeater; model: trackDelegateModel }
                         }
                     }
                 }
@@ -175,9 +190,12 @@ Rectangle {
             rootIndex: trackDelegateModel.modelIndex(index)
             height: audio? trackHeight : trackHeight * 2
             width: childrenRect.width
-            color: (index % 2)? activePalette.alternateBase : activePalette.base
-            z: 1
             timeScale: scaleFactor
+            trackIndex: index
+            onClipSelected: {
+                for (var i = 0; i < tracksRepeater.count; i++)
+                    if (i != trackIndex) tracksRepeater.itemAt(i).resetStates();
+            }
         }
     }
     

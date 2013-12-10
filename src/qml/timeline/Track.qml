@@ -6,6 +6,16 @@ Rectangle {
     property alias model: trackModel.model
     property alias rootIndex: trackModel.rootIndex
     property real timeScale: 1.0
+    property int trackIndex;
+
+    signal clipSelected(int trackIndex)
+
+    function resetStates(index) {
+        for (var i = 0; i < repeater.count; i++)
+            if (i != index) repeater.itemAt(i).state = ''
+    }
+
+    color: 'transparent'
 
     DelegateModel {
         id: trackModel
@@ -21,10 +31,15 @@ Rectangle {
             audioLevels: model.audioLevels
             width: model.duration * timeScale
             height: trackTop.height
+            clipIndex: index
+            onClipSelected: {
+                resetStates(clipIndex);
+                trackTop.clipSelected(trackIndex);
+            }
         }
     }
 
     Row {
-        Repeater { model: trackModel }
+        Repeater { id: repeater; model: trackModel }
     }
 }
