@@ -251,6 +251,7 @@ void MultitrackModel::setTrackHidden(int row, bool hidden)
             else
                 hide ^= 1;
             track->set("hide", hide);
+            MLT.refreshConsumer();
 
             QModelIndex modelIndex = index(row, 0);
             QVector<int> roles;
