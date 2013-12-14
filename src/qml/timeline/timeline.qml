@@ -3,7 +3,7 @@ import QtQml.Models 2.1
 import QtQuick.Controls 1.0
 
 Rectangle {
-    id: top
+    id: root
     SystemPalette { id: activePalette }
     color: activePalette.window
 
@@ -41,6 +41,7 @@ Rectangle {
                 width: headerWidth
                 height: trackHeaders.height
                 interactive: false
+                focus: false
 
                 Column {
                     id: trackHeaders
@@ -71,7 +72,7 @@ Rectangle {
             }
             Rectangle {
                 color: activePalette.window
-                height: top.height - trackHeaders.height - ruler.height + 4
+                height: root.height - trackHeaders.height - ruler.height + 4
                 width: headerWidth
                 Slider {
                     id: scaleSlider
@@ -97,17 +98,48 @@ Rectangle {
         }
 
         MouseArea {
-            width: top.width - headerWidth
-            height: top.height
-            onClicked: timeline.position = (scrollView.flickableItem.contentX + mouseX) / scaleFactor
+            width: root.width - headerWidth
+            height: root.height
+
+            // This provides continuous scrubbing and scimming at the left/right edges.
+            focus: true
+            hoverEnabled: true
+            property bool scim: false
+            Keys.onPressed: scim = (event.modifiers === Qt.ShiftModifier)
+            Keys.onReleased: scim = false
+            onReleased: scrubTimer.stop()
+            onMouseXChanged: {
+                if (scim || pressedButtons === Qt.LeftButton) {
+                    timeline.position = (scrollView.flickableItem.contentX + mouse.x) / scaleFactor
+                    if ((mouse.x < 50) || (mouse.x > scrollView.width - 50))
+                        scrubTimer.start()
+                }
+            }
+            Timer {
+                id: scrubTimer
+                interval: 25
+                repeat: true
+                onTriggered: {
+                    if (parent.scim || parent.pressedButtons === Qt.LeftButton) {
+                        if (parent.mouseX < 50)
+                            timeline.position -= 10
+                        else if (parent.mouseX > scrollView.flickableItem.contentX - 50)
+                            timeline.position += 10
+                    }
+                    if (parent.mouseX >= 50 && parent.mouseX <= scrollView.width - 50)
+                        stop()
+                }
+            }
+        
 
             Column {
                 Flickable {
                     // Non-slider scroll area for the Ruler.
                     contentX: scrollView.flickableItem.contentX
-                    width: top.width - headerWidth
+                    width: root.width - headerWidth
                     height: ruler.height
                     interactive: false
+                    focus: false
                     Ruler {
                         id: ruler
                         width: tracksContainer.width
@@ -117,8 +149,9 @@ Rectangle {
                 }
                 ScrollView {
                     id: scrollView
-                    width: top.width - headerWidth
-                    height: top.height - ruler.height
+                    width: root.width - headerWidth
+                    height: root.height - ruler.height
+                    focus: false
         
                     Item {
                         width: tracksContainer.width + headerWidth
@@ -148,7 +181,7 @@ Rectangle {
                 visible: timeline.position > -1
                 color: activePalette.text
                 width: 1
-                height: top.height - scrollView.__horizontalScrollBar.height
+                height: root.height - scrollView.__horizontalScrollBar.height
                 x: timeline.position * scaleFactor - scrollView.flickableItem.contentX
                 y: 0
             }
@@ -164,7 +197,7 @@ Rectangle {
                     var cx = getContext('2d');
                     cx.fillStyle = activePalette.windowText;
                     cx.beginPath();
-                    // Start from the top-left point.
+                    // Start from the root-left point.
                     cx.lineTo(width, 0);
                     cx.lineTo(width / 2.0, height);
                     cx.lineTo(0, 0);
@@ -190,11 +223,37 @@ Rectangle {
             rootIndex: trackDelegateModel.modelIndex(index)
             height: audio? trackHeight : trackHeight * 2
             width: childrenRect.width
+            isAudio: audio
             timeScale: scaleFactor
-            trackIndex: index
             onClipSelected: {
                 for (var i = 0; i < tracksRepeater.count; i++)
-                    if (i != trackIndex) tracksRepeater.itemAt(i).resetStates();
+                    if (i !== track.DelegateModel.itemsIndex) tracksRepeater.itemAt(i).resetStates();
+            }
+            onClipDragged: {
+                // This provides continuous scrolling at the left/right edges.
+                if (x > scrollView.flickableItem.contentX + scrollView.width - 50) {
+                    scrollTimer.item = clip
+                    scrollTimer.backwards = false
+                    scrollTimer.start()
+                } else if (x < 50) {
+                    scrollView.flickableItem.contentX = 0;
+                    scrollTimer.stop()
+                } else if (x < scrollView.flickableItem.contentX + 50) {
+                    scrollTimer.item = clip
+                    scrollTimer.backwards = true
+                    scrollTimer.start()
+                } else {
+                    scrollTimer.stop()
+                }
+            }
+            onClipDropped: scrollTimer.running = false
+            onClipDraggedToTrack: {
+                var i = clip.trackIndex + direction
+                if (i >= 0  && i < tracksRepeater.count) {
+                    var track = tracksRepeater.itemAt(i)
+                    clip.reparent(track)
+                    clip.trackIndex = track.DelegateModel.itemsIndex
+                }
             }
         }
     }
@@ -204,13 +263,30 @@ Rectangle {
         onPositionChanged: scrollIfNeeded()
     }
 
+    // This provides continuous scrolling at the left/right edges.
+    Timer {
+        id: scrollTimer
+        interval: 25
+        repeat: true
+        triggeredOnStart: true
+        property var item
+        property bool backwards
+        onTriggered: {
+            var delta = backwards? -10 : 10
+            if (item) item.x += delta
+            scrollView.flickableItem.contentX += delta
+            if (scrollView.flickableItem.contentX <= 0)
+                stop()
+        }
+    }
+
     function scrollIfNeeded() {
-        var position = timeline.position * scaleFactor;
-        if (position > scrollView.width + scrollView.flickableItem.contentX - 50)
-            scrollView.flickableItem.contentX = position - scrollView.width + 50;
-        else if (position < 50)
+        var x = timeline.position * scaleFactor;
+        if (x > scrollView.flickableItem.contentX + scrollView.width - 50)
+            scrollView.flickableItem.contentX = x - scrollView.width + 50;
+        else if (x < 50)
             scrollView.flickableItem.contentX = 0;
-        else if (position < scrollView.flickableItem.contentX + 50)
-            scrollView.flickableItem.contentX = position - 50;
+        else if (x < scrollView.flickableItem.contentX + 50)
+            scrollView.flickableItem.contentX = x - 50;
     }
 }
