@@ -88,8 +88,8 @@ Rectangle {
                     maximumValue: 5.0
                     value: 4.0
                     onValueChanged: {
-                        if (typeof scaleFactor != 'undefined')
-                            scaleFactor = (value <= 4) ? value / 4 : 1.0 + (value - 4) * 2
+                        if (typeof root.scaleFactor != 'undefined')
+                            root.scaleFactor = (value <= 4) ? value / 4 : 1.0 + (value - 4) * 2
                         if (typeof scrollIfNeeded != 'undefined')
                             scrollIfNeeded()
                     }
@@ -192,17 +192,20 @@ Rectangle {
                 y: 0
                 width: 11
                 height: 5
-                renderStrategy: Canvas.Threaded
-                onAvailableChanged: {
-                    var cx = getContext('2d');
-                    cx.fillStyle = activePalette.windowText;
-                    cx.beginPath();
-                    // Start from the root-left point.
-                    cx.lineTo(width, 0);
-                    cx.lineTo(width / 2.0, height);
-                    cx.lineTo(0, 0);
-                    cx.fill();
-                    cx.closePath();
+                property bool init: true
+                onPaint: {
+                    if (init) {
+                        init = false;
+                        var cx = getContext('2d');
+                        cx.fillStyle = activePalette.windowText;
+                        cx.beginPath();
+                        // Start from the root-left point.
+                        cx.lineTo(width, 0);
+                        cx.lineTo(width / 2.0, height);
+                        cx.lineTo(0, 0);
+                        cx.fill();
+                        cx.closePath();
+                    }
                 }
             }
         }
