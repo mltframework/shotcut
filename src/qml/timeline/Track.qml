@@ -53,21 +53,25 @@ Rectangle {
                 trackRoot.clipDragged(clip, mapped.x, mapped.y)
             }
             onTrimmedIn: {
-                timeline.position = clip.x / timeScale
+//                timeline.position = Math.round(clip.x / timeScale) + delta
                 // Adjust width of clip left of argument.
                 var i = clip.DelegateModel.itemsIndex - 1;
                 // TODO handle left-most item
                 if (i >= 0)
                     repeater.itemAt(i).clipDuration += delta;
+                multitrack.trimClipIn(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex, delta)
             }
+            onTrimmedInDone: multitrack.notifyClipIn(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex)
             onTrimmedOut: {
-                timeline.position = (clip.x + clip.width) / timeScale
+//                timeline.position = (clip.x + clip.width) / timeScale
                 // Adjust width of clip right of argument.
                 var i = clip.DelegateModel.itemsIndex + 1;
                 // TODO handle right-most item
                 if (i < repeater.count)
                     repeater.itemAt(i).clipDuration += delta;
+                multitrack.trimClipOut(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex, delta)
             }
+            onTrimmedOutDone: multitrack.notifyClipOut(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex)
 
             Component.onCompleted: {
                 moved.connect(trackRoot.clipDropped)

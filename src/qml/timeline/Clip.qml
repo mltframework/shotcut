@@ -20,8 +20,10 @@ Rectangle {
     signal dropped(var clip)
     signal draggedToTrack(var clip, int direction)
     signal trimmedIn(var clip, real delta)
+    signal trimmedInDone(var clip)
     signal trimmedOut(var clip, real delta)
-    
+    signal trimmedOutDone(var clip)
+
     SystemPalette { id: activePalette }
 
     color: getColor()
@@ -53,7 +55,8 @@ Rectangle {
         cx.beginPath();
         cx.moveTo(-1, height);
         for (var i = 0; i < width; i++) {
-            var level = Math.max(audioLevels[i*2], audioLevels[i*2 + 1]) / 256;
+            var j = Math.round(i / timeScale);
+            var level = Math.max(audioLevels[j*2], audioLevels[j*2 + 1]) / 256;
             cx.lineTo(i, height - level * height);
         }
         cx.lineTo(width, height);
@@ -224,7 +227,10 @@ Rectangle {
                 startX = parent.x
                 parent.anchors.left = undefined
             }
-            onReleased: parent.anchors.left = clipRoot.left
+            onReleased: {
+                parent.anchors.left = clipRoot.left
+                clipRoot.trimmedInDone(clipRoot)
+            }
             onPositionChanged: {
                 if (mouse.buttons === Qt.LeftButton) {
                     var delta = Math.round((parent.x - startX) / timeScale)
@@ -258,7 +264,10 @@ Rectangle {
             drag.axis: Drag.XAxis
 
             onPressed: parent.anchors.right = undefined
-            onReleased: parent.anchors.right = clipRoot.right
+            onReleased: {
+                parent.anchors.right = clipRoot.right
+                clipRoot.trimmedOutDone(clipRoot)
+            }
             onPositionChanged: {
                 if (mouse.buttons === Qt.LeftButton) {
                     var newDuration = Math.round((parent.x + parent.width) / timeScale)

@@ -58,7 +58,7 @@ public:
         IsMuteRole,    /// track only
         IsHiddenRole,  /// track only
         IsAudioRole,
-        AudioLevels    /// clip only
+        AudioLevelsRole    /// clip only
     };
 
     explicit MultitrackModel(QObject *parent = 0);
@@ -84,6 +84,10 @@ public slots:
     void setTrackName(int row, const QString &value);
     void setTrackMute(int row, bool mute);
     void setTrackHidden(int row, bool hidden);
+    void trimClipIn(int trackIndex, int clipIndex, int delta);
+    void notifyClipIn(int trackIndex, int clipIndex);
+    void trimClipOut(int trackIndex, int clipIndex, int delta);
+    void notifyClipOut(int trackIndex, int clipIndex);
 
 private:
     Mlt::Tractor* m_tractor;

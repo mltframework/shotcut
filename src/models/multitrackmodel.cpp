@@ -119,7 +119,7 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                 return info->fps;
             case IsAudioRole:
                 return m_trackList[index.internalId()].type == AudioTrackType;
-            case AudioLevels: {
+            case AudioLevelsRole: {
                 QVariantList* levels = (QVariantList*) info->producer->get_data(kAudioLevelsProperty);
                 int channels = 2;
                 if (info->producer && info->producer->is_valid() && info->producer->get_data(kAudioLevelsProperty))
@@ -201,7 +201,7 @@ QHash<int, QByteArray> MultitrackModel::roleNames() const
     roles[IsMuteRole] = "mute";
     roles[IsHiddenRole] = "hidden";
     roles[IsAudioRole] = "audio";
-    roles[AudioLevels] = "audioLevels";
+    roles[AudioLevelsRole] = "audioLevels";
     return roles;
 }
 
@@ -264,10 +264,96 @@ void MultitrackModel::setTrackHidden(int row, bool hidden)
     }
 }
 
+void MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta)
+{
+    int i = m_trackList.at(trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    if (track) {
+        Mlt::Playlist playlist(*track);
+        QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
+        if (info) {
+            int in = info->frame_in + delta;
+            int out = info->frame_out;
+            playlist.resize_clip(clipIndex, in, out);
+        }
+        // Adjust left of the clip.
+        if (clipIndex > 0 && playlist.is_blank(clipIndex - 1)) {
+            Mlt::ClipInfo* blankInfo = playlist.clip_info(clipIndex - 1);
+            int in = blankInfo->frame_in;
+            int out = blankInfo->frame_out + delta;
+            playlist.resize_clip(clipIndex - 1, in, out);
+            delete blankInfo;
+        } else if (delta > 0) {
+            int newIndex = clipIndex > 0? clipIndex - 1 : 0;
+            beginInsertRows(createIndex(trackIndex, 0, NO_PARENT_ID), newIndex, newIndex);
+            playlist.insert_blank(newIndex, delta - 1);
+            endInsertRows();
+        } else {
+            // TODO start adding a transition
+        }
+        QModelIndex index = createIndex(clipIndex, 0, trackIndex);
+        audioLevelsReady(index);
+    }
+}
+
+void MultitrackModel::notifyClipIn(int trackIndex, int clipIndex)
+{
+    if (trackIndex >= 0 && trackIndex < m_trackList.size() && clipIndex >= 0) {
+        QModelIndex index = createIndex(clipIndex, 0, trackIndex);
+        QVector<int> roles;
+        roles << InPointRole;
+        roles << DurationRole;
+        emit dataChanged(index, index, roles);
+    }
+}
+
+void MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta)
+{
+    int i = m_trackList.at(trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    if (track) {
+        Mlt::Playlist playlist(*track);
+        QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
+        if (info) {
+            int in = info->frame_in;
+            int out = info->frame_out - delta;
+            playlist.resize_clip(clipIndex, in, out);
+        }
+        // Adjust right of the clip.
+        if (clipIndex >= 0 && (clipIndex + 1) < playlist.count() && playlist.is_blank(clipIndex + 1)) {
+            Mlt::ClipInfo* blankInfo = playlist.clip_info(clipIndex + 1);
+            int in = blankInfo->frame_in;
+            int out = blankInfo->frame_out + delta;
+            playlist.resize_clip(clipIndex + 1, in, out);
+            delete blankInfo;
+        } else if (delta > 0) {
+            int newIndex = clipIndex + 1;
+            beginInsertRows(createIndex(trackIndex, 0, NO_PARENT_ID), newIndex, newIndex);
+            playlist.insert_blank(newIndex, delta - 1);
+            endInsertRows();
+        } else {
+            // TODO start adding a transition
+        }
+        QModelIndex index = createIndex(clipIndex, 0, trackIndex);
+        audioLevelsReady(index);
+    }
+}
+
+void MultitrackModel::notifyClipOut(int trackIndex, int clipIndex)
+{
+    if (trackIndex >= 0 && trackIndex < m_trackList.size() && clipIndex >= 0) {
+        QModelIndex index = createIndex(clipIndex, 0, trackIndex);
+        QVector<int> roles;
+        roles << OutPointRole;
+        roles << DurationRole;
+        emit dataChanged(index, index, roles);
+    }
+}
+
 void MultitrackModel::audioLevelsReady(const QModelIndex& index)
 {
     QVector<int> roles;
-    roles << AudioLevels;
+    roles << AudioLevelsRole;
     emit dataChanged(index, index, roles);
 }
 
@@ -279,7 +365,7 @@ void MultitrackModel::load()
         m_tractor = 0;
         m_trackList.clear();
         endRemoveRows();
-   }
+    }
     // In some versions of MLT, the resource property is the XML filename,
     // but the Mlt::Tractor(Service&) constructor will fail unless it detects
     // the type as tractor, and mlt_service_identify() needs the resource
