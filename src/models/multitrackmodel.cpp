@@ -119,10 +119,13 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                 return info->fps;
             case IsAudioRole:
                 return m_trackList[index.internalId()].type == AudioTrackType;
-            case AudioLevels:
+            case AudioLevels: {
+                QVariantList* levels = (QVariantList*) info->producer->get_data(kAudioLevelsProperty);
+                int channels = 2;
                 if (info->producer && info->producer->is_valid() && info->producer->get_data(kAudioLevelsProperty))
-                    return *((QVariantList*) info->producer->get_data(kAudioLevelsProperty));
+                    return levels->mid(info->frame_in * channels, info->frame_count * channels);
                 break;
+            }
             default:
                 break;
             }
@@ -401,23 +404,13 @@ public:
                 m_tempProducer->attach(converter);
                 m_tempProducer->attach(levels);
             }
-            m_tempProducer->set_in_and_out(m_producer.get_in(), m_producer.get_out());
         }
         return m_tempProducer;
     }
 
     QString cacheKey()
     {
-        QString timeIn = m_producer.frames_to_time(m_producer.get_in(), mlt_time_clock);
-        // Reduce the precision to centiseconds to increase chance for cache hit
-        // without much loss of accuracy.
-        timeIn = timeIn.left(timeIn.size() - 1);
-        QString timeOut = m_producer.frames_to_time(m_producer.get_out(), mlt_time_clock);
-        timeOut = timeOut.left(timeOut.size() - 1);
-        QString key = QString("%1 %2 %3")
-                .arg(m_producer.get("resource"))
-                .arg(timeIn)
-                .arg(timeOut);
+        QString key = QString("%1 audiolevels").arg(m_producer.get("resource"));
         QCryptographicHash hash(QCryptographicHash::Sha1);
         hash.addData(key.toUtf8());
         return hash.result().toHex();
@@ -453,8 +446,10 @@ public:
                 delete frame;
             }
             // Put into an image for caching.
-            QImage image((levels->size() + 3) / 4, 1, QImage::Format_ARGB32);
-            for (int i = 0; i < image.width(); i ++) {
+            int channels = 2;
+            QImage image((n + 3) / 4, channels, QImage::Format_ARGB32);
+            n = image.width() * image.height();
+            for (int i = 0; i < n; i ++) {
                 QRgb p; 
                 if ((4*i + 3) < levels->size()) {
                     p = qRgba(levels->at(4*i).toInt(), levels->at(4*i+1).toInt(), levels->at(4*i+2).toInt(), levels->at(4*i+3).toInt());
@@ -465,13 +460,15 @@ public:
                     int a = 0;
                     p = qRgba(r, g, b, a);
                 }
-                image.setPixel(i, 0, p);
+                image.setPixel(i / 2, i % channels, p);
             }
             DB.putThumbnail(cacheKey(), image);
         } else {
             // convert cached image
-            for (int i = 0; i < image.width(); i++) {
-                QRgb p = image.pixel(i, 0);
+            int channels = 2;
+            int n = image.width() * image.height();
+            for (int i = 0; i < n; i++) {
+                QRgb p = image.pixel(i / 2, i % channels);
                 *levels << qRed(p);
                 *levels << qGreen(p);
                 *levels << qBlue(p);
