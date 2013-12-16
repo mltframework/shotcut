@@ -111,7 +111,7 @@ Rectangle {
             onMouseXChanged: {
                 if (scim || pressedButtons === Qt.LeftButton) {
                     timeline.position = (scrollView.flickableItem.contentX + mouse.x) / scaleFactor
-                    if ((mouse.x < 50) || (mouse.x > scrollView.width - 50))
+                    if ((scrollView.flickableItem.contentX > 0 && mouse.x < 50) || (mouse.x > scrollView.width - 50))
                         scrubTimer.start()
                 }
             }
