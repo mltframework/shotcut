@@ -15,14 +15,14 @@ Rectangle {
     property int originalX: x
 
     signal selected(var clip)
-    signal moved(var clip, int newX)
+    signal moved(var clip)
     signal dragged(var clip, var mouse)
     signal dropped(var clip)
     signal draggedToTrack(var clip, int direction)
-    signal trimmedIn(var clip, real delta)
-    signal trimmedInDone(var clip)
-    signal trimmedOut(var clip, real delta)
-    signal trimmedOutDone(var clip)
+    signal trimmingIn(var clip, real delta)
+    signal trimmedIn(var clip)
+    signal trimmingOut(var clip, real delta)
+    signal trimmedOut(var clip)
 
     SystemPalette { id: activePalette }
 
@@ -177,6 +177,7 @@ Rectangle {
         }
         property int startX
         onPressed: {
+            originalX = parent.x
             startX = parent.x
             parent.state = 'selected'
             parent.selected(clipRoot)
@@ -192,10 +193,9 @@ Rectangle {
             parent.y = 0
             var delta = parent.x - startX
             if (Math.abs(delta) > 0) {
-                parent.moved(clipRoot, parent.x)
+                parent.moved(clipRoot)
                 originalX = parent.x
             } else {
-                parent.x = originalX
                 parent.dropped(clipRoot)
             }
         }
@@ -208,8 +208,7 @@ Rectangle {
         anchors.leftMargin: 0
         height: parent.height
         width: 5
-        color: 'red'
-        opacity: (trimInMouseArea.containsMouse || trimInMouseArea.drag.active)? 0.5 : 0
+        opacity: 0
         Drag.active: trimInMouseArea.drag.active
         Drag.proposedAction: Qt.MoveAction
 
@@ -229,14 +228,13 @@ Rectangle {
             }
             onReleased: {
                 parent.anchors.left = clipRoot.left
-                clipRoot.trimmedInDone(clipRoot)
+                clipRoot.trimmedIn(clipRoot)
             }
             onPositionChanged: {
                 if (mouse.buttons === Qt.LeftButton) {
                     var delta = Math.round((parent.x - startX) / timeScale)
                     if (Math.abs(delta) > 0) {
-                        clipRoot.trimmedIn(clipRoot, delta)
-                        clipRoot.clipDuration -= delta
+                        clipRoot.trimmingIn(clipRoot, delta)
                     }
                 }
             }
@@ -250,7 +248,7 @@ Rectangle {
         height: parent.height
         width: 5
         color: 'red'
-        opacity: (trimOutMouseArea.containsMouse || trimOutMouseArea.drag.active)? 0.5 : 0
+        opacity: 0
         Drag.active: trimOutMouseArea.drag.active
         Drag.proposedAction: Qt.MoveAction
 
@@ -262,19 +260,23 @@ Rectangle {
             cursorShape: Qt.SizeHorCursor
             drag.target: parent
             drag.axis: Drag.XAxis
+            property int duration
 
-            onPressed: parent.anchors.right = undefined
+            onPressed: {
+                duration = clipDuration
+                parent.anchors.right = undefined
+            }
             onReleased: {
                 parent.anchors.right = clipRoot.right
-                clipRoot.trimmedOutDone(clipRoot)
+                clipRoot.trimmedOut(clipRoot)
             }
             onPositionChanged: {
                 if (mouse.buttons === Qt.LeftButton) {
                     var newDuration = Math.round((parent.x + parent.width) / timeScale)
-                    var delta = clipRoot.clipDuration - newDuration 
+                    var delta = duration - newDuration 
                     if (Math.abs(delta) > 0) {
-                        clipRoot.trimmedOut(clipRoot, delta)
-                        clipRoot.clipDuration = newDuration
+                        clipRoot.trimmingOut(clipRoot, delta)
+                        duration = newDuration
                     }
                 }
             }

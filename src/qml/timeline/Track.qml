@@ -32,7 +32,7 @@ Rectangle {
             isBlank: model.blank
             isAudio: model.audio
             audioLevels: model.audioLevels
-            width: clipDuration * timeScale
+            width: model.duration * timeScale
             height: trackRoot.height
             trackIndex: trackRoot.DelegateModel.itemsIndex
             onSelected: {
@@ -40,38 +40,17 @@ Rectangle {
                 trackRoot.clipSelected(clip, trackRoot);
             }
             onMoved: {
-//                console.log('clip moved: ' + clip.DelegateModel.itemsIndex + ' position ' + Math.round(newX / timeScale))
-                for (var i = repeater.count - 1; i >= 0; i--) {
-                    if (i !== clip.DelegateModel.itemsIndex && newX >= repeater.itemAt(i).originalX) {
-                        console.log('dropped onto clip ' + i + ': ' + repeater.itemAt(i).clipName)
-                        break
-                    }
-                }
+                if (!multitrack.moveClip(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex, Math.round(clip.x / timeScale)))
+                    clip.x = clip.originalX
             }
             onDragged: {
                 var mapped = trackRoot.mapFromItem(repeater.itemAt(clip.DelegateModel.itemsIndex), mouse.x, mouse.y)
                 trackRoot.clipDragged(clip, mapped.x, mapped.y)
             }
-            onTrimmedIn: {
-//                timeline.position = Math.round(clip.x / timeScale) + delta
-                // Adjust width of clip left of argument.
-                var i = clip.DelegateModel.itemsIndex - 1;
-                // TODO handle left-most item
-                if (i >= 0)
-                    repeater.itemAt(i).clipDuration += delta;
-                multitrack.trimClipIn(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex, delta)
-            }
-            onTrimmedInDone: multitrack.notifyClipIn(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex)
-            onTrimmedOut: {
-//                timeline.position = (clip.x + clip.width) / timeScale
-                // Adjust width of clip right of argument.
-                var i = clip.DelegateModel.itemsIndex + 1;
-                // TODO handle right-most item
-                if (i < repeater.count)
-                    repeater.itemAt(i).clipDuration += delta;
-                multitrack.trimClipOut(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex, delta)
-            }
-            onTrimmedOutDone: multitrack.notifyClipOut(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex)
+            onTrimmingIn: multitrack.trimClipIn(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex, delta)
+            onTrimmedIn:multitrack.notifyClipIn(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex)
+            onTrimmingOut: multitrack.trimClipOut(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex, delta)
+            onTrimmedOut: multitrack.notifyClipOut(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex)
 
             Component.onCompleted: {
                 moved.connect(trackRoot.clipDropped)

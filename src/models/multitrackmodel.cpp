@@ -273,16 +273,33 @@ void MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta)
         QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
         if (info) {
             int in = info->frame_in + delta;
+            if (in < 0) return;
             int out = info->frame_out;
             playlist.resize_clip(clipIndex, in, out);
+
+            QModelIndex index = createIndex(clipIndex, 0, trackIndex);
+            QVector<int> roles;
+            roles << DurationRole;
+            roles << InPointRole;
+            emit dataChanged(index, index, roles);
         }
         // Adjust left of the clip.
         if (clipIndex > 0 && playlist.is_blank(clipIndex - 1)) {
-            Mlt::ClipInfo* blankInfo = playlist.clip_info(clipIndex - 1);
-            int in = blankInfo->frame_in;
-            int out = blankInfo->frame_out + delta;
-            playlist.resize_clip(clipIndex - 1, in, out);
-            delete blankInfo;
+            int out = playlist.clip_length(clipIndex - 1) + delta - 1;
+            if (out < 0) {
+                qDebug() << "remove blank at left";
+                beginRemoveRows(createIndex(trackIndex, 0, NO_PARENT_ID), clipIndex - 1, clipIndex - 1);
+                playlist.remove(clipIndex - 1);
+                endRemoveRows();
+            } else {
+                qDebug() << "adjust blank on left to" << out;
+                playlist.resize_clip(clipIndex - 1, 0, out);
+    
+                QModelIndex index = createIndex(clipIndex - 1, 0, trackIndex);
+                QVector<int> roles;
+                roles << DurationRole;
+                emit dataChanged(index, index, roles);
+            }
         } else if (delta > 0) {
             int newIndex = clipIndex > 0? clipIndex - 1 : 0;
             beginInsertRows(createIndex(trackIndex, 0, NO_PARENT_ID), newIndex, newIndex);
@@ -291,8 +308,6 @@ void MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta)
         } else {
             // TODO start adding a transition
         }
-        QModelIndex index = createIndex(clipIndex, 0, trackIndex);
-        audioLevelsReady(index);
     }
 }
 
@@ -301,8 +316,7 @@ void MultitrackModel::notifyClipIn(int trackIndex, int clipIndex)
     if (trackIndex >= 0 && trackIndex < m_trackList.size() && clipIndex >= 0) {
         QModelIndex index = createIndex(clipIndex, 0, trackIndex);
         QVector<int> roles;
-        roles << InPointRole;
-        roles << DurationRole;
+        roles << AudioLevelsRole;
         emit dataChanged(index, index, roles);
     }
 }
@@ -317,16 +331,27 @@ void MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta)
         if (info) {
             int in = info->frame_in;
             int out = info->frame_out - delta;
+            if ((out + 1) > info->length)
+                return;
             playlist.resize_clip(clipIndex, in, out);
+
+            QModelIndex index = createIndex(clipIndex, 0, trackIndex);
+            QVector<int> roles;
+            roles << DurationRole;
+            roles << OutPointRole;
+            emit dataChanged(index, index, roles);
         }
         // Adjust right of the clip.
         if (clipIndex >= 0 && (clipIndex + 1) < playlist.count() && playlist.is_blank(clipIndex + 1)) {
-            Mlt::ClipInfo* blankInfo = playlist.clip_info(clipIndex + 1);
-            int in = blankInfo->frame_in;
-            int out = blankInfo->frame_out + delta;
-            playlist.resize_clip(clipIndex + 1, in, out);
-            delete blankInfo;
-        } else if (delta > 0) {
+            int out = playlist.clip_length(clipIndex + 1) + delta - 1;
+            playlist.resize_clip(clipIndex + 1, 0, out);
+ 
+            QModelIndex index = createIndex(clipIndex + 1, 0, trackIndex);
+            QVector<int> roles;
+            roles << DurationRole;
+            emit dataChanged(index, index, roles);
+        } else if (delta > 0 && (clipIndex + 1) < playlist.count())  {
+            // Add blank to right.
             int newIndex = clipIndex + 1;
             beginInsertRows(createIndex(trackIndex, 0, NO_PARENT_ID), newIndex, newIndex);
             playlist.insert_blank(newIndex, delta - 1);
@@ -334,8 +359,6 @@ void MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta)
         } else {
             // TODO start adding a transition
         }
-        QModelIndex index = createIndex(clipIndex, 0, trackIndex);
-        audioLevelsReady(index);
     }
 }
 
@@ -344,9 +367,225 @@ void MultitrackModel::notifyClipOut(int trackIndex, int clipIndex)
     if (trackIndex >= 0 && trackIndex < m_trackList.size() && clipIndex >= 0) {
         QModelIndex index = createIndex(clipIndex, 0, trackIndex);
         QVector<int> roles;
-        roles << OutPointRole;
+        roles << AudioLevelsRole;
+        emit dataChanged(index, index, roles);
+    }
+}
+
+bool MultitrackModel::moveClip(int trackIndex, int clipIndex, int position)
+{
+    bool result = false;
+    int i = m_trackList.at(trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    if (track) {
+        Mlt::Playlist playlist(*track);
+        int targetIndex = playlist.get_clip_index_at(position);
+
+        if ((clipIndex + 1) < playlist.count() && position >= playlist.get_playtime()) {
+            // Clip relocated to end of playlist.
+            moveClipToEnd(playlist, trackIndex, clipIndex, position);
+            result = true;
+        }
+        else if ((targetIndex < (clipIndex - 1) || targetIndex > (clipIndex + 1))
+            && playlist.is_blank_at(position) && playlist.clip_length(clipIndex) <= playlist.clip_length(targetIndex)) {
+            // Relocate clip.
+            relocateClip(playlist, trackIndex, clipIndex, position);
+            result = true;
+        }
+        else if (targetIndex >= (clipIndex - 1) && targetIndex <= (clipIndex + 1)) {
+            int length = playlist.clip_length(clipIndex);
+            int targetIndexEnd = playlist.get_clip_index_at(position + length - 1);
+
+            if ((playlist.is_blank_at(position) || targetIndex == clipIndex)
+                && (playlist.is_blank_at(position + length - 1) || targetIndexEnd == clipIndex)) {
+
+                if (position < 0) {
+                    // Special case: dragged left of timeline origin.
+                    Mlt::ClipInfo* info = playlist.clip_info(clipIndex);
+                    playlist.resize_clip(clipIndex, info->frame_in - position, info->frame_out);
+                    delete info;
+                    QModelIndex index = createIndex(clipIndex, 0, trackIndex);
+                    QVector<int> roles;
+                    roles << DurationRole;
+                    roles << InPointRole;
+                    emit dataChanged(index, index, roles);
+                    if (clipIndex > 0) {
+                        QModelIndex parentIndex = createIndex(trackIndex, 0, NO_PARENT_ID);
+                        beginMoveRows(parentIndex, clipIndex, clipIndex, parentIndex, 0);
+                        playlist.move(clipIndex, 0);
+                        endMoveRows();
+                        consolidateBlanks(playlist, trackIndex);
+                        clipIndex = 0;
+                    }
+                }
+                // Reposition the clip within its current blank spot.
+                moveClipInBlank(playlist, trackIndex, clipIndex, position);
+                result = true;
+            }
+        }
+    }
+    return result;
+}
+
+void MultitrackModel::moveClipToEnd(Mlt::Playlist& playlist, int trackIndex, int clipIndex, int position)
+{
+    int n = playlist.count();
+    int length = position - playlist.clip_start(n - 1) - playlist.clip_length(n - 1);
+
+    if (clipIndex > 0 && playlist.is_blank(clipIndex - 1)) {
+        // If there was a blank on the left adjust it.
+        int duration = playlist.clip_length(clipIndex - 1) + playlist.clip_length(clipIndex);
+        qDebug() << "adjust blank on left to" << duration;
+        playlist.resize_clip(clipIndex - 1, 0, duration - 1);
+
+        QModelIndex index = createIndex(clipIndex - 1, 0, trackIndex);
+        QVector<int> roles;
         roles << DurationRole;
         emit dataChanged(index, index, roles);
+    } else if ((clipIndex + 1) < n && playlist.is_blank(clipIndex + 1)) {
+        // If there was a blank on the right adjust it.
+        int duration = playlist.clip_length(clipIndex + 1) + playlist.clip_length(clipIndex);
+        qDebug() << "adjust blank on right to" << duration;
+        playlist.resize_clip(clipIndex + 1, 0, duration - 1);
+
+        QModelIndex index = createIndex(clipIndex + 1, 0, trackIndex);
+        QVector<int> roles;
+        roles << DurationRole;
+        emit dataChanged(index, index, roles);
+    }
+    // Add blank to end if needed.
+    if (length > 0) {
+        beginInsertRows(createIndex(trackIndex, 0, NO_PARENT_ID), n, n);
+        playlist.blank(length - 1);
+        endInsertRows();
+    }
+    // Finally, move clip into place.
+    QModelIndex parentIndex = createIndex(trackIndex, 0, NO_PARENT_ID);
+    beginMoveRows(parentIndex, clipIndex, clipIndex, parentIndex, playlist.count());
+    playlist.move(clipIndex, playlist.count());
+    endMoveRows();
+    consolidateBlanks(playlist, trackIndex);
+}
+
+void MultitrackModel::relocateClip(Mlt::Playlist& playlist, int trackIndex, int clipIndex, int position)
+{
+    int targetIndex = playlist.get_clip_index_at(position);
+
+    // Split target blank clip.
+    playlist.split_at(position);
+    if (clipIndex >= targetIndex)
+        ++clipIndex;
+
+    // Notify blank on left was adjusted.
+    QModelIndex index = createIndex(targetIndex, 0, trackIndex);
+    QVector<int> roles;
+    roles << DurationRole;
+    emit dataChanged(index, index, roles);
+
+    // Adjust blank on right.
+    int duration = playlist.clip_length(targetIndex + 1) - playlist.clip_length(clipIndex);
+    if (duration > 0) {
+        qDebug() << "adjust blank on right" << (targetIndex + 1) << " to" << duration;
+        playlist.resize_clip(targetIndex + 1, 0, duration - 1);
+        beginInsertRows(createIndex(trackIndex, 0, NO_PARENT_ID), targetIndex + 1, targetIndex + 1);
+        endInsertRows();
+    } else {
+        qDebug() << "remove blank on right";
+        int index = targetIndex + 1;
+        playlist.remove(index);
+    }
+
+    // Move clip between split blanks.
+    QModelIndex parentIndex = createIndex(trackIndex, 0, NO_PARENT_ID);
+    beginMoveRows(parentIndex, clipIndex, clipIndex, parentIndex, targetIndex + 1);
+    playlist.move(clipIndex, targetIndex + 1);
+    endMoveRows();
+    consolidateBlanks(playlist, trackIndex);
+}
+
+void MultitrackModel::moveClipInBlank(Mlt::Playlist& playlist, int trackIndex, int clipIndex, int position)
+{
+    int delta = position - playlist.clip_start(clipIndex);
+
+    if (clipIndex > 0 && playlist.is_blank(clipIndex - 1)) {
+        // Adjust blank on left.
+        int duration = playlist.clip_length(clipIndex - 1) + delta;
+        if (duration > 0) {
+            qDebug() << "adjust blank on left" << (clipIndex - 1) << "to" << duration;
+            playlist.resize_clip(clipIndex - 1, 0, duration - 1);
+
+            QModelIndex index = createIndex(clipIndex - 1, 0, trackIndex);
+            QVector<int> roles;
+            roles << DurationRole;
+            emit dataChanged(index, index, roles);
+        } else {
+            qDebug() << "remove blank on left";
+            int index = clipIndex - 1;
+            beginRemoveRows(createIndex(trackIndex, 0, NO_PARENT_ID), index, index);
+            playlist.remove(index);
+            endRemoveRows();
+            consolidateBlanks(playlist, trackIndex);
+        }
+    } else if (delta > 0) {
+        qDebug() << "add blank on left with duration" << delta;
+        // Add blank to left.
+        int index = qMax(clipIndex - 1, 0);
+        beginInsertRows(createIndex(trackIndex, 0, NO_PARENT_ID), index, index);
+        playlist.insert_blank(index, delta - 1);
+        endInsertRows();
+        ++clipIndex;
+    }
+
+    if ((clipIndex + 1) < playlist.count() && playlist.is_blank(clipIndex + 1)) {
+        // Adjust blank to right.
+        int duration = playlist.clip_length(clipIndex + 1) - delta;
+        if (duration > 0) {
+            qDebug() << "adjust blank on right" << (clipIndex + 1) << "to" << duration;
+            playlist.resize_clip(clipIndex + 1, 0, duration - 1);
+
+            QModelIndex index = createIndex(clipIndex + 1, 0, trackIndex);
+            QVector<int> roles;
+            roles << DurationRole;
+            emit dataChanged(index, index, roles);
+        } else {
+            qDebug() << "remove blank on right";
+            int index = clipIndex + 1;
+            beginRemoveRows(createIndex(trackIndex, 0, NO_PARENT_ID), index, index);
+            playlist.remove(index);
+            endRemoveRows();
+            consolidateBlanks(playlist, trackIndex);
+        }
+    } else if (delta < 0 && (clipIndex + 1) < playlist.count()) {
+        // Add blank to right.
+        qDebug() << "add blank on right with duration" << -delta;
+        beginInsertRows(createIndex(trackIndex, 0, NO_PARENT_ID), clipIndex + 1, clipIndex + 1);
+        playlist.insert_blank(clipIndex + 1, (-delta - 1));
+        endInsertRows();
+    }
+}
+
+void MultitrackModel::consolidateBlanks(Mlt::Playlist &playlist, int trackIndex)
+{
+    for (int i = 1; i < playlist.count(); i++) {
+        if (playlist.is_blank(i - 1) && playlist.is_blank(i)) {
+            int out = playlist.clip_length(i - 1) + playlist.clip_length(i) - 1;
+            playlist.resize_clip(i - 1, 0, out);
+            QModelIndex index = createIndex(i - 1, 0, trackIndex);
+            QVector<int> roles;
+            roles << DurationRole;
+            emit dataChanged(index, index, roles);
+            beginRemoveRows(createIndex(trackIndex, 0, NO_PARENT_ID), i, i);
+            playlist.remove(i--);
+            endRemoveRows();
+        }
+        if (playlist.count() > 0) {
+            int i = playlist.count() - 1;
+            if (playlist.is_blank(i)) {
+                beginRemoveRows(createIndex(trackIndex, 0, NO_PARENT_ID), i, i);
+                playlist.remove(i);
+            endRemoveRows();
+            }
+        }
     }
 }
 

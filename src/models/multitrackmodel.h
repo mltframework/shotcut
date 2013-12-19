@@ -23,6 +23,7 @@
 #include <QList>
 #include <QString>
 #include <MltTractor.h>
+#include <MltPlaylist.h>
 
 typedef enum {
     PlaylistTrackType = 0,
@@ -88,11 +89,16 @@ public slots:
     void notifyClipIn(int trackIndex, int clipIndex);
     void trimClipOut(int trackIndex, int clipIndex, int delta);
     void notifyClipOut(int trackIndex, int clipIndex);
+    bool moveClip(int trackIndex, int clipIndex, int position);
 
 private:
     Mlt::Tractor* m_tractor;
     TrackList m_trackList;
 
+    void moveClipToEnd(Mlt::Playlist& playlist, int trackIndex, int clipIndex, int position);
+    void relocateClip(Mlt::Playlist& playlist, int trackIndex, int clipIndex, int position);
+    void moveClipInBlank(Mlt::Playlist& playlist, int trackIndex, int clipIndex, int position);
+    void consolidateBlanks(Mlt::Playlist& playlist, int trackIndex);
     void getAudioLevels();
     void addBlackTrackIfNeeded();
     void addMissingTransitions();
