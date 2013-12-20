@@ -483,8 +483,8 @@ function set_globals {
   # mlt
   CONFIG[1]="./configure --prefix=$FINAL_INSTALL_DIR --enable-gpl --enable-gpl3 --without-kde"
   # Remember, if adding more of these, to update the post-configure check.
-  [ "$QT_INCLUDE_DIR" ] && CONFIG[1]="${CONFIG[1]} --qimage-includedir=$QT_INCLUDE_DIR"
-  [ "$QT_LIB_DIR" ] && CONFIG[1]="${CONFIG[1]} --qimage-libdir=$QT_LIB_DIR"
+  [ "$QT_INCLUDE_DIR" ] && CONFIG[1]="${CONFIG[1]} --qt-includedir=$QT_INCLUDE_DIR"
+  [ "$QT_LIB_DIR" ] && CONFIG[1]="${CONFIG[1]} --qt-libdir=$QT_LIB_DIR"
   if test "1" = "$MLT_DISABLE_SOX" ; then
     CONFIG[1]="${CONFIG[1]} --disable-sox"
   fi
@@ -1150,8 +1150,8 @@ function mlt_check_configure {
         mlt_format_required sdl "Please install libsdl1.2-dev. "
         DODIE=1
       ;;
-      disable-qimage)
-        mlt_format_required qimage "Please provide paths for QImage on the 'Compile options' page. "
+      disable-qt)
+        mlt_format_required qt "Please provide paths for Qt on the 'Compile options' page. "
         DODIE=1
       ;;
 
