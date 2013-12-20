@@ -18,7 +18,7 @@
 
 import QtQuick 2.0
 import QtQml.Models 2.1
-import 'Track.js' as logic
+import 'Track.js' as Logic
 
 Rectangle {
     id: trackRoot
@@ -65,20 +65,20 @@ Rectangle {
             onDragged: {
                 // Snap if Alt key is not down.
                 if (!(mouse.modifiers & Qt.AltModifier))
-                    logic.snapClip(clip)
+                    Logic.snapClip(clip)
                 var mapped = trackRoot.mapFromItem(clip, mouse.x, mouse.y)
                 trackRoot.clipDragged(clip, mapped.x, mapped.y)
             }
             onTrimmingIn: {
                 if (!(mouse.modifiers & Qt.AltModifier))
-                    delta = logic.snapTrimIn(clip, delta)
+                    delta = Logic.snapTrimIn(clip, delta)
                 if (delta != 0)
                     multitrack.trimClipIn(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex, delta)
             }
             onTrimmedIn:multitrack.notifyClipIn(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex)
             onTrimmingOut: {
                 if (!(mouse.modifiers & Qt.AltModifier))
-                    delta = logic.snapTrimOut(clip, delta)
+                    delta = Logic.snapTrimOut(clip, delta)
                 if (delta != 0)
                     multitrack.trimClipOut(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex, delta)
             }
