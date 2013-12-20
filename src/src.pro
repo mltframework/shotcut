@@ -251,7 +251,8 @@ OTHER_FILES += \
     qml/timeline/TrackHead.qml \
     qml/timeline/Track.qml \
     qml/timeline/Clip.qml \
-    qml/timeline/Ruler.qml
+    qml/timeline/Ruler.qml \
+    qml/timeline/Track.js
 
 lupdate_hack {
     SOURCES += \

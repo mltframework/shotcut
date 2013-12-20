@@ -1,3 +1,21 @@
+/*
+ * Copyright (c) 2013 Meltytech, LLC
+ * Author: Dan Dennedy <dan@dennedy.org>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 import QtQuick 2.0
 
 Rectangle {
@@ -19,9 +37,9 @@ Rectangle {
     signal dragged(var clip, var mouse)
     signal dropped(var clip)
     signal draggedToTrack(var clip, int direction)
-    signal trimmingIn(var clip, real delta)
+    signal trimmingIn(var clip, real delta, var mouse)
     signal trimmedIn(var clip)
-    signal trimmingOut(var clip, real delta)
+    signal trimmingOut(var clip, real delta, var mouse)
     signal trimmedOut(var clip)
 
     SystemPalette { id: activePalette }
@@ -234,7 +252,7 @@ Rectangle {
                 if (mouse.buttons === Qt.LeftButton) {
                     var delta = Math.round((parent.x - startX) / timeScale)
                     if (Math.abs(delta) > 0) {
-                        clipRoot.trimmingIn(clipRoot, delta)
+                        clipRoot.trimmingIn(clipRoot, delta, mouse)
                     }
                 }
             }
@@ -275,7 +293,7 @@ Rectangle {
                     var newDuration = Math.round((parent.x + parent.width) / timeScale)
                     var delta = duration - newDuration 
                     if (Math.abs(delta) > 0) {
-                        clipRoot.trimmingOut(clipRoot, delta)
+                        clipRoot.trimmingOut(clipRoot, delta, mouse)
                         duration = newDuration
                     }
                 }

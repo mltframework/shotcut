@@ -1,5 +1,24 @@
+/*
+ * Copyright (c) 2013 Meltytech, LLC
+ * Author: Dan Dennedy <dan@dennedy.org>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 import QtQuick 2.0
 import QtQml.Models 2.1
+import 'Track.js' as logic
 
 Rectangle {
     id: trackRoot
@@ -44,12 +63,25 @@ Rectangle {
                     clip.x = clip.originalX
             }
             onDragged: {
-                var mapped = trackRoot.mapFromItem(repeater.itemAt(clip.DelegateModel.itemsIndex), mouse.x, mouse.y)
+                // Snap if Alt key is not down.
+                if (!(mouse.modifiers & Qt.AltModifier))
+                    logic.snapClip(clip)
+                var mapped = trackRoot.mapFromItem(clip, mouse.x, mouse.y)
                 trackRoot.clipDragged(clip, mapped.x, mapped.y)
             }
-            onTrimmingIn: multitrack.trimClipIn(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex, delta)
+            onTrimmingIn: {
+                if (!(mouse.modifiers & Qt.AltModifier))
+                    delta = logic.snapTrimIn(clip, delta)
+                if (delta != 0)
+                    multitrack.trimClipIn(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex, delta)
+            }
             onTrimmedIn:multitrack.notifyClipIn(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex)
-            onTrimmingOut: multitrack.trimClipOut(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex, delta)
+            onTrimmingOut: {
+                if (!(mouse.modifiers & Qt.AltModifier))
+                    delta = logic.snapTrimOut(clip, delta)
+                if (delta != 0)
+                    multitrack.trimClipOut(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex, delta)
+            }
             onTrimmedOut: multitrack.notifyClipOut(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex)
 
             Component.onCompleted: {
@@ -57,6 +89,7 @@ Rectangle {
                 dropped.connect(trackRoot.clipDropped)
                 draggedToTrack.connect(trackRoot.clipDraggedToTrack)
             }
+
         }
     }
 
