@@ -226,6 +226,7 @@ Rectangle {
         anchors.leftMargin: 0
         height: parent.height
         width: 5
+        color: isAudio? 'green' : 'lawngreen'
         opacity: 0
         Drag.active: trimInMouseArea.drag.active
         Drag.proposedAction: Qt.MoveAction
@@ -243,6 +244,7 @@ Rectangle {
             onPressed: {
                 startX = parent.x
                 parent.anchors.left = undefined
+                parent.opacity = 0
             }
             onReleased: {
                 parent.anchors.left = clipRoot.left
@@ -256,6 +258,8 @@ Rectangle {
                     }
                 }
             }
+            onEntered: parent.opacity = 0.5
+            onExited: parent.opacity = 0
         }
     }
     Rectangle {
@@ -283,6 +287,7 @@ Rectangle {
             onPressed: {
                 duration = clipDuration
                 parent.anchors.right = undefined
+                parent.opacity = 0
             }
             onReleased: {
                 parent.anchors.right = clipRoot.right
@@ -298,6 +303,8 @@ Rectangle {
                     }
                 }
             }
+            onEntered: parent.opacity = 0.5
+            onExited: parent.opacity = 0
         }
     }
 }
