@@ -156,5 +156,8 @@
         <file>light/32x32/zoom-fit-best.png</file>
         <file>oxygen/32x32/actions/zoom-original.png</file>
         <file>oxygen/32x32/actions/zoom-fit-best.png</file>
+        <file>dark/32x32/view-time-schedule.png</file>
+        <file>light/32x32/view-time-schedule.png</file>
+        <file>oxygen/32x32/actions/view-time-schedule.png</file>
     </qresource>
 </RCC>

@@ -173,6 +173,7 @@ MainWindow::MainWindow()
     addDockWidget(Qt::BottomDockWidgetArea, m_timelineDock);
     ui->menuView->addAction(m_timelineDock->toggleViewAction());
     connect(m_timelineDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onTimelineDockTriggered(bool)));
+    connect(ui->actionTimeline, SIGNAL(triggered()), SLOT(onTimelineDockTriggered()));
     connect(this, SIGNAL(producerOpened()), m_timelineDock, SLOT(onProducerOpened()));
     connect(m_player, SIGNAL(seeked(int)), m_timelineDock, SLOT(onSeeked(int)));
     connect(m_timelineDock, SIGNAL(seeked(int)), m_player, SLOT(seek(int)));
@@ -207,6 +208,7 @@ MainWindow::MainWindow()
     tabifyDockWidget(m_recentDock, m_playlistDock);
     tabifyDockWidget(m_playlistDock, m_historyDock);
     m_recentDock->raise();
+    splitDockWidget(m_timelineDock, m_filtersDock, Qt::Vertical);
 
     m_encodeDock = new EncodeDock(this);
     m_encodeDock->hide();
