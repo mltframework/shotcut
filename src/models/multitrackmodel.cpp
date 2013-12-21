@@ -789,24 +789,26 @@ public:
                 }
                 delete frame;
             }
-            // Put into an image for caching.
-            int channels = 2;
-            QImage image((n + 3) / 4, channels, QImage::Format_ARGB32);
-            n = image.width() * image.height();
-            for (int i = 0; i < n; i ++) {
-                QRgb p; 
-                if ((4*i + 3) < levels->size()) {
-                    p = qRgba(levels->at(4*i).toInt(), levels->at(4*i+1).toInt(), levels->at(4*i+2).toInt(), levels->at(4*i+3).toInt());
-                } else {
-                    int r = levels->at(4*i).toInt();
-                    int g = (4*i+1) < levels->size() ? levels->at(4*i+1).toInt() : 0;
-                    int b = (4*i+2) < levels->size() ? levels->at(4*i+2).toInt() : 0;
-                    int a = 0;
-                    p = qRgba(r, g, b, a);
+            if (levels->size() > 0) {
+                // Put into an image for caching.
+                int channels = 2;
+                QImage image((n + 3) / 4, channels, QImage::Format_ARGB32);
+                n = image.width() * image.height();
+                for (int i = 0; i < n; i ++) {
+                    QRgb p; 
+                    if ((4*i + 3) < levels->size()) {
+                        p = qRgba(levels->at(4*i).toInt(), levels->at(4*i+1).toInt(), levels->at(4*i+2).toInt(), levels->at(4*i+3).toInt());
+                    } else {
+                        int r = levels->at(4*i).toInt();
+                        int g = (4*i+1) < levels->size() ? levels->at(4*i+1).toInt() : 0;
+                        int b = (4*i+2) < levels->size() ? levels->at(4*i+2).toInt() : 0;
+                        int a = 0;
+                        p = qRgba(r, g, b, a);
+                    }
+                    image.setPixel(i / 2, i % channels, p);
                 }
-                image.setPixel(i / 2, i % channels, p);
+                DB.putThumbnail(cacheKey(), image);
             }
-            DB.putThumbnail(cacheKey(), image);
         } else {
             // convert cached image
             int channels = 2;
@@ -819,9 +821,11 @@ public:
                 *levels << qAlpha(p);
             }
         }
-        m_producer.set(kAudioLevelsProperty, levels, 0, (mlt_destructor) deleteQVariantList);
-        if (m_index.isValid())
-            m_model->audioLevelsReady(m_index);
+        if (levels->size() > 0) {
+            m_producer.set(kAudioLevelsProperty, levels, 0, (mlt_destructor) deleteQVariantList);
+            if (m_index.isValid())
+                m_model->audioLevelsReady(m_index);
+        }
     }
 };
 
