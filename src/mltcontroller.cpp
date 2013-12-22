@@ -90,6 +90,7 @@ Controller::Controller()
     , m_volumeFilter(0)
     , m_jackFilter(0)
     , m_volume(1.0)
+    , m_savedProducer(0)
 {
 }
 
@@ -115,6 +116,7 @@ Controller::~Controller()
 {
     close();
     closeConsumer();
+    delete m_savedProducer;
     delete m_profile;
 }
 
@@ -171,6 +173,10 @@ void Controller::close()
 {
     if (m_consumer && !m_consumer->is_stopped())
         m_consumer->stop();
+    if (isSeekableClip()) {
+        delete m_savedProducer;
+        m_savedProducer = new Mlt::Producer(m_producer);
+    }
     delete m_producer;
     m_producer = 0;
 }
@@ -401,7 +407,7 @@ QString Controller::resource() const
     return resource;
 }
 
-bool Controller::isSeekable()
+bool Controller::isSeekable() const
 {
     bool seekable = false;
     if (m_producer && m_producer->is_valid()) {
@@ -418,6 +424,16 @@ bool Controller::isSeekable()
         }
     }
     return seekable;
+}
+
+bool Controller::isClip() const
+{
+    return !isPlaylist() && !isMultitrack();
+}
+
+bool Controller::isSeekableClip()
+{
+    return isClip() && isSeekable();
 }
 
 bool Controller::isPlaylist() const

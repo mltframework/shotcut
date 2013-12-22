@@ -55,6 +55,8 @@ public:
     static void changeTheme(const QString& theme);
     FiltersDock* filtersDock() const { return m_filtersDock; }
     HtmlEditor* htmlEditor() const { return m_htmlEditor; }
+    Mlt::Playlist* playlist() const;
+    Mlt::Producer* multitrack() const;
 
 signals:
     void producerOpened();
@@ -115,6 +117,8 @@ public slots:
     void openCut(void*, int in, int out);
     void showStatusMessage(QString);
     void seekPlaylist(int start);
+    void seekTimeline(int position);
+    
     void onProducerOpened();
     void onGpuNotSupported();
     void editHTML(const QString& fileName);
@@ -146,6 +150,7 @@ private slots:
     void onPlaylistCleared();
     void onPlaylistClosed();
     void onPlaylistModified();
+    void onMultitrackClosed();
     void onCutModified();
     void updateMarkers();
     void updateThumbnails();

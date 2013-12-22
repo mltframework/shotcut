@@ -646,6 +646,17 @@ void MultitrackModel::load()
     emit loaded();
 }
 
+void MultitrackModel::close()
+{
+    if (!m_tractor) return;
+    beginRemoveRows(QModelIndex(), 0, m_trackList.count() - 1);
+    m_trackList.clear();
+    endRemoveRows();
+    delete m_tractor;
+    m_tractor = 0;
+    emit closed();
+}
+
 void MultitrackModel::refreshTrackList()
 {
     int n = m_tractor->count();

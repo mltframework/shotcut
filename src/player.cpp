@@ -34,6 +34,7 @@ Player::Player(QWidget *parent)
     , m_isMeltedPlaying(-1)
     , m_scrollArea(0)
     , m_zoomToggleFactor(Settings.playerZoom() == 0.0f? 1.0f : Settings.playerZoom())
+    , m_pauseAfterPlay(false)
 {
     setObjectName("Player");
     Mlt::Controller::singleton(this);
@@ -44,8 +45,21 @@ Player::Player(QWidget *parent)
     // Create a layout.
     QVBoxLayout *vlayout = new QVBoxLayout(this);
     vlayout->setObjectName("playerLayout");
-    vlayout->setMargin(0);
+    vlayout->setContentsMargins(0, 0, 0, 0);
     vlayout->setSpacing(4);
+    QVBoxLayout* playerVLayout = new QVBoxLayout;
+    playerVLayout->setSpacing(0);
+    playerVLayout->setContentsMargins(0, 0, 0, 0);
+
+    // Add tab bar to indicate/select what is playing: clip, playlist, timeline.
+    m_tabs = new QTabBar;
+    m_tabs->addTab(tr("Clip"));
+    m_tabs->addTab(tr("Playlist"));
+    m_tabs->setTabEnabled(PlaylistTabIndex, false);
+    m_tabs->addTab(tr("Timeline"));
+    m_tabs->setTabEnabled(TimelineTabIndex, false);
+    playerVLayout->addWidget(m_tabs);
+    connect(m_tabs, SIGNAL(tabBarClicked(int)), SLOT(onTabBarClicked(int)));
 
     // Add the volume and signal level meter
     QWidget* tmp = new QWidget(this);
@@ -55,7 +69,7 @@ Player::Player(QWidget *parent)
     hlayout->setSpacing(4);
     hlayout->setContentsMargins(0, 0, 0, 0);
 #ifdef Q_OS_MAC
-    hlayout->addWidget(MLT.videoWidget(), 10);
+    playerVLayout->addWidget(MLT.videoWidget(), 10);
 #else
     m_scrollArea = new QScrollArea;
     m_scrollArea->setWidgetResizable(true);
@@ -63,8 +77,9 @@ Player::Player(QWidget *parent)
     m_scrollArea->setAlignment(Qt::AlignCenter);
     m_scrollArea->setFocusPolicy(Qt::NoFocus);
     m_scrollArea->setWidget(MLT.videoWidget());
-    hlayout->addWidget(m_scrollArea, 10);
+    playerVLayout->addWidget(m_scrollArea, 10);
 #endif
+    hlayout->addLayout(playerVLayout);
     QVBoxLayout *volumeLayoutV = new QVBoxLayout;
     volumeLayoutV->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding));
     QHBoxLayout *volumeLayoutH = new QHBoxLayout;
@@ -410,6 +425,10 @@ void Player::onProducerOpened()
     if (!MLT.profile().is_explicit())
         emit profileChanged();
     play();
+    if (m_pauseAfterPlay) {
+        m_pauseAfterPlay = false;
+        seek(MLT.producer()->position());
+    }
 }
 
 void Player::onMeltedUnitOpened()
@@ -605,6 +624,37 @@ void Player::showPlaying()
     actionPlay->setIcon(m_pauseIcon);
     actionPlay->setText(tr("Pause"));
     actionPlay->setToolTip(tr("Pause playback (K)"));
+}
+
+void Player::switchToTab(TabIndex index)
+{
+    m_tabs->setCurrentIndex(index);
+}
+
+void Player::enableTab(TabIndex index, bool enabled)
+{
+    m_tabs->setTabEnabled(index, enabled);
+}
+
+void Player::onTabBarClicked(int index)
+{
+    switch (index) {
+    case ClipTabIndex:
+        if (MLT.savedProducer() && MLT.savedProducer()->is_valid()
+            && MLT.producer()->get_producer() != MLT.savedProducer()->get_producer()) {
+            m_pauseAfterPlay = true;
+            MAIN.open(new Mlt::Producer(MLT.savedProducer()));
+        }
+        break;
+    case PlaylistTabIndex:
+        if (!MLT.isPlaylist())
+            MAIN.seekPlaylist(MAIN.playlist()->position());
+        break;
+    case TimelineTabIndex:
+        if (!MLT.isMultitrack())
+            MAIN.seekTimeline(MAIN.multitrack()->position());
+        break;
+    }
 }
 
 void Player::showAudio(Mlt::Frame* frame)

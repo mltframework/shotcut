@@ -36,18 +36,16 @@ public:
     explicit TimelineDock(QWidget *parent = 0);
     ~TimelineDock();
 
-    MultitrackModel& model() { return m_model; }
+    MultitrackModel* model() { return &m_model; }
     int position() const { return m_position; }
     void setPosition(int position);
     Q_INVOKABLE QString timecode(int frames);
 
 signals:
-    void producerOpened();
     void seeked(int position);
     void positionChanged();
 
 public slots:
-    void onProducerOpened(void);
     void onShowFrame(Mlt::QFrame frame);
     void onSeeked(int position);
 

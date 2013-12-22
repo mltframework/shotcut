@@ -103,7 +103,9 @@ public:
     int consumerChanged();
     void setProfile(const QString& profile_name);
     QString resource() const;
-    bool isSeekable();
+    bool isSeekable() const;
+    bool isClip() const;
+    bool isSeekableClip();
     bool isPlaylist() const;
     bool isMultitrack() const;
     void rewind();
@@ -133,6 +135,9 @@ public:
     const TransportControllable* transportControl() const {
         return &m_transportControl;
     }
+    Mlt::Producer* savedProducer() const {
+        return m_savedProducer;
+    }
 
 protected:
     Mlt::Repository* m_repo;
@@ -146,6 +151,7 @@ private:
     QString m_url;
     double m_volume;
     TransportControl m_transportControl;
+    Mlt::Producer* m_savedProducer;
 
     static void on_jack_started(mlt_properties owner, void* object, mlt_position *position);
     void onJackStarted(int position);

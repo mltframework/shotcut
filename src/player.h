@@ -33,11 +33,18 @@ class QSlider;
 class QAction;
 class QScrollArea;
 class QToolButton;
+class QTabBar;
 
 class Player : public QWidget
 {
     Q_OBJECT
 public:
+    typedef enum {
+        ClipTabIndex = 0,
+        PlaylistTabIndex,
+        TimelineTabIndex
+    } TabIndex;
+
     explicit Player(QWidget *parent = 0);
     void connectTransport(const TransportControllable*);
     void setIn(int);
@@ -83,6 +90,9 @@ public slots:
     void fastForward();
     void showPaused();
     void showPlaying();
+    void switchToTab(TabIndex index);
+    void enableTab(TabIndex index, bool enabled = true);
+    void onTabBarClicked(int index);
 
 protected:
     void resizeEvent(QResizeEvent* event);
@@ -123,6 +133,8 @@ private:
     QAction* m_zoomOutAction;
     QAction* m_zoomInAction;
     float m_zoomToggleFactor;
+    QTabBar* m_tabs;
+    bool m_pauseAfterPlay;
 
 private slots:
     void updateSelection();

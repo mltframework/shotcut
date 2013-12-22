@@ -78,9 +78,11 @@ public:
 
 signals:
     void loaded();
+    void closed();
 
 public slots:
     void load();
+    void close();
     void refreshTrackList();
     void setTrackName(int row, const QString &value);
     void setTrackMute(int row, bool mute);

@@ -174,9 +174,9 @@ MainWindow::MainWindow()
     ui->menuView->addAction(m_timelineDock->toggleViewAction());
     connect(m_timelineDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onTimelineDockTriggered(bool)));
     connect(ui->actionTimeline, SIGNAL(triggered()), SLOT(onTimelineDockTriggered()));
-    connect(this, SIGNAL(producerOpened()), m_timelineDock, SLOT(onProducerOpened()));
     connect(m_player, SIGNAL(seeked(int)), m_timelineDock, SLOT(onSeeked(int)));
-    connect(m_timelineDock, SIGNAL(seeked(int)), m_player, SLOT(seek(int)));
+    connect(m_timelineDock, SIGNAL(seeked(int)), SLOT(seekTimeline(int)));
+    connect(m_timelineDock->model(), SIGNAL(closed()), SLOT(onMultitrackClosed()));
 
     m_filtersDock = new FiltersDock(this);
     m_filtersDock->hide();
@@ -541,13 +541,15 @@ void MainWindow::open(const QString& url, const Mlt::Properties* properties)
         if (!continueModified())
             return;
         // close existing project
-        if (m_playlistDock->model()->playlist())
+        if (playlist())
             m_playlistDock->model()->close();
+        if (multitrack())
+            m_timelineDock->model()->close();
         // let the new project change the profile
         MLT.profile().set_explicit(false);
         setWindowModified(false);
     }
-    else if (!m_playlistDock->model()->playlist()) {
+    else if (!playlist()) {
         if (!continueModified())
             return;
         setCurrentFile("");
@@ -605,10 +607,10 @@ void MainWindow::showStatusMessage(QString message)
 
 void MainWindow::seekPlaylist(int start)
 {
-    if (!m_playlistDock->model()->playlist()) return;
+    if (!playlist()) return;
     // we bypass this->open() to prevent sending producerOpened signal to self, which causes to reload playlist
-    if ((void*) MLT.producer()->get_producer() != (void*) m_playlistDock->model()->playlist()->get_playlist())
-        MLT.setProducer(new Mlt::Producer(*(m_playlistDock->model()->playlist())));
+    if ((void*) MLT.producer()->get_producer() != (void*) playlist()->get_playlist())
+        MLT.setProducer(new Mlt::Producer(*playlist()));
     m_player->setIn(-1);
     m_player->setOut(-1);
     // since we do not emit producerOpened, these components need updating
@@ -619,6 +621,27 @@ void MainWindow::seekPlaylist(int start)
     updateMarkers();
     MLT.seek(start);
     m_player->setFocus();
+    m_player->switchToTab(Player::PlaylistTabIndex);
+}
+
+void MainWindow::seekTimeline(int position)
+{
+    if (!multitrack()) return;
+    // we bypass this->open() to prevent sending producerOpened signal to self, which causes to reload playlist
+    if ((void*) MLT.producer()->get_producer() != (void*) multitrack()->get_producer()) {
+        MLT.setProducer(new Mlt::Producer(*multitrack()));
+        m_player->setIn(-1);
+        m_player->setOut(-1);
+        // since we do not emit producerOpened, these components need updating
+        on_actionJack_triggered(ui->actionJack->isChecked());
+        m_player->onProducerOpened();
+        m_encodeDock->onProducerOpened();
+        m_filtersDock->onProducerOpened();
+        updateMarkers();
+        m_player->setFocus();
+        m_player->switchToTab(Player::TimelineTabIndex);
+    }
+    MLT.seek(position);
 }
 
 void MainWindow::readPlayerSettings()
@@ -830,11 +853,24 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         m_playlistDock->on_actionUpdate_triggered();
         break;
     case Qt::Key_Escape: // Avid Toggle Active Monitor
-        if (MLT.isPlaylist())
-            m_playlistDock->on_actionOpen_triggered();
-        else if (m_playlistDock->position() >= 0) {
-            m_playlistDock->show();
-            seekPlaylist(m_playlistDock->position());
+        if (MLT.isPlaylist()) {
+            if (multitrack())
+                m_player->onTabBarClicked(Player::TimelineTabIndex);
+            else if (MLT.savedProducer())
+                m_player->onTabBarClicked(Player::ClipTabIndex);
+            else
+                m_playlistDock->on_actionOpen_triggered();
+        } else if (MLT.isMultitrack()) {
+            if (MLT.savedProducer())
+                m_player->onTabBarClicked(Player::ClipTabIndex);
+            else if (playlist())
+                m_player->onTabBarClicked(Player::PlaylistTabIndex);
+            // TODO else open clip nder playhead of current track if available
+        } else {
+            if (playlist())
+                m_player->onTabBarClicked(Player::PlaylistTabIndex);
+            else if (multitrack())
+                m_player->onTabBarClicked(Player::TimelineTabIndex);
         }
         break;
     case Qt::Key_Up:
@@ -1063,23 +1099,29 @@ void MainWindow::onProducerOpened()
         w = new WebvfxProducer(this);
     else if (MLT.isPlaylist()) {
         m_playlistDock->model()->load();
-        if (m_playlistDock->model()->playlist()) {
+        if (playlist()) {
             m_isPlaylistLoaded = true;
             m_player->setIn(-1);
             m_player->setOut(-1);
             m_playlistDock->setVisible(true);
             m_playlistDock->raise();
+            m_player->enableTab(Player::PlaylistTabIndex);
+            m_player->switchToTab(Player::PlaylistTabIndex);
         }
     }
     else if (MLT.isMultitrack()) {
-//        m_timelineDock->model().load();
-//        if (m_timelineDock->model().tractor()) {
+        m_timelineDock->model()->load();
+        if (multitrack()) {
             m_player->setIn(-1);
             m_player->setOut(-1);
             m_timelineDock->setVisible(true);
             m_timelineDock->raise();
-//        }
+            m_player->enableTab(Player::TimelineTabIndex);
+            m_player->switchToTab(Player::TimelineTabIndex);
+        }
     }
+    if (MLT.isClip())
+        m_player->switchToTab(Player::ClipTabIndex);
     if (!MLT.URL().isEmpty())
         setCurrentFile(MLT.URL());
     if (w) {
@@ -1246,6 +1288,7 @@ void MainWindow::onFiltersDockTriggered(bool checked)
 void MainWindow::onPlaylistCreated()
 {
     setCurrentFile("");
+    m_player->enableTab(Player::PlaylistTabIndex, true);
 }
 
 void MainWindow::onPlaylistCleared()
@@ -1264,29 +1307,41 @@ void MainWindow::onPlaylistClosed()
     setWindowModified(false);
     m_undoStack->clear();
     MLT.resetURL();
+    m_player->enableTab(Player::PlaylistTabIndex, false);
 }
 
 void MainWindow::onPlaylistModified()
 {
     setWindowModified(true);
-    if ((void*) MLT.producer()->get_producer() == (void*) m_playlistDock->model()->playlist()->get_playlist())
+    if ((void*) MLT.producer()->get_producer() == (void*) playlist()->get_playlist())
         m_player->onProducerModified();
     updateMarkers();
 }
 
+void MainWindow::onMultitrackClosed()
+{
+    m_player->resetProfile();
+    onPlaylistCleared();
+    setCurrentFile("");
+    setWindowModified(false);
+    m_undoStack->clear();
+    MLT.resetURL();
+    m_player->enableTab(Player::TimelineTabIndex, false);
+}
+
 void MainWindow::onCutModified()
 {
-    if (!m_playlistDock->model()->playlist())
+    if (!playlist())
         setWindowModified(true);
 }
 
 void MainWindow::updateMarkers()
 {
-    if (m_playlistDock->model()->playlist() && MLT.isPlaylist()) {
+    if (playlist() && MLT.isPlaylist()) {
         QList<int> markers;
-        int n = m_playlistDock->model()->playlist()->count();
+        int n = playlist()->count();
         for (int i = 0; i < n; i++)
-            markers.append(m_playlistDock->model()->playlist()->clip_start(i));
+            markers.append(playlist()->clip_start(i));
         m_player->setMarkers(markers);
     }
 }
@@ -1319,11 +1374,11 @@ void MainWindow::on_actionForum_triggered()
 
 void MainWindow::saveXML(const QString &filename)
 {
-    if (m_playlistDock->model()->playlist()) {
+    if (playlist()) {
         int in = MLT.producer()->get_in();
         int out = MLT.producer()->get_out();
         MLT.producer()->set_in_and_out(0, MLT.producer()->get_length() - 1);
-        MLT.saveXML(filename, m_playlistDock->model()->playlist());
+        MLT.saveXML(filename, playlist());
         MLT.producer()->set_in_and_out(in, out);
     } else {
         MLT.saveXML(filename);
@@ -1364,6 +1419,16 @@ void MainWindow::changeTheme(const QString &theme)
         QIcon::setThemeName("oxygen");
 #endif
     }
+}
+
+Mlt::Playlist* MainWindow::playlist() const
+{
+    return m_playlistDock->model()->playlist();
+}
+
+Mlt::Producer *MainWindow::multitrack() const
+{
+    return m_timelineDock->model()->tractor();
 }
 
 void MainWindow::onMeltedUnitOpened()

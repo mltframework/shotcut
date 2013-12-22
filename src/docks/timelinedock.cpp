@@ -31,8 +31,8 @@ TimelineDock::TimelineDock(QWidget *parent) :
     m_position(-1)
 {
     ui->setupUi(this);
-//    ui->treeView->setModel(&m_model);
     delete ui->treeView;
+    toggleViewAction()->setIcon(windowIcon());
 
     qmlRegisterType<MultitrackModel>("Shotcut.Models", 1, 0, "MultitrackModel");
 
@@ -71,22 +71,18 @@ QString TimelineDock::timecode(int frames)
     return MLT.producer()->frames_to_time(frames, mlt_time_smpte);
 }
 
-void TimelineDock::onProducerOpened()
-{
-    if (MLT.isMultitrack()) {
-        m_model.load();
-        emit producerOpened();
-    }
-}
-
 void TimelineDock::onShowFrame(Mlt::QFrame frame)
 {
-    m_position = frame.frame()->get_position();
-    emit positionChanged();
+    if (MLT.isMultitrack()) {
+        m_position = frame.frame()->get_position();
+        emit positionChanged();
+    }
 }
 
 void TimelineDock::onSeeked(int position)
 {
-    m_position = position;
-    emit positionChanged();
+    if (MLT.isMultitrack()) {
+        m_position = position;
+        emit positionChanged();
+    }
 }
