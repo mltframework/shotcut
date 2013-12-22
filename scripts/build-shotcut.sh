@@ -422,18 +422,18 @@ function set_globals {
     export CFLAGS="-DHAVE_STRUCT_TIMESPEC -I$FINAL_INSTALL_DIR/include"
     export CXXFLAGS="$CFLAGS"
     export LDFLAGS="-L$FINAL_INSTALL_DIR/bin -L$FINAL_INSTALL_DIR/lib"
-    export QTDIR="$HOME/Qt/5.1.1/mingw48_32"
-    export QMAKE="$HOME/Qt/5.1.1/gcc/bin/qmake"
-    export LRELEASE="$HOME/Qt/5.1.1/gcc/bin/lrelease"
+    export QTDIR="$HOME/Qt/5.2.0/mingw48_32"
+    export QMAKE="$HOME/Qt/5.2.0/gcc/bin/qmake"
+    export LRELEASE="$HOME/Qt/5.2.0/gcc/bin/lrelease"
     export CMAKE_ROOT="${SOURCE_DIR}/frei0r/cmake"
   elif test "$TARGET_OS" = "Darwin"; then
-    export QTDIR="$HOME/Qt/5.1.1/clang_64"
+    export QTDIR="$HOME/Qt/5.2.0/clang_64"
     export RANLIB=ranlib
   else
     if [ "$(uname -m)" = "x86_64" ]; then
-      export QTDIR="$HOME/Qt/5.1.1/gcc_64"
+      export QTDIR="$HOME/Qt/5.2.0/gcc_64"
     else
-      export QTDIR="$HOME/Qt/5.1.1/gcc"
+      export QTDIR="$HOME/Qt/5.2.0/gcc"
     fi
     export RANLIB=ranlib
   fi
@@ -483,8 +483,8 @@ function set_globals {
   # mlt
   CONFIG[1]="./configure --prefix=$FINAL_INSTALL_DIR --enable-gpl --enable-gpl3 --without-kde"
   # Remember, if adding more of these, to update the post-configure check.
-  [ "$QT_INCLUDE_DIR" ] && CONFIG[1]="${CONFIG[1]} --qimage-includedir=$QT_INCLUDE_DIR"
-  [ "$QT_LIB_DIR" ] && CONFIG[1]="${CONFIG[1]} --qimage-libdir=$QT_LIB_DIR"
+  [ "$QT_INCLUDE_DIR" ] && CONFIG[1]="${CONFIG[1]} --qt-includedir=$QT_INCLUDE_DIR"
+  [ "$QT_LIB_DIR" ] && CONFIG[1]="${CONFIG[1]} --qt-libdir=$QT_LIB_DIR"
   if test "1" = "$MLT_DISABLE_SOX" ; then
     CONFIG[1]="${CONFIG[1]} --disable-sox"
   fi
@@ -1064,12 +1064,12 @@ to make Shotcuts daily builds. It is the authoritative install reference:
   src/shotcut/scripts/build-shotcut.sh
 
 We cannot cover how to build all of Shotcut's dependencies from scratch here.
-On Linux, we rely upon Ubuntu and Fedora's packages to provide most of the
+On Linux, we rely upon Debian's packages to provide most of the
 more mundane dependencies. The rest like x264, libvpx, lame, FFmpeg, and
 frei0r are provided by the script.
 
 For OS X, we rely upon macports to provide the dependencies:
-  port install qt4-mac ffmpeg libsamplerate libsdl sox glib2 jack
+  port install ffmpeg libsamplerate libsdl sox glib2 jack
 
 For Windows, see this page on the MLT wiki about getting pre-built
 dependencies from various sources on the Internet:
@@ -1089,7 +1089,7 @@ establish a redirected environment. On Windows, everything is relative
 to the directory containing the .exe. DLLs are in the same directory as
 the .exe, and the lib and share folders are sub-directories. On OS X, all
 dependencies need to be put into the correct locations in Shotcut.app,
-and a script modifies all dylibs to pull them in and make their
+and the build script modifies all dylibs to pull them in and make their
 inter-dependencies relative to the executable. If you are just building for
 yourself, you do not need to do that. You can just let Shotcut use
 the macports dependencies in /opt/local.
@@ -1150,8 +1150,8 @@ function mlt_check_configure {
         mlt_format_required sdl "Please install libsdl1.2-dev. "
         DODIE=1
       ;;
-      disable-qimage)
-        mlt_format_required qimage "Please provide paths for QImage on the 'Compile options' page. "
+      disable-qt)
+        mlt_format_required qt "Please provide paths for Qt. "
         DODIE=1
       ;;
 
@@ -1177,7 +1177,7 @@ function mlt_check_configure {
         mlt_format_optional kdenlive "slow motion and freeze effects" "??"
       ;;
       disable-frei0r)
-        mlt_format_optional frei0r "plugin architecture. Several additional effects and transitions" "see http://www.piksel.org/frei0r"
+        mlt_format_optional frei0r "plugin architecture. Several additional effects and transitions" "see http://frei0r.dyne.org/"
       ;;
         
       # OTHERS
@@ -1326,7 +1326,7 @@ SLIB_EXTRA_CMD=-"mv $$(@:$(SLIBSUF)=.orig.def) $$(@:$(SLIBSUF)=.def)"
         cmd cp -a src/qml "$FINAL_INSTALL_DIR"/share/shotcut
         cmd install -p -c "$QTDIR"/translations/qt_*.qm "$FINAL_INSTALL_DIR"/share/shotcut/translations
         cmd install -p -c "$QTDIR"/translations/qtbase_*.qm "$FINAL_INSTALL_DIR"/share/shotcut/translations
-        cmd install -p -c "$QTDIR"/lib/libQt5{Concurrent,Core,Declarative,Gui,Multimedia,MultimediaQuick,MultimediaWidgets,Network,OpenGL,PrintSupport,Qml,QmlParticles,Quick,Script,Sensors,Sql,Svg,V8,WebKit,WebKitWidgets,Widgets,Xml,XmlPatterns,X11Extras,DBus}.so* "$FINAL_INSTALL_DIR"/lib
+        cmd install -p -c "$QTDIR"/lib/libQt5{Concurrent,Core,Declarative,Gui,Multimedia,MultimediaQuick,MultimediaWidgets,Network,OpenGL,Positioning,PrintSupport,Qml,QmlParticles,Quick,Script,Sensors,Sql,Svg,V8,WebKit,WebKitWidgets,Widgets,Xml,XmlPatterns,X11Extras,DBus}.so* "$FINAL_INSTALL_DIR"/lib
         cmd install -p -c "$QTDIR"/lib/lib{icudata,icui18n,icuuc}.so* "$FINAL_INSTALL_DIR"/lib
         cmd install -d "$FINAL_INSTALL_DIR"/lib/qt5/sqldrivers
         cmd cp -a "$QTDIR"/plugins/{accessible,iconengines,imageformats,mediaservice,platforms} "$FINAL_INSTALL_DIR"/lib/qt5
@@ -1490,7 +1490,7 @@ function deploy_osx
   cmd mkdir -p "$BUILD_DIR"/MacOS/share/shotcut/ 2>/dev/null
   cmd cp -a src/qml "$BUILD_DIR"/MacOS/share/shotcut/
 
-  # This little guy helps Qt 5.1 apps find the Qt plugins!
+  # This little guy helps Qt 5 apps find the Qt plugins!
   cmd printf "[Paths]\nPlugins=MacOS/lib/qt5\nQml2Imports=MacOS/lib/qml\n" > "$BUILD_DIR/Resources/qt.conf"
 
   cmd cd "$BUILD_DIR/MacOS" || die "Unable to change directory to MacOS"
@@ -1613,7 +1613,7 @@ function deploy_win32
   cmd rm lib/*
   cmd rm -rf lib/pkgconfig
   cmd rm -rf share/doc share/man share/ffmpeg/examples share/aclocal share/glib-2.0 share/gtk-2.0 share/gtk-doc share/themes share/locale
-  cmd cp -p "$QTDIR"/bin/Qt5{Concurrent,Core,Declarative,Gui,Multimedia,MultimediaQuick,MultimediaWidgets,Network,OpenGL,PrintSupport,Qml,QmlParticles,Quick,Script,Sensors,Sql,Svg,V8,WebKit,WebKitWidgets,Widgets,Xml,XmlPatterns}.dll .
+  cmd cp -p "$QTDIR"/bin/Qt5{Concurrent,Core,Declarative,Gui,Multimedia,MultimediaQuick,MultimediaWidgets,Network,OpenGL,Positioning,PrintSupport,Qml,QmlParticles,Quick,Script,Sensors,Sql,Svg,V8,WebKit,WebKitWidgets,Widgets,Xml,XmlPatterns}.dll .
   cmd cp -p "$QTDIR"/bin/{icudt51,icuin51,icuuc51,libgcc_s_dw2-1,libstdc++-6,libwinpthread-1}.dll .
   cmd mkdir -p lib/qt5/sqldrivers
   cmd cp -pr "$QTDIR"/plugins/{accessible,iconengines,imageformats,mediaservice,platforms} lib/qt5
@@ -1643,7 +1643,7 @@ function deploy_win32_sdk
   cmd mv bin/*.dll .
   cmd mv bin/*.exe .
   cmd mv COPYING COPYING.txt
-  cmd cp -p "$QTDIR"/bin/Qt5{Concurrent,Core,Declarative,Gui,Multimedia,MultimediaQuick,MultimediaWidgets,Network,OpenGL,PrintSupport,Qml,QmlParticles,Quick,Script,Sensors,Sql,Svg,V8,WebKit,WebKitWidgets,Widgets,Xml,XmlPatterns}.dll .
+  cmd cp -p "$QTDIR"/bin/Qt5{Concurrent,Core,Declarative,Gui,Multimedia,MultimediaQuick,MultimediaWidgets,Network,OpenGL,Positioning,PrintSupport,Qml,QmlParticles,Quick,Script,Sensors,Sql,Svg,V8,WebKit,WebKitWidgets,Widgets,Xml,XmlPatterns}.dll .
   cmd cp -p "$QTDIR"/bin/{icudt51,icuin51,icuuc51,libgcc_s_dw2-1,libstdc++-6,libwinpthread-1}.dll .
   cmd mkdir -p lib/qt5/sqldrivers
   cmd cp -pr "$QTDIR"/plugins/{accessible,iconengines,imageformats,mediaservice,platforms} lib/qt5
