@@ -17,6 +17,7 @@
  */
 
 import QtQuick 2.0
+import QtQuick.Controls 1.0
 
 Rectangle {
     id: clipRoot
@@ -187,22 +188,32 @@ Rectangle {
     ]
 
     MouseArea {
+        anchors.fill: parent
+        enabled: isBlank
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
+        onClicked: {
+            if (mouse.button === Qt.RightButton)
+                menu.popup()
+        }
+    }
+
+    MouseArea {
         id: mouseArea
         anchors.fill: parent
         enabled: !isBlank
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
         propagateComposedEvents: true
         drag.target: parent
         drag.axis: Drag.XAxis
         cursorShape: drag.active? Qt.DragMoveCursor : Qt.ArrowCursor
-        onClicked: {
-            mouse.accepted = false
-        }
         property int startX
         onPressed: {
             originalX = parent.x
             startX = parent.x
             parent.state = 'selected'
             parent.selected(clipRoot)
+            if (mouse.button === Qt.RightButton)
+                menu.popup()
         }
         onPositionChanged: {
             if (mouse.y < 0)
@@ -239,7 +250,6 @@ Rectangle {
             id: trimInMouseArea
             anchors.fill: parent
             hoverEnabled: true
-            acceptedButtons: Qt.LeftButton
             cursorShape: Qt.SizeHorCursor
             drag.target: parent
             drag.axis: Drag.XAxis
@@ -282,7 +292,6 @@ Rectangle {
             id: trimOutMouseArea
             anchors.fill: parent
             hoverEnabled: true
-            acceptedButtons: Qt.LeftButton
             cursorShape: Qt.SizeHorCursor
             drag.target: parent
             drag.axis: Drag.XAxis
@@ -309,6 +318,18 @@ Rectangle {
             }
             onEntered: parent.opacity = 0.5
             onExited: parent.opacity = 0
+        }
+    }
+    Menu {
+        id: menu
+        MenuItem {
+            text: qsTr('Remove')
+            onTriggered: timeline.remove(trackIndex, index)
+        }
+        MenuItem {
+            visible: !isBlank
+            text: qsTr('Lift')
+            onTriggered: timeline.lift(trackIndex, index)
         }
     }
 }
