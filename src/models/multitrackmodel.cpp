@@ -35,6 +35,135 @@ static const char* kTrackNameProperty = "shotcut:name";
 static const char* kShotcutPlaylistProperty = "shotcut:playlist";
 static const char* kAudioTrackProperty = "shotcut:audio";
 static const char* kVideoTrackProperty = "shotcut:video";
+static const char* kBackgroundTrackId = "background";
+
+static void deleteQVariantList(QVariantList* list)
+{
+    delete list;
+}
+
+class AudioLevelsTask : public QRunnable
+{
+    Mlt::Producer m_producer;
+    MultitrackModel* m_model;
+    QPersistentModelIndex m_index;
+    Mlt::Producer* m_tempProducer;
+
+public:
+    AudioLevelsTask(Mlt::Producer& producer, MultitrackModel* model, const QModelIndex& index)
+        : QRunnable()
+        , m_producer(producer)
+        , m_model(model)
+        , m_index(index)
+        , m_tempProducer(0)
+    {
+    }
+
+    ~AudioLevelsTask()
+    {
+        delete m_tempProducer;
+    }
+
+    Mlt::Producer* tempProducer()
+    {
+        if (!m_tempProducer) {
+            QString service = m_producer.get("mlt_service");
+            if (service == "avformat")
+                service = "avformat-novalidate";
+            else if (service.startsWith("xml"))
+                service = "xml-nogl";
+            m_tempProducer = new Mlt::Producer(MLT.profile(), service.toUtf8().constData(), m_producer.get("resource"));
+            if (m_tempProducer->is_valid()) {
+                Mlt::Filter channels(MLT.profile(), "audiochannels");
+                Mlt::Filter converter(MLT.profile(), "audioconvert");
+                Mlt::Filter levels(MLT.profile(), "audiolevel");
+                m_tempProducer->attach(channels);
+                m_tempProducer->attach(converter);
+                m_tempProducer->attach(levels);
+            }
+        }
+        return m_tempProducer;
+    }
+
+    QString cacheKey()
+    {
+        QString key = QString("%1 audiolevels").arg(m_producer.get("resource"));
+        QCryptographicHash hash(QCryptographicHash::Sha1);
+        hash.addData(key.toUtf8());
+        return hash.result().toHex();
+    }
+
+    void run()
+    {
+        int n = tempProducer()->get_playtime();
+        // 2 channels interleaved of uchar values
+        QVariantList* levels = new QVariantList;
+        QImage image = DB.getThumbnail(cacheKey());
+        if (image.isNull()) {
+            const char* key[2] = { "meta.media.audio_level.0", "meta.media.audio_level.1"};
+            // TODO: use project channel count
+            int channels = 2;
+
+            // for each frame
+            for (int i = 0; i < n; i++) {
+                m_tempProducer->seek(i);
+                Mlt::Frame* frame = m_tempProducer->get_frame();
+                if (frame && frame->is_valid() && !frame->get_int("test_audio")) {
+                    mlt_audio_format format = mlt_audio_s16;
+                    int frequency = 48000;
+                    int samples = mlt_sample_calculator(m_producer.get_fps(), frequency, i);
+                    frame->get_audio(format, frequency, channels, samples);
+                    // for each channel
+                    for (int channel = 0; channel < channels; channel++)
+                        // Convert real to uint for caching as image.
+                        // Scale by 0.9 because values may exceed 1.0 to indicate clipping.
+                        *levels << 256 * qMin(frame->get_double(key[channel]) * 0.9, 1.0);
+                } else if (!levels->isEmpty()) {
+                    for (int channel = 0; channel < channels; channel++)
+                        *levels << levels->last();
+                }
+                delete frame;
+            }
+            if (levels->size() > 0) {
+                // Put into an image for caching.
+                int count = levels->size();
+                QImage image((count + 3) / 4, channels, QImage::Format_ARGB32);
+                n = image.width() * image.height();
+                for (int i = 0; i < n; i ++) {
+                    QRgb p; 
+                    if ((4*i + 3) < count) {
+                        p = qRgba(levels->at(4*i).toInt(), levels->at(4*i+1).toInt(), levels->at(4*i+2).toInt(), levels->at(4*i+3).toInt());
+                    } else {
+                        int last = levels->last().toInt();
+                        int r = (4*i+0) < count? levels->at(4*i+0).toInt() : last;
+                        int g = (4*i+1) < count? levels->at(4*i+1).toInt() : last;
+                        int b = (4*i+2) < count? levels->at(4*i+2).toInt() : last;
+                        int a = last;
+                        p = qRgba(r, g, b, a);
+                    }
+                    image.setPixel(i / 2, i % channels, p);
+                }
+                DB.putThumbnail(cacheKey(), image);
+            }
+        } else {
+            // convert cached image
+            int channels = 2;
+            int n = image.width() * image.height();
+            for (int i = 0; i < n; i++) {
+                QRgb p = image.pixel(i / 2, i % channels);
+                *levels << qRed(p);
+                *levels << qGreen(p);
+                *levels << qBlue(p);
+                *levels << qAlpha(p);
+            }
+        }
+        if (levels->size() > 0) {
+            m_producer.set(kAudioLevelsProperty, levels, 0, (mlt_destructor) deleteQVariantList);
+            if (m_index.isValid())
+                m_model->audioLevelsReady(m_index);
+        }
+    }
+};
 
 MultitrackModel::MultitrackModel(QObject *parent)
     : QAbstractItemModel(parent)
@@ -446,6 +575,30 @@ bool MultitrackModel::moveClip(int trackIndex, int clipIndex, int position)
     return result;
 }
 
+void MultitrackModel::appendClip(int trackIndex, Mlt::Producer &clip)
+{
+    createIfNeeded();
+    int i = m_trackList.at(trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    if (track) {
+        Mlt::Playlist playlist(*track);
+        // Remove a blank placeholder.
+        if (playlist.count() == 1 && playlist.is_blank(0)) {
+            beginRemoveRows(createIndex(trackIndex, 0, NO_PARENT_ID), 0, 0);
+            playlist.remove(0);
+            endRemoveRows();
+        }
+        i = playlist.count();
+        beginInsertRows(createIndex(trackIndex, 0, NO_PARENT_ID), i, i);
+        playlist.append(clip, clip.get_in(), clip.get_out());
+        endInsertRows();
+        QModelIndex index = createIndex(i, 0, trackIndex);
+        QThreadPool::globalInstance()->start(
+            new AudioLevelsTask(clip.parent(), this, index));
+        emit modified();
+    }
+}
+
 void MultitrackModel::moveClipToEnd(Mlt::Playlist& playlist, int trackIndex, int clipIndex, int position)
 {
     int n = playlist.count();
@@ -615,6 +768,109 @@ void MultitrackModel::audioLevelsReady(const QModelIndex& index)
     emit dataChanged(index, index, roles);
 }
 
+void MultitrackModel::createIfNeeded()
+{
+    if (!m_tractor) {
+        m_tractor = new Mlt::Tractor;
+        m_tractor->set_profile(MLT.profile());
+        MLT.profile().set_explicit(true);
+        m_tractor->set("shotcut", 1);
+        addBackgroundTrack();
+        addVideoTrack();
+        emit created();
+    }
+}
+
+void MultitrackModel::addBackgroundTrack()
+{
+    Mlt::Playlist playlist(MLT.profile());
+    playlist.set("id", kBackgroundTrackId);
+    Mlt::Producer producer(MLT.profile(), "color:black");
+    producer.set("length", 1);
+    playlist.append(producer);
+    m_tractor->set_track(playlist, m_tractor->count());
+}
+
+void MultitrackModel::addAudioTrack()
+{
+    // Get the new track index.
+    int i = m_tractor->count();
+
+    // Create the MLT track.
+    Mlt::Playlist playlist(MLT.profile());
+    playlist.set(kAudioTrackProperty, 1);
+    playlist.set("hide", 1);
+    playlist.blank(0);
+    m_tractor->set_track(playlist, i);
+
+    // Add the mix transition.
+    Mlt::Transition mix(MLT.profile(), "mix");
+    mix.set("always_active", 1);
+    mix.set("combine", 1);
+    m_tractor->plant_transition(mix, 0, i);
+
+    // Get the new, logical audio-only index.
+    int a = 0;
+    foreach (Track t, m_trackList) {
+        if (t.type == AudioTrackType)
+            ++a;
+    }
+
+    // Add the shotcut logical audio track.
+    Track t;
+    t.mlt_index = i;
+    t.type = AudioTrackType;
+    t.number = a++;
+    QString trackName = QString("A%1").arg(a);
+    playlist.set(kTrackNameProperty, trackName.toUtf8().constData());
+    beginInsertRows(QModelIndex(), m_trackList.count(), m_trackList.count());
+    m_trackList.append(t);
+    endInsertRows();
+}
+
+void MultitrackModel::addVideoTrack()
+{
+    // Get the new track index.
+    int i = m_tractor->count();
+
+    // Create the MLT track.
+    Mlt::Playlist playlist(MLT.profile());
+    playlist.set(kVideoTrackProperty, 1);
+    playlist.blank(0);
+    m_tractor->set_track(playlist, i);
+
+    // Add the mix transition.
+    Mlt::Transition mix(MLT.profile(), "mix");
+    mix.set("always_active", 1);
+    mix.set("combine", 1);
+    m_tractor->plant_transition(mix, 0, i);
+
+    // Add the composite transition.
+    Mlt::Transition composite(MLT.profile(), "composite");
+    composite.set("fill", 1);
+    composite.set("aligned", 0);
+    composite.set("progressive", 1);
+    m_tractor->plant_transition(composite, 0, i);
+
+    // Get the new, logical video-only index.
+    int v = 0;
+    foreach (Track t, m_trackList) {
+        if (t.type == VideoTrackType)
+            ++v;
+    }
+
+    // Add the shotcut logical video track.
+    Track t;
+    t.mlt_index = i;
+    t.type = VideoTrackType;
+    t.number = v++;
+    QString trackName = QString("V%1").arg(v);
+    playlist.set(kTrackNameProperty, trackName.toUtf8().constData());
+    beginInsertRows(QModelIndex(), 0, 0);
+    m_trackList.prepend(t);
+    endInsertRows();
+}
+
 void MultitrackModel::load()
 {
     if (m_tractor) {
@@ -671,6 +927,8 @@ void MultitrackModel::refreshTrackList()
             continue;
         if (QString(track->get("id")) == "black_track")
             isKdenlive = true;
+        else if (QString(track->get("id")) == kBackgroundTrackId)
+            continue;
         else if (!track->get(kShotcutPlaylistProperty) && !track->get(kAudioTrackProperty)) {
             int hide = track->get_int("hide");
              // hide: 0 = a/v, 2 = muted video track
@@ -716,129 +974,6 @@ void MultitrackModel::refreshTrackList()
         }
     }
 }
-
-static void deleteQVariantList(QVariantList* list)
-{
-    delete list;
-}
-
-class AudioLevelsTask : public QRunnable
-{
-    Mlt::Producer m_producer;
-    MultitrackModel* m_model;
-    QPersistentModelIndex m_index;
-    Mlt::Producer* m_tempProducer;
-
-public:
-    AudioLevelsTask(Mlt::Producer& producer, MultitrackModel* model, const QModelIndex& index)
-        : QRunnable()
-        , m_producer(producer)
-        , m_model(model)
-        , m_index(index)
-        , m_tempProducer(0)
-    {
-    }
-
-    ~AudioLevelsTask()
-    {
-        delete m_tempProducer;
-    }
-
-    Mlt::Producer* tempProducer()
-    {
-        if (!m_tempProducer) {
-            QString service = m_producer.get("mlt_service");
-            if (service == "avformat")
-                service = "avformat-novalidate";
-            else if (service.startsWith("xml"))
-                service = "xml-nogl";
-            m_tempProducer = new Mlt::Producer(MLT.profile(), service.toUtf8().constData(), m_producer.get("resource"));
-            if (m_tempProducer->is_valid()) {
-                Mlt::Filter converter(MLT.profile(), "audioconvert");
-                Mlt::Filter levels(MLT.profile(), "audiolevel");
-                m_tempProducer->attach(converter);
-                m_tempProducer->attach(levels);
-            }
-        }
-        return m_tempProducer;
-    }
-
-    QString cacheKey()
-    {
-        QString key = QString("%1 audiolevels").arg(m_producer.get("resource"));
-        QCryptographicHash hash(QCryptographicHash::Sha1);
-        hash.addData(key.toUtf8());
-        return hash.result().toHex();
-    }
-
-    void run()
-    {
-        int n = tempProducer()->get_playtime();
-        // 2 channels interleaved of uchar values
-        QVariantList* levels = new QVariantList;
-        QImage image = DB.getThumbnail(cacheKey());
-        if (image.isNull()) {
-            const char* key[2] = { "meta.media.audio_level.0", "meta.media.audio_level.1"};
-            // for each frame
-            for (int i = 0; i < n; i++) {
-                m_tempProducer->seek(i);
-                Mlt::Frame* frame = m_tempProducer->get_frame();
-                if (!frame->get_int("test_audio")) {
-                    if (frame && frame->is_valid()) {
-                        mlt_audio_format format = mlt_audio_s16;
-                        int frequency = 48000;
-                        // TODO: use project channel count
-                        int channels = 2;
-                        int samples = mlt_sample_calculator(m_producer.get_fps(), frequency, i);
-                        frame->get_audio(format, frequency, channels, samples);
-                        // for each channel
-                        for (int channel = 0; channel < channels; channel++)
-                            // Convert real to uint for caching as image.
-                            // Scale by 0.9 because values may exceed 1.0 to indicate clipping.
-                            *levels << 256 * qMin(frame->get_double(key[channel]) * 0.9, 1.0);
-                    }
-                }
-                delete frame;
-            }
-            if (levels->size() > 0) {
-                // Put into an image for caching.
-                int channels = 2;
-                QImage image((n + 3) / 4, channels, QImage::Format_ARGB32);
-                n = image.width() * image.height();
-                for (int i = 0; i < n; i ++) {
-                    QRgb p; 
-                    if ((4*i + 3) < levels->size()) {
-                        p = qRgba(levels->at(4*i).toInt(), levels->at(4*i+1).toInt(), levels->at(4*i+2).toInt(), levels->at(4*i+3).toInt());
-                    } else {
-                        int r = levels->at(4*i).toInt();
-                        int g = (4*i+1) < levels->size() ? levels->at(4*i+1).toInt() : 0;
-                        int b = (4*i+2) < levels->size() ? levels->at(4*i+2).toInt() : 0;
-                        int a = 0;
-                        p = qRgba(r, g, b, a);
-                    }
-                    image.setPixel(i / 2, i % channels, p);
-                }
-                DB.putThumbnail(cacheKey(), image);
-            }
-        } else {
-            // convert cached image
-            int channels = 2;
-            int n = image.width() * image.height();
-            for (int i = 0; i < n; i++) {
-                QRgb p = image.pixel(i / 2, i % channels);
-                *levels << qRed(p);
-                *levels << qGreen(p);
-                *levels << qBlue(p);
-                *levels << qAlpha(p);
-            }
-        }
-        if (levels->size() > 0) {
-            m_producer.set(kAudioLevelsProperty, levels, 0, (mlt_destructor) deleteQVariantList);
-            if (m_index.isValid())
-                m_model->audioLevelsReady(m_index);
-        }
-    }
-};
 
 void MultitrackModel::getAudioLevels()
 {

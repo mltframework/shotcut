@@ -46,8 +46,12 @@ signals:
     void positionChanged();
 
 public slots:
+    void addAudioTrack();
+    void addVideoTrack();
+    void close();
     void onShowFrame(Mlt::QFrame frame);
     void onSeeked(int position);
+    void append(int trackIndex);
 
 private:
     Ui::TimelineDock *ui;

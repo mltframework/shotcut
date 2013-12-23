@@ -150,7 +150,9 @@ private slots:
     void onPlaylistCleared();
     void onPlaylistClosed();
     void onPlaylistModified();
+    void onMultitrackCreated();
     void onMultitrackClosed();
+    void onMultitrackModified();
     void onCutModified();
     void updateMarkers();
     void updateThumbnails();

@@ -75,14 +75,20 @@ public:
     QModelIndex parent(const QModelIndex &index) const;
     QHash<int, QByteArray> roleNames() const;
     void audioLevelsReady(const QModelIndex &index);
-
-signals:
-    void loaded();
-    void closed();
-
-public slots:
+    void createIfNeeded();
+    void addBackgroundTrack();
+    void addAudioTrack();
+    void addVideoTrack();
     void load();
     void close();
+
+signals:
+    void created();
+    void loaded();
+    void closed();
+    void modified();
+
+public slots:
     void refreshTrackList();
     void setTrackName(int row, const QString &value);
     void setTrackMute(int row, bool mute);
@@ -92,6 +98,7 @@ public slots:
     void trimClipOut(int trackIndex, int clipIndex, int delta);
     void notifyClipOut(int trackIndex, int clipIndex);
     bool moveClip(int trackIndex, int clipIndex, int position);
+    void appendClip(int trackIndex, Mlt::Producer &clip);
 
 private:
     Mlt::Tractor* m_tractor;

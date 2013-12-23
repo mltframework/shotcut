@@ -29,25 +29,30 @@ Rectangle {
     property bool isEditing: false
     signal muteClicked()
     signal hideClicked()
+    signal clicked()
 
-    id: trackHeadTop
+    id: trackHeadRoot
     SystemPalette { id: activePalette }
     color: activePalette.window
     clip: true
 
+    MouseArea {
+        anchors.fill: parent
+        onClicked: parent.clicked()
+    }
     Column {
         id: trackHeadColumn
-        spacing: 6
+        spacing: (trackHeadRoot.height < 50)? 0 : 6
         anchors {
             top: parent.top
             left: parent.left
-            margins: 4
+            margins: (trackHeadRoot.height < 50)? 0 : 4
         }
 
         Label {
             text: trackName
             color: activePalette.windowText
-            width: trackHeadTop.width
+            width: trackHeadRoot.width
             elide: Qt.ElideRight
             MouseArea {
                 height: parent.height
@@ -61,7 +66,7 @@ Rectangle {
             TextField {
                 id: nameEdit
                 visible: false
-                width: trackHeadTop.width - trackHeadColumn.anchors.margins * 2
+                width: trackHeadRoot.width - trackHeadColumn.anchors.margins * 2
                 text: trackName
                 onAccepted: {
                     trackName = text
@@ -80,7 +85,7 @@ Rectangle {
                         implicitWidth: 16
                         implicitHeight: 16
                         radius: 2
-                        color: control.checked? activePalette.highlight : trackHeadTop.color
+                        color: control.checked? activePalette.highlight : trackHeadRoot.color
                         border.color: activePalette.midlight
                         border.width: 1
                         Text {
@@ -102,7 +107,7 @@ Rectangle {
                         implicitWidth: 16
                         implicitHeight: 16
                         radius: 2
-                        color: control.checked? activePalette.highlight : trackHeadTop.color
+                        color: control.checked? activePalette.highlight : trackHeadRoot.color
                         border.color: activePalette.midlight
                         border.width: 1
                         Text {

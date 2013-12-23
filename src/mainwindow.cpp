@@ -170,13 +170,16 @@ MainWindow::MainWindow()
 
     m_timelineDock = new TimelineDock(this);
     m_timelineDock->hide();
+    m_timelineDock->setTitleBarWidget(new QWidget);
     addDockWidget(Qt::BottomDockWidgetArea, m_timelineDock);
     ui->menuView->addAction(m_timelineDock->toggleViewAction());
     connect(m_timelineDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onTimelineDockTriggered(bool)));
     connect(ui->actionTimeline, SIGNAL(triggered()), SLOT(onTimelineDockTriggered()));
     connect(m_player, SIGNAL(seeked(int)), m_timelineDock, SLOT(onSeeked(int)));
     connect(m_timelineDock, SIGNAL(seeked(int)), SLOT(seekTimeline(int)));
+    connect(m_timelineDock->model(), SIGNAL(created()), SLOT(onMultitrackCreated()));
     connect(m_timelineDock->model(), SIGNAL(closed()), SLOT(onMultitrackClosed()));
+    connect(m_timelineDock->model(), SIGNAL(modified()), SLOT(onMultitrackModified()));
 
     m_filtersDock = new FiltersDock(this);
     m_filtersDock->hide();
@@ -549,7 +552,7 @@ void MainWindow::open(const QString& url, const Mlt::Properties* properties)
         MLT.profile().set_explicit(false);
         setWindowModified(false);
     }
-    else if (!playlist()) {
+    else if (!playlist() && !multitrack()) {
         if (!continueModified())
             return;
         setCurrentFile("");
@@ -1318,6 +1321,12 @@ void MainWindow::onPlaylistModified()
     updateMarkers();
 }
 
+void MainWindow::onMultitrackCreated()
+{
+    setCurrentFile("");
+    m_player->enableTab(Player::TimelineTabIndex, true);
+}
+
 void MainWindow::onMultitrackClosed()
 {
     m_player->resetProfile();
@@ -1327,6 +1336,14 @@ void MainWindow::onMultitrackClosed()
     m_undoStack->clear();
     MLT.resetURL();
     m_player->enableTab(Player::TimelineTabIndex, false);
+}
+
+void MainWindow::onMultitrackModified()
+{
+    setWindowModified(true);
+    if ((void*) MLT.producer()->get_producer() == (void*) multitrack()->get_producer())
+        m_player->onProducerModified();
+    updateMarkers();
 }
 
 void MainWindow::onCutModified()
@@ -1380,6 +1397,8 @@ void MainWindow::saveXML(const QString &filename)
         MLT.producer()->set_in_and_out(0, MLT.producer()->get_length() - 1);
         MLT.saveXML(filename, playlist());
         MLT.producer()->set_in_and_out(in, out);
+    } else if (multitrack()) {
+        MLT.saveXML(filename, multitrack());
     } else {
         MLT.saveXML(filename);
     }

@@ -71,6 +71,22 @@ QString TimelineDock::timecode(int frames)
     return MLT.producer()->frames_to_time(frames, mlt_time_smpte);
 }
 
+void TimelineDock::addAudioTrack()
+{
+    m_model.addAudioTrack();
+}
+
+void TimelineDock::addVideoTrack()
+{
+    m_model.addVideoTrack();
+}
+
+void TimelineDock::close()
+{
+    m_model.close();
+    hide();
+}
+
 void TimelineDock::onShowFrame(Mlt::QFrame frame)
 {
     if (MLT.isMultitrack()) {
@@ -85,4 +101,10 @@ void TimelineDock::onSeeked(int position)
         m_position = position;
         emit positionChanged();
     }
+}
+
+void TimelineDock::append(int trackIndex)
+{
+    if (MLT.isSeekableClip())
+        m_model.appendClip(trackIndex, *MLT.producer());
 }

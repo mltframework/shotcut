@@ -28,6 +28,7 @@ Rectangle {
     property int headerWidth: 120
     property int trackHeight: 50
     property real scaleFactor: 0.5
+    property int currentTrack: 0
 
     Row {
         Column {
@@ -45,11 +46,14 @@ Rectangle {
                         height: 1
                     }
                     Button {
-                        id: menuButton
+                        action: menuAction
                         implicitWidth: 28
                         implicitHeight: 24
-                        iconName: 'format-justify-fill'
-                        onClicked: menu.popup()
+                    }
+                    Button {
+                        action: appendAction
+                        implicitWidth: 28
+                        implicitHeight: 24
                     }
                 }
             }
@@ -70,7 +74,7 @@ Rectangle {
                             isMute: model.mute
                             isHidden: model.hidden
                             isVideo: !model.audio
-                            color: (index % 2)? activePalette.alternateBase : activePalette.base
+                            color: (index === currentTrack)? activePalette.midlight : (index % 2)? activePalette.alternateBase : activePalette.base
                             width: headerWidth
                             height: model.audio? trackHeight : trackHeight * 2
                             onTrackNameChanged: {
@@ -84,6 +88,7 @@ Rectangle {
                             onHideClicked: {
                                 multitrack.setTrackHidden(index, isHidden)
                             }
+                            onClicked: currentTrack = index
                         }
                     }
                 }
@@ -190,7 +195,7 @@ Rectangle {
                                 model: multitrack
                                 delegate: Rectangle {
                                     width: tracksContainer.width
-                                    color: (index % 2)? activePalette.alternateBase : activePalette.base
+                                    color: (index === currentTrack)? activePalette.midlight : (index % 2)? activePalette.alternateBase : activePalette.base
                                     height: audio? trackHeight : trackHeight * 2
                                 }
                             }
@@ -240,9 +245,46 @@ Rectangle {
     Menu {
         id: menu
         MenuItem {
-            text: qsTr('New')
+            text: qsTr('Add Audio Track')
+            onTriggered: timeline.addAudioTrack();
+        }
+        MenuItem {
+            text: qsTr('Add Video Track')
+            onTriggered: timeline.addVideoTrack();
+        }
+        MenuItem {
+            enabled: trackHeight >= 50
+            text: qsTr('Make Tracks Shorter')
+            onTriggered: trackHeight = Math.max(30, trackHeight - 20)
+        }
+        MenuItem {
+            text: qsTr('Make Tracks Taller')
+            onTriggered: trackHeight += 20
+        }
+        MenuItem {
+            text: qsTr('Close')
+            onTriggered: timeline.close()
         }
     }
+
+    Action {
+        id: menuAction
+        tooltip: qsTr('Display a menu of additional actions')
+        iconName: 'format-justify-fill'
+        iconSource: 'qrc:///icons/oxygen/16x16/actions/format-justify-fill.png'
+        onTriggered: menu.popup()
+    }
+
+    Action {
+        id: appendAction
+        tooltip: qsTr('Append to the current track')
+        iconName: 'list-add'
+        iconSource: 'qrc:///icons/oxygen/16x16/actions/list-add.png'
+        onTriggered: timeline.append(currentTrack)
+    }
+
+    Keys.onUpPressed: currentTrack = Math.max(0, currentTrack - 1)
+    Keys.onDownPressed: currentTrack = Math.min(tracksRepeater.count - 1, currentTrack + 1)
 
     DelegateModel {
         id: trackDelegateModel
