@@ -29,6 +29,8 @@ Rectangle {
     property int trackHeight: 50
     property real scaleFactor: 0.5
     property int currentTrack: 0
+    property int currentClip: -1
+    property int currentClipTrack: -1
 
     Row {
         Column {
@@ -63,7 +65,6 @@ Rectangle {
                 width: headerWidth
                 height: trackHeaders.height
                 interactive: false
-                focus: false
 
                 Column {
                     id: trackHeaders
@@ -116,7 +117,7 @@ Rectangle {
                         leftMargin: 4
                         rightMargin: 4
                     }
-                    minimumValue: 0.1
+                    minimumValue: 0.05
                     maximumValue: 5.0
                     value: 2.0
                     onValueChanged: {
@@ -177,7 +178,7 @@ Rectangle {
                     width: root.width - headerWidth
                     height: ruler.height
                     interactive: false
-                    focus: false
+
                     Ruler {
                         id: ruler
                         width: tracksContainer.width
@@ -189,7 +190,6 @@ Rectangle {
                     id: scrollView
                     width: root.width - headerWidth
                     height: root.height - ruler.height
-                    focus: false
         
                     Item {
                         width: tracksContainer.width + headerWidth
@@ -253,23 +253,28 @@ Rectangle {
         id: menu
         MenuItem {
             text: qsTr('Add Audio Track')
+            shortcut: qsTr('Ctrl+U')
             onTriggered: timeline.addAudioTrack();
         }
         MenuItem {
             text: qsTr('Add Video Track')
+            shortcut: qsTr('Ctrl+Y')
             onTriggered: timeline.addVideoTrack();
         }
         MenuItem {
             enabled: trackHeight >= 50
             text: qsTr('Make Tracks Shorter')
+            shortcut: qsTr('Ctrl+K')
             onTriggered: trackHeight = Math.max(30, trackHeight - 20)
         }
         MenuItem {
             text: qsTr('Make Tracks Taller')
+            shortcut: qsTr('Ctrl+L')
             onTriggered: trackHeight += 20
         }
         MenuItem {
             text: qsTr('Close')
+            shortcut: qsTr('Ctrl+W')
             onTriggered: timeline.close()
         }
     }
@@ -292,6 +297,63 @@ Rectangle {
 
     Keys.onUpPressed: currentTrack = Math.max(0, currentTrack - 1)
     Keys.onDownPressed: currentTrack = Math.min(tracksRepeater.count - 1, currentTrack + 1)
+    Keys.onPressed: {
+        switch (event.key) {
+        case Qt.Key_C:
+            timeline.append(currentTrack)
+            break;
+        case Qt.Key_X:
+            timeline.remove(currentClipTrack, currentClip)
+            currentClip = -1
+            break;
+        case Qt.Key_Z:
+            timeline.lift(currentClipTrack, currentClip)
+            currentClip = -1
+            break;
+        case Qt.Key_Delete:
+        case Qt.Key_Backspace:
+            if (event.modifiers & Qt.ShiftModifier)
+                timeline.remove(currentClipTrack, currentClip)
+            else
+                timeline.lift(currentClipTrack, currentClip)
+            currentClip = -1
+            break;
+        case Qt.Key_Equal:
+            scaleSlider.value += 0.25
+            for (var i = 0; i < tracksRepeater.count; i++)
+                tracksRepeater.itemAt(i).redrawWaveforms()
+            break;
+        case Qt.Key_Minus:
+            scaleSlider.value -= 0.25
+            for (var i = 0; i < tracksRepeater.count; i++)
+                tracksRepeater.itemAt(i).redrawWaveforms()
+            break;
+        case Qt.Key_0:
+            scaleSlider.value = 2.0
+            for (var i = 0; i < tracksRepeater.count; i++)
+                tracksRepeater.itemAt(i).redrawWaveforms()
+            break;
+        default:
+            timeline.pressKey(event.key, event.modifiers)
+            break;
+        }
+    }
+    Keys.onReleased: {
+        switch (event.key) {
+        case Qt.Key_C:
+        case Qt.Key_X:
+        case Qt.Key_Z:
+        case Qt.Key_Delete:
+        case Qt.Key_Backspace:
+        case Qt.Key_Equal:
+        case Qt.Key_Minus:
+        case Qt.Key_0:
+            break;
+        default:
+            timeline.releaseKey(event.key, event.modifiers)
+            break;
+        }
+    }
 
     DelegateModel {
         id: trackDelegateModel
@@ -304,6 +366,8 @@ Rectangle {
             isAudio: audio
             timeScale: scaleFactor
             onClipSelected: {
+                currentClip = clip.DelegateModel.itemsIndex
+                currentClipTrack = track.DelegateModel.itemsIndex
                 for (var i = 0; i < tracksRepeater.count; i++)
                     if (i !== track.DelegateModel.itemsIndex) tracksRepeater.itemAt(i).resetStates();
             }

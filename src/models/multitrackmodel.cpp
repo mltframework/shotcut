@@ -599,6 +599,42 @@ void MultitrackModel::appendClip(int trackIndex, Mlt::Producer &clip)
     }
 }
 
+void MultitrackModel::removeClip(int trackIndex, int clipIndex)
+{
+    int i = m_trackList.at(trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    if (track) {
+        Mlt::Playlist playlist(*track);
+        if (clipIndex < playlist.count()) {
+            beginRemoveRows(createIndex(trackIndex, 0, NO_PARENT_ID), clipIndex, clipIndex);
+            playlist.remove(clipIndex);
+            endRemoveRows();
+            emit modified();
+        }
+    }
+}
+
+void MultitrackModel::liftClip(int trackIndex, int clipIndex)
+{
+    int i = m_trackList.at(trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    if (track) {
+        Mlt::Playlist playlist(*track);
+        if (clipIndex < playlist.count()) {
+            playlist.replace_with_blank(clipIndex);
+
+            QModelIndex index = createIndex(clipIndex, 0, trackIndex);
+            QVector<int> roles;
+            roles << ResourceRole;
+            roles << ServiceRole;
+            roles << IsBlankRole;
+            emit dataChanged(index, index, roles);
+
+            emit modified();
+        }
+    }
+}
+
 void MultitrackModel::moveClipToEnd(Mlt::Playlist& playlist, int trackIndex, int clipIndex, int position)
 {
     int n = playlist.count();

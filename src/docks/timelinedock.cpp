@@ -21,6 +21,7 @@
 #include "qmltypes/qmlutilities.h"
 #include "models/multitrackmodel.h"
 #include "qmltypes/thumbnailprovider.h"
+#include "mainwindow.h"
 
 #include <QtQml>
 #include <QtQuick>
@@ -107,4 +108,28 @@ void TimelineDock::append(int trackIndex)
 {
     if (MLT.isSeekableClip())
         m_model.appendClip(trackIndex, *MLT.producer());
+}
+
+void TimelineDock::remove(int trackIndex, int clipIndex)
+{
+    if (clipIndex >= 0 && trackIndex >= 0)
+        m_model.removeClip(trackIndex, clipIndex);
+}
+
+void TimelineDock::lift(int trackIndex, int clipIndex)
+{
+    if (clipIndex >= 0 && trackIndex >= 0)
+        m_model.liftClip(trackIndex, clipIndex);
+}
+
+void TimelineDock::pressKey(int key, Qt::KeyboardModifiers modifiers)
+{
+    QKeyEvent event(QEvent::KeyPress, key, modifiers);
+    MAIN.keyPressEvent(&event);
+}
+
+void TimelineDock::releaseKey(int key, Qt::KeyboardModifiers modifiers)
+{
+    QKeyEvent event(QEvent::KeyRelease, key, modifiers);
+    MAIN.keyReleaseEvent(&event);
 }

@@ -52,6 +52,10 @@ public slots:
     void onShowFrame(Mlt::QFrame frame);
     void onSeeked(int position);
     void append(int trackIndex);
+    void remove(int trackIndex, int clipIndex);
+    void lift(int trackIndex, int clipIndex);
+    void pressKey(int key, Qt::KeyboardModifiers modifiers);
+    void releaseKey(int key, Qt::KeyboardModifiers modifiers);
 
 private:
     Ui::TimelineDock *ui;

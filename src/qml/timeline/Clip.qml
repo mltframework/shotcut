@@ -112,6 +112,7 @@ Rectangle {
 
     Canvas {
         id: waveform
+        visible: !isBlank
         width: parent.width - parent.border.width * 2
         height: isAudio? parent.height : parent.height / 2
         anchors.left: parent.left
@@ -122,6 +123,7 @@ Rectangle {
 
     Rectangle {
         width: parent.width - parent.border.width * 2
+        visible: !isBlank
         height: 1
         anchors.left: parent.left
         anchors.bottom: parent.bottom

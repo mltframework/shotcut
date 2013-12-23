@@ -57,6 +57,8 @@ public:
     HtmlEditor* htmlEditor() const { return m_htmlEditor; }
     Mlt::Playlist* playlist() const;
     Mlt::Producer* multitrack() const;
+    void keyPressEvent(QKeyEvent*);
+    void keyReleaseEvent(QKeyEvent *);
 
 signals:
     void producerOpened();
@@ -65,8 +67,6 @@ signals:
 
 protected:
     MainWindow();
-    void keyPressEvent(QKeyEvent*);
-    void keyReleaseEvent(QKeyEvent *);
     void dragEnterEvent(QDragEnterEvent*);
     void dropEvent(QDropEvent*);
     void closeEvent(QCloseEvent*);

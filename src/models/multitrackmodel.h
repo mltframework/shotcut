@@ -99,6 +99,8 @@ public slots:
     void notifyClipOut(int trackIndex, int clipIndex);
     bool moveClip(int trackIndex, int clipIndex, int position);
     void appendClip(int trackIndex, Mlt::Producer &clip);
+    void removeClip(int trackIndex, int clipIndex);
+    void liftClip(int trackIndex, int clipIndex);
 
 private:
     Mlt::Tractor* m_tractor;
