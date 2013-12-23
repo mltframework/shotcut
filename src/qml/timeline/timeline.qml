@@ -105,6 +105,7 @@ Rectangle {
                 color: activePalette.window
                 height: root.height - trackHeaders.height - ruler.height + 4
                 width: headerWidth
+
                 Slider {
                     id: scaleSlider
                     orientation: Qt.Horizontal
@@ -123,6 +124,12 @@ Rectangle {
                             root.scaleFactor = (value <= 4) ? (value / 4) : (1.0 + (value - 4) * 2)
                         if (typeof scrollIfNeeded != 'undefined')
                             scrollIfNeeded()
+                    }
+                    onPressedChanged: {
+                        if (!pressed) {
+                            for (var i = 0; i < tracksRepeater.count; i++)
+                                tracksRepeater.itemAt(i).redrawWaveforms()
+                        }
                     }
                 }
             }

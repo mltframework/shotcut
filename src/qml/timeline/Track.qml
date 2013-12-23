@@ -37,6 +37,11 @@ Rectangle {
             if (i !== index) repeater.itemAt(i).state = ''
     }
 
+    function redrawWaveforms() {
+        for (var i = 0; i < repeater.count; i++)
+            repeater.itemAt(i).generateWaveform()
+    }
+
     color: 'transparent'
 
     DelegateModel {

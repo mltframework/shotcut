@@ -67,6 +67,8 @@ Rectangle {
     function generateWaveform() {
         if (typeof audioLevels == 'undefined') return;
         var cx = waveform.getContext('2d');
+        // TODO use project channel count
+        var channels = 2;
         var height = waveform.height;
         var width = waveform.width;
         var color = getColor();
@@ -74,7 +76,7 @@ Rectangle {
         cx.moveTo(-1, height);
         for (var i = 0; i < width; i++) {
             var j = Math.round(i / timeScale);
-            var level = Math.max(audioLevels[j*2], audioLevels[j*2 + 1]) / 256;
+            var level = Math.max(audioLevels[j * channels], audioLevels[j * channels + 1]) / 256;
             cx.lineTo(i, height - level * height);
         }
         cx.lineTo(width, height);
