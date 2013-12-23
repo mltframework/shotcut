@@ -66,6 +66,7 @@ public:
     ~MultitrackModel();
 
     Mlt::Tractor* tractor() const { return m_tractor; }
+    const TrackList& trackList() const { return m_trackList; }
 
     int rowCount(const QModelIndex &parent) const;
     int columnCount(const QModelIndex &parent) const;

@@ -52,13 +52,12 @@ public slots:
     void moveClipDown();
     void on_actionOpen_triggered();
     void on_actionInsertCut_triggered();
+    void on_actionAppendCut_triggered();
     void on_actionUpdate_triggered();
     void on_removeButton_clicked();
 
 private slots:
     void on_menuButton_clicked();
-
-    void on_actionAppendCut_triggered();
 
     void on_actionInsertBlank_triggered();
 

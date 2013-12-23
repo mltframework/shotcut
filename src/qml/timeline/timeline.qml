@@ -31,6 +31,7 @@ Rectangle {
     property int currentTrack: 0
     property int currentClip: -1
     property int currentClipTrack: -1
+    property color selectedTrackColor: Qt.tint(activePalette.base, Qt.rgba(1, 1, 0, 0.1));
 
     Row {
         Column {
@@ -75,7 +76,7 @@ Rectangle {
                             isMute: model.mute
                             isHidden: model.hidden
                             isVideo: !model.audio
-                            color: (index === currentTrack)? activePalette.midlight : (index % 2)? activePalette.alternateBase : activePalette.base
+                            color: (index === currentTrack)? selectedTrackColor : (index % 2)? activePalette.alternateBase : activePalette.base
                             width: headerWidth
                             height: model.audio? trackHeight : trackHeight * 2
                             onTrackNameChanged: {
@@ -202,7 +203,7 @@ Rectangle {
                                 model: multitrack
                                 delegate: Rectangle {
                                     width: tracksContainer.width
-                                    color: (index === currentTrack)? activePalette.midlight : (index % 2)? activePalette.alternateBase : activePalette.base
+                                    color: (index === currentTrack)? selectedTrackColor : (index % 2)? activePalette.alternateBase : activePalette.base
                                     height: audio? trackHeight : trackHeight * 2
                                 }
                             }
@@ -295,8 +296,8 @@ Rectangle {
         onTriggered: timeline.append(currentTrack)
     }
 
-    Keys.onUpPressed: currentTrack = Math.max(0, currentTrack - 1)
-    Keys.onDownPressed: currentTrack = Math.min(tracksRepeater.count - 1, currentTrack + 1)
+    Keys.onUpPressed: timeline.selectTrack(-1)
+    Keys.onDownPressed: timeline.selectTrack(1)
     Keys.onPressed: {
         switch (event.key) {
         case Qt.Key_C:

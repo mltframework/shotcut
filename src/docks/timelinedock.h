@@ -20,6 +20,7 @@
 #define TIMELINEDOCK_H
 
 #include <QDockWidget>
+#include <QQuickView>
 #include "models/multitrackmodel.h"
 #include "mltcontroller.h"
 
@@ -56,9 +57,11 @@ public slots:
     void lift(int trackIndex, int clipIndex);
     void pressKey(int key, Qt::KeyboardModifiers modifiers);
     void releaseKey(int key, Qt::KeyboardModifiers modifiers);
+    void selectTrack(int by);
 
 private:
     Ui::TimelineDock *ui;
+    QQuickView m_quickView;
     MultitrackModel m_model;
     int m_position;
 };

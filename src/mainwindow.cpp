@@ -823,6 +823,15 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
     case Qt::Key_PageDown:
         stepRightOneSecond();
         break;
+    case Qt::Key_C:
+        if (multitrack()) {
+            m_timelineDock->append(-1);
+        } else {
+            m_playlistDock->show();
+            m_playlistDock->raise();
+            m_playlistDock->on_actionAppendCut_triggered();
+        }
+        break;
     case Qt::Key_J:
         if (m_isKKeyPressed)
             m_player->seek(m_player->position() - 1);
@@ -877,7 +886,9 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         }
         break;
     case Qt::Key_Up:
-        if (m_playlistDock->isVisible()) {
+        if (multitrack()) {
+            m_timelineDock->selectTrack(-1);
+        } else if (m_playlistDock->isVisible()) {
             m_playlistDock->raise();
             if (event->modifiers() == Qt::ControlModifier)
                 m_playlistDock->moveClipUp();
@@ -885,7 +896,9 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         }
         break;
     case Qt::Key_Down:
-        if (m_playlistDock->isVisible()) {
+        if (multitrack()) {
+            m_timelineDock->selectTrack(1);
+        } else if (m_playlistDock->isVisible()) {
             m_playlistDock->raise();
             if (event->modifiers() == Qt::ControlModifier)
                 m_playlistDock->moveClipDown();
@@ -955,9 +968,17 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
     case Qt::Key_X: // Avid Extract
     case Qt::Key_Backspace:
     case Qt::Key_Delete:
-        m_playlistDock->show();
-        m_playlistDock->raise();
-        m_playlistDock->on_removeButton_clicked();
+        if (multitrack()) {
+            m_timelineDock->remove(-1, -1);
+        } else {
+            m_playlistDock->show();
+            m_playlistDock->raise();
+            m_playlistDock->on_removeButton_clicked();
+        }
+        break;
+    case Qt::Key_Z: // Avid Extract
+        if (multitrack())
+            m_timelineDock->lift(-1, -1);
         break;
     case Qt::Key_Enter: // Seek to current playlist item
     case Qt::Key_Return:

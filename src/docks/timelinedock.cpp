@@ -37,20 +37,19 @@ TimelineDock::TimelineDock(QWidget *parent) :
 
     qmlRegisterType<MultitrackModel>("Shotcut.Models", 1, 0, "MultitrackModel");
 
-    QQuickView* qqview = new QQuickView;
     QDir importPath = QmlUtilities::qmlDir();
     importPath.cd("modules");
-    qqview->engine()->addImportPath(importPath.path());
-    qqview->engine()->addImageProvider(QString("thumbnail"), new ThumbnailProvider);
-    qqview->rootContext()->setContextProperty("timeline", this);
-    qqview->rootContext()->setContextProperty("multitrack", &m_model);
-    qqview->setResizeMode(QQuickView::SizeRootObjectToView);
-    qqview->setColor(palette().window().color());
+    m_quickView.engine()->addImportPath(importPath.path());
+    m_quickView.engine()->addImageProvider(QString("thumbnail"), new ThumbnailProvider);
+    m_quickView.rootContext()->setContextProperty("timeline", this);
+    m_quickView.rootContext()->setContextProperty("multitrack", &m_model);
+    m_quickView.setResizeMode(QQuickView::SizeRootObjectToView);
+    m_quickView.setColor(palette().window().color());
 
     importPath = QmlUtilities::qmlDir();
     importPath.cd("timeline");
-    qqview->setSource(QUrl::fromLocalFile(importPath.filePath("timeline.qml")));
-    QWidget* container = QWidget::createWindowContainer(qqview);
+    m_quickView.setSource(QUrl::fromLocalFile(importPath.filePath("timeline.qml")));
+    QWidget* container = QWidget::createWindowContainer(&m_quickView);
     container->setFocusPolicy(Qt::TabFocus);
 
     ui->verticalLayout->addWidget(container);
@@ -106,18 +105,29 @@ void TimelineDock::onSeeked(int position)
 
 void TimelineDock::append(int trackIndex)
 {
-    if (MLT.isSeekableClip())
+    if (MLT.isSeekableClip()) {
+        if (trackIndex < 0)
+            trackIndex = m_quickView.rootObject()->property("currentTrack").toInt();
         m_model.appendClip(trackIndex, *MLT.producer());
+    }
 }
 
 void TimelineDock::remove(int trackIndex, int clipIndex)
 {
+    if (trackIndex < 0)
+        trackIndex = m_quickView.rootObject()->property("currentTrack").toInt();
+    if (clipIndex < 0)
+        clipIndex = m_quickView.rootObject()->property("currentClip").toInt();
     if (clipIndex >= 0 && trackIndex >= 0)
         m_model.removeClip(trackIndex, clipIndex);
 }
 
 void TimelineDock::lift(int trackIndex, int clipIndex)
 {
+    if (trackIndex < 0)
+        trackIndex = m_quickView.rootObject()->property("currentTrack").toInt();
+    if (clipIndex < 0)
+        clipIndex = m_quickView.rootObject()->property("currentClip").toInt();
     if (clipIndex >= 0 && trackIndex >= 0)
         m_model.liftClip(trackIndex, clipIndex);
 }
@@ -132,4 +142,14 @@ void TimelineDock::releaseKey(int key, Qt::KeyboardModifiers modifiers)
 {
     QKeyEvent event(QEvent::KeyRelease, key, modifiers);
     MAIN.keyReleaseEvent(&event);
+}
+
+void TimelineDock::selectTrack(int by)
+{
+    int currentTrack = m_quickView.rootObject()->property("currentTrack").toInt();
+    if (by < 0)
+        currentTrack = qMax(0, currentTrack + by);
+    else
+        currentTrack = qMin(m_model.trackList().size() - 1, currentTrack + by);
+    m_quickView.rootObject()->setProperty("currentTrack", currentTrack);
 }
