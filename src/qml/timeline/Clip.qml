@@ -225,7 +225,7 @@ Rectangle {
         onReleased: {
             parent.y = 0
             var delta = parent.x - startX
-            if (Math.abs(delta) > 0) {
+            if (Math.abs(delta) >= 1.0) {
                 parent.moved(clipRoot)
                 originalX = parent.x
             } else {
