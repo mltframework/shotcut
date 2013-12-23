@@ -110,9 +110,13 @@ private:
     void relocateClip(Mlt::Playlist& playlist, int trackIndex, int clipIndex, int position);
     void moveClipInBlank(Mlt::Playlist& playlist, int trackIndex, int clipIndex, int position);
     void consolidateBlanks(Mlt::Playlist& playlist, int trackIndex);
+    void consolidateBlanksAllTracks();
     void getAudioLevels();
     void addBlackTrackIfNeeded();
     void addMissingTransitions();
+
+private slots:
+    void adjustBackgroundDuration();
 };
 
 #endif // MULTITRACKMODEL_H

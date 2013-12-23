@@ -169,6 +169,7 @@ MultitrackModel::MultitrackModel(QObject *parent)
     : QAbstractItemModel(parent)
     , m_tractor(0)
 {
+    connect(this, SIGNAL(modified()), SLOT(adjustBackgroundDuration()));
 }
 
 MultitrackModel::~MultitrackModel()
@@ -346,6 +347,7 @@ void MultitrackModel::setTrackName(int row, const QString &value)
             QVector<int> roles;
             roles << NameRole;
             emit dataChanged(modelIndex, modelIndex, roles);
+            emit modified();
         }
     }
 }
@@ -367,6 +369,7 @@ void MultitrackModel::setTrackMute(int row, bool mute)
             QVector<int> roles;
             roles << IsMuteRole;
             emit dataChanged(modelIndex, modelIndex, roles);
+            emit modified();
         }
     }
 }
@@ -389,6 +392,7 @@ void MultitrackModel::setTrackHidden(int row, bool hidden)
             QVector<int> roles;
             roles << IsHiddenRole;
             emit dataChanged(modelIndex, modelIndex, roles);
+            emit modified();
         }
     }
 }
@@ -444,6 +448,7 @@ void MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta)
             // TODO start adding a transition
             return;
         }
+        emit modified();
     }
 }
 
@@ -507,6 +512,7 @@ void MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta)
         roles << DurationRole;
         roles << OutPointRole;
         emit dataChanged(index, index, roles);
+        emit modified();
     }
 }
 
@@ -572,6 +578,8 @@ bool MultitrackModel::moveClip(int trackIndex, int clipIndex, int position)
             }
         }
     }
+    if (result)
+        emit modified();
     return result;
 }
 
@@ -797,6 +805,20 @@ void MultitrackModel::consolidateBlanks(Mlt::Playlist &playlist, int trackIndex)
     }
 }
 
+void MultitrackModel::consolidateBlanksAllTracks()
+{
+    if (!m_tractor) return;
+    int i = 0;
+    foreach (Track t, m_trackList) {
+        Mlt::Producer* track = m_tractor->track(t.mlt_index);
+        if (track) {
+            Mlt::Playlist playlist(*track);
+            consolidateBlanks(playlist, i);
+        }
+        ++i;
+    }
+}
+
 void MultitrackModel::audioLevelsReady(const QModelIndex& index)
 {
     QVector<int> roles;
@@ -825,6 +847,24 @@ void MultitrackModel::addBackgroundTrack()
     producer.set("length", 1);
     playlist.append(producer);
     m_tractor->set_track(playlist, m_tractor->count());
+}
+
+void MultitrackModel::adjustBackgroundDuration()
+{
+    if (!m_tractor) return;
+    int n = 0;
+    foreach (Track t, m_trackList) {
+        Mlt::Producer* track = m_tractor->track(t.mlt_index);
+        if (track)
+            n = qMax(n, track->get_length());
+        delete track;
+    }
+    Mlt::Producer* track = m_tractor->track(0);
+    if (track) {
+        Mlt::Playlist playlist(*track);
+        playlist.resize_clip(0, 0, n - 1);
+        delete track;
+    }
 }
 
 void MultitrackModel::addAudioTrack()
@@ -948,6 +988,8 @@ void MultitrackModel::load()
     addBlackTrackIfNeeded();
     addMissingTransitions();
     refreshTrackList();
+    consolidateBlanksAllTracks();
+    adjustBackgroundDuration();
     getAudioLevels();
     beginInsertRows(QModelIndex(), 0, m_trackList.count() - 1);
     endInsertRows();
