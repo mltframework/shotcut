@@ -32,6 +32,7 @@ Rectangle {
     property var audioLevels
     property int trackIndex
     property int originalX: x
+    property color shotcutBlue: Qt.rgba(23/255, 92/255, 118/255, 1.0)
 
     signal selected(var clip)
     signal moved(var clip)
@@ -52,10 +53,9 @@ Rectangle {
     state: 'normal'
     Drag.active: mouseArea.drag.active
     Drag.proposedAction: Qt.MoveAction
-//    z: Drag.active? 1 : 0
 
     function getColor() {
-        return isBlank? 'transparent' : (isAudio? 'darkseagreen' : Qt.darker(activePalette.highlight))
+        return isBlank? 'transparent' : (isAudio? 'darkseagreen' : Qt.darker(shotcutBlue))
     }
 
     function reparent(track) {
@@ -173,8 +173,8 @@ Rectangle {
             name: 'selected'
             PropertyChanges {
                 target: clipRoot
-                border.color: activePalette.highlight
-                color: isBlank? 'transparent' : (isAudio? Qt.lighter('darkseagreen') : activePalette.highlight)
+                border.color: shotcutBlue
+                color: isBlank? 'transparent' : (isAudio? Qt.lighter('darkseagreen') : shotcutBlue)
                 z: 1
             }
         }
