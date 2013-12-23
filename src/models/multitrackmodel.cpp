@@ -829,6 +829,17 @@ void MultitrackModel::addBackgroundTrack()
 
 void MultitrackModel::addAudioTrack()
 {
+    if (!m_tractor) {
+        m_tractor = new Mlt::Tractor;
+        m_tractor->set_profile(MLT.profile());
+        MLT.profile().set_explicit(true);
+        m_tractor->set("shotcut", 1);
+        addBackgroundTrack();
+        addAudioTrack();
+        emit created();
+        return;
+    }
+
     // Get the new track index.
     int i = m_tractor->count();
 
@@ -866,6 +877,11 @@ void MultitrackModel::addAudioTrack()
 
 void MultitrackModel::addVideoTrack()
 {
+    if (!m_tractor) {
+        createIfNeeded();
+        return;
+    }
+
     // Get the new track index.
     int i = m_tractor->count();
 
