@@ -20,12 +20,14 @@
 #include "mltcontroller.h"
 #include "mainwindow.h"
 #include "database.h"
+#include "settings.h"
 #include <QScopedPointer>
 #include <QFileInfo>
 #include <QThreadPool>
 #include <QPersistentModelIndex>
 #include <QCryptographicHash>
 #include <QRgb>
+#include <QApplication>
 
 #include <QtDebug>
 
@@ -36,6 +38,7 @@ static const char* kShotcutPlaylistProperty = "shotcut:playlist";
 static const char* kAudioTrackProperty = "shotcut:audio";
 static const char* kVideoTrackProperty = "shotcut:video";
 static const char* kBackgroundTrackId = "background";
+static QString kGPUNotSupportedMessage;
 
 static void deleteQVariantList(QVariantList* list)
 {
@@ -169,6 +172,8 @@ MultitrackModel::MultitrackModel(QObject *parent)
     : QAbstractItemModel(parent)
     , m_tractor(0)
 {
+    if (kGPUNotSupportedMessage.isEmpty())
+        kGPUNotSupportedMessage = tr("GPU processing not yet supported in the timeline. :(");
     connect(this, SIGNAL(modified()), SLOT(adjustBackgroundDuration()));
 }
 
@@ -585,7 +590,10 @@ bool MultitrackModel::moveClip(int trackIndex, int clipIndex, int position)
 
 void MultitrackModel::appendClip(int trackIndex, Mlt::Producer &clip)
 {
-    createIfNeeded();
+    if (!createIfNeeded()) {
+        MAIN.showStatusMessage(kGPUNotSupportedMessage);
+        return;
+    }
     int i = m_trackList.at(trackIndex).mlt_index;
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     if (track) {
@@ -826,9 +834,9 @@ void MultitrackModel::audioLevelsReady(const QModelIndex& index)
     emit dataChanged(index, index, roles);
 }
 
-void MultitrackModel::createIfNeeded()
+bool MultitrackModel::createIfNeeded()
 {
-    if (!m_tractor) {
+    if (!m_tractor && !Settings.playerGPU()) {
         m_tractor = new Mlt::Tractor;
         m_tractor->set_profile(MLT.profile());
         MLT.profile().set_explicit(true);
@@ -836,6 +844,9 @@ void MultitrackModel::createIfNeeded()
         addBackgroundTrack();
         addVideoTrack();
         emit created();
+        return true;
+    } else {
+        return false;
     }
 }
 
@@ -869,6 +880,10 @@ void MultitrackModel::adjustBackgroundDuration()
 
 void MultitrackModel::addAudioTrack()
 {
+    if (Settings.playerGPU()) {
+        MAIN.showStatusMessage(kGPUNotSupportedMessage);
+        return;
+    }
     if (!m_tractor) {
         m_tractor = new Mlt::Tractor;
         m_tractor->set_profile(MLT.profile());
@@ -918,7 +933,8 @@ void MultitrackModel::addAudioTrack()
 void MultitrackModel::addVideoTrack()
 {
     if (!m_tractor) {
-        createIfNeeded();
+        if (!createIfNeeded())
+            MAIN.showStatusMessage(kGPUNotSupportedMessage);
         return;
     }
 
@@ -938,7 +954,7 @@ void MultitrackModel::addVideoTrack()
     m_tractor->plant_transition(mix, 0, i);
 
     // Add the composite transition.
-    Mlt::Transition composite(MLT.profile(), "composite");
+    Mlt::Transition composite(MLT.profile(), Settings.playerGPU()? "movit.overlay" : "composite");
     composite.set("fill", 1);
     composite.set("aligned", 0);
     composite.set("progressive", 1);

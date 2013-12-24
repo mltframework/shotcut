@@ -76,7 +76,7 @@ public:
     QModelIndex parent(const QModelIndex &index) const;
     QHash<int, QByteArray> roleNames() const;
     void audioLevelsReady(const QModelIndex &index);
-    void createIfNeeded();
+    bool createIfNeeded();
     void addBackgroundTrack();
     void addAudioTrack();
     void addVideoTrack();
