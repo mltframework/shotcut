@@ -40,7 +40,7 @@ Rectangle {
 
     MouseArea {
         anchors.fill: parent
-        onClicked: parent.clicked()
+        onClicked: { parent.clicked(); nameEdit.visible = false }
     }
     Column {
         id: trackHeadColumn
