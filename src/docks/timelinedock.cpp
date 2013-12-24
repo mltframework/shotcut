@@ -153,3 +153,22 @@ void TimelineDock::selectTrack(int by)
         currentTrack = qMin(m_model.trackList().size() - 1, currentTrack + by);
     m_quickView.rootObject()->setProperty("currentTrack", currentTrack);
 }
+
+void TimelineDock::openClip(int trackIndex, int clipIndex)
+{
+    if (trackIndex < 0)
+        trackIndex = m_quickView.rootObject()->property("currentTrack").toInt();
+    if (clipIndex < 0)
+        clipIndex = m_quickView.rootObject()->property("currentClip").toInt();
+    if (clipIndex >= 0 && trackIndex >= 0) {
+        int i = m_model.trackList().at(trackIndex).mlt_index;
+        QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
+        if (track) {
+            Mlt::Playlist playlist(*track);
+            QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
+            QString xml = MLT.saveXML("string", info->producer);
+            Mlt::Producer* p = new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
+            emit clipOpened(p, info->frame_in, info->frame_out);
+        }
+    }
+}

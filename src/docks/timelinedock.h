@@ -45,6 +45,7 @@ public:
 signals:
     void seeked(int position);
     void positionChanged();
+    void clipOpened(void* producer, int in, int out);
 
 public slots:
     void addAudioTrack();
@@ -58,6 +59,7 @@ public slots:
     void pressKey(int key, Qt::KeyboardModifiers modifiers);
     void releaseKey(int key, Qt::KeyboardModifiers modifiers);
     void selectTrack(int by);
+    void openClip(int trackIndex, int clipIndex);
 
 private:
     Ui::TimelineDock *ui;

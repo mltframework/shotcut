@@ -331,5 +331,10 @@ Rectangle {
             text: qsTr('Lift')
             onTriggered: timeline.lift(trackIndex, index)
         }
+        MenuItem {
+            visible: !isBlank
+            text: qsTr('Open As Clip')
+            onTriggered: timeline.openClip(trackIndex, index)
+        }
     }
 }
