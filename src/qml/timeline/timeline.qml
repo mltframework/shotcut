@@ -75,6 +75,7 @@ Rectangle {
                             trackName: model.name
                             isMute: model.mute
                             isHidden: model.hidden
+                            isComposite: model.composite
                             isVideo: !model.audio
                             color: (index === currentTrack)? selectedTrackColor : (index % 2)? activePalette.alternateBase : activePalette.base
                             width: headerWidth
@@ -89,6 +90,9 @@ Rectangle {
                             }
                             onHideClicked: {
                                 multitrack.setTrackHidden(index, isHidden)
+                            }
+                            onCompositeClicked: {
+                                multitrack.setTrackComposite(index, state)
                             }
                             onClicked: currentTrack = index
                         }

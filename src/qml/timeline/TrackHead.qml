@@ -25,10 +25,12 @@ Rectangle {
     property string trackName: ''
     property alias isMute: muteButton.checked
     property alias isHidden: hideButton.checked
-    property alias isVideo: hideButton.visible
+    property alias isComposite: compositeButton.checkedState
+    property bool isVideo
     property bool isEditing: false
     signal muteClicked()
     signal hideClicked()
+    signal compositeClicked(int state)
     signal clicked()
 
     id: trackHeadRoot
@@ -91,7 +93,7 @@ Rectangle {
                         Text {
                             anchors.horizontalCenter: parent.horizontalCenter
                             anchors.verticalCenter: parent.verticalCenter
-                            text: qsTr('M')
+                            text: qsTr('M', 'Mute')
                             color: control.checked? activePalette.highlightedText : activePalette.windowText
                         }
                     }
@@ -102,6 +104,7 @@ Rectangle {
             CheckBox {
                 id: hideButton
                 checked: isHidden
+                visible: isVideo
                 style: CheckBoxStyle {
                     indicator: Rectangle {
                         implicitWidth: 16
@@ -113,13 +116,60 @@ Rectangle {
                         Text {
                             anchors.horizontalCenter: parent.horizontalCenter
                             anchors.verticalCenter: parent.verticalCenter
-                            text: qsTr('H')
+                            text: qsTr('H', 'Hide')
                             color: control.checked? activePalette.highlightedText : activePalette.windowText
                         }
                     }
                 }
                 onClicked: hideClicked()
             }
+
+            CheckBox {
+                id: compositeButton
+                visible: isVideo
+                partiallyCheckedEnabled: true
+                checkedState: isComposite
+                style: CheckBoxStyle {
+                    indicator: Rectangle {
+                        implicitWidth: 16
+                        implicitHeight: 16
+                        radius: 2
+                        color: (control.checkedState === Qt.Checked)? activePalette.highlight
+                            : (control.checkedState === Qt.PartiallyChecked)? Qt.lighter(activePalette.highlight)
+                            : trackHeadRoot.color
+                        border.color: activePalette.midlight
+                        border.width: 1
+                        Text {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            anchors.verticalCenter: parent.verticalCenter
+                            text: qsTr('C', 'Composite')
+                            color: (control.checkedState === Qt.Checked)? activePalette.highlightedText : activePalette.windowText
+                        }
+                    }
+                }
+                onClicked: compositeClicked(checkedState)
+                MouseArea {
+                    anchors.fill: parent
+                    acceptedButtons: Qt.RightButton
+                    onClicked: compositeMenu.popup()
+                }
+            }
+        }
+    }
+
+    Menu {
+        id: compositeMenu
+        MenuItem {
+            text: qsTr('No Compositing')
+            onTriggered: { compositeClicked(Qt.Unchecked); compositeButton.checkedState = Qt.Unchecked }
+        }
+        MenuItem {
+            text: qsTr('Composite')
+            onTriggered: { compositeClicked(Qt.PartiallyChecked); compositeButton.checkedState = Qt.PartiallyChecked }
+        }
+        MenuItem {
+            text: qsTr('Composite And Fill')
+            onTriggered: { compositeClicked(Qt.Checked); compositeButton.checkedState = Qt.Checked }
         }
     }
 }

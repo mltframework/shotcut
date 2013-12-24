@@ -48,18 +48,19 @@ public:
     /// Two level model: tracks and clips on track
     enum {
         NameRole = Qt::UserRole + 1,
-        ResourceRole,  /// clip only
-        ServiceRole,   /// clip only
-        IsBlankRole,   /// clip only
-        StartRole,     /// clip only
+        ResourceRole,    /// clip only
+        ServiceRole,     /// clip only
+        IsBlankRole,     /// clip only
+        StartRole,       /// clip only
         DurationRole,
-        InPointRole,   /// clip only
-        OutPointRole,  /// clip only
-        FramerateRole, /// clip only
-        IsMuteRole,    /// track only
-        IsHiddenRole,  /// track only
+        InPointRole,     /// clip only
+        OutPointRole,    /// clip only
+        FramerateRole,   /// clip only
+        IsMuteRole,      /// track only
+        IsHiddenRole,    /// track only
         IsAudioRole,
-        AudioLevelsRole    /// clip only
+        AudioLevelsRole, /// clip only
+        IsCompositeRole, /// track only
     };
 
     explicit MultitrackModel(QObject *parent = 0);
@@ -94,6 +95,7 @@ public slots:
     void setTrackName(int row, const QString &value);
     void setTrackMute(int row, bool mute);
     void setTrackHidden(int row, bool hidden);
+    void setTrackComposite(int row, Qt::CheckState composite);
     void trimClipIn(int trackIndex, int clipIndex, int delta);
     void notifyClipIn(int trackIndex, int clipIndex);
     void trimClipOut(int trackIndex, int clipIndex, int delta);
@@ -115,6 +117,7 @@ private:
     void getAudioLevels();
     void addBlackTrackIfNeeded();
     void addMissingTransitions();
+    Mlt::Transition* getTransition(const QString& name, int trackIndex) const;
 
 private slots:
     void adjustBackgroundDuration();

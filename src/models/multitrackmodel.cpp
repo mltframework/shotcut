@@ -284,6 +284,14 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                 return playlist.get_int("hide") & 1;
             case IsAudioRole:
                 return m_trackList[index.row()].type == AudioTrackType;
+            case IsCompositeRole: {
+                QScopedPointer<Mlt::Transition> transition(getTransition("composite", i));
+                if (transition && transition->is_valid()) {
+                    if (!transition->get_int("disable"))
+                        return transition->get_int("fill")? Qt::Checked : Qt::PartiallyChecked;
+                }
+                return Qt::Unchecked;
+            }
             default:
                 break;
             }
@@ -337,6 +345,7 @@ QHash<int, QByteArray> MultitrackModel::roleNames() const
     roles[IsHiddenRole] = "hidden";
     roles[IsAudioRole] = "audio";
     roles[AudioLevelsRole] = "audioLevels";
+    roles[IsCompositeRole] = "composite";
     return roles;
 }
 
@@ -396,6 +405,26 @@ void MultitrackModel::setTrackHidden(int row, bool hidden)
             QModelIndex modelIndex = index(row, 0);
             QVector<int> roles;
             roles << IsHiddenRole;
+            emit dataChanged(modelIndex, modelIndex, roles);
+            emit modified();
+        }
+    }
+}
+
+void MultitrackModel::setTrackComposite(int row, Qt::CheckState composite)
+{
+    if (row < m_trackList.size()) {
+        int i = m_trackList.at(row).mlt_index;
+        QScopedPointer<Mlt::Transition> transition(getTransition("composite", i));
+        if (transition) {
+            transition->set("disable", (composite == Qt::Unchecked));
+            transition->set("fill", (composite == Qt::Checked));
+            transition->set("aligned", (composite == Qt::PartiallyChecked));
+            MLT.refreshConsumer();
+
+            QModelIndex modelIndex = index(row, 0);
+            QVector<int> roles;
+            roles << IsCompositeRole;
             emit dataChanged(modelIndex, modelIndex, roles);
             emit modified();
         }
@@ -958,14 +987,18 @@ void MultitrackModel::addVideoTrack()
     composite.set("fill", 1);
     composite.set("aligned", 0);
     composite.set("progressive", 1);
-    m_tractor->plant_transition(composite, 0, i);
+    composite.set("disable", 1);
 
     // Get the new, logical video-only index.
     int v = 0;
+    int last_mlt_index = 0;
     foreach (Track t, m_trackList) {
-        if (t.type == VideoTrackType)
+        if (t.type == VideoTrackType) {
             ++v;
+            last_mlt_index = t.mlt_index;
+        }
     }
+    m_tractor->plant_transition(composite, last_mlt_index, i);
 
     // Add the shotcut logical video track.
     Track t;
@@ -1131,4 +1164,18 @@ void MultitrackModel::addBlackTrackIfNeeded()
 void MultitrackModel::addMissingTransitions()
 {
     // Make sure there is a mix for every track
+}
+
+Mlt::Transition *MultitrackModel::getTransition(const QString &name, int trackIndex) const
+{
+    QScopedPointer<Mlt::Service> service(m_tractor->producer());
+    while (service && service->is_valid()) {
+        if (service->type() == transition_type) {
+            Mlt::Transition t((mlt_transition) service->get_service());
+            if (name == t.get("mlt_service") && t.get_b_track() == trackIndex)
+                return new Mlt::Transition(t);
+        }
+        service.reset(service->producer());
+    }
+    return 0;
 }
