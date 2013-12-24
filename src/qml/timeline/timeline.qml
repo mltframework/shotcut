@@ -58,6 +58,11 @@ Rectangle {
                         implicitWidth: 28
                         implicitHeight: 24
                     }
+                    Button {
+                        action: liftAction
+                        implicitWidth: 28
+                        implicitHeight: 24
+                    }
                 }
             }
             Flickable {
@@ -298,6 +303,14 @@ Rectangle {
         iconName: 'list-add'
         iconSource: 'qrc:///icons/oxygen/16x16/actions/list-add.png'
         onTriggered: timeline.append(currentTrack)
+    }
+
+    Action {
+        id: liftAction
+        tooltip: qsTr('Lift - Remove current clip without\naffecting position of other clips')
+        iconName: 'list-remove'
+        iconSource: 'qrc:///icons/oxygen/16x16/actions/list-remove.png'
+        onTriggered: timeline.lift(currentClipTrack, currentClip)
     }
 
     Keys.onUpPressed: timeline.selectTrack(-1)
