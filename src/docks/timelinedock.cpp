@@ -22,6 +22,7 @@
 #include "models/multitrackmodel.h"
 #include "qmltypes/thumbnailprovider.h"
 #include "mainwindow.h"
+#include "commands/timelinecommands.h"
 
 #include <QtQml>
 #include <QtQuick>
@@ -108,7 +109,7 @@ void TimelineDock::append(int trackIndex)
     if (MLT.isSeekableClip()) {
         if (trackIndex < 0)
             trackIndex = m_quickView.rootObject()->property("currentTrack").toInt();
-        m_model.appendClip(trackIndex, *MLT.producer());
+        MAIN.undoStack()->push(new Timeline::AppendCommand(m_model, trackIndex, MLT.saveXML("string")));
     }
 }
 

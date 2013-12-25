@@ -81,7 +81,8 @@ SOURCES += main.cpp\
     models/multitrackmodel.cpp \
     docks/timelinedock.cpp \
     qmltypes/qmlutilities.cpp \
-    qmltypes/thumbnailprovider.cpp
+    qmltypes/thumbnailprovider.cpp \
+    commands/timelinecommands.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -156,7 +157,8 @@ HEADERS  += mainwindow.h \
     models/multitrackmodel.h \
     docks/timelinedock.h \
     qmltypes/qmlutilities.h \
-    qmltypes/thumbnailprovider.h
+    qmltypes/thumbnailprovider.h \
+    commands/timelinecommands.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
