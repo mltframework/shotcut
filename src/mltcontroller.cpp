@@ -27,6 +27,8 @@
 
 namespace Mlt {
 
+const QString XmlMimeType("application/mlt+xml");
+
 QFrame::QFrame(QObject *parent)
     : QObject(parent)
     , m_frame(0)
@@ -415,11 +417,15 @@ bool Controller::isSeekable() const
             seekable = m_producer->get_int("force_seekable");
         } else {
             seekable = m_producer->get_int("seekable");
-            if (!seekable && m_producer->get("mlt_type"))
+            if (!seekable && m_producer->get("mlt_type")) {
+                // XXX what was this for?
                 seekable = !strcmp(m_producer->get("mlt_type"), "mlt_producer");
+            }
             if (!seekable) {
+                // These generators can take an out point to define their length.
+                // TODO: Currently, these max out at 15000 frames, which is arbitrary.
                 QString service(m_producer->get("mlt_service"));
-                seekable = service == "color" || service.startsWith("frei0r.");
+                seekable = (service == "color") || service.startsWith("frei0r.");
             }
         }
     }

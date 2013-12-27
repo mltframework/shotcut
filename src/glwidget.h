@@ -97,6 +97,7 @@ private:
     Event* m_threadStartEvent;
     Event* m_threadStopEvent;
     mlt_image_format m_image_format;
+    Mlt::Frame* m_lastFrame;
 
 protected:
     void initializeGL();

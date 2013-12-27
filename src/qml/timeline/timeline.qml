@@ -259,6 +259,22 @@ Rectangle {
         }
     }
 
+    Rectangle {
+        id: dropTarget
+        height: trackHeight
+        opacity: 0.5
+        visible: false
+        Text {
+            anchors.fill: parent
+            anchors.leftMargin: 100
+            text: qsTr('Append')
+            style: Text.Outline
+            styleColor: 'white'
+            font.pixelSize: parent.height * 0.8
+            verticalAlignment: Text.AlignVCenter
+        }
+    }
+
     Menu {
         id: menu
         MenuItem {
@@ -421,6 +437,43 @@ Rectangle {
     Connections {
         target: timeline
         onPositionChanged: scrollIfNeeded()
+        onDragging: {
+            if (tracksRepeater.count > 0) {
+                dropTarget.x = pos.x
+                dropTarget.y = pos.y
+                dropTarget.width = duration * scaleFactor
+                dropTarget.visible = true
+
+                for (var i = 0; i < tracksRepeater.count; i++) {
+                    var trackY = tracksRepeater.itemAt(i).y
+                    var trackH = tracksRepeater.itemAt(i).height
+                    if (pos.y >= trackY && pos.y < trackY + trackH) {
+                        currentTrack = i
+                        break
+                    }
+                }
+
+                // Scroll tracks if at edges.
+                if (pos.x > headerWidth + scrollView.width - 50) {
+                    scrollTimer.backwards = false
+                    scrollTimer.start()
+                } else if (pos.x >= headerWidth && pos.x < headerWidth + 50) {
+                    if (scrollView.flickableItem.contentX < 50) {
+                        scrollView.flickableItem.contentX = 0;
+                        scrollTimer.stop()
+                    } else {
+                        scrollTimer.backwards = true
+                        scrollTimer.start()
+                    }
+                } else {
+                    scrollTimer.stop()
+                }
+            }
+        }
+        onDropped: {
+            dropTarget.visible = false
+            scrollTimer.running = false
+        }
     }
 
     // This provides continuous scrolling at the left/right edges.

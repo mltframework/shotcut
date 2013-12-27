@@ -352,15 +352,15 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
             }
         }
     }
-    else if (!data || data->data("application/mlt+xml").isEmpty()) {
+    else if (data && data->hasFormat(Mlt::XmlMimeType)) {
         if (MLT.producer() && MLT.producer()->is_valid()) {
             if (MLT.producer()->type() == playlist_type)
                 emit showStatusMessage(tr("You cannot insert a playlist into a playlist!"));
             else if (MLT.isSeekable()) {
                 if (row == -1)
-                    MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.saveXML("string")));
+                    MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, data->data(Mlt::XmlMimeType)));
                 else
-                    MAIN.undoStack()->push(new Playlist::InsertCommand(m_model, MLT.saveXML("string"), row));
+                    MAIN.undoStack()->push(new Playlist::InsertCommand(m_model, data->data(Mlt::XmlMimeType), row));
             } else {
                 DurationDialog dialog(this);
                 dialog.setDuration(MLT.profile().fps() * 5);

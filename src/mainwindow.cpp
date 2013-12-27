@@ -1040,7 +1040,7 @@ void MainWindow::dropEvent(QDropEvent *event)
         open(path);
         event->acceptProposedAction();
     }
-    else if (mimeData->hasFormat("application/mlt+xml")) {
+    else if (mimeData->hasFormat(Mlt::XmlMimeType )) {
         m_playlistDock->on_actionOpen_triggered();
         event->acceptProposedAction();
     }

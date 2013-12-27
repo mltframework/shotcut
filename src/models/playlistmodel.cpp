@@ -316,7 +316,7 @@ bool PlaylistModel::removeRows(int row, int count, const QModelIndex& parent)
 QStringList PlaylistModel::mimeTypes() const
 {
     QStringList ls = QAbstractTableModel::mimeTypes();
-    ls.append("application/mlt+xml");
+    ls.append(Mlt::XmlMimeType);
     ls.append("text/uri-list");
     return ls;
 }
@@ -324,7 +324,11 @@ QStringList PlaylistModel::mimeTypes() const
 QMimeData *PlaylistModel::mimeData(const QModelIndexList &indexes) const
 {
     QMimeData *mimeData = new QMimeData;
-    mimeData->setData("application/mlt+xml", "");
+    Mlt::Producer* clip = m_playlist->get_clip(indexes.first().row());
+    if (clip && clip->is_valid()) {
+        mimeData->setData(Mlt::XmlMimeType, MLT.saveXML("string", &clip->parent()).toUtf8());
+        delete clip;
+    }
     return mimeData;
 }
 
@@ -336,7 +340,7 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
         return true;
     }
     // Dragged from player or file manager
-    else if (data->hasFormat("application/mlt+xml") || data->hasUrls()) {
+    else if (data->hasFormat(Mlt::XmlMimeType) || data->hasUrls()) {
         emit dropped(data, row);
         return true;
     }

@@ -43,6 +43,7 @@ GLWidget::GLWidget(QWidget *parent)
     , m_threadStartEvent(0)
     , m_threadStopEvent(0)
     , m_image_format(mlt_image_yuv422)
+    , m_lastFrame(0)
 {
     m_texture[0] = m_texture[1] = m_texture[2] = 0;
     setAttribute(Qt::WA_PaintOnScreen);
@@ -66,6 +67,7 @@ GLWidget::~GLWidget()
     delete m_threadStartEvent;
     delete m_threadStopEvent;
     delete m_renderContext;
+    delete m_lastFrame;
 }
 
 QSize GLWidget::minimumSizeHint() const
@@ -162,7 +164,8 @@ void GLWidget::mousePressEvent(QMouseEvent* event)
 {
     if (event->button() == Qt::LeftButton)
         m_dragStart = event->pos();
-    emit dragStarted();
+    if (MLT.isClip())
+        emit dragStarted();
 }
 
 void GLWidget::mouseMoveEvent(QMouseEvent* event)
@@ -177,8 +180,12 @@ void GLWidget::mouseMoveEvent(QMouseEvent* event)
         return;
     QDrag *drag = new QDrag(this);
     QMimeData *mimeData = new QMimeData;
-    mimeData->setData("application/mlt+xml", "");
+    mimeData->setData(Mlt::XmlMimeType, MLT.saveXML("string").toUtf8());
     drag->setMimeData(mimeData);
+    mimeData->setText(QString::number(MLT.producer()->get_playtime()));
+    if (m_lastFrame && !Settings.playerGPU())
+        drag->setPixmap(QPixmap::fromImage(MLT.image(m_lastFrame, 45 * MLT.profile().dar(), 45)).scaledToHeight(45));
+    drag->setHotSpot(QPoint(0, 0));
     drag->exec(Qt::LinkAction);
 }
 
@@ -355,6 +362,8 @@ void GLWidget::showFrame(Mlt::QFrame frame)
                             GL_LUMINANCE, GL_UNSIGNED_BYTE, image + m_image_width * m_image_height + m_image_width/2 * m_image_height/2);
         }
         glDraw();
+        delete m_lastFrame;
+        m_lastFrame = new Mlt::Frame(*frame.frame());
     }
     showFrameSemaphore.release();
 }
@@ -362,6 +371,9 @@ void GLWidget::showFrame(Mlt::QFrame frame)
 int GLWidget::setProducer(Mlt::Producer* producer, bool isMulti)
 {
     int error = Controller::setProducer(producer, isMulti);
+
+    delete m_lastFrame;
+    m_lastFrame = 0;
 
     if (!error) {
         bool reconnect = !m_consumer || !m_consumer->is_valid();
@@ -379,6 +391,9 @@ int GLWidget::setProducer(Mlt::Producer* producer, bool isMulti)
 int GLWidget::reconfigure(bool isMulti)
 {
     int error = 0;
+
+    delete m_lastFrame;
+    m_lastFrame = 0;
 
     // use SDL for audio, OpenGL for video
     QString serviceName = property("mlt_service").toString();

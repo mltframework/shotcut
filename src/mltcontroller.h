@@ -20,12 +20,16 @@
 #define MLTCONTROLLER_H
 
 #include <QImage>
+#include <QString>
 #include <Mlt.h>
 #include "transportcontrol.h"
 
 // forward declarations
 class QWidget;
+
 namespace Mlt {
+
+extern const QString XmlMimeType;
 
 // Wrapper to use Mlt::Frame in signals
 class QFrame : public QObject

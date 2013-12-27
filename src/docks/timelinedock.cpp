@@ -173,3 +173,34 @@ void TimelineDock::openClip(int trackIndex, int clipIndex)
         }
     }
 }
+
+void TimelineDock::dragEnterEvent(QDragEnterEvent *event)
+{
+    if (event->mimeData()->hasFormat(Mlt::XmlMimeType)) {
+        event->acceptProposedAction();
+    }
+}
+
+void TimelineDock::dragMoveEvent(QDragMoveEvent *event)
+{
+    emit dragging(event->posF(), event->mimeData()->text().toInt());
+}
+
+void TimelineDock::dragLeaveEvent(QDragLeaveEvent *event)
+{
+    Q_UNUSED(event);
+    emit dropped();
+}
+
+void TimelineDock::dropEvent(QDropEvent *event)
+{
+    if (event->mimeData()->hasFormat(Mlt::XmlMimeType)) {
+        int trackIndex = m_quickView.rootObject()->property("currentTrack").toInt();
+        if (trackIndex >= 0) {
+            MAIN.undoStack()->push(new Timeline::AppendCommand(m_model, trackIndex, event->mimeData()->data(Mlt::XmlMimeType)));
+            event->acceptProposedAction();
+        }
+    }
+    emit dropped();
+}
+

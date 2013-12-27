@@ -46,6 +46,8 @@ signals:
     void seeked(int position);
     void positionChanged();
     void clipOpened(void* producer, int in, int out);
+    void dragging(const QPointF& pos, int duration);
+    void dropped();
 
 public slots:
     void addAudioTrack();
@@ -60,6 +62,12 @@ public slots:
     void releaseKey(int key, Qt::KeyboardModifiers modifiers);
     void selectTrack(int by);
     void openClip(int trackIndex, int clipIndex);
+
+protected:
+    void dragEnterEvent(QDragEnterEvent* event);
+    void dragMoveEvent(QDragMoveEvent* event);
+    void dragLeaveEvent(QDragLeaveEvent* event);
+    void dropEvent(QDropEvent* event);
 
 private:
     Ui::TimelineDock *ui;
