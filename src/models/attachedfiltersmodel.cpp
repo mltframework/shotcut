@@ -33,13 +33,12 @@ AttachedFiltersModel::AttachedFiltersModel(QObject *parent)
 
 void AttachedFiltersModel::calculateRows()
 {
-    Mlt::Producer* producer = MLT.producer();
     m_rows =-0;
     if (MLT.isPlaylist()) return;
-    if (producer && producer->is_valid()) {
-        int n = producer->filter_count();
+    if (m_producer && m_producer->is_valid()) {
+        int n = m_producer->filter_count();
         while (n--) {
-            Mlt::Filter* filter = producer->filter(n);
+            Mlt::Filter* filter = m_producer->filter(n);
             if (filter && filter->is_valid() && !filter->get_int("_loader"))
                 m_rows++;
             delete filter;
@@ -50,12 +49,11 @@ void AttachedFiltersModel::calculateRows()
 Mlt::Filter* AttachedFiltersModel::filterForRow(int row) const
 {
     Mlt::Filter* result = 0;
-    Mlt::Producer* producer = MLT.producer();
-    if (producer && producer->is_valid()) {
-        int count = producer->filter_count();
+    if (m_producer && m_producer->is_valid()) {
+        int count = m_producer->filter_count();
         int j = 0;
         for (int i = 0; i < count; i++) {
-            Mlt::Filter* filter = producer->filter(i);
+            Mlt::Filter* filter = m_producer->filter(i);
             if (filter && filter->is_valid() && !filter->get_int("_loader")) {
                 if (j == row) {
                     result = filter;
@@ -72,12 +70,11 @@ Mlt::Filter* AttachedFiltersModel::filterForRow(int row) const
 int AttachedFiltersModel::indexForRow(int row) const
 {
     int result = -1;
-    Mlt::Producer* producer = MLT.producer();
-    if (producer && producer->is_valid()) {
-        int count = producer->filter_count();
+    if (m_producer && m_producer->is_valid()) {
+        int count = m_producer->filter_count();
         int j = 0;
         for (int i = 0; i < count; i++) {
-            Mlt::Filter* filter = producer->filter(i);
+            Mlt::Filter* filter = m_producer->filter(i);
             if (filter && filter->is_valid() && !filter->get_int("_loader")) {
                 if (j == row) {
                     result = i;
@@ -93,7 +90,7 @@ int AttachedFiltersModel::indexForRow(int row) const
 
 int AttachedFiltersModel::rowCount(const QModelIndex &parent) const
 {
-    if (MLT.producer() && MLT.producer()->is_valid())
+    if (m_producer && m_producer->is_valid())
         return m_rows;
     else
         return 0;
@@ -109,8 +106,8 @@ Qt::ItemFlags AttachedFiltersModel::flags(const QModelIndex &index) const
 
 QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
 {
-    if ( !MLT.producer() || !MLT.producer()->is_valid()
-        || index.row() >= MLT.producer()->filter_count())
+    if ( !m_producer || !m_producer->is_valid()
+        || index.row() >= m_producer->filter_count())
         return QVariant();
     switch (role ) {
     case Qt::DisplayRole: {
@@ -167,7 +164,7 @@ bool AttachedFiltersModel::setData(const QModelIndex& index, const QVariant& val
     if (role == Qt::CheckStateRole) {
         Mlt::Filter* filter = filterForRow(index.row());
         if (filter && filter->is_valid()) {
-            double speed = MLT.producer()->get_speed();
+            double speed = m_producer->get_speed();
             MLT.pause();
             filter->set("disable", !filter->get_int("disable"));
             MLT.play(speed);
@@ -187,7 +184,7 @@ Qt::DropActions AttachedFiltersModel::supportedDropActions() const
 
 bool AttachedFiltersModel::insertRows(int row, int count, const QModelIndex &parent)
 {
-    if (MLT.producer() && MLT.producer()->is_valid()) {
+    if (m_producer && m_producer->is_valid()) {
         if (m_dropRow == -1)
             m_dropRow = row;
         return true;
@@ -198,9 +195,9 @@ bool AttachedFiltersModel::insertRows(int row, int count, const QModelIndex &par
 
 bool AttachedFiltersModel::removeRows(int row, int count, const QModelIndex &parent)
 {
-    if (MLT.producer() && MLT.producer()->is_valid() && m_dropRow >= 0 && row != m_dropRow) {
+    if (m_producer && m_producer->is_valid() && m_dropRow >= 0 && row != m_dropRow) {
         MLT.pause();
-        MLT.producer()->move_filter(indexForRow(row), indexForRow(0) + m_dropRow);
+        m_producer->move_filter(indexForRow(row), indexForRow(0) + m_dropRow);
         emit changed();
         emit dataChanged(createIndex(row, 0), createIndex(row, 0));
         emit dataChanged(createIndex(m_dropRow, 0), createIndex(m_dropRow, 0));
@@ -221,7 +218,7 @@ Mlt::Filter *AttachedFiltersModel::add(const QString& mlt_service, const QString
         int count = rowCount();
         beginInsertRows(QModelIndex(), count, count);
         MLT.pause();
-        MLT.producer()->attach(*filter);
+        m_producer->attach(*filter);
         m_rows++;
         endInsertRows();
         emit changed();
@@ -236,7 +233,7 @@ void AttachedFiltersModel::remove(int row)
     if (filter && filter->is_valid()) {
         beginRemoveRows(QModelIndex(), row, row);
         MLT.pause();
-        MLT.producer()->detach(*filter);
+        m_producer->detach(*filter);
         m_rows--;
         endRemoveRows();
         emit changed();
@@ -244,9 +241,10 @@ void AttachedFiltersModel::remove(int row)
     delete filter;
 }
 
-void AttachedFiltersModel::reset()
+void AttachedFiltersModel::reset(Mlt::Producer* producer)
 {
-    calculateRows();
     beginResetModel();
+    m_producer.reset(new Mlt::Producer(producer? producer : MLT.producer()));
+    calculateRows();
     endResetModel();
 }

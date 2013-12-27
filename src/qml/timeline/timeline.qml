@@ -404,6 +404,7 @@ Rectangle {
                 currentClipTrack = track.DelegateModel.itemsIndex
                 for (var i = 0; i < tracksRepeater.count; i++)
                     if (i !== track.DelegateModel.itemsIndex) tracksRepeater.itemAt(i).resetStates();
+                timeline.selectClip(currentClipTrack, currentClip)
             }
             onClipDragged: {
                 // This provides continuous scrolling at the left/right edges.

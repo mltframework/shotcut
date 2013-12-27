@@ -23,6 +23,7 @@
 #include "qmltypes/thumbnailprovider.h"
 #include "mainwindow.h"
 #include "commands/timelinecommands.h"
+#include "docks/filtersdock.h"
 
 #include <QtQml>
 #include <QtQuick>
@@ -203,6 +204,15 @@ void TimelineDock::openClip(int trackIndex, int clipIndex)
         QString xml = MLT.saveXML("string", info->producer);
         Mlt::Producer* p = new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
         emit clipOpened(p, info->frame_in, info->frame_out);
+    }
+}
+
+void TimelineDock::selectClip(int trackIndex, int clipIndex)
+{
+    Mlt::ClipInfo* info = getClipInfo(trackIndex, clipIndex);
+    if (info && info->producer && info->producer->is_valid()) {
+        MAIN.filtersDock()->model()->reset(info->producer);
+        delete info;
     }
 }
 

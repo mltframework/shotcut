@@ -21,6 +21,7 @@
 
 #include <QAbstractListModel>
 #include <MltFilter.h>
+#include <MltProducer.h>
 
 class AttachedFiltersModel : public QAbstractListModel
 {
@@ -44,12 +45,13 @@ signals:
 public slots:
     Mlt::Filter* add(const QString& mlt_service, const QString& shotcutName = QString());
     void remove(int row);
-    void reset();
+    void reset(Mlt::Producer *producer = 0);
 
 private:
     int m_rows;
     int m_dropRow;
     int m_removeRow;
+    QScopedPointer<Mlt::Producer> m_producer;
 
     void calculateRows();
 };

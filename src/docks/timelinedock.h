@@ -64,6 +64,7 @@ public slots:
     void releaseKey(int key, Qt::KeyboardModifiers modifiers);
     void selectTrack(int by);
     void openClip(int trackIndex, int clipIndex);
+    void selectClip(int trackIndex, int clipIndex);
 
 protected:
     void dragEnterEvent(QDragEnterEvent* event);
