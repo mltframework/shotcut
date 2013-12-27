@@ -333,7 +333,6 @@ unix:!mac {
     QT += x11extras
     CONFIG += link_pkgconfig
     PKGCONFIG += mlt++
-    LIBS += -lX11
 }
 
 # Add CONFIG+=leap to include support for Leap Motion via its library.
