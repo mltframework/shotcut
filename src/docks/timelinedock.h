@@ -41,6 +41,8 @@ public:
     int position() const { return m_position; }
     void setPosition(int position);
     Q_INVOKABLE QString timecode(int frames);
+    Mlt::ClipInfo* getClipInfo(int trackIndex, int clipIndex);
+    Mlt::Producer* getClip(int trackIndex, int clipIndex);
 
 signals:
     void seeked(int position);

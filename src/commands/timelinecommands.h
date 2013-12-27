@@ -39,6 +39,34 @@ private:
     QString m_xml;
 };
 
+class LiftCommand : public QUndoCommand
+{
+public:
+    LiftCommand(MultitrackModel& model, int trackIndex, int clipIndex, int position, const QString &xml, QUndoCommand * parent = 0);
+    void redo();
+    void undo();
+private:
+    MultitrackModel& m_model;
+    int m_trackIndex;
+    int m_clipIndex;
+    int m_position;
+    QString m_xml;
+};
+
+class RemoveCommand : public QUndoCommand
+{
+public:
+    RemoveCommand(MultitrackModel& model, int trackIndex, int clipIndex, int position, const QString &xml, QUndoCommand * parent = 0);
+    void redo();
+    void undo();
+private:
+    MultitrackModel& m_model;
+    int m_trackIndex;
+    int m_clipIndex;
+    int m_position;
+    QString m_xml;
+};
+
 }
 
 #endif

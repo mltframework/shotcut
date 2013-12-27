@@ -72,6 +72,32 @@ QString TimelineDock::timecode(int frames)
     return MLT.producer()->frames_to_time(frames, mlt_time_smpte);
 }
 
+Mlt::ClipInfo *TimelineDock::getClipInfo(int trackIndex, int clipIndex)
+{
+    Mlt::ClipInfo* result = 0;
+    if (clipIndex >= 0 && trackIndex >= 0) {
+        int i = m_model.trackList().at(trackIndex).mlt_index;
+        QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
+        if (track) {
+            Mlt::Playlist playlist(*track);
+            result = playlist.clip_info(clipIndex);
+        }
+    }
+    return result;
+}
+
+Mlt::Producer *TimelineDock::getClip(int trackIndex, int clipIndex)
+{
+    Mlt::Producer* result = 0;
+    Mlt::ClipInfo* info = getClipInfo(trackIndex, clipIndex);
+    if (info) {
+        result = new Mlt::Producer(info->producer);
+        result->set_in_and_out(info->frame_in, info->frame_out);
+        delete info;
+    }
+    return result;
+}
+
 void TimelineDock::addAudioTrack()
 {
     m_model.addAudioTrack();
@@ -109,7 +135,8 @@ void TimelineDock::append(int trackIndex)
     if (MLT.isSeekableClip()) {
         if (trackIndex < 0)
             trackIndex = m_quickView.rootObject()->property("currentTrack").toInt();
-        MAIN.undoStack()->push(new Timeline::AppendCommand(m_model, trackIndex, MLT.saveXML("string")));
+        MAIN.undoStack()->push(
+            new Timeline::AppendCommand(m_model, trackIndex, MLT.saveXML("string")));
     }
 }
 
@@ -119,8 +146,13 @@ void TimelineDock::remove(int trackIndex, int clipIndex)
         trackIndex = m_quickView.rootObject()->property("currentTrack").toInt();
     if (clipIndex < 0)
         clipIndex = m_quickView.rootObject()->property("currentClip").toInt();
-    if (clipIndex >= 0 && trackIndex >= 0)
-        m_model.removeClip(trackIndex, clipIndex);
+    Mlt::Producer* clip = getClip(trackIndex, clipIndex);
+    if (clip) {
+        QString xml = MLT.saveXML("string", clip);
+        delete clip;
+        MAIN.undoStack()->push(
+            new Timeline::RemoveCommand(m_model, trackIndex, clipIndex, m_position, xml));
+    }
 }
 
 void TimelineDock::lift(int trackIndex, int clipIndex)
@@ -129,8 +161,13 @@ void TimelineDock::lift(int trackIndex, int clipIndex)
         trackIndex = m_quickView.rootObject()->property("currentTrack").toInt();
     if (clipIndex < 0)
         clipIndex = m_quickView.rootObject()->property("currentClip").toInt();
-    if (clipIndex >= 0 && trackIndex >= 0)
-        m_model.liftClip(trackIndex, clipIndex);
+    Mlt::Producer* clip = getClip(trackIndex, clipIndex);
+    if (clip) {
+        QString xml = MLT.saveXML("string", clip);
+        delete clip;
+        MAIN.undoStack()->push(
+            new Timeline::LiftCommand(m_model, trackIndex, clipIndex, m_position, xml));
+    }
 }
 
 void TimelineDock::pressKey(int key, Qt::KeyboardModifiers modifiers)
@@ -161,16 +198,11 @@ void TimelineDock::openClip(int trackIndex, int clipIndex)
         trackIndex = m_quickView.rootObject()->property("currentTrack").toInt();
     if (clipIndex < 0)
         clipIndex = m_quickView.rootObject()->property("currentClip").toInt();
-    if (clipIndex >= 0 && trackIndex >= 0) {
-        int i = m_model.trackList().at(trackIndex).mlt_index;
-        QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
-        if (track) {
-            Mlt::Playlist playlist(*track);
-            QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
-            QString xml = MLT.saveXML("string", info->producer);
-            Mlt::Producer* p = new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
-            emit clipOpened(p, info->frame_in, info->frame_out);
-        }
+    QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
+    if (info) {
+        QString xml = MLT.saveXML("string", info->producer);
+        Mlt::Producer* p = new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
+        emit clipOpened(p, info->frame_in, info->frame_out);
     }
 }
 
