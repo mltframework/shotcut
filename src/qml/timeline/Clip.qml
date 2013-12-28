@@ -98,8 +98,9 @@ Rectangle {
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.margins: parent.border.width
-        height: (parent.height - parent.border.width * 2) / 2
-        width: height * 16.0/9.0
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: parent.height / 2
+        fillMode: Image.PreserveAspectFit
         source: (isAudio || isBlank)? '' : 'image://thumbnail/' + mltService + '/' + clipResource + '#' + outPoint
     }
 
@@ -108,8 +109,9 @@ Rectangle {
         anchors.left: parent.left
         anchors.top: parent.top
         anchors.margins: parent.border.width
-        height: (parent.height - parent.border.width * 2) / 2
-        width: height * 16.0/9.0
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: parent.height / 2
+        fillMode: Image.PreserveAspectFit
         source: (isAudio || isBlank)? '' : 'image://thumbnail/' + mltService + '/' + clipResource + '#' + inPoint
     }
 
