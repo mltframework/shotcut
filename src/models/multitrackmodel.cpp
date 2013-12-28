@@ -1042,6 +1042,7 @@ void MultitrackModel::addBackgroundTrack()
     playlist.set("id", kBackgroundTrackId);
     Mlt::Producer producer(MLT.profile(), "color:black");
     producer.set("length", 1);
+    producer.set("id", "black");
     playlist.append(producer);
     m_tractor->set_track(playlist, m_tractor->count());
 }
@@ -1059,7 +1060,15 @@ void MultitrackModel::adjustBackgroundDuration()
     Mlt::Producer* track = m_tractor->track(0);
     if (track) {
         Mlt::Playlist playlist(*track);
-        playlist.resize_clip(0, 0, n - 1);
+        Mlt::Producer* clip = playlist.get_clip(0);
+        if (clip) {
+            clip->parent().set("length", n);
+            clip->parent().set_in_and_out(0, n - 1);
+            clip->set("length", n);
+            clip->set_in_and_out(0, n - 1);
+            playlist.resize_clip(0, 0, n - 1);
+            delete clip;
+        }
         delete track;
     }
 }
