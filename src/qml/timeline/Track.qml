@@ -71,7 +71,6 @@ Rectangle {
 
                 // Remove the placeholder inserted in onDraggedToTrack
                 if (fromTrack !== toTrack) {
-                    console.log('removing placehold on track ' + index + ' at ' + clipIndex)
                     trackModel.items.remove(clipIndex, 1)
                 }
                 if (!timeline.moveClip(fromTrack, toTrack, clipIndex, frame))
@@ -99,7 +98,6 @@ Rectangle {
             }
             onTrimmedOut: multitrack.notifyClipOut(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex)
             onDraggedToTrack: {
-                console.log('inserting placehold on track ' + index + ' at ' + clip.DelegateModel.itemsIndex)
                 trackModel.items.insert(clip.DelegateModel.itemsIndex, {
                     'name': '',
                     'resource': '',
