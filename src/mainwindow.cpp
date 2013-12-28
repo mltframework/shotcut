@@ -1413,14 +1413,14 @@ void MainWindow::on_actionForum_triggered()
 
 void MainWindow::saveXML(const QString &filename)
 {
-    if (playlist()) {
+    if (multitrack()) {
+        MLT.saveXML(filename, multitrack());
+    } else if (playlist()) {
         int in = MLT.producer()->get_in();
         int out = MLT.producer()->get_out();
         MLT.producer()->set_in_and_out(0, MLT.producer()->get_length() - 1);
         MLT.saveXML(filename, playlist());
         MLT.producer()->set_in_and_out(in, out);
-    } else if (multitrack()) {
-        MLT.saveXML(filename, multitrack());
     } else {
         MLT.saveXML(filename);
     }
