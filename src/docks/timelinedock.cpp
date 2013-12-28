@@ -34,7 +34,6 @@ TimelineDock::TimelineDock(QWidget *parent) :
     m_position(-1)
 {
     ui->setupUi(this);
-    delete ui->treeView;
     toggleViewAction()->setIcon(windowIcon());
 
     qmlRegisterType<MultitrackModel>("Shotcut.Models", 1, 0, "MultitrackModel");
@@ -48,14 +47,12 @@ TimelineDock::TimelineDock(QWidget *parent) :
     m_quickView.setResizeMode(QQuickView::SizeRootObjectToView);
     m_quickView.setColor(palette().window().color());
 
-    importPath = QmlUtilities::qmlDir();
-    importPath.cd("timeline");
-    m_quickView.setSource(QUrl::fromLocalFile(importPath.filePath("timeline.qml")));
-    QWidget* container = QWidget::createWindowContainer(&m_quickView);
+    QWidget* container = QWidget::createWindowContainer(&m_quickView, this);
     container->setFocusPolicy(Qt::TabFocus);
-
     ui->verticalLayout->addWidget(container);
+
     connect(MLT.videoWidget(), SIGNAL(frameReceived(Mlt::QFrame)), this, SLOT(onShowFrame(Mlt::QFrame)));
+    connect(this, &QDockWidget::visibilityChanged, this, &TimelineDock::onVisibilityChanged);
 }
 
 TimelineDock::~TimelineDock()
@@ -264,7 +261,7 @@ void TimelineDock::trimClipIn(int trackIndex, int clipIndex, int delta)
 void TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta)
 {
     MAIN.undoStack()->push(
-        new Timeline::TrimClipOutCommand(m_model, trackIndex, clipIndex, delta));
+                new Timeline::TrimClipOutCommand(m_model, trackIndex, clipIndex, delta));
 }
 
 void TimelineDock::dragEnterEvent(QDragEnterEvent *event)
@@ -295,5 +292,15 @@ void TimelineDock::dropEvent(QDropEvent *event)
         }
     }
     emit dropped();
+}
+
+void TimelineDock::onVisibilityChanged(bool visible)
+{
+    if (visible) {
+        QDir sourcePath = QmlUtilities::qmlDir();
+        sourcePath.cd("timeline");
+        m_quickView.setSource(QUrl::fromLocalFile(sourcePath.filePath("timeline.qml")));
+        disconnect(this, &QDockWidget::visibilityChanged, this, &TimelineDock::onVisibilityChanged);
+    }
 }
 

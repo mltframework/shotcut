@@ -31,7 +31,7 @@ class TimelineDock;
 class TimelineDock : public QDockWidget
 {
     Q_OBJECT
-    Q_PROPERTY(int position READ position WRITE setPosition NOTIFY positionChanged);
+    Q_PROPERTY(int position READ position WRITE setPosition NOTIFY positionChanged)
 
 public:
     explicit TimelineDock(QWidget *parent = 0);
@@ -84,6 +84,9 @@ private:
     QQuickView m_quickView;
     MultitrackModel m_model;
     int m_position;
+
+private slots:
+    void onVisibilityChanged(bool visible);
 };
 
 #endif // TIMELINEDOCK_H

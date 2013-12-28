@@ -23,8 +23,11 @@
    <iconset theme="view-time-schedule" resource="../../icons/resources.qrc">
     <normaloff>:/icons/oxygen/32x32/actions/view-time-schedule.png</normaloff>:/icons/oxygen/32x32/actions/view-time-schedule.png</iconset>
   </property>
+  <property name="features">
+   <set>QDockWidget::DockWidgetClosable</set>
+  </property>
   <property name="allowedAreas">
-   <set>Qt::BottomDockWidgetArea|Qt::TopDockWidgetArea</set>
+   <set>Qt::BottomDockWidgetArea</set>
   </property>
   <property name="windowTitle">
    <string>Timeline</string>
@@ -43,25 +46,6 @@
     <property name="bottomMargin">
      <number>0</number>
     </property>
-    <item>
-     <widget class="QTreeView" name="treeView">
-      <property name="frameShape">
-       <enum>QFrame::NoFrame</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Plain</enum>
-      </property>
-      <property name="editTriggers">
-       <set>QAbstractItemView::NoEditTriggers</set>
-      </property>
-      <property name="rootIsDecorated">
-       <bool>true</bool>
-      </property>
-      <attribute name="headerVisible">
-       <bool>false</bool>
-      </attribute>
-     </widget>
-    </item>
    </layout>
   </widget>
  </widget>
