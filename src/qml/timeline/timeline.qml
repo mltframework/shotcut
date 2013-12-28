@@ -85,9 +85,6 @@ Rectangle {
                             color: (index === currentTrack)? selectedTrackColor : (index % 2)? activePalette.alternateBase : activePalette.base
                             width: headerWidth
                             height: model.audio? trackHeight : trackHeight * 2
-                            onMuteClicked: {
-                                multitrack.setTrackMute(index, isMute)
-                            }
                             onHideClicked: {
                                 multitrack.setTrackHidden(index, isHidden)
                             }

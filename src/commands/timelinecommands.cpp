@@ -19,7 +19,9 @@
 #include "timelinecommands.h"
 #include "mltcontroller.h"
 
-Timeline::AppendCommand::AppendCommand(MultitrackModel &model, int trackIndex, const QString &xml, QUndoCommand *parent)
+namespace Timeline {
+
+AppendCommand::AppendCommand(MultitrackModel &model, int trackIndex, const QString &xml, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
@@ -28,18 +30,18 @@ Timeline::AppendCommand::AppendCommand(MultitrackModel &model, int trackIndex, c
     setText(QObject::tr("Append to track"));
 }
 
-void Timeline::AppendCommand::redo()
+void AppendCommand::redo()
 {
     Mlt::Producer producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
     m_clipIndex = m_model.appendClip(m_trackIndex, producer);
 }
 
-void Timeline::AppendCommand::undo()
+void AppendCommand::undo()
 {
     m_model.removeClip(m_trackIndex, m_clipIndex);
 }
 
-Timeline::LiftCommand::LiftCommand(MultitrackModel &model, int trackIndex,
+LiftCommand::LiftCommand(MultitrackModel &model, int trackIndex,
     int clipIndex, int position, const QString &xml, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
@@ -51,18 +53,18 @@ Timeline::LiftCommand::LiftCommand(MultitrackModel &model, int trackIndex,
     setText(QObject::tr("Lift from track"));
 }
 
-void Timeline::LiftCommand::redo()
+void LiftCommand::redo()
 {
     m_model.liftClip(m_trackIndex, m_clipIndex);
 }
 
-void Timeline::LiftCommand::undo()
+void LiftCommand::undo()
 {
     Mlt::Producer clip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
     m_model.overwriteClip(m_trackIndex, clip, m_position);
 }
 
-Timeline::RemoveCommand::RemoveCommand(MultitrackModel &model, int trackIndex,
+RemoveCommand::RemoveCommand(MultitrackModel &model, int trackIndex,
     int clipIndex, int position, const QString &xml, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
@@ -74,19 +76,19 @@ Timeline::RemoveCommand::RemoveCommand(MultitrackModel &model, int trackIndex,
     setText(QObject::tr("Remove from track"));
 }
 
-void Timeline::RemoveCommand::redo()
+void RemoveCommand::redo()
 {
     m_model.removeClip(m_trackIndex, m_clipIndex);
 }
 
-void Timeline::RemoveCommand::undo()
+void RemoveCommand::undo()
 {
     Mlt::Producer clip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
     m_model.insertClip(m_trackIndex, clip, m_position);
 }
 
 
-Timeline::NameTrackCommand::NameTrackCommand(MultitrackModel &model, int trackIndex,
+NameTrackCommand::NameTrackCommand(MultitrackModel &model, int trackIndex,
     const QString &name, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
@@ -97,12 +99,33 @@ Timeline::NameTrackCommand::NameTrackCommand(MultitrackModel &model, int trackIn
     setText(QObject::tr("Change track name"));
 }
 
-void Timeline::NameTrackCommand::redo()
+void NameTrackCommand::redo()
 {
     m_model.setTrackName(m_trackIndex, m_name);
 }
 
-void Timeline::NameTrackCommand::undo()
+void NameTrackCommand::undo()
 {
     m_model.setTrackName(m_trackIndex, m_oldName);
+}
+
+MuteTrackCommand::MuteTrackCommand(MultitrackModel &model, int trackIndex, QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_trackIndex(trackIndex)
+    , m_oldValue(model.data(m_model.index(trackIndex), MultitrackModel::IsMuteRole).toBool())
+{
+    setText(QObject::tr("Toggle track mute"));
+}
+
+void MuteTrackCommand::redo()
+{
+    m_model.setTrackMute(m_trackIndex, !m_oldValue);
+}
+
+void MuteTrackCommand::undo()
+{
+    m_model.setTrackMute(m_trackIndex, m_oldValue);
+}
+
 }

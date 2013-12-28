@@ -226,6 +226,12 @@ void TimelineDock::setTrackName(int trackIndex, const QString &value)
         new Timeline::NameTrackCommand(m_model, trackIndex, value));
 }
 
+void TimelineDock::toggleTrackMute(int trackIndex)
+{
+    MAIN.undoStack()->push(
+        new Timeline::MuteTrackCommand(m_model, trackIndex));
+}
+
 void TimelineDock::dragEnterEvent(QDragEnterEvent *event)
 {
     if (event->mimeData()->hasFormat(Mlt::XmlMimeType)) {

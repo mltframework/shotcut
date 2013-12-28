@@ -23,11 +23,10 @@ import QtQuick.Layouts 1.0
 
 Rectangle {
     property string trackName: ''
-    property alias isMute: muteButton.checked
+    property bool isMute
     property alias isHidden: hideButton.checked
     property alias isComposite: compositeButton.checkedState
     property bool isVideo
-    signal muteClicked()
     signal hideClicked()
     signal compositeClicked(int state)
     signal clicked()
@@ -85,18 +84,18 @@ Rectangle {
                         implicitWidth: 16
                         implicitHeight: 16
                         radius: 2
-                        color: control.checked? activePalette.highlight : trackHeadRoot.color
+                        color: isMute? activePalette.highlight : trackHeadRoot.color
                         border.color: activePalette.midlight
                         border.width: 1
                         Text {
                             anchors.horizontalCenter: parent.horizontalCenter
                             anchors.verticalCenter: parent.verticalCenter
                             text: qsTr('M', 'Mute')
-                            color: control.checked? activePalette.highlightedText : activePalette.windowText
+                            color: isMute? activePalette.highlightedText : activePalette.windowText
                         }
                     }
                 }
-                onClicked: muteClicked()
+                onClicked: timeline.toggleTrackMute(index)
             }
 
             CheckBox {
