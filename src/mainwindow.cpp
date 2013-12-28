@@ -211,8 +211,8 @@ MainWindow::MainWindow()
     tabifyDockWidget(m_propertiesDock, m_recentDock);
     tabifyDockWidget(m_recentDock, m_playlistDock);
     tabifyDockWidget(m_playlistDock, m_historyDock);
+    tabifyDockWidget(m_historyDock, m_filtersDock);
     m_recentDock->raise();
-    splitDockWidget(m_timelineDock, m_filtersDock, Qt::Vertical);
 
     m_encodeDock = new EncodeDock(this);
     m_encodeDock->hide();
