@@ -47,9 +47,6 @@ Player::Player(QWidget *parent)
     vlayout->setObjectName("playerLayout");
     vlayout->setContentsMargins(0, 0, 0, 0);
     vlayout->setSpacing(4);
-    QVBoxLayout* playerVLayout = new QVBoxLayout;
-    playerVLayout->setSpacing(0);
-    playerVLayout->setContentsMargins(0, 0, 0, 0);
 
     // Add tab bar to indicate/select what is playing: clip, playlist, timeline.
     m_tabs = new QTabBar;
@@ -62,7 +59,6 @@ Player::Player(QWidget *parent)
     QHBoxLayout* tabLayout = new QHBoxLayout;
     tabLayout->addWidget(m_tabs);
     tabLayout->addStretch();
-//    playerVLayout->addLayout(tabLayout);
     connect(m_tabs, SIGNAL(tabBarClicked(int)), SLOT(onTabBarClicked(int)));
 
     // Add the volume and signal level meter
@@ -73,7 +69,7 @@ Player::Player(QWidget *parent)
     hlayout->setSpacing(4);
     hlayout->setContentsMargins(0, 0, 0, 0);
 #ifdef Q_OS_MAC
-    playerVLayout->addWidget(MLT.videoWidget(), 10);
+    hlayout->addWidget(MLT.videoWidget(), 10);
 #else
     m_scrollArea = new QScrollArea;
     m_scrollArea->setWidgetResizable(true);
@@ -81,9 +77,8 @@ Player::Player(QWidget *parent)
     m_scrollArea->setAlignment(Qt::AlignCenter);
     m_scrollArea->setFocusPolicy(Qt::NoFocus);
     m_scrollArea->setWidget(MLT.videoWidget());
-    playerVLayout->addWidget(m_scrollArea, 10);
+    hlayout->addWidget(m_scrollArea, 10);
 #endif
-    hlayout->addLayout(playerVLayout);
     QVBoxLayout *volumeLayoutV = new QVBoxLayout;
     volumeLayoutV->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding));
     QHBoxLayout *volumeLayoutH = new QHBoxLayout;
