@@ -184,7 +184,7 @@ MainWindow::MainWindow()
 
     m_filtersDock = new FiltersDock(this);
     m_filtersDock->hide();
-    addDockWidget(Qt::BottomDockWidgetArea, m_filtersDock);
+    addDockWidget(Qt::LeftDockWidgetArea, m_filtersDock);
     ui->menuView->addAction(m_filtersDock->toggleViewAction());
     connect(m_filtersDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onFiltersDockTriggered(bool)));
     connect(ui->actionFilters, SIGNAL(triggered()), this, SLOT(onFiltersDockTriggered()));
