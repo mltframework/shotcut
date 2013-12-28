@@ -164,7 +164,7 @@ bool AttachedFiltersModel::setData(const QModelIndex& index, const QVariant& val
     if (role == Qt::CheckStateRole) {
         Mlt::Filter* filter = filterForRow(index.row());
         if (filter && filter->is_valid()) {
-            double speed = m_producer->get_speed();
+            double speed = MLT.producer()->get_speed();
             MLT.pause();
             filter->set("disable", !filter->get_int("disable"));
             MLT.play(speed);
