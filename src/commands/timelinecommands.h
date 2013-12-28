@@ -104,6 +104,19 @@ private:
     bool m_oldValue;
 };
 
+class CompositeTrackCommand : public QUndoCommand
+{
+public:
+    CompositeTrackCommand(MultitrackModel& model, int trackIndex, Qt::CheckState value, QUndoCommand * parent = 0);
+    void redo();
+    void undo();
+private:
+    MultitrackModel& m_model;
+    int m_trackIndex;
+    Qt::CheckState m_value;
+    Qt::CheckState m_oldValue;
+};
+
 }
 
 #endif

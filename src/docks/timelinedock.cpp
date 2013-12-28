@@ -235,7 +235,13 @@ void TimelineDock::toggleTrackMute(int trackIndex)
 void TimelineDock::toggleTrackHidden(int trackIndex)
 {
     MAIN.undoStack()->push(
-        new Timeline::HideTrackCommand(m_model, trackIndex));
+                new Timeline::HideTrackCommand(m_model, trackIndex));
+}
+
+void TimelineDock::setTrackComposite(int trackIndex, Qt::CheckState composite)
+{
+    MAIN.undoStack()->push(
+        new Timeline::CompositeTrackCommand(m_model, trackIndex, composite));
 }
 
 void TimelineDock::dragEnterEvent(QDragEnterEvent *event)

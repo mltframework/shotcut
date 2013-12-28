@@ -147,4 +147,24 @@ void HideTrackCommand::undo()
     m_model.setTrackHidden(m_trackIndex, m_oldValue);
 }
 
+CompositeTrackCommand::CompositeTrackCommand(MultitrackModel &model, int trackIndex, Qt::CheckState value, QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_trackIndex(trackIndex)
+    , m_value(value)
+    , m_oldValue(Qt::CheckState(model.data(m_model.index(trackIndex), MultitrackModel::IsCompositeRole).toInt()))
+{
+    setText(QObject::tr("Change track compositing"));
+}
+
+void CompositeTrackCommand::redo()
+{
+    m_model.setTrackComposite(m_trackIndex, m_value);
+}
+
+void CompositeTrackCommand::undo()
+{
+    m_model.setTrackComposite(m_trackIndex, m_oldValue);
+}
+
 }

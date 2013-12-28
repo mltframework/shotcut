@@ -85,9 +85,6 @@ Rectangle {
                             color: (index === currentTrack)? selectedTrackColor : (index % 2)? activePalette.alternateBase : activePalette.base
                             width: headerWidth
                             height: model.audio? trackHeight : trackHeight * 2
-                            onCompositeClicked: {
-                                multitrack.setTrackComposite(index, state)
-                            }
                             onClicked: currentTrack = index
                         }
                     }

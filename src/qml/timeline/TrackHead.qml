@@ -25,10 +25,8 @@ Rectangle {
     property string trackName: ''
     property bool isMute
     property bool isHidden
-    property alias isComposite: compositeButton.checkedState
+    property int isComposite
     property bool isVideo
-    signal hideClicked()
-    signal compositeClicked(int state)
     signal clicked()
 
     id: trackHeadRoot
@@ -131,8 +129,8 @@ Rectangle {
                         implicitWidth: 16
                         implicitHeight: 16
                         radius: 2
-                        color: (control.checkedState === Qt.Checked)? activePalette.highlight
-                            : (control.checkedState === Qt.PartiallyChecked)? Qt.lighter(activePalette.highlight)
+                        color: (isComposite === Qt.Checked)? activePalette.highlight
+                            : (isComposite === Qt.PartiallyChecked)? Qt.lighter(activePalette.highlight)
                             : trackHeadRoot.color
                         border.color: activePalette.midlight
                         border.width: 1
@@ -140,11 +138,11 @@ Rectangle {
                             anchors.horizontalCenter: parent.horizontalCenter
                             anchors.verticalCenter: parent.verticalCenter
                             text: qsTr('C', 'Composite')
-                            color: (control.checkedState === Qt.Checked)? activePalette.highlightedText : activePalette.windowText
+                            color: (isComposite === Qt.Checked)? activePalette.highlightedText : activePalette.windowText
                         }
                     }
                 }
-                onClicked: compositeClicked(checkedState)
+                onClicked: timeline.setTrackComposite(index, checkedState)
                 MouseArea {
                     anchors.fill: parent
                     acceptedButtons: Qt.RightButton

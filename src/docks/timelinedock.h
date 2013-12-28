@@ -68,6 +68,7 @@ public slots:
     void setTrackName(int trackIndex, const QString& value);
     void toggleTrackMute(int trackIndex);
     void toggleTrackHidden(int trackIndex);
+    void setTrackComposite(int trackIndex, Qt::CheckState composite);
 
 protected:
     void dragEnterEvent(QDragEnterEvent* event);
