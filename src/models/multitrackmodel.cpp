@@ -998,6 +998,11 @@ void MultitrackModel::consolidateBlanks(Mlt::Playlist &playlist, int trackIndex)
             }
         }
     }
+    if (playlist.count() == 0) {
+        beginInsertRows(index(trackIndex), 0, 0);
+        playlist.blank(0);
+        endInsertRows();
+    }
 }
 
 void MultitrackModel::consolidateBlanksAllTracks()
