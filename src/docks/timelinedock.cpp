@@ -261,6 +261,12 @@ void TimelineDock::trimClipIn(int trackIndex, int clipIndex, int delta)
         new Timeline::TrimClipInCommand(m_model, trackIndex, clipIndex, delta));
 }
 
+void TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta)
+{
+    MAIN.undoStack()->push(
+        new Timeline::TrimClipOutCommand(m_model, trackIndex, clipIndex, delta));
+}
+
 void TimelineDock::dragEnterEvent(QDragEnterEvent *event)
 {
     if (event->mimeData()->hasFormat(Mlt::XmlMimeType)) {

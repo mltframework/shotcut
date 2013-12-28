@@ -95,7 +95,7 @@ Rectangle {
                 if (!(mouse.modifiers & Qt.AltModifier))
                     delta = Logic.snapTrimOut(clip, delta)
                 if (delta != 0)
-                    multitrack.trimClipOut(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex, delta)
+                    timeline.trimClipOut(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex, delta)
             }
             onTrimmedOut: multitrack.notifyClipOut(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex)
             onDraggedToTrack: {

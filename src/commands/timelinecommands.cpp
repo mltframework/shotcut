@@ -235,4 +235,41 @@ bool TrimClipInCommand::mergeWith(const QUndoCommand *other)
     return true;
 }
 
+TrimClipOutCommand::TrimClipOutCommand(MultitrackModel &model, int trackIndex, int clipIndex, int delta, QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_trackIndex(trackIndex)
+    , m_clipIndex(clipIndex)
+    , m_delta(delta)
+    , m_notify(false)
+{
+    setText(QObject::tr("Trim clip out point"));
+}
+
+void TrimClipOutCommand::redo()
+{
+    m_model.trimClipOut(m_trackIndex, m_clipIndex, m_delta);
+    if (m_notify)
+        m_model.notifyClipOut(m_trackIndex, m_clipIndex);
+}
+
+void TrimClipOutCommand::undo()
+{
+    m_model.trimClipOut(m_trackIndex, m_clipIndex, -m_delta);
+    m_model.notifyClipOut(m_trackIndex, m_clipIndex);
+    m_notify = true;
+}
+
+int TrimClipOutCommand::id() const
+{
+    return 1;
+}
+
+bool TrimClipOutCommand::mergeWith(const QUndoCommand *other)
+{
+    if (other->id() != id()) return false;
+    m_delta += static_cast<const TrimClipOutCommand*>(other)->m_delta;
+    return true;
+}
+
 }

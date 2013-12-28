@@ -71,6 +71,7 @@ public slots:
     void setTrackComposite(int trackIndex, Qt::CheckState composite);
     bool moveClip(int fromTrack, int toTrack, int clipIndex, int position);
     void trimClipIn(int trackIndex, int clipIndex, int delta);
+    void trimClipOut(int trackIndex, int clipIndex, int delta);
 
 protected:
     void dragEnterEvent(QDragEnterEvent* event);
