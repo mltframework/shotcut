@@ -156,15 +156,15 @@ Rectangle {
         id: compositeMenu
         MenuItem {
             text: qsTr('No Compositing')
-            onTriggered: { compositeClicked(Qt.Unchecked); compositeButton.checkedState = Qt.Unchecked }
+            onTriggered: { timeline.setTrackComposite(index, Qt.Unchecked); compositeButton.checkedState = Qt.Unchecked }
         }
         MenuItem {
             text: qsTr('Composite')
-            onTriggered: { compositeClicked(Qt.PartiallyChecked); compositeButton.checkedState = Qt.PartiallyChecked }
+            onTriggered: { timeline.setTrackComposite(index, Qt.PartiallyChecked); compositeButton.checkedState = Qt.PartiallyChecked }
         }
         MenuItem {
             text: qsTr('Composite And Fill')
-            onTriggered: { compositeClicked(Qt.Checked); compositeButton.checkedState = Qt.Checked }
+            onTriggered: { timeline.setTrackComposite(index, Qt.Checked); compositeButton.checkedState = Qt.Checked }
         }
     }
 }
