@@ -53,12 +53,16 @@ Player::Player(QWidget *parent)
 
     // Add tab bar to indicate/select what is playing: clip, playlist, timeline.
     m_tabs = new QTabBar;
+    m_tabs->setShape(QTabBar::RoundedSouth);
     m_tabs->addTab(tr("Clip"));
     m_tabs->addTab(tr("Playlist"));
     m_tabs->setTabEnabled(PlaylistTabIndex, false);
     m_tabs->addTab(tr("Timeline"));
     m_tabs->setTabEnabled(TimelineTabIndex, false);
-    playerVLayout->addWidget(m_tabs);
+    QHBoxLayout* tabLayout = new QHBoxLayout;
+    tabLayout->addWidget(m_tabs);
+    tabLayout->addStretch();
+//    playerVLayout->addLayout(tabLayout);
     connect(m_tabs, SIGNAL(tabBarClicked(int)), SLOT(onTabBarClicked(int)));
 
     // Add the volume and signal level meter
@@ -201,6 +205,7 @@ Player::Player(QWidget *parent)
     toolbar->addWidget(m_inPointLabel);
     toolbar->addWidget(m_selectedLabel);
     vlayout->addWidget(toolbar);
+    vlayout->addLayout(tabLayout);
 
     connect(MLT.videoWidget(), SIGNAL(frameReceived(Mlt::QFrame)), this, SLOT(onShowFrame(Mlt::QFrame)));
     connect(actionPlay, SIGNAL(triggered()), this, SLOT(togglePlayPaused()));
