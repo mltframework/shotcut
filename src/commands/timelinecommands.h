@@ -92,6 +92,18 @@ private:
     bool m_oldValue;
 };
 
+class HideTrackCommand : public QUndoCommand
+{
+public:
+    HideTrackCommand(MultitrackModel& model, int trackIndex, QUndoCommand * parent = 0);
+    void redo();
+    void undo();
+private:
+    MultitrackModel& m_model;
+    int m_trackIndex;
+    bool m_oldValue;
+};
+
 }
 
 #endif

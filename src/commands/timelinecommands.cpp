@@ -128,4 +128,23 @@ void MuteTrackCommand::undo()
     m_model.setTrackMute(m_trackIndex, m_oldValue);
 }
 
+HideTrackCommand::HideTrackCommand(MultitrackModel &model, int trackIndex, QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_trackIndex(trackIndex)
+    , m_oldValue(model.data(m_model.index(trackIndex), MultitrackModel::IsMuteRole).toBool())
+{
+    setText(QObject::tr("Toggle track hidden"));
+}
+
+void HideTrackCommand::redo()
+{
+    m_model.setTrackHidden(m_trackIndex, !m_oldValue);
+}
+
+void HideTrackCommand::undo()
+{
+    m_model.setTrackHidden(m_trackIndex, m_oldValue);
+}
+
 }

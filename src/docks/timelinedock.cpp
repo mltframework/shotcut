@@ -232,6 +232,12 @@ void TimelineDock::toggleTrackMute(int trackIndex)
         new Timeline::MuteTrackCommand(m_model, trackIndex));
 }
 
+void TimelineDock::toggleTrackHidden(int trackIndex)
+{
+    MAIN.undoStack()->push(
+        new Timeline::HideTrackCommand(m_model, trackIndex));
+}
+
 void TimelineDock::dragEnterEvent(QDragEnterEvent *event)
 {
     if (event->mimeData()->hasFormat(Mlt::XmlMimeType)) {

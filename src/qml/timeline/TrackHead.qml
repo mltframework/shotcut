@@ -24,7 +24,7 @@ import QtQuick.Layouts 1.0
 Rectangle {
     property string trackName: ''
     property bool isMute
-    property alias isHidden: hideButton.checked
+    property bool isHidden
     property alias isComposite: compositeButton.checkedState
     property bool isVideo
     signal hideClicked()
@@ -107,18 +107,18 @@ Rectangle {
                         implicitWidth: 16
                         implicitHeight: 16
                         radius: 2
-                        color: control.checked? activePalette.highlight : trackHeadRoot.color
+                        color: isHidden? activePalette.highlight : trackHeadRoot.color
                         border.color: activePalette.midlight
                         border.width: 1
                         Text {
                             anchors.horizontalCenter: parent.horizontalCenter
                             anchors.verticalCenter: parent.verticalCenter
                             text: qsTr('H', 'Hide')
-                            color: control.checked? activePalette.highlightedText : activePalette.windowText
+                            color: isHidden? activePalette.highlightedText : activePalette.windowText
                         }
                     }
                 }
-                onClicked: hideClicked()
+                onClicked: timeline.toggleTrackHidden(index)
             }
 
             CheckBox {
