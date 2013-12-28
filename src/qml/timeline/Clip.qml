@@ -31,6 +31,8 @@ Rectangle {
     property bool isAudio: false
     property var audioLevels
     property int trackIndex
+    property int originalTrackIndex: trackIndex
+    property int originalClipIndex: index
     property int originalX: x
     property color shotcutBlue: Qt.rgba(23/255, 92/255, 118/255, 1.0)
 
@@ -55,7 +57,7 @@ Rectangle {
     Drag.proposedAction: Qt.MoveAction
 
     function getColor() {
-        return isBlank? 'transparent' : (isAudio? 'darkseagreen' : Qt.darker(shotcutBlue))
+        return isBlank? 'transparent' : (isAudio? 'darkseagreen' : shotcutBlue)
     }
 
     function reparent(track) {
@@ -148,7 +150,7 @@ Rectangle {
 
     Text {
         id: label
-        text: name
+        text: clipName
         visible: !isBlank
         font.pointSize: 8
         anchors {
@@ -165,7 +167,6 @@ Rectangle {
             name: 'normal'
             PropertyChanges {
                 target: clipRoot
-                border.color: 'black'
                 z: 0
             }
         },
@@ -173,8 +174,7 @@ Rectangle {
             name: 'selected'
             PropertyChanges {
                 target: clipRoot
-                border.color: shotcutBlue
-                color: isBlank? 'transparent' : (isAudio? Qt.lighter('darkseagreen') : shotcutBlue)
+                color: isBlank? 'transparent' : Qt.darker(getColor())
                 z: 1
             }
         }
@@ -190,11 +190,8 @@ Rectangle {
     MouseArea {
         anchors.fill: parent
         enabled: isBlank
-        acceptedButtons: Qt.LeftButton | Qt.RightButton
-        onClicked: {
-            if (mouse.button === Qt.RightButton)
-                menu.popup()
-        }
+        acceptedButtons: Qt.RightButton
+        onClicked: menu.popup()
     }
 
     MouseArea {
@@ -205,10 +202,12 @@ Rectangle {
         propagateComposedEvents: true
         drag.target: parent
         drag.axis: Drag.XAxis
-        cursorShape: drag.active? Qt.DragMoveCursor : Qt.ArrowCursor
+        cursorShape: drag.active? Qt.ClosedHandCursor : isBlank? Qt.ArrowCursor : Qt.OpenHandCursor
         property int startX
         onPressed: {
             originalX = parent.x
+            originalTrackIndex = trackIndex
+            originalClipIndex = index
             startX = parent.x
             parent.state = 'selected'
             parent.selected(clipRoot)
@@ -225,9 +224,10 @@ Rectangle {
         onReleased: {
             parent.y = 0
             var delta = parent.x - startX
-            if (Math.abs(delta) >= 1.0) {
+            if (Math.abs(delta) >= 1.0 || trackIndex !== originalTrackIndex) {
                 parent.moved(clipRoot)
                 originalX = parent.x
+                originalTrackIndex = trackIndex
             } else {
                 parent.dropped(clipRoot)
             }

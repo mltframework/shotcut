@@ -151,8 +151,10 @@ void TimelineDock::remove(int trackIndex, int clipIndex)
     if (clip) {
         QString xml = MLT.saveXML("string", clip);
         delete clip;
+        QModelIndex idx = m_model.index(clipIndex, 0, m_model.index(trackIndex));
+        int position = m_model.data(idx, MultitrackModel::StartRole).toInt();
         MAIN.undoStack()->push(
-            new Timeline::RemoveCommand(m_model, trackIndex, clipIndex, m_position, xml));
+            new Timeline::RemoveCommand(m_model, trackIndex, clipIndex, position, xml));
     }
 }
 
@@ -166,8 +168,10 @@ void TimelineDock::lift(int trackIndex, int clipIndex)
     if (clip) {
         QString xml = MLT.saveXML("string", clip);
         delete clip;
+        QModelIndex idx = m_model.index(clipIndex, 0, m_model.index(trackIndex));
+        int position = m_model.data(idx, MultitrackModel::StartRole).toInt();
         MAIN.undoStack()->push(
-            new Timeline::LiftCommand(m_model, trackIndex, clipIndex, m_position, xml));
+            new Timeline::LiftCommand(m_model, trackIndex, clipIndex, position, xml));
     }
 }
 

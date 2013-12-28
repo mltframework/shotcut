@@ -72,7 +72,7 @@ public:
     int rowCount(const QModelIndex &parent) const;
     int columnCount(const QModelIndex &parent) const;
     QVariant data(const QModelIndex &index, int role) const;
-    QModelIndex index(int row, int column,
+    QModelIndex index(int row, int column = 0,
                       const QModelIndex &parent = QModelIndex()) const;
     QModelIndex parent(const QModelIndex &index) const;
     QHash<int, QByteArray> roleNames() const;
@@ -100,8 +100,10 @@ public slots:
     void notifyClipIn(int trackIndex, int clipIndex);
     void trimClipOut(int trackIndex, int clipIndex, int delta);
     void notifyClipOut(int trackIndex, int clipIndex);
-    bool moveClip(int trackIndex, int clipIndex, int position);
-    void appendClip(int trackIndex, Mlt::Producer &clip);
+    bool moveClip(int fromTrack, int toTrack, int clipIndex, int position);
+    bool overwriteClip(int trackIndex, Mlt::Producer& clip, int position);
+    void insertClip(int trackIndex, Mlt::Producer& clip, int position);
+    int appendClip(int trackIndex, Mlt::Producer &clip);
     void removeClip(int trackIndex, int clipIndex);
     void liftClip(int trackIndex, int clipIndex);
 
@@ -109,6 +111,7 @@ private:
     Mlt::Tractor* m_tractor;
     TrackList m_trackList;
 
+    bool moveClipToTrack(int fromTrack, int toTrack, int clipIndex, int position);
     void moveClipToEnd(Mlt::Playlist& playlist, int trackIndex, int clipIndex, int position);
     void relocateClip(Mlt::Playlist& playlist, int trackIndex, int clipIndex, int position);
     void moveClipInBlank(Mlt::Playlist& playlist, int trackIndex, int clipIndex, int position);

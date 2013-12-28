@@ -64,7 +64,16 @@ Rectangle {
                 trackRoot.clipSelected(clip, trackRoot);
             }
             onMoved: {
-                if (!multitrack.moveClip(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex, Math.round(clip.x / timeScale)))
+                var fromTrack = clip.originalTrackIndex
+                var toTrack = clip.trackIndex
+                var clipIndex = clip.originalClipIndex
+                var frame = Math.round(clip.x / timeScale)
+                // Remove the placeholder inserted in onDraggedToTrack
+                if (fromTrack !== toTrack) {
+                    console.log('removing placehold on track ' + index + ' at ' + clipIndex)
+                    trackModel.items.remove(clipIndex, 1)
+                }
+                if (!multitrack.moveClip(fromTrack, toTrack, clipIndex, frame))
                     clip.x = clip.originalX
             }
             onDragged: {
@@ -88,13 +97,25 @@ Rectangle {
                     multitrack.trimClipOut(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex, delta)
             }
             onTrimmedOut: multitrack.notifyClipOut(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex)
+            onDraggedToTrack: {
+                console.log('inserting placehold on track ' + index + ' at ' + clip.DelegateModel.itemsIndex)
+                trackModel.items.insert(clip.DelegateModel.itemsIndex, {
+                    'name': '',
+                    'resource': '',
+                    'duration': clip.clipDuration,
+                    'mlt_service': '<producer',
+                    'in': 0,
+                    'out': clip.clipDuration - 1,
+                    'blank': true,
+                    'audio': false,
+                })
+            }
 
             Component.onCompleted: {
                 moved.connect(trackRoot.clipDropped)
                 dropped.connect(trackRoot.clipDropped)
                 draggedToTrack.connect(trackRoot.clipDraggedToTrack)
             }
-
         }
     }
 

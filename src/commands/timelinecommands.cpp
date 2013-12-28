@@ -59,8 +59,7 @@ void Timeline::LiftCommand::redo()
 void Timeline::LiftCommand::undo()
 {
     Mlt::Producer clip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
-    m_model.appendClip(m_trackIndex, clip);
-    m_model.moveClip(m_trackIndex, m_trackIndex, m_clipIndex, m_position);
+    m_model.overwriteClip(m_trackIndex, clip, m_position);
 }
 
 Timeline::RemoveCommand::RemoveCommand(MultitrackModel &model, int trackIndex,
@@ -83,6 +82,5 @@ void Timeline::RemoveCommand::redo()
 void Timeline::RemoveCommand::undo()
 {
     Mlt::Producer clip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
-    m_model.appendClip(m_trackIndex, clip);
-    m_model.moveClip(m_trackIndex, m_trackIndex, m_clipIndex, m_position);
+    m_model.insertClip(m_trackIndex, clip, m_position);
 }
