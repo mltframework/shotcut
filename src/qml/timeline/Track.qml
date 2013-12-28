@@ -88,9 +88,9 @@ Rectangle {
                 if (!(mouse.modifiers & Qt.AltModifier))
                     delta = Logic.snapTrimIn(clip, delta)
                 if (delta != 0)
-                    multitrack.trimClipIn(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex, delta)
+                    timeline.trimClipIn(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex, delta)
             }
-            onTrimmedIn:multitrack.notifyClipIn(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex)
+            onTrimmedIn: multitrack.notifyClipIn(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex)
             onTrimmingOut: {
                 if (!(mouse.modifiers & Qt.AltModifier))
                     delta = Logic.snapTrimOut(clip, delta)

@@ -194,7 +194,45 @@ void MoveClipCommand::undo()
 {
     if (m_toClipIndex >= 0)
         m_model.moveClip(m_toTrackIndex, m_fromTrackIndex, m_toClipIndex, m_fromStart);
-    qWarning() << "Failed to undo the clip movement!";
+    else
+        qWarning() << "Failed to undo the clip movement!";
+}
+
+TrimClipInCommand::TrimClipInCommand(MultitrackModel &model, int trackIndex, int clipIndex, int delta, QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_trackIndex(trackIndex)
+    , m_clipIndex(clipIndex)
+    , m_delta(delta)
+    , m_notify(false)
+{
+    setText(QObject::tr("Trim clip in point"));
+}
+
+void TrimClipInCommand::redo()
+{
+    m_model.trimClipIn(m_trackIndex, m_clipIndex, m_delta);
+    if (m_notify)
+        m_model.notifyClipIn(m_trackIndex, m_clipIndex);
+}
+
+void TrimClipInCommand::undo()
+{
+    m_model.trimClipIn(m_trackIndex, m_clipIndex, -m_delta);
+    m_model.notifyClipIn(m_trackIndex, m_clipIndex);
+    m_notify = true;
+}
+
+int TrimClipInCommand::id() const
+{
+    return 0;
+}
+
+bool TrimClipInCommand::mergeWith(const QUndoCommand *other)
+{
+    if (other->id() != id()) return false;
+    m_delta += static_cast<const TrimClipInCommand*>(other)->m_delta;
+    return true;
 }
 
 }

@@ -255,6 +255,12 @@ bool TimelineDock::moveClip(int fromTrack, int toTrack, int clipIndex, int posit
     }
 }
 
+void TimelineDock::trimClipIn(int trackIndex, int clipIndex, int delta)
+{
+    MAIN.undoStack()->push(
+        new Timeline::TrimClipInCommand(m_model, trackIndex, clipIndex, delta));
+}
+
 void TimelineDock::dragEnterEvent(QDragEnterEvent *event)
 {
     if (event->mimeData()->hasFormat(Mlt::XmlMimeType)) {
