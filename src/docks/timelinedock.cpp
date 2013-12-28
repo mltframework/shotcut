@@ -220,6 +220,12 @@ void TimelineDock::selectClip(int trackIndex, int clipIndex)
     }
 }
 
+void TimelineDock::setTrackName(int trackIndex, const QString &value)
+{
+    MAIN.undoStack()->push(
+        new Timeline::NameTrackCommand(m_model, trackIndex, value));
+}
+
 void TimelineDock::dragEnterEvent(QDragEnterEvent *event)
 {
     if (event->mimeData()->hasFormat(Mlt::XmlMimeType)) {

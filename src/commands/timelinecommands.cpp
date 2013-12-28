@@ -84,3 +84,25 @@ void Timeline::RemoveCommand::undo()
     Mlt::Producer clip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
     m_model.insertClip(m_trackIndex, clip, m_position);
 }
+
+
+Timeline::NameTrackCommand::NameTrackCommand(MultitrackModel &model, int trackIndex,
+    const QString &name, QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_trackIndex(trackIndex)
+    , m_name(name)
+    , m_oldName(model.data(m_model.index(trackIndex), MultitrackModel::NameRole).toString())
+{
+    setText(QObject::tr("Change track name"));
+}
+
+void Timeline::NameTrackCommand::redo()
+{
+    m_model.setTrackName(m_trackIndex, m_name);
+}
+
+void Timeline::NameTrackCommand::undo()
+{
+    m_model.setTrackName(m_trackIndex, m_oldName);
+}

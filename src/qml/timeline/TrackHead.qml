@@ -27,7 +27,6 @@ Rectangle {
     property alias isHidden: hideButton.checked
     property alias isComposite: compositeButton.checkedState
     property bool isVideo
-    property bool isEditing: false
     signal muteClicked()
     signal hideClicked()
     signal compositeClicked(int state)
@@ -62,7 +61,6 @@ Rectangle {
                 onClicked: {
                     nameEdit.visible = true
                     nameEdit.selectAll()
-                    isEditing = true
                 }
             }
             TextField {
@@ -71,7 +69,7 @@ Rectangle {
                 width: trackHeadRoot.width - trackHeadColumn.anchors.margins * 2
                 text: trackName
                 onAccepted: {
-                    trackName = text
+                    timeline.setTrackName(index, text)
                     visible = false
                 }
                 onFocusChanged: visible = focus

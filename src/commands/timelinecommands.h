@@ -67,6 +67,19 @@ private:
     QString m_xml;
 };
 
+class NameTrackCommand : public QUndoCommand
+{
+public:
+    NameTrackCommand(MultitrackModel& model, int trackIndex, const QString& name, QUndoCommand * parent = 0);
+    void redo();
+    void undo();
+private:
+    MultitrackModel& m_model;
+    int m_trackIndex;
+    QString m_name;
+    QString m_oldName;
+};
+
 }
 
 #endif

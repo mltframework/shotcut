@@ -65,6 +65,7 @@ public slots:
     void selectTrack(int by);
     void openClip(int trackIndex, int clipIndex);
     void selectClip(int trackIndex, int clipIndex);
+    void setTrackName(int trackIndex, const QString& value);
 
 protected:
     void dragEnterEvent(QDragEnterEvent* event);
