@@ -124,7 +124,8 @@ void SDLWidget::mousePressEvent(QMouseEvent* event)
 {
     if (event->button() == Qt::LeftButton)
         m_dragStart = event->pos();
-    emit dragStarted();
+    if (MLT.isClip())
+        emit dragStarted();
 }
 
 void SDLWidget::mouseMoveEvent(QMouseEvent* event)
@@ -137,10 +138,14 @@ void SDLWidget::mouseMoveEvent(QMouseEvent* event)
         return;
     if ((event->pos() - m_dragStart).manhattanLength() < QApplication::startDragDistance())
         return;
+    if (!MLT.isClip())
+        return;
     QDrag *drag = new QDrag(this);
     QMimeData *mimeData = new QMimeData;
-    mimeData->setData("application/mlt+xml", "");
+    mimeData->setData(Mlt::XmlMimeType, MLT.saveXML("string").toUtf8());
+    mimeData->setText(QString::number(MLT.producer()->get_playtime()));
     drag->setMimeData(mimeData);
+    drag->setHotSpot(QPoint(0, 0));
     drag->exec(Qt::LinkAction);
 }
 
