@@ -18,6 +18,7 @@
 
 #include "timelinecommands.h"
 #include "mltcontroller.h"
+#include <QtDebug>
 
 namespace Timeline {
 
@@ -165,6 +166,35 @@ void CompositeTrackCommand::redo()
 void CompositeTrackCommand::undo()
 {
     m_model.setTrackComposite(m_trackIndex, m_oldValue);
+}
+
+MoveClipCommand::MoveClipCommand(MultitrackModel &model, int fromTrackIndex, int toTrackIndex, int clipIndex, int position, QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_fromTrackIndex(fromTrackIndex)
+    , m_toTrackIndex(toTrackIndex)
+    , m_fromClipIndex(clipIndex)
+    , m_toClipIndex(-1)
+    , m_fromStart(model.data(
+        m_model.index(clipIndex, 0, m_model.index(fromTrackIndex)),
+            MultitrackModel::StartRole).toInt())
+    , m_toStart(position)
+{
+    setText(QObject::tr("Move clip"));
+}
+
+void MoveClipCommand::redo()
+{
+    m_model.moveClip(m_fromTrackIndex, m_toTrackIndex, m_fromClipIndex, m_toStart);
+    // Get the new clip index.
+    m_toClipIndex = m_model.clipIndex(m_toTrackIndex, m_toStart);
+}
+
+void MoveClipCommand::undo()
+{
+    if (m_toClipIndex >= 0)
+        m_model.moveClip(m_toTrackIndex, m_fromTrackIndex, m_toClipIndex, m_fromStart);
+    qWarning() << "Failed to undo the clip movement!";
 }
 
 }

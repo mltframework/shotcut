@@ -235,13 +235,24 @@ void TimelineDock::toggleTrackMute(int trackIndex)
 void TimelineDock::toggleTrackHidden(int trackIndex)
 {
     MAIN.undoStack()->push(
-                new Timeline::HideTrackCommand(m_model, trackIndex));
+        new Timeline::HideTrackCommand(m_model, trackIndex));
 }
 
 void TimelineDock::setTrackComposite(int trackIndex, Qt::CheckState composite)
 {
     MAIN.undoStack()->push(
         new Timeline::CompositeTrackCommand(m_model, trackIndex, composite));
+}
+
+bool TimelineDock::moveClip(int fromTrack, int toTrack, int clipIndex, int position)
+{
+    if (m_model.moveClipValid(fromTrack, toTrack, clipIndex, position)) {
+        MAIN.undoStack()->push(
+            new Timeline::MoveClipCommand(m_model, fromTrack, toTrack, clipIndex, position));
+        return true;
+    } else {
+        return false;
+    }
 }
 
 void TimelineDock::dragEnterEvent(QDragEnterEvent *event)

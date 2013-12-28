@@ -69,6 +69,7 @@ public slots:
     void toggleTrackMute(int trackIndex);
     void toggleTrackHidden(int trackIndex);
     void setTrackComposite(int trackIndex, Qt::CheckState composite);
+    bool moveClip(int fromTrack, int toTrack, int clipIndex, int position);
 
 protected:
     void dragEnterEvent(QDragEnterEvent* event);

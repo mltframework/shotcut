@@ -559,6 +559,60 @@ void MultitrackModel::notifyClipOut(int trackIndex, int clipIndex)
     }
 }
 
+bool MultitrackModel::moveClipValid(int fromTrack, int toTrack, int clipIndex, int position)
+{
+    // XXX This is very redundant with moveClip().
+    bool result = false;
+    int i = m_trackList.at(toTrack).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    if (track) {
+        Mlt::Playlist playlist(*track);
+        int targetIndex = playlist.get_clip_index_at(position);
+
+        if (fromTrack != toTrack) {
+            Mlt::Producer* trackFrom = m_tractor->track(m_trackList.at(fromTrack).mlt_index);
+            Mlt::Playlist playlistFrom(*trackFrom);
+            delete trackFrom;
+            QScopedPointer<Mlt::Producer> clip(playlistFrom.get_clip(clipIndex));
+            if (position >= playlist.get_playtime())
+                result = true;
+            else if (playlist.is_blank_at(position) && playlist.is_blank_at(position + clip->get_playtime() - 1)
+                    && playlist.get_clip_index_at(position) == playlist.get_clip_index_at(position + clip->get_playtime() - 1))
+                result = true;
+            if (!result) {
+                QModelIndex parentIndex = index(fromTrack);
+                // Remove blank on fromTrack.
+                beginRemoveRows(parentIndex, clipIndex, clipIndex);
+                playlistFrom.remove(clipIndex);
+                endRemoveRows();
+        
+                // Insert clip on fromTrack.
+                beginInsertRows(parentIndex, clipIndex, clipIndex);
+                playlistFrom.insert(*clip, clipIndex, clip->get_in(), clip->get_out());
+                endInsertRows();
+            }
+        }
+        else if ((clipIndex + 1) < playlist.count() && position >= playlist.get_playtime()) {
+            result = true;
+        }
+        else if ((targetIndex < (clipIndex - 1) || targetIndex > (clipIndex + 1))
+            && playlist.is_blank_at(position) && playlist.clip_length(clipIndex) <= playlist.clip_length(targetIndex)) {
+            result = true;
+        }
+        else if (targetIndex >= (clipIndex - 1) && targetIndex <= (clipIndex + 1)) {
+            int length = playlist.clip_length(clipIndex);
+            int targetIndexEnd = playlist.get_clip_index_at(position + length - 1);
+
+            if ((playlist.is_blank_at(position) || targetIndex == clipIndex)
+                && (playlist.is_blank_at(position + length - 1) || targetIndexEnd == clipIndex)) {
+
+                result = true;
+            }
+        }
+    }
+    return result;
+}
+
 bool MultitrackModel::moveClip(int fromTrack, int toTrack, int clipIndex, int position)
 {
     qDebug() << __FUNCTION__ << clipIndex << "fromTrack" << fromTrack << "toTrack" << toTrack;
@@ -1225,6 +1279,17 @@ void MultitrackModel::close()
     delete m_tractor;
     m_tractor = 0;
     emit closed();
+}
+
+int MultitrackModel::clipIndex(int trackIndex, int position)
+{
+    int i = m_trackList.at(trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    if (track) {
+        Mlt::Playlist playlist(*track);
+        return playlist.get_clip_index_at(position);
+    }
+    return -1; // error
 }
 
 void MultitrackModel::refreshTrackList()

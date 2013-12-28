@@ -117,6 +117,22 @@ private:
     Qt::CheckState m_oldValue;
 };
 
+class MoveClipCommand : public QUndoCommand
+{
+public:
+    MoveClipCommand(MultitrackModel& model, int fromTrackIndex, int toTrackIndex, int clipIndex, int position, QUndoCommand * parent = 0);
+    void redo();
+    void undo();
+private:
+    MultitrackModel& m_model;
+    int m_fromTrackIndex;
+    int m_toTrackIndex;
+    int m_fromClipIndex;
+    int m_toClipIndex;
+    int m_fromStart;
+    int m_toStart;
+};
+
 }
 
 #endif
