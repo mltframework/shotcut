@@ -25,15 +25,7 @@ Rectangle {
     width: 400
     height: 200
     color: 'transparent'
-    Component.onCompleted: {
-        // Initialize parameter values
-        shakinessSlider.value = filter.get('shakiness')
-        accuracySlider.value = filter.get('accuracy')
-        zoomSlider.value = filter.get('zoom')
-        sharpenSlider.value = filter.get('sharpen')
-        if (filter.get("vectors").length > 0)
-            status.text = qsTr('Analysis complete.')
-    }
+
     Connections {
         target: filter
         onStabilizeFinished: {
@@ -56,18 +48,24 @@ Rectangle {
                 id: shakinessSlider
                 Layout.fillWidth: true
                 Layout.minimumWidth: 100
+                value: filter.get('shakiness')
                 minimumValue: 1
                 maximumValue: 10
                 tickmarksEnabled: true
                 stepSize: 1
+                property bool isReady: false
+                Component.onCompleted: isReady = true
                 onValueChanged: {
-                    shakinessSpinner.value = value
-                    filter.set('shakiness', value)
+                    if (isReady) {
+                        shakinessSpinner.value = value
+                        filter.set('shakiness', value)
+                    }
                 }
             }
             SpinBox {
                 id: shakinessSpinner
                 Layout.minimumWidth: 60
+                value: filter.get('shakiness')
                 minimumValue: 1
                 maximumValue: 10
                 decimals: 0
@@ -85,18 +83,24 @@ Rectangle {
                 id: accuracySlider
                 Layout.fillWidth: true
                 Layout.minimumWidth: 100
+                value: filter.get('accuracy')
                 minimumValue: 1
                 maximumValue: 15
                 tickmarksEnabled: true
                 stepSize: 1
+                property bool isReady: false
+                Component.onCompleted: isReady = true
                 onValueChanged: {
-                    accuracySpinner.value = value
-                    filter.set('accuracy', value)
+                    if (isReady) {
+                        accuracySpinner.value = value
+                        filter.set('accuracy', value)
+                    }
                 }
             }
             SpinBox {
                 id: accuracySpinner
                 Layout.minimumWidth: 60
+                value: filter.get('accuracy')
                 minimumValue: 1
                 maximumValue: 15
                 decimals: 0
@@ -121,6 +125,10 @@ Rectangle {
             Label {
                 id: status
                 text: qsTr('Click Analyze to use this filter.')
+                Component.onCompleted: {
+                    if (filter.get("vectors").length > 0)
+                        text = qsTr('Analysis complete.')
+                }
             }
         }
 
@@ -133,17 +141,23 @@ Rectangle {
                 id: zoomSlider
                 Layout.fillWidth: true
                 Layout.minimumWidth: 100
+                value: filter.get('zoom')
                 minimumValue: -50
                 maximumValue: 50
+                property bool isReady: false
+                Component.onCompleted: isReady = true
                 onValueChanged: {
-                    zoomSpinner.value = value
-                    filter.set('zoom', value)
-                    filter.set("refresh", 1);
+                    if (isReady) {
+                        zoomSpinner.value = value
+                        filter.set('zoom', value)
+                        filter.set("refresh", 1);
+                    }
                 }
             }
             SpinBox {
                 id: zoomSpinner
                 Layout.minimumWidth: 60
+                value: filter.get('zoom')
                 minimumValue: -50
                 maximumValue: 50
                 decimals: 1
@@ -162,17 +176,23 @@ Rectangle {
                 id: sharpenSlider
                 Layout.fillWidth: true
                 Layout.minimumWidth: 100
+                value: filter.get('sharpen')
                 minimumValue: 0
                 maximumValue: 10
+                property bool isReady: false
+                Component.onCompleted: isReady = true
                 onValueChanged: {
-                    sharpenSpinner.value = value
-                    filter.set('sharpen', value)
-                    filter.set("refresh", 1);
+                    if (isReady) {
+                        sharpenSpinner.value = value
+                        filter.set('sharpen', value)
+                        filter.set("refresh", 1);
+                    }
                 }
             }
             SpinBox {
                 id: sharpenSpinner
                 Layout.minimumWidth: 60
+                value: filter.get('sharpen')
                 minimumValue: 0
                 maximumValue: 10
                 decimals: 2
