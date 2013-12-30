@@ -53,7 +53,11 @@ TimelineDock::TimelineDock(QWidget *parent) :
     ui->scrollArea->setWidget(container);
 
     connect(MLT.videoWidget(), SIGNAL(frameReceived(Mlt::QFrame)), this, SLOT(onShowFrame(Mlt::QFrame)));
+#ifdef Q_OS_WIN
+    onVisibilityChanged(true);
+#else
     connect(this, &QDockWidget::visibilityChanged, this, &TimelineDock::onVisibilityChanged);
+#endif
 }
 
 TimelineDock::~TimelineDock()
