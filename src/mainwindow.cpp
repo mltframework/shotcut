@@ -170,7 +170,6 @@ MainWindow::MainWindow()
 
     m_timelineDock = new TimelineDock(this);
     m_timelineDock->hide();
-    m_timelineDock->setTitleBarWidget(new QWidget);
     addDockWidget(Qt::BottomDockWidgetArea, m_timelineDock);
     ui->menuView->addAction(m_timelineDock->toggleViewAction());
     connect(m_timelineDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onTimelineDockTriggered(bool)));

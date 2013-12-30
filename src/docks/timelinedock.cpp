@@ -49,7 +49,8 @@ TimelineDock::TimelineDock(QWidget *parent) :
 
     QWidget* container = QWidget::createWindowContainer(&m_quickView, this);
     container->setFocusPolicy(Qt::TabFocus);
-    ui->verticalLayout->addWidget(container);
+    delete ui->scrollAreaWidgetContents;
+    ui->scrollArea->setWidget(container);
 
     connect(MLT.videoWidget(), SIGNAL(frameReceived(Mlt::QFrame)), this, SLOT(onShowFrame(Mlt::QFrame)));
     connect(this, &QDockWidget::visibilityChanged, this, &TimelineDock::onVisibilityChanged);

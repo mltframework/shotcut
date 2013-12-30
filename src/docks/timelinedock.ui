@@ -24,10 +24,10 @@
     <normaloff>:/icons/oxygen/32x32/actions/view-time-schedule.png</normaloff>:/icons/oxygen/32x32/actions/view-time-schedule.png</iconset>
   </property>
   <property name="features">
-   <set>QDockWidget::DockWidgetClosable</set>
+   <set>QDockWidget::AllDockWidgetFeatures</set>
   </property>
   <property name="allowedAreas">
-   <set>Qt::BottomDockWidgetArea</set>
+   <set>Qt::BottomDockWidgetArea|Qt::TopDockWidgetArea</set>
   </property>
   <property name="windowTitle">
    <string>Timeline</string>
@@ -46,6 +46,38 @@
     <property name="bottomMargin">
      <number>0</number>
     </property>
+    <item>
+     <widget class="QScrollArea" name="scrollArea">
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scrollAreaWidgetContents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>400</width>
+         <height>281</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+    </item>
    </layout>
   </widget>
  </widget>
