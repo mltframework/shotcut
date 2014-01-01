@@ -1,8 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="de">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="de" version="2.1">
 <context>
-    <name></name>
+    <name/>
     <message>
         <location filename="../src/main.cpp" line="102"/>
         <source>Loading plugins...</source>
@@ -250,7 +248,7 @@
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="558"/>
         <source>Adjust the audio/video synchronization. The center position is equivalent to no alteration.</source>
-        <translation>Audio/Video Synchronizität einstellen. Die Mittelstellung bedeutet &quot;keine Änderung&quot;</translation>
+        <translation>Audio/Video Synchronizität einstellen. Die Mittelstellung bedeutet keine Veränderung.</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="577"/>
@@ -317,17 +315,17 @@
     <message>
         <location filename="../src/qml/timeline/Clip.qml" line="328"/>
         <source>Remove</source>
-        <translation type="unfinished">Entfernen</translation>
+        <translation>Entfernen</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/Clip.qml" line="333"/>
         <source>Lift</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/timeline/Clip.qml" line="338"/>
         <source>Open As Clip</source>
-        <translation type="unfinished">Als Clip öffnen</translation>
+        <translation>Als Clip öffnen</translation>
     </message>
 </context>
 <context>
@@ -1361,7 +1359,9 @@ Codecs. Jedoch sind nicht alle Codecs Multithreading fähig.</translation>
         <source>Error:
 This program requires OpenGL version 2.0
 with the framebuffer object extension.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler:
+Dieses Programm benötigt OpenGL Version 2.0
+mit Framebuffer Objekt-Erweiterung</translation>
     </message>
 </context>
 <context>
@@ -2072,42 +2072,6 @@ Rechtsklick auf einen Job öffnet ein Menü um den aktuellen Job zu beenden.</tr
         <translation>Shotcut</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;Shotcut Quickstart Guide&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Open files by &lt;span style=&quot; font-weight:600;&quot;&gt;drag-n-drop&lt;/span&gt; in addition to the usual menu and toolbar methods.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Use &lt;span style=&quot; font-weight:600;&quot;&gt;File&lt;/span&gt; &amp;gt; &lt;span style=&quot; font-weight:600;&quot;&gt;Open Other&lt;/span&gt; to open network streams, capture devices, and generators.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;MLT XML files can be opened as a clip; so, you can use Shotcut to test your XML.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Transport Control Keyboard Shortcuts:&lt;/p&gt;
-&lt;ul type=&quot;circle&quot; style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;&quot;&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; J&lt;/span&gt;, &lt;span style=&quot; font-weight:600;&quot;&gt;K&lt;/span&gt;, and &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt; control playback speed and direction. Tap &lt;span style=&quot; font-weight:600;&quot;&gt;J&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt; repeatedly to go faster.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; I&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;O&lt;/span&gt; set the in and out points.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt; L&lt;span style=&quot; font-weight:600;&quot;&gt;eft&lt;/span&gt; or R&lt;span style=&quot; font-weight:600;&quot;&gt;ight&lt;/span&gt; cursor keys step frame-by-frame.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; Page Up&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;Page Down&lt;/span&gt; step 10 frames at-a-time.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; Alt+Left&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;Alt+Right&lt;/span&gt; to jump between start, in, out, and end.&lt;/li&gt;&lt;/ul&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Hold down &lt;span style=&quot; font-weight:600;&quot;&gt;Shift&lt;/span&gt; to make the mouse movement over the video window scrub/skim.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Update Shotcut whenever you like. We do not notify you about updates because new version are available almost daily.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;Shotcut Quickstart Guide&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Open files by &lt;span style=&quot; font-weight:600;&quot;&gt;drag-n-drop&lt;/span&gt; in addition to the usual menu and toolbar methods.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Use &lt;span style=&quot; font-weight:600;&quot;&gt;File&lt;/span&gt; &amp;gt; &lt;span style=&quot; font-weight:600;&quot;&gt;Open Other&lt;/span&gt; to open network streams, capture devices, and generators.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;MLT XML files can be opened as a clip; so, you can use Shotcut to test your XML.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Transport Control Keyboard Shortcuts:&lt;/p&gt;
-&lt;ul type=&quot;circle&quot; style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;&quot;&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; J&lt;/span&gt;, &lt;span style=&quot; font-weight:600;&quot;&gt;K&lt;/span&gt;, and &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt; control playback speed and direction. Tap &lt;span style=&quot; font-weight:600;&quot;&gt;J&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt; repeatedly to go faster.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; I&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;O&lt;/span&gt; set the in and out points.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt; L&lt;span style=&quot; font-weight:600;&quot;&gt;eft&lt;/span&gt; or R&lt;span style=&quot; font-weight:600;&quot;&gt;ight&lt;/span&gt; cursor keys step frame-by-frame.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; Page Up&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;Page Down&lt;/span&gt; step 10 frames at-a-time.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; Alt+Left&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;Alt+Right&lt;/span&gt; to jump between start, in, out, and end.&lt;/li&gt;&lt;/ul&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Hold down &lt;span style=&quot; font-weight:600;&quot;&gt;Shift&lt;/span&gt; to make the mouse movement over the video window scrub/skim.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Update Shotcut whenever you like. We do not notify you about updates because new version are available almost daily.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/mainwindow.ui" line="41"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -2126,7 +2090,7 @@ p, li { white-space: pre-wrap; }
 &lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; Alt+Left&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;Alt+Right&lt;/span&gt; to jump between start, in, out, and end.&lt;/li&gt;&lt;/ul&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Hold down &lt;span style=&quot; font-weight:600;&quot;&gt;Shift&lt;/span&gt; to make the mouse movement over the video window scrub/skim.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Update Shotcut whenever you like. We do not notify you about updates because new version are available almost daily.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="78"/>
@@ -2459,7 +2423,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.ui" line="594"/>
         <source>Timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeitachse</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="108"/>
@@ -2864,7 +2828,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="263"/>
         <source>Map Clips Root</source>
-        <translation type="unfinished"></translation>
+        <translation>Map Clips Wurzelverzeichnis</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedserverdock.cpp" line="152"/>
@@ -3048,7 +3012,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/models/multitrackmodel.cpp" line="175"/>
         <source>GPU processing not yet supported in the timeline. :(</source>
-        <translation type="unfinished"></translation>
+        <translation>GPU-Verarbeitung in der Zeitachse wird noch nicht unterstützt. :(</translation>
     </message>
 </context>
 <context>
@@ -3341,17 +3305,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/player.cpp" line="57"/>
         <source>Clip</source>
-        <translation type="unfinished">Clip</translation>
+        <translation>Clip</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="58"/>
         <source>Playlist</source>
-        <translation type="unfinished">Wiedergabeliste</translation>
+        <translation>Wiedergabeliste</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="60"/>
         <source>Timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeitachse</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="105"/>
@@ -3981,52 +3945,52 @@ selected cut.</source>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="31"/>
         <source>Append to track</source>
-        <translation type="unfinished"></translation>
+        <translation>An Spur anhängen</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="54"/>
         <source>Lift from track</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="77"/>
         <source>Remove from track</source>
-        <translation type="unfinished"></translation>
+        <translation>Aus Spur löschen</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="100"/>
         <source>Change track name</source>
-        <translation type="unfinished"></translation>
+        <translation>Spurnamen ändern</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="119"/>
         <source>Toggle track mute</source>
-        <translation type="unfinished"></translation>
+        <translation>Spur stumm schalten (ein/aus)</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="138"/>
         <source>Toggle track hidden</source>
-        <translation type="unfinished"></translation>
+        <translation>Spur verstecken/anzeigen</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="158"/>
         <source>Change track compositing</source>
-        <translation type="unfinished"></translation>
+        <translation>Zusammenmischen der Spur ändern</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="183"/>
         <source>Move clip</source>
-        <translation type="unfinished"></translation>
+        <translation>Clip verschieben</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="209"/>
         <source>Trim clip in point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="246"/>
         <source>Trim clip out point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4194,7 +4158,7 @@ selected cut.</source>
     <message>
         <location filename="../src/docks/timelinedock.ui" line="30"/>
         <source>Timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeitachse</translation>
     </message>
 </context>
 <context>
@@ -4203,34 +4167,34 @@ selected cut.</source>
         <location filename="../src/qml/timeline/TrackHead.qml" line="91"/>
         <source>M</source>
         <comment>Mute</comment>
-        <translation type="unfinished"></translation>
+        <translation>M</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/TrackHead.qml" line="114"/>
         <source>H</source>
         <comment>Hide</comment>
-        <translation type="unfinished"></translation>
+        <translation>H</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/TrackHead.qml" line="140"/>
         <source>C</source>
         <comment>Composite</comment>
-        <translation type="unfinished"></translation>
+        <translation>C</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/TrackHead.qml" line="158"/>
         <source>No Compositing</source>
-        <translation type="unfinished"></translation>
+        <translation>Nicht zusammenmischen</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/TrackHead.qml" line="162"/>
         <source>Composite</source>
-        <translation type="unfinished"></translation>
+        <translation>Zusammenmischen</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/TrackHead.qml" line="166"/>
         <source>Composite And Fill</source>
-        <translation type="unfinished"></translation>
+        <translation>Zusammenmischen und Füllen</translation>
     </message>
 </context>
 <context>
@@ -4238,7 +4202,7 @@ selected cut.</source>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/UndoButton.qml" line="24"/>
         <source>Reset to default</source>
-        <translation type="unfinished">Zurücksetzen</translation>
+        <translation>Zurücksetzen</translation>
     </message>
 </context>
 <context>
@@ -4699,12 +4663,12 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
     <message>
         <location filename="../src/qml/filters/invert/meta.qml" line="6"/>
         <source>Invert Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Farben invertieren</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sepia/meta.qml" line="6"/>
         <source>Sepia Tone</source>
-        <translation type="unfinished"></translation>
+        <translation>Sepiatönung</translation>
     </message>
 </context>
 <context>
@@ -4718,13 +4682,9 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
 <context>
     <name>meta_movit</name>
     <message>
-        <source>Saturation (GPU)</source>
-        <translation type="obsolete">Sättigung (GPU)</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/saturation/meta_movit.qml" line="6"/>
         <source>Saturation</source>
-        <translation type="unfinished">Sättigung</translation>
+        <translation>Sättigung</translation>
     </message>
 </context>
 <context>
@@ -4810,73 +4770,73 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="256"/>
         <source>Append</source>
-        <translation type="unfinished"></translation>
+        <translation>Anhängen</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="267"/>
         <source>Add Audio Track</source>
-        <translation type="unfinished"></translation>
+        <translation>Audiospur hinzufügen</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="268"/>
         <source>Ctrl+U</source>
-        <translation type="unfinished">Ctrl+U</translation>
+        <translation>Ctrl+U</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="272"/>
         <source>Add Video Track</source>
-        <translation type="unfinished"></translation>
+        <translation>Videospur hinzufügen</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="273"/>
         <source>Ctrl+Y</source>
-        <translation type="unfinished">Strg+Y</translation>
+        <translation>Strg+Y</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="278"/>
         <source>Make Tracks Shorter</source>
-        <translation type="unfinished"></translation>
+        <translation>Spur kürzen</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="279"/>
         <source>Ctrl+K</source>
-        <translation type="unfinished"></translation>
+        <translation>Strg+K</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="283"/>
         <source>Make Tracks Taller</source>
-        <translation type="unfinished"></translation>
+        <translation>Spurenhöhe vergrößern</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="284"/>
         <source>Ctrl+L</source>
-        <translation type="unfinished"></translation>
+        <translation>Strg+L</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="288"/>
         <source>Close</source>
-        <translation type="unfinished">Schließen</translation>
+        <translation>Schließen</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="289"/>
         <source>Ctrl+W</source>
-        <translation type="unfinished"></translation>
+        <translation>Strg+W</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="296"/>
         <source>Display a menu of additional actions</source>
-        <translation type="unfinished">Menü mit zusätzlichen Aktionen anzeigen</translation>
+        <translation>Menü mit zusätzlichen Aktionen anzeigen</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="304"/>
         <source>Append to the current track</source>
-        <translation type="unfinished"></translation>
+        <translation>An aktuelle Spur anhängen</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="312"/>
         <source>Lift - Remove current clip without
 affecting position of other clips</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4890,10 +4850,6 @@ affecting position of other clips</source>
         <location filename="../src/qml/filters/audio_gain/ui.qml" line="45"/>
         <source>Gain</source>
         <translation>Verstärkungsgrad</translation>
-    </message>
-    <message>
-        <source>Reset to default</source>
-        <translation type="vanished">Zurücksetzen</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx_circular_frame/ui.qml" line="76"/>
@@ -4998,12 +4954,12 @@ affecting position of other clips</source>
     <message>
         <location filename="../src/qml/filters/sepia/ui.qml" line="49"/>
         <source>Yellow-Blue</source>
-        <translation type="unfinished"></translation>
+        <translation>Gelb-Blau</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sepia/ui.qml" line="76"/>
         <source>Cyan-Red</source>
-        <translation type="unfinished"></translation>
+        <translation>Cyan-Rot</translation>
     </message>
 </context>
 <context>
@@ -5013,10 +4969,6 @@ affecting position of other clips</source>
         <source>Saturation</source>
         <translation>Sättigung</translation>
     </message>
-    <message>
-        <source>Reset to default</source>
-        <translation type="vanished">Zurücksetzen</translation>
-    </message>
 </context>
 <context>
     <name>ui_movit</name>
@@ -5024,10 +4976,6 @@ affecting position of other clips</source>
         <location filename="../src/qml/filters/saturation/ui_movit.qml" line="47"/>
         <source>Saturation</source>
         <translation>Sättigung</translation>
-    </message>
-    <message>
-        <source>Reset to default</source>
-        <translation type="vanished">Zurücksetzen</translation>
     </message>
 </context>
 </TS>
