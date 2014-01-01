@@ -38,7 +38,6 @@ static const char* kShotcutPlaylistProperty = "shotcut:playlist";
 static const char* kAudioTrackProperty = "shotcut:audio";
 static const char* kVideoTrackProperty = "shotcut:video";
 static const char* kBackgroundTrackId = "background";
-static QString kGPUNotSupportedMessage;
 
 static void deleteQVariantList(QVariantList* list)
 {
@@ -171,8 +170,6 @@ MultitrackModel::MultitrackModel(QObject *parent)
     : QAbstractItemModel(parent)
     , m_tractor(0)
 {
-    if (kGPUNotSupportedMessage.isEmpty())
-        kGPUNotSupportedMessage = tr("GPU processing not yet supported in the timeline. :(");
     connect(this, SIGNAL(modified()), SLOT(adjustBackgroundDuration()));
 }
 
@@ -285,6 +282,8 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                 return m_trackList[index.row()].type == AudioTrackType;
             case IsCompositeRole: {
                 QScopedPointer<Mlt::Transition> transition(getTransition("composite", i));
+                if (!transition)
+                    transition.reset(getTransition("movit.overlay", i));
                 if (transition && transition->is_valid()) {
                     if (!transition->get_int("disable"))
                         return transition->get_int("fill")? Qt::Checked : Qt::PartiallyChecked;
@@ -415,6 +414,8 @@ void MultitrackModel::setTrackComposite(int row, Qt::CheckState composite)
     if (row < m_trackList.size()) {
         int i = m_trackList.at(row).mlt_index;
         QScopedPointer<Mlt::Transition> transition(getTransition("composite", i));
+        if (!transition)
+            transition.reset(getTransition("movit.overlay", i));
         if (transition) {
             transition->set("disable", (composite == Qt::Unchecked));
             transition->set("fill", (composite == Qt::Checked));
@@ -792,7 +793,6 @@ void MultitrackModel::insertClip(int trackIndex, Mlt::Producer &clip, int positi
 int MultitrackModel::appendClip(int trackIndex, Mlt::Producer &clip)
 {
     if (!createIfNeeded()) {
-        MAIN.showStatusMessage(kGPUNotSupportedMessage);
         return -1;
     }
     int i = m_trackList.at(trackIndex).mlt_index;
@@ -1082,7 +1082,6 @@ void MultitrackModel::audioLevelsReady(const QModelIndex& index)
 
 bool MultitrackModel::createIfNeeded()
 {
-    if (Settings.playerGPU()) return false;
     if (!m_tractor) {
         m_tractor = new Mlt::Tractor;
         m_tractor->set_profile(MLT.profile());
@@ -1134,10 +1133,6 @@ void MultitrackModel::adjustBackgroundDuration()
 
 void MultitrackModel::addAudioTrack()
 {
-    if (Settings.playerGPU()) {
-        MAIN.showStatusMessage(kGPUNotSupportedMessage);
-        return;
-    }
     if (!m_tractor) {
         m_tractor = new Mlt::Tractor;
         m_tractor->set_profile(MLT.profile());
@@ -1187,8 +1182,7 @@ void MultitrackModel::addAudioTrack()
 void MultitrackModel::addVideoTrack()
 {
     if (!m_tractor) {
-        if (!createIfNeeded())
-            MAIN.showStatusMessage(kGPUNotSupportedMessage);
+        createIfNeeded();
         return;
     }
 
