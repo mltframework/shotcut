@@ -24,13 +24,17 @@
 #include <QGLWidget>
 #include <QOpenGLShaderProgram>
 #include <QOpenGLFramebufferObject>
+#include <QOpenGLContext>
+#include <QOffscreenSurface>
 #include <QMutex>
 #include <QWaitCondition>
+#include <QThread>
 #include "mltcontroller.h"
 
 namespace Mlt {
 
 class Filter;
+class RenderThread;
 
 class GLWidget : public QGLWidget, public Controller, protected QOpenGLFunctions
 {
@@ -65,6 +69,7 @@ public:
 
     QWidget* videoWidget() { return this; }
     QSemaphore showFrameSemaphore;
+    Filter* glslManager() const { return m_glslManager; }
 
 public slots:
     void showFrame(Mlt::QFrame);
@@ -89,7 +94,6 @@ private:
     QOpenGLShaderProgram* m_shader;
     QPoint m_dragStart;
     Filter* m_glslManager;
-    QGLWidget* m_renderContext;
     QOpenGLFramebufferObject* m_fbo;
     QMutex m_mutex;
     QWaitCondition m_condition;
@@ -98,6 +102,8 @@ private:
     Event* m_threadStopEvent;
     mlt_image_format m_image_format;
     Mlt::Frame* m_lastFrame;
+    Event* m_threadCreateEvent;
+    Event* m_threadJoinEvent;
 
 protected:
     void initializeGL();
@@ -110,6 +116,25 @@ protected:
     void destroyShader();
 
     static void on_frame_show(mlt_consumer, void* self, mlt_frame frame);
+};
+
+typedef void* ( *thread_function_t )( void* );
+
+class RenderThread : public QThread
+{
+    Q_OBJECT
+public:
+    RenderThread(thread_function_t function, void* data, GLWidget* parent);
+    ~RenderThread();
+
+protected:
+    void run();
+
+private:
+    thread_function_t m_function;
+    void* m_data;
+    QOpenGLContext* m_context;
+    QOffscreenSurface* m_surface;
 };
 
 } // namespace

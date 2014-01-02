@@ -37,13 +37,14 @@ GLWidget::GLWidget(QWidget *parent)
     , m_display_ratio(4.0/3.0)
     , m_shader(0)
     , m_glslManager(0)
-    , m_renderContext(0)
     , m_fbo(0)
     , m_isInitialized(false)
     , m_threadStartEvent(0)
     , m_threadStopEvent(0)
     , m_image_format(mlt_image_yuv422)
     , m_lastFrame(0)
+    , m_threadCreateEvent(0)
+    , m_threadJoinEvent(0)
 {
     m_texture[0] = m_texture[1] = m_texture[2] = 0;
     setAttribute(Qt::WA_PaintOnScreen);
@@ -59,6 +60,7 @@ GLWidget::GLWidget(QWidget *parent)
 
 GLWidget::~GLWidget()
 {
+    stop();
     makeCurrent();
     if (m_texture[0] && !m_glslManager)
         glDeleteTextures(3, m_texture);
@@ -66,7 +68,8 @@ GLWidget::~GLWidget()
     delete m_glslManager;
     delete m_threadStartEvent;
     delete m_threadStopEvent;
-    delete m_renderContext;
+    delete m_threadCreateEvent;
+    delete m_threadJoinEvent;
     delete m_lastFrame;
 }
 
@@ -233,6 +236,26 @@ void GLWidget::destroyShader()
     }
 }
 
+static void onThreadCreate(mlt_properties owner, GLWidget* self,
+    RenderThread** thread, int* priority, thread_function_t function, void* data )
+{
+    Q_UNUSED(owner)
+    Q_UNUSED(priority)
+    (*thread) = new RenderThread(function, data, self);
+    (*thread)->start();
+}
+
+static void onThreadJoin(mlt_properties owner, GLWidget* self, RenderThread* thread)
+{
+    Q_UNUSED(owner)
+    Q_UNUSED(self)
+    if (thread) {
+        thread->quit();
+        thread->wait();
+        delete thread;
+    }
+}
+
 void GLWidget::startGlsl()
 {
     if (!m_isInitialized) {
@@ -241,29 +264,23 @@ void GLWidget::startGlsl()
         m_mutex.unlock();
     }
     if (m_glslManager) {
-        if (!m_renderContext) {
-            m_renderContext = new QGLWidget(0, this);
-            m_renderContext->resize(0, 0);
+        m_glslManager->fire_event("init glsl");
+        if (!m_glslManager->get_int("glsl_supported")) {
+            delete m_glslManager;
+            m_glslManager = 0;
+            // Need to destroy MLT global reference to prevent filters from trying to use GPU.
+            mlt_properties_set_data(mlt_global_properties(), "glslManager", NULL, 0, NULL, NULL);
+            emit gpuNotSupported();
         }
-        if (m_renderContext->isValid()) {
-            m_renderContext->makeCurrent();
-            m_glslManager->fire_event("init glsl");
-            if (!m_glslManager->get_int("glsl_supported")) {
-                delete m_glslManager;
-                m_glslManager = 0;
-                // Need to destroy MLT global reference to prevent filters from trying to use GPU.
-                mlt_properties_set_data(mlt_global_properties(), "glslManager", NULL, 0, NULL, NULL);
-                emit gpuNotSupported();
-            }
-            else {
-                emit started();
-            }
+        else {
+            emit started();
         }
     }
 }
 
 static void onThreadStarted(mlt_properties owner, GLWidget* self)
 {
+    Q_UNUSED(owner)
     self->startGlsl();
 }
 
@@ -271,13 +288,11 @@ void GLWidget::stopGlsl()
 {
     m_glslManager->fire_event("close glsl");
     m_texture[0] = 0;
-    m_renderContext->doneCurrent();
-    delete m_renderContext;
-    m_renderContext = 0;
 }
 
 static void onThreadStopped(mlt_properties owner, GLWidget* self)
 {
+    Q_UNUSED(owner)
     self->stopGlsl();
 }
 
@@ -421,6 +436,11 @@ int GLWidget::reconfigure(bool isMulti)
         m_threadStartEvent = 0;
         delete m_threadStopEvent;
         m_threadStopEvent = 0;
+
+        delete m_threadCreateEvent;
+        m_threadCreateEvent = m_consumer->listen("consumer-thread-create", this, (mlt_listener) onThreadCreate);
+        delete m_threadJoinEvent;
+        m_threadJoinEvent = m_consumer->listen("consumer-thread-join", this, (mlt_listener) onThreadJoin);
     }
     if (m_consumer->is_valid()) {
         // Connect the producer to the consumer - tell it to "run" later
@@ -503,5 +523,42 @@ void GLWidget::on_frame_show(mlt_consumer, void* self, mlt_frame frame_ptr)
     if (widget->showFrameSemaphore.tryAcquire()) {
         Frame frame(frame_ptr);
         emit widget->frameReceived(Mlt::QFrame(frame));
+    }
+}
+
+RenderThread::RenderThread(thread_function_t function, void *data, GLWidget *parent)
+    : QThread(0)
+    , m_function(function)
+    , m_data(data)
+    , m_context(0)
+    , m_surface(0)
+{
+    if (parent->glslManager()) {
+        m_context = new QOpenGLContext;
+        m_context->setFormat(parent->context()->contextHandle()->format());
+        m_context->setShareContext(parent->context()->contextHandle());
+        m_context->create();
+        m_context->moveToThread(this);
+
+        m_surface = new QOffscreenSurface();
+        m_surface->setFormat(m_context->format());
+        m_surface->create();
+    }
+}
+
+RenderThread::~RenderThread()
+{
+    delete m_surface;
+}
+
+void RenderThread::run()
+{
+    if (m_context) {
+        m_context->makeCurrent(m_surface);
+    }
+    m_function(m_data);
+    if (m_context) {
+        m_context->doneCurrent();
+        delete m_context;
     }
 }
