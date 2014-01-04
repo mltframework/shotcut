@@ -113,12 +113,12 @@ Rectangle {
                         leftMargin: 4
                         rightMargin: 4
                     }
-                    minimumValue: 0.05
-                    maximumValue: 5.0
-                    value: 2.0
+                    minimumValue: 0
+                    maximumValue: 1
+                    value: 0.5
                     onValueChanged: {
                         if (typeof root.scaleFactor != 'undefined')
-                            root.scaleFactor = (value <= 4) ? (value / 4) : (1.0 + (value - 4) * 2)
+                            root.scaleFactor = Math.pow(value, 3) + 0.01
                         if (typeof scrollIfNeeded != 'undefined')
                             scrollIfNeeded()
                     }
