@@ -779,7 +779,7 @@ int MultitrackModel::insertClip(int trackIndex, Mlt::Producer &clip, int positio
             endInsertRows();
             result = playlist.count() - 1;
         } else {
-//            qDebug() << __FUNCTION__ << "inserting" << position;
+//            qDebug() << __FUNCTION__ << "inserting" << position << MLT.saveXML("string", &clip);
             int targetIndex = playlist.get_clip_index_at(position);
         
             if (position > playlist.clip_start(targetIndex)) {
@@ -800,7 +800,10 @@ int MultitrackModel::insertClip(int trackIndex, Mlt::Producer &clip, int positio
 
             // Insert clip between split blanks.
             beginInsertRows(index(trackIndex), targetIndex, targetIndex);
-            playlist.insert(clip, targetIndex);
+            if (qstrcmp("blank", clip.get("mlt_service")))
+                playlist.insert(clip, targetIndex);
+            else
+                playlist.insert_blank(targetIndex, clip.get_int("blank_length") - 1);
             endInsertRows();
             result = targetIndex;
         }

@@ -95,7 +95,10 @@ Mlt::Producer *TimelineDock::getClip(int trackIndex, int clipIndex)
     Mlt::ClipInfo* info = getClipInfo(trackIndex, clipIndex);
     if (info) {
         result = new Mlt::Producer(info->producer);
-        result->set_in_and_out(info->frame_in, info->frame_out);
+        if (result->is_blank())
+            result->set("blank_length", info->frame_count);
+        else
+            result->set_in_and_out(info->frame_in, info->frame_out);
         delete info;
     }
     return result;
