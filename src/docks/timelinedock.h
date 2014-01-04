@@ -72,6 +72,8 @@ public slots:
     bool moveClip(int fromTrack, int toTrack, int clipIndex, int position);
     void trimClipIn(int trackIndex, int clipIndex, int delta);
     void trimClipOut(int trackIndex, int clipIndex, int delta);
+    void insert(int trackIndex);
+    void overwrite(int trackIndex);
 
 protected:
     void dragEnterEvent(QDragEnterEvent* event);

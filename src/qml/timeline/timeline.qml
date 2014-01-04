@@ -25,7 +25,7 @@ Rectangle {
     SystemPalette { id: activePalette }
     color: activePalette.window
 
-    property int headerWidth: 120
+    property int headerWidth: 176
     property int trackHeight: 50
     property real scaleFactor: 0.5
     property int currentTrack: 0
@@ -60,6 +60,16 @@ Rectangle {
                     }
                     Button {
                         action: liftAction
+                        implicitWidth: 28
+                        implicitHeight: 24
+                    }
+                    Button {
+                        action: insertAction
+                        implicitWidth: 28
+                        implicitHeight: 24
+                    }
+                    Button {
+                        action: overwriteAction
                         implicitWidth: 28
                         implicitHeight: 24
                     }
@@ -313,6 +323,22 @@ Rectangle {
         iconName: 'list-remove'
         iconSource: 'qrc:///icons/oxygen/16x16/actions/list-remove.png'
         onTriggered: timeline.lift(currentClipTrack, currentClip)
+    }
+
+    Action {
+        id: insertAction
+        tooltip: qsTr('Insert clip into the current track')
+        iconName: 'go-next'
+        iconSource: 'qrc:///icons/oxygen/16x16/actions/go-next.png'
+        onTriggered: timeline.insert(currentClipTrack)
+    }
+
+    Action {
+        id: overwriteAction
+        tooltip: qsTr('Overwrite clip onto the current track')
+        iconName: 'go-down'
+        iconSource: 'qrc:///icons/oxygen/16x16/actions/go-down.png'
+        onTriggered: timeline.overwrite(currentClipTrack)
     }
 
     Keys.onUpPressed: timeline.selectTrack(-1)

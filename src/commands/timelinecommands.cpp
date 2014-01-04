@@ -42,6 +42,55 @@ void AppendCommand::undo()
     m_model.removeClip(m_trackIndex, m_clipIndex);
 }
 
+InsertCommand::InsertCommand(MultitrackModel &model, int trackIndex,
+    int position, const QString &xml, QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_trackIndex(trackIndex)
+    , m_clipIndex(-1)
+    , m_position(position)
+    , m_xml(xml)
+{
+    setText(QObject::tr("Insert into track"));
+}
+
+void InsertCommand::redo()
+{
+    Mlt::Producer clip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
+    m_clipIndex = m_model.insertClip(m_trackIndex, clip, m_position);
+}
+
+void InsertCommand::undo()
+{
+    m_model.removeClip(m_trackIndex, m_clipIndex);
+    // TODO Rejoin a splitted clip.
+}
+
+OverwriteCommand::OverwriteCommand(MultitrackModel &model, int trackIndex,
+    int position, const QString &xml, QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_trackIndex(trackIndex)
+    , m_clipIndex(-1)
+    , m_position(position)
+    , m_xml(xml)
+{
+    setText(QObject::tr("Overwrite onto track"));
+}
+
+void OverwriteCommand::redo()
+{
+    Mlt::Producer clip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
+    m_clipIndex = m_model.overwriteClip(m_trackIndex, clip, m_position);
+}
+
+void OverwriteCommand::undo()
+{
+    // XXX This is not correct. We need to save every playlist entry that was
+    // affected and restore them.
+    m_model.liftClip(m_trackIndex, m_clipIndex);
+}
+
 LiftCommand::LiftCommand(MultitrackModel &model, int trackIndex,
     int clipIndex, int position, const QString &xml, QUndoCommand *parent)
     : QUndoCommand(parent)

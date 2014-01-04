@@ -269,6 +269,26 @@ void TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta)
                 new Timeline::TrimClipOutCommand(m_model, trackIndex, clipIndex, delta));
 }
 
+void TimelineDock::insert(int trackIndex)
+{
+    if (MLT.isSeekableClip()) {
+        if (trackIndex < 0)
+            trackIndex = m_quickView.rootObject()->property("currentTrack").toInt();
+        MAIN.undoStack()->push(
+            new Timeline::InsertCommand(m_model, trackIndex, m_position, MLT.saveXML("string")));
+    }
+}
+
+void TimelineDock::overwrite(int trackIndex)
+{
+    if (MLT.isSeekableClip()) {
+        if (trackIndex < 0)
+            trackIndex = m_quickView.rootObject()->property("currentTrack").toInt();
+        MAIN.undoStack()->push(
+            new Timeline::OverwriteCommand(m_model, trackIndex, m_position, MLT.saveXML("string")));
+    }
+}
+
 void TimelineDock::dragEnterEvent(QDragEnterEvent *event)
 {
     if (event->mimeData()->hasFormat(Mlt::XmlMimeType)) {

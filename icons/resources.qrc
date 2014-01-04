@@ -159,5 +159,11 @@
         <file>dark/32x32/view-time-schedule.png</file>
         <file>light/32x32/view-time-schedule.png</file>
         <file>oxygen/32x32/actions/view-time-schedule.png</file>
+        <file>dark/16x16/go-next.png</file>
+        <file>dark/16x16/go-down.png</file>
+        <file>light/16x16/go-next.png</file>
+        <file>light/16x16/go-down.png</file>
+        <file>oxygen/16x16/actions/go-down.png</file>
+        <file>oxygen/16x16/actions/go-next.png</file>
     </qresource>
 </RCC>

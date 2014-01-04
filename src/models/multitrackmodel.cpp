@@ -675,9 +675,10 @@ bool MultitrackModel::moveClip(int fromTrack, int toTrack, int clipIndex, int po
     return result;
 }
 
-bool MultitrackModel::overwriteClip(int trackIndex, Mlt::Producer& clip, int position)
+int MultitrackModel::overwriteClip(int trackIndex, Mlt::Producer& clip, int position)
 {
-    bool result = false;
+    createIfNeeded();
+    int result = -1;
     int i = m_trackList.at(trackIndex).mlt_index;
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     if (track) {
@@ -702,11 +703,11 @@ bool MultitrackModel::overwriteClip(int trackIndex, Mlt::Producer& clip, int pos
             beginInsertRows(index(trackIndex), n, n);
             playlist.append(clip, in, out);
             endInsertRows();
-            result = true;
+            result = playlist.count() - 1;
             emit modified();
-        } else if (playlist.is_blank_at(position) && playlist.is_blank_at(position + clip.get_playtime() - 1)
+        } else if (position + clip.get_playtime() > playlist.get_playtime()
             // Handle straddling - new clip larger than another with blanks on both sides.
-            && playlist.get_clip_index_at(position) == playlist.get_clip_index_at(position + clip.get_playtime() - 1)) {
+            || playlist.get_clip_index_at(position) == playlist.get_clip_index_at(position + clip.get_playtime() - 1)) {
     
 //            qDebug() << __FUNCTION__ << "overwriting blank space" << clip.get_playtime();
             int targetIndex = playlist.get_clip_index_at(position);
@@ -741,15 +742,17 @@ bool MultitrackModel::overwriteClip(int trackIndex, Mlt::Producer& clip, int pos
             beginInsertRows(index(trackIndex), targetIndex, targetIndex);
             playlist.insert(clip, targetIndex);
             endInsertRows();
-            result = true;
+            result = targetIndex;
             emit modified();
         }
     }
     return result;
 }
 
-void MultitrackModel::insertClip(int trackIndex, Mlt::Producer &clip, int position)
+int MultitrackModel::insertClip(int trackIndex, Mlt::Producer &clip, int position)
 {
+    createIfNeeded();
+    int result = -1;
     int i = m_trackList.at(trackIndex).mlt_index;
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     if (track) {
@@ -774,6 +777,7 @@ void MultitrackModel::insertClip(int trackIndex, Mlt::Producer &clip, int positi
             beginInsertRows(index(trackIndex), n, n);
             playlist.append(clip, in, out);
             endInsertRows();
+            result = playlist.count() - 1;
         } else {
 //            qDebug() << __FUNCTION__ << "inserting" << position;
             int targetIndex = playlist.get_clip_index_at(position);
@@ -798,9 +802,11 @@ void MultitrackModel::insertClip(int trackIndex, Mlt::Producer &clip, int positi
             beginInsertRows(index(trackIndex), targetIndex, targetIndex);
             playlist.insert(clip, targetIndex);
             endInsertRows();
+            result = targetIndex;
         }
         emit modified();
     }
+    return i;
 }
 
 int MultitrackModel::appendClip(int trackIndex, Mlt::Producer &clip)
@@ -889,7 +895,7 @@ bool MultitrackModel::moveClipToTrack(int fromTrack, int toTrack, int clipIndex,
     playlistFrom.replace_with_blank(clipIndex);
     endInsertRows();
 
-    result = overwriteClip(toTrack, *clip, position);
+    result = overwriteClip(toTrack, *clip, position) >= 0;
 
     // If there was an error, rollback the cross-track changes.
     if (!result) {
