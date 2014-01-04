@@ -345,8 +345,14 @@ Rectangle {
     Keys.onDownPressed: timeline.selectTrack(1)
     Keys.onPressed: {
         switch (event.key) {
+        case Qt.Key_B:
+            timeline.overwrite(currentTrack)
+            break;
         case Qt.Key_C:
             timeline.append(currentTrack)
+            break;
+        case Qt.Key_V:
+            timeline.insert(currentTrack)
             break;
         case Qt.Key_X:
             timeline.remove(currentClipTrack, currentClip)
@@ -386,7 +392,9 @@ Rectangle {
     }
     Keys.onReleased: {
         switch (event.key) {
+        case Qt.Key_B:
         case Qt.Key_C:
+        case Qt.Key_V:
         case Qt.Key_X:
         case Qt.Key_Z:
         case Qt.Key_Delete:

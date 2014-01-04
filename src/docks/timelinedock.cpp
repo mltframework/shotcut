@@ -138,11 +138,12 @@ void TimelineDock::onSeeked(int position)
 
 void TimelineDock::append(int trackIndex)
 {
-    if (MLT.isSeekableClip()) {
+    if (MLT.isSeekableClip() || MLT.savedProducer()) {
         if (trackIndex < 0)
             trackIndex = m_quickView.rootObject()->property("currentTrack").toInt();
         MAIN.undoStack()->push(
-            new Timeline::AppendCommand(m_model, trackIndex, MLT.saveXML("string")));
+            new Timeline::AppendCommand(m_model, trackIndex,
+                MLT.saveXML("string", MLT.isClip()? 0 : MLT.savedProducer())));
     }
 }
 
@@ -274,21 +275,23 @@ void TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta)
 
 void TimelineDock::insert(int trackIndex)
 {
-    if (MLT.isSeekableClip()) {
+    if (MLT.isSeekableClip() || MLT.savedProducer()) {
         if (trackIndex < 0)
             trackIndex = m_quickView.rootObject()->property("currentTrack").toInt();
         MAIN.undoStack()->push(
-            new Timeline::InsertCommand(m_model, trackIndex, m_position, MLT.saveXML("string")));
+            new Timeline::InsertCommand(m_model, trackIndex, m_position,
+                MLT.saveXML("string", MLT.isClip()? 0 : MLT.savedProducer())));
     }
 }
 
 void TimelineDock::overwrite(int trackIndex)
 {
-    if (MLT.isSeekableClip()) {
+    if (MLT.isSeekableClip() || MLT.savedProducer()) {
         if (trackIndex < 0)
             trackIndex = m_quickView.rootObject()->property("currentTrack").toInt();
         MAIN.undoStack()->push(
-            new Timeline::OverwriteCommand(m_model, trackIndex, m_position, MLT.saveXML("string")));
+            new Timeline::OverwriteCommand(m_model, trackIndex, m_position,
+                MLT.saveXML("string", MLT.isClip()? 0 : MLT.savedProducer())));
     }
 }
 
