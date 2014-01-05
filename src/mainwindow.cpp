@@ -850,14 +850,22 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         setOutToCurrent();
         break;
     case Qt::Key_V: // Avid Splice In
-        m_playlistDock->show();
-        m_playlistDock->raise();
-        m_playlistDock->on_actionInsertCut_triggered();
+        if (multitrack()) {
+            m_timelineDock->insert(-1);
+        } else {
+            m_playlistDock->show();
+            m_playlistDock->raise();
+            m_playlistDock->on_actionInsertCut_triggered();
+        }
         break;
     case Qt::Key_B: // Avid Overwrite
-        m_playlistDock->show();
-        m_playlistDock->raise();
-        m_playlistDock->on_actionUpdate_triggered();
+        if (multitrack()) {
+            m_timelineDock->overwrite(-1);
+        } else {
+            m_playlistDock->show();
+            m_playlistDock->raise();
+            m_playlistDock->on_actionUpdate_triggered();
+        }
         break;
     case Qt::Key_Escape: // Avid Toggle Active Monitor
         if (MLT.isPlaylist()) {
