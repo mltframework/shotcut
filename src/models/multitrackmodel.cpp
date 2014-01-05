@@ -732,6 +732,9 @@ int MultitrackModel::overwriteClip(int trackIndex, Mlt::Producer& clip, int posi
                 playlist.resize_clip(targetIndex, 0, duration - 1);
                 beginInsertRows(index(trackIndex), targetIndex, targetIndex);
                 endInsertRows();
+                QModelIndex modelIndex = createIndex(targetIndex, 0, trackIndex);
+                QThreadPool::globalInstance()->start(
+                    new AudioLevelsTask(clip.parent(), this, modelIndex));
             } else {
 //                qDebug() << "remove blank on right";
                 beginRemoveRows(index(trackIndex), targetIndex, targetIndex);
@@ -801,6 +804,9 @@ int MultitrackModel::insertClip(int trackIndex, Mlt::Producer &clip, int positio
                 // Notify about the new item on the right.
                 beginInsertRows(index(trackIndex), targetIndex, targetIndex);
                 endInsertRows();
+                QModelIndex modelIndex = createIndex(targetIndex, 0, trackIndex);
+                QThreadPool::globalInstance()->start(
+                    new AudioLevelsTask(clip.parent(), this, modelIndex));
             }
 
             // Insert clip between split blanks.
