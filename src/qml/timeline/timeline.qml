@@ -371,17 +371,17 @@ Rectangle {
             currentClip = -1
             break;
         case Qt.Key_Equal:
-            scaleSlider.value += 0.25
+            scaleSlider.value += 0.0625
             for (var i = 0; i < tracksRepeater.count; i++)
                 tracksRepeater.itemAt(i).redrawWaveforms()
             break;
         case Qt.Key_Minus:
-            scaleSlider.value -= 0.25
+            scaleSlider.value -= 0.0625
             for (var i = 0; i < tracksRepeater.count; i++)
                 tracksRepeater.itemAt(i).redrawWaveforms()
             break;
         case Qt.Key_0:
-            scaleSlider.value = 2.0
+            scaleSlider.value = 0.5
             for (var i = 0; i < tracksRepeater.count; i++)
                 tracksRepeater.itemAt(i).redrawWaveforms()
             break;
