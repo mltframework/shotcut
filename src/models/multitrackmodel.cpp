@@ -431,8 +431,9 @@ void MultitrackModel::setTrackComposite(int row, Qt::CheckState composite)
     }
 }
 
-void MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta)
+int MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta)
 {
+    int result = clipIndex;
     int i = m_trackList.at(trackIndex).mlt_index;
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     if (track) {
@@ -440,21 +441,20 @@ void MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta)
         QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
 
         if (!info || info->frame_in < 0)
-            return; // no work to do
+            return result; // no work to do
         if (info->frame_in + delta < 0)
             delta = -info->frame_in; // clamp
 
-        if ((clipIndex > 0 && playlist.is_blank(clipIndex - 1)) || (delta > 0)) {
-            int in = info->frame_in + delta;
-            int out = info->frame_out;
-            playlist.resize_clip(clipIndex, in, out);
-    
-            QModelIndex index = createIndex(clipIndex, 0, trackIndex);
-            QVector<int> roles;
-            roles << DurationRole;
-            roles << InPointRole;
-            emit dataChanged(index, index, roles);
-        }
+        int in = info->frame_in + delta;
+        int out = info->frame_out;
+        playlist.resize_clip(clipIndex, in, out);
+
+        QModelIndex modelIndex = createIndex(clipIndex, 0, trackIndex);
+        QVector<int> roles;
+        roles << DurationRole;
+        roles << InPointRole;
+        emit dataChanged(modelIndex, modelIndex, roles);
+
         // Adjust left of the clip.
         if (clipIndex > 0 && playlist.is_blank(clipIndex - 1)) {
             int out = playlist.clip_length(clipIndex - 1) + delta - 1;
@@ -463,6 +463,7 @@ void MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta)
                 beginRemoveRows(index(trackIndex), clipIndex - 1, clipIndex - 1);
                 playlist.remove(clipIndex - 1);
                 endRemoveRows();
+                --result;
             } else {
 //                qDebug() << "adjust blank on left to" << out;
                 playlist.resize_clip(clipIndex - 1, 0, out);
@@ -474,16 +475,17 @@ void MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta)
             }
         } else if (delta > 0) {
 //            qDebug() << "add blank on left duration" << delta - 1;
-            int newIndex = clipIndex;
-            beginInsertRows(index(trackIndex), newIndex, newIndex);
-            playlist.insert_blank(newIndex, delta - 1);
+            beginInsertRows(index(trackIndex), clipIndex, clipIndex);
+            playlist.insert_blank(clipIndex, delta - 1);
             endInsertRows();
+            ++result;
         } else {
             // TODO start adding a transition
-            return;
+            return result;
         }
         emit modified();
     }
+    return result;
 }
 
 void MultitrackModel::notifyClipIn(int trackIndex, int clipIndex)

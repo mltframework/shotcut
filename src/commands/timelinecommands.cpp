@@ -260,14 +260,14 @@ TrimClipInCommand::TrimClipInCommand(MultitrackModel &model, int trackIndex, int
 
 void TrimClipInCommand::redo()
 {
-    m_model.trimClipIn(m_trackIndex, m_clipIndex, m_delta);
+    m_clipIndex = m_model.trimClipIn(m_trackIndex, m_clipIndex, m_delta);
     if (m_notify)
         m_model.notifyClipIn(m_trackIndex, m_clipIndex);
 }
 
 void TrimClipInCommand::undo()
 {
-    m_model.trimClipIn(m_trackIndex, m_clipIndex, -m_delta);
+    m_clipIndex = m_model.trimClipIn(m_trackIndex, m_clipIndex, -m_delta);
     m_model.notifyClipIn(m_trackIndex, m_clipIndex);
     m_notify = true;
 }
@@ -279,7 +279,9 @@ int TrimClipInCommand::id() const
 
 bool TrimClipInCommand::mergeWith(const QUndoCommand *other)
 {
-    if (other->id() != id()) return false;
+    const TrimClipInCommand* that = static_cast<const TrimClipInCommand*>(other);
+    if (that->id() != id() || that->m_trackIndex != m_trackIndex || that->m_clipIndex != m_clipIndex)
+        return false;
     m_delta += static_cast<const TrimClipInCommand*>(other)->m_delta;
     return true;
 }
@@ -316,7 +318,9 @@ int TrimClipOutCommand::id() const
 
 bool TrimClipOutCommand::mergeWith(const QUndoCommand *other)
 {
-    if (other->id() != id()) return false;
+    const TrimClipOutCommand* that = static_cast<const TrimClipOutCommand*>(other);
+    if (that->id() != id() || that->m_trackIndex != m_trackIndex || that->m_clipIndex != m_clipIndex)
+        return false;
     m_delta += static_cast<const TrimClipOutCommand*>(other)->m_delta;
     return true;
 }
