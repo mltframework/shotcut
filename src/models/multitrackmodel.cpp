@@ -704,7 +704,6 @@ int MultitrackModel::overwriteClip(int trackIndex, Mlt::Producer& clip, int posi
             playlist.append(clip, in, out);
             endInsertRows();
             result = playlist.count() - 1;
-            emit modified();
         } else if (position + clip.get_playtime() > playlist.get_playtime()
             // Handle straddling - new clip larger than another with blanks on both sides.
             || playlist.get_clip_index_at(position) == playlist.get_clip_index_at(position + clip.get_playtime() - 1)) {
@@ -737,12 +736,16 @@ int MultitrackModel::overwriteClip(int trackIndex, Mlt::Producer& clip, int posi
                 playlist.remove(targetIndex);
                 endRemoveRows();
             }
-    
             // Insert clip between split blanks.
             beginInsertRows(index(trackIndex), targetIndex, targetIndex);
             playlist.insert(clip, targetIndex);
             endInsertRows();
             result = targetIndex;
+        }
+        if (result >= 0) {
+            QModelIndex index = createIndex(result, 0, trackIndex);
+            QThreadPool::globalInstance()->start(
+                new AudioLevelsTask(clip.parent(), this, index));
             emit modified();
         }
     }
@@ -807,9 +810,14 @@ int MultitrackModel::insertClip(int trackIndex, Mlt::Producer &clip, int positio
             endInsertRows();
             result = targetIndex;
         }
-        emit modified();
+        if (result >= 0) {
+            QModelIndex index = createIndex(result, 0, trackIndex);
+            QThreadPool::globalInstance()->start(
+                new AudioLevelsTask(clip.parent(), this, index));
+            emit modified();
+        }
     }
-    return i;
+    return result;
 }
 
 int MultitrackModel::appendClip(int trackIndex, Mlt::Producer &clip)
