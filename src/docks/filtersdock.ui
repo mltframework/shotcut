@@ -41,11 +41,11 @@
       </property>
       <item>
        <widget class="QListView" name="listView">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
+        <property name="maximumSize">
+         <size>
+          <width>200</width>
+          <height>16777215</height>
+         </size>
         </property>
         <property name="editTriggers">
          <set>QAbstractItemView::NoEditTriggers</set>
@@ -142,7 +142,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>88</width>
+         <width>87</width>
          <height>254</height>
         </rect>
        </property>
