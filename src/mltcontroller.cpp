@@ -462,6 +462,10 @@ void Controller::rewind()
 {
     if (!m_producer || !m_producer->is_valid())
         return;
+    // Starting the consumer when producer at its end fails. So, first seek to
+    // frame before last.
+    if (m_producer->position() >= m_producer->get_length() - 1)
+        m_producer->seek(m_producer->get_length() - 2);
     if (m_producer->get_speed() >= 0)
         play(-1.0);
     else
