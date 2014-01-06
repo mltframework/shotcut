@@ -67,7 +67,12 @@ TimelineDock::~TimelineDock()
 
 void TimelineDock::setPosition(int position)
 {
-    emit seeked(position);
+    if (position <= m_model.tractor()->get_length()) {
+        emit seeked(position);
+    } else {
+        m_position = m_model.tractor()->get_length();
+        emit positionChanged();
+    }
 }
 
 QString TimelineDock::timecode(int frames)
