@@ -70,9 +70,7 @@ public:
     {
         if (!m_tempProducer) {
             QString service = m_producer.get("mlt_service");
-            if (service == "avformat")
-                service = "avformat-novalidate";
-            else if (service.startsWith("xml"))
+            if (service.startsWith("xml"))
                 service = "xml-nogl";
             m_tempProducer = new Mlt::Producer(MLT.profile(), service.toUtf8().constData(), m_producer.get("resource"));
             if (m_tempProducer->is_valid()) {
