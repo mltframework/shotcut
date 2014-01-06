@@ -701,7 +701,7 @@ int MultitrackModel::overwriteClip(int trackIndex, Mlt::Producer& clip, int posi
             int out = clip.get_out();
             clip.set_in_and_out(0, clip.get_length() - 1);
             beginInsertRows(index(trackIndex), n, n);
-            playlist.append(clip, in, out);
+            playlist.append(clip.parent(), in, out);
             endInsertRows();
             result = playlist.count() - 1;
         } else if (position + clip.get_playtime() > playlist.get_playtime()
@@ -781,7 +781,7 @@ int MultitrackModel::insertClip(int trackIndex, Mlt::Producer &clip, int positio
             int out = clip.get_out();
             clip.set_in_and_out(0, clip.get_length() - 1);
             beginInsertRows(index(trackIndex), n, n);
-            playlist.append(clip, in, out);
+            playlist.append(clip.parent(), in, out);
             endInsertRows();
             result = playlist.count() - 1;
         } else {
@@ -846,7 +846,7 @@ int MultitrackModel::appendClip(int trackIndex, Mlt::Producer &clip)
         int out = clip.get_out();
         clip.set_in_and_out(0, clip.get_length() - 1);
         beginInsertRows(index(trackIndex), i, i);
-        playlist.append(clip, in, out);
+        playlist.append(clip.parent(), in, out);
         endInsertRows();
         QModelIndex index = createIndex(i, 0, trackIndex);
         QThreadPool::globalInstance()->start(
