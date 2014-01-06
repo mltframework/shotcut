@@ -67,6 +67,7 @@ TimelineDock::~TimelineDock()
 
 void TimelineDock::setPosition(int position)
 {
+    if (!m_model.tractor()) return;
     if (position <= m_model.tractor()->get_length()) {
         emit seeked(position);
     } else {
