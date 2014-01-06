@@ -577,6 +577,9 @@ bool MultitrackModel::moveClipValid(int fromTrack, int toTrack, int clipIndex, i
             QScopedPointer<Mlt::Producer> clip(playlistFrom.get_clip(clipIndex));
             if (position >= playlist.get_playtime())
                 result = true;
+            else if (playlist.is_blank_at(position) && playlist.get_length() == 1)
+                // blank track
+                result = true;
             else if (playlist.is_blank_at(position) && playlist.is_blank_at(position + clip->get_playtime() - 1)
                     && playlist.get_clip_index_at(position) == playlist.get_clip_index_at(position + clip->get_playtime() - 1))
                 result = true;
