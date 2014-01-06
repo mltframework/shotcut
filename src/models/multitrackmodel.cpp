@@ -743,8 +743,11 @@ int MultitrackModel::overwriteClip(int trackIndex, Mlt::Producer& clip, int posi
                 endRemoveRows();
             }
             // Insert clip between split blanks.
+            int in = clip.get_in();
+            int out = clip.get_out();
+            clip.set_in_and_out(0, clip.get_length() - 1);
             beginInsertRows(index(trackIndex), targetIndex, targetIndex);
-            playlist.insert(clip, targetIndex);
+            playlist.insert(clip.parent(), targetIndex, in, out);
             endInsertRows();
             result = targetIndex;
         }
@@ -812,10 +815,14 @@ int MultitrackModel::insertClip(int trackIndex, Mlt::Producer &clip, int positio
 
             // Insert clip between split blanks.
             beginInsertRows(index(trackIndex), targetIndex, targetIndex);
-            if (qstrcmp("blank", clip.get("mlt_service")))
-                playlist.insert(clip, targetIndex);
-            else
+            if (qstrcmp("blank", clip.get("mlt_service"))) {
+                int in = clip.get_in();
+                int out = clip.get_out();
+                clip.set_in_and_out(0, clip.get_length() - 1);
+                playlist.insert(clip.parent(), targetIndex, in, out);
+            } else {
                 playlist.insert_blank(targetIndex, clip.get_int("blank_length") - 1);
+            }
             endInsertRows();
             result = targetIndex;
         }
