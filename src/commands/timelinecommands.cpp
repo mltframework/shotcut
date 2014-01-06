@@ -182,7 +182,7 @@ HideTrackCommand::HideTrackCommand(MultitrackModel &model, int trackIndex, QUndo
     : QUndoCommand(parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
-    , m_oldValue(model.data(m_model.index(trackIndex), MultitrackModel::IsMuteRole).toBool())
+    , m_oldValue(model.data(m_model.index(trackIndex), MultitrackModel::IsHiddenRole).toBool())
 {
     setText(QObject::tr("Toggle track hidden"));
 }
