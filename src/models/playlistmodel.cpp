@@ -129,12 +129,7 @@ public:
     {
         int height = PlaylistModel::THUMBNAIL_HEIGHT * 2;
         int width = height * MLT.profile().dar();
-
-        tempProducer()->seek(frameNumber);
-        Mlt::Frame* frame = tempProducer()->get_frame();
-        QImage thumb = MLT.image(frame, width, height);
-        delete frame;
-        return thumb;
+        return MLT.image(*tempProducer(), frameNumber, width, height);
     }
 
 signals:

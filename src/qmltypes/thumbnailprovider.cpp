@@ -90,10 +90,5 @@ QImage ThumbnailProvider::makeThumbnail(Mlt::Producer &producer, int frameNumber
 
     producer.attach(scaler);
     producer.attach(converter);
-    producer.seek(frameNumber);
-
-    Mlt::Frame* frame = producer.get_frame();
-    QImage thumb = MLT.image(frame, width, height);
-    delete frame;
-    return thumb;
+    return MLT.image(producer, frameNumber, width, height);
 }

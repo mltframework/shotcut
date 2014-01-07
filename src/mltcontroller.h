@@ -89,7 +89,6 @@ public:
     virtual int setProducer(Mlt::Producer*, bool isMulti = false);
     virtual int open(const char* url);
     virtual void close();
-    virtual QImage image(Frame *frame, int width, int height);
     virtual int displayWidth() const = 0;
     virtual int displayHeight() const = 0;
 
@@ -120,6 +119,8 @@ public:
     void setOut(int);
     void restart();
     void resetURL();
+    QImage image(Frame *frame, int width, int height);
+    QImage image(Mlt::Producer& producer, int frameNumber, int width, int height);
 
     Mlt::Repository* repository() const {
         return m_repo;

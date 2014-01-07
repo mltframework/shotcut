@@ -560,6 +560,29 @@ QImage Controller::image(Mlt::Frame* frame, int width, int height)
     return result;
 }
 
+QImage Controller::image(Producer& producer, int frameNumber, int width, int height)
+{
+    QImage result;
+    if (frameNumber > producer.get_length() - 3) {
+        producer.seek(frameNumber - 2);
+        Mlt::Frame* frame = producer.get_frame();
+        result = image(frame, width, height);
+        delete frame;
+        frame = producer.get_frame();
+        result = image(frame, width, height);
+        delete frame;
+        frame = producer.get_frame();
+        result = image(frame, width, height);
+        delete frame;
+    } else {
+        producer.seek(frameNumber);
+        Mlt::Frame* frame = producer.get_frame();
+        result = image(frame, width, height);
+        delete frame;
+    }
+    return result;
+}
+
 void TransportControl::play(double speed)
 {
     MLT.play(speed);
