@@ -79,13 +79,14 @@ Rectangle {
                 checked: isMute
                 style: CheckBoxStyle {
                     indicator: Rectangle {
-                        implicitWidth: control.hovered? (childrenRect.width + 4) : 16
+                        implicitWidth: control.hovered? (muteText.width + 4) : 16
                         implicitHeight: 16
                         radius: 2
                         color: isMute? activePalette.highlight : trackHeadRoot.color
                         border.color: activePalette.midlight
                         border.width: 1
                         Text {
+                            id: muteText
                             anchors.horizontalCenter: parent.horizontalCenter
                             anchors.verticalCenter: parent.verticalCenter
                             text: control.hovered? qsTr('Mute') : qsTr('M', 'Mute')
@@ -102,13 +103,14 @@ Rectangle {
                 visible: isVideo
                 style: CheckBoxStyle {
                     indicator: Rectangle {
-                        implicitWidth: control.hovered? (childrenRect.width + 4) : 16
+                        implicitWidth: control.hovered? (hideText.width + 4) : 16
                         implicitHeight: 16
                         radius: 2
                         color: isHidden? activePalette.highlight : trackHeadRoot.color
                         border.color: activePalette.midlight
                         border.width: 1
                         Text {
+                            id: hideText
                             anchors.horizontalCenter: parent.horizontalCenter
                             anchors.verticalCenter: parent.verticalCenter
                             text: control.hovered? qsTr('Hide') : qsTr('H', 'Hide')
@@ -126,7 +128,7 @@ Rectangle {
                 checkedState: isComposite
                 style: CheckBoxStyle {
                     indicator: Rectangle {
-                        implicitWidth: control.hovered? (childrenRect.width + 4) : 16
+                        implicitWidth: control.hovered? (compositeText.width + 4) : 16
                         implicitHeight: 16
                         radius: 2
                         color: (isComposite === Qt.Checked)? activePalette.highlight
@@ -135,6 +137,7 @@ Rectangle {
                         border.color: activePalette.midlight
                         border.width: 1
                         Text {
+                            id: compositeText
                             anchors.horizontalCenter: parent.horizontalCenter
                             anchors.verticalCenter: parent.verticalCenter
                             text: control.hovered? qsTr('Composite') : qsTr('C', 'Composite')
