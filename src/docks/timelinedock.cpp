@@ -331,6 +331,14 @@ void TimelineDock::dropEvent(QDropEvent *event)
     emit dropped();
 }
 
+bool TimelineDock::event(QEvent *event)
+{
+    bool result = QDockWidget::event(event);
+    if (event->type() == QEvent::PaletteChange || event->type() == QEvent::StyleChange)
+        onVisibilityChanged(true);
+    return result;
+}
+
 void TimelineDock::onVisibilityChanged(bool visible)
 {
     if (visible) {

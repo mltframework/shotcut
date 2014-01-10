@@ -80,6 +80,7 @@ protected:
     void dragMoveEvent(QDragMoveEvent* event);
     void dragLeaveEvent(QDragLeaveEvent* event);
     void dropEvent(QDropEvent* event);
+    bool event(QEvent *event);
 
 private:
     Ui::TimelineDock *ui;
