@@ -27,9 +27,7 @@
 #define check_error() { int err = glGetError(); if (err != GL_NO_ERROR) { fprintf(stderr, "GL error 0x%x at %s:%d\n", err, __FILE__, __LINE__); exit(1); } }
 
 typedef GLenum (*ClientWaitSync_fp) (GLsync sync, GLbitfield flags, GLuint64 timeout);
-typedef void (*DeleteSync_fp) (GLsync sync);
 static ClientWaitSync_fp ClientWaitSync = 0;
-static DeleteSync_fp DeleteSync = 0;
 
 using namespace Mlt;
 
@@ -96,9 +94,8 @@ void GLWidget::initializeGL()
         QOpenGLContext* cx = context()->contextHandle();
         if (m_glslManager && cx->hasExtension("GL_ARB_sync")) {
             ClientWaitSync = (ClientWaitSync_fp) cx->getProcAddress("glClientWaitSync");
-            DeleteSync = (DeleteSync_fp) cx->getProcAddress("glDeleteSync");
         }
-        if (!ClientWaitSync || !DeleteSync) {
+        if (!ClientWaitSync) {
             emit gpuNotSupported();
             delete m_glslManager;
             m_glslManager = 0;
@@ -407,10 +404,6 @@ void GLWidget::showFrame(Mlt::QFrame frame)
         delete m_lastFrame;
         m_lastFrame = new Mlt::Frame(*frame.frame());
     }
-    if (DeleteSync) {
-        GLsync sync = (GLsync) frame.frame()->get_data("movit.convert.fence");
-        if (sync) DeleteSync(sync);
-    }
     showFrameSemaphore.release();
 }
 
@@ -549,12 +542,9 @@ int GLWidget::reconfigure(bool isMulti)
 void GLWidget::on_frame_show(mlt_consumer, void* self, mlt_frame frame_ptr)
 {
     GLWidget* widget = static_cast<GLWidget*>(self);
-    Frame frame(frame_ptr);
     if (widget->showFrameSemaphore.tryAcquire()) {
+        Frame frame(frame_ptr);
         emit widget->frameReceived(Mlt::QFrame(frame));
-    } else if (DeleteSync) {
-        GLsync sync = (GLsync) frame.get_data("movit.convert.fence");
-        if (sync) DeleteSync(sync);
     }
 }
 
