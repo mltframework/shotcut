@@ -97,6 +97,8 @@ RowLayout {
             Item { Layout.fillHeight: true }
 
             RowLayout {
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
                 Layout.alignment: Qt.AlignRight
                 Button {
                     text: qsTr('OK')
@@ -118,7 +120,7 @@ RowLayout {
         modality: Qt.ApplicationModal
         title: qsTr('Delete Preset')
         width: 300
-        height: 60
+        height: 90
 
         ColumnLayout {
             anchors.fill: parent
@@ -130,6 +132,8 @@ RowLayout {
             }
             
             RowLayout {
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
                 Layout.alignment: Qt.AlignRight
                 Button {
                     text: qsTr('OK')
