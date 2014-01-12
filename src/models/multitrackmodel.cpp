@@ -619,7 +619,7 @@ bool MultitrackModel::moveClipValid(int fromTrack, int toTrack, int clipIndex, i
 
 bool MultitrackModel::moveClip(int fromTrack, int toTrack, int clipIndex, int position)
 {
-//    qDebug() << __FUNCTION__ << clipIndex << "fromTrack" << fromTrack << "toTrack" << toTrack;
+    qDebug() << __FUNCTION__ << clipIndex << "fromTrack" << fromTrack << "toTrack" << toTrack;
     bool result = false;
     int i = m_trackList.at(toTrack).mlt_index;
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
@@ -966,6 +966,13 @@ void MultitrackModel::moveClipToEnd(Mlt::Playlist& playlist, int trackIndex, int
         QVector<int> roles;
         roles << DurationRole;
         emit dataChanged(index, index, roles);
+    } else {
+        // Add new blank
+        beginInsertRows(index(trackIndex), clipIndex, clipIndex);
+        playlist.insert_blank(clipIndex, playlist.clip_length(clipIndex));
+        endInsertRows();
+        ++clipIndex;
+        ++n;
     }
     // Add blank to end if needed.
     if (length > 0) {
