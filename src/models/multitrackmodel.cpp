@@ -580,7 +580,8 @@ bool MultitrackModel::moveClipValid(int fromTrack, int toTrack, int clipIndex, i
             else if (playlist.is_blank_at(position) && playlist.get_length() == 1)
                 // blank track
                 result = true;
-            else if (playlist.get_clip_index_at(position) == playlist.get_clip_index_at(position + clip->get_playtime() - 1))
+            else if (playlist.is_blank_at(position) && playlist.is_blank_at(position + clip->get_playtime() - 1)
+                    && playlist.get_clip_index_at(position) == playlist.get_clip_index_at(position + clip->get_playtime() - 1))
                 result = true;
             if (!result) {
                 QModelIndex parentIndex = index(fromTrack);
