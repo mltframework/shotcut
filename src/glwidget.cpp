@@ -26,6 +26,11 @@
 
 #define check_error() { int err = glGetError(); if (err != GL_NO_ERROR) { fprintf(stderr, "GL error 0x%x at %s:%d\n", err, __FILE__, __LINE__); exit(1); } }
 
+typedef GLenum (*ClientWaitSync_fp) (GLsync sync, GLbitfield flags, GLuint64 timeout);
+typedef void (*DeleteSync_fp) (GLsync sync);
+static ClientWaitSync_fp ClientWaitSync = 0;
+static DeleteSync_fp DeleteSync = 0;
+
 using namespace Mlt;
 
 GLWidget::GLWidget(QWidget *parent)
@@ -87,8 +92,19 @@ void GLWidget::initializeGL()
 {
     QPalette palette;
 
-    if (Settings.playerGPU() && !m_glslManager)
-        emit gpuNotSupported();
+    if (Settings.playerGPU()) {
+        QOpenGLContext* cx = context()->contextHandle();
+        if (m_glslManager && cx->hasExtension("GL_ARB_sync")) {
+            ClientWaitSync = (ClientWaitSync_fp) cx->getProcAddress("glClientWaitSync");
+            DeleteSync = (DeleteSync_fp) cx->getProcAddress("glDeleteSync");
+        }
+        if (!ClientWaitSync || !DeleteSync) {
+            emit gpuNotSupported();
+            delete m_glslManager;
+            m_glslManager = 0;
+        }
+    }
+
     initializeOpenGLFunctions();
     qglClearColor(palette.color(QPalette::Window));
     glShadeModel(GL_FLAT);
@@ -128,7 +144,7 @@ void GLWidget::resizeGL(int width, int height)
     x = (width - w) / 2;
     y = (height - h) / 2;
 
-    if (isValid()) {
+    if (isValid() && m_isInitialized) {
         glViewport(0, 0, width, height);
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
@@ -305,6 +321,7 @@ void GLWidget::showFrame(Mlt::QFrame frame)
         if (m_glslManager && m_image_format == mlt_image_glsl_texture) {
             frame.frame()->set("movit.convert.use_texture", 1);
             const GLuint* textureId = (GLuint*) frame.frame()->get_image(m_image_format, m_image_width, m_image_height);
+            m_image_format = mlt_image_glsl_texture;
             m_texture[0] = *textureId;
 
             if (!m_fbo || m_fbo->width() != m_image_width || m_fbo->height() != m_image_height) {
@@ -324,6 +341,13 @@ void GLWidget::showFrame(Mlt::QFrame frame)
             glOrtho(0.0, m_image_width, 0.0, m_image_height, -1.0, 1.0);
             glMatrixMode( GL_MODELVIEW );
             glLoadIdentity();
+
+            GLsync sync = (GLsync) frame.frame()->get_data("movit.convert.fence");
+            if (sync) {
+                Q_ASSERT(ClientWaitSync);
+                ClientWaitSync(sync, 0, GL_TIMEOUT_IGNORED);
+                check_error();
+            }
 
             glActiveTexture( GL_TEXTURE0 );
             check_error();
@@ -345,7 +369,8 @@ void GLWidget::showFrame(Mlt::QFrame frame)
             glMatrixMode(GL_MODELVIEW);
             glPopAttrib();
         }
-        else {
+        else if (m_shader) {
+            m_image_format = mlt_image_yuv420p;
             const uint8_t* image = frame.frame()->get_image(m_image_format, m_image_width, m_image_height);
 
             // Copy each plane of YUV to a texture bound to shader program˙.
@@ -381,6 +406,10 @@ void GLWidget::showFrame(Mlt::QFrame frame)
         glDraw();
         delete m_lastFrame;
         m_lastFrame = new Mlt::Frame(*frame.frame());
+    }
+    if (DeleteSync) {
+        GLsync sync = (GLsync) frame.frame()->get_data("movit.convert.fence");
+        if (sync) DeleteSync(sync);
     }
     showFrameSemaphore.release();
 }
@@ -520,9 +549,12 @@ int GLWidget::reconfigure(bool isMulti)
 void GLWidget::on_frame_show(mlt_consumer, void* self, mlt_frame frame_ptr)
 {
     GLWidget* widget = static_cast<GLWidget*>(self);
+    Frame frame(frame_ptr);
     if (widget->showFrameSemaphore.tryAcquire()) {
-        Frame frame(frame_ptr);
         emit widget->frameReceived(Mlt::QFrame(frame));
+    } else if (DeleteSync) {
+        GLsync sync = (GLsync) frame.get_data("movit.convert.fence");
+        if (sync) DeleteSync(sync);
     }
 }
 
