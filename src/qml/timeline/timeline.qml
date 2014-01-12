@@ -452,6 +452,10 @@ Rectangle {
                     clip.trackIndex = track.DelegateModel.itemsIndex
                 }
             }
+            onCheckSnap: {
+                for (var i = 0; i < tracksRepeater.count; i++)
+                    tracksRepeater.itemAt(i).snapClip(clip)
+            }
         }
     }
     

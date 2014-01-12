@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-function snapClip(clip) {
+function snapClip(clip, repeater) {
     // clip.x = left edge
     var right = clip.x + clip.width
     var cursorX = scrollView.flickableItem.contentX + cursor.x
@@ -31,8 +31,6 @@ function snapClip(clip) {
     } else {
         // Snap to other clips.
         for (var i = 0; i < repeater.count; i++) {
-            if (i === clip.DelegateModel.itemsIndex)
-                continue
             var itemLeft = repeater.itemAt(i).x
             var itemRight = itemLeft + repeater.itemAt(i).width
             if (right > itemLeft - 10 && right < itemLeft + 10)

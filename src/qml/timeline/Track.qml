@@ -31,6 +31,7 @@ Rectangle {
     signal clipDragged(var clip, int x, int y)
     signal clipDropped(var clip)
     signal clipDraggedToTrack(var clip, int direction)
+    signal checkSnap(var clip)
 
     function resetStates(index) {
         for (var i = 0; i < repeater.count; i++)
@@ -40,6 +41,10 @@ Rectangle {
     function redrawWaveforms() {
         for (var i = 0; i < repeater.count; i++)
             repeater.itemAt(i).generateWaveform()
+    }
+
+    function snapClip(clip) {
+        Logic.snapClip(clip, repeater)
     }
 
     color: 'transparent'
@@ -79,7 +84,7 @@ Rectangle {
             onDragged: {
                 // Snap if Alt key is not down.
                 if (!(mouse.modifiers & Qt.AltModifier))
-                    Logic.snapClip(clip)
+                    trackRoot.checkSnap(clip)
                 var mapped = trackRoot.mapFromItem(clip, mouse.x, mouse.y)
                 trackRoot.clipDragged(clip, mapped.x, mapped.y)
             }
