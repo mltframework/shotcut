@@ -64,7 +64,7 @@ RowLayout {
         id: nameDialog
         flags: Qt.Dialog
         color: dialogPalette.window
-        modality: Qt.WindowModal
+        modality: Qt.ApplicationModal
         title: qsTr('Save Preset')
         width: 200
         height: 90
@@ -115,7 +115,7 @@ RowLayout {
         id: confirmDialog
         flags: Qt.Dialog
         color: dialogPalette.window
-        modality: Qt.WindowModal
+        modality: Qt.ApplicationModal
         title: qsTr('Delete Preset')
         width: 300
         height: 60

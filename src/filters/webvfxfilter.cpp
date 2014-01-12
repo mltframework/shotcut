@@ -94,7 +94,7 @@ void WebvfxFilter::on_webvfxCheckBox_clicked(bool checked)
                        this);
     dialog.setDefaultButton(QMessageBox::Yes);
     dialog.setEscapeButton(QMessageBox::No);
-    dialog.setWindowModality(Qt::WindowModal);
+    dialog.setWindowModality(Qt::ApplicationModal);
     if (dialog.exec() == QMessageBox::No)
         ui->webvfxCheckBox->setChecked(false);
 }

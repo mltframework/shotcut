@@ -199,7 +199,7 @@ void MeltedPlaylistDock::on_actionRemoveAll_triggered()
                         this);
     dialog.setDefaultButton(QMessageBox::Yes);
     dialog.setEscapeButton(QMessageBox::No);
-    dialog.setWindowModality(Qt::WindowModal);
+    dialog.setWindowModality(Qt::ApplicationModal);
     int r = dialog.exec();
     if (r == QMessageBox::Yes)
         m_model.clear();
@@ -216,7 +216,7 @@ void MeltedPlaylistDock::on_actionWipe_triggered()
                         this);
     dialog.setDefaultButton(QMessageBox::Yes);
     dialog.setEscapeButton(QMessageBox::No);
-    dialog.setWindowModality(Qt::WindowModal);
+    dialog.setWindowModality(Qt::ApplicationModal);
     int r = dialog.exec();
     if (r == QMessageBox::Yes)
         m_model.wipe();
@@ -234,7 +234,7 @@ void MeltedPlaylistDock::on_actionClean_triggered()
                         this);
     dialog.setDefaultButton(QMessageBox::Yes);
     dialog.setEscapeButton(QMessageBox::No);
-    dialog.setWindowModality(Qt::WindowModal);
+    dialog.setWindowModality(Qt::ApplicationModal);
     int r = dialog.exec();
     if (r == QMessageBox::Yes)
         m_model.clean();
