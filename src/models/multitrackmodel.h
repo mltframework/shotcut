@@ -123,6 +123,7 @@ private:
     void addBlackTrackIfNeeded();
     void addMissingTransitions();
     Mlt::Transition* getTransition(const QString& name, int trackIndex) const;
+    void removeBlankPlaceholder(Mlt::Playlist& playlist, int trackIndex);
 
 private slots:
     void adjustBackgroundDuration();
