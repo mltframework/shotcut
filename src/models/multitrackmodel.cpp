@@ -1054,6 +1054,7 @@ void MultitrackModel::moveClipInBlank(Mlt::Playlist& playlist, int trackIndex, i
             playlist.remove(i);
             endRemoveRows();
             consolidateBlanks(playlist, trackIndex);
+            --clipIndex;
         }
     } else if (delta > 0) {
 //        qDebug() << "add blank on left with duration" << delta;
