@@ -527,4 +527,8 @@ Rectangle {
         else if (x < scrollView.flickableItem.contentX + 50)
             scrollView.flickableItem.contentX = x - 50;
     }
+
+    function trackCount() {
+        return tracksRepeater.count
+    }
 }
