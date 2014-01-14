@@ -16,26 +16,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+var SNAP = 10
+
 function snapClip(clip, repeater) {
     // clip.x = left edge
     var right = clip.x + clip.width
     var cursorX = scrollView.flickableItem.contentX + cursor.x
-    if (clip.x > -10 && clip.x < 10) {
+    if (clip.x > -SNAP && clip.x < SNAP) {
         // Snap around origin.
         clip.x = 0
-    } else if (clip.x > cursorX - 10 && clip.x < cursorX + 10) {
+    } else if (clip.x > cursorX - SNAP && clip.x < cursorX + SNAP) {
         // Snap around cursor/playhead.
         clip.x = cursorX
-    } else if (right > cursorX - 10 && right < cursorX + 10) {
+    } else if (right > cursorX - SNAP && right < cursorX + SNAP) {
         clip.x = cursorX - clip.width
     } else {
         // Snap to other clips.
         for (var i = 0; i < repeater.count; i++) {
             var itemLeft = repeater.itemAt(i).x
             var itemRight = itemLeft + repeater.itemAt(i).width
-            if (right > itemLeft - 10 && right < itemLeft + 10)
+            if (right > itemLeft - SNAP && right < itemLeft + SNAP)
                 clip.x = itemLeft - clip.width
-            else if (clip.x > itemRight - 10 && clip.x < itemRight + 10)
+            else if (clip.x > itemRight - SNAP && clip.x < itemRight + SNAP)
                 clip.x = itemRight
         }
     }
@@ -44,10 +46,10 @@ function snapClip(clip, repeater) {
 function snapTrimIn(clip, delta) {
     var x = clip.x + delta
     var cursorX = scrollView.flickableItem.contentX + cursor.x
-    if (x > -10 && x < 10) {
+    if (x > -SNAP && x < SNAP) {
         // Snap around origin.
         return Math.round(-clip.x / timeScale)
-    } else if (x > cursorX - 10 && x < cursorX + 10) {
+    } else if (x > cursorX - SNAP && x < cursorX + SNAP) {
         // Snap around cursor/playhead.
         return Math.round((cursorX - clip.x) / timeScale)
     } else if (false) {
@@ -57,9 +59,9 @@ function snapTrimIn(clip, delta) {
                 continue
             var itemLeft = repeater.itemAt(i).x
             var itemRight = itemLeft + repeater.itemAt(i).width
-            if (x > itemLeft - 10 && x < itemLeft + 10)
+            if (x > itemLeft - SNAP && x < itemLeft + SNAP)
                 return Math.round((itemLeft - clip.x) / timeScale)
-            else if (x > itemRight - 10 && x < itemRight + 10)
+            else if (x > itemRight - SNAP && x < itemRight + SNAP)
                 return Math.round((itemRight - clip.x) / timeScale)
         }
     }
@@ -70,7 +72,7 @@ function snapTrimOut(clip, delta) {
     var rightEdge = clip.x + clip.width
     var x = rightEdge - delta
     var cursorX = scrollView.flickableItem.contentX + cursor.x
-    if (x > cursorX - 10 && x < cursorX + 10) {
+    if (x > cursorX - SNAP && x < cursorX + SNAP) {
         // Snap around cursor/playhead.
         return Math.round((rightEdge - cursorX) / timeScale)
     } else {
@@ -80,9 +82,9 @@ function snapTrimOut(clip, delta) {
                 continue
             var itemLeft = repeater.itemAt(i).x
             var itemRight = itemLeft + repeater.itemAt(i).width
-            if (x > itemLeft - 10 && x < itemLeft + 10)
+            if (x > itemLeft - SNAP && x < itemLeft + SNAP)
                 return Math.round((rightEdge - itemLeft) / timeScale)
-            else if (x > itemRight - 10 && x < itemRight + 10)
+            else if (x > itemRight - SNAP && x < itemRight + SNAP)
                 return Math.round((rightEdge - itemRight) / timeScale)
         }
     }
