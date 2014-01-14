@@ -75,7 +75,7 @@ function snapTrimOut(clip, delta) {
     if (x > cursorX - SNAP && x < cursorX + SNAP) {
         // Snap around cursor/playhead.
         return Math.round((rightEdge - cursorX) / timeScale)
-    } else {
+    } else if (delta < 0) {
         // Snap to other clips.
         for (var i = 0; i < repeater.count; i++) {
             if (i === clip.DelegateModel.itemsIndex || repeater.itemAt(i).isBlank)
