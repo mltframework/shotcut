@@ -31,7 +31,7 @@ Rectangle {
     property int currentTrack: 0
     property int currentClip: -1
     property int currentClipTrack: -1
-    property color selectedTrackColor: Qt.tint(activePalette.base, Qt.rgba(1, 1, 0, 0.1));
+    property color selectedTrackColor: Qt.tint(activePalette.base, Qt.rgba(0.8, 0.8, 0, 0.3));
 
     Row {
         Column {
