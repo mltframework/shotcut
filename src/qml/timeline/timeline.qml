@@ -330,7 +330,7 @@ Rectangle {
         tooltip: qsTr('Insert clip into the current track')
         iconName: 'go-next'
         iconSource: 'qrc:///icons/oxygen/16x16/actions/go-next.png'
-        onTriggered: timeline.insert(currentClipTrack)
+        onTriggered: timeline.insert(currentTrack)
     }
 
     Action {
@@ -338,7 +338,7 @@ Rectangle {
         tooltip: qsTr('Overwrite clip onto the current track')
         iconName: 'go-down'
         iconSource: 'qrc:///icons/oxygen/16x16/actions/go-down.png'
-        onTriggered: timeline.overwrite(currentClipTrack)
+        onTriggered: timeline.overwrite(currentTrack)
     }
 
     Keys.onUpPressed: timeline.selectTrack(-1)

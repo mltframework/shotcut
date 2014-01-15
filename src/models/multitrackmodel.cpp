@@ -715,34 +715,40 @@ int MultitrackModel::overwriteClip(int trackIndex, Mlt::Producer& clip, int posi
             int targetIndex = playlist.get_clip_index_at(position);
 
             if (position > playlist.clip_start(targetIndex)) {
-                // Split target blank clip.
+                // Split target clip.
+                beginInsertRows(index(trackIndex), targetIndex, targetIndex);
                 playlist.split_at(position);
+                endInsertRows();
             
-                // Notify blank on left was adjusted.
-                QModelIndex idx = createIndex(targetIndex, 0, trackIndex);
+                // Notify item on left was adjusted.
+                QModelIndex modelIndex = createIndex(targetIndex, 0, trackIndex);
                 QVector<int> roles;
                 roles << DurationRole;
-                emit dataChanged(idx, idx, roles);
+                emit dataChanged(modelIndex, modelIndex, roles);
+                QThreadPool::globalInstance()->start(
+                    new AudioLevelsTask(clip.parent(), this, modelIndex));
                 ++targetIndex;
             }
         
-            // Adjust blank on right.
+            // Adjust clip on right.
             int duration = playlist.clip_length(targetIndex) - clip.get_playtime();
             if (duration > 0) {
-//                qDebug() << "adjust blank on right" << (targetIndex) << " to" << duration;
+//                qDebug() << "adjust item on right" << (targetIndex) << " to" << duration;
                 playlist.resize_clip(targetIndex, 0, duration - 1);
-                beginInsertRows(index(trackIndex), targetIndex, targetIndex);
-                endInsertRows();
                 QModelIndex modelIndex = createIndex(targetIndex, 0, trackIndex);
+                // Notify clip on right was adjusted.
+                QVector<int> roles;
+                roles << DurationRole;
+                emit dataChanged(modelIndex, modelIndex, roles);
                 QThreadPool::globalInstance()->start(
                     new AudioLevelsTask(clip.parent(), this, modelIndex));
             } else {
-//                qDebug() << "remove blank on right";
+//                qDebug() << "remove item on right";
                 beginRemoveRows(index(trackIndex), targetIndex, targetIndex);
                 playlist.remove(targetIndex);
                 endRemoveRows();
             }
-            // Insert clip between split blanks.
+            // Insert clip between subclips.
             int in = clip.get_in();
             int out = clip.get_out();
             clip.set_in_and_out(0, clip.get_length() - 1);
@@ -796,20 +802,23 @@ int MultitrackModel::insertClip(int trackIndex, Mlt::Producer &clip, int positio
             int targetIndex = playlist.get_clip_index_at(position);
         
             if (position > playlist.clip_start(targetIndex)) {
-                // Split target blank clip.
+                // Split target clip.
+                beginInsertRows(index(trackIndex), targetIndex, targetIndex);
                 playlist.split_at(position);
+                endInsertRows();
         
                 // Notify item on left was adjusted.
-                QModelIndex idx = createIndex(targetIndex, 0, trackIndex);
+                QModelIndex modelIndex = createIndex(targetIndex, 0, trackIndex);
                 QVector<int> roles;
                 roles << DurationRole;
-                emit dataChanged(idx, idx, roles);
+                emit dataChanged(modelIndex, modelIndex, roles);
+                QThreadPool::globalInstance()->start(
+                    new AudioLevelsTask(clip.parent(), this, modelIndex));
                 ++targetIndex;
 
-                // Notify about the new item on the right.
-                beginInsertRows(index(trackIndex), targetIndex, targetIndex);
-                endInsertRows();
-                QModelIndex modelIndex = createIndex(targetIndex, 0, trackIndex);
+                // Notify item on right was adjusted.
+                modelIndex = createIndex(targetIndex, 0, trackIndex);
+                emit dataChanged(modelIndex, modelIndex, roles);
                 QThreadPool::globalInstance()->start(
                     new AudioLevelsTask(clip.parent(), this, modelIndex));
             }
