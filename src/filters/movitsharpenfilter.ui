@@ -31,6 +31,9 @@
     <layout class="QHBoxLayout" name="horizontalLayout_6">
      <item>
       <widget class="QSlider" name="noiseLevelSlider">
+       <property name="minimum">
+        <number>1</number>
+       </property>
        <property name="maximum">
         <number>1000</number>
        </property>
@@ -41,7 +44,7 @@
         <number>100</number>
        </property>
        <property name="value">
-        <number>50</number>
+        <number>10</number>
        </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -50,6 +53,9 @@
      </item>
      <item>
       <widget class="QDoubleSpinBox" name="noiseLevelSpinner">
+       <property name="minimum">
+        <double>0.010000000000000</double>
+       </property>
        <property name="maximum">
         <double>1.000000000000000</double>
        </property>
