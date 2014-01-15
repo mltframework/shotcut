@@ -997,7 +997,7 @@ void MultitrackModel::relocateClip(Mlt::Playlist& playlist, int trackIndex, int 
 {
     int targetIndex = playlist.get_clip_index_at(position);
 
-    if (position > 0) {
+    if (position > playlist.clip_start(targetIndex)) {
 //        qDebug() << "splitting clip at position" << position;
         // Split target blank clip.
         beginInsertRows(index(trackIndex), targetIndex, targetIndex);
