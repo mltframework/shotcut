@@ -50,7 +50,7 @@ Rectangle {
                 Layout.fillWidth: true
                 Layout.minimumWidth: 100
                 minimumValue: 0
-                maximumValue: 800
+                maximumValue: 300
                 onValueChanged: {
                     spinner.value = value
                     filter.set(saturationParameter, value / 100)
@@ -61,7 +61,7 @@ Rectangle {
                 Layout.minimumWidth: 70
                 suffix: ' %'
                 minimumValue: 0
-                maximumValue: 800
+                maximumValue: 300
                 onValueChanged: slider.value = value
             }
             UndoButton {

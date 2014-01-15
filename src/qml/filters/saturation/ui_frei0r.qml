@@ -27,13 +27,14 @@ Rectangle {
     height: 200
     color: 'transparent'
     property string saturationParameter: '0'
+    property real frei0rMaximum: 800
     Component.onCompleted: {
         if (filter.isNew) {
             // Set default parameter values
             slider.value = 100
         } else {
             // Initialize parameter values
-            slider.value = filter.get(saturationParameter) * slider.maximumValue
+            slider.value = filter.get(saturationParameter) * frei0rMaximum
         }
     }
 
@@ -44,7 +45,7 @@ Rectangle {
         Preset {
             parameters: [saturationParameter]
             onPresetSelected: {
-                slider.value = filter.get(saturationParameter) * slider.maximumValue
+                slider.value = filter.get(saturationParameter) * frei0rMaximum
             }
         }
 
@@ -57,10 +58,10 @@ Rectangle {
                 Layout.fillWidth: true
                 Layout.minimumWidth: 100
                 minimumValue: 0
-                maximumValue: 800
+                maximumValue: 300
                 onValueChanged: {
                     spinner.value = value
-                    filter.set(saturationParameter, value / maximumValue)
+                    filter.set(saturationParameter, value / frei0rMaximum)
                 }
             }
             SpinBox {
@@ -68,7 +69,7 @@ Rectangle {
                 Layout.minimumWidth: 70
                 suffix: ' %'
                 minimumValue: 0
-                maximumValue: 800
+                maximumValue: 300
                 onValueChanged: slider.value = value
             }
             UndoButton {
