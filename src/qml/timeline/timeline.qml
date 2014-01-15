@@ -96,6 +96,7 @@ Rectangle {
                             width: headerWidth
                             height: model.audio? trackHeight : trackHeight * 2
                             onClicked: currentTrack = index
+                            onRightClick: menu.popup()
                         }
                     }
                 }

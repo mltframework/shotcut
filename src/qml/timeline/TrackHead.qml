@@ -28,6 +28,7 @@ Rectangle {
     property int isComposite
     property bool isVideo
     signal clicked()
+    signal rightClick()
 
     id: trackHeadRoot
     SystemPalette { id: activePalette }
@@ -36,7 +37,15 @@ Rectangle {
 
     MouseArea {
         anchors.fill: parent
-        onClicked: { parent.clicked(); nameEdit.visible = false }
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
+        onClicked: {
+            if (mouse.button === Qt.RightButton) {
+                parent.rightClick()
+            } else {
+                parent.clicked()
+                nameEdit.visible = false
+            }
+        }
     }
     Column {
         id: trackHeadColumn
