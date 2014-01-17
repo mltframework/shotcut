@@ -776,7 +776,7 @@ int MultitrackModel::insertClip(int trackIndex, Mlt::Producer &clip, int positio
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     if (track) {
         Mlt::Playlist playlist(*track);
-        if (position >= playlist.get_playtime() - 1) {
+        if (position < 0 || position >= playlist.get_playtime() - 1) {
 //            qDebug() << __FUNCTION__ << "appending";
             removeBlankPlaceholder(playlist, trackIndex);
             int n = playlist.count();
