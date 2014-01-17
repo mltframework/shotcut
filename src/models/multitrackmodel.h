@@ -100,7 +100,7 @@ public slots:
     void setTrackComposite(int row, Qt::CheckState composite);
     int trimClipIn(int trackIndex, int clipIndex, int delta);
     void notifyClipIn(int trackIndex, int clipIndex);
-    void trimClipOut(int trackIndex, int clipIndex, int delta);
+    int trimClipOut(int trackIndex, int clipIndex, int delta);
     void notifyClipOut(int trackIndex, int clipIndex);
     bool moveClipValid(int fromTrack, int toTrack, int clipIndex, int position);
     bool moveClip(int fromTrack, int toTrack, int clipIndex, int position);

@@ -439,7 +439,9 @@ int MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta)
         QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
 
         if (!info || info->frame_in < 0)
-            return result; // no work to do
+            return -1; // no work to do
+        if (delta < 0 && clipIndex > 0 && !playlist.is_blank(clipIndex - 1))
+            return -1;
         if (info->frame_in + delta < 0)
             delta = -info->frame_in; // clamp
 
@@ -496,8 +498,9 @@ void MultitrackModel::notifyClipIn(int trackIndex, int clipIndex)
     }
 }
 
-void MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta)
+int MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta)
 {
+    int result = clipIndex;
     int i = m_trackList.at(trackIndex).mlt_index;
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     if (track) {
@@ -505,7 +508,9 @@ void MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta)
         QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
 
         if (!info || info->frame_out >= info->length)
-            return; // no work to do
+            return -1; // no work to do
+        if (delta < 0 && (clipIndex + 1) < playlist.count() && !playlist.is_blank(clipIndex + 1))
+            return -1;
         if ((info->frame_out - delta) >= info->length)
             delta = info->frame_out - info->length + 1; // clamp
 
@@ -535,7 +540,7 @@ void MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta)
             endInsertRows();
         } else if (clipIndex < playlist.count() - 1) {
             // TODO start adding a transition
-            return;
+            return result;
         }
         int in = info->frame_in;
         int out = info->frame_out - delta;
@@ -548,6 +553,7 @@ void MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta)
         emit dataChanged(index, index, roles);
         emit modified();
     }
+    return result;
 }
 
 void MultitrackModel::notifyClipOut(int trackIndex, int clipIndex)
