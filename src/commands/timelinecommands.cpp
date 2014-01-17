@@ -261,15 +261,17 @@ TrimClipInCommand::TrimClipInCommand(MultitrackModel &model, int trackIndex, int
 void TrimClipInCommand::redo()
 {
     m_clipIndex = m_model.trimClipIn(m_trackIndex, m_clipIndex, m_delta);
-    if (m_notify)
+    if (m_notify && m_clipIndex >= 0)
         m_model.notifyClipIn(m_trackIndex, m_clipIndex);
 }
 
 void TrimClipInCommand::undo()
 {
-    m_clipIndex = m_model.trimClipIn(m_trackIndex, m_clipIndex, -m_delta);
-    m_model.notifyClipIn(m_trackIndex, m_clipIndex);
-    m_notify = true;
+    if (m_clipIndex >= 0) {
+        m_clipIndex = m_model.trimClipIn(m_trackIndex, m_clipIndex, -m_delta);
+        m_model.notifyClipIn(m_trackIndex, m_clipIndex);
+        m_notify = true;
+    }
 }
 
 int TrimClipInCommand::id() const
@@ -299,16 +301,18 @@ TrimClipOutCommand::TrimClipOutCommand(MultitrackModel &model, int trackIndex, i
 
 void TrimClipOutCommand::redo()
 {
-    m_model.trimClipOut(m_trackIndex, m_clipIndex, m_delta);
-    if (m_notify)
+    m_clipIndex = m_model.trimClipOut(m_trackIndex, m_clipIndex, m_delta);
+    if (m_notify && m_clipIndex >= 0)
         m_model.notifyClipOut(m_trackIndex, m_clipIndex);
 }
 
 void TrimClipOutCommand::undo()
 {
-    m_model.trimClipOut(m_trackIndex, m_clipIndex, -m_delta);
-    m_model.notifyClipOut(m_trackIndex, m_clipIndex);
-    m_notify = true;
+    if (m_clipIndex >= 0) {
+        m_model.trimClipOut(m_trackIndex, m_clipIndex, -m_delta);
+        m_model.notifyClipOut(m_trackIndex, m_clipIndex);
+        m_notify = true;
+    }
 }
 
 int TrimClipOutCommand::id() const
