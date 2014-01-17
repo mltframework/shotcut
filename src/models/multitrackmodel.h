@@ -90,6 +90,7 @@ signals:
     void loaded();
     void closed();
     void modified();
+    void seeked(int position);
 
 public slots:
     void refreshTrackList();

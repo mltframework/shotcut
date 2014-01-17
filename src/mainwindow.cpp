@@ -180,6 +180,7 @@ MainWindow::MainWindow()
     connect(m_timelineDock->model(), SIGNAL(closed()), SLOT(onMultitrackClosed()));
     connect(m_timelineDock->model(), SIGNAL(modified()), SLOT(onMultitrackModified()));
     connect(m_timelineDock, SIGNAL(clipOpened(void*,int,int)), SLOT(openCut(void*, int, int)));
+    connect(m_timelineDock->model(), SIGNAL(seeked(int)), SLOT(seekTimeline(int)));
 
     m_filtersDock = new FiltersDock(this);
     m_filtersDock->hide();
@@ -639,7 +640,7 @@ void MainWindow::seekTimeline(int position)
         m_player->setFocus();
         m_player->switchToTab(Player::TimelineTabIndex);
     }
-    MLT.seek(position);
+    m_player->seek(position);
 }
 
 void MainWindow::readPlayerSettings()

@@ -686,7 +686,7 @@ int MultitrackModel::overwriteClip(int trackIndex, Mlt::Producer& clip, int posi
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     if (track) {
         Mlt::Playlist playlist(*track);
-        if (position >= playlist.get_playtime()) {
+        if (position >= playlist.get_playtime() - 1) {
 //            qDebug() << __FUNCTION__ << "appending";
             removeBlankPlaceholder(playlist, trackIndex);
             int n = playlist.count();
@@ -762,6 +762,7 @@ int MultitrackModel::overwriteClip(int trackIndex, Mlt::Producer& clip, int posi
             QThreadPool::globalInstance()->start(
                 new AudioLevelsTask(clip.parent(), this, index));
             emit modified();
+            emit seeked(playlist.clip_start(result) + playlist.clip_length(result));
         }
     }
     return result;
@@ -775,7 +776,7 @@ int MultitrackModel::insertClip(int trackIndex, Mlt::Producer &clip, int positio
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     if (track) {
         Mlt::Playlist playlist(*track);
-        if (position >= playlist.get_playtime()) {
+        if (position >= playlist.get_playtime() - 1) {
 //            qDebug() << __FUNCTION__ << "appending";
             removeBlankPlaceholder(playlist, trackIndex);
             int n = playlist.count();
@@ -841,6 +842,7 @@ int MultitrackModel::insertClip(int trackIndex, Mlt::Producer &clip, int positio
             QThreadPool::globalInstance()->start(
                 new AudioLevelsTask(clip.parent(), this, index));
             emit modified();
+            emit seeked(playlist.clip_start(result) + playlist.clip_length(result));
         }
     }
     return result;
@@ -867,6 +869,7 @@ int MultitrackModel::appendClip(int trackIndex, Mlt::Producer &clip)
         QThreadPool::globalInstance()->start(
             new AudioLevelsTask(clip.parent(), this, index));
         emit modified();
+        emit seeked(playlist.clip_start(i) + playlist.clip_length(i));
         return i;
     }
     return -1;
