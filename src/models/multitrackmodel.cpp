@@ -1038,15 +1038,28 @@ void MultitrackModel::relocateClip(Mlt::Playlist& playlist, int trackIndex, int 
         beginRemoveRows(index(trackIndex), targetIndex, targetIndex);
         playlist.remove(targetIndex);
         endRemoveRows();
-        --clipIndex;
+        if (clipIndex >= targetIndex)
+            --clipIndex;
     }
 
-    // Move clip between split blanks.
-//    qDebug() << "moving clip" << clipIndex << "to" << targetIndex;
+    // Insert clip.
+    QScopedPointer<Mlt::Producer> clip(playlist.get_clip(clipIndex));
     QModelIndex parentIndex = index(trackIndex);
-    beginMoveRows(parentIndex, clipIndex, clipIndex, parentIndex, targetIndex);
-    playlist.move(clipIndex, targetIndex);
-    endMoveRows();
+    beginInsertRows(parentIndex, targetIndex, targetIndex);
+    playlist.insert(*clip, targetIndex, clip->get_in(), clip->get_out());
+    endInsertRows();
+    QThreadPool::globalInstance()->start(
+        new AudioLevelsTask(clip->parent(), this, createIndex(targetIndex, 0, trackIndex)));
+    if (clipIndex >= targetIndex)
+        ++clipIndex;
+
+    // Replace clip with blank.
+    beginRemoveRows(parentIndex, clipIndex, clipIndex);
+    endRemoveRows();
+    beginInsertRows(parentIndex, clipIndex, clipIndex);
+    playlist.replace_with_blank(clipIndex);
+    endInsertRows();
+
     consolidateBlanks(playlist, trackIndex);
 }
 
