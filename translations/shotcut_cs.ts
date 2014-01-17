@@ -1,8 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="cs_CZ">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="cs_CZ" version="2.1">
 <context>
-    <name></name>
+    <name/>
     <message>
         <location filename="../src/main.cpp" line="102"/>
         <source>Loading plugins...</source>
@@ -317,17 +315,17 @@
     <message>
         <location filename="../src/qml/timeline/Clip.qml" line="328"/>
         <source>Remove</source>
-        <translation type="unfinished">Odstranit</translation>
+        <translation>Odstranit</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/Clip.qml" line="333"/>
         <source>Lift</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyzvednout</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/Clip.qml" line="338"/>
         <source>Open As Clip</source>
-        <translation type="unfinished">Otevřít jako záběr</translation>
+        <translation>Otevřít jako záběr</translation>
     </message>
 </context>
 <context>
@@ -1363,7 +1361,9 @@ vícevláknové.</translation>
         <source>Error:
 This program requires OpenGL version 2.0
 with the framebuffer object extension.</source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba:
+Tento program vyžaduje OpenGL ve verzi 2.0
+s rozšířením pro předmět snímkové vyrovnávací paměti.</translation>
     </message>
 </context>
 <context>
@@ -2074,42 +2074,6 @@ tlačítkem myši na úkol k otevření nabídky pro zastavení nyní běžící
         <translation>Shotcut</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;Shotcut Quickstart Guide&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Open files by &lt;span style=&quot; font-weight:600;&quot;&gt;drag-n-drop&lt;/span&gt; in addition to the usual menu and toolbar methods.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Use &lt;span style=&quot; font-weight:600;&quot;&gt;File&lt;/span&gt; &amp;gt; &lt;span style=&quot; font-weight:600;&quot;&gt;Open Other&lt;/span&gt; to open network streams, capture devices, and generators.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;MLT XML files can be opened as a clip; so, you can use Shotcut to test your XML.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Transport Control Keyboard Shortcuts:&lt;/p&gt;
-&lt;ul type=&quot;circle&quot; style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;&quot;&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; J&lt;/span&gt;, &lt;span style=&quot; font-weight:600;&quot;&gt;K&lt;/span&gt;, and &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt; control playback speed and direction. Tap &lt;span style=&quot; font-weight:600;&quot;&gt;J&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt; repeatedly to go faster.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; I&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;O&lt;/span&gt; set the in and out points.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt; L&lt;span style=&quot; font-weight:600;&quot;&gt;eft&lt;/span&gt; or R&lt;span style=&quot; font-weight:600;&quot;&gt;ight&lt;/span&gt; cursor keys step frame-by-frame.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; Page Up&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;Page Down&lt;/span&gt; step 10 frames at-a-time.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; Alt+Left&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;Alt+Right&lt;/span&gt; to jump between start, in, out, and end.&lt;/li&gt;&lt;/ul&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Hold down &lt;span style=&quot; font-weight:600;&quot;&gt;Shift&lt;/span&gt; to make the mouse movement over the video window scrub/skim.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Update Shotcut whenever you like. We do not notify you about updates because new version are available almost daily.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;Průvodce pro rychlý začátek práce v Shotcutu&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Vedle použití hlavní nabídky nebo panelu s nástroji soubory otevřete &lt;span style=&quot; font-weight:600;&quot;&gt;jejich přetažením a upuštěním&lt;/span&gt;.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Použijte &lt;span style=&quot; font-weight:600;&quot;&gt;Soubor&lt;/span&gt; -&amp;gt; &lt;span style=&quot; font-weight:600;&quot;&gt;Otevřít jiné&lt;/span&gt; k otevření síťových proudů, zařízení pro zachytávání a generatorů.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Soubory MLT XML lze otevřít jako záběr; takže můžete Shotcut použít na vyzkoušení svého XML.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesové zkratky pro ovládání pohybu záznamu:&lt;/p&gt;
-&lt;ul type=&quot;circle&quot; style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;&quot;&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesy&lt;span style=&quot; font-weight:600;&quot;&gt; J&lt;/span&gt;, &lt;span style=&quot; font-weight:600;&quot;&gt;K&lt;/span&gt; a &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt; ovládají rychlost přehrávání a směr. Stiskněte opakovaně &lt;span style=&quot; font-weight:600;&quot;&gt;J&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt;, abyste se v záznamu pohybovali rychleji.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesy&lt;span style=&quot; font-weight:600;&quot;&gt; I&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;O&lt;/span&gt; nastavují začáteční a koncové body záběru.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Směrové klávesy &lt;span style=&quot; font-weight:600;&quot;&gt;šipka vlevo&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;šipka vpravo&lt;/span&gt; pro krokový postup snímek za snímkem.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesy &lt;span style=&quot; font-weight:600;&quot;&gt; Page Up&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;Page Down&lt;/span&gt; pro krokový postup o 10 snímků.&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesy &lt;span style=&quot; font-weight:600;&quot;&gt; Alt+šipka vlevo&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;Alt+šipka vpravo&lt;/span&gt; pro skákání mezi začátkem, začátečním bodem záběru, koncovým bodem záběru a koncem.&lt;/li&gt;&lt;/ul&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Držte klávesu &lt;span style=&quot; font-weight:600;&quot;&gt;Shift&lt;/span&gt;, aby se při pohybu myší nad oknem s obrazem doleva nebo doprava v záznamu neustále hledalo.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Aktualizujte program Shotcut, kdykoli budete chtít. O nových aktualizacích vám nebudeme dávat vědět, protože nové aktualizace jsou dostupné téměř denně.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/mainwindow.ui" line="41"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -2128,7 +2092,23 @@ p, li { white-space: pre-wrap; }
 &lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; Alt+Left&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;Alt+Right&lt;/span&gt; to jump between start, in, out, and end.&lt;/li&gt;&lt;/ul&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Hold down &lt;span style=&quot; font-weight:600;&quot;&gt;Shift&lt;/span&gt; to make the mouse movement over the video window scrub/skim.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Update Shotcut whenever you like. We do not notify you about updates because new version are available almost daily.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;Průvodce pro rychlý začátek práce v Shotcutu&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Vedle použití hlavní nabídky nebo panelu s nástroji soubory otevřete &lt;span style=&quot; font-weight:600;&quot;&gt;jejich přetažením a upuštěním&lt;/span&gt;.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Použijte &lt;span style=&quot; font-weight:600;&quot;&gt;Soubor&lt;/span&gt; -&amp;gt; &lt;span style=&quot; font-weight:600;&quot;&gt;Otevřít jiné&lt;/span&gt; k otevření síťových proudů, zařízení pro zachytávání a generatorů.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Soubory MLT XML lze otevřít jako záznam; takže můžete Shotcut použít na vyzkoušení svého XML.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesové zkratky pro ovládání pohybu záznamu:&lt;/p&gt;
+&lt;ul type=&quot;circle&quot; style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;&quot;&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesy&lt;span style=&quot; font-weight:600;&quot;&gt; J&lt;/span&gt;, &lt;span style=&quot; font-weight:600;&quot;&gt;K&lt;/span&gt; a &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt; ovládají rychlost přehrávání a směr. Stiskněte opakovaně &lt;span style=&quot; font-weight:600;&quot;&gt;J&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt;, abyste se v záznamu pohybovali rychleji.&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesy&lt;span style=&quot; font-weight:600;&quot;&gt; I&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;O&lt;/span&gt; nastavují začáteční a koncové body záběru.&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Směrové klávesy &lt;span style=&quot; font-weight:600;&quot;&gt;šipka vlevo&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;šipka vpravo&lt;/span&gt; pro krokový postup snímek za snímkem.&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesy &lt;span style=&quot; font-weight:600;&quot;&gt; Page Up&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;Page Down&lt;/span&gt; pro krokový postup o 10 snímků.&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klávesy &lt;span style=&quot; font-weight:600;&quot;&gt; Alt+šipka vlevo&lt;/span&gt; nebo &lt;span style=&quot; font-weight:600;&quot;&gt;Alt+šipka vpravo&lt;/span&gt; pro skákání mezi začátkem, začátečním bodem záběru, koncovým bodem záběru a koncem.&lt;/li&gt;&lt;/ul&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Podržte &lt;span style=&quot; font-weight:600;&quot;&gt;Shift&lt;/span&gt;, aby se při pohybu myši nad oknem s obrazem stále hledalo.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Aktualizujte program Shotcut, kdykoli budete chtít. O nových aktualizacích vám nebudeme dávat vědět, protože nové aktualizace jsou dostupné téměř denně.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="78"/>
@@ -2461,7 +2441,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.ui" line="594"/>
         <source>Timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Časová osa</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="108"/>
@@ -3337,17 +3317,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/player.cpp" line="54"/>
         <source>Clip</source>
-        <translation type="unfinished">Záběr</translation>
+        <translation>Záběr</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="55"/>
         <source>Playlist</source>
-        <translation type="unfinished">Seznam záběrů</translation>
+        <translation>Seznam záběrů</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="57"/>
         <source>Timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Časová osa</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="100"/>
@@ -3979,62 +3959,62 @@ po začátek vybraného střihu.</translation>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="31"/>
         <source>Append to track</source>
-        <translation type="unfinished"></translation>
+        <translation>Připojit ke stopě</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="54"/>
         <source>Insert into track</source>
-        <translation type="unfinished"></translation>
+        <translation>Vložit do stopy</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="78"/>
         <source>Overwrite onto track</source>
-        <translation type="unfinished"></translation>
+        <translation>Přepsat na stopě</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="103"/>
         <source>Lift from track</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyzvednout ze stopy</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="126"/>
         <source>Remove from track</source>
-        <translation type="unfinished"></translation>
+        <translation> Odstranit ze stopy</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="149"/>
         <source>Change track name</source>
-        <translation type="unfinished"></translation>
+        <translation>Změnit název stopy</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="168"/>
         <source>Toggle track mute</source>
-        <translation type="unfinished"></translation>
+        <translation>Přepnout ztlumení stopy</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="187"/>
         <source>Toggle track hidden</source>
-        <translation type="unfinished"></translation>
+        <translation>Přepnout skrytí stopy</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="207"/>
         <source>Change track compositing</source>
-        <translation type="unfinished"></translation>
+        <translation>Změnit skládání stopy</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="232"/>
         <source>Move clip</source>
-        <translation type="unfinished"></translation>
+        <translation>Přesunout záběr</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="258"/>
         <source>Trim clip in point</source>
-        <translation type="unfinished"></translation>
+        <translation>Oříznout záběr na bodě</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="297"/>
         <source>Trim clip out point</source>
-        <translation type="unfinished"></translation>
+        <translation>Oříznout záběr mimo bod</translation>
     </message>
 </context>
 <context>
@@ -4078,7 +4058,7 @@ po začátek vybraného střihu.</translation>
     <message>
         <location filename="../QWebSockets/qwebsocket_p.cpp" line="771"/>
         <source>Unhandled http status code: %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nezpracovaný stavový kód http: %1.</translation>
     </message>
 </context>
 <context>
@@ -4202,7 +4182,7 @@ po začátek vybraného střihu.</translation>
     <message>
         <location filename="../src/docks/timelinedock.ui" line="33"/>
         <source>Timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Časová osa</translation>
     </message>
 </context>
 <context>
@@ -4211,34 +4191,34 @@ po začátek vybraného střihu.</translation>
         <location filename="../src/qml/timeline/TrackHead.qml" line="91"/>
         <source>M</source>
         <comment>Mute</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ztlumit</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/TrackHead.qml" line="114"/>
         <source>H</source>
         <comment>Hide</comment>
-        <translation type="unfinished"></translation>
+        <translation>Skrýt</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/TrackHead.qml" line="140"/>
         <source>C</source>
         <comment>Composite</comment>
-        <translation type="unfinished"></translation>
+        <translation>Skládat</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/TrackHead.qml" line="158"/>
         <source>No Compositing</source>
-        <translation type="unfinished"></translation>
+        <translation>Žádné skládání</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/TrackHead.qml" line="162"/>
         <source>Composite</source>
-        <translation type="unfinished"></translation>
+        <translation>Skládat</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/TrackHead.qml" line="166"/>
         <source>Composite And Fill</source>
-        <translation type="unfinished"></translation>
+        <translation>Skládat a vyplnit</translation>
     </message>
 </context>
 <context>
@@ -4246,7 +4226,7 @@ po začátek vybraného střihu.</translation>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/UndoButton.qml" line="24"/>
         <source>Reset to default</source>
-        <translation type="unfinished">Nastavit znovu na výchozí</translation>
+        <translation>Nastavit znovu na výchozí</translation>
     </message>
 </context>
 <context>
@@ -4709,12 +4689,12 @@ obrazovky do SDI/HDMI.</translation>
     <message>
         <location filename="../src/qml/filters/invert/meta.qml" line="6"/>
         <source>Invert Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Obrátit barvy</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sepia/meta.qml" line="6"/>
         <source>Sepia Tone</source>
-        <translation type="unfinished"></translation>
+        <translation>Hnědý odstín</translation>
     </message>
 </context>
 <context>
@@ -4728,13 +4708,9 @@ obrazovky do SDI/HDMI.</translation>
 <context>
     <name>meta_movit</name>
     <message>
-        <source>Saturation (GPU)</source>
-        <translation type="obsolete">Sytost (GPU)</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/saturation/meta_movit.qml" line="6"/>
         <source>Saturation</source>
-        <translation type="unfinished">Sytost</translation>
+        <translation>Sytost</translation>
     </message>
 </context>
 <context>
@@ -4820,83 +4796,84 @@ obrazovky do SDI/HDMI.</translation>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="266"/>
         <source>Append</source>
-        <translation type="unfinished"></translation>
+        <translation>Připojit</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="277"/>
         <source>Add Audio Track</source>
-        <translation type="unfinished"></translation>
+        <translation>Přidat zvukovou stopu</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="278"/>
         <source>Ctrl+U</source>
-        <translation type="unfinished">Ctrl+U</translation>
+        <translation>Ctrl+U</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="282"/>
         <source>Add Video Track</source>
-        <translation type="unfinished"></translation>
+        <translation>Přidat obrazovou stopu</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="283"/>
         <source>Ctrl+Y</source>
-        <translation type="unfinished">Ctrl+Y</translation>
+        <translation>Ctrl+Y</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="288"/>
         <source>Make Tracks Shorter</source>
-        <translation type="unfinished"></translation>
+        <translation>Udělat stopy kratší</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="289"/>
         <source>Ctrl+K</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+K</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="293"/>
         <source>Make Tracks Taller</source>
-        <translation type="unfinished"></translation>
+        <translation>Udělat stopy vyšší</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="294"/>
         <source>Ctrl+L</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+L</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="298"/>
         <source>Close</source>
-        <translation type="unfinished">Zavřít</translation>
+        <translation>Zavřít</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="299"/>
         <source>Ctrl+W</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+W</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="306"/>
         <source>Display a menu of additional actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobrazit nabídku dodatečných činností</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="314"/>
         <source>Append to the current track</source>
-        <translation type="unfinished"></translation>
+        <translation>Připojit k nynější stopě</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="322"/>
         <source>Lift - Remove current clip without
 affecting position of other clips</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyzvednout - Odstranit nynější záběr
+ovlivnění polohy jiných záběrů</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="330"/>
         <source>Insert clip into the current track</source>
-        <translation type="unfinished"></translation>
+        <translation>Vložit záběr do nynější stopy</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="338"/>
         <source>Overwrite clip onto the current track</source>
-        <translation type="unfinished"></translation>
+        <translation>Přepsat záběr na nynější stopě</translation>
     </message>
 </context>
 <context>
@@ -4910,10 +4887,6 @@ affecting position of other clips</source>
         <location filename="../src/qml/filters/audio_gain/ui.qml" line="45"/>
         <source>Gain</source>
         <translation>Zesílení</translation>
-    </message>
-    <message>
-        <source>Reset to default</source>
-        <translation type="vanished">Nastavit znovu na výchozí</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx_circular_frame/ui.qml" line="76"/>
@@ -5018,12 +4991,12 @@ affecting position of other clips</source>
     <message>
         <location filename="../src/qml/filters/sepia/ui.qml" line="49"/>
         <source>Yellow-Blue</source>
-        <translation type="unfinished"></translation>
+        <translation>Žlutomodrá</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sepia/ui.qml" line="76"/>
         <source>Cyan-Red</source>
-        <translation type="unfinished"></translation>
+        <translation>Modrozelenočervená</translation>
     </message>
 </context>
 <context>
@@ -5033,10 +5006,6 @@ affecting position of other clips</source>
         <source>Saturation</source>
         <translation>Sytost</translation>
     </message>
-    <message>
-        <source>Reset to default</source>
-        <translation type="vanished">Nastavit znovu na výchozí</translation>
-    </message>
 </context>
 <context>
     <name>ui_movit</name>
@@ -5044,10 +5013,6 @@ affecting position of other clips</source>
         <location filename="../src/qml/filters/saturation/ui_movit.qml" line="47"/>
         <source>Saturation</source>
         <translation>Sytost</translation>
-    </message>
-    <message>
-        <source>Reset to default</source>
-        <translation type="vanished">Nastavit znovu na výchozí</translation>
     </message>
 </context>
 </TS>

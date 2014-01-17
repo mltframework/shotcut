@@ -1,8 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="de">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="de" version="2.1">
 <context>
-    <name></name>
+    <name/>
     <message>
         <location filename="../src/main.cpp" line="102"/>
         <source>Loading plugins...</source>
@@ -322,7 +320,7 @@
     <message>
         <location filename="../src/qml/timeline/Clip.qml" line="333"/>
         <source>Lift</source>
-        <translation type="unfinished"></translation>
+        <translation>Wegnehmen</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/Clip.qml" line="338"/>
@@ -2092,7 +2090,23 @@ p, li { white-space: pre-wrap; }
 &lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; Alt+Left&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;Alt+Right&lt;/span&gt; to jump between start, in, out, and end.&lt;/li&gt;&lt;/ul&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Hold down &lt;span style=&quot; font-weight:600;&quot;&gt;Shift&lt;/span&gt; to make the mouse movement over the video window scrub/skim.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Update Shotcut whenever you like. We do not notify you about updates because new version are available almost daily.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;Shotcut Schnellstart-Anleitung&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Dateien können zusätzlich zu den herkömmlichen Menüs und Toolbars auch per &lt;span style=&quot; font-weight:600;&quot;&gt;drag-n-drop&lt;/span&gt; geöffnet werden.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Datei&lt;/span&gt; &amp;gt; &lt;span style=&quot; font-weight:600;&quot;&gt;Öffnen andere&lt;/span&gt; kann verwendet werden um Netzwerk-Streams, Capture-Devices und Signalgeneratoren als Quelle zu verwenden.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;MLT XML Dateien können als Clip geöffnet werden; Somit kann man Shotcut verwenden um sein XML zu testen.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Transport-Control Tastaturkürzel:&lt;/p&gt;
+&lt;ul type=&quot;circle&quot; style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;&quot;&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; J&lt;/span&gt;, &lt;span style=&quot; font-weight:600;&quot;&gt;K&lt;/span&gt;, and &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt; Abspielgeschwindigkeit und Abspielrichtung steuern. Drücken Sie &lt;span style=&quot; font-weight:600;&quot;&gt;J&lt;/span&gt; oder &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt; wiederholt um zu beschleunigen.&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Mit &lt;span style=&quot; font-weight:600;&quot;&gt; I&lt;/span&gt; oder &lt;span style=&quot; font-weight:600;&quot;&gt;O&lt;/span&gt; setzt man die In- und Out-Points.&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Mit den Cursortasten &lt;span style=&quot; font-weight:600;&quot;&gt;Links&lt;/span&gt; oder &lt;span style=&quot; font-weight:600;&quot;&gt;Rechts&lt;/span&gt; spielt man Bild-für-Bild einzeln ab.&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; Bild Auf&lt;/span&gt; oder &lt;span style=&quot; font-weight:600;&quot;&gt;Bild Ab&lt;/span&gt; springt in Sekunden-Schritten.&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; Alt+Links&lt;/span&gt; oder &lt;span style=&quot; font-weight:600;&quot;&gt;Alt+Rechts&lt;/span&gt; um zwischen Start, In-Point, Out-Point und Ende zu springen.&lt;/li&gt;&lt;/ul&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Während man die &lt;span style=&quot; font-weight:600;&quot;&gt;Shift-Taste&lt;/span&gt; gedrückt hält, kann man mit der Mausbewegung über das Video scrubben/skimmen.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Aktualisieren Sie Shotcut wann auch immer Sie möchten. Wir informieren Sie nicht über Updates, da neue Versionen beinahe täglich erscheinen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="78"/>
@@ -3010,13 +3024,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>MultitrackModel</name>
-    <message>
-        <source>GPU processing not yet supported in the timeline. :(</source>
-        <translation type="vanished">GPU-Verarbeitung in der Zeitachse wird noch nicht unterstützt. :(</translation>
-    </message>
-</context>
-<context>
     <name>MvcpThread</name>
     <message>
         <location filename="../src/mvcp/mvcpthread.cpp" line="163"/>
@@ -3638,7 +3645,7 @@ selected cut.</source>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="157"/>
         <source>Thumbnails</source>
-        <translation>Thumbnails</translation>
+        <translation>Thumbnails (Vorschaubilder)</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="177"/>
@@ -3662,7 +3669,7 @@ selected cut.</source>
     <message>
         <location filename="../src/models/playlistmodel.cpp" line="276"/>
         <source>Thumbnails</source>
-        <translation>Thumbnails</translation>
+        <translation>Thumbnails (Vorschaubilder)</translation>
     </message>
     <message>
         <location filename="../src/models/playlistmodel.cpp" line="278"/>
@@ -3951,17 +3958,17 @@ selected cut.</source>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="54"/>
         <source>Insert into track</source>
-        <translation type="unfinished"></translation>
+        <translation>In Spur einfügen</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="78"/>
         <source>Overwrite onto track</source>
-        <translation type="unfinished"></translation>
+        <translation>Auf Spur überschreiben</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="103"/>
         <source>Lift from track</source>
-        <translation type="unfinished"></translation>
+        <translation>Aus Spur &quot;wegheben&quot;</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="126"/>
@@ -3996,12 +4003,12 @@ selected cut.</source>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="258"/>
         <source>Trim clip in point</source>
-        <translation type="unfinished"></translation>
+        <translation>Clip wegheben: In-Point</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="297"/>
         <source>Trim clip out point</source>
-        <translation type="unfinished"></translation>
+        <translation>Clip wegheben: Out-Point</translation>
     </message>
 </context>
 <context>
@@ -4213,7 +4220,7 @@ selected cut.</source>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/UndoButton.qml" line="24"/>
         <source>Reset to default</source>
-        <translation>Zurücksetzen</translation>
+        <translation>Auf Standardeinstellungen/werte zurücksetzen</translation>
     </message>
 </context>
 <context>
@@ -4847,17 +4854,18 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
         <location filename="../src/qml/timeline/timeline.qml" line="322"/>
         <source>Lift - Remove current clip without
 affecting position of other clips</source>
-        <translation type="unfinished"></translation>
+        <translation>Wegheben - Den aktuellen Clip entfernen ohne
+die Position anderer Clips zu beeinflussen</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="330"/>
         <source>Insert clip into the current track</source>
-        <translation type="unfinished"></translation>
+        <translation>Clip auf aktueller Spur einfügen</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="338"/>
         <source>Overwrite clip onto the current track</source>
-        <translation type="unfinished"></translation>
+        <translation>Clip auf aktueller Spur überschreibend einfügen</translation>
     </message>
 </context>
 <context>
