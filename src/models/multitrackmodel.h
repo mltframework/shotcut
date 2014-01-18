@@ -84,6 +84,8 @@ public:
     void load();
     void close();
     int clipIndex(int trackIndex, int position);
+    bool trimClipInValid(int trackIndex, int clipIndex, int delta);
+    bool trimClipOutValid(int trackIndex, int clipIndex, int delta);
 
 signals:
     void created();

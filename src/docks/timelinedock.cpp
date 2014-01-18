@@ -269,14 +269,18 @@ bool TimelineDock::moveClip(int fromTrack, int toTrack, int clipIndex, int posit
 
 void TimelineDock::trimClipIn(int trackIndex, int clipIndex, int delta)
 {
-    MAIN.undoStack()->push(
-        new Timeline::TrimClipInCommand(m_model, trackIndex, clipIndex, delta));
+    if (m_model.trimClipInValid(trackIndex, clipIndex, delta)) {
+        MAIN.undoStack()->push(
+            new Timeline::TrimClipInCommand(m_model, trackIndex, clipIndex, delta));
+    }
 }
 
 void TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta)
 {
-    MAIN.undoStack()->push(
+    if (m_model.trimClipOutValid(trackIndex, clipIndex, delta)) {
+        MAIN.undoStack()->push(
                 new Timeline::TrimClipOutCommand(m_model, trackIndex, clipIndex, delta));
+    }
 }
 
 void TimelineDock::insert(int trackIndex)

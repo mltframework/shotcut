@@ -429,6 +429,23 @@ void MultitrackModel::setTrackComposite(int row, Qt::CheckState composite)
     }
 }
 
+bool MultitrackModel::trimClipInValid(int trackIndex, int clipIndex, int delta)
+{
+    bool result = true;
+    int i = m_trackList.at(trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    if (track) {
+        Mlt::Playlist playlist(*track);
+        QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
+
+        if (!info || info->frame_in < 0)
+            result = false;
+        else if (delta < 0 && clipIndex > 0 && !playlist.is_blank(clipIndex - 1))
+            result = false;
+    }
+    return result;
+}
+
 int MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta)
 {
     int result = clipIndex;
@@ -438,10 +455,6 @@ int MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta)
         Mlt::Playlist playlist(*track);
         QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
 
-        if (!info || info->frame_in < 0)
-            return -1; // no work to do
-        if (delta < 0 && clipIndex > 0 && !playlist.is_blank(clipIndex - 1))
-            return -1;
         if (info->frame_in + delta < 0)
             delta = -info->frame_in; // clamp
 
@@ -498,6 +511,23 @@ void MultitrackModel::notifyClipIn(int trackIndex, int clipIndex)
     }
 }
 
+bool MultitrackModel::trimClipOutValid(int trackIndex, int clipIndex, int delta)
+{
+    bool result = true;
+    int i = m_trackList.at(trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    if (track) {
+        Mlt::Playlist playlist(*track);
+        QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
+
+        if (!info || info->frame_out >= info->length)
+            result = false;
+        else if (delta < 0 && (clipIndex + 1) < playlist.count() && !playlist.is_blank(clipIndex + 1))
+            result = false;
+    }
+    return result;
+}
+
 int MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta)
 {
     int result = clipIndex;
@@ -507,10 +537,6 @@ int MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta)
         Mlt::Playlist playlist(*track);
         QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
 
-        if (!info || info->frame_out >= info->length)
-            return -1; // no work to do
-        if (delta < 0 && (clipIndex + 1) < playlist.count() && !playlist.is_blank(clipIndex + 1))
-            return -1;
         if ((info->frame_out - delta) >= info->length)
             delta = info->frame_out - info->length + 1; // clamp
 
