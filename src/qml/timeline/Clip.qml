@@ -204,7 +204,9 @@ Rectangle {
         propagateComposedEvents: true
         drag.target: parent
         drag.axis: Drag.XAxis
-        cursorShape: drag.active? Qt.ClosedHandCursor : isBlank? Qt.ArrowCursor : Qt.OpenHandCursor
+        cursorShape: (trimInMouseArea.drag.active || trimOutMouseArea.drag.active)? Qt.SizeHorCursor :
+            drag.active? Qt.ClosedHandCursor :
+            isBlank? Qt.ArrowCursor : Qt.OpenHandCursor
         property int startX
         onPressed: {
             originalX = parent.x
@@ -260,11 +262,11 @@ Rectangle {
             onPressed: {
                 startX = parent.x
                 parent.anchors.left = undefined
-                parent.opacity = 0
             }
             onReleased: {
                 parent.anchors.left = clipRoot.left
                 clipRoot.trimmedIn(clipRoot)
+                parent.opacity = 0
             }
             onPositionChanged: {
                 if (mouse.buttons === Qt.LeftButton) {
@@ -302,7 +304,6 @@ Rectangle {
             onPressed: {
                 duration = clipDuration
                 parent.anchors.right = undefined
-                parent.opacity = 0
             }
             onReleased: {
                 parent.anchors.right = clipRoot.right
