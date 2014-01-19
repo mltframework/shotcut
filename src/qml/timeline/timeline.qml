@@ -33,6 +33,11 @@ Rectangle {
     property int currentClipTrack: -1
     property color selectedTrackColor: Qt.tint(activePalette.base, Qt.rgba(0.8, 0.8, 0, 0.3));
 
+    MouseArea {
+        anchors.fill: parent
+        acceptedButtons: Qt.RightButton
+        onClicked: menu.popup()
+    }
     Row {
         Column {
             z: 1
@@ -96,7 +101,6 @@ Rectangle {
                             width: headerWidth
                             height: model.audio? trackHeight : trackHeight * 2
                             onClicked: currentTrack = index
-                            onRightClick: menu.popup()
                         }
                     }
                 }
