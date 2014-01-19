@@ -256,7 +256,11 @@ OTHER_FILES += \
     qml/timeline/Ruler.qml \
     qml/timeline/Track.js \
     qml/filters/movit_diffusion/meta.qml \
-    qml/filters/movit_diffusion/ui.qml
+    qml/filters/movit_diffusion/ui.qml \
+    qml/filters/vignette/meta_movit.qml \
+    qml/filters/vignette/ui_movit.qml \
+    qml/filters/vignette/meta_oldfilm.qml \
+    qml/filters/vignette/ui_oldfilm.qml
 
 lupdate_hack {
     SOURCES += \
@@ -296,7 +300,11 @@ lupdate_hack {
     qml/timeline/Clip.qml \
     qml/timeline/Ruler.qml \
     qml/filters/movit_diffusion/meta.qml \
-    qml/filters/movit_diffusion/ui.qml
+    qml/filters/movit_diffusion/ui.qml \
+    qml/filters/vignette/meta_movit.qml \
+    qml/filters/vignette/ui_movit.qml \
+    qml/filters/vignette/meta_oldfilm.qml \
+    qml/filters/vignette/ui_oldfilm.qml
 }
 
 TRANSLATIONS += \

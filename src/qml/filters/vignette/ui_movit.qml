@@ -30,22 +30,30 @@ Rectangle {
         anchors.fill: parent
         anchors.margins: 8
 
+        Preset {
+            parameters: ['radius', 'inner_radius']
+            onPresetSelected: {
+                radiusSlider.value = filter.get('radius') * 100
+                innerSlider.value = filter.get('inner_radius') * 100
+            }
+        }
+
         RowLayout {
             spacing: 8
     
-            Label { text: qsTr('Radius') }
+            Label { text: qsTr('Outer Radius') }
             Slider {
                 id: radiusSlider
                 Layout.fillWidth: true
                 Layout.minimumWidth: 100
                 value: filter.get('radius') * 100
                 minimumValue: 0
-                maximumValue: 2000
+                maximumValue: 100
                 property bool isReady: false
                 Component.onCompleted: isReady = true
                 onValueChanged: {
                     if (isReady) {
-                        radiusSpinner.value = value / 100
+                        radiusSpinner.value = value
                         filter.set('radius', value / 100)
                     }
                 }
@@ -53,48 +61,47 @@ Rectangle {
             SpinBox {
                 id: radiusSpinner
                 Layout.minimumWidth: 70
-                value: filter.get('radius')
-                decimals: 2
-                stepSize: 0.1
+                suffix: ' %'
+                value: filter.get('radius') * 100
                 minimumValue: 0
-                maximumValue: 20
-                onValueChanged: radiusSlider.value = value * 100
+                maximumValue: 100
+                onValueChanged: radiusSlider.value = value
             }
             UndoButton {
-                onClicked: radiusSlider.value = 300
+                onClicked: radiusSlider.value = 30
             }
         }
         RowLayout {
             spacing: 8
     
-            Label { text: qsTr('Blurriness') }
+            Label { text: qsTr('Inner Radius') }
             Slider {
-                id: mixSlider
+                id: innerSlider
                 Layout.fillWidth: true
                 Layout.minimumWidth: 100
-                value: filter.get('mix') * 100
+                value: filter.get('inner_radius') * 100
                 minimumValue: 0
                 maximumValue: 100
                 property bool isReady: false
                 Component.onCompleted: isReady = true
                 onValueChanged: {
                     if (isReady) {
-                        mixSpinner.value = value
-                        filter.set('mix', value / 100)
+                        innerSpinner.value = value
+                        filter.set('inner_radius', value / 100)
                     }
                 }
             }
             SpinBox {
-                id: mixSpinner
+                id: innerSpinner
                 Layout.minimumWidth: 70
                 suffix: ' %'
-                value: filter.get('mix') * 100
+                value: filter.get('inner_radius') * 100
                 minimumValue: 0
                 maximumValue: 100
-                onValueChanged: mixSlider.value = value
+                onValueChanged: innerSlider.value = value
             }
             UndoButton {
-                onClicked: mixSlider.value = 30
+                onClicked: innerSlider.value = 30
             }
         }
         Item {
