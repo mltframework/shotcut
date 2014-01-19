@@ -165,5 +165,11 @@
         <file>light/16x16/go-down.png</file>
         <file>oxygen/16x16/actions/go-down.png</file>
         <file>oxygen/16x16/actions/go-next.png</file>
+        <file>dark/16x16/go-previous.png</file>
+        <file>dark/16x16/go-up.png</file>
+        <file>light/16x16/go-previous.png</file>
+        <file>light/16x16/go-up.png</file>
+        <file>oxygen/16x16/actions/go-previous.png</file>
+        <file>oxygen/16x16/actions/go-up.png</file>
     </qresource>
 </RCC>
