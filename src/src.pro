@@ -254,7 +254,9 @@ OTHER_FILES += \
     qml/timeline/Track.qml \
     qml/timeline/Clip.qml \
     qml/timeline/Ruler.qml \
-    qml/timeline/Track.js
+    qml/timeline/Track.js \
+    qml/filters/movit_diffusion/meta.qml \
+    qml/filters/movit_diffusion/ui.qml
 
 lupdate_hack {
     SOURCES += \
@@ -292,7 +294,9 @@ lupdate_hack {
     qml/timeline/TrackHead.qml \
     qml/timeline/Track.qml \
     qml/timeline/Clip.qml \
-    qml/timeline/Ruler.qml
+    qml/timeline/Ruler.qml \
+    qml/filters/movit_diffusion/meta.qml \
+    qml/filters/movit_diffusion/ui.qml
 }
 
 TRANSLATIONS += \
