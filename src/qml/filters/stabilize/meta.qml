@@ -4,6 +4,6 @@ import org.shotcut.qml 1.0
 Metadata {
     type: Metadata.Filter
     name: qsTr("Stabilize")
-    mlt_service: "videostab2"
+    mlt_service: "vidstab"
     qml: "ui.qml"
 }

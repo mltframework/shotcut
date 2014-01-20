@@ -28,8 +28,8 @@ Rectangle {
 
     Connections {
         target: filter
-        onStabilizeFinished: {
-            filter.set("refresh", 1);
+        onAnalyzeFinished: {
+            filter.set("reload", 1);
             if (isSuccess) status.text = qsTr('Analysis complete.')
             button.enabled = true
         }
@@ -119,14 +119,14 @@ Rectangle {
                 onClicked: {
                     button.enabled = false
                     status.text = ''
-                    filter.stabilizeVideo();
+                    filter.analyze();
                 }
             }
             Label {
                 id: status
                 text: qsTr('Click Analyze to use this filter.')
                 Component.onCompleted: {
-                    if (filter.get("vectors").length > 0)
+                    if (filter.get("results").length > 0)
                         text = qsTr('Analysis complete.')
                 }
             }
@@ -166,40 +166,6 @@ Rectangle {
             }
             UndoButton {
                 onClicked: zoomSlider.value = 0
-            }
-        }
-
-        RowLayout {
-            spacing: 8
-            Label { text: qsTr('Sharpening') }
-            Slider {
-                id: sharpenSlider
-                Layout.fillWidth: true
-                Layout.minimumWidth: 100
-                value: filter.get('sharpen')
-                minimumValue: 0
-                maximumValue: 10
-                property bool isReady: false
-                Component.onCompleted: isReady = true
-                onValueChanged: {
-                    if (isReady) {
-                        sharpenSpinner.value = value
-                        filter.set('sharpen', value)
-                        filter.set("refresh", 1);
-                    }
-                }
-            }
-            SpinBox {
-                id: sharpenSpinner
-                Layout.minimumWidth: 60
-                value: filter.get('sharpen')
-                minimumValue: 0
-                maximumValue: 10
-                decimals: 2
-                onValueChanged: sharpenSlider.value = value
-            }
-            UndoButton {
-                onClicked: sharpenSlider.value = 0.8
             }
         }
 

@@ -125,7 +125,7 @@ void QmlFilter::deletePreset(const QString &name)
     emit presetsChanged();
 }
 
-void QmlFilter::stabilizeVideo()
+void QmlFilter::analyze()
 {
     // get temp filename for input xml
     QTemporaryFile tmp(QDir::tempPath().append("/shotcut-XXXXXX"));
@@ -133,7 +133,7 @@ void QmlFilter::stabilizeVideo()
     QString tmpName = tmp.fileName();
     tmp.close();
     tmpName.append(".mlt");
-    m_filter->set("vectors", NULL, 0);
+    m_filter->set("results", NULL, 0);
     int disable = m_filter->get_int("disable");
     m_filter->set("disable", 0);
     MLT.saveXML(tmpName);
@@ -174,9 +174,9 @@ void QmlFilter::stabilizeVideo()
 
     MeltJob* job = new MeltJob(target, tmpName);
     if (job) {
-        connect(job, SIGNAL(finished(MeltJob*, bool)), SLOT(onStabilizeFinished(MeltJob*, bool)));
+        connect(job, SIGNAL(finished(MeltJob*, bool)), SLOT(onAnalyzeFinished(MeltJob*, bool)));
         QFileInfo info(MLT.resource());
-        job->setLabel(tr("Stabilize %1").arg(info.fileName()));
+        job->setLabel(tr("Analyze %1").arg(info.fileName()));
         JOBS.add(job);
     }
 }
@@ -196,7 +196,7 @@ QString QmlFilter::objectNameOrService()
     return m_metadata.objectName().isEmpty()? m_metadata.mlt_service() : m_metadata.objectName();
 }
 
-void QmlFilter::onStabilizeFinished(MeltJob *job, bool isSuccess)
+void QmlFilter::onAnalyzeFinished(MeltJob *job, bool isSuccess)
 {
     QString fileName = job->objectName();
 
@@ -217,7 +217,7 @@ void QmlFilter::onStabilizeFinished(MeltJob *job, bool isSuccess)
             for (int j = 0; j < properties.size(); j++) {
                 QDomNode propertyNode = properties.at(j);
                 if (propertyNode.attributes().namedItem("name").toAttr().value() == "mlt_service"
-                        && propertyNode.toElement().text() == "videostab2") {
+                        && propertyNode.toElement().text() == get("mlt_service")) {
                     found = true;
                     break;
                 }
@@ -225,8 +225,8 @@ void QmlFilter::onStabilizeFinished(MeltJob *job, bool isSuccess)
             if (found) {
                 for (int j = 0; j < properties.size(); j++) {
                     QDomNode propertyNode = properties.at(j);
-                    if (propertyNode.attributes().namedItem("name").toAttr().value() == "vectors") {
-                        m_filter->set("vectors", propertyNode.toElement().text().toLatin1().constData());
+                    if (propertyNode.attributes().namedItem("name").toAttr().value() == "results") {
+                        m_filter->set("results", propertyNode.toElement().text().toLatin1().constData());
                     }
                 }
                 break;
@@ -234,5 +234,5 @@ void QmlFilter::onStabilizeFinished(MeltJob *job, bool isSuccess)
         }
     }
     QFile::remove(fileName);
-    emit stabilizeFinished(isSuccess);
+    emit analyzeFinished(isSuccess);
 }

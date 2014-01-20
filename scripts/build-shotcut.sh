@@ -43,6 +43,9 @@ FFMPEG_SUPPORT_THEORA=1
 FFMPEG_SUPPORT_MP3=1
 FFMPEG_SUPPORT_FAAC=0
 FFMPEG_ADDITIONAL_OPTIONS=
+ENABLE_VIDSTAB=1
+VIDSTAB_HEAD=1
+VIDSTAB_REVISION=
 MLT_HEAD=1
 MLT_REVISION=
 SHOTCUT_HEAD=1
@@ -161,6 +164,9 @@ function to_key {
     ;;
     webvfx)
       echo 9
+    ;;
+    vid.stab)
+      echo 10
     ;;
     *)
       echo UNKNOWN
@@ -323,6 +329,9 @@ function set_globals {
   if test "$ENABLE_WEBVFX" = "1" && test "$WEBVFX_HEAD" = 1 -o "$WEBVFX_REVISION" != ""; then
       SUBDIRS="$SUBDIRS webvfx"
   fi
+  if test "$ENABLE_VIDSTAB" = 1 ; then
+      SUBDIRS="vid.stab $SUBDIRS"
+  fi
   debug "SUBDIRS = $SUBDIRS"
 
   # REPOLOCS Array holds the repo urls
@@ -336,7 +345,7 @@ function set_globals {
   REPOLOCS[7]="git://github.com/mltframework/shotcut.git"
   REPOLOCS[8]="http://ftp.de.debian.org/debian/pool/main/s/swh-plugins/swh-plugins_0.4.15+1.orig.tar.gz"
   REPOLOCS[9]="git://github.com/ddennedy/webvfx.git"
-
+  REPOLOCS[10]="git://github.com/georgmartius/vid.stab.git"
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
   REPOTYPES[0]="git"
@@ -349,6 +358,7 @@ function set_globals {
   REPOTYPES[7]="git"
   REPOTYPES[8]="http-tgz"
   REPOTYPES[9]="git"
+  REPOTYPES[10]="git"
 
   # And, set up the revisions
   REVISIONS[0]=""
@@ -385,6 +395,10 @@ function set_globals {
   REVISIONS[9]=""
   if test 0 = "$WEBVFX_HEAD" -a "$WEBVFX_REVISION" ; then
     REVISIONS[9]="$WEBVFX_REVISION"
+  fi
+  REVISIONS[10]=""
+  if test 0 = "$VIDSTAB_HEAD" -a "$VIDSTAB_REVISION" ; then
+    REVISIONS[10]="$VIDSTAB_REVISION"
   fi
 
   # Figure out the number of cores in the system. Used both by make and startup script
@@ -589,6 +603,12 @@ function set_globals {
   CONFIG[9]="${CONFIG[9]} PREFIX=$FINAL_INSTALL_DIR MLT_SOURCE=$SOURCE_DIR/mlt"
   CFLAGS_[9]=$CFLAGS
   LDFLAGS_[9]=$LDFLAGS
+  
+  ####
+  # vid.stab
+  CONFIG[10]="cmake -DCMAKE_INSTALL_PREFIX:PATH=$FINAL_INSTALL_DIR"
+  CFLAGS_[10]=$CFLAGS
+  LDFLAGS_[10]=$LDFLAGS
 }
 
 ######################################################################
