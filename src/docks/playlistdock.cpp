@@ -167,7 +167,12 @@ void PlaylistDock::on_menuButton_clicked()
 
 void PlaylistDock::on_actionInsertCut_triggered()
 {
-    onDropped(0, ui->tableView->currentIndex().row());
+    if (MLT.isClip() || MLT.savedProducer()) {
+        QMimeData mimeData;
+        mimeData.setData(Mlt::XmlMimeType, MLT.saveXML("string",
+            MLT.isClip()? 0 : MLT.savedProducer()).toUtf8());
+        onDropped(&mimeData, ui->tableView->currentIndex().row());
+    }
 }
 
 void PlaylistDock::on_actionAppendCut_triggered()
