@@ -56,7 +56,7 @@ Rectangle {
             }
             SpinBox {
                 id: spinner
-                Layout.minimumWidth: 70
+                Layout.minimumWidth: 80
                 suffix: ' %'
                 minimumValue: 0
                 maximumValue: 300
