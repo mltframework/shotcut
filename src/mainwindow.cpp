@@ -980,7 +980,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_playlistDock->on_removeButton_clicked();
         }
         break;
-    case Qt::Key_Z: // Avid Extract
+    case Qt::Key_Z: // Avid Lift
         if (multitrack())
             m_timelineDock->lift(-1, -1);
         break;
