@@ -74,7 +74,6 @@ MainWindow::MainWindow()
     , m_htmlEditor(0)
 {
     new GLTestWidget(this);
-    QThreadPool::globalInstance()->setMaxThreadCount(1);
     Database::singleton(this);
 
     // Create the UI.
@@ -1254,6 +1253,7 @@ void MainWindow::onCaptureStateChanged(bool started)
 
 void MainWindow::onEncodeVisibilityChanged(bool checked)
 {
+    Q_UNUSED(checked)
     if (m_encodeDock->isHidden())
         m_jobsDock->hide();
 }
@@ -1672,28 +1672,30 @@ void MainWindow::changeInterpolation(bool checked, const char* method)
 class AppendTask : public QRunnable
 {
 public:
-    AppendTask(PlaylistModel* model, QString filename)
+    AppendTask(PlaylistModel* model, const QStringList& filenames)
         : QRunnable()
         , model(model)
-        , filename(filename)
+        , filenames(filenames)
     {
     }
     void run()
     {
-        Mlt::Producer p(MLT.profile(), filename.toUtf8().constData());
-        if (p.is_valid()) {
-            QString service(p.get("mlt_service"));
-            if (service == "pixbuf" || service == "qimage") {
-                p.set("ttl", 1);
-                p.set("length", qRound(MLT.profile().fps() * 4.0));
-                p.set("out", p.get_length() - 1);
+        foreach (QString filename, filenames) {
+            Mlt::Producer p(MLT.profile(), filename.toUtf8().constData());
+            if (p.is_valid()) {
+                QString service(p.get("mlt_service"));
+                if (service == "pixbuf" || service == "qimage") {
+                    p.set("ttl", 1);
+                    p.set("length", qRound(MLT.profile().fps() * 4.0));
+                    p.set("out", p.get_length() - 1);
+                }
+                MAIN.undoStack()->push(new Playlist::AppendCommand(*model, MLT.saveXML("string", &p)));
             }
-            MAIN.undoStack()->push(new Playlist::AppendCommand(*model, MLT.saveXML("string", &p)));
         }
     }
 private:
     PlaylistModel* model;
-    QString filename;
+    const QStringList& filenames;
 };
 
 void MainWindow::processMultipleFiles()
@@ -1702,10 +1704,9 @@ void MainWindow::processMultipleFiles()
         PlaylistModel* model = m_playlistDock->model();
         m_playlistDock->show();
         m_playlistDock->raise();
-        foreach (QString filename, m_multipleFiles) {
-            QThreadPool::globalInstance()->start(new AppendTask(model, filename));
+        QThreadPool::globalInstance()->start(new AppendTask(model, m_multipleFiles));
+        foreach (QString filename, m_multipleFiles)
             m_recentDock->add(filename.toUtf8().constData());
-        }
         m_multipleFiles.clear();
     }
     if (m_isPlaylistLoaded && Settings.playerGPU()) {
