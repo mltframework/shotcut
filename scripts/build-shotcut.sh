@@ -535,9 +535,9 @@ function set_globals {
     CONFIG[5]="${CONFIG[5]} --host=x86-w64-mingw32"
     CFLAGS_[5]="$CFLAGS"
   elif test "$TARGET_OS" = "Darwin"; then
-    CFLAGS_[5]="$CFLAGS -I/opt/local/include -fPIC"
+    CFLAGS_[5]="$CFLAGS -I/opt/local/include"
   else
-    CFLAGS_[5]="$CFLAGS -fPIC"
+    CFLAGS_[5]="$CFLAGS"
   fi
   LDFLAGS_[5]=$LDFLAGS
 
@@ -1266,7 +1266,7 @@ SLIB_EXTRA_CMD=-"mv $$(@:$(SLIBSUF)=.orig.def) $$(@:$(SLIBSUF)=.def)"
   # Compile
   feedback_status Building $1 - this could take some time
   if test "movit" = "$1" ; then
-    cmd make -j$MAKEJ RANLIB="$RANLIB" libmovit.a || die "Unable to build $1"
+    cmd make -j$MAKEJ RANLIB="$RANLIB" libmovit.la || die "Unable to build $1"
   elif test "webvfx" = "$1" ; then
     cmd make -j$MAKEJ -C webvfx || die "Unable to build $1/webvfx"
     cmd make -j$MAKEJ -C mlt || die "Unable to build $1/mlt"
