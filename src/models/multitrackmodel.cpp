@@ -440,6 +440,8 @@ bool MultitrackModel::trimClipInValid(int trackIndex, int clipIndex, int delta)
 
         if (!info || info->frame_in < 0)
             result = false;
+        else if (delta < 0 && clipIndex <= 0)
+            result = false;
         else if (delta < 0 && clipIndex > 0 && !playlist.is_blank(clipIndex - 1))
             result = false;
     }
