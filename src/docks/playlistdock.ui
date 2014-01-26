@@ -307,6 +307,11 @@ selected cut.</string>
     <string>In Only - Large</string>
    </property>
   </action>
+  <action name="actionAddToTimeline">
+   <property name="text">
+    <string>Add All to Timeline</string>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="../../icons/resources.qrc"/>

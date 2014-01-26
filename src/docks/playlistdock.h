@@ -43,6 +43,7 @@ signals:
     void clipOpened(void* producer, int in, int out);
     void itemActivated(int start);
     void showStatusMessage(QString);
+    void addAllTimeline(Mlt::Playlist*);
 
 public slots:
     void incrementIndex();
@@ -96,6 +97,8 @@ private slots:
     void on_actionInOnlySmall_triggered(bool checked);
 
     void on_actionInOnlyLarge_triggered(bool checked);
+
+    void on_actionAddToTimeline_triggered();
 
 private:
     Ui::PlaylistDock *ui;

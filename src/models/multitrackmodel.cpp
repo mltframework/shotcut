@@ -946,6 +946,32 @@ void MultitrackModel::liftClip(int trackIndex, int clipIndex)
     }
 }
 
+void MultitrackModel::appendFromPlaylist(Mlt::Playlist *from, int trackIndex)
+{
+    createIfNeeded();
+    int i = m_trackList.at(trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    if (track) {
+        Mlt::Playlist playlist(*track);
+        removeBlankPlaceholder(playlist, trackIndex);
+        i = playlist.count();
+        beginInsertRows(index(trackIndex), i, i + from->count() - 1);
+        for (int j = 0; j < from->count(); j++) {
+            QScopedPointer<Mlt::Producer> clip(from->get_clip(j));
+            int in = clip->get_in();
+            int out = clip->get_out();
+            clip->set_in_and_out(0, clip->get_length() - 1);
+            playlist.append(clip->parent(), in, out);
+            QModelIndex modelIndex = createIndex(i, 0, trackIndex);
+            QThreadPool::globalInstance()->start(
+                new AudioLevelsTask(clip->parent(), this, modelIndex));
+        }
+        endInsertRows();
+        emit modified();
+        emit seeked(playlist.get_playtime());
+    }
+}
+
 bool MultitrackModel::moveClipToTrack(int fromTrack, int toTrack, int clipIndex, int position)
 {
     bool result;
@@ -1275,6 +1301,7 @@ void MultitrackModel::addAudioTrack()
     playlist.set("hide", 1);
     playlist.blank(0);
     m_tractor->set_track(playlist, i);
+    MLT.updateAvformatCaching(m_tractor->count());
 
     // Add the mix transition.
     Mlt::Transition mix(MLT.profile(), "mix");
@@ -1316,6 +1343,7 @@ void MultitrackModel::addVideoTrack()
     playlist.set(kVideoTrackProperty, 1);
     playlist.blank(0);
     m_tractor->set_track(playlist, i);
+    MLT.updateAvformatCaching(m_tractor->count());
 
     // Add the mix transition.
     Mlt::Transition mix(MLT.profile(), "mix");

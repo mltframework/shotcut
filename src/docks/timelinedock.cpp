@@ -305,6 +305,12 @@ void TimelineDock::overwrite(int trackIndex)
     }
 }
 
+void TimelineDock::appendFromPlaylist(Mlt::Playlist *playlist)
+{
+    int trackIndex = m_quickView.rootObject()->property("currentTrack").toInt();
+    m_model.appendFromPlaylist(playlist, trackIndex);
+}
+
 void TimelineDock::dragEnterEvent(QDragEnterEvent *event)
 {
     if (event->mimeData()->hasFormat(Mlt::XmlMimeType)) {

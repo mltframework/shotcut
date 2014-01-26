@@ -74,6 +74,7 @@ public slots:
     void trimClipOut(int trackIndex, int clipIndex, int delta);
     void insert(int trackIndex);
     void overwrite(int trackIndex);
+    void appendFromPlaylist(Mlt::Playlist* playlist);
 
 protected:
     void dragEnterEvent(QDragEnterEvent* event);

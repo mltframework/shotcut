@@ -94,6 +94,7 @@ Controller::Controller()
     , m_volume(1.0)
     , m_savedProducer(0)
 {
+    updateAvformatCaching(5);
 }
 
 Controller& Controller::singleton(QWidget* parent)
@@ -581,6 +582,12 @@ QImage Controller::image(Producer& producer, int frameNumber, int width, int hei
         delete frame;
     }
     return result;
+}
+
+void Controller::updateAvformatCaching(int trackCount)
+{
+    int i = QThread::idealThreadCount() + trackCount;
+    mlt_service_cache_set_size(NULL, "producer_avformat", i);
 }
 
 void TransportControl::play(double speed)

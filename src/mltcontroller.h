@@ -121,6 +121,7 @@ public:
     void resetURL();
     QImage image(Frame *frame, int width, int height);
     QImage image(Mlt::Producer& producer, int frameNumber, int width, int height);
+    void updateAvformatCaching(int trackCount);
 
     Mlt::Repository* repository() const {
         return m_repo;

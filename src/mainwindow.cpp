@@ -180,6 +180,8 @@ MainWindow::MainWindow()
     connect(m_timelineDock->model(), SIGNAL(modified()), SLOT(onMultitrackModified()));
     connect(m_timelineDock, SIGNAL(clipOpened(void*,int,int)), SLOT(openCut(void*, int, int)));
     connect(m_timelineDock->model(), SIGNAL(seeked(int)), SLOT(seekTimeline(int)));
+    connect(m_playlistDock, SIGNAL(addAllTimeline(Mlt::Playlist*)), SLOT(onTimelineDockTriggered()));
+    connect(m_playlistDock, SIGNAL(addAllTimeline(Mlt::Playlist*)), m_timelineDock, SLOT(appendFromPlaylist(Mlt::Playlist*)));
 
     m_filtersDock = new FiltersDock(this);
     m_filtersDock->hide();

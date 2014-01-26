@@ -111,6 +111,7 @@ public slots:
     int appendClip(int trackIndex, Mlt::Producer &clip);
     void removeClip(int trackIndex, int clipIndex);
     void liftClip(int trackIndex, int clipIndex);
+    void appendFromPlaylist(Mlt::Playlist* playlist, int trackIndex);
 
 private:
     Mlt::Tractor* m_tractor;
