@@ -25,34 +25,32 @@ function snapClip(clip, repeater) {
     if (clip.x > -SNAP && clip.x < SNAP) {
         // Snap around origin.
         clip.x = 0
-    } else if (clip.x > cursorX - SNAP && clip.x < cursorX + SNAP) {
-        // Snap around cursor/playhead.
-        clip.x = cursorX
-    } else if (right > cursorX - SNAP && right < cursorX + SNAP) {
-        clip.x = cursorX - clip.width
+        return
     } else {
         // Snap to other clips.
         for (var i = 0; i < repeater.count; i++) {
             var itemLeft = repeater.itemAt(i).x
             var itemRight = itemLeft + repeater.itemAt(i).width
-            if (right > itemLeft - SNAP && right < itemLeft + SNAP)
+            if (right > itemLeft - SNAP && right < itemLeft + SNAP) {
                 clip.x = itemLeft - clip.width
-            else if (clip.x > itemRight - SNAP && clip.x < itemRight + SNAP)
+                return
+            } else if (clip.x > itemRight - SNAP && clip.x < itemRight + SNAP) {
                 clip.x = itemRight
+                return
+            }
         }
     }
+    if (clip.x > cursorX - SNAP && clip.x < cursorX + SNAP)
+        // Snap around cursor/playhead.
+        clip.x = cursorX
+    if (right > cursorX - SNAP && right < cursorX + SNAP)
+        clip.x = cursorX - clip.width
 }
 
 function snapTrimIn(clip, delta) {
     var x = clip.x + delta
     var cursorX = scrollView.flickableItem.contentX + cursor.x
-    if (x > -SNAP && x < SNAP) {
-        // Snap around origin.
-        return Math.round(-clip.x / timeScale)
-    } else if (x > cursorX - SNAP && x < cursorX + SNAP) {
-        // Snap around cursor/playhead.
-        return Math.round((cursorX - clip.x) / timeScale)
-    } else if (false) {
+    if (false) {
         // Snap to other clips.
         for (var i = 0; i < repeater.count; i++) {
             if (i === clip.DelegateModel.itemsIndex || repeater.itemAt(i).isBlank)
@@ -65,6 +63,13 @@ function snapTrimIn(clip, delta) {
                 return Math.round((itemRight - clip.x) / timeScale)
         }
     }
+    if (x > -SNAP && x < SNAP) {
+        // Snap around origin.
+        return Math.round(-clip.x / timeScale)
+    } else if (x > cursorX - SNAP && x < cursorX + SNAP) {
+        // Snap around cursor/playhead.
+        return Math.round((cursorX - clip.x) / timeScale)
+    }
     return delta
 }
 
@@ -72,10 +77,7 @@ function snapTrimOut(clip, delta) {
     var rightEdge = clip.x + clip.width
     var x = rightEdge - delta
     var cursorX = scrollView.flickableItem.contentX + cursor.x
-    if (x > cursorX - SNAP && x < cursorX + SNAP) {
-        // Snap around cursor/playhead.
-        return Math.round((rightEdge - cursorX) / timeScale)
-    } else if (delta < 0) {
+    if (delta < 0) {
         // Snap to other clips.
         for (var i = 0; i < repeater.count; i++) {
             if (i === clip.DelegateModel.itemsIndex || repeater.itemAt(i).isBlank)
@@ -87,6 +89,10 @@ function snapTrimOut(clip, delta) {
             else if (x > itemRight - SNAP && x < itemRight + SNAP)
                 return Math.round((rightEdge - itemRight) / timeScale)
         }
+    }
+    if (x > cursorX - SNAP && x < cursorX + SNAP) {
+        // Snap around cursor/playhead.
+        return Math.round((rightEdge - cursorX) / timeScale)
     }
     return delta
 }
