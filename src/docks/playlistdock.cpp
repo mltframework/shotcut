@@ -137,7 +137,7 @@ void PlaylistDock::on_menuButton_clicked()
     QModelIndex index = ui->tableView->currentIndex();
     if (index.isValid() && m_model.playlist()) {
         menu.addAction(ui->actionGoto);
-        if (MLT.producer()->type() != playlist_type)
+        if (MLT.isClip())
             menu.addAction(ui->actionInsertCut);
         menu.addAction(ui->actionOpen);
 
@@ -152,6 +152,7 @@ void PlaylistDock::on_menuButton_clicked()
         menu.addSeparator();
     }
     menu.addAction(ui->actionRemoveAll);
+    menu.addAction(ui->actionAddToTimeline);
     menu.addAction(ui->actionClose);
     menu.addSeparator();
     QMenu* subMenu = menu.addMenu(tr("Thumbnails"));
@@ -178,7 +179,7 @@ void PlaylistDock::on_actionInsertCut_triggered()
 void PlaylistDock::on_actionAppendCut_triggered()
 {
     if (MLT.producer() && MLT.producer()->is_valid()) {
-        if (MLT.producer()->type() == playlist_type)
+        if (!MLT.isClip())
             emit showStatusMessage(tr("You cannot insert a playlist into a playlist!"));
         else if (MLT.isSeekable())
             MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.saveXML("string")));
@@ -282,7 +283,7 @@ void PlaylistDock::on_tableView_customContextMenuRequested(const QPoint &pos)
     if (index.isValid() && m_model.playlist()) {
         QMenu menu(this);
         menu.addAction(ui->actionGoto);
-        if (MLT.producer()->type() != playlist_type)
+        if (MLT.isClip())
             menu.addAction(ui->actionInsertCut);
         menu.addAction(ui->actionOpen);
 
@@ -584,4 +585,9 @@ void PlaylistDock::on_actionInOnlyLarge_triggered(bool checked)
         ui->tableView->verticalHeader()->setDefaultSectionSize(PlaylistModel::THUMBNAIL_HEIGHT * 2);
         ui->tableView->resizeColumnToContents(PlaylistModel::COLUMN_THUMBNAIL);
     }
+}
+
+void PlaylistDock::on_actionAddToTimeline_triggered()
+{
+    emit addAllTimeline(m_model.playlist());
 }
