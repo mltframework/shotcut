@@ -83,10 +83,11 @@ export LDFLAGS=
 # usage
 # Reports legal options to this script
 function usage {
-  echo "Usage: $0 [-c config-file] [-o target-os] [-t] [-h]"
+  echo "Usage: $0 [-c config-file] [-o target-os] [-s] [-t] [-h]"
   echo "Where:"
   echo -e "\t-c config-file\tDefaults to $CONFIGFILE"
   echo -e "\t-o target-os\tDefaults to $(uname -s); use Win32 to cross-compile"
+  echo -e "\t-s\t\tbuild SDK (Linux and Windows only)"
   echo -e "\t-t\t\tSpawn into sep. process"
 }
 
@@ -96,11 +97,12 @@ function usage {
 function parse_args {
   CONFIGFILEOPT=""
   DETACH=0
-  while getopts ":tc:o:" OPT; do
+  while getopts ":tsc:o:" OPT; do
     case $OPT in
       c ) CONFIGFILEOPT=$OPTARG
           echo Setting configfile to $CONFIGFILEOPT
       ;;
+      s ) SDK=1;;
       t ) DETACH=1;;
       h ) usage
           exit 0;;
@@ -966,7 +968,8 @@ function get_subproject {
           # No git repo
           debug "No git repo, need to check out"
           feedback_status "Cloning git sources for $1"
-          cmd git --no-pager clone $REPOLOC || die "Unable to git clone source for $1 from $REPOLOC"
+          [ "$1" = "x264" ] && depth="" || depth="--depth 1"
+          cmd git --no-pager clone $depth $REPOLOC || die "Unable to git clone source for $1 from $REPOLOC"
           cmd cd $1 || die "Unable to change to directory $1"
           cmd git checkout $REVISION || die "Unable to git checkout $REVISION"
       fi
@@ -1606,13 +1609,17 @@ function deploy_win32
   cmd cd $FINAL_INSTALL_DIR || die "Unable to change to directory $FINAL_INSTALL_DIR"
 
   cmd mv bin/*.dll .
-  cmd mv bin/ffmpeg.exe .
-  cmd mv bin/qmelt.exe .
-  cmd rm -rf bin include etc man manifest src *.txt
+  if [ "$SDK" = "1" ]; then
+    cmd mv bin/*.exe .
+  else
+    cmd mv bin/ffmpeg.exe .
+    cmd mv bin/qmelt.exe .
+    cmd rm -rf bin include etc man manifest src *.txt
+    cmd rm lib/*
+    cmd rm -rf lib/pkgconfig
+    cmd rm -rf share/doc share/man share/ffmpeg/examples share/aclocal share/glib-2.0 share/gtk-2.0 share/gtk-doc share/themes share/locale
+  fi
   cmd mv COPYING COPYING.txt
-  cmd rm lib/*
-  cmd rm -rf lib/pkgconfig
-  cmd rm -rf share/doc share/man share/ffmpeg/examples share/aclocal share/glib-2.0 share/gtk-2.0 share/gtk-doc share/themes share/locale
   cmd cp -p "$QTDIR"/bin/Qt5{Concurrent,Core,Declarative,Gui,Multimedia,MultimediaQuick,MultimediaWidgets,Network,OpenGL,Positioning,PrintSupport,Qml,QmlParticles,Quick,Script,Sensors,Sql,Svg,V8,WebKit,WebKitWidgets,Widgets,Xml,XmlPatterns}.dll .
   cmd cp -p "$QTDIR"/bin/{icudt51,icuin51,icuuc51,libgcc_s_dw2-1,libstdc++-6,libwinpthread-1}.dll .
   cmd mkdir -p lib/qt5/sqldrivers
@@ -1624,47 +1631,23 @@ function deploy_win32
   cmd tar -xjf "$HOME/ladspa_plugins-win-0.4.15.tar.bz2"
   cmd printf "[Paths]\nPlugins=lib/qt5\nQml2Imports=lib/qml\n" > qt.conf
 
-  log Making installer
-  cmd cd ..
-  cmd makensis shotcut.nsi
+  if [ "$SDK" = "1" ]; then
+    # Prepare src for archiving
+    pushd .
+    clean_dirs
+    popd
+    log Copying src
+    cmd -rf src 2> /dev/null
+    cmd cp -a $SOURCE_DIR .
 
-  popd
-}
-
-function deploy_win32_sdk
-{
-  trace "Entering deploy_win32_sdk @ = $@"
-
-  pushd .
-
-  log Changing directory to $FINAL_INSTALL_DIR
-  cmd cd $FINAL_INSTALL_DIR || die "Unable to change to directory $FINAL_INSTALL_DIR"
-
-  cmd mv bin/*.dll .
-  cmd mv bin/*.exe .
-  cmd mv COPYING COPYING.txt
-  cmd cp -p "$QTDIR"/bin/Qt5{Concurrent,Core,Declarative,Gui,Multimedia,MultimediaQuick,MultimediaWidgets,Network,OpenGL,Positioning,PrintSupport,Qml,QmlParticles,Quick,Script,Sensors,Sql,Svg,V8,WebKit,WebKitWidgets,Widgets,Xml,XmlPatterns}.dll .
-  cmd cp -p "$QTDIR"/bin/{icudt51,icuin51,icuuc51,libgcc_s_dw2-1,libstdc++-6,libwinpthread-1}.dll .
-  cmd mkdir -p lib/qt5/sqldrivers
-  cmd cp -pr "$QTDIR"/plugins/{accessible,iconengines,imageformats,mediaservice,platforms} lib/qt5
-  cmd cp -p "$QTDIR"/plugins/sqldrivers/qsqlite.dll lib/qt5/sqldrivers
-  cmd cp -pr "$QTDIR"/qml lib
-  cmd cp -pr "$QTDIR"/translations/qt_*.qm share/translations
-  cmd cp -pr "$QTDIR"/translations/qtbase_*.qm share/translations
-  cmd tar -xjf "$HOME/ladspa_plugins-win-0.4.15.tar.bz2"
-  cmd printf "[Paths]\nPlugins=lib/qt5\nQml2Imports=lib/qml\n" > "$BUILD_DIR/Resources/qt.conf"
-
-  # Prepare src for archiving
-  pushd .
-  clean_dirs
-  popd
-  log Copying src
-  cmd -rf src 2> /dev/null
-  cmd cp -a $SOURCE_DIR .
-
-  log Creating archive
-  cmd cd ..
-  cmd zip -gr shotcut-sdk.zip Shotcut
+    log Creating archive
+    cmd cd ..
+    cmd zip -gr shotcut-sdk.zip Shotcut
+  else
+    log Making installer
+    cmd cd ..
+    cmd makensis shotcut.nsi
+  fi
 
   popd
 }
@@ -1786,11 +1769,21 @@ End-of-desktop-file
   tarball="$INSTALL_DIR/shotcut.tar.bz2"
   cmd rm "$tarball" 2>/dev/null
   cmd pushd "$INSTALL_DIR"
-  cmd rm -rf Shotcut/Shotcut.app/include
-  cmd rm Shotcut/Shotcut.app/lib/*.a
-  cmd rm -rf Shotcut/Shotcut.app/lib/pkgconfig
-  cmd rm -rf Shotcut/Shotcut.app/share/doc
-  cmd rm -rf Shotcut/Shotcut.app/share/man
+  if [ "$SDK" = "1" ]; then
+    # Prepare src for archiving
+    pushd .
+    clean_dirs
+    popd
+    log Copying src
+    cmd -rf Shotcut/Shotcut.app/src 2> /dev/null
+    cmd cp -a "$SOURCE_DIR" Shotcut/Shotcut.app
+  else
+    cmd rm -rf Shotcut/Shotcut.app/include
+    cmd rm Shotcut/Shotcut.app/lib/*.a
+    cmd rm -rf Shotcut/Shotcut.app/lib/pkgconfig
+    cmd rm -rf Shotcut/Shotcut.app/share/doc
+    cmd rm -rf Shotcut/Shotcut.app/share/man
+  fi
   cmd tar -cjvf "$tarball" Shotcut
   cmd rm -rf Shotcut
   popd
