@@ -776,7 +776,7 @@ void MainWindow::on_actionAbout_Shotcut_triggered()
     QMessageBox::about(this, tr("About Shotcut"),
              tr("<h1>Shotcut version %1</h1>"
                 "<p><a href=\"http://www.shotcut.org/\">Shotcut</a> is a free, open source, cross platform video editor.</p>"
-                "<small><p>Copyright &copy; 2011-2013 <a href=\"http://www.meltytech.com/\">Meltytech</a>, LLC</p>"
+                "<small><p>Copyright &copy; 2011-2014 <a href=\"http://www.meltytech.com/\">Meltytech</a>, LLC</p>"
                 "<p>Licensed under the <a href=\"http://www.gnu.org/licenses/gpl.html\">GNU General Public License v3.0</a></p>"
                 "<p>This program proudly uses the following projects:<ul>"
                 "<li><a href=\"http://www.qt-project.org/\">Qt</a> application and UI framework</li>"
