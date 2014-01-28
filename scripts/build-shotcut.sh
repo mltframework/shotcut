@@ -36,7 +36,7 @@ LIBVPX_REVISION=
 ENABLE_LAME=1
 ENABLE_SWH_PLUGINS=1
 FFMPEG_HEAD=0
-FFMPEG_REVISION="release/2.1"
+FFMPEG_REVISION="origin/release/2.1"
 FFMPEG_SUPPORT_H264=1
 FFMPEG_SUPPORT_LIBVPX=1
 FFMPEG_SUPPORT_THEORA=1
@@ -968,10 +968,9 @@ function get_subproject {
           # No git repo
           debug "No git repo, need to check out"
           feedback_status "Cloning git sources for $1"
-          [ "$1" = "x264" ] && DEPTH="" || depth="--depth 1"
-          [ "$REVISION" != "" ] && BRANCH="--branch $REVISION"
-          cmd git --no-pager clone $BRANCH $DEPTH $REPOLOC || die "Unable to git clone source for $1 from $REPOLOC"
+          cmd git --no-pager clone $REPOLOC || die "Unable to git clone source for $1 from $REPOLOC"
           cmd cd $1 || die "Unable to change to directory $1"
+          cmd git checkout $REVISION || die "Unable to git checkout $REVISION"
       fi
   elif test "svn" = "$REPOTYPE" ; then
       # Create subdir if not exist
