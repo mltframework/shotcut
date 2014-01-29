@@ -163,7 +163,7 @@ MainWindow::MainWindow()
     connect(m_playlistDock->model(), SIGNAL(cleared()), this, SLOT(onPlaylistCleared()));
     connect(m_playlistDock->model(), SIGNAL(closed()), this, SLOT(onPlaylistClosed()));
     connect(m_playlistDock->model(), SIGNAL(modified()), this, SLOT(onPlaylistModified()));
-    connect(m_playlistDock->model(), SIGNAL(loaded()), this, SLOT(updateMarkers()));
+    connect(m_playlistDock->model(), SIGNAL(loaded()), this, SLOT(onPlaylistLoaded()));
     if (!Settings.playerGPU())
         connect(m_playlistDock->model(), SIGNAL(loaded()), this, SLOT(updateThumbnails()));
 
@@ -880,11 +880,11 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         } else if (MLT.isMultitrack()) {
             if (MLT.savedProducer())
                 m_player->onTabBarClicked(Player::ClipTabIndex);
-            else if (playlist())
+            else if (playlist() && playlist()->count() > 0)
                 m_player->onTabBarClicked(Player::PlaylistTabIndex);
             // TODO else open clip nder playhead of current track if available
         } else {
-            if (playlist())
+            if (playlist() && playlist()->count() > 0)
                 m_player->onTabBarClicked(Player::PlaylistTabIndex);
             else if (multitrack())
                 m_player->onTabBarClicked(Player::TimelineTabIndex);
@@ -1317,7 +1317,14 @@ void MainWindow::onFiltersDockTriggered(bool checked)
 
 void MainWindow::onPlaylistCreated()
 {
+    if (!playlist() || playlist()->count() == 0) return;
     setCurrentFile("");
+    m_player->enableTab(Player::PlaylistTabIndex, true);
+}
+
+void MainWindow::onPlaylistLoaded()
+{
+    updateMarkers();
     m_player->enableTab(Player::PlaylistTabIndex, true);
 }
 
@@ -1346,6 +1353,7 @@ void MainWindow::onPlaylistModified()
     if ((void*) MLT.producer()->get_producer() == (void*) playlist()->get_playlist())
         m_player->onProducerModified();
     updateMarkers();
+    m_player->enableTab(Player::PlaylistTabIndex, true);
 }
 
 void MainWindow::onMultitrackCreated()

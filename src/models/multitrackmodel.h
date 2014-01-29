@@ -128,6 +128,8 @@ private:
     void addMissingTransitions();
     Mlt::Transition* getTransition(const QString& name, int trackIndex) const;
     void removeBlankPlaceholder(Mlt::Playlist& playlist, int trackIndex);
+    void retainPlaylist();
+    void loadPlaylist();
 
 private slots:
     void adjustBackgroundDuration();

@@ -61,10 +61,8 @@ public:
     void createIfNeeded();
     void showThumbnail(int row);
     void refreshThumbnails();
-    Mlt::Playlist* playlist()
-    {
-        return m_playlist;
-    }
+    Mlt::Playlist* playlist() { return m_playlist; }
+    void setPlaylist(Mlt::Playlist& playlist);
 
 signals:
     void created();

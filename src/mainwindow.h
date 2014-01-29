@@ -53,6 +53,7 @@ public:
     QUndoStack* undoStack() const;
     void saveXML(const QString& filename);
     static void changeTheme(const QString& theme);
+    PlaylistDock* playlistDock() const { return m_playlistDock; }
     FiltersDock* filtersDock() const { return m_filtersDock; }
     HtmlEditor* htmlEditor() const { return m_htmlEditor; }
     Mlt::Playlist* playlist() const;
@@ -147,6 +148,7 @@ private slots:
     void onHistoryDockTriggered(bool checked = true);
     void onFiltersDockTriggered(bool checked = true);
     void onPlaylistCreated();
+    void onPlaylistLoaded();
     void onPlaylistCleared();
     void onPlaylistClosed();
     void onPlaylistModified();

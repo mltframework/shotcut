@@ -21,6 +21,7 @@
 #include "mainwindow.h"
 #include "database.h"
 #include "settings.h"
+#include "docks/playlistdock.h"
 #include <QScopedPointer>
 #include <QFileInfo>
 #include <QThreadPool>
@@ -38,6 +39,7 @@ static const char* kShotcutPlaylistProperty = "shotcut:playlist";
 static const char* kAudioTrackProperty = "shotcut:audio";
 static const char* kVideoTrackProperty = "shotcut:video";
 static const char* kBackgroundTrackId = "background";
+static const char* kPlaylistTrackId = "main bin";
 
 static void deleteQVariantList(QVariantList* list)
 {
@@ -1237,6 +1239,7 @@ bool MultitrackModel::createIfNeeded()
         m_tractor->set_profile(MLT.profile());
         MLT.profile().set_explicit(true);
         m_tractor->set("shotcut", 1);
+        retainPlaylist();
         addBackgroundTrack();
         addVideoTrack();
         emit created();
@@ -1288,6 +1291,7 @@ void MultitrackModel::addAudioTrack()
         m_tractor->set_profile(MLT.profile());
         MLT.profile().set_explicit(true);
         m_tractor->set("shotcut", 1);
+        retainPlaylist();
         addBackgroundTrack();
         addAudioTrack();
         emit created();
@@ -1383,6 +1387,27 @@ void MultitrackModel::addVideoTrack()
     endInsertRows();
 }
 
+void MultitrackModel::retainPlaylist()
+{
+    if (!MAIN.playlist())
+        MAIN.playlistDock()->model()->createIfNeeded();
+    Mlt::Playlist playlist(*MAIN.playlist());
+    playlist.set("id", kPlaylistTrackId);
+    QString retain = QString("xml_retain %1").arg(kPlaylistTrackId);
+    m_tractor->set(retain.toUtf8().constData(), playlist.get_service(), 0);
+}
+
+void MultitrackModel::loadPlaylist()
+{
+    Mlt::Properties retainList((mlt_properties) m_tractor->get_data("xml_retain"));
+    if (retainList.is_valid() && retainList.get_data(kPlaylistTrackId)) {
+        Mlt::Playlist playlist((mlt_playlist) retainList.get_data(kPlaylistTrackId));
+        if (playlist.is_valid())
+            MAIN.playlistDock()->model()->setPlaylist(playlist);
+    }
+    retainPlaylist();
+}
+
 void MultitrackModel::load()
 {
     if (m_tractor) {
@@ -1405,6 +1430,7 @@ void MultitrackModel::load()
         return;
     }
 
+    loadPlaylist();
     addBlackTrackIfNeeded();
     addMissingTransitions();
     refreshTrackList();
@@ -1450,9 +1476,10 @@ void MultitrackModel::refreshTrackList()
         QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
         if (!track)
             continue;
-        if (QString(track->get("id")) == "black_track")
+        QString trackId = track->get("id");
+        if (trackId == "black_track")
             isKdenlive = true;
-        else if (QString(track->get("id")) == kBackgroundTrackId)
+        else if (trackId == kBackgroundTrackId)
             continue;
         else if (!track->get(kShotcutPlaylistProperty) && !track->get(kAudioTrackProperty)) {
             int hide = track->get_int("hide");
@@ -1476,10 +1503,13 @@ void MultitrackModel::refreshTrackList()
         QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
         if (!track)
             continue;
-        if (QString(track->get("id")) == "black_track")
+        QString trackId = track->get("id");
+        if (trackId == "black_track")
             isKdenlive = true;
-        else if (isKdenlive && QString(track->get("id")) == "playlist1")
+        else if (isKdenlive && trackId == "playlist1")
             // In Kdenlive, playlist1 is a special audio mixdown track.
+            continue;
+        else if (trackId == kPlaylistTrackId)
             continue;
         else if (!track->get(kShotcutPlaylistProperty) && !track->get(kVideoTrackProperty)) {
             int hide = track->get_int("hide");

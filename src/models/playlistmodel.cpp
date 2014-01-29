@@ -544,3 +544,28 @@ void PlaylistModel::refreshThumbnails()
         }
     }
 }
+
+void PlaylistModel::setPlaylist(Mlt::Playlist& playlist)
+{
+    if (playlist.is_valid()) {
+        if (m_playlist) {
+            beginRemoveRows(QModelIndex(), 0, rowCount() - 1);
+            m_playlist->clear();
+            endRemoveRows();
+            delete m_playlist;
+        }
+        m_playlist = new Mlt::Playlist(playlist);
+        if (!m_playlist->is_valid()) {
+            delete m_playlist;
+            m_playlist = 0;
+            return;
+        }
+        beginInsertRows(QModelIndex(), 0, m_playlist->count() - 1);
+        endInsertRows();
+        // do not let opening a clip change the profile!
+        MLT.profile().set_explicit(true);
+        if (Settings.playerGPU() && Settings.playlistThumbnails() != "hidden")
+            refreshThumbnails();
+        emit loaded();
+    }
+}
