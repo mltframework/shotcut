@@ -17,6 +17,7 @@
  */
 
 import QtQuick 2.1
+import QtQuick.Dialogs 1.1
 import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.0
 import Shotcut.Controls 1.0
@@ -25,12 +26,51 @@ Rectangle {
     width: 400
     height: 200
     color: 'transparent'
+    
+    function setStatus( inProgress ) {
+        if (inProgress) {
+            status.text = qsTr('Analyzing...')
+        }
+        else if (filter.get("results").length > 0 && 
+                 filter.get("results") == filter.get("filename") ) {
+            status.text = qsTr('Analysis complete.')
+        }
+        else
+        {
+            status.text = qsTr('Click "Analyze" to use this filter.')
+        }
+    }
 
     Connections {
         target: filter
         onAnalyzeFinished: {
             filter.set("reload", 1);
-            if (isSuccess) status.text = qsTr('Analysis complete.')
+            setStatus(false)
+            button.enabled = true
+        }
+    }
+    
+    FileDialog {
+        id: fileDialog
+        title: qsTr( 'Select a file to store analysis results.' )
+        modality: Qt.ApplicationModal2
+        selectExisting: false
+        selectMultiple: false
+        selectFolder: false
+        nameFilters: [ "Stabilize Results (*.stab)" ]
+        selectedNameFilter: "Stabilize Results (*.stab)"
+        onAccepted: {
+            var filename = fileDialog.fileUrl.toString().substring(7)
+            var extension = ".stab"
+            // Force file extension to ".stab"
+            if ( filename.indexOf( extension, filename - extension.length ) == -1 ) {
+                filename += ".stab"
+            }
+            filter.set( 'filename', filename )
+            setStatus(true)
+            filter.analyze();
+        }
+        onRejected: {
             button.enabled = true
         }
     }
@@ -118,16 +158,13 @@ Rectangle {
                 text: qsTr('Analyze')
                 onClicked: {
                     button.enabled = false
-                    status.text = ''
-                    filter.analyze();
+                    fileDialog.open()
                 }
             }
             Label {
                 id: status
-                text: qsTr('Click Analyze to use this filter.')
                 Component.onCompleted: {
-                    if (filter.get("results").length > 0)
-                        text = qsTr('Analysis complete.')
+                    setStatus(false)
                 }
             }
         }
