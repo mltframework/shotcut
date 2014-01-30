@@ -751,10 +751,7 @@ int MultitrackModel::overwriteClip(int trackIndex, Mlt::Producer& clip, int posi
             int targetIndex = playlist.get_clip_index_at(position);
 
             if (position > playlist.clip_start(targetIndex)) {
-                // Split target clip.
-                beginInsertRows(index(trackIndex), targetIndex, targetIndex);
-                playlist.split_at(position);
-                endInsertRows();
+                splitClip(trackIndex, targetIndex, position);
             
                 // Notify item on left was adjusted.
                 QModelIndex modelIndex = createIndex(targetIndex, 0, trackIndex);
@@ -847,10 +844,7 @@ int MultitrackModel::insertClip(int trackIndex, Mlt::Producer &clip, int positio
             int targetIndex = playlist.get_clip_index_at(position);
         
             if (position > playlist.clip_start(targetIndex)) {
-                // Split target clip.
-                beginInsertRows(index(trackIndex), targetIndex, targetIndex);
-                playlist.split_at(position);
-                endInsertRows();
+                splitClip(trackIndex, targetIndex, position);
         
                 // Notify item on left was adjusted.
                 QModelIndex modelIndex = createIndex(targetIndex, 0, trackIndex);
@@ -955,6 +949,65 @@ void MultitrackModel::liftClip(int trackIndex, int clipIndex)
 
             emit modified();
         }
+    }
+}
+
+void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
+{
+    int i = m_trackList.at(trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    if (track) {
+        Mlt::Playlist playlist(*track);
+        QScopedPointer<Mlt::Producer> clip(playlist.get_clip(clipIndex));
+
+        // Make copy of clip.
+        Mlt::Producer producer(MLT.profile(), "xml-string",
+            MLT.saveXML("xml-string", &clip->parent()).toUtf8().constData());
+        int in = clip->get_in();
+        int out = clip->get_out();
+        int duration = position - playlist.clip_start(clipIndex);
+
+        playlist.resize_clip(clipIndex, in, in + duration - 1);
+        QModelIndex modelIndex = createIndex(clipIndex, 0, trackIndex);
+        QVector<int> roles;
+        roles << DurationRole;
+        roles << OutPointRole;
+        emit dataChanged(modelIndex, modelIndex, roles);
+
+        beginInsertRows(index(trackIndex), clipIndex + 1, clipIndex + 1);
+        playlist.insert(producer, clipIndex + 1, in + duration, out);
+        endInsertRows();
+        modelIndex = createIndex(clipIndex + 1, 0, trackIndex);
+        QThreadPool::globalInstance()->start(
+            new AudioLevelsTask(producer.parent(), this, modelIndex));
+        emit modified();
+    }
+}
+
+void MultitrackModel::joinClips(int trackIndex, int clipIndex)
+{
+    if (clipIndex < 0) return;
+    int i = m_trackList.at(trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    if (track) {
+        Mlt::Playlist playlist(*track);
+        if (clipIndex >= playlist.count() - 1) return;
+        QScopedPointer<Mlt::Producer> clip(playlist.get_clip(clipIndex));
+        int in = clip->get_in();
+        int out = playlist.clip_length(clipIndex) + playlist.clip_length(clipIndex + 1) - 1;
+
+        playlist.resize_clip(clipIndex, in, out);
+        QModelIndex modelIndex = createIndex(clipIndex, 0, trackIndex);
+        QVector<int> roles;
+        roles << DurationRole;
+        roles << OutPointRole;
+        emit dataChanged(modelIndex, modelIndex, roles);
+
+        beginRemoveRows(index(trackIndex), clipIndex + 1, clipIndex + 1);
+        playlist.remove(clipIndex + 1);
+        endRemoveRows();
+
+        emit modified();
     }
 }
 

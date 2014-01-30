@@ -339,5 +339,10 @@ Rectangle {
             text: qsTr('Open As Clip')
             onTriggered: timeline.openClip(trackIndex, index)
         }
+        MenuItem {
+            visible: !isBlank
+            text: qsTr('Split At Playhead')
+            onTriggered: timeline.splitClip(trackIndex, index, timeline.position)
+        }
     }
 }

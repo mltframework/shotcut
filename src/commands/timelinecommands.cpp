@@ -63,7 +63,7 @@ void InsertCommand::redo()
 void InsertCommand::undo()
 {
     m_model.removeClip(m_trackIndex, m_clipIndex);
-    // TODO Rejoin a splitted clip.
+    m_model.joinClips(m_trackIndex, m_clipIndex - 1);
 }
 
 OverwriteCommand::OverwriteCommand(MultitrackModel &model, int trackIndex,
@@ -327,6 +327,27 @@ bool TrimClipOutCommand::mergeWith(const QUndoCommand *other)
         return false;
     m_delta += static_cast<const TrimClipOutCommand*>(other)->m_delta;
     return true;
+}
+
+SplitCommand::SplitCommand(MultitrackModel &model, int trackIndex,
+    int clipIndex, int position, QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_trackIndex(trackIndex)
+    , m_clipIndex(clipIndex)
+    , m_position(position)
+{
+    setText(QObject::tr("Split clip"));
+}
+
+void SplitCommand::redo()
+{
+    m_model.splitClip(m_trackIndex, m_clipIndex, m_position);
+}
+
+void SplitCommand::undo()
+{
+    m_model.joinClips(m_trackIndex, m_clipIndex);
 }
 
 }

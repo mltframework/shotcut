@@ -195,6 +195,19 @@ private:
     bool m_notify;
 };
 
+class SplitCommand : public QUndoCommand
+{
+public:
+    SplitCommand(MultitrackModel& model, int trackIndex, int clipIndex, int position, QUndoCommand * parent = 0);
+    void redo();
+    void undo();
+private:
+    MultitrackModel& m_model;
+    int m_trackIndex;
+    int m_clipIndex;
+    int m_position;
+};
+
 }
 
 #endif

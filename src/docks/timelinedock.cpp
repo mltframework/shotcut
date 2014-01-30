@@ -311,6 +311,19 @@ void TimelineDock::appendFromPlaylist(Mlt::Playlist *playlist)
     m_model.appendFromPlaylist(playlist, trackIndex);
 }
 
+void TimelineDock::splitClip(int trackIndex, int clipIndex, int position)
+{
+    if (trackIndex < 0)
+        trackIndex = m_quickView.rootObject()->property("currentTrack").toInt();
+    if (clipIndex < 0)
+        clipIndex = m_quickView.rootObject()->property("currentClip").toInt();
+    QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
+    if (info && position >= info->start && position < info->start + info->frame_count - 1) {
+        MAIN.undoStack()->push(
+            new Timeline::SplitCommand(m_model, trackIndex, clipIndex, position));
+    }
+}
+
 void TimelineDock::dragEnterEvent(QDragEnterEvent *event)
 {
     if (event->mimeData()->hasFormat(Mlt::XmlMimeType)) {
