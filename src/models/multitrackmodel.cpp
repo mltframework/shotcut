@@ -764,6 +764,14 @@ int MultitrackModel::overwriteClip(int trackIndex, Mlt::Producer& clip, int posi
                 QThreadPool::globalInstance()->start(
                     new AudioLevelsTask(clip.parent(), this, modelIndex));
                 ++targetIndex;
+            } else if (position < 0) {
+                clip.set_in_and_out(-position, clip.get_out());
+                QModelIndex modelIndex = createIndex(targetIndex, 0, trackIndex);
+                // Notify clip on right was adjusted.
+                QVector<int> roles;
+                roles << InPointRole;
+                roles << DurationRole;
+                emit dataChanged(modelIndex, modelIndex, roles);
             }
         
             // Adjust clip on right.
