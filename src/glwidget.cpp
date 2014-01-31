@@ -403,10 +403,11 @@ void GLWidget::showFrame(Mlt::QFrame frame)
             glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
             glTexImage2D   (GL_TEXTURE_2D, 0, GL_LUMINANCE, m_image_width/2, m_image_height/4, 0,
                             GL_LUMINANCE, GL_UNSIGNED_BYTE, image + m_image_width * m_image_height + m_image_width/2 * m_image_height/2);
+
+            delete m_lastFrame;
+            m_lastFrame = new Mlt::Frame(*frame.frame());
         }
         glDraw();
-        delete m_lastFrame;
-        m_lastFrame = new Mlt::Frame(*frame.frame());
     }
     showFrameSemaphore.release();
 }
