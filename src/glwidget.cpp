@@ -72,13 +72,12 @@ GLWidget::~GLWidget()
     if (m_texture[0] && !m_glslManager)
         glDeleteTextures(3, m_texture);
     delete m_fbo;
-// TODO deleting these causes crash at exit with recent changes to movit and MLT opengl module.
-//    delete m_glslManager;
-//    delete m_lastFrame;
+    delete m_glslManager;
     delete m_threadStartEvent;
     delete m_threadStopEvent;
     delete m_threadCreateEvent;
     delete m_threadJoinEvent;
+    delete m_lastFrame;
 }
 
 QSize GLWidget::minimumSizeHint() const
