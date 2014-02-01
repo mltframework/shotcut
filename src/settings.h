@@ -36,10 +36,16 @@ public:
     void setRecent(const QStringList&);
     QString theme() const;
     void setTheme(const QString&);
+    bool showTitleBars() const;
+    void setShowTitleBars(bool);
     QByteArray windowGeometry() const;
     void setWindowGeometry(const QByteArray&);
+    QByteArray windowGeometryDefault() const;
+    void setWindowGeometryDefault(const QByteArray&);
     QByteArray windowState() const;
     void setWindowState(const QByteArray&);
+    QByteArray windowStateDefault() const;
+    void setWindowStateDefault(const QByteArray&);
 
     QString encodePath() const;
     void setEncodePath(const QString&);

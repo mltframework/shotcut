@@ -188,6 +188,8 @@ private slots:
     void on_actionFusionDark_triggered();
     void on_actionFusionLight_triggered();
     void on_actionTutorials_triggered();
+    void on_actionRestoreLayout_triggered();
+    void on_actionShowTitleBars_triggered(bool checked);
 };
 
 #define MAIN MainWindow::singleton()

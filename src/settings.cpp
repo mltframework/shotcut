@@ -66,6 +66,16 @@ void ShotcutSettings::setTheme(const QString& s)
     settings.setValue("theme", s);
 }
 
+bool ShotcutSettings::showTitleBars() const
+{
+    return settings.value("titleBars", true).toBool();
+}
+
+void ShotcutSettings::setShowTitleBars(bool b)
+{
+    settings.setValue("titleBars", b);
+}
+
 QByteArray ShotcutSettings::windowGeometry() const
 {
     return settings.value("geometry").toByteArray();
@@ -76,6 +86,16 @@ void ShotcutSettings::setWindowGeometry(const QByteArray& a)
     settings.setValue("geometry", a);
 }
 
+QByteArray ShotcutSettings::windowGeometryDefault() const
+{
+    return settings.value("geometryDefault").toByteArray();
+}
+
+void ShotcutSettings::setWindowGeometryDefault(const QByteArray& a)
+{
+    settings.setValue("geometryDefault", a);
+}
+
 QByteArray ShotcutSettings::windowState() const
 {
     return settings.value("windowState").toByteArray();
@@ -84,6 +104,16 @@ QByteArray ShotcutSettings::windowState() const
 void ShotcutSettings::setWindowState(const QByteArray& a)
 {
     settings.setValue("windowState", a);
+}
+
+QByteArray ShotcutSettings::windowStateDefault() const
+{
+    return settings.value("windowStateDefault").toByteArray();
+}
+
+void ShotcutSettings::setWindowStateDefault(const QByteArray& a)
+{
+    settings.setValue("windowStateDefault", a);
 }
 
 QString ShotcutSettings::encodePath() const
