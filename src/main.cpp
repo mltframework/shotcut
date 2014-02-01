@@ -48,6 +48,8 @@ public:
 
         // Load translations
         const QString locale = Settings.language();
+        QLocale::setDefault(QLocale(locale));
+
         dir = applicationDirPath();
     #if defined(Q_OS_MAC)
         dir.cdUp();
