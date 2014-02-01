@@ -712,9 +712,14 @@ void MainWindow::readPlayerSettings()
 
 void MainWindow::readWindowSettings()
 {
+    Settings.setWindowGeometryDefault(saveGeometry());
+    Settings.setWindowStateDefault(saveState());
+    Settings.sync();
     restoreGeometry(Settings.windowGeometry());
     restoreState(Settings.windowState());
     m_jobsVisible = m_jobsDock->isVisible();
+    ui->actionShowTitleBars->setChecked(Settings.showTitleBars());
+    on_actionShowTitleBars_triggered(Settings.showTitleBars());
 }
 
 void MainWindow::writeSettings()
@@ -1881,4 +1886,27 @@ void MainWindow::on_actionFusionLight_triggered()
 void MainWindow::on_actionTutorials_triggered()
 {
     QDesktopServices::openUrl(QUrl("http://www.shotcut.org/bin/view/Shotcut/Tutorials"));
+}
+
+void MainWindow::on_actionRestoreLayout_triggered()
+{
+    restoreGeometry(Settings.windowGeometryDefault());
+    restoreState(Settings.windowStateDefault());
+    m_jobsVisible = m_jobsDock->isVisible();
+}
+
+void MainWindow::on_actionShowTitleBars_triggered(bool checked)
+{
+    QList <QDockWidget *> docks = findChildren<QDockWidget *>();
+    for (int i = 0; i < docks.count(); i++) {
+        QDockWidget* dock = docks.at(i);
+        if (checked) {
+            dock->setTitleBarWidget(0);
+        } else {
+            if (!dock->isFloating()) {
+                dock->setTitleBarWidget(new QWidget);
+            }
+        }
+    }
+    Settings.setShowTitleBars(checked);
 }
