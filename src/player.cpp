@@ -697,7 +697,7 @@ void Player::onVolumeChanged(int volume)
 {
     const double gain = double(volume) / VOLUME_KNEE;
     MLT.setVolume(gain);
-    emit showStatusMessage(QString("%1 dB").arg(IEC_dB(gain)));
+    emit showStatusMessage(QString("%L1 dB").arg(IEC_dB(gain)));
     Settings.setPlayerVolume(volume);
 }
 

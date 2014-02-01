@@ -198,7 +198,7 @@ void AvformatProducerWidget::onFrameReceived(Mlt::QFrame)
         fps /= m_producer->get_double("meta.media.frame_rate_den");
     if (m_producer->get("force_fps"))
         fps = m_producer->get_double("fps");
-    ui->videoTableWidget->setItem(2, 1, new QTableWidgetItem(QString::number(fps)));
+    ui->videoTableWidget->setItem(2, 1, new QTableWidgetItem(QString("%L1").arg(fps)));
 
     int progressive = m_producer->get_int("meta.media.progressive");
     if (m_producer->get("force_progressive"))
