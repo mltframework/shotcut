@@ -71,6 +71,7 @@ protected:
     void dragEnterEvent(QDragEnterEvent*);
     void dropEvent(QDropEvent*);
     void closeEvent(QCloseEvent*);
+    void showEvent(QShowEvent*);
 
 private:
     void setupSettingsMenu();

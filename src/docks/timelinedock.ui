@@ -38,7 +38,7 @@
      <number>0</number>
     </property>
     <property name="topMargin">
-     <number>0</number>
+     <number>2</number>
     </property>
     <property name="rightMargin">
      <number>0</number>
@@ -72,7 +72,7 @@
          <x>0</x>
          <y>0</y>
          <width>400</width>
-         <height>281</height>
+         <height>279</height>
         </rect>
        </property>
       </widget>
