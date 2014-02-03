@@ -414,21 +414,30 @@ void MultitrackModel::setTrackComposite(int row, Qt::CheckState composite)
     if (row < m_trackList.size()) {
         int i = m_trackList.at(row).mlt_index;
         QScopedPointer<Mlt::Transition> transition(getTransition("composite", i));
-        if (!transition)
-            transition.reset(getTransition("movit.overlay", i));
         if (transition) {
             transition->set("disable", (composite == Qt::Unchecked));
             transition->set("fill", (composite == Qt::Checked));
             transition->set("halign", (composite == Qt::PartiallyChecked)? "l" : "c");
             transition->set("valign", (composite == Qt::PartiallyChecked)? "t" : "c");
-            MLT.refreshConsumer();
-
-            QModelIndex modelIndex = index(row, 0);
-            QVector<int> roles;
-            roles << IsCompositeRole;
-            emit dataChanged(modelIndex, modelIndex, roles);
-            emit modified();
+        } else {
+            QScopedPointer<Mlt::Filter> filter(getFilter("movit.rect", i));
+            if (filter) {
+                filter->set("disable", (composite == Qt::Unchecked));
+                filter->set("fill", (composite == Qt::Checked));
+                filter->set("halign", (composite == Qt::PartiallyChecked)? "l" : "c");
+                filter->set("valign", (composite == Qt::PartiallyChecked)? "t" : "c");
+            }
+            transition.reset(getTransition("movit.overlay", i));
+            if (transition)
+                transition->set("disable", (composite == Qt::Unchecked));
         }
+        MLT.refreshConsumer();
+
+        QModelIndex modelIndex = index(row, 0);
+        QVector<int> roles;
+        roles << IsCompositeRole;
+        emit dataChanged(modelIndex, modelIndex, roles);
+        emit modified();
     }
 }
 
@@ -1421,10 +1430,12 @@ void MultitrackModel::addVideoTrack()
 
     // Add the composite transition.
     Mlt::Transition composite(MLT.profile(), Settings.playerGPU()? "movit.overlay" : "composite");
-    composite.set("fill", 1);
-    composite.set("halign", "c");
-    composite.set("valign", "c");
-    composite.set("progressive", 1);
+    if (!Settings.playerGPU()) {
+        composite.set("fill", 1);
+        composite.set("halign", "c");
+        composite.set("valign", "c");
+        composite.set("progressive", 1);
+    }
     composite.set("disable", 1);
 
     // Get the new, logical video-only index.
@@ -1437,6 +1448,14 @@ void MultitrackModel::addVideoTrack()
         }
     }
     m_tractor->plant_transition(composite, last_mlt_index, i);
+    if (Settings.playerGPU()) {
+        Mlt::Filter filter(MLT.profile(), "movit.rect");
+        filter.set("rect", "0/0:100%x100%");
+        filter.set("fill", 1);
+        filter.set("halign", "c");
+        filter.set("valign", "c");
+        m_tractor->plant_filter(filter, i);
+    }
 
     // Add the shotcut logical video track.
     Track t;
@@ -1649,6 +1668,20 @@ Mlt::Transition *MultitrackModel::getTransition(const QString &name, int trackIn
             Mlt::Transition t((mlt_transition) service->get_service());
             if (name == t.get("mlt_service") && t.get_b_track() == trackIndex)
                 return new Mlt::Transition(t);
+        }
+        service.reset(service->producer());
+    }
+    return 0;
+}
+
+Mlt::Filter *MultitrackModel::getFilter(const QString &name, int trackIndex) const
+{
+    QScopedPointer<Mlt::Service> service(m_tractor->producer());
+    while (service && service->is_valid()) {
+        if (service->type() == filter_type) {
+            Mlt::Filter f((mlt_filter) service->get_service());
+            if (name == f.get("mlt_service") && f.get_track() == trackIndex)
+                return new Mlt::Filter(f);
         }
         service.reset(service->producer());
     }
