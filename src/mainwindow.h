@@ -191,6 +191,8 @@ private slots:
     void on_actionTutorials_triggered();
     void on_actionRestoreLayout_triggered();
     void on_actionShowTitleBars_triggered(bool checked);
+    void on_actionShowToolbar_triggered(bool checked);
+    void onToolbarVisibilityChanged(bool visible);
 };
 
 #define MAIN MainWindow::singleton()

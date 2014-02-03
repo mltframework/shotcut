@@ -76,6 +76,16 @@ void ShotcutSettings::setShowTitleBars(bool b)
     settings.setValue("titleBars", b);
 }
 
+bool ShotcutSettings::showToolBar() const
+{
+    return settings.value("toolBar", true).toBool();
+}
+
+void ShotcutSettings::setShowToolBar(bool b)
+{
+    settings.setValue("toolBar", b);
+}
+
 QByteArray ShotcutSettings::windowGeometry() const
 {
     return settings.value("geometry").toByteArray();

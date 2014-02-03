@@ -38,6 +38,8 @@ public:
     void setTheme(const QString&);
     bool showTitleBars() const;
     void setShowTitleBars(bool);
+    bool showToolBar() const;
+    void setShowToolBar(bool);
     QByteArray windowGeometry() const;
     void setWindowGeometry(const QByteArray&);
     QByteArray windowGeometryDefault() const;

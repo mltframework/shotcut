@@ -91,6 +91,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionEnter_Full_Screen"/>
     <addaction name="actionRestoreLayout"/>
     <addaction name="actionShowTitleBars"/>
+    <addaction name="actionShowToolbar"/>
     <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
@@ -598,7 +599,10 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionRestoreLayout">
    <property name="text">
-    <string>Restore Layout</string>
+    <string>Restore Default Layout</string>
+   </property>
+   <property name="toolTip">
+    <string>Restore Default Layout</string>
    </property>
   </action>
   <action name="actionShowTitleBars">
@@ -607,6 +611,14 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Show Title Bars</string>
+   </property>
+  </action>
+  <action name="actionShowToolbar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show Toolbar</string>
    </property>
   </action>
  </widget>

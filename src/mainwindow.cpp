@@ -94,6 +94,7 @@ MainWindow::MainWindow()
     connect(ui->actionAbout_Qt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
     connect(this, SIGNAL(producerOpened()), this, SLOT(onProducerOpened()));
     connect(ui->actionFullscreen, SIGNAL(triggered()), this, SLOT(on_actionEnter_Full_Screen_triggered()));
+    connect(ui->mainToolBar, SIGNAL(visibilityChanged(bool)), SLOT(onToolbarVisibilityChanged(bool)));
 
     // Accept drag-n-drop of files.
     this->setAcceptDrops(true);
@@ -718,7 +719,6 @@ void MainWindow::readWindowSettings()
     restoreGeometry(Settings.windowGeometry());
     restoreState(Settings.windowState());
     m_jobsVisible = m_jobsDock->isVisible();
-    ui->actionShowTitleBars->setChecked(Settings.showTitleBars());
 }
 
 void MainWindow::writeSettings()
@@ -1074,7 +1074,10 @@ void MainWindow::showEvent(QShowEvent* event)
     // This is needed to prevent a crash on windows on startup when timeline
     // is visible and dock title bars are hidden.
     Q_UNUSED(event)
+    ui->actionShowTitleBars->setChecked(Settings.showTitleBars());
     on_actionShowTitleBars_triggered(Settings.showTitleBars());
+    ui->actionShowToolbar->setChecked(Settings.showToolBar());
+    on_actionShowToolbar_triggered(Settings.showToolBar());
 }
 
 void MainWindow::on_actionOpenOther_triggered()
@@ -1916,4 +1919,15 @@ void MainWindow::on_actionShowTitleBars_triggered(bool checked)
         }
     }
     Settings.setShowTitleBars(checked);
+}
+
+void MainWindow::on_actionShowToolbar_triggered(bool checked)
+{
+    ui->mainToolBar->setVisible(checked);
+}
+
+void MainWindow::onToolbarVisibilityChanged(bool visible)
+{
+    ui->actionShowToolbar->setChecked(visible);
+    Settings.setShowToolBar(visible);
 }
