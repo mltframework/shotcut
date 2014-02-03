@@ -419,7 +419,8 @@ void MultitrackModel::setTrackComposite(int row, Qt::CheckState composite)
         if (transition) {
             transition->set("disable", (composite == Qt::Unchecked));
             transition->set("fill", (composite == Qt::Checked));
-            transition->set("aligned", (composite == Qt::PartiallyChecked));
+            transition->set("halign", (composite == Qt::PartiallyChecked)? "l" : "c");
+            transition->set("valign", (composite == Qt::PartiallyChecked)? "t" : "c");
             MLT.refreshConsumer();
 
             QModelIndex modelIndex = index(row, 0);
@@ -1421,7 +1422,8 @@ void MultitrackModel::addVideoTrack()
     // Add the composite transition.
     Mlt::Transition composite(MLT.profile(), Settings.playerGPU()? "movit.overlay" : "composite");
     composite.set("fill", 1);
-    composite.set("aligned", 0);
+    composite.set("halign", "c");
+    composite.set("valign", "c");
     composite.set("progressive", 1);
     composite.set("disable", 1);
 
