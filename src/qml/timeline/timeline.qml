@@ -316,7 +316,7 @@ Rectangle {
 
     Action {
         id: appendAction
-        tooltip: qsTr('Append to the current track')
+        tooltip: qsTr('Append to the current track (C)')
         iconName: 'list-add'
         iconSource: 'qrc:///icons/oxygen/16x16/actions/list-add.png'
         onTriggered: timeline.append(currentTrack)
@@ -324,15 +324,15 @@ Rectangle {
 
     Action {
         id: liftAction
-        tooltip: qsTr('Lift - Remove current clip without\naffecting position of other clips')
-        iconName: 'list-remove'
-        iconSource: 'qrc:///icons/oxygen/16x16/actions/list-remove.png'
+        tooltip: qsTr('Lift - Remove current clip without\naffecting position of other clips (Z)')
+        iconName: 'go-up'
+        iconSource: 'qrc:///icons/oxygen/16x16/actions/go-up.png'
         onTriggered: timeline.lift(currentClipTrack, currentClip)
     }
 
     Action {
         id: insertAction
-        tooltip: qsTr('Insert clip into the current track')
+        tooltip: qsTr('Insert clip into the current track (V)')
         iconName: 'go-next'
         iconSource: 'qrc:///icons/oxygen/16x16/actions/go-next.png'
         onTriggered: timeline.insert(currentTrack)
@@ -340,7 +340,7 @@ Rectangle {
 
     Action {
         id: overwriteAction
-        tooltip: qsTr('Overwrite clip onto the current track')
+        tooltip: qsTr('Overwrite clip onto the current track (B)')
         iconName: 'go-down'
         iconSource: 'qrc:///icons/oxygen/16x16/actions/go-down.png'
         onTriggered: timeline.overwrite(currentTrack)
