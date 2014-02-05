@@ -40,6 +40,8 @@ static const char* kAudioTrackProperty = "shotcut:audio";
 static const char* kVideoTrackProperty = "shotcut:video";
 static const char* kBackgroundTrackId = "background";
 static const char* kPlaylistTrackId = "main bin";
+static const char* kTrackHeightProperty = "shotcut:trackHeight";
+static const char* kTimelineScaleProperty = "shotcut:scaleFactor";
 
 static void deleteQVariantList(QVariantList* list)
 {
@@ -540,6 +542,34 @@ bool MultitrackModel::trimClipOutValid(int trackIndex, int clipIndex, int delta)
             result = false;
     }
     return result;
+}
+
+int MultitrackModel::trackHeight() const
+{
+    int result = m_tractor? m_tractor->get_int(kTrackHeightProperty) : 50;
+    return result? result : 50;
+}
+
+void MultitrackModel::setTrackHeight(int height)
+{
+    if (m_tractor) {
+        m_tractor->set(kTrackHeightProperty, height);
+        emit trackHeightChanged();
+    }
+}
+
+double MultitrackModel::scaleFactor() const
+{
+    double result = m_tractor? m_tractor->get_double(kTimelineScaleProperty) : 0.5;
+    return result? result : 0.5;
+}
+
+void MultitrackModel::setScaleFactor(double scale)
+{
+    if (m_tractor) {
+        m_tractor->set(kTimelineScaleProperty, scale);
+        emit scaleFactorChanged();
+    }
 }
 
 int MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta)

@@ -26,8 +26,6 @@ Rectangle {
     color: activePalette.window
 
     property int headerWidth: 176
-    property int trackHeight: 50
-    property real scaleFactor: 0.5
     property int currentTrack: 0
     property int currentClip: -1
     property int currentClipTrack: -1
@@ -99,7 +97,7 @@ Rectangle {
                             isVideo: !model.audio
                             color: (index === currentTrack)? selectedTrackColor : (index % 2)? activePalette.alternateBase : activePalette.base
                             width: headerWidth
-                            height: model.audio? trackHeight : trackHeight * 2
+                            height: model.audio? multitrack.trackHeight : multitrack.trackHeight * 2
                             onClicked: currentTrack = index
                         }
                     }
@@ -132,8 +130,8 @@ Rectangle {
                     maximumValue: 1
                     value: 0.5
                     onValueChanged: {
-                        if (typeof root.scaleFactor != 'undefined')
-                            root.scaleFactor = Math.pow(value, 3) + 0.01
+                        if (typeof multitrack.scaleFactor != 'undefined')
+                            multitrack.scaleFactor = Math.pow(value, 3) + 0.01
                         if (typeof scrollIfNeeded != 'undefined')
                             scrollIfNeeded()
                     }
@@ -160,7 +158,7 @@ Rectangle {
             onReleased: scrubTimer.stop()
             onMouseXChanged: {
                 if (scim || pressedButtons === Qt.LeftButton) {
-                    timeline.position = (scrollView.flickableItem.contentX + mouse.x) / scaleFactor
+                    timeline.position = (scrollView.flickableItem.contentX + mouse.x) / multitrack.scaleFactor
                     if ((scrollView.flickableItem.contentX > 0 && mouse.x < 50) || (mouse.x > scrollView.width - 50))
                         scrubTimer.start()
                 }
@@ -194,7 +192,7 @@ Rectangle {
                         id: ruler
                         width: tracksContainer.width
                         index: index
-                        timeScale: scaleFactor
+                        timeScale: multitrack.scaleFactor
                     }
                 }
                 ScrollView {
@@ -214,7 +212,7 @@ Rectangle {
                                 delegate: Rectangle {
                                     width: tracksContainer.width
                                     color: (index === currentTrack)? selectedTrackColor : (index % 2)? activePalette.alternateBase : activePalette.base
-                                    height: audio? trackHeight : trackHeight * 2
+                                    height: audio? multitrack.trackHeight : multitrack.trackHeight * 2
                                 }
                             }
                         }
@@ -231,13 +229,13 @@ Rectangle {
                 color: activePalette.text
                 width: 1
                 height: root.height - scrollView.__horizontalScrollBar.height
-                x: timeline.position * scaleFactor - scrollView.flickableItem.contentX
+                x: timeline.position * multitrack.scaleFactor - scrollView.flickableItem.contentX
                 y: 0
             }
             Canvas {
                 id: playhead
                 visible: timeline.position > -1
-                x: timeline.position * scaleFactor - scrollView.flickableItem.contentX - 5
+                x: timeline.position * multitrack.scaleFactor - scrollView.flickableItem.contentX - 5
                 y: 0
                 width: 11
                 height: 5
@@ -262,7 +260,7 @@ Rectangle {
 
     Rectangle {
         id: dropTarget
-        height: trackHeight
+        height: multitrack.trackHeight
         opacity: 0.5
         visible: false
         Text {
@@ -289,15 +287,15 @@ Rectangle {
             onTriggered: timeline.addVideoTrack();
         }
         MenuItem {
-            enabled: trackHeight >= 50
+            enabled: multitrack.trackHeight >= 50
             text: qsTr('Make Tracks Shorter')
             shortcut: qsTr('Ctrl+K')
-            onTriggered: trackHeight = Math.max(30, trackHeight - 20)
+            onTriggered: multitrack.trackHeight = Math.max(30, multitrack.trackHeight - 20)
         }
         MenuItem {
             text: qsTr('Make Tracks Taller')
             shortcut: qsTr('Ctrl+L')
-            onTriggered: trackHeight += 20
+            onTriggered: multitrack.trackHeight += 20
         }
         MenuItem {
             text: qsTr('Close')
@@ -420,10 +418,10 @@ Rectangle {
         Track {
             model: multitrack
             rootIndex: trackDelegateModel.modelIndex(index)
-            height: audio? trackHeight : trackHeight * 2
+            height: audio? multitrack.trackHeight : multitrack.trackHeight * 2
             width: childrenRect.width
             isAudio: audio
-            timeScale: scaleFactor
+            timeScale: multitrack.scaleFactor
             onClipSelected: {
                 currentClip = clip.DelegateModel.itemsIndex
                 currentClipTrack = track.DelegateModel.itemsIndex
@@ -471,7 +469,7 @@ Rectangle {
             if (tracksRepeater.count > 0) {
                 dropTarget.x = pos.x
                 dropTarget.y = pos.y
-                dropTarget.width = duration * scaleFactor
+                dropTarget.width = duration * multitrack.scaleFactor
                 dropTarget.visible = true
 
                 for (var i = 0; i < tracksRepeater.count; i++) {
@@ -524,7 +522,7 @@ Rectangle {
     }
 
     function scrollIfNeeded() {
-        var x = timeline.position * scaleFactor;
+        var x = timeline.position * multitrack.scaleFactor;
         if (x > scrollView.flickableItem.contentX + scrollView.width - 50)
             scrollView.flickableItem.contentX = x - scrollView.width + 50;
         else if (x < 50)

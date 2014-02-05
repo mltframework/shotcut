@@ -44,6 +44,9 @@ typedef QList<Track> TrackList;
 class MultitrackModel : public QAbstractItemModel
 {
     Q_OBJECT
+    Q_PROPERTY(int trackHeight READ trackHeight WRITE setTrackHeight NOTIFY trackHeightChanged)
+    Q_PROPERTY(double scaleFactor READ scaleFactor WRITE setScaleFactor NOTIFY scaleFactorChanged)
+
 public:
     /// Two level model: tracks and clips on track
     enum {
@@ -86,6 +89,10 @@ public:
     int clipIndex(int trackIndex, int position);
     bool trimClipInValid(int trackIndex, int clipIndex, int delta);
     bool trimClipOutValid(int trackIndex, int clipIndex, int delta);
+    int trackHeight() const;
+    void setTrackHeight(int height);
+    double scaleFactor() const;
+    void setScaleFactor(double scale);
 
 signals:
     void created();
@@ -93,6 +100,8 @@ signals:
     void closed();
     void modified();
     void seeked(int position);
+    void trackHeightChanged();
+    void scaleFactorChanged();
 
 public slots:
     void refreshTrackList();
