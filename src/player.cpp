@@ -35,6 +35,7 @@ Player::Player(QWidget *parent)
     , m_scrollArea(0)
     , m_zoomToggleFactor(Settings.playerZoom() == 0.0f? 1.0f : Settings.playerZoom())
     , m_pauseAfterPlay(false)
+    , m_monitorScreen(-1)
 {
     setObjectName("Player");
     Mlt::Controller::singleton(this);
@@ -79,6 +80,7 @@ Player::Player(QWidget *parent)
     m_scrollArea->setWidget(MLT.videoWidget());
     hlayout->addWidget(m_scrollArea, 10);
 #endif
+    hlayout->addStretch();
     QVBoxLayout *volumeLayoutV = new QVBoxLayout;
     volumeLayoutV->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding));
     QHBoxLayout *volumeLayoutH = new QHBoxLayout;
@@ -668,6 +670,29 @@ void Player::showAudio(Mlt::Frame* frame)
         channels << frame->get_double(s.toLatin1().constData());
     }
     emit audioLevels(channels);
+}
+
+void Player::moveVideoToScreen(int screen)
+{
+    if (screen == m_monitorScreen) return;
+    QWidget* widget = m_scrollArea? m_scrollArea : MLT.videoWidget();
+
+    if (screen == -2) {
+        // -2 = embedded
+        QBoxLayout* l = (QBoxLayout*) layout()->itemAt(0)->widget()->layout();
+        widget->showNormal();
+        l->insertWidget(0, widget, 10);
+    } else if (QApplication::desktop()->screenCount() > 1) {
+        // -1 = find first screen the app is not using
+        for (int i = 0; screen == -1 && i < QApplication::desktop()->screenCount(); i++) {
+            if (i != QApplication::desktop()->screenNumber(this))
+                screen = i;
+        }
+        widget->setParent(QApplication::desktop()->screen(screen));
+        widget->move(QApplication::desktop()->screenGeometry(screen).bottomLeft());
+        widget->showFullScreen();
+    }
+    m_monitorScreen = screen;
 }
 
 //----------------------------------------------------------------------------

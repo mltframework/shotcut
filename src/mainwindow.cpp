@@ -411,6 +411,15 @@ void MainWindow::setupSettingsMenu()
     m_externalGroup = new QActionGroup(this);
     ui->actionExternalNone->setData(QString());
     m_externalGroup->addAction(ui->actionExternalNone);
+
+    int n = QApplication::desktop()->screenCount();
+    for (int i = 0; n > 1 && i < n; i++) {
+        QAction* action = new QAction(tr("Screen %1").arg(i), this);
+        action->setCheckable(true);
+        action->setData(i);
+        m_externalGroup->addAction(action);
+    }
+
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     Mlt::Consumer linsys(MLT.profile(), "sdi");
     if (linsys.is_valid()) {
@@ -420,6 +429,7 @@ void MainWindow::setupSettingsMenu()
         m_externalGroup->addAction(action);
     }
 #endif
+
     Mlt::Profile profile;
     Mlt::Consumer decklink(profile, "decklink:");
     if (decklink.is_valid()) {
@@ -526,6 +536,11 @@ void MainWindow::open(Mlt::Producer* producer)
         ui->statusBar->showMessage(tr("Failed to open "), STATUS_TIMEOUT_MS);
     else if (producer->get_int("error"))
         ui->statusBar->showMessage(tr("Failed to open ") + producer->get("resource"), STATUS_TIMEOUT_MS);
+
+    bool ok = false;
+    int screen = Settings.playerExternal().toInt(&ok);
+    if (ok) m_player->moveVideoToScreen(screen);
+
     // no else here because open() will delete the producer if open fails
     if (!MLT.setProducer(producer))
         emit producerOpened();
@@ -677,6 +692,8 @@ void MainWindow::readPlayerSettings()
         ui->actionHyper->setChecked(true);
 
     QString external = Settings.playerExternal();
+    bool ok = false;
+    external.toInt(&ok);
     foreach (QAction* a, m_externalGroup->actions()) {
         if (a->data() == external) {
             a->setChecked(true);
@@ -698,11 +715,11 @@ void MainWindow::readPlayerSettings()
 
     QString profile = Settings.playerProfile();
     // Automatic not permitted for SDI/HDMI
-    if (!external.isEmpty() && profile.isEmpty())
+    if (!external.isEmpty() && !ok && profile.isEmpty())
         profile = "atsc_720p_50";
     foreach (QAction* a, m_profileGroup->actions()) {
         // Automatic not permitted for SDI/HDMI
-        if (a->data().toString().isEmpty() && !external.isEmpty())
+        if (a->data().toString().isEmpty() && !external.isEmpty() && !ok)
             a->setDisabled(true);
         if (a->data().toString() == profile) {
             a->setChecked(true);
@@ -734,13 +751,14 @@ void MainWindow::writeSettings()
 
 void MainWindow::configureVideoWidget()
 {
-    MLT.videoWidget()->setProperty("mlt_service",
-        ui->menuExternal? m_externalGroup->checkedAction()->data() : QString());
     MLT.setProfile(m_profileGroup->checkedAction()->data().toString());
     MLT.videoWidget()->setProperty("realtime", ui->actionRealtime->isChecked());
-    if (!ui->menuExternal || m_externalGroup->checkedAction()->data().toString().isEmpty())
+    bool ok = false;
+    m_externalGroup->checkedAction()->data().toInt(&ok);
+    if (!ui->menuExternal || m_externalGroup->checkedAction()->data().toString().isEmpty() || ok) {
         MLT.videoWidget()->setProperty("progressive", ui->actionProgressive->isChecked());
-    else {
+    } else {
+        MLT.videoWidget()->setProperty("mlt_service", m_externalGroup->checkedAction()->data());
         MLT.videoWidget()->setProperty("progressive", MLT.profile().progressive());
         ui->actionProgressive->setEnabled(false);
     }
@@ -1807,7 +1825,16 @@ void MainWindow::onExternalTriggered(QAction *action)
 {
     bool isExternal = !action->data().toString().isEmpty();
     Settings.setPlayerExternal(action->data().toString());
-    MLT.videoWidget()->setProperty("mlt_service", action->data());
+
+    bool ok = false;
+    int screen = action->data().toInt(&ok);
+    if (ok || action->data().toString().isEmpty()) {
+        m_player->moveVideoToScreen(ok? screen : -2);
+        isExternal = false;
+        MLT.videoWidget()->setProperty("mlt_service", QVariant());
+    } else {
+        MLT.videoWidget()->setProperty("mlt_service", action->data());
+    }
 
     QString profile = Settings.playerProfile();
     // Automatic not permitted for SDI/HDMI
@@ -1839,7 +1866,8 @@ void MainWindow::onExternalTriggered(QAction *action)
         MLT.consumer()->set("progressive", isProgressive);
         MLT.restart();
     }
-    m_keyerMenu->setEnabled(action->data().toString().startsWith("decklink"));
+    if (m_keyerMenu)
+        m_keyerMenu->setEnabled(action->data().toString().startsWith("decklink"));
 }
 
 void MainWindow::onKeyerTriggered(QAction *action)

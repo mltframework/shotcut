@@ -54,6 +54,7 @@ public:
     int position() const {
         return m_position;
     }
+    void moveVideoToScreen(int screen = -1);
 
 signals:
     void endOfStream();
@@ -135,6 +136,7 @@ private:
     float m_zoomToggleFactor;
     QTabBar* m_tabs;
     bool m_pauseAfterPlay;
+    int m_monitorScreen;
 
 private slots:
     void updateSelection();
