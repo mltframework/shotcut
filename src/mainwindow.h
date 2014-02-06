@@ -193,6 +193,7 @@ private slots:
     void on_actionShowTitleBars_triggered(bool checked);
     void on_actionShowToolbar_triggered(bool checked);
     void onToolbarVisibilityChanged(bool visible);
+    void on_menuExternal_aboutToShow();
 };
 
 #define MAIN MainWindow::singleton()

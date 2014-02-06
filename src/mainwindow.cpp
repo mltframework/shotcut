@@ -539,7 +539,8 @@ void MainWindow::open(Mlt::Producer* producer)
 
     bool ok = false;
     int screen = Settings.playerExternal().toInt(&ok);
-    if (ok) m_player->moveVideoToScreen(screen);
+    if (ok && screen != QApplication::desktop()->screenNumber(this))
+        m_player->moveVideoToScreen(screen);
 
     // no else here because open() will delete the producer if open fails
     if (!MLT.setProducer(producer))
@@ -1958,4 +1959,23 @@ void MainWindow::onToolbarVisibilityChanged(bool visible)
 {
     ui->actionShowToolbar->setChecked(visible);
     Settings.setShowToolBar(visible);
+}
+
+void MainWindow::on_menuExternal_aboutToShow()
+{
+    foreach (QAction* action, m_externalGroup->actions()) {
+        bool ok = false;
+        int i = action->data().toInt(&ok);
+        if (ok) {
+            if (i == QApplication::desktop()->screenNumber(this)) {
+                if (action->isChecked()) {
+                    m_externalGroup->actions().first()->setChecked(true);
+                    Settings.setPlayerExternal(QString());
+                }
+                action->setDisabled(true);
+            }  else {
+                action->setEnabled(true);
+            }
+        }
+    }
 }
