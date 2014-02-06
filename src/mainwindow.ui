@@ -70,7 +70,7 @@ p, li { white-space: pre-wrap; }
      <x>0</x>
      <y>0</y>
      <width>832</width>
-     <height>22</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -103,6 +103,7 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>&amp;Help</string>
     </property>
+    <addaction name="actionUpgrade"/>
     <addaction name="actionFAQ"/>
     <addaction name="actionTutorials"/>
     <addaction name="actionForum"/>
@@ -619,6 +620,11 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Show Toolbar</string>
+   </property>
+  </action>
+  <action name="actionUpgrade">
+   <property name="text">
+    <string>Upgrade...</string>
    </property>
   </action>
  </widget>

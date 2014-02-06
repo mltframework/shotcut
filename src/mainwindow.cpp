@@ -1979,3 +1979,8 @@ void MainWindow::on_menuExternal_aboutToShow()
         }
     }
 }
+
+void MainWindow::on_actionUpgrade_triggered()
+{
+    QDesktopServices::openUrl(QUrl("http://www.shotcut.org/bin/view/Shotcut/Download"));
+}
