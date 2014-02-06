@@ -162,7 +162,7 @@ void QmlFilter::analyze()
         dom.documentElement().insertAfter(consumerNode, profiles.at(profiles.length() - 1));
     consumerNode.setAttribute("mlt_service", "xml");
     consumerNode.setAttribute("all", 1);
-    consumerNode.setAttribute("audio_off", 1);
+    consumerNode.setAttribute("audio_off", 0);
     consumerNode.setAttribute("no_meta", 1);
     consumerNode.setAttribute("resource", target);
 

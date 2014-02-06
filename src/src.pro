@@ -234,6 +234,8 @@ OTHER_FILES += \
     qml/filters/audio_channelcopy/ui.qml \
     qml/filters/audio_gain/meta.qml \
     qml/filters/audio_gain/ui.qml \
+    qml/filters/audio_loudness/meta.qml \
+    qml/filters/audio_loudness/ui.qml \
     qml/filters/audio_pan/meta.qml \
     qml/filters/audio_pan/ui.qml \
     qml/filters/audio_balance/meta.qml \
@@ -279,6 +281,8 @@ lupdate_hack {
     qml/filters/audio_channelcopy/ui.qml \
     qml/filters/audio_gain/meta.qml \
     qml/filters/audio_gain/ui.qml \
+    qml/filters/audio_loudness/meta.qml \
+    qml/filters/audio_loudness/ui.qml \
     qml/filters/audio_pan/meta.qml \
     qml/filters/audio_pan/ui.qml \
     qml/filters/audio_balance/meta.qml \
