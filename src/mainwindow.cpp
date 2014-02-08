@@ -638,7 +638,7 @@ void MainWindow::seekPlaylist(int start)
     updateMarkers();
     MLT.seek(start);
     m_player->setFocus();
-    m_player->switchToTab(Player::PlaylistTabIndex);
+    m_player->switchToTab(Player::ProgramTabIndex);
 }
 
 void MainWindow::seekTimeline(int position)
@@ -656,7 +656,7 @@ void MainWindow::seekTimeline(int position)
         m_filtersDock->onProducerOpened();
         updateMarkers();
         m_player->setFocus();
-        m_player->switchToTab(Player::TimelineTabIndex);
+        m_player->switchToTab(Player::ProgramTabIndex);
     }
     m_player->seek(position);
 }
@@ -895,22 +895,18 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
     case Qt::Key_Escape: // Avid Toggle Active Monitor
         if (MLT.isPlaylist()) {
             if (multitrack())
-                m_player->onTabBarClicked(Player::TimelineTabIndex);
+                m_player->onTabBarClicked(Player::ProgramTabIndex);
             else if (MLT.savedProducer())
-                m_player->onTabBarClicked(Player::ClipTabIndex);
+                m_player->onTabBarClicked(Player::SourceTabIndex);
             else
                 m_playlistDock->on_actionOpen_triggered();
         } else if (MLT.isMultitrack()) {
             if (MLT.savedProducer())
-                m_player->onTabBarClicked(Player::ClipTabIndex);
-            else if (playlist() && playlist()->count() > 0)
-                m_player->onTabBarClicked(Player::PlaylistTabIndex);
-            // TODO else open clip nder playhead of current track if available
+                m_player->onTabBarClicked(Player::SourceTabIndex);
+            // TODO else open clip under playhead of current track if available
         } else {
-            if (playlist() && playlist()->count() > 0)
-                m_player->onTabBarClicked(Player::PlaylistTabIndex);
-            else if (multitrack())
-                m_player->onTabBarClicked(Player::TimelineTabIndex);
+            if (multitrack() || (playlist() && playlist()->count() > 0))
+                m_player->onTabBarClicked(Player::ProgramTabIndex);
         }
         break;
     case Qt::Key_Up:
@@ -1010,8 +1006,12 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         break;
     case Qt::Key_Enter: // Seek to current playlist item
     case Qt::Key_Return:
-        if (m_playlistDock->position() >= 0)
-            seekPlaylist(m_playlistDock->position());
+        if (m_playlistDock->position() >= 0) {
+            if (event->modifiers() == Qt::ShiftModifier)
+                seekPlaylist(m_playlistDock->position());
+            else
+                m_playlistDock->on_actionOpen_triggered();
+        }
         break;
     default:
         QMainWindow::keyPressEvent(event);
@@ -1168,8 +1168,8 @@ void MainWindow::onProducerOpened()
             m_player->setOut(-1);
             m_playlistDock->setVisible(true);
             m_playlistDock->raise();
-            m_player->enableTab(Player::PlaylistTabIndex);
-            m_player->switchToTab(Player::PlaylistTabIndex);
+            m_player->enableTab(Player::ProgramTabIndex);
+            m_player->switchToTab(Player::ProgramTabIndex);
         }
     }
     else if (MLT.isMultitrack()) {
@@ -1179,12 +1179,12 @@ void MainWindow::onProducerOpened()
             m_player->setOut(-1);
             m_timelineDock->setVisible(true);
             m_timelineDock->raise();
-            m_player->enableTab(Player::TimelineTabIndex);
-            m_player->switchToTab(Player::TimelineTabIndex);
+            m_player->enableTab(Player::ProgramTabIndex);
+            m_player->switchToTab(Player::ProgramTabIndex);
         }
     }
     if (MLT.isClip())
-        m_player->switchToTab(Player::ClipTabIndex);
+        m_player->switchToTab(Player::SourceTabIndex);
     if (!MLT.URL().isEmpty())
         setCurrentFile(MLT.URL());
     if (w) {
@@ -1353,13 +1353,13 @@ void MainWindow::onPlaylistCreated()
 {
     if (!playlist() || playlist()->count() == 0) return;
     setCurrentFile("");
-    m_player->enableTab(Player::PlaylistTabIndex, true);
+    m_player->enableTab(Player::ProgramTabIndex, true);
 }
 
 void MainWindow::onPlaylistLoaded()
 {
     updateMarkers();
-    m_player->enableTab(Player::PlaylistTabIndex, true);
+    m_player->enableTab(Player::ProgramTabIndex, true);
 }
 
 void MainWindow::onPlaylistCleared()
@@ -1378,7 +1378,8 @@ void MainWindow::onPlaylistClosed()
     setWindowModified(false);
     m_undoStack->clear();
     MLT.resetURL();
-    m_player->enableTab(Player::PlaylistTabIndex, false);
+    if (!multitrack())
+        m_player->enableTab(Player::ProgramTabIndex, false);
 }
 
 void MainWindow::onPlaylistModified()
@@ -1387,13 +1388,13 @@ void MainWindow::onPlaylistModified()
     if ((void*) MLT.producer()->get_producer() == (void*) playlist()->get_playlist())
         m_player->onProducerModified();
     updateMarkers();
-    m_player->enableTab(Player::PlaylistTabIndex, true);
+    m_player->enableTab(Player::ProgramTabIndex, true);
 }
 
 void MainWindow::onMultitrackCreated()
 {
     setCurrentFile("");
-    m_player->enableTab(Player::TimelineTabIndex, true);
+    m_player->enableTab(Player::ProgramTabIndex, true);
 }
 
 void MainWindow::onMultitrackClosed()
@@ -1404,7 +1405,8 @@ void MainWindow::onMultitrackClosed()
     setWindowModified(false);
     m_undoStack->clear();
     MLT.resetURL();
-    m_player->enableTab(Player::TimelineTabIndex, false);
+    if (!playlist() || playlist()->count() == 0)
+        m_player->enableTab(Player::ProgramTabIndex, false);
 }
 
 void MainWindow::onMultitrackModified()

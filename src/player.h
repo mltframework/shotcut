@@ -40,9 +40,8 @@ class Player : public QWidget
     Q_OBJECT
 public:
     typedef enum {
-        ClipTabIndex = 0,
-        PlaylistTabIndex,
-        TimelineTabIndex
+        SourceTabIndex = 0,
+        ProgramTabIndex
     } TabIndex;
 
     explicit Player(QWidget *parent = 0);

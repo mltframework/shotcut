@@ -2113,331 +2113,336 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="115"/>
+        <location filename="../src/mainwindow.ui" line="116"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="119"/>
+        <location filename="../src/mainwindow.ui" line="120"/>
         <source>Deinterlacer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="128"/>
+        <location filename="../src/mainwindow.ui" line="129"/>
         <source>Interpolation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="137"/>
+        <location filename="../src/mainwindow.ui" line="138"/>
         <source>Video Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="143"/>
+        <location filename="../src/mainwindow.ui" line="144"/>
         <source>External Monitor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="149"/>
+        <location filename="../src/mainwindow.ui" line="150"/>
         <source>Language</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="154"/>
+        <location filename="../src/mainwindow.ui" line="155"/>
         <source>Theme</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="180"/>
+        <location filename="../src/mainwindow.ui" line="181"/>
         <source>Toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="228"/>
+        <location filename="../src/mainwindow.ui" line="229"/>
         <source>&amp;Open File...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="231"/>
+        <location filename="../src/mainwindow.ui" line="232"/>
         <source>Open a video, audio or image file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="234"/>
+        <location filename="../src/mainwindow.ui" line="235"/>
         <source>Ctrl+O</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="242"/>
+        <location filename="../src/mainwindow.ui" line="243"/>
         <source>E&amp;xit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="245"/>
+        <location filename="../src/mainwindow.ui" line="246"/>
         <source>Quit the application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="248"/>
+        <location filename="../src/mainwindow.ui" line="249"/>
         <source>Ctrl+Q</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="253"/>
+        <location filename="../src/mainwindow.ui" line="254"/>
         <source>&amp;About Shotcut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="258"/>
+        <location filename="../src/mainwindow.ui" line="259"/>
         <source>About Qt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="263"/>
+        <location filename="../src/mainwindow.ui" line="264"/>
         <source>Open Other...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="266"/>
+        <location filename="../src/mainwindow.ui" line="267"/>
         <source>Open a device, stream or generator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="269"/>
+        <location filename="../src/mainwindow.ui" line="270"/>
         <source>Ctrl+Shift+O</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="281"/>
+        <location filename="../src/mainwindow.ui" line="282"/>
         <source>&amp;Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="284"/>
+        <location filename="../src/mainwindow.ui" line="285"/>
         <source>Save project as a MLT XML file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="287"/>
+        <location filename="../src/mainwindow.ui" line="288"/>
         <source>Ctrl+S</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="295"/>
+        <location filename="../src/mainwindow.ui" line="296"/>
         <source>Save &amp;As...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="298"/>
+        <location filename="../src/mainwindow.ui" line="299"/>
         <source>Save project to a different MLT XML file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="301"/>
+        <location filename="../src/mainwindow.ui" line="302"/>
         <source>Ctrl+Shift+S</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="310"/>
+        <location filename="../src/mainwindow.ui" line="311"/>
         <source>Encode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="313"/>
+        <location filename="../src/mainwindow.ui" line="314"/>
         <source>Show the Encode and Jobs panels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="322"/>
+        <location filename="../src/mainwindow.ui" line="323"/>
         <source>&amp;Undo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="331"/>
+        <location filename="../src/mainwindow.ui" line="332"/>
         <source>&amp;Redo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="336"/>
+        <location filename="../src/mainwindow.ui" line="337"/>
         <source>Forum...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="341"/>
+        <location filename="../src/mainwindow.ui" line="342"/>
         <source>FAQ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="350"/>
-        <location filename="../src/mainwindow.cpp" line="1546"/>
+        <location filename="../src/mainwindow.ui" line="351"/>
+        <location filename="../src/mainwindow.cpp" line="1549"/>
         <source>Enter Full Screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="353"/>
+        <location filename="../src/mainwindow.ui" line="354"/>
         <source>Ctrl+Shift+F</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="362"/>
+        <location filename="../src/mainwindow.ui" line="363"/>
         <location filename="../src/mainwindow.cpp" line="135"/>
         <source>Properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="371"/>
+        <location filename="../src/mainwindow.ui" line="372"/>
         <source>Recent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="380"/>
+        <location filename="../src/mainwindow.ui" line="381"/>
         <source>Playlist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="389"/>
+        <location filename="../src/mainwindow.ui" line="390"/>
         <location filename="../src/mainwindow.cpp" line="196"/>
         <source>History</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="398"/>
+        <location filename="../src/mainwindow.ui" line="399"/>
         <source>Full Screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="409"/>
+        <location filename="../src/mainwindow.ui" line="410"/>
         <source>Realtime (frame dropping)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="420"/>
+        <location filename="../src/mainwindow.ui" line="421"/>
         <source>Progressive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="428"/>
+        <location filename="../src/mainwindow.ui" line="429"/>
         <source>GPU Processing (experimental)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="439"/>
+        <location filename="../src/mainwindow.ui" line="440"/>
         <source>One Field (fast)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="447"/>
+        <location filename="../src/mainwindow.ui" line="448"/>
         <source>Linear Blend (fast)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="455"/>
+        <location filename="../src/mainwindow.ui" line="456"/>
         <source>YADIF - temporal only (good)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="463"/>
+        <location filename="../src/mainwindow.ui" line="464"/>
         <source>YADIF - temporal + spatial (best)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="474"/>
+        <location filename="../src/mainwindow.ui" line="475"/>
         <source>Nearest Neighbor (fast)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="482"/>
+        <location filename="../src/mainwindow.ui" line="483"/>
         <source>Bilinear (good)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="490"/>
+        <location filename="../src/mainwindow.ui" line="491"/>
         <source>Bicubic (better)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="498"/>
+        <location filename="../src/mainwindow.ui" line="499"/>
         <source>Hyper/Lanczos (best)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="509"/>
+        <location filename="../src/mainwindow.ui" line="510"/>
         <source>Use OpenGL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="520"/>
+        <location filename="../src/mainwindow.ui" line="521"/>
         <source>Automatic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="531"/>
+        <location filename="../src/mainwindow.ui" line="532"/>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="539"/>
+        <location filename="../src/mainwindow.ui" line="540"/>
         <source>Use JACK Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="548"/>
+        <location filename="../src/mainwindow.ui" line="549"/>
         <source>Filters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="551"/>
+        <location filename="../src/mainwindow.ui" line="552"/>
         <source>Modify the video image or audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="556"/>
+        <location filename="../src/mainwindow.ui" line="557"/>
         <source>Add...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="564"/>
+        <location filename="../src/mainwindow.ui" line="565"/>
         <source>System</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="567"/>
+        <location filename="../src/mainwindow.ui" line="568"/>
         <source>Use the user or platform style, colors, and icons.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="575"/>
+        <location filename="../src/mainwindow.ui" line="576"/>
         <source>Fusion Dark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="583"/>
+        <location filename="../src/mainwindow.ui" line="584"/>
         <source>Fusion Light</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="588"/>
+        <location filename="../src/mainwindow.ui" line="589"/>
         <source>Tutorials...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="597"/>
+        <location filename="../src/mainwindow.ui" line="598"/>
         <source>Timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="602"/>
-        <location filename="../src/mainwindow.ui" line="605"/>
+        <location filename="../src/mainwindow.ui" line="603"/>
+        <location filename="../src/mainwindow.ui" line="606"/>
         <source>Restore Default Layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="621"/>
+        <location filename="../src/mainwindow.ui" line="622"/>
         <source>Show Toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="613"/>
+        <location filename="../src/mainwindow.ui" line="627"/>
+        <source>Upgrade...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="614"/>
         <source>Show Title Bars</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2499,82 +2504,82 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.cpp" line="536"/>
         <location filename="../src/mainwindow.cpp" line="538"/>
-        <location filename="../src/mainwindow.cpp" line="583"/>
+        <location filename="../src/mainwindow.cpp" line="584"/>
         <source>Failed to open </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="590"/>
+        <location filename="../src/mainwindow.cpp" line="591"/>
         <source>Open File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="793"/>
+        <location filename="../src/mainwindow.cpp" line="794"/>
         <source>%1[*] - %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="798"/>
+        <location filename="../src/mainwindow.cpp" line="799"/>
         <source>About Shotcut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="799"/>
+        <location filename="../src/mainwindow.cpp" line="800"/>
         <source>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2014 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1215"/>
-        <location filename="../src/mainwindow.cpp" line="1233"/>
+        <location filename="../src/mainwindow.cpp" line="1216"/>
+        <location filename="../src/mainwindow.cpp" line="1234"/>
         <source>Saved %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1225"/>
+        <location filename="../src/mainwindow.cpp" line="1226"/>
         <source>Save XML</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1225"/>
+        <location filename="../src/mainwindow.cpp" line="1226"/>
         <source>MLT XML (*.mlt)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1245"/>
+        <location filename="../src/mainwindow.cpp" line="1246"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1549"/>
+        <location filename="../src/mainwindow.cpp" line="1552"/>
         <source>Exit Full Screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1558"/>
+        <location filename="../src/mainwindow.cpp" line="1561"/>
         <source>GPU Processing is not supported</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1638"/>
+        <location filename="../src/mainwindow.cpp" line="1641"/>
         <source>You must restart Shotcut to switch using OpenGL.
 Do you want to exit now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1766"/>
+        <location filename="../src/mainwindow.cpp" line="1769"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to exit now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1804"/>
+        <location filename="../src/mainwindow.cpp" line="1807"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1813"/>
+        <location filename="../src/mainwindow.cpp" line="1816"/>
         <source>You must restart Shotcut to switch using GPU processing.
 Do you want to exit now?</source>
         <translation type="unfinished"></translation>
@@ -3294,190 +3299,185 @@ p, li { white-space: pre-wrap; }
     <name>Player</name>
     <message>
         <location filename="../src/player.cpp" line="55"/>
-        <source>Clip</source>
+        <source>Source</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="56"/>
-        <source>Playlist</source>
+        <source>Program</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="58"/>
-        <source>Timeline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/player.cpp" line="102"/>
+        <location filename="../src/player.cpp" line="100"/>
         <source>Adjust the audio volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="117"/>
+        <location filename="../src/player.cpp" line="115"/>
         <source>Silence the audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="127"/>
+        <location filename="../src/player.cpp" line="125"/>
         <source>Show or hide the volume control</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="143"/>
+        <location filename="../src/player.cpp" line="141"/>
         <source>Transport Controls</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="150"/>
+        <location filename="../src/player.cpp" line="148"/>
         <source>Current position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="154"/>
+        <location filename="../src/player.cpp" line="152"/>
         <source>Total Duration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="159"/>
+        <location filename="../src/player.cpp" line="157"/>
         <source>In Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="163"/>
+        <location filename="../src/player.cpp" line="161"/>
         <source>Selected Duration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="178"/>
+        <location filename="../src/player.cpp" line="176"/>
         <source>Zoom Fit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="181"/>
+        <location filename="../src/player.cpp" line="179"/>
         <source>Zoom 100%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="184"/>
+        <location filename="../src/player.cpp" line="182"/>
         <source>Zoom 50%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="187"/>
+        <location filename="../src/player.cpp" line="185"/>
         <source>Zoom 200%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="192"/>
+        <location filename="../src/player.cpp" line="190"/>
         <source>Toggle zoom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="277"/>
-        <location filename="../src/player.cpp" line="361"/>
-        <location filename="../src/player.cpp" line="387"/>
-        <location filename="../src/player.cpp" line="505"/>
-        <location filename="../src/player.cpp" line="620"/>
+        <location filename="../src/player.cpp" line="275"/>
+        <location filename="../src/player.cpp" line="359"/>
+        <location filename="../src/player.cpp" line="385"/>
+        <location filename="../src/player.cpp" line="503"/>
+        <location filename="../src/player.cpp" line="618"/>
         <source>Play</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="279"/>
-        <location filename="../src/player.cpp" line="362"/>
-        <location filename="../src/player.cpp" line="388"/>
-        <location filename="../src/player.cpp" line="506"/>
-        <location filename="../src/player.cpp" line="621"/>
+        <location filename="../src/player.cpp" line="277"/>
+        <location filename="../src/player.cpp" line="360"/>
+        <location filename="../src/player.cpp" line="386"/>
+        <location filename="../src/player.cpp" line="504"/>
+        <location filename="../src/player.cpp" line="619"/>
         <source>Start playback (L)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="281"/>
+        <location filename="../src/player.cpp" line="279"/>
         <source>Space</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="282"/>
-        <location filename="../src/player.cpp" line="341"/>
-        <location filename="../src/player.cpp" line="500"/>
-        <location filename="../src/player.cpp" line="627"/>
+        <location filename="../src/player.cpp" line="280"/>
+        <location filename="../src/player.cpp" line="339"/>
+        <location filename="../src/player.cpp" line="498"/>
+        <location filename="../src/player.cpp" line="625"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="284"/>
-        <location filename="../src/player.cpp" line="342"/>
-        <location filename="../src/player.cpp" line="501"/>
-        <location filename="../src/player.cpp" line="628"/>
+        <location filename="../src/player.cpp" line="282"/>
+        <location filename="../src/player.cpp" line="340"/>
+        <location filename="../src/player.cpp" line="499"/>
+        <location filename="../src/player.cpp" line="626"/>
         <source>Pause playback (K)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="286"/>
+        <location filename="../src/player.cpp" line="284"/>
         <source>Backspace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="287"/>
+        <location filename="../src/player.cpp" line="285"/>
         <source>Skip Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="289"/>
+        <location filename="../src/player.cpp" line="287"/>
         <source>Skip to the next point (Alt+Right)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="291"/>
+        <location filename="../src/player.cpp" line="289"/>
         <source>Alt+Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="292"/>
+        <location filename="../src/player.cpp" line="290"/>
         <source>Skip Previous</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="294"/>
+        <location filename="../src/player.cpp" line="292"/>
         <source>Skip to the previous point (Alt+Left)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="296"/>
+        <location filename="../src/player.cpp" line="294"/>
         <source>Alt+Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="297"/>
+        <location filename="../src/player.cpp" line="295"/>
         <source>Rewind</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="299"/>
+        <location filename="../src/player.cpp" line="297"/>
         <source>Play quickly backwards (J)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="301"/>
+        <location filename="../src/player.cpp" line="299"/>
         <source>Fast Forward</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="303"/>
+        <location filename="../src/player.cpp" line="301"/>
         <source>Play quickly forwards (L)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="346"/>
+        <location filename="../src/player.cpp" line="344"/>
         <source>Stop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="347"/>
+        <location filename="../src/player.cpp" line="345"/>
         <source>Stop playback (K)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="411"/>
+        <location filename="../src/player.cpp" line="409"/>
         <source>Live</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3628,7 +3628,7 @@ selected cut.</source>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="183"/>
-        <location filename="../src/docks/playlistdock.cpp" line="364"/>
+        <location filename="../src/docks/playlistdock.cpp" line="377"/>
         <source>You cannot insert a playlist into a playlist!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3820,32 +3820,32 @@ selected cut.</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="411"/>
+        <location filename="../src/docks/playlistdock.cpp" line="424"/>
         <source>Append playlist item %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="431"/>
+        <location filename="../src/docks/playlistdock.cpp" line="444"/>
         <source>Insert playist item %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="451"/>
+        <location filename="../src/docks/playlistdock.cpp" line="464"/>
         <source>Update playlist item %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="473"/>
+        <location filename="../src/docks/playlistdock.cpp" line="486"/>
         <source>Remove playlist item %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="492"/>
+        <location filename="../src/docks/playlistdock.cpp" line="505"/>
         <source>Clear playlist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="518"/>
+        <location filename="../src/docks/playlistdock.cpp" line="531"/>
         <source>Move item from %1 to %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4797,83 +4797,83 @@ the screen capture to SDI/HDMI in this mode.</source>
 <context>
     <name>timeline</name>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="271"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="269"/>
         <source>Append</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="282"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="280"/>
         <source>Add Audio Track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="283"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="281"/>
         <source>Ctrl+U</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="287"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="285"/>
         <source>Add Video Track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="288"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="286"/>
         <source>Ctrl+Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="293"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="291"/>
         <source>Make Tracks Shorter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="294"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="292"/>
         <source>Ctrl+K</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="298"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="296"/>
         <source>Make Tracks Taller</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="299"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="297"/>
         <source>Ctrl+L</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="303"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="301"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="304"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="302"/>
         <source>Ctrl+W</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="311"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="309"/>
         <source>Display a menu of additional actions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="319"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="317"/>
         <source>Append to the current track (C)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="327"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="325"/>
         <source>Lift - Remove current clip without
 affecting position of other clips (Z)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="335"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="333"/>
         <source>Insert clip into the current track (V)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="343"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="341"/>
         <source>Overwrite clip onto the current track (B)</source>
         <translation type="unfinished"></translation>
     </message>

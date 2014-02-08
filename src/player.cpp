@@ -52,11 +52,9 @@ Player::Player(QWidget *parent)
     // Add tab bar to indicate/select what is playing: clip, playlist, timeline.
     m_tabs = new QTabBar;
     m_tabs->setShape(QTabBar::RoundedSouth);
-    m_tabs->addTab(tr("Clip"));
-    m_tabs->addTab(tr("Playlist"));
-    m_tabs->setTabEnabled(PlaylistTabIndex, false);
-    m_tabs->addTab(tr("Timeline"));
-    m_tabs->setTabEnabled(TimelineTabIndex, false);
+    m_tabs->addTab(tr("Source"));
+    m_tabs->addTab(tr("Program"));
+    m_tabs->setTabEnabled(ProgramTabIndex, false);
     QHBoxLayout* tabLayout = new QHBoxLayout;
     tabLayout->addWidget(m_tabs);
     tabLayout->addStretch();
@@ -641,20 +639,21 @@ void Player::enableTab(TabIndex index, bool enabled)
 void Player::onTabBarClicked(int index)
 {
     switch (index) {
-    case ClipTabIndex:
+    case SourceTabIndex:
         if (MLT.savedProducer() && MLT.savedProducer()->is_valid()
             && MLT.producer()->get_producer() != MLT.savedProducer()->get_producer()) {
             m_pauseAfterPlay = true;
             MAIN.open(new Mlt::Producer(MLT.savedProducer()));
         }
         break;
-    case PlaylistTabIndex:
-        if (!MLT.isPlaylist())
-            MAIN.seekPlaylist(MAIN.playlist()->position());
-        break;
-    case TimelineTabIndex:
-        if (!MLT.isMultitrack())
-            MAIN.seekTimeline(MAIN.multitrack()->position());
+    case ProgramTabIndex:
+        if (MAIN.multitrack()) {
+            if (!MLT.isMultitrack())
+                MAIN.seekTimeline(MAIN.multitrack()->position());
+        } else {
+            if (!MLT.isPlaylist())
+                MAIN.seekPlaylist(MAIN.playlist()->position());
+        }
         break;
     }
 }

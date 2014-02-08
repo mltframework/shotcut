@@ -304,14 +304,27 @@ void PlaylistDock::on_tableView_doubleClicked(const QModelIndex &index)
     if (!m_model.playlist()) return;
     Mlt::ClipInfo* i = m_model.playlist()->clip_info(index.row());
     if (i) {
-        emit itemActivated(i->start);
+        if (qApp->keyboardModifiers() == Qt::ShiftModifier) {
+            emit itemActivated(i->start);
+        } else {
+            QString xml = MLT.saveXML("string", i->producer);
+            Mlt::Producer* p = new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
+            emit clipOpened(p, i->frame_in, i->frame_out);
+        }
         delete i;
+    } else {
+        MAIN.openVideo();
     }
 }
 
 void PlaylistDock::on_actionGoto_triggered()
 {
-    on_tableView_doubleClicked(ui->tableView->currentIndex());
+    QModelIndex index = ui->tableView->currentIndex();
+    Mlt::ClipInfo* i = m_model.playlist()->clip_info(index.row());
+    if (i) {
+        emit itemActivated(i->start);
+        delete i;
+    }
 }
 
 void PlaylistDock::on_actionRemoveAll_triggered()
