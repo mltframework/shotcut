@@ -317,10 +317,13 @@ QStringList PlaylistModel::mimeTypes() const
 QMimeData *PlaylistModel::mimeData(const QModelIndexList &indexes) const
 {
     QMimeData *mimeData = new QMimeData;
-    Mlt::Producer* clip = m_playlist->get_clip(indexes.first().row());
-    if (clip && clip->is_valid()) {
-        mimeData->setData(Mlt::XmlMimeType, MLT.saveXML("string", &clip->parent()).toUtf8());
-        delete clip;
+    Mlt::ClipInfo* info = m_playlist->clip_info(indexes.first().row());
+    if (info) {
+        Mlt::Producer* producer = info->producer;
+        producer->set_in_and_out(info->frame_in, info->frame_out);
+        mimeData->setData(Mlt::XmlMimeType, MLT.saveXML("string", producer).toUtf8());
+        producer->set_in_and_out(0, -1);
+        delete info;
     }
     return mimeData;
 }
