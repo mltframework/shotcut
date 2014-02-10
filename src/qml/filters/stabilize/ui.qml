@@ -53,20 +53,28 @@ Rectangle {
     FileDialog {
         id: fileDialog
         title: qsTr( 'Select a file to store analysis results.' )
-        modality: Qt.ApplicationModal2
+        modality: Qt.ApplicationModal
         selectExisting: false
         selectMultiple: false
         selectFolder: false
         nameFilters: [ "Stabilize Results (*.stab)" ]
         selectedNameFilter: "Stabilize Results (*.stab)"
         onAccepted: {
-            var filename = fileDialog.fileUrl.toString().substring(7)
+            var filename = fileDialog.fileUrl.toString()
+            // Remove resource prefix ("file://")
+            filename = filename.substring(7)
+            if (filename.substring(2, 4) == ':/') {
+                // In Windows, the previx is a little different
+                filename = filename.substring(1)
+            }
+            
             var extension = ".stab"
             // Force file extension to ".stab"
-            if ( filename.indexOf( extension, filename - extension.length ) == -1 ) {
+            var extIndex = filename.indexOf(extension, filename.length - extension.length)
+            if (extIndex == -1) {
                 filename += ".stab"
             }
-            filter.set( 'filename', filename )
+            filter.set('filename', filename)
             setStatus(true)
             filter.analyze();
         }
