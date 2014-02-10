@@ -70,11 +70,9 @@ Rectangle {
             }
         }
 
-        Label { text: qsTr('<b>Filter Options</b>') }
-
         RowLayout {
             spacing: 8
-            Label { text: qsTr('Target Program Loudness') }
+            Label { text: qsTr('Target Loudness') }
             Slider {
                 id: programSlider
                 Layout.fillWidth: true
@@ -88,7 +86,6 @@ Rectangle {
                     if (isReady) {
                         programSpinner.value = value
                         filter.set('program', value)
-                        filter.set("results", 0);
                     }
                 }
             }
@@ -103,7 +100,7 @@ Rectangle {
                 onValueChanged: programSlider.value = value
             }
             UndoButton {
-                onClicked: programSlider.value = 0
+                onClicked: programSlider.value = -23.0
             }
         }
 

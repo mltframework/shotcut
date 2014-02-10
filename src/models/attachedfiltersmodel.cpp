@@ -139,8 +139,6 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
                 result = tr("Sharpen");
             else if (result == "movit.white_balance" || result == "frei0r.colgate")
                 result = tr("White Balance");
-            else if (result == "sox" && filter->get("use_peak"))
-                result = tr("Normalize");
             delete filter;
             return result;
         }

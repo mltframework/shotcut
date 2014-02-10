@@ -4,7 +4,7 @@ import org.shotcut.qml 1.0
 Metadata {
     type: Metadata.Filter
     isAudio: true
-    name: qsTr("Loudness")
+    name: qsTr("Normalize")
     mlt_service: "loudness"
     qml: "ui.qml"
 }

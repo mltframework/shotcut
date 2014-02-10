@@ -81,8 +81,6 @@ private slots:
 
     void on_actionOverlayHTML_triggered();
 
-    void on_actionNormalize_triggered();
-
 private:
     Ui::FiltersDock *ui;
     AttachedFiltersModel m_model;

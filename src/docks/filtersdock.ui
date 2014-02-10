@@ -200,11 +200,6 @@
     <string>Overlay HTML</string>
    </property>
   </action>
-  <action name="actionNormalize">
-   <property name="text">
-    <string>Normalize</string>
-   </property>
-  </action>
  </widget>
  <resources>
   <include location="../../icons/resources.qrc"/>

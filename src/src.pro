@@ -75,7 +75,6 @@ SOURCES += main.cpp\
     widgets/lineeditclear.cpp \
     leapnetworklistener.cpp \
     widgets/webvfxproducer.cpp \
-    filters/normalize.cpp \
     database.cpp \
     widgets/gltestwidget.cpp \
     models/multitrackmodel.cpp \
@@ -151,7 +150,6 @@ HEADERS  += mainwindow.h \
     widgets/lineeditclear.h \
     leapnetworklistener.h \
     widgets/webvfxproducer.h \
-    filters/normalize.h \
     database.h \
     widgets/gltestwidget.h \
     models/multitrackmodel.h \
@@ -203,7 +201,6 @@ FORMS    += mainwindow.ui \
     htmleditor/htmleditor.ui \
     htmleditor/inserthtmldialog.ui \
     widgets/webvfxproducer.ui \
-    filters/normalize.ui \
     docks/timelinedock.ui
 
 RESOURCES += \

@@ -39,7 +39,6 @@
 #include "filters/frei0rsharpnessfilter.h"
 #include "filters/whitebalancefilter.h"
 #include "filters/webvfxfilter.h"
-#include "filters/normalize.h"
 #include "qmltypes/qmlfilter.h"
 #include "qmltypes/qmlmetadata.h"
 #include "qmltypes/qmlutilities.h"
@@ -57,10 +56,6 @@ static QActionList getFilters(FiltersDock* dock, Ui::FiltersDock* ui)
     actions.append(ui->actionCrop);
     actions.append(ui->actionGlow);
     actions.append(ui->actionMirror);
-    if (MLT.repository()->filters()->get_data("sox")) {
-        actions.append(ui->actionNormalize);
-        ui->actionNormalize->setProperty("isAudio", true);
-    }
 #ifndef Q_OS_WIN
     if (!Settings.playerGPU()) actions.append(ui->actionOverlayHTML);
 #endif
@@ -237,8 +232,6 @@ void FiltersDock::on_listView_clicked(const QModelIndex &index)
             ui->scrollArea->setWidget(new WhiteBalanceFilter(*filter));
         else if (name == "webvfx")
             ui->scrollArea->setWidget(new WebvfxFilter(*filter));
-        else if (name == "sox" && filter->get("use_peak"))
-            ui->scrollArea->setWidget(new NormalizeFilter(*filter));
         else
             delete ui->scrollArea->widget();
     }
@@ -369,14 +362,6 @@ void FiltersDock::on_actionOverlayHTML_triggered()
 {
     Mlt::Filter* filter = m_model.add("webvfx");
     ui->scrollArea->setWidget(new WebvfxFilter(*filter));
-    delete filter;
-    ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
-}
-
-void FiltersDock::on_actionNormalize_triggered()
-{
-    Mlt::Filter* filter = m_model.add("sox");
-    ui->scrollArea->setWidget(new NormalizeFilter(*filter, true));
     delete filter;
     ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
 }
