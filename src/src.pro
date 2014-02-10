@@ -81,7 +81,8 @@ SOURCES += main.cpp\
     docks/timelinedock.cpp \
     qmltypes/qmlutilities.cpp \
     qmltypes/thumbnailprovider.cpp \
-    commands/timelinecommands.cpp
+    commands/timelinecommands.cpp \
+    util.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -156,7 +157,8 @@ HEADERS  += mainwindow.h \
     docks/timelinedock.h \
     qmltypes/qmlutilities.h \
     qmltypes/thumbnailprovider.h \
-    commands/timelinecommands.h
+    commands/timelinecommands.h \
+    util.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \

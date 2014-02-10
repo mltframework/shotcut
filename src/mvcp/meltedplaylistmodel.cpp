@@ -17,8 +17,8 @@
  */
 
 #include "meltedplaylistmodel.h"
-#include <QFileInfo>
 #include "mltcontroller.h"
+#include "util.h"
 
 MeltedPlaylistModel::MeltedPlaylistModel(QObject *parent)
     : QAbstractTableModel(parent)
@@ -69,8 +69,8 @@ QVariant MeltedPlaylistModel::data(const QModelIndex &index, int role) const
         case COLUMN_RESOURCE: {
             QString result = QString::fromUtf8(entry.full);
             // Use basename for display
-            if (role == Qt::DisplayRole && result.startsWith('/'))
-                result = QFileInfo(result).fileName();
+            if (role == Qt::DisplayRole)
+                result = Util::baseName(result);
             return result;
         }
         case COLUMN_IN:

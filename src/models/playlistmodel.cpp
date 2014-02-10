@@ -17,7 +17,7 @@
  */
 
 #include "playlistmodel.h"
-#include <QFileInfo>
+#include "util.h"
 #include <QUrl>
 #include <QImage>
 #include <QColor>
@@ -176,8 +176,8 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
                     && info->producer->is_valid() && info->producer->get("mlt_service"))
                 result = QString::fromUtf8(info->producer->get("mlt_service"));
             // Use basename for display
-            if (role == Qt::DisplayRole && result.startsWith('/'))
-                result = QFileInfo(result).fileName();
+            if (role == Qt::DisplayRole)
+                result = Util::baseName(result);
             return result;
         }
         case COLUMN_IN:

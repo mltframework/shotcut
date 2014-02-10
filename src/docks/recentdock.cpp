@@ -19,7 +19,7 @@
 #include "docks/recentdock.h"
 #include "settings.h"
 #include "ui_recentdock.h"
-#include <QFileInfo>
+#include "util.h"
 
 static const int MaxItems = 100;
 
@@ -33,11 +33,7 @@ RecentDock::RecentDock(QWidget *parent) :
     ui->listWidget->setDragEnabled(true);
     ui->listWidget->setDragDropMode(QAbstractItemView::DragOnly);
     foreach (QString s, m_recent) {
-        QString name = s;
-        if (s.startsWith('/'))
-            // Use basename instead.
-            name = QFileInfo(s).fileName();
-        QStandardItem* item = new QStandardItem(name);
+        QStandardItem* item = new QStandardItem(Util::baseName(s));
         item->setToolTip(s);
         m_model.appendRow(item);
     }
@@ -72,10 +68,7 @@ void RecentDock::on_listWidget_activated(const QModelIndex& i)
 QString RecentDock::remove(const QString &s)
 {
     m_recent.removeOne(s);
-    QString name = s;
-    if (s.startsWith('/'))
-        // Use basename instead.
-        name = QFileInfo(s).fileName();
+    QString name = Util::baseName(s);
     QList<QStandardItem*> items = m_model.findItems(name);
     if (items.count() > 0)
         m_model.removeRow(items.first()->row());

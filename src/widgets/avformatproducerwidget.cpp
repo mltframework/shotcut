@@ -19,6 +19,7 @@
 #include "avformatproducerwidget.h"
 #include "ui_avformatproducerwidget.h"
 #include "sdlwidget.h"
+#include "util.h"
 #include <QtDebug>
 #include <QtWidgets>
 
@@ -83,10 +84,7 @@ void AvformatProducerWidget::onFrameReceived(Mlt::QFrame)
         m_defaultDuration = m_producer->get_length();
 
     QString s = QString::fromUtf8(m_producer->get("resource"));
-    QString name = s;
-    if (s.startsWith('/'))
-        // Use basename instead.
-        name = QFileInfo(s).fileName();
+    QString name = Util::baseName(s);
     ui->filenameLabel->setText(ui->filenameLabel->fontMetrics().elidedText(name, Qt::ElideLeft, width() - 30));
     ui->filenameLabel->setToolTip(s);
     ui->notesTextEdit->setPlainText(QString::fromUtf8(m_producer->get("meta.attr.comment.markup")));

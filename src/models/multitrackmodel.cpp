@@ -22,8 +22,8 @@
 #include "database.h"
 #include "settings.h"
 #include "docks/playlistdock.h"
+#include "util.h"
 #include <QScopedPointer>
-#include <QFileInfo>
 #include <QThreadPool>
 #include <QPersistentModelIndex>
 #include <QCryptographicHash>
@@ -230,8 +230,8 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                         && info->producer->is_valid() && info->producer->get("mlt_service"))
                     result = QString::fromUtf8(info->producer->get("mlt_service"));
                 // Use basename for display
-                if (role == NameRole && result.startsWith('/'))
-                    result = QFileInfo(result).fileName();
+                if (role == NameRole)
+                    result = Util::baseName(result);
                 return result;
             }
             case ServiceRole:
