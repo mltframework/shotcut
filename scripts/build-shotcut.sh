@@ -606,7 +606,11 @@ function set_globals {
   
   ####
   # vid.stab
-  CONFIG[10]="cmake -DCMAKE_INSTALL_PREFIX:PATH=$FINAL_INSTALL_DIR"
+  if test "$TARGET_OS" = "Win32" ; then
+    CONFIG[10]="cmake -DCMAKE_INSTALL_PREFIX:PATH=$FINAL_INSTALL_DIR -DCMAKE_TOOLCHAIN_FILE=my.cmake"
+  else
+    CONFIG[10]="cmake -DCMAKE_INSTALL_PREFIX:PATH=$FINAL_INSTALL_DIR"
+  fi
   CFLAGS_[10]=$CFLAGS
   LDFLAGS_[10]=$LDFLAGS
 }
@@ -810,13 +814,14 @@ function clean_dirs {
 
 function get_win32_build {
  
-  if test "frei0r" = "$1" ; then
-      debug "Fix cmake modules for frei0r"
+  if test "frei0r" = "$1" -o "vid.stab" = "$1" ; then
+      debug "Fix cmake modules for $1"
+      cmd mkdir cmake 2>/dev/null
       cmd cp -r /usr/share/cmake-2.8/Modules cmake
       cmd sed 's/-rdynamic//' cmake/Modules/Platform/Linux-GNU.cmake >/tmp/Linux-GNU.cmake
       cmd mv /tmp/Linux-GNU.cmake cmake/Modules/Platform
 
-      debug "Create cmake rules for frei0r"
+      debug "Create cmake rules for $1"
       cat >my.cmake <<END_OF_CMAKE_RULES
 # the name of the target operating system
 SET(CMAKE_SYSTEM_NAME Windows)
