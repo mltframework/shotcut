@@ -17,6 +17,7 @@
  */
 
 import QtQuick 2.1
+import QtQuick.Dialogs 1.1
 import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.0
 import Shotcut.Controls 1.0
@@ -25,12 +26,59 @@ Rectangle {
     width: 400
     height: 200
     color: 'transparent'
+    
+    function setStatus( inProgress ) {
+        if (inProgress) {
+            status.text = qsTr('Analyzing...')
+        }
+        else if (filter.get("results").length > 0 && 
+                 filter.get("results") == filter.get("filename") ) {
+            status.text = qsTr('Analysis complete.')
+        }
+        else
+        {
+            status.text = qsTr('Click "Analyze" to use this filter.')
+        }
+    }
 
     Connections {
         target: filter
-        onStabilizeFinished: {
-            filter.set("refresh", 1);
-            if (isSuccess) status.text = qsTr('Analysis complete.')
+        onAnalyzeFinished: {
+            filter.set("reload", 1);
+            setStatus(false)
+            button.enabled = true
+        }
+    }
+    
+    FileDialog {
+        id: fileDialog
+        title: qsTr( 'Select a file to store analysis results.' )
+        modality: Qt.ApplicationModal
+        selectExisting: false
+        selectMultiple: false
+        selectFolder: false
+        nameFilters: [ "Stabilize Results (*.stab)" ]
+        selectedNameFilter: "Stabilize Results (*.stab)"
+        onAccepted: {
+            var filename = fileDialog.fileUrl.toString()
+            // Remove resource prefix ("file://")
+            filename = filename.substring(7)
+            if (filename.substring(2, 4) == ':/') {
+                // In Windows, the previx is a little different
+                filename = filename.substring(1)
+            }
+            
+            var extension = ".stab"
+            // Force file extension to ".stab"
+            var extIndex = filename.indexOf(extension, filename.length - extension.length)
+            if (extIndex == -1) {
+                filename += ".stab"
+            }
+            filter.set('filename', filename)
+            setStatus(true)
+            filter.analyze();
+        }
+        onRejected: {
             button.enabled = true
         }
     }
@@ -118,16 +166,13 @@ Rectangle {
                 text: qsTr('Analyze')
                 onClicked: {
                     button.enabled = false
-                    status.text = ''
-                    filter.stabilizeVideo();
+                    fileDialog.open()
                 }
             }
             Label {
                 id: status
-                text: qsTr('Click Analyze to use this filter.')
                 Component.onCompleted: {
-                    if (filter.get("vectors").length > 0)
-                        text = qsTr('Analysis complete.')
+                    setStatus(false)
                 }
             }
         }
@@ -166,40 +211,6 @@ Rectangle {
             }
             UndoButton {
                 onClicked: zoomSlider.value = 0
-            }
-        }
-
-        RowLayout {
-            spacing: 8
-            Label { text: qsTr('Sharpening') }
-            Slider {
-                id: sharpenSlider
-                Layout.fillWidth: true
-                Layout.minimumWidth: 100
-                value: filter.get('sharpen')
-                minimumValue: 0
-                maximumValue: 10
-                property bool isReady: false
-                Component.onCompleted: isReady = true
-                onValueChanged: {
-                    if (isReady) {
-                        sharpenSpinner.value = value
-                        filter.set('sharpen', value)
-                        filter.set("refresh", 1);
-                    }
-                }
-            }
-            SpinBox {
-                id: sharpenSpinner
-                Layout.minimumWidth: 60
-                value: filter.get('sharpen')
-                minimumValue: 0
-                maximumValue: 10
-                decimals: 2
-                onValueChanged: sharpenSlider.value = value
-            }
-            UndoButton {
-                onClicked: sharpenSlider.value = 0.8
             }
         }
 

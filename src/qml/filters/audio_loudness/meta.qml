@@ -3,7 +3,8 @@ import org.shotcut.qml 1.0
 
 Metadata {
     type: Metadata.Filter
-    name: qsTr("Stabilize")
-    mlt_service: "vidstab"
+    isAudio: true
+    name: qsTr("Normalize")
+    mlt_service: "loudness"
     qml: "ui.qml"
 }

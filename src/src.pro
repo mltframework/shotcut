@@ -75,7 +75,6 @@ SOURCES += main.cpp\
     widgets/lineeditclear.cpp \
     leapnetworklistener.cpp \
     widgets/webvfxproducer.cpp \
-    filters/normalize.cpp \
     database.cpp \
     widgets/gltestwidget.cpp \
     models/multitrackmodel.cpp \
@@ -151,7 +150,6 @@ HEADERS  += mainwindow.h \
     widgets/lineeditclear.h \
     leapnetworklistener.h \
     widgets/webvfxproducer.h \
-    filters/normalize.h \
     database.h \
     widgets/gltestwidget.h \
     models/multitrackmodel.h \
@@ -203,7 +201,6 @@ FORMS    += mainwindow.ui \
     htmleditor/htmleditor.ui \
     htmleditor/inserthtmldialog.ui \
     widgets/webvfxproducer.ui \
-    filters/normalize.ui \
     docks/timelinedock.ui
 
 RESOURCES += \
@@ -234,6 +231,8 @@ OTHER_FILES += \
     qml/filters/audio_channelcopy/ui.qml \
     qml/filters/audio_gain/meta.qml \
     qml/filters/audio_gain/ui.qml \
+    qml/filters/audio_loudness/meta.qml \
+    qml/filters/audio_loudness/ui.qml \
     qml/filters/audio_pan/meta.qml \
     qml/filters/audio_pan/ui.qml \
     qml/filters/audio_balance/meta.qml \
@@ -279,6 +278,8 @@ lupdate_hack {
     qml/filters/audio_channelcopy/ui.qml \
     qml/filters/audio_gain/meta.qml \
     qml/filters/audio_gain/ui.qml \
+    qml/filters/audio_loudness/meta.qml \
+    qml/filters/audio_loudness/ui.qml \
     qml/filters/audio_pan/meta.qml \
     qml/filters/audio_pan/ui.qml \
     qml/filters/audio_balance/meta.qml \
