@@ -53,7 +53,7 @@ Rectangle {
     FileDialog {
         id: fileDialog
         title: qsTr( 'Select a file to store analysis results.' )
-        modality: Qt.ApplicationModal
+        modality: Qt.WindowModal
         selectExisting: false
         selectMultiple: false
         selectFolder: false
