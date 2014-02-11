@@ -151,11 +151,6 @@
     </item>
    </layout>
   </widget>
-  <action name="actionBlur">
-   <property name="text">
-    <string>Blur</string>
-   </property>
-  </action>
   <action name="actionMirror">
    <property name="text">
     <string>Mirror</string>

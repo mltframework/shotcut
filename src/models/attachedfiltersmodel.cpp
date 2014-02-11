@@ -123,8 +123,6 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
                     result = QString::fromUtf8(filter->get("mlt_service"));
             }
             // Relabel for widgets UIs
-            if (result == "movit.blur" || result == "boxblur")
-                result = tr("Blur");
             else if (result == "movit.lift_gamma_gain" || result == "frei0r.coloradj_RGB")
                 result = tr("Color Grading");
             else if (result == "crop")
