@@ -1465,7 +1465,8 @@ function fixlibs()
 {
   target=$(dirname "$1")/$(basename "$1")
   trace fixlibs $target
-  libs=$(otool -L "$target" | awk '/^\t\/opt\/local/ || /^\t\/Applications\// || /^\t\/Users\// || /^\tlibwebvfx/ {print $1}')
+  libs=$(otool -L "$target" |
+    awk '/^\t\/opt\/local/ || /^\t\/Applications\// || /^\t\/Users\// || /^\tlibwebvfx/ || /^\tlibvidstab/ {print $1}')
 
   # if the target is a lib, change its id
   #if [ $(echo "$1" | grep '\.dylib$') ] || [ $(echo "$1" | grep '\.so$') ]; then
@@ -1532,6 +1533,7 @@ function deploy_osx
 
   # Copy webvfx here temporarily so it can be found by fixlibs.
   cmd cp -p "$FINAL_INSTALL_DIR"/lib/libwebvfx*.dylib .
+  cmd cp -p "$FINAL_INSTALL_DIR"/lib/libvidstab*.dylib .
 
   # MLT plugins
   log Copying MLT plugins
@@ -1546,6 +1548,7 @@ function deploy_osx
 
   # Cleanup temporary libwebvfx.
   cmd rm libwebvfx*.dylib
+  cmd rm libvidstab*.dylib
 
   # Qt plugins
   log Copying Qt plugins
