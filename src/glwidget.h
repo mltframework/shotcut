@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Meltytech, LLC
+ * Copyright (c) 2011-2014 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -25,16 +25,19 @@
 #include <QOpenGLShaderProgram>
 #include <QOpenGLFramebufferObject>
 #include <QOpenGLContext>
-#include <QOffscreenSurface>
 #include <QMutex>
 #include <QWaitCondition>
 #include <QThread>
 #include "mltcontroller.h"
 
+class QOpenGLFunctions_3_2_Core;
+
 namespace Mlt {
 
 class Filter;
 class RenderThread;
+
+typedef void* ( *thread_function_t )( void* );
 
 class GLWidget : public QGLWidget, public Controller, protected QOpenGLFunctions
 {
@@ -46,6 +49,7 @@ public:
 
     QSize minimumSizeHint() const;
     QSize sizeHint() const;
+    void createThread(RenderThread** thread, thread_function_t function, void* data);
     void startGlsl();
     void stopGlsl();
     int setProducer(Mlt::Producer*, bool isMulti = false);
@@ -104,6 +108,7 @@ private:
     Mlt::Frame* m_lastFrame;
     Event* m_threadCreateEvent;
     Event* m_threadJoinEvent;
+    QOpenGLFunctions_3_2_Core* m_gl32;
 
 protected:
     void initializeGL();
@@ -118,14 +123,11 @@ protected:
     static void on_frame_show(mlt_consumer, void* self, mlt_frame frame);
 };
 
-typedef void* ( *thread_function_t )( void* );
-
 class RenderThread : public QThread
 {
     Q_OBJECT
 public:
-    RenderThread(thread_function_t function, void* data, GLWidget* parent);
-    ~RenderThread();
+    RenderThread(thread_function_t function, void* data, QOpenGLContext *context);
 
 protected:
     void run();
@@ -134,7 +136,7 @@ private:
     thread_function_t m_function;
     void* m_data;
     QOpenGLContext* m_context;
-    QOffscreenSurface* m_surface;
+    QSurface* m_surface;
 };
 
 } // namespace

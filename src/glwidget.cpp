@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Meltytech, LLC
+ * Copyright (c) 2011-2014 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * GL shader based on BSD licensed code from Peter Bengtsson:
@@ -20,18 +20,21 @@
  */
 
 #include <QtWidgets>
+#include <QOpenGLFunctions_3_2_Core>
 #include <Mlt.h>
 #include "glwidget.h"
 #include "settings.h"
 
-#define check_error() { int err = glGetError(); if (err != GL_NO_ERROR) { fprintf(stderr, "GL error 0x%x at %s:%d\n", err, __FILE__, __LINE__); exit(1); } }
+#define check_error() { int err = glGetError(); if (err != GL_NO_ERROR) { qCritical() << "GL error"  << err << "at %s" << __FILE__ << ":" << __LINE__; } }
 
 #ifndef GL_TIMEOUT_IGNORED
 #define GL_TIMEOUT_IGNORED 0xFFFFFFFFFFFFFFFFull
 #endif
 
+#ifndef Q_OS_WIN
 typedef GLenum (*ClientWaitSync_fp) (GLsync sync, GLbitfield flags, GLuint64 timeout);
 static ClientWaitSync_fp ClientWaitSync = 0;
+#endif
 
 using namespace Mlt;
 
@@ -52,6 +55,7 @@ GLWidget::GLWidget(QWidget *parent)
     , m_lastFrame(0)
     , m_threadCreateEvent(0)
     , m_threadJoinEvent(0)
+    , m_gl32(0)
 {
     m_texture[0] = m_texture[1] = m_texture[2] = 0;
     setAttribute(Qt::WA_PaintOnScreen);
@@ -63,6 +67,16 @@ GLWidget::GLWidget(QWidget *parent)
         delete m_glslManager;
         m_glslManager = 0;
     }
+#ifdef Q_OS_WIN
+    if (m_glslManager) {
+        // On Windows, my NVIDIA card needs me to set the OpenGL version to
+        // handle the fancy GL functions that Movit uses.
+        QGLFormat format;
+        format.setVersion(3, 2);
+        format.setProfile(QGLFormat::CompatibilityProfile);
+        setFormat(format);
+    }
+#endif
 }
 
 GLWidget::~GLWidget()
@@ -78,6 +92,7 @@ GLWidget::~GLWidget()
     delete m_threadCreateEvent;
     delete m_threadJoinEvent;
     delete m_lastFrame;
+    delete m_gl32;
 }
 
 QSize GLWidget::minimumSizeHint() const
@@ -94,6 +109,8 @@ void GLWidget::initializeGL()
 {
     QPalette palette;
 
+#ifndef Q_OS_WIN
+    // getProcAddress is not working for me on Windows.
     if (Settings.playerGPU()) {
         QOpenGLContext* cx = context()->contextHandle();
         if (m_glslManager && cx->hasExtension("GL_ARB_sync")) {
@@ -105,6 +122,7 @@ void GLWidget::initializeGL()
             m_glslManager = 0;
         }
     }
+#endif
 
     initializeOpenGLFunctions();
     qglClearColor(palette.color(QPalette::Window));
@@ -253,13 +271,29 @@ void GLWidget::destroyShader()
     }
 }
 
+void GLWidget::createThread(RenderThread **thread, thread_function_t function, void *data)
+{
+#ifdef Q_OS_WIN
+    // On Windows, MLT event consumer-thread-create is fired from the Qt main thread.
+    while (!m_isInitialized)
+        qApp->processEvents();
+#else
+    if (!m_isInitialized) {
+        m_mutex.lock();
+        m_condition.wait(&m_mutex);
+        m_mutex.unlock();
+    }
+#endif
+    (*thread) = new RenderThread(function, data, m_glslManager? context()->contextHandle() : 0);
+    (*thread)->start();
+}
+
 static void onThreadCreate(mlt_properties owner, GLWidget* self,
     RenderThread** thread, int* priority, thread_function_t function, void* data )
 {
     Q_UNUSED(owner)
     Q_UNUSED(priority)
-    (*thread) = new RenderThread(function, data, self);
-    (*thread)->start();
+    self->createThread(thread, function, data);
 }
 
 static void onThreadJoin(mlt_properties owner, GLWidget* self, RenderThread* thread)
@@ -275,11 +309,6 @@ static void onThreadJoin(mlt_properties owner, GLWidget* self, RenderThread* thr
 
 void GLWidget::startGlsl()
 {
-    if (!m_isInitialized) {
-        m_mutex.lock();
-        m_condition.wait(&m_mutex);
-        m_mutex.unlock();
-    }
     if (m_glslManager) {
         m_glslManager->fire_event("init glsl");
         if (!m_glslManager->get_int("glsl_supported")) {
@@ -345,9 +374,23 @@ void GLWidget::showFrame(Mlt::QFrame frame)
 
             GLsync sync = (GLsync) frame.frame()->get_data("movit.convert.fence");
             if (sync) {
-                Q_ASSERT(ClientWaitSync);
-                ClientWaitSync(sync, 0, GL_TIMEOUT_IGNORED);
-                check_error();
+#ifdef Q_OS_WIN
+                // On Windows, use QOpenGLFunctions_3_2_Core instead of getProcAddress.
+                if (!m_gl32) {
+                    m_gl32 = context()->contextHandle()->versionFunctions<QOpenGLFunctions_3_2_Core>();
+                    if (m_gl32)
+                        m_gl32->initializeOpenGLFunctions();
+                }
+                if (m_gl32) {
+                    m_gl32->glClientWaitSync(sync, 0, GL_TIMEOUT_IGNORED);
+                    check_error();
+                }
+#else
+                if (ClientWaitSync) {
+                    ClientWaitSync(sync, 0, GL_TIMEOUT_IGNORED);
+                    check_error();
+                }
+#endif
             }
 
             glActiveTexture( GL_TEXTURE0 );
@@ -553,29 +596,20 @@ void GLWidget::on_frame_show(mlt_consumer, void* self, mlt_frame frame_ptr)
     }
 }
 
-RenderThread::RenderThread(thread_function_t function, void *data, GLWidget *parent)
+RenderThread::RenderThread(thread_function_t function, void *data, QOpenGLContext *context)
     : QThread(0)
     , m_function(function)
     , m_data(data)
     , m_context(0)
-    , m_surface(0)
+    , m_surface(context? context->surface() : 0)
 {
-    if (parent->glslManager()) {
+    if (context) {
         m_context = new QOpenGLContext;
-        m_context->setFormat(parent->context()->contextHandle()->format());
-        m_context->setShareContext(parent->context()->contextHandle());
+        m_context->setFormat(context->format());
+        m_context->setShareContext(context);
         m_context->create();
         m_context->moveToThread(this);
-
-        m_surface = new QOffscreenSurface();
-        m_surface->setFormat(m_context->format());
-        m_surface->create();
     }
-}
-
-RenderThread::~RenderThread()
-{
-    delete m_surface;
 }
 
 void RenderThread::run()
