@@ -44,8 +44,8 @@ void MeltJob::start()
     QString shotcutPath = qApp->applicationDirPath();
 //    QString shotcutPath("/Applications/Shotcut.app/Contents/MacOS");
 #ifdef Q_OS_WIN
-    QFileInfo meltPath(shotcutPath, QString(Settings.playerGPU()? "melt.exe" : "qmelt.exe"));
-#else
+    QFileInfo meltPath(shotcutPath, "qmelt.exe");
+#else   
     QFileInfo meltPath(shotcutPath, QString(Settings.playerGPU()? "melt" : "qmelt"));
 #endif
     setReadChannel(QProcess::StandardError);
