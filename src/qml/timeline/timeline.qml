@@ -150,8 +150,8 @@ Rectangle {
                         rightMargin: 4
                     }
                     minimumValue: 0
-                    maximumValue: 1
-                    value: 0.5
+                    maximumValue: 1.75
+                    value: 1
                     onValueChanged: {
                         if (typeof multitrack.scaleFactor != 'undefined')
                             multitrack.scaleFactor = Math.pow(value, 3) + 0.01
@@ -410,7 +410,7 @@ Rectangle {
                 tracksRepeater.itemAt(i).redrawWaveforms()
             break;
         case Qt.Key_0:
-            scaleSlider.value = 0.5
+            scaleSlider.value = 1.0
             for (var i = 0; i < tracksRepeater.count; i++)
                 tracksRepeater.itemAt(i).redrawWaveforms()
             break;

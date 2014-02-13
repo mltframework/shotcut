@@ -29,6 +29,7 @@
 #include <QCryptographicHash>
 #include <QRgb>
 #include <QApplication>
+#include <qmath.h>
 
 #include <QtDebug>
 
@@ -560,8 +561,8 @@ void MultitrackModel::setTrackHeight(int height)
 
 double MultitrackModel::scaleFactor() const
 {
-    double result = m_tractor? m_tractor->get_double(kTimelineScaleProperty) : 0.5;
-    return result? result : 0.5;
+    double result = m_tractor? m_tractor->get_double(kTimelineScaleProperty) : 0;
+    return (result > 0)? result : (qPow(1.0, 3.0) + 0.01);
 }
 
 void MultitrackModel::setScaleFactor(double scale)
