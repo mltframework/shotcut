@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2014 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.0
+import QtQuick 2.2
 import QtQml.Models 2.1
 import QtQuick.Controls 1.0
 
@@ -36,6 +36,29 @@ Rectangle {
         acceptedButtons: Qt.RightButton
         onClicked: menu.popup()
     }
+
+    DropArea {
+        anchors.fill: parent
+        onEntered: {
+            if (drag.formats.indexOf('application/mlt+xml') >= 0)
+                drag.acceptProposedAction()
+        }
+        onExited: root.dropped()
+        onPositionChanged: {
+            if (drag.formats.indexOf('application/mlt+xml') >= 0)
+                dragging(drag, drag.text)
+        }
+        onDropped: {
+            if (drop.formats.indexOf('application/mlt+xml') >= 0) {
+                if (currentTrack >= 0) {
+                    timeline.append(currentTrack)
+                    drop.acceptProposedAction()
+                }
+                root.dropped()
+            }
+        }
+    }
+
     Row {
         Column {
             z: 1
@@ -465,43 +488,8 @@ Rectangle {
     Connections {
         target: timeline
         onPositionChanged: scrollIfNeeded()
-        onDragging: {
-            if (tracksRepeater.count > 0) {
-                dropTarget.x = pos.x
-                dropTarget.y = pos.y
-                dropTarget.width = duration * multitrack.scaleFactor
-                dropTarget.visible = true
-
-                for (var i = 0; i < tracksRepeater.count; i++) {
-                    var trackY = tracksRepeater.itemAt(i).y
-                    var trackH = tracksRepeater.itemAt(i).height
-                    if (pos.y >= trackY && pos.y < trackY + trackH) {
-                        currentTrack = i
-                        break
-                    }
-                }
-
-                // Scroll tracks if at edges.
-                if (pos.x > headerWidth + scrollView.width - 50) {
-                    scrollTimer.backwards = false
-                    scrollTimer.start()
-                } else if (pos.x >= headerWidth && pos.x < headerWidth + 50) {
-                    if (scrollView.flickableItem.contentX < 50) {
-                        scrollView.flickableItem.contentX = 0;
-                        scrollTimer.stop()
-                    } else {
-                        scrollTimer.backwards = true
-                        scrollTimer.start()
-                    }
-                } else {
-                    scrollTimer.stop()
-                }
-            }
-        }
-        onDropped: {
-            dropTarget.visible = false
-            scrollTimer.running = false
-        }
+        onDragging: dragging(pos, duration)
+        onDropped: dropped()
     }
 
     // This provides continuous scrolling at the left/right edges.
@@ -533,5 +521,44 @@ Rectangle {
 
     function trackCount() {
         return tracksRepeater.count
+    }
+
+    function dragging(pos, duration) {
+        if (tracksRepeater.count > 0) {
+            dropTarget.x = pos.x
+            dropTarget.y = pos.y
+            dropTarget.width = duration * multitrack.scaleFactor
+            dropTarget.visible = true
+
+            for (var i = 0; i < tracksRepeater.count; i++) {
+                var trackY = tracksRepeater.itemAt(i).y
+                var trackH = tracksRepeater.itemAt(i).height
+                if (pos.y >= trackY && pos.y < trackY + trackH) {
+                    currentTrack = i
+                    break
+                }
+            }
+
+            // Scroll tracks if at edges.
+            if (pos.x > headerWidth + scrollView.width - 50) {
+                scrollTimer.backwards = false
+                scrollTimer.start()
+            } else if (pos.x >= headerWidth && pos.x < headerWidth + 50) {
+                if (scrollView.flickableItem.contentX < 50) {
+                    scrollView.flickableItem.contentX = 0;
+                    scrollTimer.stop()
+                } else {
+                    scrollTimer.backwards = true
+                    scrollTimer.start()
+                }
+            } else {
+                scrollTimer.stop()
+            }
+        }
+    }
+    
+    function dropped() {
+        dropTarget.visible = false
+        scrollTimer.running = false
     }
 }
