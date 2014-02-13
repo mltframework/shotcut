@@ -341,8 +341,8 @@ Rectangle {
         }
         MenuItem {
             visible: !isBlank
-            text: qsTr('Split At Playhead')
-            onTriggered: timeline.splitClip(trackIndex, index, timeline.position)
+            text: qsTr('Split At Playhead (S)')
+            onTriggered: timeline.splitClip(trackIndex, index)
         }
     }
 }

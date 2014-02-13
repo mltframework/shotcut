@@ -110,6 +110,22 @@ Mlt::Producer *TimelineDock::getClip(int trackIndex, int clipIndex)
     return result;
 }
 
+int TimelineDock::clipIndexAtPlayhead(int trackIndex)
+{
+    int result = -1;
+    if (trackIndex < 0)
+        trackIndex = m_quickView.rootObject()->property("currentTrack").toInt();
+    if (trackIndex >= 0) {
+        int i = m_model.trackList().at(trackIndex).mlt_index;
+        QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
+        if (track) {
+            Mlt::Playlist playlist(*track);
+            result = playlist.get_clip_index_at(m_position);
+        }
+    }
+    return result;
+}
+
 void TimelineDock::addAudioTrack()
 {
     m_model.addAudioTrack();
@@ -311,16 +327,16 @@ void TimelineDock::appendFromPlaylist(Mlt::Playlist *playlist)
     m_model.appendFromPlaylist(playlist, trackIndex);
 }
 
-void TimelineDock::splitClip(int trackIndex, int clipIndex, int position)
+void TimelineDock::splitClip(int trackIndex, int clipIndex)
 {
     if (trackIndex < 0)
         trackIndex = m_quickView.rootObject()->property("currentTrack").toInt();
     if (clipIndex < 0)
-        clipIndex = m_quickView.rootObject()->property("currentClip").toInt();
+        clipIndex = clipIndexAtPlayhead(trackIndex);
     QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
-    if (info && position >= info->start && position < info->start + info->frame_count - 1) {
+    if (info && m_position >= info->start && m_position < info->start + info->frame_count - 1) {
         MAIN.undoStack()->push(
-            new Timeline::SplitCommand(m_model, trackIndex, clipIndex, position));
+            new Timeline::SplitCommand(m_model, trackIndex, clipIndex, m_position));
     }
 }
 

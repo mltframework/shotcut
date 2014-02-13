@@ -874,6 +874,10 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
     case Qt::Key_O:
         setOutToCurrent();
         break;
+    case Qt::Key_S:
+        if (multitrack())
+            m_timelineDock->splitClip();
+        break;
     case Qt::Key_V: // Avid Splice In
         if (multitrack()) {
             m_timelineDock->insert(-1);

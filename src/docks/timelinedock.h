@@ -43,6 +43,7 @@ public:
     Q_INVOKABLE QString timecode(int frames);
     Mlt::ClipInfo* getClipInfo(int trackIndex, int clipIndex);
     Mlt::Producer* getClip(int trackIndex, int clipIndex);
+    int clipIndexAtPlayhead(int trackIndex = -1);
 
 signals:
     void seeked(int position);
@@ -75,7 +76,7 @@ public slots:
     void insert(int trackIndex);
     void overwrite(int trackIndex);
     void appendFromPlaylist(Mlt::Playlist* playlist);
-    void splitClip(int trackIndex, int clipIndex, int position);
+    void splitClip(int trackIndex = -1, int clipIndex = -1);
 
 protected:
     void dragEnterEvent(QDragEnterEvent* event);

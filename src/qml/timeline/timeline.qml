@@ -377,6 +377,9 @@ Rectangle {
         case Qt.Key_C:
             timeline.append(currentTrack)
             break;
+        case Qt.Key_S:
+            timeline.splitClip(currentTrack)
+            break;
         case Qt.Key_V:
             timeline.insert(currentTrack)
             break;
@@ -420,6 +423,7 @@ Rectangle {
         switch (event.key) {
         case Qt.Key_B:
         case Qt.Key_C:
+        case Qt.Key_S:
         case Qt.Key_V:
         case Qt.Key_X:
         case Qt.Key_Z:
