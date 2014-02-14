@@ -323,7 +323,10 @@ Rectangle {
         MenuItem {
             text: qsTr('Close')
             shortcut: qsTr('Ctrl+W')
-            onTriggered: timeline.close()
+            onTriggered: {
+                timeline.close()
+                scaleSlider.value = 1
+            }
         }
     }
 
@@ -494,6 +497,11 @@ Rectangle {
         onPositionChanged: scrollIfNeeded()
         onDragging: dragging(pos, duration)
         onDropped: dropped()
+    }
+
+    Connections {
+        target: multitrack
+        onLoaded: scaleSlider.value = Math.pow(multitrack.scaleFactor - 0.01, 1.0 / 3.0)
     }
 
     // This provides continuous scrolling at the left/right edges.
