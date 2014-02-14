@@ -1033,11 +1033,11 @@ void MultitrackModel::joinClips(int trackIndex, int clipIndex)
     if (track) {
         Mlt::Playlist playlist(*track);
         if (clipIndex >= playlist.count() - 1) return;
-        QScopedPointer<Mlt::Producer> clip(playlist.get_clip(clipIndex));
-        int in = clip->get_in();
-        int out = playlist.clip_length(clipIndex) + playlist.clip_length(clipIndex + 1) - 1;
+        QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
+        int in = info->frame_in;
+        int duration = info->frame_count + playlist.clip_length(clipIndex + 1);
 
-        playlist.resize_clip(clipIndex, in, out);
+        playlist.resize_clip(clipIndex, in, in + duration - 1);
         QModelIndex modelIndex = createIndex(clipIndex, 0, trackIndex);
         QVector<int> roles;
         roles << DurationRole;
