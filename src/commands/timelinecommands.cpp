@@ -71,7 +71,6 @@ OverwriteCommand::OverwriteCommand(MultitrackModel &model, int trackIndex,
     : QUndoCommand(parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
-    , m_clipIndex(-1)
     , m_position(position)
     , m_xml(xml)
 {
@@ -81,14 +80,14 @@ OverwriteCommand::OverwriteCommand(MultitrackModel &model, int trackIndex,
 void OverwriteCommand::redo()
 {
     Mlt::Producer clip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
-    m_clipIndex = m_model.overwriteClip(m_trackIndex, clip, m_position);
+    m_playlistXml = m_model.overwrite(m_trackIndex, clip, m_position);
 }
 
 void OverwriteCommand::undo()
 {
-    // XXX This is not correct. We need to save every playlist entry that was
-    // affected and restore them.
-    m_model.liftClip(m_trackIndex, m_clipIndex);
+    Mlt::Producer producer(MLT.profile(), "xml-string", m_playlistXml.toUtf8().constData());
+    Mlt::Playlist playlist(producer);
+    m_model.overwriteFromPlaylist(playlist, m_trackIndex, m_position);
 }
 
 LiftCommand::LiftCommand(MultitrackModel &model, int trackIndex,

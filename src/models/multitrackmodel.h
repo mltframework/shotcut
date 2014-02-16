@@ -116,6 +116,7 @@ public slots:
     bool moveClipValid(int fromTrack, int toTrack, int clipIndex, int position);
     bool moveClip(int fromTrack, int toTrack, int clipIndex, int position);
     int overwriteClip(int trackIndex, Mlt::Producer& clip, int position);
+    QString overwrite(int trackIndex, Mlt::Producer& clip, int position);
     int insertClip(int trackIndex, Mlt::Producer& clip, int position);
     int appendClip(int trackIndex, Mlt::Producer &clip);
     void removeClip(int trackIndex, int clipIndex);
@@ -123,6 +124,7 @@ public slots:
     void splitClip(int trackIndex, int clipIndex, int position);
     void joinClips(int trackIndex, int clipIndex);
     void appendFromPlaylist(Mlt::Playlist* playlist, int trackIndex);
+    void overwriteFromPlaylist(Mlt::Playlist& playlist, int trackIndex, int position);
 
 private:
     Mlt::Tractor* m_tractor;

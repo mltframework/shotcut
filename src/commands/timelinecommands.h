@@ -62,7 +62,7 @@ public:
 private:
     MultitrackModel& m_model;
     int m_trackIndex;
-    int m_clipIndex;
+    QString m_playlistXml;
     int m_position;
     QString m_xml;
 };
