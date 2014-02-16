@@ -22,7 +22,6 @@
 #include <QMetaType>
 #include <Mlt.h>
 #include "glwidget.h"
-#include "sdlwidget.h"
 #include "settings.h"
 
 namespace Mlt {
@@ -103,14 +102,7 @@ Controller& Controller::singleton(QWidget* parent)
     if (!instance) {
         qRegisterMetaType<QFrame>("Mlt::QFrame");
         qRegisterMetaType<QProducer>("Mlt::QProducer");
-#if defined(Q_OS_MAC) || defined(Q_OS_WIN)
         instance = new GLWidget(parent);
-#else
-        if (Settings.playerOpenGL())
-            instance = new GLWidget(parent);
-        else
-            instance = new SDLWidget(parent);
-#endif
     }
     return *instance;
 }

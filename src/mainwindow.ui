@@ -158,7 +158,6 @@ p, li { white-space: pre-wrap; }
      <addaction name="actionFusionDark"/>
      <addaction name="actionFusionLight"/>
     </widget>
-    <addaction name="actionOpenGL"/>
     <addaction name="actionGPU"/>
     <addaction name="actionJack"/>
     <addaction name="actionRealtime"/>
@@ -497,17 +496,6 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Hyper/Lanczos (best)</string>
-   </property>
-  </action>
-  <action name="actionOpenGL">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="checked">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Use OpenGL</string>
    </property>
   </action>
   <action name="actionProfileAutomatic">

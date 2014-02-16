@@ -44,7 +44,6 @@
 #include "jobqueue.h"
 #include "docks/playlistdock.h"
 #include "glwidget.h"
-#include "sdlwidget.h"
 #include "mvcp/meltedserverdock.h"
 #include "mvcp/meltedplaylistdock.h"
 #include "mvcp/meltedunitsmodel.h"
@@ -282,25 +281,10 @@ MainWindow::MainWindow()
     connect(unitsModel, SIGNAL(generationChanged(quint8)), playlistModel, SLOT(onGenerationChanged(quint8)));
 
     // connect video widget signals
-#if defined(Q_OS_MAC) || defined(Q_OS_WIN)
     Mlt::GLWidget* videoWidget = (Mlt::GLWidget*) &(MLT);
     connect(videoWidget, SIGNAL(dragStarted()), m_playlistDock, SLOT(onPlayerDragStarted()));
     connect(videoWidget, SIGNAL(seekTo(int)), m_player, SLOT(seek(int)));
     connect(videoWidget, SIGNAL(gpuNotSupported()), this, SLOT(onGpuNotSupported()));
-#else
-    if (Settings.playerOpenGL()) {
-        Mlt::GLWidget* videoWidget = (Mlt::GLWidget*) &(MLT);
-        connect(videoWidget, SIGNAL(dragStarted()), m_playlistDock, SLOT(onPlayerDragStarted()));
-        connect(videoWidget, SIGNAL(seekTo(int)), m_player, SLOT(seek(int)));
-        connect(videoWidget, SIGNAL(gpuNotSupported()), this, SLOT(onGpuNotSupported()));
-    }
-    else {
-        Mlt::SDLWidget* videoWidget = (Mlt::SDLWidget*) &(MLT);
-        connect(videoWidget, SIGNAL(dragStarted()), m_playlistDock, SLOT(onPlayerDragStarted()));
-        connect(videoWidget, SIGNAL(seekTo(int)), m_player, SLOT(seek(int)));
-        onGpuNotSupported();
-    }
-#endif
 
     readWindowSettings();
     setCorner(Qt::TopLeftCorner, Qt::LeftDockWidgetArea);
@@ -395,17 +379,6 @@ void MainWindow::setupSettingsMenu()
         foreach (QString name, profiles)
             m_customProfileMenu->addAction(addProfile(m_profileGroup, name, dir.filePath(name)));
     }
-
-#if defined(Q_OS_MAC) || defined(Q_OS_WIN)
-    delete ui->actionOpenGL;
-    ui->actionOpenGL = 0;
-#else
-    if (!Settings.playerOpenGL()) {
-        ui->actionGPU->setChecked(false);
-        ui->actionGPU->setEnabled(false);
-        Settings.setPlayerGPU(false);
-    }
-#endif
 
     // Add the SDI and HDMI devices to the Settings menu.
     m_externalGroup = new QActionGroup(this);
@@ -663,9 +636,6 @@ void MainWindow::seekTimeline(int position)
 
 void MainWindow::readPlayerSettings()
 {
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    ui->actionOpenGL->setChecked(Settings.playerOpenGL());
-#endif
     ui->actionRealtime->setChecked(Settings.playerRealtime());
     ui->actionProgressive->setChecked(Settings.playerProgressive());
     ui->actionJack->setChecked(Settings.playerJACK());
@@ -1636,18 +1606,6 @@ void MainWindow::onShuttle(float x)
     } else {
         m_player->play(20.0 * x);
     }
-}
-
-void MainWindow::on_actionOpenGL_triggered(bool checked)
-{
-    Settings.setPlayerOpenGL(checked);
-    int r = QMessageBox::information(this, qApp->applicationName(),
-                                 tr("You must restart Shotcut to switch using OpenGL.\n"
-                                    "Do you want to exit now?"),
-                                 QMessageBox::Yes | QMessageBox::Default,
-                                 QMessageBox::No | QMessageBox::Escape);
-    if (r == QMessageBox::Yes)
-        QApplication::closeAllWindows();
 }
 
 void MainWindow::on_actionRealtime_triggered(bool checked)

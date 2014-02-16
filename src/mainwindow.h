@@ -166,7 +166,6 @@ private slots:
     void onMeltedUnitOpened();
     void onMeltedUnitActivated();
     void on_actionEnter_Full_Screen_triggered();
-    void on_actionOpenGL_triggered(bool checked);
     void on_actionRealtime_triggered(bool checked);
     void on_actionProgressive_triggered(bool checked);
     void on_actionOneField_triggered(bool checked);

@@ -10,7 +10,6 @@ include (../QWebSockets/qwebsockets.pri)
 SOURCES += main.cpp\
     mainwindow.cpp \
     mltcontroller.cpp \
-    sdlwidget.cpp \
     scrubbar.cpp \
     openotherdialog.cpp \
     widgets/plasmawidget.cpp \
@@ -86,7 +85,6 @@ SOURCES += main.cpp\
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
-    sdlwidget.h \
     scrubbar.h \
     openotherdialog.h \
     widgets/plasmawidget.h \

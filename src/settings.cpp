@@ -186,16 +186,6 @@ void ShotcutSettings::setPlayerInterpolation(const QString& s)
     settings.setValue("player/interpolation", s);
 }
 
-bool ShotcutSettings::playerOpenGL() const
-{
-    return settings.value("player/opengl", true).toBool();
-}
-
-void ShotcutSettings::setPlayerOpenGL(bool b)
-{
-    settings.setValue("player/opengl", b);
-}
-
 bool ShotcutSettings::playerGPU() const
 {
     return settings.value("player/gpu", false).toBool();

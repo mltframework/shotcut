@@ -63,8 +63,6 @@ public:
     void setPlayerGPU(bool);
     QString playerInterpolation() const;
     void setPlayerInterpolation(const QString&);
-    bool playerOpenGL() const;
-    void setPlayerOpenGL(bool);
     bool playerJACK() const;
     void setPlayerJACK(bool);
     int playerKeyerMode() const;
