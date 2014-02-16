@@ -26,6 +26,7 @@ Rectangle {
     property alias rootIndex: trackModel.rootIndex
     property bool isAudio
     property real timeScale: 1.0
+    property bool placeHolderAdded: false
 
     signal clipSelected(var clip, var track)
     signal clipDragged(var clip, int x, int y)
@@ -75,8 +76,9 @@ Rectangle {
                 var frame = Math.round(clip.x / timeScale)
 
                 // Remove the placeholder inserted in onDraggedToTrack
-                if (fromTrack !== toTrack) {
+                if (placeHolderAdded) {
                     trackModel.items.remove(clipIndex, 1)
+                    placeHolderAdded = false
                 }
                 if (!timeline.moveClip(fromTrack, toTrack, clipIndex, frame))
                     clip.x = clip.originalX
@@ -103,17 +105,21 @@ Rectangle {
             }
             onTrimmedOut: multitrack.notifyClipOut(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex)
             onDraggedToTrack: {
-                trackModel.items.insert(clip.DelegateModel.itemsIndex, {
-                    'name': '',
-                    'resource': '',
-                    'duration': clip.clipDuration,
-                    'mlt_service': '<producer',
-                    'in': 0,
-                    'out': clip.clipDuration - 1,
-                    'blank': true,
-                    'audio': false,
-                })
+                if (!placeHolderAdded) {
+                    placeHolderAdded = true
+                    trackModel.items.insert(clip.DelegateModel.itemsIndex, {
+                        'name': '',
+                        'resource': '',
+                        'duration': clip.clipDuration,
+                        'mlt_service': '<producer',
+                        'in': 0,
+                        'out': clip.clipDuration - 1,
+                        'blank': true,
+                        'audio': false,
+                    })
+                }
             }
+            onDropped: placeHolderAdded = false
 
             Component.onCompleted: {
                 moved.connect(trackRoot.clipDropped)
