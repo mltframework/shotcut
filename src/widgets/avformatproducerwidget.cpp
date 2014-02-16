@@ -18,7 +18,6 @@
 
 #include "avformatproducerwidget.h"
 #include "ui_avformatproducerwidget.h"
-#include "sdlwidget.h"
 #include "util.h"
 #include <QtDebug>
 #include <QtWidgets>
