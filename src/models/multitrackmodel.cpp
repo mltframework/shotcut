@@ -1475,7 +1475,10 @@ void MultitrackModel::addVideoTrack()
     foreach (Track t, m_trackList) {
         if (t.type == VideoTrackType) {
             ++v;
-            last_mlt_index = t.mlt_index;
+            // Take first one because video tracks are stored in our track list
+            // in reverse order from MLT.
+            if (!last_mlt_index)
+                last_mlt_index = t.mlt_index;
         }
     }
     m_tractor->plant_transition(composite, last_mlt_index, i);
