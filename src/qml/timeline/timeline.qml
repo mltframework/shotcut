@@ -26,7 +26,7 @@ Rectangle {
     SystemPalette { id: activePalette }
     color: activePalette.window
 
-    property int headerWidth: 176
+    property int headerWidth: 140
     property int currentTrack: 0
     property int currentClip: -1
     property int currentClipTrack: -1
@@ -62,17 +62,26 @@ Rectangle {
         }
     }
 
+    TimelineToolbar {
+        id: toolbar
+        width: parent.width
+        height: ruler.height + 6
+        anchors.top: parent.top
+        z: 1
+    }
+
     Row {
+        anchors.top: toolbar.bottom
         Column {
             z: 1
 
-            TimelineToolbar {
-                id: toolbar
-                z: 1
+            Rectangle {
+                // Padding between toolbar and track headers.
                 width: headerWidth
                 height: ruler.height
+                color: activePalette.window
+                z: 1
             }
-
             Flickable {
                 // Non-slider scroll area for the track headers.
                 contentY: scrollView.flickableItem.contentY
@@ -110,7 +119,7 @@ Rectangle {
             ZoomSlider {
                 id: scaleSlider
                 width: headerWidth
-                height: root.height - trackHeaders.height - ruler.height + 4
+                height: root.height - trackHeaders.height - ruler.height - toolbar.height + 4
                 onValueChanged: Logic.scrollIfNeeded()
             }
         }
@@ -168,7 +177,7 @@ Rectangle {
                 ScrollView {
                     id: scrollView
                     width: root.width - headerWidth
-                    height: root.height - ruler.height
+                    height: root.height - ruler.height - toolbar.height
         
                     Item {
                         width: tracksContainer.width + headerWidth
