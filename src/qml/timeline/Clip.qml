@@ -221,7 +221,7 @@ Rectangle {
         onPositionChanged: {
             if (mouse.y < 0 && trackIndex > 0)
                 parent.draggedToTrack(clipRoot, -1)
-            else if (mouse.y > height && (trackIndex + 1) < root.trackCount())
+            else if (mouse.y > height && (trackIndex + 1) < root.trackCount)
                 parent.draggedToTrack(clipRoot, 1)
             parent.dragged(clipRoot, mouse)
         }

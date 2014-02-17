@@ -19,6 +19,7 @@
 import QtQuick 2.2
 import QtQml.Models 2.1
 import QtQuick.Controls 1.0
+import 'Timeline.js' as Logic
 
 Rectangle {
     id: root
@@ -30,6 +31,7 @@ Rectangle {
     property int currentClip: -1
     property int currentClipTrack: -1
     property color selectedTrackColor: Qt.tint(activePalette.base, Qt.rgba(0.8, 0.8, 0, 0.3));
+    property alias trackCount: tracksRepeater.count
 
     MouseArea {
         anchors.fill: parent
@@ -43,19 +45,19 @@ Rectangle {
             if (drag.formats.indexOf('application/mlt+xml') >= 0)
                 drag.acceptProposedAction()
         }
-        onExited: root.dropped()
+        onExited: Logic.dropped()
         onPositionChanged: {
             if (drag.formats.indexOf('application/mlt+xml') >= 0)
-                dragging(drag, drag.text)
+                Logic.dragging(drag, drag.text)
         }
         onDropped: {
             if (drop.formats.indexOf('application/mlt+xml') >= 0) {
                 if (currentTrack >= 0) {
-                    var position = (drag.x - headerWidth) / multitrack.scaleFactor
+                    var position = (drop.x - headerWidth) / multitrack.scaleFactor
                     timeline.append(currentTrack)
                     drop.acceptProposedAction()
                 }
-                root.dropped()
+                Logic.dropped()
             }
         }
     }
@@ -63,45 +65,14 @@ Rectangle {
     Row {
         Column {
             z: 1
-            Rectangle {
+
+            TimelineToolbar {
                 id: toolbar
-                height: ruler.height
-                width: headerWidth
                 z: 1
-                color: activePalette.window
-                Row {
-                    spacing: 6
-                    Item {
-                        width: 1
-                        height: 1
-                    }
-                    Button {
-                        action: menuAction
-                        implicitWidth: 28
-                        implicitHeight: 24
-                    }
-                    Button {
-                        action: appendAction
-                        implicitWidth: 28
-                        implicitHeight: 24
-                    }
-                    Button {
-                        action: liftAction
-                        implicitWidth: 28
-                        implicitHeight: 24
-                    }
-                    Button {
-                        action: insertAction
-                        implicitWidth: 28
-                        implicitHeight: 24
-                    }
-                    Button {
-                        action: overwriteAction
-                        implicitWidth: 28
-                        implicitHeight: 24
-                    }
-                }
+                width: headerWidth
+                height: ruler.height
             }
+
             Flickable {
                 // Non-slider scroll area for the track headers.
                 contentY: scrollView.flickableItem.contentY
@@ -135,37 +106,12 @@ Rectangle {
                     anchors.bottom: parent.bottom
                 }
             }
-            Rectangle {
-                color: activePalette.window
-                height: root.height - trackHeaders.height - ruler.height + 4
-                width: headerWidth
 
-                Slider {
-                    id: scaleSlider
-                    orientation: Qt.Horizontal
-                    anchors {
-                        left: parent.left
-                        right: parent.right
-                        bottom: parent.bottom
-                        leftMargin: 4
-                        rightMargin: 4
-                    }
-                    minimumValue: 0
-                    maximumValue: 1.75
-                    value: 1
-                    onValueChanged: {
-                        if (typeof multitrack.scaleFactor != 'undefined')
-                            multitrack.scaleFactor = Math.pow(value, 3) + 0.01
-                        if (typeof scrollIfNeeded != 'undefined')
-                            scrollIfNeeded()
-                    }
-                    onPressedChanged: {
-                        if (!pressed) {
-                            for (var i = 0; i < tracksRepeater.count; i++)
-                                tracksRepeater.itemAt(i).redrawWaveforms()
-                        }
-                    }
-                }
+            ZoomSlider {
+                id: scaleSlider
+                width: headerWidth
+                height: root.height - trackHeaders.height - ruler.height + 4
+                onValueChanged: Logic.scrollIfNeeded()
             }
         }
 
@@ -331,46 +277,6 @@ Rectangle {
         }
     }
 
-    Action {
-        id: menuAction
-        tooltip: qsTr('Display a menu of additional actions')
-        iconName: 'format-justify-fill'
-        iconSource: 'qrc:///icons/oxygen/16x16/actions/format-justify-fill.png'
-        onTriggered: menu.popup()
-    }
-
-    Action {
-        id: appendAction
-        tooltip: qsTr('Append to the current track (C)')
-        iconName: 'list-add'
-        iconSource: 'qrc:///icons/oxygen/16x16/actions/list-add.png'
-        onTriggered: timeline.append(currentTrack)
-    }
-
-    Action {
-        id: liftAction
-        tooltip: qsTr('Lift - Remove current clip without\naffecting position of other clips (Z)')
-        iconName: 'go-up'
-        iconSource: 'qrc:///icons/oxygen/16x16/actions/go-up.png'
-        onTriggered: timeline.lift(currentClipTrack, currentClip)
-    }
-
-    Action {
-        id: insertAction
-        tooltip: qsTr('Insert clip into the current track (V)')
-        iconName: 'go-next'
-        iconSource: 'qrc:///icons/oxygen/16x16/actions/go-next.png'
-        onTriggered: timeline.insert(currentTrack)
-    }
-
-    Action {
-        id: overwriteAction
-        tooltip: qsTr('Overwrite clip onto the current track (B)')
-        iconName: 'go-down'
-        iconSource: 'qrc:///icons/oxygen/16x16/actions/go-down.png'
-        onTriggered: timeline.overwrite(currentTrack)
-    }
-
     Keys.onUpPressed: timeline.selectTrack(-1)
     Keys.onDownPressed: timeline.selectTrack(1)
     Keys.onPressed: {
@@ -495,9 +401,9 @@ Rectangle {
     
     Connections {
         target: timeline
-        onPositionChanged: scrollIfNeeded()
-        onDragging: dragging(pos, duration)
-        onDropped: dropped()
+        onPositionChanged: Logic.scrollIfNeeded()
+        onDragging: Logic.dragging(pos, duration)
+        onDropped: Logic.dropped()
     }
 
     Connections {
@@ -520,63 +426,5 @@ Rectangle {
             if (scrollView.flickableItem.contentX <= 0)
                 stop()
         }
-    }
-
-    function scrollIfNeeded() {
-        var x = timeline.position * multitrack.scaleFactor;
-        if (x > scrollView.flickableItem.contentX + scrollView.width - 50)
-            scrollView.flickableItem.contentX = x - scrollView.width + 50;
-        else if (x < 50)
-            scrollView.flickableItem.contentX = 0;
-        else if (x < scrollView.flickableItem.contentX + 50)
-            scrollView.flickableItem.contentX = x - 50;
-    }
-
-    function trackCount() {
-        return tracksRepeater.count
-    }
-
-    function dragging(pos, duration) {
-        if (tracksRepeater.count > 0) {
-            dropTarget.x = pos.x
-            dropTarget.width = duration * multitrack.scaleFactor
-
-            for (var i = 0; i < tracksRepeater.count; i++) {
-                var trackY = tracksRepeater.itemAt(i).y
-                var trackH = tracksRepeater.itemAt(i).height
-                if (pos.y >= trackY && pos.y < trackY + trackH) {
-                    currentTrack = i
-                    if (pos.x > headerWidth) {
-                        dropTarget.height = trackH
-                        dropTarget.y = trackY + ruler.height
-                        dropTarget.visible = true
-                    }
-                    break
-                }
-            }
-            if (i === tracksRepeater.count || pos.x <= headerWidth)
-                dropTarget.visible = false
-
-            // Scroll tracks if at edges.
-            if (pos.x > headerWidth + scrollView.width - 50) {
-                scrollTimer.backwards = false
-                scrollTimer.start()
-            } else if (pos.x >= headerWidth && pos.x < headerWidth + 50) {
-                if (scrollView.flickableItem.contentX < 50) {
-                    scrollView.flickableItem.contentX = 0;
-                    scrollTimer.stop()
-                } else {
-                    scrollTimer.backwards = true
-                    scrollTimer.start()
-                }
-            } else {
-                scrollTimer.stop()
-            }
-        }
-    }
-    
-    function dropped() {
-        dropTarget.visible = false
-        scrollTimer.running = false
     }
 }

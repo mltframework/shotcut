@@ -259,7 +259,10 @@ OTHER_FILES += \
     qml/filters/vignette/meta_movit.qml \
     qml/filters/vignette/ui_movit.qml \
     qml/filters/vignette/meta_oldfilm.qml \
-    qml/filters/vignette/ui_oldfilm.qml
+    qml/filters/vignette/ui_oldfilm.qml \
+    qml/timeline/TimelineToolbar.qml \
+    qml/timeline/ZoomSlider.qml \
+    qml/timeline/Timeline.js
 
 lupdate_hack {
     SOURCES += \
@@ -296,6 +299,7 @@ lupdate_hack {
     qml/filters/sepia/ui.qml \
     qml/modules/Shotcut/Controls/UndoButton.qml \
     qml/timeline/timeline.qml \
+    qml/timeline/TimelineToolbar.qml \
     qml/timeline/TrackHead.qml \
     qml/timeline/Track.qml \
     qml/timeline/Clip.qml \
