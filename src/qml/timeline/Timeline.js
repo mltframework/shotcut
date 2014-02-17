@@ -33,13 +33,13 @@ function dragging(pos, duration) {
         dropTarget.width = duration * multitrack.scaleFactor
 
         for (var i = 0; i < tracksRepeater.count; i++) {
-            var trackY = tracksRepeater.itemAt(i).y
+            var trackY = tracksRepeater.itemAt(i).y - scrollView.flickableItem.contentY
             var trackH = tracksRepeater.itemAt(i).height
             if (pos.y >= trackY && pos.y < trackY + trackH) {
                 currentTrack = i
                 if (pos.x > headerWidth) {
                     dropTarget.height = trackH
-                    dropTarget.y = trackY + ruler.height
+                    dropTarget.y = trackY + ruler.height + toolbar.height
                     dropTarget.visible = true
                 }
                 break
