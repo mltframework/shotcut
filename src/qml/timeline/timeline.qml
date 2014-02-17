@@ -51,6 +51,7 @@ Rectangle {
         onDropped: {
             if (drop.formats.indexOf('application/mlt+xml') >= 0) {
                 if (currentTrack >= 0) {
+                    var position = (drag.x - headerWidth) / multitrack.scaleFactor
                     timeline.append(currentTrack)
                     drop.acceptProposedAction()
                 }
@@ -538,18 +539,23 @@ Rectangle {
     function dragging(pos, duration) {
         if (tracksRepeater.count > 0) {
             dropTarget.x = pos.x
-            dropTarget.y = pos.y
             dropTarget.width = duration * multitrack.scaleFactor
-            dropTarget.visible = true
 
             for (var i = 0; i < tracksRepeater.count; i++) {
                 var trackY = tracksRepeater.itemAt(i).y
                 var trackH = tracksRepeater.itemAt(i).height
                 if (pos.y >= trackY && pos.y < trackY + trackH) {
                     currentTrack = i
+                    if (pos.x > headerWidth) {
+                        dropTarget.height = trackH
+                        dropTarget.y = trackY + ruler.height
+                        dropTarget.visible = true
+                    }
                     break
                 }
             }
+            if (i === tracksRepeater.count || pos.x <= headerWidth)
+                dropTarget.visible = false
 
             // Scroll tracks if at edges.
             if (pos.x > headerWidth + scrollView.width - 50) {
