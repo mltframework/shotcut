@@ -43,6 +43,11 @@ Rectangle {
             implicitHeight: 24
         }
         Button {
+            action: deleteAction
+            implicitWidth: 28
+            implicitHeight: 24
+        }
+        Button {
             action: liftAction
             implicitWidth: 28
             implicitHeight: 24
@@ -76,6 +81,14 @@ Rectangle {
     }
 
     Action {
+        id: deleteAction
+        tooltip: qsTr('Ripple Delete - Remove current clip\nshifting following clips to the left (X)')
+        iconName: 'go-previous'
+        iconSource: 'qrc:///icons/oxygen/16x16/actions/go-previous.png'
+        onTriggered: timeline.remove(currentClipTrack, currentClip)
+    }
+
+    Action {
         id: liftAction
         tooltip: qsTr('Lift - Remove current clip without\naffecting position of other clips (Z)')
         iconName: 'go-up'
@@ -85,7 +98,7 @@ Rectangle {
 
     Action {
         id: insertAction
-        tooltip: qsTr('Insert clip into the current track (V)')
+        tooltip: qsTr('Insert clip into the current track\nshifting following clips to the right (V)')
         iconName: 'go-next'
         iconSource: 'qrc:///icons/oxygen/16x16/actions/go-next.png'
         onTriggered: timeline.insert(currentTrack)
