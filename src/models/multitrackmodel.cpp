@@ -1179,7 +1179,6 @@ void MultitrackModel::appendFromPlaylist(Mlt::Playlist *from, int trackIndex)
 
 void MultitrackModel::overwriteFromPlaylist(Mlt::Playlist& from, int trackIndex, int position)
 {
-    if (from.count() == 0) return;
     int i = m_trackList.at(trackIndex).mlt_index;
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     if (track) {
@@ -1201,21 +1200,22 @@ void MultitrackModel::overwriteFromPlaylist(Mlt::Playlist& from, int trackIndex,
             playlist.remove(targetIndex);
             endRemoveRows();
         }
-        beginInsertRows(index(trackIndex), targetIndex, targetIndex + from.count() - 1);
-        for (int i = 0; i < from.count(); i++) {
-            QScopedPointer<Mlt::Producer> clip(from.get_clip(i));
-            if (clip->is_blank()) {
-                playlist.insert_blank(targetIndex, clip->get_out());
-            } else {
-                playlist.insert(*clip, targetIndex);
-                QModelIndex modelIndex = createIndex(targetIndex, 0, trackIndex);
-                QThreadPool::globalInstance()->start(
-                    new AudioLevelsTask(clip->parent(), this, modelIndex));
+        if (from.count() > 0) {
+            beginInsertRows(index(trackIndex), targetIndex, targetIndex + from.count() - 1);
+            for (int i = 0; i < from.count(); i++) {
+                QScopedPointer<Mlt::Producer> clip(from.get_clip(i));
+                if (clip->is_blank()) {
+                    playlist.insert_blank(targetIndex, clip->get_out());
+                } else {
+                    playlist.insert(*clip, targetIndex);
+                    QModelIndex modelIndex = createIndex(targetIndex, 0, trackIndex);
+                    QThreadPool::globalInstance()->start(
+                        new AudioLevelsTask(clip->parent(), this, modelIndex));
+                }
+                ++targetIndex;
             }
-            ++targetIndex;
+            endInsertRows();
         }
-        endInsertRows();
-
         consolidateBlanks(playlist, trackIndex);
         emit modified();
         emit seeked(position + playlist.get_playtime());
