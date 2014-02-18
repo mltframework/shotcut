@@ -325,6 +325,9 @@ Rectangle {
     }
     Menu {
         id: menu
+        // XXX This is a workaround for menus appearing in wrong location in a Quick
+        // view used in a DockWidget on OS X.
+        Component.onCompleted: if (timeline.yoffset) __yOffset = timeline.yoffset
         MenuItem {
             text: qsTr('Remove')
             onTriggered: timeline.remove(trackIndex, index)

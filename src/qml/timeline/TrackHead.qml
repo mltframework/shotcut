@@ -161,6 +161,9 @@ Rectangle {
 
     Menu {
         id: compositeMenu
+        // XXX This is a workaround for menus appearing in wrong location in a Quick
+        // view used in a DockWidget on OS X.
+        Component.onCompleted: if (timeline.yoffset) __yOffset = timeline.yoffset
         MenuItem {
             text: qsTr('No Compositing')
             onTriggered: { timeline.setTrackComposite(index, Qt.Unchecked); compositeButton.checkedState = Qt.Unchecked }
