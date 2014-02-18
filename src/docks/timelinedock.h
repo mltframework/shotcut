@@ -32,6 +32,7 @@ class TimelineDock : public QDockWidget
 {
     Q_OBJECT
     Q_PROPERTY(int position READ position WRITE setPosition NOTIFY positionChanged)
+    Q_PROPERTY(int yoffset READ dockYOffset)
 
 public:
     explicit TimelineDock(QWidget *parent = 0);
@@ -44,6 +45,7 @@ public:
     Mlt::ClipInfo* getClipInfo(int trackIndex, int clipIndex);
     Mlt::Producer* getClip(int trackIndex, int clipIndex);
     int clipIndexAtPlayhead(int trackIndex = -1);
+    int dockYOffset() const;
 
 signals:
     void seeked(int position);

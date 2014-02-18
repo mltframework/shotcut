@@ -126,6 +126,17 @@ int TimelineDock::clipIndexAtPlayhead(int trackIndex)
     return result;
 }
 
+int TimelineDock::dockYOffset() const
+{
+    // XXX This is a workaround for menus appearing in wrong location in a Quick
+    // view used in a DockWidget on OS X.
+#ifdef Q_OS_MAC
+    return mapToParent(QPoint(0, 0)).y();
+#else
+    return 0;
+#endif
+}
+
 void TimelineDock::addAudioTrack()
 {
     m_model.addAudioTrack();
