@@ -18,8 +18,12 @@
 
 import QtQuick 2.2
 import QtQuick.Controls 1.0
+import QtQuick.Controls.Styles 1.0
 
 Rectangle {
+    property alias ripple: rippleButton.checked
+    property alias snap: snapButton.checked
+
     SystemPalette { id: activePalette }
 
     width: 200
@@ -61,6 +65,49 @@ Rectangle {
             action: overwriteAction
             implicitWidth: 28
             implicitHeight: 24
+        }
+        CheckBox {
+            id: rippleButton
+            anchors.verticalCenter: parent.verticalCenter
+            style: CheckBoxStyle {
+                indicator: Rectangle {
+                    implicitWidth: rippleText.width + 8
+                    implicitHeight: 24
+                    radius: 3
+                    color: control.checked? activePalette.highlight : activePalette.button
+                    border.color: activePalette.shadow
+                    border.width: 1
+                    Text {
+                        id: rippleText
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: qsTr('Ripple Drop')
+                        color: control.checked? activePalette.highlightedText : activePalette.windowText
+                    }
+                }
+            }
+        }
+        CheckBox {
+            id: snapButton
+            checked: true
+            anchors.verticalCenter: parent.verticalCenter
+            style: CheckBoxStyle {
+                indicator: Rectangle {
+                    implicitWidth: snapText.width + 8
+                    implicitHeight: 24
+                    radius: 3
+                    color: control.checked? activePalette.highlight : activePalette.button
+                    border.color: activePalette.shadow
+                    border.width: 1
+                    Text {
+                        id: snapText
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: qsTr('Snap')
+                        color: control.checked? activePalette.highlightedText : activePalette.windowText
+                    }
+                }
+            }
         }
     }
 

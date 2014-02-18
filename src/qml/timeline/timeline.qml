@@ -53,12 +53,11 @@ Rectangle {
         onDropped: {
             if (drop.formats.indexOf('application/mlt+xml') >= 0) {
                 if (currentTrack >= 0) {
-                    var position = (drop.x - headerWidth) / multitrack.scaleFactor
-                    timeline.append(currentTrack)
+                    Logic.acceptDrop()
                     drop.acceptProposedAction()
                 }
-                Logic.dropped()
             }
+            Logic.dropped()
         }
     }
 
@@ -120,6 +119,7 @@ Rectangle {
                 id: scaleSlider
                 width: headerWidth
                 height: root.height - trackHeaders.height - ruler.height - toolbar.height + 4
+                z: 2
                 onValueChanged: Logic.scrollIfNeeded()
             }
         }
@@ -245,10 +245,10 @@ Rectangle {
         Text {
             anchors.fill: parent
             anchors.leftMargin: 100
-            text: qsTr('Append')
+            text: toolbar.ripple? qsTr('Insert') : qsTr('Overwrite')
             style: Text.Outline
             styleColor: 'white'
-            font.pixelSize: parent.height * 0.8
+            font.pixelSize: Math.min(Math.max(parent.height * 0.8, 15), 30)
             verticalAlignment: Text.AlignVCenter
         }
     }
@@ -413,6 +413,7 @@ Rectangle {
         onPositionChanged: Logic.scrollIfNeeded()
         onDragging: Logic.dragging(pos, duration)
         onDropped: Logic.dropped()
+        onDropAccepted: Logic.acceptDrop()
     }
 
     Connections {

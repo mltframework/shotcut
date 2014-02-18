@@ -51,6 +51,7 @@ signals:
     void clipOpened(void* producer, int in, int out);
     void dragging(const QPointF& pos, int duration);
     void dropped();
+    void dropAccepted();
 
 public slots:
     void addAudioTrack();
@@ -73,8 +74,8 @@ public slots:
     bool moveClip(int fromTrack, int toTrack, int clipIndex, int position);
     void trimClipIn(int trackIndex, int clipIndex, int delta);
     void trimClipOut(int trackIndex, int clipIndex, int delta);
-    void insert(int trackIndex);
-    void overwrite(int trackIndex);
+    void insert(int trackIndex, int position = -1);
+    void overwrite(int trackIndex, int position = -1);
     void appendFromPlaylist(Mlt::Playlist* playlist);
     void splitClip(int trackIndex = -1, int clipIndex = -1);
 

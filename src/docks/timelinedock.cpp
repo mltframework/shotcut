@@ -299,24 +299,28 @@ void TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta)
     }
 }
 
-void TimelineDock::insert(int trackIndex)
+void TimelineDock::insert(int trackIndex, int position)
 {
     if (MLT.isSeekableClip() || MLT.savedProducer()) {
         if (trackIndex < 0)
             trackIndex = m_quickView.rootObject()->property("currentTrack").toInt();
+        if (position < 0)
+            position = m_position;
         MAIN.undoStack()->push(
-            new Timeline::InsertCommand(m_model, trackIndex, m_position,
+            new Timeline::InsertCommand(m_model, trackIndex, position,
                 MLT.saveXML("string", MLT.isClip()? 0 : MLT.savedProducer())));
     }
 }
 
-void TimelineDock::overwrite(int trackIndex)
+void TimelineDock::overwrite(int trackIndex, int position)
 {
     if (MLT.isSeekableClip() || MLT.savedProducer()) {
         if (trackIndex < 0)
             trackIndex = m_quickView.rootObject()->property("currentTrack").toInt();
+        if (position < 0)
+            position = m_position;
         MAIN.undoStack()->push(
-            new Timeline::OverwriteCommand(m_model, trackIndex, m_position,
+            new Timeline::OverwriteCommand(m_model, trackIndex, position,
                 MLT.saveXML("string", MLT.isClip()? 0 : MLT.savedProducer())));
     }
 }
@@ -363,7 +367,7 @@ void TimelineDock::dropEvent(QDropEvent *event)
     if (event->mimeData()->hasFormat(Mlt::XmlMimeType)) {
         int trackIndex = m_quickView.rootObject()->property("currentTrack").toInt();
         if (trackIndex >= 0) {
-            MAIN.undoStack()->push(new Timeline::AppendCommand(m_model, trackIndex, event->mimeData()->data(Mlt::XmlMimeType)));
+            emit dropAccepted();
             event->acceptProposedAction();
         }
     }

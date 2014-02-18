@@ -87,7 +87,7 @@ Rectangle {
                         implicitHeight: 16
                         radius: 2
                         color: isMute? activePalette.highlight : trackHeadRoot.color
-                        border.color: activePalette.midlight
+                        border.color: activePalette.shadow
                         border.width: 1
                         Text {
                             id: muteText
@@ -111,7 +111,7 @@ Rectangle {
                         implicitHeight: 16
                         radius: 2
                         color: isHidden? activePalette.highlight : trackHeadRoot.color
-                        border.color: activePalette.midlight
+                        border.color: activePalette.shadow
                         border.width: 1
                         Text {
                             id: hideText
@@ -138,7 +138,7 @@ Rectangle {
                         color: (isComposite === Qt.Checked)? activePalette.highlight
                             : (isComposite === Qt.PartiallyChecked)? Qt.lighter(activePalette.highlight)
                             : trackHeadRoot.color
-                        border.color: activePalette.midlight
+                        border.color: activePalette.shadow
                         border.width: 1
                         Text {
                             id: compositeText

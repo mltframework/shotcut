@@ -96,3 +96,32 @@ function snapTrimOut(clip, delta) {
     }
     return delta
 }
+
+function snapDrop(pos, repeater) {
+    var left = scrollView.flickableItem.contentX + pos.x - headerWidth
+    var right = left + dropTarget.width
+    var cursorX = scrollView.flickableItem.contentX + cursor.x
+    if (left > -SNAP && left < SNAP) {
+        // Snap around origin.
+        dropTarget.x = headerWidth
+        return
+    } else {
+        // Snap to other clips.
+        for (var i = 0; i < repeater.count; i++) {
+            var itemLeft = repeater.itemAt(i).x
+            var itemRight = itemLeft + repeater.itemAt(i).width
+            if (right > itemLeft - SNAP && right < itemLeft + SNAP) {
+                dropTarget.x = itemLeft - dropTarget.width + headerWidth - scrollView.flickableItem.contentX
+                return
+            } else if (left > itemRight - SNAP && left < itemRight + SNAP) {
+                dropTarget.x = itemRight + headerWidth - scrollView.flickableItem.contentX
+                return
+            }
+        }
+    }
+    if (left > cursorX - SNAP && left < cursorX + SNAP)
+        // Snap around cursor/playhead.
+        dropTarget.x = cursorX + headerWidth - scrollView.flickableItem.contentX
+    if (right > cursorX - SNAP && right < cursorX + SNAP)
+        dropTarget.x = cursorX - dropTarget.width + headerWidth - scrollView.flickableItem.contentX
+}

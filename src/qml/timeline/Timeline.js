@@ -68,10 +68,23 @@ function dragging(pos, duration) {
         } else {
             scrollTimer.stop()
         }
+
+        if (toolbar.snap) {
+            for (i = 0; i < tracksRepeater.count; i++)
+                tracksRepeater.itemAt(i).snapDrop(pos)
+        }
     }
 }
 
 function dropped() {
     dropTarget.visible = false
     scrollTimer.running = false
+}
+
+function acceptDrop() {
+    var position = (dropTarget.x + scrollView.flickableItem.contentX - headerWidth) / multitrack.scaleFactor
+    if (toolbar.ripple)
+        timeline.insert(currentTrack, position)
+    else
+        timeline.overwrite(currentTrack, position)
 }

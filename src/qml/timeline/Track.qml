@@ -48,6 +48,10 @@ Rectangle {
         Logic.snapClip(clip, repeater)
     }
 
+    function snapDrop(clip) {
+        Logic.snapDrop(clip, repeater)
+    }
+
     color: 'transparent'
 
     DelegateModel {
@@ -85,20 +89,20 @@ Rectangle {
             }
             onDragged: {
                 // Snap if Alt key is not down.
-                if (!(mouse.modifiers & Qt.AltModifier))
+                if (!(mouse.modifiers & Qt.AltModifier) && toolbar.snap)
                     trackRoot.checkSnap(clip)
                 var mapped = trackRoot.mapFromItem(clip, mouse.x, mouse.y)
                 trackRoot.clipDragged(clip, mapped.x, mapped.y)
             }
             onTrimmingIn: {
-                if (!(mouse.modifiers & Qt.AltModifier))
+                if (!(mouse.modifiers & Qt.AltModifier) && toolbar.snap)
                     delta = Logic.snapTrimIn(clip, delta)
                 if (delta != 0)
                     timeline.trimClipIn(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex, delta)
             }
             onTrimmedIn: multitrack.notifyClipIn(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex)
             onTrimmingOut: {
-                if (!(mouse.modifiers & Qt.AltModifier))
+                if (!(mouse.modifiers & Qt.AltModifier) && toolbar.snap)
                     delta = Logic.snapTrimOut(clip, delta)
                 if (delta != 0)
                     timeline.trimClipOut(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex, delta)
