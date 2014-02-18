@@ -22,6 +22,7 @@ import QtQuick.Controls.Styles 1.0
 
 Rectangle {
     property alias ripple: rippleButton.checked
+    property alias scrub: scrubButton.checked
     property alias snap: snapButton.checked
 
     SystemPalette { id: activePalette }
@@ -65,6 +66,27 @@ Rectangle {
             action: overwriteAction
             implicitWidth: 28
             implicitHeight: 24
+        }
+        CheckBox {
+            id: scrubButton
+            anchors.verticalCenter: parent.verticalCenter
+            style: CheckBoxStyle {
+                indicator: Rectangle {
+                    implicitWidth: scrubText.width + 8
+                    implicitHeight: 24
+                    radius: 3
+                    color: control.checked? activePalette.highlight : activePalette.button
+                    border.color: activePalette.shadow
+                    border.width: 1
+                    Text {
+                        id: scrubText
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: qsTr('Scrub Drag')
+                        color: control.checked? activePalette.highlightedText : activePalette.windowText
+                    }
+                }
+            }
         }
         CheckBox {
             id: rippleButton

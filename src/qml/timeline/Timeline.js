@@ -69,6 +69,10 @@ function dragging(pos, duration) {
             scrollTimer.stop()
         }
 
+        if (toolbar.scrub) {
+            timeline.position = Math.round(
+                (pos.x + scrollView.flickableItem.contentX - headerWidth) / multitrack.scaleFactor)
+        }
         if (toolbar.snap) {
             for (i = 0; i < tracksRepeater.count; i++)
                 tracksRepeater.itemAt(i).snapDrop(pos)
@@ -82,7 +86,7 @@ function dropped() {
 }
 
 function acceptDrop() {
-    var position = (dropTarget.x + scrollView.flickableItem.contentX - headerWidth) / multitrack.scaleFactor
+    var position = Math.round((dropTarget.x + scrollView.flickableItem.contentX - headerWidth) / multitrack.scaleFactor)
     if (toolbar.ripple)
         timeline.insert(currentTrack, position)
     else

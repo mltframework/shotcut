@@ -21,7 +21,6 @@ var SNAP = 10
 function snapClip(clip, repeater) {
     // clip.x = left edge
     var right = clip.x + clip.width
-    var cursorX = scrollView.flickableItem.contentX + cursor.x
     if (clip.x > -SNAP && clip.x < SNAP) {
         // Snap around origin.
         clip.x = 0
@@ -40,11 +39,14 @@ function snapClip(clip, repeater) {
             }
         }
     }
-    if (clip.x > cursorX - SNAP && clip.x < cursorX + SNAP)
-        // Snap around cursor/playhead.
-        clip.x = cursorX
-    if (right > cursorX - SNAP && right < cursorX + SNAP)
-        clip.x = cursorX - clip.width
+    if (!toolbar.scrub) {
+        var cursorX = scrollView.flickableItem.contentX + cursor.x
+        if (clip.x > cursorX - SNAP && clip.x < cursorX + SNAP)
+            // Snap around cursor/playhead.
+            clip.x = cursorX
+        if (right > cursorX - SNAP && right < cursorX + SNAP)
+            clip.x = cursorX - clip.width
+    }
 }
 
 function snapTrimIn(clip, delta) {
@@ -100,7 +102,6 @@ function snapTrimOut(clip, delta) {
 function snapDrop(pos, repeater) {
     var left = scrollView.flickableItem.contentX + pos.x - headerWidth
     var right = left + dropTarget.width
-    var cursorX = scrollView.flickableItem.contentX + cursor.x
     if (left > -SNAP && left < SNAP) {
         // Snap around origin.
         dropTarget.x = headerWidth
@@ -119,9 +120,12 @@ function snapDrop(pos, repeater) {
             }
         }
     }
-    if (left > cursorX - SNAP && left < cursorX + SNAP)
-        // Snap around cursor/playhead.
-        dropTarget.x = cursorX + headerWidth - scrollView.flickableItem.contentX
-    if (right > cursorX - SNAP && right < cursorX + SNAP)
-        dropTarget.x = cursorX - dropTarget.width + headerWidth - scrollView.flickableItem.contentX
+    if (!toolbar.scrub) {
+        var cursorX = scrollView.flickableItem.contentX + cursor.x
+        if (left > cursorX - SNAP && left < cursorX + SNAP)
+            // Snap around cursor/playhead.
+            dropTarget.x = cursorX + headerWidth - scrollView.flickableItem.contentX
+        if (right > cursorX - SNAP && right < cursorX + SNAP)
+            dropTarget.x = cursorX - dropTarget.width + headerWidth - scrollView.flickableItem.contentX
+    }
 }
