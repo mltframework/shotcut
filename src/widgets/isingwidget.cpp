@@ -20,8 +20,8 @@
 #include "ui_isingwidget.h"
 
 static const char* kParamTemperature = "0";
-static const char* kParamBorderGrowth = "0";
-static const char* kParamSpontaneous = "0";
+static const char* kParamBorderGrowth = "1";
+static const char* kParamSpontaneous = "2";
 
 IsingWidget::IsingWidget(QWidget *parent) :
     QWidget(parent),
