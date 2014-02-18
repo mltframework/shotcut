@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Meltytech, LLC
+ * Copyright (c) 2011-2014 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -136,6 +136,9 @@ MainWindow::MainWindow()
     m_propertiesDock->setObjectName("propertiesDock");
     m_propertiesDock->setWindowIcon(ui->actionProperties->icon());
     m_propertiesDock->toggleViewAction()->setIcon(ui->actionProperties->icon());
+    QScrollArea* scroll = new QScrollArea;
+    scroll->setWidgetResizable(true);
+    m_propertiesDock->setWidget(scroll);
     addDockWidget(Qt::LeftDockWidgetArea, m_propertiesDock);
     ui->menuView->addAction(m_propertiesDock->toggleViewAction());
     connect(m_propertiesDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onPropertiesDockTriggered(bool)));
@@ -1086,54 +1089,18 @@ void MainWindow::on_actionOpenOther_triggered()
 
 void MainWindow::onProducerOpened()
 {
-    QString service(MLT.producer()->get("mlt_service"));
-    QString resource(MLT.resource());
-    QWidget* w = 0;
-
     m_meltedServerDock->disconnect(SIGNAL(positionUpdated(int,double,int,int,int,bool)));
     m_player->connectTransport(MLT.transportControl());
-    delete m_propertiesDock->widget();
 
     // Remove the help page.
     if (ui->stackedWidget->count() > 1)
         delete ui->stackedWidget->widget(0);
 
-    if (resource.startsWith("video4linux2:"))
-        w = new Video4LinuxWidget(this);
-    else if (resource.startsWith("pulse:"))
-        w = new PulseAudioWidget(this);
-    else if (resource.startsWith("jack:"))
-        w = new JackProducerWidget(this);
-    else if (resource.startsWith("alsa:"))
-        w = new AlsaWidget(this);
-    else if (resource.startsWith("x11grab:"))
-        w = new X11grabWidget(this);
-    else if (service == "avformat") {
-        AvformatProducerWidget* avw = new AvformatProducerWidget(this);
-        w = avw;
-        connect(avw, SIGNAL(producerReopened()), m_player, SLOT(onProducerOpened()));
+    QWidget* w = loadProducerWidget(MLT.producer());
+    if (w) {
+        if (-1 != w->metaObject()->indexOfSignal("producerReopened()"))
+            connect(w, SIGNAL(producerChanged()), m_player, SLOT(onProducerOpened()));
     }
-    else if (service == "pixbuf" || service == "qimage") {
-        ImageProducerWidget* avw = new ImageProducerWidget(this);
-        w = avw;
-        connect(avw, SIGNAL(producerReopened()), m_player, SLOT(onProducerOpened()));
-    }
-    else if (service == "decklink" || resource.contains("decklink"))
-        w = new DecklinkProducerWidget(this);
-    else if (service == "color")
-        w = new ColorProducerWidget(this);
-    else if (service == "noise")
-        w = new NoiseWidget(this);
-    else if (service == "frei0r.ising0r")
-        w = new IsingWidget(this);
-    else if (service == "frei0r.lissajous0r")
-        w = new LissajousWidget(this);
-    else if (service == "frei0r.plasma")
-        w = new PlasmaWidget(this);
-    else if (service == "frei0r.test_pat_B")
-        w = new ColorBarsWidget(this);
-    else if (service == "webvfx")
-        w = new WebvfxProducer(this);
     else if (MLT.isPlaylist()) {
         m_playlistDock->model()->load();
         if (playlist()) {
@@ -1161,16 +1128,6 @@ void MainWindow::onProducerOpened()
         m_player->switchToTab(Player::SourceTabIndex);
     if (!MLT.URL().isEmpty())
         setCurrentFile(MLT.URL());
-    if (w) {
-        dynamic_cast<AbstractProducerWidget*>(w)->setProducer(MLT.producer());
-        if (-1 != w->metaObject()->indexOfSignal("producerChanged()"))
-            connect(w, SIGNAL(producerChanged()), this, SLOT(onProducerChanged()));
-        QScrollArea* scroll = new QScrollArea;
-        scroll->setWidgetResizable(true);
-        scroll->setWidget(w);
-        m_propertiesDock->setWidget(scroll);
-    }
-    onProducerChanged();
     on_actionJack_triggered(ui->actionJack->isChecked());
 }
 
@@ -1493,6 +1450,58 @@ Mlt::Playlist* MainWindow::playlist() const
 Mlt::Producer *MainWindow::multitrack() const
 {
     return m_timelineDock->model()->tractor();
+}
+
+QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
+{
+    QWidget* w = 0;
+
+    if (!producer || !producer->is_valid())
+        return  w;
+
+    QString service(producer->get("mlt_service"));
+    QString resource = QString::fromUtf8(producer->get("resource"));
+    QScrollArea* scrollArea = (QScrollArea*) m_propertiesDock->widget();
+
+    delete scrollArea->widget();
+    if (resource.startsWith("video4linux2:"))
+        w = new Video4LinuxWidget(this);
+    else if (resource.startsWith("pulse:"))
+        w = new PulseAudioWidget(this);
+    else if (resource.startsWith("jack:"))
+        w = new JackProducerWidget(this);
+    else if (resource.startsWith("alsa:"))
+        w = new AlsaWidget(this);
+    else if (resource.startsWith("x11grab:"))
+        w = new X11grabWidget(this);
+    else if (service == "avformat")
+        w = new AvformatProducerWidget(this);
+    else if (service == "pixbuf" || service == "qimage")
+        w = new ImageProducerWidget(this);
+    else if (service == "decklink" || resource.contains("decklink"))
+        w = new DecklinkProducerWidget(this);
+    else if (service == "color")
+        w = new ColorProducerWidget(this);
+    else if (service == "noise")
+        w = new NoiseWidget(this);
+    else if (service == "frei0r.ising0r")
+        w = new IsingWidget(this);
+    else if (service == "frei0r.lissajous0r")
+        w = new LissajousWidget(this);
+    else if (service == "frei0r.plasma")
+        w = new PlasmaWidget(this);
+    else if (service == "frei0r.test_pat_B")
+        w = new ColorBarsWidget(this);
+    else if (service == "webvfx")
+        w = new WebvfxProducer(this);
+    if (w) {
+        dynamic_cast<AbstractProducerWidget*>(w)->setProducer(producer);
+        if (-1 != w->metaObject()->indexOfSignal("producerChanged()"))
+            connect(w, SIGNAL(producerChanged()), SLOT(onProducerChanged()));
+        scrollArea->setWidget(w);
+        onProducerChanged();
+    }
+    return w;
 }
 
 void MainWindow::onMeltedUnitOpened()

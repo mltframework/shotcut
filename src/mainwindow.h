@@ -58,6 +58,8 @@ public:
     HtmlEditor* htmlEditor() const { return m_htmlEditor; }
     Mlt::Playlist* playlist() const;
     Mlt::Producer* multitrack() const;
+    QWidget* loadProducerWidget(Mlt::Producer* producer);
+
     void keyPressEvent(QKeyEvent*);
     void keyReleaseEvent(QKeyEvent *);
 

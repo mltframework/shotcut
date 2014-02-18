@@ -244,6 +244,7 @@ void TimelineDock::selectClip(int trackIndex, int clipIndex)
     Mlt::ClipInfo* info = getClipInfo(trackIndex, clipIndex);
     if (info && info->producer && info->producer->is_valid()) {
         MAIN.filtersDock()->model()->reset(info->producer);
+        MAIN.loadProducerWidget(info->producer);
         delete info;
     }
 }
