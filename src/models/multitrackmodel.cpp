@@ -933,13 +933,11 @@ QString MultitrackModel::overwrite(int trackIndex, Mlt::Producer& clip, int posi
             playlist.insert(clip.parent(), targetIndex, in, out);
             endInsertRows();
         }
-        if (result.count() > 0) {
-            QModelIndex index = createIndex(targetIndex, 0, trackIndex);
-            QThreadPool::globalInstance()->start(
-                new AudioLevelsTask(clip.parent(), this, index));
-            emit modified();
-            emit seeked(playlist.clip_start(targetIndex) + playlist.clip_length(targetIndex));
-        }
+        QModelIndex index = createIndex(targetIndex, 0, trackIndex);
+        QThreadPool::globalInstance()->start(
+            new AudioLevelsTask(clip.parent(), this, index));
+        emit modified();
+        emit seeked(playlist.clip_start(targetIndex) + playlist.clip_length(targetIndex));
     }
     return MLT.saveXML("string", &result);
 }
