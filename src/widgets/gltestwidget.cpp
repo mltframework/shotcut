@@ -27,6 +27,14 @@ GLTestWidget::GLTestWidget(QWidget *parent) :
     m_isInitialized(false)
 {
     hide();
+
+#ifdef Q_OS_WIN
+    if (Settings.playerGPU()) {
+        QGLFormat format;
+        format.setVersion(3, 2);
+        setFormat(format);
+    }
+#endif
 }
 
 void GLTestWidget::initializeGL()
