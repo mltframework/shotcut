@@ -42,6 +42,7 @@ public:
     bool isNew() const { return m_isNew; }
 
     Q_INVOKABLE QString get(QString name);
+    Q_INVOKABLE double getDouble(QString name);
     Q_INVOKABLE void set(QString name, QString value);
     Q_INVOKABLE void set(QString name, double value);
     Q_INVOKABLE void set(QString name, int value);
@@ -52,6 +53,8 @@ public:
     Q_INVOKABLE int  savePreset(const QStringList& propertyNames, const QString& name = QString());
     Q_INVOKABLE void deletePreset(const QString& name);
     Q_INVOKABLE void analyze();
+    Q_INVOKABLE static int framesFromTime(const QString& time);
+    Q_INVOKABLE static QString timeFromFrames(int frames);
 
 public slots:
     void preset(const QString& name);

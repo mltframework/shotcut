@@ -54,6 +54,14 @@ QString QmlFilter::get(QString name)
         return QString();
 }
 
+double QmlFilter::getDouble(QString name)
+{
+    if (m_filter)
+        return m_filter->get_double(name.toUtf8().constData());
+    else
+        return 0;
+}
+
 void QmlFilter::set(QString name, QString value)
 {
     if (!m_filter) return;
@@ -179,6 +187,22 @@ void QmlFilter::analyze()
         job->setLabel(tr("Analyze %1").arg(info.fileName()));
         JOBS.add(job);
     }
+}
+
+int QmlFilter::framesFromTime(const QString &time)
+{
+    if (MLT.producer()) {
+        return MLT.producer()->time_to_frames(time.toLatin1().constData());
+    }
+    return 0;
+}
+
+QString QmlFilter::timeFromFrames(int frames)
+{
+    if (MLT.producer()) {
+        return MLT.producer()->frames_to_time(frames);
+    }
+    return QString();
 }
 
 void QmlFilter::preset(const QString &name)
