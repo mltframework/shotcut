@@ -1,3 +1,4 @@
 module Shotcut.Controls
 Preset 1.0 Preset.qml
 UndoButton 1.0 UndoButton.qml
+TimeSpinner 1.0 TimeSpinner.qml
