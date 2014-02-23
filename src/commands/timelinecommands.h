@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2014 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -206,6 +206,23 @@ private:
     int m_trackIndex;
     int m_clipIndex;
     int m_position;
+};
+
+class FadeInCommand : public QUndoCommand
+{
+public:
+    FadeInCommand(MultitrackModel& model, int trackIndex, int clipIndex, int duration, QUndoCommand * parent = 0);
+    void redo();
+    void undo();
+protected:
+    int id() const;
+    bool mergeWith(const QUndoCommand *other);
+private:
+    MultitrackModel& m_model;
+    int m_trackIndex;
+    int m_clipIndex;
+    int m_duration;
+    int m_previous;
 };
 
 }

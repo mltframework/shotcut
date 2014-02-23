@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2014 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -354,6 +354,16 @@ void TimelineDock::splitClip(int trackIndex, int clipIndex)
         MAIN.undoStack()->push(
             new Timeline::SplitCommand(m_model, trackIndex, clipIndex, m_position));
     }
+}
+
+void TimelineDock::fadeIn(int trackIndex, int clipIndex, int duration)
+{
+    if (trackIndex < 0)
+        trackIndex = m_quickView.rootObject()->property("currentTrack").toInt();
+    if (clipIndex < 0)
+        clipIndex = m_quickView.rootObject()->property("currentClip").toInt();
+    MAIN.undoStack()->push(
+        new Timeline::FadeInCommand(m_model, trackIndex, clipIndex, duration));
 }
 
 void TimelineDock::dragEnterEvent(QDragEnterEvent *event)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2014 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -43,6 +43,7 @@ static const char* kBackgroundTrackId = "background";
 static const char* kPlaylistTrackId = "main bin";
 static const char* kTrackHeightProperty = "shotcut:trackHeight";
 static const char* kTimelineScaleProperty = "shotcut:scaleFactor";
+static const char* kShotcutFilterProperty = "shotcut:filter";
 
 static void deleteQVariantList(QVariantList* list)
 {
@@ -260,6 +261,14 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                     return levels->mid(info->frame_in * channels, info->frame_count * channels);
                 break;
             }
+            case FadeInRole: {
+                QScopedPointer<Mlt::Filter> filter(getFilter("fadeInBrightness", info->producer));
+                if (filter && filter->get("out")) {
+                    return filter->get_int("out") + 1;
+                } else {
+                    return 0;
+                }
+            }
             default:
                 break;
             }
@@ -347,6 +356,7 @@ QHash<int, QByteArray> MultitrackModel::roleNames() const
     roles[IsAudioRole] = "audio";
     roles[AudioLevelsRole] = "audioLevels";
     roles[IsCompositeRole] = "composite";
+    roles[FadeInRole] = "fadeIn";
     return roles;
 }
 
@@ -1221,6 +1231,40 @@ void MultitrackModel::overwriteFromPlaylist(Mlt::Playlist& from, int trackIndex,
     
 }
 
+void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
+{
+    // Get filter
+    int i = m_trackList.at(trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    if (track) {
+        Mlt::Playlist playlist(*track);
+        QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
+        if (info && info->producer && info->producer->is_valid()) {
+            QScopedPointer<Mlt::Filter> filter(getFilter("fadeInBrightness", info->producer));
+            // Add filter if needed
+            if (!filter) {
+                Mlt::Filter f(MLT.profile(), "brightness");
+                f.set(kShotcutFilterProperty, "fadeInBrightness");
+                f.set("start", 0);
+                f.set("end", 1);
+                f.set_in_and_out(0, 0);
+                info->producer->attach(f);
+                filter.reset(new Mlt::Filter(f));
+            }
+            // Set filter
+            duration = qMin(qMax(duration, 0), info->frame_count - 1);
+            filter->set_in_and_out(0, duration);
+
+             // Signal change
+            QModelIndex modelIndex = createIndex(clipIndex, 0, trackIndex);
+            QVector<int> roles;
+            roles << FadeInRole;
+            emit dataChanged(modelIndex, modelIndex, roles);
+            emit modified();
+        }
+    }
+}
+
 bool MultitrackModel::moveClipToTrack(int fromTrack, int toTrack, int clipIndex, int position)
 {
     bool result;
@@ -1861,6 +1905,19 @@ Mlt::Filter *MultitrackModel::getFilter(const QString &name, int trackIndex) con
                 return new Mlt::Filter(f);
         }
         service.reset(service->producer());
+    }
+    return 0;
+}
+
+Mlt::Filter *MultitrackModel::getFilter(const QString &name, Mlt::Service* service) const
+{
+    for (int i = 0; i < service->filter_count(); i++) {
+        Mlt::Filter* filter = service->filter(i);
+        if (filter) {
+            if (name == filter->get(kShotcutFilterProperty))
+                return filter;
+            delete filter;
+        }
     }
     return 0;
 }

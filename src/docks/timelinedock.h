@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2014 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -80,6 +80,7 @@ public slots:
     void overwrite(int trackIndex, int position = -1);
     void appendFromPlaylist(Mlt::Playlist* playlist);
     void splitClip(int trackIndex = -1, int clipIndex = -1);
+    void fadeIn(int trackIndex, int clipIndex = -1, int duration = -1);
 
 protected:
     void dragEnterEvent(QDragEnterEvent* event);

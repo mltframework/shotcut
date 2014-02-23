@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2014 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,8 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.0
+import QtQuick 2.2
 import QtQuick.Controls 1.0
+import QtGraphicalEffects 1.0
 
 Rectangle {
     id: clipRoot
@@ -30,6 +31,7 @@ Rectangle {
     property bool isBlank: false
     property bool isAudio: false
     property var audioLevels
+    property int fadeIn: 0
     property int trackIndex
     property int originalTrackIndex: trackIndex
     property int originalClipIndex: index
@@ -127,6 +129,7 @@ Rectangle {
     }
 
     Rectangle {
+        // audio peak line
         width: parent.width - parent.border.width * 2
         visible: !isBlank
         height: 1
@@ -139,6 +142,7 @@ Rectangle {
     }
 
     Rectangle {
+        // text background
         color: 'lightgray'
         visible: !isBlank
         opacity: 0.7
@@ -205,6 +209,7 @@ Rectangle {
         drag.target: parent
         drag.axis: Drag.XAxis
         cursorShape: (trimInMouseArea.drag.active || trimOutMouseArea.drag.active)? Qt.SizeHorCursor :
+            fadeInMouseArea.drag.active? Qt.PointingHandCursor :
             drag.active? Qt.ClosedHandCursor :
             isBlank? Qt.ArrowCursor : Qt.OpenHandCursor
         property int startX
@@ -234,6 +239,92 @@ Rectangle {
                 originalTrackIndex = trackIndex
             } else {
                 parent.dropped(clipRoot)
+            }
+        }
+    }
+
+    Canvas {
+        id: fadeInCanvas
+        visible: !isBlank
+        width: parent.fadeIn * timeScale
+        height: parent.height - parent.border.width * 2
+        anchors.left: parent.left
+        anchors.top: parent.top
+        anchors.margins: parent.border.width
+        opacity: 0.5
+        onWidthChanged: requestPaint()
+        onPaint: {
+            var cx = getContext('2d')
+            cx.beginPath()
+            cx.moveTo(0, 0)
+            cx.lineTo(width, 0)
+            cx.lineTo(0, height)
+            cx.closePath()
+            cx.fillStyle = 'black'
+            cx.fill()
+        }
+    }
+    Rectangle {
+        id: fadeInControl
+        enabled: !isBlank
+        anchors.left: fadeInCanvas.width > radius? undefined : fadeInCanvas.left
+        anchors.horizontalCenter: fadeInCanvas.width > radius? fadeInCanvas.right : undefined
+        anchors.top: fadeInCanvas.top
+        anchors.topMargin: -3
+        width: 15
+        height: 15
+        radius: 7.5
+        color: 'black'
+        border.width: 2
+        border.color: 'white'
+        opacity: 0
+        Drag.active: fadeInMouseArea.drag.active
+        MouseArea {
+            id: fadeInMouseArea
+            anchors.fill: parent
+            hoverEnabled: true
+            cursorShape: Qt.PointingHandCursor
+            drag.target: parent
+            drag.axis: Drag.XAxis
+            property int startX
+            property int startFadeIn
+            onEntered: parent.opacity = 0.7
+            onExited: parent.opacity = 0
+            onPressed: {
+                startX = parent.x
+                startFadeIn = fadeIn
+                parent.anchors.left = undefined
+                parent.anchors.horizontalCenter = undefined
+                parent.opacity = 1
+            }
+            onReleased: {
+                if (fadeInCanvas.width > parent.radius)
+                    parent.anchors.horizontalCenter = fadeInCanvas.right
+                else
+                    parent.anchors.left = fadeInCanvas.left
+            }
+            onPositionChanged: {
+                if (mouse.buttons === Qt.LeftButton) {
+                    var delta = Math.round((parent.x - startX) / timeScale)
+                    var duration = startFadeIn + delta
+                    timeline.fadeIn(trackIndex, index, duration)
+                }
+            }
+        }
+        SequentialAnimation on scale {
+            loops: Animation.Infinite
+            running: fadeInMouseArea.containsMouse
+            NumberAnimation {
+                from: 1.0
+                to: 0.5
+                duration: 250
+                easing.type: Easing.InOutQuad
+            }
+            NumberAnimation {
+                from: 0.5
+                to: 1.0
+                duration: 250
+                easing.type: Easing.InOutQuad
             }
         }
     }

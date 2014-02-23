@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2014 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -64,6 +64,7 @@ public:
         IsAudioRole,
         AudioLevelsRole, /// clip only
         IsCompositeRole, /// track only
+        FadeInRole,      /// clip only
     };
 
     explicit MultitrackModel(QObject *parent = 0);
@@ -125,6 +126,7 @@ public slots:
     void joinClips(int trackIndex, int clipIndex);
     void appendFromPlaylist(Mlt::Playlist* playlist, int trackIndex);
     void overwriteFromPlaylist(Mlt::Playlist& playlist, int trackIndex, int position);
+    void fadeIn(int trackIndex, int clipIndex, int duration);
 
 private:
     Mlt::Tractor* m_tractor;
@@ -141,6 +143,7 @@ private:
     void addMissingTransitions();
     Mlt::Transition* getTransition(const QString& name, int trackIndex) const;
     Mlt::Filter* getFilter(const QString& name, int trackIndex) const;
+    Mlt::Filter* getFilter(const QString& name, Mlt::Service* service) const;
     void removeBlankPlaceholder(Mlt::Playlist& playlist, int trackIndex);
     void retainPlaylist();
     void loadPlaylist();
