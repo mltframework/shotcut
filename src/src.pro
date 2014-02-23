@@ -265,7 +265,9 @@ OTHER_FILES += \
     qml/timeline/Timeline.js \
     qml/modules/Shotcut/Controls/TimeSpinner.qml \
     qml/filters/fadein_brightness/meta.qml \
-    qml/filters/fadein_brightness/ui.qml
+    qml/filters/fadein_brightness/ui.qml \
+    qml/filters/fadein_volume/meta.qml \
+    qml/filters/fadein_volume/ui.qml
 
 lupdate_hack {
     SOURCES += \
@@ -315,7 +317,9 @@ lupdate_hack {
     qml/filters/vignette/ui_oldfilm.qml \
     qml/modules/Shotcut/Controls/TimeSpinner.qml \
     qml/filters/fadein_brightness/meta.qml \
-    qml/filters/fadein_brightness/ui.qml
+    qml/filters/fadein_brightness/ui.qml \
+    qml/filters/fadein_volume/meta.qml \
+    qml/filters/fadein_volume/ui.qml
 }
 
 TRANSLATIONS += \

@@ -262,12 +262,10 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                 break;
             }
             case FadeInRole: {
-                QScopedPointer<Mlt::Filter> filter(getFilter("fadeInBrightness", info->producer));
-                if (filter && filter->get("out")) {
-                    return filter->get_int("out") + 1;
-                } else {
-                    return 0;
-                }
+                QScopedPointer<Mlt::Filter> filter(getFilter("fadeInVolume", info->producer));
+                if (!filter || !filter->is_valid())
+                    filter.reset(getFilter("fadeInBrightness", info->producer));
+                return (filter && filter->is_valid())? filter->get_length() : 0;
             }
             default:
                 break;
@@ -488,6 +486,15 @@ int MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta)
         int in = info->frame_in + delta;
         int out = info->frame_out;
         playlist.resize_clip(clipIndex, in, out);
+
+        // Adjust all filters that have an explicit duration.
+        int n = info->producer->filter_count();
+        for (int j = 0; j < n; j++) {
+            Mlt::Filter* filter = info->producer->filter(j);
+            if (filter && filter->is_valid() && filter->get_length() > 0)
+                filter->set_in_and_out(in, in + filter->get_length() - 1);
+            delete filter;
+        }
 
         QModelIndex modelIndex = createIndex(clipIndex, 0, trackIndex);
         QVector<int> roles;
@@ -1233,29 +1240,44 @@ void MultitrackModel::overwriteFromPlaylist(Mlt::Playlist& from, int trackIndex,
 
 void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
 {
-    // Get filter
     int i = m_trackList.at(trackIndex).mlt_index;
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     if (track) {
         Mlt::Playlist playlist(*track);
         QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
         if (info && info->producer && info->producer->is_valid()) {
+            // Get video filter.
             QScopedPointer<Mlt::Filter> filter(getFilter("fadeInBrightness", info->producer));
-            // Add filter if needed
+
+            // Add video filter if needed.
             if (!filter) {
                 Mlt::Filter f(MLT.profile(), "brightness");
                 f.set(kShotcutFilterProperty, "fadeInBrightness");
                 f.set("start", 0);
                 f.set("end", 1);
-                f.set_in_and_out(0, 0);
                 info->producer->attach(f);
                 filter.reset(new Mlt::Filter(f));
             }
-            // Set filter
-            duration = qMin(qMax(duration, 0), info->frame_count - 1);
-            filter->set_in_and_out(0, duration);
+            // Adjust video filter.
+            duration = qMin(qMax(duration, 0), info->frame_count);
+            filter->set_in_and_out(info->frame_in, info->frame_in + duration - 1);
 
-             // Signal change
+            filter.reset(getFilter("fadeInVolume", info->producer));
+
+            // Add audio filter if needed.
+            if (!filter) {
+                Mlt::Filter f(MLT.profile(), "volume");
+                f.set(kShotcutFilterProperty, "fadeInVolume");
+                f.set("gain", 0);
+                f.set("end", 1);
+                info->producer->attach(f);
+                filter.reset(new Mlt::Filter(f));
+            }
+            // Adjust audio filter.
+            duration = qMin(qMax(duration, 0), info->frame_count);
+            filter->set_in_and_out(info->frame_in, info->frame_in + duration - 1);
+
+             // Signal change.
             QModelIndex modelIndex = createIndex(clipIndex, 0, trackIndex);
             QVector<int> roles;
             roles << FadeInRole;
