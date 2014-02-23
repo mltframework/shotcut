@@ -497,8 +497,18 @@ void Controller::next(int currentPosition)
 
 void Controller::setIn(int in)
 {
-    if (m_producer && m_producer->is_valid())
+    if (m_producer && m_producer->is_valid()) {
         m_producer->set("in", in);
+
+        // Adjust all filters that have an explicit duration.
+        int n = m_producer->filter_count();
+        for (int i = 0; i < n; i++) {
+            Filter* filter = m_producer->filter(i);
+            if (filter && filter->is_valid() && filter->get_length() > 0)
+                filter->set_in_and_out(in, in + filter->get_length() - 1);
+            delete filter;
+        }
+    }
 }
 
 void Controller::setOut(int out)

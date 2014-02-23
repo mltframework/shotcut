@@ -31,7 +31,7 @@ Rectangle {
         if (filter.isNew) {
             filter.set('start', 0)
             filter.set('end', 1)
-            filter.set('out', 9)
+            filter.set('out', filter.getDouble('in') + 9)
             value = 10
         }
     }
@@ -48,8 +48,8 @@ Rectangle {
                 id: timeSpinner
                 minimumValue: 2
                 maximumValue: 5000
-                value: filter.getDouble('out') + 1
-                onValueChanged: filter.set('out', value - 1)
+                value: filter.getDouble('out') - filter.getDouble('in') + 1
+                onValueChanged: filter.set('out', filter.getDouble('in') + value - 1)
             }
         }
         Item {
