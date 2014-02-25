@@ -265,6 +265,8 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                 QScopedPointer<Mlt::Filter> filter(getFilter("fadeInVolume", info->producer));
                 if (!filter || !filter->is_valid())
                     filter.reset(getFilter("fadeInBrightness", info->producer));
+                if (!filter || !filter->is_valid())
+                    filter.reset(getFilter("fadeInMovit", info->producer));
                 return (filter && filter->is_valid())? filter->get_length() : 0;
             }
             default:
@@ -1247,21 +1249,42 @@ void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
         QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
         if (info && info->producer && info->producer->is_valid()) {
             // Get video filter.
-            QScopedPointer<Mlt::Filter> filter(getFilter("fadeInBrightness", info->producer));
+            QScopedPointer<Mlt::Filter> filter;
+            duration = qMin(qMax(duration, 0), info->frame_count);
+
+            // Get video filter.
+            if (Settings.playerGPU())
+                filter.reset(getFilter("fadeInMovit", info->producer));
+            else
+                filter.reset(getFilter("fadeInBrightness", info->producer));
 
             // Add video filter if needed.
             if (!filter) {
-                Mlt::Filter f(MLT.profile(), "brightness");
-                f.set(kShotcutFilterProperty, "fadeInBrightness");
-                f.set("start", 0);
-                f.set("end", 1);
-                info->producer->attach(f);
-                filter.reset(new Mlt::Filter(f));
+                if (Settings.playerGPU()) {
+                    Mlt::Filter f(MLT.profile(), "movit.opacity");
+                    f.set(kShotcutFilterProperty, "fadeInMovit");
+                    QString opacity = QString("0~=0; %1=1").arg(info->frame_in + duration - 1);
+                    f.set("opacity", opacity.toLatin1().constData());
+                    f.set("alpha", 1);
+                    info->producer->attach(f);
+                    filter.reset(new Mlt::Filter(f));
+                } else {
+                    Mlt::Filter f(MLT.profile(), "brightness");
+                    f.set(kShotcutFilterProperty, "fadeInBrightness");
+                    f.set("start", 0);
+                    f.set("end", 1);
+                    info->producer->attach(f);
+                    filter.reset(new Mlt::Filter(f));
+                }
+            } else if (Settings.playerGPU()) {
+                // Special handling for animation keyframes on movit.opacity.
+                QString opacity = QString("0~=0; %1=1").arg(info->frame_in + duration - 1);
+                filter->set("opacity", opacity.toLatin1().constData());
             }
             // Adjust video filter.
-            duration = qMin(qMax(duration, 0), info->frame_count);
             filter->set_in_and_out(info->frame_in, info->frame_in + duration - 1);
 
+            // Get audio filter.
             filter.reset(getFilter("fadeInVolume", info->producer));
 
             // Add audio filter if needed.
