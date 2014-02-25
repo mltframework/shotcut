@@ -212,7 +212,10 @@ Mlt::Filter *AttachedFiltersModel::add(const QString& mlt_service, const QString
     if (filter->is_valid()) {
         if (!shotcutName.isEmpty())
             filter->set("shotcut:filter", shotcutName.toUtf8().constData());
-        filter->set_in_and_out(m_producer->get_in(), m_producer->get_in() + filter->get_length() + 1);
+
+        // If filter has explicit duration.
+        if (filter->get_length() > 0)
+            filter->set_in_and_out(m_producer->get_in(), m_producer->get_in() + filter->get_length() + 1);
 
         int count = rowCount();
         beginInsertRows(QModelIndex(), count, count);
