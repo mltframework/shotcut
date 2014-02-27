@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Meltytech, LLC
+ * Copyright (c) 2012-2014 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,6 +18,7 @@
 
 #include "imageproducerwidget.h"
 #include "ui_imageproducerwidget.h"
+#include "settings.h"
 #include <QFileInfo>
 
 ImageProducerWidget::ImageProducerWidget(QWidget *parent) :
@@ -186,4 +187,9 @@ void ImageProducerWidget::on_repeatSpinBox_editingFinished()
 {
     m_producer->set("ttl", ui->repeatSpinBox->value());
     emit producerChanged();
+}
+
+void ImageProducerWidget::on_defaultDurationButton_clicked()
+{
+    Settings.setImageDuration(ui->durationSpinBox->value() / MLT.profile().fps());
 }

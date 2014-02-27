@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Meltytech, LLC
+ * Copyright (c) 2012-2014 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -56,6 +56,8 @@ private slots:
 
     void on_repeatSpinBox_editingFinished();
 
+    void on_defaultDurationButton_clicked();
+    
 private:
     Ui::ImageProducerWidget *ui;
     int m_defaultDuration;

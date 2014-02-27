@@ -97,7 +97,7 @@
        </item>
       </layout>
      </item>
-     <item row="1" column="0">
+     <item row="2" column="0">
       <widget class="QLabel" name="durationLabel">
        <property name="text">
         <string>Duration</string>
@@ -107,32 +107,7 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
-      <widget class="TimeSpinBox" name="durationSpinBox">
-       <property name="maximumSize">
-        <size>
-         <width>150</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="focusPolicy">
-        <enum>Qt::ClickFocus</enum>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-       <property name="accelerated">
-        <bool>true</bool>
-       </property>
-       <property name="keyboardTracking">
-        <bool>false</bool>
-       </property>
-       <property name="maximum">
-        <number>2147483647</number>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0">
+     <item row="3" column="0">
       <widget class="QLabel" name="aspectRatioLabel">
        <property name="text">
         <string>Pixel aspect ratio</string>
@@ -142,7 +117,7 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="1">
+     <item row="3" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
         <widget class="QSpinBox" name="aspectNumSpinBox">
@@ -191,14 +166,21 @@
        </item>
       </layout>
      </item>
-     <item row="4" column="0">
+     <item row="4" column="0" colspan="2">
+      <widget class="QCheckBox" name="sequenceCheckBox">
+       <property name="text">
+        <string>Image sequence</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="0">
       <widget class="QLabel" name="label_3">
        <property name="text">
         <string>Repeat</string>
        </property>
       </widget>
      </item>
-     <item row="4" column="1">
+     <item row="5" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout_4">
        <item>
         <widget class="QSpinBox" name="repeatSpinBox">
@@ -234,12 +216,47 @@
        </item>
       </layout>
      </item>
-     <item row="3" column="0" colspan="2">
-      <widget class="QCheckBox" name="sequenceCheckBox">
-       <property name="text">
-        <string>Image sequence</string>
-       </property>
-      </widget>
+     <item row="2" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout_6">
+       <item>
+        <widget class="TimeSpinBox" name="durationSpinBox">
+         <property name="maximumSize">
+          <size>
+           <width>150</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::ClickFocus</enum>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="accelerated">
+          <bool>true</bool>
+         </property>
+         <property name="keyboardTracking">
+          <bool>false</bool>
+         </property>
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>2147483647</number>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="defaultDurationButton">
+         <property name="toolTip">
+          <string>Make the current duration value the default value</string>
+         </property>
+         <property name="text">
+          <string>Set Default</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
     </layout>
    </item>
@@ -292,7 +309,6 @@
  <tabstops>
   <tabstop>widthLineEdit</tabstop>
   <tabstop>heightLineEdit</tabstop>
-  <tabstop>durationSpinBox</tabstop>
   <tabstop>aspectNumSpinBox</tabstop>
   <tabstop>aspectDenSpinBox</tabstop>
   <tabstop>sequenceCheckBox</tabstop>

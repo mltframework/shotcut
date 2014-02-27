@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2014 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -30,6 +30,8 @@ public:
 
     QString language() const;
     void setLanguage(const QString&);
+    double imageDuration() const;
+    void setImageDuration(double);
     QString openPath() const;
     void setOpenPath(const QString&);
     QStringList recent() const;

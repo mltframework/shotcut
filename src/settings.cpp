@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2014 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -34,6 +34,16 @@ QString ShotcutSettings::language() const
 void ShotcutSettings::setLanguage(const QString& s)
 {
     settings.setValue("language", s);
+}
+
+double ShotcutSettings::imageDuration() const
+{
+    return settings.value("imageDuration", 4.0).toDouble();
+}
+
+void ShotcutSettings::setImageDuration(double d)
+{
+    settings.setValue("imageDuration", d);
 }
 
 QString ShotcutSettings::openPath() const

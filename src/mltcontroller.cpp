@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Meltytech, LLC
+ * Copyright (c) 2011-2014 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -154,7 +154,7 @@ int Controller::open(const char* url)
         }
         const char *service = m_producer->get("mlt_service");
         if (service && (!strcmp(service, "pixbuf") || !strcmp(service, "qimage")))
-            m_producer->set("length", profile().fps() * 4);
+            m_producer->set("length", profile().fps() * Settings.imageDuration());
     }
     else {
         delete m_producer;
