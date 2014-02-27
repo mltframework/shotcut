@@ -28,11 +28,11 @@ Rectangle {
     Component.onCompleted: {
         if (filter.isNew) {
             // Set default parameter values
-            combo.value = 0
+            combo.currentIndex = 0
             slider.value = 0
         } else {
             // Initialize parameter values
-            combo.value = filter.get('channel')
+            combo.currentIndex = filter.get('channel') * 1
             slider.value = filter.get('start') * slider.maximumValue
         }
     }
