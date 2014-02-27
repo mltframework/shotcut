@@ -77,7 +77,7 @@ Rectangle {
                 id: programSlider
                 Layout.fillWidth: true
                 Layout.minimumWidth: 100
-                value: filter.get('program')
+                value: filter.get('program') * 1
                 minimumValue: -50.0
                 maximumValue: -10.0
                 property bool isReady: false
@@ -92,7 +92,7 @@ Rectangle {
             SpinBox {
                 id: programSpinner
                 Layout.minimumWidth: 100
-                value: filter.get('program')
+                value: filter.get('program') * 1
                 minimumValue: -50.0
                 maximumValue: -10.0
                 decimals: 1

@@ -32,7 +32,7 @@ Rectangle {
             combo.currentIndex = 0
         } else {
             // Initialize parameter values
-            combo.currentIndex = filter.get(fromParameter)
+            combo.currentIndex = filter.get(fromParameter) * 1
         }
     }
 

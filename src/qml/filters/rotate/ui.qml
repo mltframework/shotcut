@@ -31,7 +31,7 @@ Rectangle {
             slider.value = 0
         } else {
             // Initialize parameter values
-            slider.value = filter.get('transition.fix_rotate_x')
+            slider.value = filter.get('transition.fix_rotate_x') * 1
         }
     }
 

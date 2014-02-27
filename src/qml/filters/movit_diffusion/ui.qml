@@ -53,7 +53,7 @@ Rectangle {
             SpinBox {
                 id: radiusSpinner
                 Layout.minimumWidth: 70
-                value: filter.get('radius')
+                value: filter.get('radius') * 1
                 decimals: 2
                 stepSize: 0.1
                 minimumValue: 0

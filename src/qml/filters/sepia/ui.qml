@@ -27,8 +27,8 @@ Rectangle {
     color: 'transparent'
     Component.onCompleted: {
         // Initialize parameter values
-        sliderBlue.value = filter.get('u')
-        sliderRed.value = filter.get('v')
+        sliderBlue.value = filter.get('u') * 1
+        sliderRed.value = filter.get('v') * 1
     }
 
     ColumnLayout {
@@ -38,8 +38,8 @@ Rectangle {
         Preset {
             parameters: ['u', 'v']
             onPresetSelected: {
-                sliderBlue.value = filter.get('u')
-                sliderRed.value = filter.get('v')
+                sliderBlue.value = filter.get('u') * 1
+                sliderRed.value = filter.get('v') * 1
             }
         }
 

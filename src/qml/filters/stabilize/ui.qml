@@ -96,7 +96,7 @@ Rectangle {
                 id: shakinessSlider
                 Layout.fillWidth: true
                 Layout.minimumWidth: 100
-                value: filter.get('shakiness')
+                value: filter.get('shakiness') * 1
                 minimumValue: 1
                 maximumValue: 10
                 tickmarksEnabled: true
@@ -113,7 +113,7 @@ Rectangle {
             SpinBox {
                 id: shakinessSpinner
                 Layout.minimumWidth: 60
-                value: filter.get('shakiness')
+                value: filter.get('shakiness') * 1
                 minimumValue: 1
                 maximumValue: 10
                 decimals: 0
@@ -131,7 +131,7 @@ Rectangle {
                 id: accuracySlider
                 Layout.fillWidth: true
                 Layout.minimumWidth: 100
-                value: filter.get('accuracy')
+                value: filter.get('accuracy') * 1
                 minimumValue: 1
                 maximumValue: 15
                 tickmarksEnabled: true
@@ -148,7 +148,7 @@ Rectangle {
             SpinBox {
                 id: accuracySpinner
                 Layout.minimumWidth: 60
-                value: filter.get('accuracy')
+                value: filter.get('accuracy') * 1
                 minimumValue: 1
                 maximumValue: 15
                 decimals: 0
@@ -186,7 +186,7 @@ Rectangle {
                 id: zoomSlider
                 Layout.fillWidth: true
                 Layout.minimumWidth: 100
-                value: filter.get('zoom')
+                value: filter.get('zoom') * 1
                 minimumValue: -50
                 maximumValue: 50
                 property bool isReady: false
@@ -202,7 +202,7 @@ Rectangle {
             SpinBox {
                 id: zoomSpinner
                 Layout.minimumWidth: 60
-                value: filter.get('zoom')
+                value: filter.get('zoom') * 1
                 minimumValue: -50
                 maximumValue: 50
                 decimals: 1
