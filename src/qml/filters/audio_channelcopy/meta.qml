@@ -6,5 +6,6 @@ Metadata {
     isAudio: true
     name: qsTr("Copy Channel")
     mlt_service: "channelcopy"
+    objectName: 'audioChannelCopy'
     qml: "ui.qml"
 }
