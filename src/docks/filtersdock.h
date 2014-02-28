@@ -51,6 +51,7 @@ public:
 public slots:
     void onModelChanged();
     void onProducerOpened();
+    void setDuration(int duration);
 
 private slots:
     void on_addAudioButton_clicked();
@@ -89,6 +90,7 @@ private:
     QMap<QString, QAction*> m_serviceActionMap;
     QMap<QString, QAction*> m_objectNameActionMap;
     QFuture<QActionList> m_filtersFuture;
+    QObject* m_quickObject;
     
     void loadWidgetsPanel(QWidget* widget = 0);
     void loadQuickPanel(const QmlMetadata *metadata, int row = -1);

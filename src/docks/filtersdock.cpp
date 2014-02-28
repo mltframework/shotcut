@@ -104,7 +104,8 @@ FiltersDock::FiltersDock(QWidget *parent) :
     QDockWidget(parent),
     ui(new Ui::FiltersDock),
     m_audioActions(0),
-    m_videoActions(0)
+    m_videoActions(0),
+    m_quickObject(0)
 {
     ui->setupUi(this);
     toggleViewAction()->setIcon(windowIcon());
@@ -175,6 +176,12 @@ void FiltersDock::onProducerOpened()
     }
 }
 
+void FiltersDock::setDuration(int duration)
+{
+    if (m_quickObject)
+        m_quickObject->setProperty("duration", duration);
+}
+
 void FiltersDock::on_addAudioButton_clicked()
 {
     availablefilters();
@@ -199,6 +206,7 @@ void FiltersDock::on_removeButton_clicked()
     if (index.isValid()) {
         m_model.remove(index.row());
         delete ui->scrollArea->widget();
+        m_quickObject = 0;
     }
 }
 
@@ -211,29 +219,29 @@ void FiltersDock::on_listView_clicked(const QModelIndex &index)
         if (meta)
             loadQuickPanel(meta, index.row());
         else if (name == "movit.blur")
-            ui->scrollArea->setWidget(new MovitBlurFilter(*filter));
+            loadWidgetsPanel(new MovitBlurFilter(*filter));
         else if (name == "movit.glow")
-            ui->scrollArea->setWidget(new MovitGlowFilter(*filter));
+            loadWidgetsPanel(new MovitGlowFilter(*filter));
         else if (name == "movit.lift_gamma_gain")
-            ui->scrollArea->setWidget(new MovitColorFilter(*filter));
+            loadWidgetsPanel(new MovitColorFilter(*filter));
         else if (name == "frei0r.coloradj_RGB")
-            ui->scrollArea->setWidget(new Frei0rColoradjWidget(*filter));
+            loadWidgetsPanel(new Frei0rColoradjWidget(*filter));
         else if (name == "boxblur")
-            ui->scrollArea->setWidget(new BoxblurFilter(*filter));
+            loadWidgetsPanel(new BoxblurFilter(*filter));
         else if (name == "frei0r.glow")
-            ui->scrollArea->setWidget(new Frei0rGlowFilter(*filter));
+            loadWidgetsPanel(new Frei0rGlowFilter(*filter));
         else if (name == "crop")
-            ui->scrollArea->setWidget(new CropFilter(*filter));
+            loadWidgetsPanel(new CropFilter(*filter));
         else if (name == "movit.sharpen")
-            ui->scrollArea->setWidget(new MovitSharpenFilter(*filter));
+            loadWidgetsPanel(new MovitSharpenFilter(*filter));
         else if (name == "frei0r.sharpness")
-            ui->scrollArea->setWidget(new Frei0rSharpnessFilter(*filter));
+            loadWidgetsPanel(new Frei0rSharpnessFilter(*filter));
         else if (name == "frei0r.colgate" || name == "movit.white_balance")
-            ui->scrollArea->setWidget(new WhiteBalanceFilter(*filter));
+            loadWidgetsPanel(new WhiteBalanceFilter(*filter));
         else if (name == "webvfx")
-            ui->scrollArea->setWidget(new WebvfxFilter(*filter));
+            loadWidgetsPanel(new WebvfxFilter(*filter));
         else
-            delete ui->scrollArea->widget();
+            loadWidgetsPanel();
     }
     delete filter;
 }
@@ -243,9 +251,9 @@ void FiltersDock::on_actionBlur_triggered()
     Mlt::Filter* filter = m_model.add(Settings.playerGPU()? "movit.blur" : "boxblur");
     if (filter && filter->is_valid()) {
         if (Settings.playerGPU())
-            ui->scrollArea->setWidget(new MovitBlurFilter(*filter, true));
+            loadWidgetsPanel(new MovitBlurFilter(*filter, true));
         else
-            ui->scrollArea->setWidget(new BoxblurFilter(*filter, true));
+            loadWidgetsPanel(new BoxblurFilter(*filter, true));
     }
     delete filter;
     ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
@@ -254,7 +262,7 @@ void FiltersDock::on_actionBlur_triggered()
 void FiltersDock::on_actionMirror_triggered()
 {
     Mlt::Filter* filter = m_model.add(Settings.playerGPU()? "movit.mirror": "mirror:flip");
-    delete ui->scrollArea->widget();
+    loadWidgetsPanel();
     delete filter;
     ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
 }
@@ -269,9 +277,9 @@ void FiltersDock::on_actionGlow_triggered()
     Mlt::Filter* filter = m_model.add(Settings.playerGPU()? "movit.glow" : "frei0r.glow");
     if (filter && filter->is_valid()) {
         if (Settings.playerGPU())
-            ui->scrollArea->setWidget(new MovitGlowFilter(*filter, true));
+            loadWidgetsPanel(new MovitGlowFilter(*filter, true));
         else
-            ui->scrollArea->setWidget(new Frei0rGlowFilter(*filter, true));
+            loadWidgetsPanel(new Frei0rGlowFilter(*filter, true));
     }
     delete filter;
     ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
@@ -282,9 +290,9 @@ void FiltersDock::on_actionSharpen_triggered()
     Mlt::Filter* filter = m_model.add(Settings.playerGPU()? "movit.sharpen" : "frei0r.sharpness");
     if (filter && filter->is_valid()) {
         if (Settings.playerGPU())
-            ui->scrollArea->setWidget(new MovitSharpenFilter(*filter, true));
+            loadWidgetsPanel(new MovitSharpenFilter(*filter, true));
         else
-            ui->scrollArea->setWidget(new Frei0rSharpnessFilter(*filter, true));
+            loadWidgetsPanel(new Frei0rSharpnessFilter(*filter, true));
     }
     delete filter;
     ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
@@ -293,7 +301,7 @@ void FiltersDock::on_actionSharpen_triggered()
 void FiltersDock::on_actionCrop_triggered()
 {
     Mlt::Filter* filter = m_model.add("crop");
-    ui->scrollArea->setWidget(new CropFilter(*filter, true));
+    loadWidgetsPanel(new CropFilter(*filter, true));
     delete filter;
     ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
 }
@@ -303,9 +311,9 @@ void FiltersDock::on_actionColorGrading_triggered()
     Mlt::Filter* filter = m_model.add(Settings.playerGPU()? "movit.lift_gamma_gain": "frei0r.coloradj_RGB");
     if (filter && filter->is_valid()) {
         if (Settings.playerGPU())
-            ui->scrollArea->setWidget(new MovitColorFilter(*filter, true));
+            loadWidgetsPanel(new MovitColorFilter(*filter, true));
         else
-            ui->scrollArea->setWidget(new Frei0rColoradjWidget(*filter, true));
+            loadWidgetsPanel(new Frei0rColoradjWidget(*filter, true));
     }
     delete filter;
     ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
@@ -337,8 +345,10 @@ void FiltersDock::addActionToMap(const QmlMetadata *meta, QAction *action)
 
 void FiltersDock::loadWidgetsPanel(QWidget *widget)
 {
+    m_quickObject = 0;
     delete ui->scrollArea->widget();
-    ui->scrollArea->setWidget(widget);
+    if (widget)
+        ui->scrollArea->setWidget(widget);
 }
 
 void FiltersDock::loadQuickPanel(const QmlMetadata* metadata, int row)
@@ -356,12 +366,13 @@ void FiltersDock::loadQuickPanel(const QmlMetadata* metadata, int row)
     QWidget* container = QWidget::createWindowContainer(qqview);
     container->setFocusPolicy(Qt::TabFocus);
     loadWidgetsPanel(container);
+    m_quickObject = qqview->rootObject();
 }
 
 void FiltersDock::on_actionOverlayHTML_triggered()
 {
     Mlt::Filter* filter = m_model.add("webvfx");
-    ui->scrollArea->setWidget(new WebvfxFilter(*filter));
+    loadWidgetsPanel(new WebvfxFilter(*filter));
     delete filter;
     ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
 }

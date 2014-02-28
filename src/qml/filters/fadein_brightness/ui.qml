@@ -25,14 +25,14 @@ Rectangle {
     width: 400
     height: 200
     color: 'transparent'
-    property alias value: timeSpinner.value
+    property alias duration: timeSpinner.value
 
     Component.onCompleted: {
         if (filter.isNew) {
+            duration = filter.framesFromTime('1:0')
             filter.set('start', 0)
             filter.set('end', 1)
-            filter.set('out', filter.getDouble('in') + 9)
-            value = 10
+            filter.set('out', duration - 1)
         }
     }
 
@@ -49,7 +49,9 @@ Rectangle {
                 minimumValue: 2
                 maximumValue: 5000
                 value: filter.getDouble('out') - filter.getDouble('in') + 1
-                onValueChanged: filter.set('out', filter.getDouble('in') + value - 1)
+                onValueChanged: {
+                    filter.set('out', filter.getDouble('in') + value - 1)
+                }
             }
         }
         Item {

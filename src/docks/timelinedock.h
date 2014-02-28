@@ -54,6 +54,7 @@ signals:
     void dragging(const QPointF& pos, int duration);
     void dropped();
     void dropAccepted();
+    void fadeInChanged(int duration);
 
 public slots:
     void addAudioTrack();

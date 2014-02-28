@@ -257,6 +257,7 @@ void TimelineDock::selectClip(int trackIndex, int clipIndex)
         MAIN.filtersDock()->model()->reset(info->producer);
         MAIN.loadProducerWidget(info->producer);
         delete info;
+        emit MAIN.filtersDock()->model()->changed();
     }
 }
 
@@ -358,12 +359,14 @@ void TimelineDock::splitClip(int trackIndex, int clipIndex)
 
 void TimelineDock::fadeIn(int trackIndex, int clipIndex, int duration)
 {
+    if (duration < 0) return;
     if (trackIndex < 0)
         trackIndex = m_quickView.rootObject()->property("currentTrack").toInt();
     if (clipIndex < 0)
         clipIndex = m_quickView.rootObject()->property("currentClip").toInt();
     MAIN.undoStack()->push(
         new Timeline::FadeInCommand(m_model, trackIndex, clipIndex, duration));
+    emit fadeInChanged(duration);
 }
 
 void TimelineDock::dragEnterEvent(QDragEnterEvent *event)

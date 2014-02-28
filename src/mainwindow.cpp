@@ -194,6 +194,7 @@ MainWindow::MainWindow()
     connect(ui->actionFilters, SIGNAL(triggered()), this, SLOT(onFiltersDockTriggered()));
     connect(this, SIGNAL(producerOpened()), m_filtersDock, SLOT(onProducerOpened()));
     connect(m_filtersDock->model(), SIGNAL(changed()), this, SLOT(onCutModified()));
+    connect(m_timelineDock, SIGNAL(fadeInChanged(int)), m_filtersDock, SLOT(setDuration(int)));
 
     m_historyDock = new QDockWidget(tr("History"), this);
     m_historyDock->hide();

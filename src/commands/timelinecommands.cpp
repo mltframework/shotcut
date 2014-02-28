@@ -355,8 +355,9 @@ FadeInCommand::FadeInCommand(MultitrackModel &model, int trackIndex, int clipInd
     , m_trackIndex(trackIndex)
     , m_clipIndex(clipIndex)
     , m_duration(duration)
-    , m_previous(model.data(m_model.index(trackIndex), MultitrackModel::FadeInRole).toInt())
 {
+    QModelIndex modelIndex = m_model.index(clipIndex, 0, m_model.index(trackIndex));
+    m_previous = model.data(modelIndex, MultitrackModel::FadeInRole).toInt();
     setText(QObject::tr("Adjust fade in"));
 }
 
