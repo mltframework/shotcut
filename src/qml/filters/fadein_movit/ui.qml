@@ -30,9 +30,10 @@ Rectangle {
     Component.onCompleted: {
         if (filter.isNew) {
             duration = filter.framesFromTime('1:0')
-            filter.set('opacity', '0~=0; %1=1'.arg(filter.getDouble('in') + 9))
+            filter.set('opacity', '0~=0; %1=1'.arg(duration - 1))
             filter.set('alpha', 1)
-            filter.set('out', duration - 1)
+            filter.set('in', filter.producerIn)
+            filter.set('out', filter.getDouble('in') + duration - 1)
         }
     }
 
@@ -51,7 +52,7 @@ Rectangle {
                 value: filter.getDouble('out') - filter.getDouble('in') + 1
                 onValueChanged: {
                     var out = filter.getDouble('in') + value - 1
-                    filter.set('opacity', '0=0; %1=1'.arg(out))
+                    filter.set('opacity', '0=0; %1=1'.arg(duration - 1))
                     filter.set('out', out)
                 }
             }

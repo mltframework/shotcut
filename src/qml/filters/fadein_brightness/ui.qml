@@ -32,7 +32,8 @@ Rectangle {
             duration = filter.framesFromTime('1:0')
             filter.set('start', 0)
             filter.set('end', 1)
-            filter.set('out', duration - 1)
+            filter.set('in', filter.producerIn)
+            filter.set('out', filter.getDouble('in') + duration - 1)
         }
     }
 

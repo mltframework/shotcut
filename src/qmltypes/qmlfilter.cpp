@@ -206,6 +206,14 @@ QString QmlFilter::timeFromFrames(int frames)
     return QString();
 }
 
+int QmlFilter::producerIn() const
+{
+    // Every attached filter has a service property that points to the service to
+    // which it is attached.
+    Mlt::Producer producer(mlt_producer(m_filter->get_data("service")));
+    return producer.get_in();
+}
+
 int QmlFilter::producerOut() const
 {
     // Every attached filter has a service property that points to the service to
