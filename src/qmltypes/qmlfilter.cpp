@@ -25,6 +25,7 @@
 #include <QTemporaryFile>
 #include <QFile>
 #include <QtXml>
+#include <MltProducer.h>
 
 QmlFilter::QmlFilter(AttachedFiltersModel& model, const QmlMetadata &metadata, int row, QObject *parent)
     : QObject(parent)
@@ -203,6 +204,14 @@ QString QmlFilter::timeFromFrames(int frames)
         return MLT.producer()->frames_to_time(frames);
     }
     return QString();
+}
+
+int QmlFilter::producerOut() const
+{
+    // Every attached filter has a service property that points to the service to
+    // which it is attached.
+    Mlt::Producer producer(mlt_producer(m_filter->get_data("service")));
+    return producer.get_out();
 }
 
 void QmlFilter::preset(const QString &name)

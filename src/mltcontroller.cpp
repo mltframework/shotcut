@@ -513,8 +513,20 @@ void Controller::setIn(int in)
 
 void Controller::setOut(int out)
 {
-    if (m_producer && m_producer->is_valid())
+    if (m_producer && m_producer->is_valid()) {
         m_producer->set("out", out);
+
+        // Adjust all filters that have an explicit duration.
+        int n = m_producer->filter_count();
+        for (int i = 0; i < n; i++) {
+            Filter* filter = m_producer->filter(i);
+            if (filter && filter->is_valid() && filter->get_length() > 0) {
+                int in = out - filter->get_length() + 1;
+                filter->set_in_and_out(in, out);
+            }
+            delete filter;
+        }
+    }
 }
 
 void Controller::restart()
