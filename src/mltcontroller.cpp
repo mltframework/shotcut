@@ -504,8 +504,10 @@ void Controller::setIn(int in)
         int n = m_producer->filter_count();
         for (int i = 0; i < n; i++) {
             Filter* filter = m_producer->filter(i);
-            if (filter && filter->is_valid() && filter->get_length() > 0)
-                filter->set_in_and_out(in, in + filter->get_length() - 1);
+            if (filter && filter->is_valid() && filter->get_length() > 0) {
+                if (QString(filter->get("shotcut:filter")).startsWith("fadeIn"))
+                    filter->set_in_and_out(in, in + filter->get_length() - 1);
+            }
             delete filter;
         }
     }
@@ -521,8 +523,10 @@ void Controller::setOut(int out)
         for (int i = 0; i < n; i++) {
             Filter* filter = m_producer->filter(i);
             if (filter && filter->is_valid() && filter->get_length() > 0) {
-                int in = out - filter->get_length() + 1;
-                filter->set_in_and_out(in, out);
+                if (QString(filter->get("shotcut:filter")).startsWith("fadeOut")) {
+                    int in = out - filter->get_length() + 1;
+                    filter->set_in_and_out(in, out);
+                }
             }
             delete filter;
         }

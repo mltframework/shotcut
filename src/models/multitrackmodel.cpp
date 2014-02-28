@@ -493,8 +493,10 @@ int MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta)
         int n = info->producer->filter_count();
         for (int j = 0; j < n; j++) {
             Mlt::Filter* filter = info->producer->filter(j);
-            if (filter && filter->is_valid() && filter->get_length() > 0)
-                filter->set_in_and_out(in, in + filter->get_length() - 1);
+            if (filter && filter->is_valid() && filter->get_length() > 0) {
+                if (QString(filter->get("shotcut:filter")).startsWith("fadeIn"))
+                    filter->set_in_and_out(in, in + filter->get_length() - 1);
+            }
             delete filter;
         }
 
@@ -635,6 +637,17 @@ int MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta)
         int in = info->frame_in;
         int out = info->frame_out - delta;
         playlist.resize_clip(clipIndex, in, out);
+
+        // Adjust all filters that have an explicit duration.
+        int n = info->producer->filter_count();
+        for (int j = 0; j < n; j++) {
+            Mlt::Filter* filter = info->producer->filter(j);
+            if (filter && filter->is_valid() && filter->get_length() > 0) {
+                if (QString(filter->get("shotcut:filter")).startsWith("fadeOut"))
+                    filter->set_in_and_out(out - filter->get_length() + 1, out);
+            }
+            delete filter;
+        }
 
         QModelIndex index = createIndex(clipIndex, 0, trackIndex);
         QVector<int> roles;
