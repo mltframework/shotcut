@@ -266,8 +266,8 @@ OTHER_FILES += \
     qml/modules/Shotcut/Controls/TimeSpinner.qml \
     qml/filters/fadein_brightness/meta.qml \
     qml/filters/fadein_brightness/ui.qml \
-    qml/filters/fadein_volume/meta.qml \
-    qml/filters/fadein_volume/ui.qml \
+    qml/filters/audio_fadein/meta.qml \
+    qml/filters/audio_fadein/ui.qml \
     qml/filters/fadein_movit/meta.qml \
     qml/filters/fadein_movit/ui.qml \
     qml/filters/fadeout_brightness/meta.qml \
@@ -324,8 +324,8 @@ lupdate_hack {
     qml/modules/Shotcut/Controls/TimeSpinner.qml \
     qml/filters/fadein_brightness/meta.qml \
     qml/filters/fadein_brightness/ui.qml \
-    qml/filters/fadein_volume/meta.qml \
-    qml/filters/fadein_volume/ui.qml \
+    qml/filters/audio_fadein/meta.qml \
+    qml/filters/audio_fadein/ui.qml \
     qml/filters/fadein_movit/meta.qml \
     qml/filters/fadein_movit/ui.qml \
     qml/filters/fadeout_brightness/meta.qml \
