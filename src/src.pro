@@ -273,7 +273,9 @@ OTHER_FILES += \
     qml/filters/fadeout_brightness/meta.qml \
     qml/filters/fadeout_brightness/ui.qml \
     qml/filters/audio_fadeout/meta.qml \
-    qml/filters/audio_fadeout/ui.qml
+    qml/filters/audio_fadeout/ui.qml \
+    qml/filters/fadeout_movit/meta.qml \
+    qml/filters/fadeout_movit/ui.qml
 
 lupdate_hack {
     SOURCES += \
@@ -331,7 +333,9 @@ lupdate_hack {
     qml/filters/fadeout_brightness/meta.qml \
     qml/filters/fadeout_brightness/ui.qml \
     qml/filters/audio_fadeout/meta.qml \
-    qml/filters/audio_fadeout/ui.qml
+    qml/filters/audio_fadeout/ui.qml \
+    qml/filters/fadeout_movit/meta.qml \
+    qml/filters/fadeout_movit/ui.qml
 }
 
 TRANSLATIONS += \
