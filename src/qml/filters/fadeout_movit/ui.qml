@@ -32,7 +32,7 @@ Rectangle {
             duration = filter.framesFromTime('1:0')
             var out = filter.producerOut
             var inFrame = out - duration + 1
-            filter.set('opacity', '0~=1; %2=0'.arg(duration - 1))
+            filter.set('opacity', '0~=1; %1=0'.arg(duration - 1))
             filter.set('alpha', 1)
             filter.set('in', inFrame)
             filter.set('out', out)
@@ -55,7 +55,7 @@ Rectangle {
                 onValueChanged: {
                     var inFrame = filter.getDouble('out') - duration + 1
                     filter.set('in', inFrame)
-                    filter.set('opacity', '0~=1; %2=0'.arg(duration - 1))
+                    filter.set('opacity', '0~=1; %1=0'.arg(duration - 1))
                 }
             }
         }
