@@ -30,7 +30,7 @@ Rectangle {
     Component.onCompleted: {
         if (filter.isNew) {
             duration = filter.framesFromTime('1:0')
-            filter.set('start', 0)
+            filter.set('gain', 0)
             filter.set('end', 1)
             filter.set('out', duration - 1)
         }
@@ -46,7 +46,7 @@ Rectangle {
             Label { text: qsTr('Duration') }
             TimeSpinner {
                 id: timeSpinner
-                minimumValue: 2
+                minimumValue: 1
                 maximumValue: 5000
                 value: filter.getDouble('out') - filter.getDouble('in') + 1
                 onValueChanged: filter.set('out', filter.getDouble('in') + value - 1)
