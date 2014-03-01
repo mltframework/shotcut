@@ -65,6 +65,7 @@ public:
         AudioLevelsRole, /// clip only
         IsCompositeRole, /// track only
         FadeInRole,      /// clip only
+        FadeOutRole,     /// clip only
     };
 
     explicit MultitrackModel(QObject *parent = 0);
@@ -127,6 +128,7 @@ public slots:
     void appendFromPlaylist(Mlt::Playlist* playlist, int trackIndex);
     void overwriteFromPlaylist(Mlt::Playlist& playlist, int trackIndex, int position);
     void fadeIn(int trackIndex, int clipIndex, int duration);
+    void fadeOut(int trackIndex, int clipIndex, int duration);
 
 private:
     Mlt::Tractor* m_tractor;

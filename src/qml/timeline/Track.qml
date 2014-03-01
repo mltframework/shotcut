@@ -70,6 +70,7 @@ Rectangle {
             height: trackRoot.height
             trackIndex: trackRoot.DelegateModel.itemsIndex
             fadeIn: model.fadeIn
+            fadeOut: model.fadeOut
 
             onSelected: {
                 resetStates(clip.DelegateModel.itemsIndex);

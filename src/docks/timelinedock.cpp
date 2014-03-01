@@ -369,6 +369,18 @@ void TimelineDock::fadeIn(int trackIndex, int clipIndex, int duration)
     emit fadeInChanged(duration);
 }
 
+void TimelineDock::fadeOut(int trackIndex, int clipIndex, int duration)
+{
+    if (duration < 0) return;
+    if (trackIndex < 0)
+        trackIndex = m_quickView.rootObject()->property("currentTrack").toInt();
+    if (clipIndex < 0)
+        clipIndex = m_quickView.rootObject()->property("currentClip").toInt();
+    MAIN.undoStack()->push(
+        new Timeline::FadeOutCommand(m_model, trackIndex, clipIndex, duration));
+    emit fadeOutChanged(duration);
+}
+
 void TimelineDock::dragEnterEvent(QDragEnterEvent *event)
 {
     if (event->mimeData()->hasFormat(Mlt::XmlMimeType)) {

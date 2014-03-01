@@ -55,6 +55,7 @@ signals:
     void dropped();
     void dropAccepted();
     void fadeInChanged(int duration);
+    void fadeOutChanged(int duration);
 
 public slots:
     void addAudioTrack();
@@ -82,6 +83,7 @@ public slots:
     void appendFromPlaylist(Mlt::Playlist* playlist);
     void splitClip(int trackIndex = -1, int clipIndex = -1);
     void fadeIn(int trackIndex, int clipIndex = -1, int duration = -1);
+    void fadeOut(int trackIndex, int clipIndex = -1, int duration = -1);
 
 protected:
     void dragEnterEvent(QDragEnterEvent* event);

@@ -176,10 +176,28 @@ void FiltersDock::onProducerOpened()
     }
 }
 
-void FiltersDock::setDuration(int duration)
+void FiltersDock::setFadeInDuration(int duration)
 {
-    if (m_quickObject)
-        m_quickObject->setProperty("duration", duration);
+    if (m_quickObject && ui->listView->currentIndex().isValid()) {
+        Mlt::Filter* filter = m_model.filterForRow(ui->listView->currentIndex().row());
+        if (filter && filter->is_valid()
+            && QString(filter->get("shotcut:filter")).startsWith("fadeIn")) {
+            m_quickObject->setProperty("duration", duration);
+        }
+        delete filter;
+    }
+}
+
+void FiltersDock::setFadeOutDuration(int duration)
+{
+    if (m_quickObject && ui->listView->currentIndex().isValid()) {
+        Mlt::Filter* filter = m_model.filterForRow(ui->listView->currentIndex().row());
+        if (filter && filter->is_valid()
+            && QString(filter->get("shotcut:filter")).startsWith("fadeOut")) {
+            m_quickObject->setProperty("duration", duration);
+        }
+        delete filter;
+    }
 }
 
 void FiltersDock::on_addAudioButton_clicked()

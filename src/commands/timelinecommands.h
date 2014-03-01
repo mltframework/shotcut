@@ -225,6 +225,23 @@ private:
     int m_previous;
 };
 
+class FadeOutCommand : public QUndoCommand
+{
+public:
+    FadeOutCommand(MultitrackModel& model, int trackIndex, int clipIndex, int duration, QUndoCommand * parent = 0);
+    void redo();
+    void undo();
+protected:
+    int id() const;
+    bool mergeWith(const QUndoCommand *other);
+private:
+    MultitrackModel& m_model;
+    int m_trackIndex;
+    int m_clipIndex;
+    int m_duration;
+    int m_previous;
+};
+
 }
 
 #endif

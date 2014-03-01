@@ -51,7 +51,8 @@ public:
 public slots:
     void onModelChanged();
     void onProducerOpened();
-    void setDuration(int duration);
+    void setFadeInDuration(int duration);
+    void setFadeOutDuration(int duration);
 
 private slots:
     void on_addAudioButton_clicked();

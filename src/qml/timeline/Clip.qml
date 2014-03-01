@@ -32,6 +32,7 @@ Rectangle {
     property bool isAudio: false
     property var audioLevels
     property int fadeIn: 0
+    property int fadeOut: 0
     property int trackIndex
     property int originalTrackIndex: trackIndex
     property int originalClipIndex: index
@@ -209,7 +210,7 @@ Rectangle {
         drag.target: parent
         drag.axis: Drag.XAxis
         cursorShape: (trimInMouseArea.drag.active || trimOutMouseArea.drag.active)? Qt.SizeHorCursor :
-            fadeInMouseArea.drag.active? Qt.PointingHandCursor :
+            (fadeInMouseArea.drag.active || fadeOutMouseArea.drag.active)? Qt.PointingHandCursor :
             drag.active? Qt.ClosedHandCursor :
             isBlank? Qt.ArrowCursor : Qt.OpenHandCursor
         property int startX
@@ -314,6 +315,92 @@ Rectangle {
         SequentialAnimation on scale {
             loops: Animation.Infinite
             running: fadeInMouseArea.containsMouse
+            NumberAnimation {
+                from: 1.0
+                to: 0.5
+                duration: 250
+                easing.type: Easing.InOutQuad
+            }
+            NumberAnimation {
+                from: 0.5
+                to: 1.0
+                duration: 250
+                easing.type: Easing.InOutQuad
+            }
+        }
+    }
+
+    Canvas {
+        id: fadeOutCanvas
+        visible: !isBlank
+        width: parent.fadeOut * timeScale
+        height: parent.height - parent.border.width * 2
+        anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.margins: parent.border.width
+        opacity: 0.5
+        onWidthChanged: requestPaint()
+        onPaint: {
+            var cx = getContext('2d')
+            cx.beginPath()
+            cx.moveTo(width, 0)
+            cx.lineTo(0, 0)
+            cx.lineTo(width, height)
+            cx.closePath()
+            cx.fillStyle = 'black'
+            cx.fill()
+        }
+    }
+    Rectangle {
+        id: fadeOutControl
+        enabled: !isBlank
+        anchors.right: fadeOutCanvas.width > radius? undefined : fadeOutCanvas.right
+        anchors.horizontalCenter: fadeOutCanvas.width > radius? fadeOutCanvas.left : undefined
+        anchors.top: fadeOutCanvas.top
+        anchors.topMargin: -3
+        width: 15
+        height: 15
+        radius: 7.5
+        color: 'black'
+        border.width: 2
+        border.color: 'white'
+        opacity: 0
+        Drag.active: fadeOutMouseArea.drag.active
+        MouseArea {
+            id: fadeOutMouseArea
+            anchors.fill: parent
+            hoverEnabled: true
+            cursorShape: Qt.PointingHandCursor
+            drag.target: parent
+            drag.axis: Drag.XAxis
+            property int startX
+            property int startFadeOut
+            onEntered: parent.opacity = 0.7
+            onExited: parent.opacity = 0
+            onPressed: {
+                startX = parent.x
+                startFadeOut = fadeOut
+                parent.anchors.right = undefined
+                parent.anchors.horizontalCenter = undefined
+                parent.opacity = 1
+            }
+            onReleased: {
+                if (fadeOutCanvas.width > parent.radius)
+                    parent.anchors.horizontalCenter = fadeOutCanvas.left
+                else
+                    parent.anchors.right = fadeOutCanvas.right
+            }
+            onPositionChanged: {
+                if (mouse.buttons === Qt.LeftButton) {
+                    var delta = Math.round((startX - parent.x) / timeScale)
+                    var duration = startFadeOut + delta
+                    timeline.fadeOut(trackIndex, index, duration)
+                }
+            }
+        }
+        SequentialAnimation on scale {
+            loops: Animation.Infinite
+            running: fadeOutMouseArea.containsMouse
             NumberAnimation {
                 from: 1.0
                 to: 0.5

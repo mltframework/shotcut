@@ -385,4 +385,40 @@ bool FadeInCommand::mergeWith(const QUndoCommand *other)
     return true;
 }
 
+FadeOutCommand::FadeOutCommand(MultitrackModel &model, int trackIndex, int clipIndex, int duration, QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_trackIndex(trackIndex)
+    , m_clipIndex(clipIndex)
+    , m_duration(duration)
+{
+    QModelIndex modelIndex = m_model.index(clipIndex, 0, m_model.index(trackIndex));
+    m_previous = model.data(modelIndex, MultitrackModel::FadeOutRole).toInt();
+    setText(QObject::tr("Adjust fade out"));
+}
+
+void FadeOutCommand::redo()
+{
+    m_model.fadeOut(m_trackIndex, m_clipIndex, m_duration);
+}
+
+void FadeOutCommand::undo()
+{
+    m_model.fadeOut(m_trackIndex, m_clipIndex, m_previous);
+}
+
+int FadeOutCommand::id() const
+{
+    return 3;
+}
+
+bool FadeOutCommand::mergeWith(const QUndoCommand *other)
+{
+    const FadeOutCommand* that = static_cast<const FadeOutCommand*>(other);
+    if (that->id() != id() || that->m_trackIndex != m_trackIndex || that->m_clipIndex != m_clipIndex)
+        return false;
+    m_duration = static_cast<const FadeOutCommand*>(other)->m_duration;
+    return true;
+}
+
 }
