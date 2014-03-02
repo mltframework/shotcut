@@ -43,7 +43,19 @@ RowLayout {
         tooltip: qsTr('Decrement')
         implicitWidth: 20
         implicitHeight: 20
-        action: decrementAction
+        MouseArea {
+            anchors.fill: parent
+            onPressed: value = value = Math.max(value - 1, minimumValue)
+            onPressAndHold: decrementTimer.start()
+            onReleased: decrementTimer.stop()
+        }
+        Timer {
+            id: decrementTimer
+            repeat: true
+            interval: 200
+            triggeredOnStart: true
+            onTriggered: value = value = Math.max(value - 1, minimumValue)
+        }
     }
     Button {
         id: incrementButton
@@ -52,15 +64,19 @@ RowLayout {
         tooltip: qsTr('Increment')
         implicitWidth: 20
         implicitHeight: 20
-        action: incrementAction
-    }
-    Action {
-        id: decrementAction
-        onTriggered: value = Math.max(value - 1, minimumValue)
-    }
-    Action {
-        id: incrementAction
-        onTriggered: value = Math.min(value + 1, maximumValue)
+        MouseArea {
+            anchors.fill: parent
+            onPressed: value = Math.min(value + 1, maximumValue)
+            onPressAndHold: incrementTimer.start()
+            onReleased: incrementTimer.stop()
+        }
+        Timer {
+            id: incrementTimer
+            repeat: true
+            interval: 200
+            triggeredOnStart: true
+            onTriggered: value = Math.min(value + 1, maximumValue)
+        }
     }
     function clamp(x, min, max) {
         return Math.max(min, Math.min(max, x))
