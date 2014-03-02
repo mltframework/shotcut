@@ -45,7 +45,7 @@ RowLayout {
         implicitHeight: 20
         MouseArea {
             anchors.fill: parent
-            onPressed: value = value = Math.max(value - 1, minimumValue)
+            onPressed: decrementAction.trigger()
             onPressAndHold: decrementTimer.start()
             onReleased: decrementTimer.stop()
         }
@@ -54,7 +54,7 @@ RowLayout {
             repeat: true
             interval: 200
             triggeredOnStart: true
-            onTriggered: value = value = Math.max(value - 1, minimumValue)
+            onTriggered: decrementAction.trigger()
         }
     }
     Button {
@@ -66,7 +66,7 @@ RowLayout {
         implicitHeight: 20
         MouseArea {
             anchors.fill: parent
-            onPressed: value = Math.min(value + 1, maximumValue)
+            onPressed: incrementAction.trigger()
             onPressAndHold: incrementTimer.start()
             onReleased: incrementTimer.stop()
         }
@@ -75,9 +75,18 @@ RowLayout {
             repeat: true
             interval: 200
             triggeredOnStart: true
-            onTriggered: value = Math.min(value + 1, maximumValue)
+            onTriggered: incrementAction.trigger()
         }
     }
+    Action {
+        id: decrementAction
+        onTriggered: value = value = Math.max(value - 1, minimumValue)
+    }
+    Action {
+        id: incrementAction
+        onTriggered: value = Math.min(value + 1, maximumValue)
+    }
+
     function clamp(x, min, max) {
         return Math.max(min, Math.min(max, x))
     }
