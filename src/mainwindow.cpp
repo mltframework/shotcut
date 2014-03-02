@@ -1347,7 +1347,7 @@ void MainWindow::onMultitrackClosed()
 void MainWindow::onMultitrackModified()
 {
     setWindowModified(true);
-    if ((void*) MLT.producer()->get_producer() == (void*) multitrack()->get_producer())
+    if (MLT.producer() && (void*) MLT.producer()->get_producer() == (void*) multitrack()->get_producer())
         m_player->onProducerModified();
     updateMarkers();
 }
