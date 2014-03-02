@@ -381,6 +381,52 @@ void TimelineDock::fadeOut(int trackIndex, int clipIndex, int duration)
     emit fadeOutChanged(duration);
 }
 
+void TimelineDock::seekPreviousEdit()
+{
+    if (!MLT.isMultitrack()) return;
+    if (!m_model.tractor()) return;
+
+    int newPosition = -1;
+    int n = m_model.tractor()->count();
+    for (int i = 0; i < n; i++) {
+        QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
+        if (track) {
+            Mlt::Playlist playlist(*track);
+            int clipIndex = playlist.get_clip_index_at(m_position);
+            if (clipIndex >= 0 && m_position == playlist.clip_start(clipIndex))
+                --clipIndex;
+            while (clipIndex > 0 && playlist.is_blank(clipIndex))
+                --clipIndex;
+            if (!playlist.is_blank(clipIndex) && clipIndex >= 0)
+                newPosition = qMax(newPosition, playlist.clip_start(clipIndex));
+        }
+    }
+    if (newPosition != m_position)
+        setPosition(newPosition);
+}
+
+void TimelineDock::seekNextEdit()
+{
+    if (!MLT.isMultitrack()) return;
+    if (!m_model.tractor()) return;
+
+    int newPosition = std::numeric_limits<int>::max();
+    int n = m_model.tractor()->count();
+    for (int i = 0; i < n; i++) {
+        QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
+        if (track) {
+            Mlt::Playlist playlist(*track);
+            int clipIndex = playlist.get_clip_index_at(m_position) + 1;
+            while (clipIndex < playlist.count() && playlist.is_blank(clipIndex))
+                ++clipIndex;
+            if (!playlist.is_blank(clipIndex) && clipIndex < playlist.count())
+                newPosition = qMin(newPosition, playlist.clip_start(clipIndex));
+        }
+    }
+    if (newPosition != m_position)
+        setPosition(newPosition);
+}
+
 void TimelineDock::dragEnterEvent(QDragEnterEvent *event)
 {
     if (event->mimeData()->hasFormat(Mlt::XmlMimeType)) {

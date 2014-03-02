@@ -69,7 +69,9 @@ signals:
     void rewound();
     void fastForwarded();
     void previousSought(int currentPosition);
+    void previousSought();
     void nextSought(int currentPosition);
+    void nextSought();
     void profileChanged();
 
 public slots:

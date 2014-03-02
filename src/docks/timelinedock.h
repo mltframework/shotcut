@@ -84,6 +84,8 @@ public slots:
     void splitClip(int trackIndex = -1, int clipIndex = -1);
     void fadeIn(int trackIndex, int clipIndex = -1, int duration = -1);
     void fadeOut(int trackIndex, int clipIndex = -1, int duration = -1);
+    void seekPreviousEdit();
+    void seekNextEdit();
 
 protected:
     void dragEnterEvent(QDragEnterEvent* event);

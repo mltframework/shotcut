@@ -185,6 +185,8 @@ MainWindow::MainWindow()
     connect(m_timelineDock->model(), SIGNAL(seeked(int)), SLOT(seekTimeline(int)));
     connect(m_playlistDock, SIGNAL(addAllTimeline(Mlt::Playlist*)), SLOT(onTimelineDockTriggered()));
     connect(m_playlistDock, SIGNAL(addAllTimeline(Mlt::Playlist*)), m_timelineDock, SLOT(appendFromPlaylist(Mlt::Playlist*)));
+    connect(m_player, SIGNAL(previousSought()), m_timelineDock, SLOT(seekPreviousEdit()));
+    connect(m_player, SIGNAL(nextSought()), m_timelineDock, SLOT(seekNextEdit()));
 
     m_filtersDock = new FiltersDock(this);
     m_filtersDock->hide();

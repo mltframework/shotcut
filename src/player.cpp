@@ -576,6 +576,7 @@ void Player::on_actionSkipNext_triggered()
     }
     else {
         emit nextSought(m_position);
+        emit nextSought();
     }
 }
 
@@ -595,6 +596,7 @@ void Player::on_actionSkipPrevious_triggered()
     }
     else {
         emit previousSought(m_position);
+        emit previousSought();
     }
 }
 
