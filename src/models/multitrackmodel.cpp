@@ -1272,7 +1272,7 @@ void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
         if (info && info->producer && info->producer->is_valid()) {
             // Get video filter.
             QScopedPointer<Mlt::Filter> filter;
-            duration = qMin(qMax(duration, 0), info->frame_count);
+            duration = qBound(0, duration, info->frame_count);
 
             // Get video filter.
             if (Settings.playerGPU())
@@ -1341,7 +1341,7 @@ void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
         if (info && info->producer && info->producer->is_valid()) {
             // Get video filter.
             QScopedPointer<Mlt::Filter> filter;
-            duration = qMin(qMax(duration, 0), info->frame_count);
+            duration = qBound(0, duration, info->frame_count);
 
             // Get video filter.
             if (Settings.playerGPU())

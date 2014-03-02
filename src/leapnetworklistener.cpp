@@ -87,7 +87,7 @@ void LeapNetworkListener::onMessage(const QString &s)
                     if (center.isArray() && size.isArray()) {
                         double normalized = ((x - center.toArray()[0].toDouble()) / size.toArray()[0].toDouble()) + 0.5;
                         // clamp [0, 1]
-                        normalized = qMin(qMax(normalized, 0.0), 1.0);
+                        normalized = qBound(0.0, normalized, 1.0);
                         emit shuttle(2.0f * (normalized - 0.5));
                     }
                 }
