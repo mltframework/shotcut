@@ -159,17 +159,21 @@
         <file>dark/32x32/view-time-schedule.png</file>
         <file>light/32x32/view-time-schedule.png</file>
         <file>oxygen/32x32/actions/view-time-schedule.png</file>
-        <file>dark/16x16/go-next.png</file>
-        <file>dark/16x16/go-down.png</file>
-        <file>light/16x16/go-next.png</file>
-        <file>light/16x16/go-down.png</file>
-        <file>oxygen/16x16/actions/go-down.png</file>
-        <file>oxygen/16x16/actions/go-next.png</file>
-        <file>dark/16x16/go-previous.png</file>
-        <file>dark/16x16/go-up.png</file>
-        <file>light/16x16/go-previous.png</file>
-        <file>light/16x16/go-up.png</file>
-        <file>oxygen/16x16/actions/go-previous.png</file>
-        <file>oxygen/16x16/actions/go-up.png</file>
+        <file>dark/16x16/delete.png</file>
+        <file>dark/16x16/insert.png</file>
+        <file>dark/16x16/lift.png</file>
+        <file>dark/16x16/overwrite.png</file>
+        <file>dark/16x16/snap.png</file>
+        <file>dark/16x16/split.png</file>
+        <file>light/16x16/insert.png</file>
+        <file>light/16x16/lift.png</file>
+        <file>light/16x16/overwrite.png</file>
+        <file>light/16x16/snap.png</file>
+        <file>light/16x16/split.png</file>
+        <file>oxygen/16x16/actions/split.png</file>
+        <file>oxygen/16x16/actions/snap.png</file>
+        <file>oxygen/16x16/actions/overwrite.png</file>
+        <file>oxygen/16x16/actions/insert.png</file>
+        <file>oxygen/16x16/actions/lift.png</file>
     </qresource>
 </RCC>

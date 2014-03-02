@@ -67,6 +67,85 @@ Rectangle {
             implicitWidth: 28
             implicitHeight: 24
         }
+        Button {
+            action: splitAction
+            implicitWidth: 28
+            implicitHeight: 24
+        }
+
+        CheckBox {
+            id: snapButton
+            checked: true
+            anchors.verticalCenter: parent.verticalCenter
+            style: CheckBoxStyle {
+                background: Rectangle {
+                    implicitWidth: 28
+                    implicitHeight: 24
+                    radius: 3
+                    color: control.checked? activePalette.highlight : activePalette.button
+                    border.color: activePalette.shadow
+                    border.width: 1
+                }
+                indicator: ToolButton {
+                    x: 3
+                    implicitWidth: 24
+                    implicitHeight: 20
+                    iconName: 'snap'
+                    iconSource: 'qrc:///icons/oxygen/16x16/actions/snap.png'
+                }
+            }
+            onHoveredChanged: {
+                if (hovered) {
+                    tooltipTimer.restart()
+                    tooltip.color = timeline.toolTipBaseColor()
+                    tooltip.border.color = timeline.toolTipTextColor()
+                    tooltipText.color = timeline.toolTipTextColor()
+                } else {
+                    tooltipTimer.stop()
+                    tooltip.state = 'invisible'
+                }
+            }
+            Rectangle {
+                id: tooltip
+                color: timeline.toolTipBaseColor()
+                border.color: timeline.toolTipTextColor()
+                border.width: 1
+                anchors.left: parent.horizontalCenter
+                anchors.top: parent.bottom
+                anchors.topMargin: 2
+                width: tooltipText.width + 8
+                height: tooltipText.height + 8
+                states: [
+                    State { name: 'invisible'; PropertyChanges { target: tooltip; opacity: 0} },
+                    State { name: 'visible'; PropertyChanges { target: tooltip; opacity: 1} }
+                ]
+                state: 'invisible'
+                transitions: [
+                    Transition {
+                        from: 'invisible'
+                        to: 'visible'
+                        OpacityAnimator { target: tooltip; duration: 200; easing.type: Easing.InOutQuad }
+                    },
+                    Transition {
+                        from: 'visible'
+                        to: 'invisible'
+                        OpacityAnimator { target: tooltip; duration: 200; easing.type: Easing.InOutQuad }
+                    }
+                ]
+                Timer {
+                    id: tooltipTimer
+                    interval: 1000
+                    onTriggered: parent.state = 'visible'
+                }
+                Label {
+                    id: tooltipText
+                    color: timeline.toolTipTextColor()
+                    text: qsTr('Snap')
+                    anchors.centerIn: parent
+                }
+            }
+        }
+
         CheckBox {
             id: scrubButton
             anchors.verticalCenter: parent.verticalCenter
@@ -109,28 +188,6 @@ Rectangle {
                 }
             }
         }
-        CheckBox {
-            id: snapButton
-            checked: true
-            anchors.verticalCenter: parent.verticalCenter
-            style: CheckBoxStyle {
-                indicator: Rectangle {
-                    implicitWidth: snapText.width + 8
-                    implicitHeight: 24
-                    radius: 3
-                    color: control.checked? activePalette.highlight : activePalette.button
-                    border.color: activePalette.shadow
-                    border.width: 1
-                    Text {
-                        id: snapText
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.verticalCenter: parent.verticalCenter
-                        text: qsTr('Snap')
-                        color: control.checked? activePalette.highlightedText : activePalette.windowText
-                    }
-                }
-            }
-        }
     }
 
     Action {
@@ -152,32 +209,40 @@ Rectangle {
     Action {
         id: deleteAction
         tooltip: qsTr('Ripple Delete - Remove current clip\nshifting following clips to the left (X)')
-        iconName: 'go-previous'
-        iconSource: 'qrc:///icons/oxygen/16x16/actions/go-previous.png'
+        iconName: 'list-remove'
+        iconSource: 'qrc:///icons/oxygen/16x16/actions/list-remove.png'
         onTriggered: timeline.remove(currentClipTrack, currentClip)
     }
 
     Action {
         id: liftAction
         tooltip: qsTr('Lift - Remove current clip without\naffecting position of other clips (Z)')
-        iconName: 'go-up'
-        iconSource: 'qrc:///icons/oxygen/16x16/actions/go-up.png'
+        iconName: 'lift'
+        iconSource: 'qrc:///icons/oxygen/16x16/actions/lift.png'
         onTriggered: timeline.lift(currentClipTrack, currentClip)
     }
 
     Action {
         id: insertAction
         tooltip: qsTr('Insert clip into the current track\nshifting following clips to the right (V)')
-        iconName: 'go-next'
-        iconSource: 'qrc:///icons/oxygen/16x16/actions/go-next.png'
+        iconName: 'insert'
+        iconSource: 'qrc:///icons/oxygen/16x16/actions/insert.png'
         onTriggered: timeline.insert(currentTrack)
     }
 
     Action {
         id: overwriteAction
         tooltip: qsTr('Overwrite clip onto the current track (B)')
-        iconName: 'go-down'
-        iconSource: 'qrc:///icons/oxygen/16x16/actions/go-down.png'
+        iconName: 'overwrite'
+        iconSource: 'qrc:///icons/oxygen/16x16/actions/overwrite.png'
         onTriggered: timeline.overwrite(currentTrack)
+    }
+
+    Action {
+        id: splitAction
+        tooltip: qsTr('Split At Playhead (S)')
+        iconName: 'split'
+        iconSource: 'qrc:///icons/oxygen/16x16/actions/split.png'
+        onTriggered: timeline.splitClip(currentTrack, currentClip)
     }
 }

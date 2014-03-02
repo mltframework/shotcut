@@ -21,6 +21,7 @@
 
 #include <QDockWidget>
 #include <QQuickView>
+#include <QApplication>
 #include "models/multitrackmodel.h"
 #include "mltcontroller.h"
 
@@ -86,6 +87,8 @@ public slots:
     void fadeOut(int trackIndex, int clipIndex = -1, int duration = -1);
     void seekPreviousEdit();
     void seekNextEdit();
+    QColor toolTipBaseColor() const { return qApp->palette().toolTipBase().color(); }
+    QColor toolTipTextColor() const { return qApp->palette().toolTipText().color(); }
 
 protected:
     void dragEnterEvent(QDragEnterEvent* event);
