@@ -125,8 +125,6 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
             // Relabel for widgets UIs
             else if (result == "movit.lift_gamma_gain" || result == "frei0r.coloradj_RGB")
                 result = tr("Color Grading");
-            else if (result == "crop")
-                result = tr("Crop");
             else if (result == "movit.glow" || result == "frei0r.glow")
                 result = tr("Glow");
             else if (result == "movit.mirror" || result == "mirror")

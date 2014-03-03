@@ -166,14 +166,6 @@
     <string>Sharpen</string>
    </property>
   </action>
-  <action name="actionCrop">
-   <property name="text">
-    <string>Crop</string>
-   </property>
-   <property name="toolTip">
-    <string>Remove bad edges or black bars</string>
-   </property>
-  </action>
   <action name="actionColorGrading">
    <property name="text">
     <string>Color Grading</string>

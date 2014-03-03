@@ -57,7 +57,6 @@ SOURCES += main.cpp\
     filters/movitcolorfilter.cpp \
     filters/frei0rcoloradjwidget.cpp \
     filters/frei0rglowfilter.cpp \
-    filters/cropfilter.cpp \
     filters/movitsharpenfilter.cpp \
     filters/frei0rsharpnessfilter.cpp \
     widgets/colorpickerwidget.cpp \
@@ -65,6 +64,7 @@ SOURCES += main.cpp\
     dialogs/customprofiledialog.cpp \
     qmltypes/qmlfilter.cpp \
     qmltypes/qmlmetadata.cpp \
+    qmltypes/qmlprofile.cpp \
     filters/webvfxfilter.cpp \
     htmleditor/htmleditor.cpp \
     htmleditor/highlighter.cpp \
@@ -130,7 +130,6 @@ HEADERS  += mainwindow.h \
     filters/movitcolorfilter.h \
     filters/frei0rcoloradjwidget.h \
     filters/frei0rglowfilter.h \
-    filters/cropfilter.h \
     filters/movitsharpenfilter.h \
     filters/frei0rsharpnessfilter.h \
     widgets/colorpickerwidget.h \
@@ -138,6 +137,7 @@ HEADERS  += mainwindow.h \
     dialogs/customprofiledialog.h \
     qmltypes/qmlfilter.h \
     qmltypes/qmlmetadata.h \
+    qmltypes/qmlprofile.h \
     filters/webvfxfilter.h \
     htmleditor/htmleditor.h \
     htmleditor/highlighter.h \
@@ -186,7 +186,6 @@ FORMS    += mainwindow.ui \
     filters/movitcolorfilter.ui \
     filters/frei0rcoloradjwidget.ui \
     filters/frei0rglowfilter.ui \
-    filters/cropfilter.ui \
     filters/movitsharpenfilter.ui \
     filters/frei0rsharpnessfilter.ui \
     filters/whitebalancefilter.ui \
@@ -233,6 +232,8 @@ OTHER_FILES += \
     qml/filters/audio_balance/ui.qml \
     qml/filters/boxblur/meta.qml \
     qml/filters/boxblur/ui.qml \
+    qml/filters/crop/meta.qml \
+    qml/filters/crop/ui.qml \
     qml/filters/rotate/ui.qml \
     qml/filters/rotate/meta.qml \
     qml/filters/stabilize/meta.qml \
@@ -302,6 +303,8 @@ lupdate_hack {
     qml/filters/audio_balance/ui.qml \
     qml/filters/boxblur/meta.qml \
     qml/filters/boxblur/ui.qml \
+    qml/filters/crop/meta.qml \
+    qml/filters/crop/ui.qml \
     qml/filters/rotate/ui.qml \
     qml/filters/rotate/meta.qml \
     qml/filters/stabilize/meta.qml \
