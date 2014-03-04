@@ -73,28 +73,12 @@ Rectangle {
             implicitHeight: 24
         }
 
-        CheckBox {
+        ToggleButton {
             id: snapButton
             checked: true
-            anchors.verticalCenter: parent.verticalCenter
-            style: CheckBoxStyle {
-                background: Rectangle {
-                    implicitWidth: 28
-                    implicitHeight: 24
-                    radius: 3
-                    color: control.checked? activePalette.highlight : activePalette.button
-                    border.color: activePalette.shadow
-                    border.width: 1
-                }
-                indicator: ToolButton {
-                    x: 3
-                    implicitWidth: 24
-                    implicitHeight: 20
-                    iconName: 'snap'
-                    iconSource: 'qrc:///icons/oxygen/16x16/actions/snap.png'
-                }
-            }
-            ToolTip { text: qsTr('Toggle snapping') }
+            iconName: 'snap'
+            iconSource: 'qrc:///icons/oxygen/16x16/actions/snap.png'
+            tooltip: qsTr('Toggle snapping')
         }
 
         CheckBox {

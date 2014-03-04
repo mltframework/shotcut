@@ -276,7 +276,8 @@ OTHER_FILES += \
     qml/filters/audio_fadeout/ui.qml \
     qml/filters/fadeout_movit/meta.qml \
     qml/filters/fadeout_movit/ui.qml \
-    qml/timeline/ToolTip.qml
+    qml/timeline/ToolTip.qml \
+    qml/timeline/ToggleButton.qml
 
 lupdate_hack {
     SOURCES += \
