@@ -94,56 +94,7 @@ Rectangle {
                     iconSource: 'qrc:///icons/oxygen/16x16/actions/snap.png'
                 }
             }
-            onHoveredChanged: {
-                if (hovered) {
-                    tooltipTimer.restart()
-                    tooltip.color = timeline.toolTipBaseColor()
-                    tooltip.border.color = timeline.toolTipTextColor()
-                    tooltipText.color = timeline.toolTipTextColor()
-                } else {
-                    tooltipTimer.stop()
-                    tooltip.state = 'invisible'
-                }
-            }
-            Rectangle {
-                id: tooltip
-                color: timeline.toolTipBaseColor()
-                border.color: timeline.toolTipTextColor()
-                border.width: 1
-                anchors.left: parent.horizontalCenter
-                anchors.top: parent.bottom
-                anchors.topMargin: 2
-                width: tooltipText.width + 8
-                height: tooltipText.height + 8
-                states: [
-                    State { name: 'invisible'; PropertyChanges { target: tooltip; opacity: 0} },
-                    State { name: 'visible'; PropertyChanges { target: tooltip; opacity: 1} }
-                ]
-                state: 'invisible'
-                transitions: [
-                    Transition {
-                        from: 'invisible'
-                        to: 'visible'
-                        OpacityAnimator { target: tooltip; duration: 200; easing.type: Easing.InOutQuad }
-                    },
-                    Transition {
-                        from: 'visible'
-                        to: 'invisible'
-                        OpacityAnimator { target: tooltip; duration: 200; easing.type: Easing.InOutQuad }
-                    }
-                ]
-                Timer {
-                    id: tooltipTimer
-                    interval: 1000
-                    onTriggered: parent.state = 'visible'
-                }
-                Label {
-                    id: tooltipText
-                    color: timeline.toolTipTextColor()
-                    text: qsTr('Snap')
-                    anchors.centerIn: parent
-                }
-            }
+            ToolTip { text: qsTr('Toggle snapping') }
         }
 
         CheckBox {

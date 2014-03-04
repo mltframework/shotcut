@@ -1444,6 +1444,8 @@ void MainWindow::changeTheme(const QString &theme)
         QIcon::setThemeName("oxygen");
 #endif
     }
+    if (MAIN.m_timelineDock)
+        emit MAIN.m_timelineDock->tooltipColorChanged();
 }
 
 Mlt::Playlist* MainWindow::playlist() const
