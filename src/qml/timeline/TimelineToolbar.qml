@@ -72,7 +72,6 @@ Rectangle {
             implicitWidth: 28
             implicitHeight: 24
         }
-
         ToggleButton {
             id: snapButton
             checked: true
@@ -80,48 +79,17 @@ Rectangle {
             iconSource: 'qrc:///icons/oxygen/16x16/actions/snap.png'
             tooltip: qsTr('Toggle snapping')
         }
-
-        CheckBox {
+        ToggleButton {
             id: scrubButton
-            anchors.verticalCenter: parent.verticalCenter
-            style: CheckBoxStyle {
-                indicator: Rectangle {
-                    implicitWidth: scrubText.width + 8
-                    implicitHeight: 24
-                    radius: 3
-                    color: control.checked? activePalette.highlight : activePalette.button
-                    border.color: activePalette.shadow
-                    border.width: 1
-                    Text {
-                        id: scrubText
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.verticalCenter: parent.verticalCenter
-                        text: qsTr('Scrub Drag')
-                        color: control.checked? activePalette.highlightedText : activePalette.windowText
-                    }
-                }
-            }
+            iconName: 'scrub_drag'
+            iconSource: 'qrc:///icons/oxygen/16x16/actions/scrub_drag.png'
+            tooltip: qsTr('Scrub while dragging')
         }
-        CheckBox {
+        ToggleButton {
             id: rippleButton
-            anchors.verticalCenter: parent.verticalCenter
-            style: CheckBoxStyle {
-                indicator: Rectangle {
-                    implicitWidth: rippleText.width + 8
-                    implicitHeight: 24
-                    radius: 3
-                    color: control.checked? activePalette.highlight : activePalette.button
-                    border.color: activePalette.shadow
-                    border.width: 1
-                    Text {
-                        id: rippleText
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.verticalCenter: parent.verticalCenter
-                        text: qsTr('Ripple Drop')
-                        color: control.checked? activePalette.highlightedText : activePalette.windowText
-                    }
-                }
-            }
+            iconName: 'target'
+            iconSource: 'qrc:///icons/oxygen/16x16/actions/target.png'
+            tooltip: qsTr('Ripple (insert) when source is dropped')
         }
     }
 

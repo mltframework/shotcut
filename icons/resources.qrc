@@ -175,5 +175,11 @@
         <file>oxygen/16x16/actions/overwrite.png</file>
         <file>oxygen/16x16/actions/insert.png</file>
         <file>oxygen/16x16/actions/lift.png</file>
+        <file>dark/16x16/scrub_drag.png</file>
+        <file>dark/16x16/target.png</file>
+        <file>light/16x16/target.png</file>
+        <file>light/16x16/scrub_drag.png</file>
+        <file>oxygen/16x16/actions/target.png</file>
+        <file>oxygen/16x16/actions/scrub_drag.png</file>
     </qresource>
 </RCC>
