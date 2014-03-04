@@ -17,10 +17,10 @@
  */
 
 #include "qmlprofile.h"
+#include "mltcontroller.h"
 
-QmlProfile::QmlProfile(const Mlt::Profile& profile, QObject *parent)
+QmlProfile::QmlProfile(QObject *parent)
     : QObject(parent)
-    , m_profile(mlt_profile_clone(profile.get_profile()))
 {
 }
 
@@ -30,10 +30,10 @@ QmlProfile::~QmlProfile()
 
 int QmlProfile::width() const
 {
-    return m_profile.width();
+    return MLT.profile().width();
 }
 
 int QmlProfile::height() const
 {
-    return m_profile.height();
+    return MLT.profile().height();
 }

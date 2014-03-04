@@ -347,7 +347,7 @@ void FiltersDock::loadQuickPanel(const QmlMetadata* metadata, int row)
     qqview->engine()->addImportPath(importPath.path());
     QmlFilter* qmlFilter = new QmlFilter(m_model, *metadata, row, qqview);
     qqview->engine()->rootContext()->setContextProperty("filter", qmlFilter);
-    QmlProfile* qmlProfile = new QmlProfile(MLT.profile(), qqview);
+    QmlProfile* qmlProfile = new QmlProfile(qqview);
     qqview->engine()->rootContext()->setContextProperty("profile", qmlProfile);
     qqview->setResizeMode(QQuickView::SizeRootObjectToView);
     qqview->setColor(palette().window().color());

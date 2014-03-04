@@ -20,7 +20,6 @@
 #define PROFILE_H
 
 #include <QObject>
-#include <MltProfile.h>
 
 class QmlProfile : public QObject
 {
@@ -29,14 +28,11 @@ class QmlProfile : public QObject
     Q_PROPERTY(int height READ height CONSTANT)
 
 public:
-    explicit QmlProfile(const Mlt::Profile& profile, QObject *parent = 0);
+    explicit QmlProfile(QObject *parent = 0);
     ~QmlProfile();
 
-    Q_INVOKABLE int width() const;
-    Q_INVOKABLE int height() const;
-
-private:
-    Mlt::Profile m_profile;
+    int width() const;
+    int height() const;
 };
 
 #endif // PROFILE_H
