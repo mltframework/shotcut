@@ -93,12 +93,13 @@ Rectangle {
                             id: muteText
                             anchors.horizontalCenter: parent.horizontalCenter
                             anchors.verticalCenter: parent.verticalCenter
-                            text: control.hovered? qsTr('Mute') : qsTr('M', 'Mute')
+                            text: qsTr('M', 'Mute')
                             color: isMute? activePalette.highlightedText : activePalette.windowText
                         }
                     }
                 }
                 onClicked: timeline.toggleTrackMute(index)
+                ToolTip { text: qsTr('Mute') }
             }
 
             CheckBox {
@@ -117,12 +118,13 @@ Rectangle {
                             id: hideText
                             anchors.horizontalCenter: parent.horizontalCenter
                             anchors.verticalCenter: parent.verticalCenter
-                            text: control.hovered? qsTr('Hide') : qsTr('H', 'Hide')
+                            text: qsTr('H', 'Hide')
                             color: isHidden? activePalette.highlightedText : activePalette.windowText
                         }
                     }
                 }
                 onClicked: timeline.toggleTrackHidden(index)
+                ToolTip { text: qsTr('Hide') }
             }
 
             CheckBox {
@@ -144,12 +146,13 @@ Rectangle {
                             id: compositeText
                             anchors.horizontalCenter: parent.horizontalCenter
                             anchors.verticalCenter: parent.verticalCenter
-                            text: control.hovered? qsTr('Composite') : qsTr('C', 'Composite')
+                            text: qsTr('C', 'Composite')
                             color: (isComposite === Qt.Checked)? activePalette.highlightedText : activePalette.windowText
                         }
                     }
                 }
                 onClicked: timeline.setTrackComposite(index, checkedState)
+                ToolTip { text: qsTr('Composite') }
                 MouseArea {
                     anchors.fill: parent
                     acceptedButtons: Qt.RightButton
