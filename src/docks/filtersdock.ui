@@ -151,11 +151,6 @@
     </item>
    </layout>
   </widget>
-  <action name="actionBlur">
-   <property name="text">
-    <string>Blur</string>
-   </property>
-  </action>
   <action name="actionMirror">
    <property name="text">
     <string>Mirror</string>
@@ -169,14 +164,6 @@
   <action name="actionSharpen">
    <property name="text">
     <string>Sharpen</string>
-   </property>
-  </action>
-  <action name="actionCrop">
-   <property name="text">
-    <string>Crop</string>
-   </property>
-   <property name="toolTip">
-    <string>Remove bad edges or black bars</string>
    </property>
   </action>
   <action name="actionColorGrading">

@@ -53,13 +53,10 @@ SOURCES += main.cpp\
     widgets/colorwheel.cpp \
     models/attachedfiltersmodel.cpp \
     docks/filtersdock.cpp \
-    filters/movitblurfilter.cpp \
     filters/movitglowfilter.cpp \
     filters/movitcolorfilter.cpp \
     filters/frei0rcoloradjwidget.cpp \
-    filters/boxblurfilter.cpp \
     filters/frei0rglowfilter.cpp \
-    filters/cropfilter.cpp \
     filters/movitsharpenfilter.cpp \
     filters/frei0rsharpnessfilter.cpp \
     widgets/colorpickerwidget.cpp \
@@ -67,6 +64,7 @@ SOURCES += main.cpp\
     dialogs/customprofiledialog.cpp \
     qmltypes/qmlfilter.cpp \
     qmltypes/qmlmetadata.cpp \
+    qmltypes/qmlprofile.cpp \
     filters/webvfxfilter.cpp \
     htmleditor/htmleditor.cpp \
     htmleditor/highlighter.cpp \
@@ -128,13 +126,10 @@ HEADERS  += mainwindow.h \
     widgets/colorwheel.h \
     models/attachedfiltersmodel.h \
     docks/filtersdock.h \
-    filters/movitblurfilter.h \
     filters/movitglowfilter.h \
     filters/movitcolorfilter.h \
     filters/frei0rcoloradjwidget.h \
-    filters/boxblurfilter.h \
     filters/frei0rglowfilter.h \
-    filters/cropfilter.h \
     filters/movitsharpenfilter.h \
     filters/frei0rsharpnessfilter.h \
     widgets/colorpickerwidget.h \
@@ -142,6 +137,7 @@ HEADERS  += mainwindow.h \
     dialogs/customprofiledialog.h \
     qmltypes/qmlfilter.h \
     qmltypes/qmlmetadata.h \
+    qmltypes/qmlprofile.h \
     filters/webvfxfilter.h \
     htmleditor/htmleditor.h \
     htmleditor/highlighter.h \
@@ -186,13 +182,10 @@ FORMS    += mainwindow.ui \
     mvcp/meltedserverdock.ui \
     mvcp/meltedplaylistdock.ui \
     docks/filtersdock.ui \
-    filters/movitblurfilter.ui \
     filters/movitglowfilter.ui \
     filters/movitcolorfilter.ui \
     filters/frei0rcoloradjwidget.ui \
-    filters/boxblurfilter.ui \
     filters/frei0rglowfilter.ui \
-    filters/cropfilter.ui \
     filters/movitsharpenfilter.ui \
     filters/frei0rsharpnessfilter.ui \
     filters/whitebalancefilter.ui \
@@ -237,6 +230,10 @@ OTHER_FILES += \
     qml/filters/audio_pan/ui.qml \
     qml/filters/audio_balance/meta.qml \
     qml/filters/audio_balance/ui.qml \
+    qml/filters/boxblur/meta.qml \
+    qml/filters/boxblur/ui.qml \
+    qml/filters/crop/meta.qml \
+    qml/filters/crop/ui.qml \
     qml/filters/rotate/ui.qml \
     qml/filters/rotate/meta.qml \
     qml/filters/stabilize/meta.qml \
@@ -254,6 +251,8 @@ OTHER_FILES += \
     qml/timeline/Clip.qml \
     qml/timeline/Ruler.qml \
     qml/timeline/Track.js \
+    qml/filters/movitblur/meta.qml \
+    qml/filters/movitblur/ui.qml \
     qml/filters/movit_diffusion/meta.qml \
     qml/filters/movit_diffusion/ui.qml \
     qml/filters/vignette/meta_movit.qml \
@@ -302,6 +301,10 @@ lupdate_hack {
     qml/filters/audio_pan/ui.qml \
     qml/filters/audio_balance/meta.qml \
     qml/filters/audio_balance/ui.qml \
+    qml/filters/boxblur/meta.qml \
+    qml/filters/boxblur/ui.qml \
+    qml/filters/crop/meta.qml \
+    qml/filters/crop/ui.qml \
     qml/filters/rotate/ui.qml \
     qml/filters/rotate/meta.qml \
     qml/filters/stabilize/meta.qml \
@@ -319,6 +322,8 @@ lupdate_hack {
     qml/timeline/Track.qml \
     qml/timeline/Clip.qml \
     qml/timeline/Ruler.qml \
+    qml/filters/movitblur/meta.qml \
+    qml/filters/movitblur/ui.qml \
     qml/filters/movit_diffusion/meta.qml \
     qml/filters/movit_diffusion/ui.qml \
     qml/filters/vignette/meta_movit.qml \

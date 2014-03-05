@@ -63,8 +63,6 @@ private slots:
     
     void on_listView_clicked(const QModelIndex &index);
     
-    void on_actionBlur_triggered();
-    
     void on_actionMirror_triggered();
     
     void on_listView_doubleClicked(const QModelIndex &index);
@@ -72,8 +70,6 @@ private slots:
     void on_actionGlow_triggered();
     
     void on_actionSharpen_triggered();
-    
-    void on_actionCrop_triggered();
     
     void on_actionColorGrading_triggered();
     

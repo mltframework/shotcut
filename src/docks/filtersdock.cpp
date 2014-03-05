@@ -28,19 +28,17 @@
 #include <QtConcurrent/QtConcurrentRun>
 #include "mainwindow.h"
 #include "settings.h"
-#include "filters/movitblurfilter.h"
 #include "filters/movitglowfilter.h"
 #include "filters/movitcolorfilter.h"
 #include "filters/frei0rcoloradjwidget.h"
-#include "filters/boxblurfilter.h"
 #include "filters/frei0rglowfilter.h"
-#include "filters/cropfilter.h"
 #include "filters/movitsharpenfilter.h"
 #include "filters/frei0rsharpnessfilter.h"
 #include "filters/whitebalancefilter.h"
 #include "filters/webvfxfilter.h"
 #include "qmltypes/qmlfilter.h"
 #include "qmltypes/qmlmetadata.h"
+#include "qmltypes/qmlprofile.h"
 #include "qmltypes/qmlutilities.h"
 
 static bool compareQAction(const QAction* a1, const QAction* a2)
@@ -51,9 +49,7 @@ static bool compareQAction(const QAction* a1, const QAction* a2)
 static QActionList getFilters(FiltersDock* dock, Ui::FiltersDock* ui)
 {
     QList<QAction*> actions;
-    actions.append(ui->actionBlur);
     actions.append(ui->actionColorGrading);
-    actions.append(ui->actionCrop);
     actions.append(ui->actionGlow);
     actions.append(ui->actionMirror);
 #ifndef Q_OS_WIN
@@ -236,20 +232,14 @@ void FiltersDock::on_listView_clicked(const QModelIndex &index)
         QmlMetadata* meta = qmlMetadataForService(filter);
         if (meta)
             loadQuickPanel(meta, index.row());
-        else if (name == "movit.blur")
-            loadWidgetsPanel(new MovitBlurFilter(*filter));
         else if (name == "movit.glow")
             loadWidgetsPanel(new MovitGlowFilter(*filter));
         else if (name == "movit.lift_gamma_gain")
             loadWidgetsPanel(new MovitColorFilter(*filter));
         else if (name == "frei0r.coloradj_RGB")
             loadWidgetsPanel(new Frei0rColoradjWidget(*filter));
-        else if (name == "boxblur")
-            loadWidgetsPanel(new BoxblurFilter(*filter));
         else if (name == "frei0r.glow")
             loadWidgetsPanel(new Frei0rGlowFilter(*filter));
-        else if (name == "crop")
-            loadWidgetsPanel(new CropFilter(*filter));
         else if (name == "movit.sharpen")
             loadWidgetsPanel(new MovitSharpenFilter(*filter));
         else if (name == "frei0r.sharpness")
@@ -262,19 +252,6 @@ void FiltersDock::on_listView_clicked(const QModelIndex &index)
             loadWidgetsPanel();
     }
     delete filter;
-}
-
-void FiltersDock::on_actionBlur_triggered()
-{
-    Mlt::Filter* filter = m_model.add(Settings.playerGPU()? "movit.blur" : "boxblur");
-    if (filter && filter->is_valid()) {
-        if (Settings.playerGPU())
-            loadWidgetsPanel(new MovitBlurFilter(*filter, true));
-        else
-            loadWidgetsPanel(new BoxblurFilter(*filter, true));
-    }
-    delete filter;
-    ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
 }
 
 void FiltersDock::on_actionMirror_triggered()
@@ -312,14 +289,6 @@ void FiltersDock::on_actionSharpen_triggered()
         else
             loadWidgetsPanel(new Frei0rSharpnessFilter(*filter, true));
     }
-    delete filter;
-    ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
-}
-
-void FiltersDock::on_actionCrop_triggered()
-{
-    Mlt::Filter* filter = m_model.add("crop");
-    loadWidgetsPanel(new CropFilter(*filter, true));
     delete filter;
     ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
 }
@@ -378,6 +347,8 @@ void FiltersDock::loadQuickPanel(const QmlMetadata* metadata, int row)
     qqview->engine()->addImportPath(importPath.path());
     QmlFilter* qmlFilter = new QmlFilter(m_model, *metadata, row, qqview);
     qqview->engine()->rootContext()->setContextProperty("filter", qmlFilter);
+    QmlProfile* qmlProfile = new QmlProfile(qqview);
+    qqview->engine()->rootContext()->setContextProperty("profile", qmlProfile);
     qqview->setResizeMode(QQuickView::SizeRootObjectToView);
     qqview->setColor(palette().window().color());
     qqview->setSource(QUrl::fromLocalFile(metadata->qmlFilePath()));

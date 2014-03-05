@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2014 Meltytech, LLC
+ * Author: Brian Matherly <pez4brian@yahoo.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,33 +16,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef MOVITBLURFILTER_H
-#define MOVITBLURFILTER_H
+#ifndef PROFILE_H
+#define PROFILE_H
 
-#include <QWidget>
-#include <MltFilter.h>
+#include <QObject>
 
-namespace Ui {
-class MovitBlurFilter;
-}
-
-class MovitBlurFilter : public QWidget
+class QmlProfile : public QObject
 {
     Q_OBJECT
-    
-public:
-    explicit MovitBlurFilter(Mlt::Filter filter, bool setDefaults = false, QWidget *parent = 0);
-    ~MovitBlurFilter();
+    Q_PROPERTY(int width READ width CONSTANT)
+    Q_PROPERTY(int height READ height CONSTANT)
 
-private slots:
-    void on_doubleSpinBox_valueChanged(double arg1);
-    
-    void on_pushButton_clicked();
-    
-private:
-    Ui::MovitBlurFilter *ui;
-    Mlt::Filter m_filter;
-    double m_radiusDefault;
+public:
+    explicit QmlProfile(QObject *parent = 0);
+    ~QmlProfile();
+
+    int width() const;
+    int height() const;
 };
 
-#endif // MOVITBLURFILTER_H
+#endif // PROFILE_H
