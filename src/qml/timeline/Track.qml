@@ -84,8 +84,15 @@ Rectangle {
 
                 // Remove the placeholder inserted in onDraggedToTrack
                 if (placeHolderAdded) {
-                    trackModel.items.remove(clipIndex, 1)
                     placeHolderAdded = false
+                    if (fromTrack === toTrack)
+                        // XXX This is causing timeline to become undefined making function
+                        // call below to fail. This basically results in rejected operation
+                        // to the user, but at least it prevents the timeline from becoming
+                        // corrupt and out-of-sync with the model.
+                        trackModel.items.resolve(clipIndex, clipIndex + 1)
+                    else
+                        trackModel.items.remove(clipIndex, 1)
                 }
                 if (!timeline.moveClip(fromTrack, toTrack, clipIndex, frame))
                     clip.x = clip.originalX
