@@ -125,6 +125,8 @@ Rectangle {
                         'out': clip.clipDuration - 1,
                         'blank': true,
                         'audio': false,
+                        'fadeIn': 0,
+                        'fadeOut': 0
                     })
                 }
             }
