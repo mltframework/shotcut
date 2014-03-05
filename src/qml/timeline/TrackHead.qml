@@ -83,7 +83,7 @@ Rectangle {
                 checked: isMute
                 style: CheckBoxStyle {
                     indicator: Rectangle {
-                        implicitWidth: control.hovered? (muteText.width + 4) : 16
+                        implicitWidth: 16
                         implicitHeight: 16
                         radius: 2
                         color: isMute? activePalette.highlight : trackHeadRoot.color
@@ -108,7 +108,7 @@ Rectangle {
                 visible: isVideo
                 style: CheckBoxStyle {
                     indicator: Rectangle {
-                        implicitWidth: control.hovered? (hideText.width + 4) : 16
+                        implicitWidth: 16
                         implicitHeight: 16
                         radius: 2
                         color: isHidden? activePalette.highlight : trackHeadRoot.color
@@ -134,7 +134,7 @@ Rectangle {
                 checkedState: isComposite
                 style: CheckBoxStyle {
                     indicator: Rectangle {
-                        implicitWidth: control.hovered? (compositeText.width + 4) : 16
+                        implicitWidth: 16
                         implicitHeight: 16
                         radius: 2
                         color: (isComposite === Qt.Checked)? activePalette.highlight
