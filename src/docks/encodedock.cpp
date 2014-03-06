@@ -392,6 +392,30 @@ void EncodeDock::encode(const QString& target)
     MLT.play();
 }
 
+void EncodeDock::resetOptions()
+{
+    // Reset all controls to default values.
+    ui->formatCombo->setCurrentIndex(0);
+
+    ui->videoCodecCombo->setCurrentIndex(0);
+    ui->videoRateControlCombo->setCurrentIndex(0);
+    ui->videoBitrateCombo->lineEdit()->setText("2M");
+    ui->videoBufferSizeSpinner->setValue(224);
+    ui->videoQualitySpinner->setValue(50);
+    ui->gopSpinner->setValue(100);
+    ui->bFramesSpinner->setValue(0);
+    ui->videoCodecThreadsSpinner->setValue(0);
+    ui->dualPassCheckbox->setChecked(false);
+    ui->disableVideoCheckbox->setChecked(false);
+
+    ui->sampleRateCombo->lineEdit()->setText("48000");
+    ui->audioCodecCombo->setCurrentIndex(0);
+    ui->audioBitrateCombo->lineEdit()->setText("128k");
+    ui->audioQualitySpinner->setValue(50);
+    ui->disableAudioCheckbox->setChecked(false);
+    ui->advancedTextEdit->setPlainText("");
+}
+
 static double getBufferSize(Mlt::Properties* preset, const char* property)
 {
     double size = preset->get_double(property);
@@ -427,6 +451,7 @@ void EncodeDock::on_presetsTree_currentItemChanged(QTreeWidgetItem *current, QTr
             QStringList other;
             QStringList textParts = name.split('/');
 
+            resetOptions();
             if (textParts.count() > 3) {
                 // textParts = ['consumer', 'avformat', profile, preset].
                 QString folder = textParts.at(2);

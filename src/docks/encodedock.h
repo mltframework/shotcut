@@ -86,6 +86,7 @@ private:
     void runMelt(const QString& target, int realtime = -1);
     void enqueueMelt(const QString& target, int realtime = -1);
     void encode(const QString& target);
+    void resetOptions();
 };
 
 #endif // ENCODEDOCK_H
