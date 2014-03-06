@@ -18,7 +18,7 @@
 
 import QtQuick 2.2
 import QtQuick.Controls 1.0
-import QtQuick.Controls.Styles 1.0
+import QtQuick.Layouts 1.0
 
 Rectangle {
     property alias ripple: rippleButton.checked
@@ -31,66 +31,72 @@ Rectangle {
     height: 24
     color: activePalette.window
 
-    Row {
-        spacing: 6
-        Item {
-            width: 1
-            height: 1
-        }
-        Button {
+    ToolBar {
+      RowLayout {
+        ToolButton {
             action: menuAction
             implicitWidth: 28
             implicitHeight: 24
         }
-        Button {
+        ToolButton {
             action: appendAction
             implicitWidth: 28
             implicitHeight: 24
         }
-        Button {
+        ToolButton {
             action: deleteAction
             implicitWidth: 28
             implicitHeight: 24
         }
-        Button {
+        ToolButton {
             action: liftAction
             implicitWidth: 28
             implicitHeight: 24
         }
-        Button {
+        ToolButton {
             action: insertAction
             implicitWidth: 28
             implicitHeight: 24
         }
-        Button {
+        ToolButton {
             action: overwriteAction
             implicitWidth: 28
             implicitHeight: 24
         }
-        Button {
+        ToolButton {
             action: splitAction
             implicitWidth: 28
             implicitHeight: 24
         }
-        ToggleButton {
+        ToolButton {
             id: snapButton
+            implicitWidth: 28
+            implicitHeight: 24
+            checkable: true
             checked: true
             iconName: 'snap'
             iconSource: 'qrc:///icons/oxygen/16x16/actions/snap.png'
             tooltip: qsTr('Toggle snapping')
         }
-        ToggleButton {
+        ToolButton {
             id: scrubButton
+            implicitWidth: 28
+            implicitHeight: 24
+            checkable: true
             iconName: 'scrub_drag'
             iconSource: 'qrc:///icons/oxygen/16x16/actions/scrub_drag.png'
             tooltip: qsTr('Scrub while dragging')
         }
-        ToggleButton {
+        ToolButton {
             id: rippleButton
+            implicitWidth: 28
+            implicitHeight: 24
+            checkable: true
             iconName: 'target'
             iconSource: 'qrc:///icons/oxygen/16x16/actions/target.png'
             tooltip: qsTr('Ripple (insert) when source is dropped')
         }
+      }
     }
 
     Action {
