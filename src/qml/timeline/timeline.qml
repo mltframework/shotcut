@@ -125,6 +125,7 @@ Rectangle {
         }
 
         MouseArea {
+            id: tracksArea
             width: root.width - headerWidth
             height: root.height
 
@@ -132,8 +133,6 @@ Rectangle {
             focus: true
             hoverEnabled: true
             property bool scim: false
-            Keys.onPressed: scim = (event.modifiers === Qt.ShiftModifier)
-            Keys.onReleased: scim = false
             onReleased: scrubTimer.stop()
             onMouseXChanged: {
                 if (scim || pressedButtons === Qt.LeftButton) {
@@ -292,6 +291,7 @@ Rectangle {
     Keys.onUpPressed: timeline.selectTrack(-1)
     Keys.onDownPressed: timeline.selectTrack(1)
     Keys.onPressed: {
+        tracksArea.scim = (event.modifiers === Qt.ShiftModifier)
         switch (event.key) {
         case Qt.Key_B:
             timeline.overwrite(currentTrack)
@@ -342,6 +342,7 @@ Rectangle {
         }
     }
     Keys.onReleased: {
+        tracksArea.scim = false
         switch (event.key) {
         case Qt.Key_B:
         case Qt.Key_C:
