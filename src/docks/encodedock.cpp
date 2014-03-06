@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Meltytech, LLC
+ * Copyright (c) 2012-2014 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -68,6 +68,9 @@ EncodeDock::EncodeDock(QWidget *parent) :
     layout->addStretch();
 #endif
 
+    m_presetsModel.setSourceModel(new QStandardItemModel(this));
+    m_presetsModel.setFilterCaseSensitivity(Qt::CaseInsensitive);
+    ui->presetsTree->setModel(&m_presetsModel);
     loadPresets();
 
     // populate the combos
@@ -120,58 +123,54 @@ void EncodeDock::onProducerOpened()
 
 void EncodeDock::loadPresets()
 {
-    ui->presetsTree->clear();
-    QTreeWidgetItem* item = new QTreeWidgetItem(QStringList(tr("Custom")));
-    item->setFlags(Qt::ItemIsEnabled);
-    ui->presetsTree->addTopLevelItem(item);
-    item = new QTreeWidgetItem(QStringList(tr("Stock")));
-    item->setFlags(Qt::ItemIsEnabled);
-    ui->presetsTree->addTopLevelItem(item);
+    QStandardItemModel* sourceModel = (QStandardItemModel*) m_presetsModel.sourceModel();
+    sourceModel->clear();
+
+    QStandardItem* parentItem = new QStandardItem(tr("Custom"));
+    sourceModel->invisibleRootItem()->appendRow(parentItem);
+    QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
+    if (dir.cd("presets") && dir.cd("encode")) {
+        QStringList entries = dir.entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
+        foreach (QString name, entries) {
+            QStandardItem* item = new QStandardItem(name);
+            item->setData(name);
+            parentItem->appendRow(item);
+        }
+    }
+
+    parentItem = new QStandardItem(tr("Stock"));
+    sourceModel->invisibleRootItem()->appendRow(parentItem);
     QString prefix("consumer/avformat/");
-    for (int i = 0; i < ui->presetsTree->topLevelItemCount(); i++) {
-        QTreeWidgetItem* group = ui->presetsTree->topLevelItem(i);
-        if (group->text(0) == tr("Stock")) {
-            if (m_presets && m_presets->is_valid()) {
-                for (int j = 0; j < m_presets->count(); j++) {
-                    QString name(m_presets->get_name(j));
-                    if (name.startsWith(prefix)) {
-                        Mlt::Properties preset((mlt_properties) m_presets->get_data(name.toLatin1().constData()));
-                        if (preset.get_int("meta.preset.hidden"))
-                            continue;
-                        if (preset.get("meta.preset.name"))
-                            name = QString::fromUtf8(preset.get("meta.preset.name"));
-                        else {
-                            // use relative path and filename
-                            name.remove(0, prefix.length());
-                            QStringList textParts = name.split('/');
-                            if (textParts.count() > 1) {
-                                // if the path is a profile name, then change it to "preset (profile)"
-                                QString profile = textParts.at(0);
-                                textParts.removeFirst();
-                                if (m_profiles->get_data(profile.toLatin1().constData()))
-                                    name = QString("%1 (%2)").arg(textParts.join("/")).arg(profile);
-                            }
-                        }
-                        QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(name));
-                        item->setData(0, Qt::UserRole, QString(m_presets->get_name(j)));
-                        if (preset.get("meta.preset.note"))
-                            item->setToolTip(0, QString("<p>%1</p>").arg(QString::fromUtf8(preset.get("meta.preset.note"))));
+    if (m_presets && m_presets->is_valid()) {
+        for (int j = 0; j < m_presets->count(); j++) {
+            QString name(m_presets->get_name(j));
+            if (name.startsWith(prefix)) {
+                Mlt::Properties preset((mlt_properties) m_presets->get_data(name.toLatin1().constData()));
+                if (preset.get_int("meta.preset.hidden"))
+                    continue;
+                if (preset.get("meta.preset.name"))
+                    name = QString::fromUtf8(preset.get("meta.preset.name"));
+                else {
+                    // use relative path and filename
+                    name.remove(0, prefix.length());
+                    QStringList textParts = name.split('/');
+                    if (textParts.count() > 1) {
+                        // if the path is a profile name, then change it to "preset (profile)"
+                        QString profile = textParts.at(0);
+                        textParts.removeFirst();
+                        if (m_profiles->get_data(profile.toLatin1().constData()))
+                            name = QString("%1 (%2)").arg(textParts.join("/")).arg(profile);
                     }
                 }
-            }
-        }
-        else if (group->text(0) == tr("Custom")) {
-            QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
-            if (dir.cd("presets") && dir.cd("encode")) {
-                QStringList entries = dir.entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
-                foreach (QString name, entries) {
-                    QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(name));
-                    item->setData(0, Qt::UserRole, name);
-                }
+                QStandardItem* item = new QStandardItem(name);
+                item->setData(QString(m_presets->get_name(j)));
+                if (preset.get("meta.preset.note"))
+                    item->setToolTip(QString("<p>%1</p>").arg(QString::fromUtf8(preset.get("meta.preset.note"))));
+                parentItem->appendRow(item);
             }
         }
     }
-    ui->presetsTree->model()->sort(0);
+    m_presetsModel.sort(0);
     ui->presetsTree->expandAll();
 }
 
@@ -427,14 +426,14 @@ static double getBufferSize(Mlt::Properties* preset, const char* property)
     return size / 1024 / 8;
 }
 
-void EncodeDock::on_presetsTree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
+void EncodeDock::on_presetsTree_clicked(const QModelIndex &index)
 {
-    if (!current || !current->parent())
+    if (!index.parent().isValid())
         return;
-    QString name = current->data(0, Qt::UserRole).toString();
+    QString name = m_presetsModel.data(index, Qt::UserRole + 1).toString();
     if (!name.isEmpty()) {
         Mlt::Properties* preset;
-        if (current->parent()->text(0) == tr("Custom")) {
+        if (m_presetsModel.data(index.parent()).toString() == tr("Custom")) {
             ui->removePresetButton->setEnabled(true);
             preset = new Mlt::Properties();
             QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
@@ -738,7 +737,6 @@ void EncodeDock::on_addPresetButton_clicked()
         QString subdir("encode");
 
         if (!preset.isEmpty()) {
-            qDebug() << dialog.properties();
             if (!dir.exists())
                 dir.mkpath(dir.path());
             if (!dir.cd("presets")) {
@@ -755,15 +753,13 @@ void EncodeDock::on_addPresetButton_clicked()
 
             // add the preset and select it
             loadPresets();
-            for (int i = 0; i < ui->presetsTree->topLevelItemCount(); i++) {
-                QTreeWidgetItem* group = ui->presetsTree->topLevelItem(i);
-                if (group->text(0) == tr("Custom")) {
-                    for (int j = 0; j < group->childCount(); j++) {
-                        if (group->child(j)->text(0) == preset) {
-                            ui->presetsTree->setCurrentItem(group->child(j), 0);
-                            break;
-                        }
-                    }
+            QModelIndex parentIndex = m_presetsModel.index(0, 0);
+            int n = m_presetsModel.rowCount(parentIndex);
+            for (int i = 0; i < n; i++) {
+                QModelIndex index = m_presetsModel.index(i, 0, parentIndex);
+                if (m_presetsModel.data(index).toString() == preset) {
+                    ui->presetsTree->setCurrentIndex(index);
+                    break;
                 }
             }
         }
@@ -773,7 +769,8 @@ void EncodeDock::on_addPresetButton_clicked()
 
 void EncodeDock::on_removePresetButton_clicked()
 {
-    QString preset(ui->presetsTree->currentItem()->text(0));
+    QModelIndex index = ui->presetsTree->currentIndex();
+    QString preset = m_presetsModel.data(index).toString();
     QMessageBox dialog(QMessageBox::Question,
                        tr("Delete Preset"),
                        tr("Are you sure you want to delete %1?").arg(preset),
@@ -787,7 +784,7 @@ void EncodeDock::on_removePresetButton_clicked()
         QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
         if (dir.cd("presets") && dir.cd("encode")) {
             dir.remove(preset);
-            ui->presetsTree->topLevelItem(0)->removeChild(ui->presetsTree->currentItem());
+            m_presetsModel.removeRow(index.row(), index.parent());
         }
     }
 }
@@ -855,4 +852,17 @@ void EncodeDock::on_audioRateControlCombo_activated(int index)
 void EncodeDock::on_scanModeCombo_currentIndexChanged(int index)
 {
     ui->fieldOrderCombo->setDisabled(index);
+}
+
+void EncodeDock::on_presetsSearch_textChanged(const QString &search)
+{
+    m_presetsModel.setFilterFixedString(search);
+}
+
+bool PresetsProxyModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
+{
+    QModelIndex index = sourceModel()->index(source_row, 0, source_parent);
+    return !source_parent.isValid() || 
+        sourceModel()->data(index).toString().contains(filterRegExp()) ||
+        sourceModel()->data(index, Qt::ToolTipRole).toString().contains(filterRegExp());
 }

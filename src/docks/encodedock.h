@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Meltytech, LLC
+ * Copyright (c) 2012-2014 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,6 +21,8 @@
 
 #include <QDockWidget>
 #include <QDomElement>
+#include <QStandardItemModel>
+#include <QSortFilterProxyModel>
 
 class QTreeWidgetItem;
 class QStringList;
@@ -31,6 +33,12 @@ namespace Mlt {
     class Properties;
 }
 class MeltJob;
+
+class PresetsProxyModel : public QSortFilterProxyModel
+{
+protected:
+    bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const;
+};
 
 class EncodeDock : public QDockWidget
 {
@@ -48,7 +56,7 @@ public slots:
     void onProfileChanged();
 
 private slots:
-    void on_presetsTree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
+    void on_presetsTree_clicked(const QModelIndex &index);
 
     void on_encodeButton_clicked();
 
@@ -57,6 +65,7 @@ private slots:
     void on_addPresetButton_clicked();
 
     void on_removePresetButton_clicked();
+
     void onFinished(MeltJob*, bool isSuccess);
 
     void on_stopCaptureButton_clicked();
@@ -66,6 +75,8 @@ private slots:
     void on_audioRateControlCombo_activated(int index);
 
     void on_scanModeCombo_currentIndexChanged(int index);
+
+    void on_presetsSearch_textChanged(const QString &search);
 
 private:
     enum {
@@ -78,6 +89,7 @@ private:
     MeltJob* m_immediateJob;
     QString m_extension;
     Mlt::Properties *m_profiles;
+    PresetsProxyModel m_presetsModel;
 
     void loadPresets();
     Mlt::Properties* collectProperties(int realtime);
