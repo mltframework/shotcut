@@ -47,27 +47,6 @@ EncodeDock::EncodeDock(QWidget *parent) :
     ui->videoCodecThreadsSpinner->setMaximum(QThread::idealThreadCount());
     toggleViewAction()->setIcon(windowIcon());
 
-#ifdef Q_OS_WIN
-    // Add splitter handle decoration for Windows.
-    QSplitterHandle *handle = ui->splitter->handle(1);
-    QHBoxLayout *layout = new QHBoxLayout(handle);
-    QVBoxLayout *vbox = new QVBoxLayout;
-    ui->splitter->setHandleWidth(7);
-    handle->setLayout(layout);
-    layout->setSpacing(0);
-    layout->setMargin(0);
-    layout->addStretch();
-    layout->addLayout(vbox);
-    for (int i = 0; i < 2; i++) {
-        QFrame *line = new QFrame(handle);
-        line->setMinimumSize(15, 1);
-        line->setMaximumSize(15, 1);
-        line->setFrameShape(QFrame::StyledPanel);
-        vbox->addWidget(line);
-    }
-    layout->addStretch();
-#endif
-
     m_presetsModel.setSourceModel(new QStandardItemModel(this));
     m_presetsModel.setFilterCaseSensitivity(Qt::CaseInsensitive);
     ui->presetsTree->setModel(&m_presetsModel);

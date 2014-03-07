@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>347</width>
-    <height>662</height>
+    <width>575</width>
+    <height>484</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>400</width>
+    <height>155</height>
+   </size>
   </property>
   <property name="windowIcon">
    <iconset theme="media-record" resource="../../icons/resources.qrc">
@@ -21,12 +27,15 @@
    <string>Encode</string>
   </property>
   <widget class="QWidget" name="dockWidgetContents">
-   <layout class="QGridLayout" name="gridLayout_5">
+   <layout class="QHBoxLayout" name="horizontalLayout_21" stretch="3,4">
+    <property name="spacing">
+     <number>0</number>
+    </property>
     <property name="leftMargin">
      <number>0</number>
     </property>
     <property name="topMargin">
-     <number>6</number>
+     <number>0</number>
     </property>
     <property name="rightMargin">
      <number>0</number>
@@ -34,10 +43,85 @@
     <property name="bottomMargin">
      <number>0</number>
     </property>
-    <property name="verticalSpacing">
-     <number>0</number>
-    </property>
-    <item row="0" column="0">
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="LineEditClear" name="presetsSearch">
+        <property name="placeholderText">
+         <string>search</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTreeView" name="presetsTree">
+        <property name="editTriggers">
+         <set>QAbstractItemView::NoEditTriggers</set>
+        </property>
+        <property name="showDropIndicator" stdset="0">
+         <bool>false</bool>
+        </property>
+        <property name="alternatingRowColors">
+         <bool>true</bool>
+        </property>
+        <attribute name="headerVisible">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="headerDefaultSectionSize">
+         <number>0</number>
+        </attribute>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <property name="spacing">
+         <number>6</number>
+        </property>
+        <item>
+         <widget class="QPushButton" name="addPresetButton">
+          <property name="toolTip">
+           <string>Add current settings as a new custom preset</string>
+          </property>
+          <property name="icon">
+           <iconset theme="list-add" resource="../../icons/resources.qrc">
+            <normaloff>:/icons/oxygen/16x16/actions/list-add.png</normaloff>:/icons/oxygen/16x16/actions/list-add.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="removePresetButton">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="toolTip">
+           <string>Delete currently selected preset</string>
+          </property>
+          <property name="icon">
+           <iconset theme="list-remove" resource="../../icons/resources.qrc">
+            <normaloff>:/icons/oxygen/16x16/actions/list-remove.png</normaloff>:/icons/oxygen/16x16/actions/list-remove.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+    <item>
      <widget class="QScrollArea" name="scrollArea">
       <property name="frameShape">
        <enum>QFrame::NoFrame</enum>
@@ -50,100 +134,1218 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>347</width>
-         <height>589</height>
+         <width>341</width>
+         <height>447</height>
         </rect>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_4">
+       <layout class="QVBoxLayout" name="verticalLayout_3">
         <property name="spacing">
          <number>0</number>
         </property>
         <property name="leftMargin">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="bottomMargin">
          <number>0</number>
         </property>
         <item>
-         <widget class="QSplitter" name="splitter">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
+         <layout class="QHBoxLayout" name="horizontalLayout_14">
+          <property name="spacing">
+           <number>6</number>
           </property>
-          <widget class="QWidget" name="layoutWidget">
-           <layout class="QVBoxLayout" name="verticalLayout">
-            <property name="spacing">
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>8</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Format</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="formatCombo"/>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_13">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QTabWidget" name="tabWidget">
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <property name="usesScrollButtons">
+           <bool>false</bool>
+          </property>
+          <property name="documentMode">
+           <bool>false</bool>
+          </property>
+          <widget class="QWidget" name="modeTab">
+           <attribute name="title">
+            <string>Video</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_6">
+            <property name="leftMargin">
              <number>0</number>
             </property>
-            <item>
-             <widget class="LineEditClear" name="presetsSearch">
-              <property name="placeholderText">
-               <string>search</string>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item row="1" column="0">
+             <widget class="QWidget" name="widget" native="true">
+              <layout class="QGridLayout" name="gridLayout_2">
+               <property name="verticalSpacing">
+                <number>3</number>
+               </property>
+               <item row="3" column="1" colspan="2">
+                <layout class="QHBoxLayout" name="horizontalLayout_16">
+                 <item>
+                  <widget class="QDoubleSpinBox" name="fpsSpinner">
+                   <property name="decimals">
+                    <number>3</number>
+                   </property>
+                   <property name="minimum">
+                    <double>1.000000000000000</double>
+                   </property>
+                   <property name="maximum">
+                    <double>1000.000000000000000</double>
+                   </property>
+                   <property name="value">
+                    <double>25.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_16">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </item>
+               <item row="9" column="0">
+                <spacer name="verticalSpacer_2">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="0" column="0">
+                <widget class="QLabel" name="label_22">
+                 <property name="text">
+                  <string>Resolution</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="label_10">
+                 <property name="text">
+                  <string>Frames/sec</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1" colspan="2">
+                <layout class="QHBoxLayout" name="horizontalLayout_8">
+                 <property name="spacing">
+                  <number>2</number>
+                 </property>
+                 <item>
+                  <widget class="QSpinBox" name="aspectNumSpinner">
+                   <property name="minimum">
+                    <number>1</number>
+                   </property>
+                   <property name="maximum">
+                    <number>4096</number>
+                   </property>
+                   <property name="value">
+                    <number>16</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_16">
+                   <property name="text">
+                    <string>:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QSpinBox" name="aspectDenSpinner">
+                   <property name="minimum">
+                    <number>1</number>
+                   </property>
+                   <property name="maximum">
+                    <number>4096</number>
+                   </property>
+                   <property name="value">
+                    <number>9</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_8">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </item>
+               <item row="5" column="1" colspan="2">
+                <layout class="QHBoxLayout" name="horizontalLayout_10">
+                 <item>
+                  <widget class="QComboBox" name="fieldOrderCombo">
+                   <item>
+                    <property name="text">
+                     <string>Bottom Field First</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Top Field First</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_10">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </item>
+               <item row="5" column="0">
+                <widget class="QLabel" name="label_15">
+                 <property name="text">
+                  <string>Field order</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="label_13">
+                 <property name="text">
+                  <string>Aspect ratio</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1" colspan="2">
+                <layout class="QHBoxLayout" name="horizontalLayout_7">
+                 <property name="spacing">
+                  <number>2</number>
+                 </property>
+                 <item>
+                  <widget class="QSpinBox" name="widthSpinner">
+                   <property name="minimum">
+                    <number>16</number>
+                   </property>
+                   <property name="maximum">
+                    <number>4096</number>
+                   </property>
+                   <property name="value">
+                    <number>1280</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_11">
+                   <property name="text">
+                    <string>x</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QSpinBox" name="heightSpinner">
+                   <property name="minimum">
+                    <number>1</number>
+                   </property>
+                   <property name="maximum">
+                    <number>4096</number>
+                   </property>
+                   <property name="value">
+                    <number>720</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_7">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </item>
+               <item row="4" column="0">
+                <widget class="QLabel" name="label_14">
+                 <property name="text">
+                  <string>Scan mode</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="1" colspan="2">
+                <layout class="QHBoxLayout" name="horizontalLayout_9">
+                 <property name="spacing">
+                  <number>2</number>
+                 </property>
+                 <item>
+                  <widget class="QComboBox" name="scanModeCombo">
+                   <property name="currentIndex">
+                    <number>1</number>
+                   </property>
+                   <item>
+                    <property name="text">
+                     <string>Interlaced</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Progressive</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_9">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="videoTab">
+           <attribute name="title">
+            <string>Codec</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_3">
+            <property name="verticalSpacing">
+             <number>3</number>
+            </property>
+            <item row="3" column="0">
+             <widget class="QLabel" name="label_17">
+              <property name="text">
+               <string>Codec</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
              </widget>
             </item>
-            <item>
-             <widget class="QTreeView" name="presetsTree">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>120</height>
-               </size>
-              </property>
-              <property name="editTriggers">
-               <set>QAbstractItemView::NoEditTriggers</set>
-              </property>
-              <property name="showDropIndicator" stdset="0">
-               <bool>false</bool>
-              </property>
-              <property name="alternatingRowColors">
-               <bool>true</bool>
-              </property>
-              <attribute name="headerVisible">
-               <bool>false</bool>
-              </attribute>
-              <attribute name="headerDefaultSectionSize">
-               <number>0</number>
-              </attribute>
-             </widget>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout">
-              <property name="spacing">
-               <number>6</number>
-              </property>
+            <item row="3" column="1">
+             <layout class="QHBoxLayout" name="horizontalLayout_11">
               <item>
-               <widget class="QPushButton" name="addPresetButton">
-                <property name="toolTip">
-                 <string>Add current settings as a new custom preset</string>
+               <widget class="QComboBox" name="videoCodecCombo"/>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_11">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
                 </property>
-                <property name="icon">
-                 <iconset theme="list-add" resource="../../icons/resources.qrc">
-                  <normaloff>:/icons/oxygen/16x16/actions/list-add.png</normaloff>:/icons/oxygen/16x16/actions/list-add.png</iconset>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item row="9" column="0">
+             <widget class="QLabel" name="label_18">
+              <property name="text">
+               <string>GOP</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="9" column="1">
+             <layout class="QHBoxLayout" name="horizontalLayout_12">
+              <item>
+               <widget class="QSpinBox" name="gopSpinner">
+                <property name="toolTip">
+                 <string>GOP = group of pictures, which is the maximum key frame interval</string>
+                </property>
+                <property name="maximum">
+                 <number>999</number>
+                </property>
+                <property name="value">
+                 <number>100</number>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="removePresetButton">
+               <widget class="QLabel" name="label_19">
+                <property name="text">
+                 <string>frames</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_12">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item row="6" column="1">
+             <layout class="QHBoxLayout" name="videoBitrateLayout">
+              <item>
+               <widget class="QComboBox" name="videoBitrateCombo">
+                <property name="toolTip">
+                 <string>The average bit rate</string>
+                </property>
+                <property name="editable">
+                 <bool>true</bool>
+                </property>
+                <property name="currentIndex">
+                 <number>8</number>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>64k</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>128k</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>256k</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>512k</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>768k</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>1M</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>1200k</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>1500k</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>2M</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>2500k</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>3M</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>4M</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>5M</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>6M</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>8M</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>10M</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>12M</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>14M</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>16M</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>18M</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>20M</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>25M</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>30M</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>40M</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>50M</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>60M</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>70M</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>80M</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="videoBitrateSuffixLabel">
+                <property name="text">
+                 <string>b/s</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="videoBitrateSpacer">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item row="13" column="1">
+             <widget class="QCheckBox" name="disableVideoCheckbox">
+              <property name="text">
+               <string>Disable video</string>
+              </property>
+             </widget>
+            </item>
+            <item row="12" column="1">
+             <widget class="QCheckBox" name="dualPassCheckbox">
+              <property name="text">
+               <string>Dual pass</string>
+              </property>
+             </widget>
+            </item>
+            <item row="10" column="0">
+             <widget class="QLabel" name="label_20">
+              <property name="text">
+               <string>B frames</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="10" column="1">
+             <layout class="QHBoxLayout" name="horizontalLayout_13">
+              <item>
+               <widget class="QSpinBox" name="bFramesSpinner">
+                <property name="toolTip">
+                 <string>B frames are the bidrectional &quot;delta&quot; pictures
+in temporal compression</string>
+                </property>
+                <property name="maximum">
+                 <number>8</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_14">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item row="14" column="1">
+             <spacer name="verticalSpacer">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="11" column="0">
+             <widget class="QLabel" name="label_12">
+              <property name="text">
+               <string>Codec threads</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="11" column="1">
+             <layout class="QHBoxLayout" name="horizontalLayout_15">
+              <item>
+               <widget class="QSpinBox" name="videoCodecThreadsSpinner">
+                <property name="toolTip">
+                 <string>The recommended setting is 0 for the x264 codec and
+number of processor cores (including virtual) - 1 for other
+codecs. However, not all codecs are multi-threaded.</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_21">
+                <property name="text">
+                 <string>(0 = auto)</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_15">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item row="5" column="0">
+             <widget class="QLabel" name="label_23">
+              <property name="text">
+               <string>Rate control</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="1">
+             <layout class="QHBoxLayout" name="horizontalLayout_17">
+              <item>
+               <widget class="QComboBox" name="videoRateControlCombo">
+                <item>
+                 <property name="text">
+                  <string>Average Bitrate</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Constant Bitrate</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Quality-based VBR</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_17">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item row="7" column="0">
+             <widget class="QLabel" name="label_24">
+              <property name="text">
+               <string>Buffer size</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="1">
+             <layout class="QHBoxLayout" name="horizontalLayout_18">
+              <item>
+               <widget class="QDoubleSpinBox" name="videoBufferSizeSpinner">
                 <property name="enabled">
                  <bool>false</bool>
                 </property>
-                <property name="toolTip">
-                 <string>Delete currently selected preset</string>
+                <property name="maximum">
+                 <double>9999.000000000000000</double>
                 </property>
-                <property name="icon">
-                 <iconset theme="list-remove" resource="../../icons/resources.qrc">
-                  <normaloff>:/icons/oxygen/16x16/actions/list-remove.png</normaloff>:/icons/oxygen/16x16/actions/list-remove.png</iconset>
+                <property name="value">
+                 <double>224.000000000000000</double>
                 </property>
                </widget>
               </item>
               <item>
-               <spacer name="horizontalSpacer_2">
+               <widget class="QLabel" name="label_6">
+                <property name="text">
+                 <string>KiB</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_18">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item row="8" column="0">
+             <widget class="QLabel" name="label_25">
+              <property name="text">
+               <string>Quality</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="8" column="1">
+             <layout class="QHBoxLayout" name="horizontalLayout_19">
+              <item>
+               <widget class="QSpinBox" name="videoQualitySpinner">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="suffix">
+                 <string> %</string>
+                </property>
+                <property name="minimum">
+                 <number>0</number>
+                </property>
+                <property name="maximum">
+                 <number>100</number>
+                </property>
+                <property name="value">
+                 <number>50</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_19">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item row="6" column="0">
+             <widget class="QLabel" name="videoBitrateLabel">
+              <property name="text">
+               <string>Bitrate</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="audioTab">
+           <attribute name="title">
+            <string>Audio</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout">
+            <property name="verticalSpacing">
+             <number>3</number>
+            </property>
+            <item row="1" column="1">
+             <layout class="QHBoxLayout" name="horizontalLayout_4">
+              <item>
+               <widget class="QComboBox" name="sampleRateCombo">
+                <property name="editable">
+                 <bool>true</bool>
+                </property>
+                <property name="currentIndex">
+                 <number>6</number>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>8000</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>12000</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>16000</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>22500</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>32000</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>44100</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>48000</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>96000</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_9">
+                <property name="text">
+                 <string>KHz</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_6">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_8">
+              <property name="text">
+               <string>Sample rate</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="label_3">
+              <property name="text">
+               <string>Codec</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <layout class="QHBoxLayout" name="horizontalLayout_6">
+              <item>
+               <widget class="QComboBox" name="audioCodecCombo"/>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_3">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item row="5" column="0">
+             <widget class="QLabel" name="label_4">
+              <property name="text">
+               <string>Bitrate</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="1">
+             <layout class="QHBoxLayout" name="horizontalLayout_3">
+              <item>
+               <widget class="QComboBox" name="audioBitrateCombo">
+                <property name="toolTip">
+                 <string>The average bit rate</string>
+                </property>
+                <property name="editable">
+                 <bool>true</bool>
+                </property>
+                <property name="currentIndex">
+                 <number>5</number>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>16k</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>32k</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>48k</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>64k</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>96k</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>128k</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>220k</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>256k</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>384k</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>512k</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>1M</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_5">
+                <property name="text">
+                 <string>b/s</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_4">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item row="7" column="1">
+             <widget class="QCheckBox" name="disableAudioCheckbox">
+              <property name="text">
+               <string>Disable audio</string>
+              </property>
+             </widget>
+            </item>
+            <item row="8" column="0">
+             <spacer name="verticalSpacer_3">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="label_7">
+              <property name="text">
+               <string>Rate control</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <layout class="QHBoxLayout" name="horizontalLayout_5">
+              <item>
+               <widget class="QComboBox" name="audioRateControlCombo">
+                <item>
+                 <property name="text">
+                  <string>Average Bitrate</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Constant Bitrate</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Quality-based VBR</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_5">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item row="6" column="0">
+             <widget class="QLabel" name="label_26">
+              <property name="text">
+               <string>Quality</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="1">
+             <layout class="QHBoxLayout" name="horizontalLayout_20">
+              <item>
+               <widget class="QSpinBox" name="audioQualitySpinner">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="suffix">
+                 <string> %</string>
+                </property>
+                <property name="minimum">
+                 <number>0</number>
+                </property>
+                <property name="maximum">
+                 <number>100</number>
+                </property>
+                <property name="value">
+                 <number>50</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_20">
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
                 </property>
@@ -159,1294 +1361,86 @@
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="verticalLayoutWidget_2">
-           <layout class="QVBoxLayout" name="verticalLayout_2">
-            <property name="leftMargin">
-             <number>6</number>
-            </property>
-            <property name="rightMargin">
-             <number>6</number>
-            </property>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_14">
-              <item>
-               <widget class="QLabel" name="label">
-                <property name="text">
-                 <string>Format</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QComboBox" name="formatCombo"/>
-              </item>
-              <item>
-               <spacer name="horizontalSpacer_13">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <widget class="QTabWidget" name="tabWidget">
-              <property name="currentIndex">
-               <number>0</number>
-              </property>
-              <property name="usesScrollButtons">
-               <bool>false</bool>
-              </property>
-              <property name="documentMode">
-               <bool>false</bool>
-              </property>
-              <widget class="QWidget" name="modeTab">
-               <attribute name="title">
-                <string>Video</string>
-               </attribute>
-               <layout class="QGridLayout" name="gridLayout_6">
-                <property name="leftMargin">
-                 <number>0</number>
-                </property>
-                <property name="topMargin">
-                 <number>0</number>
-                </property>
-                <property name="rightMargin">
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>0</number>
-                </property>
-                <item row="1" column="0">
-                 <widget class="QWidget" name="widget" native="true">
-                  <layout class="QGridLayout" name="gridLayout_2">
-                   <property name="verticalSpacing">
-                    <number>3</number>
-                   </property>
-                   <item row="3" column="1" colspan="2">
-                    <layout class="QHBoxLayout" name="horizontalLayout_16">
-                     <item>
-                      <widget class="QDoubleSpinBox" name="fpsSpinner">
-                       <property name="decimals">
-                        <number>3</number>
-                       </property>
-                       <property name="minimum">
-                        <double>1.000000000000000</double>
-                       </property>
-                       <property name="maximum">
-                        <double>1000.000000000000000</double>
-                       </property>
-                       <property name="value">
-                        <double>25.000000000000000</double>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <spacer name="horizontalSpacer_16">
-                       <property name="orientation">
-                        <enum>Qt::Horizontal</enum>
-                       </property>
-                       <property name="sizeHint" stdset="0">
-                        <size>
-                         <width>40</width>
-                         <height>20</height>
-                        </size>
-                       </property>
-                      </spacer>
-                     </item>
-                    </layout>
-                   </item>
-                   <item row="9" column="0">
-                    <spacer name="verticalSpacer_2">
-                     <property name="orientation">
-                      <enum>Qt::Vertical</enum>
-                     </property>
-                     <property name="sizeHint" stdset="0">
-                      <size>
-                       <width>20</width>
-                       <height>40</height>
-                      </size>
-                     </property>
-                    </spacer>
-                   </item>
-                   <item row="0" column="0">
-                    <widget class="QLabel" name="label_22">
-                     <property name="text">
-                      <string>Resolution</string>
-                     </property>
-                     <property name="alignment">
-                      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="3" column="0">
-                    <widget class="QLabel" name="label_10">
-                     <property name="text">
-                      <string>Frames/sec</string>
-                     </property>
-                     <property name="alignment">
-                      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="1" column="1" colspan="2">
-                    <layout class="QHBoxLayout" name="horizontalLayout_8">
-                     <property name="spacing">
-                      <number>2</number>
-                     </property>
-                     <item>
-                      <widget class="QSpinBox" name="aspectNumSpinner">
-                       <property name="minimum">
-                        <number>1</number>
-                       </property>
-                       <property name="maximum">
-                        <number>4096</number>
-                       </property>
-                       <property name="value">
-                        <number>16</number>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QLabel" name="label_16">
-                       <property name="text">
-                        <string>:</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QSpinBox" name="aspectDenSpinner">
-                       <property name="minimum">
-                        <number>1</number>
-                       </property>
-                       <property name="maximum">
-                        <number>4096</number>
-                       </property>
-                       <property name="value">
-                        <number>9</number>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <spacer name="horizontalSpacer_8">
-                       <property name="orientation">
-                        <enum>Qt::Horizontal</enum>
-                       </property>
-                       <property name="sizeHint" stdset="0">
-                        <size>
-                         <width>40</width>
-                         <height>20</height>
-                        </size>
-                       </property>
-                      </spacer>
-                     </item>
-                    </layout>
-                   </item>
-                   <item row="5" column="1" colspan="2">
-                    <layout class="QHBoxLayout" name="horizontalLayout_10">
-                     <item>
-                      <widget class="QComboBox" name="fieldOrderCombo">
-                       <item>
-                        <property name="text">
-                         <string>Bottom Field First</string>
-                        </property>
-                       </item>
-                       <item>
-                        <property name="text">
-                         <string>Top Field First</string>
-                        </property>
-                       </item>
-                      </widget>
-                     </item>
-                     <item>
-                      <spacer name="horizontalSpacer_10">
-                       <property name="orientation">
-                        <enum>Qt::Horizontal</enum>
-                       </property>
-                       <property name="sizeHint" stdset="0">
-                        <size>
-                         <width>40</width>
-                         <height>20</height>
-                        </size>
-                       </property>
-                      </spacer>
-                     </item>
-                    </layout>
-                   </item>
-                   <item row="5" column="0">
-                    <widget class="QLabel" name="label_15">
-                     <property name="text">
-                      <string>Field order</string>
-                     </property>
-                     <property name="alignment">
-                      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="1" column="0">
-                    <widget class="QLabel" name="label_13">
-                     <property name="text">
-                      <string>Aspect ratio</string>
-                     </property>
-                     <property name="alignment">
-                      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="0" column="1" colspan="2">
-                    <layout class="QHBoxLayout" name="horizontalLayout_7">
-                     <property name="spacing">
-                      <number>2</number>
-                     </property>
-                     <item>
-                      <widget class="QSpinBox" name="widthSpinner">
-                       <property name="minimum">
-                        <number>16</number>
-                       </property>
-                       <property name="maximum">
-                        <number>4096</number>
-                       </property>
-                       <property name="value">
-                        <number>1280</number>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QLabel" name="label_11">
-                       <property name="text">
-                        <string>x</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QSpinBox" name="heightSpinner">
-                       <property name="minimum">
-                        <number>1</number>
-                       </property>
-                       <property name="maximum">
-                        <number>4096</number>
-                       </property>
-                       <property name="value">
-                        <number>720</number>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <spacer name="horizontalSpacer_7">
-                       <property name="orientation">
-                        <enum>Qt::Horizontal</enum>
-                       </property>
-                       <property name="sizeHint" stdset="0">
-                        <size>
-                         <width>40</width>
-                         <height>20</height>
-                        </size>
-                       </property>
-                      </spacer>
-                     </item>
-                    </layout>
-                   </item>
-                   <item row="4" column="0">
-                    <widget class="QLabel" name="label_14">
-                     <property name="text">
-                      <string>Scan mode</string>
-                     </property>
-                     <property name="alignment">
-                      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="4" column="1" colspan="2">
-                    <layout class="QHBoxLayout" name="horizontalLayout_9">
-                     <property name="spacing">
-                      <number>2</number>
-                     </property>
-                     <item>
-                      <widget class="QComboBox" name="scanModeCombo">
-                       <property name="currentIndex">
-                        <number>1</number>
-                       </property>
-                       <item>
-                        <property name="text">
-                         <string>Interlaced</string>
-                        </property>
-                       </item>
-                       <item>
-                        <property name="text">
-                         <string>Progressive</string>
-                        </property>
-                       </item>
-                      </widget>
-                     </item>
-                     <item>
-                      <spacer name="horizontalSpacer_9">
-                       <property name="orientation">
-                        <enum>Qt::Horizontal</enum>
-                       </property>
-                       <property name="sizeHint" stdset="0">
-                        <size>
-                         <width>40</width>
-                         <height>20</height>
-                        </size>
-                       </property>
-                      </spacer>
-                     </item>
-                    </layout>
-                   </item>
-                  </layout>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-              <widget class="QWidget" name="videoTab">
-               <attribute name="title">
-                <string>Codec</string>
-               </attribute>
-               <layout class="QGridLayout" name="gridLayout_3">
-                <property name="verticalSpacing">
-                 <number>3</number>
-                </property>
-                <item row="3" column="0">
-                 <widget class="QLabel" name="label_17">
-                  <property name="text">
-                   <string>Codec</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="3" column="1">
-                 <layout class="QHBoxLayout" name="horizontalLayout_11">
-                  <item>
-                   <widget class="QComboBox" name="videoCodecCombo"/>
-                  </item>
-                  <item>
-                   <spacer name="horizontalSpacer_11">
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>40</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                 </layout>
-                </item>
-                <item row="9" column="0">
-                 <widget class="QLabel" name="label_18">
-                  <property name="text">
-                   <string>GOP</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="9" column="1">
-                 <layout class="QHBoxLayout" name="horizontalLayout_12">
-                  <item>
-                   <widget class="QSpinBox" name="gopSpinner">
-                    <property name="toolTip">
-                     <string>GOP = group of pictures, which is the maximum key frame interval</string>
-                    </property>
-                    <property name="maximum">
-                     <number>999</number>
-                    </property>
-                    <property name="value">
-                     <number>100</number>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLabel" name="label_19">
-                    <property name="text">
-                     <string>frames</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <spacer name="horizontalSpacer_12">
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>40</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                 </layout>
-                </item>
-                <item row="6" column="1">
-                 <layout class="QHBoxLayout" name="videoBitrateLayout">
-                  <item>
-                   <widget class="QComboBox" name="videoBitrateCombo">
-                    <property name="toolTip">
-                     <string>The average bit rate</string>
-                    </property>
-                    <property name="editable">
-                     <bool>true</bool>
-                    </property>
-                    <property name="currentIndex">
-                     <number>8</number>
-                    </property>
-                    <item>
-                     <property name="text">
-                      <string>64k</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>128k</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>256k</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>512k</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>768k</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>1M</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>1200k</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>1500k</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>2M</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>2500k</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>3M</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>4M</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>5M</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>6M</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>8M</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>10M</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>12M</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>14M</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>16M</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>18M</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>20M</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>25M</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>30M</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>40M</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>50M</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>60M</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>70M</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>80M</string>
-                     </property>
-                    </item>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLabel" name="videoBitrateSuffixLabel">
-                    <property name="text">
-                     <string>b/s</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <spacer name="videoBitrateSpacer">
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>40</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                 </layout>
-                </item>
-                <item row="13" column="1">
-                 <widget class="QCheckBox" name="disableVideoCheckbox">
-                  <property name="text">
-                   <string>Disable video</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="12" column="1">
-                 <widget class="QCheckBox" name="dualPassCheckbox">
-                  <property name="text">
-                   <string>Dual pass</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="10" column="0">
-                 <widget class="QLabel" name="label_20">
-                  <property name="text">
-                   <string>B frames</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="10" column="1">
-                 <layout class="QHBoxLayout" name="horizontalLayout_13">
-                  <item>
-                   <widget class="QSpinBox" name="bFramesSpinner">
-                    <property name="toolTip">
-                     <string>B frames are the bidrectional &quot;delta&quot; pictures
-in temporal compression</string>
-                    </property>
-                    <property name="maximum">
-                     <number>8</number>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <spacer name="horizontalSpacer_14">
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>40</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                 </layout>
-                </item>
-                <item row="14" column="1">
-                 <spacer name="verticalSpacer">
-                  <property name="orientation">
-                   <enum>Qt::Vertical</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>20</width>
-                    <height>40</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item row="11" column="0">
-                 <widget class="QLabel" name="label_12">
-                  <property name="text">
-                   <string>Codec threads</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="11" column="1">
-                 <layout class="QHBoxLayout" name="horizontalLayout_15">
-                  <item>
-                   <widget class="QSpinBox" name="videoCodecThreadsSpinner">
-                    <property name="toolTip">
-                     <string>The recommended setting is 0 for the x264 codec and
-number of processor cores (including virtual) - 1 for other
-codecs. However, not all codecs are multi-threaded.</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLabel" name="label_21">
-                    <property name="text">
-                     <string>(0 = auto)</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <spacer name="horizontalSpacer_15">
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>40</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                 </layout>
-                </item>
-                <item row="5" column="0">
-                 <widget class="QLabel" name="label_23">
-                  <property name="text">
-                   <string>Rate control</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="5" column="1">
-                 <layout class="QHBoxLayout" name="horizontalLayout_17">
-                  <item>
-                   <widget class="QComboBox" name="videoRateControlCombo">
-                    <item>
-                     <property name="text">
-                      <string>Average Bitrate</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>Constant Bitrate</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>Quality-based VBR</string>
-                     </property>
-                    </item>
-                   </widget>
-                  </item>
-                  <item>
-                   <spacer name="horizontalSpacer_17">
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>40</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                 </layout>
-                </item>
-                <item row="7" column="0">
-                 <widget class="QLabel" name="label_24">
-                  <property name="text">
-                   <string>Buffer size</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="7" column="1">
-                 <layout class="QHBoxLayout" name="horizontalLayout_18">
-                  <item>
-                   <widget class="QDoubleSpinBox" name="videoBufferSizeSpinner">
-                    <property name="enabled">
-                     <bool>false</bool>
-                    </property>
-                    <property name="maximum">
-                     <double>9999.000000000000000</double>
-                    </property>
-                    <property name="value">
-                     <double>224.000000000000000</double>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLabel" name="label_6">
-                    <property name="text">
-                     <string>KiB</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <spacer name="horizontalSpacer_18">
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>40</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                 </layout>
-                </item>
-                <item row="8" column="0">
-                 <widget class="QLabel" name="label_25">
-                  <property name="text">
-                   <string>Quality</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="8" column="1">
-                 <layout class="QHBoxLayout" name="horizontalLayout_19">
-                  <item>
-                   <widget class="QSpinBox" name="videoQualitySpinner">
-                    <property name="enabled">
-                     <bool>false</bool>
-                    </property>
-                    <property name="suffix">
-                     <string> %</string>
-                    </property>
-                    <property name="minimum">
-                     <number>0</number>
-                    </property>
-                    <property name="maximum">
-                     <number>100</number>
-                    </property>
-                    <property name="value">
-                     <number>50</number>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <spacer name="horizontalSpacer_19">
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>40</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                 </layout>
-                </item>
-                <item row="6" column="0">
-                 <widget class="QLabel" name="videoBitrateLabel">
-                  <property name="text">
-                   <string>Bitrate</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-              <widget class="QWidget" name="audioTab">
-               <attribute name="title">
-                <string>Audio</string>
-               </attribute>
-               <layout class="QGridLayout" name="gridLayout">
-                <property name="verticalSpacing">
-                 <number>3</number>
-                </property>
-                <item row="1" column="1">
-                 <layout class="QHBoxLayout" name="horizontalLayout_4">
-                  <item>
-                   <widget class="QComboBox" name="sampleRateCombo">
-                    <property name="editable">
-                     <bool>true</bool>
-                    </property>
-                    <property name="currentIndex">
-                     <number>6</number>
-                    </property>
-                    <item>
-                     <property name="text">
-                      <string>8000</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>12000</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>16000</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>22500</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>32000</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>44100</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>48000</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>96000</string>
-                     </property>
-                    </item>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLabel" name="label_9">
-                    <property name="text">
-                     <string>KHz</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <spacer name="horizontalSpacer_6">
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>40</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                 </layout>
-                </item>
-                <item row="1" column="0">
-                 <widget class="QLabel" name="label_8">
-                  <property name="text">
-                   <string>Sample rate</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="0">
-                 <widget class="QLabel" name="label_3">
-                  <property name="text">
-                   <string>Codec</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="1">
-                 <layout class="QHBoxLayout" name="horizontalLayout_6">
-                  <item>
-                   <widget class="QComboBox" name="audioCodecCombo"/>
-                  </item>
-                  <item>
-                   <spacer name="horizontalSpacer_3">
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>40</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                 </layout>
-                </item>
-                <item row="5" column="0">
-                 <widget class="QLabel" name="label_4">
-                  <property name="text">
-                   <string>Bitrate</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="5" column="1">
-                 <layout class="QHBoxLayout" name="horizontalLayout_3">
-                  <item>
-                   <widget class="QComboBox" name="audioBitrateCombo">
-                    <property name="toolTip">
-                     <string>The average bit rate</string>
-                    </property>
-                    <property name="editable">
-                     <bool>true</bool>
-                    </property>
-                    <property name="currentIndex">
-                     <number>5</number>
-                    </property>
-                    <item>
-                     <property name="text">
-                      <string>16k</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>32k</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>48k</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>64k</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>96k</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>128k</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>220k</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>256k</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>384k</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>512k</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>1M</string>
-                     </property>
-                    </item>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLabel" name="label_5">
-                    <property name="text">
-                     <string>b/s</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <spacer name="horizontalSpacer_4">
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>40</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                 </layout>
-                </item>
-                <item row="7" column="1">
-                 <widget class="QCheckBox" name="disableAudioCheckbox">
-                  <property name="text">
-                   <string>Disable audio</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="8" column="0">
-                 <spacer name="verticalSpacer_3">
-                  <property name="orientation">
-                   <enum>Qt::Vertical</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>20</width>
-                    <height>40</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item row="3" column="0">
-                 <widget class="QLabel" name="label_7">
-                  <property name="text">
-                   <string>Rate control</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="3" column="1">
-                 <layout class="QHBoxLayout" name="horizontalLayout_5">
-                  <item>
-                   <widget class="QComboBox" name="audioRateControlCombo">
-                    <item>
-                     <property name="text">
-                      <string>Average Bitrate</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>Constant Bitrate</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>Quality-based VBR</string>
-                     </property>
-                    </item>
-                   </widget>
-                  </item>
-                  <item>
-                   <spacer name="horizontalSpacer_5">
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>40</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                 </layout>
-                </item>
-                <item row="6" column="0">
-                 <widget class="QLabel" name="label_26">
-                  <property name="text">
-                   <string>Quality</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="6" column="1">
-                 <layout class="QHBoxLayout" name="horizontalLayout_20">
-                  <item>
-                   <widget class="QSpinBox" name="audioQualitySpinner">
-                    <property name="enabled">
-                     <bool>false</bool>
-                    </property>
-                    <property name="suffix">
-                     <string> %</string>
-                    </property>
-                    <property name="minimum">
-                     <number>0</number>
-                    </property>
-                    <property name="maximum">
-                     <number>100</number>
-                    </property>
-                    <property name="value">
-                     <number>50</number>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <spacer name="horizontalSpacer_20">
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>40</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                 </layout>
-                </item>
-               </layout>
-              </widget>
-              <widget class="QWidget" name="otherTab">
-               <attribute name="title">
-                <string>Other</string>
-               </attribute>
-               <layout class="QGridLayout" name="gridLayout_4">
-                <item row="0" column="0">
-                 <widget class="QPlainTextEdit" name="advancedTextEdit"/>
-                </item>
-               </layout>
-              </widget>
-             </widget>
+          <widget class="QWidget" name="otherTab">
+           <attribute name="title">
+            <string>Other</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_4">
+            <item row="0" column="0">
+             <widget class="QPlainTextEdit" name="advancedTextEdit"/>
             </item>
            </layout>
           </widget>
          </widget>
         </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <property name="spacing">
+           <number>6</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="encodeButton">
+            <property name="text">
+             <string>Encode File</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="streamButton">
+            <property name="text">
+             <string>Stream</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="stopCaptureLayout">
+          <property name="spacing">
+           <number>6</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="stopCaptureButton">
+            <property name="text">
+             <string>Stop Screen Capture</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="stopCaptureSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>0</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
        </layout>
       </widget>
      </widget>
     </item>
-    <item row="1" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <property name="spacing">
-       <number>6</number>
-      </property>
-      <item>
-       <widget class="QPushButton" name="encodeButton">
-        <property name="text">
-         <string>Encode File</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="streamButton">
-        <property name="text">
-         <string>Stream</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-     </layout>
-    </item>
-    <item row="2" column="0">
-     <layout class="QHBoxLayout" name="stopCaptureLayout">
-      <property name="spacing">
-       <number>6</number>
-      </property>
-      <item>
-       <widget class="QPushButton" name="stopCaptureButton">
-        <property name="text">
-         <string>Stop Screen Capture</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="stopCaptureSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>0</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-     </layout>
-    </item>
    </layout>
+   <zorder>scrollArea</zorder>
+   <zorder></zorder>
   </widget>
  </widget>
  <customwidgets>
@@ -1458,45 +1452,8 @@ codecs. However, not all codecs are multi-threaded.</string>
  </customwidgets>
  <tabstops>
   <tabstop>scrollArea</tabstop>
-  <tabstop>presetsTree</tabstop>
   <tabstop>addPresetButton</tabstop>
   <tabstop>removePresetButton</tabstop>
-  <tabstop>formatCombo</tabstop>
-  <tabstop>tabWidget</tabstop>
-  <tabstop>sampleRateCombo</tabstop>
-  <tabstop>audioCodecCombo</tabstop>
-  <tabstop>audioRateControlCombo</tabstop>
-  <tabstop>audioBitrateCombo</tabstop>
-  <tabstop>audioQualitySpinner</tabstop>
-  <tabstop>disableAudioCheckbox</tabstop>
-  <tabstop>widthSpinner</tabstop>
-  <tabstop>heightSpinner</tabstop>
-  <tabstop>aspectNumSpinner</tabstop>
-  <tabstop>aspectDenSpinner</tabstop>
-  <tabstop>scanModeCombo</tabstop>
-  <tabstop>fpsSpinner</tabstop>
-  <tabstop>fieldOrderCombo</tabstop>
-  <tabstop>videoCodecCombo</tabstop>
-  <tabstop>videoRateControlCombo</tabstop>
-  <tabstop>videoBitrateCombo</tabstop>
-  <tabstop>videoBufferSizeSpinner</tabstop>
-  <tabstop>videoQualitySpinner</tabstop>
-  <tabstop>gopSpinner</tabstop>
-  <tabstop>bFramesSpinner</tabstop>
-  <tabstop>videoCodecThreadsSpinner</tabstop>
-  <tabstop>dualPassCheckbox</tabstop>
-  <tabstop>disableVideoCheckbox</tabstop>
-  <tabstop>advancedTextEdit</tabstop>
-  <tabstop>encodeButton</tabstop>
-  <tabstop>streamButton</tabstop>
-  <tabstop>stopCaptureButton</tabstop>
-  <tabstop>aspectNumSpinner</tabstop>
-  <tabstop>aspectDenSpinner</tabstop>
-  <tabstop>fpsSpinner</tabstop>
-  <tabstop>widthSpinner</tabstop>
-  <tabstop>heightSpinner</tabstop>
-  <tabstop>scanModeCombo</tabstop>
-  <tabstop>fieldOrderCombo</tabstop>
  </tabstops>
  <resources>
   <include location="../../icons/resources.qrc"/>
