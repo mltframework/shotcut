@@ -204,7 +204,7 @@ MainWindow::MainWindow()
     m_historyDock->setObjectName("historyDock");
     m_historyDock->setWindowIcon(ui->actionHistory->icon());
     m_historyDock->toggleViewAction()->setIcon(ui->actionHistory->icon());
-    addDockWidget(Qt::LeftDockWidgetArea, m_historyDock);
+    addDockWidget(Qt::RightDockWidgetArea, m_historyDock);
     ui->menuView->addAction(m_historyDock->toggleViewAction());
     connect(m_historyDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onHistoryDockTriggered(bool)));
     connect(ui->actionHistory, SIGNAL(triggered()), this, SLOT(onHistoryDockTriggered()));
@@ -216,20 +216,13 @@ MainWindow::MainWindow()
     ui->actionUndo->setDisabled(true);
     ui->actionRedo->setDisabled(true);
 
-    tabifyDockWidget(m_propertiesDock, m_recentDock);
-    tabifyDockWidget(m_recentDock, m_playlistDock);
-    tabifyDockWidget(m_playlistDock, m_historyDock);
-    tabifyDockWidget(m_historyDock, m_filtersDock);
-    m_recentDock->raise();
-
     m_encodeDock = new EncodeDock(this);
     m_encodeDock->hide();
-    addDockWidget(Qt::RightDockWidgetArea, m_encodeDock);
+    addDockWidget(Qt::LeftDockWidgetArea, m_encodeDock);
     ui->menuView->addAction(m_encodeDock->toggleViewAction());
     connect(this, SIGNAL(producerOpened()), m_encodeDock, SLOT(onProducerOpened()));
     connect(ui->actionEncode, SIGNAL(triggered()), this, SLOT(onEncodeTriggered()));
     connect(m_encodeDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onEncodeTriggered(bool)));
-    connect(m_encodeDock, SIGNAL(visibilityChanged(bool)), this, SLOT(onEncodeVisibilityChanged(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_player, SLOT(onCaptureStateChanged(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_propertiesDock, SLOT(setDisabled(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_recentDock, SLOT(setDisabled(bool)));
@@ -246,11 +239,17 @@ MainWindow::MainWindow()
     m_jobsDock = new JobsDock(this);
     m_jobsDock->hide();
     addDockWidget(Qt::RightDockWidgetArea, m_jobsDock);
-    tabifyDockWidget(m_encodeDock, m_jobsDock);
     ui->menuView->addAction(m_jobsDock->toggleViewAction());
     connect(&JOBS, SIGNAL(jobAdded()), m_jobsDock, SLOT(show()));
     connect(&JOBS, SIGNAL(jobAdded()), m_jobsDock, SLOT(raise()));
-    connect(m_jobsDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onJobsVisibilityChanged(bool)));
+    connect(m_jobsDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onJobsDockTriggered(bool)));
+
+    tabifyDockWidget(m_propertiesDock, m_recentDock);
+    tabifyDockWidget(m_recentDock, m_playlistDock);
+    tabifyDockWidget(m_playlistDock, m_filtersDock);
+    tabifyDockWidget(m_filtersDock, m_encodeDock);
+    tabifyDockWidget(m_historyDock, m_jobsDock);
+    m_recentDock->raise();
 
     m_meltedServerDock = new MeltedServerDock(this);
     m_meltedServerDock->hide();
@@ -713,7 +712,6 @@ void MainWindow::readWindowSettings()
     Settings.sync();
     restoreGeometry(Settings.windowGeometry());
     restoreState(Settings.windowState());
-    m_jobsVisible = m_jobsDock->isVisible();
 }
 
 void MainWindow::writeSettings()
@@ -1204,14 +1202,9 @@ QUndoStack* MainWindow::undoStack() const
 
 void MainWindow::onEncodeTriggered(bool checked)
 {
-    m_encodeDock->setVisible(checked);
     if (checked) {
-        m_jobsDock->setVisible(m_jobsVisible);
+        m_encodeDock->show();
         m_encodeDock->raise();
-    } else {
-        bool saveVisibility = m_jobsDock->isVisible();
-        m_jobsDock->setVisible(false);
-        m_jobsVisible = saveVisibility;
     }
 }
 
@@ -1222,18 +1215,12 @@ void MainWindow::onCaptureStateChanged(bool started)
         showMinimized();
 }
 
-void MainWindow::onEncodeVisibilityChanged(bool checked)
+void MainWindow::onJobsDockTriggered(bool checked)
 {
-    Q_UNUSED(checked)
-    if (m_encodeDock->isHidden())
-        m_jobsDock->hide();
-}
-
-void MainWindow::onJobsVisibilityChanged(bool checked)
-{
-    m_jobsVisible = checked;
-    if (checked)
+    if (checked) {
+        m_jobsDock->show();
         m_jobsDock->raise();
+    }
 }
 
 void MainWindow::onRecentDockTriggered(bool checked)
@@ -1910,7 +1897,6 @@ void MainWindow::on_actionRestoreLayout_triggered()
 {
     restoreGeometry(Settings.windowGeometryDefault());
     restoreState(Settings.windowStateDefault());
-    m_jobsVisible = m_jobsDock->isVisible();
 }
 
 void MainWindow::on_actionShowTitleBars_triggered(bool checked)

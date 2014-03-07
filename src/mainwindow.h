@@ -95,7 +95,6 @@ private:
     PlaylistDock* m_playlistDock;
     TimelineDock* m_timelineDock;
     QString m_currentFile;
-    bool m_jobsVisible;
     bool m_isKKeyPressed;
     QUndoStack* m_undoStack;
     QDockWidget* m_historyDock;
@@ -142,8 +141,7 @@ private slots:
     bool on_actionSave_As_triggered();
     void onEncodeTriggered(bool checked = true);
     void onCaptureStateChanged(bool started);
-    void onEncodeVisibilityChanged(bool);
-    void onJobsVisibilityChanged(bool);
+    void onJobsDockTriggered(bool);
     void onRecentDockTriggered(bool checked = true);
     void onPropertiesDockTriggered(bool checked = true);
     void onPlaylistDockTriggered(bool checked = true);
