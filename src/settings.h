@@ -19,12 +19,16 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
+#include <QObject>
 #include <QSettings>
 #include <QStringList>
 #include <QByteArray>
 
-class ShotcutSettings
+class ShotcutSettings : public QObject
 {
+    Q_OBJECT
+    Q_PROPERTY(bool timelineShowWaveforms READ timelineShowWaveforms WRITE setTimelineShowWaveforms NOTIFY timelineShowWaveformsChanged)
+
 public:
     static ShotcutSettings& singleton();
 
@@ -87,7 +91,13 @@ public:
     QString playlistThumbnails() const;
     void setPlaylistThumbnails(const QString&);
 
+    bool timelineShowWaveforms() const;
+    void setTimelineShowWaveforms(bool);
+
     void sync();
+
+signals:
+    void timelineShowWaveformsChanged();
 
 private:
     QSettings settings;

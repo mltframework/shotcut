@@ -24,6 +24,7 @@
 #include "mainwindow.h"
 #include "commands/timelinecommands.h"
 #include "docks/filtersdock.h"
+#include "settings.h"
 
 #include <QtQml>
 #include <QtQuick>
@@ -44,6 +45,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     m_quickView.engine()->addImageProvider(QString("thumbnail"), new ThumbnailProvider);
     m_quickView.rootContext()->setContextProperty("timeline", this);
     m_quickView.rootContext()->setContextProperty("multitrack", &m_model);
+    m_quickView.rootContext()->setContextProperty("settings", &ShotcutSettings::singleton());
     m_quickView.setResizeMode(QQuickView::SizeRootObjectToView);
     m_quickView.setColor(palette().window().color());
 

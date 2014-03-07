@@ -278,6 +278,20 @@ Rectangle {
             shortcut: qsTr('Ctrl+L')
             onTriggered: multitrack.trackHeight += 20
         }
+        MenuSeparator {}
+        MenuItem {
+            text: qsTr('Show Audio Waveforms')
+            checkable: true
+            checked: settings.timelineShowWaveforms
+            onTriggered: {
+                settings.timelineShowWaveforms = checked
+                if (checked) {
+                    for (var i = 0; i < tracksRepeater.count; i++)
+                        tracksRepeater.itemAt(i).redrawWaveforms()
+                }
+            }
+        }
+        MenuSeparator {}
         MenuItem {
             text: qsTr('Close')
             shortcut: qsTr('Ctrl+W')

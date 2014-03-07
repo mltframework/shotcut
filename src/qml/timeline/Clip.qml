@@ -71,7 +71,9 @@ Rectangle {
     }
 
     function generateWaveform() {
+        if (!waveform.visible) return;
         if (typeof audioLevels == 'undefined') return;
+
         var cx = waveform.getContext('2d');
         // TODO use project channel count
         var channels = 2;
@@ -120,7 +122,7 @@ Rectangle {
 
     Canvas {
         id: waveform
-        visible: !isBlank
+        visible: !isBlank && settings.timelineShowWaveforms
         width: parent.width - parent.border.width * 2
         height: isAudio? parent.height : parent.height / 2
         anchors.left: parent.left
