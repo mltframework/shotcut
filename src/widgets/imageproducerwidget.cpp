@@ -56,6 +56,7 @@ void ImageProducerWidget::setProducer(Mlt::Producer* p)
     ui->durationSpinBox->setValue(m_producer->get_length());
     ui->widthLineEdit->setText(p->get("meta.media.width"));
     ui->heightLineEdit->setText(p->get("meta.media.height"));
+    ui->aspectNumSpinBox->blockSignals(true);
     if (p->get("shotcut_aspect_num") && p->get("shotcut_aspect_den")) {
         ui->aspectNumSpinBox->setValue(p->get_int("shotcut_aspect_num"));
         ui->aspectDenSpinBox->setValue(p->get_int("shotcut_aspect_den"));
@@ -72,6 +73,7 @@ void ImageProducerWidget::setProducer(Mlt::Producer* p)
             ui->aspectDenSpinBox->setValue(1000);
         }
     }
+    ui->aspectNumSpinBox->blockSignals(false);
     if (m_producer->get_int("ttl"))
         ui->repeatSpinBox->setValue(m_producer->get_int("ttl"));
     ui->sequenceCheckBox->setChecked(m_producer->get_int("shotcut_sequence"));

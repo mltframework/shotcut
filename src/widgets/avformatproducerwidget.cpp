@@ -187,8 +187,12 @@ void AvformatProducerWidget::onFrameReceived(Mlt::QFrame)
         dar_numerator = m_producer->get_int("shotcut_aspect_num");
     if (m_producer->get("shotcut_aspect_den"))
         dar_denominator = m_producer->get_int("shotcut_aspect_den");
+    ui->aspectNumSpinBox->blockSignals(true);
     ui->aspectNumSpinBox->setValue(dar_numerator);
+    ui->aspectNumSpinBox->blockSignals(false);
+    ui->aspectDenSpinBox->blockSignals(true);
     ui->aspectDenSpinBox->setValue(dar_denominator);
+    ui->aspectDenSpinBox->blockSignals(false);
 
     double fps = m_producer->get_double("meta.media.frame_rate_num");
     if (m_producer->get_double("meta.media.frame_rate_den") > 0)
