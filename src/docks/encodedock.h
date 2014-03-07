@@ -57,6 +57,7 @@ public slots:
 
 private slots:
     void on_presetsTree_clicked(const QModelIndex &index);
+    void on_presetsTree_activated(const QModelIndex &index);
 
     void on_encodeButton_clicked();
 
@@ -77,6 +78,8 @@ private slots:
     void on_scanModeCombo_currentIndexChanged(int index);
 
     void on_presetsSearch_textChanged(const QString &search);
+
+    void on_resetButton_clicked();
 
 private:
     enum {

@@ -375,6 +375,13 @@ void EncodeDock::resetOptions()
     // Reset all controls to default values.
     ui->formatCombo->setCurrentIndex(0);
 
+    ui->widthSpinner->setEnabled(true);
+    ui->heightSpinner->setEnabled(true);
+    ui->aspectNumSpinner->setEnabled(true);
+    ui->aspectDenSpinner->setEnabled(true);
+    ui->scanModeCombo->setEnabled(true);
+    ui->fpsSpinner->setEnabled(true);
+
     ui->videoCodecCombo->setCurrentIndex(0);
     ui->videoRateControlCombo->setCurrentIndex(0);
     ui->videoBitrateCombo->lineEdit()->setText("2M");
@@ -442,6 +449,13 @@ void EncodeDock::on_presetsTree_clicked(const QModelIndex &index)
                     ui->aspectDenSpinner->setValue(p.display_aspect_den());
                     ui->scanModeCombo->setCurrentIndex(p.progressive());
                     ui->fpsSpinner->setValue(p.fps());
+
+                    ui->widthSpinner->setEnabled(false);
+                    ui->heightSpinner->setEnabled(false);
+                    ui->aspectNumSpinner->setEnabled(false);
+                    ui->aspectDenSpinner->setEnabled(false);
+                    ui->scanModeCombo->setEnabled(false);
+                    ui->fpsSpinner->setEnabled(false);
                 }
             }
             ui->disableAudioCheckbox->setChecked(preset->get_int("an"));
@@ -571,6 +585,11 @@ void EncodeDock::on_presetsTree_clicked(const QModelIndex &index)
         }
         delete preset;
     }
+}
+
+void EncodeDock::on_presetsTree_activated(const QModelIndex &index)
+{
+    on_presetsTree_clicked(index);
 }
 
 void EncodeDock::on_encodeButton_clicked()
@@ -844,4 +863,9 @@ bool PresetsProxyModel::filterAcceptsRow(int source_row, const QModelIndex &sour
     return !source_parent.isValid() || 
         sourceModel()->data(index).toString().contains(filterRegExp()) ||
         sourceModel()->data(index, Qt::ToolTipRole).toString().contains(filterRegExp());
+}
+
+void EncodeDock::on_resetButton_clicked()
+{
+    resetOptions();
 }
