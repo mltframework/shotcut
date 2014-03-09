@@ -868,4 +868,5 @@ bool PresetsProxyModel::filterAcceptsRow(int source_row, const QModelIndex &sour
 void EncodeDock::on_resetButton_clicked()
 {
     resetOptions();
+    onProfileChanged();
 }
