@@ -79,6 +79,7 @@ p, li { white-space: pre-wrap; }
     </property>
     <addaction name="actionOpen"/>
     <addaction name="actionOpenOther"/>
+    <addaction name="actionOpenXML"/>
     <addaction name="actionSave"/>
     <addaction name="actionSave_As"/>
     <addaction name="separator"/>
@@ -613,6 +614,14 @@ p, li { white-space: pre-wrap; }
   <action name="actionUpgrade">
    <property name="text">
     <string>Upgrade...</string>
+   </property>
+  </action>
+  <action name="actionOpenXML">
+   <property name="text">
+    <string>Open XML As Clip...</string>
+   </property>
+   <property name="toolTip">
+    <string>Open a MLT XML project file as a virtual clip</string>
    </property>
   </action>
  </widget>

@@ -194,6 +194,7 @@ private slots:
     void onToolbarVisibilityChanged(bool visible);
     void on_menuExternal_aboutToShow();
     void on_actionUpgrade_triggered();
+    void on_actionOpenXML_triggered();
 };
 
 #define MAIN MainWindow::singleton()

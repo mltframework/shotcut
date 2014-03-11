@@ -27,6 +27,7 @@
 namespace Mlt {
 
 const QString XmlMimeType("application/mlt+xml");
+static const char* kShotcutVirtualClip = "shotcut:virtual";
 
 QFrame::QFrame(QObject *parent)
     : QObject(parent)
@@ -161,6 +162,29 @@ int Controller::open(const char* url)
         m_producer = 0;
         error = 1;
     }
+    return error;
+}
+
+bool Controller::openXML(const QString &filename)
+{
+    bool error = true;
+    close();
+    Producer* producer = new Mlt::Producer(profile(), "xml", filename.toUtf8().constData());
+    if (producer->is_valid()) {
+        double fps = profile().fps();
+        if (!profile().is_explicit())
+            profile().from_producer(*producer);
+        if (profile().fps() != fps) {
+            // reopen with the correct fps
+            delete producer;
+            producer = new Mlt::Producer(profile(), "xml", filename.toUtf8().constData());
+        }
+        producer->set(kShotcutVirtualClip, 1);
+        producer->set("resource", filename.toUtf8().constData());
+        setProducer(new Producer(producer));
+        error = false;
+    }
+    delete producer;
     return error;
 }
 
@@ -441,12 +465,14 @@ bool Controller::isSeekableClip()
 bool Controller::isPlaylist() const
 {
     return m_producer && m_producer->is_valid() &&
+          !m_producer->get_int(kShotcutVirtualClip) &&
             (m_producer->get_int("_original_type") == playlist_type || resource() == "<playlist>");
 }
 
 bool Controller::isMultitrack() const
 {
     return m_producer && m_producer->is_valid()
+        && !m_producer->get_int(kShotcutVirtualClip)
         && (m_producer->get_int("_original_type") == tractor_type || resource() == "<tractor>")
         && (m_producer->get("shotcut"));
 }

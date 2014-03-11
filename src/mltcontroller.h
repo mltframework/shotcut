@@ -88,6 +88,7 @@ public:
     virtual QWidget* videoWidget() = 0;
     virtual int setProducer(Mlt::Producer*, bool isMulti = false);
     virtual int open(const char* url);
+    bool openXML(const QString& filename);
     virtual void close();
     virtual int displayWidth() const = 0;
     virtual int displayHeight() const = 0;

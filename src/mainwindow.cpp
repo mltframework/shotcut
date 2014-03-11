@@ -61,7 +61,7 @@
 #include <QDebug>
 #include <QThreadPool>
 
-static const int STATUS_TIMEOUT_MS = 3000;
+static const int STATUS_TIMEOUT_MS = 5000;
 
 MainWindow::MainWindow()
     : QMainWindow(0)
@@ -1948,4 +1948,25 @@ void MainWindow::on_menuExternal_aboutToShow()
 void MainWindow::on_actionUpgrade_triggered()
 {
     QDesktopServices::openUrl(QUrl("http://www.shotcut.org/bin/view/Shotcut/Download"));
+}
+
+void MainWindow::on_actionOpenXML_triggered()
+{
+    QStringList filenames = QFileDialog::getOpenFileNames(this, tr("Open File"), Settings.openPath());
+
+    if (filenames.length() > 0) {
+        const QString& url = filenames.first();
+        Settings.setOpenPath(QFileInfo(url).path());
+        activateWindow();
+        if (filenames.length() > 1)
+            m_multipleFiles = filenames;
+        if (!MLT.openXML(url)) {
+            open(MLT.producer());
+            m_recentDock->add(url);
+        }
+        else {
+            ui->statusBar->showMessage(tr("Failed to open ") + url, STATUS_TIMEOUT_MS);
+            emit openFailed(url);
+        }
+    }
 }
