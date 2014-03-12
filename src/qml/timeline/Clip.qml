@@ -30,6 +30,7 @@ Rectangle {
     property int clipDuration: 0
     property bool isBlank: false
     property bool isAudio: false
+    property bool isTransition: false
     property var audioLevels
     property int fadeIn: 0
     property int fadeOut: 0
@@ -58,9 +59,10 @@ Rectangle {
     state: 'normal'
     Drag.active: mouseArea.drag.active
     Drag.proposedAction: Qt.MoveAction
+    opacity: Drag.active? 0.5 : 1.0
 
     function getColor() {
-        return isBlank? 'transparent' : (isAudio? 'darkseagreen' : shotcutBlue)
+        return isBlank? 'transparent' : isAudio? 'darkseagreen' : isTransition? 'mediumpurple' : shotcutBlue
     }
 
     function reparent(track) {
@@ -106,7 +108,7 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: parent.height / 2
         fillMode: Image.PreserveAspectFit
-        source: (isAudio || isBlank)? '' : 'image://thumbnail/' + mltService + '/' + clipResource + '#' + outPoint
+        source: (isAudio || isBlank || isTransition)? '' : 'image://thumbnail/' + mltService + '/' + clipResource + '#' + outPoint
     }
 
     Image {
@@ -117,7 +119,7 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: parent.height / 2
         fillMode: Image.PreserveAspectFit
-        source: (isAudio || isBlank)? '' : 'image://thumbnail/' + mltService + '/' + clipResource + '#' + inPoint
+        source: (isAudio || isBlank || isTransition)? '' : 'image://thumbnail/' + mltService + '/' + clipResource + '#' + inPoint
     }
 
     Canvas {
@@ -147,7 +149,7 @@ Rectangle {
     Rectangle {
         // text background
         color: 'lightgray'
-        visible: !isBlank
+        visible: !isBlank && !isTransition
         opacity: 0.7
         anchors.top: parent.top
         anchors.left: parent.left
@@ -160,7 +162,7 @@ Rectangle {
     Text {
         id: label
         text: clipName
-        visible: !isBlank
+        visible: !isBlank && !isTransition
         font.pointSize: 8
         anchors {
             top: parent.top
@@ -248,7 +250,7 @@ Rectangle {
 
     Canvas {
         id: fadeInCanvas
-        visible: !isBlank
+        visible: !isBlank && !isTransition
         width: parent.fadeIn * timeScale
         height: parent.height - parent.border.width * 2
         anchors.left: parent.left
@@ -269,7 +271,7 @@ Rectangle {
     }
     Rectangle {
         id: fadeInControl
-        enabled: !isBlank
+        enabled: !isBlank && !isTransition
         anchors.left: fadeInCanvas.width > radius? undefined : fadeInCanvas.left
         anchors.horizontalCenter: fadeInCanvas.width > radius? fadeInCanvas.right : undefined
         anchors.top: fadeInCanvas.top
@@ -334,7 +336,7 @@ Rectangle {
 
     Canvas {
         id: fadeOutCanvas
-        visible: !isBlank
+        visible: !isBlank && !isTransition
         width: parent.fadeOut * timeScale
         height: parent.height - parent.border.width * 2
         anchors.right: parent.right
@@ -355,7 +357,7 @@ Rectangle {
     }
     Rectangle {
         id: fadeOutControl
-        enabled: !isBlank
+        enabled: !isBlank && !isTransition
         anchors.right: fadeOutCanvas.width > radius? undefined : fadeOutCanvas.right
         anchors.horizontalCenter: fadeOutCanvas.width > radius? fadeOutCanvas.left : undefined
         anchors.top: fadeOutCanvas.top
@@ -420,7 +422,7 @@ Rectangle {
 
     Rectangle {
         id: trimIn
-        enabled: !isBlank
+        enabled: !isBlank && !isTransition
         anchors.left: parent.left
         anchors.leftMargin: 0
         height: parent.height
@@ -462,7 +464,7 @@ Rectangle {
     }
     Rectangle {
         id: trimOut
-        enabled: !isBlank
+        enabled: !isBlank && !isTransition
         anchors.right: parent.right
         anchors.rightMargin: 0
         height: parent.height

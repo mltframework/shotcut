@@ -293,6 +293,10 @@ bool TimelineDock::moveClip(int fromTrack, int toTrack, int clipIndex, int posit
         MAIN.undoStack()->push(
             new Timeline::MoveClipCommand(m_model, fromTrack, toTrack, clipIndex, position));
         return true;
+    } else if (m_model.addTransitionValid(fromTrack, toTrack, clipIndex, position)) {
+        MAIN.undoStack()->push(
+            new Timeline::AddTransitionCommand(m_model, fromTrack, clipIndex, position));
+        return true;
     } else {
         return false;
     }

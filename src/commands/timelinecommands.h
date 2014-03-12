@@ -242,6 +242,20 @@ private:
     int m_previous;
 };
 
+class AddTransitionCommand : public QUndoCommand
+{
+public:
+    AddTransitionCommand(MultitrackModel& model, int trackIndex, int clipIndex, int position, QUndoCommand * parent = 0);
+    void redo();
+    void undo();
+private:
+    MultitrackModel& m_model;
+    int m_trackIndex;
+    int m_clipIndex;
+    int m_position;
+    int m_transitionIndex;
+};
+
 }
 
 #endif

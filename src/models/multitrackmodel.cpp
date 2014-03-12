@@ -277,6 +277,8 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                     filter.reset(getFilter("fadeOutMovit", info->producer));
                 return (filter && filter->is_valid())? filter->get_length() : 0;
             }
+            case IsTransitionRole:
+                return !qstrcmp(info->resource, "<tractor>");
             default:
                 break;
             }
@@ -366,6 +368,7 @@ QHash<int, QByteArray> MultitrackModel::roleNames() const
     roles[IsCompositeRole] = "composite";
     roles[FadeInRole] = "fadeIn";
     roles[FadeOutRole] = "fadeOut";
+    roles[IsTransitionRole] = "isTransition";
     return roles;
 }
 
@@ -1399,6 +1402,103 @@ void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
             emit dataChanged(modelIndex, modelIndex, roles);
             emit modified();
         }
+    }
+}
+
+bool MultitrackModel::addTransitionValid(int fromTrack, int toTrack, int clipIndex, int position)
+{
+    bool result = false;
+    int i = m_trackList.at(toTrack).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    if (track) {
+        Mlt::Playlist playlist(*track);
+        int targetIndex = playlist.get_clip_index_at(position);
+        int endOfPreviousClip = playlist.clip_start(clipIndex - 1) + playlist.clip_length(clipIndex - 1);
+        int endOfCurrentClip = position + playlist.clip_length(clipIndex);
+        int startOfNextClip = playlist.clip_start(clipIndex + 1);
+
+        if (fromTrack == toTrack)
+        if (!playlist.is_blank_at(position))
+        if ((targetIndex == (clipIndex - 1) && endOfCurrentClip > endOfPreviousClip) ||
+            (targetIndex == clipIndex && position < startOfNextClip)) {
+            result = true;
+        }
+    }
+    return result;
+}
+
+int MultitrackModel::addTransition(int trackIndex, int clipIndex, int position)
+{
+    int i = m_trackList.at(trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    if (track) {
+        Mlt::Playlist playlist(*track);
+        int endOfPreviousClip = playlist.clip_start(clipIndex - 1) + playlist.clip_length(clipIndex - 1);
+        int endOfCurrentClip = position + playlist.clip_length(clipIndex);
+        int startOfNextClip = playlist.clip_start(clipIndex + 1);
+        int targetIndex = playlist.get_clip_index_at(position);
+
+        if (!playlist.is_blank_at(position))
+        if ((targetIndex == (clipIndex - 1) && endOfCurrentClip > endOfPreviousClip) || // dragged left
+            (targetIndex == clipIndex && position < startOfNextClip)) { // dragged right
+
+            // Adjust/insert blanks
+            moveClipInBlank(playlist, trackIndex, clipIndex, position);
+            targetIndex = playlist.get_clip_index_at(position);
+
+            // Create mix
+            int duration = qAbs(position - playlist.clip_start(clipIndex));
+            beginInsertRows(index(trackIndex), targetIndex + 1, targetIndex + 1);
+            playlist.mix(targetIndex, duration);
+            endInsertRows();
+
+            // Add transitions
+            Mlt::Transition dissolve(MLT.profile(), Settings.playerGPU()? "movit.mix" : "luma");
+            Mlt::Transition crossFade(MLT.profile(), "mix:-1");
+            playlist.mix_add(targetIndex + 1, &dissolve);
+            playlist.mix_add(targetIndex + 1, &crossFade);
+
+            // Notify ins and outs changed
+            QModelIndex modelIndex = createIndex(targetIndex, 0, trackIndex);
+            QVector<int> roles;
+            roles << StartRole;
+            roles << OutPointRole;
+            roles << DurationRole;
+            emit dataChanged(modelIndex, modelIndex, roles);
+            modelIndex = createIndex(targetIndex + 2, 0, trackIndex);
+            roles << StartRole;
+            roles << InPointRole;
+            roles << DurationRole;
+            emit dataChanged(modelIndex, modelIndex, roles);
+            emit modified();
+            return targetIndex + 1;
+        }
+    }
+    return -1;
+}
+
+void MultitrackModel::removeTransition(int trackIndex, int clipIndex)
+{
+    int i = m_trackList.at(trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    if (track) {
+        Mlt::Playlist playlist(*track);
+
+        beginRemoveRows(index(trackIndex), clipIndex, clipIndex);
+        playlist.remove(clipIndex);
+        endRemoveRows();
+        --clipIndex;
+
+        QModelIndex modelIndex = createIndex(clipIndex, 0, trackIndex);
+        QVector<int> roles;
+        roles << OutPointRole;
+        roles << DurationRole;
+        emit dataChanged(modelIndex, modelIndex, roles);
+        modelIndex = createIndex(clipIndex + 1, 0, trackIndex);
+        roles << InPointRole;
+        roles << DurationRole;
+        emit dataChanged(modelIndex, modelIndex, roles);
+        emit modified();
     }
 }
 

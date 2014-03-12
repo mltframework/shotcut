@@ -65,6 +65,7 @@ Rectangle {
             outPoint: model.out
             isBlank: model.blank
             isAudio: model.audio
+            isTransition: model.isTransition
             audioLevels: model.audioLevels
             width: model.duration * timeScale
             height: trackRoot.height

@@ -66,6 +66,7 @@ public:
         IsCompositeRole, /// track only
         FadeInRole,      /// clip only
         FadeOutRole,     /// clip only
+        IsTransitionRole /// clip only
     };
 
     explicit MultitrackModel(QObject *parent = 0);
@@ -129,6 +130,9 @@ public slots:
     void overwriteFromPlaylist(Mlt::Playlist& playlist, int trackIndex, int position);
     void fadeIn(int trackIndex, int clipIndex, int duration);
     void fadeOut(int trackIndex, int clipIndex, int duration);
+    bool addTransitionValid(int fromTrack, int toTrack, int clipIndex, int position);
+    int addTransition(int trackIndex, int clipIndex, int position);
+    void removeTransition(int trackIndex, int clipIndex);
 
 private:
     Mlt::Tractor* m_tractor;

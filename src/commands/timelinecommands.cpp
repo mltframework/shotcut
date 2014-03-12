@@ -421,4 +421,35 @@ bool FadeOutCommand::mergeWith(const QUndoCommand *other)
     return true;
 }
 
+AddTransitionCommand::AddTransitionCommand(MultitrackModel &model, int trackIndex, int clipIndex, int position, QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_trackIndex(trackIndex)
+    , m_clipIndex(clipIndex)
+    , m_position(position)
+    , m_transitionIndex(-1)
+{
+    setText(QObject::tr("Add transition"));
+}
+
+void AddTransitionCommand::redo()
+{
+    m_transitionIndex = m_model.addTransition(m_trackIndex, m_clipIndex, m_position);
+}
+
+void AddTransitionCommand::undo()
+{
+    if (m_transitionIndex >= 0) {
+        m_model.removeTransition(m_trackIndex, m_transitionIndex);
+        // Delete the blank that was inserted.
+        if (m_transitionIndex == m_clipIndex) { // dragged left
+            m_model.removeClip(m_trackIndex, m_clipIndex + 1);
+        } else {
+            m_model.removeClip(m_trackIndex, m_clipIndex);
+        }
+    } else {
+        qWarning() << "Failed to undo the transition!";
+    }
+}
+
 }
