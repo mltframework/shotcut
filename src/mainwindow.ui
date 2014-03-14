@@ -618,7 +618,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionOpenXML">
    <property name="text">
-    <string>Open XML As Clip...</string>
+    <string>Open MLT XML As Clip...</string>
    </property>
    <property name="toolTip">
     <string>Open a MLT XML project file as a virtual clip</string>
