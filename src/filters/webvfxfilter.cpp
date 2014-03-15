@@ -56,7 +56,11 @@ WebvfxFilter::~WebvfxFilter()
 
 void WebvfxFilter::on_openButton_clicked()
 {
-    QString filename = QFileDialog::getOpenFileName(this, tr("Open HTML File"), Settings.openPath(),
+    QString path = Settings.openPath();
+#ifdef Q_OS_MAC
+    path.append("/*");
+#endif
+    QString filename = QFileDialog::getOpenFileName(this, tr("Open HTML File"), path,
         tr("HTML-Files (*.htm *.html);;All Files (*)"));
     activateWindow();
     if (!filename.isEmpty())
@@ -101,7 +105,9 @@ void WebvfxFilter::on_webvfxCheckBox_clicked(bool checked)
 
 void WebvfxFilter::on_newButton_clicked()
 {
-    QString filename = QFileDialog::getSaveFileName(this, tr("Open HTML File"), Settings.openPath(),
+    QString path = Settings.openPath();
+    path.append("/.html");
+    QString filename = QFileDialog::getSaveFileName(this, tr("Save HTML File"), path,
         tr("HTML-Files (*.html *.htm);;All Files (*)"));
     activateWindow();
 

@@ -567,7 +567,11 @@ void MainWindow::open(const QString& url, const Mlt::Properties* properties)
 
 void MainWindow::openVideo()
 {
-    QStringList filenames = QFileDialog::getOpenFileNames(this, tr("Open File"), Settings.openPath());
+    QString path = Settings.openPath();
+#ifdef Q_OS_MAC
+    path.append("/*");
+#endif
+    QStringList filenames = QFileDialog::getOpenFileNames(this, tr("Open File"), path);
 
     if (filenames.length() > 0) {
         Settings.setOpenPath(QFileInfo(filenames.first()).path());
@@ -1156,7 +1160,9 @@ bool MainWindow::on_actionSave_As_triggered()
 {
     if (!MLT.producer())
         return true;
-    QString filename = QFileDialog::getSaveFileName(this, tr("Save XML"), Settings.openPath(), tr("MLT XML (*.mlt)"));
+    QString path = Settings.openPath();
+    path.append("/.mlt");
+    QString filename = QFileDialog::getSaveFileName(this, tr("Save XML"), path, tr("MLT XML (*.mlt)"));
     if (!filename.isEmpty()) {
         QFileInfo fi(filename);
         if (fi.suffix() != "mlt")
@@ -1952,8 +1958,12 @@ void MainWindow::on_actionUpgrade_triggered()
 
 void MainWindow::on_actionOpenXML_triggered()
 {
-    QStringList filenames = QFileDialog::getOpenFileNames(this, tr("Open File"), Settings.openPath());
-
+    QString path = Settings.openPath();
+#ifdef Q_OS_MAC
+    path.append("/*");
+#endif
+    QStringList filenames = QFileDialog::getOpenFileNames(this, tr("Open File"), path,
+        tr("MLT XML (*.mlt);;All Files (*)"));
     if (filenames.length() > 0) {
         const QString& url = filenames.first();
         Settings.setOpenPath(QFileInfo(url).path());

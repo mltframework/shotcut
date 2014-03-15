@@ -612,6 +612,11 @@ void EncodeDock::on_encodeButton_clicked()
         directory += "/.";
         directory += m_extension;
     }
+#ifdef Q_OS_MAC
+    else {
+        directory.append("/.mp4");
+    }
+#endif
     QString outputFilename = QFileDialog::getSaveFileName(this,
         seekable? tr("Encode to File") : tr("Capture to File"), directory);
     if (!outputFilename.isEmpty()) {
