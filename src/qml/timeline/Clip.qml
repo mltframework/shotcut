@@ -307,12 +307,17 @@ Rectangle {
                     parent.anchors.horizontalCenter = fadeInCanvas.right
                 else
                     parent.anchors.left = fadeInCanvas.left
+                bubbleHelp.hide()
             }
             onPositionChanged: {
                 if (mouse.buttons === Qt.LeftButton) {
                     var delta = Math.round((parent.x - startX) / timeScale)
                     var duration = startFadeIn + delta
                     timeline.fadeIn(trackIndex, index, duration)
+
+                    // Show fade duration as time in a "bubble" help.
+                    var s = timeline.timecode(Math.max(duration, 0))
+                    bubbleHelp.show(clipRoot.x, trackRoot.y + clipRoot.height, s.substring(6))
                 }
             }
         }
@@ -393,12 +398,17 @@ Rectangle {
                     parent.anchors.horizontalCenter = fadeOutCanvas.left
                 else
                     parent.anchors.right = fadeOutCanvas.right
+                bubbleHelp.hide()
             }
             onPositionChanged: {
                 if (mouse.buttons === Qt.LeftButton) {
                     var delta = Math.round((startX - parent.x) / timeScale)
                     var duration = startFadeOut + delta
                     timeline.fadeOut(trackIndex, index, duration)
+
+                    // Show fade duration as time in a "bubble" help.
+                    var s = timeline.timecode(Math.max(duration, 0))
+                    bubbleHelp.show(clipRoot.x, trackRoot.y + clipRoot.height, s.substring(6))
                 }
             }
         }
@@ -443,6 +453,7 @@ Rectangle {
 
             onPressed: {
                 startX = parent.x
+                originalX = 0 // reusing originalX to accumulate delta for bubble help
                 parent.anchors.left = undefined
             }
             onReleased: {
@@ -454,6 +465,8 @@ Rectangle {
                 if (mouse.buttons === Qt.LeftButton) {
                     var delta = Math.round((parent.x - startX) / timeScale)
                     if (Math.abs(delta) > 0) {
+                        if (clipDuration + originalX + delta > 0)
+                            originalX += delta
                         clipRoot.trimmingIn(clipRoot, delta, mouse)
                     }
                 }
@@ -485,6 +498,7 @@ Rectangle {
 
             onPressed: {
                 duration = clipDuration
+                originalX = 0 // reusing originalX to accumulate delta for bubble help
                 parent.anchors.right = undefined
             }
             onReleased: {
@@ -496,6 +510,8 @@ Rectangle {
                     var newDuration = Math.round((parent.x + parent.width) / timeScale)
                     var delta = duration - newDuration 
                     if (Math.abs(delta) > 0) {
+                        if (clipDuration - originalX - delta > 0)
+                            originalX += delta
                         clipRoot.trimmingOut(clipRoot, delta, mouse)
                         duration = newDuration
                     }

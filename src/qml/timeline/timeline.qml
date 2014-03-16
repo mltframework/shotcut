@@ -19,6 +19,7 @@
 import QtQuick 2.2
 import QtQml.Models 2.1
 import QtQuick.Controls 1.0
+import QtGraphicalEffects 1.0
 import 'Timeline.js' as Logic
 
 Rectangle {
@@ -252,6 +253,57 @@ Rectangle {
         }
     }
 
+    Rectangle {
+        id: bubbleHelp
+        property alias text: bubbleHelpLabel.text
+        color: timeline.toolTipBaseColor
+        width: bubbleHelpLabel.width + 8
+        height: bubbleHelpLabel.height + 8
+        radius: 4
+        states: [
+            State { name: 'invisible'; PropertyChanges { target: bubbleHelp; opacity: 0} },
+            State { name: 'visible'; PropertyChanges { target: bubbleHelp; opacity: 1} }
+        ]
+        state: 'invisible'
+        transitions: [
+            Transition {
+                from: 'invisible'
+                to: 'visible'
+                OpacityAnimator { target: bubbleHelp; duration: 200; easing.type: Easing.InOutQuad }
+            },
+            Transition {
+                from: 'visible'
+                to: 'invisible'
+                OpacityAnimator { target: bubbleHelp; duration: 200; easing.type: Easing.InOutQuad }
+            }
+        ]
+        Label {
+            id: bubbleHelpLabel
+            color: timeline.toolTipTextColor
+            anchors.centerIn: parent
+        }
+        function show(x, y, text) {
+            bubbleHelp.x = x + tracksArea.x - scrollView.flickableItem.contentX - bubbleHelpLabel.width
+            bubbleHelp.y = y + tracksArea.y - scrollView.flickableItem.contentY - bubbleHelpLabel.height
+            bubbleHelp.text = text
+            bubbleHelp.state = 'visible'
+        }
+        function hide() {
+            bubbleHelp.state = 'invisible'
+        }
+    }
+    DropShadow {
+        source: bubbleHelp
+        anchors.fill: bubbleHelp
+        opacity: bubbleHelp.opacity
+        horizontalOffset: 3
+        verticalOffset: 3
+        radius: 8
+        color: '#80000000'
+        transparentBorder: true
+        fast: true
+    }
+
     Menu {
         id: menu
         // XXX This is a workaround for menus appearing in wrong location in a Quick
@@ -409,8 +461,20 @@ Rectangle {
                 } else {
                     scrollTimer.stop()
                 }
+                // Show distance moved as time in a "bubble" help.
+                var track = tracksRepeater.itemAt(clip.trackIndex)
+                var delta = Math.round((clip.x - clip.originalX) / multitrack.scaleFactor)
+                var s = timeline.timecode(Math.abs(delta))
+                // remove leading zeroes
+                if (s.substring(0, 3) === '00:')
+                    s = s.substring(3)
+                s = ((delta < 0)? '-' : (delta > 0)? '+' : '') + s
+                bubbleHelp.show(x, track.y + height, s)
             }
-            onClipDropped: scrollTimer.running = false
+            onClipDropped: {
+                scrollTimer.running = false
+                bubbleHelp.hide()
+            }
             onClipDraggedToTrack: {
                 var i = clip.trackIndex + direction
                 if (i >= 0  && i < tracksRepeater.count) {

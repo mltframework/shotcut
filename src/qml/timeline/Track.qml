@@ -110,17 +110,43 @@ Rectangle {
             onTrimmingIn: {
                 if (!(mouse.modifiers & Qt.AltModifier) && toolbar.snap)
                     delta = Logic.snapTrimIn(clip, delta)
-                if (delta != 0)
+                if (delta != 0) {
                     timeline.trimClipIn(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex, delta)
+
+                    // Show amount trimmed as a time in a "bubble" help.
+                    var s = timeline.timecode(Math.abs(clip.originalX))
+                    // remove leading zeroes
+                    if (s.substring(0, 3) === '00:')
+                        s = s.substring(3)
+                    s = ((clip.originalX < 0)? '-' : (clip.originalX > 0)? '+' : '') + s
+                    s += ' = ' + timeline.timecode(clipDuration)
+                    bubbleHelp.show(clip.x, trackRoot.y + trackRoot.height, s)
+                }
             }
-            onTrimmedIn: multitrack.notifyClipIn(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex)
+            onTrimmedIn: {
+                multitrack.notifyClipIn(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex)
+                bubbleHelp.hide()
+            }
             onTrimmingOut: {
                 if (!(mouse.modifiers & Qt.AltModifier) && toolbar.snap)
                     delta = Logic.snapTrimOut(clip, delta)
-                if (delta != 0)
+                if (delta != 0) {
                     timeline.trimClipOut(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex, delta)
+
+                    // Show amount trimmed as a time in a "bubble" help.
+                    var s = timeline.timecode(Math.abs(clip.originalX))
+                    // remove leading zeroes
+                    if (s.substring(0, 3) === '00:')
+                        s = s.substring(3)
+                    s = ((clip.originalX < 0)? '+' : (clip.originalX > 0)? '-' : '') + s
+                    s += ' = ' + timeline.timecode(clipDuration)
+                    bubbleHelp.show(clip.x, trackRoot.y + trackRoot.height, s)
+                }
             }
-            onTrimmedOut: multitrack.notifyClipOut(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex)
+            onTrimmedOut: {
+                multitrack.notifyClipOut(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex)
+                bubbleHelp.hide()
+            }
             onDraggedToTrack: {
                 if (!placeHolderAdded) {
                     placeHolderAdded = true
