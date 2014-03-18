@@ -286,7 +286,8 @@ Rectangle {
             bubbleHelp.x = x + tracksArea.x - scrollView.flickableItem.contentX - bubbleHelpLabel.width
             bubbleHelp.y = y + tracksArea.y - scrollView.flickableItem.contentY - bubbleHelpLabel.height
             bubbleHelp.text = text
-            bubbleHelp.state = 'visible'
+            if (bubbleHelp.state !== 'visible')
+                bubbleHelp.state = 'visible'
         }
         function hide() {
             bubbleHelp.state = 'invisible'

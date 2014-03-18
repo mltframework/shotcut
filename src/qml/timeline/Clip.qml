@@ -408,7 +408,7 @@ Rectangle {
 
                     // Show fade duration as time in a "bubble" help.
                     var s = timeline.timecode(Math.max(duration, 0))
-                    bubbleHelp.show(clipRoot.x, trackRoot.y + clipRoot.height, s.substring(6))
+                    bubbleHelp.show(clipRoot.x + clipRoot.width, trackRoot.y + clipRoot.height, s.substring(6))
                 }
             }
         }
