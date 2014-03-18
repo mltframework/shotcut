@@ -1331,10 +1331,8 @@ SLIB_EXTRA_CMD=-"mv $$(@:$(SLIBSUF)=.orig.def) $$(@:$(SLIBSUF)=.def)"
       # Convert translations
       if [ "$TARGET_OS" = "Win32" ]; then
           cmd "$LRELEASE" src/src.pro
-      elif [ "$(which lrelease-qt5)" != "" ]; then
-          cmd lrelease-qt5 src/src.pro
       else
-          cmd lrelease src/src.pro
+          cmd "$QTDIR/bin/lrelease" src/src.pro
       fi
       if test "$TARGET_OS" = "Win32" ; then
         cmd install -c -m 755 src/shotcut.exe "$FINAL_INSTALL_DIR"
