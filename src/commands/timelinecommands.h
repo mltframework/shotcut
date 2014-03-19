@@ -26,6 +26,15 @@
 namespace Timeline
 {
 
+enum {
+    UndoIdTrimClipIn,
+    UndoIdTrimClipOut,
+    UndoIdFadeIn,
+    UndoIdFadeOut,
+    UndoIdTrimTransitionIn,
+    UndoIdTrimTransitionOut
+};
+
 class AppendCommand : public QUndoCommand
 {
 public:
@@ -168,7 +177,7 @@ public:
     void redo();
     void undo();
 protected:
-    int id() const;
+    int id() const { return UndoIdTrimClipIn; }
     bool mergeWith(const QUndoCommand *other);
 private:
     MultitrackModel& m_model;
@@ -185,7 +194,7 @@ public:
     void redo();
     void undo();
 protected:
-    int id() const;
+    int id() const { return UndoIdTrimClipOut; }
     bool mergeWith(const QUndoCommand *other);
 private:
     MultitrackModel& m_model;
@@ -215,7 +224,7 @@ public:
     void redo();
     void undo();
 protected:
-    int id() const;
+    int id() const { return UndoIdFadeIn; }
     bool mergeWith(const QUndoCommand *other);
 private:
     MultitrackModel& m_model;
@@ -232,7 +241,7 @@ public:
     void redo();
     void undo();
 protected:
-    int id() const;
+    int id() const { return UndoIdFadeOut; }
     bool mergeWith(const QUndoCommand *other);
 private:
     MultitrackModel& m_model;
@@ -256,6 +265,40 @@ private:
     int m_transitionIndex;
 };
 
-}
+class TrimTransitionInCommand : public QUndoCommand
+{
+public:
+    TrimTransitionInCommand(MultitrackModel& model, int trackIndex, int clipIndex, int delta, QUndoCommand * parent = 0);
+    void redo();
+    void undo();
+protected:
+    int id() const { return UndoIdTrimTransitionIn; }
+    bool mergeWith(const QUndoCommand *other);
+private:
+    MultitrackModel& m_model;
+    int m_trackIndex;
+    int m_clipIndex;
+    int m_delta;
+    bool m_notify;
+};
+
+class TrimTransitionOutCommand : public QUndoCommand
+{
+public:
+    TrimTransitionOutCommand(MultitrackModel& model, int trackIndex, int clipIndex, int delta, QUndoCommand * parent = 0);
+    void redo();
+    void undo();
+protected:
+    int id() const { return UndoIdTrimTransitionOut; }
+    bool mergeWith(const QUndoCommand *other);
+private:
+    MultitrackModel& m_model;
+    int m_trackIndex;
+    int m_clipIndex;
+    int m_delta;
+    bool m_notify;
+};
+
+} // namespace
 
 #endif

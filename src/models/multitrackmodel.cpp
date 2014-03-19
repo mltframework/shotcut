@@ -1502,6 +1502,134 @@ void MultitrackModel::removeTransition(int trackIndex, int clipIndex)
     }
 }
 
+bool MultitrackModel::trimTransitionInValid(int trackIndex, int clipIndex, int delta)
+{
+    Q_UNUSED(delta)
+    bool result = false;
+    int i = m_trackList.at(trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    if (track) {
+        Mlt::Playlist playlist(*track);
+        if (clipIndex < playlist.count() - 1) {
+            Mlt::ClipInfo info;
+            playlist.clip_info(clipIndex + 1, &info);
+            if (!qstrcmp(info.resource, "<tractor>"))
+                result = true;
+        }
+    }
+    return result;
+}
+
+void MultitrackModel::trimTransitionIn(int trackIndex, int clipIndex, int delta)
+{
+    int i = m_trackList.at(trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    if (track) {
+        Mlt::Playlist playlist(*track);
+
+        // Adjust the playlist "mix" entry.
+        QScopedPointer<Mlt::Producer> producer(playlist.get_clip(clipIndex + 1));
+        Mlt::Tractor tractor(producer->parent());
+        QScopedPointer<Mlt::Producer> track_a(tractor.track(0));
+        QScopedPointer<Mlt::Producer> track_b(tractor.track(1));
+        int out = playlist.clip_length(clipIndex + 1) + delta - 1;
+        playlist.block();
+        track_a->set_in_and_out(track_a->get_in() - delta, track_a->get_out());
+        track_b->set_in_and_out(track_b->get_in() - delta, track_b->get_out());
+        playlist.unblock();
+        tractor.multitrack()->set_in_and_out(0, out);
+        tractor.set_in_and_out(0, out);
+        producer->set("length", out + 1);
+        producer->set_in_and_out(0, out);
+
+        // Adjust the transitions.
+        QScopedPointer<Mlt::Service> service(tractor.producer());
+        while (service && service->is_valid()) {
+            if (service->type() == transition_type) {
+                Mlt::Transition transition(*service);
+                transition.set_in_and_out(0, out);
+            }
+            service.reset(service->producer());
+        }
+
+        // Adjust clip entry being trimmed.
+        Mlt::ClipInfo info;
+        playlist.clip_info(clipIndex, &info);
+        playlist.resize_clip(clipIndex, info.frame_in, info.frame_out - delta);
+
+        QVector<int> roles;
+        roles << OutPointRole;
+        roles << DurationRole;
+        emit dataChanged(createIndex(clipIndex, 0, trackIndex),
+                         createIndex(clipIndex + 1, 0, trackIndex), roles);
+        emit modified();
+    }
+}
+
+bool MultitrackModel::trimTransitionOutValid(int trackIndex, int clipIndex, int delta)
+{
+    Q_UNUSED(delta)
+    bool result = false;
+    int i = m_trackList.at(trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    if (track) {
+        Mlt::Playlist playlist(*track);
+        if (clipIndex > 0) {
+            Mlt::ClipInfo info;
+            playlist.clip_info(clipIndex - 1, &info);
+            if (!qstrcmp(info.resource, "<tractor>"))
+                result = true;
+        }
+    }
+    return result;
+}
+
+void MultitrackModel::trimTransitionOut(int trackIndex, int clipIndex, int delta)
+{
+    int i = m_trackList.at(trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    if (track) {
+        Mlt::Playlist playlist(*track);
+
+        // Adjust the playlist "mix" entry.
+        QScopedPointer<Mlt::Producer> producer(playlist.get_clip(clipIndex - 1));
+        Mlt::Tractor tractor(producer->parent());
+        QScopedPointer<Mlt::Producer> track_a(tractor.track(0));
+        QScopedPointer<Mlt::Producer> track_b(tractor.track(1));
+        int out = playlist.clip_length(clipIndex - 1) + delta - 1;
+        playlist.block();
+        track_a->set_in_and_out(track_a->get_in(), track_a->get_out() + delta);
+        track_b->set_in_and_out(track_b->get_in(), track_b->get_out() + delta);
+        playlist.unblock();
+        tractor.multitrack()->set_in_and_out(0, out);
+        tractor.set_in_and_out(0, out);
+        producer->set("length", out + 1);
+        producer->set_in_and_out(0, out);
+
+        // Adjust the transitions.
+        QScopedPointer<Mlt::Service> service(tractor.producer());
+        while (service && service->is_valid()) {
+            if (service->type() == transition_type) {
+                Mlt::Transition transition(*service);
+                transition.set_in_and_out(0, out);
+            }
+            service.reset(service->producer());
+        }
+
+        // Adjust clip entry being trimmed.
+        Mlt::ClipInfo info;
+        playlist.clip_info(clipIndex, &info);
+        playlist.resize_clip(clipIndex, info.frame_in + delta, info.frame_out);
+
+        QVector<int> roles;
+        roles << OutPointRole;
+        roles << DurationRole;
+        emit dataChanged(createIndex(clipIndex - 1, 0, trackIndex),
+                         createIndex(clipIndex, 0, trackIndex), roles);
+        emit modified();
+    }
+}
+
 bool MultitrackModel::moveClipToTrack(int fromTrack, int toTrack, int clipIndex, int position)
 {
     bool result;

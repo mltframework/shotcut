@@ -133,6 +133,10 @@ public slots:
     bool addTransitionValid(int fromTrack, int toTrack, int clipIndex, int position);
     int addTransition(int trackIndex, int clipIndex, int position);
     void removeTransition(int trackIndex, int clipIndex);
+    bool trimTransitionInValid(int trackIndex, int clipIndex, int delta);
+    void trimTransitionIn(int trackIndex, int clipIndex, int delta);
+    bool trimTransitionOutValid(int trackIndex, int clipIndex, int delta);
+    void trimTransitionOut(int trackIndex, int clipIndex, int delta);
 
 private:
     Mlt::Tractor* m_tractor;
