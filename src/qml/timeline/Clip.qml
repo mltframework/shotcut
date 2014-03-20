@@ -536,12 +536,12 @@ Rectangle {
             onTriggered: timeline.lift(trackIndex, index)
         }
         MenuItem {
-            visible: !isBlank
+            visible: !isBlank && !isTransition
             text: qsTr('Open As Clip')
             onTriggered: timeline.openClip(trackIndex, index)
         }
         MenuItem {
-            visible: !isBlank
+            visible: !isBlank && !isTransition
             text: qsTr('Split At Playhead (S)')
             onTriggered: timeline.splitClip(trackIndex, index)
         }
