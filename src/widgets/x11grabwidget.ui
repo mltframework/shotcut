@@ -210,9 +210,6 @@ Most users do not need to change this.</string>
      <property name="text">
       <string>Show the capture region</string>
      </property>
-     <property name="shortcut">
-      <string>Ctrl+S</string>
-     </property>
     </widget>
    </item>
    <item row="8" column="0" colspan="5">

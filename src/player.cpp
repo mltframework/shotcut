@@ -276,22 +276,21 @@ void Player::retranslateUi(QWidget* widget)
 #ifndef QT_NO_TOOLTIP
     actionPlay->setToolTip(tr("Start playback (L)"));
 #endif // QT_NO_TOOLTIP
-    actionPlay->setShortcut(tr("Space"));
+    actionPlay->setShortcut(QString("Space"));
     actionPause->setText(tr("Pause"));
 #ifndef QT_NO_TOOLTIP
     actionPause->setToolTip(tr("Pause playback (K)"));
 #endif // QT_NO_TOOLTIP
-    actionPause->setShortcut(tr("Backspace"));
     actionSkipNext->setText(tr("Skip Next"));
 #ifndef QT_NO_TOOLTIP
     actionSkipNext->setToolTip(tr("Skip to the next point (Alt+Right)"));
 #endif // QT_NO_TOOLTIP
-    actionSkipNext->setShortcut(tr("Alt+Right"));
+    actionSkipNext->setShortcut(QString("Alt+Right"));
     actionSkipPrevious->setText(tr("Skip Previous"));
 #ifndef QT_NO_TOOLTIP
     actionSkipPrevious->setToolTip(tr("Skip to the previous point (Alt+Left)"));
 #endif // QT_NO_TOOLTIP
-    actionSkipPrevious->setShortcut(tr("Alt+Left"));
+    actionSkipPrevious->setShortcut(QString("Alt+Left"));
     actionRewind->setText(tr("Rewind"));
 #ifndef QT_NO_TOOLTIP
     actionRewind->setToolTip(tr("Play quickly backwards (J)"));
