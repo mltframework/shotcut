@@ -137,10 +137,15 @@ public slots:
     void trimTransitionIn(int trackIndex, int clipIndex, int delta);
     bool trimTransitionOutValid(int trackIndex, int clipIndex, int delta);
     void trimTransitionOut(int trackIndex, int clipIndex, int delta);
+    bool addTransitionByTrimInValid(int trackIndex, int clipIndex, int delta);
+    void addTransitionByTrimIn(int trackIndex, int clipIndex, int delta);
+    bool addTransitionByTrimOutValid(int trackIndex, int clipIndex, int delta);
+    void addTransitionByTrimOut(int trackIndex, int clipIndex, int delta);
 
 private:
     Mlt::Tractor* m_tractor;
     TrackList m_trackList;
+    bool m_isMakingTransition;
 
     bool moveClipToTrack(int fromTrack, int toTrack, int clipIndex, int position);
     void moveClipToEnd(Mlt::Playlist& playlist, int trackIndex, int clipIndex, int position);

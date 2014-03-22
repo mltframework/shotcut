@@ -304,7 +304,11 @@ bool TimelineDock::moveClip(int fromTrack, int toTrack, int clipIndex, int posit
 
 void TimelineDock::trimClipIn(int trackIndex, int clipIndex, int delta)
 {
-    if (m_model.trimTransitionOutValid(trackIndex, clipIndex, delta)) {
+    if (m_model.addTransitionByTrimInValid(trackIndex, clipIndex, delta)) {
+        MAIN.undoStack()->push(
+            new Timeline::AddTransitionByTrimInCommand(m_model, trackIndex, clipIndex, delta));
+    }
+    else if (m_model.trimTransitionOutValid(trackIndex, clipIndex, delta)) {
         MAIN.undoStack()->push(
             new Timeline::TrimTransitionOutCommand(m_model, trackIndex, clipIndex, delta));
     }
@@ -316,7 +320,11 @@ void TimelineDock::trimClipIn(int trackIndex, int clipIndex, int delta)
 
 void TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta)
 {
-    if (m_model.trimTransitionInValid(trackIndex, clipIndex, delta)) {
+    if (m_model.addTransitionByTrimOutValid(trackIndex, clipIndex, delta)) {
+        MAIN.undoStack()->push(
+            new Timeline::AddTransitionByTrimOutCommand(m_model, trackIndex, clipIndex, delta));
+    }
+    else if (m_model.trimTransitionInValid(trackIndex, clipIndex, delta)) {
         MAIN.undoStack()->push(
             new Timeline::TrimTransitionInCommand(m_model, trackIndex, clipIndex, delta));
     }

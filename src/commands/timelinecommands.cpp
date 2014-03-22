@@ -504,4 +504,81 @@ bool TrimTransitionOutCommand::mergeWith(const QUndoCommand *other)
     return true;
 }
 
+AddTransitionByTrimInCommand::AddTransitionByTrimInCommand(MultitrackModel &model, int trackIndex, int clipIndex, int delta, QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_trackIndex(trackIndex)
+    , m_clipIndex(clipIndex)
+    , m_delta(delta)
+    , m_notify(false)
+{
+    setText(QObject::tr("Add transition"));
+}
+
+void AddTransitionByTrimInCommand::redo()
+{
+    m_model.addTransitionByTrimIn(m_trackIndex, m_clipIndex, m_delta);
+    if (m_notify && m_clipIndex > 0)
+        m_model.notifyClipOut(m_trackIndex, m_clipIndex - 1);
+}
+
+void AddTransitionByTrimInCommand::undo()
+{
+    if (m_clipIndex > 0) {
+        QModelIndex modelIndex = m_model.index(m_clipIndex, 0, m_model.index(m_trackIndex));
+        m_delta = -m_model.data(modelIndex, MultitrackModel::DurationRole).toInt();
+        m_model.liftClip(m_trackIndex, m_clipIndex);
+        m_model.trimClipOut(m_trackIndex, m_clipIndex - 1, m_delta);
+        m_model.notifyClipOut(m_trackIndex, m_clipIndex - 1);
+        m_notify = true;
+    }
+}
+
+bool AddTransitionByTrimInCommand::mergeWith(const QUndoCommand *other)
+{
+    const AddTransitionByTrimInCommand* that = static_cast<const AddTransitionByTrimInCommand*>(other);
+    if (that->id() != id() || that->m_trackIndex != m_trackIndex ||
+        (that->m_clipIndex != m_clipIndex && m_clipIndex != that->m_clipIndex - 1))
+        return false;
+    return true;
+}
+
+AddTransitionByTrimOutCommand::AddTransitionByTrimOutCommand(MultitrackModel &model, int trackIndex, int clipIndex, int delta, QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_trackIndex(trackIndex)
+    , m_clipIndex(clipIndex)
+    , m_delta(delta)
+    , m_notify(false)
+{
+    setText(QObject::tr("Add transition"));
+}
+
+void AddTransitionByTrimOutCommand::redo()
+{
+    m_model.addTransitionByTrimOut(m_trackIndex, m_clipIndex, m_delta);
+    if (m_notify)
+        m_model.notifyClipIn(m_trackIndex, m_clipIndex + 2);
+}
+
+void AddTransitionByTrimOutCommand::undo()
+{
+    if (m_clipIndex + 2 < m_model.rowCount(m_model.index(m_trackIndex))) {
+        QModelIndex modelIndex = m_model.index(m_clipIndex + 1, 0, m_model.index(m_trackIndex));
+        m_delta = -m_model.data(modelIndex, MultitrackModel::DurationRole).toInt();
+        m_model.liftClip(m_trackIndex, m_clipIndex + 1);
+        m_model.trimClipIn(m_trackIndex, m_clipIndex + 2, m_delta);
+        m_model.notifyClipIn(m_trackIndex, m_clipIndex + 1);
+        m_notify = true;
+    }
+}
+
+bool AddTransitionByTrimOutCommand::mergeWith(const QUndoCommand *other)
+{
+    const AddTransitionByTrimOutCommand* that = static_cast<const AddTransitionByTrimOutCommand*>(other);
+    if (that->id() != id() || that->m_trackIndex != m_trackIndex || that->m_clipIndex != m_clipIndex)
+        return false;
+    return true;
+}
+
 } // namespace

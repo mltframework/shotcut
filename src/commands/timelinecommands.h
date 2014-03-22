@@ -32,7 +32,9 @@ enum {
     UndoIdFadeIn,
     UndoIdFadeOut,
     UndoIdTrimTransitionIn,
-    UndoIdTrimTransitionOut
+    UndoIdTrimTransitionOut,
+    UndoIdAddTransitionByTrimIn,
+    UndoIdAddTransitionByTrimOut
 };
 
 class AppendCommand : public QUndoCommand
@@ -290,6 +292,40 @@ public:
     void undo();
 protected:
     int id() const { return UndoIdTrimTransitionOut; }
+    bool mergeWith(const QUndoCommand *other);
+private:
+    MultitrackModel& m_model;
+    int m_trackIndex;
+    int m_clipIndex;
+    int m_delta;
+    bool m_notify;
+};
+
+class AddTransitionByTrimInCommand : public QUndoCommand
+{
+public:
+    AddTransitionByTrimInCommand(MultitrackModel& model, int trackIndex, int clipIndex, int delta, QUndoCommand * parent = 0);
+    void redo();
+    void undo();
+protected:
+    int id() const { return UndoIdAddTransitionByTrimIn; }
+    bool mergeWith(const QUndoCommand *other);
+private:
+    MultitrackModel& m_model;
+    int m_trackIndex;
+    int m_clipIndex;
+    int m_delta;
+    bool m_notify;
+};
+
+class AddTransitionByTrimOutCommand : public QUndoCommand
+{
+public:
+    AddTransitionByTrimOutCommand(MultitrackModel& model, int trackIndex, int clipIndex, int delta, QUndoCommand * parent = 0);
+    void redo();
+    void undo();
+protected:
+    int id() const { return UndoIdAddTransitionByTrimOut; }
     bool mergeWith(const QUndoCommand *other);
 private:
     MultitrackModel& m_model;

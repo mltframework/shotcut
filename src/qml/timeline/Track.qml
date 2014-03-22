@@ -123,6 +123,9 @@ Rectangle {
             }
             onTrimmedIn: {
                 multitrack.notifyClipIn(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex)
+                // Notify out point of clip A changed when trimming to add a transition.
+                if (clip.DelegateModel.itemsIndex > 1 && repeater.itemAt(clip.DelegateModel.itemsIndex - 1).isTransition)
+                    multitrack.notifyClipOut(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex - 2)
                 bubbleHelp.hide()
             }
             onTrimmingOut: {
@@ -141,6 +144,9 @@ Rectangle {
             }
             onTrimmedOut: {
                 multitrack.notifyClipOut(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex)
+                // Notify in point of clip B changed when trimming to add a transition.
+                if (clip.DelegateModel.itemsIndex + 2 < repeater.count && repeater.itemAt(clip.DelegateModel.itemsIndex + 1).isTransition)
+                    multitrack.notifyClipIn(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex + 2)
                 bubbleHelp.hide()
             }
             onDraggedToTrack: {

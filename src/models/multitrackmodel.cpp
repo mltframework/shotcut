@@ -173,6 +173,7 @@ public:
 MultitrackModel::MultitrackModel(QObject *parent)
     : QAbstractItemModel(parent)
     , m_tractor(0)
+    , m_isMakingTransition(false)
 {
     connect(this, SIGNAL(modified()), SLOT(adjustBackgroundDuration()));
 }
@@ -542,9 +543,6 @@ int MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta)
             playlist.insert_blank(clipIndex, delta - 1);
             endInsertRows();
             ++result;
-        } else {
-            // TODO start adding a transition
-            return result;
         }
         emit modified();
     }
@@ -559,6 +557,7 @@ void MultitrackModel::notifyClipIn(int trackIndex, int clipIndex)
         roles << AudioLevelsRole;
         emit dataChanged(index, index, roles);
     }
+    m_isMakingTransition = false;
 }
 
 bool MultitrackModel::trimClipOutValid(int trackIndex, int clipIndex, int delta)
@@ -642,9 +641,6 @@ int MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta)
             beginInsertRows(index(trackIndex), newIndex, newIndex);
             playlist.insert_blank(newIndex, delta - 1);
             endInsertRows();
-        } else if (clipIndex < playlist.count() - 1) {
-            // TODO start adding a transition
-            return result;
         }
         int in = info->frame_in;
         int out = info->frame_out - delta;
@@ -679,6 +675,7 @@ void MultitrackModel::notifyClipOut(int trackIndex, int clipIndex)
         roles << AudioLevelsRole;
         emit dataChanged(index, index, roles);
     }
+    m_isMakingTransition = false;
 }
 
 bool MultitrackModel::moveClipValid(int fromTrack, int toTrack, int clipIndex, int position)
@@ -1113,6 +1110,12 @@ void MultitrackModel::liftClip(int trackIndex, int clipIndex)
     if (track) {
         Mlt::Playlist playlist(*track);
         if (clipIndex < playlist.count()) {
+            // Shotcut does not like the behavior of replace_with_blank() on a
+            // transition (MLT mix clip). So, we null mlt_mix to prevent it.
+            QScopedPointer<Mlt::Producer> producer(playlist.get_clip(clipIndex));
+            if (producer)
+                producer->parent().set("mlt_mix", NULL, 0);
+
             playlist.replace_with_blank(clipIndex);
 
             QModelIndex index = createIndex(clipIndex, 0, trackIndex);
@@ -1441,13 +1444,13 @@ int MultitrackModel::addTransition(int trackIndex, int clipIndex, int position)
         if (!playlist.is_blank_at(position))
         if ((targetIndex == (clipIndex - 1) && endOfCurrentClip > endOfPreviousClip) || // dragged left
             (targetIndex == clipIndex && position < startOfNextClip)) { // dragged right
+            int duration = qAbs(position - playlist.clip_start(clipIndex));
 
             // Adjust/insert blanks
             moveClipInBlank(playlist, trackIndex, clipIndex, position);
             targetIndex = playlist.get_clip_index_at(position);
 
             // Create mix
-            int duration = qAbs(position - playlist.clip_start(clipIndex));
             beginInsertRows(index(trackIndex), targetIndex + 1, targetIndex + 1);
             playlist.mix(targetIndex, duration);
             endInsertRows();
@@ -1466,6 +1469,7 @@ int MultitrackModel::addTransition(int trackIndex, int clipIndex, int position)
             roles << DurationRole;
             emit dataChanged(modelIndex, modelIndex, roles);
             modelIndex = createIndex(targetIndex + 2, 0, trackIndex);
+            roles.clear();
             roles << StartRole;
             roles << InPointRole;
             roles << DurationRole;
@@ -1576,6 +1580,7 @@ bool MultitrackModel::trimTransitionOutValid(int trackIndex, int clipIndex, int 
         Mlt::Playlist playlist(*track);
         if (clipIndex > 0) {
             Mlt::ClipInfo info;
+            // Check if there is already a transition.
             playlist.clip_info(clipIndex - 1, &info);
             if (!qstrcmp(info.resource, "<tractor>"))
                 result = true;
@@ -1625,8 +1630,139 @@ void MultitrackModel::trimTransitionOut(int trackIndex, int clipIndex, int delta
         roles << OutPointRole;
         roles << DurationRole;
         emit dataChanged(createIndex(clipIndex - 1, 0, trackIndex),
+                         createIndex(clipIndex - 1, 0, trackIndex), roles);
+        roles.clear();
+        roles << InPointRole;
+        roles << DurationRole;
+        emit dataChanged(createIndex(clipIndex, 0, trackIndex),
                          createIndex(clipIndex, 0, trackIndex), roles);
         emit modified();
+    }
+}
+
+bool MultitrackModel::addTransitionByTrimInValid(int trackIndex, int clipIndex, int delta)
+{
+    Q_UNUSED(delta)
+    bool result = false;
+    int i = m_trackList.at(trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    if (track) {
+        Mlt::Playlist playlist(*track);
+        if (clipIndex > 0) {
+            Mlt::ClipInfo info;
+            // Check if preceeding clip is not blank, not already a transition,
+            // and there is enough frames before in point of current clip.
+            playlist.clip_info(clipIndex - 1, &info);
+            if (delta < 0 && !playlist.is_blank(clipIndex - 1) && qstrcmp(info.resource, "<tractor>")) {
+                playlist.clip_info(clipIndex, &info);
+                if (info.frame_in >= -delta)
+                    result = true;
+            } else {
+                result = m_isMakingTransition;
+            }
+        }
+    }
+    return result;
+}
+
+void MultitrackModel::addTransitionByTrimIn(int trackIndex, int clipIndex, int delta)
+{
+    int i = m_trackList.at(trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    if (track) {
+        Mlt::Playlist playlist(*track);
+        Mlt::ClipInfo info;
+
+        // Create transition if it does not yet exist.
+        playlist.clip_info(clipIndex - 1, &info);
+        if (qstrcmp(info.resource, "<tractor>")) {
+            beginInsertRows(index(trackIndex), clipIndex, clipIndex);
+            playlist.mix_out(clipIndex - 1, -delta);
+            endInsertRows();
+
+            // Add transitions.
+            Mlt::Transition dissolve(MLT.profile(), Settings.playerGPU()? "movit.mix" : "luma");
+            Mlt::Transition crossFade(MLT.profile(), "mix:-1");
+            playlist.mix_add(clipIndex, &dissolve);
+            playlist.mix_add(clipIndex, &crossFade);
+
+            // Notify clip A changed.
+            QModelIndex modelIndex = createIndex(clipIndex - 1, 0, trackIndex);
+            QVector<int> roles;
+            roles << OutPointRole;
+            roles << DurationRole;
+            emit dataChanged(modelIndex, modelIndex, roles);
+            emit modified();
+            m_isMakingTransition = true;
+        } else if (m_isMakingTransition) {
+            // Adjust a transition addition already in progress.
+            // m_isMakingTransition will be set false when mouse button released via notifyClipOut().
+            delta = playlist.clip_start(clipIndex - 1) - (playlist.clip_start(clipIndex) + delta);
+            trimTransitionIn(trackIndex, clipIndex - 2, delta);
+        }
+    }
+}
+
+bool MultitrackModel::addTransitionByTrimOutValid(int trackIndex, int clipIndex, int delta)
+{
+    Q_UNUSED(delta)
+    bool result = false;
+    int i = m_trackList.at(trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    if (track) {
+        Mlt::Playlist playlist(*track);
+        if (clipIndex + 1 < playlist.count()) {
+            Mlt::ClipInfo info;
+            // Check if following clip is not blank, not already a transition,
+            // and there is enough frames after out point of current clip.
+            playlist.clip_info(clipIndex + 1, &info);
+            if (delta < 0 && !playlist.is_blank(clipIndex + 1) && qstrcmp(info.resource, "<tractor>")) {
+                playlist.clip_info(clipIndex, &info);
+                if ((info.length - info.frame_out) >= -delta)
+                    result = true;
+            } else {
+                result = m_isMakingTransition;
+            }
+        }
+    }
+    return result;
+}
+
+void MultitrackModel::addTransitionByTrimOut(int trackIndex, int clipIndex, int delta)
+{
+    int i = m_trackList.at(trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    if (track) {
+        Mlt::Playlist playlist(*track);
+        Mlt::ClipInfo info;
+
+        // Create transition if it does not yet exist.
+        playlist.clip_info(clipIndex + 1, &info);
+        if (qstrcmp(info.resource, "<tractor>")) {
+            beginInsertRows(index(trackIndex), clipIndex + 1, clipIndex + 1);
+            playlist.mix_in(clipIndex, -delta);
+            endInsertRows();
+
+            // Add transitions.
+            Mlt::Transition dissolve(MLT.profile(), Settings.playerGPU()? "movit.mix" : "luma");
+            Mlt::Transition crossFade(MLT.profile(), "mix:-1");
+            playlist.mix_add(clipIndex + 1, &dissolve);
+            playlist.mix_add(clipIndex + 1, &crossFade);
+
+            // Notify clip B changed.
+            QModelIndex modelIndex = createIndex(clipIndex + 2, 0, trackIndex);
+            QVector<int> roles;
+            roles << InPointRole;
+            roles << DurationRole;
+            emit dataChanged(modelIndex, modelIndex, roles);
+            emit modified();
+            m_isMakingTransition = true;
+        } else if (m_isMakingTransition) {
+            // Adjust a transition addition already in progress.
+            // m_isMakingTransition will be set false when mouse button released via notifyClipIn().
+            delta = playlist.clip_start(clipIndex + 1) - (playlist.clip_start(clipIndex) + playlist.clip_length(clipIndex) + delta);
+            trimTransitionOut(trackIndex, clipIndex + 2, delta);
+        }
     }
 }
 
