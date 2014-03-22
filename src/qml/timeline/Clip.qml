@@ -531,7 +531,7 @@ Rectangle {
             onTriggered: timeline.remove(trackIndex, index)
         }
         MenuItem {
-            visible: !isBlank && !isTransition
+            visible: !isBlank
             text: qsTr('Lift')
             onTriggered: timeline.lift(trackIndex, index)
         }
