@@ -162,6 +162,7 @@ private:
     void removeBlankPlaceholder(Mlt::Playlist& playlist, int trackIndex);
     void retainPlaylist();
     void loadPlaylist();
+    bool isTransition(Mlt::Playlist& playlist, int clipIndex) const;
 
 private slots:
     void adjustBackgroundDuration();

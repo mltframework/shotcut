@@ -44,6 +44,7 @@ static const char* kPlaylistTrackId = "main bin";
 static const char* kTrackHeightProperty = "shotcut:trackHeight";
 static const char* kTimelineScaleProperty = "shotcut:scaleFactor";
 static const char* kShotcutFilterProperty = "shotcut:filter";
+static const char* kShotcutTransitionProperty = "shotcut:transition";
 
 static void deleteQVariantList(QVariantList* list)
 {
@@ -279,7 +280,7 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                 return (filter && filter->is_valid())? filter->get_length() : 0;
             }
             case IsTransitionRole:
-                return !qstrcmp(info->resource, "<tractor>");
+                return isTransition(playlist, index.row());
             default:
                 break;
             }
@@ -507,7 +508,7 @@ int MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta)
         for (int j = 0; j < n; j++) {
             Mlt::Filter* filter = info->producer->filter(j);
             if (filter && filter->is_valid() && filter->get_length() > 0) {
-                if (QString(filter->get("shotcut:filter")).startsWith("fadeIn"))
+                if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeIn"))
                     filter->set_in_and_out(in, in + filter->get_length() - 1);
             }
             delete filter;
@@ -651,7 +652,7 @@ int MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta)
         for (int j = 0; j < n; j++) {
             Mlt::Filter* filter = info->producer->filter(j);
             if (filter && filter->is_valid() && filter->get_length() > 0) {
-                if (QString(filter->get("shotcut:filter")).startsWith("fadeOut"))
+                if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeOut"))
                     filter->set_in_and_out(out - filter->get_length() + 1, out);
             }
             delete filter;
@@ -1453,6 +1454,8 @@ int MultitrackModel::addTransition(int trackIndex, int clipIndex, int position)
             // Create mix
             beginInsertRows(index(trackIndex), targetIndex + 1, targetIndex + 1);
             playlist.mix(targetIndex, duration);
+            QScopedPointer<Mlt::Producer> producer(playlist.get_clip(targetIndex + 1));
+            producer->parent().set(kShotcutTransitionProperty, 1);
             endInsertRows();
 
             // Add transitions
@@ -1514,10 +1517,9 @@ bool MultitrackModel::trimTransitionInValid(int trackIndex, int clipIndex, int d
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     if (track) {
         Mlt::Playlist playlist(*track);
-        if (clipIndex < playlist.count() - 1) {
-            Mlt::ClipInfo info;
-            playlist.clip_info(clipIndex + 1, &info);
-            if (!qstrcmp(info.resource, "<tractor>"))
+        if (clipIndex + 1 < playlist.count()) {
+            // Check if there is already a transition.
+            if (isTransition(playlist, clipIndex + 1))
                 result = true;
         }
     }
@@ -1579,10 +1581,8 @@ bool MultitrackModel::trimTransitionOutValid(int trackIndex, int clipIndex, int 
     if (track) {
         Mlt::Playlist playlist(*track);
         if (clipIndex > 0) {
-            Mlt::ClipInfo info;
             // Check if there is already a transition.
-            playlist.clip_info(clipIndex - 1, &info);
-            if (!qstrcmp(info.resource, "<tractor>"))
+            if (isTransition(playlist, clipIndex - 1))
                 result = true;
         }
     }
@@ -1649,11 +1649,10 @@ bool MultitrackModel::addTransitionByTrimInValid(int trackIndex, int clipIndex, 
     if (track) {
         Mlt::Playlist playlist(*track);
         if (clipIndex > 0) {
-            Mlt::ClipInfo info;
             // Check if preceeding clip is not blank, not already a transition,
             // and there is enough frames before in point of current clip.
-            playlist.clip_info(clipIndex - 1, &info);
-            if (delta < 0 && !playlist.is_blank(clipIndex - 1) && qstrcmp(info.resource, "<tractor>")) {
+            if (delta < 0 && !playlist.is_blank(clipIndex - 1) && !isTransition(playlist, clipIndex - 1)) {
+                Mlt::ClipInfo info;
                 playlist.clip_info(clipIndex, &info);
                 if (info.frame_in >= -delta)
                     result = true;
@@ -1671,13 +1670,13 @@ void MultitrackModel::addTransitionByTrimIn(int trackIndex, int clipIndex, int d
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     if (track) {
         Mlt::Playlist playlist(*track);
-        Mlt::ClipInfo info;
 
         // Create transition if it does not yet exist.
-        playlist.clip_info(clipIndex - 1, &info);
-        if (qstrcmp(info.resource, "<tractor>")) {
+        if (!isTransition(playlist, clipIndex - 1)) {
             beginInsertRows(index(trackIndex), clipIndex, clipIndex);
             playlist.mix_out(clipIndex - 1, -delta);
+            QScopedPointer<Mlt::Producer> producer(playlist.get_clip(clipIndex));
+            producer->parent().set(kShotcutTransitionProperty, 1);
             endInsertRows();
 
             // Add transitions.
@@ -1712,11 +1711,10 @@ bool MultitrackModel::addTransitionByTrimOutValid(int trackIndex, int clipIndex,
     if (track) {
         Mlt::Playlist playlist(*track);
         if (clipIndex + 1 < playlist.count()) {
-            Mlt::ClipInfo info;
             // Check if following clip is not blank, not already a transition,
             // and there is enough frames after out point of current clip.
-            playlist.clip_info(clipIndex + 1, &info);
-            if (delta < 0 && !playlist.is_blank(clipIndex + 1) && qstrcmp(info.resource, "<tractor>")) {
+            if (delta < 0 && !playlist.is_blank(clipIndex + 1) && !isTransition(playlist, clipIndex +  1)) {
+                Mlt::ClipInfo info;
                 playlist.clip_info(clipIndex, &info);
                 if ((info.length - info.frame_out) >= -delta)
                     result = true;
@@ -1734,13 +1732,13 @@ void MultitrackModel::addTransitionByTrimOut(int trackIndex, int clipIndex, int 
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     if (track) {
         Mlt::Playlist playlist(*track);
-        Mlt::ClipInfo info;
 
         // Create transition if it does not yet exist.
-        playlist.clip_info(clipIndex + 1, &info);
-        if (qstrcmp(info.resource, "<tractor>")) {
+        if (!isTransition(playlist, clipIndex + 1)) {
             beginInsertRows(index(trackIndex), clipIndex + 1, clipIndex + 1);
             playlist.mix_in(clipIndex, -delta);
+            QScopedPointer<Mlt::Producer> producer(playlist.get_clip(clipIndex + 1));
+            producer->parent().set(kShotcutTransitionProperty, 1);
             endInsertRows();
 
             // Add transitions.
@@ -2210,6 +2208,14 @@ void MultitrackModel::loadPlaylist()
             MAIN.playlistDock()->model()->setPlaylist(playlist);
     }
     retainPlaylist();
+}
+
+bool MultitrackModel::isTransition(Mlt::Playlist &playlist, int clipIndex) const
+{
+    QScopedPointer<Mlt::Producer> producer(playlist.get_clip(clipIndex));
+    if (producer && producer->parent().get(kShotcutTransitionProperty))
+        return true;
+    return false;
 }
 
 void MultitrackModel::load()
