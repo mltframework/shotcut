@@ -28,6 +28,7 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
 {
     ui->setupUi(this);
     bool gpu = Settings.playerGPU();
+    ui->gpuProcessingWarning->setVisible(gpu);
     ui->lumaCombo->setDisabled(gpu);
     ui->invertCheckBox->setDisabled(gpu);
     ui->softnessSlider->setDisabled(gpu);

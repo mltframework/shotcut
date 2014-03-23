@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>388</width>
-    <height>263</height>
+    <height>306</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -192,9 +192,12 @@
       </layout>
      </item>
      <item row="3" column="1" colspan="2">
-      <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,0,0">
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
         <widget class="QSlider" name="softnessSlider">
+         <property name="toolTip">
+          <string>Change the softness of the edge of the wipe</string>
+         </property>
          <property name="maximum">
           <number>100</number>
          </property>
@@ -213,57 +216,30 @@
          </property>
         </widget>
        </item>
-       <item>
-        <spacer name="horizontalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
       </layout>
      </item>
-     <item row="4" column="1" colspan="2">
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <item>
-        <widget class="QRadioButton" name="crossfadeRadioButton">
-         <property name="text">
-          <string>Cross-fade</string>
-         </property>
-         <attribute name="buttonGroup">
-          <string notr="true">buttonGroup</string>
-         </attribute>
-        </widget>
-       </item>
-       <item>
-        <widget class="QRadioButton" name="mixRadioButton">
-         <property name="text">
-          <string>Mix</string>
-         </property>
-         <attribute name="buttonGroup">
-          <string notr="true">buttonGroup</string>
-         </attribute>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_3">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Wipe Softness</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1" colspan="2">
+      <widget class="QCheckBox" name="invertCheckBox">
+       <property name="toolTip">
+        <string>Swap the appearance of the A and B clips</string>
+       </property>
+       <property name="text">
+        <string>Invert Wipe</string>
+       </property>
+      </widget>
      </item>
      <item row="6" column="0">
       <spacer name="verticalSpacer">
@@ -278,6 +254,22 @@
        </property>
       </spacer>
      </item>
+     <item row="1" column="1" colspan="2">
+      <widget class="QLabel" name="gpuProcessingWarning">
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Video transitions other than &lt;span style=&quot; font-weight:600;&quot;&gt;Dissolve&lt;/span&gt; are not yet available when &lt;span style=&quot; font-weight:600;&quot;&gt;GPU Processing&lt;/span&gt; is enabled in &lt;span style=&quot; font-weight:600;&quot;&gt;Settings&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
+       </property>
+       <property name="margin">
+        <number>8</number>
+       </property>
+      </widget>
+     </item>
      <item row="4" column="0">
       <widget class="QLabel" name="label_4">
        <property name="text">
@@ -288,18 +280,24 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>Softness</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
      <item row="5" column="1" colspan="2">
-      <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,1,0,0,0">
+      <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,0,1,0,0">
+       <item>
+        <widget class="QRadioButton" name="mixRadioButton">
+         <property name="toolTip">
+          <string>Do not alter the audio levels during the
+course of the transition. Instead, set a
+fixed mixing level, or choose only clip A's
+audio (0%) or clip B's audio (100%).</string>
+         </property>
+         <property name="text">
+          <string>Mix:</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">buttonGroup</string>
+         </attribute>
+        </widget>
+       </item>
        <item>
         <widget class="QLabel" name="label_6">
          <property name="text">
@@ -331,37 +329,26 @@
          </property>
         </widget>
        </item>
-       <item>
-        <spacer name="horizontalSpacer_4">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
       </layout>
      </item>
-     <item row="5" column="0">
-      <widget class="QLabel" name="label_5">
-       <property name="text">
-        <string>Mix Level</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1" colspan="2">
-      <widget class="QCheckBox" name="invertCheckBox">
-       <property name="text">
-        <string>Invert</string>
-       </property>
-      </widget>
+     <item row="4" column="1" colspan="2">
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QRadioButton" name="crossfadeRadioButton">
+         <property name="toolTip">
+          <string>Automatically fade-out the audio of clip A
+and fade-in the audio of clip B over the
+duration of the transition.</string>
+         </property>
+         <property name="text">
+          <string>Cross-fade</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">buttonGroup</string>
+         </attribute>
+        </widget>
+       </item>
+      </layout>
      </item>
     </layout>
    </item>
@@ -373,7 +360,6 @@
   <tabstop>softnessSlider</tabstop>
   <tabstop>softnessSpinner</tabstop>
   <tabstop>crossfadeRadioButton</tabstop>
-  <tabstop>mixRadioButton</tabstop>
   <tabstop>mixSlider</tabstop>
   <tabstop>mixSpinner</tabstop>
  </tabstops>
