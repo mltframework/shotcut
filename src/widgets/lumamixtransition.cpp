@@ -45,7 +45,8 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
             ui->softnessSpinner->setDisabled(true);
         }
         ui->invertCheckBox->setChecked(transition->get_int("invert"));
-        ui->softnessSlider->setValue(qRound(transition->get_double("softness") * 100.0));
+        if (transition->get("softness"))
+            ui->softnessSlider->setValue(qRound(transition->get_double("softness") * 100.0));
     }
     transition.reset(getTransition("mix"));
     if (transition && transition->is_valid()) {
@@ -78,6 +79,8 @@ void LumaMixTransition::on_lumaCombo_currentIndexChanged(int index)
         } else {
             transition->set("resource", QString("%luma%1.pgm").arg(index, 2, 10, QChar('0')).toLatin1().constData());
             transition->set("progressive", 1);
+            transition->set("invert", ui->invertCheckBox->isChecked());
+            transition->set("softness", ui->softnessSlider->value() / 100.0);
         }
         MLT.refreshConsumer();
     }
