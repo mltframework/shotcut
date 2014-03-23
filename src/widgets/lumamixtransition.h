@@ -36,8 +36,6 @@ public:
     ~LumaMixTransition();
     
 private slots:
-    void on_lumaCombo_currentIndexChanged(int index);
-    
     void on_invertCheckBox_clicked(bool checked);
     
     void on_softnessSlider_valueChanged(int value);
@@ -48,11 +46,14 @@ private slots:
     
     void on_mixSlider_valueChanged(int value);
     
+    void on_lumaCombo_activated(int index);
+    
 private:
     Ui::LumaMixTransition *ui;
     Mlt::Producer m_producer;
 
     Mlt::Transition* getTransition(const QString& name);
+    void updateCustomLumaLabel(Mlt::Transition &transition);
 };
 
 #endif // LUMAMIXTRANSITION_H

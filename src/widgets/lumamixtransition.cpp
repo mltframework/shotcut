@@ -20,6 +20,10 @@
 #include "ui_lumamixtransition.h"
 #include "settings.h"
 #include "mltcontroller.h"
+#include <QFileDialog>
+#include <QFileInfo>
+
+static const int kLumaComboCustomIndex = 23;
 
 LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
     : QWidget(parent)
@@ -39,6 +43,8 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
         QString resource = transition->get("resource");
         if (!resource.isEmpty() && resource.indexOf("%luma") != -1) {
             ui->lumaCombo->setCurrentIndex(resource.midRef(resource.indexOf("%luma") + 5).left(2).toInt());
+        } else if (!resource.isEmpty()) {
+            ui->lumaCombo->setCurrentIndex(kLumaComboCustomIndex);
         } else {
             ui->invertCheckBox->setDisabled(true);
             ui->softnessSlider->setDisabled(true);
@@ -47,6 +53,7 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
         ui->invertCheckBox->setChecked(transition->get_int("invert"));
         if (transition->get("softness"))
             ui->softnessSlider->setValue(qRound(transition->get_double("softness") * 100.0));
+        updateCustomLumaLabel(*transition);
     }
     transition.reset(getTransition("mix"));
     if (transition && transition->is_valid()) {
@@ -64,26 +71,6 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
 LumaMixTransition::~LumaMixTransition()
 {
     delete ui;
-}
-
-void LumaMixTransition::on_lumaCombo_currentIndexChanged(int index)
-{
-    ui->invertCheckBox->setEnabled(index > 0);
-    ui->softnessSlider->setEnabled(index > 0);
-    ui->softnessSpinner->setEnabled(index > 0);
-
-    QScopedPointer<Mlt::Transition> transition(getTransition("luma"));
-    if (transition && transition->is_valid()) {
-        if (index == 0) {
-            transition->set("resource", "");
-        } else {
-            transition->set("resource", QString("%luma%1.pgm").arg(index, 2, 10, QChar('0')).toLatin1().constData());
-            transition->set("progressive", 1);
-            transition->set("invert", ui->invertCheckBox->isChecked());
-            transition->set("softness", ui->softnessSlider->value() / 100.0);
-        }
-        MLT.refreshConsumer();
-    }
 }
 
 void LumaMixTransition::on_invertCheckBox_clicked(bool checked)
@@ -144,4 +131,51 @@ Mlt::Transition *LumaMixTransition::getTransition(const QString &name)
         service.reset(service->producer());
     }
     return 0;
+}
+
+void LumaMixTransition::updateCustomLumaLabel(Mlt::Transition &transition)
+{
+    QString resource = transition.get("resource");
+    if (resource.isEmpty() || resource.indexOf("%luma") != -1) {
+        ui->customLumaLabel->hide();
+        ui->customLumaLabel->setToolTip(QString());
+    } else if (!resource.isEmpty()) {
+        ui->customLumaLabel->setText(QFileInfo(transition.get("resource")).fileName());
+        ui->customLumaLabel->setToolTip(transition.get("resource"));
+        ui->customLumaLabel->show();
+    }
+}
+
+void LumaMixTransition::on_lumaCombo_activated(int index)
+{
+    ui->invertCheckBox->setEnabled(index > 0);
+    ui->softnessSlider->setEnabled(index > 0);
+    ui->softnessSpinner->setEnabled(index > 0);
+
+    QScopedPointer<Mlt::Transition> transition(getTransition("luma"));
+    if (transition && transition->is_valid()) {
+        if (index == 0) {
+            transition->set("resource", "");
+        } else if (index == kLumaComboCustomIndex) {
+            // Custom file
+            QString path = Settings.openPath();
+#ifdef Q_OS_MAC
+            path.append("/*");
+#endif
+            QString filename = QFileDialog::getOpenFileName(this, tr("Open File"), path,
+                tr("Images (*.bmp *.jpeg *.jpg *.pgm *.png *.svg *.tga *.tif *.tiff);;All Files (*)"));
+            activateWindow();
+            if (!filename.isEmpty())
+                transition->set("resource", filename.toUtf8().constData());
+        } else {
+            transition->set("resource", QString("%luma%1.pgm").arg(index, 2, 10, QChar('0')).toLatin1().constData());
+        }
+        if (qstrcmp(transition->get("resource"), "")) {
+            transition->set("progressive", 1);
+            transition->set("invert", ui->invertCheckBox->isChecked());
+            transition->set("softness", ui->softnessSlider->value() / 100.0);
+        }
+        updateCustomLumaLabel(*transition);
+        MLT.refreshConsumer();
+    }
 }
