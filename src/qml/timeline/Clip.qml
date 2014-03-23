@@ -77,6 +77,7 @@ Rectangle {
         if (typeof audioLevels == 'undefined') return;
 
         var cx = waveform.getContext('2d');
+        if (cx === null) return
         // TODO use project channel count
         var channels = 2;
         var height = waveform.height;
@@ -260,6 +261,7 @@ Rectangle {
         onWidthChanged: requestPaint()
         onPaint: {
             var cx = getContext('2d')
+            if (cx === null) return
             cx.beginPath()
             cx.moveTo(0, 0)
             cx.lineTo(width, 0)
@@ -351,6 +353,7 @@ Rectangle {
         onWidthChanged: requestPaint()
         onPaint: {
             var cx = getContext('2d')
+            if (cx === null) return
             cx.beginPath()
             cx.moveTo(width, 0)
             cx.lineTo(0, 0)

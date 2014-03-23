@@ -223,6 +223,7 @@ Rectangle {
                     if (init) {
                         init = false;
                         var cx = getContext('2d');
+                        if (cx === null) return
                         cx.fillStyle = activePalette.windowText;
                         cx.beginPath();
                         // Start from the root-left point.
