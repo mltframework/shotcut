@@ -79,7 +79,8 @@ SOURCES += main.cpp\
     qmltypes/qmlutilities.cpp \
     qmltypes/thumbnailprovider.cpp \
     commands/timelinecommands.cpp \
-    util.cpp
+    util.cpp \
+    widgets/lumamixtransition.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -152,7 +153,8 @@ HEADERS  += mainwindow.h \
     qmltypes/qmlutilities.h \
     qmltypes/thumbnailprovider.h \
     commands/timelinecommands.h \
-    util.h
+    util.h \
+    widgets/lumamixtransition.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
@@ -194,7 +196,8 @@ FORMS    += mainwindow.ui \
     htmleditor/htmleditor.ui \
     htmleditor/inserthtmldialog.ui \
     widgets/webvfxproducer.ui \
-    docks/timelinedock.ui
+    docks/timelinedock.ui \
+    widgets/lumamixtransition.ui
 
 RESOURCES += \
     ../icons/resources.qrc \

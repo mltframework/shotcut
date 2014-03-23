@@ -56,6 +56,7 @@
 #include "database.h"
 #include "widgets/gltestwidget.h"
 #include "docks/timelinedock.h"
+#include "widgets/lumamixtransition.h"
 
 #include <QtWidgets>
 #include <QDebug>
@@ -1497,6 +1498,11 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
         w = new ColorBarsWidget(this);
     else if (service == "webvfx")
         w = new WebvfxProducer(this);
+    else if (producer->parent().get("shotcut:transition")) {
+        w = new LumaMixTransition(producer->parent(), this);
+        scrollArea->setWidget(w);
+        return w;
+    }
     if (w) {
         dynamic_cast<AbstractProducerWidget*>(w)->setProducer(producer);
         if (-1 != w->metaObject()->indexOfSignal("producerChanged()"))

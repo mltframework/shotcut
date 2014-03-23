@@ -45,6 +45,7 @@ static const char* kTrackHeightProperty = "shotcut:trackHeight";
 static const char* kTimelineScaleProperty = "shotcut:scaleFactor";
 static const char* kShotcutFilterProperty = "shotcut:filter";
 static const char* kShotcutTransitionProperty = "shotcut:transition";
+static const char* kShotcutDefaultTransition = "lumaMix";
 
 static void deleteQVariantList(QVariantList* list)
 {
@@ -1455,7 +1456,7 @@ int MultitrackModel::addTransition(int trackIndex, int clipIndex, int position)
             beginInsertRows(index(trackIndex), targetIndex + 1, targetIndex + 1);
             playlist.mix(targetIndex, duration);
             QScopedPointer<Mlt::Producer> producer(playlist.get_clip(targetIndex + 1));
-            producer->parent().set(kShotcutTransitionProperty, 1);
+            producer->parent().set(kShotcutTransitionProperty, kShotcutDefaultTransition);
             endInsertRows();
 
             // Add transitions
@@ -1676,7 +1677,7 @@ void MultitrackModel::addTransitionByTrimIn(int trackIndex, int clipIndex, int d
             beginInsertRows(index(trackIndex), clipIndex, clipIndex);
             playlist.mix_out(clipIndex - 1, -delta);
             QScopedPointer<Mlt::Producer> producer(playlist.get_clip(clipIndex));
-            producer->parent().set(kShotcutTransitionProperty, 1);
+            producer->parent().set(kShotcutTransitionProperty, kShotcutDefaultTransition);
             endInsertRows();
 
             // Add transitions.
@@ -1738,7 +1739,7 @@ void MultitrackModel::addTransitionByTrimOut(int trackIndex, int clipIndex, int 
             beginInsertRows(index(trackIndex), clipIndex + 1, clipIndex + 1);
             playlist.mix_in(clipIndex, -delta);
             QScopedPointer<Mlt::Producer> producer(playlist.get_clip(clipIndex + 1));
-            producer->parent().set(kShotcutTransitionProperty, 1);
+            producer->parent().set(kShotcutTransitionProperty, kShotcutDefaultTransition);
             endInsertRows();
 
             // Add transitions.
