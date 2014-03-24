@@ -62,7 +62,7 @@ Rectangle {
     opacity: Drag.active? 0.5 : 1.0
 
     function getColor() {
-        return isBlank? 'transparent' : isAudio? 'darkseagreen' : isTransition? 'mediumpurple' : shotcutBlue
+        return isBlank? 'transparent' : isTransition? 'mediumpurple' : isAudio? 'darkseagreen' : shotcutBlue
     }
 
     function reparent(track) {
@@ -124,6 +124,26 @@ Rectangle {
     }
 
     Canvas {
+        id: transitionCanvas
+        visible: isTransition
+        anchors.fill: parent
+        onPaint: {
+            var cx = getContext('2d')
+            if (cx === null) return
+            cx.beginPath()
+            cx.moveTo(0, 0)
+            cx.lineTo(width, height)
+            cx.lineTo(width, 0)
+            cx.lineTo(0, height)
+            cx.closePath()
+            cx.fillStyle = isAudio? 'darkseagreen' : shotcutBlue
+            cx.fill()
+            cx.strokeStyle = 'black'
+            cx.stroke()
+        }
+    }
+
+    Canvas {
         id: waveform
         visible: !isBlank && settings.timelineShowWaveforms
         width: parent.width - parent.border.width * 2
@@ -137,7 +157,7 @@ Rectangle {
     Rectangle {
         // audio peak line
         width: parent.width - parent.border.width * 2
-        visible: !isBlank
+        visible: !isBlank && !isTransition
         height: 1
         anchors.left: parent.left
         anchors.bottom: parent.bottom
