@@ -119,6 +119,9 @@ audio (0%) or clip B's audio (100%).</string>
        </item>
        <item>
         <widget class="QSlider" name="mixSlider">
+         <property name="maximum">
+          <number>100</number>
+         </property>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
