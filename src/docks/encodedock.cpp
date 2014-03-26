@@ -157,6 +157,9 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
 {
     Mlt::Properties* p = new Mlt::Properties;
     if (p && p->is_valid()) {
+#ifdef Q_OS_WIN
+        p->set_lcnumeric("C");
+#endif
         if (realtime)
             p->set("real_time", realtime);
         if (ui->formatCombo->currentIndex() != 0)
@@ -214,7 +217,7 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
             p->set("bf", ui->bFramesSpinner->value());
             p->set("width", ui->widthSpinner->value());
             p->set("height", ui->heightSpinner->value());
-            p->set("aspect", QString("@%1/%2").arg(ui->aspectNumSpinner->value()).arg(ui->aspectDenSpinner->value()).toLatin1().constData());
+            p->set("aspect", double(ui->aspectNumSpinner->value()) / double(ui->aspectDenSpinner->value()));
             p->set("progressive", ui->scanModeCombo->currentIndex());
             p->set("top_field_first", ui->fieldOrderCombo->currentIndex());
             if (qFloor(ui->fpsSpinner->value() * 10.0) == 239) {
@@ -422,6 +425,9 @@ void EncodeDock::on_presetsTree_clicked(const QModelIndex &index)
         if (m_presetsModel.data(index.parent()).toString() == tr("Custom")) {
             ui->removePresetButton->setEnabled(true);
             preset = new Mlt::Properties();
+#ifdef Q_OS_WIN
+            preset->set_lcnumeric("C");
+#endif
             QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
             if (dir.cd("presets") && dir.cd("encode"))
                 preset->load(dir.absoluteFilePath(name).toLatin1().constData());
