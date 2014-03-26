@@ -38,40 +38,7 @@
     </widget>
    </item>
    <item>
-    <layout class="QGridLayout" name="gridLayout" columnstretch="0,1,0">
-     <item row="4" column="1" colspan="2">
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <item>
-        <widget class="QSlider" name="softnessSlider">
-         <property name="toolTip">
-          <string>Change the softness of the edge of the wipe</string>
-         </property>
-         <property name="maximum">
-          <number>100</number>
-         </property>
-         <property name="value">
-          <number>20</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QSpinBox" name="softnessSpinner">
-         <property name="suffix">
-          <string> %</string>
-         </property>
-         <property name="maximum">
-          <number>100</number>
-         </property>
-         <property name="value">
-          <number>20</number>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
+    <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="0">
       <widget class="QLabel" name="label">
        <property name="text">
@@ -82,71 +49,7 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="1" colspan="2">
-      <widget class="QCheckBox" name="invertCheckBox">
-       <property name="toolTip">
-        <string>Swap the appearance of the A and B clips</string>
-       </property>
-       <property name="text">
-        <string>Invert Wipe</string>
-       </property>
-      </widget>
-     </item>
-     <item row="6" column="1" colspan="2">
-      <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,0,1,0,0">
-       <item>
-        <widget class="QRadioButton" name="mixRadioButton">
-         <property name="toolTip">
-          <string>Do not alter the audio levels during the
-course of the transition. Instead, set a
-fixed mixing level, or choose only clip A's
-audio (0%) or clip B's audio (100%).</string>
-         </property>
-         <property name="text">
-          <string>Mix:</string>
-         </property>
-         <attribute name="buttonGroup">
-          <string notr="true">buttonGroup</string>
-         </attribute>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_6">
-         <property name="text">
-          <string>A</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QSlider" name="mixSlider">
-         <property name="maximum">
-          <number>100</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_7">
-         <property name="text">
-          <string>B</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QSpinBox" name="mixSpinner">
-         <property name="suffix">
-          <string> %</string>
-         </property>
-         <property name="maximum">
-          <number>100</number>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item row="0" column="1" colspan="2">
+     <item row="0" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1">
        <item>
         <widget class="QComboBox" name="lumaCombo">
@@ -293,49 +196,80 @@ audio (0%) or clip B's audio (100%).</string>
        </item>
       </layout>
      </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="label_3">
+     <item row="1" column="1">
+      <widget class="QLabel" name="customLumaLabel">
        <property name="text">
-        <string>Wipe Softness</string>
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QCheckBox" name="invertCheckBox">
+       <property name="toolTip">
+        <string>Swap the appearance of the A and B clips</string>
+       </property>
+       <property name="text">
+        <string>Invert Wipe</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Softness</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSlider" name="softnessSlider">
+         <property name="toolTip">
+          <string>Change the softness of the edge of the wipe</string>
+         </property>
+         <property name="maximum">
+          <number>100</number>
+         </property>
+         <property name="value">
+          <number>20</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="softnessSpinner">
+         <property name="suffix">
+          <string> %</string>
+         </property>
+         <property name="maximum">
+          <number>100</number>
+         </property>
+         <property name="value">
+          <number>20</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>Audio</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
-       <property name="wordWrap">
-        <bool>true</bool>
-       </property>
       </widget>
      </item>
-     <item row="2" column="1" colspan="2">
-      <widget class="QLabel" name="gpuProcessingWarning">
-       <property name="frameShape">
-        <enum>QFrame::StyledPanel</enum>
-       </property>
-       <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Video transitions other than &lt;span style=&quot; font-weight:600;&quot;&gt;Dissolve&lt;/span&gt; are not yet available when &lt;span style=&quot; font-weight:600;&quot;&gt;GPU Processing&lt;/span&gt; is enabled in &lt;span style=&quot; font-weight:600;&quot;&gt;Settings&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-       <property name="wordWrap">
-        <bool>true</bool>
-       </property>
-       <property name="margin">
-        <number>8</number>
-       </property>
-      </widget>
-     </item>
-     <item row="7" column="0">
-      <spacer name="verticalSpacer">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>20</width>
-         <height>40</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="5" column="1" colspan="2">
+     <item row="4" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
         <widget class="QRadioButton" name="crossfadeRadioButton">
@@ -354,24 +288,74 @@ duration of the transition.</string>
        </item>
       </layout>
      </item>
-     <item row="5" column="0">
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>Audio</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1" colspan="2">
-      <widget class="QLabel" name="customLumaLabel">
-       <property name="text">
-        <string>TextLabel</string>
-       </property>
-      </widget>
+     <item row="5" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,0,1,0,0">
+       <item>
+        <widget class="QRadioButton" name="mixRadioButton">
+         <property name="toolTip">
+          <string>Do not alter the audio levels during the
+course of the transition. Instead, set a
+fixed mixing level, or choose only clip A's
+audio (0%) or clip B's audio (100%).</string>
+         </property>
+         <property name="text">
+          <string>Mix:</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">buttonGroup</string>
+         </attribute>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>A</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSlider" name="mixSlider">
+         <property name="maximum">
+          <number>100</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_7">
+         <property name="text">
+          <string>B</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="mixSpinner">
+         <property name="suffix">
+          <string> %</string>
+         </property>
+         <property name="maximum">
+          <number>100</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
     </layout>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>91</height>
+      </size>
+     </property>
+    </spacer>
    </item>
   </layout>
  </widget>

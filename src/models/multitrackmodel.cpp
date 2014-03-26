@@ -1460,7 +1460,7 @@ int MultitrackModel::addTransition(int trackIndex, int clipIndex, int position)
             endInsertRows();
 
             // Add transitions
-            Mlt::Transition dissolve(MLT.profile(), Settings.playerGPU()? "movit.mix" : "luma");
+            Mlt::Transition dissolve(MLT.profile(), Settings.playerGPU()? "movit.luma_mix" : "luma");
             Mlt::Transition crossFade(MLT.profile(), "mix:-1");
             playlist.mix_add(targetIndex + 1, &dissolve);
             playlist.mix_add(targetIndex + 1, &crossFade);
@@ -1681,7 +1681,7 @@ void MultitrackModel::addTransitionByTrimIn(int trackIndex, int clipIndex, int d
             endInsertRows();
 
             // Add transitions.
-            Mlt::Transition dissolve(MLT.profile(), Settings.playerGPU()? "movit.mix" : "luma");
+            Mlt::Transition dissolve(MLT.profile(), Settings.playerGPU()? "movit.luma_mix" : "luma");
             Mlt::Transition crossFade(MLT.profile(), "mix:-1");
             playlist.mix_add(clipIndex, &dissolve);
             playlist.mix_add(clipIndex, &crossFade);
@@ -1743,7 +1743,7 @@ void MultitrackModel::addTransitionByTrimOut(int trackIndex, int clipIndex, int 
             endInsertRows();
 
             // Add transitions.
-            Mlt::Transition dissolve(MLT.profile(), Settings.playerGPU()? "movit.mix" : "luma");
+            Mlt::Transition dissolve(MLT.profile(), Settings.playerGPU()? "movit.luma_mix" : "luma");
             Mlt::Transition crossFade(MLT.profile(), "mix:-1");
             playlist.mix_add(clipIndex + 1, &dissolve);
             playlist.mix_add(clipIndex + 1, &crossFade);

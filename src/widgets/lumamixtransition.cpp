@@ -31,12 +31,6 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
     , m_producer(producer)
 {
     ui->setupUi(this);
-    bool gpu = Settings.playerGPU();
-    ui->gpuProcessingWarning->setVisible(gpu);
-    ui->lumaCombo->setDisabled(gpu);
-    ui->invertCheckBox->setDisabled(gpu);
-    ui->softnessSlider->setDisabled(gpu);
-    ui->softnessSpinner->setDisabled(gpu);
 
     QScopedPointer<Mlt::Transition> transition(getTransition("luma"));
     if (transition && transition->is_valid()) {
@@ -126,6 +120,8 @@ Mlt::Transition *LumaMixTransition::getTransition(const QString &name)
         if (service->type() == transition_type) {
             Mlt::Transition transition(*service);
             if (name == transition.get("mlt_service"))
+                return new Mlt::Transition(transition);
+            else if (name == "luma" && QString("movit.luma_mix") == transition.get("mlt_service"))
                 return new Mlt::Transition(transition);
         }
         service.reset(service->producer());
