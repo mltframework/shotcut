@@ -280,22 +280,22 @@
 <context>
     <name>Clip</name>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="536"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="533"/>
         <source>Remove</source>
         <translation>Fjern</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="541"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="538"/>
         <source>Lift</source>
         <translation>Løft</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="546"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="543"/>
         <source>Open As Clip</source>
         <translation>Åben som klip</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="551"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="548"/>
         <source>Split At Playhead (S)</source>
         <translation>Del ved afspilningsmærket (S)</translation>
     </message>
@@ -825,7 +825,7 @@
     <message>
         <location filename="../src/docks/encodedock.ui" line="777"/>
         <source>Dual pass</source>
-        <translation type="unfinished"/>
+        <translation>Dual process</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="784"/>
@@ -842,7 +842,7 @@ i temporal komprimering</translation>
     <message>
         <location filename="../src/docks/encodedock.ui" line="835"/>
         <source>Codec threads</source>
-        <translation type="unfinished"/>
+        <translation>Codec tråde</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="847"/>
@@ -1013,9 +1013,9 @@ codecs. Men ikke alle codecs er multi-threaded.</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1391"/>
-        <location filename="../src/docks/encodedock.cpp" line="684"/>
-        <location filename="../src/docks/encodedock.cpp" line="691"/>
-        <location filename="../src/docks/encodedock.cpp" line="794"/>
+        <location filename="../src/docks/encodedock.cpp" line="689"/>
+        <location filename="../src/docks/encodedock.cpp" line="696"/>
+        <location filename="../src/docks/encodedock.cpp" line="799"/>
         <source>Stream</source>
         <translation>Stream</translation>
     </message>
@@ -1048,7 +1048,7 @@ codecs. Men ikke alle codecs er multi-threaded.</translation>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="100"/>
         <location filename="../src/docks/encodedock.cpp" line="604"/>
-        <location filename="../src/docks/encodedock.cpp" line="793"/>
+        <location filename="../src/docks/encodedock.cpp" line="798"/>
         <source>Capture File</source>
         <translation>Optagede file</translation>
     </message>
@@ -1065,43 +1065,43 @@ codecs. Men ikke alle codecs er multi-threaded.</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="599"/>
-        <location filename="../src/docks/encodedock.cpp" line="639"/>
+        <location filename="../src/docks/encodedock.cpp" line="644"/>
         <source>Stop Capture</source>
         <translation>Stop optagelse</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="616"/>
+        <location filename="../src/docks/encodedock.cpp" line="621"/>
         <source>Encode to File</source>
         <translation>Indkodér til fil</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="616"/>
+        <location filename="../src/docks/encodedock.cpp" line="621"/>
         <source>Capture to File</source>
         <translation>Optag til fil</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="679"/>
-        <location filename="../src/docks/encodedock.cpp" line="700"/>
+        <location filename="../src/docks/encodedock.cpp" line="684"/>
+        <location filename="../src/docks/encodedock.cpp" line="705"/>
         <source>Stop Stream</source>
         <translation>Stop stream</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="692"/>
+        <location filename="../src/docks/encodedock.cpp" line="697"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>Indtast netværksprotokol ordningen, adresse, port, og parametre som en URL:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="730"/>
+        <location filename="../src/docks/encodedock.cpp" line="735"/>
         <source>Add Encode Preset</source>
         <translation>Tilføj indkode forudindstilling</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="773"/>
+        <location filename="../src/docks/encodedock.cpp" line="778"/>
         <source>Delete Preset</source>
         <translation>Slet forudindstilling</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="774"/>
+        <location filename="../src/docks/encodedock.cpp" line="779"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>Er du sikker på at du vil slette %1?</translation>
     </message>
@@ -1805,7 +1805,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/widgets/isingwidget.ui" line="26"/>
         <source>Ising Model</source>
-        <translation type="unfinished"/>
+        <translation>Ising model</translation>
     </message>
     <message>
         <location filename="../src/widgets/isingwidget.ui" line="48"/>
@@ -1869,7 +1869,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="18"/>
         <source>Jobs</source>
-        <translation type="unfinished"/>
+        <translation>Jobs</translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="104"/>
@@ -1987,6 +1987,235 @@ på et job for at åbne en menu for at stoppe et kørende job.</translation>
         <location filename="../src/widgets/lissajouswidget.ui" line="113"/>
         <source>Y Ratio</source>
         <translation>Y forhold</translation>
+    </message>
+</context>
+<context>
+    <name>LumaMixTransition</name>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="14"/>
+        <source>Form</source>
+        <translation>Form</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="26"/>
+        <source>Transition</source>
+        <translation>Overgang</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="47"/>
+        <source>Change the softness of the edge of the wipe</source>
+        <translation>Redigér blødheden af wipe</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="63"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="137"/>
+        <source> %</source>
+        <translation>%</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="78"/>
+        <source>Video</source>
+        <translation>Video</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="88"/>
+        <source>Swap the appearance of the A and B clips</source>
+        <translation>Ombyt A og B klip.</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="91"/>
+        <source>Invert Wipe</source>
+        <translation>Invertér wipe</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="100"/>
+        <source>Do not alter the audio levels during the
+course of the transition. Instead, set a
+fixed mixing level, or choose only clip A's
+audio (0%) or clip B&apos;s audio (100%).</source>
+        <translation>Ændrer ikke lydniveauer gennem
+overgangen. Indsæt istedet et fast
+niveau, eller vælg kun klip As lyd (0%) eller
+klip Bs lyd (100%).</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="106"/>
+        <source>Mix:</source>
+        <translation>Mix:</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="116"/>
+        <source>A</source>
+        <translation>A</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="130"/>
+        <source>B</source>
+        <translation>B</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="158"/>
+        <source>Dissolve</source>
+        <translation>Overtoning</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="163"/>
+        <source>Bar Horizontal</source>
+        <translation>Bar Horizontal</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="168"/>
+        <source>Bar Vertical</source>
+        <translation>Bar Vertical</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="173"/>
+        <source>Barn Door Horizonal</source>
+        <translation>Barn Door Horizonal</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="178"/>
+        <source>Barn Door Vertical</source>
+        <translation>Barn Door Vertical</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="183"/>
+        <source>Barn Door Diagonal SW-NE</source>
+        <translation>Barn Door Diagonal SW-NE</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="188"/>
+        <source>Barn Door Diagonal NW-SE</source>
+        <translation>Barn Door Diagonal NW-SE</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="193"/>
+        <source>Diagonal Top Left</source>
+        <translation>Diagonal Top Left</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="198"/>
+        <source>Diagonal Top Right</source>
+        <translation>Diagonal Top Right</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="203"/>
+        <source>Matrix Waterfall Horizontal</source>
+        <translation>Matrix Waterfall Horizontal</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="208"/>
+        <source>Matrix Waterfall Vertical</source>
+        <translation>Matrix Waterfall Vertical</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="213"/>
+        <source>Matrix Snake Horizontal</source>
+        <translation>Matrix Snake Horizontal</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="218"/>
+        <source>Matrix Snake Parallel Horizontal</source>
+        <translation>Matrix Snake Parallel Horizontal</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="223"/>
+        <source>Matrix Snake Vertical</source>
+        <translation>Matrix Snake Vertical</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="228"/>
+        <source>Matrix Snake Parallel Vertical</source>
+        <translation>Matrix Snake Parallel Vertical</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="233"/>
+        <source>Barn V Up</source>
+        <translation>Barn V Up</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="238"/>
+        <source>Iris Circle</source>
+        <translation>Iris Circle</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="243"/>
+        <source>Double Iris</source>
+        <translation>Double Iris</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="248"/>
+        <source>Iris Box</source>
+        <translation>Iris Box</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="253"/>
+        <source>Box Bottom Right</source>
+        <translation>Box Bottom Right</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="258"/>
+        <source>Box Bottom Left</source>
+        <translation>Box Bottom Left</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="263"/>
+        <source>Box Right Center</source>
+        <translation>Box Right Center</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="268"/>
+        <source>Clock Top</source>
+        <translation>Clock Top</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="273"/>
+        <source>Custom...</source>
+        <translation>Custom...</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="296"/>
+        <source>Wipe Softness</source>
+        <translation>Wipe Softness</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="312"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Video transitions other than &lt;span style=&quot; font-weight:600;&quot;&gt;Dissolve&lt;/span&gt; are not yet available when &lt;span style=&quot; font-weight:600;&quot;&gt;GPU Processing&lt;/span&gt; is enabled in &lt;span style=&quot; font-weight:600;&quot;&gt;Settings&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ingen andre overgange end &lt;span style=&quot; font-weight:600;&quot;&gt;overtoning&lt;/span&gt; er understøttet når &lt;span style=&quot; font-weight:600;&quot;&gt;GPU processing&lt;/span&gt; slået til i &lt;span style=&quot; font-weight:600;&quot;&gt;indstillinger&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="340"/>
+        <source>Automatically fade-out the audio of clip A
+and fade-in the audio of clip B over the
+duration of the transition.</source>
+        <translation>Automatisk fade-ud af lyden af klip A
+og fade-ind af lyden af klip B gennem
+overgangens længde. </translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="345"/>
+        <source>Cross-fade</source>
+        <translation>Kryds-fade</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="357"/>
+        <source>Audio</source>
+        <translation>Lyd</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="367"/>
+        <source>TextLabel</source>
+        <translation>TekstEtiket</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.cpp" line="165"/>
+        <source>Open File</source>
+        <translation>Åbn fil</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.cpp" line="166"/>
+        <source>Images (*.bmp *.jpeg *.jpg *.pgm *.png *.svg *.tga *.tif *.tiff);;All Files (*)</source>
+        <translation>Billeder (*.bmp *.jpeg *.jpg *.pgm *.png *.svg *.tga *.tif *.tiff);;Alle filer (*)</translation>
     </message>
 </context>
 <context>
@@ -2210,7 +2439,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="351"/>
-        <location filename="../src/mainwindow.cpp" line="1525"/>
+        <location filename="../src/mainwindow.cpp" line="1541"/>
         <source>Enter Full Screen</source>
         <translation>Åben fuld skærm</translation>
     </message>
@@ -2221,7 +2450,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="363"/>
-        <location filename="../src/mainwindow.cpp" line="134"/>
+        <location filename="../src/mainwindow.cpp" line="135"/>
         <source>Properties</source>
         <translation>Egenskaber</translation>
     </message>
@@ -2237,7 +2466,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="390"/>
-        <location filename="../src/mainwindow.cpp" line="202"/>
+        <location filename="../src/mainwindow.cpp" line="203"/>
         <source>History</source>
         <translation>Historik</translation>
     </message>
@@ -2393,142 +2622,147 @@ p, li { white-space: pre-wrap; }
         <translation>Vis titellinjer</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="107"/>
+        <location filename="../src/mainwindow.cpp" line="108"/>
         <source>Ctrl+Z</source>
         <translation>Ctrl+Z</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="108"/>
+        <location filename="../src/mainwindow.cpp" line="109"/>
         <source>Ctrl+Shift+Z</source>
         <translation>Ctrl+Shift+Z</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="360"/>
+        <location filename="../src/mainwindow.cpp" line="361"/>
         <source>Non-Broadcast</source>
         <translation>Non-Broadcast</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="371"/>
+        <location filename="../src/mainwindow.cpp" line="372"/>
         <source>DVD Widescreen NTSC</source>
         <translation>DVD Widescreen NTSC</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="372"/>
+        <location filename="../src/mainwindow.cpp" line="373"/>
         <source>DVD Widescreen PAL</source>
         <translation>DVD Widescreen PAL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="377"/>
+        <location filename="../src/mainwindow.cpp" line="378"/>
         <source>Custom</source>
         <translation>Tilpasset</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="396"/>
+        <location filename="../src/mainwindow.cpp" line="397"/>
         <source>Screen %1</source>
         <translation>Skærm %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="427"/>
+        <location filename="../src/mainwindow.cpp" line="428"/>
         <source>Off</source>
         <translation>Off</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="430"/>
+        <location filename="../src/mainwindow.cpp" line="431"/>
         <source>Internal</source>
         <translation>Intern</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="433"/>
+        <location filename="../src/mainwindow.cpp" line="434"/>
         <source>External</source>
         <translation>Ekstern</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="447"/>
+        <location filename="../src/mainwindow.cpp" line="448"/>
         <source>DeckLink Keyer</source>
-        <translation type="unfinished"/>
+        <translation>DeckLink Keyer</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="515"/>
-        <location filename="../src/mainwindow.cpp" line="517"/>
-        <location filename="../src/mainwindow.cpp" line="563"/>
-        <location filename="../src/mainwindow.cpp" line="1968"/>
+        <location filename="../src/mainwindow.cpp" line="520"/>
+        <location filename="../src/mainwindow.cpp" line="522"/>
+        <location filename="../src/mainwindow.cpp" line="568"/>
+        <location filename="../src/mainwindow.cpp" line="1988"/>
         <source>Failed to open </source>
         <translation>Kunne ikke åbne</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="570"/>
-        <location filename="../src/mainwindow.cpp" line="1955"/>
+        <location filename="../src/mainwindow.cpp" line="579"/>
+        <location filename="../src/mainwindow.cpp" line="1975"/>
         <source>Open File</source>
         <translation>Åbn fil</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="769"/>
+        <location filename="../src/mainwindow.cpp" line="778"/>
         <source>%1[*] - %2</source>
         <translation>%1[*] - %2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="774"/>
+        <location filename="../src/mainwindow.cpp" line="783"/>
         <source>About Shotcut</source>
         <translation>&amp;Om Shotcut</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="775"/>
+        <location filename="../src/mainwindow.cpp" line="784"/>
         <source>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2014 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;h1&gt; Shotcut version% 1 &lt;/ h1&gt; &lt;p&gt; &lt;a href=&quot;http://www.shotcut.org/&quot;&gt; Shotcut &lt;/ a&gt; er en gratis, open source , cross -platform video editor . &lt;/ p&gt; &lt;small&gt; &lt;p&gt; Copyright © 2011-2014 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt; Meltytech &lt;/ a&gt; , LLC &lt;/ p&gt; licenseret under &lt;a href = &quot; http://www.gnu.org/licenses/gpl.html &quot;&gt; GNU General Public License v3.0 &lt;/ a&gt; &lt;/ p&gt; Dette program benytter følgende projekter : &lt;ul&gt; &lt; li&gt; &lt;a href=&quot;http://www.qt-project.org/&quot;&gt; Qt &lt;/ a&gt; ansøgning og UI rammer &lt;/ li&gt; &lt;li&gt; &lt;a href=&quot;http://www.mltframework.org/&quot;&gt; MLT &lt;/ a&gt; multimedia authoring rammer &lt;/ li&gt; &lt;li&gt; &lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt; FFmpeg &lt;/ a&gt; multimedie formater og codec biblioteker &lt; / li&gt; &lt;li&gt; &lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt; x264 &lt;/ a&gt; H.264 encoder &lt;/ li&gt; &lt;li&gt; &lt;a href = &quot;http://www.webmproject.org/&quot;&gt; WebM &lt;/ a&gt; VP8 encoder &lt;/ li&gt; &lt;li&gt; &lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt; LAME &lt;/ a&gt; MP3 encoder &lt;/ li&gt; &lt;li&gt; &lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt; Frei0r &lt;/ a&gt; video plugins &lt;/ li&gt; &lt;li&gt; &lt;a href = &quot;http://www.ladspa.org/&quot;&gt; LADSPA &lt;/ a&gt; audio plugins &lt;/ li&gt; &lt;li&gt; &lt;a href=&quot;http://www.defaulticon.com/&quot;&gt; DefaultIcon &lt;/ a&gt; ikon samling af &lt;a href = &quot; http://www.interactivemania.com/&quot;&gt; interactivemania &lt;/ a&gt; &lt; / li&gt; &lt;li&gt; &lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt; Oxygen &lt;/ a&gt; ikon samling &lt; / li&gt; &lt;/ ul&gt; &lt;/ p&gt; kildekoden der bruges til at dette program kan downloades fra &lt;a href=&quot;http://www.shotcut.org/&quot;&gt; shotcut.org &lt;/ a&gt; . &lt;/ p&gt; Dette program er distribueret i håb om at det vil være nyttigt, men UDEN NOGEN GARANTI ; . endda uden den underforståede garanti for SALGBARHED eller EGNETHED tIL ET BESTEMT FORMÅL &lt;/ small&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1149"/>
-        <location filename="../src/mainwindow.cpp" line="1167"/>
+        <location filename="../src/mainwindow.cpp" line="1158"/>
+        <location filename="../src/mainwindow.cpp" line="1178"/>
         <source>Saved %1</source>
         <translation>Gem %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1159"/>
+        <location filename="../src/mainwindow.cpp" line="1170"/>
         <source>Save XML</source>
         <translation>Gem XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1159"/>
+        <location filename="../src/mainwindow.cpp" line="1170"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1179"/>
+        <location filename="../src/mainwindow.cpp" line="1190"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>Projektet er blevet ændret. 
 Ønsker du at gemme dine ændringer? </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1528"/>
+        <location filename="../src/mainwindow.cpp" line="1544"/>
         <source>Exit Full Screen</source>
         <translation>Afslut fuldskærm</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1537"/>
+        <location filename="../src/mainwindow.cpp" line="1553"/>
         <source>GPU Processing is not supported</source>
         <translation>GPU processing ikke understøttet</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1733"/>
+        <location filename="../src/mainwindow.cpp" line="1749"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to exit now?</source>
         <translation>Du skal genstarte Shotcut for at skifte til det nye sprog. 
 Ønsker du at afslutte?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1771"/>
+        <location filename="../src/mainwindow.cpp" line="1787"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>Det lykkes ikke at forbinde til JACK.
 Verificér at JACK er installeret og kører.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1780"/>
+        <location filename="../src/mainwindow.cpp" line="1796"/>
         <source>You must restart Shotcut to switch using GPU processing.
 Do you want to exit now?</source>
         <translation>Du skal genstarte Shotcut for at skifte til GPU processing. 
 Ønsker du at afslutte?</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1976"/>
+        <source>MLT XML (*.mlt);;All Files (*)</source>
+        <translation>MLT XML (*.mlt);;Alle filer (*)</translation>
     </message>
 </context>
 <context>
@@ -2797,7 +3031,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="263"/>
         <source>Map Clips Root</source>
-        <translation type="unfinished"/>
+        <translation>Kortlæg roden af klip.</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedserverdock.cpp" line="152"/>
@@ -2908,12 +3142,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/filters/movitglowfilter.ui" line="114"/>
         <source>Highlight Blurriness</source>
-        <translation type="unfinished"/>
+        <translation>Uskarphed i højlys</translation>
     </message>
     <message>
         <location filename="../src/filters/movitglowfilter.ui" line="186"/>
         <source>Highlight Cutoff</source>
-        <translation type="unfinished"/>
+        <translation>Klippe højlys</translation>
     </message>
 </context>
 <context>
@@ -3011,7 +3245,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/widgets/networkproducerwidget.ui" line="26"/>
         <source>Network Stream</source>
-        <translation type="unfinished"/>
+        <translation>Netværks stream</translation>
     </message>
     <message>
         <location filename="../src/widgets/networkproducerwidget.ui" line="48"/>
@@ -3117,7 +3351,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/openotherdialog.cpp" line="66"/>
         <location filename="../src/openotherdialog.cpp" line="124"/>
         <source>Ising</source>
-        <translation type="unfinished"/>
+        <translation>Ising</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="70"/>
@@ -3260,110 +3494,90 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/player.cpp" line="275"/>
-        <location filename="../src/player.cpp" line="359"/>
-        <location filename="../src/player.cpp" line="385"/>
-        <location filename="../src/player.cpp" line="503"/>
-        <location filename="../src/player.cpp" line="620"/>
+        <location filename="../src/player.cpp" line="358"/>
+        <location filename="../src/player.cpp" line="384"/>
+        <location filename="../src/player.cpp" line="502"/>
+        <location filename="../src/player.cpp" line="619"/>
         <source>Play</source>
         <translation>Afspil</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="277"/>
-        <location filename="../src/player.cpp" line="360"/>
-        <location filename="../src/player.cpp" line="386"/>
-        <location filename="../src/player.cpp" line="504"/>
-        <location filename="../src/player.cpp" line="621"/>
+        <location filename="../src/player.cpp" line="359"/>
+        <location filename="../src/player.cpp" line="385"/>
+        <location filename="../src/player.cpp" line="503"/>
+        <location filename="../src/player.cpp" line="620"/>
         <source>Start playback (L)</source>
         <translation>Start afspilning (L)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="279"/>
-        <source>Space</source>
-        <translation>Space</translation>
-    </message>
-    <message>
         <location filename="../src/player.cpp" line="280"/>
-        <location filename="../src/player.cpp" line="339"/>
-        <location filename="../src/player.cpp" line="498"/>
-        <location filename="../src/player.cpp" line="627"/>
+        <location filename="../src/player.cpp" line="338"/>
+        <location filename="../src/player.cpp" line="497"/>
+        <location filename="../src/player.cpp" line="626"/>
         <source>Pause</source>
         <translation>Pause</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="282"/>
-        <location filename="../src/player.cpp" line="340"/>
-        <location filename="../src/player.cpp" line="499"/>
-        <location filename="../src/player.cpp" line="628"/>
+        <location filename="../src/player.cpp" line="339"/>
+        <location filename="../src/player.cpp" line="498"/>
+        <location filename="../src/player.cpp" line="627"/>
         <source>Pause playback (K)</source>
         <translation>Sæt afspilning på pause (K)</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="284"/>
-        <source>Backspace</source>
-        <translation>Backspace</translation>
-    </message>
-    <message>
-        <location filename="../src/player.cpp" line="285"/>
         <source>Skip Next</source>
         <translation>Spring næste over</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="287"/>
+        <location filename="../src/player.cpp" line="286"/>
         <source>Skip to the next point (Alt+Right)</source>
         <translation>Hop til næste punkt (Alt+Højre)</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="289"/>
-        <source>Alt+Right</source>
-        <translation>Alt+Højre</translation>
-    </message>
-    <message>
-        <location filename="../src/player.cpp" line="290"/>
         <source>Skip Previous</source>
         <translation>Spring forrige over</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="292"/>
+        <location filename="../src/player.cpp" line="291"/>
         <source>Skip to the previous point (Alt+Left)</source>
         <translation>Hop til forrige punkt (Alt+Venstre)</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="294"/>
-        <source>Alt+Left</source>
-        <translation>Alt+Left</translation>
-    </message>
-    <message>
-        <location filename="../src/player.cpp" line="295"/>
         <source>Rewind</source>
         <translation>Spol tilbage</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="297"/>
+        <location filename="../src/player.cpp" line="296"/>
         <source>Play quickly backwards (J)</source>
         <translation>Afspil hurtigt baglæns (J)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="299"/>
+        <location filename="../src/player.cpp" line="298"/>
         <source>Fast Forward</source>
         <translation>Hurtig frem</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="301"/>
+        <location filename="../src/player.cpp" line="300"/>
         <source>Play quickly forwards (L)</source>
         <translation>Afspil hurtigt forlæns (L)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="344"/>
+        <location filename="../src/player.cpp" line="343"/>
         <source>Stop</source>
         <translation>Stop</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="345"/>
+        <location filename="../src/player.cpp" line="344"/>
         <source>Stop playback (K)</source>
         <translation>Stop afspilning (K)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="409"/>
+        <location filename="../src/player.cpp" line="408"/>
         <source>Live</source>
         <translation>Live</translation>
     </message>
@@ -3881,29 +4095,41 @@ udvalgte snit.</translation>
         <translation>Trim klip ind punkt</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="298"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="293"/>
         <source>Trim clip out point</source>
         <translation>Trim klip ud punkt</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="339"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="329"/>
         <source>Split clip</source>
         <translation>Opsplit klip</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="361"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="351"/>
         <source>Adjust fade in</source>
         <translation>Justér indtoning</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="397"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="382"/>
         <source>Adjust fade out</source>
         <translation>Justér udtoning</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="432"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="412"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="515"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="554"/>
         <source>Add transition</source>
         <translation>Tilføj overgang</translation>
+    </message>
+    <message>
+        <location filename="../src/commands/timelinecommands.cpp" line="443"/>
+        <source>Trim transition in point</source>
+        <translation>Trim indpunkt for overtoning</translation>
+    </message>
+    <message>
+        <location filename="../src/commands/timelinecommands.cpp" line="479"/>
+        <source>Trim transition out point</source>
+        <translation>Trim udpunkt for overtoning</translation>
     </message>
 </context>
 <context>
@@ -3932,22 +4158,22 @@ udvalgte snit.</translation>
     <message>
         <location filename="../QWebSockets/qwebsocket_p.cpp" line="741"/>
         <source>Accept-Key received from server %1 does not match the client key %2.</source>
-        <translation type="unfinished"/>
+        <translation>Accept-nøglen modtaget fra serveren% 1 matcher ikke klient-nøglen% 2.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/qwebsocket_p.cpp" line="758"/>
         <source>Handshake: Server requests a version that we don&apos;t support: %1.</source>
-        <translation type="unfinished"/>
+        <translation>Håndtryk: Server anmoder om en version, som vi ikke understøtter:% 1.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/qwebsocket_p.cpp" line="764"/>
         <source>Unknown error condition encountered. Aborting connection.</source>
-        <translation type="unfinished"/>
+        <translation>Ukendt fejltilstand mødt. Afbryder forbindelsen.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/qwebsocket_p.cpp" line="771"/>
         <source>Unhandled http status code: %1.</source>
-        <translation type="unfinished"/>
+        <translation>Ubehandlet http status kode:% 1.</translation>
     </message>
 </context>
 <context>
@@ -3955,27 +4181,27 @@ udvalgte snit.</translation>
     <message>
         <location filename="../QWebSockets/qwebsocketserver_p.cpp" line="58"/>
         <source>Server closed.</source>
-        <translation type="unfinished"/>
+        <translation>Server lukket.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/qwebsocketserver_p.cpp" line="335"/>
         <source>Upgrading to websocket failed.</source>
-        <translation type="unfinished"/>
+        <translation>Opdatering af websokkel forfejlet.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/qwebsocketserver_p.cpp" line="341"/>
         <source>Cannot upgrade to websocket.</source>
-        <translation type="unfinished"/>
+        <translation>Kan ikke opgradere websokkel.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/qwebsocketserver_p.cpp" line="347"/>
         <source>Invalid response received.</source>
-        <translation type="unfinished"/>
+        <translation>Ukorrekt svar modtaget,</translation>
     </message>
     <message>
         <location filename="../QWebSockets/qwebsocketserver_p.cpp" line="352"/>
         <source>Closing socket because of invalid or unsupported request.</source>
-        <translation type="unfinished"/>
+        <translation>Lukker sokkel pga. forkert eller ikke understøttet ønske.</translation>
     </message>
 </context>
 <context>
@@ -4372,28 +4598,32 @@ mens de efterfølgende klip skubbes til højre (V)</translation>
         <translation>Genindlæs</translation>
     </message>
     <message>
-        <location filename="../src/filters/webvfxfilter.cpp" line="59"/>
-        <location filename="../src/filters/webvfxfilter.cpp" line="104"/>
+        <location filename="../src/filters/webvfxfilter.cpp" line="63"/>
         <source>Open HTML File</source>
         <translation>Åbn HTML-fil</translation>
     </message>
     <message>
-        <location filename="../src/filters/webvfxfilter.cpp" line="60"/>
+        <location filename="../src/filters/webvfxfilter.cpp" line="64"/>
         <source>HTML-Files (*.htm *.html);;All Files (*)</source>
         <translation>HTML-filer (*.htm *.html);;Alle filer (*)</translation>
     </message>
     <message>
-        <location filename="../src/filters/webvfxfilter.cpp" line="90"/>
+        <location filename="../src/filters/webvfxfilter.cpp" line="94"/>
         <source>Comfirm Selection</source>
         <translation>Bekræft valgte</translation>
     </message>
     <message>
-        <location filename="../src/filters/webvfxfilter.cpp" line="92"/>
+        <location filename="../src/filters/webvfxfilter.cpp" line="96"/>
         <source>Do you still want to use this?</source>
         <translation>Vil du stadig bruge dette?</translation>
     </message>
     <message>
-        <location filename="../src/filters/webvfxfilter.cpp" line="105"/>
+        <location filename="../src/filters/webvfxfilter.cpp" line="110"/>
+        <source>Save HTML File</source>
+        <translation>Gem HTML fil</translation>
+    </message>
+    <message>
+        <location filename="../src/filters/webvfxfilter.cpp" line="111"/>
         <source>HTML-Files (*.html *.htm);;All Files (*)</source>
         <translation>HTML-filer (*.htm *.html);;Alle filer (*)</translation>
     </message>
@@ -4470,7 +4700,8 @@ mens de efterfølgende klip skubbes til højre (V)</translation>
         <location filename="../src/widgets/x11grabwidget.ui" line="49"/>
         <source>An X11 display name of the form hostname:displaynumber.screennumber
 Most users do not need to change this.</source>
-        <translation type="unfinished"/>
+        <translation>Et X11 visningsnavn i denne form hostname:displaynumber.screennumber
+Det fleste brugere behøver ikke ændre dette.</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="53"/>
@@ -4505,7 +4736,7 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="118"/>
         <source>The horizontal coordinate from the left edge when using a fixed capture region.</source>
-        <translation type="unfinished"/>
+        <translation>Det vandrette koordinat fra venstre kant ved brug af fastlagt optageområde.</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="128"/>
@@ -4515,7 +4746,7 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="138"/>
         <source>The vertical coordinate from the top edge when using a fixed capture region.</source>
-        <translation type="unfinished"/>
+        <translation>Det lodrette koordinat fra øverste kant ved brug af fastlagt optageområde.</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="148"/>
@@ -4531,7 +4762,7 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="165"/>
         <source>Width of the capture region</source>
-        <translation type="unfinished"/>
+        <translation>Bredde af optageområde</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="184"/>
@@ -4541,60 +4772,55 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="191"/>
         <source>Height of the capture region</source>
-        <translation type="unfinished"/>
+        <translation>Højde af optageområde</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="211"/>
         <source>Show the capture region</source>
-        <translation type="unfinished"/>
+        <translation>Vis optageområde</translation>
     </message>
     <message>
-        <location filename="../src/widgets/x11grabwidget.ui" line="214"/>
-        <source>Ctrl+S</source>
-        <translation>Ctrl+S</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/x11grabwidget.ui" line="221"/>
+        <location filename="../src/widgets/x11grabwidget.ui" line="218"/>
         <source>Draw the mouse cursor</source>
-        <translation type="unfinished"/>
+        <translation>Tegn mussemarkør</translation>
     </message>
     <message>
-        <location filename="../src/widgets/x11grabwidget.ui" line="231"/>
+        <location filename="../src/widgets/x11grabwidget.ui" line="228"/>
         <source>Audio Input</source>
         <translation>Lydinput</translation>
     </message>
     <message>
-        <location filename="../src/widgets/x11grabwidget.ui" line="241"/>
+        <location filename="../src/widgets/x11grabwidget.ui" line="238"/>
         <source>Choose an audio input method to use during capture.</source>
-        <translation type="unfinished"/>
+        <translation>Vælge lyd-indput til brug under optagelse.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/x11grabwidget.ui" line="245"/>
+        <location filename="../src/widgets/x11grabwidget.ui" line="242"/>
         <source>None</source>
         <translation>Ingen</translation>
     </message>
     <message>
-        <location filename="../src/widgets/x11grabwidget.ui" line="250"/>
+        <location filename="../src/widgets/x11grabwidget.ui" line="247"/>
         <source>PulseAudio</source>
         <translation>PulseAudio</translation>
     </message>
     <message>
-        <location filename="../src/widgets/x11grabwidget.ui" line="255"/>
+        <location filename="../src/widgets/x11grabwidget.ui" line="252"/>
         <source>JACK</source>
         <translation>JACK</translation>
     </message>
     <message>
-        <location filename="../src/widgets/x11grabwidget.ui" line="260"/>
+        <location filename="../src/widgets/x11grabwidget.ui" line="257"/>
         <source>ALSA</source>
         <translation>ALSA</translation>
     </message>
     <message>
-        <location filename="../src/widgets/x11grabwidget.ui" line="291"/>
+        <location filename="../src/widgets/x11grabwidget.ui" line="288"/>
         <source>Apply</source>
         <translation>Anvend</translation>
     </message>
     <message>
-        <location filename="../src/widgets/x11grabwidget.ui" line="298"/>
+        <location filename="../src/widgets/x11grabwidget.ui" line="295"/>
         <source>Use this when you are going to capture Shotcut itself.
 It makes the capture run in the background, but
 you will not be able to simultaneously send
@@ -4605,7 +4831,7 @@ vil du ikke være i stand til samtidigt at sende
 optagelsen til SDI / HDMI i denne tilstand.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/x11grabwidget.ui" line="304"/>
+        <location filename="../src/widgets/x11grabwidget.ui" line="301"/>
         <source>Capture Shotcut</source>
         <translation>Optage Shotcut</translation>
     </message>
@@ -4820,67 +5046,67 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
 <context>
     <name>timeline</name>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="247"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="249"/>
         <source>Insert</source>
         <translation>Indsæt</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="247"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="249"/>
         <source>Overwrite</source>
         <translation>Overskriv</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="261"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="315"/>
         <source>Add Audio Track</source>
         <translation>Tilføj lydspor</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="262"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="316"/>
         <source>Ctrl+U</source>
         <translation>Ctrl+U</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="266"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="320"/>
         <source>Add Video Track</source>
         <translation>Tilføj lydspor</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="267"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="321"/>
         <source>Ctrl+Y</source>
         <translation>Ctrl+Y</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="272"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="326"/>
         <source>Make Tracks Shorter</source>
         <translation>Gør spor smallere</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="273"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="327"/>
         <source>Ctrl+K</source>
         <translation>Ctrl+K</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="277"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="331"/>
         <source>Make Tracks Taller</source>
         <translation>Gør spor højere</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="278"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="332"/>
         <source>Ctrl+L</source>
         <translation>Ctrl+L</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="283"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="337"/>
         <source>Show Audio Waveforms</source>
         <translation>Vis lyd-waveforms</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="296"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="350"/>
         <source>Close</source>
         <translation>Luk</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="297"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="351"/>
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
@@ -5056,7 +5282,7 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
     <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="130"/>
         <source>Center Bias</source>
-        <translation type="unfinished"/>
+        <translation>Center Bias</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="162"/>
