@@ -345,6 +345,12 @@ Rectangle {
                 }
             }
         }
+        MenuItem {
+            text: qsTr('Reload')
+            onTriggered: {
+                multitrack.reload()
+            }
+        }
         MenuSeparator {}
         MenuItem {
             text: qsTr('Close')

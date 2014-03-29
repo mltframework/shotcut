@@ -478,11 +478,13 @@ bool MultitrackModel::trimClipInValid(int trackIndex, int clipIndex, int delta)
         Mlt::Playlist playlist(*track);
         QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
 
-        if (!info || info->frame_in < 0)
+        if (!info || (info->frame_in + delta) < 0 || (info->frame_in + delta) > info->frame_out)
             result = false;
         else if (delta < 0 && clipIndex <= 0)
             result = false;
         else if (delta < 0 && clipIndex > 0 && !playlist.is_blank(clipIndex - 1))
+            result = false;
+        else if (delta > 0 && clipIndex > 0 && isTransition(playlist, clipIndex - 1))
             result = false;
     }
     return result;
@@ -570,11 +572,12 @@ bool MultitrackModel::trimClipOutValid(int trackIndex, int clipIndex, int delta)
     if (track) {
         Mlt::Playlist playlist(*track);
         QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
-
-        if (!info || info->frame_out >= info->length)
+        if (!info || (info->frame_out - delta) >= info->length || (info->frame_out - delta) < info->frame_in)
             result = false;
         else if (delta < 0 && (clipIndex + 1) < playlist.count() && !playlist.is_blank(clipIndex + 1))
             result = false;
+        else if (delta > 0 && (clipIndex + 1) < playlist.count() && isTransition(playlist, clipIndex + 1))
+            return false;
     }
     return result;
 }
@@ -1512,16 +1515,26 @@ void MultitrackModel::removeTransition(int trackIndex, int clipIndex)
 
 bool MultitrackModel::trimTransitionInValid(int trackIndex, int clipIndex, int delta)
 {
-    Q_UNUSED(delta)
     bool result = false;
     int i = m_trackList.at(trackIndex).mlt_index;
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     if (track) {
         Mlt::Playlist playlist(*track);
-        if (clipIndex + 1 < playlist.count()) {
-            // Check if there is already a transition.
-            if (isTransition(playlist, clipIndex + 1))
-                result = true;
+        if (clipIndex + 2 < playlist.count()) {
+            Mlt::ClipInfo info;
+            // Check if there is already a transition and its new length valid.
+            if (isTransition(playlist, clipIndex + 1) && playlist.clip_length(clipIndex + 1) + delta > 0) {
+                // Check clip A out point.
+                playlist.clip_info(clipIndex, &info);
+                info.frame_out -= delta;
+                if (info.frame_out > info.frame_in && info.frame_out < info.length) {
+                    // Check clip B in point.
+                    playlist.clip_info(clipIndex + 2, &info);
+                    info.frame_in -= playlist.clip_length(clipIndex + 1) + delta;
+                    if (info.frame_in >= 0 && info.frame_in <= info.frame_out)
+                        result = true;
+                }
+            }
         }
     }
     return result;
@@ -1581,10 +1594,21 @@ bool MultitrackModel::trimTransitionOutValid(int trackIndex, int clipIndex, int 
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     if (track) {
         Mlt::Playlist playlist(*track);
-        if (clipIndex > 0) {
+        if (clipIndex > 1) {
+            Mlt::ClipInfo info;
             // Check if there is already a transition.
-            if (isTransition(playlist, clipIndex - 1))
-                result = true;
+            if (isTransition(playlist, clipIndex - 1)) {
+                // Check clip A out point.
+                playlist.clip_info(clipIndex - 2, &info);
+                info.frame_out += playlist.clip_length(clipIndex - 1) + delta;
+                if (info.frame_out > info.frame_in && info.frame_out < info.length) {
+                    // Check clip B in point.
+                    playlist.clip_info(clipIndex, &info);
+                    info.frame_in += delta;
+                    if (info.frame_in >= 0 && info.frame_in <= info.frame_out)
+                        result = true;
+                }
+            }
         }
     }
     return result;
@@ -2222,11 +2246,11 @@ bool MultitrackModel::isTransition(Mlt::Playlist &playlist, int clipIndex) const
 void MultitrackModel::load()
 {
     if (m_tractor) {
-        beginRemoveRows(QModelIndex(), 0, rowCount(QModelIndex()) - 1);
+        beginResetModel();
         delete m_tractor;
         m_tractor = 0;
         m_trackList.clear();
-        endRemoveRows();
+        endResetModel();
     }
     // In some versions of MLT, the resource property is the XML filename,
     // but the Mlt::Tractor(Service&) constructor will fail unless it detects
@@ -2251,6 +2275,15 @@ void MultitrackModel::load()
     beginInsertRows(QModelIndex(), 0, m_trackList.count() - 1);
     endInsertRows();
     emit loaded();
+}
+
+void MultitrackModel::reload()
+{
+    if (m_tractor) {
+        beginResetModel();
+        endResetModel();
+        getAudioLevels();
+    }
 }
 
 void MultitrackModel::close()
