@@ -1128,6 +1128,7 @@ void MultitrackModel::liftClip(int trackIndex, int clipIndex)
             roles << ResourceRole;
             roles << ServiceRole;
             roles << IsBlankRole;
+            roles << IsTransitionRole;
             emit dataChanged(index, index, roles);
 
             consolidateBlanks(playlist, trackIndex);
