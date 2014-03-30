@@ -494,16 +494,25 @@ void EncodeDock::on_presetsTree_clicked(const QModelIndex &index)
                     ui->gopSpinner->setValue(preset->get_int("g"));
                 else if (name == "bf")
                     ui->bFramesSpinner->setValue(preset->get_int("bf"));
-                else if (name == "deinterlace")
+                else if (name == "deinterlace") {
                     ui->scanModeCombo->setCurrentIndex(preset->get_int("deinterlace"));
-                else if (name == "progressive")
+                    ui->scanModeCombo->setEnabled(false);
+                }
+                else if (name == "progressive") {
                     ui->scanModeCombo->setCurrentIndex(preset->get_int("progressive"));
-                else if (name == "top_field_first")
+                    ui->scanModeCombo->setEnabled(false);
+                }
+                else if (name == "top_field_first") {
                     ui->fieldOrderCombo->setCurrentIndex(preset->get_int("top_field_first"));
-                else if (name == "width")
+                }
+                else if (name == "width") {
                     ui->widthSpinner->setValue(preset->get_int("width"));
-                else if (name == "height")
+                    ui->widthSpinner->setEnabled(false);
+                }
+                else if (name == "height") {
                     ui->heightSpinner->setValue(preset->get_int("height"));
+                    ui->heightSpinner->setEnabled(false);
+                }
                 else if (name == "aspect") {
                     double dar = preset->get_double("aspect");
                     if (int(dar * 100) == 133) {
@@ -518,9 +527,13 @@ void EncodeDock::on_presetsTree_clicked(const QModelIndex &index)
                         ui->aspectNumSpinner->setValue(dar * 1000);
                         ui->aspectDenSpinner->setValue(1000);
                     }
+                    ui->aspectNumSpinner->setEnabled(false);
+                    ui->aspectDenSpinner->setEnabled(false);
                 }
-                else if (name == "r")
+                else if (name == "r") {
                     ui->fpsSpinner->setValue(preset->get_double("r"));
+                    ui->fpsSpinner->setEnabled(false);
+                }
                 else if (name == "pix_fmt") {
                     QString pix_fmt(preset->get("pix_fmt"));
                     if (pix_fmt != "yuv420p")
