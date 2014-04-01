@@ -80,8 +80,8 @@ public slots:
     void toggleTrackHidden(int trackIndex);
     void setTrackComposite(int trackIndex, Qt::CheckState composite);
     bool moveClip(int fromTrack, int toTrack, int clipIndex, int position);
-    void trimClipIn(int trackIndex, int clipIndex, int delta);
-    void trimClipOut(int trackIndex, int clipIndex, int delta);
+    bool trimClipIn(int trackIndex, int clipIndex, int delta);
+    bool trimClipOut(int trackIndex, int clipIndex, int delta);
     void insert(int trackIndex, int position = -1, const QString &xml = QString());
     void overwrite(int trackIndex, int position = -1, const QString &xml = QString());
     void appendFromPlaylist(Mlt::Playlist* playlist);

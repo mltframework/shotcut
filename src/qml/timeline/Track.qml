@@ -108,17 +108,21 @@ Rectangle {
                 trackRoot.clipDragged(clip, mapped.x, mapped.y)
             }
             onTrimmingIn: {
+                var originalDelta = delta
                 if (!(mouse.modifiers & Qt.AltModifier) && toolbar.snap)
                     delta = Logic.snapTrimIn(clip, delta)
                 if (delta != 0) {
-                    timeline.trimClipIn(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex, delta)
-
-                    // Show amount trimmed as a time in a "bubble" help.
-                    var s = timeline.timecode(Math.abs(clip.originalX))
-                    s = '%1%2 = %3'.arg((clip.originalX < 0)? '-' : (clip.originalX > 0)? '+' : '')
-                                   .arg(s.substring(3))
-                                   .arg(timeline.timecode(clipDuration))
-                    bubbleHelp.show(clip.x, trackRoot.y + trackRoot.height, s)
+                    if (timeline.trimClipIn(trackRoot.DelegateModel.itemsIndex,
+                                            clip.DelegateModel.itemsIndex, delta)) {
+                        // Show amount trimmed as a time in a "bubble" help.
+                        var s = timeline.timecode(Math.abs(clip.originalX))
+                        s = '%1%2 = %3'.arg((clip.originalX < 0)? '-' : (clip.originalX > 0)? '+' : '')
+                                       .arg(s.substring(3))
+                                       .arg(timeline.timecode(clipDuration))
+                        bubbleHelp.show(clip.x, trackRoot.y + trackRoot.height, s)
+                    } else {
+                        clip.originalX -= originalDelta
+                    }
                 }
             }
             onTrimmedIn: {
@@ -129,17 +133,21 @@ Rectangle {
                 bubbleHelp.hide()
             }
             onTrimmingOut: {
+                var originalDelta = delta
                 if (!(mouse.modifiers & Qt.AltModifier) && toolbar.snap)
                     delta = Logic.snapTrimOut(clip, delta)
                 if (delta != 0) {
-                    timeline.trimClipOut(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex, delta)
-
-                    // Show amount trimmed as a time in a "bubble" help.
-                    var s = timeline.timecode(Math.abs(clip.originalX))
-                    s = '%1%2 = %3'.arg((clip.originalX < 0)? '+' : (clip.originalX > 0)? '-' : '')
-                                   .arg(s.substring(3))
-                                   .arg(timeline.timecode(clipDuration))
-                    bubbleHelp.show(clip.x + clip.width, trackRoot.y + trackRoot.height, s)
+                    if (timeline.trimClipOut(trackRoot.DelegateModel.itemsIndex,
+                                             clip.DelegateModel.itemsIndex, delta)) {
+                        // Show amount trimmed as a time in a "bubble" help.
+                        var s = timeline.timecode(Math.abs(clip.originalX))
+                        s = '%1%2 = %3'.arg((clip.originalX < 0)? '+' : (clip.originalX > 0)? '-' : '')
+                                       .arg(s.substring(3))
+                                       .arg(timeline.timecode(clipDuration))
+                        bubbleHelp.show(clip.x + clip.width, trackRoot.y + trackRoot.height, s)
+                    } else {
+                        clip.originalX -= originalDelta
+                    }
                 }
             }
             onTrimmedOut: {
