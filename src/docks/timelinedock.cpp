@@ -449,6 +449,8 @@ void TimelineDock::seekNextEdit()
                 ++clipIndex;
             if (!playlist.is_blank(clipIndex) && clipIndex < playlist.count())
                 newPosition = qMin(newPosition, playlist.clip_start(clipIndex));
+            else if (clipIndex == playlist.count())
+                newPosition = playlist.get_playtime();
         }
     }
     if (newPosition != m_position)
