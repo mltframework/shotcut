@@ -240,6 +240,7 @@ Rectangle {
             isBlank? Qt.ArrowCursor : Qt.OpenHandCursor
         property int startX
         onPressed: {
+            root.stopScrolling = true
             originalX = parent.x
             originalTrackIndex = trackIndex
             originalClipIndex = index
@@ -257,6 +258,7 @@ Rectangle {
             parent.dragged(clipRoot, mouse)
         }
         onReleased: {
+            root.stopScrolling = false
             parent.y = 0
             var delta = parent.x - startX
             if (Math.abs(delta) >= 1.0 || trackIndex !== originalTrackIndex) {
@@ -318,6 +320,7 @@ Rectangle {
             onEntered: parent.opacity = 0.7
             onExited: parent.opacity = 0
             onPressed: {
+                root.stopScrolling = true
                 startX = parent.x
                 startFadeIn = fadeIn
                 parent.anchors.left = undefined
@@ -325,6 +328,7 @@ Rectangle {
                 parent.opacity = 1
             }
             onReleased: {
+                root.stopScrolling = false
                 if (fadeInCanvas.width > parent.radius)
                     parent.anchors.horizontalCenter = fadeInCanvas.right
                 else
@@ -410,6 +414,7 @@ Rectangle {
             onEntered: parent.opacity = 0.7
             onExited: parent.opacity = 0
             onPressed: {
+                root.stopScrolling = true
                 startX = parent.x
                 startFadeOut = fadeOut
                 parent.anchors.right = undefined
@@ -417,6 +422,7 @@ Rectangle {
                 parent.opacity = 1
             }
             onReleased: {
+                root.stopScrolling = false
                 if (fadeOutCanvas.width > parent.radius)
                     parent.anchors.horizontalCenter = fadeOutCanvas.left
                 else
@@ -475,11 +481,13 @@ Rectangle {
             property int startX
 
             onPressed: {
+                root.stopScrolling = true
                 startX = parent.x
                 originalX = 0 // reusing originalX to accumulate delta for bubble help
                 parent.anchors.left = undefined
             }
             onReleased: {
+                root.stopScrolling = false
                 parent.anchors.left = clipRoot.left
                 clipRoot.trimmedIn(clipRoot)
                 parent.opacity = 0
@@ -520,11 +528,13 @@ Rectangle {
             property int duration
 
             onPressed: {
+                root.stopScrolling = true
                 duration = clipDuration
                 originalX = 0 // reusing originalX to accumulate delta for bubble help
                 parent.anchors.right = undefined
             }
             onReleased: {
+                root.stopScrolling = false
                 parent.anchors.right = clipRoot.right
                 clipRoot.trimmedOut(clipRoot)
             }

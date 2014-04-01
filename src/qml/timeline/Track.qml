@@ -99,9 +99,11 @@ Rectangle {
                     clip.x = clip.originalX
             }
             onDragged: {
-                // Snap if Alt key is not down.
-                if (toolbar.scrub)
+                if (toolbar.scrub) {
+                    root.stopScrolling = false
                     timeline.position = Math.round(clip.x / timeScale)
+                }
+                // Snap if Alt key is not down.
                 if (!(mouse.modifiers & Qt.AltModifier) && toolbar.snap)
                     trackRoot.checkSnap(clip)
                 var mapped = trackRoot.mapFromItem(clip, mouse.x, mouse.y)

@@ -33,6 +33,7 @@ Rectangle {
     property int currentClipTrack: -1
     property color selectedTrackColor: Qt.tint(activePalette.base, Qt.rgba(0.8, 0.8, 0, 0.3));
     property alias trackCount: tracksRepeater.count
+    property bool stopScrolling: false
 
     MouseArea {
         anchors.fill: parent
@@ -500,7 +501,7 @@ Rectangle {
     
     Connections {
         target: timeline
-        onPositionChanged: Logic.scrollIfNeeded()
+        onPositionChanged: if (!stopScrolling) Logic.scrollIfNeeded()
         onDragging: Logic.dragging(pos, duration)
         onDropped: Logic.dropped()
         onDropAccepted: Logic.acceptDrop(xml)
