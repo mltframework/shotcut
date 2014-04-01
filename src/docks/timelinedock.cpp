@@ -334,29 +334,31 @@ void TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta)
     }
 }
 
-void TimelineDock::insert(int trackIndex, int position)
+void TimelineDock::insert(int trackIndex, int position, const QString &xml)
 {
-    if (MLT.isSeekableClip() || MLT.savedProducer()) {
+    if (MLT.isSeekableClip() || MLT.savedProducer() || !xml.isEmpty()) {
+        QString xmlToUse = !xml.isEmpty()? xml
+            : MLT.saveXML("string", MLT.isClip()? 0 : MLT.savedProducer());
         if (trackIndex < 0)
             trackIndex = m_quickView.rootObject()->property("currentTrack").toInt();
         if (position < 0)
             position = m_position;
         MAIN.undoStack()->push(
-            new Timeline::InsertCommand(m_model, trackIndex, position,
-                MLT.saveXML("string", MLT.isClip()? 0 : MLT.savedProducer())));
+            new Timeline::InsertCommand(m_model, trackIndex, position, xmlToUse));
     }
 }
 
-void TimelineDock::overwrite(int trackIndex, int position)
+void TimelineDock::overwrite(int trackIndex, int position, const QString &xml)
 {
-    if (MLT.isSeekableClip() || MLT.savedProducer()) {
+    if (MLT.isSeekableClip() || MLT.savedProducer() || !xml.isEmpty()) {
+        QString xmlToUse = !xml.isEmpty()? xml
+            : MLT.saveXML("string", MLT.isClip()? 0 : MLT.savedProducer());
         if (trackIndex < 0)
             trackIndex = m_quickView.rootObject()->property("currentTrack").toInt();
         if (position < 0)
             position = m_position;
         MAIN.undoStack()->push(
-            new Timeline::OverwriteCommand(m_model, trackIndex, position,
-                MLT.saveXML("string", MLT.isClip()? 0 : MLT.savedProducer())));
+            new Timeline::OverwriteCommand(m_model, trackIndex, position, xmlToUse));
     }
 }
 
@@ -472,7 +474,7 @@ void TimelineDock::dropEvent(QDropEvent *event)
     if (event->mimeData()->hasFormat(Mlt::XmlMimeType)) {
         int trackIndex = m_quickView.rootObject()->property("currentTrack").toInt();
         if (trackIndex >= 0) {
-            emit dropAccepted();
+            emit dropAccepted(QString::fromUtf8(event->mimeData()->data(Mlt::XmlMimeType)));
             event->acceptProposedAction();
         }
     }

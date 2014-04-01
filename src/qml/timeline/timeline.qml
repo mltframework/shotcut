@@ -54,7 +54,7 @@ Rectangle {
         onDropped: {
             if (drop.formats.indexOf('application/mlt+xml') >= 0) {
                 if (currentTrack >= 0) {
-                    Logic.acceptDrop()
+                    Logic.acceptDrop(drop.getDataAsString('application/mlt+xml'))
                     drop.acceptProposedAction()
                 }
             }
@@ -503,7 +503,7 @@ Rectangle {
         onPositionChanged: Logic.scrollIfNeeded()
         onDragging: Logic.dragging(pos, duration)
         onDropped: Logic.dropped()
-        onDropAccepted: Logic.acceptDrop()
+        onDropAccepted: Logic.acceptDrop(xml)
     }
 
     Connections {

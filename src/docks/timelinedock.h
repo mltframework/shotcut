@@ -56,7 +56,7 @@ signals:
     void clipOpened(void* producer, int in, int out);
     void dragging(const QPointF& pos, int duration);
     void dropped();
-    void dropAccepted();
+    void dropAccepted(const QString &xml);
     void fadeInChanged(int duration);
     void fadeOutChanged(int duration);
     void tooltipColorChanged();
@@ -82,8 +82,8 @@ public slots:
     bool moveClip(int fromTrack, int toTrack, int clipIndex, int position);
     void trimClipIn(int trackIndex, int clipIndex, int delta);
     void trimClipOut(int trackIndex, int clipIndex, int delta);
-    void insert(int trackIndex, int position = -1);
-    void overwrite(int trackIndex, int position = -1);
+    void insert(int trackIndex, int position = -1, const QString &xml = QString());
+    void overwrite(int trackIndex, int position = -1, const QString &xml = QString());
     void appendFromPlaylist(Mlt::Playlist* playlist);
     void splitClip(int trackIndex = -1, int clipIndex = -1);
     void fadeIn(int trackIndex, int clipIndex = -1, int duration = -1);

@@ -85,10 +85,10 @@ function dropped() {
     scrollTimer.running = false
 }
 
-function acceptDrop() {
+function acceptDrop(xml) {
     var position = Math.round((dropTarget.x + scrollView.flickableItem.contentX - headerWidth) / multitrack.scaleFactor)
     if (toolbar.ripple)
-        timeline.insert(currentTrack, position)
+        timeline.insert(currentTrack, position, xml)
     else
-        timeline.overwrite(currentTrack, position)
+        timeline.overwrite(currentTrack, position, xml)
 }
