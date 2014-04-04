@@ -828,12 +828,14 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         stepRightOneSecond();
         break;
     case Qt::Key_C:
-        if (multitrack()) {
-            m_timelineDock->append(-1);
-        } else {
+        if (event->modifiers() == Qt::ShiftModifier) {
             m_playlistDock->show();
             m_playlistDock->raise();
             m_playlistDock->on_actionAppendCut_triggered();
+        } else {
+            m_timelineDock->show();
+            m_timelineDock->raise();
+            m_timelineDock->append(-1);
         }
         break;
     case Qt::Key_J:
@@ -863,21 +865,25 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_timelineDock->splitClip();
         break;
     case Qt::Key_V: // Avid Splice In
-        if (multitrack()) {
-            m_timelineDock->insert(-1);
-        } else {
+        if (event->modifiers() == Qt::ShiftModifier) {
             m_playlistDock->show();
             m_playlistDock->raise();
             m_playlistDock->on_actionInsertCut_triggered();
+        } else {
+            m_timelineDock->show();
+            m_timelineDock->raise();
+            m_timelineDock->insert(-1);
         }
         break;
     case Qt::Key_B: // Avid Overwrite
-        if (multitrack()) {
-            m_timelineDock->overwrite(-1);
-        } else {
+        if (event->modifiers() == Qt::ShiftModifier) {
             m_playlistDock->show();
             m_playlistDock->raise();
             m_playlistDock->on_actionUpdate_triggered();
+        } else {
+            m_timelineDock->show();
+            m_timelineDock->raise();
+            m_timelineDock->overwrite(-1);
         }
         break;
     case Qt::Key_Escape: // Avid Toggle Active Monitor
@@ -978,19 +984,40 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         }
         break;
     case Qt::Key_X: // Avid Extract
+        if (event->modifiers() == Qt::ShiftModifier) {
+            m_playlistDock->show();
+            m_playlistDock->raise();
+            m_playlistDock->on_removeButton_clicked();
+        } else {
+            m_timelineDock->show();
+            m_timelineDock->raise();
+            m_timelineDock->remove(-1, -1);
+        }
+        break;
     case Qt::Key_Backspace:
     case Qt::Key_Delete:
         if (multitrack()) {
-            m_timelineDock->remove(-1, -1);
+            m_timelineDock->show();
+            m_timelineDock->raise();
+            if (event->modifiers() == Qt::ShiftModifier)
+                m_timelineDock->remove(-1, -1);
+            else
+                m_timelineDock->lift(-1, -1);
         } else {
             m_playlistDock->show();
             m_playlistDock->raise();
             m_playlistDock->on_removeButton_clicked();
         }
-        break;
     case Qt::Key_Z: // Avid Lift
-        if (multitrack())
+        if (event->modifiers() == Qt::ShiftModifier) {
+            m_playlistDock->show();
+            m_playlistDock->raise();
+            m_playlistDock->on_removeButton_clicked();
+        } else if (multitrack()) {
+            m_timelineDock->show();
+            m_timelineDock->raise();
             m_timelineDock->lift(-1, -1);
+        }
         break;
     case Qt::Key_Enter: // Seek to current playlist item
     case Qt::Key_Return:
