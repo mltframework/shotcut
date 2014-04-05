@@ -25,10 +25,12 @@
 #include "commands/timelinecommands.h"
 #include "docks/filtersdock.h"
 #include "settings.h"
-#include "mltproperties.h"
 
 #include <QtQml>
 #include <QtQuick>
+
+static const char* kFilterInProperty = "_shotcut:filter_in";
+static const char* kFilterOutProperty = "_shotcut:filter_out";
 
 TimelineDock::TimelineDock(QWidget *parent) :
     QDockWidget(parent),
@@ -260,8 +262,8 @@ void TimelineDock::selectClip(int trackIndex, int clipIndex)
         // We need to set these special properties so time-based filters
         // can get information about the cut while still applying filters
         // to the cut parent.
-        info->producer->set(FilterInProperty, info->frame_in);
-        info->producer->set(FilterOutProperty, info->frame_out);
+        info->producer->set(kFilterInProperty, info->frame_in);
+        info->producer->set(kFilterOutProperty, info->frame_out);
         MAIN.filtersDock()->model()->reset(info->producer);
         MAIN.loadProducerWidget(info->producer);
         delete info;
