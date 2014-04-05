@@ -18,6 +18,7 @@
 
 #include "qmlfilter.h"
 #include "mltcontroller.h"
+#include "mltproperties.h"
 #include "jobqueue.h"
 #include <QStandardPaths>
 #include <QDir>
@@ -211,7 +212,13 @@ int QmlFilter::producerIn() const
     // Every attached filter has a service property that points to the service to
     // which it is attached.
     Mlt::Producer producer(mlt_producer(m_filter->get_data("service")));
-    return producer.get_in();
+    if (producer.get(FilterInProperty))
+        // Shots on the timeline will set the producer to the cut parent.
+        // However, we want time-based filters such as fade in/out to use
+        // the cut's in/out and not the parent's.
+        return producer.get_int(FilterInProperty);
+    else
+        return producer.get_in();
 }
 
 int QmlFilter::producerOut() const
@@ -219,7 +226,13 @@ int QmlFilter::producerOut() const
     // Every attached filter has a service property that points to the service to
     // which it is attached.
     Mlt::Producer producer(mlt_producer(m_filter->get_data("service")));
-    return producer.get_out();
+    if (producer.get(FilterOutProperty))
+        // Shots on the timeline will set the producer to the cut parent.
+        // However, we want time-based filters such as fade in/out to use
+        // the cut's in/out and not the parent's.
+        return producer.get_int(FilterOutProperty);
+    else
+        return producer.get_out();
 }
 
 void QmlFilter::preset(const QString &name)

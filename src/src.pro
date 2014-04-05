@@ -154,7 +154,8 @@ HEADERS  += mainwindow.h \
     qmltypes/thumbnailprovider.h \
     commands/timelinecommands.h \
     util.h \
-    widgets/lumamixtransition.h
+    widgets/lumamixtransition.h \
+    mltproperties.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \

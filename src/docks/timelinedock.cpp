@@ -25,6 +25,7 @@
 #include "commands/timelinecommands.h"
 #include "docks/filtersdock.h"
 #include "settings.h"
+#include "mltproperties.h"
 
 #include <QtQml>
 #include <QtQuick>
@@ -256,6 +257,11 @@ void TimelineDock::selectClip(int trackIndex, int clipIndex)
 {
     Mlt::ClipInfo* info = getClipInfo(trackIndex, clipIndex);
     if (info && info->producer && info->producer->is_valid()) {
+        // We need to set these special properties so time-based filters
+        // can get information about the cut while still applying filters
+        // to the cut parent.
+        info->producer->set(FilterInProperty, info->frame_in);
+        info->producer->set(FilterOutProperty, info->frame_out);
         MAIN.filtersDock()->model()->reset(info->producer);
         MAIN.loadProducerWidget(info->producer);
         delete info;
