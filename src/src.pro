@@ -54,14 +54,13 @@ SOURCES += main.cpp\
     models/attachedfiltersmodel.cpp \
     docks/filtersdock.cpp \
     filters/movitglowfilter.cpp \
-    filters/movitcolorfilter.cpp \
-    filters/frei0rcoloradjwidget.cpp \
     filters/frei0rglowfilter.cpp \
     filters/movitsharpenfilter.cpp \
     filters/frei0rsharpnessfilter.cpp \
     widgets/colorpickerwidget.cpp \
     filters/whitebalancefilter.cpp \
     dialogs/customprofiledialog.cpp \
+    qmltypes/colorwheelitem.cpp \
     qmltypes/qmlfilter.cpp \
     qmltypes/qmlmetadata.cpp \
     qmltypes/qmlprofile.cpp \
@@ -128,14 +127,13 @@ HEADERS  += mainwindow.h \
     models/attachedfiltersmodel.h \
     docks/filtersdock.h \
     filters/movitglowfilter.h \
-    filters/movitcolorfilter.h \
-    filters/frei0rcoloradjwidget.h \
     filters/frei0rglowfilter.h \
     filters/movitsharpenfilter.h \
     filters/frei0rsharpnessfilter.h \
     widgets/colorpickerwidget.h \
     filters/whitebalancefilter.h \
     dialogs/customprofiledialog.h \
+    qmltypes/colorwheelitem.h \
     qmltypes/qmlfilter.h \
     qmltypes/qmlmetadata.h \
     qmltypes/qmlprofile.h \
@@ -185,8 +183,6 @@ FORMS    += mainwindow.ui \
     mvcp/meltedplaylistdock.ui \
     docks/filtersdock.ui \
     filters/movitglowfilter.ui \
-    filters/movitcolorfilter.ui \
-    filters/frei0rcoloradjwidget.ui \
     filters/frei0rglowfilter.ui \
     filters/movitsharpenfilter.ui \
     filters/frei0rsharpnessfilter.ui \
@@ -235,6 +231,8 @@ OTHER_FILES += \
     qml/filters/audio_balance/ui.qml \
     qml/filters/boxblur/meta.qml \
     qml/filters/boxblur/ui.qml \
+    qml/filters/color/meta.qml \
+    qml/filters/color/ui.qml \
     qml/filters/crop/meta.qml \
     qml/filters/crop/ui.qml \
     qml/filters/rotate/ui.qml \
@@ -307,6 +305,8 @@ lupdate_hack {
     qml/filters/audio_balance/ui.qml \
     qml/filters/boxblur/meta.qml \
     qml/filters/boxblur/ui.qml \
+    qml/filters/color/meta.qml \
+    qml/filters/color/ui.qml \
     qml/filters/crop/meta.qml \
     qml/filters/crop/ui.qml \
     qml/filters/rotate/ui.qml \

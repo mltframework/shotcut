@@ -29,8 +29,6 @@
 #include "mainwindow.h"
 #include "settings.h"
 #include "filters/movitglowfilter.h"
-#include "filters/movitcolorfilter.h"
-#include "filters/frei0rcoloradjwidget.h"
 #include "filters/frei0rglowfilter.h"
 #include "filters/movitsharpenfilter.h"
 #include "filters/frei0rsharpnessfilter.h"
@@ -40,6 +38,7 @@
 #include "qmltypes/qmlmetadata.h"
 #include "qmltypes/qmlprofile.h"
 #include "qmltypes/qmlutilities.h"
+#include "qmltypes/colorwheelitem.h"
 
 static bool compareQAction(const QAction* a1, const QAction* a2)
 {
@@ -49,7 +48,6 @@ static bool compareQAction(const QAction* a1, const QAction* a2)
 static QActionList getFilters(FiltersDock* dock, Ui::FiltersDock* ui)
 {
     QList<QAction*> actions;
-    actions.append(ui->actionColorGrading);
     actions.append(ui->actionGlow);
     actions.append(ui->actionMirror);
 #ifndef Q_OS_WIN
@@ -60,6 +58,7 @@ static QActionList getFilters(FiltersDock* dock, Ui::FiltersDock* ui)
 
     // Find all of the plugin filters.
     qmlRegisterType<QmlMetadata>("org.shotcut.qml", 1, 0, "Metadata");
+    qmlRegisterType<ColorWheelItem>("Shotcut.Controls", 1, 0, "ColorWheelItem");
     QQmlEngine engine;
     QDir dir = QmlUtilities::qmlDir();
     dir.cd("filters");
@@ -234,10 +233,6 @@ void FiltersDock::on_listView_clicked(const QModelIndex &index)
             loadQuickPanel(meta, index.row());
         else if (name == "movit.glow")
             loadWidgetsPanel(new MovitGlowFilter(*filter));
-        else if (name == "movit.lift_gamma_gain")
-            loadWidgetsPanel(new MovitColorFilter(*filter));
-        else if (name == "frei0r.coloradj_RGB")
-            loadWidgetsPanel(new Frei0rColoradjWidget(*filter));
         else if (name == "frei0r.glow")
             loadWidgetsPanel(new Frei0rGlowFilter(*filter));
         else if (name == "movit.sharpen")
@@ -288,19 +283,6 @@ void FiltersDock::on_actionSharpen_triggered()
             loadWidgetsPanel(new MovitSharpenFilter(*filter, true));
         else
             loadWidgetsPanel(new Frei0rSharpnessFilter(*filter, true));
-    }
-    delete filter;
-    ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
-}
-
-void FiltersDock::on_actionColorGrading_triggered()
-{
-    Mlt::Filter* filter = m_model.add(Settings.playerGPU()? "movit.lift_gamma_gain": "frei0r.coloradj_RGB");
-    if (filter && filter->is_valid()) {
-        if (Settings.playerGPU())
-            loadWidgetsPanel(new MovitColorFilter(*filter, true));
-        else
-            loadWidgetsPanel(new Frei0rColoradjWidget(*filter, true));
     }
     delete filter;
     ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
