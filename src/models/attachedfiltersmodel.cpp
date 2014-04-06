@@ -123,9 +123,7 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
                     result = QString::fromUtf8(filter->get("mlt_service"));
             }
             // Relabel for widgets UIs
-            if (result == "movit.lift_gamma_gain" || result == "frei0r.coloradj_RGB")
-                result = tr("Color Grading");
-            else if (result == "movit.glow" || result == "frei0r.glow")
+            if (result == "movit.glow" || result == "frei0r.glow")
                 result = tr("Glow");
             else if (result == "movit.mirror" || result == "mirror")
                 result = tr("Mirror");

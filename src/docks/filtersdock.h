@@ -71,8 +71,6 @@ private slots:
     
     void on_actionSharpen_triggered();
     
-    void on_actionColorGrading_triggered();
-    
     void on_actionWhiteBalance_triggered();
 
     void onActionTriggered(QAction* action);
