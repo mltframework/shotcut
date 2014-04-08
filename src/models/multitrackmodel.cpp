@@ -1099,6 +1099,12 @@ void MultitrackModel::removeClip(int trackIndex, int clipIndex)
     if (track) {
         Mlt::Playlist playlist(*track);
         if (clipIndex < playlist.count()) {
+            // Shotcut does not like the behavior of remove() on a
+            // transition (MLT mix clip). So, we null mlt_mix to prevent it.
+            QScopedPointer<Mlt::Producer> producer(playlist.get_clip(clipIndex));
+            if (producer)
+                producer->parent().set("mlt_mix", NULL, 0);
+
             beginRemoveRows(index(trackIndex), clipIndex, clipIndex);
             playlist.remove(clipIndex);
             endRemoveRows();
