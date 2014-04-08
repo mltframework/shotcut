@@ -64,8 +64,7 @@ Rectangle {
     GridLayout {
         columns: 6
         columnSpacing: 20
-        anchors.top: parent.top
-        anchors.bottom: parent.bottom
+        anchors.fill: parent
 
         // Row 1
         Preset {
@@ -96,9 +95,9 @@ Rectangle {
         // Row 3
         ColorWheelItem {
             id: liftwheel
-            implicitWidth: height * 1.1
             Layout.columnSpan: 2
-            Layout.fillHeight: true;
+            implicitWidth: parent.width / 3 - parent.columnSpacing
+            implicitHeight: implicitWidth / 1.1
             Layout.alignment : Qt.AlignCenter | Qt.AlignTop
             Layout.minimumHeight: 75
             Layout.maximumHeight: 300
@@ -110,9 +109,9 @@ Rectangle {
         }
         ColorWheelItem {
             id: gammawheel
-            implicitWidth: height * 1.1
             Layout.columnSpan: 2
-            Layout.fillHeight: true;
+            implicitWidth: parent.width / 3 - parent.columnSpacing
+            implicitHeight: implicitWidth / 1.1
             Layout.alignment : Qt.AlignCenter | Qt.AlignTop
             Layout.minimumHeight: 75
             Layout.maximumHeight: 300
@@ -124,9 +123,9 @@ Rectangle {
         }
         ColorWheelItem {
             id: gainwheel
-            implicitWidth: height * 1.1
             Layout.columnSpan: 2
-            Layout.fillHeight: true;
+            implicitWidth: parent.width / 3 - parent.columnSpacing
+            implicitHeight: implicitWidth / 1.1
             Layout.alignment : Qt.AlignCenter | Qt.AlignTop
             Layout.minimumHeight: 75
             Layout.maximumHeight: 300
