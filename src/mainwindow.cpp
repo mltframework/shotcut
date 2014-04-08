@@ -1032,6 +1032,9 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
                 m_playlistDock->on_actionOpen_triggered();
         }
         break;
+    case Qt::Key_F5:
+        m_timelineDock->model()->reload();
+        break;
     default:
         QMainWindow::keyPressEvent(event);
     }
