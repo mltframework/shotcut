@@ -351,6 +351,7 @@ lupdate_hack {
 }
 
 TRANSLATIONS += \
+    ../translations/shotcut_ca.ts \
     ../translations/shotcut_cs.ts \
     ../translations/shotcut_da.ts \
     ../translations/shotcut_de.ts \
