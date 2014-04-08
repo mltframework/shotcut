@@ -2000,12 +2000,12 @@ tlačítkem myši na úkol k otevření nabídky pro zastavení nyní běžící
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="26"/>
         <source>Transition</source>
-        <translation type="unfinished"/>
+        <translation>Přechod</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="47"/>
         <source>Change the softness of the edge of the wipe</source>
-        <translation type="unfinished"/>
+        <translation>Změnit jemnost okraje stírání obrazu</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="63"/>
@@ -2021,12 +2021,12 @@ tlačítkem myši na úkol k otevření nabídky pro zastavení nyní běžící
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="88"/>
         <source>Swap the appearance of the A and B clips</source>
-        <translation type="unfinished"/>
+        <translation>Vyměnit zobrazení záběrů A a B</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="91"/>
         <source>Invert Wipe</source>
-        <translation type="unfinished"/>
+        <translation>Obrátit stírání obrazu</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="100"/>
@@ -2034,164 +2034,169 @@ tlačítkem myši na úkol k otevření nabídky pro zastavení nyní běžící
 course of the transition. Instead, set a
 fixed mixing level, or choose only clip A's
 audio (0%) or clip B&apos;s audio (100%).</source>
-        <translation type="unfinished"/>
+        <translation>Neměňte zvukové úrovně během
+toku přechodu. Místo toho nastavte
+pevnou úroveň míchání, nebo vyberte pouze zvuk
+záběru A (0%) nebo zvuk záběru B (100%).</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="106"/>
         <source>Mix:</source>
-        <translation type="unfinished"/>
+        <translation>Míchání:</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="116"/>
         <source>A</source>
-        <translation type="unfinished"/>
+        <translation>A</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="130"/>
         <source>B</source>
-        <translation type="unfinished"/>
+        <translation>B</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="158"/>
         <source>Dissolve</source>
-        <translation type="unfinished"/>
+        <translation>Prolínat se</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="163"/>
         <source>Bar Horizontal</source>
-        <translation type="unfinished"/>
+        <translation>Pruh vodorovně</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="168"/>
         <source>Bar Vertical</source>
-        <translation type="unfinished"/>
+        <translation>Pruh svisle</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="173"/>
         <source>Barn Door Horizonal</source>
-        <translation type="unfinished"/>
+        <translation>Vrata od stodoly vodorovně</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="178"/>
         <source>Barn Door Vertical</source>
-        <translation type="unfinished"/>
+        <translation>Vrata od stodoly svisle</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="183"/>
         <source>Barn Door Diagonal SW-NE</source>
-        <translation type="unfinished"/>
+        <translation>Vrata od stodoly diagonálně SW-NE</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="188"/>
         <source>Barn Door Diagonal NW-SE</source>
-        <translation type="unfinished"/>
+        <translation>Vrata od stodoly diagonálně NW-SE</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="193"/>
         <source>Diagonal Top Left</source>
-        <translation type="unfinished"/>
+        <translation>Diagonálně nahoru vlevo</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="198"/>
         <source>Diagonal Top Right</source>
-        <translation type="unfinished"/>
+        <translation>Diagonálně nahoru vpravo</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="203"/>
         <source>Matrix Waterfall Horizontal</source>
-        <translation type="unfinished"/>
+        <translation>Matrix vodopád vodorovně</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="208"/>
         <source>Matrix Waterfall Vertical</source>
-        <translation type="unfinished"/>
+        <translation>Matrix vodopád svisle</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="213"/>
         <source>Matrix Snake Horizontal</source>
-        <translation type="unfinished"/>
+        <translation>Matrix had vodorovně</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="218"/>
         <source>Matrix Snake Parallel Horizontal</source>
-        <translation type="unfinished"/>
+        <translation>Matrix had souběžně vodorovně</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="223"/>
         <source>Matrix Snake Vertical</source>
-        <translation type="unfinished"/>
+        <translation>Matrix had svisle</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="228"/>
         <source>Matrix Snake Parallel Vertical</source>
-        <translation type="unfinished"/>
+        <translation>Matrix had souběžně svisle</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="233"/>
         <source>Barn V Up</source>
-        <translation type="unfinished"/>
+        <translation>Stodola V nahoru</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="238"/>
         <source>Iris Circle</source>
-        <translation type="unfinished"/>
+        <translation>Kruh duhy</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="243"/>
         <source>Double Iris</source>
-        <translation type="unfinished"/>
+        <translation>Dvojitá duha</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="248"/>
         <source>Iris Box</source>
-        <translation type="unfinished"/>
+        <translation>Obdélník duhy</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="253"/>
         <source>Box Bottom Right</source>
-        <translation type="unfinished"/>
+        <translation>Obdélník dole vpravo</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="258"/>
         <source>Box Bottom Left</source>
-        <translation type="unfinished"/>
+        <translation>Obdélník dole vlevo</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="263"/>
         <source>Box Right Center</source>
-        <translation type="unfinished"/>
+        <translation>Obdélník vpravo střed</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="268"/>
         <source>Clock Top</source>
-        <translation type="unfinished"/>
+        <translation>Hodiny nahoře</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="273"/>
         <source>Custom...</source>
-        <translation type="unfinished"/>
+        <translation>Vlastní...</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="296"/>
         <source>Wipe Softness</source>
-        <translation type="unfinished"/>
+        <translation>Jemnost stírání obrazu</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="312"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Video transitions other than &lt;span style=&quot; font-weight:600;&quot;&gt;Dissolve&lt;/span&gt; are not yet available when &lt;span style=&quot; font-weight:600;&quot;&gt;GPU Processing&lt;/span&gt; is enabled in &lt;span style=&quot; font-weight:600;&quot;&gt;Settings&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Obrazové přechody jiné než &lt;span style=&quot; font-weight:600;&quot;&gt;Prolínat se&lt;/span&gt; ještě nejsou dostupné, když je &lt;span style=&quot; font-weight:600;&quot;&gt;zpracování promocí GPU&lt;/span&gt; is povoleno v &lt;span style=&quot; font-weight:600;&quot;&gt;Nastavení&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="340"/>
         <source>Automatically fade-out the audio of clip A
 and fade-in the audio of clip B over the
 duration of the transition.</source>
-        <translation type="unfinished"/>
+        <translation>Automaticky zeslabit zvuk záběru A
+a zesílit zvuk záběru B po dobu
+trvání přechodu.</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="345"/>
         <source>Cross-fade</source>
-        <translation type="unfinished"/>
+        <translation>Prolínání</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="357"/>
@@ -2211,7 +2216,7 @@ duration of the transition.</source>
     <message>
         <location filename="../src/widgets/lumamixtransition.cpp" line="166"/>
         <source>Images (*.bmp *.jpeg *.jpg *.pgm *.png *.svg *.tga *.tif *.tiff);;All Files (*)</source>
-        <translation type="unfinished"/>
+        <translation>Obrázky (*.bmp *.jpeg *.jpg *.pgm *.png *.svg *.tga *.tif *.tiff);;Všechny obrázky (*)</translation>
     </message>
 </context>
 <context>

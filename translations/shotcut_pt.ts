@@ -664,7 +664,7 @@
         <location filename="../src/docks/encodedock.ui" line="595"/>
         <location filename="../src/docks/encodedock.ui" line="1163"/>
         <source>The average bit rate</source>
-        <translation>A média de taxa de bits</translation>
+        <translation>A taxa média de bits</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="605"/>
@@ -868,7 +868,7 @@ codificadores. No entanto, nem todos os codificadores são multi-tarefas.</trans
         <location filename="../src/docks/encodedock.ui" line="891"/>
         <location filename="../src/docks/encodedock.ui" line="1286"/>
         <source>Average Bitrate</source>
-        <translation>Média de taxa de bits</translation>
+        <translation>Taxa média de bits</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="896"/>
