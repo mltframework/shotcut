@@ -278,7 +278,8 @@ OTHER_FILES += \
     qml/filters/fadeout_movit/ui.qml \
     qml/timeline/ToolTip.qml \
     qml/timeline/ToggleButton.qml \
-    qml/filters/crop/meta_movit.qml
+    qml/filters/crop/meta_movit.qml \
+    qml/filters/color/meta_movit.qml
 
 lupdate_hack {
     SOURCES += \
@@ -348,6 +349,7 @@ lupdate_hack {
     qml/filters/fadeout_movit/meta.qml \
     qml/filters/fadeout_movit/ui.qml \
     qml/filters/crop/meta_movit.qml
+    qml/filters/color/meta_movit.qml
 }
 
 TRANSLATIONS += \
