@@ -83,6 +83,7 @@ static QActionList getFilters(FiltersDock* dock, Ui::FiltersDock* ui)
                     meta->setParent(action);
                     meta->setPath(subdir);
                     action->setProperty("isAudio", meta->isAudio());
+                    action->setVisible(!meta->isHidden());
                     actions << action;
                     dock->addActionToMap(meta, action);
                 }
@@ -138,11 +139,11 @@ QmlMetadata *FiltersDock::qmlMetadataForService(Mlt::Service *service)
 {
     availablefilters();
     if (service->get("shotcut:filter")) {
-        QAction* action = m_objectNameActionMap.value(service->get("shotcut:filter"));
+        QAction* action = m_actionMap.value(service->get("shotcut:filter"));
         if (action && action->children().count())
             return qobject_cast<QmlMetadata*>(action->children().first());
     }
-    QAction* action = m_serviceActionMap.value(service->get("mlt_service"));
+    QAction* action = m_actionMap.value(service->get("mlt_service"));
     if (action && action->children().count())
         return qobject_cast<QmlMetadata*>(action->children().first());
     else
@@ -219,6 +220,7 @@ void FiltersDock::on_removeButton_clicked()
     if (index.isValid()) {
         m_model.remove(index.row());
         delete ui->scrollArea->widget();
+        ui->scrollArea->setWidget(0);
         m_quickObject = 0;
     }
 }
@@ -306,18 +308,16 @@ void FiltersDock::onActionTriggered(QAction* action)
 
 void FiltersDock::addActionToMap(const QmlMetadata *meta, QAction *action)
 {
+    m_actionMap[meta->mlt_service()] = action;
     if (!meta->objectName().isEmpty())
-        m_objectNameActionMap[meta->objectName()] = action;
-    else
-        m_serviceActionMap[meta->mlt_service()] = action;
+        m_actionMap[meta->objectName()] = action;
 }
 
 void FiltersDock::loadWidgetsPanel(QWidget *widget)
 {
     m_quickObject = 0;
     delete ui->scrollArea->widget();
-    if (widget)
-        ui->scrollArea->setWidget(widget);
+    ui->scrollArea->setWidget(widget);
 }
 
 void FiltersDock::loadQuickPanel(const QmlMetadata* metadata, int row)

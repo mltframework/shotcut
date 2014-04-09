@@ -279,7 +279,9 @@ OTHER_FILES += \
     qml/timeline/ToolTip.qml \
     qml/timeline/ToggleButton.qml \
     qml/filters/crop/meta_movit.qml \
-    qml/filters/color/meta_movit.qml
+    qml/filters/color/meta_movit.qml \
+    qml/filters/color/meta_frei0r_coloradj.qml \
+    qml/filters/color/ui_frei0r_coloradj.qml
 
 lupdate_hack {
     SOURCES += \
@@ -348,8 +350,10 @@ lupdate_hack {
     qml/filters/audio_fadeout/ui.qml \
     qml/filters/fadeout_movit/meta.qml \
     qml/filters/fadeout_movit/ui.qml \
-    qml/filters/crop/meta_movit.qml
-    qml/filters/color/meta_movit.qml
+    qml/filters/crop/meta_movit.qml \
+    qml/filters/color/meta_movit.qml \
+    qml/filters/color/meta_frei0r_coloradj.qml \
+    qml/filters/color/ui_frei0r_coloradj.qml
 }
 
 TRANSLATIONS += \

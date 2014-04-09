@@ -82,8 +82,7 @@ private:
     AttachedFiltersModel m_model;
     QActionGroup* m_audioActions;
     QActionGroup* m_videoActions;
-    QMap<QString, QAction*> m_serviceActionMap;
-    QMap<QString, QAction*> m_objectNameActionMap;
+    QMap<QString, QAction*> m_actionMap;
     QFuture<QActionList> m_filtersFuture;
     QObject* m_quickObject;
     

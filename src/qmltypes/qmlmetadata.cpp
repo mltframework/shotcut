@@ -24,6 +24,7 @@ QmlMetadata::QmlMetadata(QObject *parent)
     , m_needsGPU(false)
     , m_qmlFileName("ui.qml")
     , m_isAudio(false)
+    , m_isHidden(false)
 {
 }
 
@@ -65,4 +66,9 @@ QString QmlMetadata::qmlFilePath() const
 void QmlMetadata::setIsAudio(bool isAudio)
 {
     m_isAudio = isAudio;
+}
+
+void QmlMetadata::setIsHidden(bool isHidden)
+{
+    m_isHidden = isHidden;
 }
