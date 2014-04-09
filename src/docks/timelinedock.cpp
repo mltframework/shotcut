@@ -264,10 +264,9 @@ void TimelineDock::selectClip(int trackIndex, int clipIndex)
         // to the cut parent.
         info->producer->set(kFilterInProperty, info->frame_in);
         info->producer->set(kFilterOutProperty, info->frame_out);
-        MAIN.filtersDock()->model()->reset(info->producer);
+        MAIN.filtersDock()->setProducer(info->producer);
         MAIN.loadProducerWidget(info->producer);
         delete info;
-        emit MAIN.filtersDock()->model()->changed();
     }
 }
 

@@ -172,6 +172,15 @@ void FiltersDock::onProducerOpened()
     }
 }
 
+void FiltersDock::setProducer(Mlt::Producer *producer)
+{
+    loadWidgetsPanel();
+    m_model.reset(producer);
+    emit model()->changed();
+    ui->addAudioButton->setEnabled(true);
+    ui->addVideoButton->setEnabled(true);
+}
+
 void FiltersDock::setFadeInDuration(int duration)
 {
     if (m_quickObject && ui->listView->currentIndex().isValid()) {

@@ -51,6 +51,7 @@ public:
 public slots:
     void onModelChanged();
     void onProducerOpened();
+    void setProducer(Mlt::Producer *producer);
     void setFadeInDuration(int duration);
     void setFadeOutDuration(int duration);
 
