@@ -141,6 +141,7 @@ void EncodeDock::loadPresets()
                             name = QString("%1 (%2)").arg(textParts.join("/")).arg(profile);
                     }
                 }
+                if (name == "lossless/FFV1") continue;
                 QStandardItem* item = new QStandardItem(name);
                 item->setData(QString(m_presets->get_name(j)));
                 if (preset.get("meta.preset.note"))
