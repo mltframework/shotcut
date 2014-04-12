@@ -22,7 +22,7 @@
     <message>
         <location filename="../src/dialogs/addencodepresetdialog.ui" line="53"/>
         <source>Make final changes to the preset including removing items you do not want to include, or copy/paste the clipboard.</source>
-        <translation>Fes canvis finals a la plantilla, fins i tot esborrant ítems que no hi vols incloure, o copia/enganxa al porta-retalls.</translation>
+        <translation>Feu els canvis finals a la plantilla; també podeu esborrar ítems que no hi voleu incloure,  o copiar i enganxar del porta-retalls.</translation>
     </message>
 </context>
 <context>
@@ -40,7 +40,7 @@
     <message>
         <location filename="../src/widgets/alsawidget.ui" line="61"/>
         <source>Apply</source>
-        <translation>Aplicar</translation>
+        <translation>Aplica</translation>
     </message>
     <message>
         <location filename="../src/widgets/alsawidget.ui" line="68"/>
@@ -68,7 +68,7 @@
     <message>
         <location filename="../src/models/attachedfiltersmodel.cpp" line="129"/>
         <source>Glow</source>
-        <translation>Brillantor difosa</translation>
+        <translation>Resplandor</translation>
     </message>
     <message>
         <location filename="../src/models/attachedfiltersmodel.cpp" line="131"/>
@@ -83,7 +83,7 @@
     <message>
         <location filename="../src/models/attachedfiltersmodel.cpp" line="135"/>
         <source>Sharpen</source>
-        <translation>Enfocar</translation>
+        <translation>Enfoca</translation>
     </message>
     <message>
         <location filename="../src/models/attachedfiltersmodel.cpp" line="137"/>
@@ -96,7 +96,7 @@
     <message>
         <location filename="../src/widgets/audiosignal.cpp" line="42"/>
         <source>Monitor Audio Signal</source>
-        <translation>Monitoratge de senyal d&apos;àudio</translation>
+        <translation>Monitoritza el Senyal d&apos;Àudio</translation>
     </message>
 </context>
 <context>
@@ -119,7 +119,7 @@
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="109"/>
         <source>Video</source>
-        <translation>Video</translation>
+        <translation>Vídeo</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="117"/>
@@ -170,7 +170,7 @@
         <location filename="../src/widgets/avformatproducerwidget.ui" line="328"/>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="358"/>
         <source>Frame rate</source>
-        <translation>Fotogrames per segon</translation>
+        <translation>Imatges per segon</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="333"/>
@@ -228,7 +228,7 @@
         <location filename="../src/widgets/avformatproducerwidget.ui" line="515"/>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="545"/>
         <source>Sample rate</source>
-        <translation>Taxa de mostreig</translation>
+        <translation>Freqüència de mostratge</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="558"/>
@@ -268,7 +268,7 @@
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="738"/>
         <source>Copy Full File Path</source>
-        <translation>Copia el camí complet de l&apos;arxiu</translation>
+        <translation>Copia la ruta completa de l&apos;arxiu</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="115"/>
@@ -292,7 +292,7 @@
     <message>
         <location filename="../src/qml/timeline/Clip.qml" line="543"/>
         <source>Open As Clip</source>
-        <translation>Obre com a clip</translation>
+        <translation>Obre Com a Clip</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/Clip.qml" line="548"/>
@@ -310,12 +310,12 @@
     <message>
         <location filename="../src/widgets/colorbarswidget.ui" line="26"/>
         <source>Color Bars</source>
-        <translation>Barres de colors</translation>
+        <translation>Cartes d&apos;Ajust</translation>
     </message>
     <message>
         <location filename="../src/widgets/colorbarswidget.ui" line="45"/>
         <source>Type</source>
-        <translation>Tecleja</translation>
+        <translation>Tipus</translation>
     </message>
     <message>
         <location filename="../src/widgets/colorbarswidget.ui" line="62"/>
@@ -382,7 +382,7 @@
     <message>
         <location filename="../src/widgets/colorproducerwidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Formulari</translation>
+        <translation>Forma</translation>
     </message>
     <message>
         <location filename="../src/widgets/colorproducerwidget.ui" line="26"/>
@@ -405,7 +405,7 @@
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="14"/>
         <source>Add Custom Video Mode</source>
-        <translation>Afegeix un mode de video personalitzat</translation>
+        <translation>Afegeix un Mode de Vídeo Personalitzat</translation>
     </message>
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="29"/>
@@ -517,12 +517,12 @@
     <message>
         <location filename="../src/widgets/decklinkproducerwidget.ui" line="92"/>
         <source>Please be aware that not every card model supports automatic signal detection, and not all cards support all of the signal modes.</source>
-        <translation>Tingues en compte que no tots els models de tarja suporten la detecció automàtica del senyal, i que no totes les targes suporten tots els modes de senyal.</translation>
+        <translation>Tingueu en compte que no tots els models de tarja suporten la detecció automàtica del senyal, i que no totes les targes suporten tots els modes de senyal.</translation>
     </message>
     <message>
         <location filename="../src/widgets/decklinkproducerwidget.cpp" line="28"/>
         <source>Detect Automatically</source>
-        <translation>Detectar automàticament</translation>
+        <translation>Detecta automàticament</translation>
     </message>
 </context>
 <context>
@@ -543,7 +543,7 @@
     <message>
         <location filename="../src/dialogs/durationdialog.ui" line="17"/>
         <source>Set Duration</source>
-        <translation>Estableix la durada</translation>
+        <translation>Estableix la Durada</translation>
     </message>
     <message>
         <location filename="../src/dialogs/durationdialog.ui" line="25"/>
@@ -581,7 +581,7 @@
     <message>
         <location filename="../src/docks/encodedock.ui" line="209"/>
         <source>Video</source>
-        <translation>Video</translation>
+        <translation>Vídeo</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="279"/>
@@ -820,7 +820,7 @@
     <message>
         <location filename="../src/docks/encodedock.ui" line="770"/>
         <source>Disable video</source>
-        <translation>Desactiva video</translation>
+        <translation>Desactiva vídeo</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="777"/>
@@ -1010,7 +1010,7 @@ són multi-fil.</translation>
         <location filename="../src/docks/encodedock.ui" line="1384"/>
         <location filename="../src/docks/encodedock.cpp" line="98"/>
         <source>Encode File</source>
-        <translation>Codifica el firxer</translation>
+        <translation>Codifica i Desa</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1391"/>
@@ -1051,7 +1051,7 @@ són multi-fil.</translation>
         <location filename="../src/docks/encodedock.cpp" line="604"/>
         <location filename="../src/docks/encodedock.cpp" line="798"/>
         <source>Capture File</source>
-        <translation>Fitxer de captura</translation>
+        <translation>Captura a Fitxer</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="108"/>
@@ -1073,18 +1073,18 @@ són multi-fil.</translation>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="621"/>
         <source>Encode to File</source>
-        <translation>Codifica a un fitxer</translation>
+        <translation>Codifica i Desa</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="621"/>
         <source>Capture to File</source>
-        <translation>Captura a un fitxer</translation>
+        <translation>Captura a un Fitxer</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="684"/>
         <location filename="../src/docks/encodedock.cpp" line="705"/>
         <source>Stop Stream</source>
-        <translation>Atura el flux</translation>
+        <translation>Atura e Flux</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="697"/>
@@ -1094,7 +1094,7 @@ són multi-fil.</translation>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="735"/>
         <source>Add Encode Preset</source>
-        <translation type="unfinished"/>
+        <translation>Afegiu Plantilla de Codificat</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="778"/>
@@ -1127,12 +1127,12 @@ són multi-fil.</translation>
     <message>
         <location filename="../src/docks/filtersdock.ui" line="85"/>
         <source>Add a video filter</source>
-        <translation>Afegeix un filtre de video</translation>
+        <translation>Afegeix un filtre de vídeo</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.ui" line="88"/>
         <source>Video</source>
-        <translation>Video</translation>
+        <translation>Vídeo</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.ui" line="102"/>
@@ -1147,7 +1147,7 @@ són multi-fil.</translation>
     <message>
         <location filename="../src/docks/filtersdock.ui" line="161"/>
         <source>Glow</source>
-        <translation>Brillantor difosa</translation>
+        <translation>Resplandor</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.ui" line="166"/>
@@ -1270,14 +1270,14 @@ This program requires OpenGL version 2.0
 with the framebuffer object extension.</source>
         <translation>Error
 Aquest programa necessita la versió 2.0 d&apos;OpenGL
-amb l&apos;extensió de l&apos;objecte frramebuffer.</translation>
+amb l&apos;extensió de l&apos;objecte framebuffer.</translation>
     </message>
     <message>
         <location filename="../src/widgets/gltestwidget.cpp" line="62"/>
         <source>GPU Processing requires OpenGL version 3.2, but you have version %1.%2.
 Disabling GPU Processing.</source>
         <translation>El processat GPU requereix la versió 3.2 de l&apos;OpenGL, però tens la versió %1.%2.
-Desactivant el processat GPU.</translation>
+Es desactiva el processat GPU.</translation>
     </message>
 </context>
 <context>
@@ -1292,7 +1292,7 @@ Desactivant el processat GPU.</translation>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="36"/>
         <source>&amp;Edit</source>
-        <translation>&amp;Editar</translation>
+        <translation>&amp;Edita</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="53"/>
@@ -1507,12 +1507,12 @@ Desactivant el processat GPU.</translation>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="509"/>
         <source>Zoom In</source>
-        <translation>Acosta zoom</translation>
+        <translation>Apropa</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="514"/>
         <source>E&amp;xit</source>
-        <translation>Sortir (&amp;x)</translation>
+        <translation>&amp;Surt</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="517"/>
@@ -1624,7 +1624,7 @@ Vols desar-ne els canvis?</translation>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="191"/>
         <source>Open File...</source>
-        <translation>Obre fitxer...</translation>
+        <translation>Obre un Fitxer...</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="192"/>
@@ -1660,12 +1660,12 @@ Vols desar-ne els canvis?</translation>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="236"/>
         <source>All Files (*)</source>
-        <translation>Tots els fitxers (*)</translation>
+        <translation>Tots els Fitxers (*)</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="238"/>
         <source>Open image...</source>
-        <translation>Obrir imatge...</translation>
+        <translation>Obre una imatge...</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="285"/>
@@ -1700,7 +1700,7 @@ Vols desar-ne els canvis?</translation>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="554"/>
         <source>Open %1 ?</source>
-        <translation>Vols obrir %1 ?</translation>
+        <translation>Voleu obrir %1 ?</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="555"/>
@@ -1763,17 +1763,17 @@ Vols desar-ne els canvis?</translation>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="179"/>
         <source>Repeat</source>
-        <translation type="unfinished"/>
+        <translation>Repeteix</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="197"/>
         <source> frames</source>
-        <translation type="unfinished"/>
+        <translation>fotogrames</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="213"/>
         <source>per picture</source>
-        <translation type="unfinished"/>
+        <translation>per imatge</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="172"/>
@@ -1839,7 +1839,7 @@ Vols desar-ne els canvis?</translation>
     <message>
         <location filename="../src/widgets/jackproducerwidget.ui" line="43"/>
         <source>You need to manually connect the JACK input ports.</source>
-        <translation>Has de connectar manualment els ports d&apos;entrada del JACK</translation>
+        <translation>Heu de connectar manualment els ports d&apos;entrada del JACK</translation>
     </message>
 </context>
 <context>
@@ -1847,7 +1847,7 @@ Vols desar-ne els canvis?</translation>
     <message>
         <location filename="../src/jobqueue.cpp" line="159"/>
         <source>pending</source>
-        <translation>Pendent</translation>
+        <translation>pendent</translation>
     </message>
     <message>
         <location filename="../src/jobqueue.cpp" line="195"/>
@@ -1877,10 +1877,10 @@ Vols desar-ne els canvis?</translation>
         <source>Stop automatically processing the next pending job in
 the list. This does not stop a currently running job. Right-
 -click a job to open a menu to stop a currently running job.</source>
-        <translation>Atura automàticament el processat del següent treball
-de la llista. Això no atura el treball actual. Clic dret
-en un treball per obrir un diàleg per aturar un treball
-en curs.</translation>
+        <translation>Atura automàticament el processat del següent
+treball de la llista. Això no atura el treball actual.
+El clic dret sobre un treball obre un diàleg que permet
+aturar un treball en curs.</translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="109"/>
@@ -2017,7 +2017,7 @@ en curs.</translation>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="78"/>
         <source>Video</source>
-        <translation>Video</translation>
+        <translation>Vídeo</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="88"/>
@@ -2073,22 +2073,22 @@ mescla, o tria només l&apos;àudio del clip A
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="173"/>
         <source>Barn Door Horizonal</source>
-        <translation>Porta de Barn Horitzontal</translation>
+        <translation>Comporta Horitzontal</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="178"/>
         <source>Barn Door Vertical</source>
-        <translation>Porta de Barn Vertical</translation>
+        <translation>Comporta Vertical</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="183"/>
         <source>Barn Door Diagonal SW-NE</source>
-        <translation>Porta de Barn Diagonal SO-NE</translation>
+        <translation>Comporta Diagonal SO-NE</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="188"/>
         <source>Barn Door Diagonal NW-SE</source>
-        <translation>Porta de Barn Diagonal NO-SE</translation>
+        <translation>Comporta Diagonal NO-SE</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="193"/>
@@ -2133,7 +2133,7 @@ mescla, o tria només l&apos;àudio del clip A
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="233"/>
         <source>Barn V Up</source>
-        <translation>Barn V Amunt</translation>
+        <translation>Comporta V Amunt</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="238"/>
@@ -2183,19 +2183,21 @@ mescla, o tria només l&apos;àudio del clip A
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="312"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Video transitions other than &lt;span style=&quot; font-weight:600;&quot;&gt;Dissolve&lt;/span&gt; are not yet available when &lt;span style=&quot; font-weight:600;&quot;&gt;GPU Processing&lt;/span&gt; is enabled in &lt;span style=&quot; font-weight:600;&quot;&gt;Settings&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Les transicions de vídeo que no siguin &lt;span style=&quot; font-weight:600;&quot;&gt;Dissol&lt;/span&gt; encara no estan disponibles si està activat el &lt;span style=&quot; font-weight:600;&quot;&gt;Processament GPU&lt;/span&gt; a &lt;span style=&quot;font-weight:600;&quot;&gt;Configura&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="340"/>
         <source>Automatically fade-out the audio of clip A
 and fade-in the audio of clip B over the
 duration of the transition.</source>
-        <translation type="unfinished"/>
+        <translation>Fon automàticament l&apos;àudio del clip A
+i entra gradualment l&apos;àudio del clip B
+mentre dura la transició</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="345"/>
         <source>Cross-fade</source>
-        <translation type="unfinished"/>
+        <translation>Fosa creuada</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="357"/>
@@ -2210,12 +2212,12 @@ duration of the transition.</source>
     <message>
         <location filename="../src/widgets/lumamixtransition.cpp" line="165"/>
         <source>Open File</source>
-        <translation>Obre fitxer</translation>
+        <translation>Obre un Fitxer</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.cpp" line="166"/>
         <source>Images (*.bmp *.jpeg *.jpg *.pgm *.png *.svg *.tga *.tif *.tiff);;All Files (*)</source>
-        <translation type="unfinished"/>
+        <translation>Imatges (*.bmp *.jpge *.jpg *.pgm *.png *.svg *.tga *.tif *.tiff);;Tots els Fitxers (*)</translation>
     </message>
 </context>
 <context>
@@ -2244,37 +2246,53 @@ p, li { white-space: pre-wrap; }
 &lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; Alt+Left&lt;/span&gt; or &lt;span style=&quot; font-weight:600;&quot;&gt;Alt+Right&lt;/span&gt; to jump between start, in, out, and end.&lt;/li&gt;&lt;/ul&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Hold down &lt;span style=&quot; font-weight:600;&quot;&gt;Shift&lt;/span&gt; to make the mouse movement over the video window scrub/skim.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Update Shotcut whenever you like. We do not notify you about updates because new version are available almost daily.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;Guia ràpida del Shotcut&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Obriu fitxers &lt;span style=&quot; font-weight:600;&quot;&gt;arrossegant-los&lt;/span&gt; a més del mètode tradicional del menú i la barra d&apos;eines.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Utilitzeu &lt;span style=&quot; font-weight:600;&quot;&gt;Fitxer&lt;/span&gt; &amp;gt; &lt;span style=&quot; font-weight:600;&quot;&gt;Obre altre&lt;/span&gt; per obrir fluxes de xarxa, dispositius de captura i generadors.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Els fitxers XML MLT es poden obrir com a clip; així podeu utilitzar el Shotcut per verificar el vostre XML.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Dreceres de teclat del control de transport:&lt;/p&gt;
+&lt;ul type=&quot;circle&quot; style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;&quot;&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;La &lt;span style=&quot; font-weight:600;&quot;&gt; J&lt;/span&gt;, la &lt;span style=&quot; font-weight:600;&quot;&gt;K&lt;/span&gt;, i la &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt; controlen la velocitat i la direcció de reproducció. Premeu &lt;span style=&quot; font-weight:600;&quot;&gt;J&lt;/span&gt; o &lt;span style=&quot; font-weight:600;&quot;&gt;L&lt;/span&gt; repetidament per anar més de pressa.&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Les tecles &lt;span style=&quot; font-weight:600;&quot;&gt; I&lt;/span&gt; i &lt;span style=&quot; font-weight:600;&quot;&gt;O&lt;/span&gt; fixen els punts d&apos;entrada i sortida del clip.&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Les tecles del cursor E&lt;span style=&quot; font-weight:600;&quot;&gt;squerra&lt;/span&gt; o D&lt;span style=&quot; font-weight:600;&quot;&gt;reta&lt;/span&gt; avancen fotograma a fotograma.&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; RePag&lt;/span&gt; o &lt;span style=&quot; font-weight:600;&quot;&gt;AvPag&lt;/span&gt; avancen segon a segon.&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; Alt+Esquerra&lt;/span&gt; o &lt;span style=&quot; font-weight:600;&quot;&gt;Alt+Dreta&lt;/span&gt; salten entre l&apos;inici, el punt d&apos;entrada, el de sortida i el final.&lt;/li&gt;&lt;/ul&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Aguanteu premut &lt;span style=&quot; font-weight:600;&quot;&gt;Majúscules&lt;/span&gt; per fer que el moviment del ratolí per la finestra faci avançar i retrocedir la pel·lícula.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Actualitzeu el Shotcut quan vulgueu. No avisem d&apos;actualitzacions perquè hi ha versions noves quasi diàriament.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="78"/>
         <source>&amp;File</source>
-        <translation>&amp;Arxiu</translation>
+        <translation>&amp;Fitxer</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="90"/>
         <source>&amp;View</source>
-        <translation>&amp;Vista</translation>
+        <translation>&amp;Visualitza</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="100"/>
         <source>&amp;Edit</source>
-        <translation>&amp;Editar</translation>
+        <translation>&amp;Edita</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="105"/>
         <source>&amp;Help</source>
-        <translation>Ajuda (&amp;H)</translation>
+        <translation>A&amp;juda</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="117"/>
         <source>Settings</source>
-        <translation>Configuració</translation>
+        <translation>Configura</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="121"/>
         <source>Deinterlacer</source>
-        <translation>Desentrellaçador</translation>
+        <translation>Desentrellaçat</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="130"/>
@@ -2284,7 +2302,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.ui" line="139"/>
         <source>Video Mode</source>
-        <translation>Mode de video</translation>
+        <translation>Mode de Vídeo</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="145"/>
@@ -2309,12 +2327,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.ui" line="229"/>
         <source>&amp;Open File...</source>
-        <translation>&amp;Obrir fitxer</translation>
+        <translation>&amp;Obre un Fitxer...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="232"/>
         <source>Open a video, audio or image file</source>
-        <translation>Obre un fitxer de video, d&apos;àudio o d&apos;imatge</translation>
+        <translation>Obre un fitxer de vídeo, d&apos;àudio o d&apos;imatge</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="235"/>
@@ -2324,7 +2342,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.ui" line="243"/>
         <source>E&amp;xit</source>
-        <translation>Sortir (&amp;x)</translation>
+        <translation>&amp;Surt</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="246"/>
@@ -2339,22 +2357,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.ui" line="254"/>
         <source>&amp;About Shotcut</source>
-        <translation>&amp;Sobre Shotcut</translation>
+        <translation>&amp;Quant a Shotcut</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="259"/>
         <source>About Qt</source>
-        <translation>Sobre Qt</translation>
+        <translation>Quant a Qt</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="264"/>
         <source>Open Other...</source>
-        <translation>Obre altre...</translation>
+        <translation>Obre Altre...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="267"/>
         <source>Open a device, stream or generator</source>
-        <translation>Obre un dispositiu, flux o generador</translation>
+        <translation>Obre un dispositiu, un flux o un generador</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="270"/>
@@ -2419,7 +2437,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.ui" line="342"/>
         <source>FAQ...</source>
-        <translation>PMF -FAQ-</translation>
+        <translation>PMF</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="351"/>
@@ -2441,7 +2459,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.ui" line="372"/>
         <source>Recent</source>
-        <translation>Recents</translation>
+        <translation>Fitxers Recents</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="381"/>
@@ -2482,7 +2500,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.ui" line="448"/>
         <source>Linear Blend (fast)</source>
-        <translation>Mescla linial (ràpid)</translation>
+        <translation>Mescla Lineal (ràpid)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="456"/>
@@ -2537,7 +2555,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.ui" line="541"/>
         <source>Modify the video image or audio</source>
-        <translation>Modifica el video, imatge o àudio</translation>
+        <translation>Modifica el vídeo, la imatge o l&apos;àudio</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="546"/>
@@ -2557,12 +2575,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.ui" line="565"/>
         <source>Fusion Dark</source>
-        <translation>Fusió fosca</translation>
+        <translation>Fusió Fosc</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="573"/>
         <source>Fusion Light</source>
-        <translation>Fusió clara</translation>
+        <translation>Fusió Clar</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="578"/>
@@ -2593,7 +2611,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.ui" line="621"/>
         <source>Open MLT XML As Clip...</source>
-        <translation>Obre un XML MLT com a Clip...</translation>
+        <translation>Obre un XML MLT Com a Clip...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="624"/>
@@ -2603,7 +2621,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.ui" line="603"/>
         <source>Show Title Bars</source>
-        <translation>Mostra les barres apilades</translation>
+        <translation>Mostra les Barres de Títol</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="108"/>
@@ -2658,7 +2676,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.cpp" line="448"/>
         <source>DeckLink Keyer</source>
-        <translation type="unfinished"/>
+        <translation>Comandament DeckLink</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="520"/>
@@ -2672,7 +2690,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/mainwindow.cpp" line="579"/>
         <location filename="../src/mainwindow.cpp" line="1975"/>
         <source>Open File</source>
-        <translation>Obre fitxer</translation>
+        <translation>Obre Fitxer</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="778"/>
@@ -2682,12 +2700,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.cpp" line="783"/>
         <source>About Shotcut</source>
-        <translation>Sobre Shotcut</translation>
+        <translation>Quant a Shotcut</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="784"/>
         <source>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2014 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;h1&gt;Shotcut versió %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; és un editor de vídeo multiplataforma lliure i de codi obert.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2014 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Sota llicència &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Aquest programa fa ús dels següents projectes amb orgull:&lt;ul&gt;&lt;li&gt;Aplicació &lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; i entorn de treball d&apos;IU&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt;, entorn de treball de creació multimèdia&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt;, llibreries de formats i còdecs multimèdia&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt;, codificador d&apos;H.264&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt;, codificador de VP8&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; codificador d&apos;MP3&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt;, connectors de vídeo&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt;, connectors d&apos;àudio&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt;, col·lecció d&apos;icones d&apos;&lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt;, col·lecció d&apos;icones&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;El codi font utilitzat per compilar aquest programa es pot descarregar de &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;Aquest programa es distribueix amb l&apos;esperança que serà útil, però sense CAP GARANTIA; sense tansols la garantia implícita de MERCANTIBILITAT o ADEQUACIÓ A UN FI PARTICULAR. Aquestes clausules són correctes excepte error en la traducció.&lt;/small&gt;</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1158"/>
@@ -2715,19 +2733,19 @@ Vols desar-ne els canvis?</translation>
     <message>
         <location filename="../src/mainwindow.cpp" line="1544"/>
         <source>Exit Full Screen</source>
-        <translation>Sortir de pantalla completa</translation>
+        <translation>Surt de la Pantalla Completa</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1553"/>
         <source>GPU Processing is not supported</source>
-        <translation>El processat GPU no està suportat</translation>
+        <translation>No es suporta el Processat GPU</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1749"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to exit now?</source>
-        <translation>Has de reiniciar Shotcut per canviar al nou idioma.
-Vols sortir ara?</translation>
+        <translation>Heu de reiniciar Shotcut per canviar al nou idioma.
+Voleu sortir ara?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1787"/>
@@ -2740,8 +2758,8 @@ Verifiqueu que JACK està instal·lat i executant-se.</translation>
         <location filename="../src/mainwindow.cpp" line="1796"/>
         <source>You must restart Shotcut to switch using GPU processing.
 Do you want to exit now?</source>
-        <translation>Has de reiniciar Shotcut per començar a utilitzar el processament GPU.
-Vols sortir ara?</translation>
+        <translation>Heu de reiniciar Shotcut per començar a utilitzar el processament GPU.
+Voleu sortir ara?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1976"/>
@@ -2827,7 +2845,7 @@ Vols sortir ara?</translation>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="142"/>
         <source>Open As Clip</source>
-        <translation>Obre com a clip</translation>
+        <translation>Obre Com a Clip</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="145"/>
@@ -2924,12 +2942,12 @@ Vols continuar?</translation>
     <message>
         <location filename="../src/mvcp/meltedplaylistmodel.cpp" line="114"/>
         <source>In</source>
-        <translation>Dins</translation>
+        <translation>Entrada</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistmodel.cpp" line="116"/>
         <source>Out</source>
-        <translation>Fora</translation>
+        <translation>Sortida</translation>
     </message>
 </context>
 <context>
@@ -2968,14 +2986,14 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Clica&lt;/span&gt; una unitat per obrir-la a la llista de reproducció.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Cliqueu&lt;/span&gt; una unitat per obrir-la a la llista de reproducció.&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Doble clic&lt;/span&gt; sobre una unitat per controlar-la al reproductor, o &lt;span style=&quot; font-weight:600;&quot;&gt;clic dret&lt;/span&gt; per accions de control de transport.&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Clic&lt;/span&gt; sobre un ítem de la llista de reproducció per seleccionar-lo per operacions d&apos;edició (p,ex. inserir).&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Feu &lt;span style=&quot; font-weight:600;&quot;&gt;Doble clic&lt;/span&gt; sobre una unitat per controlar-la al reproductor, o &lt;span style=&quot; font-weight:600;&quot;&gt;clic dret&lt;/span&gt; per accions de control de transport.&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Feu &lt;span style=&quot; font-weight:600;&quot;&gt;Clic&lt;/span&gt; sobre un ítem de la llista de reproducció per seleccionar-lo per operacions d&apos;edició (p,ex. inserir).&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Doble clic&lt;/span&gt; sobre un ítem de la llista de reproducció per avançar la unitat fins a ell.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Feu &lt;span style=&quot; font-weight:600;&quot;&gt;Doble clic&lt;/span&gt; sobre un ítem de la llista de reproducció per avançar el capçal fins a ell.&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Arrossega&lt;/span&gt; des de l&apos;arbre de clips del servidor fins a la llista de reproducció, o&lt;span style=&quot; font-weight:600;&quot;&gt;clic&lt;/span&gt; sobre un clip per seleccionar-lo i utilitzar-lo amb les accions &lt;span style=&quot; font-weight:600;&quot;&gt;Afegir&lt;/span&gt; i &lt;span style=&quot; font-weight:600;&quot;&gt;Inserir&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Arrossegueu&lt;/span&gt; des de l&apos;arbre de clips del servidor fins a la llista de reproducció, o feu &lt;span style=&quot; font-weight:600;&quot;&gt;clic&lt;/span&gt; sobre un clip per seleccionar-lo i utilitzar-lo amb les accions &lt;span style=&quot; font-weight:600;&quot;&gt;Afegir&lt;/span&gt; i &lt;span style=&quot; font-weight:600;&quot;&gt;Inserir&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="195"/>
@@ -3126,7 +3144,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/filters/movitglowfilter.ui" line="114"/>
         <source>Highlight Blurriness</source>
-        <translation>Desenfoc de la brillantor</translation>
+        <translation>Desenfocament de la brillantor</translation>
     </message>
     <message>
         <location filename="../src/filters/movitglowfilter.ui" line="186"/>
@@ -3260,7 +3278,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/openotherdialog.ui" line="17"/>
         <source>Open Other</source>
-        <translation>Obre altre</translation>
+        <translation>Obre Altre</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.ui" line="43"/>
@@ -3353,7 +3371,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/openotherdialog.cpp" line="78"/>
         <location filename="../src/openotherdialog.cpp" line="130"/>
         <source>Color Bars</source>
-        <translation>Barres de colors</translation>
+        <translation>Cartes d&apos;Ajust</translation>
     </message>
 </context>
 <context>
@@ -3391,12 +3409,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/widgets/plasmawidget.ui" line="330"/>
         <source>Move 1</source>
-        <translation>Mou-ne 1</translation>
+        <translation>Moviment 1</translation>
     </message>
     <message>
         <location filename="../src/widgets/plasmawidget.ui" line="398"/>
         <source>Move 2</source>
-        <translation>Mou-ne 2</translation>
+        <translation>Moviment 2</translation>
     </message>
 </context>
 <context>
@@ -3584,7 +3602,15 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;You can freely preview clips without necessarily adding them to the playlist or closing it.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;To trim or adjust a playlist entry choose &lt;span style=&quot; font-weight:600;&quot;&gt;Open As Clip&lt;/span&gt; from the context menu, make the changes, and then choose &lt;span style=&quot; font-weight:600;&quot;&gt;Update&lt;/span&gt;.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Drag-n-drop&lt;/span&gt; to rearrange the items.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Feu &lt;span style=&quot; font-weight:600;&quot;&gt;Doble clic&lt;/span&gt; sobre un ítem per carregar la llista de reproducció al reproductor.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;El reproductor avançarà fins al començament de l&apos;ítem sobre el que hagueu fet &lt;span style=&quot; font-weight:600;&quot;&gt;doble clic&lt;/span&gt;.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Podeu veure clips lliurement sense haver d&apos;afegir-los necessàriament a la llista de reproducció o haver de tancar-la.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Per ajustar una entrada de la llista de reproducció, seleccioneu &lt;span style=&quot; font-weight:600;&quot;&gt;Obre com a clip&lt;/span&gt; del menú contextual, feu els canvis, i després seleccioneu &lt;span style=&quot; font-weight:600;&quot;&gt;Actualitza&lt;/span&gt;.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Arrossegueu&lt;/span&gt; per reordenar els ítems.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="93"/>
@@ -3638,7 +3664,7 @@ avançar fins al tall seleccionat.</translation>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="232"/>
         <source>Open As Clip</source>
-        <translation>Obre com a clip</translation>
+        <translation>Obre Com a Clip</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="235"/>
@@ -3684,23 +3710,23 @@ avançar fins al tall seleccionat.</translation>
         <location filename="../src/docks/playlistdock.ui" line="277"/>
         <location filename="../src/docks/playlistdock.ui" line="280"/>
         <source>In and Out - Left/Right</source>
-        <translation>Dins i Fora - Esquerra/Dreta</translation>
+        <translation>Entrada i Sortida - Esquerra/Dreta</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="288"/>
         <location filename="../src/docks/playlistdock.ui" line="291"/>
         <source>In and Out - Top/Bottom</source>
-        <translation>Dins i Fora - Dalt/Baix</translation>
+        <translation>Entrada i Sortida - Dalt/Baix</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="299"/>
         <source>In Only - Small</source>
-        <translation>Només Dins - Petit</translation>
+        <translation>Només Entrada - Petit</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="307"/>
         <source>In Only - Large</source>
-        <translation>Només Dins - Gran</translation>
+        <translation>Només Entrada - Gran</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="312"/>
@@ -3744,7 +3770,7 @@ avançar fins al tall seleccionat.</translation>
     <message>
         <location filename="../src/models/playlistmodel.cpp" line="273"/>
         <source>In</source>
-        <translation>Dins</translation>
+        <translation>Entrada</translation>
     </message>
     <message>
         <location filename="../src/models/playlistmodel.cpp" line="275"/>
@@ -3958,7 +3984,7 @@ avançar fins al tall seleccionat.</translation>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="328"/>
         <source>Timeout when reading data from socket.</source>
-        <translation>Temps esgotat mentre es llegien dades del socket.</translation>
+        <translation>S&apos;ha esgotat el temps en llegir dades del sòcol.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="393"/>
@@ -3968,7 +3994,7 @@ avançar fins al tall seleccionat.</translation>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="405"/>
         <source>Lengths smaller than 126 must be expressed as one byte.</source>
-        <translation>Longituds menors de 126 s&apos;han d&apos;expressar en un sol octet.</translation>
+        <translation>Les longituds menors de 126 s&apos;han d&apos;expressar en un sol byte.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="429"/>
@@ -3978,7 +4004,7 @@ avançar fins al tall seleccionat.</translation>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="443"/>
         <source>Lengths smaller than 65536 (2^16) must be expressed as 2 bytes.</source>
-        <translation>Les longituds menors de 65536 (2^16) s&apos;han d&apos;expressar amb 2 octets.</translation>
+        <translation>Les longituds menors de 65536 (2^16) s&apos;han d&apos;expressar amb 2 bytes.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="467"/>
@@ -3988,7 +4014,7 @@ avançar fins al tall seleccionat.</translation>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="490"/>
         <source>Maximum framesize exceeded.</source>
-        <translation>S&apos;ha excedit la mida màxima del fotograma.</translation>
+        <translation>S&apos;ha excedit la mida màxima del marc de dades.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="502"/>
@@ -4008,7 +4034,7 @@ avançar fins al tall seleccionat.</translation>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="573"/>
         <source>Controle frame is larger than 125 bytes</source>
-        <translation>El fotograma de control és major de 125 octets</translation>
+        <translation>El fotograma de control és major de 125 bytes</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="577"/>
@@ -4118,12 +4144,12 @@ avançar fins al tall seleccionat.</translation>
     <message>
         <location filename="../QWebSockets/qwebsocket_p.cpp" line="564"/>
         <source>Error writing bytes to socket: %1.</source>
-        <translation>Error en escriure octets al socket: %1.</translation>
+        <translation>Error en escriure bytes al sòcol: %1.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/qwebsocket_p.cpp" line="576"/>
         <source>Bytes written %1 != %2.</source>
-        <translation>Octets escrits %1 != %2.</translation>
+        <translation>Bytes escrits %1 != %2.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/qwebsocket_p.cpp" line="705"/>
@@ -4157,7 +4183,7 @@ avançar fins al tall seleccionat.</translation>
     <message>
         <location filename="../QWebSockets/qwebsocketserver_p.cpp" line="58"/>
         <source>Server closed.</source>
-        <translation>El servidor és tancat.</translation>
+        <translation>S&apos;ha tancat el servidor.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/qwebsocketserver_p.cpp" line="335"/>
@@ -4177,7 +4203,7 @@ avançar fins al tall seleccionat.</translation>
     <message>
         <location filename="../QWebSockets/qwebsocketserver_p.cpp" line="352"/>
         <source>Closing socket because of invalid or unsupported request.</source>
-        <translation>Es tanca el socket per culpa d&apos;una sol·licitud invàlida o no suportada.</translation>
+        <translation>S&apos;ha tancat el sòcol per culpa d&apos;una sol·licitud invàlida o no suportada.</translation>
     </message>
 </context>
 <context>
@@ -4198,12 +4224,12 @@ avançar fins al tall seleccionat.</translation>
     <message>
         <location filename="../src/docks/recentdock.ui" line="18"/>
         <source>Recent</source>
-        <translation>Recents</translation>
+        <translation>Fitxers Recents</translation>
     </message>
     <message>
         <location filename="../src/docks/recentdock.ui" line="40"/>
         <source>Show only files with name matching text</source>
-        <translation>Mostra només els fitxes el nom dels quals coincideixi amb el text</translation>
+        <translation>Mostra només els fitxers el nom dels quals coincideixi amb el text</translation>
     </message>
     <message>
         <location filename="../src/docks/recentdock.ui" line="43"/>
@@ -4299,12 +4325,12 @@ avançar fins al tall seleccionat.</translation>
     <message>
         <location filename="../src/qml/timeline/TimelineToolbar.qml" line="88"/>
         <source>Scrub while dragging</source>
-        <translation type="unfinished"/>
+        <translation>Visualitza en arrossegar</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/TimelineToolbar.qml" line="97"/>
         <source>Ripple (insert) when source is dropped</source>
-        <translation>Descargola (insereix) quan es deixa anar l&apos;origen</translation>
+        <translation>Expandeix (insereix) quan es deixa anar l&apos;origen</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/TimelineToolbar.qml" line="104"/>
@@ -4320,7 +4346,7 @@ avançar fins al tall seleccionat.</translation>
         <location filename="../src/qml/timeline/TimelineToolbar.qml" line="120"/>
         <source>Ripple Delete - Remove current clip
 shifting following clips to the left (X)</source>
-        <translation>Esborra i cargola - Esborra el clip actual
+        <translation>Esborrat expansiu - Esborra el clip actual
 i mou els clips següents cap a l&apos;esquerra (X)</translation>
     </message>
     <message>
@@ -4423,7 +4449,7 @@ movent els clips següents cap a la dreta (V)</translation>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="49"/>
         <source>Set the path to the video device file</source>
-        <translation>Estableix el camí al fitxer de dispositiu de video</translation>
+        <translation>Estableix el camí al fitxer de dispositiu de vídeo</translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="52"/>
@@ -4576,7 +4602,7 @@ movent els clips següents cap a la dreta (V)</translation>
     <message>
         <location filename="../src/filters/webvfxfilter.cpp" line="63"/>
         <source>Open HTML File</source>
-        <translation>Obre fitxer HTML</translation>
+        <translation>Obre un Fitxer HTML</translation>
     </message>
     <message>
         <location filename="../src/filters/webvfxfilter.cpp" line="64"/>
@@ -4596,7 +4622,7 @@ movent els clips següents cap a la dreta (V)</translation>
     <message>
         <location filename="../src/filters/webvfxfilter.cpp" line="110"/>
         <source>Save HTML File</source>
-        <translation>Desa el fitxer HTML</translation>
+        <translation>Desa un Fitxer HTML</translation>
     </message>
     <message>
         <location filename="../src/filters/webvfxfilter.cpp" line="111"/>
@@ -4822,7 +4848,7 @@ simultàniament en aquest mode.</translation>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/meta.qml" line="7"/>
         <source>Copy Channel</source>
-        <translation>Canal de còpia</translation>
+        <translation>Copia el Canal</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_gain/meta.qml" line="7"/>
@@ -4837,7 +4863,7 @@ simultàniament en aquest mode.</translation>
     <message>
         <location filename="../src/qml/filters/audio_pan/meta.qml" line="7"/>
         <source>Pan</source>
-        <translation type="unfinished"/>
+        <translation>Balanç</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_mono/meta.qml" line="7"/>
@@ -4930,7 +4956,7 @@ simultàniament en aquest mode.</translation>
     <message>
         <location filename="../src/qml/filters/vignette/meta_movit.qml" line="6"/>
         <source>Vignette</source>
-        <translation type="unfinished"/>
+        <translation>Vinyetatge</translation>
     </message>
 </context>
 <context>
@@ -4938,7 +4964,7 @@ simultàniament en aquest mode.</translation>
     <message>
         <location filename="../src/qml/filters/vignette/meta_oldfilm.qml" line="6"/>
         <source>Vignette</source>
-        <translation type="unfinished"/>
+        <translation>Vinyetatge</translation>
     </message>
 </context>
 <context>
@@ -5044,7 +5070,7 @@ simultàniament en aquest mode.</translation>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="320"/>
         <source>Add Video Track</source>
-        <translation>Afegeix pista de video</translation>
+        <translation>Afegeix Pista de Vídeo</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="321"/>
@@ -5187,7 +5213,7 @@ simultàniament en aquest mode.</translation>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="55"/>
         <source>Select a file to store analysis results.</source>
-        <translation>Tria un fitxer per desar els resultats de l&apos;anàlisi.</translation>
+        <translation>Tria un fitxer per desar el resultat de l&apos;anàlisi.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="90"/>
@@ -5307,7 +5333,7 @@ simultàniament en aquest mode.</translation>
     <message>
         <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="79"/>
         <source>Feathering</source>
-        <translation type="unfinished"/>
+        <translation>Difuminat</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="112"/>
@@ -5317,7 +5343,7 @@ simultàniament en aquest mode.</translation>
     <message>
         <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="144"/>
         <source>Non-linear Feathering</source>
-        <translation type="unfinished"/>
+        <translation>Difuminat no linial</translation>
     </message>
 </context>
 </TS>
