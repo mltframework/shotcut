@@ -51,7 +51,8 @@ static QActionList getFilters(FiltersDock* dock, Ui::FiltersDock* ui)
     actions.append(ui->actionGlow);
     actions.append(ui->actionMirror);
 #ifndef Q_OS_WIN
-    if (!Settings.playerGPU()) actions.append(ui->actionOverlayHTML);
+    if (!Settings.playerGPU() && MLT.repository()->filters()->get_data("webvfx"))
+        actions.append(ui->actionOverlayHTML);
 #endif
     actions.append(ui->actionSharpen);
     actions.append(ui->actionWhiteBalance);
@@ -317,10 +318,13 @@ void FiltersDock::onActionTriggered(QAction* action)
 
 void FiltersDock::addActionToMap(const QmlMetadata *meta, QAction *action)
 {
-    if (!meta->objectName().isEmpty())
+    if (!meta->objectName().isEmpty()) {
         m_actionMap[meta->objectName()] = action;
-    else
+        if (meta->mlt_service() == "frei0r.coloradj_RGB")
+            m_actionMap["frei0r.coloradj_RGB"] = action;
+    } else {
         m_actionMap[meta->mlt_service()] = action;
+    }
 }
 
 void FiltersDock::loadWidgetsPanel(QWidget *widget)
