@@ -317,9 +317,10 @@ void FiltersDock::onActionTriggered(QAction* action)
 
 void FiltersDock::addActionToMap(const QmlMetadata *meta, QAction *action)
 {
-    m_actionMap[meta->mlt_service()] = action;
     if (!meta->objectName().isEmpty())
         m_actionMap[meta->objectName()] = action;
+    else
+        m_actionMap[meta->mlt_service()] = action;
 }
 
 void FiltersDock::loadWidgetsPanel(QWidget *widget)
