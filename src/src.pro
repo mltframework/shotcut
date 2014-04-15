@@ -53,8 +53,6 @@ SOURCES += main.cpp\
     widgets/colorwheel.cpp \
     models/attachedfiltersmodel.cpp \
     docks/filtersdock.cpp \
-    filters/movitglowfilter.cpp \
-    filters/frei0rglowfilter.cpp \
     filters/movitsharpenfilter.cpp \
     filters/frei0rsharpnessfilter.cpp \
     widgets/colorpickerwidget.cpp \
@@ -126,8 +124,6 @@ HEADERS  += mainwindow.h \
     widgets/colorwheel.h \
     models/attachedfiltersmodel.h \
     docks/filtersdock.h \
-    filters/movitglowfilter.h \
-    filters/frei0rglowfilter.h \
     filters/movitsharpenfilter.h \
     filters/frei0rsharpnessfilter.h \
     widgets/colorpickerwidget.h \
@@ -182,8 +178,6 @@ FORMS    += mainwindow.ui \
     mvcp/meltedserverdock.ui \
     mvcp/meltedplaylistdock.ui \
     docks/filtersdock.ui \
-    filters/movitglowfilter.ui \
-    filters/frei0rglowfilter.ui \
     filters/movitsharpenfilter.ui \
     filters/frei0rsharpnessfilter.ui \
     filters/whitebalancefilter.ui \
@@ -276,6 +270,10 @@ OTHER_FILES += \
     qml/filters/audio_fadeout/ui.qml \
     qml/filters/fadeout_movit/meta.qml \
     qml/filters/fadeout_movit/ui.qml \
+    qml/filters/glow/meta_frei0r.qml \
+    qml/filters/glow/ui_frei0r.qml \
+    qml/filters/glow/meta_movit.qml \
+    qml/filters/glow/ui_movit.qml \
     qml/timeline/ToolTip.qml \
     qml/timeline/ToggleButton.qml \
     qml/filters/crop/meta_movit.qml \
@@ -312,6 +310,10 @@ lupdate_hack {
     qml/filters/color/ui.qml \
     qml/filters/crop/meta.qml \
     qml/filters/crop/ui.qml \
+    qml/filters/glow/meta_frei0r.qml \
+    qml/filters/glow/ui_frei0r.qml \
+    qml/filters/glow/meta_movit.qml \
+    qml/filters/glow/ui_movit.qml \
     qml/filters/rotate/ui.qml \
     qml/filters/rotate/meta.qml \
     qml/filters/stabilize/meta.qml \
