@@ -68,8 +68,6 @@ private slots:
     
     void on_listView_doubleClicked(const QModelIndex &index);
     
-    void on_actionGlow_triggered();
-    
     void on_actionSharpen_triggered();
     
     void on_actionWhiteBalance_triggered();

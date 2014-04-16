@@ -28,8 +28,6 @@
 #include <QtConcurrent/QtConcurrentRun>
 #include "mainwindow.h"
 #include "settings.h"
-#include "filters/movitglowfilter.h"
-#include "filters/frei0rglowfilter.h"
 #include "filters/movitsharpenfilter.h"
 #include "filters/frei0rsharpnessfilter.h"
 #include "filters/whitebalancefilter.h"
@@ -48,7 +46,6 @@ static bool compareQAction(const QAction* a1, const QAction* a2)
 static QActionList getFilters(FiltersDock* dock, Ui::FiltersDock* ui)
 {
     QList<QAction*> actions;
-    actions.append(ui->actionGlow);
     actions.append(ui->actionMirror);
 #ifndef Q_OS_WIN
     if (!Settings.playerGPU() && MLT.repository()->filters()->get_data("webvfx"))
@@ -243,10 +240,6 @@ void FiltersDock::on_listView_clicked(const QModelIndex &index)
         QmlMetadata* meta = qmlMetadataForService(filter);
         if (meta)
             loadQuickPanel(meta, index.row());
-        else if (name == "movit.glow")
-            loadWidgetsPanel(new MovitGlowFilter(*filter));
-        else if (name == "frei0r.glow")
-            loadWidgetsPanel(new Frei0rGlowFilter(*filter));
         else if (name == "movit.sharpen")
             loadWidgetsPanel(new MovitSharpenFilter(*filter));
         else if (name == "frei0r.sharpness")
@@ -272,19 +265,6 @@ void FiltersDock::on_actionMirror_triggered()
 void FiltersDock::on_listView_doubleClicked(const QModelIndex &index)
 {
     m_model.setData(index, true, Qt::CheckStateRole);
-}
-
-void FiltersDock::on_actionGlow_triggered()
-{
-    Mlt::Filter* filter = m_model.add(Settings.playerGPU()? "movit.glow" : "frei0r.glow");
-    if (filter && filter->is_valid()) {
-        if (Settings.playerGPU())
-            loadWidgetsPanel(new MovitGlowFilter(*filter, true));
-        else
-            loadWidgetsPanel(new Frei0rGlowFilter(*filter, true));
-    }
-    delete filter;
-    ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
 }
 
 void FiltersDock::on_actionSharpen_triggered()

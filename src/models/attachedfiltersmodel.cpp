@@ -123,9 +123,7 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
                     result = QString::fromUtf8(filter->get("mlt_service"));
             }
             // Relabel for widgets UIs
-            if (result == "movit.glow" || result == "frei0r.glow")
-                result = tr("Glow");
-            else if (result == "movit.mirror" || result == "mirror")
+            if (result == "movit.mirror" || result == "mirror")
                 result = tr("Mirror");
             else if (result == "webvfx")
                 result = tr("Overlay HTML");
