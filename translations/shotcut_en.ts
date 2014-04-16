@@ -5172,7 +5172,7 @@ the screen capture to SDI/HDMI in this mode.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/color/ui_frei0r_coloradj.qml" line="64"/>
-        <source>Highlights (Gain))</source>
+        <source>Highlights (Gain)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

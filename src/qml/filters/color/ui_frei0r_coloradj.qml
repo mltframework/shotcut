@@ -61,7 +61,7 @@ Rectangle {
             ComboBox {
                 id: modeCombo
                 Layout.minimumWidth: 200
-                model: [qsTr('Shadows (Lift)'), qsTr('Midtones (Gamma)'), qsTr('Highlights (Gain))')]
+                model: [qsTr('Shadows (Lift)'), qsTr('Midtones (Gamma)'), qsTr('Highlights (Gain)')]
                 onCurrentIndexChanged: filter.set(paramAction, currentIndex / 2)
             }
         }
