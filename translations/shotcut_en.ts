@@ -1148,11 +1148,6 @@ codecs. However, not all codecs are multi-threaded.</source>
         <source>Overlay HTML</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../src/docks/filtersdock.cpp" line="165"/>
-        <source>Filters can only be applied to clips.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>Frei0rSharpnessFilter</name>
@@ -4732,6 +4727,11 @@ the screen capture to SDI/HDMI in this mode.</source>
         <source>Color Grading</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../src/qml/filters/wave/meta.qml" line="6"/>
+        <source>Wave</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>meta_frei0r</name>
@@ -5137,6 +5137,26 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../src/qml/filters/color/ui.qml" line="89"/>
         <source>Highlights (Gain)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/wave/ui.qml" line="54"/>
+        <source>Amplitude</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/wave/ui.qml" line="86"/>
+        <source>Speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/wave/ui.qml" line="117"/>
+        <source>Deform horizontally?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/wave/ui.qml" line="128"/>
+        <source>Deform vertically?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

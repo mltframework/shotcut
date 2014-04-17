@@ -279,7 +279,9 @@ OTHER_FILES += \
     qml/filters/crop/meta_movit.qml \
     qml/filters/color/meta_movit.qml \
     qml/filters/color/meta_frei0r_coloradj.qml \
-    qml/filters/color/ui_frei0r_coloradj.qml
+    qml/filters/color/ui_frei0r_coloradj.qml \
+    qml/filters/wave/meta.qml \
+    qml/filters/wave/ui.qml
 
 lupdate_hack {
     SOURCES += \
@@ -355,7 +357,9 @@ lupdate_hack {
     qml/filters/crop/meta_movit.qml \
     qml/filters/color/meta_movit.qml \
     qml/filters/color/meta_frei0r_coloradj.qml \
-    qml/filters/color/ui_frei0r_coloradj.qml
+    qml/filters/color/ui_frei0r_coloradj.qml \
+    qml/filters/wave/meta.qml \
+    qml/filters/wave/ui.qml
 }
 
 TRANSLATIONS += \
