@@ -159,15 +159,8 @@ void FiltersDock::onProducerOpened()
     loadWidgetsPanel();
     m_model.reset();
     onModelChanged();
-    if (MLT.isPlaylist() && this->isVisible()) {
-        ui->addAudioButton->setDisabled(true);
-        ui->addVideoButton->setDisabled(true);
-        MAIN.showStatusMessage(tr("Filters can only be applied to clips."));
-    }
-    else {
-        ui->addAudioButton->setEnabled(true);
-        ui->addVideoButton->setEnabled(true);
-    }
+    ui->addAudioButton->setEnabled(MLT.isClip());
+    ui->addVideoButton->setEnabled(MLT.isClip());
 }
 
 void FiltersDock::setProducer(Mlt::Producer *producer)
