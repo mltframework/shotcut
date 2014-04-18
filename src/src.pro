@@ -223,8 +223,10 @@ OTHER_FILES += \
     qml/filters/audio_pan/ui.qml \
     qml/filters/audio_balance/meta.qml \
     qml/filters/audio_balance/ui.qml \
-    qml/filters/boxblur/meta.qml \
-    qml/filters/boxblur/ui.qml \
+    qml/filters/blur/meta_boxblur.qml \
+    qml/filters/blur/ui_boxblur.qml \
+    qml/filters/blur/meta_movit.qml \
+    qml/filters/blur/ui_movit.qml \
     qml/filters/color/meta.qml \
     qml/filters/color/ui.qml \
     qml/filters/crop/meta.qml \
@@ -246,8 +248,6 @@ OTHER_FILES += \
     qml/timeline/Clip.qml \
     qml/timeline/Ruler.qml \
     qml/timeline/Track.js \
-    qml/filters/movitblur/meta.qml \
-    qml/filters/movitblur/ui.qml \
     qml/filters/movit_diffusion/meta.qml \
     qml/filters/movit_diffusion/ui.qml \
     qml/filters/vignette/meta_movit.qml \
@@ -306,8 +306,10 @@ lupdate_hack {
     qml/filters/audio_pan/ui.qml \
     qml/filters/audio_balance/meta.qml \
     qml/filters/audio_balance/ui.qml \
-    qml/filters/boxblur/meta.qml \
-    qml/filters/boxblur/ui.qml \
+    qml/filters/blur/meta_boxblur.qml \
+    qml/filters/blur/ui_boxblur.qml \
+    qml/filters/blur/meta_movit.qml \
+    qml/filters/blur/ui_movit.qml \
     qml/filters/color/meta.qml \
     qml/filters/color/ui.qml \
     qml/filters/crop/meta.qml \
@@ -333,8 +335,6 @@ lupdate_hack {
     qml/timeline/Track.qml \
     qml/timeline/Clip.qml \
     qml/timeline/Ruler.qml \
-    qml/filters/movitblur/meta.qml \
-    qml/filters/movitblur/ui.qml \
     qml/filters/movit_diffusion/meta.qml \
     qml/filters/movit_diffusion/ui.qml \
     qml/filters/vignette/meta_movit.qml \
