@@ -1,6 +1,8 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="pt_BR" version="2.1">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="pt_BR">
 <context>
-    <name/>
+    <name></name>
     <message>
         <location filename="../src/main.cpp" line="104"/>
         <source>Loading plugins...</source>
@@ -62,31 +64,21 @@
     <name>AttachedFiltersModel</name>
     <message>
         <location filename="../src/models/attachedfiltersmodel.cpp" line="127"/>
-        <source>Color Grading</source>
-        <translation>Graduação de Cores</translation>
-    </message>
-    <message>
-        <location filename="../src/models/attachedfiltersmodel.cpp" line="129"/>
-        <source>Glow</source>
-        <translation>Brilho</translation>
-    </message>
-    <message>
-        <location filename="../src/models/attachedfiltersmodel.cpp" line="131"/>
         <source>Mirror</source>
         <translation>Espelhar</translation>
     </message>
     <message>
-        <location filename="../src/models/attachedfiltersmodel.cpp" line="133"/>
+        <location filename="../src/models/attachedfiltersmodel.cpp" line="129"/>
         <source>Overlay HTML</source>
         <translation>Sobreposição HTML</translation>
     </message>
     <message>
-        <location filename="../src/models/attachedfiltersmodel.cpp" line="135"/>
+        <location filename="../src/models/attachedfiltersmodel.cpp" line="131"/>
         <source>Sharpen</source>
         <translation>Aguçar</translation>
     </message>
     <message>
-        <location filename="../src/models/attachedfiltersmodel.cpp" line="137"/>
+        <location filename="../src/models/attachedfiltersmodel.cpp" line="133"/>
         <source>White Balance</source>
         <translation>Balanço do Branco</translation>
     </message>
@@ -280,22 +272,22 @@
 <context>
     <name>Clip</name>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="533"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="563"/>
         <source>Remove</source>
         <translation>Remover </translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="538"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="568"/>
         <source>Lift</source>
         <translation>Elevação</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="543"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="573"/>
         <source>Open As Clip</source>
         <translation>Abrir Como Clipe</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="548"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="578"/>
         <source>Split At Playhead (S)</source>
         <translation>Dividir na playhead (S)</translation>
     </message>
@@ -1013,9 +1005,9 @@ codificadores. No entanto, nem todos os codificadores são multi-tarefas.</trans
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1391"/>
-        <location filename="../src/docks/encodedock.cpp" line="689"/>
-        <location filename="../src/docks/encodedock.cpp" line="696"/>
-        <location filename="../src/docks/encodedock.cpp" line="799"/>
+        <location filename="../src/docks/encodedock.cpp" line="709"/>
+        <location filename="../src/docks/encodedock.cpp" line="716"/>
+        <location filename="../src/docks/encodedock.cpp" line="819"/>
         <source>Stream</source>
         <translation>Fluxo</translation>
     </message>
@@ -1047,14 +1039,14 @@ codificadores. No entanto, nem todos os codificadores são multi-tarefas.</trans
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="100"/>
-        <location filename="../src/docks/encodedock.cpp" line="604"/>
-        <location filename="../src/docks/encodedock.cpp" line="798"/>
+        <location filename="../src/docks/encodedock.cpp" line="624"/>
+        <location filename="../src/docks/encodedock.cpp" line="818"/>
         <source>Capture File</source>
         <translation>Capturar Arquivo</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="108"/>
-        <location filename="../src/docks/encodedock.cpp" line="422"/>
+        <location filename="../src/docks/encodedock.cpp" line="426"/>
         <source>Custom</source>
         <translation>Personalizado</translation>
     </message>
@@ -1064,44 +1056,44 @@ codificadores. No entanto, nem todos os codificadores são multi-tarefas.</trans
         <translation>Estoque</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="599"/>
-        <location filename="../src/docks/encodedock.cpp" line="644"/>
+        <location filename="../src/docks/encodedock.cpp" line="619"/>
+        <location filename="../src/docks/encodedock.cpp" line="664"/>
         <source>Stop Capture</source>
         <translation>Parar Captura</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="621"/>
+        <location filename="../src/docks/encodedock.cpp" line="641"/>
         <source>Encode to File</source>
         <translation>Codificar para arquivo</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="621"/>
+        <location filename="../src/docks/encodedock.cpp" line="641"/>
         <source>Capture to File</source>
         <translation>Capturar para arquivo</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="684"/>
-        <location filename="../src/docks/encodedock.cpp" line="705"/>
+        <location filename="../src/docks/encodedock.cpp" line="704"/>
+        <location filename="../src/docks/encodedock.cpp" line="725"/>
         <source>Stop Stream</source>
         <translation>Parar Fluxo</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="697"/>
+        <location filename="../src/docks/encodedock.cpp" line="717"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>Digite o esquema de protocolo de rede, endereço, porta, e parâmetros como uma URL:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="735"/>
+        <location filename="../src/docks/encodedock.cpp" line="755"/>
         <source>Add Encode Preset</source>
         <translation>Adicionar Codificação Predefinida</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="778"/>
+        <location filename="../src/docks/encodedock.cpp" line="798"/>
         <source>Delete Preset</source>
         <translation>Apagar predefinição</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="779"/>
+        <location filename="../src/docks/encodedock.cpp" line="799"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>Você deseja realmente apagar %1?</translation>
     </message>
@@ -1145,95 +1137,19 @@ codificadores. No entanto, nem todos os codificadores são multi-tarefas.</trans
     </message>
     <message>
         <location filename="../src/docks/filtersdock.ui" line="161"/>
-        <source>Glow</source>
-        <translation>Brilho</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/filtersdock.ui" line="166"/>
         <source>Sharpen</source>
         <translation>Nitidez</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.ui" line="171"/>
-        <source>Color Grading</source>
-        <translation>Graduação de Cores</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/filtersdock.ui" line="174"/>
-        <source>Correct, alter, or enhance the color</source>
-        <translation>Corrigir, alterar ou aumentar a cor</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/filtersdock.ui" line="179"/>
+        <location filename="../src/docks/filtersdock.ui" line="166"/>
         <source>White Balance</source>
         <translation>Balanço do Branco</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.ui" line="184"/>
-        <location filename="../src/docks/filtersdock.ui" line="187"/>
+        <location filename="../src/docks/filtersdock.ui" line="171"/>
+        <location filename="../src/docks/filtersdock.ui" line="174"/>
         <source>Overlay HTML</source>
         <translation>Sobreposição HTML</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/filtersdock.cpp" line="167"/>
-        <source>Filters can only be applied to clips.</source>
-        <translation>Filtros só podem ser aplicados a trilhas.</translation>
-    </message>
-</context>
-<context>
-    <name>Frei0rColoradjWidget</name>
-    <message>
-        <location filename="../src/filters/frei0rcoloradjwidget.ui" line="14"/>
-        <source>Form</source>
-        <translation>Formulário</translation>
-    </message>
-    <message>
-        <location filename="../src/filters/frei0rcoloradjwidget.ui" line="42"/>
-        <source>Mode</source>
-        <translation>Modo</translation>
-    </message>
-    <message>
-        <location filename="../src/filters/frei0rcoloradjwidget.ui" line="53"/>
-        <source>Shadows (Lift)</source>
-        <translation>Shadows (Lift)</translation>
-    </message>
-    <message>
-        <location filename="../src/filters/frei0rcoloradjwidget.ui" line="58"/>
-        <source>Midtones (Gamma)</source>
-        <translation>Midtones (Gamma) </translation>
-    </message>
-    <message>
-        <location filename="../src/filters/frei0rcoloradjwidget.ui" line="63"/>
-        <source>Highlights (Gain)</source>
-        <translation>Highlights (Gain) </translation>
-    </message>
-    <message>
-        <location filename="../src/filters/frei0rcoloradjwidget.ui" line="86"/>
-        <source>Keep Luma</source>
-        <translation>Manter Luma</translation>
-    </message>
-</context>
-<context>
-    <name>Frei0rGlowFilter</name>
-    <message>
-        <location filename="../src/filters/frei0rglowfilter.ui" line="14"/>
-        <source>Form</source>
-        <translation>Formulário</translation>
-    </message>
-    <message>
-        <location filename="../src/filters/frei0rglowfilter.ui" line="20"/>
-        <source>Blur</source>
-        <translation>Desfocar</translation>
-    </message>
-    <message>
-        <location filename="../src/filters/frei0rglowfilter.ui" line="32"/>
-        <source> %</source>
-        <translation>% </translation>
-    </message>
-    <message>
-        <location filename="../src/filters/frei0rglowfilter.ui" line="51"/>
-        <source>Reset to default</source>
-        <translation>Redefinir para o padrão</translation>
     </message>
 </context>
 <context>
@@ -2002,36 +1918,41 @@ na lista. Isto não paralisa um trabalho em execução. Botão direito do mouse
         <translation>Transição</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="47"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="234"/>
         <source>Change the softness of the edge of the wipe</source>
         <translation>Altere a suavidade da margem da transição</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="63"/>
-        <location filename="../src/widgets/lumamixtransition.ui" line="137"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="250"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="336"/>
         <source> %</source>
         <translation>% </translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="78"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="45"/>
         <source>Video</source>
         <translation>Vídeo</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="88"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="209"/>
         <source>Swap the appearance of the A and B clips</source>
         <translation>Trocar a aparência dos clipes A e B</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="91"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="212"/>
         <source>Invert Wipe</source>
         <translation>Inverter transição</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="100"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="221"/>
+        <source>Softness</source>
+        <translation>Suavidade</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/lumamixtransition.ui" line="296"/>
         <source>Do not alter the audio levels during the
 course of the transition. Instead, set a
-fixed mixing level, or choose only clip A's
+fixed mixing level, or choose only clip A&apos;s
 audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>Não altere os níveis de áudio durante o
 curso da transição. Ao invés disso, defina um
@@ -2039,152 +1960,142 @@ nível de mixagem fixo, ou escolha apenas o áudio
 do clipe A (0%) ou do B (100%).</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="106"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="302"/>
         <source>Mix:</source>
         <translation>Mix:</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="116"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="312"/>
         <source>A</source>
         <translation>A</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="130"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="329"/>
         <source>B</source>
         <translation>B</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="158"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="64"/>
         <source>Dissolve</source>
         <translation>Dissolver</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="163"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="69"/>
         <source>Bar Horizontal</source>
         <translation>Bar Horizontal</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="168"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="74"/>
         <source>Bar Vertical</source>
         <translation>Bar Vertical</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="173"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="79"/>
         <source>Barn Door Horizonal</source>
         <translation>Barn Door Horizonal</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="178"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="84"/>
         <source>Barn Door Vertical</source>
         <translation>Barn Door Vertical</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="183"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="89"/>
         <source>Barn Door Diagonal SW-NE</source>
         <translation>Barn Door Diagonal SW-NE</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="188"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="94"/>
         <source>Barn Door Diagonal NW-SE</source>
         <translation>Barn Door Diagonal NW-SE</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="193"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="99"/>
         <source>Diagonal Top Left</source>
         <translation>Diagonal Top Left</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="198"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="104"/>
         <source>Diagonal Top Right</source>
         <translation>Diagonal Top Right</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="203"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="109"/>
         <source>Matrix Waterfall Horizontal</source>
         <translation>Matrix Waterfall Horizontal</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="208"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="114"/>
         <source>Matrix Waterfall Vertical</source>
         <translation>Matrix Waterfall Vertical</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="213"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="119"/>
         <source>Matrix Snake Horizontal</source>
         <translation>Matrix Snake Horizontal</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="218"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="124"/>
         <source>Matrix Snake Parallel Horizontal</source>
         <translation>Matrix Snake Parallel Horizontal</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="223"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="129"/>
         <source>Matrix Snake Vertical</source>
         <translation>Matrix Snake Vertical</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="228"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="134"/>
         <source>Matrix Snake Parallel Vertical</source>
         <translation>Matrix Snake Parallel Vertical</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="233"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="139"/>
         <source>Barn V Up</source>
         <translation>Barn V Up</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="238"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="144"/>
         <source>Iris Circle</source>
         <translation>Iris Circle</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="243"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="149"/>
         <source>Double Iris</source>
         <translation>Double Iris</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="248"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="154"/>
         <source>Iris Box</source>
         <translation>Iris Box</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="253"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="159"/>
         <source>Box Bottom Right</source>
         <translation>Box Bottom Right</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="258"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="164"/>
         <source>Box Bottom Left</source>
         <translation>Box Bottom Left</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="263"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="169"/>
         <source>Box Right Center</source>
         <translation>Box Right Center</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="268"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="174"/>
         <source>Clock Top</source>
         <translation>Clock Top</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="273"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="179"/>
         <source>Custom...</source>
         <translation>Personalizado...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="296"/>
-        <source>Wipe Softness</source>
-        <translation>Suavidade da transição</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="312"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Video transitions other than &lt;span style=&quot; font-weight:600;&quot;&gt;Dissolve&lt;/span&gt; are not yet available when &lt;span style=&quot; font-weight:600;&quot;&gt;GPU Processing&lt;/span&gt; is enabled in &lt;span style=&quot; font-weight:600;&quot;&gt;Settings&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Transições de vídeo, a não ser a &lt;span style=&quot; font-weight:600;&quot;&gt;Dissolve&lt;/span&gt; , ainda não estão disponíveis quando &lt;span style=&quot; font-weight:600;&quot;&gt;o processamento pela GPU&lt;/span&gt; estiver habilitado nas &lt;span style=&quot; font-weight:600;&quot;&gt;Configurações&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="340"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="277"/>
         <source>Automatically fade-out the audio of clip A
 and fade-in the audio of clip B over the
 duration of the transition.</source>
@@ -2193,27 +2104,27 @@ e fade-in no do B automaticamente no
 decorrer da transição.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="345"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="282"/>
         <source>Cross-fade</source>
         <translation>Cross-fade</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="357"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="265"/>
         <source>Audio</source>
         <translation>Áudio</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.ui" line="367"/>
+        <location filename="../src/widgets/lumamixtransition.ui" line="202"/>
         <source>TextLabel</source>
         <translation>Etiqueta de Texto</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.cpp" line="165"/>
+        <location filename="../src/widgets/lumamixtransition.cpp" line="161"/>
         <source>Open File</source>
         <translation>Abrir Arquivo</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.cpp" line="166"/>
+        <location filename="../src/widgets/lumamixtransition.cpp" line="162"/>
         <source>Images (*.bmp *.jpeg *.jpg *.pgm *.png *.svg *.tga *.tif *.tiff);;All Files (*)</source>
         <translation>Imagens (*.bmp *.jpeg *.jpg *.pgm *.png *.svg *.tga *.tif *.tiff);;Todos os arquivos (*)</translation>
     </message>
@@ -2439,7 +2350,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="351"/>
-        <location filename="../src/mainwindow.cpp" line="1541"/>
+        <location filename="../src/mainwindow.cpp" line="1575"/>
         <source>Enter Full Screen</source>
         <translation>Entrar em Tela Cheia</translation>
     </message>
@@ -2677,90 +2588,90 @@ p, li { white-space: pre-wrap; }
         <translation>DeckLink Keyer</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="520"/>
-        <location filename="../src/mainwindow.cpp" line="522"/>
-        <location filename="../src/mainwindow.cpp" line="568"/>
-        <location filename="../src/mainwindow.cpp" line="1988"/>
+        <location filename="../src/mainwindow.cpp" line="524"/>
+        <location filename="../src/mainwindow.cpp" line="526"/>
+        <location filename="../src/mainwindow.cpp" line="572"/>
+        <location filename="../src/mainwindow.cpp" line="2022"/>
         <source>Failed to open </source>
         <translation>Falha ao abrir</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="579"/>
-        <location filename="../src/mainwindow.cpp" line="1975"/>
+        <location filename="../src/mainwindow.cpp" line="583"/>
+        <location filename="../src/mainwindow.cpp" line="2009"/>
         <source>Open File</source>
         <translation>Abrir Arquivo</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="778"/>
+        <location filename="../src/mainwindow.cpp" line="782"/>
         <source>%1[*] - %2</source>
         <translation>%1[*] - %2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="783"/>
+        <location filename="../src/mainwindow.cpp" line="787"/>
         <source>About Shotcut</source>
         <translation>Sobre o Shotcut</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="784"/>
+        <location filename="../src/mainwindow.cpp" line="788"/>
         <source>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2014 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
         <translation>&lt;h1&gt;Shotcut versão %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; é um editor de vídeo gratuito, de código aberto e multiplataforma.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2014 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Sob a Licença &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Este programa orgulhosamente usa os seguintes projetos:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; aplicativo e estrutura UI&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; estrutura de autoria multimídia&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; formato multimídia e bibliotecas de codificadores&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; codificador H.264&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; codificador VP8&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; codificador MP3&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; plugins de vídeo&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; plugins de áudio&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; coleção de ícones da &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; coleção de ícones&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;O código-fonte usado para construir este programa pode ser transferido de &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;Este programa é distribuído na esperança de que será útil, mas SEM QUALQUER GARANTIA, nem mesmo a garantia implícita de COMERCIALIZAÇÃO ou ADEQUAÇÃO A UM DETERMINADO FIM.&lt;/small&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1158"/>
-        <location filename="../src/mainwindow.cpp" line="1178"/>
+        <location filename="../src/mainwindow.cpp" line="1192"/>
+        <location filename="../src/mainwindow.cpp" line="1212"/>
         <source>Saved %1</source>
         <translation>%1 Salvo</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1170"/>
+        <location filename="../src/mainwindow.cpp" line="1204"/>
         <source>Save XML</source>
         <translation>Salvar XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1170"/>
+        <location filename="../src/mainwindow.cpp" line="1204"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt) </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1190"/>
+        <location filename="../src/mainwindow.cpp" line="1224"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>O projeto foi modificado.
 Você deseja salvar as alterações?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1544"/>
+        <location filename="../src/mainwindow.cpp" line="1578"/>
         <source>Exit Full Screen</source>
         <translation>Sair da Tela Cheia</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1553"/>
+        <location filename="../src/mainwindow.cpp" line="1587"/>
         <source>GPU Processing is not supported</source>
         <translation>Processamento pela GPU não é suportado</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1749"/>
+        <location filename="../src/mainwindow.cpp" line="1783"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to exit now?</source>
         <translation>Você deve reiniciar o Shotcut para mudar para o novo idioma.
 Você deseja sair agora?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1787"/>
+        <location filename="../src/mainwindow.cpp" line="1821"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>Falha ao conectar a JACK.
 Verifique que JACK esteja instalando e sendo executado.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1796"/>
+        <location filename="../src/mainwindow.cpp" line="1830"/>
         <source>You must restart Shotcut to switch using GPU processing.
 Do you want to exit now?</source>
         <translation>Você deve reiniciar o Shotcut para alternar o uso do processamento GPU.
 Você gostaria de sair agora?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1976"/>
+        <location filename="../src/mainwindow.cpp" line="2010"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;Todos os arquivos (*)</translation>
     </message>
@@ -3095,59 +3006,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/mvcp/meltedunitsmodel.cpp" line="116"/>
         <source>disconnected</source>
         <translation>desconectado</translation>
-    </message>
-</context>
-<context>
-    <name>MovitColorFilter</name>
-    <message>
-        <location filename="../src/filters/movitcolorfilter.ui" line="14"/>
-        <source>Form</source>
-        <translation>Formulário</translation>
-    </message>
-    <message>
-        <location filename="../src/filters/movitcolorfilter.ui" line="42"/>
-        <source>Shadows (Lift)</source>
-        <translation>Sombras (Elevação)</translation>
-    </message>
-    <message>
-        <location filename="../src/filters/movitcolorfilter.ui" line="72"/>
-        <source>Highlights (Gain)</source>
-        <translation>Iluminação (Ganho) </translation>
-    </message>
-    <message>
-        <location filename="../src/filters/movitcolorfilter.ui" line="82"/>
-        <source>Midtones (Gamma)</source>
-        <translation>Tons Médios (Gama) </translation>
-    </message>
-</context>
-<context>
-    <name>MovitGlowFilter</name>
-    <message>
-        <location filename="../src/filters/movitglowfilter.ui" line="14"/>
-        <source>Form</source>
-        <translation>Formulário</translation>
-    </message>
-    <message>
-        <location filename="../src/filters/movitglowfilter.ui" line="42"/>
-        <source>Radius</source>
-        <translation>Raio</translation>
-    </message>
-    <message>
-        <location filename="../src/filters/movitglowfilter.ui" line="76"/>
-        <location filename="../src/filters/movitglowfilter.ui" line="148"/>
-        <location filename="../src/filters/movitglowfilter.ui" line="220"/>
-        <source>Reset to default</source>
-        <translation>Redefinir para o padrão</translation>
-    </message>
-    <message>
-        <location filename="../src/filters/movitglowfilter.ui" line="114"/>
-        <source>Highlight Blurriness</source>
-        <translation>Realçar Desfocagem</translation>
-    </message>
-    <message>
-        <location filename="../src/filters/movitglowfilter.ui" line="186"/>
-        <source>Highlight Cutoff</source>
-        <translation>Realçar Limite do Corte</translation>
     </message>
 </context>
 <context>
@@ -4207,12 +4065,12 @@ o início do corte selecionado.</translation>
 <context>
     <name>QmlFilter</name>
     <message>
-        <location filename="../src/qmltypes/qmlfilter.cpp" line="121"/>
+        <location filename="../src/qmltypes/qmlfilter.cpp" line="124"/>
         <source>(defaults)</source>
         <translation>(padrões)</translation>
     </message>
     <message>
-        <location filename="../src/qmltypes/qmlfilter.cpp" line="188"/>
+        <location filename="../src/qmltypes/qmlfilter.cpp" line="191"/>
         <source>Analyze %1</source>
         <translation>Analisar %1</translation>
     </message>
@@ -4926,14 +4784,31 @@ a captura de tela para SDI/HDMI neste modo.</translation>
         <translation>Fade To Black</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/boxblur/meta.qml" line="6"/>
         <source>Blur</source>
-        <translation>Desfocar</translation>
+        <translation type="vanished">Desfocar</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/meta.qml" line="6"/>
         <source>Crop</source>
         <translation>Cortar</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/color/meta.qml" line="6"/>
+        <source>Color Grading</source>
+        <translation>Graduação de Cores</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/wave/meta.qml" line="6"/>
+        <source>Wave</source>
+        <translation>Onda</translation>
+    </message>
+</context>
+<context>
+    <name>meta_boxblur</name>
+    <message>
+        <location filename="../src/qml/filters/blur/meta_boxblur.qml" line="6"/>
+        <source>Blur</source>
+        <translation type="unfinished">Desfocar</translation>
     </message>
 </context>
 <context>
@@ -4942,6 +4817,19 @@ a captura de tela para SDI/HDMI neste modo.</translation>
         <location filename="../src/qml/filters/saturation/meta_frei0r.qml" line="6"/>
         <source>Saturation</source>
         <translation>Saturação</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/glow/meta_frei0r.qml" line="6"/>
+        <source>Glow</source>
+        <translation>Brilho</translation>
+    </message>
+</context>
+<context>
+    <name>meta_frei0r_coloradj</name>
+    <message>
+        <location filename="../src/qml/filters/color/meta_frei0r_coloradj.qml" line="7"/>
+        <source>Color Grading</source>
+        <translation>Graduação de Cores</translation>
     </message>
 </context>
 <context>
@@ -4955,6 +4843,26 @@ a captura de tela para SDI/HDMI neste modo.</translation>
         <location filename="../src/qml/filters/vignette/meta_movit.qml" line="6"/>
         <source>Vignette</source>
         <translation>Vignette</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/color/meta_movit.qml" line="6"/>
+        <source>Color Grading</source>
+        <translation>Graduação de Cores</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/crop/meta_movit.qml" line="6"/>
+        <source>Crop</source>
+        <translation>Cortar</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/glow/meta_movit.qml" line="6"/>
+        <source>Glow</source>
+        <translation>Brilho</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blur/meta_movit.qml" line="6"/>
+        <source>Blur</source>
+        <translation type="unfinished">Desfocar</translation>
     </message>
 </context>
 <context>
@@ -5046,67 +4954,72 @@ a captura de tela para SDI/HDMI neste modo.</translation>
 <context>
     <name>timeline</name>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="249"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="250"/>
         <source>Insert</source>
         <translation>Inserir</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="249"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="250"/>
         <source>Overwrite</source>
         <translation>Sobrescrever</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="315"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="316"/>
         <source>Add Audio Track</source>
         <translation>Adicionar Faixa de Áudio</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="316"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="317"/>
         <source>Ctrl+U</source>
         <translation>Ctrl+U</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="320"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="321"/>
         <source>Add Video Track</source>
         <translation>Adicionar Faixa de Vídeo</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="321"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="322"/>
         <source>Ctrl+Y</source>
         <translation>Ctrl+Y </translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="326"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="327"/>
         <source>Make Tracks Shorter</source>
         <translation>Criar Faixas Menores</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="327"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="328"/>
         <source>Ctrl+K</source>
         <translation>Ctrl+K</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="331"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="332"/>
         <source>Make Tracks Taller</source>
         <translation>Criar Faixas Maiores</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="332"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="333"/>
         <source>Ctrl+L</source>
         <translation>Ctrl+L</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="337"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="338"/>
         <source>Show Audio Waveforms</source>
         <translation>Exibir formas de onda de áudio</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="350"/>
+        <source>Reload</source>
+        <translation>Recarregar</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/timeline/timeline.qml" line="357"/>
         <source>Close</source>
         <translation>Fechar</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="351"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="358"/>
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
@@ -5265,14 +5178,12 @@ a captura de tela para SDI/HDMI neste modo.</translation>
         <translation>Duração</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/boxblur/ui.qml" line="47"/>
         <source>Width</source>
-        <translation>Largura</translation>
+        <translation type="vanished">Largura</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/boxblur/ui.qml" line="81"/>
         <source>Height</source>
-        <translation>Altura</translation>
+        <translation type="vanished">Altura</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="108"/>
@@ -5294,6 +5205,54 @@ a captura de tela para SDI/HDMI neste modo.</translation>
         <source>Bottom</source>
         <translation>Inferior</translation>
     </message>
+    <message>
+        <location filename="../src/qml/filters/color/ui.qml" line="79"/>
+        <source>Shadows (Lift)</source>
+        <translation>Sombras (Elevação)</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/color/ui.qml" line="84"/>
+        <source>Midtones (Gamma)</source>
+        <translation>Tons Médios (Gama) </translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/color/ui.qml" line="89"/>
+        <source>Highlights (Gain)</source>
+        <translation>Iluminação (Ganho) </translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/wave/ui.qml" line="54"/>
+        <source>Amplitude</source>
+        <translation>Amplitude</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/wave/ui.qml" line="86"/>
+        <source>Speed</source>
+        <translation>Velocidade</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/wave/ui.qml" line="117"/>
+        <source>Deform horizontally?</source>
+        <translation>Deformar horizontalmente?</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/wave/ui.qml" line="128"/>
+        <source>Deform vertically?</source>
+        <translation>Deformar verticalmente?</translation>
+    </message>
+</context>
+<context>
+    <name>ui_boxblur</name>
+    <message>
+        <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="47"/>
+        <source>Width</source>
+        <translation type="unfinished">Largura</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="81"/>
+        <source>Height</source>
+        <translation type="unfinished">Altura</translation>
+    </message>
 </context>
 <context>
     <name>ui_frei0r</name>
@@ -5301,6 +5260,34 @@ a captura de tela para SDI/HDMI neste modo.</translation>
         <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="54"/>
         <source>Saturation</source>
         <translation>Saturação</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/glow/ui_frei0r.qml" line="54"/>
+        <source>Blur</source>
+        <translation>Desfocar</translation>
+    </message>
+</context>
+<context>
+    <name>ui_frei0r_coloradj</name>
+    <message>
+        <location filename="../src/qml/filters/color/ui_frei0r_coloradj.qml" line="60"/>
+        <source>Mode</source>
+        <translation>Modo</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/color/ui_frei0r_coloradj.qml" line="64"/>
+        <source>Shadows (Lift)</source>
+        <translation>Sombras (Elevação)</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/color/ui_frei0r_coloradj.qml" line="64"/>
+        <source>Midtones (Gamma)</source>
+        <translation>Tons Médios (Gama) </translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/color/ui_frei0r_coloradj.qml" line="64"/>
+        <source>Highlights (Gain)</source>
+        <translation>Iluminação (Ganho) </translation>
     </message>
 </context>
 <context>
@@ -5319,6 +5306,22 @@ a captura de tela para SDI/HDMI neste modo.</translation>
         <location filename="../src/qml/filters/vignette/ui_movit.qml" line="77"/>
         <source>Inner Radius</source>
         <translation>Raio Interno</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blur/ui_movit.qml" line="36"/>
+        <location filename="../src/qml/filters/glow/ui_movit.qml" line="62"/>
+        <source>Radius</source>
+        <translation>Raio</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/glow/ui_movit.qml" line="94"/>
+        <source>Highlight Blurriness</source>
+        <translation>Realçar Desfocagem</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/glow/ui_movit.qml" line="125"/>
+        <source>Highlight Cutoff</source>
+        <translation>Realçar Limite do Corte</translation>
     </message>
 </context>
 <context>

@@ -4713,11 +4713,6 @@ the screen capture to SDI/HDMI in this mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/boxblur/meta.qml" line="6"/>
-        <source>Blur</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/crop/meta.qml" line="6"/>
         <source>Crop</source>
         <translation type="unfinished"></translation>
@@ -4730,6 +4725,14 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../src/qml/filters/wave/meta.qml" line="6"/>
         <source>Wave</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>meta_boxblur</name>
+    <message>
+        <location filename="../src/qml/filters/blur/meta_boxblur.qml" line="6"/>
+        <source>Blur</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4779,6 +4782,11 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../src/qml/filters/glow/meta_movit.qml" line="6"/>
         <source>Glow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blur/meta_movit.qml" line="6"/>
+        <source>Blur</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5095,16 +5103,6 @@ the screen capture to SDI/HDMI in this mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/boxblur/ui.qml" line="47"/>
-        <source>Width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/boxblur/ui.qml" line="81"/>
-        <source>Height</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="108"/>
         <source>Center</source>
         <translation type="unfinished"></translation>
@@ -5157,6 +5155,19 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../src/qml/filters/wave/ui.qml" line="128"/>
         <source>Deform vertically?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ui_boxblur</name>
+    <message>
+        <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="47"/>
+        <source>Width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="81"/>
+        <source>Height</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5214,6 +5225,7 @@ the screen capture to SDI/HDMI in this mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/blur/ui_movit.qml" line="36"/>
         <location filename="../src/qml/filters/glow/ui_movit.qml" line="62"/>
         <source>Radius</source>
         <translation type="unfinished"></translation>
