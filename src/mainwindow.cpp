@@ -554,7 +554,7 @@ void MainWindow::open(const QString& url, const Mlt::Properties* properties)
         MLT.profile().set_explicit(false);
         setWindowModified(false);
     }
-    else if (!playlist() && !multitrack()) {
+    if (!playlist() && !multitrack()) {
         if (!continueModified())
             return;
         setCurrentFile("");
