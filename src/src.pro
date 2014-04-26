@@ -5,6 +5,7 @@ QT       += widgets opengl xml network qml quick webkitwidgets sql
 TARGET = shotcut
 TEMPLATE = app
 
+win32:DEFINES += QT_STATIC
 include (../QWebSockets/qwebsockets.pri)
 
 SOURCES += main.cpp\
