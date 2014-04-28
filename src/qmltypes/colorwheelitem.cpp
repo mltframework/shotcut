@@ -40,6 +40,7 @@ ColorWheelItem::ColorWheelItem(QQuickItem *parent)
 {
     setAcceptedMouseButtons(Qt::LeftButton);
     setAcceptHoverEvents(true);
+    setRenderTarget(QQuickPaintedItem::FramebufferObject);
 }
 
 QColor ColorWheelItem::color()
