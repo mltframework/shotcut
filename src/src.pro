@@ -395,8 +395,13 @@ mac {
 }
 win32 {
     CONFIG += windows rtti
-    INCLUDEPATH += include/mlt++ include/mlt
-    LIBS += -Llib -lmlt++ -lmlt -lopengl32
+    CONFIG -= debug_and_release
+    isEmpty(MLT_PATH) {
+        message("MLT_PATH not set; using ..\\..\\... You can change this with 'qmake MLT_PATH=...'")
+        MLT_PATH = ..\\..\\..
+    }
+    INCLUDEPATH += $$MLT_PATH\\include\\mlt++ $$MLT_PATH\\include\\mlt
+    LIBS += -L$$MLT_PATH\\lib -lmlt++ -lmlt -lopengl32
     RC_FILE = shotcut.rc
 }
 unix:!mac {
@@ -423,12 +428,17 @@ CONFIG(leap) {
 
 isEmpty(SHOTCUT_VERSION) {
     !win32:SHOTCUT_VERSION = $$system(date "+%y.%m.%d")
+     win32:SHOTCUT_VERSION = adhoc
 }
 DEFINES += SHOTCUT_VERSION=\\\"$$SHOTCUT_VERSION\\\"
 
 unix:!mac:isEmpty(PREFIX) {
     message("Install PREFIX not set; using /usr/local. You can change this with 'qmake PREFIX=...'")
     PREFIX = /usr/local
+}
+win32:isEmpty(PREFIX) {
+    message("Install PREFIX not set; using C:\\Projects\\Shotcut. You can change this with 'qmake PREFIX=...'")
+    PREFIX = C:\\Projects\\Shotcut
 }
 unix:target.path = $$PREFIX/bin
 win32:target.path = $$PREFIX
