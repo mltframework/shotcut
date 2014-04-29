@@ -1137,18 +1137,17 @@ són multi-fil.</translation>
         <translation>Mirall</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.ui" line="161"/>
         <source>Sharpen</source>
-        <translation>Enfocar</translation>
+        <translation type="vanished">Enfocar</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.ui" line="166"/>
+        <location filename="../src/docks/filtersdock.ui" line="161"/>
         <source>White Balance</source>
         <translation>Balanç de blancs</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.ui" line="171"/>
-        <location filename="../src/docks/filtersdock.ui" line="174"/>
+        <location filename="../src/docks/filtersdock.ui" line="166"/>
+        <location filename="../src/docks/filtersdock.ui" line="169"/>
         <source>Overlay HTML</source>
         <translation>Sobreposa HTML</translation>
     </message>
@@ -1156,25 +1155,20 @@ són multi-fil.</translation>
 <context>
     <name>Frei0rSharpnessFilter</name>
     <message>
-        <location filename="../src/filters/frei0rsharpnessfilter.ui" line="14"/>
         <source>Form</source>
-        <translation>Formulari</translation>
+        <translation type="vanished">Formulari</translation>
     </message>
     <message>
-        <location filename="../src/filters/frei0rsharpnessfilter.ui" line="20"/>
         <source>Size</source>
-        <translation>Mida</translation>
+        <translation type="vanished">Mida</translation>
     </message>
     <message>
-        <location filename="../src/filters/frei0rsharpnessfilter.ui" line="51"/>
-        <location filename="../src/filters/frei0rsharpnessfilter.ui" line="110"/>
         <source> %</source>
-        <translation>%</translation>
+        <translation type="vanished">%</translation>
     </message>
     <message>
-        <location filename="../src/filters/frei0rsharpnessfilter.ui" line="148"/>
         <source>Amount</source>
-        <translation>Quantitat</translation>
+        <translation type="vanished">Quantitat</translation>
     </message>
 </context>
 <context>
@@ -3013,43 +3007,32 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>MovitSharpenFilter</name>
     <message>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="14"/>
         <source>Form</source>
-        <translation>Formulari</translation>
+        <translation type="vanished">Formulari</translation>
     </message>
     <message>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="20"/>
         <source>Gaussian Radius</source>
-        <translation>Radi Gaussià</translation>
+        <translation type="vanished">Radi Gaussià</translation>
     </message>
     <message>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="79"/>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="141"/>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="227"/>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="286"/>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="339"/>
         <source>Reset to default</source>
-        <translation>Reinicia a l&apos;estat per defecte</translation>
+        <translation type="vanished">Reinicia a l&apos;estat per defecte</translation>
     </message>
     <message>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="163"/>
         <source>Circle Radius</source>
-        <translation>Radi del cercle</translation>
+        <translation type="vanished">Radi del cercle</translation>
     </message>
     <message>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="196"/>
         <source>Noise Level</source>
-        <translation>Nivell de soroll</translation>
+        <translation type="vanished">Nivell de soroll</translation>
     </message>
     <message>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="387"/>
         <source>Correlation</source>
-        <translation>Correlació</translation>
+        <translation type="vanished">Correlació</translation>
     </message>
     <message>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="400"/>
         <source>Matrix Size</source>
-        <translation>Mida de la matriu</translation>
+        <translation type="vanished">Mida de la matriu</translation>
     </message>
 </context>
 <context>
@@ -4825,6 +4808,11 @@ simultàniament en aquest mode.</translation>
         <source>Glow</source>
         <translation>Resplandor</translation>
     </message>
+    <message>
+        <location filename="../src/qml/filters/sharpen/meta_frei0r.qml" line="6"/>
+        <source>Sharpen</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>meta_frei0r_coloradj</name>
@@ -4865,6 +4853,11 @@ simultàniament en aquest mode.</translation>
         <location filename="../src/qml/filters/blur/meta_movit.qml" line="6"/>
         <source>Blur</source>
         <translation type="unfinished">Desenfoc</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/sharpen/meta_movit.qml" line="6"/>
+        <source>Sharpen</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5268,6 +5261,16 @@ simultàniament en aquest mode.</translation>
         <source>Blur</source>
         <translation>Desenfoc</translation>
     </message>
+    <message>
+        <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="58"/>
+        <source>Amount</source>
+        <translation type="unfinished">Quantitat</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="89"/>
+        <source>Size</source>
+        <translation type="unfinished">Mida</translation>
+    </message>
 </context>
 <context>
     <name>ui_frei0r_coloradj</name>
@@ -5324,6 +5327,26 @@ simultàniament en aquest mode.</translation>
         <location filename="../src/qml/filters/glow/ui_movit.qml" line="125"/>
         <source>Highlight Cutoff</source>
         <translation>Tall de lluminositat</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="65"/>
+        <source>Circle Radius</source>
+        <translation type="unfinished">Radi del cercle</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="96"/>
+        <source>Gaussian Radius</source>
+        <translation type="unfinished">Radi Gaussià</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="127"/>
+        <source>Correlation</source>
+        <translation type="unfinished">Correlació</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="158"/>
+        <source>Noise</source>
+        <translation type="unfinished">Soroll</translation>
     </message>
 </context>
 <context>

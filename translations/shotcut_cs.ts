@@ -1137,18 +1137,17 @@ vícevláknové.</translation>
         <translation>Zrcadlení</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.ui" line="161"/>
         <source>Sharpen</source>
-        <translation>Zaostření</translation>
+        <translation type="vanished">Zaostření</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.ui" line="166"/>
+        <location filename="../src/docks/filtersdock.ui" line="161"/>
         <source>White Balance</source>
         <translation>Vyvážení bílé</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.ui" line="171"/>
-        <location filename="../src/docks/filtersdock.ui" line="174"/>
+        <location filename="../src/docks/filtersdock.ui" line="166"/>
+        <location filename="../src/docks/filtersdock.ui" line="169"/>
         <source>Overlay HTML</source>
         <translation>HTML překrytí</translation>
     </message>
@@ -1156,25 +1155,20 @@ vícevláknové.</translation>
 <context>
     <name>Frei0rSharpnessFilter</name>
     <message>
-        <location filename="../src/filters/frei0rsharpnessfilter.ui" line="14"/>
         <source>Form</source>
-        <translation>Formulář</translation>
+        <translation type="vanished">Formulář</translation>
     </message>
     <message>
-        <location filename="../src/filters/frei0rsharpnessfilter.ui" line="20"/>
         <source>Size</source>
-        <translation>Velikost</translation>
+        <translation type="vanished">Velikost</translation>
     </message>
     <message>
-        <location filename="../src/filters/frei0rsharpnessfilter.ui" line="51"/>
-        <location filename="../src/filters/frei0rsharpnessfilter.ui" line="110"/>
         <source> %</source>
-        <translation> %</translation>
+        <translation type="vanished"> %</translation>
     </message>
     <message>
-        <location filename="../src/filters/frei0rsharpnessfilter.ui" line="148"/>
         <source>Amount</source>
-        <translation>Množství</translation>
+        <translation type="vanished">Množství</translation>
     </message>
 </context>
 <context>
@@ -3012,43 +3006,32 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>MovitSharpenFilter</name>
     <message>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="14"/>
         <source>Form</source>
-        <translation>Formulář</translation>
+        <translation type="vanished">Formulář</translation>
     </message>
     <message>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="20"/>
         <source>Gaussian Radius</source>
-        <translation>Gaussův poloměr</translation>
+        <translation type="vanished">Gaussův poloměr</translation>
     </message>
     <message>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="79"/>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="141"/>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="227"/>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="286"/>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="339"/>
         <source>Reset to default</source>
-        <translation>Nastavit znovu na výchozí</translation>
+        <translation type="vanished">Nastavit znovu na výchozí</translation>
     </message>
     <message>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="163"/>
         <source>Circle Radius</source>
-        <translation>Poloměr kruhu</translation>
+        <translation type="vanished">Poloměr kruhu</translation>
     </message>
     <message>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="196"/>
         <source>Noise Level</source>
-        <translation>Úroveň šumu</translation>
+        <translation type="vanished">Úroveň šumu</translation>
     </message>
     <message>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="387"/>
         <source>Correlation</source>
-        <translation>Souvztažnost</translation>
+        <translation type="vanished">Souvztažnost</translation>
     </message>
     <message>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="400"/>
         <source>Matrix Size</source>
-        <translation>Velikost matice</translation>
+        <translation type="vanished">Velikost matice</translation>
     </message>
 </context>
 <context>
@@ -4826,6 +4809,11 @@ obrazovky do SDI/HDMI.</translation>
         <source>Glow</source>
         <translation>Záře</translation>
     </message>
+    <message>
+        <location filename="../src/qml/filters/sharpen/meta_frei0r.qml" line="6"/>
+        <source>Sharpen</source>
+        <translation type="unfinished">Zaostření</translation>
+    </message>
 </context>
 <context>
     <name>meta_frei0r_coloradj</name>
@@ -4866,6 +4854,11 @@ obrazovky do SDI/HDMI.</translation>
         <location filename="../src/qml/filters/blur/meta_movit.qml" line="6"/>
         <source>Blur</source>
         <translation type="unfinished">Rozmazání</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/sharpen/meta_movit.qml" line="6"/>
+        <source>Sharpen</source>
+        <translation type="unfinished">Zaostření</translation>
     </message>
 </context>
 <context>
@@ -5269,6 +5262,16 @@ obrazovky do SDI/HDMI.</translation>
         <source>Blur</source>
         <translation>Rozmazání</translation>
     </message>
+    <message>
+        <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="58"/>
+        <source>Amount</source>
+        <translation type="unfinished">Množství</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="89"/>
+        <source>Size</source>
+        <translation type="unfinished">Velikost</translation>
+    </message>
 </context>
 <context>
     <name>ui_frei0r_coloradj</name>
@@ -5325,6 +5328,26 @@ obrazovky do SDI/HDMI.</translation>
         <location filename="../src/qml/filters/glow/ui_movit.qml" line="125"/>
         <source>Highlight Cutoff</source>
         <translation>Zastavení světlého místa</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="65"/>
+        <source>Circle Radius</source>
+        <translation type="unfinished">Poloměr kruhu</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="96"/>
+        <source>Gaussian Radius</source>
+        <translation type="unfinished">Gaussův poloměr</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="127"/>
+        <source>Correlation</source>
+        <translation type="unfinished">Souvztažnost</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="158"/>
+        <source>Noise</source>
+        <translation type="unfinished">Šum</translation>
     </message>
 </context>
 <context>

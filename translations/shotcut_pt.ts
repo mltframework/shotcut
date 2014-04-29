@@ -1136,18 +1136,17 @@ codificadores. No entanto, nem todos os codificadores são multi-tarefas.</trans
         <translation>Espelhar</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.ui" line="161"/>
         <source>Sharpen</source>
-        <translation>Nitidez</translation>
+        <translation type="vanished">Nitidez</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.ui" line="166"/>
+        <location filename="../src/docks/filtersdock.ui" line="161"/>
         <source>White Balance</source>
         <translation>Balanço do Branco</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.ui" line="171"/>
-        <location filename="../src/docks/filtersdock.ui" line="174"/>
+        <location filename="../src/docks/filtersdock.ui" line="166"/>
+        <location filename="../src/docks/filtersdock.ui" line="169"/>
         <source>Overlay HTML</source>
         <translation>Sobreposição HTML</translation>
     </message>
@@ -1155,25 +1154,20 @@ codificadores. No entanto, nem todos os codificadores são multi-tarefas.</trans
 <context>
     <name>Frei0rSharpnessFilter</name>
     <message>
-        <location filename="../src/filters/frei0rsharpnessfilter.ui" line="14"/>
         <source>Form</source>
-        <translation>Formulário</translation>
+        <translation type="vanished">Formulário</translation>
     </message>
     <message>
-        <location filename="../src/filters/frei0rsharpnessfilter.ui" line="20"/>
         <source>Size</source>
-        <translation>Tamanho </translation>
+        <translation type="vanished">Tamanho </translation>
     </message>
     <message>
-        <location filename="../src/filters/frei0rsharpnessfilter.ui" line="51"/>
-        <location filename="../src/filters/frei0rsharpnessfilter.ui" line="110"/>
         <source> %</source>
-        <translation>% </translation>
+        <translation type="vanished">% </translation>
     </message>
     <message>
-        <location filename="../src/filters/frei0rsharpnessfilter.ui" line="148"/>
         <source>Amount</source>
-        <translation>Quantidade</translation>
+        <translation type="vanished">Quantidade</translation>
     </message>
 </context>
 <context>
@@ -3011,43 +3005,32 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>MovitSharpenFilter</name>
     <message>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="14"/>
         <source>Form</source>
-        <translation>Formulário</translation>
+        <translation type="vanished">Formulário</translation>
     </message>
     <message>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="20"/>
         <source>Gaussian Radius</source>
-        <translation>Raio Gaussiano</translation>
+        <translation type="vanished">Raio Gaussiano</translation>
     </message>
     <message>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="79"/>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="141"/>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="227"/>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="286"/>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="339"/>
         <source>Reset to default</source>
-        <translation>Redefinir para o padrão</translation>
+        <translation type="vanished">Redefinir para o padrão</translation>
     </message>
     <message>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="163"/>
         <source>Circle Radius</source>
-        <translation>Raio do Círculo</translation>
+        <translation type="vanished">Raio do Círculo</translation>
     </message>
     <message>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="196"/>
         <source>Noise Level</source>
-        <translation>Nível de Ruído</translation>
+        <translation type="vanished">Nível de Ruído</translation>
     </message>
     <message>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="387"/>
         <source>Correlation</source>
-        <translation>Correlação</translation>
+        <translation type="vanished">Correlação</translation>
     </message>
     <message>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="400"/>
         <source>Matrix Size</source>
-        <translation>Tamanho da Matriz</translation>
+        <translation type="vanished">Tamanho da Matriz</translation>
     </message>
 </context>
 <context>
@@ -4823,6 +4806,11 @@ a captura de tela para SDI/HDMI neste modo.</translation>
         <source>Glow</source>
         <translation>Brilho</translation>
     </message>
+    <message>
+        <location filename="../src/qml/filters/sharpen/meta_frei0r.qml" line="6"/>
+        <source>Sharpen</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>meta_frei0r_coloradj</name>
@@ -4863,6 +4851,11 @@ a captura de tela para SDI/HDMI neste modo.</translation>
         <location filename="../src/qml/filters/blur/meta_movit.qml" line="6"/>
         <source>Blur</source>
         <translation type="unfinished">Desfocar</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/sharpen/meta_movit.qml" line="6"/>
+        <source>Sharpen</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5266,6 +5259,16 @@ a captura de tela para SDI/HDMI neste modo.</translation>
         <source>Blur</source>
         <translation>Desfocar</translation>
     </message>
+    <message>
+        <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="58"/>
+        <source>Amount</source>
+        <translation type="unfinished">Quantidade</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="89"/>
+        <source>Size</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ui_frei0r_coloradj</name>
@@ -5322,6 +5325,26 @@ a captura de tela para SDI/HDMI neste modo.</translation>
         <location filename="../src/qml/filters/glow/ui_movit.qml" line="125"/>
         <source>Highlight Cutoff</source>
         <translation>Realçar Limite do Corte</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="65"/>
+        <source>Circle Radius</source>
+        <translation type="unfinished">Raio do Círculo</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="96"/>
+        <source>Gaussian Radius</source>
+        <translation type="unfinished">Raio Gaussiano</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="127"/>
+        <source>Correlation</source>
+        <translation type="unfinished">Correlação</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="158"/>
+        <source>Noise</source>
+        <translation type="unfinished">Ruído</translation>
     </message>
 </context>
 <context>

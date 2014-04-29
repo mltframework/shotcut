@@ -1134,18 +1134,17 @@ codecs. However, not all codecs are multi-threaded.</source>
         <translation>镜像</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.ui" line="161"/>
         <source>Sharpen</source>
-        <translation>锐化</translation>
+        <translation type="vanished">锐化</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.ui" line="166"/>
+        <location filename="../src/docks/filtersdock.ui" line="161"/>
         <source>White Balance</source>
         <translation>白平衡</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.ui" line="171"/>
-        <location filename="../src/docks/filtersdock.ui" line="174"/>
+        <location filename="../src/docks/filtersdock.ui" line="166"/>
+        <location filename="../src/docks/filtersdock.ui" line="169"/>
         <source>Overlay HTML</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1153,25 +1152,20 @@ codecs. However, not all codecs are multi-threaded.</source>
 <context>
     <name>Frei0rSharpnessFilter</name>
     <message>
-        <location filename="../src/filters/frei0rsharpnessfilter.ui" line="14"/>
         <source>Form</source>
-        <translation>表单</translation>
+        <translation type="vanished">表单</translation>
     </message>
     <message>
-        <location filename="../src/filters/frei0rsharpnessfilter.ui" line="20"/>
         <source>Size</source>
-        <translation>大小</translation>
+        <translation type="vanished">大小</translation>
     </message>
     <message>
-        <location filename="../src/filters/frei0rsharpnessfilter.ui" line="51"/>
-        <location filename="../src/filters/frei0rsharpnessfilter.ui" line="110"/>
         <source> %</source>
-        <translation> %</translation>
+        <translation type="vanished"> %</translation>
     </message>
     <message>
-        <location filename="../src/filters/frei0rsharpnessfilter.ui" line="148"/>
         <source>Amount</source>
-        <translation>总计</translation>
+        <translation type="vanished">总计</translation>
     </message>
 </context>
 <context>
@@ -2972,43 +2966,32 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>MovitSharpenFilter</name>
     <message>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="14"/>
         <source>Form</source>
-        <translation>表单</translation>
+        <translation type="vanished">表单</translation>
     </message>
     <message>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="20"/>
         <source>Gaussian Radius</source>
-        <translation>Gaussian Radius</translation>
+        <translation type="vanished">Gaussian Radius</translation>
     </message>
     <message>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="79"/>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="141"/>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="227"/>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="286"/>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="339"/>
         <source>Reset to default</source>
-        <translation>重置到缺省</translation>
+        <translation type="vanished">重置到缺省</translation>
     </message>
     <message>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="163"/>
         <source>Circle Radius</source>
-        <translation>Circle Radius</translation>
+        <translation type="vanished">Circle Radius</translation>
     </message>
     <message>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="196"/>
         <source>Noise Level</source>
-        <translation>Noise Level</translation>
+        <translation type="vanished">Noise Level</translation>
     </message>
     <message>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="387"/>
         <source>Correlation</source>
-        <translation>Correlation</translation>
+        <translation type="vanished">Correlation</translation>
     </message>
     <message>
-        <location filename="../src/filters/movitsharpenfilter.ui" line="400"/>
         <source>Matrix Size</source>
-        <translation>Matrix Size</translation>
+        <translation type="vanished">Matrix Size</translation>
     </message>
 </context>
 <context>
@@ -4771,6 +4754,11 @@ the screen capture to SDI/HDMI in this mode.</source>
         <source>Glow</source>
         <translation>发光</translation>
     </message>
+    <message>
+        <location filename="../src/qml/filters/sharpen/meta_frei0r.qml" line="6"/>
+        <source>Sharpen</source>
+        <translation type="unfinished">锐化</translation>
+    </message>
 </context>
 <context>
     <name>meta_frei0r_coloradj</name>
@@ -4811,6 +4799,11 @@ the screen capture to SDI/HDMI in this mode.</source>
         <location filename="../src/qml/filters/blur/meta_movit.qml" line="6"/>
         <source>Blur</source>
         <translation type="unfinished">模糊</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/sharpen/meta_movit.qml" line="6"/>
+        <source>Sharpen</source>
+        <translation type="unfinished">锐化</translation>
     </message>
 </context>
 <context>
@@ -5214,6 +5207,16 @@ the screen capture to SDI/HDMI in this mode.</source>
         <source>Blur</source>
         <translation>模糊</translation>
     </message>
+    <message>
+        <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="58"/>
+        <source>Amount</source>
+        <translation type="unfinished">总计</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="89"/>
+        <source>Size</source>
+        <translation type="unfinished">大小</translation>
+    </message>
 </context>
 <context>
     <name>ui_frei0r_coloradj</name>
@@ -5270,6 +5273,26 @@ the screen capture to SDI/HDMI in this mode.</source>
         <location filename="../src/qml/filters/glow/ui_movit.qml" line="125"/>
         <source>Highlight Cutoff</source>
         <translation>Highlight Cutoff</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="65"/>
+        <source>Circle Radius</source>
+        <translation type="unfinished">Circle Radius</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="96"/>
+        <source>Gaussian Radius</source>
+        <translation type="unfinished">Gaussian Radius</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="127"/>
+        <source>Correlation</source>
+        <translation type="unfinished">Correlation</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="158"/>
+        <source>Noise</source>
+        <translation type="unfinished">Noise</translation>
     </message>
 </context>
 <context>
