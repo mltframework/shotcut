@@ -28,8 +28,6 @@
 #include <QtConcurrent/QtConcurrentRun>
 #include "mainwindow.h"
 #include "settings.h"
-#include "filters/movitsharpenfilter.h"
-#include "filters/frei0rsharpnessfilter.h"
 #include "filters/whitebalancefilter.h"
 #include "filters/webvfxfilter.h"
 #include "qmltypes/qmlfilter.h"
@@ -51,7 +49,6 @@ static QActionList getFilters(FiltersDock* dock, Ui::FiltersDock* ui)
     if (!Settings.playerGPU() && MLT.repository()->filters()->get_data("webvfx"))
         actions.append(ui->actionOverlayHTML);
 #endif
-    actions.append(ui->actionSharpen);
     actions.append(ui->actionWhiteBalance);
 
     // Find all of the plugin filters.
@@ -233,10 +230,6 @@ void FiltersDock::on_listView_clicked(const QModelIndex &index)
         QmlMetadata* meta = qmlMetadataForService(filter);
         if (meta)
             loadQuickPanel(meta, index.row());
-        else if (name == "movit.sharpen")
-            loadWidgetsPanel(new MovitSharpenFilter(*filter));
-        else if (name == "frei0r.sharpness")
-            loadWidgetsPanel(new Frei0rSharpnessFilter(*filter));
         else if (name == "frei0r.colgate" || name == "movit.white_balance")
             loadWidgetsPanel(new WhiteBalanceFilter(*filter));
         else if (name == "webvfx")
@@ -258,19 +251,6 @@ void FiltersDock::on_actionMirror_triggered()
 void FiltersDock::on_listView_doubleClicked(const QModelIndex &index)
 {
     m_model.setData(index, true, Qt::CheckStateRole);
-}
-
-void FiltersDock::on_actionSharpen_triggered()
-{
-    Mlt::Filter* filter = m_model.add(Settings.playerGPU()? "movit.sharpen" : "frei0r.sharpness");
-    if (filter && filter->is_valid()) {
-        if (Settings.playerGPU())
-            loadWidgetsPanel(new MovitSharpenFilter(*filter, true));
-        else
-            loadWidgetsPanel(new Frei0rSharpnessFilter(*filter, true));
-    }
-    delete filter;
-    ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
 }
 
 void FiltersDock::on_actionWhiteBalance_triggered()

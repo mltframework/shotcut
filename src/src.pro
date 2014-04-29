@@ -54,8 +54,6 @@ SOURCES += main.cpp\
     widgets/colorwheel.cpp \
     models/attachedfiltersmodel.cpp \
     docks/filtersdock.cpp \
-    filters/movitsharpenfilter.cpp \
-    filters/frei0rsharpnessfilter.cpp \
     widgets/colorpickerwidget.cpp \
     filters/whitebalancefilter.cpp \
     dialogs/customprofiledialog.cpp \
@@ -125,8 +123,6 @@ HEADERS  += mainwindow.h \
     widgets/colorwheel.h \
     models/attachedfiltersmodel.h \
     docks/filtersdock.h \
-    filters/movitsharpenfilter.h \
-    filters/frei0rsharpnessfilter.h \
     widgets/colorpickerwidget.h \
     filters/whitebalancefilter.h \
     dialogs/customprofiledialog.h \
@@ -179,8 +175,6 @@ FORMS    += mainwindow.ui \
     mvcp/meltedserverdock.ui \
     mvcp/meltedplaylistdock.ui \
     docks/filtersdock.ui \
-    filters/movitsharpenfilter.ui \
-    filters/frei0rsharpnessfilter.ui \
     filters/whitebalancefilter.ui \
     dialogs/customprofiledialog.ui \
     filters/webvfxfilter.ui \
@@ -242,6 +236,10 @@ OTHER_FILES += \
     qml/filters/invert/meta.qml \
     qml/filters/sepia/meta.qml \
     qml/filters/sepia/ui.qml \
+    qml/filters/sharpen/meta_frei0r.qml \
+    qml/filters/sharpen/ui_frei0r.qml \
+    qml/filters/sharpen/meta_movit.qml \
+    qml/filters/sharpen/ui_movit.qml \
     qml/modules/Shotcut/Controls/UndoButton.qml \
     qml/timeline/timeline.qml \
     qml/timeline/TrackHead.qml \
@@ -329,6 +327,10 @@ lupdate_hack {
     qml/filters/invert/meta.qml \
     qml/filters/sepia/meta.qml \
     qml/filters/sepia/ui.qml \
+    qml/filters/sharpen/meta_frei0r.qml \
+    qml/filters/sharpen/ui_frei0r.qml \
+    qml/filters/sharpen/meta_movit.qml \
+    qml/filters/sharpen/ui_movit.qml \
     qml/modules/Shotcut/Controls/UndoButton.qml \
     qml/timeline/timeline.qml \
     qml/timeline/TimelineToolbar.qml \

@@ -156,11 +156,6 @@
     <string>Mirror</string>
    </property>
   </action>
-  <action name="actionSharpen">
-   <property name="text">
-    <string>Sharpen</string>
-   </property>
-  </action>
   <action name="actionWhiteBalance">
    <property name="text">
     <string>White Balance</string>
