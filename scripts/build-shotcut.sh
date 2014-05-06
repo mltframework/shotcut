@@ -29,6 +29,7 @@ FREI0R_REVISION=
 ENABLE_MOVIT=1
 MOVIT_HEAD=1
 MOVIT_REVISION=
+LIBEPOXY_REVISION=
 X264_HEAD=0
 X264_REVISION=d967c09cd93a230e03ec1e0f0f696975d15a01c0
 LIBVPX_HEAD=1
@@ -167,6 +168,9 @@ function to_key {
     ;;
     vid.stab)
       echo 10
+    ;;
+    libepoxy)
+      echo 11
     ;;
     *)
       echo UNKNOWN
@@ -312,7 +316,7 @@ function set_globals {
       SUBDIRS="frei0r $SUBDIRS"
   fi
   if test "$ENABLE_MOVIT" = 1 && test "$MOVIT_HEAD" = 1 -o "$MOVIT_REVISION" != ""; then
-      SUBDIRS="movit $SUBDIRS"
+      SUBDIRS="libepoxy movit $SUBDIRS"
   fi
   if test "$FFMPEG_SUPPORT_H264" = 1 && test "$X264_HEAD" = 1 -o "$X264_REVISION" != ""; then
       SUBDIRS="x264 $SUBDIRS"
@@ -340,12 +344,13 @@ function set_globals {
   REPOLOCS[2]="git://github.com/ddennedy/frei0r.git"
   REPOLOCS[3]="git://git.videolan.org/x264.git"
   REPOLOCS[4]="http://git.chromium.org/webm/libvpx.git"
-  REPOLOCS[5]="git://github.com/ddennedy/movit.git"
+  REPOLOCS[5]="http://git.sesse.net/movit/"
   REPOLOCS[6]="http://downloads.sourceforge.net/project/lame/lame/3.99/lame-3.99.5.tar.gz"
   REPOLOCS[7]="git://github.com/mltframework/shotcut.git"
   REPOLOCS[8]="http://ftp.de.debian.org/debian/pool/main/s/swh-plugins/swh-plugins_0.4.15+1.orig.tar.gz"
-  REPOLOCS[9]="git://github.com/ddennedy/webvfx.git"
+  REPOLOCS[9]="git://github.com/mltframework/webvfx.git"
   REPOLOCS[10]="git://github.com/georgmartius/vid.stab.git"
+  REPOLOCS[11]="git://github.com/anholt/libepoxy.git"
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
   REPOTYPES[0]="git"
@@ -359,6 +364,7 @@ function set_globals {
   REPOTYPES[8]="http-tgz"
   REPOTYPES[9]="git"
   REPOTYPES[10]="git"
+  REPOTYPES[11]="git"
 
   # And, set up the revisions
   REVISIONS[0]=""
@@ -399,6 +405,10 @@ function set_globals {
   REVISIONS[10]=""
   if test 0 = "$VIDSTAB_HEAD" -a "$VIDSTAB_REVISION" ; then
     REVISIONS[10]="$VIDSTAB_REVISION"
+  fi
+  REVISIONS[11]=""
+  if test "$LIBEPOXY_REVISION" ; then
+    REVISIONS[11]="$LIBEPOXY_REVISION"
   fi
 
   # Figure out the number of cores in the system. Used both by make and startup script
@@ -549,7 +559,8 @@ function set_globals {
   CONFIG[5]="./autogen.sh --prefix=$FINAL_INSTALL_DIR"
   if test "$TARGET_OS" = "Win32" ; then
     CONFIG[5]="${CONFIG[5]} --host=x86-w64-mingw32"
-    CFLAGS_[5]="$CFLAGS"
+    # MinGW does not provide ffs(), but there is a gcc intrinsic for it.
+    CFLAGS_[5]="$CFLAGS -Dffs=__builtin_ffs"
   elif test "$TARGET_OS" = "Darwin"; then
     CFLAGS_[5]="$CFLAGS -I/opt/local/include"
   else
@@ -613,6 +624,19 @@ function set_globals {
   fi
   CFLAGS_[10]=$CFLAGS
   LDFLAGS_[10]=$LDFLAGS
+
+  #####
+  # libepoxy
+  CONFIG[11]="./autogen.sh --prefix=$FINAL_INSTALL_DIR"
+  if test "$TARGET_OS" = "Win32" ; then
+    CONFIG[11]="${CONFIG[11]} --host=x86-w64-mingw32"
+    CFLAGS_[11]="$CFLAGS"
+  elif test "$TARGET_OS" = "Darwin"; then
+    CFLAGS_[11]="$CFLAGS -I/opt/local/include"
+  else
+    CFLAGS_[11]="$CFLAGS"
+  fi
+  LDFLAGS_[11]=$LDFLAGS
 }
 
 ######################################################################
@@ -696,8 +720,8 @@ function prepare_feedback {
       NUMSTEPS=$(( $NUMSTEPS + 1 ))
     fi
     if test 1 = "$ENABLE_MOVIT" ; then
-      debug Adding 1 step for get movit
-      NUMSTEPS=$(( $NUMSTEPS + 1 ))
+      debug Adding 2 steps for get movit and libepoxy
+      NUMSTEPS=$(( $NUMSTEPS + 2 ))
     fi
     if test 1 = "$ENABLE_WEBVFX" ; then
       debug Adding 1 step for get webvfx
@@ -712,8 +736,8 @@ function prepare_feedback {
       NUMSTEPS=$(( $NUMSTEPS + 1 ))
     fi
     if test 1 = "$ENABLE_MOVIT" ; then
-      debug Adding 1 step for clean movit
-      NUMSTEPS=$(( $NUMSTEPS + 1 ))
+      debug Adding 2 steps for clean movit and libepoxy
+      NUMSTEPS=$(( $NUMSTEPS + 2 ))
     fi
     if test 1 = "$ENABLE_WEBVFX" ; then
       debug Adding 1 step for clean webvfx
@@ -728,8 +752,8 @@ function prepare_feedback {
       NUMSTEPS=$(( $NUMSTEPS + 3 ))
     fi
     if test 1 = "$ENABLE_MOVIT" ; then
-      debug Adding 3 steps for compile-install movit
-      NUMSTEPS=$(( $NUMSTEPS + 3 ))
+      debug Adding 6 steps for compile-install movit and libepoxy
+      NUMSTEPS=$(( $NUMSTEPS + 6 ))
     fi
     if test 1 = "$ENABLE_WEBVFX" ; then
       debug Adding 3 steps for compile-install webvfx
@@ -1360,9 +1384,6 @@ SLIB_EXTRA_CMD=-"mv $$(@:$(SLIBSUF)=.orig.def) $$(@:$(SLIBSUF)=.def)"
 
         log Copying some libs from system
         #cmd install -p -c /usr/lib/libaudio.so* "$FINAL_INSTALL_DIR"/lib
-        GLEWLIB=$(ldd "$FINAL_INSTALL_DIR"/lib/mlt/libmltopengl.so | awk '/GLEW/ {print $3}')
-        log GLEWLIB=$GLEWLIB
-        cmd install -c "$GLEWLIB" "$FINAL_INSTALL_DIR"/lib
         SOXLIB=$(ldd "$FINAL_INSTALL_DIR"/lib/mlt/libmltsox.so | awk '/libsox/ {print $3}')
         log SOXLIB=$SOXLIB
         cmd install -c "$SOXLIB" "$FINAL_INSTALL_DIR"/lib
@@ -1377,6 +1398,12 @@ SLIB_EXTRA_CMD=-"mv $$(@:$(SLIBSUF)=.orig.def) $$(@:$(SLIBSUF)=.def)"
       cmd make -C webvfx install || die "Unable to install $1/webvfx"
       cmd make -C mlt install || die "Unable to install $1/mlt"
       cmd make -C mlt/qmelt install || die "Unable to install $1/mlt/qmelt"
+    elif test "libepoxy" = "$1" -a "$TARGET_OS" = "Win32" ; then
+      cmd make install || die "Unable to install $1"
+      cmd install -p -c include/epoxy/wgl*.h "$FINAL_INSTALL_DIR"/include/epoxy
+      # libopengl32.dll is added to prebuilts to make libtool build a dll for
+      # libepoxy, but it is not an import lib for other projects.
+      cmd rm "$FINAL_INSTALL_DIR"/lib/libopengl32.dll
     else
       cmd make install || die "Unable to install $1"
     fi
