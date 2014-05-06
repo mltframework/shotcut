@@ -27,6 +27,7 @@
 
 #include "ui_htmleditor.h"
 #include "ui_inserthtmldialog.h"
+#include "qmltypes/qmlutilities.h"
 
 #include <QtWidgets>
 #include <QtWebKitWidgets>
@@ -371,13 +372,7 @@ bool HtmlEditor::queryCommandState(const QString &cmd)
 
 QString HtmlEditor::qmlFilePath(const QString &fileName)
 {
-    QDir dir(qApp->applicationDirPath());
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    dir.cdUp();
-#endif
-    dir.cd("share");
-    dir.cd("shotcut");
-    dir.cd("qml");
+    QDir dir = QmlUtilities::qmlDir();
     dir.cd("htmleditor");
     return dir.absoluteFilePath(fileName);
 }
