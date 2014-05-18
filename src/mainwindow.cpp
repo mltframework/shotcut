@@ -561,12 +561,12 @@ void MainWindow::open(const QString& url, const Mlt::Properties* properties)
         setWindowModified(false);
         MLT.resetURL();
     }
-    if (!MLT.open(url.toUtf8().constData())) {
+    if (!MLT.open(url)) {
         Mlt::Properties* props = const_cast<Mlt::Properties*>(properties);
         if (props && props->is_valid())
             mlt_properties_inherit(MLT.producer()->get_properties(), props->get_properties());
         open(MLT.producer());
-        m_recentDock->add(url.toUtf8().constData());
+        m_recentDock->add(url);
     }
     else {
         ui->statusBar->showMessage(tr("Failed to open ") + url, STATUS_TIMEOUT_MS);

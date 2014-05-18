@@ -133,12 +133,12 @@ int Controller::setProducer(Mlt::Producer* producer, bool)
     return error;
 }
 
-int Controller::open(const char* url)
+int Controller::open(const QString &url)
 {
     int error = 0;
 
     close();
-    m_producer = new Mlt::Producer(profile(), url);
+    m_producer = new Mlt::Producer(profile(), url.toUtf8().constData());
     if (m_producer->is_valid()) {
         double fps = profile().fps();
         if (!profile().is_explicit())
@@ -146,12 +146,12 @@ int Controller::open(const char* url)
         if (profile().fps() != fps) {
             // reopen with the correct fps
             delete m_producer;
-            m_producer = new Mlt::Producer(profile(), url);
+            m_producer = new Mlt::Producer(profile(), url.toUtf8().constData());
         }
         if (m_url.isEmpty() && QString(m_producer->get("xml")) == "was here") {
             if (m_producer->get_int("_original_type") != tractor_type ||
                (m_producer->get_int("_original_type") == tractor_type && m_producer->get("shotcut")))
-                m_url = QString::fromUtf8(url);
+                m_url = url;
         }
         const char *service = m_producer->get("mlt_service");
         if (service && (!strcmp(service, "pixbuf") || !strcmp(service, "qimage")))
