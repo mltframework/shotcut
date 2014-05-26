@@ -1,4 +1,4 @@
 TEMPLATE = subdirs
-SUBDIRS = mvcp src
+SUBDIRS = CuteLogger mvcp src
 cache()
 src.depends = mvcp

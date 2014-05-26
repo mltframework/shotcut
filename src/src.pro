@@ -376,8 +376,9 @@ TRANSLATIONS += \
     ../translations/shotcut_pt.ts \
     ../translations/shotcut_zh.ts
 
-INCLUDEPATH = ../mvcp
+INCLUDEPATH = ../CuteLogger/include ../mvcp
 
+LIBS += -L../CuteLogger -lLogger -lpthread
 LIBS += -L../mvcp -lmvcp -lpthread
 
 mac {

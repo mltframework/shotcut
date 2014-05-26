@@ -19,6 +19,9 @@
 #include <QtWidgets>
 #include "mainwindow.h"
 #include "settings.h"
+#include <Logger.h>
+#include <FileAppender.h>
+#include <ConsoleAppender.h>
 
 class Application : public QApplication
 {
@@ -45,6 +48,22 @@ public:
         setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
         setAttribute(Qt::AA_DontShowIconsInMenus);
 #endif
+        // Startup logging.
+        dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation).first();
+        if (!dir.exists()) dir.mkpath(dir.path());
+        const QString logFileName = dir.filePath("shotcut-log.txt");
+        QFile::remove(logFileName);
+        FileAppender* fileAppender = new FileAppender(logFileName);
+        fileAppender->setFormat("[%-7l] <%C> %m\n");
+        Logger::registerAppender(fileAppender);
+#ifndef NDEBUG
+        // Only log to console in dev debug builds.
+        ConsoleAppender* consoleAppender = new ConsoleAppender();
+        consoleAppender->setFormat(fileAppender->format());
+        Logger::registerAppender(consoleAppender);
+#endif
+        LOG_INFO() << "Starting Shotcut version" << SHOTCUT_VERSION;
+        LOG_INFO() << "locale =" << QLocale();
 
         // Load translations
         const QString locale = Settings.language();
@@ -81,6 +100,7 @@ public:
     ~Application()
     {
         delete mainWindow;
+        qDebug() << "exiting";
     }
 
 protected:
