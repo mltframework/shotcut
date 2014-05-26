@@ -3,10 +3,14 @@
 
 #include <QtCore/qglobal.h>
 
-#if defined(CUTELOGGER_LIBRARY)
-#  define CUTELOGGERSHARED_EXPORT Q_DECL_EXPORT
+#if defined(QT_STATIC)
+#  define CUTELOGGERSHARED_EXPORT
 #else
-#  define CUTELOGGERSHARED_EXPORT Q_DECL_IMPORT
+#  if defined(CUTELOGGER_LIBRARY)
+#    define CUTELOGGERSHARED_EXPORT Q_DECL_EXPORT
+#  else
+#    define CUTELOGGERSHARED_EXPORT Q_DECL_IMPORT
+#  endif
 #endif
 
 #endif // CUTELOGGER_GLOBAL_H
