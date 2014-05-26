@@ -73,6 +73,7 @@ MainWindow::MainWindow()
     , m_isPlaylistLoaded(false)
     , m_htmlEditor(0)
 {
+    qDebug() << "begin";
     new GLTestWidget(this);
     Database::singleton(this);
 
@@ -317,6 +318,7 @@ MainWindow::MainWindow()
     connect(leap, SIGNAL(jogLeftFrame()), SLOT(stepLeftOneFrame()));
     connect(leap, SIGNAL(jogLeftSecond()), SLOT(stepLeftOneSecond()));
 #endif
+    qDebug() << "end";
 }
 
 MainWindow& MainWindow::singleton()
@@ -333,6 +335,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::setupSettingsMenu()
 {
+    qDebug() << "begin";
     QActionGroup* deinterlaceGroup = new QActionGroup(this);
     deinterlaceGroup->addAction(ui->actionOneField);
     deinterlaceGroup->addAction(ui->actionLinearBlend);
@@ -507,6 +510,7 @@ void MainWindow::setupSettingsMenu()
         ui->actionFusionLight->setChecked(true);
     else
         ui->actionSystemTheme->setChecked(true);
+    qDebug() << "end";
 }
 
 QAction* MainWindow::addProfile(QActionGroup* actionGroup, const QString& desc, const QString& name)
@@ -655,6 +659,7 @@ void MainWindow::seekTimeline(int position)
 
 void MainWindow::readPlayerSettings()
 {
+    qDebug() << "begin";
     ui->actionRealtime->setChecked(Settings.playerRealtime());
     ui->actionProgressive->setChecked(Settings.playerProgressive());
     ui->actionJack->setChecked(Settings.playerJACK());
@@ -716,15 +721,18 @@ void MainWindow::readPlayerSettings()
             break;
         }
     }
+    qDebug() << "end";
 }
 
 void MainWindow::readWindowSettings()
 {
+    qDebug() << "begin";
     Settings.setWindowGeometryDefault(saveGeometry());
     Settings.setWindowStateDefault(saveState());
     Settings.sync();
     restoreGeometry(Settings.windowGeometry());
     restoreState(Settings.windowState());
+    qDebug() << "end";
 }
 
 void MainWindow::writeSettings()
@@ -740,6 +748,7 @@ void MainWindow::writeSettings()
 
 void MainWindow::configureVideoWidget()
 {
+    qDebug() << "begin";
     MLT.setProfile(m_profileGroup->checkedAction()->data().toString());
     MLT.videoWidget()->setProperty("realtime", ui->actionRealtime->isChecked());
     bool ok = false;
@@ -771,6 +780,7 @@ void MainWindow::configureVideoWidget()
         MLT.videoWidget()->setProperty("keyer", m_keyerGroup->checkedAction()->data());
     MLT.videoWidget()->setContentsMargins(0, 0, 0, 0);
     MLT.videoWidget()->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    qDebug() << "end";
 }
 
 void MainWindow::setCurrentFile(const QString &filename)
@@ -1444,6 +1454,7 @@ void MainWindow::saveXML(const QString &filename)
 
 void MainWindow::changeTheme(const QString &theme)
 {
+    qDebug() << "begin";
     if (theme == "dark") {
         QApplication::setStyle("Fusion");
         QPalette palette;
@@ -1478,6 +1489,7 @@ void MainWindow::changeTheme(const QString &theme)
     }
     if (MAIN.m_timelineDock)
         emit MAIN.m_timelineDock->tooltipColorChanged();
+    qDebug() << "end";
 }
 
 Mlt::Playlist* MainWindow::playlist() const

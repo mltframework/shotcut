@@ -20,6 +20,7 @@
 #include "ui_jobsdock.h"
 #include "jobqueue.h"
 #include <QtWidgets>
+#include <QDebug>
 #include "dialogs/textviewerdialog.h"
 #include "mainwindow.h"
 
@@ -27,6 +28,7 @@ JobsDock::JobsDock(QWidget *parent) :
     QDockWidget(parent),
     ui(new Ui::JobsDock)
 {
+    qDebug() << "begin";
     ui->setupUi(this);
     toggleViewAction()->setIcon(windowIcon());
     ui->treeView->setModel(&JOBS);
@@ -35,6 +37,7 @@ JobsDock::JobsDock(QWidget *parent) :
     header->setSectionResizeMode(0, QHeaderView::Stretch);
     header->setSectionResizeMode(1, QHeaderView::ResizeToContents);
     ui->cleanButton->hide();
+    qDebug() << "end";
 }
 
 JobsDock::~JobsDock()

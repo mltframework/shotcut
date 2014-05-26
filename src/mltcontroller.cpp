@@ -20,6 +20,7 @@
 #include <QWidget>
 #include <QPalette>
 #include <QMetaType>
+#include <QDebug>
 #include <Mlt.h>
 #include "glwidget.h"
 #include "settings.h"
@@ -85,16 +86,18 @@ Producer* QProducer::producer() const {
 
 
 Controller::Controller()
-    : m_repo(Mlt::Factory::init())
-    , m_producer(0)
+    : m_producer(0)
     , m_consumer(0)
-    , m_profile(new Mlt::Profile)
     , m_volumeFilter(0)
     , m_jackFilter(0)
     , m_volume(1.0)
     , m_savedProducer(0)
 {
+    qDebug() << "begin";
+    m_repo = Mlt::Factory::init();
+    m_profile = new Mlt::Profile;
     updateAvformatCaching(5);
+    qDebug() << "end";
 }
 
 Controller& Controller::singleton(QWidget* parent)

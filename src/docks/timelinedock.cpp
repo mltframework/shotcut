@@ -28,6 +28,7 @@
 
 #include <QtQml>
 #include <QtQuick>
+#include <QDebug>
 
 static const char* kFilterInProperty = "_shotcut:filter_in";
 static const char* kFilterOutProperty = "_shotcut:filter_out";
@@ -37,6 +38,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     ui(new Ui::TimelineDock),
     m_position(-1)
 {
+    qDebug() << "begin";
     ui->setupUi(this);
     toggleViewAction()->setIcon(windowIcon());
 
@@ -63,6 +65,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
 #else
     connect(this, &QDockWidget::visibilityChanged, this, &TimelineDock::onVisibilityChanged);
 #endif
+    qDebug() << "end";
 }
 
 TimelineDock::~TimelineDock()

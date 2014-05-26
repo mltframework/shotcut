@@ -26,6 +26,7 @@
 #include <QActionGroup>
 #include <QFileInfo>
 #include <QtConcurrent/QtConcurrentRun>
+#include <QDebug>
 #include "mainwindow.h"
 #include "settings.h"
 #include "filters/whitebalancefilter.h"
@@ -63,6 +64,7 @@ static QActionList getFilters(FiltersDock* dock, Ui::FiltersDock* ui)
         subdir.setFilter(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
         subdir.setNameFilters(QStringList("meta*.qml"));
         foreach (QString fileName, subdir.entryList()) {
+            qDebug() << "reading filter metadata" << dirName << fileName;
             QQmlComponent component(&engine, subdir.absoluteFilePath(fileName));
             QmlMetadata *meta = qobject_cast<QmlMetadata*>(component.create());
             if (meta && (meta->isAudio() || (meta->needsGPU() == Settings.playerGPU()))) {
@@ -74,6 +76,7 @@ static QActionList getFilters(FiltersDock* dock, Ui::FiltersDock* ui)
 #endif
                 // Check if mlt_service is available.
                 if (MLT.repository()->filters()->get_data(meta->mlt_service().toLatin1().constData())) {
+                    qDebug() << "added filter" << meta->name();
                     QAction* action = new QAction(meta->name(), 0);
                     meta->setParent(action);
                     meta->setPath(subdir);
@@ -98,6 +101,7 @@ FiltersDock::FiltersDock(QWidget *parent) :
     m_videoActions(0),
     m_quickObject(0)
 {
+    qDebug() << "begin";
     ui->setupUi(this);
     toggleViewAction()->setIcon(windowIcon());
     ui->listView->setModel(&m_model);
@@ -105,6 +109,7 @@ FiltersDock::FiltersDock(QWidget *parent) :
     ui->listView->setDropIndicatorShown(true);
     connect(model(), SIGNAL(changed()), this, SLOT(onModelChanged()));
     m_filtersFuture = QtConcurrent::run(getFilters, this, ui);
+    qDebug() << "end";
 }
 
 FiltersDock::~FiltersDock()

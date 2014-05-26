@@ -28,6 +28,7 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     QDockWidget(parent),
     ui(new Ui::PlaylistDock)
 {
+    qDebug() << "begin";
     ui->setupUi(this);
     toggleViewAction()->setIcon(windowIcon());
     ui->tableView->setModel(&m_model);
@@ -68,6 +69,7 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
         ui->actionThumbnailsHidden->setChecked(true);
         on_actionThumbnailsHidden_triggered(true);
     }
+    qDebug() << "end";
 }
 
 PlaylistDock::~PlaylistDock()

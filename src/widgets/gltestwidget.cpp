@@ -17,9 +17,10 @@
  */
 
 #include "gltestwidget.h"
-#include <QtDebug>
+#include <QDebug>
 #include <QMessageBox>
 #include <QCoreApplication>
+#include <Logger.h>
 #include "settings.h"
 
 GLTestWidget::GLTestWidget(QWidget *parent) :
@@ -35,6 +36,7 @@ GLTestWidget::GLTestWidget(QWidget *parent) :
         setFormat(format);
     }
 #endif
+    LOG_INFO() << "OpenGL context version" << format().majorVersion() << format().minorVersion();
 }
 
 void GLTestWidget::initializeGL()
@@ -49,6 +51,9 @@ void GLTestWidget::initializeGL()
         supported = supported && hasOpenGLFeature(QOpenGLFunctions::Framebuffers);
 
         if (!supported) {
+            qWarning() << "OpenGL has NPOTTextures" << hasOpenGLFeature(QOpenGLFunctions::NPOTTextures);
+            qWarning() << "OpenGL has Shaders" << hasOpenGLFeature(QOpenGLFunctions::Shaders);
+            qWarning() << "OpenGL has Framebuffers" << hasOpenGLFeature(QOpenGLFunctions::Framebuffers);
             QMessageBox::critical(this, qApp->applicationName(),
                               tr("Error:\nThis program requires OpenGL version 2.0\nwith the framebuffer object extension."));
             ::exit(EXIT_FAILURE);

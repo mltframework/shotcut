@@ -21,12 +21,15 @@
 #include "ui_recentdock.h"
 #include "util.h"
 
+#include <QDebug>
+
 static const int MaxItems = 100;
 
 RecentDock::RecentDock(QWidget *parent) :
     QDockWidget(parent),
     ui(new Ui::RecentDock)
 {
+    qDebug() << "begin";
     ui->setupUi(this);
     toggleViewAction()->setIcon(windowIcon());
     m_recent = Settings.recent();
@@ -40,6 +43,7 @@ RecentDock::RecentDock(QWidget *parent) :
     m_proxyModel.setSourceModel(&m_model);
     m_proxyModel.setFilterCaseSensitivity(Qt::CaseInsensitive);
     ui->listWidget->setModel(&m_proxyModel);
+    qDebug() << "end";
 }
 
 RecentDock::~RecentDock()

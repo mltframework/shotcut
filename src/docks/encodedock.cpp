@@ -38,6 +38,7 @@ EncodeDock::EncodeDock(QWidget *parent) :
     m_immediateJob(0),
     m_profiles(Mlt::Profile::list())
 {
+    qDebug() << "begin";
     ui->setupUi(this);
 #ifdef Q_OS_UNIX
     ui->stopCaptureButton->hide();
@@ -83,6 +84,7 @@ EncodeDock::EncodeDock(QWidget *parent) :
     ui->videoCodecCombo->model()->sort(0);
     ui->videoCodecCombo->insertItem(0, tr("Default for format"));
     ui->videoCodecCombo->setCurrentIndex(0);
+    qDebug() << "end";
 }
 
 EncodeDock::~EncodeDock()
