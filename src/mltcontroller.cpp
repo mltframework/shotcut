@@ -96,7 +96,7 @@ Controller::Controller()
     qDebug() << "begin";
     m_repo = Mlt::Factory::init();
     m_profile = new Mlt::Profile;
-    updateAvformatCaching(5);
+    updateAvformatCaching(0);
     qDebug() << "end";
 }
 
@@ -636,7 +636,7 @@ QImage Controller::image(Producer& producer, int frameNumber, int width, int hei
 void Controller::updateAvformatCaching(int trackCount)
 {
     int i = QThread::idealThreadCount() + trackCount;
-    mlt_service_cache_set_size(NULL, "producer_avformat", i);
+    mlt_service_cache_set_size(NULL, "producer_avformat", qMax(4, i));
 }
 
 void TransportControl::play(double speed)
