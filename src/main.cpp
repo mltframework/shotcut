@@ -22,6 +22,58 @@
 #include <Logger.h>
 #include <FileAppender.h>
 #include <ConsoleAppender.h>
+#include <QSysInfo>
+#include <framework/mlt_log.h>
+
+static void mlt_log_handler(void *service, int mlt_level, const char *format, va_list args)
+{
+    if (mlt_level > mlt_log_get_level())
+        return;
+
+    enum Logger::LogLevel cuteLoggerLevel;
+    switch (mlt_level) {
+    case MLT_LOG_DEBUG:
+        cuteLoggerLevel = Logger::Trace;
+        break;
+    case MLT_LOG_ERROR:
+        cuteLoggerLevel = Logger::Error;
+        break;
+    case MLT_LOG_FATAL:
+    case MLT_LOG_PANIC:
+        cuteLoggerLevel = Logger::Fatal;
+        break;
+    case MLT_LOG_INFO:
+        cuteLoggerLevel = Logger::Info;
+        break;
+    case MLT_LOG_VERBOSE:
+        cuteLoggerLevel = Logger::Debug;
+        break;
+    case MLT_LOG_WARNING:
+        cuteLoggerLevel = Logger::Warning;
+        break;
+    }
+    QString message;
+    mlt_properties properties = service? MLT_SERVICE_PROPERTIES((mlt_service) service) : NULL;
+    if (properties) {
+        char *mlt_type = mlt_properties_get(properties, "mlt_type");
+        char *service_name = mlt_properties_get(properties, "mlt_service");
+        char *resource = mlt_properties_get(properties, "resource");
+        if (!resource || resource[0] != '<' || resource[strlen(resource) - 1] != '>')
+            mlt_type = mlt_properties_get(properties, "mlt_type" );
+        if (service_name)
+            message = QString("[%1 %2] ").arg(mlt_type).arg(service_name);
+        else
+            message = QString().sprintf("[%s %p] ", mlt_type, service);
+        if (resource)
+            message.append(QString("\"%1\" ").arg(resource));
+        message.append(QString().vsprintf(format, args));
+        message.replace('\n', "");
+    } else {
+        message = QString().vsprintf(format, args);
+        message.replace('\n', "");
+    }
+    Logger::write(cuteLoggerLevel, __FILE__, __LINE__, "MLT", message);
+}
 
 class Application : public QApplication
 {
@@ -61,9 +113,25 @@ public:
         ConsoleAppender* consoleAppender = new ConsoleAppender();
         consoleAppender->setFormat(fileAppender->format());
         Logger::registerAppender(consoleAppender);
+
+        mlt_log_set_level(MLT_LOG_VERBOSE);
+#else
+        mlt_log_set_level(MLT_LOG_INFO);
 #endif
+        mlt_log_set_callback(mlt_log_handler);
+
+        // Log some basic info.
         LOG_INFO() << "Starting Shotcut version" << SHOTCUT_VERSION;
+#if defined (Q_OS_WIN)
+        LOG_INFO() << "Windows version" << QSysInfo::windowsVersion();
+#elif defined(Q_OS_MAC)
+        LOG_INFO() << "OS X version" << QSysInfo::macVersion();
+#else
+        LOG_INFO() << "Linux version";
+#endif
+        LOG_INFO() << "number of logical cores =" << QThread::idealThreadCount();
         LOG_INFO() << "locale =" << QLocale();
+        LOG_INFO() << "install dir =" <<  applicationDirPath();
 
         // Load translations
         const QString locale = Settings.language();
