@@ -25,6 +25,7 @@
 #include "commands/timelinecommands.h"
 #include "docks/filtersdock.h"
 #include "settings.h"
+#include "qmltypes/qmlutilities.h"
 
 #include <QtQml>
 #include <QtQuick>
@@ -48,6 +49,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     importPath.cd("modules");
     m_quickView.engine()->addImportPath(importPath.path());
     m_quickView.engine()->addImageProvider(QString("thumbnail"), new ThumbnailProvider);
+    m_quickView.rootContext()->setContextProperty("Shotcut", new QmlUtilities(this));
     m_quickView.rootContext()->setContextProperty("timeline", this);
     m_quickView.rootContext()->setContextProperty("multitrack", &m_model);
     m_quickView.rootContext()->setContextProperty("settings", &ShotcutSettings::singleton());

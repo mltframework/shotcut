@@ -58,6 +58,7 @@
 #include "docks/timelinedock.h"
 #include "widgets/lumamixtransition.h"
 #include "mltxmlgpuchecker.h"
+#include "qmltypes/qmlutilities.h"
 
 #include <QtWidgets>
 #include <QDebug>
@@ -558,7 +559,7 @@ bool MainWindow::isCompatibleWithGpuMode(const QString &url)
                    QMessageBox::No |
                    QMessageBox::Yes,
                    this);
-                dialog.setWindowModality(Qt::ApplicationModal);
+                dialog.setWindowModality(QmlUtilities::dialogModality());
                 dialog.setDefaultButton(QMessageBox::Yes);
                 dialog.setEscapeButton(QMessageBox::No);
                 int r = dialog.exec();
@@ -575,7 +576,7 @@ bool MainWindow::isCompatibleWithGpuMode(const QString &url)
                    QMessageBox::No |
                    QMessageBox::Yes,
                    this);
-                dialog.setWindowModality(Qt::ApplicationModal);
+                dialog.setWindowModality(QmlUtilities::dialogModality());
                 dialog.setDefaultButton(QMessageBox::Yes);
                 dialog.setEscapeButton(QMessageBox::No);
                 int r = dialog.exec();
@@ -1286,7 +1287,7 @@ bool MainWindow::continueModified()
                                      QMessageBox::Cancel |
                                      QMessageBox::Yes,
                                      this);
-        dialog.setWindowModality(Qt::ApplicationModal);
+        dialog.setWindowModality(QmlUtilities::dialogModality());
         dialog.setDefaultButton(QMessageBox::Yes);
         dialog.setEscapeButton(QMessageBox::Cancel);
         int r = dialog.exec();
@@ -1847,7 +1848,7 @@ void MainWindow::onLanguageTriggered(QAction* action)
                        this);
     dialog.setDefaultButton(QMessageBox::Yes);
     dialog.setEscapeButton(QMessageBox::No);
-    dialog.setWindowModality(Qt::ApplicationModal);
+    dialog.setWindowModality(QmlUtilities::dialogModality());
     if (dialog.exec() == QMessageBox::Yes)
         QApplication::closeAllWindows();
 }
@@ -1894,7 +1895,7 @@ void MainWindow::on_actionGPU_triggered(bool checked)
                        this);
     dialog.setDefaultButton(QMessageBox::Yes);
     dialog.setEscapeButton(QMessageBox::No);
-    dialog.setWindowModality(Qt::ApplicationModal);
+    dialog.setWindowModality(QmlUtilities::dialogModality());
     if (dialog.exec() == QMessageBox::Yes)
         QApplication::closeAllWindows();
 }
@@ -1965,7 +1966,7 @@ void MainWindow::onProfileTriggered(QAction *action)
 void MainWindow::on_actionAddCustomProfile_triggered()
 {
     CustomProfileDialog dialog(this);
-    dialog.setWindowModality(Qt::ApplicationModal);
+    dialog.setWindowModality(QmlUtilities::dialogModality());
     if (dialog.exec() == QDialog::Accepted) {
         QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
         if (dir.cd("profiles")) {

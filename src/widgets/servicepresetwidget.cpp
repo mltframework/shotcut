@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Meltytech, LLC
+ * Copyright (c) 2012-2014 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,6 +18,8 @@
 
 #include "servicepresetwidget.h"
 #include "ui_servicepresetwidget.h"
+#include "qmltypes/qmlutilities.h"
+
 #include <QStandardPaths>
 #include <QDir>
 #include <QInputDialog>
@@ -81,7 +83,7 @@ void ServicePresetWidget::savePreset(Mlt::Properties* properties)
     dialog.setInputMode(QInputDialog::TextInput);
     dialog.setWindowTitle(tr("Save Preset"));
     dialog.setLabelText(tr("Name:"));
-    dialog.setWindowModality(Qt::ApplicationModal);
+    dialog.setWindowModality(QmlUtilities::dialogModality());
     int r = dialog.exec();
     QString preset = dialog.textValue();
     if (r == QDialog::Accepted && !preset.isEmpty()) {
@@ -137,7 +139,7 @@ void ServicePresetWidget::on_deletePresetButton_clicked()
                        this);
     dialog.setDefaultButton(QMessageBox::Yes);
     dialog.setEscapeButton(QMessageBox::No);
-    dialog.setWindowModality(Qt::ApplicationModal);
+    dialog.setWindowModality(QmlUtilities::dialogModality());
     int result = dialog.exec();
     if (result == QMessageBox::Yes) {
         QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());

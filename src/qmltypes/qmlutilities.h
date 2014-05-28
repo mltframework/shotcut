@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2014 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,10 +25,13 @@
 class QmlUtilities : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(Qt::WindowModality dialogModality READ dialogModality);
+
 public:
     explicit QmlUtilities(QObject *parent = 0);
 
     static QDir qmlDir();
+    static Qt::WindowModality dialogModality();
 };
 
 #endif // QMLUTILITIES_H

@@ -289,10 +289,11 @@ void FiltersDock::loadQuickPanel(const QmlMetadata* metadata, int row)
     QDir importPath = QmlUtilities::qmlDir();
     importPath.cd("modules");
     qqview->engine()->addImportPath(importPath.path());
+    qqview->rootContext()->setContextProperty("Shotcut", new QmlUtilities(qqview));
+    qqview->rootContext()->setContextProperty("settings", &ShotcutSettings::singleton());
     QmlFilter* qmlFilter = new QmlFilter(m_model, *metadata, row, qqview);
-    qqview->engine()->rootContext()->setContextProperty("filter", qmlFilter);
-    QmlProfile* qmlProfile = new QmlProfile(qqview);
-    qqview->engine()->rootContext()->setContextProperty("profile", qmlProfile);
+    qqview->rootContext()->setContextProperty("filter", qmlFilter);
+    qqview->rootContext()->setContextProperty("profile", new QmlProfile(qqview));
     qqview->setResizeMode(QQuickView::SizeRootObjectToView);
     qqview->setColor(palette().window().color());
     qqview->setSource(QUrl::fromLocalFile(metadata->qmlFilePath()));

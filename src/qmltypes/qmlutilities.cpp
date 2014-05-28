@@ -18,6 +18,7 @@
 
 #include "qmlutilities.h"
 #include <QCoreApplication>
+#include <QSysInfo>
 
 QmlUtilities::QmlUtilities(QObject *parent) :
     QObject(parent)
@@ -36,3 +37,11 @@ QDir QmlUtilities::qmlDir()
     return dir;
 }
 
+Qt::WindowModality QmlUtilities::dialogModality()
+{
+#ifdef Q_OS_OSX
+    return (QSysInfo::macVersion() >= QSysInfo::MV_10_8)? Qt::WindowModal : Qt::ApplicationModal;
+#else
+    return Qt::ApplicationModal;
+#endif
+}
