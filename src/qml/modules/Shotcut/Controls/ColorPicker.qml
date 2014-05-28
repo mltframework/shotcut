@@ -68,8 +68,8 @@ RowLayout {
     Button {
         id: pickerButton
         iconName: 'color-picker'
-        iconSource: 'qrc:///icons/oxygen/16x16/actions/color-picker.png'
-        tooltip: qsTr("Pick a color on the screen. By pressing the mouse button and then moving your mouse you can select a section of the screen from which to get an average color.")
+        iconSource: 'qrc:///icons/oxygen/32x32/actions/color-picker.png'
+        tooltip: '<p>' + qsTr("Pick a color on the screen. By pressing the mouse button and then moving your mouse you can select a section of the screen from which to get an average color.") + '</p>'
         implicitWidth: 20
         implicitHeight: 20
         checkable: true
