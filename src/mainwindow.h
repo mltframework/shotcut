@@ -115,6 +115,7 @@ private:
 #endif
 
 public slots:
+    bool isCompatibleWithGpuMode(const QString& url);
     void open(const QString& url, const Mlt::Properties* = 0);
     void openVideo();
     void openCut(void*, int in, int out);

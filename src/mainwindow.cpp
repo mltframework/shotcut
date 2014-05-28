@@ -57,6 +57,7 @@
 #include "widgets/gltestwidget.h"
 #include "docks/timelinedock.h"
 #include "widgets/lumamixtransition.h"
+#include "mltxmlgpuchecker.h"
 
 #include <QtWidgets>
 #include <QDebug>
@@ -543,8 +544,56 @@ void MainWindow::open(Mlt::Producer* producer)
     activateWindow();
 }
 
+bool MainWindow::isCompatibleWithGpuMode(const QString &url)
+{
+    MltXmlGpuChecker gpuChecker;
+    QFile file(url);
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        if (gpuChecker.check(&file)) {
+            if (gpuChecker.needsGPU() && !Settings.playerGPU()) {
+                QMessageBox dialog(QMessageBox::Question,
+                   qApp->applicationName(),
+                   tr("The file you opened uses GPU effects, but GPU processing is not enabled.\n"
+                      "Do you want to enable GPU processing and exit?"),
+                   QMessageBox::No |
+                   QMessageBox::Yes,
+                   this);
+                dialog.setWindowModality(Qt::ApplicationModal);
+                dialog.setDefaultButton(QMessageBox::Yes);
+                dialog.setEscapeButton(QMessageBox::No);
+                int r = dialog.exec();
+                if (r == QMessageBox::Yes) {
+                    Settings.setPlayerGPU(true);
+                    QApplication::closeAllWindows();
+                }
+                return false;
+            } else if (gpuChecker.hasEffects() && !gpuChecker.needsGPU() && Settings.playerGPU()) {
+                QMessageBox dialog(QMessageBox::Question,
+                   qApp->applicationName(),
+                   tr("The file you opened uses effects that are incompatible with GPU processing.\n"
+                      "Do you want to disable GPU processing and exit?"),
+                   QMessageBox::No |
+                   QMessageBox::Yes,
+                   this);
+                dialog.setWindowModality(Qt::ApplicationModal);
+                dialog.setDefaultButton(QMessageBox::Yes);
+                dialog.setEscapeButton(QMessageBox::No);
+                int r = dialog.exec();
+                if (r == QMessageBox::Yes) {
+                    Settings.setPlayerGPU(false);
+                    QApplication::closeAllWindows();
+                }
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 void MainWindow::open(const QString& url, const Mlt::Properties* properties)
 {
+    if (!isCompatibleWithGpuMode(url))
+        return;
     if (url.endsWith(".mlt") || url.endsWith(".xml")) {
         // only check for a modified project when loading a project, not a simple producer
         if (!continueModified())
@@ -2022,6 +2071,8 @@ void MainWindow::on_actionOpenXML_triggered()
         tr("MLT XML (*.mlt);;All Files (*)"));
     if (filenames.length() > 0) {
         const QString& url = filenames.first();
+        if (!isCompatibleWithGpuMode(url))
+            return;
         Settings.setOpenPath(QFileInfo(url).path());
         activateWindow();
         if (filenames.length() > 1)

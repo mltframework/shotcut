@@ -76,7 +76,8 @@ SOURCES += main.cpp\
     qmltypes/thumbnailprovider.cpp \
     commands/timelinecommands.cpp \
     util.cpp \
-    widgets/lumamixtransition.cpp
+    widgets/lumamixtransition.cpp \
+    mltxmlgpuchecker.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -145,7 +146,8 @@ HEADERS  += mainwindow.h \
     qmltypes/thumbnailprovider.h \
     commands/timelinecommands.h \
     util.h \
-    widgets/lumamixtransition.h
+    widgets/lumamixtransition.h \
+    mltxmlgpuchecker.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
