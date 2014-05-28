@@ -156,11 +156,6 @@
     <string>Mirror</string>
    </property>
   </action>
-  <action name="actionWhiteBalance">
-   <property name="text">
-    <string>White Balance</string>
-   </property>
-  </action>
   <action name="actionOverlayHTML">
    <property name="text">
     <string>Overlay HTML</string>

@@ -54,9 +54,8 @@ SOURCES += main.cpp\
     widgets/colorwheel.cpp \
     models/attachedfiltersmodel.cpp \
     docks/filtersdock.cpp \
-    widgets/colorpickerwidget.cpp \
-    filters/whitebalancefilter.cpp \
     dialogs/customprofiledialog.cpp \
+    qmltypes/colorpickeritem.cpp \
     qmltypes/colorwheelitem.cpp \
     qmltypes/qmlfilter.cpp \
     qmltypes/qmlmetadata.cpp \
@@ -124,9 +123,8 @@ HEADERS  += mainwindow.h \
     widgets/colorwheel.h \
     models/attachedfiltersmodel.h \
     docks/filtersdock.h \
-    widgets/colorpickerwidget.h \
-    filters/whitebalancefilter.h \
     dialogs/customprofiledialog.h \
+    qmltypes/colorpickeritem.h \
     qmltypes/colorwheelitem.h \
     qmltypes/qmlfilter.h \
     qmltypes/qmlmetadata.h \
@@ -177,7 +175,6 @@ FORMS    += mainwindow.ui \
     mvcp/meltedserverdock.ui \
     mvcp/meltedplaylistdock.ui \
     docks/filtersdock.ui \
-    filters/whitebalancefilter.ui \
     dialogs/customprofiledialog.ui \
     filters/webvfxfilter.ui \
     htmleditor/htmleditor.ui \
@@ -207,6 +204,7 @@ OTHER_FILES += \
     qml/filters/webvfx_circular_frame/ui.qml \
     qml/filters/webvfx_circular_frame/meta.qml \
     qml/modules/Shotcut/Controls/qmldir \
+    qml/modules/Shotcut/Controls/ColorPicker.qml \
     qml/modules/Shotcut/Controls/Preset.qml \
     qml/htmleditor/text_outline.qml \
     qml/htmleditor/text_shadow.qml \
@@ -282,7 +280,10 @@ OTHER_FILES += \
     qml/filters/color/meta_frei0r_coloradj.qml \
     qml/filters/color/ui_frei0r_coloradj.qml \
     qml/filters/wave/meta.qml \
-    qml/filters/wave/ui.qml
+    qml/filters/wave/ui.qml \
+    qml/filters/white/meta_frei0r.qml \
+    qml/filters/white/meta_movit.qml \
+    qml/filters/white/ui.qml
 
 lupdate_hack {
     SOURCES += \
@@ -294,6 +295,7 @@ lupdate_hack {
     qml/filters/webvfx_circular_frame/ui.qml \
     qml/filters/webvfx_circular_frame/meta.qml \
     qml/modules/Shotcut/Controls/qmldir \
+    qml/modules/Shotcut/Controls/ColorPicker.qml \
     qml/modules/Shotcut/Controls/Preset.qml \
     qml/htmleditor/text_outline.qml \
     qml/htmleditor/text_shadow.qml \
@@ -364,7 +366,10 @@ lupdate_hack {
     qml/filters/color/meta_frei0r_coloradj.qml \
     qml/filters/color/ui_frei0r_coloradj.qml \
     qml/filters/wave/meta.qml \
-    qml/filters/wave/ui.qml
+    qml/filters/wave/ui.qml \
+    qml/filters/white/meta_frei0r.qml \
+    qml/filters/white/meta_movit.qml \
+    qml/filters/white/ui.qml
 }
 
 TRANSLATIONS += \

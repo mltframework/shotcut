@@ -1,0 +1,81 @@
+/*
+ * Copyright (c) 2014 Meltytech, LLC
+ * Author: Brian Matherly <pez4brian@yahoo.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+import QtQuick 2.2
+import QtQuick.Controls 1.1
+import QtQuick.Controls.Styles 1.1
+import QtQuick.Dialogs 1.1
+import QtQuick.Layouts 1.1
+import Shotcut.Controls 1.0
+
+RowLayout {
+    property color value: "white"
+    property bool alpha: false
+    spacing: 8
+    
+    signal pickStarted
+    
+    SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
+    
+    ColorPickerItem {
+        id: pickerItem
+        onColorPicked: {
+            value = color
+            pickerButton.checked = false
+        }
+    }
+    
+    Button {
+        id: colorButton
+        Layout.fillWidth: true
+        implicitHeight: 18
+        style: ButtonStyle {
+            background: Rectangle {
+                border.width: 1
+                border.color: activePalette.shadow
+                radius: 4
+                color: value
+            }
+        }
+        onClicked: colorDialog.visible = true
+    }
+    
+    ColorDialog {
+        id: colorDialog
+        title: qsTr("Please choose a color")
+        showAlphaChannel: alpha
+        color: value
+        onAccepted: {
+            value = currentColor
+        }
+    }
+    
+    Button {
+        id: pickerButton
+        iconName: 'color-picker'
+        iconSource: 'qrc:///icons/oxygen/16x16/actions/color-picker.png'
+        tooltip: qsTr("Pick a color on the screen. By pressing the mouse button and then moving your mouse you can select a section of the screen from which to get an average color.")
+        implicitWidth: 20
+        implicitHeight: 20
+        checkable: true
+        onClicked: {
+            pickStarted()
+            pickerItem.pickColor()
+        }
+    }
+}

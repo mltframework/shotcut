@@ -29,12 +29,12 @@
 #include <QDebug>
 #include "mainwindow.h"
 #include "settings.h"
-#include "filters/whitebalancefilter.h"
 #include "filters/webvfxfilter.h"
 #include "qmltypes/qmlfilter.h"
 #include "qmltypes/qmlmetadata.h"
 #include "qmltypes/qmlprofile.h"
 #include "qmltypes/qmlutilities.h"
+#include "qmltypes/colorpickeritem.h"
 #include "qmltypes/colorwheelitem.h"
 
 static bool compareQAction(const QAction* a1, const QAction* a2)
@@ -50,10 +50,10 @@ static QActionList getFilters(FiltersDock* dock, Ui::FiltersDock* ui)
     if (!Settings.playerGPU() && MLT.repository()->filters()->get_data("webvfx"))
         actions.append(ui->actionOverlayHTML);
 #endif
-    actions.append(ui->actionWhiteBalance);
 
     // Find all of the plugin filters.
     qmlRegisterType<QmlMetadata>("org.shotcut.qml", 1, 0, "Metadata");
+    qmlRegisterType<ColorPickerItem>("Shotcut.Controls", 1, 0, "ColorPickerItem");
     qmlRegisterType<ColorWheelItem>("Shotcut.Controls", 1, 0, "ColorWheelItem");
     QQmlEngine engine;
     QDir dir = QmlUtilities::qmlDir();
@@ -235,8 +235,6 @@ void FiltersDock::on_listView_clicked(const QModelIndex &index)
         QmlMetadata* meta = qmlMetadataForService(filter);
         if (meta)
             loadQuickPanel(meta, index.row());
-        else if (name == "frei0r.colgate" || name == "movit.white_balance")
-            loadWidgetsPanel(new WhiteBalanceFilter(*filter));
         else if (name == "webvfx")
             loadWidgetsPanel(new WebvfxFilter(*filter));
         else
@@ -256,14 +254,6 @@ void FiltersDock::on_actionMirror_triggered()
 void FiltersDock::on_listView_doubleClicked(const QModelIndex &index)
 {
     m_model.setData(index, true, Qt::CheckStateRole);
-}
-
-void FiltersDock::on_actionWhiteBalance_triggered()
-{
-    Mlt::Filter* filter = m_model.add(Settings.playerGPU()? "movit.white_balance": "frei0r.colgate");
-    loadWidgetsPanel(new WhiteBalanceFilter(*filter, true));
-    delete filter;
-    ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
 }
 
 void FiltersDock::onActionTriggered(QAction* action)
