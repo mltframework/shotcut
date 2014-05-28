@@ -4,7 +4,7 @@
 <context>
     <name></name>
     <message>
-        <location filename="../src/main.cpp" line="104"/>
+        <location filename="../src/main.cpp" line="192"/>
         <source>Loading plugins...</source>
         <translation>Indlæser plugins...</translation>
     </message>
@@ -351,22 +351,31 @@
     </message>
 </context>
 <context>
+    <name>ColorPicker</name>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="60"/>
+        <source>Please choose a color</source>
+        <translation type="unfinished">Vælg en farve</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="72"/>
+        <source>Pick a color on the screen. By pressing the mouse button and then moving your mouse you can select a section of the screen from which to get an average color.</source>
+        <translation type="unfinished">Vælg en farve fra skærmen. Ved at holde museknappen nede og bevæge musen kan du vælge en sektion af skærmen og få en gennemsnitsfarve af den sektion.</translation>
+    </message>
+</context>
+<context>
     <name>ColorPickerWidget</name>
     <message>
-        <location filename="../src/widgets/colorpickerwidget.cpp" line="75"/>
         <source>Pick a color on the screen. By pressing the mouse button and then moving your mouse you can select a section of the screen from which to get an average color.</source>
-        <translation>Vælg en farve fra skærmen. Ved at holde museknappen nede og bevæge musen kan du vælge en sektion af skærmen og få en gennemsnitsfarve af den sektion.</translation>
+        <translation type="vanished">Vælg en farve fra skærmen. Ved at holde museknappen nede og bevæge musen kan du vælge en sektion af skærmen og få en gennemsnitsfarve af den sektion.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/colorpickerwidget.cpp" line="105"/>
-        <location filename="../src/widgets/colorpickerwidget.cpp" line="129"/>
         <source>Requesting color information...</source>
-        <translation>Anmoder om farveinformation...</translation>
+        <translation type="vanished">Anmoder om farveinformation...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/colorpickerwidget.cpp" line="138"/>
         <source>Calculated average color for rectangle.</source>
-        <translation>Beregnet gennemsnitsfarve for firkant.</translation>
+        <translation type="vanished">Beregnet gennemsnitsfarve for firkant.</translation>
     </message>
 </context>
 <context>
@@ -999,15 +1008,15 @@ codecs. Men ikke alle codecs er multi-threaded.</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1384"/>
-        <location filename="../src/docks/encodedock.cpp" line="98"/>
+        <location filename="../src/docks/encodedock.cpp" line="102"/>
         <source>Encode File</source>
         <translation>Indkodér fil</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1391"/>
-        <location filename="../src/docks/encodedock.cpp" line="709"/>
-        <location filename="../src/docks/encodedock.cpp" line="716"/>
-        <location filename="../src/docks/encodedock.cpp" line="819"/>
+        <location filename="../src/docks/encodedock.cpp" line="713"/>
+        <location filename="../src/docks/encodedock.cpp" line="720"/>
+        <location filename="../src/docks/encodedock.cpp" line="823"/>
         <source>Stream</source>
         <translation>Stream</translation>
     </message>
@@ -1027,73 +1036,73 @@ codecs. Men ikke alle codecs er multi-threaded.</translation>
         <translation>Stop skærmoptagelse</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="68"/>
+        <location filename="../src/docks/encodedock.cpp" line="71"/>
         <source>Automatic from extension</source>
         <translation>Automatisk fra filendelse</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="76"/>
-        <location filename="../src/docks/encodedock.cpp" line="84"/>
+        <location filename="../src/docks/encodedock.cpp" line="79"/>
+        <location filename="../src/docks/encodedock.cpp" line="87"/>
         <source>Default for format</source>
         <translation>Standard for format</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="100"/>
-        <location filename="../src/docks/encodedock.cpp" line="624"/>
-        <location filename="../src/docks/encodedock.cpp" line="818"/>
+        <location filename="../src/docks/encodedock.cpp" line="104"/>
+        <location filename="../src/docks/encodedock.cpp" line="628"/>
+        <location filename="../src/docks/encodedock.cpp" line="822"/>
         <source>Capture File</source>
         <translation>Optagede file</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="108"/>
-        <location filename="../src/docks/encodedock.cpp" line="426"/>
+        <location filename="../src/docks/encodedock.cpp" line="112"/>
+        <location filename="../src/docks/encodedock.cpp" line="430"/>
         <source>Custom</source>
         <translation>Tilpasset</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="120"/>
+        <location filename="../src/docks/encodedock.cpp" line="124"/>
         <source>Stock</source>
         <translation>Indbygget</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="619"/>
-        <location filename="../src/docks/encodedock.cpp" line="664"/>
+        <location filename="../src/docks/encodedock.cpp" line="623"/>
+        <location filename="../src/docks/encodedock.cpp" line="668"/>
         <source>Stop Capture</source>
         <translation>Stop optagelse</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="641"/>
+        <location filename="../src/docks/encodedock.cpp" line="645"/>
         <source>Encode to File</source>
         <translation>Indkodér til fil</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="641"/>
+        <location filename="../src/docks/encodedock.cpp" line="645"/>
         <source>Capture to File</source>
         <translation>Optag til fil</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="704"/>
-        <location filename="../src/docks/encodedock.cpp" line="725"/>
+        <location filename="../src/docks/encodedock.cpp" line="708"/>
+        <location filename="../src/docks/encodedock.cpp" line="729"/>
         <source>Stop Stream</source>
         <translation>Stop stream</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="717"/>
+        <location filename="../src/docks/encodedock.cpp" line="721"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>Indtast netværksprotokol ordningen, adresse, port, og parametre som en URL:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="755"/>
+        <location filename="../src/docks/encodedock.cpp" line="759"/>
         <source>Add Encode Preset</source>
         <translation>Tilføj indkode forudindstilling</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="798"/>
+        <location filename="../src/docks/encodedock.cpp" line="802"/>
         <source>Delete Preset</source>
         <translation>Slet forudindstilling</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="799"/>
+        <location filename="../src/docks/encodedock.cpp" line="803"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>Er du sikker på at du vil slette %1?</translation>
     </message>
@@ -1140,13 +1149,12 @@ codecs. Men ikke alle codecs er multi-threaded.</translation>
         <translation type="vanished">Skarphed</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.ui" line="161"/>
         <source>White Balance</source>
-        <translation>Hvidbalance</translation>
+        <translation type="vanished">Hvidbalance</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.ui" line="166"/>
-        <location filename="../src/docks/filtersdock.ui" line="169"/>
+        <location filename="../src/docks/filtersdock.ui" line="161"/>
+        <location filename="../src/docks/filtersdock.ui" line="164"/>
         <source>Overlay HTML</source>
         <translation>Overlæg HTML</translation>
     </message>
@@ -1173,7 +1181,7 @@ codecs. Men ikke alle codecs er multi-threaded.</translation>
 <context>
     <name>GLTestWidget</name>
     <message>
-        <location filename="../src/widgets/gltestwidget.cpp" line="53"/>
+        <location filename="../src/widgets/gltestwidget.cpp" line="58"/>
         <source>Error:
 This program requires OpenGL version 2.0
 with the framebuffer object extension.</source>
@@ -1182,7 +1190,7 @@ Dette program kræver OpenGL version 2.0
 med framebuffer object extention.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/gltestwidget.cpp" line="62"/>
+        <location filename="../src/widgets/gltestwidget.cpp" line="67"/>
         <source>GPU Processing requires OpenGL version 3.2, but you have version %1.%2.
 Disabling GPU Processing.</source>
         <translation>GPU Processing kræver OpenGL version 3.2, men du har version% 1.% 2. 
@@ -1193,8 +1201,8 @@ Deaktiverer GPU Processing.</translation>
     <name>HtmlEditor</name>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="14"/>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="153"/>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="655"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="154"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="650"/>
         <source>HTML Editor</source>
         <translation>HTML-redigering</translation>
     </message>
@@ -1514,120 +1522,120 @@ Deaktiverer GPU Processing.</translation>
         <translation>Tekst skygge...</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="56"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="57"/>
         <source>WYSIWYG Editor</source>
         <translation>WYSIWYG Redigering</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="57"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="58"/>
         <source>View Source</source>
         <translation>Se kildekode</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="154"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="155"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>Dokumentet er blevet ændret. 
 Ønsker du at gemme dine ændringer? </translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="191"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="192"/>
         <source>Open File...</source>
         <translation>Åben fil...</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="192"/>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="220"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="193"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="221"/>
         <source>HTML-Files (*.htm *.html);;All Files (*)</source>
         <translation>HTML-filer (*.htm *.html);;Alle files (*)</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="219"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="220"/>
         <source>Save as...</source>
         <translation>Gem som...</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="232"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="233"/>
         <source>Common Graphics (*.png *.jpg *.jpeg *.gif);;</source>
         <translation>Common Graphics (*.png *.jpg *.jpeg *.gif);;</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="233"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="234"/>
         <source>Portable Network Graphics (PNG) (*.png);;</source>
         <translation>Portable Network Graphics (PNG) (*.png);;</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="234"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="235"/>
         <source>JPEG (*.jpg *.jpeg);;</source>
         <translation>JPEG (*.jpg *.jpeg);;</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="235"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="236"/>
         <source>Graphics Interchange Format (*.gif);;</source>
         <translation>Graphics Interchange Format (*.gif);;</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="236"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="237"/>
         <source>All Files (*)</source>
         <translation>Alle filer (*)</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="238"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="239"/>
         <source>Open image...</source>
         <translation>Åbn billedfil...</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="285"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="286"/>
         <source>Create link</source>
         <translation>Opret link</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="286"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="287"/>
         <source>Enter URL</source>
         <translation>Indtast URL</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="479"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="474"/>
         <source>Font</source>
         <translation>Skrifttype</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="479"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="474"/>
         <source>Select font:</source>
         <translation>Vælg skrifttype:</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="489"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="484"/>
         <source>Font Size</source>
         <translation>Skriftstørrelse</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="489"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="484"/>
         <source>Size in points:</source>
         <translation>Størrelse i punkter:</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="554"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="549"/>
         <source>Open %1 ?</source>
         <translation>Åbn %1 ?</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="555"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="550"/>
         <source>Open link</source>
         <translation>Åbn link</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="564"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="559"/>
         <source>Text Outline</source>
         <translation>Tekst omrids...</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="581"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="576"/>
         <source>Text Shadow</source>
         <translation>Tekstskygge</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="655"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="650"/>
         <source>%1[*] - %2</source>
         <translation>%1[*] - %2</translation>
     </message>
@@ -1866,12 +1874,12 @@ på et job for at åbne en menu for at stoppe et kørende job.</translation>
         <translation>Vis i mappe</translation>
     </message>
     <message>
-        <location filename="../src/docks/jobsdock.cpp" line="83"/>
+        <location filename="../src/docks/jobsdock.cpp" line="86"/>
         <source>Job Log</source>
         <translation>Job log</translation>
     </message>
     <message>
-        <location filename="../src/docks/jobsdock.cpp" line="96"/>
+        <location filename="../src/docks/jobsdock.cpp" line="99"/>
         <source>MLT XML</source>
         <translation>MLT XML</translation>
     </message>
@@ -2344,7 +2352,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="351"/>
-        <location filename="../src/mainwindow.cpp" line="1575"/>
+        <location filename="../src/mainwindow.cpp" line="1637"/>
         <source>Enter Full Screen</source>
         <translation>Åben fuld skærm</translation>
     </message>
@@ -2355,7 +2363,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="363"/>
-        <location filename="../src/mainwindow.cpp" line="135"/>
+        <location filename="../src/mainwindow.cpp" line="138"/>
         <source>Properties</source>
         <translation>Egenskaber</translation>
     </message>
@@ -2371,7 +2379,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="390"/>
-        <location filename="../src/mainwindow.cpp" line="203"/>
+        <location filename="../src/mainwindow.cpp" line="206"/>
         <source>History</source>
         <translation>Historik</translation>
     </message>
@@ -2527,145 +2535,157 @@ p, li { white-space: pre-wrap; }
         <translation>Vis titellinjer</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="108"/>
+        <location filename="../src/mainwindow.cpp" line="111"/>
         <source>Ctrl+Z</source>
         <translation>Ctrl+Z</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="109"/>
+        <location filename="../src/mainwindow.cpp" line="112"/>
         <source>Ctrl+Shift+Z</source>
         <translation>Ctrl+Shift+Z</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="361"/>
+        <location filename="../src/mainwindow.cpp" line="366"/>
         <source>Non-Broadcast</source>
         <translation>Non-Broadcast</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="372"/>
+        <location filename="../src/mainwindow.cpp" line="377"/>
         <source>DVD Widescreen NTSC</source>
         <translation>DVD Widescreen NTSC</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="373"/>
+        <location filename="../src/mainwindow.cpp" line="378"/>
         <source>DVD Widescreen PAL</source>
         <translation>DVD Widescreen PAL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="378"/>
+        <location filename="../src/mainwindow.cpp" line="383"/>
         <source>Custom</source>
         <translation>Tilpasset</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="397"/>
+        <location filename="../src/mainwindow.cpp" line="402"/>
         <source>Screen %1</source>
         <translation>Skærm %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="428"/>
+        <location filename="../src/mainwindow.cpp" line="433"/>
         <source>Off</source>
         <translation>Off</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="431"/>
+        <location filename="../src/mainwindow.cpp" line="436"/>
         <source>Internal</source>
         <translation>Intern</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="434"/>
+        <location filename="../src/mainwindow.cpp" line="439"/>
         <source>External</source>
         <translation>Ekstern</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="448"/>
+        <location filename="../src/mainwindow.cpp" line="453"/>
         <source>DeckLink Keyer</source>
         <translation>DeckLink Keyer</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="524"/>
-        <location filename="../src/mainwindow.cpp" line="526"/>
-        <location filename="../src/mainwindow.cpp" line="572"/>
-        <location filename="../src/mainwindow.cpp" line="2022"/>
+        <location filename="../src/mainwindow.cpp" line="530"/>
+        <location filename="../src/mainwindow.cpp" line="532"/>
+        <location filename="../src/mainwindow.cpp" line="626"/>
+        <location filename="../src/mainwindow.cpp" line="2086"/>
         <source>Failed to open </source>
         <translation>Kunne ikke åbne</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="583"/>
-        <location filename="../src/mainwindow.cpp" line="2009"/>
+        <location filename="../src/mainwindow.cpp" line="557"/>
+        <source>The file you opened uses GPU effects, but GPU processing is not enabled.
+Do you want to enable GPU processing and exit?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="574"/>
+        <source>The file you opened uses effects that are incompatible with GPU processing.
+Do you want to disable GPU processing and exit?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="637"/>
+        <location filename="../src/mainwindow.cpp" line="2071"/>
         <source>Open File</source>
         <translation>Åbn fil</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="782"/>
+        <location filename="../src/mainwindow.cpp" line="842"/>
         <source>%1[*] - %2</source>
         <translation>%1[*] - %2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="787"/>
+        <location filename="../src/mainwindow.cpp" line="847"/>
         <source>About Shotcut</source>
         <translation>&amp;Om Shotcut</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="788"/>
+        <location filename="../src/mainwindow.cpp" line="848"/>
         <source>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2014 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
         <translation>&lt;h1&gt; Shotcut version% 1 &lt;/ h1&gt; &lt;p&gt; &lt;a href=&quot;http://www.shotcut.org/&quot;&gt; Shotcut &lt;/ a&gt; er en gratis, open source , cross -platform video editor . &lt;/ p&gt; &lt;small&gt; &lt;p&gt; Copyright © 2011-2014 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt; Meltytech &lt;/ a&gt; , LLC &lt;/ p&gt; licenseret under &lt;a href = &quot; http://www.gnu.org/licenses/gpl.html &quot;&gt; GNU General Public License v3.0 &lt;/ a&gt; &lt;/ p&gt; Dette program benytter følgende projekter : &lt;ul&gt; &lt; li&gt; &lt;a href=&quot;http://www.qt-project.org/&quot;&gt; Qt &lt;/ a&gt; ansøgning og UI rammer &lt;/ li&gt; &lt;li&gt; &lt;a href=&quot;http://www.mltframework.org/&quot;&gt; MLT &lt;/ a&gt; multimedia authoring rammer &lt;/ li&gt; &lt;li&gt; &lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt; FFmpeg &lt;/ a&gt; multimedie formater og codec biblioteker &lt; / li&gt; &lt;li&gt; &lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt; x264 &lt;/ a&gt; H.264 encoder &lt;/ li&gt; &lt;li&gt; &lt;a href = &quot;http://www.webmproject.org/&quot;&gt; WebM &lt;/ a&gt; VP8 encoder &lt;/ li&gt; &lt;li&gt; &lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt; LAME &lt;/ a&gt; MP3 encoder &lt;/ li&gt; &lt;li&gt; &lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt; Frei0r &lt;/ a&gt; video plugins &lt;/ li&gt; &lt;li&gt; &lt;a href = &quot;http://www.ladspa.org/&quot;&gt; LADSPA &lt;/ a&gt; audio plugins &lt;/ li&gt; &lt;li&gt; &lt;a href=&quot;http://www.defaulticon.com/&quot;&gt; DefaultIcon &lt;/ a&gt; ikon samling af &lt;a href = &quot; http://www.interactivemania.com/&quot;&gt; interactivemania &lt;/ a&gt; &lt; / li&gt; &lt;li&gt; &lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt; Oxygen &lt;/ a&gt; ikon samling &lt; / li&gt; &lt;/ ul&gt; &lt;/ p&gt; kildekoden der bruges til at dette program kan downloades fra &lt;a href=&quot;http://www.shotcut.org/&quot;&gt; shotcut.org &lt;/ a&gt; . &lt;/ p&gt; Dette program er distribueret i håb om at det vil være nyttigt, men UDEN NOGEN GARANTI ; . endda uden den underforståede garanti for SALGBARHED eller EGNETHED tIL ET BESTEMT FORMÅL &lt;/ small&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1192"/>
-        <location filename="../src/mainwindow.cpp" line="1212"/>
+        <location filename="../src/mainwindow.cpp" line="1252"/>
+        <location filename="../src/mainwindow.cpp" line="1272"/>
         <source>Saved %1</source>
         <translation>Gem %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1204"/>
+        <location filename="../src/mainwindow.cpp" line="1264"/>
         <source>Save XML</source>
         <translation>Gem XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1204"/>
+        <location filename="../src/mainwindow.cpp" line="1264"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1224"/>
+        <location filename="../src/mainwindow.cpp" line="1284"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>Projektet er blevet ændret. 
 Ønsker du at gemme dine ændringer? </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1578"/>
+        <location filename="../src/mainwindow.cpp" line="1640"/>
         <source>Exit Full Screen</source>
         <translation>Afslut fuldskærm</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1587"/>
+        <location filename="../src/mainwindow.cpp" line="1649"/>
         <source>GPU Processing is not supported</source>
         <translation>GPU processing ikke understøttet</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1783"/>
+        <location filename="../src/mainwindow.cpp" line="1845"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to exit now?</source>
         <translation>Du skal genstarte Shotcut for at skifte til det nye sprog. 
 Ønsker du at afslutte?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1821"/>
+        <location filename="../src/mainwindow.cpp" line="1883"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>Det lykkes ikke at forbinde til JACK.
 Verificér at JACK er installeret og kører.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1830"/>
+        <location filename="../src/mainwindow.cpp" line="1892"/>
         <source>You must restart Shotcut to switch using GPU processing.
 Do you want to exit now?</source>
         <translation>Du skal genstarte Shotcut for at skifte til GPU processing. 
 Ønsker du at afslutte?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2010"/>
+        <location filename="../src/mainwindow.cpp" line="2072"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;Alle filer (*)</translation>
     </message>
@@ -2801,8 +2821,8 @@ Do you want to exit now?</source>
         <translation>Fjern alle elementer undtagen det afspillende klip.</translation>
     </message>
     <message>
-        <location filename="../src/mvcp/meltedplaylistdock.cpp" line="195"/>
-        <location filename="../src/mvcp/meltedplaylistdock.cpp" line="212"/>
+        <location filename="../src/mvcp/meltedplaylistdock.cpp" line="197"/>
+        <location filename="../src/mvcp/meltedplaylistdock.cpp" line="214"/>
         <source>&quot;Remove All&quot; will remove all of clips in the playlist.
 
 IMPORTANT: You cannot Undo this action!
@@ -2815,7 +2835,7 @@ VIGTIGT: Du kan ikke fortryde denne handling!
 Ønsker du at fortsætte?</translation>
     </message>
     <message>
-        <location filename="../src/mvcp/meltedplaylistdock.cpp" line="229"/>
+        <location filename="../src/mvcp/meltedplaylistdock.cpp" line="231"/>
         <source>&quot;Clean&quot; will remove all of clips in the playlist
 except the currently playing clip.
 
@@ -3573,18 +3593,18 @@ udvalgte snit.</translation>
         <translation>Tilføj alle til tidslinje</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="158"/>
+        <location filename="../src/docks/playlistdock.cpp" line="160"/>
         <source>Thumbnails</source>
         <translation>Miniaturebilleder</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="183"/>
-        <location filename="../src/docks/playlistdock.cpp" line="377"/>
+        <location filename="../src/docks/playlistdock.cpp" line="185"/>
+        <location filename="../src/docks/playlistdock.cpp" line="379"/>
         <source>You cannot insert a playlist into a playlist!</source>
         <translation>Du kan ikke indsætte en afviklingsliste i en afviklingsliste!</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="247"/>
+        <location filename="../src/docks/playlistdock.cpp" line="249"/>
         <source>This clip does not match the selected cut in the playlist!</source>
         <translation>Dette klip passer ikke til det valgte klip i afspilningslisten!</translation>
     </message>
@@ -3771,52 +3791,52 @@ udvalgte snit.</translation>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="424"/>
+        <location filename="../src/docks/playlistdock.cpp" line="426"/>
         <source>Append playlist item %1</source>
         <translation>Tilføj afviklingsliste element %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="444"/>
+        <location filename="../src/docks/playlistdock.cpp" line="446"/>
         <source>Insert playist item %1</source>
         <translation>Indsæt afviklingsliste element %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="464"/>
+        <location filename="../src/docks/playlistdock.cpp" line="466"/>
         <source>Update playlist item %1</source>
         <translation>Opdatér afviklingsliste element %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="486"/>
+        <location filename="../src/docks/playlistdock.cpp" line="488"/>
         <source>Remove playlist item %1</source>
         <translation>Fjern afviklingsliste element %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="505"/>
+        <location filename="../src/docks/playlistdock.cpp" line="507"/>
         <source>Clear playlist</source>
         <translation>Ryd afspilningsliste</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="531"/>
+        <location filename="../src/docks/playlistdock.cpp" line="533"/>
         <source>Move item from %1 to %2</source>
         <translation>Flyt element fra %1 til %2</translation>
     </message>
     <message>
-        <location filename="../src/mvcp/meltedplaylistdock.cpp" line="312"/>
+        <location filename="../src/mvcp/meltedplaylistdock.cpp" line="314"/>
         <source>Append %1</source>
         <translation>Tilføj %1</translation>
     </message>
     <message>
-        <location filename="../src/mvcp/meltedplaylistdock.cpp" line="338"/>
+        <location filename="../src/mvcp/meltedplaylistdock.cpp" line="340"/>
         <source>Remove %1 at %2</source>
         <translation>Slet %1 til %2</translation>
     </message>
     <message>
-        <location filename="../src/mvcp/meltedplaylistdock.cpp" line="364"/>
+        <location filename="../src/mvcp/meltedplaylistdock.cpp" line="366"/>
         <source>Insert %1 at %2</source>
         <translation>Indsæt %1 at %2</translation>
     </message>
     <message>
-        <location filename="../src/mvcp/meltedplaylistdock.cpp" line="388"/>
+        <location filename="../src/mvcp/meltedplaylistdock.cpp" line="390"/>
         <source>Move %1 from %2 to %3</source>
         <translation>Flyt %1 fra %2 til %3</translation>
     </message>
@@ -3972,6 +3992,11 @@ udvalgte snit.</translation>
         <source>Trim transition out point</source>
         <translation>Trim udpunkt for overtoning</translation>
     </message>
+    <message>
+        <location filename="../src/mltxmlgpuchecker.cpp" line="37"/>
+        <source>The file is not a MLT XML file.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QWebSocketPrivate</name>
@@ -4099,28 +4124,28 @@ udvalgte snit.</translation>
         <translation>Slet</translation>
     </message>
     <message>
-        <location filename="../src/widgets/servicepresetwidget.cpp" line="74"/>
-        <location filename="../src/widgets/servicepresetwidget.cpp" line="75"/>
+        <location filename="../src/widgets/servicepresetwidget.cpp" line="76"/>
+        <location filename="../src/widgets/servicepresetwidget.cpp" line="77"/>
         <source>(defaults)</source>
         <translation>(forvalg)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/servicepresetwidget.cpp" line="82"/>
+        <location filename="../src/widgets/servicepresetwidget.cpp" line="84"/>
         <source>Save Preset</source>
         <translation>Gem forudindstilling</translation>
     </message>
     <message>
-        <location filename="../src/widgets/servicepresetwidget.cpp" line="83"/>
+        <location filename="../src/widgets/servicepresetwidget.cpp" line="85"/>
         <source>Name:</source>
         <translation>Navn:</translation>
     </message>
     <message>
-        <location filename="../src/widgets/servicepresetwidget.cpp" line="134"/>
+        <location filename="../src/widgets/servicepresetwidget.cpp" line="136"/>
         <source>Delete Preset</source>
         <translation>Slet forudindstilling</translation>
     </message>
     <message>
-        <location filename="../src/widgets/servicepresetwidget.cpp" line="135"/>
+        <location filename="../src/widgets/servicepresetwidget.cpp" line="137"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>Er du sikker på at du vil slette %1?</translation>
     </message>
@@ -4439,32 +4464,32 @@ mens de efterfølgende klip skubbes til højre (V)</translation>
         <translation>Genindlæs</translation>
     </message>
     <message>
-        <location filename="../src/filters/webvfxfilter.cpp" line="63"/>
+        <location filename="../src/filters/webvfxfilter.cpp" line="64"/>
         <source>Open HTML File</source>
         <translation>Åbn HTML-fil</translation>
     </message>
     <message>
-        <location filename="../src/filters/webvfxfilter.cpp" line="64"/>
+        <location filename="../src/filters/webvfxfilter.cpp" line="65"/>
         <source>HTML-Files (*.htm *.html);;All Files (*)</source>
         <translation>HTML-filer (*.htm *.html);;Alle filer (*)</translation>
     </message>
     <message>
-        <location filename="../src/filters/webvfxfilter.cpp" line="94"/>
+        <location filename="../src/filters/webvfxfilter.cpp" line="95"/>
         <source>Comfirm Selection</source>
         <translation>Bekræft valgte</translation>
     </message>
     <message>
-        <location filename="../src/filters/webvfxfilter.cpp" line="96"/>
+        <location filename="../src/filters/webvfxfilter.cpp" line="97"/>
         <source>Do you still want to use this?</source>
         <translation>Vil du stadig bruge dette?</translation>
     </message>
     <message>
-        <location filename="../src/filters/webvfxfilter.cpp" line="110"/>
+        <location filename="../src/filters/webvfxfilter.cpp" line="111"/>
         <source>Save HTML File</source>
         <translation>Gem HTML fil</translation>
     </message>
     <message>
-        <location filename="../src/filters/webvfxfilter.cpp" line="111"/>
+        <location filename="../src/filters/webvfxfilter.cpp" line="112"/>
         <source>HTML-Files (*.html *.htm);;All Files (*)</source>
         <translation>HTML-filer (*.htm *.html);;Alle filer (*)</translation>
     </message>
@@ -4500,24 +4525,20 @@ mens de efterfølgende klip skubbes til højre (V)</translation>
 <context>
     <name>WhiteBalanceFilter</name>
     <message>
-        <location filename="../src/filters/whitebalancefilter.ui" line="14"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation type="vanished">Form</translation>
     </message>
     <message>
-        <location filename="../src/filters/whitebalancefilter.ui" line="20"/>
         <source>Neutral Color</source>
-        <translation>Neutral farve</translation>
+        <translation type="vanished">Neutral farve</translation>
     </message>
     <message>
-        <location filename="../src/filters/whitebalancefilter.ui" line="79"/>
         <source>Color Temperature</source>
-        <translation>Farvetemperatur</translation>
+        <translation type="vanished">Farvetemperatur</translation>
     </message>
     <message>
-        <location filename="../src/filters/whitebalancefilter.ui" line="94"/>
         <source> kelvin</source>
-        <translation> kelvin</translation>
+        <translation type="vanished"> kelvin</translation>
     </message>
 </context>
 <context>
@@ -4811,6 +4832,11 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
         <source>Sharpen</source>
         <translation type="unfinished">Skarphed</translation>
     </message>
+    <message>
+        <location filename="../src/qml/filters/white/meta_frei0r.qml" line="6"/>
+        <source>White Balance</source>
+        <translation type="unfinished">Hvidbalance</translation>
+    </message>
 </context>
 <context>
     <name>meta_frei0r_coloradj</name>
@@ -4856,6 +4882,11 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
         <location filename="../src/qml/filters/sharpen/meta_movit.qml" line="6"/>
         <source>Sharpen</source>
         <translation type="unfinished">Skarphed</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/white/meta_movit.qml" line="6"/>
+        <source>White Balance</source>
+        <translation type="unfinished">Hvidbalance</translation>
     </message>
 </context>
 <context>
@@ -5232,6 +5263,16 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
         <location filename="../src/qml/filters/wave/ui.qml" line="128"/>
         <source>Deform vertically?</source>
         <translation>Deformere lodret?</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/white/ui.qml" line="76"/>
+        <source>Neutral Color</source>
+        <translation type="unfinished">Neutral farve</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/white/ui.qml" line="97"/>
+        <source>Color Temperature</source>
+        <translation type="unfinished">Farvetemperatur</translation>
     </message>
 </context>
 <context>
