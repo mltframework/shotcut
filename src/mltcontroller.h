@@ -123,6 +123,7 @@ public:
     QImage image(Frame *frame, int width, int height);
     QImage image(Mlt::Producer& producer, int frameNumber, int width, int height);
     void updateAvformatCaching(int trackCount);
+    bool isAudioFilter(const QString& name);
 
     Mlt::Repository* repository() const {
         return m_repo;

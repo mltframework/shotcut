@@ -17,6 +17,7 @@
  */
 
 #include "mltxmlgpuchecker.h"
+#include "mltcontroller.h"
 #include <QIODevice>
 #include <QDebug>
 
@@ -56,7 +57,6 @@ void MltXmlGpuChecker::readMlt()
         if (m_xml.isStartElement()) {
             if (m_xml.name() == "filter" || m_xml.name() == "transition") {
                 isRelevant = true;
-                m_hasEffects = true;
             } else if (isRelevant && m_xml.name() == "property") {
                 readProperty();
             }
@@ -73,6 +73,8 @@ void MltXmlGpuChecker::readProperty()
 
     if (m_xml.attributes().value("name") == "mlt_service") {
         const QString& value = m_xml.readElementText();
+        if (!MLT.isAudioFilter(value))
+            m_hasEffects = true;
         if (value.startsWith("movit.") || value.startsWith("glsl."))
             m_needsGPU = true;
     }

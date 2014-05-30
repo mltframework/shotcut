@@ -639,6 +639,21 @@ void Controller::updateAvformatCaching(int trackCount)
     mlt_service_cache_set_size(NULL, "producer_avformat", qMax(4, i));
 }
 
+bool Controller::isAudioFilter(const QString &name)
+{
+    QScopedPointer<Properties> metadata(m_repo->metadata(filter_type, name.toLatin1().constData()));
+    if (metadata->is_valid()) {
+        Properties tags(metadata->get_data("tags"));
+        if (tags.is_valid()) {
+            for (int j = 0; j < tags.count(); ++j) {
+                if (!qstricmp(tags.get(j), "Audio"))
+                    return true;
+            }
+        }
+    }
+    return false;
+}
+
 void TransportControl::play(double speed)
 {
     MLT.play(speed);
