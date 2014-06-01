@@ -1,8 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="ca">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="ca" version="2.1">
 <context>
-    <name></name>
+    <name/>
     <message>
         <location filename="../src/main.cpp" line="192"/>
         <source>Loading plugins...</source>
@@ -355,27 +353,12 @@
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="60"/>
         <source>Please choose a color</source>
-        <translation type="unfinished">Si us plau, tria un color</translation>
+        <translation>Si us plau, tria un color</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="72"/>
         <source>Pick a color on the screen. By pressing the mouse button and then moving your mouse you can select a section of the screen from which to get an average color.</source>
-        <translation type="unfinished">Tria un color de la pantalla. Fent clic i arrossegant amb el ratolí pots seleccionar una secció de pantalla d&apos;on treure&apos;n un color promig.</translation>
-    </message>
-</context>
-<context>
-    <name>ColorPickerWidget</name>
-    <message>
-        <source>Pick a color on the screen. By pressing the mouse button and then moving your mouse you can select a section of the screen from which to get an average color.</source>
-        <translation type="vanished">Tria un color de la pantalla. Fent clic i arrossegant amb el ratolí pots seleccionar una secció de pantalla d&apos;on treure&apos;n un color promig.</translation>
-    </message>
-    <message>
-        <source>Requesting color information...</source>
-        <translation type="vanished">Sol·licitant informació del color...</translation>
-    </message>
-    <message>
-        <source>Calculated average color for rectangle.</source>
-        <translation type="vanished">Color promig calculat del rectangle.</translation>
+        <translation>Tria un color de la pantalla. Fent clic i arrossegant amb el ratolí pots seleccionar una secció de pantalla d&apos;on treure&apos;n un color promig.</translation>
     </message>
 </context>
 <context>
@@ -1146,37 +1129,10 @@ són multi-fil.</translation>
         <translation>Mirall</translation>
     </message>
     <message>
-        <source>Sharpen</source>
-        <translation type="vanished">Enfocar</translation>
-    </message>
-    <message>
-        <source>White Balance</source>
-        <translation type="vanished">Balanç de blancs</translation>
-    </message>
-    <message>
         <location filename="../src/docks/filtersdock.ui" line="161"/>
         <location filename="../src/docks/filtersdock.ui" line="164"/>
         <source>Overlay HTML</source>
         <translation>Sobreposa HTML</translation>
-    </message>
-</context>
-<context>
-    <name>Frei0rSharpnessFilter</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formulari</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation type="vanished">Mida</translation>
-    </message>
-    <message>
-        <source> %</source>
-        <translation type="vanished">%</translation>
-    </message>
-    <message>
-        <source>Amount</source>
-        <translation type="vanished">Quantitat</translation>
     </message>
 </context>
 <context>
@@ -1194,8 +1150,8 @@ amb l&apos;extensió de l&apos;objecte framebuffer.</translation>
         <location filename="../src/widgets/gltestwidget.cpp" line="67"/>
         <source>GPU Processing requires OpenGL version 3.2, but you have version %1.%2.
 Disabling GPU Processing.</source>
-        <translation>El processat GPU requereix la versió 3.2 de l&apos;OpenGL, però tens la versió %1.%2.
-Es desactiva el processat GPU.</translation>
+        <translation>El processament GPU requereix la versió 3.2 de l&apos;OpenGL, però teniu la versió %1.%2.
+Es desactivarà el processament GPU.</translation>
     </message>
 </context>
 <context>
@@ -1956,7 +1912,7 @@ aturar un treball en curs.</translation>
         <location filename="../src/widgets/lumamixtransition.ui" line="296"/>
         <source>Do not alter the audio levels during the
 course of the transition. Instead, set a
-fixed mixing level, or choose only clip A&apos;s
+fixed mixing level, or choose only clip A's
 audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>No altera els nivells d&apos;àudio durant la
 transició. Fixa, en canvi, un nivell de
@@ -2403,7 +2359,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.ui" line="429"/>
         <source>GPU Processing (experimental)</source>
-        <translation>Processat GPU (experimental)</translation>
+        <translation>Processament GPU (experimental)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="440"/>
@@ -2603,13 +2559,15 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/mainwindow.cpp" line="557"/>
         <source>The file you opened uses GPU effects, but GPU processing is not enabled.
 Do you want to enable GPU processing and exit?</source>
-        <translation type="unfinished"></translation>
+        <translation>El fitxer que esteu obrint utilitza efectes de GPU, però el processament GPU no està habilitat
+Voleu activar el processament GPU i sortir?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="574"/>
         <source>The file you opened uses effects that are incompatible with GPU processing.
 Do you want to disable GPU processing and exit?</source>
-        <translation type="unfinished"></translation>
+        <translation>El fitxer que esteu obrint utilitza efectes que són incompatibles amb el processament GPU.
+Voleu desactivar el processament GPU i sortir?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="637"/>
@@ -2663,7 +2621,7 @@ Vols desar-ne els canvis?</translation>
     <message>
         <location filename="../src/mainwindow.cpp" line="1649"/>
         <source>GPU Processing is not supported</source>
-        <translation>No es suporta el Processat GPU</translation>
+        <translation>El processament GPU no està suportat</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1845"/>
@@ -3022,37 +2980,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/mvcp/meltedunitsmodel.cpp" line="116"/>
         <source>disconnected</source>
         <translation>desconnectat</translation>
-    </message>
-</context>
-<context>
-    <name>MovitSharpenFilter</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formulari</translation>
-    </message>
-    <message>
-        <source>Gaussian Radius</source>
-        <translation type="vanished">Radi Gaussià</translation>
-    </message>
-    <message>
-        <source>Reset to default</source>
-        <translation type="vanished">Reinicia a l&apos;estat per defecte</translation>
-    </message>
-    <message>
-        <source>Circle Radius</source>
-        <translation type="vanished">Radi del cercle</translation>
-    </message>
-    <message>
-        <source>Noise Level</source>
-        <translation type="vanished">Nivell de soroll</translation>
-    </message>
-    <message>
-        <source>Correlation</source>
-        <translation type="vanished">Correlació</translation>
-    </message>
-    <message>
-        <source>Matrix Size</source>
-        <translation type="vanished">Mida de la matriu</translation>
     </message>
 </context>
 <context>
@@ -3997,7 +3924,7 @@ avançar fins al tall seleccionat.</translation>
     <message>
         <location filename="../src/mltxmlgpuchecker.cpp" line="37"/>
         <source>The file is not a MLT XML file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aquest fitxer no és un fitxer XML MLT.</translation>
     </message>
 </context>
 <context>
@@ -4525,25 +4452,6 @@ movent els clips següents cap a la dreta (V)</translation>
     </message>
 </context>
 <context>
-    <name>WhiteBalanceFilter</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formulari</translation>
-    </message>
-    <message>
-        <source>Neutral Color</source>
-        <translation type="vanished">Color neutral</translation>
-    </message>
-    <message>
-        <source>Color Temperature</source>
-        <translation type="vanished">Temperatura de color</translation>
-    </message>
-    <message>
-        <source> kelvin</source>
-        <translation type="vanished">kelvin</translation>
-    </message>
-</context>
-<context>
     <name>X11grabWidget</name>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="14"/>
@@ -4740,7 +4648,7 @@ simultàniament en aquest mode.</translation>
     <message>
         <location filename="../src/qml/filters/rotate/meta.qml" line="6"/>
         <source>Rotate</source>
-        <translation>Rota</translation>
+        <translation>Rotació</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/meta.qml" line="6"/>
@@ -4790,10 +4698,6 @@ simultàniament en aquest mode.</translation>
         <translation>Fosa a negre</translation>
     </message>
     <message>
-        <source>Blur</source>
-        <translation type="vanished">Desenfoc</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/crop/meta.qml" line="6"/>
         <source>Crop</source>
         <translation>Escapça</translation>
@@ -4806,7 +4710,7 @@ simultàniament en aquest mode.</translation>
     <message>
         <location filename="../src/qml/filters/wave/meta.qml" line="6"/>
         <source>Wave</source>
-        <translation type="unfinished"></translation>
+        <translation>Ona</translation>
     </message>
 </context>
 <context>
@@ -4814,7 +4718,7 @@ simultàniament en aquest mode.</translation>
     <message>
         <location filename="../src/qml/filters/blur/meta_boxblur.qml" line="6"/>
         <source>Blur</source>
-        <translation type="unfinished">Desenfoc</translation>
+        <translation>Desenfoc</translation>
     </message>
 </context>
 <context>
@@ -4832,12 +4736,12 @@ simultàniament en aquest mode.</translation>
     <message>
         <location filename="../src/qml/filters/sharpen/meta_frei0r.qml" line="6"/>
         <source>Sharpen</source>
-        <translation type="unfinished"></translation>
+        <translation>Enfoca</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/white/meta_frei0r.qml" line="6"/>
         <source>White Balance</source>
-        <translation type="unfinished">Balanç de blancs</translation>
+        <translation>Balanç de blancs</translation>
     </message>
 </context>
 <context>
@@ -4878,17 +4782,17 @@ simultàniament en aquest mode.</translation>
     <message>
         <location filename="../src/qml/filters/blur/meta_movit.qml" line="6"/>
         <source>Blur</source>
-        <translation type="unfinished">Desenfoc</translation>
+        <translation>Desenfoc</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/meta_movit.qml" line="6"/>
         <source>Sharpen</source>
-        <translation type="unfinished"></translation>
+        <translation>Enfoca</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/white/meta_movit.qml" line="6"/>
         <source>White Balance</source>
-        <translation type="unfinished">Balanç de blancs</translation>
+        <translation>Balanç de blancs</translation>
     </message>
 </context>
 <context>
@@ -5204,14 +5108,6 @@ simultàniament en aquest mode.</translation>
         <translation>Durada</translation>
     </message>
     <message>
-        <source>Width</source>
-        <translation type="vanished">Amplada</translation>
-    </message>
-    <message>
-        <source>Height</source>
-        <translation type="vanished">Alçada</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="108"/>
         <source>Center</source>
         <translation>Centra</translation>
@@ -5249,32 +5145,32 @@ simultàniament en aquest mode.</translation>
     <message>
         <location filename="../src/qml/filters/wave/ui.qml" line="54"/>
         <source>Amplitude</source>
-        <translation type="unfinished"></translation>
+        <translation>Amplitud</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/wave/ui.qml" line="86"/>
         <source>Speed</source>
-        <translation type="unfinished"></translation>
+        <translation>Velocitat</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/wave/ui.qml" line="117"/>
         <source>Deform horizontally?</source>
-        <translation type="unfinished"></translation>
+        <translation>Deforma horitzontalment?</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/wave/ui.qml" line="128"/>
         <source>Deform vertically?</source>
-        <translation type="unfinished"></translation>
+        <translation>Deforma verticalment?</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/white/ui.qml" line="76"/>
         <source>Neutral Color</source>
-        <translation type="unfinished">Color neutral</translation>
+        <translation>Color neutral</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/white/ui.qml" line="97"/>
         <source>Color Temperature</source>
-        <translation type="unfinished">Temperatura de color</translation>
+        <translation>Temperatura de color</translation>
     </message>
 </context>
 <context>
@@ -5282,12 +5178,12 @@ simultàniament en aquest mode.</translation>
     <message>
         <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="47"/>
         <source>Width</source>
-        <translation type="unfinished">Amplada</translation>
+        <translation>Amplada</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="81"/>
         <source>Height</source>
-        <translation type="unfinished">Alçada</translation>
+        <translation>Alçada</translation>
     </message>
 </context>
 <context>
@@ -5305,12 +5201,12 @@ simultàniament en aquest mode.</translation>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="58"/>
         <source>Amount</source>
-        <translation type="unfinished">Quantitat</translation>
+        <translation>Quantitat</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="89"/>
         <source>Size</source>
-        <translation type="unfinished">Mida</translation>
+        <translation>Mida</translation>
     </message>
 </context>
 <context>
@@ -5372,22 +5268,22 @@ simultàniament en aquest mode.</translation>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="65"/>
         <source>Circle Radius</source>
-        <translation type="unfinished">Radi del cercle</translation>
+        <translation>Radi del cercle</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="96"/>
         <source>Gaussian Radius</source>
-        <translation type="unfinished">Radi Gaussià</translation>
+        <translation>Radi Gaussià</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="127"/>
         <source>Correlation</source>
-        <translation type="unfinished">Correlació</translation>
+        <translation>Correlació</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="158"/>
         <source>Noise</source>
-        <translation type="unfinished">Soroll</translation>
+        <translation>Soroll</translation>
     </message>
 </context>
 <context>

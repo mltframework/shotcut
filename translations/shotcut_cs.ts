@@ -1,8 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="cs_CZ">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="cs_CZ" version="2.1">
 <context>
-    <name></name>
+    <name/>
     <message>
         <location filename="../src/main.cpp" line="192"/>
         <source>Loading plugins...</source>
@@ -355,27 +353,12 @@
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="60"/>
         <source>Please choose a color</source>
-        <translation type="unfinished">Zvolte, prosím, barvu</translation>
+        <translation>Zvolte, prosím, barvu</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="72"/>
         <source>Pick a color on the screen. By pressing the mouse button and then moving your mouse you can select a section of the screen from which to get an average color.</source>
-        <translation type="unfinished">Vyberte barvu na obrazovce. Stisknutím tlačítka myši a potom pohybem myši můžete vybrat oblast obrazovky, ze které se má získat průměrná barva.</translation>
-    </message>
-</context>
-<context>
-    <name>ColorPickerWidget</name>
-    <message>
-        <source>Pick a color on the screen. By pressing the mouse button and then moving your mouse you can select a section of the screen from which to get an average color.</source>
-        <translation type="vanished">Vyberte barvu na obrazovce. Stisknutím tlačítka myši a potom pohybem myši můžete vybrat oblast obrazovky, ze které se má získat průměrná barva.</translation>
-    </message>
-    <message>
-        <source>Requesting color information...</source>
-        <translation type="vanished">Požaduje se informace o barvě...</translation>
-    </message>
-    <message>
-        <source>Calculated average color for rectangle.</source>
-        <translation type="vanished">Vypočítána průměrná barva obdélníku.</translation>
+        <translation>Vyberte barvu na obrazovce. Stisknutím tlačítka myši a potom pohybem myši můžete vybrat oblast obrazovky, ze které se má získat průměrná barva.</translation>
     </message>
 </context>
 <context>
@@ -1146,37 +1129,10 @@ vícevláknové.</translation>
         <translation>Zrcadlení</translation>
     </message>
     <message>
-        <source>Sharpen</source>
-        <translation type="vanished">Zaostření</translation>
-    </message>
-    <message>
-        <source>White Balance</source>
-        <translation type="vanished">Vyvážení bílé</translation>
-    </message>
-    <message>
         <location filename="../src/docks/filtersdock.ui" line="161"/>
         <location filename="../src/docks/filtersdock.ui" line="164"/>
         <source>Overlay HTML</source>
         <translation>HTML překrytí</translation>
-    </message>
-</context>
-<context>
-    <name>Frei0rSharpnessFilter</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formulář</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation type="vanished">Velikost</translation>
-    </message>
-    <message>
-        <source> %</source>
-        <translation type="vanished"> %</translation>
-    </message>
-    <message>
-        <source>Amount</source>
-        <translation type="vanished">Množství</translation>
     </message>
 </context>
 <context>
@@ -1955,7 +1911,7 @@ tlačítkem myši na úkol k otevření nabídky pro zastavení nyní běžící
         <location filename="../src/widgets/lumamixtransition.ui" line="296"/>
         <source>Do not alter the audio levels during the
 course of the transition. Instead, set a
-fixed mixing level, or choose only clip A&apos;s
+fixed mixing level, or choose only clip A's
 audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>Neměňte zvukové úrovně během
 toku přechodu. Místo toho nastavte
@@ -2602,13 +2558,15 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/mainwindow.cpp" line="557"/>
         <source>The file you opened uses GPU effects, but GPU processing is not enabled.
 Do you want to enable GPU processing and exit?</source>
-        <translation type="unfinished"></translation>
+        <translation>Soubor, který jste otevřel, používá efekty GPU, ale zpracování pomocí GPU není povoleno.
+Chcete povolit zpracování s pomocí GPU a program ukončit?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="574"/>
         <source>The file you opened uses effects that are incompatible with GPU processing.
 Do you want to disable GPU processing and exit?</source>
-        <translation type="unfinished"></translation>
+        <translation>Soubor, který jste otevřel, používá efekty, které jsou neslučitelné se zpracováním pomocí GPU.
+Chcete zakázat zpracování s pomocí GPU a program ukončit?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="637"/>
@@ -3021,37 +2979,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/mvcp/meltedunitsmodel.cpp" line="116"/>
         <source>disconnected</source>
         <translation>Odpojeno</translation>
-    </message>
-</context>
-<context>
-    <name>MovitSharpenFilter</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formulář</translation>
-    </message>
-    <message>
-        <source>Gaussian Radius</source>
-        <translation type="vanished">Gaussův poloměr</translation>
-    </message>
-    <message>
-        <source>Reset to default</source>
-        <translation type="vanished">Nastavit znovu na výchozí</translation>
-    </message>
-    <message>
-        <source>Circle Radius</source>
-        <translation type="vanished">Poloměr kruhu</translation>
-    </message>
-    <message>
-        <source>Noise Level</source>
-        <translation type="vanished">Úroveň šumu</translation>
-    </message>
-    <message>
-        <source>Correlation</source>
-        <translation type="vanished">Souvztažnost</translation>
-    </message>
-    <message>
-        <source>Matrix Size</source>
-        <translation type="vanished">Velikost matice</translation>
     </message>
 </context>
 <context>
@@ -3996,7 +3923,7 @@ po začátek vybraného střihu.</translation>
     <message>
         <location filename="../src/mltxmlgpuchecker.cpp" line="37"/>
         <source>The file is not a MLT XML file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Soubor není souborem MLT XML.</translation>
     </message>
 </context>
 <context>
@@ -4526,25 +4453,6 @@ Následující záběry jsou posunuty vpravo (V)</translation>
     </message>
 </context>
 <context>
-    <name>WhiteBalanceFilter</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formulář</translation>
-    </message>
-    <message>
-        <source>Neutral Color</source>
-        <translation type="vanished">Neutrální barva</translation>
-    </message>
-    <message>
-        <source>Color Temperature</source>
-        <translation type="vanished">Teplota barvy</translation>
-    </message>
-    <message>
-        <source> kelvin</source>
-        <translation type="vanished"> kelvin</translation>
-    </message>
-</context>
-<context>
     <name>X11grabWidget</name>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="14"/>
@@ -4791,10 +4699,6 @@ obrazovky do SDI/HDMI.</translation>
         <translation>Stmívání do černé</translation>
     </message>
     <message>
-        <source>Blur</source>
-        <translation type="vanished">Rozmazání</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/crop/meta.qml" line="6"/>
         <source>Crop</source>
         <translation>Ořezání</translation>
@@ -4807,7 +4711,7 @@ obrazovky do SDI/HDMI.</translation>
     <message>
         <location filename="../src/qml/filters/wave/meta.qml" line="6"/>
         <source>Wave</source>
-        <translation type="unfinished"></translation>
+        <translation>Vlna</translation>
     </message>
 </context>
 <context>
@@ -4815,7 +4719,7 @@ obrazovky do SDI/HDMI.</translation>
     <message>
         <location filename="../src/qml/filters/blur/meta_boxblur.qml" line="6"/>
         <source>Blur</source>
-        <translation type="unfinished">Rozmazání</translation>
+        <translation>Rozmazání</translation>
     </message>
 </context>
 <context>
@@ -4833,12 +4737,12 @@ obrazovky do SDI/HDMI.</translation>
     <message>
         <location filename="../src/qml/filters/sharpen/meta_frei0r.qml" line="6"/>
         <source>Sharpen</source>
-        <translation type="unfinished">Zaostření</translation>
+        <translation>Zaostření</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/white/meta_frei0r.qml" line="6"/>
         <source>White Balance</source>
-        <translation type="unfinished">Vyvážení bílé</translation>
+        <translation>Vyvážení bílé</translation>
     </message>
 </context>
 <context>
@@ -4879,17 +4783,17 @@ obrazovky do SDI/HDMI.</translation>
     <message>
         <location filename="../src/qml/filters/blur/meta_movit.qml" line="6"/>
         <source>Blur</source>
-        <translation type="unfinished">Rozmazání</translation>
+        <translation>Rozmazání</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/meta_movit.qml" line="6"/>
         <source>Sharpen</source>
-        <translation type="unfinished">Zaostření</translation>
+        <translation>Zaostření</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/white/meta_movit.qml" line="6"/>
         <source>White Balance</source>
-        <translation type="unfinished">Vyvážení bílé</translation>
+        <translation>Vyvážení bílé</translation>
     </message>
 </context>
 <context>
@@ -5205,14 +5109,6 @@ obrazovky do SDI/HDMI.</translation>
         <translation>Doba trvání</translation>
     </message>
     <message>
-        <source>Width</source>
-        <translation type="vanished">Šířka</translation>
-    </message>
-    <message>
-        <source>Height</source>
-        <translation type="vanished">Výška</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="108"/>
         <source>Center</source>
         <translation>Střed</translation>
@@ -5250,32 +5146,32 @@ obrazovky do SDI/HDMI.</translation>
     <message>
         <location filename="../src/qml/filters/wave/ui.qml" line="54"/>
         <source>Amplitude</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozkmit</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/wave/ui.qml" line="86"/>
         <source>Speed</source>
-        <translation type="unfinished"></translation>
+        <translation>Rychlost</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/wave/ui.qml" line="117"/>
         <source>Deform horizontally?</source>
-        <translation type="unfinished"></translation>
+        <translation>Změnit tvar vodorovně?</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/wave/ui.qml" line="128"/>
         <source>Deform vertically?</source>
-        <translation type="unfinished"></translation>
+        <translation>Změnit tvar svisle?</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/white/ui.qml" line="76"/>
         <source>Neutral Color</source>
-        <translation type="unfinished">Neutrální barva</translation>
+        <translation>Neutrální barva</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/white/ui.qml" line="97"/>
         <source>Color Temperature</source>
-        <translation type="unfinished">Teplota barvy</translation>
+        <translation>Teplota barvy</translation>
     </message>
 </context>
 <context>
@@ -5283,12 +5179,12 @@ obrazovky do SDI/HDMI.</translation>
     <message>
         <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="47"/>
         <source>Width</source>
-        <translation type="unfinished">Šířka</translation>
+        <translation>Šířka</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="81"/>
         <source>Height</source>
-        <translation type="unfinished">Výška</translation>
+        <translation>Výška</translation>
     </message>
 </context>
 <context>
@@ -5306,12 +5202,12 @@ obrazovky do SDI/HDMI.</translation>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="58"/>
         <source>Amount</source>
-        <translation type="unfinished">Množství</translation>
+        <translation>Množství</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="89"/>
         <source>Size</source>
-        <translation type="unfinished">Velikost</translation>
+        <translation>Velikost</translation>
     </message>
 </context>
 <context>
@@ -5373,22 +5269,22 @@ obrazovky do SDI/HDMI.</translation>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="65"/>
         <source>Circle Radius</source>
-        <translation type="unfinished">Poloměr kruhu</translation>
+        <translation>Poloměr kruhu</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="96"/>
         <source>Gaussian Radius</source>
-        <translation type="unfinished">Gaussův poloměr</translation>
+        <translation>Gaussův poloměr</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="127"/>
         <source>Correlation</source>
-        <translation type="unfinished">Souvztažnost</translation>
+        <translation>Souvztažnost</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="158"/>
         <source>Noise</source>
-        <translation type="unfinished">Šum</translation>
+        <translation>Šum</translation>
     </message>
 </context>
 <context>

@@ -1,8 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="da_DK">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="da_DK" version="2.1">
 <context>
-    <name></name>
+    <name/>
     <message>
         <location filename="../src/main.cpp" line="192"/>
         <source>Loading plugins...</source>
@@ -355,27 +353,12 @@
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="60"/>
         <source>Please choose a color</source>
-        <translation type="unfinished">Vælg en farve</translation>
+        <translation>Vælg en farve</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="72"/>
         <source>Pick a color on the screen. By pressing the mouse button and then moving your mouse you can select a section of the screen from which to get an average color.</source>
-        <translation type="unfinished">Vælg en farve fra skærmen. Ved at holde museknappen nede og bevæge musen kan du vælge en sektion af skærmen og få en gennemsnitsfarve af den sektion.</translation>
-    </message>
-</context>
-<context>
-    <name>ColorPickerWidget</name>
-    <message>
-        <source>Pick a color on the screen. By pressing the mouse button and then moving your mouse you can select a section of the screen from which to get an average color.</source>
-        <translation type="vanished">Vælg en farve fra skærmen. Ved at holde museknappen nede og bevæge musen kan du vælge en sektion af skærmen og få en gennemsnitsfarve af den sektion.</translation>
-    </message>
-    <message>
-        <source>Requesting color information...</source>
-        <translation type="vanished">Anmoder om farveinformation...</translation>
-    </message>
-    <message>
-        <source>Calculated average color for rectangle.</source>
-        <translation type="vanished">Beregnet gennemsnitsfarve for firkant.</translation>
+        <translation>Vælg en farve fra skærmen. Ved at holde museknappen nede og bevæge musen kan du vælge en sektion af skærmen og få en gennemsnitsfarve af den sektion.</translation>
     </message>
 </context>
 <context>
@@ -1145,37 +1128,10 @@ codecs. Men ikke alle codecs er multi-threaded.</translation>
         <translation>Spejlvend</translation>
     </message>
     <message>
-        <source>Sharpen</source>
-        <translation type="vanished">Skarphed</translation>
-    </message>
-    <message>
-        <source>White Balance</source>
-        <translation type="vanished">Hvidbalance</translation>
-    </message>
-    <message>
         <location filename="../src/docks/filtersdock.ui" line="161"/>
         <location filename="../src/docks/filtersdock.ui" line="164"/>
         <source>Overlay HTML</source>
         <translation>Overlæg HTML</translation>
-    </message>
-</context>
-<context>
-    <name>Frei0rSharpnessFilter</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation type="vanished">Størrelse</translation>
-    </message>
-    <message>
-        <source> %</source>
-        <translation type="vanished">%</translation>
-    </message>
-    <message>
-        <source>Amount</source>
-        <translation type="vanished">Mængde</translation>
     </message>
 </context>
 <context>
@@ -1954,7 +1910,7 @@ på et job for at åbne en menu for at stoppe et kørende job.</translation>
         <location filename="../src/widgets/lumamixtransition.ui" line="296"/>
         <source>Do not alter the audio levels during the
 course of the transition. Instead, set a
-fixed mixing level, or choose only clip A&apos;s
+fixed mixing level, or choose only clip A's
 audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>Ændrer ikke lydniveauer gennem
 overgangen. Indsæt istedet et fast
@@ -2601,13 +2557,15 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/mainwindow.cpp" line="557"/>
         <source>The file you opened uses GPU effects, but GPU processing is not enabled.
 Do you want to enable GPU processing and exit?</source>
-        <translation type="unfinished"></translation>
+        <translation>Den åbnede fil benytter GPU effekter, men GPU processor er ikke slået til.
+Vil du slå GPU processor til og exit?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="574"/>
         <source>The file you opened uses effects that are incompatible with GPU processing.
 Do you want to disable GPU processing and exit?</source>
-        <translation type="unfinished"></translation>
+        <translation>Den åbnede fil benytter GPU effekter, som ikke er kompatible med GPU processor.
+Vil du slå GPU processor fra og exit?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="637"/>
@@ -3020,37 +2978,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/mvcp/meltedunitsmodel.cpp" line="116"/>
         <source>disconnected</source>
         <translation>ikke tilsluttet</translation>
-    </message>
-</context>
-<context>
-    <name>MovitSharpenFilter</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Gaussian Radius</source>
-        <translation type="vanished">Gaussian radius</translation>
-    </message>
-    <message>
-        <source>Reset to default</source>
-        <translation type="vanished">Nulstil til standard</translation>
-    </message>
-    <message>
-        <source>Circle Radius</source>
-        <translation type="vanished">Cirkel radius</translation>
-    </message>
-    <message>
-        <source>Noise Level</source>
-        <translation type="vanished">Støjniveau</translation>
-    </message>
-    <message>
-        <source>Correlation</source>
-        <translation type="vanished">Korrelation</translation>
-    </message>
-    <message>
-        <source>Matrix Size</source>
-        <translation type="vanished">Matrixstørrelse</translation>
     </message>
 </context>
 <context>
@@ -3995,7 +3922,7 @@ udvalgte snit.</translation>
     <message>
         <location filename="../src/mltxmlgpuchecker.cpp" line="37"/>
         <source>The file is not a MLT XML file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Filen er ikke en MLT XML fil.</translation>
     </message>
 </context>
 <context>
@@ -4523,25 +4450,6 @@ mens de efterfølgende klip skubbes til højre (V)</translation>
     </message>
 </context>
 <context>
-    <name>WhiteBalanceFilter</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Neutral Color</source>
-        <translation type="vanished">Neutral farve</translation>
-    </message>
-    <message>
-        <source>Color Temperature</source>
-        <translation type="vanished">Farvetemperatur</translation>
-    </message>
-    <message>
-        <source> kelvin</source>
-        <translation type="vanished"> kelvin</translation>
-    </message>
-</context>
-<context>
     <name>X11grabWidget</name>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="14"/>
@@ -4788,10 +4696,6 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
         <translation>Krydsblænd til sort</translation>
     </message>
     <message>
-        <source>Blur</source>
-        <translation type="vanished">Slør</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/crop/meta.qml" line="6"/>
         <source>Crop</source>
         <translation>Beskær</translation>
@@ -4812,7 +4716,7 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
     <message>
         <location filename="../src/qml/filters/blur/meta_boxblur.qml" line="6"/>
         <source>Blur</source>
-        <translation type="unfinished">Slør</translation>
+        <translation>Slør</translation>
     </message>
 </context>
 <context>
@@ -4830,12 +4734,12 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
     <message>
         <location filename="../src/qml/filters/sharpen/meta_frei0r.qml" line="6"/>
         <source>Sharpen</source>
-        <translation type="unfinished">Skarphed</translation>
+        <translation>Skarphed</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/white/meta_frei0r.qml" line="6"/>
         <source>White Balance</source>
-        <translation type="unfinished">Hvidbalance</translation>
+        <translation>Hvidbalance</translation>
     </message>
 </context>
 <context>
@@ -4876,17 +4780,17 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
     <message>
         <location filename="../src/qml/filters/blur/meta_movit.qml" line="6"/>
         <source>Blur</source>
-        <translation type="unfinished">Slør</translation>
+        <translation>Slør</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/meta_movit.qml" line="6"/>
         <source>Sharpen</source>
-        <translation type="unfinished">Skarphed</translation>
+        <translation>Skarphed</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/white/meta_movit.qml" line="6"/>
         <source>White Balance</source>
-        <translation type="unfinished">Hvidbalance</translation>
+        <translation>Hvidbalance</translation>
     </message>
 </context>
 <context>
@@ -5202,14 +5106,6 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
         <translation>Varighed</translation>
     </message>
     <message>
-        <source>Width</source>
-        <translation type="vanished">Bredde</translation>
-    </message>
-    <message>
-        <source>Height</source>
-        <translation type="vanished">Højde</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="108"/>
         <source>Center</source>
         <translation>Centrér</translation>
@@ -5267,12 +5163,12 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
     <message>
         <location filename="../src/qml/filters/white/ui.qml" line="76"/>
         <source>Neutral Color</source>
-        <translation type="unfinished">Neutral farve</translation>
+        <translation>Neutral farve</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/white/ui.qml" line="97"/>
         <source>Color Temperature</source>
-        <translation type="unfinished">Farvetemperatur</translation>
+        <translation>Farvetemperatur</translation>
     </message>
 </context>
 <context>
@@ -5280,12 +5176,12 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
     <message>
         <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="47"/>
         <source>Width</source>
-        <translation type="unfinished">Bredde</translation>
+        <translation>Bredde</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="81"/>
         <source>Height</source>
-        <translation type="unfinished">Højde</translation>
+        <translation>Højde</translation>
     </message>
 </context>
 <context>
@@ -5303,12 +5199,12 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="58"/>
         <source>Amount</source>
-        <translation type="unfinished">Mængde</translation>
+        <translation>Mængde</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="89"/>
         <source>Size</source>
-        <translation type="unfinished">Størrelse</translation>
+        <translation>Størrelse</translation>
     </message>
 </context>
 <context>
@@ -5370,22 +5266,22 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="65"/>
         <source>Circle Radius</source>
-        <translation type="unfinished">Cirkel radius</translation>
+        <translation>Cirkel radius</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="96"/>
         <source>Gaussian Radius</source>
-        <translation type="unfinished">Gaussian radius</translation>
+        <translation>Gaussian radius</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="127"/>
         <source>Correlation</source>
-        <translation type="unfinished">Korrelation</translation>
+        <translation>Korrelation</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="158"/>
         <source>Noise</source>
-        <translation type="unfinished">Støj</translation>
+        <translation>Støj</translation>
     </message>
 </context>
 <context>

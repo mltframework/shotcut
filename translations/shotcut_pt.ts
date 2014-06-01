@@ -1,8 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="pt_BR">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="pt_BR" version="2.1">
 <context>
-    <name></name>
+    <name/>
     <message>
         <location filename="../src/main.cpp" line="192"/>
         <source>Loading plugins...</source>
@@ -355,27 +353,12 @@
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="60"/>
         <source>Please choose a color</source>
-        <translation type="unfinished">Escolha uma cor</translation>
+        <translation>Por favor, escolha uma cor</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="72"/>
         <source>Pick a color on the screen. By pressing the mouse button and then moving your mouse you can select a section of the screen from which to get an average color.</source>
-        <translation type="unfinished">Escolha uma cor na tela. Ao pressionar o botão do mouse e, em seguida, movendo o mouse você pode selecionar uma seção da tela da qual pode obter uma cor média.</translation>
-    </message>
-</context>
-<context>
-    <name>ColorPickerWidget</name>
-    <message>
-        <source>Pick a color on the screen. By pressing the mouse button and then moving your mouse you can select a section of the screen from which to get an average color.</source>
-        <translation type="vanished">Escolha uma cor na tela. Ao pressionar o botão do mouse e, em seguida, movendo o mouse você pode selecionar uma seção da tela da qual pode obter uma cor média.</translation>
-    </message>
-    <message>
-        <source>Requesting color information...</source>
-        <translation type="vanished">Solicitando informação de cor...</translation>
-    </message>
-    <message>
-        <source>Calculated average color for rectangle.</source>
-        <translation type="vanished">Cor média calculada para o retângulo.</translation>
+        <translation>Escolha uma cor na tela. Pressione o botão do mouse e o mova para selecionar uma seção da tela, de onde poderá obter uma cor média.</translation>
     </message>
 </context>
 <context>
@@ -1145,37 +1128,10 @@ codificadores. No entanto, nem todos os codificadores são multi-tarefas.</trans
         <translation>Espelhar</translation>
     </message>
     <message>
-        <source>Sharpen</source>
-        <translation type="vanished">Nitidez</translation>
-    </message>
-    <message>
-        <source>White Balance</source>
-        <translation type="vanished">Balanço do Branco</translation>
-    </message>
-    <message>
         <location filename="../src/docks/filtersdock.ui" line="161"/>
         <location filename="../src/docks/filtersdock.ui" line="164"/>
         <source>Overlay HTML</source>
         <translation>Sobreposição HTML</translation>
-    </message>
-</context>
-<context>
-    <name>Frei0rSharpnessFilter</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formulário</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation type="vanished">Tamanho </translation>
-    </message>
-    <message>
-        <source> %</source>
-        <translation type="vanished">% </translation>
-    </message>
-    <message>
-        <source>Amount</source>
-        <translation type="vanished">Quantidade</translation>
     </message>
 </context>
 <context>
@@ -1954,7 +1910,7 @@ na lista. Isto não paralisa um trabalho em execução. Botão direito do mouse
         <location filename="../src/widgets/lumamixtransition.ui" line="296"/>
         <source>Do not alter the audio levels during the
 course of the transition. Instead, set a
-fixed mixing level, or choose only clip A&apos;s
+fixed mixing level, or choose only clip A's
 audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>Não altere os níveis de áudio durante o
 curso da transição. Ao invés disso, defina um
@@ -2601,13 +2557,15 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/mainwindow.cpp" line="557"/>
         <source>The file you opened uses GPU effects, but GPU processing is not enabled.
 Do you want to enable GPU processing and exit?</source>
-        <translation type="unfinished"></translation>
+        <translation>O arquivo aberto usa efeitos de GPU, mas o processamento pela GPU não está habilitado.
+Deseja habilitar o processamento de GPU e sair?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="574"/>
         <source>The file you opened uses effects that are incompatible with GPU processing.
 Do you want to disable GPU processing and exit?</source>
-        <translation type="unfinished"></translation>
+        <translation>O arquivo aberto usa efeitos que são incompatíveis com o processamento pela GPU.
+Deseja desabilitar o processamento pela GPU e sair?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="637"/>
@@ -3020,37 +2978,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/mvcp/meltedunitsmodel.cpp" line="116"/>
         <source>disconnected</source>
         <translation>desconectado</translation>
-    </message>
-</context>
-<context>
-    <name>MovitSharpenFilter</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formulário</translation>
-    </message>
-    <message>
-        <source>Gaussian Radius</source>
-        <translation type="vanished">Raio Gaussiano</translation>
-    </message>
-    <message>
-        <source>Reset to default</source>
-        <translation type="vanished">Redefinir para o padrão</translation>
-    </message>
-    <message>
-        <source>Circle Radius</source>
-        <translation type="vanished">Raio do Círculo</translation>
-    </message>
-    <message>
-        <source>Noise Level</source>
-        <translation type="vanished">Nível de Ruído</translation>
-    </message>
-    <message>
-        <source>Correlation</source>
-        <translation type="vanished">Correlação</translation>
-    </message>
-    <message>
-        <source>Matrix Size</source>
-        <translation type="vanished">Tamanho da Matriz</translation>
     </message>
 </context>
 <context>
@@ -3995,7 +3922,7 @@ o início do corte selecionado.</translation>
     <message>
         <location filename="../src/mltxmlgpuchecker.cpp" line="37"/>
         <source>The file is not a MLT XML file.</source>
-        <translation type="unfinished"></translation>
+        <translation>O arquivo não é um arquivo MLT XML.</translation>
     </message>
 </context>
 <context>
@@ -4523,25 +4450,6 @@ deslocando os clipes seguintes para a direita (V)</translation>
     </message>
 </context>
 <context>
-    <name>WhiteBalanceFilter</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formulário</translation>
-    </message>
-    <message>
-        <source>Neutral Color</source>
-        <translation type="vanished">Cor neutra</translation>
-    </message>
-    <message>
-        <source>Color Temperature</source>
-        <translation type="vanished">Temperatura de cor</translation>
-    </message>
-    <message>
-        <source> kelvin</source>
-        <translation type="vanished">kelvin</translation>
-    </message>
-</context>
-<context>
     <name>X11grabWidget</name>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="14"/>
@@ -4788,10 +4696,6 @@ a captura de tela para SDI/HDMI neste modo.</translation>
         <translation>Fade To Black</translation>
     </message>
     <message>
-        <source>Blur</source>
-        <translation type="vanished">Desfocar</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/crop/meta.qml" line="6"/>
         <source>Crop</source>
         <translation>Cortar</translation>
@@ -4812,7 +4716,7 @@ a captura de tela para SDI/HDMI neste modo.</translation>
     <message>
         <location filename="../src/qml/filters/blur/meta_boxblur.qml" line="6"/>
         <source>Blur</source>
-        <translation type="unfinished">Desfocar</translation>
+        <translation>Desfocar</translation>
     </message>
 </context>
 <context>
@@ -4830,12 +4734,12 @@ a captura de tela para SDI/HDMI neste modo.</translation>
     <message>
         <location filename="../src/qml/filters/sharpen/meta_frei0r.qml" line="6"/>
         <source>Sharpen</source>
-        <translation type="unfinished"></translation>
+        <translation>Nitidez</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/white/meta_frei0r.qml" line="6"/>
         <source>White Balance</source>
-        <translation type="unfinished">Balanço do Branco</translation>
+        <translation>Balanço de branco</translation>
     </message>
 </context>
 <context>
@@ -4876,17 +4780,17 @@ a captura de tela para SDI/HDMI neste modo.</translation>
     <message>
         <location filename="../src/qml/filters/blur/meta_movit.qml" line="6"/>
         <source>Blur</source>
-        <translation type="unfinished">Desfocar</translation>
+        <translation>Desfocar</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/meta_movit.qml" line="6"/>
         <source>Sharpen</source>
-        <translation type="unfinished"></translation>
+        <translation>Nitidez</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/white/meta_movit.qml" line="6"/>
         <source>White Balance</source>
-        <translation type="unfinished">Balanço do Branco</translation>
+        <translation>Balanço de branco</translation>
     </message>
 </context>
 <context>
@@ -5202,14 +5106,6 @@ a captura de tela para SDI/HDMI neste modo.</translation>
         <translation>Duração</translation>
     </message>
     <message>
-        <source>Width</source>
-        <translation type="vanished">Largura</translation>
-    </message>
-    <message>
-        <source>Height</source>
-        <translation type="vanished">Altura</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="108"/>
         <source>Center</source>
         <translation>Centro</translation>
@@ -5267,12 +5163,12 @@ a captura de tela para SDI/HDMI neste modo.</translation>
     <message>
         <location filename="../src/qml/filters/white/ui.qml" line="76"/>
         <source>Neutral Color</source>
-        <translation type="unfinished">Cor neutra</translation>
+        <translation>Cor neutra</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/white/ui.qml" line="97"/>
         <source>Color Temperature</source>
-        <translation type="unfinished">Temperatura de cor</translation>
+        <translation>Temperatura de cor</translation>
     </message>
 </context>
 <context>
@@ -5280,12 +5176,12 @@ a captura de tela para SDI/HDMI neste modo.</translation>
     <message>
         <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="47"/>
         <source>Width</source>
-        <translation type="unfinished">Largura</translation>
+        <translation>Largura</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="81"/>
         <source>Height</source>
-        <translation type="unfinished">Altura</translation>
+        <translation>Altura</translation>
     </message>
 </context>
 <context>
@@ -5303,12 +5199,12 @@ a captura de tela para SDI/HDMI neste modo.</translation>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="58"/>
         <source>Amount</source>
-        <translation type="unfinished">Quantidade</translation>
+        <translation>Quantidade</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="89"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamanho </translation>
     </message>
 </context>
 <context>
@@ -5370,22 +5266,22 @@ a captura de tela para SDI/HDMI neste modo.</translation>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="65"/>
         <source>Circle Radius</source>
-        <translation type="unfinished">Raio do Círculo</translation>
+        <translation>Raio do Círculo</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="96"/>
         <source>Gaussian Radius</source>
-        <translation type="unfinished">Raio Gaussiano</translation>
+        <translation>Raio Gaussiano</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="127"/>
         <source>Correlation</source>
-        <translation type="unfinished">Correlação</translation>
+        <translation>Correlação</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="158"/>
         <source>Noise</source>
-        <translation type="unfinished">Ruído</translation>
+        <translation>Ruído</translation>
     </message>
 </context>
 <context>

@@ -1,8 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="de">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="de" version="2.1">
 <context>
-    <name></name>
+    <name/>
     <message>
         <location filename="../src/main.cpp" line="192"/>
         <source>Loading plugins...</source>
@@ -355,27 +353,12 @@
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="60"/>
         <source>Please choose a color</source>
-        <translation type="unfinished">Bitte wählen Sie eine Farbe</translation>
+        <translation>Bitte wählen Sie eine Farbe</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="72"/>
         <source>Pick a color on the screen. By pressing the mouse button and then moving your mouse you can select a section of the screen from which to get an average color.</source>
-        <translation type="unfinished">Wählen Sie eine Farbe auf dem Bildschirm. Während Sie den Knopf auf der Maus gedrückt halten, können Sie mit der Maus herumfahren um einen Bereich am Bildschrim auszuwählen, von dem dann der durchschnittliche Farbwert genommen wird.</translation>
-    </message>
-</context>
-<context>
-    <name>ColorPickerWidget</name>
-    <message>
-        <source>Pick a color on the screen. By pressing the mouse button and then moving your mouse you can select a section of the screen from which to get an average color.</source>
-        <translation type="vanished">Wählen Sie eine Farbe auf dem Bildschirm. Während Sie den Knopf auf der Maus gedrückt halten, können Sie mit der Maus herumfahren um einen Bereich am Bildschrim auszuwählen, von dem dann der durchschnittliche Farbwert genommen wird.</translation>
-    </message>
-    <message>
-        <source>Requesting color information...</source>
-        <translation type="vanished">Anfordern der Farbinformation...</translation>
-    </message>
-    <message>
-        <source>Calculated average color for rectangle.</source>
-        <translation type="vanished">Durschnittlicher Farbwert für Rechteck berechnet</translation>
+        <translation>Wählen Sie eine Farbe auf dem Bildschirm. Während Sie den Knopf auf der Maus gedrückt halten, können Sie mit der Maus herumfahren um einen Bereich am Bildschrim auszuwählen, von dem dann der durchschnittliche Farbwert genommen wird.</translation>
     </message>
 </context>
 <context>
@@ -1144,37 +1127,10 @@ Codecs. Jedoch sind nicht alle Codecs Multithreading fähig.</translation>
         <translation>Spiegeln</translation>
     </message>
     <message>
-        <source>Sharpen</source>
-        <translation type="vanished">Scharfzeichnen</translation>
-    </message>
-    <message>
-        <source>White Balance</source>
-        <translation type="vanished">Weißabgleich</translation>
-    </message>
-    <message>
         <location filename="../src/docks/filtersdock.ui" line="161"/>
         <location filename="../src/docks/filtersdock.ui" line="164"/>
         <source>Overlay HTML</source>
         <translation>Overlay HTML</translation>
-    </message>
-</context>
-<context>
-    <name>Frei0rSharpnessFilter</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formular</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation type="vanished">Größe</translation>
-    </message>
-    <message>
-        <source> %</source>
-        <translation type="vanished"> %</translation>
-    </message>
-    <message>
-        <source>Amount</source>
-        <translation type="vanished">Anteil</translation>
     </message>
 </context>
 <context>
@@ -1953,7 +1909,7 @@ Rechtsklick auf einen Job öffnet ein Menü um den aktuellen Job zu beenden.</tr
         <location filename="../src/widgets/lumamixtransition.ui" line="296"/>
         <source>Do not alter the audio levels during the
 course of the transition. Instead, set a
-fixed mixing level, or choose only clip A&apos;s
+fixed mixing level, or choose only clip A's
 audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>Audio Lautstärke während der Überblendung
 nicht verändern. Stattdessen einen fixen Pegel
@@ -2369,7 +2325,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.ui" line="372"/>
         <source>Recent</source>
-        <translation>Kürzlich</translation>
+        <translation>Zuletzt geöffnet</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="381"/>
@@ -2600,13 +2556,13 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/mainwindow.cpp" line="557"/>
         <source>The file you opened uses GPU effects, but GPU processing is not enabled.
 Do you want to enable GPU processing and exit?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="574"/>
         <source>The file you opened uses effects that are incompatible with GPU processing.
 Do you want to disable GPU processing and exit?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="637"/>
@@ -3020,37 +2976,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>MovitSharpenFilter</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formular</translation>
-    </message>
-    <message>
-        <source>Gaussian Radius</source>
-        <translation type="vanished">Gauß&apos;scher Radius</translation>
-    </message>
-    <message>
-        <source>Reset to default</source>
-        <translation type="vanished">Zurücksetzen</translation>
-    </message>
-    <message>
-        <source>Circle Radius</source>
-        <translation type="vanished">Kreisradius</translation>
-    </message>
-    <message>
-        <source>Noise Level</source>
-        <translation type="vanished">Rauschpegel</translation>
-    </message>
-    <message>
-        <source>Correlation</source>
-        <translation type="vanished">Korrelation</translation>
-    </message>
-    <message>
-        <source>Matrix Size</source>
-        <translation type="vanished">Matrixgröße</translation>
-    </message>
-</context>
-<context>
     <name>MvcpThread</name>
     <message>
         <location filename="../src/mvcp/mvcpthread.cpp" line="163"/>
@@ -3283,7 +3208,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/player.cpp" line="56"/>
         <source>Program</source>
-        <translation>Programm</translation>
+        <translation>Projekt</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="100"/>
@@ -3948,12 +3873,12 @@ selected cut.</source>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="257"/>
         <source>Trim clip in point</source>
-        <translation type="unfinished"></translation>
+        <translation>Clip In-Point verschieben</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="293"/>
         <source>Trim clip out point</source>
-        <translation type="unfinished"></translation>
+        <translation>Clip Out-Point verschieben</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="329"/>
@@ -3980,17 +3905,17 @@ selected cut.</source>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="443"/>
         <source>Trim transition in point</source>
-        <translation type="unfinished"></translation>
+        <translation>Überblendung In-Point verschieben</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="479"/>
         <source>Trim transition out point</source>
-        <translation type="unfinished"></translation>
+        <translation>Überblendung Out-Point verschieben</translation>
     </message>
     <message>
         <location filename="../src/mltxmlgpuchecker.cpp" line="37"/>
         <source>The file is not a MLT XML file.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4518,25 +4443,6 @@ Nachfolgende Clips werden nach rechts verschoben (V)</translation>
     </message>
 </context>
 <context>
-    <name>WhiteBalanceFilter</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formular</translation>
-    </message>
-    <message>
-        <source>Neutral Color</source>
-        <translation type="vanished">Neutrale Farbe</translation>
-    </message>
-    <message>
-        <source>Color Temperature</source>
-        <translation type="vanished">Farbtemperatur</translation>
-    </message>
-    <message>
-        <source> kelvin</source>
-        <translation type="vanished"> kelvin</translation>
-    </message>
-</context>
-<context>
     <name>X11grabWidget</name>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="14"/>
@@ -4781,10 +4687,6 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
         <translation>Fade-Out nach Schwarz</translation>
     </message>
     <message>
-        <source>Blur</source>
-        <translation type="vanished">weichzeichnen</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/crop/meta.qml" line="6"/>
         <source>Crop</source>
         <translation>Zuschneiden</translation>
@@ -4805,7 +4707,7 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
     <message>
         <location filename="../src/qml/filters/blur/meta_boxblur.qml" line="6"/>
         <source>Blur</source>
-        <translation type="unfinished">weichzeichnen</translation>
+        <translation>weichzeichnen</translation>
     </message>
 </context>
 <context>
@@ -4823,12 +4725,12 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
     <message>
         <location filename="../src/qml/filters/sharpen/meta_frei0r.qml" line="6"/>
         <source>Sharpen</source>
-        <translation type="unfinished">Scharfzeichnen</translation>
+        <translation>Scharfzeichnen</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/white/meta_frei0r.qml" line="6"/>
         <source>White Balance</source>
-        <translation type="unfinished">Weißabgleich</translation>
+        <translation>Weißabgleich</translation>
     </message>
 </context>
 <context>
@@ -4869,17 +4771,17 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
     <message>
         <location filename="../src/qml/filters/blur/meta_movit.qml" line="6"/>
         <source>Blur</source>
-        <translation type="unfinished">weichzeichnen</translation>
+        <translation>weichzeichnen</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/meta_movit.qml" line="6"/>
         <source>Sharpen</source>
-        <translation type="unfinished">Scharfzeichnen</translation>
+        <translation>Scharfzeichnen</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/white/meta_movit.qml" line="6"/>
         <source>White Balance</source>
-        <translation type="unfinished">Weißabgleich</translation>
+        <translation>Weißabgleich</translation>
     </message>
 </context>
 <context>
@@ -5195,14 +5097,6 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
         <translation>Spieldauer</translation>
     </message>
     <message>
-        <source>Width</source>
-        <translation type="vanished">Breite</translation>
-    </message>
-    <message>
-        <source>Height</source>
-        <translation type="vanished">Höhe</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="108"/>
         <source>Center</source>
         <translation>Mitte</translation>
@@ -5260,12 +5154,12 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
     <message>
         <location filename="../src/qml/filters/white/ui.qml" line="76"/>
         <source>Neutral Color</source>
-        <translation type="unfinished">Neutrale Farbe</translation>
+        <translation>Neutrale Farbe</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/white/ui.qml" line="97"/>
         <source>Color Temperature</source>
-        <translation type="unfinished">Farbtemperatur</translation>
+        <translation>Farbtemperatur</translation>
     </message>
 </context>
 <context>
@@ -5273,12 +5167,12 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
     <message>
         <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="47"/>
         <source>Width</source>
-        <translation type="unfinished">Breite</translation>
+        <translation>Breite</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="81"/>
         <source>Height</source>
-        <translation type="unfinished">Höhe</translation>
+        <translation>Höhe</translation>
     </message>
 </context>
 <context>
@@ -5296,12 +5190,12 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
     <message>
         <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="58"/>
         <source>Amount</source>
-        <translation type="unfinished">Anteil</translation>
+        <translation>Anteil</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="89"/>
         <source>Size</source>
-        <translation type="unfinished">Größe</translation>
+        <translation>Größe</translation>
     </message>
 </context>
 <context>
@@ -5363,22 +5257,22 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="65"/>
         <source>Circle Radius</source>
-        <translation type="unfinished">Kreisradius</translation>
+        <translation>Kreisradius</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="96"/>
         <source>Gaussian Radius</source>
-        <translation type="unfinished">Gauß&apos;scher Radius</translation>
+        <translation>Gauß&apos;scher Radius</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="127"/>
         <source>Correlation</source>
-        <translation type="unfinished">Korrelation</translation>
+        <translation>Korrelation</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="158"/>
         <source>Noise</source>
-        <translation type="unfinished">Rauschen</translation>
+        <translation>Rauschen</translation>
     </message>
 </context>
 <context>
