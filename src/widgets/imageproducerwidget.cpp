@@ -53,7 +53,7 @@ void ImageProducerWidget::setProducer(Mlt::Producer* p)
         p->set("ttl", 1);
     }
     ui->filenameLabel->setText(ui->filenameLabel->fontMetrics().elidedText(s, Qt::ElideLeft, width() - 40));
-    ui->durationSpinBox->setValue(m_producer->get_length());
+    ui->durationSpinBox->setValue(m_producer->get_out() + 1);
     ui->widthLineEdit->setText(p->get("meta.media.width"));
     ui->heightLineEdit->setText(p->get("meta.media.height"));
     ui->aspectNumSpinBox->blockSignals(true);
@@ -82,18 +82,11 @@ void ImageProducerWidget::setProducer(Mlt::Producer* p)
 
 void ImageProducerWidget::reopen(Mlt::Producer* p)
 {
-    int length = ui->durationSpinBox->value();
-    int out = m_producer->get_out();
+    int out = ui->durationSpinBox->value() - 1;
     int position = m_producer->position();
     double speed = m_producer->get_speed();
 
-    p->set("length", length);
-    if (out + 1 >= m_producer->get_length())
-        p->set("out", length - 1);
-    else if (out >= length)
-        p->set("out", length - 1);
-    else
-        p->set("out", out);
+    p->set("out", out);
     if (position > p->get_out())
         position = p->get_out();
     p->set("in", m_producer->get_in());

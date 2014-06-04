@@ -157,8 +157,10 @@ int Controller::open(const QString &url)
                 m_url = url;
         }
         const char *service = m_producer->get("mlt_service");
-        if (service && (!strcmp(service, "pixbuf") || !strcmp(service, "qimage")))
-            m_producer->set("length", profile().fps() * Settings.imageDuration());
+        if (service && (!strcmp(service, "pixbuf") || !strcmp(service, "qimage"))) {
+            m_producer->set("length", qRound(profile().fps() * 600));
+            m_producer->set("out", profile().fps() * Settings.imageDuration() - 1);
+        }
     }
     else {
         delete m_producer;
