@@ -28,6 +28,8 @@ class ShotcutSettings : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(bool timelineShowWaveforms READ timelineShowWaveforms WRITE setTimelineShowWaveforms NOTIFY timelineShowWaveformsChanged)
+    Q_PROPERTY(QString openPath READ openPath WRITE setOpenPath NOTIFY openPathChanged)
+    Q_PROPERTY(QString savePath READ savePath WRITE setSavePath NOTIFY savePathChanged)
 
 public:
     static ShotcutSettings& singleton();
@@ -38,6 +40,8 @@ public:
     void setImageDuration(double);
     QString openPath() const;
     void setOpenPath(const QString&);
+    QString savePath() const;
+    void setSavePath(const QString&);
     QStringList recent() const;
     void setRecent(const QStringList&);
     QString theme() const;
@@ -97,6 +101,8 @@ public:
     void sync();
 
 signals:
+    void openPathChanged();
+    void savePathChanged();
     void timelineShowWaveformsChanged();
 
 private:

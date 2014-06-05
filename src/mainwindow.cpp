@@ -1259,11 +1259,12 @@ bool MainWindow::on_actionSave_As_triggered()
 {
     if (!MLT.producer())
         return true;
-    QString path = Settings.openPath();
+    QString path = Settings.savePath();
     path.append("/.mlt");
     QString filename = QFileDialog::getSaveFileName(this, tr("Save XML"), path, tr("MLT XML (*.mlt)"));
     if (!filename.isEmpty()) {
         QFileInfo fi(filename);
+        Settings.setSavePath(fi.path());
         if (fi.suffix() != "mlt")
             filename += ".mlt";
         saveXML(filename);

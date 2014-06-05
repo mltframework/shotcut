@@ -106,7 +106,7 @@ void WebvfxFilter::on_webvfxCheckBox_clicked(bool checked)
 
 void WebvfxFilter::on_newButton_clicked()
 {
-    QString path = Settings.openPath();
+    QString path = Settings.savePath();
     path.append("/.html");
     QString filename = QFileDialog::getSaveFileName(this, tr("Save HTML File"), path,
         tr("HTML-Files (*.html *.htm);;All Files (*)"));
@@ -114,6 +114,7 @@ void WebvfxFilter::on_newButton_clicked()
 
     if (!filename.isEmpty()) {
         QFileInfo info(filename);
+        Settings.setSavePath(info.path());
         if (info.suffix().isEmpty())
             filename += ".html";
         QFile inFile(":/scripts/new.html");

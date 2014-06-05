@@ -64,10 +64,15 @@ Rectangle {
             // Remove resource prefix ("file://")
             filename = filename.substring(7)
             if (filename.substring(2, 4) == ':/') {
-                // In Windows, the previx is a little different
+                // In Windows, the prefix is a little different
                 filename = filename.substring(1)
             }
-            
+
+            var lastPathSeparator = filename.lastIndexOf('/')
+            if (lastPathSeparator !== -1) {
+                settings.savePath = filename.substring(0, lastPathSeparator)
+            }
+
             var extension = ".stab"
             // Force file extension to ".stab"
             var extIndex = filename.indexOf(extension, filename.length - extension.length)
@@ -166,6 +171,7 @@ Rectangle {
                 text: qsTr('Analyze')
                 onClicked: {
                     button.enabled = false
+                    fileDialog.folder = settings.savePath
                     fileDialog.open()
                 }
             }

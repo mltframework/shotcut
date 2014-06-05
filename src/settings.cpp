@@ -65,6 +65,18 @@ QString ShotcutSettings::openPath() const
 void ShotcutSettings::setOpenPath(const QString& s)
 {
     settings.setValue("openPath", s);
+    emit savePathChanged();
+}
+
+QString ShotcutSettings::savePath() const
+{
+    return settings.value("savePath", QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)).toString();
+}
+
+void ShotcutSettings::setSavePath(const QString& s)
+{
+    settings.setValue("savePath", s);
+    emit savePathChanged();
 }
 
 QStringList ShotcutSettings::recent() const

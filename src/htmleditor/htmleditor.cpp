@@ -28,6 +28,7 @@
 #include "ui_htmleditor.h"
 #include "ui_inserthtmldialog.h"
 #include "qmltypes/qmlutilities.h"
+#include "settings.h"
 
 #include <QtWidgets>
 #include <QtWebKitWidgets>
@@ -217,13 +218,16 @@ bool HtmlEditor::fileSave()
 
 bool HtmlEditor::fileSaveAs()
 {
+    QString path = Settings.savePath();
+    path.append("/.html");
     QString fn = QFileDialog::getSaveFileName(this, tr("Save as..."),
-                 QString(), tr("HTML-Files (*.htm *.html);;All Files (*)"));
+                 path, tr("HTML-Files (*.htm *.html);;All Files (*)"));
     if (fn.isEmpty())
         return false;
     if (!(fn.endsWith(".htm", Qt::CaseInsensitive) || fn.endsWith(".html", Qt::CaseInsensitive)))
         fn += ".htm"; // default
     setCurrentFileName(fn);
+    Settings.setSavePath(QFileInfo(fn).path());
     return fileSave();
 }
 
