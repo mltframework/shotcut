@@ -106,8 +106,8 @@ Player::Player(QWidget *parent)
     if (Settings.theme() == "system")
         volumeLayoutH = new QVBoxLayout;
     else
-        volumeLayoutH = new QHBoxLayout;
 #endif
+    volumeLayoutH = new QHBoxLayout;
     volumeLayoutH->setContentsMargins(0, 0, 0, 0);
     volumeLayoutH->setSpacing(0);
     volumeLayoutV->addLayout(volumeLayoutH);
