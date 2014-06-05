@@ -81,7 +81,7 @@ Player::Player(QWidget *parent)
     hlayout->addStretch();
     QVBoxLayout *volumeLayoutV = new QVBoxLayout;
     volumeLayoutV->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding));
-    QHBoxLayout *volumeLayoutH = new QHBoxLayout;
+    QBoxLayout *volumeLayoutH = new QHBoxLayout;
     volumeLayoutH->setSpacing(0);
     volumeLayoutH->setContentsMargins(0, 0, 0, 0);
     m_volumeSlider = new QSlider(Qt::Vertical);
@@ -102,7 +102,12 @@ Player::Player(QWidget *parent)
     connect(this, SIGNAL(audioLevels(QVector<double>)), m_audioSignal, SLOT(slotAudioLevels(QVector<double>)));
 
     // Add mute-volume buttons layout
-    volumeLayoutH = new QHBoxLayout;
+#ifdef Q_OS_MAC
+    if (Settings.theme() == "system")
+        volumeLayoutH = new QVBoxLayout;
+    else
+        volumeLayoutH = new QHBoxLayout;
+#endif
     volumeLayoutH->setContentsMargins(0, 0, 0, 0);
     volumeLayoutH->setSpacing(0);
     volumeLayoutV->addLayout(volumeLayoutH);
