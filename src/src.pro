@@ -57,10 +57,11 @@ SOURCES += main.cpp\
     dialogs/customprofiledialog.cpp \
     qmltypes/colorpickeritem.cpp \
     qmltypes/colorwheelitem.cpp \
+    qmltypes/qmlfile.cpp \
     qmltypes/qmlfilter.cpp \
+    qmltypes/qmlhtmleditor.cpp \
     qmltypes/qmlmetadata.cpp \
     qmltypes/qmlprofile.cpp \
-    filters/webvfxfilter.cpp \
     htmleditor/htmleditor.cpp \
     htmleditor/highlighter.cpp \
     settings.cpp \
@@ -126,10 +127,11 @@ HEADERS  += mainwindow.h \
     dialogs/customprofiledialog.h \
     qmltypes/colorpickeritem.h \
     qmltypes/colorwheelitem.h \
+    qmltypes/qmlfile.h \
     qmltypes/qmlfilter.h \
+    qmltypes/qmlhtmleditor.h \
     qmltypes/qmlmetadata.h \
     qmltypes/qmlprofile.h \
-    filters/webvfxfilter.h \
     htmleditor/htmleditor.h \
     htmleditor/highlighter.h \
     settings.h \
@@ -176,7 +178,6 @@ FORMS    += mainwindow.ui \
     mvcp/meltedplaylistdock.ui \
     docks/filtersdock.ui \
     dialogs/customprofiledialog.ui \
-    filters/webvfxfilter.ui \
     htmleditor/htmleditor.ui \
     htmleditor/inserthtmldialog.ui \
     widgets/webvfxproducer.ui \
@@ -240,6 +241,7 @@ OTHER_FILES += \
     qml/filters/sharpen/ui_frei0r.qml \
     qml/filters/sharpen/meta_movit.qml \
     qml/filters/sharpen/ui_movit.qml \
+    qml/modules/Shotcut/Controls/ToolTip.qml \
     qml/modules/Shotcut/Controls/UndoButton.qml \
     qml/timeline/timeline.qml \
     qml/timeline/TrackHead.qml \
@@ -281,6 +283,8 @@ OTHER_FILES += \
     qml/filters/color/ui_frei0r_coloradj.qml \
     qml/filters/wave/meta.qml \
     qml/filters/wave/ui.qml \
+    qml/filters/webvfx/meta.qml \
+    qml/filters/webvfx/ui.qml \
     qml/filters/white/meta_frei0r.qml \
     qml/filters/white/meta_movit.qml \
     qml/filters/white/ui.qml
@@ -335,6 +339,7 @@ lupdate_hack {
     qml/filters/sharpen/ui_frei0r.qml \
     qml/filters/sharpen/meta_movit.qml \
     qml/filters/sharpen/ui_movit.qml \
+    qml/modules/Shotcut/Controls/ToolTip.qml \
     qml/modules/Shotcut/Controls/UndoButton.qml \
     qml/timeline/timeline.qml \
     qml/timeline/TimelineToolbar.qml \
@@ -367,6 +372,8 @@ lupdate_hack {
     qml/filters/color/ui_frei0r_coloradj.qml \
     qml/filters/wave/meta.qml \
     qml/filters/wave/ui.qml \
+    qml/filters/webvfx/meta.qml \
+    qml/filters/webvfx/ui.qml \
     qml/filters/white/meta_frei0r.qml \
     qml/filters/white/meta_movit.qml \
     qml/filters/white/ui.qml

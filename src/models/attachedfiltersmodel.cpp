@@ -125,12 +125,6 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
             // Relabel for widgets UIs
             if (result == "movit.mirror" || result == "mirror")
                 result = tr("Mirror");
-            else if (result == "webvfx")
-                result = tr("Overlay HTML");
-            else if (result == "movit.sharpen" || result == "frei0r.sharpness")
-                result = tr("Sharpen");
-            else if (result == "movit.white_balance" || result == "frei0r.colgate")
-                result = tr("White Balance");
             delete filter;
             return result;
         }

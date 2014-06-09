@@ -29,8 +29,9 @@
 #include <QDebug>
 #include "mainwindow.h"
 #include "settings.h"
-#include "filters/webvfxfilter.h"
+#include "qmltypes/qmlfile.h"
 #include "qmltypes/qmlfilter.h"
+#include "qmltypes/qmlhtmleditor.h"
 #include "qmltypes/qmlmetadata.h"
 #include "qmltypes/qmlprofile.h"
 #include "qmltypes/qmlutilities.h"
@@ -46,13 +47,12 @@ static QActionList getFilters(FiltersDock* dock, Ui::FiltersDock* ui)
 {
     QList<QAction*> actions;
     actions.append(ui->actionMirror);
-#ifndef Q_OS_WIN
-    if (!Settings.playerGPU() && MLT.repository()->filters()->get_data("webvfx"))
-        actions.append(ui->actionOverlayHTML);
-#endif
 
     // Find all of the plugin filters.
+    qmlRegisterType<QmlFile>("org.shotcut.qml", 1, 0, "File");
+    qmlRegisterType<QmlHtmlEditor>("org.shotcut.qml", 1, 0, "HtmlEditor");
     qmlRegisterType<QmlMetadata>("org.shotcut.qml", 1, 0, "Metadata");
+    qmlRegisterType<QmlUtilities>("org.shotcut.qml", 1, 0, "Utilities");
     qmlRegisterType<ColorPickerItem>("Shotcut.Controls", 1, 0, "ColorPickerItem");
     qmlRegisterType<ColorWheelItem>("Shotcut.Controls", 1, 0, "ColorWheelItem");
     QQmlEngine engine;
@@ -235,8 +235,6 @@ void FiltersDock::on_listView_clicked(const QModelIndex &index)
         QmlMetadata* meta = qmlMetadataForService(filter);
         if (meta)
             loadQuickPanel(meta, index.row());
-        else if (name == "webvfx")
-            loadWidgetsPanel(new WebvfxFilter(*filter));
         else
             loadWidgetsPanel();
     }
@@ -301,12 +299,4 @@ void FiltersDock::loadQuickPanel(const QmlMetadata* metadata, int row)
     container->setFocusPolicy(Qt::TabFocus);
     loadWidgetsPanel(container);
     m_quickObject = qqview->rootObject();
-}
-
-void FiltersDock::on_actionOverlayHTML_triggered()
-{
-    Mlt::Filter* filter = m_model.add("webvfx");
-    loadWidgetsPanel(new WebvfxFilter(*filter));
-    delete filter;
-    ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
 }

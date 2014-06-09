@@ -19,6 +19,7 @@
 #include "qmlutilities.h"
 #include <QCoreApplication>
 #include <QSysInfo>
+#include <QCursor>
 
 QmlUtilities::QmlUtilities(QObject *parent) :
     QObject(parent)
@@ -44,4 +45,9 @@ Qt::WindowModality QmlUtilities::dialogModality()
 #else
     return Qt::ApplicationModal;
 #endif
+}
+
+QPoint QmlUtilities::cursorPos()
+{
+    return QCursor::pos();
 }

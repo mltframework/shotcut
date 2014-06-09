@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2013-2014 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2014 Meltytech, LLC
+ * Author: Brian Matherly <pez4brian@yahoo.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,24 +16,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef QMLUTILITIES_H
-#define QMLUTILITIES_H
+#include "qmlhtmleditor.h"
+#include "mainwindow.h"
+#include "htmleditor/htmleditor.h"
 
-#include <QObject>
-#include <QDir>
-#include <QPoint>
-
-class QmlUtilities : public QObject
+QmlHtmlEditor::QmlHtmlEditor()
+    : QObject()
 {
-    Q_OBJECT
-    Q_PROPERTY(Qt::WindowModality dialogModality READ dialogModality);
+}
 
-public:
-    explicit QmlUtilities(QObject *parent = 0);
+void QmlHtmlEditor::edit(QString file)
+{
+    MAIN.editHTML(file);
+    connect(MAIN.htmlEditor(), SIGNAL(closed(void)), SLOT(slotClosed(void)));
+    connect(MAIN.htmlEditor(), SIGNAL(saved(void)), SLOT(slotSaved(void)));
+}
 
-    static QDir qmlDir();
-    static Qt::WindowModality dialogModality();
-    Q_INVOKABLE static QPoint cursorPos();
-};
+void QmlHtmlEditor::slotClosed()
+{
+    emit closed();
+}
 
-#endif // QMLUTILITIES_H
+void QmlHtmlEditor::slotSaved()
+{
+    emit saved();
+}

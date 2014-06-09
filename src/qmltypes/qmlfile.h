@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2013-2014 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2014 Meltytech, LLC
+ * Author: Brian Matherly <pez4brian@yahoo.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,24 +16,34 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef QMLUTILITIES_H
-#define QMLUTILITIES_H
+#ifndef QMLFILE_H
+#define QMLFILE_H
 
 #include <QObject>
-#include <QDir>
-#include <QPoint>
+#include <QUrl>
 
-class QmlUtilities : public QObject
+class QmlFile : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(Qt::WindowModality dialogModality READ dialogModality);
+    Q_PROPERTY(QUrl url READ getUrl WRITE setUrl NOTIFY urlChanged)
+    Q_PROPERTY(QString fileName READ getFileName)
+    Q_PROPERTY(QString path READ getPath)
 
 public:
-    explicit QmlUtilities(QObject *parent = 0);
+    explicit QmlFile();
+    QUrl getUrl();
+    void setUrl(const QUrl& text);
+    QString getFileName();
+    QString getPath();
+    Q_INVOKABLE void copyFromFile(QString source);
+    Q_INVOKABLE bool exists();
+    Q_INVOKABLE QString suffix();
 
-    static QDir qmlDir();
-    static Qt::WindowModality dialogModality();
-    Q_INVOKABLE static QPoint cursorPos();
+signals:
+    void urlChanged(const QUrl &url);
+
+private:
+    QUrl m_url;
 };
 
-#endif // QMLUTILITIES_H
+#endif // QMLFILE_H

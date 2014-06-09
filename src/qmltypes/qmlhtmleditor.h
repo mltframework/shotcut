@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2013-2014 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2014 Meltytech, LLC
+ * Author: Brian Matherly <pez4brian@yahoo.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,24 +16,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef QMLUTILITIES_H
-#define QMLUTILITIES_H
+#ifndef QMLHTMLEDITOR_H
+#define QMLHTMLEDITOR_H
 
 #include <QObject>
-#include <QDir>
-#include <QPoint>
 
-class QmlUtilities : public QObject
+class QmlHtmlEditor : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(Qt::WindowModality dialogModality READ dialogModality);
 
 public:
-    explicit QmlUtilities(QObject *parent = 0);
+    explicit QmlHtmlEditor();
+    Q_INVOKABLE void edit(const QString file);
 
-    static QDir qmlDir();
-    static Qt::WindowModality dialogModality();
-    Q_INVOKABLE static QPoint cursorPos();
+signals:
+    void closed();
+    void saved();
+
+private slots:
+    void slotClosed();
+    void slotSaved();
 };
 
-#endif // QMLUTILITIES_H
+#endif // QMLHTMLEDITOR_H
