@@ -19,6 +19,7 @@
 import QtQuick 2.2
 import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
+import Shotcut.Controls 1.0 as Shotcut
 
 CheckBox {
     property string iconName
@@ -44,5 +45,5 @@ CheckBox {
             iconSource: control.iconSource
         }
     }
-    ToolTip { id: tooltip }
+    Shotcut.ToolTip { id: tooltip }
 }

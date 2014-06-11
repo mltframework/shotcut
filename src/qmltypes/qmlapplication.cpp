@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Meltytech, LLC
+ * Copyright (c) 2013 Meltytech, LLC
  * Author: Brian Matherly <pez4brian@yahoo.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,26 +16,44 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "qmlprofile.h"
-#include "mltcontroller.h"
+#include "qmlapplication.h"
+#include <QApplication>
+#include <QCoreApplication>
+#include <QSysInfo>
+#include <QCursor>
+#include <QPalette>
 
-QmlProfile& QmlProfile::singleton()
+QmlApplication& QmlApplication::singleton()
 {
-    static QmlProfile instance;
+    static QmlApplication instance;
     return instance;
 }
 
-QmlProfile::QmlProfile() :
+QmlApplication::QmlApplication() :
     QObject()
 {
 }
 
-int QmlProfile::width() const
+Qt::WindowModality QmlApplication::dialogModality()
 {
-    return MLT.profile().width();
+#ifdef Q_OS_OSX
+    return (QSysInfo::macVersion() >= QSysInfo::MV_10_8)? Qt::WindowModal : Qt::ApplicationModal;
+#else
+    return Qt::ApplicationModal;
+#endif
 }
 
-int QmlProfile::height() const
+QPoint QmlApplication::mousePos()
 {
-    return MLT.profile().height();
+    return QCursor::pos();
+}
+
+QColor QmlApplication::toolTipBaseColor()
+{
+    return qApp->palette().toolTipBase().color();
+}
+
+QColor QmlApplication::toolTipTextColor()
+{
+    return qApp->palette().toolTipText().color();
 }

@@ -18,7 +18,7 @@
 
 #include "servicepresetwidget.h"
 #include "ui_servicepresetwidget.h"
-#include "qmltypes/qmlutilities.h"
+#include "qmltypes/qmlapplication.h"
 
 #include <QStandardPaths>
 #include <QDir>
@@ -83,7 +83,7 @@ void ServicePresetWidget::savePreset(Mlt::Properties* properties)
     dialog.setInputMode(QInputDialog::TextInput);
     dialog.setWindowTitle(tr("Save Preset"));
     dialog.setLabelText(tr("Name:"));
-    dialog.setWindowModality(QmlUtilities::dialogModality());
+    dialog.setWindowModality(QmlApplication::dialogModality());
     int r = dialog.exec();
     QString preset = dialog.textValue();
     if (r == QDialog::Accepted && !preset.isEmpty()) {
@@ -139,7 +139,7 @@ void ServicePresetWidget::on_deletePresetButton_clicked()
                        this);
     dialog.setDefaultButton(QMessageBox::Yes);
     dialog.setEscapeButton(QMessageBox::No);
-    dialog.setWindowModality(QmlUtilities::dialogModality());
+    dialog.setWindowModality(QmlApplication::dialogModality());
     int result = dialog.exec();
     if (result == QMessageBox::Yes) {
         QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());

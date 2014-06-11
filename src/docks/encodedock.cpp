@@ -23,7 +23,7 @@
 #include "mltcontroller.h"
 #include "mainwindow.h"
 #include "settings.h"
-#include "qmltypes/qmlutilities.h"
+#include "qmltypes/qmlapplication.h"
 
 #include <QtDebug>
 #include <QtWidgets>
@@ -720,7 +720,7 @@ void EncodeDock::on_streamButton_clicked()
     dialog.setWindowTitle(tr("Stream"));
     dialog.setLabelText(tr("Enter the network protocol scheme, address, port, and parameters as an URL:"));
     dialog.setTextValue("udp://224.224.224.224:1234?pkt_size=1316&reuse=1");
-    dialog.setWindowModality(QmlUtilities::dialogModality());
+    dialog.setWindowModality(QmlApplication::dialogModality());
     int r = dialog.exec();
     QString url = dialog.textValue();
     if (r == QDialog::Accepted && !url.isEmpty()) {
@@ -805,7 +805,7 @@ void EncodeDock::on_removePresetButton_clicked()
                        this);
     dialog.setDefaultButton(QMessageBox::Yes);
     dialog.setEscapeButton(QMessageBox::No);
-    dialog.setWindowModality(QmlUtilities::dialogModality());
+    dialog.setWindowModality(QmlApplication::dialogModality());
     int result = dialog.exec();
     if (result == QMessageBox::Yes) {
         QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());

@@ -57,6 +57,7 @@ SOURCES += main.cpp\
     dialogs/customprofiledialog.cpp \
     qmltypes/colorpickeritem.cpp \
     qmltypes/colorwheelitem.cpp \
+    qmltypes/qmlapplication.cpp \
     qmltypes/qmlfile.cpp \
     qmltypes/qmlfilter.cpp \
     qmltypes/qmlhtmleditor.cpp \
@@ -127,6 +128,7 @@ HEADERS  += mainwindow.h \
     dialogs/customprofiledialog.h \
     qmltypes/colorpickeritem.h \
     qmltypes/colorwheelitem.h \
+    qmltypes/qmlapplication.h \
     qmltypes/qmlfile.h \
     qmltypes/qmlfilter.h \
     qmltypes/qmlhtmleditor.h \
@@ -275,7 +277,6 @@ OTHER_FILES += \
     qml/filters/glow/ui_frei0r.qml \
     qml/filters/glow/meta_movit.qml \
     qml/filters/glow/ui_movit.qml \
-    qml/timeline/ToolTip.qml \
     qml/timeline/ToggleButton.qml \
     qml/filters/crop/meta_movit.qml \
     qml/filters/color/meta_movit.qml \

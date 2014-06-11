@@ -19,7 +19,7 @@
 #include "meltedplaylistdock.h"
 #include "ui_meltedplaylistdock.h"
 #include "mainwindow.h"
-#include "qmltypes/qmlutilities.h"
+#include "qmltypes/qmlapplication.h"
 
 #include <QMimeData>
 #include <QFileInfo>
@@ -201,7 +201,7 @@ void MeltedPlaylistDock::on_actionRemoveAll_triggered()
                         this);
     dialog.setDefaultButton(QMessageBox::Yes);
     dialog.setEscapeButton(QMessageBox::No);
-    dialog.setWindowModality(QmlUtilities::dialogModality());
+    dialog.setWindowModality(QmlApplication::dialogModality());
     int r = dialog.exec();
     if (r == QMessageBox::Yes)
         m_model.clear();
@@ -218,7 +218,7 @@ void MeltedPlaylistDock::on_actionWipe_triggered()
                         this);
     dialog.setDefaultButton(QMessageBox::Yes);
     dialog.setEscapeButton(QMessageBox::No);
-    dialog.setWindowModality(QmlUtilities::dialogModality());
+    dialog.setWindowModality(QmlApplication::dialogModality());
     int r = dialog.exec();
     if (r == QMessageBox::Yes)
         m_model.wipe();
@@ -236,7 +236,7 @@ void MeltedPlaylistDock::on_actionClean_triggered()
                         this);
     dialog.setDefaultButton(QMessageBox::Yes);
     dialog.setEscapeButton(QMessageBox::No);
-    dialog.setWindowModality(QmlUtilities::dialogModality());
+    dialog.setWindowModality(QmlApplication::dialogModality());
     int r = dialog.exec();
     if (r == QMessageBox::Yes)
         m_model.clean();

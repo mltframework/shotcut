@@ -28,11 +28,15 @@ class QmlProfile : public QObject
     Q_PROPERTY(int height READ height CONSTANT)
 
 public:
-    explicit QmlProfile(QObject *parent = 0);
-    ~QmlProfile();
+    static QmlProfile& singleton();
 
     int width() const;
     int height() const;
+
+private:
+    explicit QmlProfile();
+    QmlProfile(QmlProfile const&);
+    void operator=(QmlProfile const&);
 };
 
 #endif // PROFILE_H

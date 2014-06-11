@@ -30,7 +30,7 @@ class QmlFile : public QObject
     Q_PROPERTY(QString path READ getPath)
 
 public:
-    explicit QmlFile();
+    explicit QmlFile(QObject *parent = 0);
     QUrl getUrl();
     void setUrl(const QUrl& text);
     QString getFileName();

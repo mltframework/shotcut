@@ -20,8 +20,8 @@
 #include <QFileInfo>
 #include <QFile>
 
-QmlFile::QmlFile()
-    : QObject()
+QmlFile::QmlFile(QObject* parent)
+    : QObject(parent)
     , m_url()
 {
 }

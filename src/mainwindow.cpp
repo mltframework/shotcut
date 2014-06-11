@@ -59,6 +59,7 @@
 #include "widgets/lumamixtransition.h"
 #include "mltxmlgpuchecker.h"
 #include "qmltypes/qmlutilities.h"
+#include "qmltypes/qmlapplication.h"
 
 #include <QtWidgets>
 #include <QDebug>
@@ -78,6 +79,9 @@ MainWindow::MainWindow()
     qDebug() << "begin";
     new GLTestWidget(this);
     Database::singleton(this);
+
+    // Initialize all QML types
+    QmlUtilities::registerCommonTypes();
 
     // Create the UI.
     ui->setupUi(this);
@@ -559,7 +563,7 @@ bool MainWindow::isCompatibleWithGpuMode(const QString &url)
                    QMessageBox::No |
                    QMessageBox::Yes,
                    this);
-                dialog.setWindowModality(QmlUtilities::dialogModality());
+                dialog.setWindowModality(QmlApplication::dialogModality());
                 dialog.setDefaultButton(QMessageBox::Yes);
                 dialog.setEscapeButton(QMessageBox::No);
                 int r = dialog.exec();
@@ -576,7 +580,7 @@ bool MainWindow::isCompatibleWithGpuMode(const QString &url)
                    QMessageBox::No |
                    QMessageBox::Yes,
                    this);
-                dialog.setWindowModality(QmlUtilities::dialogModality());
+                dialog.setWindowModality(QmlApplication::dialogModality());
                 dialog.setDefaultButton(QMessageBox::Yes);
                 dialog.setEscapeButton(QMessageBox::No);
                 int r = dialog.exec();
@@ -1288,7 +1292,7 @@ bool MainWindow::continueModified()
                                      QMessageBox::Cancel |
                                      QMessageBox::Yes,
                                      this);
-        dialog.setWindowModality(QmlUtilities::dialogModality());
+        dialog.setWindowModality(QmlApplication::dialogModality());
         dialog.setDefaultButton(QMessageBox::Yes);
         dialog.setEscapeButton(QMessageBox::Cancel);
         int r = dialog.exec();
@@ -1538,8 +1542,7 @@ void MainWindow::changeTheme(const QString &theme)
         QIcon::setThemeName("oxygen");
 #endif
     }
-    if (MAIN.m_timelineDock)
-        emit MAIN.m_timelineDock->tooltipColorChanged();
+    emit QmlApplication::singleton().paletteChanged();
     qDebug() << "end";
 }
 
@@ -1849,7 +1852,7 @@ void MainWindow::onLanguageTriggered(QAction* action)
                        this);
     dialog.setDefaultButton(QMessageBox::Yes);
     dialog.setEscapeButton(QMessageBox::No);
-    dialog.setWindowModality(QmlUtilities::dialogModality());
+    dialog.setWindowModality(QmlApplication::dialogModality());
     if (dialog.exec() == QMessageBox::Yes)
         QApplication::closeAllWindows();
 }
@@ -1896,7 +1899,7 @@ void MainWindow::on_actionGPU_triggered(bool checked)
                        this);
     dialog.setDefaultButton(QMessageBox::Yes);
     dialog.setEscapeButton(QMessageBox::No);
-    dialog.setWindowModality(QmlUtilities::dialogModality());
+    dialog.setWindowModality(QmlApplication::dialogModality());
     if (dialog.exec() == QMessageBox::Yes)
         QApplication::closeAllWindows();
 }
@@ -1967,7 +1970,7 @@ void MainWindow::onProfileTriggered(QAction *action)
 void MainWindow::on_actionAddCustomProfile_triggered()
 {
     CustomProfileDialog dialog(this);
-    dialog.setWindowModality(QmlUtilities::dialogModality());
+    dialog.setWindowModality(QmlApplication::dialogModality());
     if (dialog.exec() == QDialog::Accepted) {
         QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
         if (dir.cd("profiles")) {

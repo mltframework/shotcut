@@ -23,17 +23,18 @@
 #include <QDir>
 #include <QPoint>
 
+class QQmlContext;
+
 class QmlUtilities : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(Qt::WindowModality dialogModality READ dialogModality);
 
 public:
     explicit QmlUtilities(QObject *parent = 0);
 
+    static void registerCommonTypes();
+    static void setCommonProperties(QQmlContext* rootContext);
     static QDir qmlDir();
-    static Qt::WindowModality dialogModality();
-    Q_INVOKABLE static QPoint cursorPos();
 };
 
 #endif // QMLUTILITIES_H

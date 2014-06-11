@@ -258,7 +258,7 @@ Rectangle {
     Rectangle {
         id: bubbleHelp
         property alias text: bubbleHelpLabel.text
-        color: timeline.toolTipBaseColor
+        color: application.toolTipBaseColor
         width: bubbleHelpLabel.width + 8
         height: bubbleHelpLabel.height + 8
         radius: 4
@@ -281,7 +281,7 @@ Rectangle {
         ]
         Label {
             id: bubbleHelpLabel
-            color: timeline.toolTipTextColor
+            color: application.toolTipTextColor
             anchors.centerIn: parent
         }
         function show(x, y, text) {

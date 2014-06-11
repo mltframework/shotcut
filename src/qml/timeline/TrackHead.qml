@@ -20,6 +20,7 @@ import QtQuick 2.0
 import QtQuick.Controls 1.0
 import QtQuick.Controls.Styles 1.0
 import QtQuick.Layouts 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Rectangle {
     property string trackName: ''
@@ -99,7 +100,7 @@ Rectangle {
                     }
                 }
                 onClicked: timeline.toggleTrackMute(index)
-                ToolTip { text: qsTr('Mute') }
+                Shotcut.ToolTip { text: qsTr('Mute') }
             }
 
             CheckBox {
@@ -124,7 +125,7 @@ Rectangle {
                     }
                 }
                 onClicked: timeline.toggleTrackHidden(index)
-                ToolTip { text: qsTr('Hide') }
+                Shotcut.ToolTip { text: qsTr('Hide') }
             }
 
             CheckBox {
@@ -152,7 +153,7 @@ Rectangle {
                     }
                 }
                 onClicked: timeline.setTrackComposite(index, checkedState)
-                ToolTip { text: qsTr('Composite') }
+                Shotcut.ToolTip { text: qsTr('Composite') }
                 MouseArea {
                     anchors.fill: parent
                     acceptedButtons: Qt.RightButton

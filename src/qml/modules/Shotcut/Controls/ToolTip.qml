@@ -27,9 +27,6 @@ Item {
     
     anchors.fill: parent
 
-    SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
-    Shotcut.Utilities { id: utils }
-
     MouseArea {
         anchors.fill: parent
         acceptedButtons: Qt.NoButton
@@ -46,13 +43,13 @@ Item {
         id: toolTipWindow
         width: toolTipRect.width + 2
         height: toolTipRect.height + 2
-        color: activePalette.light
+        color: application.toolTipTextColor
         visible: false
-        flags: Qt.Tool | Qt.WindowStaysOnTopHint | Qt.FramelessWindowHint
+        flags: Qt.ToolTip
         
         function beginDisplay() {
             if (!toolTipWindow.visible) {
-                interval: 1000
+                tipTimer.interval = 1000
                 tipTimer.running = true
             } else {
                 tipTimer.running = false
@@ -61,7 +58,7 @@ Item {
 
         function endDisplay() {
             if (toolTipWindow.visible) {
-                interval: 500
+                tipTimer.interval = 500
                 tipTimer.running = true
             } else {
                 tipTimer.running = false
@@ -72,7 +69,7 @@ Item {
             id: tipTimer
             onTriggered: {
                 if (!toolTipWindow.visible) {
-                    var cursorPoint = utils.cursorPos()
+                    var cursorPoint = application.mousePos
                     toolTipWindow.x = cursorPoint.x
                     toolTipWindow.y = cursorPoint.y + 15
                 }
@@ -83,14 +80,14 @@ Item {
         Rectangle {
             id: toolTipRect
             anchors.centerIn: parent
-            color: activePalette.highlight
+            color: application.toolTipBaseColor
             implicitWidth: Math.min(350, toolTipText.implicitWidth + 4)
             height: toolTipText.contentHeight + 4
             Text {
                 id: toolTipText
                 anchors.fill: parent
                 anchors.margins: 2
-                color: activePalette.highlightedText
+                color: application.toolTipTextColor
                 clip: false
                 wrapMode: Text.WordWrap
             }

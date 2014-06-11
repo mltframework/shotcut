@@ -29,14 +29,9 @@
 #include <QDebug>
 #include "mainwindow.h"
 #include "settings.h"
-#include "qmltypes/qmlfile.h"
 #include "qmltypes/qmlfilter.h"
-#include "qmltypes/qmlhtmleditor.h"
 #include "qmltypes/qmlmetadata.h"
-#include "qmltypes/qmlprofile.h"
 #include "qmltypes/qmlutilities.h"
-#include "qmltypes/colorpickeritem.h"
-#include "qmltypes/colorwheelitem.h"
 
 static bool compareQAction(const QAction* a1, const QAction* a2)
 {
@@ -49,12 +44,6 @@ static QActionList getFilters(FiltersDock* dock, Ui::FiltersDock* ui)
     actions.append(ui->actionMirror);
 
     // Find all of the plugin filters.
-    qmlRegisterType<QmlFile>("org.shotcut.qml", 1, 0, "File");
-    qmlRegisterType<QmlHtmlEditor>("org.shotcut.qml", 1, 0, "HtmlEditor");
-    qmlRegisterType<QmlMetadata>("org.shotcut.qml", 1, 0, "Metadata");
-    qmlRegisterType<QmlUtilities>("org.shotcut.qml", 1, 0, "Utilities");
-    qmlRegisterType<ColorPickerItem>("Shotcut.Controls", 1, 0, "ColorPickerItem");
-    qmlRegisterType<ColorWheelItem>("Shotcut.Controls", 1, 0, "ColorWheelItem");
     QQmlEngine engine;
     QDir dir = QmlUtilities::qmlDir();
     dir.cd("filters");
@@ -287,11 +276,9 @@ void FiltersDock::loadQuickPanel(const QmlMetadata* metadata, int row)
     QDir importPath = QmlUtilities::qmlDir();
     importPath.cd("modules");
     qqview->engine()->addImportPath(importPath.path());
-    qqview->rootContext()->setContextProperty("Shotcut", new QmlUtilities(qqview));
-    qqview->rootContext()->setContextProperty("settings", &ShotcutSettings::singleton());
+    QmlUtilities::setCommonProperties(qqview->rootContext());
     QmlFilter* qmlFilter = new QmlFilter(m_model, *metadata, row, qqview);
     qqview->rootContext()->setContextProperty("filter", qmlFilter);
-    qqview->rootContext()->setContextProperty("profile", new QmlProfile(qqview));
     qqview->setResizeMode(QQuickView::SizeRootObjectToView);
     qqview->setColor(palette().window().color());
     qqview->setSource(QUrl::fromLocalFile(metadata->qmlFilePath()));

@@ -34,8 +34,6 @@ class TimelineDock : public QDockWidget
     Q_OBJECT
     Q_PROPERTY(int position READ position WRITE setPosition NOTIFY positionChanged)
     Q_PROPERTY(int yoffset READ dockYOffset)
-    Q_PROPERTY(QColor toolTipBaseColor READ toolTipBaseColor NOTIFY tooltipColorChanged)
-    Q_PROPERTY(QColor toolTipTextColor READ toolTipTextColor NOTIFY tooltipColorChanged)
 
 public:
     explicit TimelineDock(QWidget *parent = 0);
@@ -59,7 +57,6 @@ signals:
     void dropAccepted(const QString &xml);
     void fadeInChanged(int duration);
     void fadeOutChanged(int duration);
-    void tooltipColorChanged();
 
 public slots:
     void addAudioTrack();
@@ -106,10 +103,6 @@ private:
 
 private slots:
     void onVisibilityChanged(bool visible);
-
-private:
-    QColor toolTipBaseColor() const { return qApp->palette().toolTipBase().color(); }
-    QColor toolTipTextColor() const { return qApp->palette().toolTipText().color(); }
 };
 
 #endif // TIMELINEDOCK_H

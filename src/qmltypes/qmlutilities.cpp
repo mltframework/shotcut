@@ -16,14 +16,41 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "qmlutilities.h"
+#include "qmltypes/qmlapplication.h"
+#include "qmltypes/colorpickeritem.h"
+#include "qmltypes/colorwheelitem.h"
+#include "qmltypes/qmlprofile.h"
+#include "qmltypes/qmlutilities.h"
+#include "qmltypes/qmlfile.h"
+#include "qmltypes/qmlhtmleditor.h"
+#include "qmltypes/qmlmetadata.h"
+#include "settings.h"
 #include <QCoreApplication>
 #include <QSysInfo>
 #include <QCursor>
+#include <QtQml>
+#include <QQmlContext>
 
 QmlUtilities::QmlUtilities(QObject *parent) :
     QObject(parent)
 {
+}
+
+void QmlUtilities::registerCommonTypes()
+{
+    qmlRegisterType<QmlFile>("org.shotcut.qml", 1, 0, "File");
+    qmlRegisterType<QmlHtmlEditor>("org.shotcut.qml", 1, 0, "HtmlEditor");
+    qmlRegisterType<QmlMetadata>("org.shotcut.qml", 1, 0, "Metadata");
+    qmlRegisterType<QmlUtilities>("org.shotcut.qml", 1, 0, "Utilities");
+    qmlRegisterType<ColorPickerItem>("Shotcut.Controls", 1, 0, "ColorPickerItem");
+    qmlRegisterType<ColorWheelItem>("Shotcut.Controls", 1, 0, "ColorWheelItem");
+}
+
+void QmlUtilities::setCommonProperties(QQmlContext* rootContext)
+{
+    rootContext->setContextProperty("settings", &ShotcutSettings::singleton());
+    rootContext->setContextProperty("application", &QmlApplication::singleton());
+    rootContext->setContextProperty("profile", &QmlProfile::singleton());
 }
 
 QDir QmlUtilities::qmlDir()
@@ -36,18 +63,4 @@ QDir QmlUtilities::qmlDir()
     dir.cd("shotcut");
     dir.cd("qml");
     return dir;
-}
-
-Qt::WindowModality QmlUtilities::dialogModality()
-{
-#ifdef Q_OS_OSX
-    return (QSysInfo::macVersion() >= QSysInfo::MV_10_8)? Qt::WindowModal : Qt::ApplicationModal;
-#else
-    return Qt::ApplicationModal;
-#endif
-}
-
-QPoint QmlUtilities::cursorPos()
-{
-    return QCursor::pos();
 }
