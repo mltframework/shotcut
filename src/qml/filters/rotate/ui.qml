@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2014 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -28,10 +28,8 @@ Rectangle {
     Component.onCompleted: {
         if (filter.isNew) {
             // Set default parameter values
-            slider.value = 0
-        } else {
-            // Initialize parameter values
-            slider.value = filter.get('transition.fix_rotate_x') * 1
+            filter.set('transition.fix_rotate_x', 0)
+            slider.value = filter.get('transition.fix_rotate_x')
         }
     }
 
@@ -40,28 +38,18 @@ Rectangle {
         anchors.margins: 8
 
         RowLayout {
-            spacing: 8
-    
             Label { text: qsTr('Rotation') }
-            Slider {
+            SliderSpinner {
                 id: slider
                 Layout.fillWidth: true
                 Layout.minimumWidth: 100
                 minimumValue: 0
                 maximumValue: 360
-                onValueChanged: {
-                    spinner.value = value
-                    filter.set('transition.fix_rotate_x', value)
-                }
-            }
-            SpinBox {
-                id: spinner
-                Layout.minimumWidth: 110
-                suffix: qsTr(' degree')
-                minimumValue: 0
-                maximumValue: 360
                 decimals: 1
-                onValueChanged: slider.value = value
+                spinnerWidth: 110
+                suffix: qsTr(' degree')
+                value: filter.get('transition.fix_rotate_x')
+                onValueChanged: filter.set('transition.fix_rotate_x', value)
             }
             UndoButton {
                 onClicked: slider.value = 0

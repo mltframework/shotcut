@@ -30,34 +30,24 @@ Rectangle {
     function setEnabled() {
         if (filter.get('center') == 1) {
             biasslider.enabled = true
-            biasspinner.enabled = true
             biasundo.enabled = true
-            topspinner.enabled = false
             topslider.enabled = false
             topundo.enabled = false
-            bottomspinner.enabled = false
             bottomslider.enabled = false
             bottomundo.enabled = false
-            leftspinner.enabled = false
             leftslider.enabled = false
             leftundo.enabled = false
-            rightspinner.enabled = false
             rightslider.enabled = false
             rightundo.enabled = false
         } else {
             biasslider.enabled = false
-            biasspinner.enabled = false
             biasundo.enabled = false
-            topspinner.enabled = true
             topslider.enabled = true
             topundo.enabled = true
-            bottomspinner.enabled = true
             bottomslider.enabled = true
             bottomundo.enabled = true
-            leftspinner.enabled = true
             leftslider.enabled = true
             leftundo.enabled = true
-            rightspinner.enabled = true
             rightslider.enabled = true
             rightundo.enabled = true
         }
@@ -74,31 +64,36 @@ Rectangle {
             filter.set("right", 0);
             centerCheckBox.checked = false
             filter.savePreset(defaultParameters)
+
+            biasslider.value = +filter.get('center_bias')
+            topslider.value = +filter.get('top')
+            bottomslider.value = +filter.get('bottom')
+            leftslider.value = +filter.get('left')
+            rightslider.value = +filter.get('right')
         }
         centerCheckBox.checked = filter.get('center') == '1'
-        biasspinner.value = +filter.get('center_bias')
-        topspinner.value = +filter.get('top')
-        bottomspinner.value = +filter.get('bottom')
-        leftspinner.value = +filter.get('left')
-        rightspinner.value = +filter.get('right')
         setEnabled()
     }
 
     GridLayout {
-        columns: 4
+        columns: 3
         anchors.fill: parent
         anchors.margins: 8
 
+        Label {
+            text: qsTr('Preset')
+            Layout.alignment: Qt.AlignRight
+        }
         Preset {
-            Layout.columnSpan: 4
+            Layout.columnSpan: 2
             parameters: defaultParameters
             onPresetSelected: {
                 centerCheckBox.checked = filter.get('center') == '1'
-                biasspinner.value = +filter.get('center_bias')
-                topspinner.value = +filter.get('top')
-                bottomspinner.value = +filter.get('bottom')
-                leftspinner.value = +filter.get('left')
-                rightspinner.value = +filter.get('right')
+                biasslider.value = +filter.get('center_bias')
+                topslider.value = +filter.get('top')
+                bottomslider.value = +filter.get('bottom')
+                leftslider.value = +filter.get('left')
+                rightslider.value = +filter.get('right')
                 setEnabled()
             }
         }
@@ -117,7 +112,6 @@ Rectangle {
             }
         }
         Item {
-            Layout.columnSpan: 2
             Layout.fillWidth: true;
         }
         UndoButton {
@@ -127,160 +121,85 @@ Rectangle {
             }
         }
 
-        Label { text: qsTr('Center Bias') }
-        Slider {
-            id: biasslider
-            Layout.fillWidth: true
-            Layout.minimumWidth: 100
-            value: +filter.get('center_bias')
-            minimumValue: -Math.max(profile.width, profile.height) / 2
-            maximumValue: Math.max(profile.width, profile.height) / 2
-            property bool isReady: false
-            Component.onCompleted: isReady = true
-            onValueChanged: {
-                if (isReady) {
-                    biasspinner.value = value
-                    filter.set('center_bias', value)
-                }
-            }
+        Label {
+            text: qsTr('Center bias')
+            Layout.alignment: Qt.AlignRight
         }
-        SpinBox {
-            id: biasspinner
-            Layout.minimumWidth: 80
-            value: +filter.get('center_bias')
-            suffix: ' px'
+        SliderSpinner {
+            id: biasslider
             minimumValue: -Math.max(profile.width, profile.height) / 2
             maximumValue: Math.max(profile.width, profile.height) / 2
-            decimals: 0
-            onValueChanged: biasslider.value = value
+            suffix: ' px'
+            value: +filter.get('center_bias')
+            onValueChanged: filter.set('center_bias', value)
         }
         UndoButton {
             id: biasundo
             onClicked: biasslider.value = 0
         }
 
-        Label { text: qsTr('Top') }
-        Slider {
-            id: topslider
-            Layout.fillWidth: true
-            Layout.minimumWidth: 100
-            value: +filter.get('top')
-            minimumValue: 0
-            maximumValue: profile.height
-            property bool isReady: false
-            Component.onCompleted: isReady = true
-            onValueChanged: {
-                if (isReady) {
-                    topspinner.value = value
-                    filter.set('top', value)
-                }
-            }
+        Label {
+            text: qsTr('Top')
+            Layout.alignment: Qt.AlignRight
         }
-        SpinBox {
-            id: topspinner
-            Layout.minimumWidth: 80
-            value: +filter.get('top')
-            suffix: ' px'
+        SliderSpinner {
+            id: topslider
             minimumValue: 0
             maximumValue: profile.height
-            decimals: 0
-            onValueChanged: topslider.value = value
+            suffix: ' px'
+            value: +filter.get('top')
+            onValueChanged: filter.set('top', value)
         }
         UndoButton {
             id: topundo
             onClicked: topslider.value = 0
         }
 
-        Label { text: qsTr('Bottom') }
-        Slider {
-            id: bottomslider
-            Layout.fillWidth: true
-            Layout.minimumWidth: 100
-            value: +filter.get('bottom')
-            minimumValue: 0
-            maximumValue: profile.height
-            property bool isReady: false
-            Component.onCompleted: isReady = true
-            onValueChanged: {
-                if (isReady) {
-                    bottomspinner.value = value
-                    filter.set('bottom', value)
-                }
-            }
+        Label {
+            text: qsTr('Bottom')
+            Layout.alignment: Qt.AlignRight
         }
-        SpinBox {
-            id: bottomspinner
-            Layout.minimumWidth: 80
-            value: +filter.get('bottom')
-            suffix: ' px'
+        SliderSpinner {
+            id: bottomslider
             minimumValue: 0
             maximumValue: profile.height
-            decimals: 0
-            onValueChanged: bottomslider.value = value
+            suffix: ' px'
+            value: +filter.get('bottom')
+            onValueChanged: filter.set('bottom', value)
         }
         UndoButton {
             id: bottomundo
             onClicked: bottomslider.value = 0
         }
 
-        Label { text: qsTr('Left') }
-        Slider {
-            id: leftslider
-            Layout.fillWidth: true
-            Layout.minimumWidth: 100
-            value: +filter.get('left')
-            minimumValue: 0
-            maximumValue: profile.width
-            property bool isReady: false
-            Component.onCompleted: isReady = true
-            onValueChanged: {
-                if (isReady) {
-                    leftspinner.value = value
-                    filter.set('left', value)
-                }
-            }
+        Label {
+            text: qsTr('Left')
+            Layout.alignment: Qt.AlignRight
         }
-        SpinBox {
-            id: leftspinner
-            Layout.minimumWidth: 80
-            value: +filter.get('left')
-            suffix: ' px'
+        SliderSpinner {
+            id: leftslider
             minimumValue: 0
             maximumValue: profile.width
-            decimals: 0
-            onValueChanged: leftslider.value = value
+            suffix: ' px'
+            value: +filter.get('left')
+            onValueChanged: filter.set('left', value)
         }
         UndoButton {
             id: leftundo
             onClicked: leftslider.value = 0
         }
 
-        Label { text: qsTr('Right') }
-        Slider {
-            id: rightslider
-            Layout.fillWidth: true
-            Layout.minimumWidth: 100
-            value: +filter.get('right')
-            minimumValue: 0
-            maximumValue: profile.width
-            property bool isReady: false
-            Component.onCompleted: isReady = true
-            onValueChanged: {
-                if (isReady) {
-                    rightspinner.value = value
-                    filter.set('right', value)
-                }
-            }
+        Label {
+            text: qsTr('Right')
+            Layout.alignment: Qt.AlignRight
         }
-        SpinBox {
-            id: rightspinner
-            Layout.minimumWidth: 80
-            value: +filter.get('right')
-            suffix: ' px'
+        SliderSpinner {
+            id: rightslider
             minimumValue: 0
             maximumValue: profile.width
-            decimals: 0
-            onValueChanged: rightslider.value = value
+            suffix: ' px'
+            value: +filter.get('right')
+            onValueChanged: filter.set('right', value)
         }
         UndoButton {
             id: rightundo
@@ -289,7 +208,6 @@ Rectangle {
         
         Item {
             Layout.fillHeight: true;
-            Layout.columnSpan: 4
         }
     }
 }

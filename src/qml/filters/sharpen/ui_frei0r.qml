@@ -34,20 +34,22 @@ Rectangle {
             filter.set(paramAmount, 0.5)
             filter.set(paramSize, 0.5)
             filter.savePreset(defaultParameters)
+            aslider.value = filter.get(paramAmount) * 100.0
+            sslider.value = filter.get(paramSize) * 100.0
         }
-        aslider.value = filter.get(paramAmount) * 100.0
-        aspinner.value = filter.get(paramAmount) * 100.0
-        sslider.value = filter.get(paramSize) * 100.0
-        sspinner.value = filter.get(paramSize) * 100.0
     }
 
     GridLayout {
-        columns: 4
+        columns: 3
         anchors.fill: parent
         anchors.margins: 8
         
+        Label {
+            text: qsTr('Preset')
+            Layout.alignment: Qt.AlignRight
+        }
         Preset {
-            Layout.columnSpan: 4
+            Layout.columnSpan: 2
             parameters: defaultParameters
             onPresetSelected: {
                 aslider.value = filter.get(paramAmount) * 100.0
@@ -55,71 +57,42 @@ Rectangle {
             }
         }
 
-        Label { text: qsTr('Amount') }
-        Slider {
-            id: aslider
-            Layout.fillWidth: true
-            Layout.minimumWidth: 100
-            value: filter.get(paramAmount) * 100.0
-            minimumValue: 0
-            maximumValue: 100
-            property bool isReady: false
-            Component.onCompleted: isReady = true
-            onValueChanged: {
-                if (isReady) {
-                    aspinner.value = value
-                    filter.set(paramAmount, value / 100.0)
-                }
-            }
+        Label {
+            text: qsTr('Amount')
+            Layout.alignment: Qt.AlignRight
         }
-        SpinBox {
-            id: aspinner
-            Layout.minimumWidth: 80
-            value: filter.get(paramAmount) * 100.0
-            suffix: ' %'
+        SliderSpinner {
+            id: aslider
             minimumValue: 0
             maximumValue: 100
+            suffix: ' %'
             decimals: 1
-            onValueChanged: aslider.value = value
+            value: filter.get(paramAmount) * 100.0
+            onValueChanged: filter.set(paramAmount, value / 100.0)
         }
         UndoButton {
             onClicked: aslider.value = 50
         }
 
-        Label { text: qsTr('Size') }
-        Slider {
-            id: sslider
-            Layout.fillWidth: true
-            Layout.minimumWidth: 100
-            value: filter.get(paramSize) * 100.0
-            minimumValue: 0
-            maximumValue: 100
-            property bool isReady: false
-            Component.onCompleted: isReady = true
-            onValueChanged: {
-                if (isReady) {
-                    sspinner.value = value
-                    filter.set(paramSize, value / 100.0)
-                }
-            }
+        Label {
+            text: qsTr('Size')
+            Layout.alignment: Qt.AlignRight
         }
-        SpinBox {
-            id: sspinner
-            Layout.minimumWidth: 80
-            value: filter.get(paramSize) * 100.0
-            suffix: ' %'
+        SliderSpinner {
+            id: sslider
             minimumValue: 0
             maximumValue: 100
+            suffix: ' %'
             decimals: 1
-            onValueChanged: sslider.value = value
+            value: filter.get(paramSize) * 100.0
+            onValueChanged: filter.set(paramSize, value / 100.0)
         }
         UndoButton {
             onClicked: sslider.value = 50
         }
 
         Item {
-            Layout.columnSpan: 4
-            Layout.fillHeight: true;
+            Layout.fillHeight: true
         }
     }
 }

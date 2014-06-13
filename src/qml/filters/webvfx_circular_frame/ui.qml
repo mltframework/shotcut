@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2014 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +17,8 @@
  */
 
 import QtQuick 2.1
-import QtQuick.Controls 1.0
+import QtQuick.Controls 1.1
+import QtQuick.Controls.Styles 1.1
 import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.0
 import Shotcut.Controls 1.0
@@ -30,74 +31,56 @@ Rectangle {
         if (filter.isNew) {
             filter.set('resource', filter.path + 'filter-demo.html')
             // Set default parameter values
-            slider.value = 50
-            colorSwatch.color = 'black'
-        } else {
-            // Initialize parameter values
+            colorSwatch.value = 'black'
+            filter.set('radius', 0.5)
             slider.value = filter.get('radius') * slider.maximumValue
         }
     }
 
-    ColumnLayout {
+    GridLayout {
+        columns: 3
         anchors.fill: parent
         anchors.margins: 8
 
-        RowLayout {
-            anchors.fill: parent
-            spacing: 8
-    
-            Label { text: qsTr('Radius') }
-            Slider {
-                id: slider
-                Layout.fillWidth: true
-                Layout.minimumWidth: 100
-                minimumValue: 0
-                maximumValue: 100
-                onValueChanged: {
-                    spinner.value = value
-                    filter.set('radius', value / maximumValue)
-                }
-            }
-            SpinBox {
-                id: spinner
-                Layout.minimumWidth: 70
-                suffix: ' %'
-                minimumValue: 0
-                maximumValue: 100
-                onValueChanged: slider.value = value
-            }
-            UndoButton {
-                onClicked: slider.value = 50
-            }
+        Label {
+            text: qsTr('Radius')
+            Layout.alignment: Qt.AlignRight
+        }
+        SliderSpinner {
+            id: slider
+            minimumValue: 0
+            maximumValue: 100
+            suffix: ' %'
+            value: filter.get('radius') * slider.maximumValue
+            onValueChanged: filter.set('radius', value / maximumValue)
+        }
+        UndoButton {
+            onClicked: slider.value = 50
         }
 
-        RowLayout {
-            Button {
-                text: qsTr('Color')
-                onClicked: colorDialog.visible = true
+        Label {
+            text: qsTr('Color')
+            Layout.alignment: Qt.AlignRight
+        }
+        ColorPicker {
+            id: colorSwatch
+            Layout.columnSpan: 2
+            value: filter.get('color')
+            property bool isReady: false
+            Component.onCompleted: isReady = true
+            onValueChanged: {
+                if (isReady) {
+                    filter.set('color', '' + value)
+                    filter.set("disable", 0);
+                }
             }
-            Rectangle {
-                id: colorSwatch
-                width: 20
-                height: 20
-                color: filter.get('color')
+            onPickStarted: {
+                filter.set("disable", 1);
             }
         }
 
         Item {
-            Layout.fillHeight: true;
-        }
-    }
-
-    ColorDialog {
-        id: colorDialog
-        title: qsTr("Please choose a color")
-        showAlphaChannel: false
-        onAccepted: {
-            // The "''+" hack converts the color into a string.
-            filter.set('color', ''+ colorDialog.color)
-            colorSwatch.color = colorDialog.color
-            console.log("You chose: " + colorDialog.color)
+            Layout.fillHeight: true
         }
     }
 }

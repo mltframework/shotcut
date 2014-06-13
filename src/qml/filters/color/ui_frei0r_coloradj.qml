@@ -56,7 +56,6 @@ Rectangle {
         }
 
         RowLayout {
-            spacing: 8
             Label { text: qsTr('Mode') }
             ComboBox {
                 id: modeCombo

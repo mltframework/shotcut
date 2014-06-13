@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2014 Meltytech, LLC
  * Author: Brian Matherly <pez4brian@yahoo.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -31,87 +31,50 @@ Rectangle {
             // Set default parameter values
             filter.set('hori', 2)
             wslider.value = 2;
-            wspinner.value = 2
             filter.set('vert', 2)
             hslider.value = 2
-            hspinner.value = 2
         }
     }
 
-    ColumnLayout {
+    GridLayout {
+        columns: 3
         anchors.fill: parent
         anchors.margins: 8
 
-        RowLayout {
-            spacing: 8
-            Label { text: qsTr('Width') }
-            Slider {
-                id: wslider
-                Layout.fillWidth: true
-                Layout.minimumWidth: 100
-                value: filter.get('hori')
-                minimumValue: 1
-                maximumValue: 99
-                property bool isReady: false
-                Component.onCompleted: isReady = true
-                onValueChanged: {
-                    if (isReady) {
-                        wspinner.value = value
-                        filter.set('hori', value)
-                    }
-                }
-            }
-            SpinBox {
-                id: wspinner
-                Layout.minimumWidth: 80
-                value: filter.get('hori')
-                suffix: ' px'
-                minimumValue: 1
-                maximumValue: 99
-                decimals: 0
-                onValueChanged: wslider.value = value
-            }
-            UndoButton {
-                onClicked: wslider.value = 2
-            }
+        Label {
+            text: qsTr('Width')
+            Layout.alignment: Qt.AlignRight
+        }
+        SliderSpinner {
+            id: wslider
+            minimumValue: 1
+            maximumValue: 99
+            suffix: ' px'
+            value: filter.get('hori')
+            onValueChanged: filter.set('hori', value)
+        }
+        UndoButton {
+            onClicked: wslider.value = 2
         }
 
-        RowLayout {
-            spacing: 8
-            Label { text: qsTr('Height') }
-            Slider {
-                id: hslider
-                Layout.fillWidth: true
-                Layout.minimumWidth: 100
-                value: filter.get('vert')
-                minimumValue: 1
-                maximumValue: 99
-                property bool isReady: false
-                Component.onCompleted: isReady = true
-                onValueChanged: {
-                    if (isReady) {
-                        hspinner.value = value
-                        filter.set('vert', value)
-                    }
-                }
-            }
-            SpinBox {
-                id: hspinner
-                Layout.minimumWidth: 80
-                value: filter.get('vert')
-                suffix: ' px'
-                minimumValue: 1
-                maximumValue: 99
-                decimals: 0
-                onValueChanged: hslider.value = value
-            }
-            UndoButton {
-                onClicked: hslider.value = 2
-            }
+        Label {
+            text: qsTr('Height')
+            Layout.alignment: Qt.AlignRight
+        }
+        SliderSpinner {
+            id: hslider
+            minimumValue: 1
+            maximumValue: 99
+            suffix: ' px'
+            value: filter.get('vert')
+            onValueChanged: filter.set('vert', value)
+        }
+        UndoButton {
+            onClicked: hslider.value = 2
         }
         
         Item {
-            Layout.fillHeight: true;
+            Layout.fillHeight: true
         }
     }
 }

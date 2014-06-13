@@ -42,8 +42,6 @@ Rectangle {
         anchors.margins: 8
 
         RowLayout {
-            spacing: 8
-
             Label { text: qsTr('Duration') }
             TimeSpinner {
                 id: timeSpinner

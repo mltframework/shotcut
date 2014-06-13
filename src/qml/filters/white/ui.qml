@@ -59,13 +59,17 @@ Rectangle {
     }
 
     GridLayout {
-        columns: 4
+        columns: 3
         anchors.fill: parent
         anchors.margins: 8
         
+        Label {
+            text: qsTr('Preset')
+            Layout.alignment: Qt.AlignRight
+        }
         Preset {
             id: presetItem
-            Layout.columnSpan: 4
+            Layout.columnSpan: 2
             onPresetSelected: {
                 tempslider.value = filter.get(tempParam) * tempScale
                 colorPicker.value = filter.get(neutralParam)
@@ -73,10 +77,12 @@ Rectangle {
         }
         
         // Row 1
-        Label { text: qsTr('Neutral Color') }
+        Label {
+            text: qsTr('Neutral color')
+            Layout.alignment: Qt.AlignRight
+        }
         ColorPicker {
             id: colorPicker
-            Layout.columnSpan: 2
             property bool isReady: false
             Component.onCompleted: isReady = true
             onValueChanged: {
@@ -94,65 +100,68 @@ Rectangle {
         }
 
         // Row 2
-        Label { text: qsTr('Color Temperature') }
-        Slider {
-            id: tempslider
-            Layout.fillWidth: true
-            Layout.minimumWidth: 100
-            Layout.maximumHeight: tempspinner.height
-            style: SliderStyle {
-                groove: Rectangle {
-                    rotation: -90
-                    height: parent.width
-                    x: (parent.width - width) / 2
-                    gradient: Gradient {
-                        GradientStop { position: 0.000; color: "#FFC500" }
-                        GradientStop { position: 0.392; color: "#FFFFFF" }
-                        GradientStop { position: 1.000; color: "#DDFFFE" }
-                    }
-                    radius: 4
-                    onWidthChanged: {
-                        // Force width (which is really height due to rotation).
-                        width = tempslider.height / 2
-                    }
-                }
-                handle: Rectangle {
-                    color: "lightgray"
-                    border.color: "gray"
-                    border.width: 2
-                    width: height / 2
-                    height: tempslider.height
-                    radius: 4
-                }
-            }
-            minimumValue: 1000.0
-            maximumValue: 15000.0
-            property bool isReady: false
-            Component.onCompleted: isReady = true
-            onValueChanged: {
-                if (isReady) {
-                    tempspinner.value = value
-                    filter.set(tempParam, value / tempScale)
-                }
-            }
+        Label {
+            text: qsTr('Color temperature')
+            Layout.alignment: Qt.AlignRight
         }
-        SpinBox {
-            id: tempspinner
-            Layout.minimumWidth: 100
-            minimumValue: 1000.0
-            maximumValue: 15000.0
-            decimals: 0
-            stepSize: 10
-            suffix: ' deg'
-            onValueChanged: tempslider.value = value
+        RowLayout {
+            Slider {
+                id: tempslider
+                Layout.fillWidth: true
+                Layout.maximumHeight: tempspinner.height
+                style: SliderStyle {
+                    groove: Rectangle {
+                        rotation: -90
+                        height: parent.width
+                        x: (parent.width - width) / 2
+                        gradient: Gradient {
+                            GradientStop { position: 0.000; color: "#FFC500" }
+                            GradientStop { position: 0.392; color: "#FFFFFF" }
+                            GradientStop { position: 1.000; color: "#DDFFFE" }
+                        }
+                        radius: 4
+                        onWidthChanged: {
+                            // Force width (which is really height due to rotation).
+                            width = tempslider.height / 2
+                        }
+                    }
+                    handle: Rectangle {
+                        color: "lightgray"
+                        border.color: "gray"
+                        border.width: 2
+                        width: height / 2
+                        height: tempslider.height
+                        radius: 4
+                    }
+                }
+                minimumValue: 1000.0
+                maximumValue: 15000.0
+                property bool isReady: false
+                Component.onCompleted: isReady = true
+                onValueChanged: {
+                    if (isReady) {
+                        tempspinner.value = value
+                        filter.set(tempParam, value / tempScale)
+                    }
+                }
+            }
+            SpinBox {
+                id: tempspinner
+                Layout.minimumWidth: 100
+                minimumValue: 1000.0
+                maximumValue: 15000.0
+                decimals: 0
+                stepSize: 10
+                suffix: ' deg'
+                onValueChanged: tempslider.value = value
+            }
         }
         UndoButton {
             onClicked: tempslider.value = defaultTemp
         }
 
         Item {
-            Layout.fillHeight: true;
-            Layout.columnSpan: 4
+            Layout.fillHeight: true
         }
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2014 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,80 +25,57 @@ Rectangle {
     width: 400
     height: 200
     color: 'transparent'
-    Component.onCompleted: {
-        // Initialize parameter values
-        sliderBlue.value = filter.get('u') * 1
-        sliderRed.value = filter.get('v') * 1
-    }
 
-    ColumnLayout {
+    GridLayout {
+        columns: 3
         anchors.fill: parent
         anchors.margins: 8
 
+        Label {
+            text: qsTr('Preset')
+            Layout.alignment: Qt.AlignRight
+        }
         Preset {
+            Layout.columnSpan: 2
             parameters: ['u', 'v']
             onPresetSelected: {
-                sliderBlue.value = filter.get('u') * 1
-                sliderRed.value = filter.get('v') * 1
+                sliderBlue.value = filter.get('u')
+                sliderRed.value = filter.get('v')
             }
         }
 
-        RowLayout {
-            spacing: 8
-    
-            Label { text: qsTr('Yellow-Blue') }
-            Slider {
-                id: sliderBlue
-                Layout.fillWidth: true
-                Layout.minimumWidth: 100
-                minimumValue: 0
-                maximumValue: 255
-                onValueChanged: {
-                    spinnerBlue.value = value
-                    filter.set('u', value)
-                }
-            }
-            SpinBox {
-                id: spinnerBlue
-                Layout.minimumWidth: 70
-                minimumValue: 0
-                maximumValue: 255
-                onValueChanged: sliderBlue.value = value
-            }
-            UndoButton {
-                onClicked: sliderBlue.value = 75
-            }
+        Label {
+            text: qsTr('Yellow-Blue')
+            Layout.alignment: Qt.AlignRight
+        }
+        SliderSpinner {
+            id: sliderBlue
+            minimumValue: 0
+            maximumValue: 255
+            value: filter.get('u')
+            onValueChanged:filter.set('u', value)
+        }
+        UndoButton {
+            onClicked: sliderBlue.value = 75
         }
 
-        RowLayout {
-            spacing: 8
-    
-            Label { text: qsTr('Cyan-Red') }
-            Slider {
-                id: sliderRed
-                Layout.fillWidth: true
-                Layout.minimumWidth: 100
-                minimumValue: 0
-                maximumValue: 255
-                onValueChanged: {
-                    spinnerRed.value = value
-                    filter.set('v', value)
-                }
-            }
-            SpinBox {
-                id: spinnerRed
-                Layout.minimumWidth: 70
-                minimumValue: 0
-                maximumValue: 255
-                onValueChanged: sliderRed.value = value
-            }
-            UndoButton {
-                onClicked: sliderRed.value = 150
-            }
+        Label {
+            text: qsTr('Cyan-Red')
+            Layout.alignment: Qt.AlignRight
+        }
+        SliderSpinner {
+            id: sliderRed
+            minimumValue: 0
+            maximumValue: 255
+            value: filter.get('v')
+            onValueChanged: filter.set('v', value)
+        }
+        UndoButton {
+            onClicked: sliderRed.value = 150
         }
 
         Item {
-            Layout.fillHeight: true;
+            Layout.fillHeight: true
         }
     }
 }

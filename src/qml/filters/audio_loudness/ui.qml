@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2014 Meltytech, LLC
  * Author: Brian Matherly <pez4brian@yahoo.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -53,7 +53,23 @@ Rectangle {
         anchors.margins: 8
 
         RowLayout {
-            spacing: 8
+            Label { text: qsTr('Target Loudness') }
+            SliderSpinner {
+                id: programSlider
+                minimumValue: -50.0
+                maximumValue: -10.0
+                decimals: 1
+                suffix: ' LUFS'
+                spinnerWidth: 100
+                value: filter.get('program') * 1
+                onValueChanged: filter.set('program', value)
+            }
+            UndoButton {
+                onClicked: programSlider.value = -23.0
+            }
+        }
+
+        RowLayout {
             Button {
                 id: button
                 text: qsTr('Analyze')
@@ -67,40 +83,6 @@ Rectangle {
                 Component.onCompleted: {
                     setStatus(false)
                 }
-            }
-        }
-
-        RowLayout {
-            spacing: 8
-            Label { text: qsTr('Target Loudness') }
-            Slider {
-                id: programSlider
-                Layout.fillWidth: true
-                Layout.minimumWidth: 100
-                value: filter.get('program') * 1
-                minimumValue: -50.0
-                maximumValue: -10.0
-                property bool isReady: false
-                Component.onCompleted: isReady = true
-                onValueChanged: {
-                    if (isReady) {
-                        programSpinner.value = value
-                        filter.set('program', value)
-                    }
-                }
-            }
-            SpinBox {
-                id: programSpinner
-                Layout.minimumWidth: 100
-                value: filter.get('program') * 1
-                minimumValue: -50.0
-                maximumValue: -10.0
-                decimals: 1
-                suffix: ' LUFS'
-                onValueChanged: programSlider.value = value
-            }
-            UndoButton {
-                onClicked: programSlider.value = -23.0
             }
         }
 

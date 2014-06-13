@@ -26,77 +26,45 @@ Rectangle {
     height: 200
     color: 'transparent'
 
-    ColumnLayout {
+    GridLayout {
+        columns: 3
         anchors.fill: parent
         anchors.margins: 8
 
-        RowLayout {
-            spacing: 8
-    
-            Label { text: qsTr('Radius') }
-            Slider {
-                id: radiusSlider
-                Layout.fillWidth: true
-                Layout.minimumWidth: 100
-                value: filter.get('radius') * 100
-                minimumValue: 0
-                maximumValue: 2000
-                property bool isReady: false
-                Component.onCompleted: isReady = true
-                onValueChanged: {
-                    if (isReady) {
-                        radiusSpinner.value = value / 100
-                        filter.set('radius', value / 100)
-                    }
-                }
-            }
-            SpinBox {
-                id: radiusSpinner
-                Layout.minimumWidth: 70
-                value: filter.get('radius') * 1
-                decimals: 2
-                stepSize: 0.1
-                minimumValue: 0
-                maximumValue: 20
-                onValueChanged: radiusSlider.value = value * 100
-            }
-            UndoButton {
-                onClicked: radiusSlider.value = 300
-            }
+        Label {
+            text: qsTr('Radius')
+            Layout.alignment: Qt.AlignRight
         }
-        RowLayout {
-            spacing: 8
-    
-            Label { text: qsTr('Blurriness') }
-            Slider {
-                id: mixSlider
-                Layout.fillWidth: true
-                Layout.minimumWidth: 100
-                value: filter.get('mix') * 100
-                minimumValue: 0
-                maximumValue: 100
-                property bool isReady: false
-                Component.onCompleted: isReady = true
-                onValueChanged: {
-                    if (isReady) {
-                        mixSpinner.value = value
-                        filter.set('mix', value / 100)
-                    }
-                }
-            }
-            SpinBox {
-                id: mixSpinner
-                Layout.minimumWidth: 70
-                suffix: ' %'
-                value: filter.get('mix') * 100
-                minimumValue: 0
-                maximumValue: 100
-                onValueChanged: mixSlider.value = value
-            }
-            UndoButton {
-                onClicked: mixSlider.value = 30
-            }
+        SliderSpinner {
+            id: radiusSlider
+            minimumValue: 0
+            maximumValue: 2000
+            ratio: 100
+            decimals: 2
+            stepSize: 0.1
+            value: filter.get('radius') * 100
+            onValueChanged: filter.set('radius', value / 100)
         }
+        UndoButton {
+            onClicked: radiusSlider.value = 300
+        }
+
+        Label {
+            text: qsTr('Blurriness')
+            Layout.alignment: Qt.AlignRight
+        }
+        SliderSpinner {
+            id: mixSlider
+            minimumValue: 0
+            maximumValue: 100
+            suffix: ' %'
+            value: filter.get('mix') * 100
+            onValueChanged: filter.set('mix', value / 100)
+        }
+        UndoButton {
+            onClicked: mixSlider.value = 30
+        }
+
         Item {
             Layout.fillHeight: true;
         }

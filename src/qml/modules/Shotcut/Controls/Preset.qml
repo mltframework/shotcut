@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2014 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,6 @@ import QtQuick.Layouts 1.0
 import QtQuick.Window 2.1
 
 RowLayout {
-    spacing: 8
     property var parameters: []
 
     // Tell the parent QML page to update its controls.
@@ -36,7 +35,6 @@ RowLayout {
         filter.loadPresets()
     }
 
-    Label { text: qsTr('Preset') }
     ComboBox {
         id: presetCombo
         Layout.fillWidth: true
@@ -50,12 +48,20 @@ RowLayout {
     }
     Button {
         id: saveButton
-        text: qsTr('Save')
+        iconName: 'list-add'
+        iconSource: 'qrc:///icons/oxygen/16x16/actions/list-add.png'
+        tooltip: qsTr('Save')
+        implicitWidth: 20
+        implicitHeight: 20
         onClicked: nameDialog.visible = true
     }
     Button {
         id: deleteButton
-        text: qsTr('Delete')
+        iconName: 'list-remove'
+        iconSource: 'qrc:///icons/oxygen/16x16/actions/list-remove.png'
+        tooltip: qsTr('Delete')
+        implicitWidth: 20
+        implicitHeight: 20
         onClicked: confirmDialog.visible = true
     }
 

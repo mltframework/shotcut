@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2014 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -28,10 +28,8 @@ Rectangle {
     Component.onCompleted: {
         if (filter.isNew) {
             // Set default parameter values
-            slider.value = 500
-        } else {
-            // Initialize parameter values
-            slider.value = filter.get('start') * slider.maximumValue
+            filter.set('start', 0.5)
+            slider.value = filter.get('start') * 1000
         }
     }
 
@@ -40,28 +38,16 @@ Rectangle {
         anchors.margins: 8
 
         RowLayout {
-            spacing: 8
-    
             Label { text: qsTr('Left') }
-            Slider {
+            SliderSpinner {
                 id: slider
-                Layout.fillWidth: true
-                Layout.minimumWidth: 100
                 minimumValue: 0
                 maximumValue: 1000
-                onValueChanged: {
-                    spinner.value = value / maximumValue
-                    filter.set('start', value / maximumValue)
-                }
-            }
-            Label { text: qsTr('Right') }
-            SpinBox {
-                id: spinner
-                Layout.minimumWidth: 70
+                ratio: 1000
                 decimals: 2
-                minimumValue: 0
-                maximumValue: 1
-                onValueChanged: slider.value = value * slider.maximumValue
+                label: qsTr('Right')
+                value: filter.get('start') * maximumValue
+                onValueChanged: filter.set('start', value / maximumValue)
             }
             UndoButton {
                 onClicked: slider.value = 500

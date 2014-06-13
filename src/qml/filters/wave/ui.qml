@@ -35,11 +35,17 @@ Rectangle {
         }
     }
 
-    ColumnLayout {
+    GridLayout {
+        columns: 3
         anchors.fill: parent
         anchors.margins: 8
 
+        Label {
+            text: qsTr('Preset')
+            Layout.alignment: Qt.AlignRight
+        }
         Preset {
+            Layout.columnSpan: 2
             parameters: ['wave', 'speed', 'deformX', 'deformX']
             onPresetSelected: {
                 waveSlider.value = filter.get('wave')
@@ -48,73 +54,42 @@ Rectangle {
                 deformYCheckBox.checked = filter.get('deformY') === '1'
             }
         }
-        RowLayout {
-            spacing: 8
-    
-            Label { text: qsTr('Amplitude') }
-            Slider {
-                id: waveSlider
-                Layout.fillWidth: true
-                Layout.minimumWidth: 100
-                value: filter.get('wave')
-                minimumValue: 1
-                maximumValue: 500
-                property bool isReady: false
-                Component.onCompleted: isReady = true
-                onValueChanged: {
-                    if (isReady) {
-                        waveSpinner.value = value
-                        filter.set('wave', value)
-                    }
-                }
-            }
-            SpinBox {
-                id: waveSpinner
-                Layout.minimumWidth: 70
-                value: filter.get('wave')
-                minimumValue: 1
-                maximumValue: 500
-                onValueChanged: waveSlider.value = value
-            }
-            UndoButton {
-                onClicked: waveSlider.value = 10
-            }
+
+        Label {
+            text: qsTr('Amplitude')
+            Layout.alignment: Qt.AlignRight
         }
-        RowLayout {
-            spacing: 8
-    
-            Label { text: qsTr('Speed') }
-            Slider {
-                id: speedSlider
-                Layout.fillWidth: true
-                Layout.minimumWidth: 100
-                value: filter.get('speed')
-                minimumValue: 0
-                maximumValue: 1000
-                property bool isReady: false
-                Component.onCompleted: isReady = true
-                onValueChanged: {
-                    if (isReady) {
-                        speedSpinner.value = value
-                        filter.set('speed', value)
-                    }
-                }
-            }
-            SpinBox {
-                id: speedSpinner
-                Layout.minimumWidth: 70
-                value: filter.get('speed')
-                minimumValue: 0
-                maximumValue: 1000
-                onValueChanged: speedSlider.value = value
-            }
-            UndoButton {
-                onClicked: speedSlider.value = 5
-            }
+        SliderSpinner {
+            id: waveSlider
+            minimumValue: 1
+            maximumValue: 500
+            value: filter.get('wave')
+            onValueChanged: filter.set('wave', value)
         }
+        UndoButton {
+            onClicked: waveSlider.value = 10
+        }
+
+        Label {
+            text: qsTr('Speed')
+            Layout.alignment: Qt.AlignRight
+        }
+        SliderSpinner {
+            id: speedSlider
+            minimumValue: 0
+            maximumValue: 1000
+            value: filter.get('speed')
+            onValueChanged: filter.set('speed', value)
+        }
+        UndoButton {
+            onClicked: speedSlider.value = 5
+        }
+
+        Label {}
         CheckBox {
             id: deformXCheckBox
             text: qsTr('Deform horizontally?')
+            Layout.columnSpan: 2
             checked: filter.get('deformX') === '1'
             property bool isReady: false
             Component.onCompleted: isReady = true
@@ -123,9 +98,12 @@ Rectangle {
                     filter.set('deformX', checked)
             }
         }
+
+        Label {}
         CheckBox {
             id: deformYCheckBox
             text: qsTr('Deform vertically?')
+            Layout.columnSpan: 2
             checked: filter.get('deformY') === '1'
             property bool isReady: false
             Component.onCompleted: isReady = true
@@ -134,8 +112,9 @@ Rectangle {
                     filter.set('deformY', checked)
             }
         }
+
         Item {
-            Layout.fillHeight: true;
+            Layout.fillHeight: true
         }
     }
 }

@@ -33,58 +33,45 @@ Rectangle {
             // Set default parameter values
             filter.set(paramBlur, 50.0 / 100.0)
             filter.savePreset(defaultParameters)
+            bslider.value = filter.get(paramBlur) * 100.0
         }
-        bslider.value = filter.get(paramBlur) * 100.0
-        bspinner.value = filter.get(paramBlur) * 100.0
     }
 
-    ColumnLayout {
+    GridLayout {
+        columns: 3
         anchors.fill: parent
         anchors.margins: 8
-        
+
+        Label {
+            text: qsTr('Preset')
+            Layout.alignment: Qt.AlignRight
+        }
         Preset {
+            Layout.columnSpan: 2
             parameters: defaultParameters
             onPresetSelected: {
                 bslider.value = filter.get(paramBlur) * 100.0
             }
         }
 
-        RowLayout {
-            spacing: 8
-            Label { text: qsTr('Blur') }
-            Slider {
-                id: bslider
-                Layout.fillWidth: true
-                Layout.minimumWidth: 100
-                value: filter.get(paramBlur) * 100.0
-                minimumValue: 0
-                maximumValue: 100
-                property bool isReady: false
-                Component.onCompleted: isReady = true
-                onValueChanged: {
-                    if (isReady) {
-                        bspinner.value = value
-                        filter.set(paramBlur, value / 100.0)
-                    }
-                }
-            }
-            SpinBox {
-                id: bspinner
-                Layout.minimumWidth: 80
-                value: filter.get(paramBlur) * 100.0
-                suffix: ' %'
-                minimumValue: 0
-                maximumValue: 100
-                decimals: 0
-                onValueChanged: bslider.value = value
-            }
-            UndoButton {
-                onClicked: bslider.value = 50
-            }
+        Label {
+            text: qsTr('Blur')
+            Layout.alignment: Qt.AlignRight
         }
-        
+        SliderSpinner {
+            id: bslider
+            minimumValue: 0
+            maximumValue: 100
+            suffix: ' %'
+            value: filter.get(paramBlur) * 100.0
+            onValueChanged: filter.set(paramBlur, value / 100.0)
+        }
+        UndoButton {
+            onClicked: bslider.value = 50
+        }
+
         Item {
-            Layout.fillHeight: true;
+            Layout.fillHeight: true
         }
     }
 }

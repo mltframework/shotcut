@@ -26,11 +26,17 @@ Rectangle {
     height: 200
     color: 'transparent'
 
-    ColumnLayout {
+    GridLayout {
+        columns: 3
         anchors.fill: parent
         anchors.margins: 8
 
+        Label{
+            text: qsTr('Preset')
+            Layout.alignment: Qt.AlignRight
+        }
         Preset {
+            Layout.columnSpan: 2
             parameters: ['radius', 'smooth', 'opacity', 'mode']
             onPresetSelected: {
                 radiusSlider.value = filter.get('radius') * 100
@@ -40,108 +46,43 @@ Rectangle {
             }
         }
 
-        RowLayout {
-            spacing: 8
-    
-            Label { text: qsTr('Radius') }
-            Slider {
-                id: radiusSlider
-                Layout.fillWidth: true
-                Layout.minimumWidth: 100
-                value: filter.get('radius') * 100
-                minimumValue: 0
-                maximumValue: 100
-                property bool isReady: false
-                Component.onCompleted: isReady = true
-                onValueChanged: {
-                    if (isReady) {
-                        radiusSpinner.value = value
-                        filter.set('radius', value / 100)
-                    }
-                }
-            }
-            SpinBox {
-                id: radiusSpinner
-                Layout.minimumWidth: 70
-                suffix: ' %'
-                value: filter.get('radius') * 100
-                minimumValue: 0
-                maximumValue: 100
-                onValueChanged: radiusSlider.value = value
-            }
-            UndoButton {
-                onClicked: radiusSlider.value = 50
-            }
+        Label {
+            text: qsTr('Radius')
+            Layout.alignment: Qt.AlignRight
         }
-        RowLayout {
-            spacing: 8
-    
-            Label { text: qsTr('Feathering') }
-            Slider {
-                id: smoothSlider
-                Layout.fillWidth: true
-                Layout.minimumWidth: 100
-                value: filter.get('smooth') * 100
-                minimumValue: 0
-                maximumValue: 500
-                property bool isReady: false
-                Component.onCompleted: isReady = true
-                onValueChanged: {
-                    if (isReady) {
-                        smoothSpinner.value = value
-                        filter.set('smooth', value / 100)
-                    }
-                }
-            }
-            SpinBox {
-                id: smoothSpinner
-                Layout.minimumWidth: 70
-                suffix: ' %'
-                value: filter.get('smooth') * 100
-                minimumValue: 0
-                maximumValue: 500
-                onValueChanged: smoothSlider.value = value
-            }
-            UndoButton {
-                onClicked: smoothSlider.value = 80
-            }
+        SliderSpinner {
+            id: radiusSlider
+            minimumValue: 0
+            maximumValue: 100
+            suffix: ' %'
+            value: filter.get('radius') * 100
+            onValueChanged: filter.set('radius', value / 100)
         }
-        RowLayout {
-            spacing: 8
-    
-            Label { text: qsTr('Opacity') }
-            Slider {
-                id: opacitySlider
-                Layout.fillWidth: true
-                Layout.minimumWidth: 100
-                value: (1.0 - filter.get('opacity')) * 100
-                minimumValue: 0
-                maximumValue: 100
-                property bool isReady: false
-                Component.onCompleted: isReady = true
-                onValueChanged: {
-                    if (isReady) {
-                        opacitySpinner.value = value
-                        filter.set('opacity', 1.0 - value / 100)
-                    }
-                }
-            }
-            SpinBox {
-                id: opacitySpinner
-                Layout.minimumWidth: 70
-                suffix: ' %'
-                value: (1.0 - filter.get('opacity')) * 100
-                minimumValue: 0
-                maximumValue: 100
-                onValueChanged: opacitySlider.value = value
-            }
-            UndoButton {
-                onClicked: opacitySlider.value = 100
-            }
+        UndoButton {
+            onClicked: radiusSlider.value = 50
         }
+
+        Label {
+            text: qsTr('Feathering')
+            Layout.alignment: Qt.AlignRight
+        }
+        SliderSpinner {
+            id: smoothSlider
+            minimumValue: 0
+            maximumValue: 500
+            suffix: ' %'
+            value: filter.get('smooth') * 100
+            onValueChanged: filter.set('smooth', value / 100)
+        }
+        UndoButton {
+            onClicked: smoothSlider.value = 80
+        }
+
+        Label {}
         CheckBox {
             id: modeCheckBox
-            text: qsTr('Non-linear Feathering')
+            text: qsTr('Non-linear feathering')
+            Layout.columnSpan: 2
             checked: filter.get('mode') === '1'
             property bool isReady: false
             Component.onCompleted: isReady = true
@@ -150,8 +91,25 @@ Rectangle {
                     filter.set('mode', checked)
             }
         }
+
+        Label {
+            text: qsTr('Opacity')
+            Layout.alignment: Qt.AlignRight
+        }
+        SliderSpinner {
+            id: opacitySlider
+            minimumValue: 0
+            maximumValue: 100
+            suffix: ' %'
+            value: (1.0 - filter.get('opacity')) * 100
+            onValueChanged: filter.set('opacity', 1.0 - value / 100)
+        }
+        UndoButton {
+            onClicked: opacitySlider.value = 100
+        }
+
         Item {
-            Layout.fillHeight: true;
+            Layout.fillHeight: true
         }
     }
 }

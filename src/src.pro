@@ -288,7 +288,8 @@ OTHER_FILES += \
     qml/filters/webvfx/ui.qml \
     qml/filters/white/meta_frei0r.qml \
     qml/filters/white/meta_movit.qml \
-    qml/filters/white/ui.qml
+    qml/filters/white/ui.qml \
+    qml/modules/Shotcut/Controls/SliderSpinner.qml
 
 lupdate_hack {
     SOURCES += \

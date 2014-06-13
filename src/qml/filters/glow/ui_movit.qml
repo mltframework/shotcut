@@ -34,22 +34,23 @@ Rectangle {
             filter.set('blur_mix', 1.0)
             filter.set('highlight_cutoff', 0.2)
             filter.savePreset(defaultParameters)
+            radiusslider.value = filter.get("radius")
+            blurslider.value = filter.get("blur_mix")
+            cutoffslider.value = filter.get("highlight_cutoff")
         }
-        radiusslider.value = filter.get("radius")
-        radiusspinner.value = filter.get("radius")
-        blurslider.value = filter.get("blur_mix")
-        blurspinner.value = filter.get("blur_mix")
-        cutoffslider.value = filter.get("highlight_cutoff")
-        cutoffspinner.value = filter.get("highlight_cutoff")
     }
 
     GridLayout {
-        columns: 4
+        columns: 3
         anchors.fill: parent
         anchors.margins: 8
         
+        Label {
+            text: qsTr('Preset')
+            Layout.alignment: Qt.AlignRight
+        }
         Preset {
-            Layout.columnSpan: 4
+            Layout.columnSpan: 2
             parameters: defaultParameters
             onPresetSelected: {
                 radiusslider.value = filter.get("radius")
@@ -59,102 +60,58 @@ Rectangle {
         }
 
         // Row 1
-        Label { text: qsTr('Radius') }
-        Slider {
-            id: radiusslider
-            Layout.fillWidth: true
-            Layout.minimumWidth: 100
-            value: filter.get("radius")
-            minimumValue: 0
-            maximumValue: 100
-            property bool isReady: false
-            Component.onCompleted: isReady = true
-            onValueChanged: {
-                if (isReady) {
-                    radiusspinner.value = value
-                    filter.set("radius", value)
-                }
-            }
+        Label {
+            text: qsTr('Radius')
+            Layout.alignment: Qt.AlignRight
         }
-        SpinBox {
-            id: radiusspinner
-            Layout.minimumWidth: 80
+        SliderSpinner {
+            id: radiusslider
             minimumValue: 0
             maximumValue: 100
             decimals: 1
-            stepSize: 0.1
-            onValueChanged: radiusslider.value = value
+            value: filter.get("radius")
+            onValueChanged: filter.set("radius", value)
         }
         UndoButton {
             onClicked: radiusslider.value = 20
         }
-        
 
         // Row 2
-        Label { text: qsTr('Highlight Blurriness') }
-        Slider {
-            id: blurslider
-            Layout.fillWidth: true
-            Layout.minimumWidth: 100
-            value: filter.get("blur_mix")
-            minimumValue: 0.0
-            maximumValue: 1.0
-            property bool isReady: false
-            Component.onCompleted: isReady = true
-            onValueChanged: {
-                if (isReady) {
-                    blurspinner.value = value
-                    filter.set("blur_mix", value)
-                }
-            }
+        Label { 
+            text: qsTr('Highlight blurriness')
+            Layout.alignment: Qt.AlignRight
         }
-        SpinBox {
-            id: blurspinner
-            Layout.minimumWidth: 80
+        SliderSpinner {
+            id: blurslider
             minimumValue: 0.0
             maximumValue: 1.0
             decimals: 2
-            stepSize: 0.01
-            onValueChanged: blurslider.value = value
+            value: filter.get("blur_mix")
+            onValueChanged: filter.set("blur_mix", value)
         }
         UndoButton {
             onClicked: blurslider.value = 1.0
         }
 
         // Row 3
-        Label { text: qsTr('Highlight Cutoff') }
-        Slider {
+        Label {
+            text: qsTr('Highlight butoff')
+            Layout.alignment: Qt.AlignRight
+        }
+        SliderSpinner {
             id: cutoffslider
-            Layout.fillWidth: true
-            Layout.minimumWidth: 100
-            value: filter.get("highlight_cutoff")
             minimumValue: 0.1
             maximumValue: 1.0
-            property bool isReady: false
-            Component.onCompleted: isReady = true
-            onValueChanged: {
-                if (isReady) {
-                    cutoffspinner.value = value
-                    filter.set("highlight_cutoff", value)
-                }
-            }
-        }
-        SpinBox {
-            id: cutoffspinner
-            Layout.minimumWidth: 80
-            minimumValue: 0.0
-            maximumValue: 1.0
             decimals: 2
-            stepSize: 0.01
-            onValueChanged: cutoffslider.value = value
+            value: filter.get("highlight_cutoff")
+            onValueChanged: filter.set("highlight_cutoff", value)
         }
         UndoButton {
             onClicked: cutoffslider.value = 0.2
         }
 
         Item {
-            Layout.fillHeight: true;
-            Layout.columnSpan: 4
+            Layout.fillHeight: true
         }
     }
 }

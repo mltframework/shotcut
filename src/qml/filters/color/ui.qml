@@ -63,12 +63,16 @@ Rectangle {
 
     GridLayout {
         columns: 6
-        columnSpacing: 20
         anchors.fill: parent
+        anchors.margins: 8
 
         // Row 1
+        Label {
+            text: qsTr('Preset')
+            Layout.alignment: Qt.AlignRight
+        }
         Preset {
-            Layout.columnSpan: 6
+            Layout.columnSpan: 5
             parameters: defaultParameters
             onPresetSelected: {
                 loadWheels()
@@ -135,5 +139,7 @@ Rectangle {
                 filter.set("gain_b", (gainwheel.blue / 255.0) * gainFactor);
             }
         }
+
+        Item { Layout.fillHeight: true }
     }
 }

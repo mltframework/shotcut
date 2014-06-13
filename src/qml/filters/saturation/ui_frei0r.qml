@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2014 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -30,53 +30,46 @@ Rectangle {
     Component.onCompleted: {
         if (filter.isNew) {
             // Set default parameter values
-            slider.value = 100
-        } else {
-            // Initialize parameter values
+            filter.set(saturationParameter, 100 / frei0rMaximum)
             slider.value = filter.get(saturationParameter) * frei0rMaximum
         }
     }
 
-    ColumnLayout {
+    GridLayout {
+        columns: 3
         anchors.fill: parent
         anchors.margins: 8
 
+        Label {
+            text: qsTr('Preset')
+            Layout.alignment: Qt.AlignRight
+        }
         Preset {
+            Layout.columnSpan: 2
             parameters: [saturationParameter]
             onPresetSelected: {
                 slider.value = filter.get(saturationParameter) * frei0rMaximum
             }
         }
 
-        RowLayout {
-            spacing: 8
-    
-            Label { text: qsTr('Saturation') }
-            Slider {
-                id: slider
-                Layout.fillWidth: true
-                Layout.minimumWidth: 100
-                minimumValue: 0
-                maximumValue: 300
-                onValueChanged: {
-                    spinner.value = value
-                    filter.set(saturationParameter, value / frei0rMaximum)
-                }
-            }
-            SpinBox {
-                id: spinner
-                Layout.minimumWidth: 70
-                suffix: ' %'
-                minimumValue: 0
-                maximumValue: 300
-                onValueChanged: slider.value = value
-            }
-            UndoButton {
-                onClicked: slider.value = 100
-            }
+        Label {
+            text: qsTr('Saturation')
+            Layout.alignment: Qt.AlignRight
         }
+        SliderSpinner {
+            id: slider
+            minimumValue: 0
+            maximumValue: 300
+            suffix: ' %'
+            value: filter.get(saturationParameter) * frei0rMaximum
+            onValueChanged: filter.set(saturationParameter, value / frei0rMaximum)
+        }
+        UndoButton {
+            onClicked: slider.value = 100
+        }
+
         Item {
-            Layout.fillHeight: true;
+            Layout.fillHeight: true
         }
     }
 }

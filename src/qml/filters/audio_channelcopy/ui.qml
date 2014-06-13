@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2014 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -41,7 +41,6 @@ Rectangle {
         anchors.margins: 8
 
         RowLayout {
-            spacing: 8
             Label { text: qsTr('Copy from') }
             ComboBox {
                 id: combo

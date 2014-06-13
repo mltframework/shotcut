@@ -1515,8 +1515,8 @@ void MainWindow::changeTheme(const QString &theme)
         QPalette palette;
         palette.setColor(QPalette::Window, QColor(50,50,50));
         palette.setColor(QPalette::WindowText, QColor(220,220,220));
-        palette.setColor(QPalette::Base, QColor(35,35,35));
-        palette.setColor(QPalette::AlternateBase, QColor(31,31,31));
+        palette.setColor(QPalette::Base, QColor(30,30,30));
+        palette.setColor(QPalette::AlternateBase, QColor(40,40,40));
         palette.setColor(QPalette::Highlight, QColor(23,92,118));
         palette.setColor(QPalette::HighlightedText, Qt::white);
         palette.setColor(QPalette::ToolTipBase, palette.color(QPalette::Highlight));

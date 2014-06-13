@@ -26,11 +26,17 @@ Rectangle {
     height: 200
     color: 'transparent'
 
-    ColumnLayout {
+    GridLayout {
+        columns: 3
         anchors.fill: parent
         anchors.margins: 8
 
+        Label {
+            text: qsTr('Preset')
+            Layout.alignment: Qt.AlignRight
+        }
         Preset {
+            Layout.columnSpan: 2
             parameters: ['radius', 'inner_radius']
             onPresetSelected: {
                 radiusSlider.value = filter.get('radius') * 100
@@ -38,74 +44,40 @@ Rectangle {
             }
         }
 
-        RowLayout {
-            spacing: 8
-    
-            Label { text: qsTr('Outer Radius') }
-            Slider {
-                id: radiusSlider
-                Layout.fillWidth: true
-                Layout.minimumWidth: 100
-                value: filter.get('radius') * 100
-                minimumValue: 0
-                maximumValue: 100
-                property bool isReady: false
-                Component.onCompleted: isReady = true
-                onValueChanged: {
-                    if (isReady) {
-                        radiusSpinner.value = value
-                        filter.set('radius', value / 100)
-                    }
-                }
-            }
-            SpinBox {
-                id: radiusSpinner
-                Layout.minimumWidth: 70
-                suffix: ' %'
-                value: filter.get('radius') * 100
-                minimumValue: 0
-                maximumValue: 100
-                onValueChanged: radiusSlider.value = value
-            }
-            UndoButton {
-                onClicked: radiusSlider.value = 30
-            }
+        Label {
+            text: qsTr('Outer radius')
+            Layout.alignment: Qt.AlignRight
         }
-        RowLayout {
-            spacing: 8
-    
-            Label { text: qsTr('Inner Radius') }
-            Slider {
-                id: innerSlider
-                Layout.fillWidth: true
-                Layout.minimumWidth: 100
-                value: filter.get('inner_radius') * 100
-                minimumValue: 0
-                maximumValue: 100
-                property bool isReady: false
-                Component.onCompleted: isReady = true
-                onValueChanged: {
-                    if (isReady) {
-                        innerSpinner.value = value
-                        filter.set('inner_radius', value / 100)
-                    }
-                }
-            }
-            SpinBox {
-                id: innerSpinner
-                Layout.minimumWidth: 70
-                suffix: ' %'
-                value: filter.get('inner_radius') * 100
-                minimumValue: 0
-                maximumValue: 100
-                onValueChanged: innerSlider.value = value
-            }
-            UndoButton {
-                onClicked: innerSlider.value = 30
-            }
+        SliderSpinner {
+            id: radiusSlider
+            minimumValue: 0
+            maximumValue: 100
+            suffix: ' %'
+            value: filter.get('radius') * 100
+            onValueChanged: filter.set('radius', value / 100)
         }
+        UndoButton {
+            onClicked: radiusSlider.value = 30
+        }
+
+        Label {
+            text: qsTr('Inner radius')
+            Layout.alignment: Qt.AlignRight
+        }
+        SliderSpinner {
+            id: innerSlider
+            minimumValue: 0
+            maximumValue: 100
+            suffix: ' %'
+            value: filter.get('inner_radius') * 100
+            onValueChanged: filter.set('inner_radius', value / 100)
+        }
+        UndoButton {
+            onClicked: innerSlider.value = 30
+        }
+
         Item {
-            Layout.fillHeight: true;
+            Layout.fillHeight: true
         }
     }
 }

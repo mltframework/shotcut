@@ -26,7 +26,6 @@ import Shotcut.Controls 1.0
 RowLayout {
     property color value: "white"
     property bool alpha: false
-    spacing: 8
     
     signal pickStarted
     
@@ -42,13 +41,13 @@ RowLayout {
     
     Button {
         id: colorButton
-        Layout.fillWidth: true
-        implicitHeight: 18
+        implicitWidth: 20
+        implicitHeight: 20
         style: ButtonStyle {
             background: Rectangle {
                 border.width: 1
-                border.color: activePalette.shadow
-                radius: 4
+                border.color: 'gray'
+                radius: 3
                 color: value
             }
         }

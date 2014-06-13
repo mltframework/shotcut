@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2014 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -29,9 +29,7 @@ Rectangle {
     Component.onCompleted: {
         if (filter.isNew) {
             // Set default parameter values
-            slider.value = 100
-        } else {
-            // Initialize parameter values
+            filter.set(gainParameter, 1.0)
             slider.value = filter.get(gainParameter) * 100
         }
     }
@@ -41,27 +39,16 @@ Rectangle {
         anchors.margins: 8
 
         RowLayout {
-            spacing: 8
             Label { text: qsTr('Gain') }
-            Slider {
+            SliderSpinner {
                 id: slider
-                Layout.fillWidth: true
-                Layout.minimumWidth: 100
                 minimumValue: 0
                 maximumValue: 300
-                onValueChanged: {
-                    spinner.value = value
-                    filter.set(gainParameter, value / 100)
-                }
-            }
-            SpinBox {
-                id: spinner
-                Layout.minimumWidth: 80
                 suffix: ' %'
-                minimumValue: 0
-                maximumValue: 300
                 decimals: 1
-                onValueChanged: slider.value = value
+                spinnerWidth: 80
+                value: filter.get(gainParameter) * 100
+                onValueChanged:filter.set(gainParameter, value / 100)
             }
             UndoButton {
                 onClicked: slider.value = 100

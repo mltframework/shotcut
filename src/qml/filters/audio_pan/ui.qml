@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2014 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -29,55 +29,45 @@ Rectangle {
         if (filter.isNew) {
             // Set default parameter values
             combo.currentIndex = 0
+            filter.set('start', 0)
             slider.value = 0
-        } else {
-            // Initialize parameter values
-            combo.currentIndex = filter.get('channel') * 1
-            slider.value = filter.get('start') * slider.maximumValue
         }
     }
 
-    ColumnLayout {
+    GridLayout {
+        columns: 3
         anchors.fill: parent
         anchors.margins: 8
 
-        RowLayout {
-            spacing: 8
-            Label { text: qsTr('Channel') }
-            ComboBox {
-                id: combo
-                model: [qsTr('Left'), qsTr('Right')]
-                onCurrentIndexChanged: filter.set('channel', currentIndex)
-            }
+        Label {
+            text: qsTr('Channel')
+            Layout.alignment: Qt.AlignRight
         }
-        RowLayout {
-            spacing: 8
-    
-            Label { text: qsTr('Left') }
-            Slider {
-                id: slider
-                Layout.fillWidth: true
-                Layout.minimumWidth: 100
-                minimumValue: 0
-                maximumValue: 1000
-                onValueChanged: {
-                    spinner.value = value / maximumValue
-                    filter.set('start', value / maximumValue)
-                }
-            }
-            Label { text: qsTr('Right') }
-            SpinBox {
-                id: spinner
-                Layout.minimumWidth: 70
-                decimals: 2
-                minimumValue: 0
-                maximumValue: 1
-                onValueChanged: slider.value = value * slider.maximumValue
-            }
-            UndoButton {
-                onClicked: slider.value = 0
-            }
+        ComboBox {
+            id: combo
+            Layout.columnSpan: 2
+            model: [qsTr('Left'), qsTr('Right')]
+            onCurrentIndexChanged: filter.set('channel', currentIndex)
         }
+
+        Label {
+            text: qsTr('Left')
+            Layout.alignment: Qt.AlignRight
+        }
+        SliderSpinner {
+            id: slider
+            minimumValue: 0
+            maximumValue: 1000
+            label: qsTr('Right')
+            ratio: maximumValue
+            decimals: 2
+            value: filter.get('start') * maximumValue
+            onValueChanged: filter.set('start', value / maximumValue)
+        }
+        UndoButton {
+            onClicked: slider.value = 0
+        }
+
         Item {
             Layout.fillHeight: true;
         }

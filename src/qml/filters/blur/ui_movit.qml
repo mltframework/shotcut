@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2014 Meltytech, LLC
  * Author: Brian Matherly <pez4brian@yahoo.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -31,33 +31,14 @@ Rectangle {
         anchors.margins: 8
 
         RowLayout {
-            spacing: 8
-            
             Label { text: qsTr('Radius') }
-            Slider {
+            SliderSpinner {
                 id: slider
-                Layout.fillWidth: true
-                value: filter.get('radius')
-                Layout.minimumWidth: 100
                 minimumValue: 0
                 maximumValue: 99.99
-                property bool isReady: false
-                Component.onCompleted: isReady = true
-                onValueChanged: {
-                    if (isReady) {
-                        spinner.value = value
-                        filter.set('radius', value)
-                    }
-                }
-            }
-            SpinBox {
-                id: spinner
-                Layout.minimumWidth: 80
                 value: filter.get('radius')
-                minimumValue: 0
-                maximumValue: 99.99
                 decimals: 2
-                onValueChanged: slider.value = value
+                onValueChanged: filter.set('radius', value)
             }
             UndoButton {
                 onClicked: slider.value = 3.0

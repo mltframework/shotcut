@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2014 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -37,7 +37,7 @@ Rectangle {
         }
         else
         {
-            status.text = qsTr('Click "Analyze" to use this filter.')
+            status.text = qsTr('Click Analyze to use this filter.')
         }
     }
 
@@ -88,135 +88,90 @@ Rectangle {
         }
     }
 
-    ColumnLayout {
+    GridLayout {
+        columns: 3
         anchors.fill: parent
         anchors.margins: 8
 
-        Label { text: qsTr('<b>Analyze Options</b>') }
-
-        RowLayout {
-            spacing: 8
-            Label { text: qsTr('Shakiness') }
-            Slider {
-                id: shakinessSlider
-                Layout.fillWidth: true
-                Layout.minimumWidth: 100
-                value: filter.get('shakiness') * 1
-                minimumValue: 1
-                maximumValue: 10
-                tickmarksEnabled: true
-                stepSize: 1
-                property bool isReady: false
-                Component.onCompleted: isReady = true
-                onValueChanged: {
-                    if (isReady) {
-                        shakinessSpinner.value = value
-                        filter.set('shakiness', value)
-                    }
-                }
-            }
-            SpinBox {
-                id: shakinessSpinner
-                Layout.minimumWidth: 60
-                value: filter.get('shakiness') * 1
-                minimumValue: 1
-                maximumValue: 10
-                decimals: 0
-                onValueChanged: shakinessSlider.value = value
-            }
-            UndoButton {
-                onClicked: shakinessSlider.value = 4
-            }
+        Label {
+            text: qsTr('<b>Analyze Options</b>')
+            Layout.columnSpan: 3
         }
 
-        RowLayout {
-            spacing: 8
-            Label { text: qsTr('Accuracy') }
-            Slider {
-                id: accuracySlider
-                Layout.fillWidth: true
-                Layout.minimumWidth: 100
-                value: filter.get('accuracy') * 1
-                minimumValue: 1
-                maximumValue: 15
-                tickmarksEnabled: true
-                stepSize: 1
-                property bool isReady: false
-                Component.onCompleted: isReady = true
-                onValueChanged: {
-                    if (isReady) {
-                        accuracySpinner.value = value
-                        filter.set('accuracy', value)
-                    }
-                }
-            }
-            SpinBox {
-                id: accuracySpinner
-                Layout.minimumWidth: 60
-                value: filter.get('accuracy') * 1
-                minimumValue: 1
-                maximumValue: 15
-                decimals: 0
-                onValueChanged: accuracySlider.value = value
-            }
-            UndoButton {
-                onClicked: accuracySlider.value = 4
-            }
+        Label {
+            text: qsTr('Shakiness')
+            Layout.alignment: Qt.AlignRight
+        }
+        SliderSpinner {
+            id: shakinessSlider
+            minimumValue: 1
+            maximumValue: 10
+            tickmarksEnabled: true
+            stepSize: 1
+            value: filter.get('shakiness')
+            onValueChanged: filter.set('shakiness', value)
+        }
+        UndoButton {
+            onClicked: shakinessSlider.value = 4
         }
 
-        RowLayout {
-            spacing: 8
-            Button {
-                id: button
-                text: qsTr('Analyze')
-                onClicked: {
-                    button.enabled = false
-                    fileDialog.folder = settings.savePath
-                    fileDialog.open()
-                }
-            }
-            Label {
-                id: status
-                Component.onCompleted: {
-                    setStatus(false)
-                }
-            }
+        Label {
+            text: qsTr('Accuracy')
+            Layout.alignment: Qt.AlignRight
+        }
+        SliderSpinner {
+            id: accuracySlider
+            minimumValue: 1
+            maximumValue: 15
+            tickmarksEnabled: true
+            stepSize: 1
+            value: filter.get('accuracy')
+            onValueChanged: filter.set('accuracy', value)
+        }
+        UndoButton {
+            onClicked: accuracySlider.value = 4
         }
 
-        Label { text: qsTr('<b>Filter Options</b>') }
+        Label {
+            text: qsTr('<b>Filter Options</b>')
+            Layout.columnSpan: 3
+        }
 
-        RowLayout {
-            spacing: 8
-            Label { text: qsTr('Zoom') }
-            Slider {
-                id: zoomSlider
-                Layout.fillWidth: true
-                Layout.minimumWidth: 100
-                value: filter.get('zoom') * 1
-                minimumValue: -50
-                maximumValue: 50
-                property bool isReady: false
-                Component.onCompleted: isReady = true
-                onValueChanged: {
-                    if (isReady) {
-                        zoomSpinner.value = value
-                        filter.set('zoom', value)
-                        filter.set("refresh", 1);
-                    }
-                }
+        Label {
+            text: qsTr('Zoom')
+            Layout.alignment: Qt.AlignRight
+        }
+        SliderSpinner {
+            id: zoomSlider
+            minimumValue: -50
+            maximumValue: 50
+            decimals: 1
+            suffix: ' %'
+            value: filter.get('zoom')
+            onValueChanged: {
+                filter.set('zoom', value)
+                filter.set("refresh", 1);
             }
-            SpinBox {
-                id: zoomSpinner
-                Layout.minimumWidth: 60
-                value: filter.get('zoom') * 1
-                minimumValue: -50
-                maximumValue: 50
-                decimals: 1
-                suffix: ' %'
-                onValueChanged: zoomSlider.value = value
+        }
+        UndoButton {
+            onClicked: zoomSlider.value = 0
+        }
+
+        Button {
+            id: button
+            text: qsTr('Analyze')
+            Layout.alignment: Qt.AlignRight
+            onClicked: {
+                button.enabled = false
+                fileDialog.folder = settings.savePath
+                fileDialog.open()
             }
-            UndoButton {
-                onClicked: zoomSlider.value = 0
+        }
+        Label {
+            id: status
+            Layout.columnSpan: 2
+            Component.onCompleted: {
+                setStatus(false)
             }
         }
 
