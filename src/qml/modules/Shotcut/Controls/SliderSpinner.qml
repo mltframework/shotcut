@@ -19,7 +19,7 @@ RowLayout {
 
     SystemPalette { id: activePalette }
 
-//    onValueChanged: spinner.value = value / ratio
+    onValueChanged: spinner.value = value / ratio
 
     Slider {
         id: slider
@@ -101,7 +101,6 @@ RowLayout {
         minimumValue: slider.minimumValue / ratio
         maximumValue: slider.maximumValue / ratio
         stepSize: 1 / Math.pow(10, decimals)
-        value: parent.value / ratio
         onValueChanged: slider.value = value * ratio
 
         style: SpinBoxStyle {
