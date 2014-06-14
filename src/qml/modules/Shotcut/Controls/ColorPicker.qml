@@ -52,6 +52,7 @@ RowLayout {
             }
         }
         onClicked: colorDialog.visible = true
+        tooltip: qsTr('Click to open color dialog')
     }
     
     ColorDialog {
