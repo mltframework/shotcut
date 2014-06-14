@@ -256,11 +256,7 @@ void QmlFilter::onAnalyzeFinished(MeltJob *job, bool isSuccess)
 {
     QString fileName = job->objectName();
 
-#if !defined(Q_OS_WIN)
-    // Workaround qmelt crashing on Windows at end of vidstab analysis.
-    if (isSuccess)
-#endif
-    {
+    if (isSuccess) {
         // parse the xml
         QFile file(fileName);
         file.open(QIODevice::ReadOnly);
@@ -286,20 +282,8 @@ void QmlFilter::onAnalyzeFinished(MeltJob *job, bool isSuccess)
                 for (int j = 0; j < properties.size(); j++) {
                     QDomNode propertyNode = properties.at(j);
                     if (propertyNode.attributes().namedItem("name").toAttr().value() == "results") {
-                        m_filter->set("results", propertyNode.toElement().text().toUtf8().constData());
+                        m_filter->set("results", propertyNode.toElement().text().toLatin1().constData());
                     }
-#if defined(Q_OS_WIN)
-                    // Workaround for qmelt crashing on Windows at end of vidstab analysis.
-                    // The .stab file contents may still be valid; copy filename to results.
-                    else if (!isSuccess && propertyNode.attributes().namedItem("name").toAttr().value() == "filename") {
-                        if (get("mlt_service") == "vidstab") {
-                            const QString& filePath = propertyNode.toElement().text();
-                            QFileInfo info(filePath);
-                            if (info.size() > 0)
-                                m_filter->set("results", filePath.toUtf8().constData());
-                        }
-                    }
-#endif
                 }
                 break;
             }
