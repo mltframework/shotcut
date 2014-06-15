@@ -64,8 +64,6 @@ private slots:
     
     void on_listView_clicked(const QModelIndex &index);
     
-    void on_actionMirror_triggered();
-    
     void on_listView_doubleClicked(const QModelIndex &index);
 
     void onActionTriggered(QAction* action);
