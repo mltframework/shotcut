@@ -41,7 +41,6 @@ static bool compareQAction(const QAction* a1, const QAction* a2)
 static QActionList getFilters(FiltersDock* dock, Ui::FiltersDock* ui)
 {
     QList<QAction*> actions;
-    actions.append(ui->actionMirror);
 
     // Find all of the plugin filters.
     QQmlEngine engine;
@@ -228,14 +227,6 @@ void FiltersDock::on_listView_clicked(const QModelIndex &index)
             loadWidgetsPanel();
     }
     delete filter;
-}
-
-void FiltersDock::on_actionMirror_triggered()
-{
-    Mlt::Filter* filter = m_model.add(Settings.playerGPU()? "movit.mirror": "mirror:flip");
-    loadWidgetsPanel();
-    delete filter;
-    ui->listView->setCurrentIndex(m_model.index(m_model.rowCount() - 1));
 }
 
 void FiltersDock::on_listView_doubleClicked(const QModelIndex &index)

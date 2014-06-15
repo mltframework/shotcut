@@ -229,6 +229,9 @@ OTHER_FILES += \
     qml/filters/color/ui.qml \
     qml/filters/crop/meta.qml \
     qml/filters/crop/ui.qml \
+    qml/filters/mirror/meta.qml \
+    qml/filters/mirror/meta_movit.qml \
+    qml/filters/mirror/ui.qml \
     qml/filters/rotate/ui.qml \
     qml/filters/rotate/meta.qml \
     qml/filters/stabilize/meta.qml \
@@ -237,6 +240,7 @@ OTHER_FILES += \
     qml/filters/audio_swapchannels/meta.qml \
     qml/filters/audio_swapchannels/ui.qml \
     qml/filters/invert/meta.qml \
+    qml/filters/invert/ui.qml \
     qml/filters/sepia/meta.qml \
     qml/filters/sepia/ui.qml \
     qml/filters/sharpen/meta_frei0r.qml \
@@ -327,6 +331,9 @@ lupdate_hack {
     qml/filters/glow/ui_frei0r.qml \
     qml/filters/glow/meta_movit.qml \
     qml/filters/glow/ui_movit.qml \
+    qml/filters/mirror/meta.qml \
+    qml/filters/mirror/meta_movit.qml \
+    qml/filters/mirror/ui.qml \
     qml/filters/rotate/ui.qml \
     qml/filters/rotate/meta.qml \
     qml/filters/stabilize/meta.qml \
@@ -335,6 +342,7 @@ lupdate_hack {
     qml/filters/audio_swapchannels/meta.qml \
     qml/filters/audio_swapchannels/ui.qml \
     qml/filters/invert/meta.qml \
+    qml/filters/invert/ui.qml \
     qml/filters/sepia/meta.qml \
     qml/filters/sepia/ui.qml \
     qml/filters/sharpen/meta_frei0r.qml \

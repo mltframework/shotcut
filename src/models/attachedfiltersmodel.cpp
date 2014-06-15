@@ -122,9 +122,6 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
                 else if (filter->get("mlt_service"))
                     result = QString::fromUtf8(filter->get("mlt_service"));
             }
-            // Relabel for widgets UIs
-            if (result == "movit.mirror" || result == "mirror")
-                result = tr("Mirror");
             delete filter;
             return result;
         }

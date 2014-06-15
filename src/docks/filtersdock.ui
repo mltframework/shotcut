@@ -151,19 +151,6 @@
     </item>
    </layout>
   </widget>
-  <action name="actionMirror">
-   <property name="text">
-    <string>Mirror</string>
-   </property>
-  </action>
-  <action name="actionOverlayHTML">
-   <property name="text">
-    <string>Overlay HTML</string>
-   </property>
-   <property name="toolTip">
-    <string>Overlay HTML</string>
-   </property>
-  </action>
  </widget>
  <resources>
   <include location="../../icons/resources.qrc"/>
