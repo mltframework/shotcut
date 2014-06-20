@@ -36,11 +36,9 @@ static void mlt_log_handler(void *service, int mlt_level, const char *format, va
         cuteLoggerLevel = Logger::Trace;
         break;
     case MLT_LOG_ERROR:
-        cuteLoggerLevel = Logger::Error;
-        break;
     case MLT_LOG_FATAL:
     case MLT_LOG_PANIC:
-        cuteLoggerLevel = Logger::Fatal;
+        cuteLoggerLevel = Logger::Error;
         break;
     case MLT_LOG_INFO:
         cuteLoggerLevel = Logger::Info;
