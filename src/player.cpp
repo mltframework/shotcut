@@ -646,7 +646,7 @@ void Player::onTabBarClicked(int index)
 {
     switch (index) {
     case SourceTabIndex:
-        if (MLT.savedProducer() && MLT.savedProducer()->is_valid()
+        if (MLT.savedProducer() && MLT.savedProducer()->is_valid() && MLT.producer()
             && MLT.producer()->get_producer() != MLT.savedProducer()->get_producer()) {
             m_pauseAfterPlay = true;
             MAIN.open(new Mlt::Producer(MLT.savedProducer()));
@@ -654,10 +654,10 @@ void Player::onTabBarClicked(int index)
         break;
     case ProgramTabIndex:
         if (MAIN.multitrack()) {
-            if (!MLT.isMultitrack())
+            if (!MLT.isMultitrack() && MAIN.multitrack())
                 MAIN.seekTimeline(MAIN.multitrack()->position());
         } else {
-            if (!MLT.isPlaylist())
+            if (!MLT.isPlaylist() && MAIN.playlist())
                 MAIN.seekPlaylist(MAIN.playlist()->position());
         }
         break;
