@@ -72,6 +72,8 @@ void RecentDock::on_listWidget_activated(const QModelIndex& i)
 QString RecentDock::remove(const QString &s)
 {
     m_recent.removeOne(s);
+    Settings.setRecent(m_recent);
+
     QString name = Util::baseName(s);
     QList<QStandardItem*> items = m_model.findItems(name);
     if (items.count() > 0)
