@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2014 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -76,9 +76,19 @@ private:
     QStringList m_presets;
     
     QString objectNameOrService();
+};
 
-private slots:
-    void onAnalyzeFinished(MeltJob* job, bool isSuccess);
+class AnalyzeDelegate : public QObject
+{
+    Q_OBJECT
+public:
+    explicit AnalyzeDelegate(Mlt::Filter *filter);
+
+public slots:
+    void onAnalyzeFinished(MeltJob *job, bool isSuccess);
+
+private:
+    Mlt::Filter m_filter;
 };
 
 #endif // FILTER_H

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2014 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -191,7 +191,9 @@ void QmlFilter::analyze(bool isAudio)
 
     MeltJob* job = new MeltJob(target, tmpName);
     if (job) {
-        connect(job, SIGNAL(finished(MeltJob*, bool)), SLOT(onAnalyzeFinished(MeltJob*, bool)));
+        AnalyzeDelegate* delegate = new AnalyzeDelegate(m_filter);
+        connect(job, &MeltJob::finished, delegate, &AnalyzeDelegate::onAnalyzeFinished);
+        connect(job, &MeltJob::finished, this, &QmlFilter::analyzeFinished);
         QFileInfo info(QString::fromUtf8(service.get("resource")));
         job->setLabel(tr("Analyze %1").arg(info.fileName()));
         JOBS.add(job);
@@ -257,7 +259,12 @@ QString QmlFilter::objectNameOrService()
     return m_metadata.objectName().isEmpty()? m_metadata.mlt_service() : m_metadata.objectName();
 }
 
-void QmlFilter::onAnalyzeFinished(MeltJob *job, bool isSuccess)
+AnalyzeDelegate::AnalyzeDelegate(Mlt::Filter* filter)
+    : QObject(0)
+    , m_filter(*filter)
+{}
+
+void AnalyzeDelegate::onAnalyzeFinished(MeltJob *job, bool isSuccess)
 {
     QString fileName = job->objectName();
 
@@ -278,7 +285,7 @@ void QmlFilter::onAnalyzeFinished(MeltJob *job, bool isSuccess)
             for (int j = 0; j < properties.size(); j++) {
                 QDomNode propertyNode = properties.at(j);
                 if (propertyNode.attributes().namedItem("name").toAttr().value() == "mlt_service"
-                        && propertyNode.toElement().text() == get("mlt_service")) {
+                        && propertyNode.toElement().text() == m_filter.get("mlt_service")) {
                     found = true;
                     break;
                 }
@@ -287,7 +294,7 @@ void QmlFilter::onAnalyzeFinished(MeltJob *job, bool isSuccess)
                 for (int j = 0; j < properties.size(); j++) {
                     QDomNode propertyNode = properties.at(j);
                     if (propertyNode.attributes().namedItem("name").toAttr().value() == "results") {
-                        m_filter->set("results", propertyNode.toElement().text().toLatin1().constData());
+                        m_filter.set("results", propertyNode.toElement().text().toLatin1().constData());
                     }
                 }
                 break;
@@ -295,5 +302,5 @@ void QmlFilter::onAnalyzeFinished(MeltJob *job, bool isSuccess)
         }
     }
     QFile::remove(fileName);
-    emit analyzeFinished(isSuccess);
+    deleteLater();
 }
