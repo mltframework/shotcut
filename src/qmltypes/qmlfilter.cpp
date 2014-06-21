@@ -137,8 +137,10 @@ void QmlFilter::deletePreset(const QString &name)
     emit presetsChanged();
 }
 
-void QmlFilter::analyze()
+void QmlFilter::analyze(bool isAudio)
 {
+    Mlt::Service service(mlt_service(m_filter->get_data("service")));
+
     // get temp filename for input xml
     QTemporaryFile tmp(QDir::tempPath().append("/shotcut-XXXXXX"));
     tmp.open();
@@ -148,7 +150,7 @@ void QmlFilter::analyze()
     m_filter->set("results", NULL, 0);
     int disable = m_filter->get_int("disable");
     m_filter->set("disable", 0);
-    MLT.saveXML(tmpName);
+    MLT.saveXML(tmpName, &service);
     m_filter->set("disable", disable);
 
     // get temp filename for output xml
@@ -174,7 +176,10 @@ void QmlFilter::analyze()
         dom.documentElement().insertAfter(consumerNode, profiles.at(profiles.length() - 1));
     consumerNode.setAttribute("mlt_service", "xml");
     consumerNode.setAttribute("all", 1);
-    consumerNode.setAttribute("audio_off", 0);
+    if (isAudio)
+        consumerNode.setAttribute("video_off", 1);
+    else
+        consumerNode.setAttribute("audio_off", 1);
     consumerNode.setAttribute("no_meta", 1);
     consumerNode.setAttribute("resource", target);
 
@@ -187,7 +192,7 @@ void QmlFilter::analyze()
     MeltJob* job = new MeltJob(target, tmpName);
     if (job) {
         connect(job, SIGNAL(finished(MeltJob*, bool)), SLOT(onAnalyzeFinished(MeltJob*, bool)));
-        QFileInfo info(MLT.resource());
+        QFileInfo info(QString::fromUtf8(service.get("resource")));
         job->setLabel(tr("Analyze %1").arg(info.fileName()));
         JOBS.add(job);
     }

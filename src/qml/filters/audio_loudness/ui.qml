@@ -75,7 +75,7 @@ Rectangle {
                 text: qsTr('Analyze')
                 onClicked: {
                     button.enabled = false
-                    filter.analyze();
+                    filter.analyze(true);
                 }
             }
             Label {

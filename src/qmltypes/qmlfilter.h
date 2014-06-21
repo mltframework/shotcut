@@ -54,7 +54,7 @@ public:
     /// returns the index of the new preset
     Q_INVOKABLE int  savePreset(const QStringList& propertyNames, const QString& name = QString());
     Q_INVOKABLE void deletePreset(const QString& name);
-    Q_INVOKABLE void analyze();
+    Q_INVOKABLE void analyze(bool isAudio = false);
     Q_INVOKABLE static int framesFromTime(const QString& time);
     Q_INVOKABLE static QString timeFromFrames(int frames);
     int producerIn() const;
