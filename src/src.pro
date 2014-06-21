@@ -78,7 +78,8 @@ SOURCES += main.cpp\
     commands/timelinecommands.cpp \
     util.cpp \
     widgets/lumamixtransition.cpp \
-    mltxmlgpuchecker.cpp
+    mltxmlgpuchecker.cpp \
+    autosavefile.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -149,7 +150,8 @@ HEADERS  += mainwindow.h \
     commands/timelinecommands.h \
     util.h \
     widgets/lumamixtransition.h \
-    mltxmlgpuchecker.h
+    mltxmlgpuchecker.h \
+    autosavefile.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \

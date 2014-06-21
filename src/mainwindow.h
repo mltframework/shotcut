@@ -20,6 +20,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QMutex>
+#include <QTimer>
 #include "mltcontroller.h"
 #ifdef WITH_LIBLEAP
 #include "leaplistener.h"
@@ -40,6 +42,7 @@ class QActionGroup;
 class FiltersDock;
 class HtmlEditor;
 class TimelineDock;
+class AutoSaveFile;
 
 class MainWindow : public QMainWindow
 {
@@ -59,6 +62,7 @@ public:
     Mlt::Playlist* playlist() const;
     Mlt::Producer* multitrack() const;
     QWidget* loadProducerWidget(Mlt::Producer* producer);
+    void doAutosave();
 
     void keyPressEvent(QKeyEvent*);
     void keyReleaseEvent(QKeyEvent *);
@@ -85,6 +89,7 @@ private:
     void setCurrentFile(const QString &filename);
     void changeDeinterlacer(bool checked, const char* method);
     void changeInterpolation(bool checked, const char* method);
+    bool checkAutoSave(QString &url);
 
     Ui::MainWindow* ui;
     Player* m_player;
@@ -110,13 +115,18 @@ private:
     bool m_isPlaylistLoaded;
     QActionGroup* m_languagesGroup;
     HtmlEditor* m_htmlEditor;
+    AutoSaveFile* m_autosaveFile;
+    QMutex m_autosaveMutex;
+    QTimer m_autosaveTimer;
+
 #ifdef WITH_LIBLEAP
     LeapListener m_leapListener;
 #endif
 
 public slots:
     bool isCompatibleWithGpuMode(const QString& url);
-    void open(const QString& url, const Mlt::Properties* = 0);
+    void updateAutoSave();
+    void open(QString url, const Mlt::Properties* = 0);
     void openVideo();
     void openCut(void*, int in, int out);
     void showStatusMessage(QString);
@@ -196,6 +206,7 @@ private slots:
     void on_menuExternal_aboutToShow();
     void on_actionUpgrade_triggered();
     void on_actionOpenXML_triggered();
+    void onAutosaveTimeout();
 };
 
 #define MAIN MainWindow::singleton()

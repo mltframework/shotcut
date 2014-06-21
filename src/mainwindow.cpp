@@ -60,12 +60,16 @@
 #include "mltxmlgpuchecker.h"
 #include "qmltypes/qmlutilities.h"
 #include "qmltypes/qmlapplication.h"
+#include "autosavefile.h"
 
 #include <QtWidgets>
 #include <QDebug>
 #include <QThreadPool>
+#include <QtConcurrent/QtConcurrentRun>
+#include <QMutexLocker>
 
 static const int STATUS_TIMEOUT_MS = 5000;
+static const int AUTOSAVE_TIMEOUT_MS = 10000;
 
 MainWindow::MainWindow()
     : QMainWindow(0)
@@ -75,10 +79,14 @@ MainWindow::MainWindow()
     , m_keyerMenu(0)
     , m_isPlaylistLoaded(false)
     , m_htmlEditor(0)
+    , m_autosaveFile(0)
 {
     qDebug() << "begin";
     new GLTestWidget(this);
     Database::singleton(this);
+    m_autosaveTimer.setSingleShot(true);
+    m_autosaveTimer.setInterval(AUTOSAVE_TIMEOUT_MS);
+    connect(&m_autosaveTimer, &QTimer::timeout, this, &MainWindow::onAutosaveTimeout);
 
     // Initialize all QML types
     QmlUtilities::registerCommonTypes();
@@ -172,8 +180,10 @@ MainWindow::MainWindow()
     connect(m_playlistDock, SIGNAL(showStatusMessage(QString)), this, SLOT(showStatusMessage(QString)));
     connect(m_playlistDock->model(), SIGNAL(created()), this, SLOT(onPlaylistCreated()));
     connect(m_playlistDock->model(), SIGNAL(cleared()), this, SLOT(onPlaylistCleared()));
+    connect(m_playlistDock->model(), SIGNAL(cleared()), this, SLOT(updateAutoSave()));
     connect(m_playlistDock->model(), SIGNAL(closed()), this, SLOT(onPlaylistClosed()));
     connect(m_playlistDock->model(), SIGNAL(modified()), this, SLOT(onPlaylistModified()));
+    connect(m_playlistDock->model(), SIGNAL(modified()), this, SLOT(updateAutoSave()));
     connect(m_playlistDock->model(), SIGNAL(loaded()), this, SLOT(onPlaylistLoaded()));
     if (!Settings.playerGPU())
         connect(m_playlistDock->model(), SIGNAL(loaded()), this, SLOT(updateThumbnails()));
@@ -189,6 +199,7 @@ MainWindow::MainWindow()
     connect(m_timelineDock->model(), SIGNAL(created()), SLOT(onMultitrackCreated()));
     connect(m_timelineDock->model(), SIGNAL(closed()), SLOT(onMultitrackClosed()));
     connect(m_timelineDock->model(), SIGNAL(modified()), SLOT(onMultitrackModified()));
+    connect(m_timelineDock->model(), SIGNAL(modified()), SLOT(updateAutoSave()));
     connect(m_timelineDock, SIGNAL(clipOpened(void*,int,int)), SLOT(openCut(void*, int, int)));
     connect(m_timelineDock->model(), SIGNAL(seeked(int)), SLOT(seekTimeline(int)));
     connect(m_playlistDock, SIGNAL(addAllTimeline(Mlt::Playlist*)), SLOT(onTimelineDockTriggered()));
@@ -335,6 +346,11 @@ MainWindow& MainWindow::singleton()
 
 MainWindow::~MainWindow()
 {
+    m_autosaveMutex.lock();
+    delete m_autosaveFile;
+    m_autosaveFile = 0;
+    m_autosaveMutex.unlock();
+
     delete m_htmlEditor;
     delete ui;
 }
@@ -595,8 +611,77 @@ bool MainWindow::isCompatibleWithGpuMode(const QString &url)
     return true;
 }
 
-void MainWindow::open(const QString& url, const Mlt::Properties* properties)
+bool MainWindow::checkAutoSave(QString &url)
 {
+    QMutexLocker locker(&m_autosaveMutex);
+
+    // check whether autosave files exist:
+    AutoSaveFile* stale = AutoSaveFile::getFile(url);
+    if (stale) {
+        QMessageBox dialog(QMessageBox::Question, qApp->applicationName(),
+           tr("Auto-saved files exist. Do you want to recover them now?"),
+           QMessageBox::No | QMessageBox::Yes, this);
+        dialog.setWindowModality(QmlApplication::dialogModality());
+        dialog.setDefaultButton(QMessageBox::Yes);
+        dialog.setEscapeButton(QMessageBox::No);
+        int r = dialog.exec();
+        if (r == QMessageBox::Yes) {
+            if (!stale->open(QIODevice::ReadWrite)) {
+                qWarning() << "failed to recover autosave file" << url;
+                delete stale;
+            } else {
+                delete m_autosaveFile;
+                m_autosaveFile = stale;
+                url = stale->fileName();
+                return true;
+            }
+        } else {
+            // remove the stale file
+            delete stale;
+        }
+    }
+
+    // create new autosave object
+    delete m_autosaveFile;
+    m_autosaveFile = new AutoSaveFile(url);
+
+    return false;
+}
+
+void MainWindow::doAutosave()
+{
+    m_autosaveMutex.lock();
+    if (m_autosaveFile) {
+        if (m_autosaveFile->isOpen() || m_autosaveFile->open(QIODevice::ReadWrite)) {
+            saveXML(m_autosaveFile->fileName());
+        } else {
+            qWarning() << "failed to open autosave file for writing" << m_autosaveFile->fileName();
+        }
+    }
+    m_autosaveMutex.unlock();
+}
+
+static void autosaveTask(MainWindow* p)
+{
+    qDebug() << "running";
+    p->doAutosave();
+}
+
+void MainWindow::onAutosaveTimeout()
+{
+    if (isWindowModified())
+        QtConcurrent::run(autosaveTask, this);
+}
+
+void MainWindow::updateAutoSave()
+{
+    if (!m_autosaveTimer.isActive())
+        m_autosaveTimer.start();
+}
+
+void MainWindow::open(QString url, const Mlt::Properties* properties)
+{
+    bool modified = false;
     if (!isCompatibleWithGpuMode(url))
         return;
     if (url.endsWith(".mlt") || url.endsWith(".xml")) {
@@ -610,13 +695,14 @@ void MainWindow::open(const QString& url, const Mlt::Properties* properties)
             m_timelineDock->model()->close();
         // let the new project change the profile
         MLT.profile().set_explicit(false);
-        setWindowModified(false);
+        modified = checkAutoSave(url);
+        setWindowModified(modified);
     }
     if (!playlist() && !multitrack()) {
-        if (!continueModified())
+        if (!modified && !continueModified())
             return;
         setCurrentFile("");
-        setWindowModified(false);
+        setWindowModified(modified);
         MLT.resetURL();
     }
     if (!MLT.open(url)) {
@@ -624,7 +710,7 @@ void MainWindow::open(const QString& url, const Mlt::Properties* properties)
         if (props && props->is_valid())
             mlt_properties_inherit(MLT.producer()->get_properties(), props->get_properties());
         open(MLT.producer());
-        m_recentDock->add(url);
+        m_recentDock->add(m_autosaveFile? m_autosaveFile->managedFileName() : url);
     }
     else {
         ui->statusBar->showMessage(tr("Failed to open ") + url, STATUS_TIMEOUT_MS);
@@ -676,7 +762,7 @@ void MainWindow::seekPlaylist(int start)
 {
     if (!playlist()) return;
     // we bypass this->open() to prevent sending producerOpened signal to self, which causes to reload playlist
-    if ((void*) MLT.producer()->get_producer() != (void*) playlist()->get_playlist())
+    if (!MLT.producer() || (void*) MLT.producer()->get_producer() != (void*) playlist()->get_playlist())
         MLT.setProducer(new Mlt::Producer(*playlist()));
     m_player->setIn(-1);
     m_player->setOut(-1);
@@ -1235,7 +1321,9 @@ void MainWindow::onProducerOpened()
     }
     if (MLT.isClip())
         m_player->switchToTab(Player::SourceTabIndex);
-    if (!MLT.URL().isEmpty())
+    if (m_autosaveFile)
+        setCurrentFile(m_autosaveFile->managedFileName());
+    else if (!MLT.URL().isEmpty())
         setCurrentFile(MLT.URL());
     on_actionJack_triggered(ui->actionJack->isChecked());
 }
@@ -1272,6 +1360,10 @@ bool MainWindow::on_actionSave_As_triggered()
         if (fi.suffix() != "mlt")
             filename += ".mlt";
         saveXML(filename);
+        if (m_autosaveFile)
+            m_autosaveFile->changeManagedFile(filename);
+        else
+            m_autosaveFile = new AutoSaveFile(filename);
         setCurrentFile(filename);
         setWindowModified(false);
         showStatusMessage(tr("Saved %1").arg(m_currentFile));
@@ -1451,8 +1543,10 @@ void MainWindow::onMultitrackModified()
 
 void MainWindow::onCutModified()
 {
-    if (!playlist())
+    if (!playlist()) {
         setWindowModified(true);
+        updateAutoSave();
+    }
 }
 
 void MainWindow::updateMarkers()
