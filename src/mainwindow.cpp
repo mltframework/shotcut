@@ -1247,17 +1247,15 @@ void MainWindow::dropEvent(QDropEvent *event)
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
-    if (continueModified()) {
+    if (continueJobsRunning() && continueModified()) {
         if (!m_htmlEditor || m_htmlEditor->close()) {
             writeSettings();
             event->accept();
             qApp->quit();
-        } else {
-            event->ignore();
+            return;
         }
-    } else {
-        event->ignore();
     }
+    event->ignore();
 }
 
 void MainWindow::showEvent(QShowEvent* event)
@@ -1393,6 +1391,24 @@ bool MainWindow::continueModified()
         } else if (r == QMessageBox::Cancel) {
             return false;
         }
+    }
+    return true;
+}
+
+bool MainWindow::continueJobsRunning()
+{
+    if (JOBS.hasIncomplete()) {
+        QMessageBox dialog(QMessageBox::Warning,
+                                     qApp->applicationName(),
+                                     tr("There are incomplete jobs.\n"
+                                        "Do you want to still want to exit?"),
+                                     QMessageBox::No |
+                                     QMessageBox::Yes,
+                                     this);
+        dialog.setWindowModality(QmlApplication::dialogModality());
+        dialog.setDefaultButton(QMessageBox::Yes);
+        dialog.setEscapeButton(QMessageBox::No);
+        return (dialog.exec() == QMessageBox::Yes);
     }
     return true;
 }

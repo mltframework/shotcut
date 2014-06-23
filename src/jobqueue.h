@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Meltytech, LLC
+ * Copyright (c) 2012-2014 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -98,6 +98,7 @@ public:
     void pause();
     void resume();
     bool isPaused() const;
+    bool hasIncomplete() const;
 
 signals:
     void jobAdded();

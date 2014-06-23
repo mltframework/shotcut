@@ -53,6 +53,7 @@ public:
     ~MainWindow();
     void open(Mlt::Producer* producer);
     bool continueModified();
+    bool continueJobsRunning();
     QUndoStack* undoStack() const;
     void saveXML(const QString& filename);
     static void changeTheme(const QString& theme);

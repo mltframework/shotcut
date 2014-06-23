@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Meltytech, LLC
+ * Copyright (c) 2012-2014 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -238,4 +238,13 @@ void JobQueue::resume()
 bool JobQueue::isPaused() const
 {
     return m_paused;
+}
+
+bool JobQueue::hasIncomplete() const
+{
+    foreach (MeltJob* job, m_jobs) {
+        if (!job->ran() || job->state() == QProcess::Running)
+            return true;
+    }
+    return false;
 }
