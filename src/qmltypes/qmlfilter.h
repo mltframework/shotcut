@@ -82,12 +82,13 @@ class AnalyzeDelegate : public QObject
 {
     Q_OBJECT
 public:
-    explicit AnalyzeDelegate(Mlt::Filter *filter);
+    explicit AnalyzeDelegate(AttachedFiltersModel& model, Mlt::Filter *filter);
 
 public slots:
     void onAnalyzeFinished(MeltJob *job, bool isSuccess);
 
 private:
+    AttachedFiltersModel& m_model;
     Mlt::Filter m_filter;
 };
 

@@ -214,7 +214,8 @@ MainWindow::MainWindow()
     connect(m_filtersDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onFiltersDockTriggered(bool)));
     connect(ui->actionFilters, SIGNAL(triggered()), this, SLOT(onFiltersDockTriggered()));
     connect(this, SIGNAL(producerOpened()), m_filtersDock, SLOT(onProducerOpened()));
-    connect(m_filtersDock->model(), SIGNAL(changed()), this, SLOT(onCutModified()));
+    connect(m_filtersDock->model(), SIGNAL(changed(bool)), SLOT(setWindowModified(bool)));
+    connect(m_filtersDock->model(), SIGNAL(changed()), SLOT(updateAutoSave()));
     connect(m_timelineDock, SIGNAL(fadeInChanged(int)), m_filtersDock, SLOT(setFadeInDuration(int)));
     connect(m_timelineDock, SIGNAL(fadeOutChanged(int)), m_filtersDock, SLOT(setFadeOutDuration(int)));
 

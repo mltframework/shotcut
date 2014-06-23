@@ -191,7 +191,7 @@ void QmlFilter::analyze(bool isAudio)
 
     MeltJob* job = new MeltJob(target, tmpName);
     if (job) {
-        AnalyzeDelegate* delegate = new AnalyzeDelegate(m_filter);
+        AnalyzeDelegate* delegate = new AnalyzeDelegate(m_model, m_filter);
         connect(job, &MeltJob::finished, delegate, &AnalyzeDelegate::onAnalyzeFinished);
         connect(job, &MeltJob::finished, this, &QmlFilter::analyzeFinished);
         QFileInfo info(QString::fromUtf8(service.get("resource")));
@@ -259,8 +259,9 @@ QString QmlFilter::objectNameOrService()
     return m_metadata.objectName().isEmpty()? m_metadata.mlt_service() : m_metadata.objectName();
 }
 
-AnalyzeDelegate::AnalyzeDelegate(Mlt::Filter* filter)
+AnalyzeDelegate::AnalyzeDelegate(AttachedFiltersModel &model, Mlt::Filter* filter)
     : QObject(0)
+    , m_model(model)
     , m_filter(*filter)
 {}
 
@@ -295,6 +296,7 @@ void AnalyzeDelegate::onAnalyzeFinished(MeltJob *job, bool isSuccess)
                     QDomNode propertyNode = properties.at(j);
                     if (propertyNode.attributes().namedItem("name").toAttr().value() == "results") {
                         m_filter.set("results", propertyNode.toElement().text().toLatin1().constData());
+                        emit m_model.changed();
                     }
                 }
                 break;

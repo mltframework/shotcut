@@ -40,7 +40,7 @@ public:
     bool removeRows(int row, int count, const QModelIndex &parent);
  
 signals:
-    void changed();
+    void changed(bool modified = true);
 
 public slots:
     Mlt::Filter* add(const QString& mlt_service, const QString& shotcutName = QString());
