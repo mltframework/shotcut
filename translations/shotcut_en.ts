@@ -5225,7 +5225,7 @@ the screen capture to SDI/HDMI in this mode.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/glow/ui_movit.qml" line="98"/>
-        <source>Highlight butoff</source>
+        <source>Highlight cutoff</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

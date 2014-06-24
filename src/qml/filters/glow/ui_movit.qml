@@ -95,7 +95,7 @@ Rectangle {
 
         // Row 3
         Label {
-            text: qsTr('Highlight butoff')
+            text: qsTr('Highlight cutoff')
             Layout.alignment: Qt.AlignRight
         }
         SliderSpinner {
