@@ -19,6 +19,7 @@
 import QtQuick 2.2
 import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.0
+import QtGraphicalEffects 1.0
 
 Rectangle {
     property alias ripple: rippleButton.checked
@@ -95,6 +96,54 @@ Rectangle {
             iconName: 'target'
             iconSource: 'qrc:///icons/oxygen/16x16/actions/target.png'
             tooltip: qsTr('Ripple (insert) when source is dropped')
+        }
+        ColorOverlay {
+            id: snapColorEffect
+            visible: snapButton.checked
+            anchors.fill: snapButton
+            source: snapButton
+            color: activePalette.highlight
+            cached: true
+        }
+        Blend {
+            visible: snapButton.checked
+            anchors.fill: snapButton
+            source: snapButton
+            foregroundSource: snapColorEffect
+            mode: 'color'
+            cached: true
+        }
+        ColorOverlay {
+            id: scrubColorEffect
+            visible: scrubButton.checked
+            anchors.fill: scrubButton
+            source: scrubButton
+            color: activePalette.highlight
+            cached: true
+        }
+        Blend {
+            visible: scrubButton.checked
+            anchors.fill: scrubButton
+            source: scrubButton
+            foregroundSource: scrubColorEffect
+            mode: 'color'
+            cached: true
+        }
+        ColorOverlay {
+            id: rippleColorEffect
+            visible: rippleButton.checked
+            anchors.fill: rippleButton
+            source: rippleButton
+            color: activePalette.highlight
+            cached: true
+        }
+        Blend {
+            visible: rippleButton.checked
+            anchors.fill: rippleButton
+            source: rippleButton
+            foregroundSource: rippleColorEffect
+            mode: 'color'
+            cached: true
         }
       }
     }
