@@ -579,7 +579,7 @@ void EncodeDock::on_presetsTree_clicked(const QModelIndex &index)
                 else if (name == "meta.preset.extension")
                     m_extension = preset->get("meta.preset.extension");
                 else if (name != "an" && name != "vn" && name != "threads"
-                         && !name.startsWith("meta.preset."))
+                         && !name.startsWith('_') && !name.startsWith("meta.preset."))
                     other.append(QString("%1=%2").arg(name).arg(preset->get(i)));
             }
             ui->advancedTextEdit->setPlainText(other.join("\n"));
