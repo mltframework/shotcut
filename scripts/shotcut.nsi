@@ -7,6 +7,8 @@
 
 ;--------------------------------
 
+!define APPDIR "\Shotcut"
+
 ; The name of the installer
 Name "Shotcut"
 
@@ -31,9 +33,9 @@ SetCompressor lzma
 
 ; Pages
 
-;Page components
 Page license
 Page directory
+Page components
 Page instfiles
 
 LicenseData Shotcut\COPYING.txt
@@ -43,11 +45,30 @@ UninstPage instfiles
 
 ;--------------------------------
 
+Section "Remove Old Program Files"
+
+  ; Require that install dir ends with app name.
+  StrLen $R0 "${APPDIR}"
+  StrCpy $R1 $INSTDIR "" -$R0
+  StrCmp $R1 "${APPDIR}" +2
+    StrCpy $INSTDIR "$INSTDIR${APPDIR}"
+
+  ; Remove program files and directories
+  RMDir /r "$INSTDIR"
+
+SectionEnd
+
 ; The stuff to install
-Section "Program Files"
+Section "Install Program Files"
 
   SectionIn RO
-  
+
+  ; Require that install dir ends with app name.
+  StrLen $R0 "${APPDIR}"
+  StrCpy $R1 $INSTDIR "" -$R0
+  StrCmp $R1 "${APPDIR}" +2
+    StrCpy $INSTDIR "$INSTDIR${APPDIR}"
+
   ; Set output path to the installation directory.
   SetOutPath $INSTDIR
   
@@ -67,7 +88,7 @@ Section "Program Files"
 SectionEnd
 
 ; Optional section (can be disabled by the user)
-Section "Start Menu Shortcuts"
+Section "Create Start Menu Shortcuts"
 
   ;CreateDirectory "$SMPROGRAMS\Shotcut"
   ;CreateShortCut "$SMPROGRAMS\Shotcut\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
@@ -81,6 +102,13 @@ SectionEnd
 
 Section "Uninstall"
   
+  ; Make sure the uninstaller is in APPDIR
+  StrLen $R0 "${APPDIR}"
+  StrCpy $R1 $INSTDIR "" -$R0
+  StrCmp $R1 "${APPDIR}" +3
+    MessageBox MB_OK|MB_ICONSTOP "The uninstall path is invalid!"
+    Abort "Uninstall failed"
+
   ; Remove registry keys
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Shotcut"
   DeleteRegKey HKLM SOFTWARE\Shotcut
