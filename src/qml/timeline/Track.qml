@@ -106,6 +106,8 @@ Rectangle {
                 // Snap if Alt key is not down.
                 if (!(mouse.modifiers & Qt.AltModifier) && toolbar.snap)
                     trackRoot.checkSnap(clip)
+                // Prevent dragging left of multitracks origin.
+                clip.x = Math.max(0, clip.x)
                 var mapped = trackRoot.mapFromItem(clip, mouse.x, mouse.y)
                 trackRoot.clipDragged(clip, mapped.x, mapped.y)
             }
@@ -171,6 +173,7 @@ Rectangle {
                         'out': clip.clipDuration - 1,
                         'blank': true,
                         'audio': false,
+                        'isTransition': false,
                         'fadeIn': 0,
                         'fadeOut': 0
                     })
