@@ -1,8 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="cs_CZ">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="cs_CZ" version="2.1">
 <context>
-    <name></name>
+    <name/>
     <message>
         <location filename="../src/main.cpp" line="190"/>
         <source>Loading plugins...</source>
@@ -58,25 +56,6 @@
         <location filename="../src/widgets/alsawidget.ui" line="85"/>
         <source>Channels</source>
         <translation>Kanály</translation>
-    </message>
-</context>
-<context>
-    <name>AttachedFiltersModel</name>
-    <message>
-        <source>Mirror</source>
-        <translation type="vanished">Zrcadlení</translation>
-    </message>
-    <message>
-        <source>Overlay HTML</source>
-        <translation type="vanished">HTML překrytí</translation>
-    </message>
-    <message>
-        <source>Sharpen</source>
-        <translation type="vanished">Zaostření</translation>
-    </message>
-    <message>
-        <source>White Balance</source>
-        <translation type="vanished">Vyvážení bílé</translation>
     </message>
 </context>
 <context>
@@ -351,7 +330,7 @@
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="55"/>
         <source>Click to open color dialog</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="60"/>
@@ -1125,14 +1104,6 @@ vícevláknové.</translation>
         <location filename="../src/docks/filtersdock.ui" line="102"/>
         <source>Remove selected filter</source>
         <translation>Odstranit vybraný filtr</translation>
-    </message>
-    <message>
-        <source>Mirror</source>
-        <translation type="vanished">Zrcadlení</translation>
-    </message>
-    <message>
-        <source>Overlay HTML</source>
-        <translation type="vanished">HTML překrytí</translation>
     </message>
 </context>
 <context>
@@ -1911,7 +1882,7 @@ tlačítkem myši na úkol k otevření nabídky pro zastavení nyní běžící
         <location filename="../src/widgets/lumamixtransition.ui" line="296"/>
         <source>Do not alter the audio levels during the
 course of the transition. Instead, set a
-fixed mixing level, or choose only clip A&apos;s
+fixed mixing level, or choose only clip A's
 audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>Neměňte zvukové úrovně během
 toku přechodu. Místo toho nastavte
@@ -2571,7 +2542,7 @@ Chcete zakázat zpracování s pomocí GPU a program ukončit?</translation>
     <message>
         <location filename="../src/mainwindow.cpp" line="623"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="728"/>
@@ -2621,7 +2592,7 @@ Chcete uložit své změny?</translation>
         <location filename="../src/mainwindow.cpp" line="1404"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1755"/>
@@ -3584,10 +3555,6 @@ po začátek vybraného střihu.</translation>
 <context>
     <name>Preset</name>
     <message>
-        <source>Preset</source>
-        <translation type="vanished">Přednastavení</translation>
-    </message>
-    <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="53"/>
         <source>Save</source>
         <translation>Uložit</translation>
@@ -4367,61 +4334,6 @@ Následující záběry jsou posunuty vpravo (V)</translation>
     </message>
 </context>
 <context>
-    <name>WebvfxFilter</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formulář</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;For Advanced Users&lt;/span&gt;&lt;br/&gt;If you enable this, and you do not use the WebVfx JavaScript extension, your content will not render!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Pro pokročilé uživatele&lt;/span&gt;&lt;br/&gt;Pokud toto povolíte, a nepoužíváte rozšíření WebVfx JavaScript, obsah se nevykreslí!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Use WebVfx JavaScript extension</source>
-        <translation type="vanished">Použít rozšíření WebVfx JavaScript</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">Upravit</translation>
-    </message>
-    <message>
-        <source>New</source>
-        <translation type="vanished">Nový</translation>
-    </message>
-    <message>
-        <source>Open</source>
-        <translation type="vanished">Otevřít</translation>
-    </message>
-    <message>
-        <source>Reload</source>
-        <translation type="vanished">Nahrát znovu</translation>
-    </message>
-    <message>
-        <source>Open HTML File</source>
-        <translation type="vanished">Otevřít soubor HTML</translation>
-    </message>
-    <message>
-        <source>HTML-Files (*.htm *.html);;All Files (*)</source>
-        <translation type="vanished">Soubory HTML (*.htm *.html);;Všechny soubory (*)</translation>
-    </message>
-    <message>
-        <source>Comfirm Selection</source>
-        <translation type="vanished">Potvrdit výběr</translation>
-    </message>
-    <message>
-        <source>Do you still want to use this?</source>
-        <translation type="vanished">Pořád to chcete použít?</translation>
-    </message>
-    <message>
-        <source>Save HTML File</source>
-        <translation type="vanished">Uložit soubor HTML</translation>
-    </message>
-    <message>
-        <source>HTML-Files (*.html *.htm);;All Files (*)</source>
-        <translation type="vanished">Soubory HTML (*.html *.htm);;Všechny soubory (*)</translation>
-    </message>
-</context>
-<context>
     <name>WebvfxProducer</name>
     <message>
         <location filename="../src/widgets/webvfxproducer.ui" line="14"/>
@@ -4713,12 +4625,12 @@ obrazovky do SDI/HDMI.</translation>
     <message>
         <location filename="../src/qml/filters/mirror/meta.qml" line="6"/>
         <source>Mirror</source>
-        <translation type="unfinished">Zrcadlení</translation>
+        <translation>Zrcadlení</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/meta.qml" line="6"/>
         <source>Overlay HTML</source>
-        <translation type="unfinished">HTML překrytí</translation>
+        <translation>HTML překrytí</translation>
     </message>
 </context>
 <context>
@@ -4805,7 +4717,7 @@ obrazovky do SDI/HDMI.</translation>
     <message>
         <location filename="../src/qml/filters/mirror/meta_movit.qml" line="6"/>
         <source>Mirror</source>
-        <translation type="unfinished">Zrcadlení</translation>
+        <translation>Zrcadlení</translation>
     </message>
 </context>
 <context>
@@ -4991,10 +4903,6 @@ obrazovky do SDI/HDMI.</translation>
         <translation>Barva</translation>
     </message>
     <message>
-        <source>Please choose a color</source>
-        <translation type="vanished">Zvolte, prosím, barvu</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/audio_balance/ui.qml" line="41"/>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="49"/>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="54"/>
@@ -5065,7 +4973,7 @@ obrazovky do SDI/HDMI.</translation>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="40"/>
         <source>Click Analyze to use this filter.</source>
-        <translation type="unfinished"></translation>
+        <translation>Klepněte na Vyhodnotit pro použití tohoto filtru.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="55"/>
@@ -5129,13 +5037,9 @@ obrazovky do SDI/HDMI.</translation>
         <translation>Střed</translation>
     </message>
     <message>
-        <source>Center Bias</source>
-        <translation type="vanished">Vychýlení středu</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="125"/>
         <source>Center bias</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="142"/>
@@ -5154,7 +5058,7 @@ obrazovky do SDI/HDMI.</translation>
         <location filename="../src/qml/filters/wave/ui.qml" line="44"/>
         <location filename="../src/qml/filters/white/ui.qml" line="67"/>
         <source>Preset</source>
-        <translation type="unfinished">Přednastavení</translation>
+        <translation>Přednastavení</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/ui.qml" line="83"/>
@@ -5192,102 +5096,94 @@ obrazovky do SDI/HDMI.</translation>
         <translation>Změnit tvar svisle?</translation>
     </message>
     <message>
-        <source>Neutral Color</source>
-        <translation type="vanished">Neutrální barva</translation>
-    </message>
-    <message>
-        <source>Color Temperature</source>
-        <translation type="vanished">Teplota barvy</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="56"/>
         <source>No File Loaded</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="58"/>
         <source>No HTML file loaded. Click &quot;Open&quot; or &quot;New&quot; to load a file.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="109"/>
         <source>&lt;b&gt;File:&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="121"/>
         <source>Use WebVfx JavaScript extension</source>
-        <translation type="unfinished">Použít rozšíření WebVfx JavaScript</translation>
+        <translation>Použít rozšíření WebVfx JavaScript</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="124"/>
         <source>For Advanced Users: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="125"/>
         <source>If you enable this, and you do not use the WebVfx JavaScript extension, your content will not render!</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="137"/>
         <source>Confirm Selection</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="138"/>
         <source>Do you still want to use this?</source>
-        <translation type="unfinished">Pořád to chcete použít?</translation>
+        <translation>Pořád to chcete použít?</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="149"/>
         <source>Open...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="153"/>
         <source>Open HTML File</source>
-        <translation type="unfinished">Otevřít soubor HTML</translation>
+        <translation>Otevřít soubor HTML</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="157"/>
         <source>Load an existing HTML file.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="162"/>
         <source>New...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="166"/>
         <source>Save HTML File</source>
-        <translation type="unfinished">Uložit soubor HTML</translation>
+        <translation>Uložit soubor HTML</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="170"/>
         <source>Load new HTML file.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="181"/>
         <source>Edit...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="198"/>
         <source>Reload</source>
-        <translation type="unfinished">Nahrát znovu</translation>
+        <translation>Nahrát znovu</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/white/ui.qml" line="81"/>
         <source>Neutral color</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/white/ui.qml" line="104"/>
         <source>Color temperature</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5315,7 +5211,7 @@ obrazovky do SDI/HDMI.</translation>
         <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="44"/>
         <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="48"/>
         <source>Preset</source>
-        <translation type="unfinished">Přednastavení</translation>
+        <translation>Přednastavení</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glow/ui_frei0r.qml" line="58"/>
@@ -5364,44 +5260,20 @@ obrazovky do SDI/HDMI.</translation>
         <translation>Sytost</translation>
     </message>
     <message>
-        <source>Outer Radius</source>
-        <translation type="vanished">Vnější poloměr</translation>
-    </message>
-    <message>
-        <source>Inner Radius</source>
-        <translation type="vanished">Vnitřní poloměr</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/blur/ui_movit.qml" line="34"/>
         <location filename="../src/qml/filters/glow/ui_movit.qml" line="64"/>
         <source>Radius</source>
         <translation>Poloměr</translation>
     </message>
     <message>
-        <source>Highlight Blurriness</source>
-        <translation type="vanished">Rozmazanost světlého místa</translation>
-    </message>
-    <message>
-        <source>Highlight Cutoff</source>
-        <translation type="vanished">Zastavení světlého místa</translation>
-    </message>
-    <message>
-        <source>Circle Radius</source>
-        <translation type="vanished">Poloměr kruhu</translation>
-    </message>
-    <message>
-        <source>Gaussian Radius</source>
-        <translation type="vanished">Gaussův poloměr</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="66"/>
         <source>Circle radius</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="84"/>
         <source>Gaussian radius</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="102"/>
@@ -5418,27 +5290,27 @@ obrazovky do SDI/HDMI.</translation>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="50"/>
         <location filename="../src/qml/filters/vignette/ui_movit.qml" line="35"/>
         <source>Preset</source>
-        <translation type="unfinished">Přednastavení</translation>
+        <translation>Přednastavení</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glow/ui_movit.qml" line="81"/>
         <source>Highlight blurriness</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/glow/ui_movit.qml" line="98"/>
-        <source>Highlight butoff</source>
-        <translation type="unfinished"></translation>
+        <source>Highlight cutoff</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/ui_movit.qml" line="48"/>
         <source>Outer radius</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/ui_movit.qml" line="64"/>
         <source>Inner radius</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5446,7 +5318,7 @@ obrazovky do SDI/HDMI.</translation>
     <message>
         <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="35"/>
         <source>Preset</source>
-        <translation type="unfinished">Přednastavení</translation>
+        <translation>Přednastavení</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="50"/>
@@ -5461,16 +5333,12 @@ obrazovky do SDI/HDMI.</translation>
     <message>
         <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="84"/>
         <source>Non-linear feathering</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="96"/>
         <source>Opacity</source>
         <translation>Neprůhlednost</translation>
-    </message>
-    <message>
-        <source>Non-linear Feathering</source>
-        <translation type="vanished">Měkký výběrový okraj (nelineární)</translation>
     </message>
 </context>
 </TS>

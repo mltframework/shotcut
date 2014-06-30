@@ -1,8 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="de">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="de" version="2.1">
 <context>
-    <name></name>
+    <name/>
     <message>
         <location filename="../src/main.cpp" line="190"/>
         <source>Loading plugins...</source>
@@ -58,25 +56,6 @@
         <location filename="../src/widgets/alsawidget.ui" line="85"/>
         <source>Channels</source>
         <translation>Kanäle</translation>
-    </message>
-</context>
-<context>
-    <name>AttachedFiltersModel</name>
-    <message>
-        <source>Mirror</source>
-        <translation type="vanished">Spiegeln</translation>
-    </message>
-    <message>
-        <source>Overlay HTML</source>
-        <translation type="vanished">Overlay HTML</translation>
-    </message>
-    <message>
-        <source>Sharpen</source>
-        <translation type="vanished">Scharfzeichnen</translation>
-    </message>
-    <message>
-        <source>White Balance</source>
-        <translation type="vanished">Weißabgleich</translation>
     </message>
 </context>
 <context>
@@ -351,7 +330,7 @@
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="55"/>
         <source>Click to open color dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Hier clicken um Farb-Dialog zu öffnen</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="60"/>
@@ -1123,14 +1102,6 @@ Codecs. Jedoch sind nicht alle Codecs Multithreading fähig.</translation>
         <location filename="../src/docks/filtersdock.ui" line="102"/>
         <source>Remove selected filter</source>
         <translation>Ausgewählter Filter entfernen</translation>
-    </message>
-    <message>
-        <source>Mirror</source>
-        <translation type="vanished">Spiegeln</translation>
-    </message>
-    <message>
-        <source>Overlay HTML</source>
-        <translation type="vanished">Overlay HTML</translation>
     </message>
 </context>
 <context>
@@ -1909,7 +1880,7 @@ Rechtsklick auf einen Job öffnet ein Menü um den aktuellen Job zu beenden.</tr
         <location filename="../src/widgets/lumamixtransition.ui" line="296"/>
         <source>Do not alter the audio levels during the
 course of the transition. Instead, set a
-fixed mixing level, or choose only clip A&apos;s
+fixed mixing level, or choose only clip A's
 audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>Audio Lautstärke während der Überblendung
 nicht verändern. Stattdessen einen fixen Pegel
@@ -2556,18 +2527,20 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/mainwindow.cpp" line="578"/>
         <source>The file you opened uses GPU effects, but GPU processing is not enabled.
 Do you want to enable GPU processing and exit?</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Datei die Sie geöffnet haben, verwendet GPU Effekte, aber GPU-Verarbeitung ist nicht aktiviert.
+Wollen Sie GPU-Verarbeitung aktivieren?  (Shotcut muss neu gestartet werden)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="595"/>
         <source>The file you opened uses effects that are incompatible with GPU processing.
 Do you want to disable GPU processing and exit?</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Datei die Sie geöffnet haben verwendet Effekte die mit GPU-Verarbeitung inkompatibel sind.
+Wollen Sie GPU-Verarbeitung deaktivieren? (Shotcut muss neu gestartet werden)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="623"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatisch gespeicherte Dateien existieren. Wollen Sie diese wiederherstellen?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="728"/>
@@ -2616,7 +2589,8 @@ Do you want to save your changes?</source>
         <location filename="../src/mainwindow.cpp" line="1404"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
-        <translation type="unfinished"></translation>
+        <translation>Es gibt noch unvollständige Jobs.
+Wollen Sie trotzdem beenden?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1755"/>
@@ -3576,10 +3550,6 @@ selected cut.</source>
 <context>
     <name>Preset</name>
     <message>
-        <source>Preset</source>
-        <translation type="vanished">Voreinstellung</translation>
-    </message>
-    <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="53"/>
         <source>Save</source>
         <translation>Speichern</translation>
@@ -3925,7 +3895,7 @@ selected cut.</source>
     <message>
         <location filename="../src/mltxmlgpuchecker.cpp" line="38"/>
         <source>The file is not a MLT XML file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Datei ist keine MLT XML-Datei.</translation>
     </message>
 </context>
 <context>
@@ -4357,61 +4327,6 @@ Nachfolgende Clips werden nach rechts verschoben (V)</translation>
     </message>
 </context>
 <context>
-    <name>WebvfxFilter</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formular</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;For Advanced Users&lt;/span&gt;&lt;br/&gt;If you enable this, and you do not use the WebVfx JavaScript extension, your content will not render!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Für erfahrene Anwender&lt;/span&gt;&lt;br/&gt;Der Inhalt wird nur dargestellt, wenn die WebVfx JavaScript Erweiterung verwendet wird!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Use WebVfx JavaScript extension</source>
-        <translation type="vanished">WebVfx JavaScript Erweiterung verwenden</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">Bearbeiten</translation>
-    </message>
-    <message>
-        <source>New</source>
-        <translation type="vanished">Neu</translation>
-    </message>
-    <message>
-        <source>Open</source>
-        <translation type="vanished">Öffnen</translation>
-    </message>
-    <message>
-        <source>Reload</source>
-        <translation type="vanished">Neu laden</translation>
-    </message>
-    <message>
-        <source>Open HTML File</source>
-        <translation type="vanished">HTML Datei öffnen</translation>
-    </message>
-    <message>
-        <source>HTML-Files (*.htm *.html);;All Files (*)</source>
-        <translation type="vanished">HTML-Dateien (*.htm *.html);;Alle Dateien (*)</translation>
-    </message>
-    <message>
-        <source>Comfirm Selection</source>
-        <translation type="vanished">Auswahl bestätigen</translation>
-    </message>
-    <message>
-        <source>Do you still want to use this?</source>
-        <translation type="vanished">Wollen Sie das noch verwenden?</translation>
-    </message>
-    <message>
-        <source>Save HTML File</source>
-        <translation type="vanished">Als HTML Datei speichern</translation>
-    </message>
-    <message>
-        <source>HTML-Files (*.html *.htm);;All Files (*)</source>
-        <translation type="vanished">HTML-Dateien (*.html *.htm);;Alle Dateien (*)</translation>
-    </message>
-</context>
-<context>
     <name>WebvfxProducer</name>
     <message>
         <location filename="../src/widgets/webvfxproducer.ui" line="14"/>
@@ -4701,12 +4616,12 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
     <message>
         <location filename="../src/qml/filters/mirror/meta.qml" line="6"/>
         <source>Mirror</source>
-        <translation type="unfinished">Spiegeln</translation>
+        <translation>Spiegeln</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/meta.qml" line="6"/>
         <source>Overlay HTML</source>
-        <translation type="unfinished">Overlay HTML</translation>
+        <translation>Overlay HTML</translation>
     </message>
 </context>
 <context>
@@ -4793,7 +4708,7 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
     <message>
         <location filename="../src/qml/filters/mirror/meta_movit.qml" line="6"/>
         <source>Mirror</source>
-        <translation type="unfinished">Spiegeln</translation>
+        <translation>Spiegeln</translation>
     </message>
 </context>
 <context>
@@ -4979,10 +4894,6 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
         <translation>Farbe</translation>
     </message>
     <message>
-        <source>Please choose a color</source>
-        <translation type="vanished">Bitte wählen Sie eine Farbe</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/audio_balance/ui.qml" line="41"/>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="49"/>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="54"/>
@@ -5053,7 +4964,7 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="40"/>
         <source>Click Analyze to use this filter.</source>
-        <translation type="unfinished"></translation>
+        <translation>Auf &quot;Analysieren&quot; klicken um diesen Filter zu verwenden</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="55"/>
@@ -5117,13 +5028,9 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
         <translation>Mitte</translation>
     </message>
     <message>
-        <source>Center Bias</source>
-        <translation type="vanished">Ausrichtung Mitte</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="125"/>
         <source>Center bias</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausrichtung Mitte</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="142"/>
@@ -5142,7 +5049,7 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
         <location filename="../src/qml/filters/wave/ui.qml" line="44"/>
         <location filename="../src/qml/filters/white/ui.qml" line="67"/>
         <source>Preset</source>
-        <translation type="unfinished">Voreinstellung</translation>
+        <translation>Voreinstellung</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/ui.qml" line="83"/>
@@ -5180,102 +5087,94 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
         <translation>Vertikal verzerren?</translation>
     </message>
     <message>
-        <source>Neutral Color</source>
-        <translation type="vanished">Neutrale Farbe</translation>
-    </message>
-    <message>
-        <source>Color Temperature</source>
-        <translation type="vanished">Farbtemperatur</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="56"/>
         <source>No File Loaded</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine Datei geladen</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="58"/>
         <source>No HTML file loaded. Click &quot;Open&quot; or &quot;New&quot; to load a file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine HTML-Datei geladen. Klicken Sie auf &quot;Öffnen&quot; oder &quot;Neu&quot; um eine Datei zu laden.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="109"/>
         <source>&lt;b&gt;File:&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Datei:&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="121"/>
         <source>Use WebVfx JavaScript extension</source>
-        <translation type="unfinished">WebVfx JavaScript Erweiterung verwenden</translation>
+        <translation>WebVfx JavaScript Erweiterung verwenden</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="124"/>
         <source>For Advanced Users: </source>
-        <translation type="unfinished"></translation>
+        <translation>Für fortgeschrittene Benutzer:</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="125"/>
         <source>If you enable this, and you do not use the WebVfx JavaScript extension, your content will not render!</source>
-        <translation type="unfinished"></translation>
+        <translation>Falls Sie diese Funktion aktivieren, jedoch nicht die WebVfx JavaScript Erweiterung verwenden, wird ihr Inhalt nicht rendern!</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="137"/>
         <source>Confirm Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Auswahl bestätigen</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="138"/>
         <source>Do you still want to use this?</source>
-        <translation type="unfinished">Wollen Sie das noch verwenden?</translation>
+        <translation>Wollen Sie das noch verwenden?</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="149"/>
         <source>Open...</source>
-        <translation type="unfinished"></translation>
+        <translation>Öffnen...</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="153"/>
         <source>Open HTML File</source>
-        <translation type="unfinished">HTML Datei öffnen</translation>
+        <translation>HTML Datei öffnen</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="157"/>
         <source>Load an existing HTML file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Existierende HTML-Datei laden.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="162"/>
         <source>New...</source>
-        <translation type="unfinished"></translation>
+        <translation>Neu...</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="166"/>
         <source>Save HTML File</source>
-        <translation type="unfinished">Als HTML Datei speichern</translation>
+        <translation>Als HTML Datei speichern</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="170"/>
         <source>Load new HTML file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lade neue HTML-Datei</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="181"/>
         <source>Edit...</source>
-        <translation type="unfinished"></translation>
+        <translation>Bearbeiten...</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="198"/>
         <source>Reload</source>
-        <translation type="unfinished">Neu laden</translation>
+        <translation>Neu laden</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/white/ui.qml" line="81"/>
         <source>Neutral color</source>
-        <translation type="unfinished"></translation>
+        <translation>Neutrale Farbe</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/white/ui.qml" line="104"/>
         <source>Color temperature</source>
-        <translation type="unfinished"></translation>
+        <translation>Farbtemperatur</translation>
     </message>
 </context>
 <context>
@@ -5303,7 +5202,7 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
         <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="44"/>
         <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="48"/>
         <source>Preset</source>
-        <translation type="unfinished">Voreinstellung</translation>
+        <translation>Voreinstellung</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glow/ui_frei0r.qml" line="58"/>
@@ -5352,44 +5251,20 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
         <translation>Sättigung</translation>
     </message>
     <message>
-        <source>Outer Radius</source>
-        <translation type="vanished">Äußerer Radius</translation>
-    </message>
-    <message>
-        <source>Inner Radius</source>
-        <translation type="vanished">Innerer Radius</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/blur/ui_movit.qml" line="34"/>
         <location filename="../src/qml/filters/glow/ui_movit.qml" line="64"/>
         <source>Radius</source>
         <translation>Radius</translation>
     </message>
     <message>
-        <source>Highlight Blurriness</source>
-        <translation type="vanished">Glanzlichter Weichzeichner-Intensität</translation>
-    </message>
-    <message>
-        <source>Highlight Cutoff</source>
-        <translation type="vanished">Glanzlichter Cutoff</translation>
-    </message>
-    <message>
-        <source>Circle Radius</source>
-        <translation type="vanished">Kreisradius</translation>
-    </message>
-    <message>
-        <source>Gaussian Radius</source>
-        <translation type="vanished">Gauß&apos;scher Radius</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="66"/>
         <source>Circle radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Kreisradius</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="84"/>
         <source>Gaussian radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Gauß&apos;scher Radius</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="102"/>
@@ -5406,27 +5281,27 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="50"/>
         <location filename="../src/qml/filters/vignette/ui_movit.qml" line="35"/>
         <source>Preset</source>
-        <translation type="unfinished">Voreinstellung</translation>
+        <translation>Voreinstellung</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glow/ui_movit.qml" line="81"/>
         <source>Highlight blurriness</source>
-        <translation type="unfinished"></translation>
+        <translation>Highlight Weichzeichner-Intensität</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glow/ui_movit.qml" line="98"/>
-        <source>Highlight butoff</source>
-        <translation type="unfinished"></translation>
+        <source>Highlight cutoff</source>
+        <translation>Highlight Cutoff</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/ui_movit.qml" line="48"/>
         <source>Outer radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Äußerer Radius</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/ui_movit.qml" line="64"/>
         <source>Inner radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Innerer Radius</translation>
     </message>
 </context>
 <context>
@@ -5434,7 +5309,7 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
     <message>
         <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="35"/>
         <source>Preset</source>
-        <translation type="unfinished">Voreinstellung</translation>
+        <translation>Voreinstellung</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="50"/>
@@ -5449,16 +5324,12 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
     <message>
         <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="84"/>
         <source>Non-linear feathering</source>
-        <translation type="unfinished"></translation>
+        <translation>Weiche Auswahlkante (non-linear)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="96"/>
         <source>Opacity</source>
         <translation>Deckkraft</translation>
-    </message>
-    <message>
-        <source>Non-linear Feathering</source>
-        <translation type="vanished">Weiche Auswahlkante (non-linear)</translation>
     </message>
 </context>
 </TS>

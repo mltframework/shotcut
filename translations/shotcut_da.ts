@@ -1,8 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="da_DK">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="da_DK" version="2.1">
 <context>
-    <name></name>
+    <name/>
     <message>
         <location filename="../src/main.cpp" line="190"/>
         <source>Loading plugins...</source>
@@ -58,25 +56,6 @@
         <location filename="../src/widgets/alsawidget.ui" line="85"/>
         <source>Channels</source>
         <translation>Kanaler</translation>
-    </message>
-</context>
-<context>
-    <name>AttachedFiltersModel</name>
-    <message>
-        <source>Mirror</source>
-        <translation type="vanished">Spejlvend</translation>
-    </message>
-    <message>
-        <source>Overlay HTML</source>
-        <translation type="vanished">Overlæg HTML</translation>
-    </message>
-    <message>
-        <source>Sharpen</source>
-        <translation type="vanished">Skarphed</translation>
-    </message>
-    <message>
-        <source>White Balance</source>
-        <translation type="vanished">Hvidbalance</translation>
     </message>
 </context>
 <context>
@@ -351,7 +330,7 @@
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="55"/>
         <source>Click to open color dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Klik for at åbne farve dialog</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="60"/>
@@ -1124,14 +1103,6 @@ codecs. Men ikke alle codecs er multi-threaded.</translation>
         <location filename="../src/docks/filtersdock.ui" line="102"/>
         <source>Remove selected filter</source>
         <translation>Fjern det valgte filter</translation>
-    </message>
-    <message>
-        <source>Mirror</source>
-        <translation type="vanished">Spejlvend</translation>
-    </message>
-    <message>
-        <source>Overlay HTML</source>
-        <translation type="vanished">Overlæg HTML</translation>
     </message>
 </context>
 <context>
@@ -1910,7 +1881,7 @@ på et job for at åbne en menu for at stoppe et kørende job.</translation>
         <location filename="../src/widgets/lumamixtransition.ui" line="296"/>
         <source>Do not alter the audio levels during the
 course of the transition. Instead, set a
-fixed mixing level, or choose only clip A&apos;s
+fixed mixing level, or choose only clip A's
 audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>Ændrer ikke lydniveauer gennem
 overgangen. Indsæt istedet et fast
@@ -2570,7 +2541,7 @@ Vil du slå GPU processor fra og exit?</translation>
     <message>
         <location filename="../src/mainwindow.cpp" line="623"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatisk gemte filer eksisterer. Vil du gendanne dem nu?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="728"/>
@@ -2620,7 +2591,8 @@ Do you want to save your changes?</source>
         <location filename="../src/mainwindow.cpp" line="1404"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
-        <translation type="unfinished"></translation>
+        <translation>Der er ufærdige jobs.
+Vil du stadig lukke programmet?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1755"/>
@@ -3583,10 +3555,6 @@ udvalgte snit.</translation>
 <context>
     <name>Preset</name>
     <message>
-        <source>Preset</source>
-        <translation type="vanished">Forudindstilling</translation>
-    </message>
-    <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="53"/>
         <source>Save</source>
         <translation>Gem</translation>
@@ -4364,61 +4332,6 @@ mens de efterfølgende klip skubbes til højre (V)</translation>
     </message>
 </context>
 <context>
-    <name>WebvfxFilter</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;For Advanced Users&lt;/span&gt;&lt;br/&gt;If you enable this, and you do not use the WebVfx JavaScript extension, your content will not render!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Til avancerede brugere&lt;/span&gt;&lt;br/&gt;Hvis du bruger denne og du ikke bruger WebVfx JavaScript udvidelsen vil dit indhold ikke rendere!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Use WebVfx JavaScript extension</source>
-        <translation type="vanished">Brug WebVfx JavaScript udvidelse</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">Rediger</translation>
-    </message>
-    <message>
-        <source>New</source>
-        <translation type="vanished">Ny</translation>
-    </message>
-    <message>
-        <source>Open</source>
-        <translation type="vanished">Åbn</translation>
-    </message>
-    <message>
-        <source>Reload</source>
-        <translation type="vanished">Genindlæs</translation>
-    </message>
-    <message>
-        <source>Open HTML File</source>
-        <translation type="vanished">Åbn HTML-fil</translation>
-    </message>
-    <message>
-        <source>HTML-Files (*.htm *.html);;All Files (*)</source>
-        <translation type="vanished">HTML-filer (*.htm *.html);;Alle filer (*)</translation>
-    </message>
-    <message>
-        <source>Comfirm Selection</source>
-        <translation type="vanished">Bekræft valgte</translation>
-    </message>
-    <message>
-        <source>Do you still want to use this?</source>
-        <translation type="vanished">Vil du stadig bruge dette?</translation>
-    </message>
-    <message>
-        <source>Save HTML File</source>
-        <translation type="vanished">Gem HTML fil</translation>
-    </message>
-    <message>
-        <source>HTML-Files (*.html *.htm);;All Files (*)</source>
-        <translation type="vanished">HTML-filer (*.htm *.html);;Alle filer (*)</translation>
-    </message>
-</context>
-<context>
     <name>WebvfxProducer</name>
     <message>
         <location filename="../src/widgets/webvfxproducer.ui" line="14"/>
@@ -4710,12 +4623,12 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
     <message>
         <location filename="../src/qml/filters/mirror/meta.qml" line="6"/>
         <source>Mirror</source>
-        <translation type="unfinished">Spejlvend</translation>
+        <translation>Spejlvend</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/meta.qml" line="6"/>
         <source>Overlay HTML</source>
-        <translation type="unfinished">Overlæg HTML</translation>
+        <translation>Overlæg HTML</translation>
     </message>
 </context>
 <context>
@@ -4802,7 +4715,7 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
     <message>
         <location filename="../src/qml/filters/mirror/meta_movit.qml" line="6"/>
         <source>Mirror</source>
-        <translation type="unfinished">Spejlvend</translation>
+        <translation>Spejlvend</translation>
     </message>
 </context>
 <context>
@@ -4988,10 +4901,6 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
         <translation>Farve</translation>
     </message>
     <message>
-        <source>Please choose a color</source>
-        <translation type="vanished">Vælg en farve</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/audio_balance/ui.qml" line="41"/>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="49"/>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="54"/>
@@ -5062,7 +4971,7 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="40"/>
         <source>Click Analyze to use this filter.</source>
-        <translation type="unfinished"></translation>
+        <translation>Klik Analysér for at bruge dette filter.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="55"/>
@@ -5126,13 +5035,9 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
         <translation>Centrér</translation>
     </message>
     <message>
-        <source>Center Bias</source>
-        <translation type="vanished">Center Bias</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="125"/>
         <source>Center bias</source>
-        <translation type="unfinished"></translation>
+        <translation>Center vægt</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="142"/>
@@ -5151,7 +5056,7 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
         <location filename="../src/qml/filters/wave/ui.qml" line="44"/>
         <location filename="../src/qml/filters/white/ui.qml" line="67"/>
         <source>Preset</source>
-        <translation type="unfinished">Forudindstilling</translation>
+        <translation>Forudindstilling</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/ui.qml" line="83"/>
@@ -5189,102 +5094,94 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
         <translation>Deformere lodret?</translation>
     </message>
     <message>
-        <source>Neutral Color</source>
-        <translation type="vanished">Neutral farve</translation>
-    </message>
-    <message>
-        <source>Color Temperature</source>
-        <translation type="vanished">Farvetemperatur</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="56"/>
         <source>No File Loaded</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen fil åbnet</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="58"/>
         <source>No HTML file loaded. Click &quot;Open&quot; or &quot;New&quot; to load a file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen HTML fil åbnet. Klik &quot;Åben&quot; eller &quot;Ny&quot; for at åbne en fil. </translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="109"/>
         <source>&lt;b&gt;File:&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Fil:&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="121"/>
         <source>Use WebVfx JavaScript extension</source>
-        <translation type="unfinished">Brug WebVfx JavaScript udvidelse</translation>
+        <translation>Brug WebVfx JavaScript udvidelse</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="124"/>
         <source>For Advanced Users: </source>
-        <translation type="unfinished"></translation>
+        <translation>Til avancerede brugere:</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="125"/>
         <source>If you enable this, and you do not use the WebVfx JavaScript extension, your content will not render!</source>
-        <translation type="unfinished"></translation>
+        <translation>Hvis du slår dette til og du ikke vil bruge WebVfx JavaScript filendelsen, så vil dit indhold ikke rendere!</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="137"/>
         <source>Confirm Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Bekræft valgte</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="138"/>
         <source>Do you still want to use this?</source>
-        <translation type="unfinished">Vil du stadig bruge dette?</translation>
+        <translation>Vil du stadig bruge dette?</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="149"/>
         <source>Open...</source>
-        <translation type="unfinished"></translation>
+        <translation>Åben...</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="153"/>
         <source>Open HTML File</source>
-        <translation type="unfinished">Åbn HTML-fil</translation>
+        <translation>Åbn HTML-fil</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="157"/>
         <source>Load an existing HTML file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Åben en eksisterende HTML fil.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="162"/>
         <source>New...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ny...</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="166"/>
         <source>Save HTML File</source>
-        <translation type="unfinished">Gem HTML fil</translation>
+        <translation>Gem HTML fil</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="170"/>
         <source>Load new HTML file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Åben ny HTML fil.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="181"/>
         <source>Edit...</source>
-        <translation type="unfinished"></translation>
+        <translation>Redigér...</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="198"/>
         <source>Reload</source>
-        <translation type="unfinished">Genindlæs</translation>
+        <translation>Genindlæs</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/white/ui.qml" line="81"/>
         <source>Neutral color</source>
-        <translation type="unfinished"></translation>
+        <translation>Neutral farve</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/white/ui.qml" line="104"/>
         <source>Color temperature</source>
-        <translation type="unfinished"></translation>
+        <translation>Farvetemperatur</translation>
     </message>
 </context>
 <context>
@@ -5312,7 +5209,7 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
         <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="44"/>
         <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="48"/>
         <source>Preset</source>
-        <translation type="unfinished">Forudindstilling</translation>
+        <translation>Forudindstilling</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glow/ui_frei0r.qml" line="58"/>
@@ -5361,44 +5258,20 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
         <translation>Farvemætning</translation>
     </message>
     <message>
-        <source>Outer Radius</source>
-        <translation type="vanished">Ydre radius</translation>
-    </message>
-    <message>
-        <source>Inner Radius</source>
-        <translation type="vanished">Indre radius</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/blur/ui_movit.qml" line="34"/>
         <location filename="../src/qml/filters/glow/ui_movit.qml" line="64"/>
         <source>Radius</source>
         <translation>Radius</translation>
     </message>
     <message>
-        <source>Highlight Blurriness</source>
-        <translation type="vanished">Uskarphed i højlys</translation>
-    </message>
-    <message>
-        <source>Highlight Cutoff</source>
-        <translation type="vanished">Klippe højlys</translation>
-    </message>
-    <message>
-        <source>Circle Radius</source>
-        <translation type="vanished">Cirkel radius</translation>
-    </message>
-    <message>
-        <source>Gaussian Radius</source>
-        <translation type="vanished">Gaussian radius</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="66"/>
         <source>Circle radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Cirkelradius</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="84"/>
         <source>Gaussian radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Gaussian radius</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="102"/>
@@ -5415,27 +5288,27 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="50"/>
         <location filename="../src/qml/filters/vignette/ui_movit.qml" line="35"/>
         <source>Preset</source>
-        <translation type="unfinished">Forudindstilling</translation>
+        <translation>Forudindstilling</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glow/ui_movit.qml" line="81"/>
         <source>Highlight blurriness</source>
-        <translation type="unfinished"></translation>
+        <translation>Højlys uskarphed</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glow/ui_movit.qml" line="98"/>
-        <source>Highlight butoff</source>
-        <translation type="unfinished"></translation>
+        <source>Highlight cutoff</source>
+        <translation>Klippe højlys</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/ui_movit.qml" line="48"/>
         <source>Outer radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Ydre radius</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/ui_movit.qml" line="64"/>
         <source>Inner radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Indre radius</translation>
     </message>
 </context>
 <context>
@@ -5443,7 +5316,7 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
     <message>
         <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="35"/>
         <source>Preset</source>
-        <translation type="unfinished">Forudindstilling</translation>
+        <translation>Forudindstilling</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="50"/>
@@ -5458,16 +5331,12 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
     <message>
         <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="84"/>
         <source>Non-linear feathering</source>
-        <translation type="unfinished"></translation>
+        <translation>Ikke-lineær udblødning</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="96"/>
         <source>Opacity</source>
         <translation>Gennemsigtighed</translation>
-    </message>
-    <message>
-        <source>Non-linear Feathering</source>
-        <translation type="vanished">Ikke-liniær udviskning</translation>
     </message>
 </context>
 </TS>

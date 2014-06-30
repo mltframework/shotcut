@@ -1,8 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="ca">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="ca" version="2.1">
 <context>
-    <name></name>
+    <name/>
     <message>
         <location filename="../src/main.cpp" line="190"/>
         <source>Loading plugins...</source>
@@ -58,25 +56,6 @@
         <location filename="../src/widgets/alsawidget.ui" line="85"/>
         <source>Channels</source>
         <translation>Canals</translation>
-    </message>
-</context>
-<context>
-    <name>AttachedFiltersModel</name>
-    <message>
-        <source>Mirror</source>
-        <translation type="vanished">Mirall</translation>
-    </message>
-    <message>
-        <source>Overlay HTML</source>
-        <translation type="vanished">Sobreposa HTML</translation>
-    </message>
-    <message>
-        <source>Sharpen</source>
-        <translation type="vanished">Enfoca</translation>
-    </message>
-    <message>
-        <source>White Balance</source>
-        <translation type="vanished">Balanç de blancs</translation>
     </message>
 </context>
 <context>
@@ -351,7 +330,7 @@
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="55"/>
         <source>Click to open color dialog</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="60"/>
@@ -1125,14 +1104,6 @@ són multi-fil.</translation>
         <location filename="../src/docks/filtersdock.ui" line="102"/>
         <source>Remove selected filter</source>
         <translation>Esborra el filtre seleccionat</translation>
-    </message>
-    <message>
-        <source>Mirror</source>
-        <translation type="vanished">Mirall</translation>
-    </message>
-    <message>
-        <source>Overlay HTML</source>
-        <translation type="vanished">Sobreposa HTML</translation>
     </message>
 </context>
 <context>
@@ -1912,7 +1883,7 @@ aturar un treball en curs.</translation>
         <location filename="../src/widgets/lumamixtransition.ui" line="296"/>
         <source>Do not alter the audio levels during the
 course of the transition. Instead, set a
-fixed mixing level, or choose only clip A&apos;s
+fixed mixing level, or choose only clip A's
 audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>No altera els nivells d&apos;àudio durant la
 transició. Fixa, en canvi, un nivell de
@@ -2572,7 +2543,7 @@ Voleu desactivar el processament GPU i sortir?</translation>
     <message>
         <location filename="../src/mainwindow.cpp" line="623"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="728"/>
@@ -2622,7 +2593,7 @@ Vols desar-ne els canvis?</translation>
         <location filename="../src/mainwindow.cpp" line="1404"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1755"/>
@@ -3585,10 +3556,6 @@ avançar fins al tall seleccionat.</translation>
 <context>
     <name>Preset</name>
     <message>
-        <source>Preset</source>
-        <translation type="vanished">Plantilla</translation>
-    </message>
-    <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="53"/>
         <source>Save</source>
         <translation>Desa</translation>
@@ -4366,61 +4333,6 @@ movent els clips següents cap a la dreta (V)</translation>
     </message>
 </context>
 <context>
-    <name>WebvfxFilter</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formulari</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;For Advanced Users&lt;/span&gt;&lt;br/&gt;If you enable this, and you do not use the WebVfx JavaScript extension, your content will not render!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Per usuaris avançats&lt;/span&gt;&lt;br/&gt;Si actives això, i no utilitzes l&apos;extensió JavasScript WebVfx, el teu contingut no es renderitzarà!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Use WebVfx JavaScript extension</source>
-        <translation type="vanished">Utilitza l&apos;extensió de JavaScript WebVfx</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">Edita</translation>
-    </message>
-    <message>
-        <source>New</source>
-        <translation type="vanished">Nou</translation>
-    </message>
-    <message>
-        <source>Open</source>
-        <translation type="vanished">Obre</translation>
-    </message>
-    <message>
-        <source>Reload</source>
-        <translation type="vanished">Recarrega</translation>
-    </message>
-    <message>
-        <source>Open HTML File</source>
-        <translation type="vanished">Obre un Fitxer HTML</translation>
-    </message>
-    <message>
-        <source>HTML-Files (*.htm *.html);;All Files (*)</source>
-        <translation type="vanished">Fitxers HTML (*.htm *.html);;Tots els fitxers (*)</translation>
-    </message>
-    <message>
-        <source>Comfirm Selection</source>
-        <translation type="vanished">Confirma la selecció</translation>
-    </message>
-    <message>
-        <source>Do you still want to use this?</source>
-        <translation type="vanished">Encara vols utilitzar això?</translation>
-    </message>
-    <message>
-        <source>Save HTML File</source>
-        <translation type="vanished">Desa un Fitxer HTML</translation>
-    </message>
-    <message>
-        <source>HTML-Files (*.html *.htm);;All Files (*)</source>
-        <translation type="vanished">Fitxers HTML (*.htm *.html);;Tots els fitxers (*)</translation>
-    </message>
-</context>
-<context>
     <name>WebvfxProducer</name>
     <message>
         <location filename="../src/widgets/webvfxproducer.ui" line="14"/>
@@ -4712,12 +4624,12 @@ simultàniament en aquest mode.</translation>
     <message>
         <location filename="../src/qml/filters/mirror/meta.qml" line="6"/>
         <source>Mirror</source>
-        <translation type="unfinished">Mirall</translation>
+        <translation>Mirall</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/meta.qml" line="6"/>
         <source>Overlay HTML</source>
-        <translation type="unfinished">Sobreposa HTML</translation>
+        <translation>Sobreposa HTML</translation>
     </message>
 </context>
 <context>
@@ -4804,7 +4716,7 @@ simultàniament en aquest mode.</translation>
     <message>
         <location filename="../src/qml/filters/mirror/meta_movit.qml" line="6"/>
         <source>Mirror</source>
-        <translation type="unfinished">Mirall</translation>
+        <translation>Mirall</translation>
     </message>
 </context>
 <context>
@@ -4990,10 +4902,6 @@ simultàniament en aquest mode.</translation>
         <translation>Color</translation>
     </message>
     <message>
-        <source>Please choose a color</source>
-        <translation type="vanished">Si us plau, tria un color</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/audio_balance/ui.qml" line="41"/>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="49"/>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="54"/>
@@ -5064,7 +4972,7 @@ simultàniament en aquest mode.</translation>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="40"/>
         <source>Click Analyze to use this filter.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="55"/>
@@ -5128,13 +5036,9 @@ simultàniament en aquest mode.</translation>
         <translation>Centra</translation>
     </message>
     <message>
-        <source>Center Bias</source>
-        <translation type="vanished">Centra Desviació</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="125"/>
         <source>Center bias</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="142"/>
@@ -5153,7 +5057,7 @@ simultàniament en aquest mode.</translation>
         <location filename="../src/qml/filters/wave/ui.qml" line="44"/>
         <location filename="../src/qml/filters/white/ui.qml" line="67"/>
         <source>Preset</source>
-        <translation type="unfinished">Plantilla</translation>
+        <translation>Plantilla</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/ui.qml" line="83"/>
@@ -5191,102 +5095,94 @@ simultàniament en aquest mode.</translation>
         <translation>Deforma verticalment?</translation>
     </message>
     <message>
-        <source>Neutral Color</source>
-        <translation type="vanished">Color neutral</translation>
-    </message>
-    <message>
-        <source>Color Temperature</source>
-        <translation type="vanished">Temperatura de color</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="56"/>
         <source>No File Loaded</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="58"/>
         <source>No HTML file loaded. Click &quot;Open&quot; or &quot;New&quot; to load a file.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="109"/>
         <source>&lt;b&gt;File:&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="121"/>
         <source>Use WebVfx JavaScript extension</source>
-        <translation type="unfinished">Utilitza l&apos;extensió de JavaScript WebVfx</translation>
+        <translation>Utilitza l&apos;extensió de JavaScript WebVfx</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="124"/>
         <source>For Advanced Users: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="125"/>
         <source>If you enable this, and you do not use the WebVfx JavaScript extension, your content will not render!</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="137"/>
         <source>Confirm Selection</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="138"/>
         <source>Do you still want to use this?</source>
-        <translation type="unfinished">Encara vols utilitzar això?</translation>
+        <translation>Encara vols utilitzar això?</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="149"/>
         <source>Open...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="153"/>
         <source>Open HTML File</source>
-        <translation type="unfinished">Obre un Fitxer HTML</translation>
+        <translation>Obre un Fitxer HTML</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="157"/>
         <source>Load an existing HTML file.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="162"/>
         <source>New...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="166"/>
         <source>Save HTML File</source>
-        <translation type="unfinished">Desa un Fitxer HTML</translation>
+        <translation>Desa un Fitxer HTML</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="170"/>
         <source>Load new HTML file.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="181"/>
         <source>Edit...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="198"/>
         <source>Reload</source>
-        <translation type="unfinished">Recarrega</translation>
+        <translation>Recarrega</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/white/ui.qml" line="81"/>
         <source>Neutral color</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/white/ui.qml" line="104"/>
         <source>Color temperature</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5314,7 +5210,7 @@ simultàniament en aquest mode.</translation>
         <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="44"/>
         <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="48"/>
         <source>Preset</source>
-        <translation type="unfinished">Plantilla</translation>
+        <translation>Plantilla</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glow/ui_frei0r.qml" line="58"/>
@@ -5363,44 +5259,20 @@ simultàniament en aquest mode.</translation>
         <translation>Saturació</translation>
     </message>
     <message>
-        <source>Outer Radius</source>
-        <translation type="vanished">Radi exterior</translation>
-    </message>
-    <message>
-        <source>Inner Radius</source>
-        <translation type="vanished">Radi interior</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/blur/ui_movit.qml" line="34"/>
         <location filename="../src/qml/filters/glow/ui_movit.qml" line="64"/>
         <source>Radius</source>
         <translation>Radi</translation>
     </message>
     <message>
-        <source>Highlight Blurriness</source>
-        <translation type="vanished">Desenfocament de la brillantor</translation>
-    </message>
-    <message>
-        <source>Highlight Cutoff</source>
-        <translation type="vanished">Tall de lluminositat</translation>
-    </message>
-    <message>
-        <source>Circle Radius</source>
-        <translation type="vanished">Radi del cercle</translation>
-    </message>
-    <message>
-        <source>Gaussian Radius</source>
-        <translation type="vanished">Radi Gaussià</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="66"/>
         <source>Circle radius</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="84"/>
         <source>Gaussian radius</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="102"/>
@@ -5417,27 +5289,27 @@ simultàniament en aquest mode.</translation>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="50"/>
         <location filename="../src/qml/filters/vignette/ui_movit.qml" line="35"/>
         <source>Preset</source>
-        <translation type="unfinished">Plantilla</translation>
+        <translation>Plantilla</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glow/ui_movit.qml" line="81"/>
         <source>Highlight blurriness</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/glow/ui_movit.qml" line="98"/>
-        <source>Highlight butoff</source>
-        <translation type="unfinished"></translation>
+        <source>Highlight cutoff</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/ui_movit.qml" line="48"/>
         <source>Outer radius</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/ui_movit.qml" line="64"/>
         <source>Inner radius</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5445,7 +5317,7 @@ simultàniament en aquest mode.</translation>
     <message>
         <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="35"/>
         <source>Preset</source>
-        <translation type="unfinished">Plantilla</translation>
+        <translation>Plantilla</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="50"/>
@@ -5460,16 +5332,12 @@ simultàniament en aquest mode.</translation>
     <message>
         <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="84"/>
         <source>Non-linear feathering</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="96"/>
         <source>Opacity</source>
         <translation>Opacitat</translation>
-    </message>
-    <message>
-        <source>Non-linear Feathering</source>
-        <translation type="vanished">Difuminat no linial</translation>
     </message>
 </context>
 </TS>
