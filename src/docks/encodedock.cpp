@@ -30,8 +30,8 @@
 #include <QtXml>
 
 // formulas to map absolute value ranges to percentages as int
-#define TO_ABSOLUTE(min, max, rel) ((min) + ((max) - (min)) * (rel) / 100)
-#define TO_RELATIVE(min, max, abs) (100 * ((abs) - (min)) / ((max) - (min)))
+#define TO_ABSOLUTE(min, max, rel) qRound(float(min) + float((max) - (min)) * float(rel) / 100.0f)
+#define TO_RELATIVE(min, max, abs) qRound(100.0f * float((abs) - (min)) / float((max) - (min)))
 
 EncodeDock::EncodeDock(QWidget *parent) :
     QDockWidget(parent),
@@ -560,7 +560,7 @@ void EncodeDock::on_presetsTree_clicked(const QModelIndex &index)
                 }
                 else if (name == "crf") {
                     ui->videoRateControlCombo->setCurrentIndex(RateControlQuality);
-                    ui->videoQualitySpinner->setValue(preset->get_int("crf"));
+                    videoQuality = preset->get_int("crf");
                 }
                 else if (name == "bufsize") {
                     // traditionally this means video only
