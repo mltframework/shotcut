@@ -1295,6 +1295,12 @@ function configure_compile_install_subproject {
     export CXXFLAGS="$CFLAGS"
   fi
 
+  # Special hack for vid.stab
+  if test "vid.stab" = "$1" -a "$TARGET_OS" = "Win32"; then
+    sed 's/-O3/-O2/' <CMakeLists.txt >CMakeLists.new
+    mv CMakeLists.new CMakeLists.txt
+  fi
+
   cmd `lookup CONFIG $1` || die "Unable to configure $1"
   feedback_progress Done configuring $1
 
