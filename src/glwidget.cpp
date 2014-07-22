@@ -236,24 +236,30 @@ void GLWidget::createShader()
         m_shader = new QOpenGLShaderProgram(this);
         m_shader->addShaderFromSourceCode(QOpenGLShader::Fragment,
         "uniform sampler2D Ytex, Utex, Vtex;"
+        "uniform int colorspace;"
         "void main(void) {"
-        "  float r, g, b;"
-        "  vec4 txl, ux, vx;"
-        "  float nx = gl_TexCoord[0].x;"
-        "  float ny = gl_TexCoord[0].y;"
-        "  float y = texture2D(Ytex, vec2(nx, ny)).r;"
-        "  float u = texture2D(Utex, vec2(nx, ny)).r;"
-        "  float v = texture2D(Vtex, vec2(nx, ny)).r;"
-
-        "  y = 1.1643 * (y - 0.0625);"
-        "  u = u - 0.5;"
-        "  v = v - 0.5;"
-
-        "  r = y + 1.5958  * v;"
-        "  g = y - 0.39173 * u - 0.81290 * v;"
-        "  b = y + 2.017   * u;"
-
-        "  gl_FragColor = vec4(r, g, b, 1.0);"
+        "  float x = gl_TexCoord[0].x;"
+        "  float y = gl_TexCoord[0].y;"
+        "  vec4 input;"
+        "  input.r = texture2D(Ytex, vec2(x, y)).r - 0.0625;" // Y
+        "  input.g = texture2D(Utex, vec2(x, y)).r - 0.5;"    // U
+        "  input.b = texture2D(Vtex, vec2(x, y)).r - 0.5;"    // V
+        "  input.a  = 1.0;"
+        "  mat4 coefficients;"
+        "  if (colorspace == 601) {"
+        "    coefficients = mat4("
+        "      1.1643,  1.1643,  1.1643, 0.0," // column 1
+        "      0.0,    -0.39173, 2.017,  0.0," // column 2
+        "      1.5958, -0.8129,  0.0,    0.0," // column 3
+        "      0.0,     0.0,     0.0,    1.0);"// column 4
+        "  } else {" // ITU-R 709
+        "    coefficients = mat4("
+        "      1.1643, 1.1643, 1.1643, 0.0," // column 1
+        "      0.0,   -0.213,  2.112,  0.0," // column 2
+        "      1.793, -0.533,  0.0,    0.0," // column 3
+        "      0.0,    0.0,    0.0,    1.0);"// column 4
+        "  }"
+        "  gl_FragColor = coefficients * input;"
         "}");
         m_shader->bind();
         doneCurrent();
@@ -446,6 +452,8 @@ void GLWidget::showFrame(Mlt::QFrame frame)
             glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
             glTexImage2D   (GL_TEXTURE_2D, 0, GL_LUMINANCE, m_image_width/2, m_image_height/4, 0,
                             GL_LUMINANCE, GL_UNSIGNED_BYTE, image + m_image_width * m_image_height + m_image_width/2 * m_image_height/2);
+
+            m_shader->setUniformValue(m_shader->uniformLocation("colorspace"), MLT.profile().colorspace());
 
             delete m_lastFrame;
             m_lastFrame = new Mlt::Frame(*frame.frame());
