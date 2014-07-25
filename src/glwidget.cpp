@@ -533,6 +533,7 @@ int GLWidget::reconfigure(bool isMulti)
             m_consumer->set("real_time", property("realtime").toBool()? 1 : -threadCount);
         }
         m_consumer->set("mlt_image_format", "yuv422");
+        m_consumer->set("color_trc", Settings.playerGamma().toLatin1().constData());
         m_display_ratio = profile().dar();
 
         if (isMulti) {

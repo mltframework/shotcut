@@ -69,6 +69,8 @@ public:
     void setPlayerDeinterlacer(const QString&);
     QString playerExternal() const;
     void setPlayerExternal(const QString&);
+    QString playerGamma() const;
+    void setPlayerGamma(const QString&);
     bool playerGPU() const;
     void setPlayerGPU(bool);
     QString playerInterpolation() const;

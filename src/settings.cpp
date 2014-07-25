@@ -199,6 +199,16 @@ void ShotcutSettings::setPlayerExternal(const QString& s)
     settings.setValue("player/external", s);
 }
 
+QString ShotcutSettings::playerGamma() const
+{
+    return settings.value("player/gamma", "iec61966_2_1").toString();
+}
+
+void ShotcutSettings::setPlayerGamma(const QString& s)
+{
+    settings.setValue("player/gamma", s);
+}
+
 void ShotcutSettings::setPlayerGPU(bool b)
 {
     settings.setValue("player/gpu", b);

@@ -359,16 +359,23 @@ MainWindow::~MainWindow()
 void MainWindow::setupSettingsMenu()
 {
     qDebug() << "begin";
-    QActionGroup* deinterlaceGroup = new QActionGroup(this);
-    deinterlaceGroup->addAction(ui->actionOneField);
-    deinterlaceGroup->addAction(ui->actionLinearBlend);
-    deinterlaceGroup->addAction(ui->actionYadifTemporal);
-    deinterlaceGroup->addAction(ui->actionYadifSpatial);
-    QActionGroup* interpolationGroup = new QActionGroup(this);
-    interpolationGroup->addAction(ui->actionNearest);
-    interpolationGroup->addAction(ui->actionBilinear);
-    interpolationGroup->addAction(ui->actionBicubic);
-    interpolationGroup->addAction(ui->actionHyper);
+    QActionGroup* group = new QActionGroup(this);
+    group->addAction(ui->actionOneField);
+    group->addAction(ui->actionLinearBlend);
+    group->addAction(ui->actionYadifTemporal);
+    group->addAction(ui->actionYadifSpatial);
+    group = new QActionGroup(this);
+    group->addAction(ui->actionNearest);
+    group->addAction(ui->actionBilinear);
+    group->addAction(ui->actionBicubic);
+    group->addAction(ui->actionHyper);
+    if (Settings.playerGPU()) {
+        group = new QActionGroup(this);
+        group->addAction(ui->actionGammaRec709);
+        group->addAction(ui->actionGammaSRGB);
+    } else {
+        delete ui->menuGamma;
+    }
     m_profileGroup = new QActionGroup(this);
     m_profileGroup->addAction(ui->actionProfileAutomatic);
     ui->actionProfileAutomatic->setData(QString());
@@ -523,10 +530,10 @@ void MainWindow::setupSettingsMenu()
     connect(m_languagesGroup, SIGNAL(triggered(QAction*)), this, SLOT(onLanguageTriggered(QAction*)));
 
     // Setup the themes actions
-    QActionGroup* themeGroup = new QActionGroup(this);
-    themeGroup->addAction(ui->actionSystemTheme);
-    themeGroup->addAction(ui->actionFusionDark);
-    themeGroup->addAction(ui->actionFusionLight);
+    group = new QActionGroup(this);
+    group->addAction(ui->actionSystemTheme);
+    group->addAction(ui->actionFusionDark);
+    group->addAction(ui->actionFusionLight);
     if (Settings.theme() == "dark")
         ui->actionFusionDark->setChecked(true);
     else if (Settings.theme() == "light")
@@ -862,6 +869,13 @@ void MainWindow::readPlayerSettings()
             break;
         }
     }
+
+    QString gamma = Settings.playerGamma();
+    if (gamma == "bt709")
+        ui->actionGammaRec709->setChecked(true);
+    else
+        ui->actionGammaSRGB->setChecked(true);
+
     qDebug() << "end";
 }
 
@@ -2202,4 +2216,20 @@ void MainWindow::on_actionOpenXML_triggered()
             emit openFailed(url);
         }
     }
+}
+
+void MainWindow::on_actionGammaSRGB_triggered(bool checked)
+{
+    Q_UNUSED(checked)
+    Settings.setPlayerGamma("iec61966_2_1");
+    MLT.restart();
+    MLT.refreshConsumer();
+}
+
+void MainWindow::on_actionGammaRec709_triggered(bool checked)
+{
+    Q_UNUSED(checked)
+    Settings.setPlayerGamma("bt709");
+    MLT.restart();
+    MLT.refreshConsumer();
 }
