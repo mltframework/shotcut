@@ -25,8 +25,8 @@ Rectangle {
     property var defaultParameters: ['lift_r', 'lift_g', 'lift_b', 'gamma_r', 'gamma_g', 'gamma_b', 'gain_r', 'gain_g', 'gain_b']
     property var gammaFactor: 2.0
     property var gainFactor: 4.0
-    width: 400
-    height: 200
+    width: 450
+    height: 300
     color: 'transparent'
     
     function loadWheels() {
