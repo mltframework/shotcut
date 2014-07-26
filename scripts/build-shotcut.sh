@@ -1674,7 +1674,7 @@ function deploy_win32
     cmd mv bin/qmelt.exe .
     cmd rm -rf bin include etc man manifest src *.txt
     cmd rm lib/*
-    cmd rm -rf lib/pkgconfig
+    cmd rm -rf lib/pkgconfig lib/gdk-pixbuf-2.0 lib/glib-2.0 lib/gtk-2.0
     cmd rm -rf share/doc share/man share/ffmpeg/examples share/aclocal share/glib-2.0 share/gtk-2.0 share/gtk-doc share/themes share/locale
   fi
   cmd mv COPYING COPYING.txt
