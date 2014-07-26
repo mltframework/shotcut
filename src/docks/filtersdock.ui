@@ -18,7 +18,7 @@
    <string>Filters</string>
   </property>
   <widget class="QWidget" name="dockWidgetContents">
-   <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,10">
+   <layout class="QHBoxLayout" name="dockWidgetLayout" stretch="0,10">
     <property name="spacing">
      <number>0</number>
     </property>
@@ -119,8 +119,8 @@
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>40</width>
-            <height>20</height>
+            <width>0</width>
+            <height>0</height>
            </size>
           </property>
          </spacer>
@@ -142,8 +142,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>87</width>
-         <height>254</height>
+         <width>178</width>
+         <height>257</height>
         </rect>
        </property>
       </widget>

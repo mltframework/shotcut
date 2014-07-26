@@ -55,6 +55,9 @@ public slots:
     void setFadeInDuration(int duration);
     void setFadeOutDuration(int duration);
 
+protected:
+    void resizeEvent(QResizeEvent *event);
+
 private slots:
     void on_addAudioButton_clicked();
     

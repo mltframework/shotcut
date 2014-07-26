@@ -186,6 +186,18 @@ void FiltersDock::setFadeOutDuration(int duration)
     }
 }
 
+void FiltersDock::resizeEvent(QResizeEvent* event)
+{
+    QWidget::resizeEvent(event);
+    if (event->size().height() > event->size().width()) {
+        ui->dockWidgetLayout->setDirection(QBoxLayout::TopToBottom);
+        ui->listView->setMaximumSize(QWIDGETSIZE_MAX, 100);
+    } else {
+        ui->dockWidgetLayout->setDirection(QBoxLayout::LeftToRight);
+        ui->listView->setMaximumSize(200, QWIDGETSIZE_MAX);
+    }
+}
+
 void FiltersDock::on_addAudioButton_clicked()
 {
     availablefilters();
@@ -274,6 +286,7 @@ void FiltersDock::loadQuickPanel(const QmlMetadata* metadata, int row)
     qqview->setColor(palette().window().color());
     qqview->setSource(QUrl::fromLocalFile(metadata->qmlFilePath()));
     QWidget* container = QWidget::createWindowContainer(qqview);
+    container->setMinimumSize(qqview->geometry().size());
     container->setFocusPolicy(Qt::TabFocus);
     loadWidgetsPanel(container);
     m_quickObject = qqview->rootObject();
