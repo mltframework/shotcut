@@ -2263,6 +2263,7 @@ void MultitrackModel::load()
     // but the Mlt::Tractor(Service&) constructor will fail unless it detects
     // the type as tractor, and mlt_service_identify() needs the resource
     // property to say "<tractor>" to identify it as playlist type.
+    MLT.producer()->set("mlt_type", "mlt_producer");
     MLT.producer()->set("resource", "<tractor>");
     MLT.profile().set_explicit(true);
     m_tractor = new Mlt::Tractor(*MLT.producer());

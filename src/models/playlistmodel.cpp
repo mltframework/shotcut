@@ -413,6 +413,7 @@ void PlaylistModel::load()
     // but the Mlt::Playlist(Service&) constructor will fail unless it detects
     // the type as playlist, and mlt_service_identify() needs the resource
     // property to say "<playlist>" to identify it as playlist type.
+    MLT.producer()->set("mlt_type", "mlt_producer");
     MLT.producer()->set("resource", "<playlist>");
     m_playlist = new Mlt::Playlist(*MLT.producer());
     if (!m_playlist->is_valid()) {
