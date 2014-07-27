@@ -2236,7 +2236,7 @@ void MultitrackModel::loadPlaylist()
     Mlt::Properties retainList((mlt_properties) m_tractor->get_data("xml_retain"));
     if (retainList.is_valid() && retainList.get_data(kPlaylistTrackId)) {
         Mlt::Playlist playlist((mlt_playlist) retainList.get_data(kPlaylistTrackId));
-        if (playlist.is_valid())
+        if (playlist.is_valid() && playlist.type() == playlist_type)
             MAIN.playlistDock()->model()->setPlaylist(playlist);
     }
     retainPlaylist();
