@@ -1507,7 +1507,6 @@ void MainWindow::onFiltersDockTriggered(bool checked)
 void MainWindow::onPlaylistCreated()
 {
     if (!playlist() || playlist()->count() == 0) return;
-    setCurrentFile("");
     m_player->enableTab(Player::ProgramTabIndex, true);
 }
 
@@ -1548,7 +1547,6 @@ void MainWindow::onPlaylistModified()
 
 void MainWindow::onMultitrackCreated()
 {
-    setCurrentFile("");
     m_player->enableTab(Player::ProgramTabIndex, true);
 }
 
