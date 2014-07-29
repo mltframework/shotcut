@@ -240,11 +240,11 @@ void GLWidget::createShader()
         "void main(void) {"
         "  float x = gl_TexCoord[0].x;"
         "  float y = gl_TexCoord[0].y;"
-        "  vec4 input;"
-        "  input.r = texture2D(Ytex, vec2(x, y)).r - 0.0625;" // Y
-        "  input.g = texture2D(Utex, vec2(x, y)).r - 0.5;"    // U
-        "  input.b = texture2D(Vtex, vec2(x, y)).r - 0.5;"    // V
-        "  input.a  = 1.0;"
+        "  vec4 pixel;"
+        "  pixel.r = texture2D(Ytex, vec2(x, y)).r - 0.0625;" // Y
+        "  pixel.g = texture2D(Utex, vec2(x, y)).r - 0.5;"    // U
+        "  pixel.b = texture2D(Vtex, vec2(x, y)).r - 0.5;"    // V
+        "  pixel.a  = 1.0;"
         "  mat4 coefficients;"
         "  if (colorspace == 601) {"
         "    coefficients = mat4("
@@ -259,7 +259,7 @@ void GLWidget::createShader()
         "      1.793, -0.533,  0.0,    0.0," // column 3
         "      0.0,    0.0,    0.0,    1.0);"// column 4
         "  }"
-        "  gl_FragColor = coefficients * input;"
+        "  gl_FragColor = coefficients * pixel;"
         "}");
         m_shader->bind();
         doneCurrent();
