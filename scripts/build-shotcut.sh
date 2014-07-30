@@ -584,9 +584,6 @@ function set_globals {
   elif [ "$TARGET_OS" = "Win32" ]; then
     # DEFINES+=QT_STATIC is for QWebSockets
     CONFIG[7]="$QMAKE -r -spec mingw CONFIG+=link_pkgconfig PKGCONFIG+=mlt++ LIBS+=-L${QTDIR}/lib SHOTCUT_VERSION=$(date '+%y.%m.%d') DEFINES+=QT_STATIC"
-  elif [ "$(which qmake-qt5)" != "" ]; then
-    CONFIG[7]="qmake-qt5 -r"
-    LD_LIBRARY_PATH_[7]="/usr/local/lib"
   else
     CONFIG[7]="$QTDIR/bin/qmake -r"
     LD_LIBRARY_PATH_[7]="/usr/local/lib"
@@ -606,8 +603,6 @@ function set_globals {
     CONFIG[9]="$QTDIR/bin/qmake -r -spec macx-g++ MLT_PREFIX=$FINAL_INSTALL_DIR"
   elif [ "$TARGET_OS" = "Win32" ]; then
     CONFIG[9]="$QMAKE -r -spec mingw LIBS+=-L${QTDIR}/lib INCLUDEPATH+=$FINAL_INSTALL_DIR/include"
-  elif [ "$(which qmake-qt5)" != "" ]; then
-    CONFIG[9]="qmake-qt5 -r"
   else
     CONFIG[9]="$QTDIR/bin/qmake -r"
   fi
