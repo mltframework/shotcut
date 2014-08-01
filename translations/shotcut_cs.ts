@@ -1,8 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="cs_CZ">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="cs_CZ" version="2.1">
 <context>
-    <name></name>
+    <name/>
     <message>
         <location filename="../src/main.cpp" line="190"/>
         <source>Loading plugins...</source>
@@ -332,7 +330,7 @@
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="55"/>
         <source>Click to open color dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Klepněte pro otevření dialogu pro barvy</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="60"/>
@@ -1884,7 +1882,7 @@ tlačítkem myši na úkol k otevření nabídky pro zastavení nyní běžící
         <location filename="../src/widgets/lumamixtransition.ui" line="296"/>
         <source>Do not alter the audio levels during the
 course of the transition. Instead, set a
-fixed mixing level, or choose only clip A&apos;s
+fixed mixing level, or choose only clip A's
 audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>Neměňte zvukové úrovně během
 toku přechodu. Místo toho nastavte
@@ -2163,7 +2161,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.ui" line="164"/>
         <source>Gamma</source>
-        <translation type="unfinished"></translation>
+        <translation>Gamma</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="189"/>
@@ -2467,12 +2465,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.ui" line="643"/>
         <source>sRGB (computer)</source>
-        <translation type="unfinished"></translation>
+        <translation>sRGB (počítač)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="651"/>
         <source>Rec. 709 (TV)</source>
-        <translation type="unfinished"></translation>
+        <translation>Rec. 709 (TV)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="611"/>
@@ -2559,7 +2557,7 @@ Chcete zakázat zpracování s pomocí GPU a program ukončit?</translation>
     <message>
         <location filename="../src/mainwindow.cpp" line="630"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Existují automaticky uložené soubory. Chcete je nyní obnovit?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="735"/>
@@ -2609,7 +2607,8 @@ Chcete uložit své změny?</translation>
         <location filename="../src/mainwindow.cpp" line="1418"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
-        <translation type="unfinished"></translation>
+        <translation>Jsou tu nedokončené úkoly.
+Pořád ještě chcete program ukončit?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1769"/>
@@ -5056,7 +5055,7 @@ obrazovky do SDI/HDMI.</translation>
     <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="125"/>
         <source>Center bias</source>
-        <translation type="unfinished"></translation>
+        <translation>Vychýlení středu</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="142"/>
@@ -5115,17 +5114,17 @@ obrazovky do SDI/HDMI.</translation>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="56"/>
         <source>No File Loaded</source>
-        <translation type="unfinished"></translation>
+        <translation>Nenahrán žádný soubor</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="58"/>
         <source>No HTML file loaded. Click &quot;Open&quot; or &quot;New&quot; to load a file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nenahrán žádný soubor HTML. Klepněte na Otevřít nebo Nový pro nahrání souboru.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="109"/>
         <source>&lt;b&gt;File:&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Soubor:&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="121"/>
@@ -5135,17 +5134,17 @@ obrazovky do SDI/HDMI.</translation>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="124"/>
         <source>For Advanced Users: </source>
-        <translation type="unfinished"></translation>
+        <translation>Pro pokročilé uživatele:</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="125"/>
         <source>If you enable this, and you do not use the WebVfx JavaScript extension, your content will not render!</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokud toto povolíte, a nepoužíváte rozšíření WebVfx JavaScript, obsah se nevykreslí!</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="137"/>
         <source>Confirm Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Potvrdit výběr</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="138"/>
@@ -5155,7 +5154,7 @@ obrazovky do SDI/HDMI.</translation>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="149"/>
         <source>Open...</source>
-        <translation type="unfinished"></translation>
+        <translation>Otevřít...</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="153"/>
@@ -5165,12 +5164,12 @@ obrazovky do SDI/HDMI.</translation>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="157"/>
         <source>Load an existing HTML file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nahrát stávající soubor HTML.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="162"/>
         <source>New...</source>
-        <translation type="unfinished"></translation>
+        <translation>Nový...</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="166"/>
@@ -5180,12 +5179,12 @@ obrazovky do SDI/HDMI.</translation>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="170"/>
         <source>Load new HTML file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nahrát nový soubor HTML.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="181"/>
         <source>Edit...</source>
-        <translation type="unfinished"></translation>
+        <translation>Upravit...</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="198"/>
@@ -5195,12 +5194,12 @@ obrazovky do SDI/HDMI.</translation>
     <message>
         <location filename="../src/qml/filters/white/ui.qml" line="81"/>
         <source>Neutral color</source>
-        <translation type="unfinished"></translation>
+        <translation>Neutrální barva</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/white/ui.qml" line="104"/>
         <source>Color temperature</source>
-        <translation type="unfinished"></translation>
+        <translation>Teplota barvy</translation>
     </message>
 </context>
 <context>
@@ -5285,12 +5284,12 @@ obrazovky do SDI/HDMI.</translation>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="66"/>
         <source>Circle radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Poloměr kruhu</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="84"/>
         <source>Gaussian radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Gaussův poloměr</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="102"/>
@@ -5312,22 +5311,22 @@ obrazovky do SDI/HDMI.</translation>
     <message>
         <location filename="../src/qml/filters/glow/ui_movit.qml" line="81"/>
         <source>Highlight blurriness</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozmazanost světlého místa</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glow/ui_movit.qml" line="98"/>
         <source>Highlight cutoff</source>
-        <translation type="unfinished"></translation>
+        <translation>Zastavení světlého místa</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/ui_movit.qml" line="48"/>
         <source>Outer radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Vnější poloměr</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/ui_movit.qml" line="64"/>
         <source>Inner radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Vnitřní poloměr</translation>
     </message>
 </context>
 <context>
@@ -5350,7 +5349,7 @@ obrazovky do SDI/HDMI.</translation>
     <message>
         <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="84"/>
         <source>Non-linear feathering</source>
-        <translation type="unfinished"></translation>
+        <translation>Měkký výběrový okraj (nelineární)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="96"/>

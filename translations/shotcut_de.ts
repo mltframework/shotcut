@@ -1,8 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="de">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="de" version="2.1">
 <context>
-    <name></name>
+    <name/>
     <message>
         <location filename="../src/main.cpp" line="190"/>
         <source>Loading plugins...</source>
@@ -1882,7 +1880,7 @@ Rechtsklick auf einen Job öffnet ein Menü um den aktuellen Job zu beenden.</tr
         <location filename="../src/widgets/lumamixtransition.ui" line="296"/>
         <source>Do not alter the audio levels during the
 course of the transition. Instead, set a
-fixed mixing level, or choose only clip A&apos;s
+fixed mixing level, or choose only clip A's
 audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>Audio Lautstärke während der Überblendung
 nicht verändern. Stattdessen einen fixen Pegel
@@ -2161,7 +2159,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.ui" line="164"/>
         <source>Gamma</source>
-        <translation type="unfinished"></translation>
+        <translation>Gamma</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="189"/>
@@ -2465,12 +2463,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.ui" line="643"/>
         <source>sRGB (computer)</source>
-        <translation type="unfinished"></translation>
+        <translation>sRGB (Computer)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="651"/>
         <source>Rec. 709 (TV)</source>
-        <translation type="unfinished"></translation>
+        <translation>Rec. 709 (TV)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="611"/>
