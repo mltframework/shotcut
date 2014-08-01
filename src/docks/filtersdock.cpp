@@ -286,7 +286,6 @@ void FiltersDock::loadQuickPanel(const QmlMetadata* metadata, int row)
     qqview->setColor(palette().window().color());
     qqview->setSource(QUrl::fromLocalFile(metadata->qmlFilePath()));
     QWidget* container = QWidget::createWindowContainer(qqview);
-    container->setMinimumSize(qqview->geometry().size());
     container->setFocusPolicy(Qt::TabFocus);
     loadWidgetsPanel(container);
     m_quickObject = qqview->rootObject();
