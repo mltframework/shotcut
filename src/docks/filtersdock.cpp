@@ -188,13 +188,14 @@ void FiltersDock::setFadeOutDuration(int duration)
 
 void FiltersDock::resizeEvent(QResizeEvent* event)
 {
-    QWidget::resizeEvent(event);
-    if (event->size().height() > event->size().width()) {
+    QDockWidget::resizeEvent(event);
+    const int listViewWidth = 200;
+    if (event->size().height() > event->size().width() - listViewWidth) {
         ui->dockWidgetLayout->setDirection(QBoxLayout::TopToBottom);
         ui->listView->setMaximumSize(QWIDGETSIZE_MAX, 100);
     } else {
         ui->dockWidgetLayout->setDirection(QBoxLayout::LeftToRight);
-        ui->listView->setMaximumSize(200, QWIDGETSIZE_MAX);
+        ui->listView->setMaximumSize(listViewWidth, QWIDGETSIZE_MAX);
     }
 }
 
