@@ -354,6 +354,7 @@ MainWindow::~MainWindow()
 
     delete m_htmlEditor;
     delete ui;
+    Mlt::Controller::destroy();
 }
 
 void MainWindow::setupSettingsMenu()
@@ -933,8 +934,6 @@ void MainWindow::configureVideoWidget()
         MLT.videoWidget()->setProperty("rescale", "hyper");
     if (m_keyerGroup)
         MLT.videoWidget()->setProperty("keyer", m_keyerGroup->checkedAction()->data());
-    MLT.videoWidget()->setContentsMargins(0, 0, 0, 0);
-    MLT.videoWidget()->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
     qDebug() << "end";
 }
 

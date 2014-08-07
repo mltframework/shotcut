@@ -138,6 +138,7 @@ private:
     QTabBar* m_tabs;
     bool m_pauseAfterPlay;
     int m_monitorScreen;
+    QWidget* m_videoWidget;
 
 private slots:
     void updateSelection();

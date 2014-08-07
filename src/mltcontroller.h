@@ -82,10 +82,11 @@ protected:
     virtual int reconfigure(bool isMulti) = 0;
 
 public:
-    static Controller& singleton(QWidget* parent = 0);
+    static Controller& singleton(QObject *parent = 0);
     virtual ~Controller();
+    static void destroy();
 
-    virtual QWidget* videoWidget() = 0;
+    virtual QObject* videoWidget() = 0;
     virtual int setProducer(Mlt::Producer*, bool isMulti = false);
     virtual int open(const QString& url);
     bool openXML(const QString& filename);

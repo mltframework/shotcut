@@ -27,6 +27,7 @@
 
 namespace Mlt {
 
+static Controller* instance = 0;
 const QString XmlMimeType("application/mlt+xml");
 static const char* kShotcutVirtualClip = "shotcut:virtual";
 
@@ -100,9 +101,8 @@ Controller::Controller()
     qDebug() << "end";
 }
 
-Controller& Controller::singleton(QWidget* parent)
+Controller& Controller::singleton(QObject *parent)
 {
-    static Controller* instance = 0;
     if (!instance) {
         qRegisterMetaType<QFrame>("Mlt::QFrame");
         qRegisterMetaType<QProducer>("Mlt::QProducer");
@@ -117,6 +117,11 @@ Controller::~Controller()
     closeConsumer();
     delete m_savedProducer;
     delete m_profile;
+}
+
+void Controller::destroy()
+{
+    delete instance;
 }
 
 int Controller::setProducer(Mlt::Producer* producer, bool)

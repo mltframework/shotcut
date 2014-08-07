@@ -38,7 +38,7 @@ Player::Player(QWidget *parent)
     , m_monitorScreen(-1)
 {
     setObjectName("Player");
-    Mlt::Controller::singleton(this);
+    Mlt::Controller::singleton();
     setupActions(this);
     m_playIcon = actionPlay->icon();
     m_pauseIcon = actionPause->icon();
@@ -67,15 +67,16 @@ Player::Player(QWidget *parent)
     QHBoxLayout* hlayout = new QHBoxLayout(tmp);
     hlayout->setSpacing(4);
     hlayout->setContentsMargins(0, 0, 0, 0);
+    m_videoWidget = QWidget::createWindowContainer(qobject_cast<QWindow*>(MLT.videoWidget()));
 #ifdef Q_OS_MAC
-    hlayout->addWidget(MLT.videoWidget(), 10);
+    hlayout->addWidget(m_videoWidget, 10);
 #else
     m_scrollArea = new QScrollArea;
     m_scrollArea->setWidgetResizable(true);
     m_scrollArea->setFrameShape(QFrame::NoFrame);
     m_scrollArea->setAlignment(Qt::AlignCenter);
     m_scrollArea->setFocusPolicy(Qt::NoFocus);
-    m_scrollArea->setWidget(MLT.videoWidget());
+    m_scrollArea->setWidget(m_videoWidget);
     hlayout->addWidget(m_scrollArea, 10);
 #endif
     hlayout->addStretch();
@@ -327,7 +328,7 @@ void Player::setMarkers(const QList<int> &markers)
 
 QSize Player::videoSize() const
 {
-    return m_scrollArea? m_scrollArea->contentsRect().size() : MLT.videoWidget()->size();
+    return m_videoWidget->size();
 }
 
 void Player::resizeEvent(QResizeEvent*)
@@ -680,22 +681,20 @@ void Player::showAudio(Mlt::Frame* frame)
 void Player::moveVideoToScreen(int screen)
 {
     if (screen == m_monitorScreen) return;
-    QWidget* widget = m_scrollArea? m_scrollArea : MLT.videoWidget();
-
     if (screen == -2) {
         // -2 = embedded
         QBoxLayout* l = (QBoxLayout*) layout()->itemAt(0)->widget()->layout();
-        widget->showNormal();
-        l->insertWidget(0, widget, 10);
+        m_videoWidget->showNormal();
+        l->insertWidget(0, m_videoWidget, 10);
     } else if (QApplication::desktop()->screenCount() > 1) {
         // -1 = find first screen the app is not using
         for (int i = 0; screen == -1 && i < QApplication::desktop()->screenCount(); i++) {
             if (i != QApplication::desktop()->screenNumber(this))
                 screen = i;
         }
-        widget->setParent(QApplication::desktop()->screen(screen));
-        widget->move(QApplication::desktop()->screenGeometry(screen).bottomLeft());
-        widget->showFullScreen();
+        m_videoWidget->setParent(QApplication::desktop()->screen(screen));
+        m_videoWidget->move(QApplication::desktop()->screenGeometry(screen).bottomLeft());
+        m_videoWidget->showFullScreen();
     }
     m_monitorScreen = screen;
 }
@@ -772,7 +771,7 @@ void Player::setZoom(float factor, const QIcon& icon)
     } else {
         m_zoomToggleFactor = factor;
         m_scrollArea->setWidgetResizable(false);
-        MLT.videoWidget()->resize(
+        m_videoWidget->resize(
             qRound(factor * MLT.profile().width() * MLT.profile().sar()),
             qRound(factor * MLT.profile().height()));
         m_scrollArea->horizontalScrollBar()->setValue(m_scrollArea->horizontalScrollBar()->maximum() / 2);
