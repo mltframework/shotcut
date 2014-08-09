@@ -32,6 +32,7 @@ class QmlMetadata : public QObject
     Q_PROPERTY(QString mlt_service READ mlt_service WRITE set_mlt_service)
     Q_PROPERTY(bool needsGPU READ needsGPU WRITE setNeedsGPU)
     Q_PROPERTY(QString qml READ qmlFileName WRITE setQmlFileName)
+    Q_PROPERTY(QString vui READ vuiFileName WRITE setVuiFileName)
     Q_PROPERTY(bool isAudio READ isAudio WRITE setIsAudio)
     Q_PROPERTY(bool isHidden READ isHidden WRITE setIsHidden)
 
@@ -54,9 +55,12 @@ public:
     void setNeedsGPU(bool);
     QString qmlFileName() const { return m_qmlFileName; }
     void setQmlFileName(const QString&);
+    QString vuiFileName() const { return m_vuiFileName; }
+    void setVuiFileName(const QString&);
     QDir path() const { return m_path; }
     void setPath(const QDir& path);
     QString qmlFilePath() const;
+    QString vuiFilePath() const;
     bool isAudio() const { return m_isAudio; }
     void setIsAudio(bool isAudio);
     bool isHidden() const { return m_isHidden; }
@@ -68,6 +72,7 @@ private:
     QString m_mlt_service;
     bool m_needsGPU;
     QString m_qmlFileName;
+    QString m_vuiFileName;
     QDir m_path;
     bool m_isAudio;
     bool m_isHidden;

@@ -23,6 +23,7 @@
 #include <QOpenGLFunctions_3_2_Core>
 #include <QUrl>
 #include <QOffscreenSurface>
+#include <QtQml>
 #include <Mlt.h>
 #include "glwidget.h"
 #include "settings.h"
@@ -46,7 +47,6 @@ using namespace Mlt;
 GLWidget::GLWidget(QObject *parent)
     : QQuickView((QWindow*) parent)
     , Controller()
-    , m_display_ratio(4.0/3.0)
     , m_shader(0)
     , m_glslManager(0)
     , m_isInitialized(false)
@@ -63,6 +63,11 @@ GLWidget::GLWidget(QObject *parent)
     setPersistentSceneGraph(true);
     setClearBeforeRendering(false);
     setResizeMode(QQuickView::SizeRootObjectToView);
+    QDir importPath = QmlUtilities::qmlDir();
+    importPath.cd("modules");
+    engine()->addImportPath(importPath.path());
+    QmlUtilities::setCommonProperties(rootContext());
+    rootContext()->setContextProperty("video", this);
 
     if (Settings.playerGPU())
         m_glslManager = new Filter(profile(), "glsl.manager");
@@ -98,6 +103,7 @@ GLWidget::~GLWidget()
     delete m_threadJoinEvent;
     delete m_lastFrame;
     if (m_frameRenderer && m_frameRenderer->isRunning()) {
+        QMetaObject::invokeMethod(m_frameRenderer, "cleanup");
         m_frameRenderer->quit();
         m_frameRenderer->wait();
         delete m_frameRenderer;
@@ -152,31 +158,35 @@ void GLWidget::initializeGL()
 
 void GLWidget::resizeGL(int width, int height)
 {
+    int x, y, w, h;
     width *= devicePixelRatio();
     height *= devicePixelRatio();
-    qDebug() << width << 'x' << height;
     double this_aspect = (double) width / height;
+    double video_aspect = profile().dar();
+    qDebug() << width << 'x' << height;
 
     // Special case optimisation to negate odd effect of sample aspect ratio
     // not corresponding exactly with image resolution.
-    if ((int) (this_aspect * 1000) == (int) (m_display_ratio * 1000))
+    if ((int) (this_aspect * 1000) == (int) (video_aspect * 1000))
     {
         w = width;
         h = height;
     }
     // Use OpenGL to normalise sample aspect ratio
-    else if (height * m_display_ratio > width)
+    else if (height * video_aspect > width)
     {
         w = width;
-        h = width / m_display_ratio;
+        h = width / video_aspect;
     }
     else
     {
-        w = height * m_display_ratio;
+        w = height * video_aspect;
         h = height;
     }
     x = (width - w) / 2;
     y = (height - h) / 2;
+    m_rect.setRect(x, y, w, h);
+    emit rectChanged();
 }
 
 void GLWidget::resizeEvent(QResizeEvent* event)
@@ -256,6 +266,8 @@ void GLWidget::paintGL()
     glClear(GL_COLOR_BUFFER_BIT);
     check_error();
 
+    if (!m_texture[0]) return;
+
     // Bind textures.
     for (int i = 0; i < 3; ++i) {
         if (m_texture[i]) {
@@ -285,10 +297,10 @@ void GLWidget::paintGL()
 
     // Provide vertices of triangle strip.
     QVector<QVector2D> vertices;
-    vertices << QVector2D(float(-w)/2.0f, float(-h)/2.0f);
-    vertices << QVector2D(float(-w)/2.0f, float( h)/2.0f);
-    vertices << QVector2D(float( w)/2.0f, float(-h)/2.0f);
-    vertices << QVector2D(float( w)/2.0f, float( h)/2.0f);
+    vertices << QVector2D(float(-m_rect.width())/2.0f, float(-m_rect.height())/2.0f);
+    vertices << QVector2D(float(-m_rect.width())/2.0f, float( m_rect.height())/2.0f);
+    vertices << QVector2D(float( m_rect.width())/2.0f, float(-m_rect.height())/2.0f);
+    vertices << QVector2D(float( m_rect.width())/2.0f, float( m_rect.height())/2.0f);
     m_shader->enableAttributeArray(m_vertexLocation);
     check_error();
     m_shader->setAttributeArray(m_vertexLocation, vertices.constData());
@@ -327,6 +339,7 @@ void GLWidget::paintGL()
 void GLWidget::mousePressEvent(QMouseEvent* event)
 {
     QQuickView::mousePressEvent(event);
+    if (event->isAccepted()) return;
     if (event->button() == Qt::LeftButton)
         m_dragStart = event->pos();
     if (MLT.isClip())
@@ -336,6 +349,7 @@ void GLWidget::mousePressEvent(QMouseEvent* event)
 void GLWidget::mouseMoveEvent(QMouseEvent* event)
 {
     QQuickView::mouseMoveEvent(event);
+    if (event->isAccepted()) return;
     if (event->modifiers() == Qt::ShiftModifier && m_producer) {
         emit seekTo(m_producer->get_length() * event->x() / width());
         return;
@@ -437,8 +451,10 @@ int GLWidget::setProducer(Mlt::Producer* producer, bool isMulti)
 
     if (!error) {
         error = reconfigure(isMulti);
-        if (!error)
+        if (!error) {
+            // The profile display aspect ratio may have changed.
             resizeGL(width(), height());
+        }
     }
     return error;
 }
@@ -494,7 +510,6 @@ int GLWidget::reconfigure(bool isMulti)
         }
         m_consumer->set("mlt_image_format", "yuv422");
         m_consumer->set("color_trc", Settings.playerGamma().toLatin1().constData());
-        m_display_ratio = profile().dar();
 
         if (isMulti) {
             m_consumer->set("terminate_on_pause", 0);
@@ -633,11 +648,6 @@ FrameRenderer::FrameRenderer(QOpenGLContext* shareContext)
 FrameRenderer::~FrameRenderer()
 {
     qDebug();
-    if (m_texture[0] && m_texture[1] && m_texture[2]) {
-        m_context->makeCurrent(m_surface);
-        glDeleteTextures(3, m_texture);
-        m_context->doneCurrent();
-    }
     delete m_context;
     delete m_gl32;
     delete m_frame;
@@ -747,4 +757,15 @@ void FrameRenderer::showFrame(Mlt::QFrame frame)
         m_context->doneCurrent();
     }
     m_semaphore.release();
+}
+
+void FrameRenderer::cleanup()
+{
+    qDebug();
+    if (m_texture[0] && m_texture[1] && m_texture[2]) {
+        m_context->makeCurrent(m_surface);
+        glDeleteTextures(3, m_texture);
+        m_context->doneCurrent();
+        m_texture[0] = m_texture[1] = m_texture[2] = 0;
+    }
 }

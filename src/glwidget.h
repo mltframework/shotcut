@@ -28,6 +28,7 @@
 #include <QMutex>
 #include <QWaitCondition>
 #include <QThread>
+#include <QRect>
 #include "mltcontroller.h"
 
 class QOpenGLFunctions_3_2_Core;
@@ -45,6 +46,7 @@ typedef void* ( *thread_function_t )( void* );
 class GLWidget : public QQuickView, public Controller, protected QOpenGLFunctions
 {
     Q_OBJECT
+    Q_PROPERTY(QRect rect MEMBER m_rect NOTIFY rectChanged)
 
 public:
     GLWidget(QObject *parent = 0);
@@ -72,10 +74,11 @@ public:
         Controller::pause();
         emit paused();
     }
-    int displayWidth() const { return w / devicePixelRatio(); }
-    int displayHeight() const { return h / devicePixelRatio(); }
+    int displayWidth() const { return m_rect.width() / devicePixelRatio(); }
+    int displayHeight() const { return m_rect.height() / devicePixelRatio(); }
 
     QObject* videoWidget() { return this; }
+    QQuickView* videoQuickView() { return this; }
     Filter* glslManager() const { return m_glslManager; }
     FrameRenderer* frameRenderer() const { return m_frameRenderer; }
 
@@ -91,11 +94,11 @@ signals:
     void started();
     void paused();
     void playing();
+    void rectChanged();
 
 private:
-    int x, y, w, h;
+    QRect m_rect;
     GLuint m_texture[3];
-    double m_display_ratio;
     QOpenGLShaderProgram* m_shader;
     QPoint m_dragStart;
     Filter* m_glslManager;
@@ -156,6 +159,7 @@ public:
 
 public slots:
     void showFrame(Mlt::QFrame frame);
+    void cleanup();
 
 signals:
     void textureReady(GLuint yName, GLuint uName = 0, GLuint vName = 0);

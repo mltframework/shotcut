@@ -25,7 +25,7 @@
 #include "transportcontrol.h"
 
 // forward declarations
-class QWidget;
+class QQuickView;
 
 namespace Mlt {
 
@@ -87,6 +87,7 @@ public:
     static void destroy();
 
     virtual QObject* videoWidget() = 0;
+    virtual QQuickView* videoQuickView() = 0;
     virtual int setProducer(Mlt::Producer*, bool isMulti = false);
     virtual int open(const QString& url);
     bool openXML(const QString& filename);
