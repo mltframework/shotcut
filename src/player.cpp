@@ -32,7 +32,6 @@ Player::Player(QWidget *parent)
     , m_position(0)
     , m_seekPosition(SEEK_INACTIVE)
     , m_isMeltedPlaying(-1)
-    , m_scrollArea(0)
     , m_zoomToggleFactor(Settings.playerZoom() == 0.0f? 1.0f : Settings.playerZoom())
     , m_pauseAfterPlay(false)
     , m_monitorScreen(-1)
@@ -60,26 +59,29 @@ Player::Player(QWidget *parent)
     tabLayout->addStretch();
     connect(m_tabs, SIGNAL(tabBarClicked(int)), SLOT(onTabBarClicked(int)));
 
-    // Add the volume and signal level meter
-    QWidget* tmp = new QWidget(this);
-    vlayout->addWidget(tmp, 10);
+    // Add the layouts for managing video view, scroll bars, and audio controls.
+    QHBoxLayout* hlayout = new QHBoxLayout;
+    vlayout->addLayout(hlayout, 10);
     vlayout->addStretch();
-    QHBoxLayout* hlayout = new QHBoxLayout(tmp);
     hlayout->setSpacing(4);
     hlayout->setContentsMargins(0, 0, 0, 0);
-    m_videoWidget = QWidget::createWindowContainer(qobject_cast<QWindow*>(MLT.videoWidget()));
-#ifdef Q_OS_MAC
-    hlayout->addWidget(m_videoWidget, 10);
-#else
-    m_scrollArea = new QScrollArea;
-    m_scrollArea->setWidgetResizable(true);
-    m_scrollArea->setFrameShape(QFrame::NoFrame);
-    m_scrollArea->setAlignment(Qt::AlignCenter);
-    m_scrollArea->setFocusPolicy(Qt::NoFocus);
-    m_scrollArea->setWidget(m_videoWidget);
-    hlayout->addWidget(m_scrollArea, 10);
-#endif
+    QGridLayout* glayout = new QGridLayout;
+    glayout->setSpacing(0);
+    glayout->setContentsMargins(0, 0, 0, 0);
+    hlayout->addLayout(glayout, 10);
     hlayout->addStretch();
+
+    // Add the video widgets.
+    m_videoWidget = QWidget::createWindowContainer(qobject_cast<QWindow*>(MLT.videoWidget()));
+    glayout->addWidget(m_videoWidget, 0, 0);
+    m_verticalScroll = new QScrollBar(Qt::Vertical);
+    glayout->addWidget(m_verticalScroll, 0, 1);
+    m_verticalScroll->hide();
+    m_horizontalScroll = new QScrollBar(Qt::Horizontal);
+    glayout->addWidget(m_horizontalScroll, 1, 0);
+    m_horizontalScroll->hide();
+
+    // Add the volume and signal level meter
     QVBoxLayout *volumeLayoutV = new QVBoxLayout;
     volumeLayoutV->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding));
     QBoxLayout *volumeLayoutH = new QHBoxLayout;
@@ -219,6 +221,9 @@ Player::Player(QWidget *parent)
     connect(m_positionSpinner, SIGNAL(valueChanged(int)), this, SLOT(seek(int)));
     connect(m_positionSpinner, SIGNAL(editingFinished()), this, SLOT(setFocus()));
     connect(this, SIGNAL(endOfStream()), this, SLOT(pause()));
+    connect(this, SIGNAL(zoomChanged(float)), MLT.videoWidget(), SLOT(setZoom(float)));
+    connect(m_horizontalScroll, SIGNAL(valueChanged(int)), MLT.videoWidget(), SLOT(setOffsetX(int)));
+    connect(m_verticalScroll, SIGNAL(valueChanged(int)), MLT.videoWidget(), SLOT(setOffsetY(int)));
     setFocusPolicy(Qt::StrongFocus);
 }
 
@@ -334,6 +339,14 @@ QSize Player::videoSize() const
 void Player::resizeEvent(QResizeEvent*)
 {
     MLT.onWindowResize();
+    if (Settings.playerZoom() > 0.0f) {
+        float horizontal = float(m_horizontalScroll->value()) / m_horizontalScroll->maximum();
+        float vertical = float(m_verticalScroll->value()) / m_verticalScroll->maximum();
+        adjustScrollBars(horizontal, vertical);
+    } else {
+        m_horizontalScroll->hide();
+        m_verticalScroll->hide();
+    }
 }
 
 void Player::play(double speed)
@@ -678,6 +691,35 @@ void Player::showAudio(Mlt::Frame* frame)
     emit audioLevels(channels);
 }
 
+void Player::adjustScrollBars(float horizontal, float vertical)
+{
+    if (MLT.profile().width() * m_zoomToggleFactor > m_videoWidget->width()) {
+        m_horizontalScroll->setPageStep(m_videoWidget->width());
+        m_horizontalScroll->setMaximum(MLT.profile().width() * m_zoomToggleFactor
+                                       - m_horizontalScroll->pageStep());
+        m_horizontalScroll->setValue(qRound(horizontal * m_horizontalScroll->maximum()));
+        emit m_horizontalScroll->valueChanged(m_horizontalScroll->value());
+        m_horizontalScroll->show();
+    } else {
+        int max = MLT.profile().width() * m_zoomToggleFactor - m_videoWidget->width();
+        emit m_horizontalScroll->valueChanged(qRound(0.5 * max));
+        m_horizontalScroll->hide();
+    }
+
+    if (MLT.profile().height() * m_zoomToggleFactor > m_videoWidget->height()) {
+        m_verticalScroll->setPageStep(m_videoWidget->height());
+        m_verticalScroll->setMaximum(MLT.profile().height() * m_zoomToggleFactor
+                                     - m_verticalScroll->pageStep());
+        m_verticalScroll->setValue(qRound(vertical * m_verticalScroll->maximum()));
+        emit m_verticalScroll->valueChanged(m_verticalScroll->value());
+        m_verticalScroll->show();
+    } else {
+        int max = MLT.profile().height() * m_zoomToggleFactor - m_videoWidget->height();
+        emit m_verticalScroll->valueChanged(qRound(0.5 * max));
+        m_verticalScroll->hide();
+    }
+}
+
 void Player::moveVideoToScreen(int screen)
 {
     if (screen == m_monitorScreen) return;
@@ -761,21 +803,16 @@ void Player::onMuteButtonToggled(bool checked)
 
 void Player::setZoom(float factor, const QIcon& icon)
 {
+    emit zoomChanged(factor);
     Settings.setPlayerZoom(factor);
-    if (!m_scrollArea)
-        return;
     if (factor == 0.0f) {
-        m_scrollArea->setWidgetResizable(true);
         m_zoomButton->setIcon(icon);
         m_zoomButton->setChecked(false);
+        m_horizontalScroll->hide();
+        m_verticalScroll->hide();
     } else {
         m_zoomToggleFactor = factor;
-        m_scrollArea->setWidgetResizable(false);
-        m_videoWidget->resize(
-            qRound(factor * MLT.profile().width() * MLT.profile().sar()),
-            qRound(factor * MLT.profile().height()));
-        m_scrollArea->horizontalScrollBar()->setValue(m_scrollArea->horizontalScrollBar()->maximum() / 2);
-        m_scrollArea->verticalScrollBar()->setValue(m_scrollArea->verticalScrollBar()->maximum() / 2);
+        adjustScrollBars(0.5f, 0.5f);
         m_zoomButton->setIcon(icon);
         m_zoomButton->setChecked(true);
     }

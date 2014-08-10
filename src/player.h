@@ -31,7 +31,7 @@ class TimeSpinBox;
 class AudioSignal;
 class QSlider;
 class QAction;
-class QScrollArea;
+class QScrollBar;
 class QToolButton;
 class QTabBar;
 
@@ -73,6 +73,9 @@ signals:
     void nextSought(int currentPosition);
     void nextSought();
     void profileChanged();
+    void zoomChanged(float zoom);
+    void scrolledHorizontally(int x);
+    void scrolledVertically(int y);
 
 public slots:
     void play(double speed = 1.0);
@@ -103,6 +106,7 @@ private:
     void setupActions(QWidget* widget);
     void retranslateUi(QWidget* widget);
     void showAudio(Mlt::Frame* frame);
+    void adjustScrollBars(float horizontal, float vertical);
 
     QAction *actionPlay;
     QAction *actionPause;
@@ -128,7 +132,8 @@ private:
     int m_duration;
     bool m_isSeekable;
     int m_isMeltedPlaying;
-    QScrollArea* m_scrollArea;
+    QScrollBar* m_horizontalScroll;
+    QScrollBar* m_verticalScroll;
     QToolButton* m_zoomButton;
     QAction* m_zoomFitAction;
     QAction* m_zoomOriginalAction;

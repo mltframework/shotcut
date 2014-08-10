@@ -46,7 +46,9 @@ typedef void* ( *thread_function_t )( void* );
 class GLWidget : public QQuickView, public Controller, protected QOpenGLFunctions
 {
     Q_OBJECT
-    Q_PROPERTY(QRect rect MEMBER m_rect NOTIFY rectChanged)
+    Q_PROPERTY(QRect rect READ rect NOTIFY rectChanged)
+    Q_PROPERTY(float zoom READ zoom NOTIFY zoomChanged)
+    Q_PROPERTY(QPoint offset READ offset NOTIFY offsetChanged)
 
 public:
     GLWidget(QObject *parent = 0);
@@ -74,13 +76,21 @@ public:
         Controller::pause();
         emit paused();
     }
-    int displayWidth() const { return m_rect.width() / devicePixelRatio(); }
-    int displayHeight() const { return m_rect.height() / devicePixelRatio(); }
+    int displayWidth() const { return m_rect.width(); }
+    int displayHeight() const { return m_rect.height(); }
 
     QObject* videoWidget() { return this; }
     QQuickView* videoQuickView() { return this; }
     Filter* glslManager() const { return m_glslManager; }
     FrameRenderer* frameRenderer() const { return m_frameRenderer; }
+    QRect rect() const { return m_rect; }
+    float zoom() const { return m_zoom * MLT.profile().width() / m_rect.width(); }
+    QPoint offset() const;
+
+public slots:
+    void setZoom(float zoom);
+    void setOffsetX(int x);
+    void setOffsetY(int y);
 
 signals:
     /** This method will be called each time a new frame is available.
@@ -95,6 +105,8 @@ signals:
     void paused();
     void playing();
     void rectChanged();
+    void zoomChanged();
+    void offsetChanged();
 
 private:
     QRect m_rect;
@@ -112,10 +124,13 @@ private:
     Event* m_threadJoinEvent;
     FrameRenderer* m_frameRenderer;
     int m_projectionLocation;
+    int m_modelViewLocation;
     int m_vertexLocation;
     int m_texCoordLocation;
     int m_colorspaceLocation;
     int m_textureLocation[3];
+    float m_zoom;
+    QPoint m_offset;
 
 private slots:
     void initializeGL();

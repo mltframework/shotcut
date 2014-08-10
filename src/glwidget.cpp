@@ -56,6 +56,8 @@ GLWidget::GLWidget(QObject *parent)
     , m_threadCreateEvent(0)
     , m_threadJoinEvent(0)
     , m_frameRenderer(0)
+    , m_zoom(0.0f)
+    , m_offset(QPoint(0, 0))
 {
     qDebug() << "begin";
     m_texture[0] = m_texture[1] = m_texture[2] = 0;
@@ -159,8 +161,6 @@ void GLWidget::initializeGL()
 void GLWidget::resizeGL(int width, int height)
 {
     int x, y, w, h;
-    width *= devicePixelRatio();
-    height *= devicePixelRatio();
     double this_aspect = (double) width / height;
     double video_aspect = profile().dar();
     qDebug() << width << 'x' << height;
@@ -200,11 +200,12 @@ void GLWidget::createShader()
     m_shader = new QOpenGLShaderProgram;
     m_shader->addShaderFromSourceCode(QOpenGLShader::Vertex,
                                      "uniform mat4 projection;"
+                                      "uniform mat4 modelView;"
                                      "attribute vec4 vertex;"
                                      "attribute vec2 texCoord;"
                                      "varying vec2 coordinates;"
                                      "void main(void) {"
-                                     "  gl_Position = projection * vertex;"
+                                     "  gl_Position = projection * modelView * vertex;"
                                      "  coordinates = texCoord;"
                                      "}");
     if (m_glslManager) {
@@ -247,6 +248,7 @@ void GLWidget::createShader()
         m_colorspaceLocation = m_shader->uniformLocation("colorspace");
     }
     m_projectionLocation = m_shader->uniformLocation("projection");
+    m_modelViewLocation = m_shader->uniformLocation("modelView");
     m_vertexLocation = m_shader->attributeLocation("vertex");
     m_texCoordLocation = m_shader->attributeLocation("texCoord");
 }
@@ -295,12 +297,24 @@ void GLWidget::paintGL()
     m_shader->setUniformValue(m_projectionLocation, projection);
     check_error();
 
+    // Set model view.
+    QMatrix4x4 modelView;
+    if (m_zoom > 0.0) {
+        if (offset().x() || offset().y())
+            modelView.translate(-offset().x(), offset().y());
+        modelView.scale(zoom(), zoom());
+    }
+    m_shader->setUniformValue(m_modelViewLocation, modelView);
+    check_error();
+
     // Provide vertices of triangle strip.
     QVector<QVector2D> vertices;
-    vertices << QVector2D(float(-m_rect.width())/2.0f, float(-m_rect.height())/2.0f);
-    vertices << QVector2D(float(-m_rect.width())/2.0f, float( m_rect.height())/2.0f);
-    vertices << QVector2D(float( m_rect.width())/2.0f, float(-m_rect.height())/2.0f);
-    vertices << QVector2D(float( m_rect.width())/2.0f, float( m_rect.height())/2.0f);
+    width = m_rect.width() * devicePixelRatio();
+    height = m_rect.height() * devicePixelRatio();
+    vertices << QVector2D(float(-width)/2.0f, float(-height)/2.0f);
+    vertices << QVector2D(float(-width)/2.0f, float( height)/2.0f);
+    vertices << QVector2D(float( width)/2.0f, float(-height)/2.0f);
+    vertices << QVector2D(float( width)/2.0f, float( height)/2.0f);
     m_shader->enableAttributeArray(m_vertexLocation);
     check_error();
     m_shader->setAttributeArray(m_vertexLocation, vertices.constData());
@@ -570,6 +584,33 @@ void GLWidget::setLastFrame(mlt_frame frame)
 {
     delete m_lastFrame;
     m_lastFrame = new Mlt::Frame(frame);
+}
+
+QPoint GLWidget::offset() const
+{
+    return QPoint(m_offset.x() - (MLT.profile().width()  * m_zoom -  width()) / 2,
+                  m_offset.y() - (MLT.profile().height() * m_zoom - height()) / 2);
+}
+
+void GLWidget::setZoom(float zoom)
+{
+    m_zoom = zoom;
+    emit zoomChanged();
+    update();
+}
+
+void GLWidget::setOffsetX(int x)
+{
+    m_offset.setX(x);
+    emit offsetChanged();
+    update();
+}
+
+void GLWidget::setOffsetY(int y)
+{
+    m_offset.setY(y);
+    emit offsetChanged();
+    update();
 }
 
 void GLWidget::updateTexture(GLuint yName, GLuint uName, GLuint vName)
