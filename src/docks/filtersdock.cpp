@@ -151,7 +151,6 @@ void FiltersDock::onProducerOpened()
     onModelChanged();
     ui->addAudioButton->setEnabled(MLT.isClip());
     ui->addVideoButton->setEnabled(MLT.isClip());
-    MLT.videoQuickView()->setSource(QUrl());
 }
 
 void FiltersDock::setProducer(Mlt::Producer *producer)
@@ -223,10 +222,7 @@ void FiltersDock::on_removeButton_clicked()
     QModelIndex index = ui->listView->currentIndex();
     if (index.isValid()) {
         m_model.remove(index.row());
-        delete ui->scrollArea->widget();
-        ui->scrollArea->setWidget(0);
-        m_quickObject = 0;
-        MLT.videoQuickView()->setSource(QUrl());
+        loadWidgetsPanel(0);
     }
 }
 
@@ -273,6 +269,7 @@ void FiltersDock::loadWidgetsPanel(QWidget *widget)
     m_quickObject = 0;
     delete ui->scrollArea->widget();
     ui->scrollArea->setWidget(widget);
+    MLT.videoQuickView()->setSource(QUrl());
 }
 
 void FiltersDock::loadQuickPanel(const QmlMetadata* metadata, int row)
