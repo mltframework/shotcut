@@ -22,6 +22,7 @@
 #include <QObject>
 #include <QString>
 #include <QVariant>
+#include <QRectF>
 #include <MltFilter.h>
 #include "models/attachedfiltersmodel.h"
 #include "qmlmetadata.h"
@@ -45,9 +46,11 @@ public:
 
     Q_INVOKABLE QString get(QString name);
     Q_INVOKABLE double getDouble(QString name);
+    Q_INVOKABLE QRectF getRect(QString name);
     Q_INVOKABLE void set(QString name, QString value);
     Q_INVOKABLE void set(QString name, double value);
     Q_INVOKABLE void set(QString name, int value);
+    Q_INVOKABLE void set(QString name, double x, double y, double width, double height, double opacity = 1.0);
     QString path() const { return m_path; }
     Q_INVOKABLE void loadPresets();
     QStringList presets() const { return m_presets; }

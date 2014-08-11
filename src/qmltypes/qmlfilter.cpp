@@ -66,6 +66,20 @@ double QmlFilter::getDouble(QString name)
         return 0;
 }
 
+QRectF QmlFilter::getRect(QString name)
+{
+    const char* s = m_filter->get(name.toUtf8().constData());
+    mlt_rect rect = m_filter->get_rect(name.toUtf8().constData());
+    if (::strchr(s, '%')) {
+        return QRectF(rect.x * MLT.profile().width(),
+                      rect.y * MLT.profile().height(),
+                      rect.w * MLT.profile().width(),
+                      rect.h * MLT.profile().height());
+    } else {
+        return QRectF(rect.x, rect.y, rect.w, rect.h);
+    }
+}
+
 void QmlFilter::set(QString name, QString value)
 {
     if (!m_filter) return;
@@ -84,6 +98,12 @@ void QmlFilter::set(QString name, int value)
 {
     if (!m_filter) return;
     m_filter->set(name.toUtf8().constData(), value);
+    MLT.refreshConsumer();
+}
+
+void QmlFilter::set(QString name, double x, double y, double width, double height, double opacity)
+{
+    m_filter->set(name.toUtf8().constData(), x, y, width, height, opacity);
     MLT.refreshConsumer();
 }
 
