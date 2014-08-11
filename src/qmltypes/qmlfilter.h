@@ -69,6 +69,7 @@ public slots:
 signals:
     void presetsChanged();
     void analyzeFinished(bool isSuccess);
+    void changed(); /// Use to let UI and VUI QML signal updates to each other.
 
 private:
     AttachedFiltersModel& m_model;
