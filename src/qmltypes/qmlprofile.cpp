@@ -39,3 +39,8 @@ int QmlProfile::height() const
 {
     return MLT.profile().height();
 }
+
+double QmlProfile::aspectRatio() const
+{
+    return MLT.profile().dar();
+}

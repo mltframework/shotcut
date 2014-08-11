@@ -26,12 +26,14 @@ class QmlProfile : public QObject
     Q_OBJECT
     Q_PROPERTY(int width READ width CONSTANT)
     Q_PROPERTY(int height READ height CONSTANT)
+    Q_PROPERTY(double aspectRatio READ aspectRatio CONSTANT)
 
 public:
     static QmlProfile& singleton();
 
     int width() const;
     int height() const;
+    double aspectRatio() const;
 
 private:
     explicit QmlProfile();
