@@ -301,7 +301,8 @@ void GLWidget::paintGL()
     QMatrix4x4 modelView;
     if (m_zoom > 0.0) {
         if (offset().x() || offset().y())
-            modelView.translate(-offset().x(), offset().y());
+            modelView.translate(-offset().x() * devicePixelRatio(),
+                                 offset().y() * devicePixelRatio());
         modelView.scale(zoom(), zoom());
     }
     m_shader->setUniformValue(m_modelViewLocation, modelView);
