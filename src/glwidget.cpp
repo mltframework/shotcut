@@ -792,6 +792,7 @@ void FrameRenderer::showFrame(Mlt::QFrame frame)
 
             glBindTexture(GL_TEXTURE_2D, 0);
             check_error();
+            glFlush();
 
             emit textureReady(m_texture[0], m_texture[1], m_texture[2]);
         }
