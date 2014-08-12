@@ -196,11 +196,7 @@ Player::Player(QWidget *parent)
     m_zoomButton->setPopupMode(QToolButton::MenuButtonPopup);
     m_zoomButton->setCheckable(true);
     m_zoomButton->setToolTip(tr("Toggle zoom"));
-#ifndef Q_OS_MAC
     toolbar->addWidget(m_zoomButton);
-#else
-    zoomFit();
-#endif
 
     spacer = new QWidget(this);
     spacer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
