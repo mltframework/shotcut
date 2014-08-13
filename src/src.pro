@@ -295,7 +295,14 @@ OTHER_FILES += \
     qml/filters/white/meta_frei0r.qml \
     qml/filters/white/meta_movit.qml \
     qml/filters/white/ui.qml \
-    qml/modules/Shotcut/Controls/SliderSpinner.qml
+    qml/modules/Shotcut/Controls/SliderSpinner.qml \
+    qml/modules/Shotcut/Controls/RectangleControl.qml \
+    qml/filters/size_position/meta_affine.qml \
+    qml/filters/size_position/vui_affine.qml \
+    qml/filters/size_position/ui_affine.qml \
+    qml/filters/size_position/meta_movit.qml \
+    qml/filters/size_position/ui_movit.qml \
+    qml/filters/size_position/vui_movit.qml
 
 lupdate_hack {
     SOURCES += \
@@ -388,7 +395,13 @@ lupdate_hack {
     qml/filters/webvfx/ui.qml \
     qml/filters/white/meta_frei0r.qml \
     qml/filters/white/meta_movit.qml \
-    qml/filters/white/ui.qml
+    qml/filters/white/ui.qml \
+    qml/filters/size_position/meta_affine.qml \
+    qml/filters/size_position/vui_affine.qml \
+    qml/filters/size_position/ui_affine.qml \
+    qml/filters/size_position/meta_movit.qml \
+    qml/filters/size_position/ui_movit.qml \
+    qml/filters/size_position/vui_movit.qml
 }
 
 TRANSLATIONS += \
