@@ -5,3 +5,4 @@ ToolTip 1.0 ToolTip.qml
 UndoButton 1.0 UndoButton.qml
 TimeSpinner 1.0 TimeSpinner.qml
 SliderSpinner 1.0 SliderSpinner.qml
+RectangleControl 1.0 RectangleControl.qml
