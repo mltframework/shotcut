@@ -417,8 +417,16 @@ TRANSLATIONS += \
 
 INCLUDEPATH = ../CuteLogger/include ../mvcp
 
-LIBS += -L../CuteLogger -lLogger -lpthread
-LIBS += -L../mvcp -lmvcp -lpthread
+debug_and_release {
+    build_pass:CONFIG(debug, debug|release) {
+        LIBS += -L../CuteLogger/debug -L../mvcp/debug
+    } else {
+        LIBS += -L../CuteLogger/release -L../mvcp/release
+    }
+} else {
+    LIBS += -L../CuteLogger -L../mvcp
+}
+LIBS += -lLogger -lmvcp -lpthread
 
 mac {
     TARGET = Shotcut
@@ -437,7 +445,6 @@ mac {
 }
 win32 {
     CONFIG += windows rtti
-    CONFIG -= debug_and_release
     isEmpty(MLT_PATH) {
         message("MLT_PATH not set; using ..\\..\\... You can change this with 'qmake MLT_PATH=...'")
         MLT_PATH = ..\\..\\..
