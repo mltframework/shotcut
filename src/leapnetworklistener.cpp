@@ -33,7 +33,7 @@ void LeapNetworkListener::start()
     connect(&m_socket, &QWebSocket::connected, this, &LeapNetworkListener::onConnected);
     connect(&m_socket, &QWebSocket::disconnected, this, &LeapNetworkListener::onDisconnected);
     connect(&m_socket, &QWebSocket::textFrameReceived, this, &LeapNetworkListener::onMessage);
-    connect(&m_timer, &QTimer::timeout, this, &LeapNetworkListener::heartbeat);
+    connect(&m_timer, SIGNAL(timeout()), this, SLOT(heartbeat()));
     m_socket.open(url);
 }
 

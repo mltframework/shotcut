@@ -512,7 +512,7 @@ void TimelineDock::onVisibilityChanged(bool visible)
         QDir sourcePath = QmlUtilities::qmlDir();
         sourcePath.cd("timeline");
         m_quickView.setSource(QUrl::fromLocalFile(sourcePath.filePath("timeline.qml")));
-        disconnect(this, &QDockWidget::visibilityChanged, this, &TimelineDock::onVisibilityChanged);
+        disconnect(this, SIGNAL(visibilityChanged(bool)), this, SLOT(onVisibilityChanged(bool)));
     }
 }
 

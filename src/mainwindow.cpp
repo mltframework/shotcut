@@ -86,7 +86,7 @@ MainWindow::MainWindow()
     Database::singleton(this);
     m_autosaveTimer.setSingleShot(true);
     m_autosaveTimer.setInterval(AUTOSAVE_TIMEOUT_MS);
-    connect(&m_autosaveTimer, &QTimer::timeout, this, &MainWindow::onAutosaveTimeout);
+    connect(&m_autosaveTimer, SIGNAL(timeout()), this, SLOT(onAutosaveTimeout()));
 
     // Initialize all QML types
     QmlUtilities::registerCommonTypes();

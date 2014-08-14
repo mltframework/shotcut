@@ -89,8 +89,8 @@ GLWidget::GLWidget(QObject *parent)
     }
 #endif
 
-    connect(this, &QQuickWindow::sceneGraphInitialized, this, &GLWidget::initializeGL, Qt::DirectConnection);
-    connect(this, &QQuickWindow::beforeRendering, this, &GLWidget::paintGL, Qt::DirectConnection);
+    connect(this, SIGNAL(sceneGraphInitialized()), SLOT(initializeGL()), Qt::DirectConnection);
+    connect(this, SIGNAL(beforeRendering()), SLOT(paintGL()), Qt::DirectConnection);
     qDebug() << "end";
 }
 
@@ -149,9 +149,9 @@ void GLWidget::initializeGL()
     m_frameRenderer = new FrameRenderer(openglContext());
     openglContext()->makeCurrent(openglContext()->surface());
 
-    connect(this, &GLWidget::frameReceived, m_frameRenderer, &FrameRenderer::showFrame, Qt::QueuedConnection);
-    connect(m_frameRenderer, &FrameRenderer::textureReady, this, &GLWidget::updateTexture, Qt::DirectConnection);
-    connect(this, &GLWidget::textureUpdated, this, &QQuickView::update, Qt::QueuedConnection);
+    connect(this, SIGNAL(frameReceived(Mlt::QFrame)), m_frameRenderer, SLOT(showFrame(Mlt::QFrame)), Qt::QueuedConnection);
+    connect(m_frameRenderer, SIGNAL(textureReady(GLuint,GLuint,GLuint)), SLOT(updateTexture(GLuint,GLuint,GLuint)), Qt::DirectConnection);
+    connect(this, SIGNAL(textureUpdated()), SLOT(update()), Qt::QueuedConnection);
 
     m_condition.wakeAll();
     m_isInitialized = true;
