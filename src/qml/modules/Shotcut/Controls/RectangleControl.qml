@@ -127,6 +127,8 @@ Item {
             }
             onPositionChanged: {
                 parent.x = topRightHandle.x + handleSize - rectangle.height * aspectRatio
+                parent.x = Math.min(parent.x, bottomRightHandle.x)
+                parent.y = Math.min(parent.y, bottomRightHandle.y)
                 rectChanged(rectangle)
             }
             onReleased: {
@@ -159,6 +161,8 @@ Item {
             }
             onPositionChanged: {
                 parent.x = topLeftHandle.x + rectangle.height * aspectRatio - handleSize
+                parent.x = Math.max(parent.x, bottomLeftHandle.x)
+                parent.y = Math.min(parent.y, bottomLeftHandle.y)
                 rectChanged(rectangle)
             }
             onReleased: {
@@ -191,6 +195,8 @@ Item {
             }
             onPositionChanged: {
                 parent.x = topRightHandle.x + handleSize - rectangle.height * aspectRatio
+                parent.x = Math.min(parent.x, topRightHandle.x)
+                parent.y = Math.max(parent.y, topRightHandle.y)
                 rectChanged(rectangle)
             }
             onReleased: {
@@ -221,6 +227,8 @@ Item {
             }
             onPositionChanged: {
                 parent.x = topLeftHandle.x + rectangle.height * aspectRatio - handleSize
+                parent.x = Math.max(parent.x, topLeftHandle.x)
+                parent.y = Math.max(parent.y, topLeftHandle.y)
                 rectChanged(rectangle)
             }
             onReleased: {
