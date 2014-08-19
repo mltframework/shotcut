@@ -29,6 +29,10 @@
 
 static const char* kFilterInProperty = "_shotcut:filter_in";
 static const char* kFilterOutProperty = "_shotcut:filter_out";
+static const char* kWidthProperty = "meta.media.width";
+static const char* kHeightProperty = "meta.media.height";
+static const char* kAspectNumProperty = "meta.media.sample_aspect_num";
+static const char* kAspectDenProperty = "meta.media.sample_aspect_den";
 
 QmlFilter::QmlFilter(AttachedFiltersModel& model, const QmlMetadata &metadata, int row, QObject *parent)
     : QObject(parent)
@@ -262,6 +266,22 @@ int QmlFilter::producerOut() const
         return producer.get_int(kFilterOutProperty);
     else
         return producer.get_out();
+}
+
+double QmlFilter::producerAspect() const
+{
+    // Every attached filter has a service property that points to the service to
+    // which it is attached.
+    Mlt::Producer producer(mlt_producer(m_filter->get_data("service")));
+    if (producer.get(kHeightProperty)) {
+        double sar = 1.0;
+        if (producer.get(kAspectDenProperty)) {
+            sar = producer.get_double(kAspectNumProperty) /
+                  producer.get_double(kAspectDenProperty);
+        }
+        return sar * producer.get_double(kWidthProperty) / producer.get_double(kHeightProperty);
+    }
+    return MLT.profile().dar();
 }
 
 void QmlFilter::preset(const QString &name)

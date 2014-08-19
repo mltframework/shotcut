@@ -37,6 +37,7 @@ class QmlFilter : public QObject
     Q_PROPERTY(QStringList presets READ presets NOTIFY presetsChanged)
     Q_PROPERTY(int producerIn READ producerIn)
     Q_PROPERTY(int producerOut READ producerOut)
+    Q_PROPERTY(double producerAspect READ producerAspect)
 
 public:
     explicit QmlFilter(AttachedFiltersModel& model, const QmlMetadata& metadata, int row, QObject *parent = 0);
@@ -62,6 +63,7 @@ public:
     Q_INVOKABLE static QString timeFromFrames(int frames);
     int producerIn() const;
     int producerOut() const;
+    double producerAspect() const;
 
 public slots:
     void preset(const QString& name);
