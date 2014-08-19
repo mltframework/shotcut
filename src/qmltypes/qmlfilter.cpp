@@ -73,42 +73,66 @@ double QmlFilter::getDouble(QString name)
 QRectF QmlFilter::getRect(QString name)
 {
     const char* s = m_filter->get(name.toUtf8().constData());
-    mlt_rect rect = m_filter->get_rect(name.toUtf8().constData());
-    if (::strchr(s, '%')) {
-        return QRectF(rect.x * MLT.profile().width(),
-                      rect.y * MLT.profile().height(),
-                      rect.w * MLT.profile().width(),
-                      rect.h * MLT.profile().height());
+    if (s) {
+        mlt_rect rect = m_filter->get_rect(name.toUtf8().constData());
+        if (::strchr(s, '%')) {
+            return QRectF(qRound(rect.x * MLT.profile().width()),
+                          qRound(rect.y * MLT.profile().height()),
+                          qRound(rect.w * MLT.profile().width()),
+                          qRound(rect.h * MLT.profile().height()));
+        } else {
+            return QRectF(rect.x, rect.y, rect.w, rect.h);
+        }
     } else {
-        return QRectF(rect.x, rect.y, rect.w, rect.h);
+        return QRectF(0.0, 0.0, 0.0, 0.0);
     }
 }
 
 void QmlFilter::set(QString name, QString value)
 {
     if (!m_filter) return;
-    m_filter->set(name.toUtf8().constData(), value.toUtf8().constData());
-    MLT.refreshConsumer();
+    const char* cname = name.toUtf8().constData();
+    const char* cvalue = value.toUtf8().constData();
+    if (qstrcmp(m_filter->get(cname), cvalue)) {
+        m_filter->set(cname, cvalue);
+        MLT.refreshConsumer();
+        emit changed();
+    }
 }
 
 void QmlFilter::set(QString name, double value)
 {
     if (!m_filter) return;
-    m_filter->set(name.toUtf8().constData(), value);
-    MLT.refreshConsumer();
+    const char* cname = name.toUtf8().constData();
+    if (!m_filter->get(cname) || m_filter->get_double(cname) != value) {
+        m_filter->set(cname, value);
+        MLT.refreshConsumer();
+        emit changed();
+    }
 }
 
 void QmlFilter::set(QString name, int value)
 {
     if (!m_filter) return;
-    m_filter->set(name.toUtf8().constData(), value);
-    MLT.refreshConsumer();
+    const char* cname = name.toUtf8().constData();
+    if (!m_filter->get(cname) || m_filter->get_int(cname) != value) {
+        m_filter->set(cname, value);
+        MLT.refreshConsumer();
+        emit changed();
+    }
 }
 
 void QmlFilter::set(QString name, double x, double y, double width, double height, double opacity)
 {
-    m_filter->set(name.toUtf8().constData(), x, y, width, height, opacity);
-    MLT.refreshConsumer();
+    if (!m_filter) return;
+    const char* cname = name.toUtf8().constData();
+    mlt_rect rect = m_filter->get_rect(cname);
+    if (m_filter->get(cname) || x != rect.x || y != rect.y || width != rect.w
+        || height != rect.h || opacity != rect.o) {
+        m_filter->set(cname, x, y, width, height, opacity);
+        MLT.refreshConsumer();
+        emit changed();
+    }
 }
 
 void QmlFilter::loadPresets()
@@ -292,6 +316,7 @@ void QmlFilter::preset(const QString &name)
         return;
     m_filter->load(dir.filePath(name).toUtf8().constData());
     MLT.refreshConsumer();
+    emit changed();
 }
 
 QString QmlFilter::objectNameOrService()
