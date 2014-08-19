@@ -16,40 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.0
-import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
-
-Item {
-    Component.onCompleted: {
-        if (filter.isNew) {
-            filter.set('rect', '0/50%:50%x50%')
-            filter.savePreset(['rect'], qsTr('Bottom Left'))
-            filter.set('rect', '50%/50%:50%x50%')
-            filter.savePreset(['rect'], qsTr('Bottom Right'))
-            filter.set('rect', '0/0:50%x50%')
-            filter.savePreset(['rect'], qsTr('Top Left'))
-            filter.set('rect', '50%/0:50%x50%')
-            filter.savePreset(['rect'], qsTr('Top Right'))
-            filter.set('rect', '0/0:100%x100%')
-            filter.savePreset(['rect'])
-        }
-    }
-    GridLayout {
-        columns: 2
-        anchors.fill: parent
-        anchors.margins: 8
-
-        Label {
-            text: qsTr('Preset')
-            Layout.alignment: Qt.AlignRight
-        }
-        Preset {
-            parameters: ['rect']
-            onPresetSelected: filter.changed()
-        }
-
-        Item { Layout.fillHeight: true }
-    }
+SizePositionUI {
+    fillProperty: 'fill'
+    rectProperty: 'rect'
+    valignProperty: 'valign'
+    halignProperty: 'halign'
 }

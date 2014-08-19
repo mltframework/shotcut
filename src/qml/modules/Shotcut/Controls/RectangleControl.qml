@@ -24,17 +24,27 @@ Item {
 
     property real widthScale: 1.0
     property real heightScale: 1.0
-    property real aspectRatio: 1.0
-    property int handleSize: 15
-    property real borderSize: 2.0
+    property real aspectRatio: 0.0
+    property int handleSize: 10
+    property int borderSize: 2
+    property alias rectangle: rectangle
+    property color handleColor: Qt.rgba(1, 1, 1, 0.9)
 
     signal rectChanged(Rectangle rect)
 
     function setHandles(rect) {
-        topLeftHandle.x = Math.floor(rect.x * widthScale)
-        topLeftHandle.y = Math.floor(rect.y * widthScale)
-        bottomRightHandle.x = topLeftHandle.x + Math.floor(rect.width * widthScale) - handleSize
-        bottomRightHandle.y = topLeftHandle.y + Math.floor(rect.height * heightScale) - handleSize
+        topLeftHandle.x = Math.round(rect.x * widthScale)
+        topLeftHandle.y = Math.round(rect.y * widthScale)
+        if (aspectRatio === 0.0) {
+            bottomRightHandle.x = topLeftHandle.x + Math.round(rect.width * widthScale) - handleSize
+            bottomRightHandle.y = topLeftHandle.y + Math.round(rect.height * heightScale) - handleSize
+        } else if (aspectRatio > 1.0) {
+            bottomRightHandle.x = topLeftHandle.x + Math.round(rect.width * widthScale) - handleSize
+            bottomRightHandle.y = topLeftHandle.y + Math.round(rect.width * widthScale / aspectRatio) - handleSize
+        } else {
+            bottomRightHandle.x = topLeftHandle.x + Math.round(rect.height * heightScale * aspectRatio) - handleSize
+            bottomRightHandle.y = topLeftHandle.y + Math.round(rect.height * heightScale) - handleSize
+        }
         topRightHandle.x = bottomRightHandle.x
         topRightHandle.y = topLeftHandle.y
         bottomLeftHandle.x = topLeftHandle.x
@@ -45,7 +55,7 @@ Item {
         id: rectangle
         color: 'transparent'
         border.width: borderSize
-        border.color: Qt.rgba(1, 1, 1, 0.5)
+        border.color: handleColor
         anchors.top: topLeftHandle.top
         anchors.left: topLeftHandle.left
         anchors.right: bottomRightHandle.right
@@ -55,7 +65,7 @@ Item {
         // Provides contrasting thick line to above rectangle.
         color: 'transparent'
         border.width: handleSize - borderSize
-        border.color: Qt.rgba(0, 0, 0, 0.5)
+        border.color: Qt.rgba(0, 0, 0, 0.4)
         anchors.fill: rectangle
         anchors.margins: borderSize
     }
@@ -64,9 +74,9 @@ Item {
         id: positionHandle
         color: Qt.rgba(0, 0, 0, 0.5)
         border.width: borderSize
-        border.color: Qt.rgba(1, 1, 1, 0.5)
-        width: handleSize * 1.5
-        height: handleSize * 1.5
+        border.color: handleColor
+        width: handleSize * 2
+        height: handleSize * 2
         radius: width / 2
         anchors.centerIn: rectangle
         MouseArea {
@@ -109,9 +119,7 @@ Item {
     }
     Rectangle {
         id: topLeftHandle
-        color: 'transparent'
-        border.width: borderSize
-        border.color: Qt.rgba(1, 1, 1, 0.5)
+        color: handleColor
         width: handleSize
         height: handleSize
         MouseArea {
@@ -126,7 +134,8 @@ Item {
                 bottomLeftHandle.anchors.left = rectangle.left
             }
             onPositionChanged: {
-                parent.x = topRightHandle.x + handleSize - rectangle.height * aspectRatio
+                if (aspectRatio !== 0.0)
+                    parent.x = topRightHandle.x + handleSize - rectangle.height * aspectRatio
                 parent.x = Math.min(parent.x, bottomRightHandle.x)
                 parent.y = Math.min(parent.y, bottomRightHandle.y)
                 rectChanged(rectangle)
@@ -141,9 +150,7 @@ Item {
 
     Rectangle {
         id: topRightHandle
-        color: 'transparent'
-        border.width: borderSize
-        border.color: Qt.rgba(1, 1, 1, 0.5)
+        color: handleColor
         width: handleSize
         height: handleSize
         MouseArea {
@@ -160,7 +167,8 @@ Item {
                 bottomRightHandle.anchors.right = rectangle.right
             }
             onPositionChanged: {
-                parent.x = topLeftHandle.x + rectangle.height * aspectRatio - handleSize
+                if (aspectRatio !== 0.0)
+                    parent.x = topLeftHandle.x + rectangle.height * aspectRatio - handleSize
                 parent.x = Math.max(parent.x, bottomLeftHandle.x)
                 parent.y = Math.min(parent.y, bottomLeftHandle.y)
                 rectChanged(rectangle)
@@ -175,9 +183,7 @@ Item {
 
     Rectangle {
         id: bottomLeftHandle
-        color: 'transparent'
-        border.width: borderSize
-        border.color: Qt.rgba(1, 1, 1, 0.5)
+        color: handleColor
         width: handleSize
         height: handleSize
         MouseArea {
@@ -194,7 +200,8 @@ Item {
                 bottomRightHandle.anchors.bottom = rectangle.bottom
             }
             onPositionChanged: {
-                parent.x = topRightHandle.x + handleSize - rectangle.height * aspectRatio
+                if (aspectRatio !== 0.0)
+                    parent.x = topRightHandle.x + handleSize - rectangle.height * aspectRatio
                 parent.x = Math.min(parent.x, topRightHandle.x)
                 parent.y = Math.max(parent.y, topRightHandle.y)
                 rectChanged(rectangle)
@@ -209,9 +216,7 @@ Item {
 
     Rectangle {
         id: bottomRightHandle
-        color: 'transparent'
-        border.width: borderSize
-        border.color: Qt.rgba(1, 1, 1, 0.5)
+        color: handleColor
         width: handleSize
         height: handleSize
         MouseArea {
@@ -226,7 +231,8 @@ Item {
                 bottomLeftHandle.anchors.bottom = rectangle.bottom
             }
             onPositionChanged: {
-                parent.x = topLeftHandle.x + rectangle.height * aspectRatio - handleSize
+                if (aspectRatio !== 0.0)
+                    parent.x = topLeftHandle.x + rectangle.height * aspectRatio - handleSize
                 parent.x = Math.max(parent.x, topLeftHandle.x)
                 parent.y = Math.max(parent.y, topLeftHandle.y)
                 rectChanged(rectangle)

@@ -297,6 +297,8 @@ OTHER_FILES += \
     qml/filters/white/ui.qml \
     qml/modules/Shotcut/Controls/SliderSpinner.qml \
     qml/modules/Shotcut/Controls/RectangleControl.qml \
+    qml/filters/size_position/SizePositionUI.qml \
+    qml/filters/size_position/SizePositionVUI.qml \
     qml/filters/size_position/meta_affine.qml \
     qml/filters/size_position/vui_affine.qml \
     qml/filters/size_position/ui_affine.qml \
@@ -396,6 +398,8 @@ lupdate_hack {
     qml/filters/white/meta_frei0r.qml \
     qml/filters/white/meta_movit.qml \
     qml/filters/white/ui.qml \
+    qml/filters/size_position/SizePositionUI.qml \
+    qml/filters/size_position/SizePositionVUI.qml \
     qml/filters/size_position/meta_affine.qml \
     qml/filters/size_position/vui_affine.qml \
     qml/filters/size_position/ui_affine.qml \

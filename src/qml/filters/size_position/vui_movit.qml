@@ -16,56 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.1
-import Shotcut.Controls 1.0
-
-Flickable {
-    width: 400
-    height: 200
-    interactive: false
-    clip: true
-    property real zoom: (video.zoom > 0)? video.zoom : 1.0
-    contentWidth: video.rect.width * zoom
-    contentHeight: video.rect.height * zoom
-    contentX: video.offset.x
-    contentY: video.offset.y
-
-    Component.onCompleted: {
-        if (filter.isNew) {
-            // Set default parameter values
-            filter.set('rect', '0/0:100%x100%')
-        }
-        rectangle.setHandles(filter.getRect('rect'))
-    }
-
-    Connections {
-        target: filter
-        onChanged: rectangle.setHandles(filter.getRect('rect'))
-    }
-
-    Item {
-        id: videoItem
-        x: video.rect.x
-        y: video.rect.y
-        width: video.rect.width
-        height: video.rect.height
-        scale: zoom
-
-        RectangleControl {
-            id: rectangle
-            widthScale: video.rect.width / profile.width
-            heightScale: video.rect.height / profile.height
-            aspectRatio: profile.aspectRatio
-            handleSize: 15 / zoom
-            borderSize: 2.0 / zoom
-            onRectChanged: {
-                filter.set('rect', '%1%/%2%:%3%x%4%'
-                           .arg(Math.round(rect.x / widthScale) / profile.width * 100)
-                           .arg(Math.round(rect.y / heightScale) / profile.height * 100)
-                           .arg(Math.round(rect.width / widthScale) / profile.width * 100)
-                           .arg(Math.round(rect.height / heightScale) / profile.height * 100))
-                console.log('' + filter.get('rect'))
-            }
-        }
-    }
+SizePositionVUI {
+    fillProperty: 'fill'
+    rectProperty: 'rect'
+    valignProperty: 'valign'
+    halignProperty: 'halign'
 }

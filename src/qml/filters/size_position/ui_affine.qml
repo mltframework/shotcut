@@ -16,40 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.0
-import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
-
-Item {
-    Component.onCompleted: {
-        if (filter.isNew) {
-            filter.set('transition.geometry', '0/50%:50%x50%')
-            filter.savePreset(['transition.geometry'], qsTr('Bottom Left'))
-            filter.set('transition.geometry', '50%/50%:50%x50%')
-            filter.savePreset(['transition.geometry'], qsTr('Bottom Right'))
-            filter.set('transition.geometry', '0/0:50%x50%')
-            filter.savePreset(['transition.geometry'], qsTr('Top Left'))
-            filter.set('transition.geometry', '50%/0:50%x50%')
-            filter.savePreset(['transition.geometry'], qsTr('Top Right'))
-            filter.set('transition.geometry', '0/0:100%x100%')
-            filter.savePreset(['transition.geometry'])
-        }
-    }
-    GridLayout {
-        columns: 2
-        anchors.fill: parent
-        anchors.margins: 8
-
-        Label {
-            text: qsTr('Preset')
-            Layout.alignment: Qt.AlignRight
-        }
-        Preset {
-            parameters: ['transition.geometry']
-            onPresetSelected: filter.changed()
-        }
-
-        Item { Layout.fillHeight: true }
-    }
+SizePositionUI {
+    fillProperty: 'transition.fill'
+    rectProperty: 'transition.geometry'
+    valignProperty: 'transition.valign'
+    halignProperty: 'transition.halign'
 }
