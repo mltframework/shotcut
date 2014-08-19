@@ -655,7 +655,7 @@ void EncodeDock::on_encodeButton_clicked()
         }
         if (seekable)
             // Batch encode
-            enqueueMelt(outputFilename);
+            enqueueMelt(outputFilename, -MLT.realTime());
         else if (MLT.producer()->get_int("shotcut_bgcapture")) {
             MLT.stop();
             runMelt(outputFilename);

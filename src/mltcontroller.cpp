@@ -661,6 +661,12 @@ bool Controller::isAudioFilter(const QString &name)
     return false;
 }
 
+int Controller::realTime() const
+{
+    int threadCount = QThread::idealThreadCount();
+    return threadCount > 2? qMin(threadCount - 1, 4) : 1;
+}
+
 void TransportControl::play(double speed)
 {
     MLT.play(speed);

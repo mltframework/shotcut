@@ -519,9 +519,7 @@ int GLWidget::reconfigure(bool isMulti)
         if (m_glslManager) {
             m_consumer->set("real_time", property("realtime").toBool()? 1 : -1);
         } else {
-            int threadCount = QThread::idealThreadCount();
-            threadCount = threadCount > 2? (threadCount > 3? 3 : 2) : 1;
-            m_consumer->set("real_time", property("realtime").toBool()? 1 : -threadCount);
+            m_consumer->set("real_time", property("realtime").toBool()? 1 : -MLT.realTime());
         }
         m_consumer->set("mlt_image_format", "yuv422");
         m_consumer->set("color_trc", Settings.playerGamma().toLatin1().constData());
