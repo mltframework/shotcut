@@ -156,7 +156,7 @@ private:
     void consolidateBlanksAllTracks();
     void getAudioLevels();
     void addBlackTrackIfNeeded();
-    void addMissingTransitions();
+    void convertOldDoc();
     Mlt::Transition* getTransition(const QString& name, int trackIndex) const;
     Mlt::Filter* getFilter(const QString& name, int trackIndex) const;
     Mlt::Filter* getFilter(const QString& name, Mlt::Service* service) const;

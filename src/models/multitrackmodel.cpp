@@ -306,12 +306,12 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
             case IsAudioRole:
                 return m_trackList[index.row()].type == AudioTrackType;
             case IsCompositeRole: {
-                QScopedPointer<Mlt::Transition> transition(getTransition("composite", i));
+                QScopedPointer<Mlt::Transition> transition(getTransition("frei0r.cairoblend", i));
                 if (!transition)
                     transition.reset(getTransition("movit.overlay", i));
                 if (transition && transition->is_valid()) {
                     if (!transition->get_int("disable"))
-                        return transition->get_int("fill")? Qt::Checked : Qt::PartiallyChecked;
+                        return Qt::Checked;
                 }
                 return Qt::Unchecked;
             }
@@ -441,20 +441,10 @@ void MultitrackModel::setTrackComposite(int row, Qt::CheckState composite)
 {
     if (row < m_trackList.size()) {
         int i = m_trackList.at(row).mlt_index;
-        QScopedPointer<Mlt::Transition> transition(getTransition("composite", i));
+        QScopedPointer<Mlt::Transition> transition(getTransition("frei0r.cairoblend", i));
         if (transition) {
             transition->set("disable", (composite == Qt::Unchecked));
-            transition->set("fill", (composite == Qt::Checked));
-            transition->set("halign", (composite == Qt::PartiallyChecked)? "l" : "c");
-            transition->set("valign", (composite == Qt::PartiallyChecked)? "t" : "c");
         } else {
-            QScopedPointer<Mlt::Filter> filter(getFilter("movit.rect", i));
-            if (filter) {
-                filter->set("disable", (composite == Qt::Unchecked));
-                filter->set("fill", (composite == Qt::Checked));
-                filter->set("halign", (composite == Qt::PartiallyChecked)? "l" : "c");
-                filter->set("valign", (composite == Qt::PartiallyChecked)? "t" : "c");
-            }
             transition.reset(getTransition("movit.overlay", i));
             if (transition)
                 transition->set("disable", (composite == Qt::Unchecked));
@@ -2178,13 +2168,7 @@ void MultitrackModel::addVideoTrack()
     m_tractor->plant_transition(mix, 0, i);
 
     // Add the composite transition.
-    Mlt::Transition composite(MLT.profile(), Settings.playerGPU()? "movit.overlay" : "composite");
-    if (!Settings.playerGPU()) {
-        composite.set("fill", 1);
-        composite.set("halign", "c");
-        composite.set("valign", "c");
-        composite.set("progressive", 1);
-    }
+    Mlt::Transition composite(MLT.profile(), Settings.playerGPU()? "movit.overlay" : "frei0r.cairoblend");
     composite.set("disable", 1);
 
     // Get the new, logical video-only index.
@@ -2200,14 +2184,6 @@ void MultitrackModel::addVideoTrack()
         }
     }
     m_tractor->plant_transition(composite, last_mlt_index, i);
-    if (Settings.playerGPU()) {
-        Mlt::Filter filter(MLT.profile(), "movit.rect");
-        filter.set("rect", "0/0:100%x100%");
-        filter.set("fill", 1);
-        filter.set("halign", "c");
-        filter.set("valign", "c");
-        m_tractor->plant_filter(filter, i);
-    }
 
     // Add the shotcut logical video track.
     Track t;
@@ -2275,7 +2251,7 @@ void MultitrackModel::load()
 
     loadPlaylist();
     addBlackTrackIfNeeded();
-    addMissingTransitions();
+    convertOldDoc();
     refreshTrackList();
     consolidateBlanksAllTracks();
     adjustBackgroundDuration();
@@ -2425,9 +2401,31 @@ void MultitrackModel::addBlackTrackIfNeeded()
     }
 }
 
-void MultitrackModel::addMissingTransitions()
+void MultitrackModel::convertOldDoc()
 {
-    // Make sure there is a mix for every track
+    // Convert composite to frei0r.cairoblend.
+    int n = m_tractor->count();
+    for (int i = 1; i < n; ++i) {
+        QScopedPointer<Mlt::Transition> transition(getTransition("composite", i));
+        if (transition) {
+            Mlt::Transition composite(MLT.profile(), "frei0r.cairoblend");
+            composite.set("disable", transition->get_int("disable"));
+            m_tractor->field()->disconnect_service(*transition);
+            m_tractor->plant_transition(composite, transition->get_int("a_track"), i);
+        }
+    }
+
+    // Remove movit.rect filters.
+    QScopedPointer<Mlt::Service> service(m_tractor->producer());
+    while (service && service->is_valid()) {
+        if (service->type() == filter_type) {
+            Mlt::Filter f((mlt_filter) service->get_service());
+            if (QString::fromLatin1(f.get("mlt_service")) == "movit.rect") {
+                m_tractor->field()->disconnect_service(f);
+            }
+        }
+        service.reset(service->producer());
+    }
 }
 
 Mlt::Transition *MultitrackModel::getTransition(const QString &name, int trackIndex) const

@@ -131,16 +131,13 @@ Rectangle {
             CheckBox {
                 id: compositeButton
                 visible: isVideo
-                partiallyCheckedEnabled: true
-                checkedState: isComposite
+                checked: isComposite
                 style: CheckBoxStyle {
                     indicator: Rectangle {
                         implicitWidth: 16
                         implicitHeight: 16
                         radius: 2
-                        color: (isComposite === Qt.Checked)? activePalette.highlight
-                            : (isComposite === Qt.PartiallyChecked)? Qt.lighter(activePalette.highlight)
-                            : trackHeadRoot.color
+                        color: isComposite? activePalette.highlight : trackHeadRoot.color
                         border.color: activePalette.shadow
                         border.width: 1
                         Text {
@@ -148,7 +145,7 @@ Rectangle {
                             anchors.horizontalCenter: parent.horizontalCenter
                             anchors.verticalCenter: parent.verticalCenter
                             text: qsTr('C', 'Composite')
-                            color: (isComposite === Qt.Checked)? activePalette.highlightedText : activePalette.windowText
+                            color: isComposite? activePalette.highlightedText : activePalette.windowText
                         }
                     }
                 }
