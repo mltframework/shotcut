@@ -230,7 +230,6 @@ void FiltersDock::on_listView_clicked(const QModelIndex &index)
 {
     Mlt::Filter* filter = m_model.filterForRow(index.row());
     if (filter && filter->is_valid()) {
-        QString name = filter->get("mlt_service");
         QmlMetadata* meta = qmlMetadataForService(filter);
         if (meta)
             loadQuickPanel(meta, index.row());
