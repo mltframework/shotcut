@@ -66,6 +66,8 @@ Flickable {
             aspectRatio: getAspectRatio()
             handleSize: Math.max(Math.round(8 / zoom), 4)
             borderSize: Math.max(Math.round(1.33 / zoom), 1)
+            onWidthScaleChanged: setHandles(filter.getRect(rectProperty))
+            onHeightScaleChanged: setHandles(filter.getRect(rectProperty))
             onRectChanged:  {
                 filterRect.x = rect.x
                 filterRect.y = rect.y
@@ -100,5 +102,4 @@ Flickable {
             }
         }
     }
-
 }
