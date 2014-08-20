@@ -2177,10 +2177,7 @@ void MultitrackModel::addVideoTrack()
     foreach (Track t, m_trackList) {
         if (t.type == VideoTrackType) {
             ++v;
-            // Take first one because video tracks are stored in our track list
-            // in reverse order from MLT.
-            if (!last_mlt_index)
-                last_mlt_index = t.mlt_index;
+            last_mlt_index = t.mlt_index;
         }
     }
     m_tractor->plant_transition(composite, last_mlt_index, i);
@@ -2251,8 +2248,8 @@ void MultitrackModel::load()
 
     loadPlaylist();
     addBlackTrackIfNeeded();
-    convertOldDoc();
     refreshTrackList();
+    convertOldDoc();
     consolidateBlanksAllTracks();
     adjustBackgroundDuration();
     getAudioLevels();
@@ -2425,6 +2422,21 @@ void MultitrackModel::convertOldDoc()
             }
         }
         service.reset(service->producer());
+    }
+
+    // Change a_track of composite transitions to bottom video track.
+    int a_track = 0;
+    foreach (Track t, m_trackList) {
+        if (t.type == VideoTrackType)
+            a_track = t.mlt_index;
+    }
+    QString name = Settings.playerGPU()? "movit.overlay" : "frei0r.cairoblend";
+    foreach (Track t, m_trackList) {
+        if (t.type == VideoTrackType) {
+            QScopedPointer<Mlt::Transition> transition(getTransition(name, t.mlt_index));
+            if (transition && transition->get_a_track() != 0)
+                transition->set("a_track", a_track);
+        }
     }
 }
 
