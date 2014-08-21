@@ -34,6 +34,7 @@ class QAction;
 class QScrollBar;
 class QToolButton;
 class QTabBar;
+class QHBoxLayout;
 
 class Player : public QWidget
 {
@@ -144,6 +145,8 @@ private:
     bool m_pauseAfterPlay;
     int m_monitorScreen;
     QWidget* m_videoWidget;
+    QHBoxLayout* m_videoLayout;
+    QWidget* m_videoScrollWidget;
 
 private slots:
     void updateSelection();

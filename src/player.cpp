@@ -60,16 +60,17 @@ Player::Player(QWidget *parent)
     connect(m_tabs, SIGNAL(tabBarClicked(int)), SLOT(onTabBarClicked(int)));
 
     // Add the layouts for managing video view, scroll bars, and audio controls.
-    QHBoxLayout* hlayout = new QHBoxLayout;
-    vlayout->addLayout(hlayout, 10);
+    m_videoLayout = new QHBoxLayout;
+    m_videoLayout->setSpacing(4);
+    m_videoLayout->setContentsMargins(0, 0, 0, 0);
+    vlayout->addLayout(m_videoLayout, 10);
     vlayout->addStretch();
-    hlayout->setSpacing(4);
-    hlayout->setContentsMargins(0, 0, 0, 0);
-    QGridLayout* glayout = new QGridLayout;
+    m_videoScrollWidget = new QWidget;
+    m_videoLayout->addWidget(m_videoScrollWidget, 10);
+    m_videoLayout->addStretch();
+    QGridLayout* glayout = new QGridLayout(m_videoScrollWidget);
     glayout->setSpacing(0);
     glayout->setContentsMargins(0, 0, 0, 0);
-    hlayout->addLayout(glayout, 10);
-    hlayout->addStretch();
 
     // Add the video widgets.
     m_videoWidget = QWidget::createWindowContainer(qobject_cast<QWindow*>(MLT.videoWidget()));
@@ -95,7 +96,7 @@ Player::Player(QWidget *parent)
     volumeLayoutH->addWidget(m_volumeSlider);
     volumeLayoutH->addWidget(m_audioSignal);
     volumeLayoutV->addLayout(volumeLayoutH);
-    hlayout->addLayout(volumeLayoutV);
+    m_videoLayout->addLayout(volumeLayoutV);
     m_volumeSlider->setRange(0, 99);
     m_volumeSlider->setValue(Settings.playerVolume());
     onVolumeChanged(m_volumeSlider->value());
@@ -279,6 +280,7 @@ void Player::setupActions(QWidget* widget)
 
 void Player::retranslateUi(QWidget* widget)
 {
+    Q_UNUSED(widget)
     actionPlay->setText(tr("Play"));
 #ifndef QT_NO_TOOLTIP
     actionPlay->setToolTip(tr("Start playback (L)"));
@@ -721,18 +723,18 @@ void Player::moveVideoToScreen(int screen)
     if (screen == m_monitorScreen) return;
     if (screen == -2) {
         // -2 = embedded
-        QBoxLayout* l = (QBoxLayout*) layout()->itemAt(0)->widget()->layout();
-        m_videoWidget->showNormal();
-        l->insertWidget(0, m_videoWidget, 10);
+        if (!m_videoScrollWidget->isFullScreen()) return;
+        m_videoScrollWidget->showNormal();
+        m_videoLayout->insertWidget(0, m_videoScrollWidget, 10);
     } else if (QApplication::desktop()->screenCount() > 1) {
         // -1 = find first screen the app is not using
         for (int i = 0; screen == -1 && i < QApplication::desktop()->screenCount(); i++) {
             if (i != QApplication::desktop()->screenNumber(this))
                 screen = i;
         }
-        m_videoWidget->setParent(QApplication::desktop()->screen(screen));
-        m_videoWidget->move(QApplication::desktop()->screenGeometry(screen).bottomLeft());
-        m_videoWidget->showFullScreen();
+        m_videoScrollWidget->setParent(QApplication::desktop()->screen(screen));
+        m_videoScrollWidget->move(QApplication::desktop()->screenGeometry(screen).bottomLeft());
+        m_videoScrollWidget->showFullScreen();
     }
     m_monitorScreen = screen;
 }
