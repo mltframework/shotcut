@@ -193,30 +193,21 @@ Item {
             text: qsTr('Left')
             exclusiveGroup: halignGroup
             enabled: fitRadioButton.checked
-            onClicked: {
-                while (filter.get(halignProperty) !== 'left')
-                    filter.set(halignProperty, 'left')
-            }
+            onClicked: filter.set(halignProperty, 'left')
         }
         RadioButton {
             id: centerRadioButton
             text: qsTr('Center')
             exclusiveGroup: halignGroup
             enabled: fitRadioButton.checked
-            onClicked: {
-                while (filter.get(halignProperty) !== 'center')
-                    filter.set(halignProperty, 'center')
-            }
+            onClicked: filter.set(halignProperty, 'center')
         }
         RadioButton {
             id: rightRadioButton
             text: qsTr('Right')
             exclusiveGroup: halignGroup
             enabled: fitRadioButton.checked
-            onClicked: {
-                while (filter.get(halignProperty) !== 'right')
-                    filter.set(halignProperty, 'right')
-            }
+            onClicked: filter.set(halignProperty, 'right')
         }
         Item { Layout.fillWidth: true }
 
@@ -229,31 +220,21 @@ Item {
             text: qsTr('Top')
             exclusiveGroup: valignGroup
             enabled: fitRadioButton.checked
-            onClicked: {
-                while (filter.get(valignProperty) !== 'left')
-                    filter.set(valignProperty, 'left')
-            }
+            onClicked: filter.set(valignProperty, 'top')
         }
         RadioButton {
             id: middleRadioButton
             text: qsTr('Middle')
             exclusiveGroup: valignGroup
             enabled: fitRadioButton.checked
-            onClicked: {
-                while (filter.get(valignProperty) !== 'middle')
-                    filter.set(valignProperty, 'middle')
-
-            }
+            onClicked: filter.set(valignProperty, 'middle')
         }
         RadioButton {
             id: bottomRadioButton
             text: qsTr('Bottom')
             exclusiveGroup: valignGroup
             enabled: fitRadioButton.checked
-            onClicked: {
-                while (filter.get(valignProperty) !== 'bottom')
-                    filter.set(valignProperty, 'bottom')
-            }
+            onClicked: filter.set(valignProperty, 'bottom')
         }
         Item { Layout.fillWidth: true }
 
