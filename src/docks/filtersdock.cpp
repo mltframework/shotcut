@@ -280,15 +280,20 @@ void FiltersDock::loadQuickPanel(const QmlMetadata* metadata, int row)
     qqview->engine()->addImportPath(importPath.path());
     QmlUtilities::setCommonProperties(qqview->rootContext());
     QmlFilter* qmlFilter = new QmlFilter(m_model, *metadata, row, qqview);
-    qqview->rootContext()->setContextProperty("filter", qmlFilter);
-    qqview->setResizeMode(QQuickView::SizeRootObjectToView);
-    qqview->setColor(palette().window().color());
-    qqview->setSource(QUrl::fromLocalFile(metadata->qmlFilePath()));
-    QWidget* container = QWidget::createWindowContainer(qqview);
-    container->setFocusPolicy(Qt::TabFocus);
-    loadWidgetsPanel(container);
-    m_quickObject = qqview->rootObject();
 
-    MLT.videoQuickView()->rootContext()->setContextProperty("filter", qmlFilter);
-    MLT.videoQuickView()->setSource(QUrl::fromLocalFile(metadata->vuiFilePath()));
+    if (QFile::exists(metadata->qmlFilePath())) {
+        qqview->rootContext()->setContextProperty("filter", qmlFilter);
+        qqview->setResizeMode(QQuickView::SizeRootObjectToView);
+        qqview->setColor(palette().window().color());
+        qqview->setSource(QUrl::fromLocalFile(metadata->qmlFilePath()));
+        QWidget* container = QWidget::createWindowContainer(qqview);
+        container->setFocusPolicy(Qt::TabFocus);
+        loadWidgetsPanel(container);
+        m_quickObject = qqview->rootObject();
+    }
+
+    if (QFile::exists(metadata->vuiFilePath())) {
+        MLT.videoQuickView()->rootContext()->setContextProperty("filter", qmlFilter);
+        MLT.videoQuickView()->setSource(QUrl::fromLocalFile(metadata->vuiFilePath()));
+    }
 }
