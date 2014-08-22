@@ -163,7 +163,6 @@ void GLWidget::resizeGL(int width, int height)
     int x, y, w, h;
     double this_aspect = (double) width / height;
     double video_aspect = profile().dar();
-    qDebug() << width << 'x' << height;
 
     // Special case optimisation to negate odd effect of sample aspect ratio
     // not corresponding exactly with image resolution.
