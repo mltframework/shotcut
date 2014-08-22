@@ -108,7 +108,7 @@ GLWidget::~GLWidget()
         QMetaObject::invokeMethod(m_frameRenderer, "cleanup");
         m_frameRenderer->quit();
         m_frameRenderer->wait();
-        delete m_frameRenderer;
+        m_frameRenderer->deleteLater();
     }
     delete m_shader;
 }
