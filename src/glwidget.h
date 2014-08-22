@@ -184,7 +184,8 @@ private:
     QOpenGLContext* m_context;
     QOffscreenSurface* m_surface;
 public:
-    GLuint m_texture[3];
+    GLuint m_renderTexture[3];
+    GLuint m_displayTexture[3];
     QOpenGLFunctions_3_2_Core* m_gl32;
     Frame* m_frame;
 };

@@ -671,7 +671,8 @@ FrameRenderer::FrameRenderer(QOpenGLContext* shareContext)
      , m_frame(0)
 {
     Q_ASSERT(shareContext);
-    m_texture[0] = m_texture[1] = m_texture[2] = 0;
+    m_renderTexture[0] = m_renderTexture[1] = m_renderTexture[2] = 0;
+    m_displayTexture[0] = m_displayTexture[1] = m_displayTexture[2] = 0;
     m_context = new QOpenGLContext;
     m_context->setFormat(shareContext->format());
     m_context->setShareContext(shareContext);
@@ -741,13 +742,13 @@ void FrameRenderer::showFrame(Mlt::QFrame frame)
             const uint8_t* image = frame.frame()->get_image(format, width, height);
 
             // Upload each plane of YUV to a texture.
-            if (m_texture[0] && m_texture[1] && m_texture[2])
-                glDeleteTextures(3, m_texture);
-            glGenTextures(3, m_texture);
+            if (m_renderTexture[0] && m_renderTexture[1] && m_renderTexture[2])
+                glDeleteTextures(3, m_renderTexture);
+            glGenTextures(3, m_renderTexture);
             check_error();
             glPixelStorei(GL_UNPACK_ROW_LENGTH, width);
 
-            glBindTexture  (GL_TEXTURE_2D, m_texture[0]);
+            glBindTexture  (GL_TEXTURE_2D, m_renderTexture[0]);
             check_error();
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             check_error();
@@ -761,7 +762,7 @@ void FrameRenderer::showFrame(Mlt::QFrame frame)
                             GL_LUMINANCE, GL_UNSIGNED_BYTE, image);
             check_error();
 
-            glBindTexture  (GL_TEXTURE_2D, m_texture[1]);
+            glBindTexture  (GL_TEXTURE_2D, m_renderTexture[1]);
             check_error();
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             check_error();
@@ -775,7 +776,7 @@ void FrameRenderer::showFrame(Mlt::QFrame frame)
                             GL_LUMINANCE, GL_UNSIGNED_BYTE, image + width * height);
             check_error();
 
-            glBindTexture  (GL_TEXTURE_2D, m_texture[2]);
+            glBindTexture  (GL_TEXTURE_2D, m_renderTexture[2]);
             check_error();
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             check_error();
@@ -793,7 +794,9 @@ void FrameRenderer::showFrame(Mlt::QFrame frame)
             check_error();
             glFlush();
 
-            emit textureReady(m_texture[0], m_texture[1], m_texture[2]);
+            for (int i = 0; i < 3; ++i)
+                qSwap(m_renderTexture[i], m_displayTexture[i]);
+            emit textureReady(m_displayTexture[0], m_displayTexture[1], m_displayTexture[2]);
         }
         m_context->doneCurrent();
     }
@@ -803,10 +806,13 @@ void FrameRenderer::showFrame(Mlt::QFrame frame)
 void FrameRenderer::cleanup()
 {
     qDebug();
-    if (m_texture[0] && m_texture[1] && m_texture[2]) {
+    if (m_renderTexture[0] && m_renderTexture[1] && m_renderTexture[2]) {
         m_context->makeCurrent(m_surface);
-        glDeleteTextures(3, m_texture);
+        glDeleteTextures(3, m_renderTexture);
+        if (m_displayTexture[0] && m_displayTexture[1] && m_displayTexture[2])
+            glDeleteTextures(3, m_displayTexture);
         m_context->doneCurrent();
-        m_texture[0] = m_texture[1] = m_texture[2] = 0;
+        m_renderTexture[0] = m_renderTexture[1] = m_renderTexture[2] = 0;
+        m_displayTexture[0] = m_displayTexture[1] = m_displayTexture[2] = 0;
     }
 }
