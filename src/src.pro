@@ -304,7 +304,10 @@ OTHER_FILES += \
     qml/filters/size_position/ui_affine.qml \
     qml/filters/size_position/meta_movit.qml \
     qml/filters/size_position/ui_movit.qml \
-    qml/filters/size_position/vui_movit.qml
+    qml/filters/size_position/vui_movit.qml \
+    qml/filters/opacity/meta.qml \
+    qml/filters/opacity/ui.qml \
+    qml/filters/opacity/meta_movit.qml
 
 lupdate_hack {
     SOURCES += \
@@ -405,7 +408,10 @@ lupdate_hack {
     qml/filters/size_position/ui_affine.qml \
     qml/filters/size_position/meta_movit.qml \
     qml/filters/size_position/ui_movit.qml \
-    qml/filters/size_position/vui_movit.qml
+    qml/filters/size_position/vui_movit.qml \
+    qml/filters/opacity/meta.qml \
+    qml/filters/opacity/ui.qml \
+    qml/filters/opacity/meta_movit.qml
 }
 
 TRANSLATIONS += \
