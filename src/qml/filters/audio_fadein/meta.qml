@@ -5,7 +5,7 @@ Metadata {
     type: Metadata.Filter
     isAudio: true
     objectName: 'fadeInVolume'
-    name: qsTr("Fade In")
+    name: qsTr("Fade In Audio")
     mlt_service: "volume"
     qml: "ui.qml"
 }
