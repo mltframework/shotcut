@@ -37,6 +37,7 @@ Rectangle {
             filter.set('in', inFrame)
             filter.set('out', out)
         }
+        alphaCheckbox.checked = filter.get('alpha') != 1
     }
 
     ColumnLayout {
@@ -53,7 +54,23 @@ Rectangle {
                 onValueChanged: {
                     var inFrame = filter.getDouble('out') - duration + 1
                     filter.set('in', inFrame)
+                    if (filter.get('alpha') != 1)
+                        filter.set('alpha', '0~=1; %1=0'.arg(duration - 1))
+                    else
+                        filter.set('opacity', '0~=1; %1=0'.arg(duration - 1))
+                }
+            }
+        }
+        CheckBox {
+            id: alphaCheckbox
+            text: qsTr('Adjust opacity instead of fade with black')
+            onClicked: {
+                if (checked) {
+                    filter.set('opacity', 1)
+                    filter.set('alpha', '0~=1; %1=0'.arg(duration - 1))
+                } else {
                     filter.set('opacity', '0~=1; %1=0'.arg(duration - 1))
+                    filter.set('alpha', 1)
                 }
             }
         }

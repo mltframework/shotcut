@@ -30,11 +30,12 @@ Rectangle {
     Component.onCompleted: {
         if (filter.isNew) {
             duration = filter.framesFromTime('1:0')
-            filter.set('start', 0)
-            filter.set('end', 1)
+            filter.set('level', '0=0; %1=1'.arg(duration - 1))
+            filter.set('alpha', 1)
             filter.set('in', filter.producerIn)
             filter.set('out', filter.getDouble('in') + duration - 1)
         }
+        alphaCheckbox.checked = filter.get('alpha') != 1
     }
 
     ColumnLayout {
@@ -49,7 +50,25 @@ Rectangle {
                 maximumValue: 5000
                 value: filter.getDouble('out') - filter.getDouble('in') + 1
                 onValueChanged: {
+                    var out = filter.getDouble('in') + value - 1
                     filter.set('out', filter.getDouble('in') + value - 1)
+                    if (filter.get('alpha') != 1)
+                        filter.set('alpha', '0=0; %1=1'.arg(duration - 1))
+                    else
+                        filter.set('level', '0=0; %1=1'.arg(duration - 1))
+                }
+            }
+        }
+        CheckBox {
+            id: alphaCheckbox
+            text: qsTr('Adjust opacity instead of fade with black')
+            onClicked: {
+                if (checked) {
+                    filter.set('level', 1)
+                    filter.set('alpha', '0=0; %1=1'.arg(duration - 1))
+                } else {
+                    filter.set('level', '0=0; %1=1'.arg(duration - 1))
+                    filter.set('alpha', 1)
                 }
             }
         }

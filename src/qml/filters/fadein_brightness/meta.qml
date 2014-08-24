@@ -4,7 +4,7 @@ import org.shotcut.qml 1.0
 Metadata {
     type: Metadata.Filter
     objectName: 'fadeInBrightness'
-    name: qsTr("Fade From Black")
+    name: qsTr("Fade In Video")
     mlt_service: "brightness"
     qml: "ui.qml"
 }

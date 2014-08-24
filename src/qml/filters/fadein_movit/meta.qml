@@ -4,7 +4,7 @@ import org.shotcut.qml 1.0
 Metadata {
     type: Metadata.Filter
     objectName: 'fadeInMovit'
-    name: qsTr("Fade From Black")
+    name: qsTr("Fade In Video")
     mlt_service: "movit.opacity"
     needsGPU: true
     qml: "ui.qml"

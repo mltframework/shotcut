@@ -1301,8 +1301,9 @@ void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
                     } else {
                         Mlt::Filter f(MLT.profile(), "brightness");
                         f.set(kShotcutFilterProperty, "fadeInBrightness");
-                        f.set("start", 0);
-                        f.set("end", 1);
+                        QString level = QString("0=0; %1=1").arg(duration - 1);
+                        f.set("level", level.toLatin1().constData());
+                        f.set("alpha", 1);
                         info->producer->attach(f);
                         filter.reset(new Mlt::Filter(f));
                     }
@@ -1310,6 +1311,10 @@ void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
                     // Special handling for animation keyframes on movit.opacity.
                     QString opacity = QString("0~=0; %1=1").arg(duration - 1);
                     filter->set("opacity", opacity.toLatin1().constData());
+                } else {
+                    // Special handling for animation keyframes on brightness.
+                    QString level = QString("0=0; %1=1").arg(duration - 1);
+                    filter->set("level", level.toLatin1().constData());
                 }
                 // Adjust video filter.
                 filter->set_in_and_out(info->frame_in, info->frame_in + duration - 1);
@@ -1371,8 +1376,9 @@ void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
                     } else {
                         Mlt::Filter f(MLT.profile(), "brightness");
                         f.set(kShotcutFilterProperty, "fadeOutBrightness");
-                        f.set("start", 1);
-                        f.set("end", 0);
+                        QString level = QString("0=1; %1=1").arg(duration - 1);
+                        f.set("level", level.toLatin1().constData());
+                        f.set("alpha", 1);
                         info->producer->attach(f);
                         filter.reset(new Mlt::Filter(f));
                     }
@@ -1380,6 +1386,10 @@ void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
                     // Special handling for animation keyframes on movit.opacity.
                     QString opacity = QString("0~=1; %1=0").arg(duration - 1);
                     filter->set("opacity", opacity.toLatin1().constData());
+                } else {
+                    // Special handling for animation keyframes on brightness.
+                    QString level = QString("0=1; %1=0").arg(duration - 1);
+                    filter->set("level", level.toLatin1().constData());
                 }
                 // Adjust video filter.
                 filter->set_in_and_out(info->frame_out - duration + 1, info->frame_out);
