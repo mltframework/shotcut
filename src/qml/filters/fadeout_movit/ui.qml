@@ -51,28 +51,14 @@ Rectangle {
                 minimumValue: 1
                 maximumValue: 5000
                 value: filter.getDouble('out') - filter.getDouble('in') + 1
-                onValueChanged: {
-                    var inFrame = filter.getDouble('out') - duration + 1
-                    filter.set('in', inFrame)
-                    if (filter.get('alpha') != 1)
-                        filter.set('alpha', '0~=1; %1=0'.arg(duration - 1))
-                    else
-                        filter.set('opacity', '0~=1; %1=0'.arg(duration - 1))
-                }
+                onValueChanged: filter.set('in', filter.getDouble('out') - duration + 1)
             }
         }
         CheckBox {
             id: alphaCheckbox
             text: qsTr('Adjust opacity instead of fade with black')
-            onClicked: {
-                if (checked) {
-                    filter.set('opacity', 1)
-                    filter.set('alpha', '0~=1; %1=0'.arg(duration - 1))
-                } else {
-                    filter.set('opacity', '0~=1; %1=0'.arg(duration - 1))
-                    filter.set('alpha', 1)
-                }
-            }
+            // When =-1, alpha follows opacity value.
+            onClicked: filter.set('alpha', checked? -1 : 1)
         }
         Item {
             Layout.fillHeight: true;

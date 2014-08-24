@@ -27,8 +27,8 @@ Item {
         if (filter.isNew) {
             // Set default parameter values
             filter.set('level', 1)
-            filter.set('opacity', 1)
             filter.set('alpha', 100.0 / 100.0)
+            filter.set('opacity', filter.getDouble('alpha'))
             slider.value = filter.get('alpha') * 100.0
         }
     }
@@ -48,7 +48,10 @@ Item {
             maximumValue: 100
             suffix: ' %'
             value: filter.get('alpha') * 100.0
-            onValueChanged: filter.set('alpha', value / 100.0)
+            onValueChanged: {
+                filter.set('alpha', value / 100.0)
+                filter.set('opacity', filter.getDouble('alpha'))
+            }
         }
         UndoButton {
             onClicked: slider.value = 100
