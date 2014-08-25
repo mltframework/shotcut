@@ -24,8 +24,9 @@ import QtQuick.Layouts 1.1
 import Shotcut.Controls 1.0
 
 RowLayout {
-    property color value: "white"
+    property string value: "white"
     property bool alpha: false
+    property alias eyedropper: pickerButton.visible
     
     signal pickStarted
     
@@ -61,7 +62,10 @@ RowLayout {
         showAlphaChannel: alpha
         color: value
         onAccepted: {
-            value = currentColor
+            if (alpha)
+                value = '#' + (255 * currentColor.a).toString(16) + currentColor.toString().substr(1)
+            else
+                value = currentColor
         }
     }
     
