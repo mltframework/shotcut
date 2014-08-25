@@ -62,10 +62,14 @@ RowLayout {
         showAlphaChannel: alpha
         color: value
         onAccepted: {
-            if (alpha)
-                value = '#' + (255 * currentColor.a).toString(16) + currentColor.toString().substr(1)
-            else
+            if (alpha) {
+                var alphaHex = (255 * currentColor.a).toString(16)
+                if (alphaHex.length === 1)
+                    alphaHex = '0' + alphaHex
+                value = '#' + alphaHex + currentColor.toString().substr(1)
+            } else {
                 value = currentColor
+            }
         }
     }
     
