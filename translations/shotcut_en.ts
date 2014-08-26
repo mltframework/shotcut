@@ -4655,11 +4655,6 @@ the screen capture to SDI/HDMI in this mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/meta.qml" line="7"/>
-        <source>Overlay Text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/fadein_brightness/meta.qml" line="7"/>
         <location filename="../src/qml/filters/fadein_movit/meta.qml" line="7"/>
         <source>Fade In Video</source>
@@ -4674,6 +4669,11 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../src/qml/filters/opacity/meta.qml" line="7"/>
         <source>Opacity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dynamictext/meta.qml" line="7"/>
+        <source>Text</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

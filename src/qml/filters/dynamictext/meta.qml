@@ -4,6 +4,6 @@ import org.shotcut.qml 1.0
 Metadata {
     type: Metadata.Filter
     objectName: 'dynamicText'
-    name: qsTr('Overlay Text')
+    name: qsTr('Text')
     mlt_service: 'dynamictext'
 }
