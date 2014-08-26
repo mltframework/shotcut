@@ -1,7 +1,9 @@
 /*
  * Copyright (c) 2014 Meltytech, LLC
  * Author: Brian Matherly <pez4brian@yahoo.com>
+ * Author: Dan Dennedy <dan@dennedy.org>
  * Inspiration: KDENLIVE colorpickerwidget.cpp by Till Theato (root@ttill.de)
+ * Inspiration: QColorDialog.cpp
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,11 +28,42 @@
 #include <QDesktopWidget>
 #include <QImage>
 #include <QScreen>
+#include "mainwindow.h"
+
+class EventFilter : public QObject
+{
+public:
+    explicit EventFilter(ScreenSelector *selector, QObject *parent = 0)
+        : QObject(parent)
+        , m_selector(selector)
+    {}
+
+    bool eventFilter(QObject *, QEvent *event)
+    {
+        switch (event->type()) {
+        case QEvent::MouseButtonPress:
+            return m_selector->onMousePressEvent(static_cast<QMouseEvent *>(event));
+        case QEvent::MouseMove:
+            return m_selector->onMouseMoveEvent(static_cast<QMouseEvent *>(event));
+        case QEvent::MouseButtonRelease:
+            return m_selector->onMouseReleaseEvent(static_cast<QMouseEvent *>(event));
+        case QEvent::KeyPress:
+            return m_selector->onKeyPressEvent(static_cast<QKeyEvent *>(event));
+        default:
+            break;
+        }
+        return false;
+    }
+
+private:
+    ScreenSelector *m_selector;
+};
 
 ScreenSelector::ScreenSelector(QWidget* parent)
     : QFrame(parent)
     , m_selectionInProgress(false)
-    , m_SelectionRect()
+    , m_selectionRect()
+    , m_eventFilter(0)
 {
     setFrameStyle(QFrame::Box | QFrame::Plain);
     setWindowOpacity(0.5);
@@ -41,83 +74,79 @@ ScreenSelector::ScreenSelector(QWidget* parent)
 void ScreenSelector::startSelection()
 {
     m_selectionInProgress = false;
-    grabMouse(QCursor(QIcon::fromTheme("color-picker", QIcon(":/icons/oxygen/32x32/actions/color-picker.png")).pixmap(22, 22), 0, 21));
+    if (!m_eventFilter)
+        m_eventFilter = new EventFilter(this);
+    QApplication::instance()->installEventFilter(m_eventFilter);
+    grabMouse();
     grabKeyboard();
+    MAIN.setCursor(Qt::CrossCursor);
 }
 
-void ScreenSelector::mousePressEvent(QMouseEvent *event)
+bool ScreenSelector::onMousePressEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton && !m_selectionInProgress) {
         m_selectionInProgress = true;
         show();
-        m_SelectionRect = QRect(event->globalPos(), QSize(1,1));
-        setGeometry(m_SelectionRect);
+        m_selectionRect = QRect(event->globalPos(), QSize(1,1));
+        setGeometry(m_selectionRect);
     }
-    QFrame::mousePressEvent(event);
+    return true;
 }
 
-void ScreenSelector::mouseMoveEvent(QMouseEvent *event)
+bool ScreenSelector::onMouseMoveEvent(QMouseEvent *event)
 {
     if (m_selectionInProgress) {
-        m_SelectionRect.setWidth(event->globalX() - m_SelectionRect.x());
-        m_SelectionRect.setHeight(event->globalY() - m_SelectionRect.y());
+        m_selectionRect.setWidth(event->globalX() - m_selectionRect.x());
+        m_selectionRect.setHeight(event->globalY() - m_selectionRect.y());
 
-        if (m_SelectionRect.width() == 0) {
-            m_SelectionRect.setWidth(1);
+        if (m_selectionRect.width() == 0) {
+            m_selectionRect.setWidth(1);
         }
-        if (m_SelectionRect.height() == 0) {
-            m_SelectionRect.setHeight(1);
+        if (m_selectionRect.height() == 0) {
+            m_selectionRect.setHeight(1);
         }
-        setGeometry(m_SelectionRect.normalized());
+        setGeometry(m_selectionRect.normalized());
     }
-    QFrame::mouseMoveEvent(event);
+    return true;
 }
 
-void ScreenSelector::mouseReleaseEvent(QMouseEvent *event)
+bool ScreenSelector::onMouseReleaseEvent(QMouseEvent *event)
 {
     if(event->button() == Qt::LeftButton && m_selectionInProgress == true ) {
-        releaseMouse();
-        releaseKeyboard();
-        m_selectionInProgress = false;
-        hide();
+        release();
         // Give the frame buffer time to clear the selector window before
         // signaling the selection.
-        QTimer::singleShot(100, this, SLOT(screenRefreshed()));
+        QTimer::singleShot(100, this, SLOT(grabColor()));
     }
-    QFrame::mouseReleaseEvent(event);
+    return true;
 }
 
-void ScreenSelector::screenRefreshed()
+bool ScreenSelector::onKeyPressEvent(QKeyEvent* event)
 {
-    emit screenSelected(m_SelectionRect);
+    if (event->key() == Qt::Key_Escape)
+        release();
+    event->accept();
+    return true;
 }
 
-ColorPickerItem::ColorPickerItem(QObject* parent)
-    : QObject(parent)
-    , m_selector(NULL)
+void ScreenSelector::release()
 {
-    m_selector = new ScreenSelector(0);
-    connect(m_selector, SIGNAL(screenSelected(QRect)), this, SLOT(slotScreenSelected(QRect)));
+    QApplication::instance()->removeEventFilter(m_eventFilter);
+    releaseMouse();
+    releaseKeyboard();
+    MAIN.setCursor(Qt::ArrowCursor);
+    m_selectionInProgress = false;
+    hide();
 }
 
-ColorPickerItem::~ColorPickerItem()
+void ScreenSelector::grabColor()
 {
-    delete m_selector;
-}
-
-void ColorPickerItem::pickColor()
-{
-    m_selector->startSelection();
-}
-
-void ColorPickerItem::slotScreenSelected(QRect pickerRect)
-{
-    pickerRect = pickerRect.normalized();
-
+    m_selectionRect = m_selectionRect.normalized();
     QDesktopWidget* desktop = QApplication::desktop();
-    int screenNum = desktop->screenNumber(pickerRect.topLeft());
+    int screenNum = desktop->screenNumber(m_selectionRect.topLeft());
     QScreen* screen = QGuiApplication::screens()[screenNum];
-    QPixmap screenGrab = screen->grabWindow(desktop->winId(), pickerRect.x(), pickerRect.y(), pickerRect.width(), pickerRect.height());
+    QPixmap screenGrab = screen->grabWindow(desktop->winId(),
+        m_selectionRect.x(), m_selectionRect.y(), m_selectionRect.width(), m_selectionRect.height());
     QImage image = screenGrab.toImage();
     int numPixel = image.width() * image.height();
     int sumR = 0;
@@ -135,4 +164,11 @@ void ColorPickerItem::slotScreenSelected(QRect pickerRect)
 
     QColor avgColor(sumR / numPixel, sumG / numPixel, sumB / numPixel);
     emit colorPicked(avgColor);
+}
+
+ColorPickerItem::ColorPickerItem(QObject* parent)
+    : QObject(parent)
+{
+    connect(this, SIGNAL(pickColor()), &m_selector, SLOT(startSelection()));
+    connect(&m_selector, SIGNAL(colorPicked(QColor)), SIGNAL(colorPicked(QColor)));
 }

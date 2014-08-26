@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2014 Meltytech, LLC
  * Author: Brian Matherly <pez4brian@yahoo.com>
+ * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,47 +24,50 @@
 #include <QColor>
 #include <QFrame>
 
-class ScreenSelector;
-
-class ColorPickerItem : public QObject
-{
-    Q_OBJECT
-public:
-    explicit ColorPickerItem(QObject* parent = 0);
-    virtual ~ColorPickerItem();
-    Q_INVOKABLE void pickColor();
-
-signals:
-    void colorPicked(const QColor &color);
-
-private:
-    ScreenSelector* m_selector;
-
-private slots:
-    void slotScreenSelected(QRect);
-};
+class EventFilter;
 
 class ScreenSelector : public QFrame
 {
     Q_OBJECT
 public:
     ScreenSelector(QWidget* parent = 0);
+
+public slots:
     void startSelection();
 
 signals:
     void screenSelected(QRect);
+    void colorPicked(const QColor &color);
 
-protected:
-    void mousePressEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
-    void mouseReleaseEvent(QMouseEvent *event);
+public:
+    bool onMousePressEvent(QMouseEvent *event);
+    bool onMouseMoveEvent(QMouseEvent *event);
+    bool onMouseReleaseEvent(QMouseEvent *event);
+    bool onKeyPressEvent(QKeyEvent *event);
 
 private:
     bool m_selectionInProgress;
-    QRect m_SelectionRect;
+    QRect m_selectionRect;
+    EventFilter* m_eventFilter;
+
+    void release();
 
 private slots:
-    void screenRefreshed();
+    void grabColor();
+};
+
+class ColorPickerItem : public QObject
+{
+    Q_OBJECT
+public:
+    explicit ColorPickerItem(QObject* parent = 0);
+
+signals:
+    void pickColor();
+    void colorPicked(const QColor &color);
+
+private:
+    ScreenSelector m_selector;
 };
 
 #endif // COLORPICKERITEM_H
