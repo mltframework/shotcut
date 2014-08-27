@@ -64,7 +64,7 @@ Rectangle {
     
     FileDialog {
         id: fileDialog
-        modality: Qt.ApplicationModal
+        modality: Qt.WindowModal
         selectMultiple: false
         selectFolder: false
         folder: settings.savePath
