@@ -434,9 +434,7 @@ void TimelineDock::seekPreviousEdit()
             int clipIndex = playlist.get_clip_index_at(m_position);
             if (clipIndex >= 0 && m_position == playlist.clip_start(clipIndex))
                 --clipIndex;
-            while (clipIndex > 0 && playlist.is_blank(clipIndex))
-                --clipIndex;
-            if (!playlist.is_blank(clipIndex) && clipIndex >= 0)
+            if (clipIndex >= 0)
                 newPosition = qMax(newPosition, playlist.clip_start(clipIndex));
         }
     }
@@ -456,12 +454,10 @@ void TimelineDock::seekNextEdit()
         if (track) {
             Mlt::Playlist playlist(*track);
             int clipIndex = playlist.get_clip_index_at(m_position) + 1;
-            while (clipIndex < playlist.count() && playlist.is_blank(clipIndex))
-                ++clipIndex;
-            if (!playlist.is_blank(clipIndex) && clipIndex < playlist.count())
+            if (clipIndex < playlist.count())
                 newPosition = qMin(newPosition, playlist.clip_start(clipIndex));
             else if (clipIndex == playlist.count())
-                newPosition = playlist.get_playtime();
+                newPosition = qMin(newPosition, playlist.clip_start(clipIndex) + playlist.clip_length(clipIndex));
         }
     }
     if (newPosition != m_position)
