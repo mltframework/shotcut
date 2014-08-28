@@ -146,13 +146,18 @@ int Controller::open(const QString &url)
     int error = 0;
 
     close();
-    m_producer = new Mlt::Producer(profile(), url.toUtf8().constData());
+    if (Settings.playerGPU() && !profile().is_explicit())
+        // Prevent loading normalizing filters, which might be Movit ones that
+        // may not have a proper OpenGL context when requesting a sample frame.
+        m_producer = new Mlt::Producer(profile(), "abnormal", url.toUtf8().constData());
+    else
+        m_producer = new Mlt::Producer(profile(), url.toUtf8().constData());
     if (m_producer->is_valid()) {
         double fps = profile().fps();
         if (!profile().is_explicit())
             profile().from_producer(*m_producer);
-        if (profile().fps() != fps) {
-            // reopen with the correct fps
+        if (profile().fps() != fps || (Settings.playerGPU() && !profile().is_explicit())) {
+            // Reload with correct FPS or with Movit normalizing filters attached.
             delete m_producer;
             m_producer = new Mlt::Producer(profile(), url.toUtf8().constData());
         }
