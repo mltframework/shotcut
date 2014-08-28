@@ -28,14 +28,6 @@ GLTestWidget::GLTestWidget(QWidget *parent) :
     m_isInitialized(false)
 {
     hide();
-
-#ifdef Q_OS_WIN
-    if (Settings.playerGPU()) {
-        QGLFormat format;
-        format.setVersion(3, 2);
-        setFormat(format);
-    }
-#endif
     LOG_INFO() << "OpenGL context version" << format().majorVersion() << format().minorVersion();
 }
 
@@ -58,18 +50,6 @@ void GLTestWidget::initializeGL()
                               tr("Error:\nThis program requires OpenGL version 2.0\nwith the framebuffer object extension."));
             ::exit(EXIT_FAILURE);
         }
-
-#ifdef Q_OS_WIN
-        if (Settings.playerGPU()) {
-            supported = (QGLFormat::openGLVersionFlags() & QGLFormat::OpenGL_Version_3_2);
-            if (!supported) {
-                QMessageBox::warning(this, qApp->applicationName(),
-                    tr("GPU Processing requires OpenGL version 3.2, but you have version %1.%2.\nDisabling GPU Processing.")
-                                     .arg(format().majorVersion()).arg(format().minorVersion()));
-                Settings.setPlayerGPU(false);
-            }
-        }
-#endif
         deleteLater();
     }
 }

@@ -78,17 +78,6 @@ GLWidget::GLWidget(QObject *parent)
         m_glslManager = 0;
     }
 
-#ifdef Q_OS_WIN
-    if (m_glslManager) {
-        // On Windows, my NVIDIA card needs me to set the OpenGL version to
-        // handle the fancy GL functions that Movit uses.
-        QSurfaceFormat format;
-        format.setVersion(3, 2);
-        format.setProfile(QSurfaceFormat::CompatibilityProfile);
-        setFormat(format);
-    }
-#endif
-
     connect(this, SIGNAL(sceneGraphInitialized()), SLOT(initializeGL()), Qt::DirectConnection);
     connect(this, SIGNAL(beforeRendering()), SLOT(paintGL()), Qt::DirectConnection);
     qDebug() << "end";
