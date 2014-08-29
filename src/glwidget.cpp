@@ -780,7 +780,7 @@ void FrameRenderer::showFrame(Mlt::QFrame frame)
 
             glBindTexture(GL_TEXTURE_2D, 0);
             check_error();
-            glFlush();
+            glFinish();
 
             for (int i = 0; i < 3; ++i)
                 qSwap(m_renderTexture[i], m_displayTexture[i]);
