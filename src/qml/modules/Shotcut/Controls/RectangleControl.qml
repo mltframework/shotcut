@@ -29,6 +29,11 @@ Item {
     property int borderSize: 2
     property alias rectangle: rectangle
     property color handleColor: Qt.rgba(1, 1, 1, 0.9)
+    opacity: (positionMouseArea.containsMouse || positionMouseArea.pressed ||
+              topLeftMouseArea.containsMouse || topLeftMouseArea.pressed ||
+              topRightMouseArea.containsMouse || topRightMouseArea.pressed ||
+              bottomLeftMouseArea.containsMouse || bottomLeftMouseArea.pressed ||
+              bottomRightMouseArea.containsMouse || bottomRightMouseArea.pressed)? 1.0 : 0.5
 
     signal rectChanged(Rectangle rect)
 
@@ -85,6 +90,7 @@ Item {
             acceptedButtons: Qt.LeftButton
             cursorShape: Qt.SizeAllCursor
             drag.target: rectangle
+            hoverEnabled: true
             onEntered: {
                 rectangle.anchors.top = undefined
                 rectangle.anchors.left = undefined
@@ -123,10 +129,12 @@ Item {
         width: handleSize
         height: handleSize
         MouseArea {
+            id: topLeftMouseArea
             anchors.fill: parent
             acceptedButtons: Qt.LeftButton
             cursorShape: Qt.SizeFDiagCursor
             drag.target: parent
+            hoverEnabled: true
             onEntered: {
                 rectangle.anchors.top = parent.top
                 rectangle.anchors.left = parent.left
@@ -154,10 +162,12 @@ Item {
         width: handleSize
         height: handleSize
         MouseArea {
+            id: topRightMouseArea
             anchors.fill: parent
             acceptedButtons: Qt.LeftButton
             cursorShape: Qt.SizeBDiagCursor
             drag.target: parent
+            hoverEnabled: true
             onEntered: {
                 rectangle.anchors.top = parent.top
                 rectangle.anchors.right = parent.right
@@ -187,10 +197,12 @@ Item {
         width: handleSize
         height: handleSize
         MouseArea {
+            id: bottomLeftMouseArea
             anchors.fill: parent
             acceptedButtons: Qt.LeftButton
             cursorShape: Qt.SizeBDiagCursor
             drag.target: parent
+            hoverEnabled: true
             onEntered: {
                 rectangle.anchors.bottom = parent.bottom
                 rectangle.anchors.left = parent.left
@@ -220,10 +232,12 @@ Item {
         width: handleSize
         height: handleSize
         MouseArea {
+            id: bottomRightMouseArea
             anchors.fill: parent
             acceptedButtons: Qt.LeftButton
             cursorShape: Qt.SizeFDiagCursor
             drag.target: parent
+            hoverEnabled: true
             onEntered: {
                 rectangle.anchors.bottom = parent.bottom
                 rectangle.anchors.right = parent.right
