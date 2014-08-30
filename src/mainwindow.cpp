@@ -1297,7 +1297,6 @@ void MainWindow::on_actionOpenOther_triggered()
 void MainWindow::onProducerOpened()
 {
     m_meltedServerDock->disconnect(SIGNAL(positionUpdated(int,double,int,int,int,bool)));
-    m_player->connectTransport(MLT.transportControl());
 
     // Remove the help page.
     if (ui->stackedWidget->count() > 1)

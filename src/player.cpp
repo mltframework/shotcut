@@ -35,6 +35,7 @@ Player::Player(QWidget *parent)
     , m_zoomToggleFactor(Settings.playerZoom() == 0.0f? 1.0f : Settings.playerZoom())
     , m_pauseAfterPlay(false)
     , m_monitorScreen(-1)
+    , m_currentTransport(0)
 {
     setObjectName("Player");
     Mlt::Controller::singleton();
@@ -226,6 +227,8 @@ Player::Player(QWidget *parent)
 
 void Player::connectTransport(const TransportControllable* receiver)
 {
+    if (receiver == m_currentTransport) return;
+    m_currentTransport = receiver;
     disconnect(SIGNAL(played(double)));
     disconnect(SIGNAL(paused()));
     disconnect(SIGNAL(stopped()));
@@ -440,6 +443,16 @@ void Player::onProducerOpened()
 
     if (!MLT.profile().is_explicit())
         emit profileChanged();
+    connectTransport(MLT.transportControl());
+    // Closing the previous producer might call pause() milliseconds before
+    // calling play() here. Delays while purging the consumer on pause can
+    // interfere with the play() call. So, we delay play a little to let
+    // pause purging to complete.
+    QTimer::singleShot(500, this, SLOT(postProducerOpened()));
+}
+
+void Player::postProducerOpened()
+{
     play();
     if (m_pauseAfterPlay) {
         m_pauseAfterPlay = false;

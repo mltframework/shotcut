@@ -85,6 +85,7 @@ public slots:
     void togglePlayPaused();
     void seek(int position);
     void onProducerOpened();
+    void postProducerOpened();
     void onMeltedUnitOpened();
     void onProducerModified();
     void onShowFrame(int position, double fps, int in, int out, int length, bool isPlaying);
@@ -147,6 +148,7 @@ private:
     QWidget* m_videoWidget;
     QHBoxLayout* m_videoLayout;
     QWidget* m_videoScrollWidget;
+    const TransportControllable* m_currentTransport;
 
 private slots:
     void updateSelection();
