@@ -161,6 +161,9 @@ int Controller::open(const QString &url)
             delete m_producer;
             m_producer = new Mlt::Producer(profile(), url.toUtf8().constData());
         }
+        // Convert avformat to avformat-novalidate so that XML loads faster.
+        if (!qstrcmp(m_producer->get("mlt_service"), "avformat"))
+            m_producer->set("mlt_service", "avformat-novalidate");
         if (m_url.isEmpty() && QString(m_producer->get("xml")) == "was here") {
             if (m_producer->get_int("_original_type") != tractor_type ||
                (m_producer->get_int("_original_type") == tractor_type && m_producer->get("shotcut")))

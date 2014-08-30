@@ -1700,7 +1700,7 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
         w = new AlsaWidget(this);
     else if (resource.startsWith("x11grab:"))
         w = new X11grabWidget(this);
-    else if (service == "avformat")
+    else if (service.startsWith("avformat"))
         w = new AvformatProducerWidget(this);
     else if (service == "pixbuf" || service == "qimage")
         w = new ImageProducerWidget(this);

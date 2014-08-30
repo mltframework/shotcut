@@ -112,7 +112,7 @@ void OpenOtherDialog::load(Mlt::Producer* producer)
             selectTreeWidget(tr("ALSA Audio"));
         else if (resource.startsWith("x11grab:"))
             selectTreeWidget(tr("Screen"));
-        else if (service == "avformat")
+        else if (service.startsWith("avformat"))
             selectTreeWidget(tr("Network"));
         else if (service == "decklink" || resource.contains("decklink"))
             selectTreeWidget(tr("SDI/HDMI"));
