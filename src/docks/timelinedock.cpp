@@ -245,6 +245,17 @@ void TimelineDock::selectTrack(int by)
     m_quickView.rootObject()->setProperty("currentTrack", currentTrack);
 }
 
+void TimelineDock::selectTrackHead(int trackIndex)
+{
+    if (trackIndex >= 0) {
+        int i = m_model.trackList().at(trackIndex).mlt_index;
+        Mlt::Producer* producer = m_model.tractor()->track(i);
+        if (producer && producer->is_valid())
+            MAIN.filtersDock()->setProducer(producer);
+        delete producer;
+    }
+}
+
 void TimelineDock::openClip(int trackIndex, int clipIndex)
 {
     if (trackIndex < 0)

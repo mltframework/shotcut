@@ -103,7 +103,13 @@ Rectangle {
                             color: (index === currentTrack)? selectedTrackColor : (index % 2)? activePalette.alternateBase : activePalette.base
                             width: headerWidth
                             height: model.audio? multitrack.trackHeight : multitrack.trackHeight * 2
-                            onClicked: currentTrack = index
+                            onClicked: {
+                                currentTrack = index
+                                timeline.selectTrackHead(currentTrack)
+                                currentClip = -1
+                                for (var i = 0; i < tracksRepeater.count; i++)
+                                    tracksRepeater.itemAt(i).resetStates();
+                            }
                         }
                     }
                 }

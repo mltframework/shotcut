@@ -70,6 +70,7 @@ public slots:
     void pressKey(int key, Qt::KeyboardModifiers modifiers);
     void releaseKey(int key, Qt::KeyboardModifiers modifiers);
     void selectTrack(int by);
+    void selectTrackHead(int trackIndex);
     void openClip(int trackIndex, int clipIndex);
     void selectClip(int trackIndex, int clipIndex);
     void setTrackName(int trackIndex, const QString& value);
