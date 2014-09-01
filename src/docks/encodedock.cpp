@@ -655,7 +655,7 @@ void EncodeDock::on_encodeButton_clicked()
         }
         if (seekable)
             // Batch encode
-            enqueueMelt(outputFilename, -MLT.realTime());
+            enqueueMelt(outputFilename, Settings.playerGPU()? -1 : -MLT.realTime());
         else if (MLT.producer()->get_int("shotcut_bgcapture")) {
             MLT.stop();
             runMelt(outputFilename);
