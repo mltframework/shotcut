@@ -405,7 +405,7 @@ void Player::seek(int position)
     actionPlay->setToolTip(tr("Start playback (L)"));
 }
 
-void Player::onProducerOpened()
+void Player::onProducerOpened(bool play)
 {
     m_duration = MLT.producer()->get_length();
     m_isSeekable = MLT.isSeekable();
@@ -444,11 +444,13 @@ void Player::onProducerOpened()
     if (!MLT.profile().is_explicit())
         emit profileChanged();
     connectTransport(MLT.transportControl());
+
     // Closing the previous producer might call pause() milliseconds before
     // calling play() here. Delays while purging the consumer on pause can
     // interfere with the play() call. So, we delay play a little to let
     // pause purging to complete.
-    QTimer::singleShot(500, this, SLOT(postProducerOpened()));
+    if (play)
+        QTimer::singleShot(500, this, SLOT(postProducerOpened()));
 }
 
 void Player::postProducerOpened()

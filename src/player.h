@@ -84,7 +84,7 @@ public slots:
     void stop();
     void togglePlayPaused();
     void seek(int position);
-    void onProducerOpened();
+    void onProducerOpened(bool play = true);
     void postProducerOpened();
     void onMeltedUnitOpened();
     void onProducerModified();

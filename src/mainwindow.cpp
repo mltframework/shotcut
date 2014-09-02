@@ -777,7 +777,7 @@ void MainWindow::seekPlaylist(int start)
     m_player->setOut(-1);
     // since we do not emit producerOpened, these components need updating
     on_actionJack_triggered(ui->actionJack->isChecked());
-    m_player->onProducerOpened();
+    m_player->onProducerOpened(false);
     m_encodeDock->onProducerOpened();
     m_filtersDock->onProducerOpened();
     updateMarkers();
@@ -796,7 +796,7 @@ void MainWindow::seekTimeline(int position)
         m_player->setOut(-1);
         // since we do not emit producerOpened, these components need updating
         on_actionJack_triggered(ui->actionJack->isChecked());
-        m_player->onProducerOpened();
+        m_player->onProducerOpened(false);
         m_encodeDock->onProducerOpened();
         m_filtersDock->onProducerOpened();
         updateMarkers();
