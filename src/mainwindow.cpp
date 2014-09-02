@@ -752,14 +752,11 @@ void MainWindow::openVideo()
 void MainWindow::openCut(void* producer, int in, int out)
 {
     double speed = MLT.producer()? MLT.producer()->get_speed(): 0;
+    m_player->setPauseAfterOpen(speed == 0);
     open((Mlt::Producer*) producer);
     m_player->setIn(in);
     m_player->setOut(out);
     MLT.seek(in);
-    if (speed == 0)
-        m_player->pause();
-    else
-        m_player->play(speed);
 }
 
 void MainWindow::showStatusMessage(QString message)
@@ -1516,8 +1513,8 @@ void MainWindow::onPlaylistLoaded()
 
 void MainWindow::onPlaylistCleared()
 {
+    m_player->setPauseAfterOpen(true);
     open(new Mlt::Producer(MLT.profile(), "color:"));
-    m_player->pause();
     m_player->seek(0);
     setWindowModified(true);
 }

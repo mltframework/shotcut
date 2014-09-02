@@ -33,7 +33,7 @@ Player::Player(QWidget *parent)
     , m_seekPosition(SEEK_INACTIVE)
     , m_isMeltedPlaying(-1)
     , m_zoomToggleFactor(Settings.playerZoom() == 0.0f? 1.0f : Settings.playerZoom())
-    , m_pauseAfterPlay(false)
+    , m_pauseAfterOpen(false)
     , m_monitorScreen(-1)
     , m_currentTransport(0)
 {
@@ -456,8 +456,8 @@ void Player::onProducerOpened(bool play)
 void Player::postProducerOpened()
 {
     play();
-    if (m_pauseAfterPlay) {
-        m_pauseAfterPlay = false;
+    if (m_pauseAfterOpen) {
+        m_pauseAfterOpen = false;
         seek(MLT.producer()->position());
     }
 }
@@ -675,7 +675,7 @@ void Player::onTabBarClicked(int index)
     case SourceTabIndex:
         if (MLT.savedProducer() && MLT.savedProducer()->is_valid() && MLT.producer()
             && MLT.producer()->get_producer() != MLT.savedProducer()->get_producer()) {
-            m_pauseAfterPlay = true;
+            m_pauseAfterOpen = true;
             MAIN.open(new Mlt::Producer(MLT.savedProducer()));
         }
         break;
@@ -752,6 +752,11 @@ void Player::moveVideoToScreen(int screen)
         m_videoScrollWidget->showFullScreen();
     }
     m_monitorScreen = screen;
+}
+
+void Player::setPauseAfterOpen(bool pause)
+{
+    m_pauseAfterOpen = pause;
 }
 
 //----------------------------------------------------------------------------

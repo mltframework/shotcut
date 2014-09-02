@@ -55,6 +55,7 @@ public:
         return m_position;
     }
     void moveVideoToScreen(int screen = -1);
+    void setPauseAfterOpen(bool pause);
 
 signals:
     void endOfStream();
@@ -143,7 +144,7 @@ private:
     QAction* m_zoomInAction;
     float m_zoomToggleFactor;
     QTabBar* m_tabs;
-    bool m_pauseAfterPlay;
+    bool m_pauseAfterOpen;
     int m_monitorScreen;
     QWidget* m_videoWidget;
     QHBoxLayout* m_videoLayout;
