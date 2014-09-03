@@ -752,8 +752,7 @@ void MainWindow::openVideo()
 
 void MainWindow::openCut(void* producer, int in, int out)
 {
-    double speed = MLT.producer()? MLT.producer()->get_speed(): 0;
-    m_player->setPauseAfterOpen(speed == 0);
+    m_player->setPauseAfterOpen(true);
     open((Mlt::Producer*) producer);
     m_player->setIn(in);
     m_player->setOut(out);
