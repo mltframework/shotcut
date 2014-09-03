@@ -51,6 +51,8 @@ Flickable {
         rectangle.setHandles(filter.getRect(rectProperty))
     }
 
+    DropArea { anchors.fill: parent }
+
     Item {
         id: videoItem
         x: video.rect.x

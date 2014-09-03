@@ -268,7 +268,7 @@ void FiltersDock::loadWidgetsPanel(QWidget *widget)
     m_quickObject = 0;
     delete ui->scrollArea->widget();
     ui->scrollArea->setWidget(widget);
-    MLT.videoQuickView()->setSource(QUrl());
+    MLT.videoQuickView()->setSource(QmlUtilities::blankVui());
 }
 
 void FiltersDock::loadQuickPanel(const QmlMetadata* metadata, int row)

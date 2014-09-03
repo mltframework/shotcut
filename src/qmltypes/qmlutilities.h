@@ -22,6 +22,7 @@
 #include <QObject>
 #include <QDir>
 #include <QPoint>
+#include <QUrl>
 
 class QQmlContext;
 
@@ -35,6 +36,7 @@ public:
     static void registerCommonTypes();
     static void setCommonProperties(QQmlContext* rootContext);
     static QDir qmlDir();
+    static QUrl blankVui();
 };
 
 #endif // QMLUTILITIES_H

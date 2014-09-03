@@ -133,6 +133,7 @@ MainWindow::MainWindow()
 
     // Add the player widget.
     m_player = new Player;
+    MLT.videoWidget()->installEventFilter(this);
     ui->stackedWidget->addWidget(m_player);
     connect(this, SIGNAL(producerOpened()), m_player, SLOT(onProducerOpened()));
     connect(m_player, SIGNAL(showStatusMessage(QString)), this, SLOT(showStatusMessage(QString)));
@@ -1210,6 +1211,18 @@ void MainWindow::keyReleaseEvent(QKeyEvent* event)
 }
 
 // Drag-n-drop events
+
+bool MainWindow::eventFilter(QObject* target, QEvent* event)
+{
+    if (event->type() == QEvent::DragEnter) {
+        dragEnterEvent(static_cast<QDragEnterEvent*>(event));
+        return true;
+    } else if (event->type() == QEvent::Drop) {
+        dropEvent(static_cast<QDropEvent*>(event));
+        return true;
+    }
+    return QMainWindow::eventFilter(target, event);
+}
 
 void MainWindow::dragEnterEvent(QDragEnterEvent *event)
 {

@@ -71,6 +71,7 @@ GLWidget::GLWidget(QObject *parent)
     engine()->addImportPath(importPath.path());
     QmlUtilities::setCommonProperties(rootContext());
     rootContext()->setContextProperty("video", this);
+    setSource(QmlUtilities::blankVui());
 
     if (Settings.playerGPU())
         m_glslManager = new Filter(profile(), "glsl.manager");

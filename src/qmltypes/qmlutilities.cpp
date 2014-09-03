@@ -64,3 +64,8 @@ QDir QmlUtilities::qmlDir()
     dir.cd("qml");
     return dir;
 }
+
+QUrl QmlUtilities::blankVui()
+{
+    return QUrl("qrc:/src/qml/vui_droparea.qml");
+}

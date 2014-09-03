@@ -310,7 +310,8 @@ OTHER_FILES += \
     qml/filters/opacity/meta_movit.qml \
     qml/filters/dynamictext/meta.qml \
     qml/filters/dynamictext/ui.qml \
-    qml/filters/dynamictext/vui.qml
+    qml/filters/dynamictext/vui.qml \
+    qml/vui_droparea.qml
 
 lupdate_hack {
     SOURCES += \

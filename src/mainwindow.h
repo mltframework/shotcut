@@ -75,6 +75,7 @@ signals:
 
 protected:
     MainWindow();
+    bool eventFilter(QObject* target, QEvent* event);
     void dragEnterEvent(QDragEnterEvent*);
     void dropEvent(QDropEvent*);
     void closeEvent(QCloseEvent*);

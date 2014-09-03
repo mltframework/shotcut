@@ -56,6 +56,7 @@ Flickable {
         anchors.fill: parent
         onClicked: textEdit.focus = false
     }
+    DropArea { anchors.fill: parent }
 
     Item {
         id: videoItem
