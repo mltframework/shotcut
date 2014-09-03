@@ -28,6 +28,7 @@
 #include "glwidget.h"
 #include "settings.h"
 #include "qmltypes/qmlutilities.h"
+#include "mainwindow.h"
 
 #define USE_GL_SYNC // Use glFinish() if not defined.
 
@@ -372,6 +373,13 @@ void GLWidget::mouseMoveEvent(QMouseEvent* event)
         drag->setPixmap(QPixmap::fromImage(MLT.image(m_lastFrame, 45 * MLT.profile().dar(), 45)).scaledToHeight(45));
     drag->setHotSpot(QPoint(0, 0));
     drag->exec(Qt::LinkAction);
+}
+
+void GLWidget::keyPressEvent(QKeyEvent* event)
+{
+    QQuickView::keyPressEvent(event);
+    if (event->isAccepted()) return;
+    MAIN.keyPressEvent(event);
 }
 
 void GLWidget::createThread(RenderThread **thread, thread_function_t function, void *data)

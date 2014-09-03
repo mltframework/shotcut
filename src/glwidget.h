@@ -142,6 +142,7 @@ protected:
     void resizeEvent(QResizeEvent* event);
     void mousePressEvent(QMouseEvent *);
     void mouseMoveEvent(QMouseEvent *);
+    void keyPressEvent(QKeyEvent* event);
     void createShader();
 
     static void on_frame_show(mlt_consumer, void* self, mlt_frame frame);
