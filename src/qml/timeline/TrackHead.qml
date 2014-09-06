@@ -52,18 +52,29 @@ Rectangle {
             margins: (trackHeadRoot.height < 50)? 0 : 4
         }
 
-        Label {
-            text: trackName
-            color: activePalette.windowText
-            width: trackHeadRoot.width
-            elide: Qt.ElideRight
+        Rectangle {
+            color: 'transparent'
+            width: trackHeadRoot.width - trackHeadColumn.anchors.margins * 2
+            radius: 2
+            border.color: trackNameMouseArea.containsMouse? activePalette.shadow : 'transparent'
+            height: nameEdit.height
             MouseArea {
+                id: trackNameMouseArea
                 height: parent.height
                 width: nameEdit.width
+                hoverEnabled: true
                 onClicked: {
                     nameEdit.visible = true
                     nameEdit.selectAll()
                 }
+            }
+            Label {
+                text: trackName
+                color: activePalette.windowText
+                elide: Qt.ElideRight
+                x: 4
+                y: 3
+                width: parent.width - 8
             }
             TextField {
                 id: nameEdit
