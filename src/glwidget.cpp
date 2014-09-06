@@ -370,8 +370,10 @@ void GLWidget::mouseMoveEvent(QMouseEvent* event)
     mimeData->setData(Mlt::XmlMimeType, MLT.saveXML("string").toUtf8());
     drag->setMimeData(mimeData);
     mimeData->setText(QString::number(MLT.producer()->get_playtime()));
+    m_mutex.lock();
     if (m_lastFrame && !m_glslManager)
         drag->setPixmap(QPixmap::fromImage(MLT.image(m_lastFrame, 45 * MLT.profile().dar(), 45)).scaledToHeight(45));
+    m_mutex.unlock();
     drag->setHotSpot(QPoint(0, 0));
     drag->exec(Qt::LinkAction);
 }
@@ -458,8 +460,10 @@ int GLWidget::setProducer(Mlt::Producer* producer, bool isMulti)
 {
     int error = Controller::setProducer(producer, isMulti);
 
+    m_mutex.lock();
     delete m_lastFrame;
     m_lastFrame = 0;
+    m_mutex.unlock();
 
     if (!error) {
         error = reconfigure(isMulti);
@@ -475,8 +479,10 @@ int GLWidget::reconfigure(bool isMulti)
 {
     int error = 0;
 
+    m_mutex.lock();
     delete m_lastFrame;
     m_lastFrame = 0;
+    m_mutex.unlock();
 
     // use SDL for audio, OpenGL for video
     QString serviceName = property("mlt_service").toString();
@@ -578,8 +584,10 @@ int GLWidget::reconfigure(bool isMulti)
 
 void GLWidget::setLastFrame(mlt_frame frame)
 {
+    m_mutex.lock();
     delete m_lastFrame;
     m_lastFrame = new Mlt::Frame(frame);
+    m_mutex.unlock();
 }
 
 QPoint GLWidget::offset() const
