@@ -31,6 +31,8 @@ Item {
 
     Component.onCompleted: {
         if (filter.isNew) {
+            if (application.OS === 'Windows')
+                filter.set('family', 'Verdana')
             filter.set('fgcolour', '#ffffffff')
             filter.set('bgcolour', '#20000000')
             filter.set('olcolour', '#ff000000')
@@ -179,7 +181,7 @@ Item {
             Layout.columnSpan: 3
             Button {
                 id: fontButton
-                text: filter.get('family')
+                text: (application.OS === 'Windows')? 'Verdana' : filter.get('family')
                 onClicked: fontDialog.open()
 
                 FontDialog {
