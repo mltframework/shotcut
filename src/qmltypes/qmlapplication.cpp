@@ -57,3 +57,18 @@ QColor QmlApplication::toolTipTextColor()
 {
     return qApp->palette().toolTipText().color();
 }
+
+QString QmlApplication::OS()
+{
+#if defined(Q_OS_OSX)
+    return "OS X";
+#elif defined(Q_OS_LINUX)
+    return "Linux";
+#elif defined(Q_OS_UNIX)
+    return "UNIX";
+#elif defined(Q_OS_WIN)
+    return "Windows";
+#else
+    return "";
+#endif
+}

@@ -32,6 +32,7 @@ class QmlApplication : public QObject
     Q_PROPERTY(QPoint mousePos READ mousePos);
     Q_PROPERTY(QColor toolTipBaseColor READ toolTipBaseColor NOTIFY paletteChanged)
     Q_PROPERTY(QColor toolTipTextColor READ toolTipTextColor NOTIFY paletteChanged)
+    Q_PROPERTY(QString OS READ OS CONSTANT)
 
 public:
     static QmlApplication& singleton();
@@ -39,6 +40,7 @@ public:
     static QPoint mousePos();
     static QColor toolTipBaseColor();
     static QColor toolTipTextColor();
+    static QString OS();
 
 signals:
     void paletteChanged();
