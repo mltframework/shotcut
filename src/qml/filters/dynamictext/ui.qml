@@ -63,6 +63,11 @@ Item {
             filter.set(halignProperty, 'center')
             filter.savePreset(preset.parameters, qsTr('Lower Third'))
 
+            filter.set(rectProperty, '0/0:100%x100%')
+            filter.set(valignProperty, 'bottom')
+            filter.set(halignProperty, 'center')
+            filter.savePreset(preset.parameters)
+
             setControls()
         }
     }

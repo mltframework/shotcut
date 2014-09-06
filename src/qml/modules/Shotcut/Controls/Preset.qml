@@ -28,10 +28,6 @@ RowLayout {
     signal presetSelected()
 
     Component.onCompleted: {
-        if (filter.isNew) {
-            // Save the default preset.
-            filter.savePreset(parameters)
-        }
         filter.loadPresets()
     }
 

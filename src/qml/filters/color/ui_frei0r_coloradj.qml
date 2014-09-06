@@ -39,6 +39,8 @@ Rectangle {
     }
     
     Component.onCompleted: {
+        if (filter.isNew)
+            filter.savePreset(defaultParameters)
         modeCombo.currentIndex = filter.get(paramAction) * 2
         loadWheels()
     }

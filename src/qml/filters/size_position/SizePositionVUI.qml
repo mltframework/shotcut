@@ -41,13 +41,6 @@ Flickable {
     }
 
     Component.onCompleted: {
-        if (filter.isNew) {
-            // Set default parameter values
-            filter.set(fillProperty, 0)
-            filter.set(rectProperty, '0/0:100%x100%')
-            filter.set(valignProperty, 'top')
-            filter.set(halignProperty, 'left')
-        }
         rectangle.setHandles(filter.getRect(rectProperty))
     }
 

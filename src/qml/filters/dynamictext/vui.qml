@@ -42,11 +42,6 @@ Flickable {
 
     Component.onCompleted: {
         if (filter.isNew) {
-            // Set default parameter values
-            filter.set(fillProperty, 0)
-            filter.set(rectProperty, '0/0:100%x100%')
-            filter.set(valignProperty, 'bottom')
-            filter.set(halignProperty, 'center')
             filter.set('size', filterRect.height)
         }
         rectangle.setHandles(filter.getRect(rectProperty))

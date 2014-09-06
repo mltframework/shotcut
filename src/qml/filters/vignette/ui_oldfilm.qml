@@ -25,6 +25,10 @@ Rectangle {
     width: 400
     height: 200
     color: 'transparent'
+    Component.onCompleted: {
+        if (filter.isNew)
+            filter.savePreset(preset.parameters)
+    }
 
     GridLayout {
         columns: 3
@@ -36,6 +40,7 @@ Rectangle {
             Layout.alignment: Qt.AlignRight
         }
         Preset {
+            id: preset
             Layout.columnSpan: 2
             parameters: ['radius', 'smooth', 'opacity', 'mode']
             onPresetSelected: {

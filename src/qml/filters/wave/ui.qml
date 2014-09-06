@@ -32,6 +32,7 @@ Rectangle {
             filter.set('speed', 5)
             filter.set('deformX', 1)
             filter.set('deformY', 1)
+            filter.savePreset(preset.parameters)
         }
     }
 
@@ -45,6 +46,7 @@ Rectangle {
             Layout.alignment: Qt.AlignRight
         }
         Preset {
+            id: preset
             Layout.columnSpan: 2
             parameters: ['wave', 'speed', 'deformX', 'deformX']
             onPresetSelected: {

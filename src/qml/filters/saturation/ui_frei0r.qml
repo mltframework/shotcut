@@ -32,6 +32,7 @@ Rectangle {
             // Set default parameter values
             filter.set(saturationParameter, 100 / frei0rMaximum)
             slider.value = filter.get(saturationParameter) * frei0rMaximum
+            filter.savePreset(preset.parameters)
         }
     }
 
@@ -45,6 +46,7 @@ Rectangle {
             Layout.alignment: Qt.AlignRight
         }
         Preset {
+            id: preset
             Layout.columnSpan: 2
             parameters: [saturationParameter]
             onPresetSelected: {
