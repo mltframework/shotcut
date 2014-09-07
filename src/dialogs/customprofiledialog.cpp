@@ -62,8 +62,9 @@ void CustomProfileDialog::on_buttonBox_accepted()
     MLT.profile().set_explicit(1);
     MLT.profile().set_width(ui->widthSpinner->value());
     MLT.profile().set_height(ui->heightSpinner->value());
-    int sar_num = ui->heightSpinner->value() * ui->aspectNumSpinner->value() / ui->aspectDenSpinner->value();
-    int sar_den = ui->widthSpinner->value();
+    MLT.profile().set_display_aspect(ui->aspectNumSpinner->value(), ui->aspectDenSpinner->value());
+    int sar_num = ui->heightSpinner->value() * ui->aspectNumSpinner->value() / ui->aspectDenSpinner->value();//1024
+    int sar_den = ui->widthSpinner->value(); //720
     if (sar_num == sar_den)
         sar_num = sar_den = 1;
     MLT.profile().set_sample_aspect(sar_num, sar_den);
