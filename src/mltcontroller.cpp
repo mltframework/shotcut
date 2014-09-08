@@ -431,9 +431,8 @@ void Controller::setProfile(const QString& profile_name)
     m_profile->set_height(tmp.height());
     m_profile->set_progressive(tmp.progressive());
     m_profile->set_sample_aspect(tmp.sample_aspect_num(), tmp.sample_aspect_den());
+    m_profile->set_display_aspect(tmp.display_aspect_num(), tmp.display_aspect_den());
     m_profile->set_width(tmp.width());
-    m_profile->get_profile()->display_aspect_num = tmp.display_aspect_num();
-    m_profile->get_profile()->display_aspect_den = tmp.display_aspect_den();
     m_profile->set_explicit(!profile_name.isEmpty());
     restart();
 }
