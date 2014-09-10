@@ -145,10 +145,7 @@ bool AttachedFiltersModel::setData(const QModelIndex& index, const QVariant& val
     if (role == Qt::CheckStateRole) {
         Mlt::Filter* filter = filterForRow(index.row());
         if (filter && filter->is_valid()) {
-            double speed = MLT.producer()->get_speed();
-            MLT.pause();
             filter->set("disable", !filter->get_int("disable"));
-            MLT.play(speed);
             emit changed();
             emit dataChanged(createIndex(index.row(), 0), createIndex(index.row(), 0));
         }
@@ -177,7 +174,6 @@ bool AttachedFiltersModel::insertRows(int row, int count, const QModelIndex &par
 bool AttachedFiltersModel::removeRows(int row, int count, const QModelIndex &parent)
 {
     if (m_producer && m_producer->is_valid() && m_dropRow >= 0 && row != m_dropRow) {
-        MLT.pause();
         m_producer->move_filter(indexForRow(row), indexForRow(0) + m_dropRow);
         emit changed();
         emit dataChanged(createIndex(row, 0), createIndex(row, 0));
@@ -212,7 +208,6 @@ void AttachedFiltersModel::remove(int row)
     Mlt::Filter* filter = filterForRow(row);
     if (filter && filter->is_valid()) {
         beginRemoveRows(QModelIndex(), row, row);
-        MLT.pause();
         m_producer->detach(*filter);
         m_rows--;
         endRemoveRows();
