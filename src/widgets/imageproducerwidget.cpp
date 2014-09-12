@@ -19,6 +19,7 @@
 #include "imageproducerwidget.h"
 #include "ui_imageproducerwidget.h"
 #include "settings.h"
+#include "mainwindow.h"
 #include <QFileInfo>
 
 ImageProducerWidget::ImageProducerWidget(QWidget *parent) :
@@ -164,17 +165,31 @@ void ImageProducerWidget::on_sequenceCheckBox_clicked(bool checked)
             begin.prepend(name[i - 1]);
         if (count) {
             m_producer->set("begin", begin.toLatin1().constData());
+            int j = begin.toInt();
             name.replace(i, count, begin.prepend('%').append('d'));
             resource = info.path() + "/" + name;
             m_producer->set("resource", resource.toUtf8().constData());
+
+            // Count the number of consecutive files.
+            MAIN.showStatusMessage(tr("Getting length of image sequence..."));
+            name = info.fileName();
+            name.replace(i, count, "%1");
+            resource = info.path().append('/').append(name);
+            for (i = j; QFile::exists(resource.arg(i, count, 10, QChar('0'))); ++i);
+            i -= j;
+            m_producer->set("length", i);
+            ui->durationSpinBox->setValue(i);
+            MAIN.showStatusMessage(tr("Reloading image sequence..."));
         }
     }
     else {
         m_producer->set("resource", m_producer->get("shotcut_resource"));
+        m_producer->set("length", qRound(MLT.profile().fps() * 600));
+        ui->durationSpinBox->setValue(MLT.profile().fps() * Settings.imageDuration());
     }
     Mlt::Producer* p = producer(MLT.profile());
     p->pass_list(*m_producer, "force_aspect_ratio, shotcut_aspect_num, shotcut_aspect_den, "
-        "shotcut_resource, resource, ttl, shotcut_sequence");
+        "shotcut_resource, resource, ttl, shotcut_sequence, length");
     reopen(p);
 }
 
