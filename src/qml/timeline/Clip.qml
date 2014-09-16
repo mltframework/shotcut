@@ -144,7 +144,11 @@ Rectangle {
             cx.lineTo(width, 0)
             cx.lineTo(0, height)
             cx.closePath()
-            cx.fillStyle = getColor()
+            var grad = cx.createLinearGradient(0, 0, 0, height)
+            var color = isAudio? 'darkseagreen' : root.shotcutBlue
+            grad.addColorStop(0, parent.state === 'selected'? Qt.darker(color) : Qt.lighter(color))
+            grad.addColorStop(1, color)
+            cx.fillStyle = grad
             cx.fill()
             cx.strokeStyle = 'black'
             cx.stroke()
@@ -227,8 +231,10 @@ Rectangle {
         Transition {
             to: '*'
             ColorAnimation { target: gradientStop; duration: 100 }
+
         }
     ]
+    onStateChanged: if (isTransition) transitionCanvas.requestPaint()
 
     MouseArea {
         anchors.fill: parent
