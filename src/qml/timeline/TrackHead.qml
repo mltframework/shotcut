@@ -34,6 +34,23 @@ Rectangle {
     SystemPalette { id: activePalette }
     color: activePalette.window
     clip: true
+    state: 'normal'
+    states: [
+        State { name: 'normal' },
+        State {
+            name: 'selected'
+            PropertyChanges {
+                target: trackHeadRoot
+                color: isVideo? root.shotcutBlue : 'darkseagreen'
+            }
+        }
+    ]
+    transitions: [
+        Transition {
+            to: '*'
+            ColorAnimation { target: clipRoot; duration: 100 }
+        }
+    ]
 
     MouseArea {
         anchors.fill: parent

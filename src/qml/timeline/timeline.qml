@@ -34,6 +34,7 @@ Rectangle {
     property color selectedTrackColor: Qt.tint(activePalette.base, Qt.rgba(0.8, 0.8, 0, 0.3));
     property alias trackCount: tracksRepeater.count
     property bool stopScrolling: false
+    property color shotcutBlue: Qt.rgba(23/255, 92/255, 118/255, 1.0)
 
     MouseArea {
         anchors.fill: parent
@@ -93,6 +94,7 @@ Rectangle {
                 Column {
                     id: trackHeaders
                     Repeater {
+                        id: trackHeaderRepeater
                         model: multitrack
                         TrackHead {
                             trackName: model.name
@@ -109,6 +111,9 @@ Rectangle {
                                 currentClip = -1
                                 for (var i = 0; i < tracksRepeater.count; i++)
                                     tracksRepeater.itemAt(i).resetStates();
+                                for (var i = 0; i < trackHeaderRepeater.count; i++)
+                                    trackHeaderRepeater.itemAt(i).state = 'normal'
+                                state = 'selected'
                             }
                         }
                     }
@@ -458,6 +463,8 @@ Rectangle {
                 currentClipTrack = track.DelegateModel.itemsIndex
                 for (var i = 0; i < tracksRepeater.count; i++)
                     if (i !== track.DelegateModel.itemsIndex) tracksRepeater.itemAt(i).resetStates();
+                for (var i = 0; i < trackHeaderRepeater.count; i++)
+                    trackHeaderRepeater.itemAt(i).state = 'normal'
                 timeline.selectClip(currentClipTrack, currentClip)
             }
             onClipDragged: {

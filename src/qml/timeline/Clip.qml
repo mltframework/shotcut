@@ -38,7 +38,6 @@ Rectangle {
     property int originalTrackIndex: trackIndex
     property int originalClipIndex: index
     property int originalX: x
-    property color shotcutBlue: Qt.rgba(23/255, 92/255, 118/255, 1.0)
 
     signal selected(var clip)
     signal moved(var clip)
@@ -51,8 +50,17 @@ Rectangle {
     signal trimmedOut(var clip)
 
     SystemPalette { id: activePalette }
-
-    color: getColor()
+    gradient: Gradient {
+        GradientStop {
+            id: gradientStop
+            position: 0.00
+            color: Qt.lighter(getColor())
+        }
+        GradientStop {
+            position: 1.0
+            color: getColor()
+        }
+    }
     border.color: 'black'
     border.width: isBlank? 0 : 1
     clip: true
@@ -62,7 +70,7 @@ Rectangle {
     opacity: Drag.active? 0.5 : 1.0
 
     function getColor() {
-        return isBlank? 'transparent' : isTransition? 'mediumpurple' : isAudio? 'darkseagreen' : shotcutBlue
+        return isBlank? 'transparent' : isTransition? 'mediumpurple' : isAudio? 'darkseagreen' : root.shotcutBlue
     }
 
     function reparent(track) {
@@ -136,7 +144,7 @@ Rectangle {
             cx.lineTo(width, 0)
             cx.lineTo(0, height)
             cx.closePath()
-            cx.fillStyle = isAudio? 'darkseagreen' : shotcutBlue
+            cx.fillStyle = getColor()
             cx.fill()
             cx.strokeStyle = 'black'
             cx.stroke()
@@ -206,8 +214,11 @@ Rectangle {
             name: 'selected'
             PropertyChanges {
                 target: clipRoot
-                color: isBlank? 'transparent' : Qt.darker(getColor())
                 z: 1
+            }
+            PropertyChanges {
+                target: gradientStop
+                color: Qt.darker(getColor())
             }
         }
     ]
@@ -215,7 +226,7 @@ Rectangle {
     transitions: [
         Transition {
             to: '*'
-            ColorAnimation { target: clipRoot; duration: 50 }
+            ColorAnimation { target: gradientStop; duration: 100 }
         }
     ]
 
