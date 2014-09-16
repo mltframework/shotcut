@@ -1835,13 +1835,13 @@ void MainWindow::stepRightOneSecond()
 
 void MainWindow::setInToCurrent()
 {
-    if (MLT.isSeekable() && !MLT.isPlaylist())
+    if (MLT.isSeekable() && MLT.isClip())
         m_player->setIn(m_player->position());
 }
 
 void MainWindow::setOutToCurrent()
 {
-    if (MLT.isSeekable() && !MLT.isPlaylist())
+    if (MLT.isSeekable() && MLT.isClip())
         m_player->setOut(m_player->position());
 }
 
