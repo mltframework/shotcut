@@ -100,9 +100,6 @@ Mlt::Producer* X11grabWidget::producer(Mlt::Profile& profile)
         delete p;
         tractor->set_track(*audio, 1);
         delete audio;
-        Mlt::Transition* tran = new Mlt::Transition(profile, "mix");
-        tractor->plant_transition(tran);
-        delete tran;
         p = new Mlt::Producer(tractor->get_producer());
         delete tractor;
     }
