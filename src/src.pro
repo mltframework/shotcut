@@ -477,21 +477,6 @@ unix:!mac {
     LIBS += -lX11
 }
 
-# Add CONFIG+=leap to include support for Leap Motion via its library.
-CONFIG(leap) {
-    DEFINES += WITH_LIBLEAP
-    SOURCES += leaplistener.cpp
-    HEADERS += leaplistener.h
-    unix {
-        isEmpty(LEAP_PREFIX) {
-            LEAP_PREFIX = /usr/local
-        }
-        INCLUDEPATH += $$LEAP_PREFIX/include
-        LIBS += -L$$LEAP_PREFIX/lib
-    }
-    LIBS += -lLeap
-}
-
 isEmpty(SHOTCUT_VERSION) {
     !win32:SHOTCUT_VERSION = $$system(date "+%y.%m.%d")
      win32:SHOTCUT_VERSION = adhoc

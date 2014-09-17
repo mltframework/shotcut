@@ -323,20 +323,12 @@ MainWindow::MainWindow()
     setFocus();
     setCurrentFile("");
 
-#ifdef WITH_LIBLEAP
-    connect(&m_leapListener, SIGNAL(shuttle(float)), this, SLOT(onShuttle(float)));
-    connect(&m_leapListener, SIGNAL(jogRightFrame()), this, SLOT(stepRightOneFrame()));
-    connect(&m_leapListener, SIGNAL(jogRightSecond()), this, SLOT(stepRightOneSecond()));
-    connect(&m_leapListener, SIGNAL(jogLeftFrame()), this, SLOT(stepLeftOneFrame()));
-    connect(&m_leapListener, SIGNAL(jogLeftSecond()), this, SLOT(stepLeftOneSecond()));
-#else
     LeapNetworkListener* leap = new LeapNetworkListener(this);
     connect(leap, SIGNAL(shuttle(float)), SLOT(onShuttle(float)));
     connect(leap, SIGNAL(jogRightFrame()), SLOT(stepRightOneFrame()));
     connect(leap, SIGNAL(jogRightSecond()), SLOT(stepRightOneSecond()));
     connect(leap, SIGNAL(jogLeftFrame()), SLOT(stepLeftOneFrame()));
     connect(leap, SIGNAL(jogLeftSecond()), SLOT(stepLeftOneSecond()));
-#endif
     qDebug() << "end";
 }
 

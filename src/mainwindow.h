@@ -23,9 +23,6 @@
 #include <QMutex>
 #include <QTimer>
 #include "mltcontroller.h"
-#ifdef WITH_LIBLEAP
-#include "leaplistener.h"
-#endif
 
 namespace Ui {
     class MainWindow;

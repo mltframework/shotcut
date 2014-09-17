@@ -580,7 +580,7 @@ function set_globals {
   #####
   # shotcut 
   if [ "$TARGET_OS" = "Darwin" ]; then
-    CONFIG[7]="$QTDIR/bin/qmake -r -spec macx-g++ MLT_PREFIX=$FINAL_INSTALL_DIR CONFIG+=leap"
+    CONFIG[7]="$QTDIR/bin/qmake -r -spec macx-g++ MLT_PREFIX=$FINAL_INSTALL_DIR"
   elif [ "$TARGET_OS" = "Win32" ]; then
     # DEFINES+=QT_STATIC is for QWebSockets
     CONFIG[7]="$QMAKE -r -spec mingw CONFIG+=link_pkgconfig PKGCONFIG+=mlt++ LIBS+=-L${QTDIR}/lib SHOTCUT_VERSION=$(date '+%y.%m.%d') DEFINES+=QT_STATIC"
@@ -1391,9 +1391,6 @@ SLIB_EXTRA_CMD=-"mv $$(@:$(SLIBSUF)=.orig.def) $$(@:$(SLIBSUF)=.def)"
         PNGLIB=$(ldd "$SOXLIB" | awk '/libpng/ {print $3}')
         log PNGLIB=$PNGLIB
         cmd install -c "$PNGLIB" "$FINAL_INSTALL_DIR"/lib
-        LEAPLIB=$(ldd "$FINAL_INSTALL_DIR"/bin/shotcut | awk '/Leap/ {print $3}')
-        log LEAPLIB=$LEAPLIB
-        cmd install -c "$LEAPLIB" "$FINAL_INSTALL_DIR"/lib
       fi
     elif test "webvfx" = "$1" ; then
       cmd make -C webvfx install || die "Unable to install $1/webvfx"
@@ -1628,10 +1625,6 @@ function deploy_osx
   # Movit shaders
   log Copying Movit shaders
   cmd cp -a "$FINAL_INSTALL_DIR"/share/movit share
-
-  # Leap Motion library
-  cmd cp -p /usr/local/lib/libLeap.dylib lib
-  cmd install_name_tool -change "@loader_path/libLeap.dylib" "@loader_path/lib/libLeap.dylib" Shotcut
 
   popd
 
