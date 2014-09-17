@@ -33,6 +33,8 @@
 #include <QtWidgets>
 #include <QtWebKitWidgets>
 #include <QQuickView>
+#include <QQuickItem>
+#include <QQmlEngine>
 
 #define FORWARD_ACTION(action1, action2) \
     connect(action1, SIGNAL(triggered()), \
