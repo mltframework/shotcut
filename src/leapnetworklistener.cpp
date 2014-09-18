@@ -79,7 +79,7 @@ void LeapNetworkListener::onMessage(const QString &s)
         }
         else if (frame["hands"].isArray() && frame["hands"].toArray().count() > 0) {
             QJsonObject hand = frame["hands"].toArray().first().toObject();
-            if (frame["pointables"].toArray().count() <= 1) {
+            if (frame["pointables"].toArray().count() > 1) {
                 if (hand["palmPosition"].isArray() && frame["interactionBox"].isObject()) {
                     double x = hand["palmPosition"].toArray().first().toDouble();
                     QJsonValue center = frame["interactionBox"].toObject()["center"];
