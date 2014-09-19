@@ -1801,7 +1801,7 @@ GenericName[de]=Video Bearbeitungsprogramm
 Comment=Video Editor
 Comment[de]=Programm zum Bearbeiten und Abspielen von Videodateien.
 Terminal=false
-Exec=sh -c "\$(dirname "%k")/Shotcut.app/shotcut "%F""
+Exec=env "\$(dirname "%k")/Shotcut.app/shotcut" "%F"
 Icon=applications-multimedia
 End-of-desktop-file
   if test 0 != $? ; then
