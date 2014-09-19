@@ -34,7 +34,7 @@ Item {
 
     function setHandles(rect) {
         topLeftHandle.x = Math.round(rect.x * widthScale)
-        topLeftHandle.y = Math.round(rect.y * widthScale)
+        topLeftHandle.y = Math.round(rect.y * heightScale)
         if (aspectRatio === 0.0) {
             bottomRightHandle.x = topLeftHandle.x + Math.round(rect.width * widthScale) - handleSize
             bottomRightHandle.y = topLeftHandle.y + Math.round(rect.height * heightScale) - handleSize

@@ -64,15 +64,15 @@ Flickable {
             onWidthScaleChanged: setHandles(filter.getRect(rectProperty))
             onHeightScaleChanged: setHandles(filter.getRect(rectProperty))
             onRectChanged:  {
-                filterRect.x = rect.x
-                filterRect.y = rect.y
-                filterRect.width = rect.width
-                filterRect.height = rect.height
+                filterRect.x = Math.round(rect.x / rectangle.widthScale)
+                filterRect.y = Math.round(rect.y / rectangle.heightScale)
+                filterRect.width = Math.round(rect.width / rectangle.widthScale)
+                filterRect.height = Math.round(rect.height / rectangle.heightScale)
                 filter.set(rectProperty, '%1%/%2%:%3%x%4%'
-                           .arg(Math.round(rect.x / rectangle.widthScale) / profile.width * 100)
-                           .arg(Math.round(rect.y / rectangle.heightScale) / profile.height * 100)
-                           .arg(Math.round(rect.width / rectangle.widthScale) / profile.width * 100)
-                           .arg(Math.round(rect.height / rectangle.heightScale) / profile.height * 100))
+                           .arg(filterRect.x / profile.width * 100)
+                           .arg(filterRect.y / profile.height * 100)
+                           .arg(filterRect.width / profile.width * 100)
+                           .arg(filterRect.height / profile.height * 100))
             }
         }
     }
