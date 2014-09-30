@@ -43,7 +43,9 @@ QImage ThumbnailProvider::requestImage(const QString &id, QSize *size, const QSi
         QString resource = id.section('/', 1);
         int frameNumber = id.mid(index + 1).toInt();
 
-        if (service.startsWith("xml"))
+        if (service == "avformat-novalidate")
+            service = "avformat";
+        else if (service.startsWith("xml"))
             service = "xml-nogl";
         resource = resource.left(resource.lastIndexOf('#'));
 
