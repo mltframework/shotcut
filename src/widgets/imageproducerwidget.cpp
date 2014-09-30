@@ -185,7 +185,7 @@ void ImageProducerWidget::on_sequenceCheckBox_clicked(bool checked)
     else {
         m_producer->set("resource", m_producer->get("shotcut_resource"));
         m_producer->set("length", qRound(MLT.profile().fps() * 600));
-        ui->durationSpinBox->setValue(MLT.profile().fps() * Settings.imageDuration());
+        ui->durationSpinBox->setValue(qRound(MLT.profile().fps() * Settings.imageDuration()));
     }
     Mlt::Producer* p = producer(MLT.profile());
     p->pass_list(*m_producer, "force_aspect_ratio, shotcut_aspect_num, shotcut_aspect_den, "
