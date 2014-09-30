@@ -509,6 +509,10 @@ void MainWindow::setupSettingsMenu()
     a->setCheckable(true);
     a->setData("de");
     ui->menuLanguage->addActions(m_languagesGroup->actions());
+    a = new QAction(QLocale::languageToString(QLocale::Polish), m_languagesGroup);
+    a->setCheckable(true);
+    a->setData("pl");
+    ui->menuLanguage->addActions(m_languagesGroup->actions());
     a = new QAction(QLocale::languageToString(QLocale::Portuguese), m_languagesGroup);
     a->setCheckable(true);
     a->setData("pt");
