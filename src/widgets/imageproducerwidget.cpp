@@ -85,8 +85,9 @@ void ImageProducerWidget::reopen(Mlt::Producer* p)
 {
     int out = ui->durationSpinBox->value() - 1;
     int position = m_producer->position();
-    double speed = m_producer->get_speed();
 
+    if (out + 1 > p->get_length())
+        p->set("length", out + 1);
     p->set("out", out);
     if (position > p->get_out())
         position = p->get_out();
@@ -98,7 +99,6 @@ void ImageProducerWidget::reopen(Mlt::Producer* p)
     emit producerReopened();
     emit producerChanged();
     MLT.seek(position);
-    MLT.play(speed);
     setProducer(p);
 }
 
@@ -135,7 +135,7 @@ void ImageProducerWidget::on_durationSpinBox_editingFinished()
 {
     if (!m_producer)
         return;
-    if (ui->durationSpinBox->value() == m_producer->get_length())
+    if (ui->durationSpinBox->value() == m_producer->get_out() + 1)
         return;
     Mlt::Producer* p = producer(MLT.profile());
     p->pass_list(*m_producer, "force_aspect_ratio, shotcut_aspect_num, shotcut_aspect_den,"
