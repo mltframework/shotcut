@@ -274,6 +274,9 @@ void PlaylistDock::on_actionOpen_triggered()
     if (i) {
         QString xml = MLT.saveXML("string", i->producer);
         Mlt::Producer* p = new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
+        QString service = p->get("mlt_service");
+        if (service == "pixbuf" || service == "qimage")
+            p->set_in_and_out(i->frame_in, i->frame_out);
         emit clipOpened(p, i->frame_in, i->frame_out);
         delete i;
     }
@@ -311,6 +314,9 @@ void PlaylistDock::on_tableView_doubleClicked(const QModelIndex &index)
         } else {
             QString xml = MLT.saveXML("string", i->producer);
             Mlt::Producer* p = new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
+            QString service = p->get("mlt_service");
+            if (service == "pixbuf" || service == "qimage")
+                p->set_in_and_out(i->frame_in, i->frame_out);
             emit clipOpened(p, i->frame_in, i->frame_out);
         }
         delete i;
