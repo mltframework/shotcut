@@ -418,10 +418,10 @@ void Player::onProducerOpened(bool play)
     m_selectedLabel->setText("--:--:--:--");
     if (m_isSeekable) {
         m_durationLabel->setText(QString(MLT.producer()->get_length_time()).prepend(" / "));
-        m_previousIn = MLT.producer()->get_in();
+        m_previousIn = MLT.isClip()? MLT.producer()->get_in() : -1;
         m_scrubber->setEnabled(true);
         m_scrubber->setInPoint(m_previousIn);
-        m_previousOut = MLT.producer()->get_out();
+        m_previousOut = MLT.isClip()? MLT.producer()->get_out() : -1;
         m_scrubber->setOutPoint(m_previousOut);
     }
     else {
@@ -568,7 +568,7 @@ void Player::updateSelection()
         m_selectedLabel->setText(MLT.producer()->frames_to_time(MLT.producer()->get_playtime()));
     } else {
         m_inPointLabel->setText("--:--:--:-- / ");
-        if (MLT.producer() && !MLT.isPlaylist() &&
+        if (MLT.producer() && MLT.isClip() &&
                 MLT.producer()->get_out() < m_duration - 1) {
             m_selectedLabel->setText(MLT.producer()->frames_to_time(MLT.producer()->get_playtime()));
         } else if (!MLT.producer() || MLT.producer()->get_in() == 0) {
