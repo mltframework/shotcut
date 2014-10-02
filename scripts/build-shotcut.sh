@@ -493,7 +493,7 @@ function set_globals {
   CONFIG[0]="${CONFIG[0]} $FFMPEG_ADDITIONAL_OPTIONS"
   CFLAGS_[0]="-I$FINAL_INSTALL_DIR/include $CFLAGS"
   if test "$TARGET_OS" = "Win32" ; then
-    CONFIG[0]="${CONFIG[0]} --enable-memalign-hack --cross-prefix=$CROSS --arch=x86 --target-os=mingw32"
+    CONFIG[0]="${CONFIG[0]} --cross-prefix=$CROSS --arch=x86 --target-os=mingw32"
     LDFLAGS_[0]="$LDFLAGS"
   else
     LDFLAGS_[0]="-L$FINAL_INSTALL_DIR/lib $LDFLAGS"
