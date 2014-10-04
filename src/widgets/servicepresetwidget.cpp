@@ -73,8 +73,7 @@ void ServicePresetWidget::saveDefaultPreset(Mlt::Properties& properties)
         if (dir.mkdir(m_widgetName))
             dir.cd(m_widgetName);
     }
-    if (!QFile(dir.filePath(tr("(defaults)"))).exists())
-        properties.save(dir.filePath(tr("(defaults)")).toUtf8().constData());
+    properties.save(dir.filePath(tr("(defaults)")).toUtf8().constData());
 }
 
 void ServicePresetWidget::savePreset(Mlt::Properties* properties)

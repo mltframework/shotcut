@@ -167,8 +167,7 @@ int QmlFilter::savePreset(const QStringList &propertyNames, const QString &name)
             dir.cd(objectNameOrService());
     }
     const QString preset = name.isEmpty()? tr("(defaults)") : name;
-    if (!QFile(dir.filePath(preset)).exists())
-        properties.save(dir.filePath(preset).toUtf8().constData());
+    properties.save(dir.filePath(preset).toUtf8().constData());
     loadPresets();
     return m_presets.indexOf(name);
 }
