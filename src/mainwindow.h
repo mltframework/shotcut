@@ -24,6 +24,8 @@
 #include <QTimer>
 #include "mltcontroller.h"
 
+#define EXIT_RESTART (42)
+
 namespace Ui {
     class MainWindow;
 }
@@ -117,6 +119,7 @@ private:
     AutoSaveFile* m_autosaveFile;
     QMutex m_autosaveMutex;
     QTimer m_autosaveTimer;
+    int m_exitCode;
 
 #ifdef WITH_LIBLEAP
     LeapListener m_leapListener;

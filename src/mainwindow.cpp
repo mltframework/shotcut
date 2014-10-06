@@ -80,6 +80,7 @@ MainWindow::MainWindow()
     , m_isPlaylistLoaded(false)
     , m_htmlEditor(0)
     , m_autosaveFile(0)
+    , m_exitCode(0)
 {
     qDebug() << "begin";
     new GLTestWidget(this);
@@ -1270,7 +1271,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
         if (!m_htmlEditor || m_htmlEditor->close()) {
             writeSettings();
             event->accept();
-            qApp->quit();
+            QApplication::exit(m_exitCode);
             return;
         }
     }
@@ -2026,8 +2027,10 @@ void MainWindow::on_actionGPU_triggered(bool checked)
     dialog.setDefaultButton(QMessageBox::Yes);
     dialog.setEscapeButton(QMessageBox::No);
     dialog.setWindowModality(QmlApplication::dialogModality());
-    if (dialog.exec() == QMessageBox::Yes)
+    if (dialog.exec() == QMessageBox::Yes) {
+        m_exitCode = EXIT_RESTART;
         QApplication::closeAllWindows();
+    }
 }
 
 void MainWindow::onExternalTriggered(QAction *action)

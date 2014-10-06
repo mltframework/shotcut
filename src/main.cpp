@@ -23,6 +23,7 @@
 #include <FileAppender.h>
 #include <ConsoleAppender.h>
 #include <QSysInfo>
+#include <QProcess>
 #include <framework/mlt_log.h>
 
 static void mlt_log_handler(void *service, int mlt_level, const char *format, va_list args)
@@ -198,5 +199,15 @@ int main(int argc, char **argv)
     splash.finish(a.mainWindow);
     if (!a.resourceArg.isEmpty())
         a.mainWindow->open(a.resourceArg);
-    return a.exec();
+    int result = a.exec();
+
+    if (EXIT_RESTART == result) {
+        qDebug() << "restarting app";
+        QProcess* restart = new QProcess;
+        restart->start(a.applicationFilePath());
+        restart->waitForReadyRead();
+        restart->waitForFinished(1000);
+        result = EXIT_SUCCESS;
+    }
+    return result;
 }
