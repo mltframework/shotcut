@@ -80,7 +80,7 @@ MainWindow::MainWindow()
     , m_isPlaylistLoaded(false)
     , m_htmlEditor(0)
     , m_autosaveFile(0)
-    , m_exitCode(0)
+    , m_exitCode(EXIT_SUCCESS)
 {
     qDebug() << "begin";
     new GLTestWidget(this);
@@ -582,7 +582,7 @@ bool MainWindow::isCompatibleWithGpuMode(const QString &url)
                 QMessageBox dialog(QMessageBox::Question,
                    qApp->applicationName(),
                    tr("The file you opened uses GPU effects, but GPU processing is not enabled.\n"
-                      "Do you want to enable GPU processing and exit?"),
+                      "Do you want to enable GPU processing and restart?"),
                    QMessageBox::No |
                    QMessageBox::Yes,
                    this);
@@ -592,6 +592,7 @@ bool MainWindow::isCompatibleWithGpuMode(const QString &url)
                 int r = dialog.exec();
                 if (r == QMessageBox::Yes) {
                     Settings.setPlayerGPU(true);
+                    m_exitCode = EXIT_RESTART;
                     QApplication::closeAllWindows();
                 }
                 return false;
@@ -599,7 +600,7 @@ bool MainWindow::isCompatibleWithGpuMode(const QString &url)
                 QMessageBox dialog(QMessageBox::Question,
                    qApp->applicationName(),
                    tr("The file you opened uses effects that are incompatible with GPU processing.\n"
-                      "Do you want to disable GPU processing and exit?"),
+                      "Do you want to disable GPU processing and restart?"),
                    QMessageBox::No |
                    QMessageBox::Yes,
                    this);
@@ -609,6 +610,7 @@ bool MainWindow::isCompatibleWithGpuMode(const QString &url)
                 int r = dialog.exec();
                 if (r == QMessageBox::Yes) {
                     Settings.setPlayerGPU(false);
+                    m_exitCode = EXIT_RESTART;
                     QApplication::closeAllWindows();
                 }
                 return false;
@@ -1974,14 +1976,16 @@ void MainWindow::onLanguageTriggered(QAction* action)
     QMessageBox dialog(QMessageBox::Information,
                        qApp->applicationName(),
                        tr("You must restart Shotcut to switch to the new language.\n"
-                          "Do you want to exit now?"),
+                          "Do you want to restart now?"),
                        QMessageBox::No | QMessageBox::Yes,
                        this);
     dialog.setDefaultButton(QMessageBox::Yes);
     dialog.setEscapeButton(QMessageBox::No);
     dialog.setWindowModality(QmlApplication::dialogModality());
-    if (dialog.exec() == QMessageBox::Yes)
+    if (dialog.exec() == QMessageBox::Yes) {
+        m_exitCode = EXIT_RESTART;
         QApplication::closeAllWindows();
+    }
 }
 
 void MainWindow::on_actionNearest_triggered(bool checked)
@@ -2021,7 +2025,7 @@ void MainWindow::on_actionGPU_triggered(bool checked)
     QMessageBox dialog(QMessageBox::Information,
                        qApp->applicationName(),
                        tr("You must restart Shotcut to switch using GPU processing.\n"
-                          "Do you want to exit now?"),
+                          "Do you want to restart now?"),
                        QMessageBox::No | QMessageBox::Yes,
                        this);
     dialog.setDefaultButton(QMessageBox::Yes);
