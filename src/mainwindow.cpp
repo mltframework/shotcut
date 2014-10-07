@@ -977,7 +977,8 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         m_player->seek(0);
         break;
     case Qt::Key_End:
-        m_player->seek(MLT.producer()->get_length() - 1);
+        if (MLT.producer())
+            m_player->seek(MLT.producer()->get_length() - 1);
         break;
     case Qt::Key_Left:
         stepLeftOneFrame();
