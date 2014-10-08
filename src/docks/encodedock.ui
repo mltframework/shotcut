@@ -1450,7 +1450,6 @@ codecs. However, not all codecs are multi-threaded.</string>
     </item>
    </layout>
    <zorder>scrollArea</zorder>
-   <zorder></zorder>
   </widget>
  </widget>
  <customwidgets>
