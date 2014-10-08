@@ -46,7 +46,7 @@ void MvcpThread::run()
         mvcp lmvcp = mvcp_init(parser);
         mvcp_response_close(response);
         int command = COMMAND_INVALID;
-        QObject* parameters;
+        QObject* parameters = 0;
 
         m_mutex.lock();
         if (!m_commands.isEmpty()) {
@@ -56,18 +56,20 @@ void MvcpThread::run()
         m_mutex.unlock();
 
         while (!m_quit) {
-            switch (command) {
-            case COMMAND_ULS:
-                do_uls(lmvcp, parameters);
-                break;
-            case COMMAND_CLS:
-                do_cls(lmvcp, parameters);
-                break;
-            case COMMAND_USTA:
-                do_usta(lmvcp, parameters);
-                break;
-            default:
-                break;
+            if (parameters) {
+                switch (command) {
+                case COMMAND_ULS:
+                    do_uls(lmvcp, parameters);
+                    break;
+                case COMMAND_CLS:
+                    do_cls(lmvcp, parameters);
+                    break;
+                case COMMAND_USTA:
+                    do_usta(lmvcp, parameters);
+                    break;
+                default:
+                    break;
+                }
             }
             m_mutex.lock();
             while (!m_quit && m_commands.isEmpty())

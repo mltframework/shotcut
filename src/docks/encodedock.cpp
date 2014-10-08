@@ -441,8 +441,8 @@ void EncodeDock::on_presetsTree_clicked(const QModelIndex &index)
             preset = new Mlt::Properties((mlt_properties) m_presets->get_data(name.toLatin1().constData()));
         }
         if (preset->is_valid()) {
-            int audioQuality;
-            int videoQuality;
+            int audioQuality = -1;
+            int videoQuality = -1;
             QStringList other;
             QStringList textParts = name.split('/');
 
@@ -585,7 +585,7 @@ void EncodeDock::on_presetsTree_clicked(const QModelIndex &index)
 
             // normalize the quality settings
             // quality depends on codec
-            if (ui->audioRateControlCombo->currentIndex() == RateControlQuality) {
+            if (ui->audioRateControlCombo->currentIndex() == RateControlQuality && audioQuality > -1) {
                 const QString& acodec = ui->audioCodecCombo->currentText();
                 if (acodec == "libmp3lame") // 0 (best) - 9 (worst)
                     ui->audioQualitySpinner->setValue(TO_RELATIVE(9, 0, audioQuality));
@@ -595,7 +595,7 @@ void EncodeDock::on_presetsTree_clicked(const QModelIndex &index)
                     // aac: 0 (worst) - 500 (best)
                     ui->audioQualitySpinner->setValue(TO_RELATIVE(0, 500, audioQuality));
             }
-            if (ui->videoRateControlCombo->currentIndex() == RateControlQuality) {
+            if (ui->videoRateControlCombo->currentIndex() == RateControlQuality && videoQuality > -1) {
                 const QString& vcodec = ui->videoCodecCombo->currentText();
                 //val = min + (max - min) * paramval;
                 if (vcodec == "libx264") // 0 (best, 100%) -51 (worst)

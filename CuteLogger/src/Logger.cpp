@@ -243,7 +243,7 @@ static void cleanupLoggerPrivate()
 #if QT_VERSION >= 0x050000
 static void qtLoggerMessageHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg)
 {
-  Logger::LogLevel level;
+  Logger::LogLevel level = Logger::Error;
   switch (type)
   {
     case QtDebugMsg:

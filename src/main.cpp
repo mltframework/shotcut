@@ -31,7 +31,7 @@ static void mlt_log_handler(void *service, int mlt_level, const char *format, va
     if (mlt_level > mlt_log_get_level())
         return;
 
-    enum Logger::LogLevel cuteLoggerLevel;
+    enum Logger::LogLevel cuteLoggerLevel = Logger::Fatal;
     switch (mlt_level) {
     case MLT_LOG_DEBUG:
         cuteLoggerLevel = Logger::Trace;
