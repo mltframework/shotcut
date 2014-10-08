@@ -1,6 +1,6 @@
 CONFIG   += link_prl
 
-QT       += widgets opengl xml network qml quick webkitwidgets sql
+QT       += widgets opengl xml network printsupport qml quick sql webkitwidgets
 
 TARGET = shotcut
 TEMPLATE = app
