@@ -48,7 +48,7 @@ Rectangle {
     transitions: [
         Transition {
             to: '*'
-            ColorAnimation { target: clipRoot; duration: 100 }
+            ColorAnimation { target: trackHeadRoot; duration: 100 }
         }
     ]
 
