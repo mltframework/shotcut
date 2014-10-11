@@ -24,6 +24,7 @@ Flickable {
     property string fillProperty
     property string halignProperty
     property string valignProperty
+    property var _locale: Qt.locale(application.numericLocale)
 
     width: 400
     height: 200
@@ -68,12 +69,11 @@ Flickable {
                 filterRect.y = Math.round(rect.y / rectangle.heightScale)
                 filterRect.width = Math.round(rect.width / rectangle.widthScale)
                 filterRect.height = Math.round(rect.height / rectangle.heightScale)
-                var locale = Qt.locale(application.numericLocale)
                 filter.set(rectProperty, '%1%/%2%:%3%x%4%'
-                           .arg((filterRect.x / profile.width * 100).toLocaleString(locale))
-                           .arg((filterRect.y / profile.height * 100).toLocaleString(locale))
-                           .arg((filterRect.width / profile.width * 100).toLocaleString(locale))
-                           .arg((filterRect.height / profile.height * 100).toLocaleString(locale)))
+                           .arg((filterRect.x / profile.width * 100).toLocaleString(_locale))
+                           .arg((filterRect.y / profile.height * 100).toLocaleString(_locale))
+                           .arg((filterRect.width / profile.width * 100).toLocaleString(_locale))
+                           .arg((filterRect.height / profile.height * 100).toLocaleString(_locale)))
             }
         }
     }
@@ -90,12 +90,11 @@ Flickable {
                 rectangle.aspectRatio = getAspectRatio()
                 rectangle.setHandles(filterRect)
                 var rect = rectangle.rectangle
-                var locale = Qt.locale(application.numericLocale)
                 filter.set(rectProperty, '%1%/%2%:%3%x%4%'
-                           .arg((Math.round(rect.x / rectangle.widthScale) / profile.width * 100).toLocaleString(locale))
-                           .arg((Math.round(rect.y / rectangle.heightScale) / profile.height * 100).toLocaleString(locale))
-                           .arg((Math.round(rect.width / rectangle.widthScale) / profile.width * 100).toLocaleString(locale))
-                           .arg((Math.round(rect.height / rectangle.heightScale) / profile.height * 100).toLocaleString(locale)))
+                           .arg((Math.round(rect.x / rectangle.widthScale) / profile.width * 100).toLocaleString(_locale))
+                           .arg((Math.round(rect.y / rectangle.heightScale) / profile.height * 100).toLocaleString(_locale))
+                           .arg((Math.round(rect.width / rectangle.widthScale) / profile.width * 100).toLocaleString(_locale))
+                           .arg((Math.round(rect.height / rectangle.heightScale) / profile.height * 100).toLocaleString(_locale)))
             }
         }
     }

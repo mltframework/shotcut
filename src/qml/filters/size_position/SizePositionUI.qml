@@ -26,6 +26,7 @@ Item {
     property string rectProperty
     property string valignProperty
     property string halignProperty
+    property var _locale: Qt.locale(application.numericLocale)
 
     property rect filterRect: filter.getRect(rectProperty)
 
@@ -74,12 +75,11 @@ Item {
             filterRect.y = y
             filterRect.width = w
             filterRect.height = h
-            var locale = Qt.locale(application.numericLocale)
             filter.set(rectProperty, '%1%/%2%:%3%x%4%'
-                       .arg((x / profile.width * 100).toLocaleString(locale))
-                       .arg((y / profile.height * 100).toLocaleString(locale))
-                       .arg((w / profile.width * 100).toLocaleString(locale))
-                       .arg((h / profile.height * 100).toLocaleString(locale)))
+                       .arg((x / profile.width * 100).toLocaleString(_locale))
+                       .arg((y / profile.height * 100).toLocaleString(_locale))
+                       .arg((w / profile.width * 100).toLocaleString(_locale))
+                       .arg((h / profile.height * 100).toLocaleString(_locale)))
         }
     }
 

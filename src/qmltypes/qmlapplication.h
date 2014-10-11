@@ -33,7 +33,7 @@ class QmlApplication : public QObject
     Q_PROPERTY(QColor toolTipBaseColor READ toolTipBaseColor NOTIFY paletteChanged)
     Q_PROPERTY(QColor toolTipTextColor READ toolTipTextColor NOTIFY paletteChanged)
     Q_PROPERTY(QString OS READ OS CONSTANT)
-    Q_PROPERTY(QString numericLocale READ numericLocale)
+    Q_PROPERTY(QString numericLocale READ numericLocale CONSTANT)
 
 public:
     static QmlApplication& singleton();
