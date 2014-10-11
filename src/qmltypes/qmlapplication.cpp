@@ -22,7 +22,11 @@
 #include <QSysInfo>
 #include <QCursor>
 #include <QPalette>
+#ifdef Q_OS_WIN
+#include <QLocale>
+#else
 #include <clocale>
+#endif
 
 QmlApplication& QmlApplication::singleton()
 {
@@ -76,5 +80,9 @@ QString QmlApplication::OS()
 
 QString QmlApplication::numericLocale()
 {
+#ifdef Q_OS_WIN
+    return QLocale::system().name();
+#else
     return QString::fromLatin1(::setlocale(LC_NUMERIC, NULL));
+#endif
 }
