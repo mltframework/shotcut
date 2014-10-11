@@ -56,12 +56,6 @@ static QActionList getFilters(FiltersDock* dock, Ui::FiltersDock* ui)
             QQmlComponent component(&engine, subdir.absoluteFilePath(fileName));
             QmlMetadata *meta = qobject_cast<QmlMetadata*>(component.create());
             if (meta && (meta->isAudio() || (meta->needsGPU() == Settings.playerGPU()))) {
-#ifdef Q_OS_WIN
-                if (meta->mlt_service() == "webvfx") {
-                    delete meta;
-                    continue;
-                }
-#endif
                 // Check if mlt_service is available.
                 if (MLT.repository()->filters()->get_data(meta->mlt_service().toLatin1().constData())) {
                     qDebug() << "added filter" << meta->name();

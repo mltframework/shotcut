@@ -39,6 +39,19 @@ void QmlFile::setUrl(const QUrl& url)
                             QUrl::RemovePort |
                             QUrl::RemoveAuthority |
                             QUrl::RemoveQuery );
+
+#ifdef Q_OS_WIN
+    QString s = adj.toString();
+    // If there is a slash before a drive letter.
+    // On Windows, file URLs look like file:///C:/Users/....
+    // The scheme is removed but only "://" (not 3 slashes) between scheme and path.
+    if (s.size() > 2 && s[0] == '/' && s[2]  == ':') {
+        // Remove the leading slash.
+        s = s.right(s.size() - 1);
+        adj = QUrl(s);
+    }
+#endif
+
     if(m_url != adj) {
         m_url = adj;
         emit urlChanged(m_url);
