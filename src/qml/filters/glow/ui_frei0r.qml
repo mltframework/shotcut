@@ -33,7 +33,7 @@ Rectangle {
             // Set default parameter values
             filter.set(paramBlur, 50.0 / 100.0)
             filter.savePreset(defaultParameters)
-            bslider.value = filter.get(paramBlur) * 100.0
+            bslider.value = filter.getDouble(paramBlur) * 100.0
         }
     }
 
@@ -50,7 +50,7 @@ Rectangle {
             Layout.columnSpan: 2
             parameters: defaultParameters
             onPresetSelected: {
-                bslider.value = filter.get(paramBlur) * 100.0
+                bslider.value = filter.getDouble(paramBlur) * 100.0
             }
         }
 
@@ -63,7 +63,7 @@ Rectangle {
             minimumValue: 0
             maximumValue: 100
             suffix: ' %'
-            value: filter.get(paramBlur) * 100.0
+            value: filter.getDouble(paramBlur) * 100.0
             onValueChanged: filter.set(paramBlur, value / 100.0)
         }
         UndoButton {

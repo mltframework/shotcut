@@ -61,7 +61,7 @@ Rectangle {
                 decimals: 1
                 suffix: ' LUFS'
                 spinnerWidth: 100
-                value: filter.get('program') * 1
+                value: filter.getDouble('program')
                 onValueChanged: filter.set('program', value)
             }
             UndoButton {

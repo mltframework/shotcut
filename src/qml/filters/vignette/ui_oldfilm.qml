@@ -44,9 +44,9 @@ Rectangle {
             Layout.columnSpan: 2
             parameters: ['radius', 'smooth', 'opacity', 'mode']
             onPresetSelected: {
-                radiusSlider.value = filter.get('radius') * 100
-                smoothSlider.value = filter.get('smooth') * 100
-                opacitySlider.value = (1.0 - filter.get('opacity')) * 100
+                radiusSlider.value = filter.getDouble('radius') * 100
+                smoothSlider.value = filter.getDouble('smooth') * 100
+                opacitySlider.value = (1.0 - filter.getDouble('opacity')) * 100
                 modeCheckBox.checked = filter.get('mode') === '1'
             }
         }
@@ -60,7 +60,7 @@ Rectangle {
             minimumValue: 0
             maximumValue: 100
             suffix: ' %'
-            value: filter.get('radius') * 100
+            value: filter.getDouble('radius') * 100
             onValueChanged: filter.set('radius', value / 100)
         }
         UndoButton {
@@ -76,7 +76,7 @@ Rectangle {
             minimumValue: 0
             maximumValue: 500
             suffix: ' %'
-            value: filter.get('smooth') * 100
+            value: filter.getDouble('smooth') * 100
             onValueChanged: filter.set('smooth', value / 100)
         }
         UndoButton {
@@ -106,7 +106,7 @@ Rectangle {
             minimumValue: 0
             maximumValue: 100
             suffix: ' %'
-            value: (1.0 - filter.get('opacity')) * 100
+            value: (1.0 - filter.getDouble('opacity')) * 100
             onValueChanged: filter.set('opacity', 1.0 - value / 100)
         }
         UndoButton {

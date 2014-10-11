@@ -42,7 +42,7 @@ Rectangle {
             ratio: 100
             decimals: 2
             stepSize: 0.1
-            value: filter.get('radius') * 100
+            value: filter.getDouble('radius') * 100
             onValueChanged: filter.set('radius', value / 100)
         }
         UndoButton {
@@ -58,7 +58,7 @@ Rectangle {
             minimumValue: 0
             maximumValue: 100
             suffix: ' %'
-            value: filter.get('mix') * 100
+            value: filter.getDouble('mix') * 100
             onValueChanged: filter.set('mix', value / 100)
         }
         UndoButton {

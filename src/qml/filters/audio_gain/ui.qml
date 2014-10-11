@@ -30,7 +30,7 @@ Rectangle {
         if (filter.isNew) {
             // Set default parameter values
             filter.set(gainParameter, 1.0)
-            slider.value = filter.get(gainParameter) * 100
+            slider.value = filter.getDouble(gainParameter) * 100
         }
     }
 
@@ -47,7 +47,7 @@ Rectangle {
                 suffix: ' %'
                 decimals: 1
                 spinnerWidth: 80
-                value: filter.get(gainParameter) * 100
+                value: filter.getDouble(gainParameter) * 100
                 onValueChanged:filter.set(gainParameter, value / 100)
             }
             UndoButton {

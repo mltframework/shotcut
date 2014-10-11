@@ -33,7 +33,7 @@ Rectangle {
             // Set default parameter values
             colorSwatch.value = 'black'
             filter.set('radius', 0.5)
-            slider.value = filter.get('radius') * slider.maximumValue
+            slider.value = filter.getDouble('radius') * slider.maximumValue
         }
     }
 
@@ -51,7 +51,7 @@ Rectangle {
             minimumValue: 0
             maximumValue: 100
             suffix: ' %'
-            value: filter.get('radius') * slider.maximumValue
+            value: filter.getDouble('radius') * slider.maximumValue
             onValueChanged: filter.set('radius', value / maximumValue)
         }
         UndoButton {

@@ -108,7 +108,7 @@ Rectangle {
             maximumValue: 10
             tickmarksEnabled: true
             stepSize: 1
-            value: filter.get('shakiness')
+            value: filter.getDouble('shakiness')
             onValueChanged: filter.set('shakiness', value)
         }
         UndoButton {
@@ -125,7 +125,7 @@ Rectangle {
             maximumValue: 15
             tickmarksEnabled: true
             stepSize: 1
-            value: filter.get('accuracy')
+            value: filter.getDouble('accuracy')
             onValueChanged: filter.set('accuracy', value)
         }
         UndoButton {
@@ -147,7 +147,7 @@ Rectangle {
             maximumValue: 50
             decimals: 1
             suffix: ' %'
-            value: filter.get('zoom')
+            value: filter.getDouble('zoom')
             onValueChanged: {
                 filter.set('zoom', value)
                 filter.set("refresh", 1);

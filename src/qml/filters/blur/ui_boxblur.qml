@@ -50,7 +50,7 @@ Rectangle {
             minimumValue: 1
             maximumValue: 99
             suffix: ' px'
-            value: filter.get('hori')
+            value: filter.getDouble('hori')
             onValueChanged: filter.set('hori', value)
         }
         UndoButton {
@@ -66,7 +66,7 @@ Rectangle {
             minimumValue: 1
             maximumValue: 99
             suffix: ' px'
-            value: filter.get('vert')
+            value: filter.getDouble('vert')
             onValueChanged: filter.set('vert', value)
         }
         UndoButton {

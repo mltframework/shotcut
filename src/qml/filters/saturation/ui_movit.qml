@@ -47,7 +47,7 @@ Rectangle {
                 minimumValue: 0
                 maximumValue: 300
                 suffix: ' %'
-                value: filter.get(saturationParameter) * 100
+                value: filter.getDouble(saturationParameter) * 100
                 onValueChanged: filter.set(saturationParameter, value / 100)
             }
             UndoButton {

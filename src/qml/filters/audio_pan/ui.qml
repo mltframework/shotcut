@@ -61,7 +61,7 @@ Rectangle {
             label: qsTr('Right')
             ratio: maximumValue
             decimals: 2
-            value: filter.get('start') * maximumValue
+            value: filter.getDouble('start') * maximumValue
             onValueChanged: filter.set('start', value / maximumValue)
         }
         UndoButton {

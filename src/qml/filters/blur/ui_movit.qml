@@ -36,7 +36,7 @@ Rectangle {
                 id: slider
                 minimumValue: 0
                 maximumValue: 99.99
-                value: filter.get('radius')
+                value: filter.getDouble('radius')
                 decimals: 2
                 onValueChanged: filter.set('radius', value)
             }

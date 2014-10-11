@@ -29,7 +29,7 @@ Rectangle {
         if (filter.isNew) {
             // Set default parameter values
             filter.set('transition.fix_rotate_x', 0)
-            slider.value = filter.get('transition.fix_rotate_x')
+            slider.value = filter.getDouble('transition.fix_rotate_x')
         }
     }
 
@@ -48,7 +48,7 @@ Rectangle {
                 decimals: 1
                 spinnerWidth: 110
                 suffix: qsTr(' degree')
-                value: filter.get('transition.fix_rotate_x')
+                value: filter.getDouble('transition.fix_rotate_x')
                 onValueChanged: filter.set('transition.fix_rotate_x', value)
             }
             UndoButton {

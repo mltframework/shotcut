@@ -30,17 +30,17 @@ Rectangle {
     color: 'transparent'
     
     function loadWheels() {
-        liftwheel.color = Qt.rgba( filter.get("lift_r"),
-                                   filter.get("lift_g"),
-                                   filter.get("lift_b"),
+        liftwheel.color = Qt.rgba( filter.getDouble("lift_r"),
+                                   filter.getDouble("lift_g"),
+                                   filter.getDouble("lift_b"),
                                    1.0 )
-        gammawheel.color = Qt.rgba( filter.get("gamma_r") / gammaFactor,
-                                    filter.get("gamma_g") / gammaFactor,
-                                    filter.get("gamma_b") / gammaFactor,
+        gammawheel.color = Qt.rgba( filter.getDouble("gamma_r") / gammaFactor,
+                                    filter.getDouble("gamma_g") / gammaFactor,
+                                    filter.getDouble("gamma_b") / gammaFactor,
                                     1.0 )
-        gainwheel.color = Qt.rgba( filter.get("gain_r") / gainFactor,
-                                   filter.get("gain_g") / gainFactor,
-                                   filter.get("gain_b") / gainFactor,
+        gainwheel.color = Qt.rgba( filter.getDouble("gain_r") / gainFactor,
+                                   filter.getDouble("gain_g") / gainFactor,
+                                   filter.getDouble("gain_b") / gainFactor,
                                    1.0 )
     }
     

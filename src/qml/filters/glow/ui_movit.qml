@@ -34,9 +34,9 @@ Rectangle {
             filter.set('blur_mix', 1.0)
             filter.set('highlight_cutoff', 0.2)
             filter.savePreset(defaultParameters)
-            radiusslider.value = filter.get("radius")
-            blurslider.value = filter.get("blur_mix")
-            cutoffslider.value = filter.get("highlight_cutoff")
+            radiusslider.value = filter.getDouble("radius")
+            blurslider.value = filter.getDouble("blur_mix")
+            cutoffslider.value = filter.getDouble("highlight_cutoff")
         }
     }
 
@@ -53,9 +53,9 @@ Rectangle {
             Layout.columnSpan: 2
             parameters: defaultParameters
             onPresetSelected: {
-                radiusslider.value = filter.get("radius")
-                blurslider.value = filter.get("blur_mix")
-                cutoffslider.value = filter.get("highlight_cutoff")
+                radiusslider.value = filter.getDouble("radius")
+                blurslider.value = filter.getDouble("blur_mix")
+                cutoffslider.value = filter.getDouble("highlight_cutoff")
             }
         }
 
@@ -69,7 +69,7 @@ Rectangle {
             minimumValue: 0
             maximumValue: 100
             decimals: 1
-            value: filter.get("radius")
+            value: filter.getDouble("radius")
             onValueChanged: filter.set("radius", value)
         }
         UndoButton {
@@ -86,7 +86,7 @@ Rectangle {
             minimumValue: 0.0
             maximumValue: 1.0
             decimals: 2
-            value: filter.get("blur_mix")
+            value: filter.getDouble("blur_mix")
             onValueChanged: filter.set("blur_mix", value)
         }
         UndoButton {
@@ -103,7 +103,7 @@ Rectangle {
             minimumValue: 0.1
             maximumValue: 1.0
             decimals: 2
-            value: filter.get("highlight_cutoff")
+            value: filter.getDouble("highlight_cutoff")
             onValueChanged: filter.set("highlight_cutoff", value)
         }
         UndoButton {

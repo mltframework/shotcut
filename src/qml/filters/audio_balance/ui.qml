@@ -29,7 +29,7 @@ Rectangle {
         if (filter.isNew) {
             // Set default parameter values
             filter.set('start', 0.5)
-            slider.value = filter.get('start') * 1000
+            slider.value = filter.getDouble('start') * 1000
         }
     }
 
@@ -46,7 +46,7 @@ Rectangle {
                 ratio: 1000
                 decimals: 2
                 label: qsTr('Right')
-                value: filter.get('start') * maximumValue
+                value: filter.getDouble('start') * maximumValue
                 onValueChanged: filter.set('start', value / maximumValue)
             }
             UndoButton {

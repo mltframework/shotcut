@@ -32,16 +32,16 @@ Rectangle {
     color: 'transparent'
     
     function loadWheels() {
-        wheel.color = Qt.rgba(filter.get(paramRed),
-                              filter.get(paramGreen),
-                              filter.get(paramBlue),
+        wheel.color = Qt.rgba(filter.getDouble(paramRed),
+                              filter.getDouble(paramGreen),
+                              filter.getDouble(paramBlue),
                               1.0)
     }
     
     Component.onCompleted: {
         if (filter.isNew)
             filter.savePreset(defaultParameters)
-        modeCombo.currentIndex = filter.get(paramAction) * 2
+        modeCombo.currentIndex = filter.getDouble(paramAction) * 2
         loadWheels()
     }
 
@@ -52,7 +52,7 @@ Rectangle {
         Preset {
             parameters: defaultParameters
             onPresetSelected: {
-                modeCombo.currentIndex = filter.get(paramAction) * 2
+                modeCombo.currentIndex = filter.getDouble(paramAction) * 2
                 loadWheels()
             }
         }

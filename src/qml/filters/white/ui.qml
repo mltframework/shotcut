@@ -53,8 +53,8 @@ Rectangle {
             filter.set(tempParam, defaultTemp / tempScale)
             filter.savePreset(defaultParameters)
         }
-        tempslider.value = filter.get(tempParam) * tempScale
-        tempspinner.value = filter.get(tempParam) * tempScale
+        tempslider.value = filter.getDouble(tempParam) * tempScale
+        tempspinner.value = filter.getDouble(tempParam) * tempScale
         colorPicker.value = filter.get(neutralParam)
     }
 
@@ -71,7 +71,7 @@ Rectangle {
             id: presetItem
             Layout.columnSpan: 2
             onPresetSelected: {
-                tempslider.value = filter.get(tempParam) * tempScale
+                tempslider.value = filter.getDouble(tempParam) * tempScale
                 colorPicker.value = filter.get(neutralParam)
             }
         }

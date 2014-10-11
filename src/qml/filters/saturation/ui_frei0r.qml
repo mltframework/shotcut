@@ -31,7 +31,7 @@ Rectangle {
         if (filter.isNew) {
             // Set default parameter values
             filter.set(saturationParameter, 100 / frei0rMaximum)
-            slider.value = filter.get(saturationParameter) * frei0rMaximum
+            slider.value = filter.getDouble(saturationParameter) * frei0rMaximum
             filter.savePreset(preset.parameters)
         }
     }
@@ -50,7 +50,7 @@ Rectangle {
             Layout.columnSpan: 2
             parameters: [saturationParameter]
             onPresetSelected: {
-                slider.value = filter.get(saturationParameter) * frei0rMaximum
+                slider.value = filter.getDouble(saturationParameter) * frei0rMaximum
             }
         }
 
@@ -63,7 +63,7 @@ Rectangle {
             minimumValue: 0
             maximumValue: 300
             suffix: ' %'
-            value: filter.get(saturationParameter) * frei0rMaximum
+            value: filter.getDouble(saturationParameter) * frei0rMaximum
             onValueChanged: filter.set(saturationParameter, value / frei0rMaximum)
         }
         UndoButton {

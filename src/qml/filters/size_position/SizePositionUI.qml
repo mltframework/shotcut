@@ -74,11 +74,12 @@ Item {
             filterRect.y = y
             filterRect.width = w
             filterRect.height = h
+            var locale = Qt.locale(application.numericLocale)
             filter.set(rectProperty, '%1%/%2%:%3%x%4%'
-                       .arg(x / profile.width * 100)
-                       .arg(y / profile.height * 100)
-                       .arg(w / profile.width * 100)
-                       .arg(h / profile.height * 100))
+                       .arg((x / profile.width * 100).toLocaleString(locale))
+                       .arg((y / profile.height * 100).toLocaleString(locale))
+                       .arg((w / profile.width * 100).toLocaleString(locale))
+                       .arg((h / profile.height * 100).toLocaleString(locale)))
         }
     }
 

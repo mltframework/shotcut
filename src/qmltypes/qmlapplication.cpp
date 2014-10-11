@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2014 Meltytech, LLC
  * Author: Brian Matherly <pez4brian@yahoo.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,6 +22,7 @@
 #include <QSysInfo>
 #include <QCursor>
 #include <QPalette>
+#include <clocale>
 
 QmlApplication& QmlApplication::singleton()
 {
@@ -71,4 +72,9 @@ QString QmlApplication::OS()
 #else
     return "";
 #endif
+}
+
+QString QmlApplication::numericLocale()
+{
+    return QString::fromLatin1(::setlocale(LC_NUMERIC, NULL));
 }

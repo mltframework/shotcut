@@ -44,8 +44,8 @@ Rectangle {
             Layout.columnSpan: 2
             parameters: ['u', 'v']
             onPresetSelected: {
-                sliderBlue.value = filter.get('u')
-                sliderRed.value = filter.get('v')
+                sliderBlue.value = filter.getDouble('u')
+                sliderRed.value = filter.getDouble('v')
             }
         }
 
@@ -57,7 +57,7 @@ Rectangle {
             id: sliderBlue
             minimumValue: 0
             maximumValue: 255
-            value: filter.get('u')
+            value: filter.getDouble('u')
             onValueChanged:filter.set('u', value)
         }
         UndoButton {
@@ -72,7 +72,7 @@ Rectangle {
             id: sliderRed
             minimumValue: 0
             maximumValue: 255
-            value: filter.get('v')
+            value: filter.getDouble('v')
             onValueChanged: filter.set('v', value)
         }
         UndoButton {

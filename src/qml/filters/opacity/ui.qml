@@ -29,7 +29,7 @@ Item {
             filter.set('level', 1)
             filter.set('alpha', 100.0 / 100.0)
             filter.set('opacity', filter.getDouble('alpha'))
-            slider.value = filter.get('alpha') * 100.0
+            slider.value = filter.getDouble('alpha') * 100.0
         }
     }
 
@@ -47,7 +47,7 @@ Item {
             minimumValue: 0
             maximumValue: 100
             suffix: ' %'
-            value: filter.get('alpha') * 100.0
+            value: filter.getDouble('alpha') * 100.0
             onValueChanged: {
                 filter.set('alpha', value / 100.0)
                 filter.set('opacity', filter.getDouble('alpha'))

@@ -34,10 +34,10 @@ Rectangle {
             filter.set('correlation', 0.95)
             filter.set('noise', 0.01)
             filter.savePreset(defaultParameters)
-            cradiusslider.value = filter.get("circle_radius")
-            gradiusslider.value = filter.get("gaussian_radius")
-            corrslider.value = filter.get("correlation")
-            noiseslider.value = filter.get("noise")
+            cradiusslider.value = filter.getDouble("circle_radius")
+            gradiusslider.value = filter.getDouble("gaussian_radius")
+            corrslider.value = filter.getDouble("correlation")
+            noiseslider.value = filter.getDouble("noise")
         }
     }
 
@@ -54,10 +54,10 @@ Rectangle {
             Layout.columnSpan: 2
             parameters: defaultParameters
             onPresetSelected: {
-                cradiusslider.value = filter.get("circle_radius")
-                gradiusslider.value = filter.get("gaussian_radius")
-                corrslider.value = filter.get("correlation")
-                noiseslider.value = filter.get("noise")
+                cradiusslider.value = filter.getDouble("circle_radius")
+                gradiusslider.value = filter.getDouble("gaussian_radius")
+                corrslider.value = filter.getDouble("correlation")
+                noiseslider.value = filter.getDouble("noise")
             }
         }
 
@@ -72,7 +72,7 @@ Rectangle {
             maximumValue: 99.99
             decimals: 2
             stepSize: 0.1
-            value: filter.get("circle_radius")
+            value: filter.getDouble("circle_radius")
             onValueChanged: filter.set("circle_radius", value)
         }
         UndoButton {
@@ -90,7 +90,7 @@ Rectangle {
             maximumValue: 99.99
             decimals: 2
             stepSize: 0.1
-            value: filter.get("gaussian_radius")
+            value: filter.getDouble("gaussian_radius")
             onValueChanged: filter.set("gaussian_radius", value)
         }
         UndoButton {
@@ -107,7 +107,7 @@ Rectangle {
             minimumValue: 0.0
             maximumValue: 1.0
             decimals: 2
-            value: filter.get("correlation")
+            value: filter.getDouble("correlation")
             onValueChanged: filter.set("correlation", value)
         }
         UndoButton {
@@ -124,7 +124,7 @@ Rectangle {
             minimumValue: 0.0
             maximumValue: 1.0
             decimals: 2
-            value: filter.get("noise")
+            value: filter.getDouble("noise")
             onValueChanged: filter.set("noise", value)
         }
         UndoButton {

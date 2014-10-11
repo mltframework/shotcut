@@ -50,8 +50,8 @@ Rectangle {
             Layout.columnSpan: 2
             parameters: ['wave', 'speed', 'deformX', 'deformX']
             onPresetSelected: {
-                waveSlider.value = filter.get('wave')
-                speedSlider.value = filter.get('speed')
+                waveSlider.value = filter.getDouble('wave')
+                speedSlider.value = filter.getDouble('speed')
                 deformXCheckBox.checked = filter.get('deformX') === '1'
                 deformYCheckBox.checked = filter.get('deformY') === '1'
             }
@@ -65,7 +65,7 @@ Rectangle {
             id: waveSlider
             minimumValue: 1
             maximumValue: 500
-            value: filter.get('wave')
+            value: filter.getDouble('wave')
             onValueChanged: filter.set('wave', value)
         }
         UndoButton {
@@ -80,7 +80,7 @@ Rectangle {
             id: speedSlider
             minimumValue: 0
             maximumValue: 1000
-            value: filter.get('speed')
+            value: filter.getDouble('speed')
             onValueChanged: filter.set('speed', value)
         }
         UndoButton {

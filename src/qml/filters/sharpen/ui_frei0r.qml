@@ -34,8 +34,8 @@ Rectangle {
             filter.set(paramAmount, 0.5)
             filter.set(paramSize, 0.5)
             filter.savePreset(defaultParameters)
-            aslider.value = filter.get(paramAmount) * 100.0
-            sslider.value = filter.get(paramSize) * 100.0
+            aslider.value = filter.getDouble(paramAmount) * 100.0
+            sslider.value = filter.getDouble(paramSize) * 100.0
         }
     }
 
@@ -52,8 +52,8 @@ Rectangle {
             Layout.columnSpan: 2
             parameters: defaultParameters
             onPresetSelected: {
-                aslider.value = filter.get(paramAmount) * 100.0
-                sslider.value = filter.get(paramSize) * 100.0
+                aslider.value = filter.getDouble(paramAmount) * 100.0
+                sslider.value = filter.getDouble(paramSize) * 100.0
             }
         }
 
@@ -67,7 +67,7 @@ Rectangle {
             maximumValue: 100
             suffix: ' %'
             decimals: 1
-            value: filter.get(paramAmount) * 100.0
+            value: filter.getDouble(paramAmount) * 100.0
             onValueChanged: filter.set(paramAmount, value / 100.0)
         }
         UndoButton {
@@ -84,7 +84,7 @@ Rectangle {
             maximumValue: 100
             suffix: ' %'
             decimals: 1
-            value: filter.get(paramSize) * 100.0
+            value: filter.getDouble(paramSize) * 100.0
             onValueChanged: filter.set(paramSize, value / 100.0)
         }
         UndoButton {

@@ -44,8 +44,8 @@ Rectangle {
             Layout.columnSpan: 2
             parameters: ['radius', 'inner_radius']
             onPresetSelected: {
-                radiusSlider.value = filter.get('radius') * 100
-                innerSlider.value = filter.get('inner_radius') * 100
+                radiusSlider.value = filter.getDouble('radius') * 100
+                innerSlider.value = filter.getDouble('inner_radius') * 100
             }
         }
 
@@ -58,7 +58,7 @@ Rectangle {
             minimumValue: 0
             maximumValue: 100
             suffix: ' %'
-            value: filter.get('radius') * 100
+            value: filter.getDouble('radius') * 100
             onValueChanged: filter.set('radius', value / 100)
         }
         UndoButton {
@@ -74,7 +74,7 @@ Rectangle {
             minimumValue: 0
             maximumValue: 100
             suffix: ' %'
-            value: filter.get('inner_radius') * 100
+            value: filter.getDouble('inner_radius') * 100
             onValueChanged: filter.set('inner_radius', value / 100)
         }
         UndoButton {
