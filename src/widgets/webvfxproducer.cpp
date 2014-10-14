@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2014 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,6 +19,8 @@
 #include "webvfxproducer.h"
 #include "ui_webvfxproducer.h"
 #include "mltcontroller.h"
+
+static const char* kParamTransparent = "transparent";
 
 WebvfxProducer::WebvfxProducer(QWidget *parent) :
     QWidget(parent),
@@ -40,7 +42,7 @@ Mlt::Producer* WebvfxProducer::producer(Mlt::Profile &profile)
         s.append("plain:");
     s.append(ui->urlLabel->text());
     Mlt::Producer* p = new Mlt::Producer(profile, s.toUtf8().constData());
-    p->set("transparent", ui->transparentCheckBox->isChecked());
+    p->set(kParamTransparent, ui->transparentCheckBox->isChecked());
     return p;
 }
 
@@ -49,9 +51,14 @@ void WebvfxProducer::setProducer(Mlt::Producer* producer)
     ui->reloadButton->show();
     if (producer) {
         QString resource(producer->get("resource"));
-        if (resource.startsWith("plain:"))
+        if (resource.startsWith("plain:")) {
             resource.remove(0, 6);
+            ui->webvfxCheckBox->setChecked(false);
+        } else {
+            ui->webvfxCheckBox->setChecked(true);
+        }
         ui->urlLabel->setText(resource);
+        ui->transparentCheckBox->setChecked(producer->get_int(kParamTransparent));
     }
 }
 
