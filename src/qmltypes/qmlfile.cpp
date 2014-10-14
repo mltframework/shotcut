@@ -19,6 +19,7 @@
 #include "qmlfile.h"
 #include <QFileInfo>
 #include <QFile>
+#include <QDebug>
 
 QmlFile::QmlFile(QObject* parent)
     : QObject(parent)
@@ -33,15 +34,21 @@ QUrl QmlFile::getUrl()
 
 void QmlFile::setUrl(const QUrl& url)
 {
-    QUrl adj = url.adjusted(QUrl::RemoveScheme |
-                            QUrl::RemovePassword |
-                            QUrl::RemoveUserInfo |
-                            QUrl::RemovePort |
-                            QUrl::RemoveAuthority |
-                            QUrl::RemoveQuery );
-
+    QUrl::FormattingOptions options =
+            QUrl::RemoveScheme |
+            QUrl::RemovePassword |
+            QUrl::RemoveUserInfo |
+            QUrl::RemovePort |
+            QUrl::RemoveAuthority |
+            QUrl::RemoveQuery;
 #ifdef Q_OS_WIN
+    // If the scheme is a drive letter, do not remove it.
+    if (url.scheme().size() == 1)
+        options ^= QUrl::RemoveScheme;
+
+    QUrl adj = url.adjusted(options);
     QString s = adj.toString();
+
     // If there is a slash before a drive letter.
     // On Windows, file URLs look like file:///C:/Users/....
     // The scheme is removed but only "://" (not 3 slashes) between scheme and path.
@@ -50,6 +57,8 @@ void QmlFile::setUrl(const QUrl& url)
         s = s.right(s.size() - 1);
         adj = QUrl(s);
     }
+#else
+    QUrl adj = url.adjusted(options);
 #endif
 
     if(m_url != adj) {
