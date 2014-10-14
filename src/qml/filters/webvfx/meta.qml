@@ -6,4 +6,5 @@ Metadata {
     name: qsTr("Overlay HTML")
     mlt_service: "webvfx"
     qml: "ui.qml"
+    isFavorite: true
 }

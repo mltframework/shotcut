@@ -49,6 +49,7 @@
 #include "mvcp/meltedplaylistdock.h"
 #include "mvcp/meltedunitsmodel.h"
 #include "mvcp/meltedplaylistmodel.h"
+#include "controllers/filtercontroller.h"
 #include "docks/filtersdock.h"
 #include "dialogs/customprofiledialog.h"
 #include "htmleditor/htmleditor.h"
@@ -212,17 +213,22 @@ MainWindow::MainWindow()
     connect(m_player, SIGNAL(previousSought()), m_timelineDock, SLOT(seekPreviousEdit()));
     connect(m_player, SIGNAL(nextSought()), m_timelineDock, SLOT(seekNextEdit()));
 
-    m_filtersDock = new FiltersDock(this);
+    m_filterController = new FilterController(this);
+    m_filtersDock = new FiltersDock(m_filterController->metadataModel(), m_filterController->attachedModel(), this);
     m_filtersDock->hide();
     addDockWidget(Qt::LeftDockWidgetArea, m_filtersDock);
     ui->menuView->addAction(m_filtersDock->toggleViewAction());
-    connect(m_filtersDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onFiltersDockTriggered(bool)));
-    connect(ui->actionFilters, SIGNAL(triggered()), this, SLOT(onFiltersDockTriggered()));
-    connect(this, SIGNAL(producerOpened()), m_filtersDock, SLOT(onProducerOpened()));
-    connect(m_filtersDock->model(), SIGNAL(changed(bool)), SLOT(setWindowModified(bool)));
-    connect(m_filtersDock->model(), SIGNAL(changed()), SLOT(updateAutoSave()));
-    connect(m_timelineDock, SIGNAL(fadeInChanged(int)), m_filtersDock, SLOT(setFadeInDuration(int)));
-    connect(m_timelineDock, SIGNAL(fadeOutChanged(int)), m_filtersDock, SLOT(setFadeOutDuration(int)));
+    connect(m_filtersDock, SIGNAL(attachFilterRequested(int)), m_filterController, SLOT(attachFilter(int)));
+    connect(m_filtersDock, SIGNAL(removeFilterRequested(int)), m_filterController, SLOT(removeFilter(int)));
+    connect(m_filtersDock, SIGNAL(currentFilterRequested(int)), m_filterController, SLOT(setCurrentFilter(int)));
+    connect(m_filterController, SIGNAL(currentFilterChanged(QmlFilter*, QmlMetadata*)), m_filtersDock, SLOT(setCurrentFilter(QmlFilter*, QmlMetadata*)));
+    connect(this, SIGNAL(producerOpened()), m_filterController, SLOT(setProducer()));
+    connect(m_filterController->attachedModel(), SIGNAL(changed(bool)), SLOT(setWindowModified(bool)));
+    connect(m_filterController->attachedModel(), SIGNAL(changed()), SLOT(updateAutoSave()));
+    connect(m_timelineDock, SIGNAL(fadeInChanged(int)), m_filterController, SLOT(setFadeInDuration(int)));
+    connect(m_timelineDock, SIGNAL(fadeOutChanged(int)), m_filterController, SLOT(setFadeOutDuration(int)));
+    connect(m_timelineDock, SIGNAL(trackSelected(Mlt::Producer*)), m_filterController, SLOT(setProducer(Mlt::Producer*)));
+    connect(m_timelineDock, SIGNAL(clipSelected(Mlt::Producer*)), m_filterController, SLOT(setProducer(Mlt::Producer*)));
 
     m_historyDock = new QDockWidget(tr("History"), this);
     m_historyDock->hide();
@@ -316,6 +322,7 @@ MainWindow::MainWindow()
     connect(videoWidget, SIGNAL(dragStarted()), m_playlistDock, SLOT(onPlayerDragStarted()));
     connect(videoWidget, SIGNAL(seekTo(int)), m_player, SLOT(seek(int)));
     connect(videoWidget, SIGNAL(gpuNotSupported()), this, SLOT(onGpuNotSupported()));
+    connect(m_filterController, SIGNAL(currentFilterChanged(QmlFilter*, QmlMetadata*)), videoWidget, SLOT(setCurrentFilter(QmlFilter*, QmlMetadata*)));
 
     readWindowSettings();
     setCorner(Qt::TopLeftCorner, Qt::LeftDockWidgetArea);
@@ -778,7 +785,7 @@ void MainWindow::seekPlaylist(int start)
     on_actionJack_triggered(ui->actionJack->isChecked());
     m_player->onProducerOpened(false);
     m_encodeDock->onProducerOpened();
-    m_filtersDock->onProducerOpened();
+    m_filterController->setProducer();
     updateMarkers();
     MLT.seek(start);
     m_player->setFocus();
@@ -797,7 +804,7 @@ void MainWindow::seekTimeline(int position)
         on_actionJack_triggered(ui->actionJack->isChecked());
         m_player->onProducerOpened(false);
         m_encodeDock->onProducerOpened();
-        m_filtersDock->onProducerOpened();
+        m_filterController->setProducer();
         updateMarkers();
         m_player->setFocus();
         m_player->switchToTab(Player::ProgramTabIndex);
@@ -1503,14 +1510,6 @@ void MainWindow::onHistoryDockTriggered(bool checked)
     if (checked) {
         m_historyDock->show();
         m_historyDock->raise();
-    }
-}
-
-void MainWindow::onFiltersDockTriggered(bool checked)
-{
-    if (checked) {
-        m_filtersDock->show();
-        m_filtersDock->raise();
     }
 }
 

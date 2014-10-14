@@ -38,6 +38,7 @@ class QUndoStack;
 class MeltedPlaylistDock;
 class MeltedServerDock;
 class QActionGroup;
+class FilterController;
 class FiltersDock;
 class HtmlEditor;
 class TimelineDock;
@@ -57,7 +58,7 @@ public:
     void saveXML(const QString& filename);
     static void changeTheme(const QString& theme);
     PlaylistDock* playlistDock() const { return m_playlistDock; }
-    FiltersDock* filtersDock() const { return m_filtersDock; }
+    FilterController* filterController() const { return m_filterController; }
     HtmlEditor* htmlEditor() const { return m_htmlEditor; }
     Mlt::Playlist* playlist() const;
     Mlt::Producer* multitrack() const;
@@ -110,6 +111,7 @@ private:
     QActionGroup* m_externalGroup;
     QActionGroup* m_keyerGroup;
     FiltersDock* m_filtersDock;
+    FilterController* m_filterController;
     QMenu* m_customProfileMenu;
     QMenu* m_keyerMenu;
     QStringList m_multipleFiles;
@@ -160,7 +162,6 @@ private slots:
     void onPlaylistDockTriggered(bool checked = true);
     void onTimelineDockTriggered(bool checked = true);
     void onHistoryDockTriggered(bool checked = true);
-    void onFiltersDockTriggered(bool checked = true);
     void onPlaylistCreated();
     void onPlaylistLoaded();
     void onPlaylistCleared();

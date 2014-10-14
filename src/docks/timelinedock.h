@@ -57,6 +57,8 @@ signals:
     void dropAccepted(const QString &xml);
     void fadeInChanged(int duration);
     void fadeOutChanged(int duration);
+    void trackSelected(Mlt::Producer* producer);
+    void clipSelected(Mlt::Producer* producer);
 
 public slots:
     void addAudioTrack();

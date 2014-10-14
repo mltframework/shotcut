@@ -14,6 +14,7 @@ SOURCES += main.cpp\
     mltcontroller.cpp \
     scrubbar.cpp \
     openotherdialog.cpp \
+    controllers/filtercontroller.cpp \
     widgets/plasmawidget.cpp \
     widgets/lissajouswidget.cpp \
     widgets/isingwidget.cpp \
@@ -54,6 +55,7 @@ SOURCES += main.cpp\
     mvcp/meltedserverdock.cpp \
     widgets/colorwheel.cpp \
     models/attachedfiltersmodel.cpp \
+    models/metadatamodel.cpp \
     docks/filtersdock.cpp \
     dialogs/customprofiledialog.cpp \
     qmltypes/colorpickeritem.cpp \
@@ -87,6 +89,7 @@ HEADERS  += mainwindow.h \
     mltcontroller.h \
     scrubbar.h \
     openotherdialog.h \
+    controllers/filtercontroller.h \
     widgets/plasmawidget.h \
     abstractproducerwidget.h \
     widgets/lissajouswidget.h \
@@ -127,6 +130,7 @@ HEADERS  += mainwindow.h \
     transportcontrol.h \
     widgets/colorwheel.h \
     models/attachedfiltersmodel.h \
+    models/metadatamodel.h \
     docks/filtersdock.h \
     dialogs/customprofiledialog.h \
     qmltypes/colorpickeritem.h \
@@ -183,7 +187,6 @@ FORMS    += mainwindow.ui \
     dialogs/durationdialog.ui \
     mvcp/meltedserverdock.ui \
     mvcp/meltedplaylistdock.ui \
-    docks/filtersdock.ui \
     dialogs/customprofiledialog.ui \
     htmleditor/htmleditor.ui \
     htmleditor/inserthtmldialog.ui \
@@ -261,6 +264,9 @@ OTHER_FILES += \
     qml/timeline/Clip.qml \
     qml/timeline/Ruler.qml \
     qml/timeline/Track.js \
+    qml/views/filter/filterview.qml \
+    qml/views/filter/AttachedFilters.qml \
+    qml/views/filter/FilterMenu.qml \
     qml/filters/movit_diffusion/meta.qml \
     qml/filters/movit_diffusion/ui.qml \
     qml/filters/vignette/meta_movit.qml \
@@ -382,6 +388,9 @@ lupdate_hack {
     qml/timeline/Track.qml \
     qml/timeline/Clip.qml \
     qml/timeline/Ruler.qml \
+    qml/views/filter/filterview.qml \
+    qml/views/filter/AttachedFilters.qml \
+    qml/views/filter/FilterMenu.qml \
     qml/filters/movit_diffusion/meta.qml \
     qml/filters/movit_diffusion/ui.qml \
     qml/filters/vignette/meta_movit.qml \

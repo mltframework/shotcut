@@ -17,6 +17,7 @@
  */
 
 #include "qmlmetadata.h"
+#include "settings.h"
 
 QmlMetadata::QmlMetadata(QObject *parent)
     : QObject(parent)
@@ -26,7 +27,19 @@ QmlMetadata::QmlMetadata(QObject *parent)
     , m_vuiFileName("vui.qml")
     , m_isAudio(false)
     , m_isHidden(false)
+    , m_isFavorite(false)
 {
+}
+
+void QmlMetadata::loadSettings()
+{
+    //Override the default favorite setting if it has been set by the user.
+    QString favorite = Settings.filterFavorite(uniqueId());
+    if (favorite == "yes") {
+        m_isFavorite = true;
+    } else if (favorite == "no") {
+        m_isFavorite = false;
+    }
 }
 
 void QmlMetadata::setType(QmlMetadata::PluginType type)
@@ -42,6 +55,15 @@ void QmlMetadata::setName(const QString &name)
 void QmlMetadata::set_mlt_service(const QString &service)
 {
     m_mlt_service = service;
+}
+
+QString QmlMetadata::uniqueId() const
+{
+    if (!objectName().isEmpty()) {
+        return objectName();
+    } else {
+        return mlt_service();
+    }
 }
 
 void QmlMetadata::setNeedsGPU(bool needs)
@@ -82,4 +104,17 @@ void QmlMetadata::setIsAudio(bool isAudio)
 void QmlMetadata::setIsHidden(bool isHidden)
 {
     m_isHidden = isHidden;
+}
+
+void QmlMetadata::setIsFavorite(bool isFavorite)
+{
+    m_isFavorite = isFavorite;
+
+    if (!uniqueId().isEmpty()) {
+        if (isFavorite) {
+            Settings.setFilterFavorite(uniqueId(), "yes");
+        } else {
+            Settings.setFilterFavorite(uniqueId(), "no");
+        }
+    }
 }

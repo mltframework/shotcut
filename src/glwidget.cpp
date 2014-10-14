@@ -28,6 +28,7 @@
 #include "glwidget.h"
 #include "settings.h"
 #include "qmltypes/qmlutilities.h"
+#include "qmltypes/qmlfilter.h"
 #include "mainwindow.h"
 
 #define USE_GL_SYNC // Use glFinish() if not defined.
@@ -615,6 +616,14 @@ void GLWidget::setOffsetY(int y)
     m_offset.setY(y);
     emit offsetChanged();
     update();
+}
+
+void GLWidget::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta)
+{
+    if (QFile::exists(meta->vuiFilePath())) {
+        rootContext()->setContextProperty("filter", filter);
+        setSource(QUrl::fromLocalFile(meta->vuiFilePath()));
+    }
 }
 
 void GLWidget::updateTexture(GLuint yName, GLuint uName, GLuint vName)

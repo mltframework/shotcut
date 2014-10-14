@@ -181,5 +181,8 @@
         <file>light/16x16/scrub_drag.png</file>
         <file>oxygen/16x16/actions/target.png</file>
         <file>oxygen/16x16/actions/scrub_drag.png</file>
+        <file>light/32x32/bookmarks.png</file>
+        <file>dark/32x32/bookmarks.png</file>
+        <file>oxygen/32x32/places/bookmarks.png</file>
     </qresource>
 </RCC>

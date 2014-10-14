@@ -19,7 +19,7 @@
 #include "attachedfiltersmodel.h"
 #include "mltcontroller.h"
 #include "mainwindow.h"
-#include "docks/filtersdock.h"
+#include "controllers/filtercontroller.h"
 #include "qmltypes/qmlmetadata.h"
 #include <QTimer>
 #include <QDebug>
@@ -115,7 +115,7 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
             Mlt::Filter* filter = filterForRow(index.row());
             if (filter && filter->is_valid()) {
                 // Relabel by QML UI
-                QmlMetadata* meta = MAIN.filtersDock()->qmlMetadataForService(filter);
+                QmlMetadata* meta = MAIN.filterController()->metadataForService(filter);
                 if (meta)
                     result = meta->name();
                 // Fallback is raw mlt_service name
@@ -153,6 +153,12 @@ bool AttachedFiltersModel::setData(const QModelIndex& index, const QVariant& val
         return true;
     }
     return false;
+}
+
+QHash<int, QByteArray> AttachedFiltersModel::roleNames() const {
+    QHash<int, QByteArray> roles = QAbstractListModel::roleNames();
+    roles[Qt::CheckStateRole] = "checkState";
+    return roles;
 }
 
 Qt::DropActions AttachedFiltersModel::supportedDropActions() const

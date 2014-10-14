@@ -6,4 +6,5 @@ Metadata {
     name: qsTr("Color Grading")
     mlt_service: "lift_gamma_gain"
     qml: "ui.qml"
+    isFavorite: true
 }

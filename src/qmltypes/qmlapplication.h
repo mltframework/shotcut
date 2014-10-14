@@ -24,6 +24,7 @@
 #include <QDir>
 #include <QPoint>
 #include <QColor>
+#include <QSize>
 
 class QmlApplication : public QObject
 {
@@ -34,6 +35,8 @@ class QmlApplication : public QObject
     Q_PROPERTY(QColor toolTipTextColor READ toolTipTextColor NOTIFY paletteChanged)
     Q_PROPERTY(QString OS READ OS CONSTANT)
     Q_PROPERTY(QString numericLocale READ numericLocale CONSTANT)
+    Q_PROPERTY(QPoint mainWinPos READ mainWinPos);
+    Q_PROPERTY(QSize mainWinSize READ mainWinSize);
 
 public:
     static QmlApplication& singleton();
@@ -43,6 +46,8 @@ public:
     static QColor toolTipTextColor();
     static QString OS();
     static QString numericLocale();
+    static QPoint mainWinPos();
+    static QSize mainWinSize();
 
 signals:
     void paletteChanged();

@@ -7,4 +7,5 @@ Metadata {
     name: qsTr("Fade Out Video")
     mlt_service: "brightness"
     qml: "ui.qml"
+    isFavorite: true
 }

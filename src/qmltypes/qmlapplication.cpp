@@ -17,6 +17,7 @@
  */
 
 #include "qmlapplication.h"
+#include "mainwindow.h"
 #include <QApplication>
 #include <QCoreApplication>
 #include <QSysInfo>
@@ -85,4 +86,14 @@ QString QmlApplication::numericLocale()
 #else
     return QString::fromLatin1(::setlocale(LC_NUMERIC, NULL));
 #endif
+}
+
+QPoint QmlApplication::mainWinPos()
+{
+    return MAIN.pos();
+}
+
+QSize QmlApplication::mainWinSize()
+{
+    return MAIN.size();
 }

@@ -7,4 +7,5 @@ Metadata {
     name: qsTr("Gain")
     mlt_service: "volume"
     qml: "ui.qml"
+    isFavorite: true
 }
