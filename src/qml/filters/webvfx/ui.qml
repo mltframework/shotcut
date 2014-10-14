@@ -28,10 +28,10 @@ Rectangle {
     width: 400
     height: 200
     color: 'transparent'
-    
+
     SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
     Shotcut.File { id: htmlFile }
-    
+
     Component.onCompleted: {
         var resource = filter.get('resource')
         if (resource.substring(0,6) == "plain:") {
@@ -45,23 +45,24 @@ Rectangle {
         }
 
         htmlFile.url = resource
-        
+
         if (htmlFile.exists()) {
             fileLabel.text = htmlFile.fileName
             fileLabelTip.text = htmlFile.url.toString()
-            openButton.enabled = false
-            newButton.enabled = false
+            openButton.visible = false
+            newButton.visible = false
+            editButton.visible = true
+            reloadButton.visible = true
             webvfxCheckBox.enabled = false
         } else {
+            console.log('htmlFile.url = ' + htmlFile.url)
             fileLabel.text = qsTr("No File Loaded")
             fileLabel.color = 'red'
             fileLabelTip.text = qsTr('No HTML file loaded. Click "Open" or "New" to load a file.')
             filter.set("disable", 1)
-            editButton.enabled = false
-            reloadButton.enabled = false
         }
     }
-    
+
     FileDialog {
         id: fileDialog
         modality: Qt.WindowModal
@@ -73,7 +74,7 @@ Rectangle {
         onAccepted: {
             htmlFile.url = fileDialog.fileUrl
             settings.savePath = htmlFile.path
-            
+
             if (fileDialog.selectExisting == false) {
                 if (!htmlFile.suffix()) {
                     htmlFile.url = htmlFile.url + ".html"
@@ -84,12 +85,12 @@ Rectangle {
             fileLabel.text = htmlFile.fileName
             fileLabel.color = activePalette.text
             fileLabelTip.text = htmlFile.url.toString()
-            openButton.enabled = false
-            newButton.enabled = false
+            openButton.visible = false
+            newButton.visible = false
             webvfxCheckBox.enabled = false
-            editButton.enabled = true
-            reloadButton.enabled = true
-            
+            editButton.visible = true
+            reloadButton.visible = true
+
             var resource = htmlFile.url.toString()
             if (!webvfxCheckBox.checked) {
                 resource = "plain:" + resource
@@ -97,23 +98,27 @@ Rectangle {
             filter.set('resource', resource)
             filter.set("disable", 0)
         }
+        onRejected: {
+            openButton.visible = true
+            newButton.visible = true
+        }
     }
 
     GridLayout {
         columns: 4
         anchors.fill: parent
         anchors.margins: 8
-        
+
         // Row 1
         Label {
-            text: qsTr('<b>File:</b>') 
+            text: qsTr('<b>File:</b>')
         }
         Label {
             id: fileLabel
             Layout.columnSpan: 3
             Shotcut.ToolTip { id: fileLabelTip }
         }
-        
+
         // Row 2
         CheckBox {
             id: webvfxCheckBox
@@ -142,13 +147,12 @@ Rectangle {
                 }
             }
         }
-        
+
         // Row 3
         Button {
             id: openButton
             text: qsTr('Open...')
             onClicked: {
-                openButton.enabled = false
                 fileDialog.selectExisting = true
                 fileDialog.title = qsTr( "Open HTML File" )
                 fileDialog.open()
@@ -161,7 +165,6 @@ Rectangle {
             id: newButton
             text: qsTr('New...')
             onClicked: {
-                newButton.enabled = false
                 fileDialog.selectExisting = false
                 fileDialog.title = qsTr( "Save HTML File" )
                 fileDialog.open()
@@ -173,15 +176,18 @@ Rectangle {
         Item {
             Layout.columnSpan: 2
             Layout.fillWidth: true
+            visible: openButton.visible
         }
 
         // Row 4
         Button {
             id: editButton
             text: qsTr('Edit...')
+            visible: false
             onClicked: {
                 editor.edit(htmlFile.url.toString())
                 editButton.enabled = false
+                reloadButton.enabled = false
             }
             Shotcut.HtmlEditor {
                 id: editor
@@ -190,12 +196,14 @@ Rectangle {
                 }
                 onClosed: {
                     editButton.enabled = true
+                    reloadButton.enabled = true
                 }
             }
         }
         Button {
             id: reloadButton
             text: qsTr('Reload')
+            visible: false
             onClicked: {
                 filter.set("_reload", 1);
             }
@@ -203,8 +211,9 @@ Rectangle {
         Item {
             Layout.columnSpan: 2
             Layout.fillWidth: true
+            visible: editButton.visible
         }
-        
+
         Item {
             Layout.fillHeight: true;
             Layout.columnSpan: 4
