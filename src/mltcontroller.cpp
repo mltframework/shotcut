@@ -31,6 +31,11 @@ static Controller* instance = 0;
 const QString XmlMimeType("application/mlt+xml");
 static const char* kShotcutVirtualClip = "shotcut:virtual";
 
+static int alignWidth(int width)
+{
+    return width + 8 - width % 8;
+}
+
 QFrame::QFrame(QObject *parent)
     : QObject(parent)
     , m_frame(0)
@@ -154,8 +159,10 @@ int Controller::open(const QString &url)
         m_producer = new Mlt::Producer(profile(), url.toUtf8().constData());
     if (m_producer->is_valid()) {
         double fps = profile().fps();
-        if (!profile().is_explicit())
+        if (!profile().is_explicit()) {
             profile().from_producer(*m_producer);
+            profile().set_width(alignWidth(profile().width()));
+        }
         if (profile().fps() != fps || (Settings.playerGPU() && !profile().is_explicit())) {
             // Reload with correct FPS or with Movit normalizing filters attached.
             delete m_producer;
@@ -190,8 +197,10 @@ bool Controller::openXML(const QString &filename)
     Producer* producer = new Mlt::Producer(profile(), "xml", filename.toUtf8().constData());
     if (producer->is_valid()) {
         double fps = profile().fps();
-        if (!profile().is_explicit())
+        if (!profile().is_explicit()) {
             profile().from_producer(*producer);
+            profile().set_width(alignWidth(profile().width()));
+        }
         if (profile().fps() != fps) {
             // reopen with the correct fps
             delete producer;
@@ -432,7 +441,7 @@ void Controller::setProfile(const QString& profile_name)
     m_profile->set_progressive(tmp.progressive());
     m_profile->set_sample_aspect(tmp.sample_aspect_num(), tmp.sample_aspect_den());
     m_profile->set_display_aspect(tmp.display_aspect_num(), tmp.display_aspect_den());
-    m_profile->set_width(tmp.width());
+    m_profile->set_width(alignWidth(tmp.width()));
     m_profile->set_explicit(!profile_name.isEmpty());
     restart();
 }
