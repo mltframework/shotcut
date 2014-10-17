@@ -28,16 +28,6 @@ QmlHtmlEditor::QmlHtmlEditor()
 void QmlHtmlEditor::edit(QString file)
 {
     MAIN.editHTML(file);
-    connect(MAIN.htmlEditor(), SIGNAL(closed(void)), SLOT(slotClosed(void)));
-    connect(MAIN.htmlEditor(), SIGNAL(saved(void)), SLOT(slotSaved(void)));
-}
-
-void QmlHtmlEditor::slotClosed()
-{
-    emit closed();
-}
-
-void QmlHtmlEditor::slotSaved()
-{
-    emit saved();
+    connect(MAIN.htmlEditor(), SIGNAL(closed()), SIGNAL(closed()));
+    connect(MAIN.htmlEditor(), SIGNAL(saved()), SIGNAL(saved()));
 }

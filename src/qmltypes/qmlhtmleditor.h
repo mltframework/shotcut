@@ -32,10 +32,6 @@ public:
 signals:
     void closed();
     void saved();
-
-private slots:
-    void slotClosed();
-    void slotSaved();
 };
 
 #endif // QMLHTMLEDITOR_H
