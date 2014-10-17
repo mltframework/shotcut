@@ -70,7 +70,7 @@ GLWidget::GLWidget(QObject *parent)
     QDir importPath = QmlUtilities::qmlDir();
     importPath.cd("modules");
     engine()->addImportPath(importPath.path());
-    QmlUtilities::setCommonProperties(rootContext());
+    QmlUtilities::setCommonProperties((QQuickView*)this);
     rootContext()->setContextProperty("video", this);
     setSource(QmlUtilities::blankVui());
 

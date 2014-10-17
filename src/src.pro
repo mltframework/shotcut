@@ -77,6 +77,7 @@ SOURCES += main.cpp\
     models/multitrackmodel.cpp \
     docks/timelinedock.cpp \
     qmltypes/qmlutilities.cpp \
+    qmltypes/qmlview.cpp \
     qmltypes/thumbnailprovider.cpp \
     commands/timelinecommands.cpp \
     util.cpp \
@@ -152,6 +153,7 @@ HEADERS  += mainwindow.h \
     models/multitrackmodel.h \
     docks/timelinedock.h \
     qmltypes/qmlutilities.h \
+    qmltypes/qmlview.h \
     qmltypes/thumbnailprovider.h \
     commands/timelinecommands.h \
     util.h \

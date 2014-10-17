@@ -38,7 +38,7 @@ public:
     explicit MetadataModel(QObject *parent = 0);
 
     // Implement QAbstractListModel
-    int rowCount(const QModelIndex &parent = QModelIndex()) const;
+    Q_INVOKABLE int rowCount(const QModelIndex &parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role) const;
     bool setData(const QModelIndex &index, const QVariant &value, int role);
     QHash<int, QByteArray> roleNames() const;
@@ -46,7 +46,7 @@ public:
 
     // Direct access to QmlMetadata
     void add(QmlMetadata* data);
-    QmlMetadata* get(int index);
+    Q_INVOKABLE QmlMetadata* get(int index) const;
 
 private:
     typedef QList<QmlMetadata*> MetadataList;

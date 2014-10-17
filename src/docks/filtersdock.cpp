@@ -50,7 +50,7 @@ FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* att
     modulePath.cd("modules");
     m_qview.engine()->addImportPath(modulePath.path());
 
-    QmlUtilities::setCommonProperties(m_qview.rootContext());
+    QmlUtilities::setCommonProperties(&m_qview);
     m_qview.rootContext()->setContextProperty("metadatamodel", metadataModel);
     m_qview.rootContext()->setContextProperty("attachedfiltersmodel", attachedModel);
     setCurrentFilter(NULL, NULL);

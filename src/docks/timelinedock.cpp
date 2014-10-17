@@ -50,7 +50,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     importPath.cd("modules");
     m_quickView.engine()->addImportPath(importPath.path());
     m_quickView.engine()->addImageProvider(QString("thumbnail"), new ThumbnailProvider);
-    QmlUtilities::setCommonProperties(m_quickView.rootContext());
+    QmlUtilities::setCommonProperties(&m_quickView);
     m_quickView.rootContext()->setContextProperty("timeline", this);
     m_quickView.rootContext()->setContextProperty("multitrack", &m_model);
     m_quickView.setResizeMode(QQuickView::SizeRootObjectToView);

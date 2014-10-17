@@ -63,7 +63,7 @@ Rectangle {
             Layout.fillWidth: true
             iconName: 'list-add'
             tooltip: qsTr('Add a Filter')
-            onClicked: filterMenu.popup()
+            onClicked: filterMenu.popup(addButton)
         }
         Button {
             id: removeButton

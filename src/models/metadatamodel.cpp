@@ -103,7 +103,7 @@ void MetadataModel::add(QmlMetadata* data)
     data->setParent(this);
 }
 
-QmlMetadata* MetadataModel::get(int index)
+QmlMetadata* MetadataModel::get(int index) const
 {
     if( index < m_list.size() ) {
         return m_list[index];

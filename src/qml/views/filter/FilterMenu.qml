@@ -24,17 +24,53 @@ import QtQuick.Controls.Styles 1.1
 Window {
     id: filterWindow
     
-    property bool showAll: false
+    property bool _showAll: false
+    property int _itemHeight: 30
     
     signal filterSelected(int index)
     
-    function popup() {
-        var cursorPoint = application.mousePos
-        filterWindow.x = cursorPoint.x
-        filterWindow.y = cursorPoint.y - menuListView.height / 2
+    function popup(triggerItem) {
+        var menuRect = _menuRect(triggerItem)
+        filterWindow.x = menuRect.x
+        filterWindow.y = menuRect.y
+        filterWindow.height = menuRect.height
         filterWindow.visible = true
         filterWindow.requestActivate()
         menuListView.currentIndex = -1
+    }
+
+    function _menuRect(triggerItem) {
+        var result = Qt.rect(0, 0, 0, 0)
+        var itemPos = triggerItem.mapToItem(null,0,0)
+        var triggerPos = Qt.point(itemPos.x + view.pos.x, itemPos.y + view.pos.y)
+        var mainWinRect = application.mainWinRect
+        
+        // Calculate the max possible height of the menu
+        var i = 0
+        var visibleItems = 0;
+        for( i = 0; i < metadatamodel.rowCount(); i++ ) {
+            var meta = metadatamodel.get(i)
+            if( !meta.isHidden && (meta.isFavorite || _showAll) ) {
+                visibleItems++
+            }
+        }
+        var maxHeight = (visibleItems * _itemHeight) + padRect.height + moreButton.height
+        result.height = Math.min(maxHeight, mainWinRect.height)
+        
+        // Calculate the y position
+        result.y = triggerPos.y - result.height / 2 // Ideal position is centered
+        if( result.y < mainWinRect.y ) {
+            // Window would be higher than the application window. Move it down
+            result.y = mainWinRect.y
+        } else if( result.y + result.height > mainWinRect.y + mainWinRect.height ) {
+            // Window would be lower than the application window. Move it up
+            result.y =  mainWinRect.y + mainWinRect.height - result.height
+        }
+        
+        // Calculate the x position
+        result.x = triggerPos.x
+        
+        return result
     }
 
     color: activePalette.window
@@ -53,12 +89,12 @@ Window {
         id: filterMenuDelegate
         
         Item {
-            visible: !hidden && (favorite || showAll)
-            height: visible ? filterItemRow.height : 0
+            visible: !hidden && (favorite || _showAll)
+            height: visible ? _itemHeight : 0
         
             Row {
                 id: filterItemRow
-                height: 30
+                height: _itemHeight
                 
                 Button {
                     id: favButton
@@ -135,6 +171,7 @@ Window {
         }
         
         Rectangle {
+            id: padRect
             color: activePalette.base
             height: 2
             width: parent.width
@@ -145,8 +182,8 @@ Window {
             width: parent.width
             text: qsTr('More')
             onClicked: {
-                showAll = !showAll
-                if (showAll) {
+                _showAll = !_showAll
+                if (_showAll) {
                     text =  qsTr('Less')
                 } else {
                     text = qsTr('More')

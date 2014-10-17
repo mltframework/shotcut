@@ -88,12 +88,7 @@ QString QmlApplication::numericLocale()
 #endif
 }
 
-QPoint QmlApplication::mainWinPos()
+QRect QmlApplication::mainWinRect()
 {
-    return MAIN.pos();
-}
-
-QSize QmlApplication::mainWinSize()
-{
-    return MAIN.size();
+    return MAIN.geometry();
 }

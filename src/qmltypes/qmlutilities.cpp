@@ -21,6 +21,7 @@
 #include "qmltypes/colorwheelitem.h"
 #include "qmltypes/qmlprofile.h"
 #include "qmltypes/qmlutilities.h"
+#include "qmltypes/qmlview.h"
 #include "qmltypes/qmlfile.h"
 #include "qmltypes/qmlhtmleditor.h"
 #include "qmltypes/qmlmetadata.h"
@@ -30,6 +31,7 @@
 #include <QCursor>
 #include <QtQml>
 #include <QQmlContext>
+#include <QQuickView>
 
 QmlUtilities::QmlUtilities(QObject *parent) :
     QObject(parent)
@@ -46,11 +48,13 @@ void QmlUtilities::registerCommonTypes()
     qmlRegisterType<ColorWheelItem>("Shotcut.Controls", 1, 0, "ColorWheelItem");
 }
 
-void QmlUtilities::setCommonProperties(QQmlContext* rootContext)
+void QmlUtilities::setCommonProperties(QQuickView* qview)
 {
+    QQmlContext* rootContext = qview->rootContext();
     rootContext->setContextProperty("settings", &ShotcutSettings::singleton());
     rootContext->setContextProperty("application", &QmlApplication::singleton());
     rootContext->setContextProperty("profile", &QmlProfile::singleton());
+    rootContext->setContextProperty("view", new QmlView(qview));
 }
 
 QDir QmlUtilities::qmlDir()
