@@ -45,7 +45,6 @@
       <addaction name="actionEditSelectAll"/>
       <addaction name="separator"/>
       <addaction name="actionInsertImage"/>
-      <addaction name="actionCreateLink"/>
       <addaction name="actionInsertHtml"/>
      </widget>
      <widget class="QMenu" name="menuF_ormat">
@@ -97,6 +96,15 @@
       <addaction name="actionTextOutline"/>
       <addaction name="actionTextShadow"/>
      </widget>
+     <widget class="QMenu" name="menuFile">
+      <property name="title">
+       <string>&amp;File</string>
+      </property>
+      <addaction name="actionFileSave"/>
+      <addaction name="separator"/>
+      <addaction name="actionExit"/>
+     </widget>
+     <addaction name="menuFile"/>
      <addaction name="menu_Edit"/>
      <addaction name="menuF_ormat"/>
     </widget>
@@ -218,9 +226,6 @@
            <property name="frameShape">
             <enum>QFrame::NoFrame</enum>
            </property>
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
           </widget>
          </item>
         </layout>
@@ -287,7 +292,7 @@
     <string>&amp;Redo</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Y</string>
+    <string>Ctrl+Shift+Z</string>
    </property>
   </action>
   <action name="actionEditCut">
@@ -510,11 +515,18 @@
    </property>
   </action>
   <action name="actionExit">
+   <property name="icon">
+    <iconset theme="window-close" resource="../../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/window-close.png</normaloff>:/icons/oxygen/32x32/actions/window-close.png</iconset>
+   </property>
    <property name="text">
-    <string>E&amp;xit</string>
+    <string>C&amp;lose Window</string>
+   </property>
+   <property name="toolTip">
+    <string>Close Window</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Q</string>
+    <string>Ctrl+W</string>
    </property>
   </action>
   <action name="actionStyleParagraph">

@@ -46,12 +46,14 @@
 HtmlEditor::HtmlEditor(QWidget *parent)
         : QWidget(parent)
         , ui(new Ui_HtmlEditor)
-        , sourceDirty(true)
         , highlighter(0)
         , ui_dialog(0)
         , insertHtmlDialog(0)
 {
     ui->setupUi(this);
+#ifdef Q_OS_WIN
+    ui->actionEditRedo->setShortcut(QString("Ctrl+Y"));
+#endif
 
     QPalette pal = ui->webView->page()->palette();
     pal.setColor(QPalette::Base, Qt::gray);
@@ -91,11 +93,6 @@ HtmlEditor::HtmlEditor(QWidget *parent)
     connect(ui->actionZoomIn, SIGNAL(triggered()), SLOT(zoomIn()));
 
     // these are forward to internal QWebView
-    FORWARD_ACTION(ui->actionEditUndo, QWebPage::Undo);
-    FORWARD_ACTION(ui->actionEditRedo, QWebPage::Redo);
-    FORWARD_ACTION(ui->actionEditCut, QWebPage::Cut);
-    FORWARD_ACTION(ui->actionEditCopy, QWebPage::Copy);
-    FORWARD_ACTION(ui->actionEditPaste, QWebPage::Paste);
     FORWARD_ACTION(ui->actionFormatBold, QWebPage::ToggleBold);
     FORWARD_ACTION(ui->actionFormatItalic, QWebPage::ToggleItalic);
     FORWARD_ACTION(ui->actionFormatUnderline, QWebPage::ToggleUnderline);
@@ -131,15 +128,19 @@ HtmlEditor::HtmlEditor(QWidget *parent)
     // necessary to sync our actions
     connect(ui->webView->page(), SIGNAL(selectionChanged()), SLOT(adjustActions()));
     connect(ui->webView->page(), SIGNAL(contentsChanged()), SLOT(adjustSource()));
+    connect(ui->plainTextEdit, SIGNAL(textChanged()), SLOT(adjustSource()));
+    connect(ui->plainTextEdit, SIGNAL(copyAvailable(bool)), ui->actionEditCopy, SLOT(setEnabled(bool)));
+    connect(ui->plainTextEdit, SIGNAL(copyAvailable(bool)), ui->actionEditCut, SLOT(setEnabled(bool)));
+    connect(ui->plainTextEdit, SIGNAL(undoAvailable(bool)), ui->actionEditUndo, SLOT(setEnabled(bool)));
+    connect(ui->plainTextEdit, SIGNAL(redoAvailable(bool)), ui->actionEditRedo, SLOT(setEnabled(bool)));
     ui->webView->setFocus();
 
     setCurrentFileName(QString());
     fileNew();
 
-    adjustActions();
+    changeTab(0);
     adjustSource();
     setWindowModified(false);
-//    changeZoom(100);
 }
 
 HtmlEditor::~HtmlEditor()
@@ -206,8 +207,11 @@ bool HtmlEditor::fileSave()
     QFile file(fileName);
     bool success = file.open(QIODevice::WriteOnly);
     if (success) {
-        // FIXME: here we always use UTF-8 encoding
-        QString content = ui->webView->page()->mainFrame()->toHtml();
+        QString content;
+        if (ui->tabWidget->currentIndex() == 0)
+            content = ui->webView->page()->mainFrame()->toHtml();
+        else
+            content = ui->plainTextEdit->toPlainText();
         QByteArray data = content.toUtf8();
         qint64 c = file.write(data);
         success = (c >= data.length());
@@ -351,7 +355,10 @@ void HtmlEditor::zoomIn()
 
 void HtmlEditor::editSelectAll()
 {
-    ui->webView->triggerPageAction(QWebPage::SelectAll);
+    if (ui->tabWidget->currentIndex() == 0)
+        ui->webView->triggerPageAction(QWebPage::SelectAll);
+    else
+        ui->plainTextEdit->selectAll();
 }
 
 void HtmlEditor::execCommand(const QString &cmd)
@@ -535,19 +542,84 @@ void HtmlEditor::adjustActions()
 void HtmlEditor::adjustSource()
 {
     setWindowModified(true);
-    sourceDirty = true;
-
     if (ui->tabWidget->currentIndex() == 1)
-        changeTab(1);
+        ui->actionEditPaste->setEnabled(ui->plainTextEdit->canPaste());
 }
 
 void HtmlEditor::changeTab(int index)
 {
-    if (sourceDirty && (index == 1)) {
-        QString content = ui->webView->page()->mainFrame()->toHtml();
-        ui->plainTextEdit->setPlainText(content);
-        sourceDirty = false;
+    QString html;
+    bool enabled = true;
+
+    disconnect(ui->actionEditUndo, SIGNAL(triggered()), 0, 0);
+    disconnect(ui->actionEditRedo, SIGNAL(triggered()), 0, 0);
+    disconnect(ui->actionEditCut, SIGNAL(triggered()), 0, 0);
+    disconnect(ui->actionEditCopy, SIGNAL(triggered()), 0, 0);
+    disconnect(ui->actionEditPaste, SIGNAL(triggered()), 0, 0);
+    if (index == 1) {
+        html = ui->webView->page()->mainFrame()->toHtml();
+        ui->webView->blockSignals(true);
+        ui->plainTextEdit->setPlainText(html);
+        ui->webView->blockSignals(false);
+        enabled = false;
+        ui->actionEditUndo->setEnabled(enabled);
+        ui->actionEditRedo->setEnabled(enabled);
+        ui->actionEditCut->setEnabled(enabled);
+        ui->actionEditCopy->setEnabled(enabled);
+        ui->actionEditPaste->setEnabled(ui->plainTextEdit->canPaste());
+        connect(ui->actionEditUndo, SIGNAL(triggered()), ui->plainTextEdit, SLOT(undo()));
+        connect(ui->actionEditRedo, SIGNAL(triggered()), ui->plainTextEdit, SLOT(redo()));
+        connect(ui->actionEditCut, SIGNAL(triggered()), ui->plainTextEdit, SLOT(cut()));
+        connect(ui->actionEditCopy, SIGNAL(triggered()), ui->plainTextEdit, SLOT(copy()));
+        connect(ui->actionEditCopy, SIGNAL(triggered(bool)), ui->actionEditPaste, SLOT(setDisabled(bool)));
+        connect(ui->actionEditPaste, SIGNAL(triggered()), ui->plainTextEdit, SLOT(paste()));
+    } else {
+        html = ui->plainTextEdit->toPlainText();
+        ui->webView->blockSignals(true);
+        ui->webView->setHtml(html);
+        ui->webView->blockSignals(false);
+        FORWARD_ACTION(ui->actionEditUndo, QWebPage::Undo);
+        FORWARD_ACTION(ui->actionEditRedo, QWebPage::Redo);
+        FORWARD_ACTION(ui->actionEditCut, QWebPage::Cut);
+        FORWARD_ACTION(ui->actionEditCopy, QWebPage::Copy);
+        FORWARD_ACTION(ui->actionEditPaste, QWebPage::Paste);
     }
+    ui->actionFormatAlignCenter->setEnabled(enabled);
+    ui->actionFormatAlignJustify->setEnabled(enabled);
+    ui->actionFormatAlignLeft->setEnabled(enabled);
+    ui->actionFormatAlignRight->setEnabled(enabled);
+    ui->actionFormatBackgroundColor->setEnabled(enabled);
+    ui->actionFormatBold->setEnabled(enabled);
+    ui->actionFormatBulletedList->setEnabled(enabled);
+    ui->actionFormatDecreaseIndent->setEnabled(enabled);
+    ui->actionFormatFontName->setEnabled(enabled);
+    ui->actionFormatIncreaseIndent->setEnabled(enabled);
+    ui->actionFormatItalic->setEnabled(enabled);
+    ui->actionFormatNumberedList->setEnabled(enabled);
+    ui->actionFormatStrikethrough->setEnabled(enabled);
+    ui->actionFormatTextColor->setEnabled(enabled);
+    ui->actionFormatUnderline->setEnabled(enabled);
+    ui->actionInsertHtml->setEnabled(enabled);
+    ui->actionInsertImage->setEnabled(enabled);
+    ui->actionStyleAddress->setEnabled(enabled);
+    ui->actionStyleHeading1->setEnabled(enabled);
+    ui->actionStyleHeading2->setEnabled(enabled);
+    ui->actionStyleHeading3->setEnabled(enabled);
+    ui->actionStyleHeading4->setEnabled(enabled);
+    ui->actionStyleHeading5->setEnabled(enabled);
+    ui->actionStyleHeading6->setEnabled(enabled);
+    ui->actionStyleParagraph->setEnabled(enabled);
+    ui->actionStylePreformatted->setEnabled(enabled);
+    ui->actionZoomIn->setEnabled(enabled);
+    ui->actionZoomOut->setEnabled(enabled);
+    zoomSlider->setEnabled(enabled);
+    if (index == 0)
+        adjustActions();
+
+    enabled = enabled && html.contains("qrc:/scripts/htmleditor.js");
+    ui->actionFormatFontSize->setEnabled(enabled);
+    ui->actionTextOutline->setEnabled(enabled);
+    ui->actionTextShadow->setEnabled(enabled);
 }
 
 void HtmlEditor::openLink(const QUrl &url)
@@ -629,9 +701,10 @@ bool HtmlEditor::load(const QString &f)
     connect(ui->webView, SIGNAL(linkClicked(QUrl)), SLOT(openLink(QUrl)));
 
     const QString html(data);
-    ui->actionFormatFontSize->setEnabled(html.contains("qrc:/scripts/htmleditor.js"));
-    ui->actionTextOutline->setEnabled(html.contains("qrc:/scripts/htmleditor.js"));
-    ui->actionTextShadow->setEnabled(html.contains("qrc:/scripts/htmleditor.js"));
+    bool enabled = html.contains("qrc:/scripts/htmleditor.js");
+    ui->actionFormatFontSize->setEnabled(enabled);
+    ui->actionTextOutline->setEnabled(enabled);
+    ui->actionTextShadow->setEnabled(enabled);
     setCurrentFileName(f);
     return true;
 }

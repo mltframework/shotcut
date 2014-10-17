@@ -116,7 +116,6 @@ private slots:
 private:
     Ui_HtmlEditor *ui;
     QString fileName;
-    bool sourceDirty;
     QLabel *zoomLabel;
     QSlider *zoomSlider;
     Highlighter *highlighter;
