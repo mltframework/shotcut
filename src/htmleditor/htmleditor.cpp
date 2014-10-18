@@ -567,6 +567,12 @@ void HtmlEditor::changeTab(int index)
         ui->actionEditCut->setEnabled(enabled);
         ui->actionEditCopy->setEnabled(enabled);
         ui->actionEditPaste->setEnabled(ui->plainTextEdit->canPaste());
+        ui->actionFormatBold->setChecked(false);
+        ui->actionFormatItalic->setChecked(false);
+        ui->actionFormatStrikethrough->setChecked(false);
+        ui->actionFormatUnderline->setChecked(false);
+        ui->actionFormatBulletedList->setChecked(false);
+        ui->actionFormatNumberedList->setChecked(false);
         connect(ui->actionEditUndo, SIGNAL(triggered()), ui->plainTextEdit, SLOT(undo()));
         connect(ui->actionEditRedo, SIGNAL(triggered()), ui->plainTextEdit, SLOT(redo()));
         connect(ui->actionEditCut, SIGNAL(triggered()), ui->plainTextEdit, SLOT(cut()));
