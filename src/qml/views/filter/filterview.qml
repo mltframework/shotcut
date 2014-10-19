@@ -31,6 +31,17 @@ Rectangle {
     color: activePalette.window
     width: 400
     
+    onWidthChanged: _setLayout()
+    onHeightChanged: _setLayout()
+    
+    function _setLayout() {
+        if( height > width - 200 ) {
+            root.state = "portrait"
+        } else {
+            root.state = "landscape"
+        }
+    }
+    
     SystemPalette { id: activePalette }
     
     FilterMenu {
@@ -41,17 +52,16 @@ Rectangle {
     }
 
     GridLayout {
-        columns: 2
-        anchors.fill: parent
-        anchors.margins: 8
-
+        id: attachedContainer
+        columns: 3
+        anchors.top: parent.top
+        anchors.left: parent.left
+        
         AttachedFilters {
             id: attachedFilters
-            Layout.columnSpan: 2
+            Layout.columnSpan: 3
             Layout.fillWidth: true
-            width: parent.width
-            height: 100
-            anchors.top: parent.top
+            Layout.fillHeight: true
             onSelectedIndexChanged: {
                 root.currentFilterRequested(selectedIndex)
                 filterConfig.source = metadata ? metadata.qmlFilePath : ""
@@ -60,14 +70,14 @@ Rectangle {
 
         Button {
             id: addButton
-            Layout.fillWidth: true
+            Layout.minimumWidth: height
             iconName: 'list-add'
             tooltip: qsTr('Add a Filter')
             onClicked: filterMenu.popup(addButton)
         }
         Button {
             id: removeButton
-            Layout.fillWidth: true
+            Layout.minimumWidth: height
             iconName: 'list-remove'
             enabled: attachedFilters.selectedIndex > -1 ? true : false
             opacity: enabled ? 1.0 : 0.5
@@ -77,16 +87,37 @@ Rectangle {
                 root.removeFilterRequested(attachedFilters.selectedIndex)
             }
         }
-
         Item {
-            Layout.columnSpan: 2
-            Layout.fillHeight: true;
-            Layout.fillWidth: true;
-            
-            Loader {
-                id: filterConfig
-                anchors.fill: parent
-            }
+            Layout.fillWidth: true
         }
     }
+
+    Loader {
+        id: filterConfig
+    }
+        
+    states: [
+        State {
+            name: "landscape"
+            AnchorChanges {
+                target: filterConfig
+                anchors.top: root.top
+                anchors.bottom: root.bottom
+                anchors.left: attachedContainer.right
+                anchors.right: root.right
+            }
+            PropertyChanges { target: attachedContainer; width: 200; height: root.height }
+        },
+        State {
+            name: "portrait"
+            AnchorChanges {
+                target: filterConfig
+                anchors.top: attachedContainer.bottom
+                anchors.bottom: root.bottom
+                anchors.left: root.left
+                anchors.right: root.right
+            }
+            PropertyChanges { target: attachedContainer; width: root.width; height: 125 }
+        }
+    ]
 }

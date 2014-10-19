@@ -25,7 +25,6 @@ Rectangle {
     property int selectedIndex: attachedFiltersView.currentIndex
     
     color: activePalette.base
-    height: 100
 
     SystemPalette { id: activePalette }
 
