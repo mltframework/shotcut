@@ -63,6 +63,7 @@ Rectangle {
             Layout.fillWidth: true
             Layout.fillHeight: true
             onSelectedIndexChanged: {
+                filterConfig.source = ""
                 root.currentFilterRequested(selectedIndex)
                 filterConfig.source = metadata ? metadata.qmlFilePath : ""
             }
@@ -83,7 +84,7 @@ Rectangle {
             opacity: enabled ? 1.0 : 0.5
             tooltip: qsTr('Remove Selected Filter')
             onClicked: {
-                console.log("Remove Filter Requested", attachedFilters.selectedIndex) 
+                filterConfig.source = ""
                 root.removeFilterRequested(attachedFilters.selectedIndex)
             }
         }

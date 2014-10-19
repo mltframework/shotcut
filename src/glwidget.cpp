@@ -620,8 +620,9 @@ void GLWidget::setOffsetY(int y)
 
 void GLWidget::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta)
 {
-    if (QFile::exists(meta->vuiFilePath())) {
-        rootContext()->setContextProperty("filter", filter);
+    setSource(QUrl());
+    rootContext()->setContextProperty("filter", filter);
+    if (meta && QFile::exists(meta->vuiFilePath())) {
         setSource(QUrl::fromLocalFile(meta->vuiFilePath()));
     }
 }
