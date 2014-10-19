@@ -162,6 +162,7 @@ private slots:
     void onPlaylistDockTriggered(bool checked = true);
     void onTimelineDockTriggered(bool checked = true);
     void onHistoryDockTriggered(bool checked = true);
+    void onFiltersDockTriggered(bool checked = true);
     void onPlaylistCreated();
     void onPlaylistLoaded();
     void onPlaylistCleared();

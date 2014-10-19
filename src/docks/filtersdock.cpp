@@ -20,6 +20,7 @@
 #include "filtersdock.h"
 #include <QQuickView>
 #include <QQuickItem>
+#include <QtWidgets/QScrollArea>
 #include <QQmlEngine>
 #include <QDir>
 #include <QUrl>
@@ -58,9 +59,14 @@ FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* att
     m_qview.setColor(palette().window().color());
     QUrl source = QUrl::fromLocalFile(viewPath.absoluteFilePath("filterview.qml"));
     m_qview.setSource(source);
-    QWidget* container = QWidget::createWindowContainer(&m_qview);
+    QWidget* container = QWidget::createWindowContainer(&m_qview, this);
     container->setFocusPolicy(Qt::TabFocus);
-    QDockWidget::setWidget(container);
+
+    QScrollArea *scrollArea = new QScrollArea(this);
+    scrollArea->setFrameShape(QFrame::NoFrame);
+    scrollArea->setWidgetResizable(true);
+    scrollArea->setWidget(container);
+    setWidget(scrollArea);
 
     // Connect signals from m_qview
     QObject* root = m_qview.rootObject();

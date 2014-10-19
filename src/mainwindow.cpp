@@ -221,6 +221,8 @@ MainWindow::MainWindow()
     connect(m_filtersDock, SIGNAL(attachFilterRequested(int)), m_filterController, SLOT(attachFilter(int)));
     connect(m_filtersDock, SIGNAL(removeFilterRequested(int)), m_filterController, SLOT(removeFilter(int)));
     connect(m_filtersDock, SIGNAL(currentFilterRequested(int)), m_filterController, SLOT(setCurrentFilter(int)));
+    connect(m_filtersDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onFiltersDockTriggered(bool)));
+    connect(ui->actionFilters, SIGNAL(triggered()), this, SLOT(onFiltersDockTriggered()));
     connect(m_filterController, SIGNAL(currentFilterChanged(QmlFilter*, QmlMetadata*)), m_filtersDock, SLOT(setCurrentFilter(QmlFilter*, QmlMetadata*)));
     connect(this, SIGNAL(producerOpened()), m_filterController, SLOT(setProducer()));
     connect(m_filterController->attachedModel(), SIGNAL(changed(bool)), SLOT(setWindowModified(bool)));
@@ -1510,6 +1512,14 @@ void MainWindow::onHistoryDockTriggered(bool checked)
     if (checked) {
         m_historyDock->show();
         m_historyDock->raise();
+    }
+}
+
+void MainWindow::onFiltersDockTriggered(bool checked)
+{
+    if (checked) {
+        m_filtersDock->show();
+        m_filtersDock->raise();
     }
 }
 
