@@ -70,6 +70,10 @@ Rectangle {
                         attachedFiltersView.currentIndex = index
                         attachedFiltersView.forceActiveFocus()
                     }
+                    onDoubleClicked: {
+                        model.checkState = !model.checkState
+                        filterDelegateCheck.checkedState = model.checkState
+                    }
                 }
             }
         }
