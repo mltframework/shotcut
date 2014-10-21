@@ -311,7 +311,10 @@ OTHER_FILES += \
     qml/filters/dynamictext/meta.qml \
     qml/filters/dynamictext/ui.qml \
     qml/filters/dynamictext/vui.qml \
-    qml/vui_droparea.qml
+    qml/vui_droparea.qml \
+    qml/filters/webvfx_threejs_text/meta.qml \
+    qml/filters/webvfx_threejs_text/ui.qml \
+    qml/filters/webvfx_threejs_text/threejs_text.html
 
 lupdate_hack {
     SOURCES += \
@@ -418,7 +421,10 @@ lupdate_hack {
     qml/filters/opacity/meta_movit.qml \
     qml/filters/dynamictext/meta.qml \
     qml/filters/dynamictext/ui.qml \
-    qml/filters/dynamictext/vui.qml
+    qml/filters/dynamictext/vui.qml \
+    qml/filters/webvfx_threejs_text/meta.qml \
+    qml/filters/webvfx_threejs_text/ui.qml \
+    qml/filters/webvfx_threejs_text/threejs_text.html
 }
 
 TRANSLATIONS += \
