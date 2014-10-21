@@ -72,8 +72,6 @@ FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* att
     QObject* root = m_qview.rootObject();
     QObject::connect(root, SIGNAL(attachFilterRequested(int)),
                      this, SIGNAL(attachFilterRequested(int)));
-    QObject::connect(root, SIGNAL(removeFilterRequested(int)),
-                     this, SIGNAL(removeFilterRequested(int)));
     QObject::connect(root, SIGNAL(currentFilterRequested(int)),
                      this, SIGNAL(currentFilterRequested(int)));
 

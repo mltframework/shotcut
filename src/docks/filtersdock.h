@@ -38,7 +38,6 @@ public:
 
 signals:
     void attachFilterRequested(int metadataIndex);
-    void removeFilterRequested(int attachedIndex);
     void currentFilterRequested(int attachedIndex);
 
 public slots:

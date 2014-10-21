@@ -37,6 +37,7 @@ FilterController::FilterController(QObject* parent) : QObject(parent),
     m_future = QtConcurrent::run(this, &FilterController::loadFilterMetadata);
 
     connect(&m_attachedModel, SIGNAL(changed()), this, SLOT(handleAttachedModelChange()));
+    connect(&m_attachedModel, SIGNAL(rowsAboutToBeRemoved(const QModelIndex&,int,int)), this, SLOT(handleAttachedRowsAboutToBeRemoved(const QModelIndex&,int,int)));
 }
 
 void FilterController::loadFilterMetadata() {
@@ -122,14 +123,6 @@ void FilterController::attachFilter(int metadataIndex)
     m_currentFilter.reset(filter);
 }
 
-void FilterController::removeFilter(int attachedIndex)
-{
-    QModelIndex index = m_attachedModel.index(attachedIndex);
-    if (index.isValid()) {
-        m_attachedModel.remove(index.row());
-    }
-}
-
 void FilterController::setCurrentFilter(int attachedIndex)
 {
     if( attachedIndex == m_currentFilterIndex ) {
@@ -189,6 +182,13 @@ void FilterController::setFadeOutDuration(int duration)
 void FilterController::handleAttachedModelChange()
 {
     MLT.refreshConsumer();
+}
+
+void FilterController::handleAttachedRowsAboutToBeRemoved(const QModelIndex&, int first, int)
+{
+    if (m_currentFilterIndex >= first) {
+        setCurrentFilter(-1);
+    }
 }
 
 void FilterController::addMetadata(QmlMetadata* meta)

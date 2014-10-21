@@ -45,7 +45,6 @@ signals:
 public slots:
     void setProducer(Mlt::Producer *producer = 0);
     void attachFilter(int metadataIndex);
-    void removeFilter(int attachedIndex);
     void setCurrentFilter(int attachedIndex);
     void setFadeInDuration(int duration);
     void setFadeOutDuration(int duration);
@@ -53,6 +52,7 @@ public slots:
 private slots:
     void handleAttachedModelChange();
     void addMetadata(QmlMetadata*);
+    void handleAttachedRowsAboutToBeRemoved(const QModelIndex & parent, int first, int last);
 
 private:
     void loadFilterMetadata();

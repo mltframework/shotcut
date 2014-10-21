@@ -85,7 +85,9 @@ Rectangle {
             tooltip: qsTr('Remove Selected Filter')
             onClicked: {
                 filterConfig.source = ""
-                root.removeFilterRequested(attachedFilters.selectedIndex)
+                attachedfiltersmodel.remove(attachedFilters.selectedIndex)
+                root.currentFilterRequested(attachedFilters.selectedIndex)
+                filterConfig.source = metadata ? metadata.qmlFilePath : ""
             }
         }
         Item {
