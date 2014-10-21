@@ -33,7 +33,7 @@ static const char* kShotcutVirtualClip = "shotcut:virtual";
 
 static int alignWidth(int width)
 {
-    return width + 8 - width % 8;
+    return (width + 7) / 8 * 8;
 }
 
 QFrame::QFrame(QObject *parent)
