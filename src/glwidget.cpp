@@ -629,7 +629,8 @@ void GLWidget::updateTexture(GLuint yName, GLuint uName, GLuint vName)
 void GLWidget::on_frame_show(mlt_consumer, void* self, mlt_frame frame_ptr)
 {
     GLWidget* widget = static_cast<GLWidget*>(self);
-    if (widget->frameRenderer() && widget->frameRenderer()->semaphore()->tryAcquire()) {
+    int timeout = (widget->consumer()->get_int("real_time") > 0)? 0: 1000;
+    if (widget->frameRenderer() && widget->frameRenderer()->semaphore()->tryAcquire(1, timeout)) {
         Frame frame(frame_ptr);
         widget->setLastFrame(frame_ptr);
         emit widget->frameReceived(Mlt::QFrame(frame));
