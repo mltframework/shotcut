@@ -36,8 +36,6 @@ Rectangle {
             
             // Trick to make the model item available to the dragItem
             property var rowData: model
-            
-            ListView.onAdd: { attachedFiltersView.currentIndex = attachedFiltersView.count - 1 }
 
             height: filterDelegateText.implicitHeight
             width: parent ? parent.width : undefined
@@ -117,6 +115,8 @@ Rectangle {
                 model.modelReset.connect(handleReset)
             }
             
+            onCountChanged: currentIndex = count - 1
+
             MouseArea {
                 property int oldIndex: -1
                 property var grabPos: Qt.point(0,0)
