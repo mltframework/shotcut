@@ -39,6 +39,7 @@ public:
     Qt::DropActions supportedDropActions() const;
     bool insertRows(int row, int count, const QModelIndex &parent);
     bool removeRows(int row, int count, const QModelIndex &parent);
+    bool moveRows(const QModelIndex & sourceParent, int sourceRow, int count, const QModelIndex & destinationParent, int destinationRow);
  
 signals:
     void changed(bool modified = true);
@@ -46,6 +47,7 @@ signals:
 public slots:
     Mlt::Filter* add(const QString& mlt_service, const QString& shotcutName = QString());
     void remove(int row);
+    bool move(int fromRow, int toRow);
     void reset(Mlt::Producer *producer = 0);
 
 private:

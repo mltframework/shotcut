@@ -31,48 +31,59 @@ Rectangle {
     Component {
         id: filterDelegate
         
-        Row {
-            height: filterDelegateText.implicitHeight
+        Rectangle {
+            id: background
+            
+            // Trick to make the model item available to the dragItem
+            property var rowData: model
+            
             ListView.onAdd: { attachedFiltersView.currentIndex = attachedFiltersView.count - 1 }
-            
-            Item {
-                width: 4
+
+            height: filterDelegateText.implicitHeight
+            width: parent ? parent.width : undefined
+            color: "transparent"
+            border.width: 2
+            border.color: attachedFiltersView.dragTarget == index ? activePalette.highlight : "transparent"
+
+            Row {
                 height: parent.height
-            }
-            
-            CheckBox {
-                id: filterDelegateCheck
-                width: 15
-                anchors.verticalCenter: parent.verticalCenter
-                checkedState: model.checkState
-                onClicked: {
-                    model.checkState = !model.checkState
+                
+                Item {
+                    width: 4
+                    height: parent.height
                 }
-            }
-            
-            Item {
-                width: 4
-                height: parent.height
-            }
-            
-            Text { 
-                id: filterDelegateText
-                text: model.display
-                color: attachedFiltersView.currentIndex == index ? activePalette.highlightedText : activePalette.windowText
-                width: attachedFiltersView.width - 23
-    
-                MouseArea {
-                    id: mouseArea
-                    anchors.fill: parent
-                    z: 1
-                    hoverEnabled: true
+                
+                CheckBox {
+                    id: filterDelegateCheck
+                    width: 15
+                    anchors.verticalCenter: parent.verticalCenter
+                    checkedState: model.checkState
                     onClicked: {
-                        attachedFiltersView.currentIndex = index
-                        attachedFiltersView.forceActiveFocus()
-                    }
-                    onDoubleClicked: {
                         model.checkState = !model.checkState
-                        filterDelegateCheck.checkedState = model.checkState
+                    }
+                }
+                
+                Item {
+                    width: 4
+                    height: parent.height
+                }
+                
+                Text { 
+                    id: filterDelegateText
+                    text: model.display
+                    color: attachedFiltersView.currentIndex == index ? activePalette.highlightedText : activePalette.windowText
+                    width: attachedFiltersView.width - 23
+        
+                    MouseArea {
+                        id: mouseArea
+                        anchors.fill: parent
+                        onClicked: {
+                            attachedFiltersView.currentIndex = index
+                        }
+                        onDoubleClicked: {
+                            model.checkState = !model.checkState
+                            filterDelegateCheck.checkedState = model.checkState
+                        }
                     }
                 }
             }
@@ -83,6 +94,8 @@ Rectangle {
         anchors.fill: parent
         ListView {
             id: attachedFiltersView
+            
+            property var dragTarget: -1
             
             function handleReset () {
                 currentIndex = -1
@@ -102,6 +115,94 @@ Rectangle {
             
             Component.onCompleted: {
                 model.modelReset.connect(handleReset)
+            }
+            
+            MouseArea {
+                property int oldIndex: -1
+                property var grabPos: Qt.point(0,0)
+                
+                function beginDrag() {
+                    var grabbedItem = attachedFiltersView.itemAt(mouseX, mouseY)
+                    oldIndex = attachedFiltersView.indexAt(mouseX, mouseY)
+                    grabPos = Qt.point(mouseX - grabbedItem.x, mouseY - grabbedItem.y)
+                    dragItem.index = oldIndex
+                    dragItem.model = grabbedItem.rowData
+                    dragItem.sourceComponent = filterDelegate
+                    dragItem.x = mouseX - grabPos.x
+                    dragItem.y = mouseY - grabPos.y
+                    attachedFiltersView.currentIndex = oldIndex
+                    cursorShape = Qt.DragMoveCursor
+                    autoScrollTimer.running = true
+                }
+                
+                function endDrag() {
+                    oldIndex = -1
+                    attachedFiltersView.dragTarget = -1
+                    dragItem.sourceComponent = null
+                    cursorShape = Qt.ArrowCursor
+                    autoScrollTimer.running = false
+                }
+                
+                propagateComposedEvents: true
+                anchors.fill: parent
+                z: 1
+                
+                onPressAndHold: {
+                    if (oldIndex == -1) {
+                        beginDrag()
+                    }
+                }
+                onReleased: {
+                    if(oldIndex != -1 
+                    && attachedFiltersView.dragTarget != -1
+                    && oldIndex != attachedFiltersView.dragTarget) {
+                        attachedfiltersmodel.move(oldIndex, attachedFiltersView.dragTarget)
+                    }
+                    endDrag()
+                    mouse.accepted = true;
+                }
+                onPositionChanged: {
+                    if (oldIndex == -1) {
+                        beginDrag()
+                    }
+                    dragItem.x = mouseX - grabPos.x
+                    dragItem.y = mouseY - grabPos.y
+                    attachedFiltersView.dragTarget = attachedFiltersView.indexAt(mouseX, mouseY + attachedFiltersView.contentY)
+                }
+                onCanceled: endDrag()
+                
+                Timer {
+                    id: autoScrollTimer
+                    interval: 500; 
+                    running: false;
+                    repeat: true
+                    onTriggered: {
+                        // Make sure previous and next indices are always visible
+                        var nextIndex = attachedFiltersView.dragTarget + 1
+                        var prevIndex = attachedFiltersView.dragTarget - 1
+                        if( nextIndex < attachedFiltersView.count ) {
+                            attachedFiltersView.positionViewAtIndex(nextIndex, ListView.Contain)
+                        }
+                        if( prevIndex >= 0 ) {
+                            attachedFiltersView.positionViewAtIndex(prevIndex, ListView.Contain)
+                        }
+                        attachedFiltersView.dragTarget = attachedFiltersView.indexAt(parent.mouseX, parent.mouseY + attachedFiltersView.contentY)
+                    }
+                }
+            }
+            
+            Loader {
+                id: dragItem
+                
+                // Emulate the delegate properties added by ListView
+                property var model : Object()
+                property int index
+                
+                onLoaded: {
+                    item.color = activePalette.highlight
+                    item.opacity = 0.5
+                    item.width = attachedFiltersView.width
+                }
             }
         }
     }

@@ -191,6 +191,29 @@ bool AttachedFiltersModel::removeRows(int row, int count, const QModelIndex &par
     }
 }
 
+bool AttachedFiltersModel::moveRows(const QModelIndex & sourceParent, int sourceRow, int count, const QModelIndex & destinationParent, int destinationRow)
+{
+    if (!m_producer || !m_producer->is_valid() || sourceParent != destinationParent || count != 1) {
+        return false;
+    }
+
+    QModelIndex fromIndex = createIndex(sourceRow, 0);
+    QModelIndex toIndex = createIndex(destinationRow, 0);
+
+    if (fromIndex.isValid() && toIndex.isValid()) {
+        if (beginMoveRows(sourceParent, sourceRow, sourceRow, destinationParent, destinationRow)) {
+            if (destinationRow > sourceRow) {
+                // Moving down: Convert to MLT Service indexing
+                destinationRow--;
+            }
+            m_producer->move_filter(indexForRow(sourceRow), indexForRow(destinationRow));
+            endMoveRows();
+            return true;
+        }
+    }
+    return false;
+}
+
 Mlt::Filter *AttachedFiltersModel::add(const QString& mlt_service, const QString& shotcutName)
 {
     Mlt::Filter* filter = new Mlt::Filter(MLT.profile(), mlt_service.toUtf8().constData());
@@ -220,6 +243,22 @@ void AttachedFiltersModel::remove(int row)
         emit changed();
     }
     delete filter;
+}
+
+bool AttachedFiltersModel::move(int fromRow, int toRow)
+{
+    QModelIndex parent = QModelIndex();
+
+    if (fromRow < 0 || toRow < 0) {
+        return false;
+    }
+
+    if (toRow > fromRow) {
+        // Moving down: put it under the destination index
+        toRow++;
+    }
+
+    return moveRows(parent, fromRow, 1, parent, toRow);
 }
 
 void AttachedFiltersModel::reset(Mlt::Producer* producer)
