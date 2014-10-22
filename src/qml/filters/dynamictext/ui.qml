@@ -66,6 +66,7 @@ Item {
             filter.set(rectProperty, '0/0:100%x100%')
             filter.set(valignProperty, 'bottom')
             filter.set(halignProperty, 'center')
+            filter.set('size', filterRect.height)
             filter.savePreset(preset.parameters)
 
             setControls()
@@ -94,6 +95,14 @@ Item {
     }
 
     function setControls() {
+        textArea.text = filter.get('argument')
+        fgColor.value = filter.get('fgcolour')
+        fontButton.text = filter.get('family')
+        weightCombo.currentIndex = weightCombo.valueToIndex()
+        outlineColor.value = filter.get('olcolour')
+        outlineSpinner.value = filter.getDouble('outline')
+        bgColor.value = filter.get('bgcolour')
+        padSpinner.value = filter.getDouble('pad')
         var align = filter.get(halignProperty)
         if (align === 'left')
             leftRadioButton.checked = true
@@ -138,7 +147,6 @@ Item {
         TextArea {
             id: textArea
             Layout.columnSpan: 4
-            text: filter.get('argument')
             textFormat: TextEdit.PlainText
             wrapMode: TextEdit.NoWrap
             Layout.minimumHeight: 40
@@ -177,38 +185,38 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
         ColorPicker {
+            id: fgColor
             eyedropper: false
             alpha: true
-            value: filter.get('fgcolour')
             onValueChanged: filter.set('fgcolour', value)
         }
         RowLayout {
             Layout.columnSpan: 3
             Button {
                 id: fontButton
-                text: (application.OS === 'Windows')? 'Verdana' : filter.get('family')
-                onClicked: fontDialog.open()
-
+                onClicked: {
+                    fontDialog.font = Qt.font({ family: filter.get('family'), pointSize: 24, weight: Font.Normal })
+                    fontDialog.open()
+                }
                 FontDialog {
                     id: fontDialog
                     title: "Please choose a font"
-                    font: Qt.font({ family: filter.get('family'), pointSize: 24, weight: Font.Normal })
                     onFontChanged: filter.set('family', font.family)
                     onAccepted: fontButton.text = font.family
                     onRejected: filter.set('family', fontButton.text)
                 }
             }
             ComboBox {
+                id: weightCombo
                 model: [qsTr('Normal'), qsTr('Bold'), qsTr('Light', 'thin font stroke')]
                 property var values: [Font.Normal, Font.Bold, Font.Light]
                 function valueToIndex() {
-                    var w = filter.get('weight')
+                    var w = filter.getDouble('weight')
                     for (var i = 0; i < values.length; ++i)
-                        if (values[i] == w) break;
+                        if (values[i] === w) break;
                     if (i === values.length) i = 0;
                     return i;
                 }
-                currentIndex: valueToIndex()
                 onActivated: filter.set('weight', 10 * values[index])
             }
         }
@@ -218,9 +226,9 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
         ColorPicker {
+            id: outlineColor
             eyedropper: false
             alpha: true
-            value: filter.get('olcolour')
             onValueChanged: filter.set('olcolour', value)
         }
         Label {
@@ -228,7 +236,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
         SpinBox {
-            value: filter.get('outline')
+            id: outlineSpinner
             Layout.minimumWidth: 50
             Layout.columnSpan: 2
             minimumValue: 0
@@ -242,9 +250,9 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
         ColorPicker {
+            id: bgColor
             eyedropper: false
             alpha: true
-            value: filter.get('bgcolour')
             onValueChanged: filter.set('bgcolour', value)
         }
         Label {
@@ -252,7 +260,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
         SpinBox {
-            value: filter.get('pad')
+            id: padSpinner
             Layout.minimumWidth: 50
             Layout.columnSpan: 2
             minimumValue: 0
