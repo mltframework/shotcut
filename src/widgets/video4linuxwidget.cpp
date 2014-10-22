@@ -95,9 +95,6 @@ Mlt::Producer* Video4LinuxWidget::producer(Mlt::Profile& profile)
         delete p;
         tractor->set_track(*audio, 1);
         delete audio;
-        Mlt::Transition* tran = new Mlt::Transition(profile, "mix");
-        tractor->plant_transition(tran);
-        delete tran;
         p = new Mlt::Producer(tractor->get_producer());
         delete tractor;
         p->set("resource", QString("video4linux2:%1")
