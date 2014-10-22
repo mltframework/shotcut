@@ -26,6 +26,7 @@
 #include "widgets/colorbarswidget.h"
 #include "widgets/colorproducerwidget.h"
 #include "widgets/decklinkproducerwidget.h"
+#include "widgets/directshowvideowidget.h"
 #include "widgets/isingwidget.h"
 #include "widgets/jackproducerwidget.h"
 #include "widgets/lissajouswidget.h"
@@ -1708,6 +1709,8 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
         w = new JackProducerWidget(this);
     else if (resource.startsWith("alsa:"))
         w = new AlsaWidget(this);
+    else if (resource.startsWith("dshow:"))
+        w = new DirectShowVideoWidget(this);
     else if (resource.startsWith("x11grab:"))
         w = new X11grabWidget(this);
     else if (service.startsWith("avformat"))

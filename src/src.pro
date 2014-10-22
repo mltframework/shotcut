@@ -1,6 +1,7 @@
 CONFIG   += link_prl
 
 QT       += widgets opengl xml network printsupport qml quick sql webkitwidgets
+QT       += multimedia
 
 TARGET = shotcut
 TEMPLATE = app
@@ -79,7 +80,8 @@ SOURCES += main.cpp\
     util.cpp \
     widgets/lumamixtransition.cpp \
     mltxmlgpuchecker.cpp \
-    autosavefile.cpp
+    autosavefile.cpp \
+    widgets/directshowvideowidget.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -151,7 +153,8 @@ HEADERS  += mainwindow.h \
     util.h \
     widgets/lumamixtransition.h \
     mltxmlgpuchecker.h \
-    autosavefile.h
+    autosavefile.h \
+    widgets/directshowvideowidget.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
@@ -186,7 +189,8 @@ FORMS    += mainwindow.ui \
     htmleditor/inserthtmldialog.ui \
     widgets/webvfxproducer.ui \
     docks/timelinedock.ui \
-    widgets/lumamixtransition.ui
+    widgets/lumamixtransition.ui \
+    widgets/directshowvideowidget.ui
 
 RESOURCES += \
     ../icons/resources.qrc \

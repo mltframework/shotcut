@@ -50,6 +50,9 @@ OpenOtherDialog::OpenOtherDialog(QWidget *parent) :
     item->setData(0, Qt::UserRole, ui->alsaTab->objectName());
     item = new QTreeWidgetItem(group, QStringList(tr("Screen")));
     item->setData(0, Qt::UserRole, ui->x11grabTab->objectName());
+#elif defined(Q_OS_WIN)
+    QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("DirectShow")));
+    item->setData(0, Qt::UserRole, ui->dshowVideoTab->objectName());
 #endif
 
     // populate the generators
@@ -110,6 +113,8 @@ void OpenOtherDialog::load(Mlt::Producer* producer)
             selectTreeWidget(tr("JACK Audio"));
         else if (resource.startsWith("alsa:"))
             selectTreeWidget(tr("ALSA Audio"));
+        else if (resource.startsWith("dshow:"))
+            selectTreeWidget(tr("DirectShow"));
         else if (resource.startsWith("x11grab:"))
             selectTreeWidget(tr("Screen"));
         else if (service.startsWith("avformat"))
@@ -180,6 +185,8 @@ void OpenOtherDialog::on_treeWidget_currentItemChanged(QTreeWidgetItem *current,
                     m_current = ui->alsaWidget;
                 else if (w == ui->x11grabTab)
                     m_current = ui->x11grabWidget;
+                else if (w == ui->dshowVideoTab)
+                    m_current = ui->dshowVideoWidget;
                 break;
             }
         }

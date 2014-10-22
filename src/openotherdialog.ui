@@ -46,7 +46,7 @@
      </widget>
      <widget class="QStackedWidget" name="methodTabWidget">
       <property name="currentIndex">
-       <number>5</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="networkTab">
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -59,6 +59,13 @@
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
          <widget class="DecklinkProducerWidget" name="decklinkWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="dshowVideoTab">
+       <layout class="QVBoxLayout" name="verticalLayout_14">
+        <item>
+         <widget class="DirectShowVideoWidget" name="dshowVideoWidget" native="true"/>
         </item>
        </layout>
       </widget>
@@ -237,6 +244,12 @@
    <class>X11grabWidget</class>
    <extends>QWidget</extends>
    <header>widgets/x11grabwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>DirectShowVideoWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/directshowvideowidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -367,6 +367,12 @@ void EncodeDock::encode(const QString& target)
     if (p && p->is_valid()) {
         for (int i = 0; i < p->count(); i++)
             MLT.consumer()->set(QString("1.%1").arg(p->get_name(i)).toLatin1().constData(), p->get(i));
+#ifdef Q_OS_WIN
+        // p is using C numeric locale on Windows and copied above as a string.
+        // Convert aspect to double and set it as such on MLT.consumer(),
+        // which be using a different locale.
+        MLT.consumer()->set("1.aspect", p->get_double("aspect"));
+#endif
     }
     delete p;
     if (ui->formatCombo->currentIndex() == 0 &&
