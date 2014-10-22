@@ -45,7 +45,11 @@ public slots:
     void setFadeInDuration(int duration);
     void setFadeOutDuration(int duration);
 
+protected:
+    bool event(QEvent *event);
+
 private:
+    void resetQview();
     QQuickView m_qview;
 };
 

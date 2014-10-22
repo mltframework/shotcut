@@ -42,23 +42,6 @@ FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* att
     setWindowIcon(filterIcon);
     toggleViewAction()->setIcon(windowIcon());
 
-    QDir viewPath = QmlUtilities::qmlDir();
-    viewPath.cd("views");
-    viewPath.cd("filter");
-    m_qview.engine()->addImportPath(viewPath.path());
-
-    QDir modulePath = QmlUtilities::qmlDir();
-    modulePath.cd("modules");
-    m_qview.engine()->addImportPath(modulePath.path());
-
-    QmlUtilities::setCommonProperties(&m_qview);
-    m_qview.rootContext()->setContextProperty("metadatamodel", metadataModel);
-    m_qview.rootContext()->setContextProperty("attachedfiltersmodel", attachedModel);
-    setCurrentFilter(NULL, NULL);
-    m_qview.setResizeMode(QQuickView::SizeRootObjectToView);
-    m_qview.setColor(palette().window().color());
-    QUrl source = QUrl::fromLocalFile(viewPath.absoluteFilePath("filterview.qml"));
-    m_qview.setSource(source);
     QWidget* container = QWidget::createWindowContainer(&m_qview, this);
     container->setFocusPolicy(Qt::TabFocus);
 
@@ -68,12 +51,11 @@ FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* att
     scrollArea->setWidget(container);
     setWidget(scrollArea);
 
-    // Connect signals from m_qview
-    QObject* root = m_qview.rootObject();
-    QObject::connect(root, SIGNAL(attachFilterRequested(int)),
-                     this, SIGNAL(attachFilterRequested(int)));
-    QObject::connect(root, SIGNAL(currentFilterRequested(int)),
-                     this, SIGNAL(currentFilterRequested(int)));
+    QmlUtilities::setCommonProperties(&m_qview);
+    m_qview.rootContext()->setContextProperty("metadatamodel", metadataModel);
+    m_qview.rootContext()->setContextProperty("attachedfiltersmodel", attachedModel);
+    setCurrentFilter(NULL, NULL);
+    resetQview();
 
     qDebug() << "end";
 }
@@ -98,4 +80,46 @@ void FiltersDock::setFadeOutDuration(int duration)
     if (filterUi) {
         filterUi->setProperty("duration", duration);
     }
+}
+
+bool FiltersDock::event(QEvent *event)
+{
+    bool result = QDockWidget::event(event);
+    if (event->type() == QEvent::PaletteChange || event->type() == QEvent::StyleChange) {
+        resetQview();
+    }
+    return result;
+}
+
+void FiltersDock::resetQview()
+{
+    if (m_qview.status() != QQuickView::Null) {
+        QObject* root = m_qview.rootObject();
+        QObject::disconnect(root, SIGNAL(attachFilterRequested(int)),
+                            this, SIGNAL(attachFilterRequested(int)));
+        QObject::disconnect(root, SIGNAL(currentFilterRequested(int)),
+                            this, SIGNAL(currentFilterRequested(int)));
+
+        m_qview.setSource(QUrl(""));
+    }
+
+    QDir viewPath = QmlUtilities::qmlDir();
+    viewPath.cd("views");
+    viewPath.cd("filter");
+    m_qview.engine()->addImportPath(viewPath.path());
+
+    QDir modulePath = QmlUtilities::qmlDir();
+    modulePath.cd("modules");
+    m_qview.engine()->addImportPath(modulePath.path());
+
+    m_qview.setResizeMode(QQuickView::SizeRootObjectToView);
+    m_qview.setColor(palette().window().color());
+    QUrl source = QUrl::fromLocalFile(viewPath.absoluteFilePath("filterview.qml"));
+    m_qview.setSource(source);
+
+    QObject* root = m_qview.rootObject();
+    QObject::connect(root, SIGNAL(attachFilterRequested(int)),
+                     this, SIGNAL(attachFilterRequested(int)));
+    QObject::connect(root, SIGNAL(currentFilterRequested(int)),
+                     this, SIGNAL(currentFilterRequested(int)));
 }
