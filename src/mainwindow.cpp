@@ -226,8 +226,8 @@ MainWindow::MainWindow()
     connect(this, SIGNAL(producerOpened()), m_filterController, SLOT(setProducer()));
     connect(m_filterController->attachedModel(), SIGNAL(changed(bool)), SLOT(setWindowModified(bool)));
     connect(m_filterController->attachedModel(), SIGNAL(changed()), SLOT(updateAutoSave()));
-    connect(m_timelineDock, SIGNAL(fadeInChanged(int)), m_filterController, SLOT(setFadeInDuration(int)));
-    connect(m_timelineDock, SIGNAL(fadeOutChanged(int)), m_filterController, SLOT(setFadeOutDuration(int)));
+    connect(m_timelineDock, SIGNAL(fadeInChanged(int)), m_filtersDock, SLOT(setFadeInDuration(int)));
+    connect(m_timelineDock, SIGNAL(fadeOutChanged(int)), m_filtersDock, SLOT(setFadeOutDuration(int)));
     connect(m_timelineDock, SIGNAL(trackSelected(Mlt::Producer*)), m_filterController, SLOT(setProducer(Mlt::Producer*)));
     connect(m_timelineDock, SIGNAL(clipSelected(Mlt::Producer*)), m_filterController, SLOT(setProducer(Mlt::Producer*)));
 

@@ -42,6 +42,8 @@ signals:
 
 public slots:
     void setCurrentFilter(QmlFilter* filter, QmlMetadata* meta);
+    void setFadeInDuration(int duration);
+    void setFadeOutDuration(int duration);
 
 private:
     QQuickView m_qview;

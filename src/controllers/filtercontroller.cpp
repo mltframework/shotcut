@@ -151,34 +151,6 @@ void FilterController::setCurrentFilter(int attachedIndex)
     delete mltFilter;
 }
 
-void FilterController::setFadeInDuration(int duration)
-{
-/* TODO: implement this
-    if (m_quickObject && ui->listView->currentIndex().isValid()) {
-        Mlt::Filter* filter = m_model.filterForRow(ui->listView->currentIndex().row());
-        if (filter && filter->is_valid()
-            && QString(filter->get("shotcut:filter")).startsWith("fadeIn")) {
-            m_quickObject->setProperty("duration", duration);
-        }
-        delete filter;
-    }
-*/
-}
-
-void FilterController::setFadeOutDuration(int duration)
-{
-/* TODO: implement this
-    if (m_quickObject && ui->listView->currentIndex().isValid()) {
-        Mlt::Filter* filter = m_model.filterForRow(ui->listView->currentIndex().row());
-        if (filter && filter->is_valid()
-            && QString(filter->get("shotcut:filter")).startsWith("fadeOut")) {
-            m_quickObject->setProperty("duration", duration);
-        }
-        delete filter;
-    }
-*/
-}
-
 void FilterController::handleAttachedModelChange()
 {
     MLT.refreshConsumer();

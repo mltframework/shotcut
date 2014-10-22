@@ -83,3 +83,19 @@ void FiltersDock::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta)
     m_qview.rootContext()->setContextProperty("filter", filter);
     m_qview.rootContext()->setContextProperty("metadata", meta);
 }
+
+void FiltersDock::setFadeInDuration(int duration)
+{
+    QObject* filterUi = m_qview.rootObject()->findChild<QObject*>("fadeIn");
+    if (filterUi) {
+        filterUi->setProperty("duration", duration);
+    }
+}
+
+void FiltersDock::setFadeOutDuration(int duration)
+{
+    QObject* filterUi = m_qview.rootObject()->findChild<QObject*>("fadeOut");
+    if (filterUi) {
+        filterUi->setProperty("duration", duration);
+    }
+}

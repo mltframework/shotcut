@@ -46,8 +46,6 @@ public slots:
     void setProducer(Mlt::Producer *producer = 0);
     void attachFilter(int metadataIndex);
     void setCurrentFilter(int attachedIndex);
-    void setFadeInDuration(int duration);
-    void setFadeOutDuration(int duration);
 
 private slots:
     void handleAttachedModelChange();
