@@ -50,6 +50,9 @@ QVariant MetadataModel::data(const QModelIndex &index, int role) const
             case ServiceRole:
                 result = meta->mlt_service();
                 break;
+            case IsAudioRole:
+                result = meta->isAudio();
+                break;
         }
     }
 
@@ -77,6 +80,7 @@ QHash<int, QByteArray> MetadataModel::roleNames() const {
     roles[HiddenRole] = "hidden";
     roles[FavoriteRole] = "favorite";
     roles[ServiceRole] = "service";
+    roles[IsAudioRole] = "isAudio";
     return roles;
 }
 

@@ -28,11 +28,13 @@ class MetadataModel : public QAbstractListModel
 {
     Q_OBJECT
 public:
+
     enum ModelRoles {
         NameRole = Qt::UserRole + 1,
         HiddenRole,
         FavoriteRole,
-        ServiceRole
+        ServiceRole,
+        IsAudioRole
     };
 
     explicit MetadataModel(QObject *parent = 0);
