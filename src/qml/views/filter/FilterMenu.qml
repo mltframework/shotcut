@@ -144,8 +144,13 @@ Loader {
                 id: filterMenuDelegate
                 
                 Item {
+                    id: filterMenuItem
                     visible: _isVisible(hidden, favorite, isAudio)
                     height: visible ? _itemHeight : 0
+                    
+                    Behavior on height {
+                        NumberAnimation { duration: 500 }
+                    }
                 
                     Row {
                         id: filterItemRow
@@ -194,8 +199,7 @@ Loader {
                             MouseArea {
                                 id: mouseArea
                                 anchors.fill: parent
-                                z: filterItemText.z + 1
-                                hoverEnabled: true
+                                hoverEnabled: filterMenuItem.height > 0
                                 onClicked: {
                                     filterWindow.visible = false
                                     filterWindow.itemSelected(index)
