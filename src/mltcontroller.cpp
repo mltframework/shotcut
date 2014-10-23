@@ -20,6 +20,7 @@
 #include <QWidget>
 #include <QPalette>
 #include <QMetaType>
+#include <QFileInfo>
 #include <QDebug>
 #include <Mlt.h>
 #include "glwidget.h"
@@ -401,6 +402,10 @@ QString Controller::saveXML(const QString& filename, Service* service)
     c.set("time_format", "clock");
     c.set("no_meta", 1);
     c.set("store", "shotcut");
+    if (QFile::exists(filename)) {
+        const char* path = QFileInfo(filename).absolutePath().toUtf8().constData();
+        c.set("root", path);
+    }
     c.connect(s);
     c.start();
     if (ignore)
