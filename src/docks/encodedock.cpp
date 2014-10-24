@@ -161,9 +161,6 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
 {
     Mlt::Properties* p = new Mlt::Properties;
     if (p && p->is_valid()) {
-#ifdef Q_OS_WIN
-        p->set_lcnumeric("C");
-#endif
         if (realtime)
             p->set("real_time", realtime);
         if (ui->formatCombo->currentIndex() != 0)
@@ -367,12 +364,6 @@ void EncodeDock::encode(const QString& target)
     if (p && p->is_valid()) {
         for (int i = 0; i < p->count(); i++)
             MLT.consumer()->set(QString("1.%1").arg(p->get_name(i)).toLatin1().constData(), p->get(i));
-#ifdef Q_OS_WIN
-        // p is using C numeric locale on Windows and copied above as a string.
-        // Convert aspect to double and set it as such on MLT.consumer(),
-        // which be using a different locale.
-        MLT.consumer()->set("1.aspect", p->get_double("aspect"));
-#endif
     }
     delete p;
     if (ui->formatCombo->currentIndex() == 0 &&
@@ -435,9 +426,6 @@ void EncodeDock::on_presetsTree_clicked(const QModelIndex &index)
         if (m_presetsModel.data(index.parent()).toString() == tr("Custom")) {
             ui->removePresetButton->setEnabled(true);
             preset = new Mlt::Properties();
-#ifdef Q_OS_WIN
-            preset->set_lcnumeric("C");
-#endif
             QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
             if (dir.cd("presets") && dir.cd("encode"))
                 preset->load(dir.absoluteFilePath(name).toLatin1().constData());
