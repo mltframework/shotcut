@@ -68,9 +68,8 @@ Item {
             filter.set(halignProperty, 'center')
             filter.set('size', filterRect.height)
             filter.savePreset(preset.parameters)
-
-            setControls()
         }
+        setControls()
     }
 
     function setFilter() {

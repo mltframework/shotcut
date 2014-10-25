@@ -57,9 +57,8 @@ Item {
             filter.set(valignProperty, 'top')
             filter.set(halignProperty, 'left')
             filter.savePreset(preset.parameters)
-
-            setControls()
         }
+        setControls()
     }
 
     function setFilter() {
