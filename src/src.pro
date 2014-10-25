@@ -318,7 +318,20 @@ OTHER_FILES += \
     qml/vui_droparea.qml \
     qml/filters/webvfx_threejs_text/meta.qml \
     qml/filters/webvfx_threejs_text/ui.qml \
-    qml/filters/webvfx_threejs_text/threejs_text.html
+    qml/filters/webvfx_threejs_text/threejs_text.html \
+    qml/filters/webvfx_threejs_text/Detector.js \
+    qml/filters/webvfx_threejs_text/GeometryUtils.js \
+    qml/filters/webvfx_threejs_text/three.min.js \
+    qml/filters/webvfx_threejs_text/fonts/droid_sans_bold.typeface.js \
+    qml/filters/webvfx_threejs_text/fonts/droid_sans_regular.typeface.js \
+    qml/filters/webvfx_threejs_text/fonts/droid_serif_bold.typeface.js \
+    qml/filters/webvfx_threejs_text/fonts/droid_serif_regular.typeface.js \
+    qml/filters/webvfx_threejs_text/fonts/gentilis_bold.typeface.js \
+    qml/filters/webvfx_threejs_text/fonts/gentilis_regular.typeface.js \
+    qml/filters/webvfx_threejs_text/fonts/helvetiker_bold.typeface.js \
+    qml/filters/webvfx_threejs_text/fonts/helvetiker_regular.typeface.js \
+    qml/filters/webvfx_threejs_text/fonts/optimer_bold.typeface.js \
+    qml/filters/webvfx_threejs_text/fonts/optimer_regular.typeface.js
 
 lupdate_hack {
     SOURCES += \
