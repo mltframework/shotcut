@@ -66,7 +66,7 @@ Rectangle {
                     height: parent.height
                 }
                 
-                Text { 
+                Label { 
                     id: filterDelegateText
                     text: model.display
                     color: attachedFiltersView.currentIndex == index ? activePalette.highlightedText : activePalette.windowText
