@@ -88,7 +88,7 @@ Loader {
                         visibleItems++
                     }
                 }
-                return (visibleItems * _itemHeight) + toolBar.height
+                return (visibleItems * _itemHeight) + toolBar.height + 2
             }
         
             function _menuRect(triggerItem) {
@@ -128,7 +128,7 @@ Loader {
                 filterWindow.height = newHeight
             }
 
-            color: activePalette.window
+            color: Qt.darker(activePalette.window, 1.5) // Border color
             flags: Qt.ToolTip
             width: 220
             height: 200
@@ -231,7 +231,7 @@ Loader {
                             
                     ScrollView {
                         width: parent.width
-                        height: filterWindow.height - toolBar.height
+                        height: filterWindow.height - toolBar.height - 2
                         ListView {
                             id: menuListView
                             anchors.fill: parent
@@ -244,44 +244,52 @@ Loader {
                         }
                     }
                     
-                    ToolBar {
+                    Rectangle {
+                        id: separatorBar
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        width: parent.width - 20
+                        height: 1
+                        color: Qt.darker(activePalette.window, 1.5)
+                    }
+
+                    RowLayout {
                         id: toolBar
-                        RowLayout {
-                            ToolButton {
-                                id: favButton
-                                implicitWidth: 28
-                                implicitHeight: 24
-                                checkable: true
-                                checked: true
-                                iconName: 'bookmarks'
-                                iconSource: 'qrc:///icons/oxygen/32x32/places/bookmarks.png'
-                                tooltip: checked ? qsTr('Show All') : qsTr('Show Favorite')
-                                onCheckedChanged: _resizeMenu()
-                            }
-                            ToolButton {
-                                id: vidButton
-                                implicitWidth: 28
-                                implicitHeight: 24
-                                checkable: true
-                                checked: true
-                                iconName: 'video-television'
-                                iconSource: 'qrc:///icons/oxygen/32x32/devices/video-television.png'
-                                tooltip: checked ? qsTr('Hide Video') : qsTr('Show Video')
-                                onClicked: if(!checked) audButton.checked = true
-                                onCheckedChanged: _resizeMenu()
-                            }
-                            ToolButton {
-                                id: audButton
-                                implicitWidth: 28
-                                implicitHeight: 24
-                                checkable: true
-                                checked: true
-                                iconName: 'speaker'
-                                iconSource: 'qrc:///icons/oxygen/32x32/actions/speaker.png'
-                                tooltip: checked ? qsTr('Hide Audio') : qsTr('Show Audio')
-                                onClicked: if(!checked) vidButton.checked = true
-                                onCheckedChanged: _resizeMenu()
-                            }
+                        height: 30
+                        
+                        ToolButton {
+                            id: favButton
+                            implicitWidth: 28
+                            implicitHeight: 24
+                            checkable: true
+                            checked: true
+                            iconName: 'bookmarks'
+                            iconSource: 'qrc:///icons/oxygen/32x32/places/bookmarks.png'
+                            tooltip: checked ? qsTr('Show All') : qsTr('Show Favorite')
+                            onCheckedChanged: _resizeMenu()
+                        }
+                        ToolButton {
+                            id: vidButton
+                            implicitWidth: 28
+                            implicitHeight: 24
+                            checkable: true
+                            checked: true
+                            iconName: 'video-television'
+                            iconSource: 'qrc:///icons/oxygen/32x32/devices/video-television.png'
+                            tooltip: checked ? qsTr('Hide Video') : qsTr('Show Video')
+                            onClicked: if(!checked) audButton.checked = true
+                            onCheckedChanged: _resizeMenu()
+                        }
+                        ToolButton {
+                            id: audButton
+                            implicitWidth: 28
+                            implicitHeight: 24
+                            checkable: true
+                            checked: true
+                            iconName: 'speaker'
+                            iconSource: 'qrc:///icons/oxygen/32x32/actions/speaker.png'
+                            tooltip: checked ? qsTr('Hide Audio') : qsTr('Show Audio')
+                            onClicked: if(!checked) vidButton.checked = true
+                            onCheckedChanged: _resizeMenu()
                         }
                     }
                 }
