@@ -3,6 +3,7 @@ import org.shotcut.qml 1.0
 
 Metadata {
     type: Metadata.Filter
+    objectName: "affineRotate"
     name: qsTr("Rotate")
     mlt_service: "affine"
     qml: "ui.qml"
