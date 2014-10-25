@@ -109,6 +109,7 @@ Flickable {
                            .arg((filterRect.y / profile.height * 100).toLocaleString(_locale))
                            .arg((filterRect.width / profile.width * 100).toLocaleString(_locale))
                            .arg((filterRect.height / profile.height * 100).toLocaleString(_locale)))
+                filter.set('size', filterRect.height)
             }
         }
     }
