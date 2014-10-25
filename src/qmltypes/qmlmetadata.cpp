@@ -86,14 +86,14 @@ void QmlMetadata::setPath(const QDir &path)
     m_path = path;
 }
 
-QString QmlMetadata::qmlFilePath() const
+QUrl QmlMetadata::qmlFilePath() const
 {
-    return m_path.absoluteFilePath(m_qmlFileName);
+    return QUrl::fromLocalFile(m_path.absoluteFilePath(m_qmlFileName));
 }
 
-QString QmlMetadata::vuiFilePath() const
+QUrl QmlMetadata::vuiFilePath() const
 {
-    return m_path.absoluteFilePath(m_vuiFileName);
+    return QUrl::fromLocalFile(m_path.absoluteFilePath(m_vuiFileName));
 }
 
 void QmlMetadata::setIsAudio(bool isAudio)

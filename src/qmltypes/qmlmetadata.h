@@ -22,6 +22,7 @@
 #include <QObject>
 #include <QString>
 #include <QDir>
+#include <QUrl>
 
 class QmlMetadata : public QObject
 {
@@ -33,8 +34,8 @@ class QmlMetadata : public QObject
     Q_PROPERTY(bool needsGPU READ needsGPU WRITE setNeedsGPU)
     Q_PROPERTY(QString qml READ qmlFileName WRITE setQmlFileName)
     Q_PROPERTY(QString vui READ vuiFileName WRITE setVuiFileName)
-    Q_PROPERTY( QString qmlFilePath READ qmlFilePath )
-    Q_PROPERTY( QString vuiFilePath READ vuiFilePath )
+    Q_PROPERTY(QUrl qmlFilePath READ qmlFilePath )
+    Q_PROPERTY(QUrl vuiFilePath READ vuiFilePath )
     Q_PROPERTY(bool isAudio READ isAudio WRITE setIsAudio)
     Q_PROPERTY(bool isHidden READ isHidden WRITE setIsHidden)
     Q_PROPERTY(bool isFavorite READ isFavorite WRITE setIsFavorite)
@@ -64,8 +65,8 @@ public:
     void setVuiFileName(const QString&);
     QDir path() const { return m_path; }
     void setPath(const QDir& path);
-    QString qmlFilePath() const;
-    QString vuiFilePath() const;
+    QUrl qmlFilePath() const;
+    QUrl vuiFilePath() const;
     bool isAudio() const { return m_isAudio; }
     void setIsAudio(bool isAudio);
     bool isHidden() const { return m_isHidden; }

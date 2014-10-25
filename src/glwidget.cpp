@@ -622,8 +622,8 @@ void GLWidget::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta)
 {
     setSource(QUrl());
     rootContext()->setContextProperty("filter", filter);
-    if (meta && QFile::exists(meta->vuiFilePath())) {
-        setSource(QUrl::fromLocalFile(meta->vuiFilePath()));
+    if (meta && QFile::exists(meta->vuiFilePath().toLocalFile())) {
+        setSource(meta->vuiFilePath());
     }
 }
 
