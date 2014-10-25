@@ -51,13 +51,13 @@ Loader {
             Behavior on height {
                 id: heightBehavior
                 enabled: false
-                animation: NumberAnimation { duration: 500 }
+                animation: NumberAnimation { duration: 200 }
             }
             
             Behavior on y {
                 id: yBehavior
                 enabled: false
-                animation: NumberAnimation { duration: 500 }
+                animation: NumberAnimation { duration: 200 }
             }
 
             function popup(triggerItem) {
@@ -149,7 +149,7 @@ Loader {
                     height: visible ? _itemHeight : 0
                     
                     Behavior on height {
-                        NumberAnimation { duration: 500 }
+                        NumberAnimation { duration: 200 }
                     }
                 
                     Row {
