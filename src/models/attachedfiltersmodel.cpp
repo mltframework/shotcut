@@ -31,6 +31,11 @@ AttachedFiltersModel::AttachedFiltersModel(QObject *parent)
 {
 }
 
+bool AttachedFiltersModel::isReady()
+{
+    return m_producer != NULL;
+}
+
 void AttachedFiltersModel::calculateRows()
 {
     m_rows =-0;
@@ -267,4 +272,5 @@ void AttachedFiltersModel::reset(Mlt::Producer* producer)
     m_producer.reset(new Mlt::Producer(producer? producer : MLT.producer()));
     calculateRows();
     endResetModel();
+    emit readyChanged();
 }

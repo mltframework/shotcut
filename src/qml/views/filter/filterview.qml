@@ -73,6 +73,8 @@ Rectangle {
             id: addButton
             Layout.minimumWidth: height
             iconName: 'list-add'
+            enabled: attachedfiltersmodel.ready
+            opacity: enabled ? 1.0 : 0.5
             tooltip: qsTr('Add a Filter')
             onClicked: filterMenu.popup(addButton)
         }
