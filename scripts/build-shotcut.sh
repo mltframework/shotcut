@@ -35,6 +35,8 @@ X264_REVISION=
 LIBVPX_HEAD=1
 LIBVPX_REVISION=
 ENABLE_LAME=1
+LIBOPUS_HEAD=1
+LIBOPUS_REVISION=
 ENABLE_SWH_PLUGINS=1
 FFMPEG_HEAD=0
 FFMPEG_REVISION="origin/release/2.3"
@@ -43,6 +45,7 @@ FFMPEG_SUPPORT_LIBVPX=1
 FFMPEG_SUPPORT_THEORA=1
 FFMPEG_SUPPORT_MP3=1
 FFMPEG_SUPPORT_FAAC=0
+FFMPEG_SUPPORT_OPUS=1
 FFMPEG_ADDITIONAL_OPTIONS=
 ENABLE_VIDSTAB=1
 VIDSTAB_HEAD=1
@@ -171,6 +174,9 @@ function to_key {
     ;;
     libepoxy)
       echo 11
+    ;;
+    opus)
+      echo 12
     ;;
     *)
       echo UNKNOWN
@@ -327,6 +333,9 @@ function set_globals {
   if test "$FFMPEG_SUPPORT_MP3" = 1 && test "$ENABLE_LAME" = 1; then
       SUBDIRS="lame $SUBDIRS"
   fi
+  if test "$FFMPEG_SUPPORT_OPUS" = 1 && test "$LIBOPUS_HEAD" = 1 -o "$LIBOPUS_REVISION" != ""; then
+      SUBDIRS="opus $SUBDIRS"
+  fi
   if test "$ENABLE_SWH_PLUGINS" = "1" && test "$TARGET_OS" = "Darwin"; then
       SUBDIRS="swh-plugins $SUBDIRS"
   fi
@@ -351,6 +360,7 @@ function set_globals {
   REPOLOCS[9]="git://github.com/mltframework/webvfx.git"
   REPOLOCS[10]="git://github.com/georgmartius/vid.stab.git"
   REPOLOCS[11]="git://github.com/anholt/libepoxy.git"
+  REPOLOCS[12]="git://git.opus-codec.org/opus.git"
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
   REPOTYPES[0]="git"
@@ -365,6 +375,7 @@ function set_globals {
   REPOTYPES[9]="git"
   REPOTYPES[10]="git"
   REPOTYPES[11]="git"
+  REPOTYPES[12]="git"
 
   # And, set up the revisions
   REVISIONS[0]=""
@@ -409,6 +420,10 @@ function set_globals {
   REVISIONS[11]=""
   if test "$LIBEPOXY_REVISION" ; then
     REVISIONS[11]="$LIBEPOXY_REVISION"
+  fi
+  REVISIONS[12]=""
+  if test 0 = "$LIBOPUS_HEAD" -a "$LIBOPUS_REVISION" ; then
+    REVISIONS[12]="$LIBOPUS_REVISION"
   fi
 
   # Figure out the number of cores in the system. Used both by make and startup script
@@ -489,11 +504,14 @@ function set_globals {
   if test 1 = "$FFMPEG_SUPPORT_LIBVPX" ; then
     CONFIG[0]="${CONFIG[0]} --enable-libvpx"
   fi
+  if test 1 = "$FFMPEG_SUPPORT_OPUS" ; then
+    CONFIG[0]="${CONFIG[0]} --enable-libopus"
+  fi
   # Add optional parameters
   CONFIG[0]="${CONFIG[0]} $FFMPEG_ADDITIONAL_OPTIONS"
   CFLAGS_[0]="-I$FINAL_INSTALL_DIR/include $CFLAGS"
   if test "$TARGET_OS" = "Win32" ; then
-    CONFIG[0]="${CONFIG[0]} --cross-prefix=$CROSS --arch=x86 --target-os=mingw32"
+    CONFIG[0]="${CONFIG[0]} --cross-prefix=$CROSS --arch=x86 --target-os=mingw32 --pkg-config=pkg-config"
     LDFLAGS_[0]="$LDFLAGS"
   else
     LDFLAGS_[0]="-L$FINAL_INSTALL_DIR/lib $LDFLAGS"
@@ -632,6 +650,19 @@ function set_globals {
     CFLAGS_[11]="$CFLAGS"
   fi
   LDFLAGS_[11]=$LDFLAGS
+
+  #####
+  # libopus
+  CONFIG[12]="./configure --prefix=$FINAL_INSTALL_DIR"
+  if test "$TARGET_OS" = "Win32" ; then
+    CONFIG[12]="${CONFIG[12]} --host=x86-w64-mingw32"
+    CFLAGS_[12]="$CFLAGS"
+  elif test "$TARGET_OS" = "Darwin"; then
+    CFLAGS_[12]="$CFLAGS -I/opt/local/include"
+  else
+    CFLAGS_[12]="$CFLAGS"
+  fi
+  LDFLAGS_[12]=$LDFLAGS
 }
 
 ######################################################################
@@ -1111,8 +1142,8 @@ to make Shotcuts daily builds. It is the authoritative install reference:
 
 We cannot cover how to build all of Shotcut's dependencies from scratch here.
 On Linux, we rely upon Debian's packages to provide most of the
-more mundane dependencies. The rest like x264, libvpx, lame, FFmpeg, and
-frei0r are provided by the script.
+more mundane dependencies. The rest like x264, libvpx, lame, libopus, FFmpeg,
+and frei0r are provided by the script.
 
 For OS X, we rely upon macports to provide the dependencies:
   port install ffmpeg libsamplerate libsdl sox glib2 jack
@@ -1294,6 +1325,15 @@ function configure_compile_install_subproject {
   if test "vid.stab" = "$1" -a "$TARGET_OS" = "Win32"; then
     sed 's/-O3/-O2/' <CMakeLists.txt >CMakeLists.new
     mv CMakeLists.new CMakeLists.txt
+  fi
+
+  # Special hack for libopus
+  if test "opus" = "$1" -a ! -e configure ; then
+    debug "Need to create configure for $1"
+    cmd ./autogen.sh || die "Unable to create configure file for $1"
+    if test ! -e configure ; then
+      die "Unable to confirm presence of configure file for $1"
+    fi
   fi
 
   cmd `lookup CONFIG $1` || die "Unable to configure $1"
