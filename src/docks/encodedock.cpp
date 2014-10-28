@@ -170,15 +170,23 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
             p->set("audio_off", 1);
         }
         else {
+            const QString& acodec = ui->audioCodecCombo->currentText();
             if (ui->audioCodecCombo->currentIndex() > 0)
                 p->set("acodec", ui->audioCodecCombo->currentText().toLatin1().constData());
             p->set("ar", ui->sampleRateCombo->currentText().toLatin1().constData());
             if (ui->audioRateControlCombo->currentIndex() == RateControlAverage
                     || ui->audioRateControlCombo->currentIndex() == RateControlConstant) {
                 p->set("ab", ui->audioBitrateCombo->currentText().toLatin1().constData());
-            }
-            else {
-                const QString& acodec = ui->audioCodecCombo->currentText();
+                if (acodec == "libopus") {
+                    if (RateControlConstant == ui->audioRateControlCombo->currentIndex())
+                        p->set("vbr", "off");
+                    else
+                        p->set("vbr", "constrained");
+                }
+            } if (acodec == "libopus") {
+                p->set("vbr", "on");
+                p->set("ab", ui->audioBitrateCombo->currentText().toLatin1().constData());
+            } else {
                 int aq = ui->audioQualitySpinner->value();
                 if (acodec == "libmp3lame")
                     aq = TO_ABSOLUTE(9, 0, aq);
@@ -476,6 +484,9 @@ void EncodeDock::on_presetsTree_clicked(const QModelIndex &index)
                     for (int i = 0; i < ui->audioCodecCombo->count(); i++)
                         if (ui->audioCodecCombo->itemText(i) == preset->get("acodec"))
                             ui->audioCodecCombo->setCurrentIndex(i);
+                    if (ui->audioCodecCombo->currentText() == "libopus")
+                        // reset libopus to VBR (its default)
+                        ui->audioRateControlCombo->setCurrentIndex(RateControlQuality);
                 }
                 else if (name == "vcodec") {
                     for (int i = 0; i < ui->videoCodecCombo->count(); i++)
@@ -542,6 +553,16 @@ void EncodeDock::on_presetsTree_clicked(const QModelIndex &index)
                 else if (name == "aq") {
                     ui->audioRateControlCombo->setCurrentIndex(RateControlQuality);
                     audioQuality = preset->get_int("aq");
+                }
+                else if (name == "vbr") {
+                    // libopus rate mode
+                    QString value(preset->get("vbr"));
+                    if (value == "off")
+                        ui->audioRateControlCombo->setCurrentIndex(RateControlConstant);
+                    else if (value == "constrained")
+                        ui->audioRateControlCombo->setCurrentIndex(RateControlAverage);
+                    else
+                        ui->audioRateControlCombo->setCurrentIndex(RateControlQuality);
                 }
                 else if (name == "vq") {
                     ui->videoRateControlCombo->setCurrentIndex(RateControlQuality);
@@ -853,6 +874,9 @@ void EncodeDock::on_videoRateControlCombo_activated(int index)
 
 void EncodeDock::on_audioRateControlCombo_activated(int index)
 {
+    if (ui->audioCodecCombo->currentText() == "libopus")
+        // libopus does not use % for quality
+        return;
     switch (index) {
     case RateControlAverage:
         ui->audioBitrateCombo->setEnabled(true);
