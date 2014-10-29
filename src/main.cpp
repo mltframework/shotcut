@@ -204,7 +204,7 @@ int main(int argc, char **argv)
     if (EXIT_RESTART == result) {
         qDebug() << "restarting app";
         QProcess* restart = new QProcess;
-        restart->start(a.applicationFilePath());
+        restart->start(a.applicationFilePath(), QStringList());
         restart->waitForReadyRead();
         restart->waitForFinished(1000);
         result = EXIT_SUCCESS;
