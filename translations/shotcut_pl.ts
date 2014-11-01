@@ -4,7 +4,7 @@
 <context>
     <name></name>
     <message>
-        <location filename="../src/main.cpp" line="190"/>
+        <location filename="../src/main.cpp" line="191"/>
         <source>Loading plugins...</source>
         <translation>Ładowanie wtyczek</translation>
     </message>
@@ -507,6 +507,35 @@
     </message>
 </context>
 <context>
+    <name>DirectShowVideoWidget</name>
+    <message>
+        <location filename="../src/widgets/directshowvideowidget.ui" line="14"/>
+        <source>Form</source>
+        <translation>Formularz</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/directshowvideowidget.ui" line="26"/>
+        <source>DirectShow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/directshowvideowidget.ui" line="59"/>
+        <location filename="../src/widgets/directshowvideowidget.ui" line="88"/>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/directshowvideowidget.ui" line="67"/>
+        <source>Video Input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/directshowvideowidget.ui" line="77"/>
+        <source>Audio Input</source>
+        <translation>Wejście audio</translation>
+    </message>
+</context>
+<context>
     <name>DurationDialog</name>
     <message>
         <location filename="../src/dialogs/durationdialog.ui" line="17"/>
@@ -978,9 +1007,9 @@ codecs. However, not all codecs are multi-threaded.</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1391"/>
-        <location filename="../src/docks/encodedock.cpp" line="712"/>
-        <location filename="../src/docks/encodedock.cpp" line="719"/>
-        <location filename="../src/docks/encodedock.cpp" line="822"/>
+        <location filename="../src/docks/encodedock.cpp" line="727"/>
+        <location filename="../src/docks/encodedock.cpp" line="734"/>
+        <location filename="../src/docks/encodedock.cpp" line="837"/>
         <source>Stream</source>
         <translation>Rozpocznij streaming</translation>
     </message>
@@ -1012,14 +1041,14 @@ codecs. However, not all codecs are multi-threaded.</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="104"/>
-        <location filename="../src/docks/encodedock.cpp" line="627"/>
-        <location filename="../src/docks/encodedock.cpp" line="821"/>
+        <location filename="../src/docks/encodedock.cpp" line="642"/>
+        <location filename="../src/docks/encodedock.cpp" line="836"/>
         <source>Capture File</source>
         <translation>Przechwyć plik</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="112"/>
-        <location filename="../src/docks/encodedock.cpp" line="429"/>
+        <location filename="../src/docks/encodedock.cpp" line="434"/>
         <source>Custom</source>
         <translation>Własny</translation>
     </message>
@@ -1029,44 +1058,44 @@ codecs. However, not all codecs are multi-threaded.</source>
         <translation>Lista</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="622"/>
-        <location filename="../src/docks/encodedock.cpp" line="667"/>
+        <location filename="../src/docks/encodedock.cpp" line="637"/>
+        <location filename="../src/docks/encodedock.cpp" line="682"/>
         <source>Stop Capture</source>
         <translation>Zatrzymaj przechwytywanie</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="644"/>
+        <location filename="../src/docks/encodedock.cpp" line="659"/>
         <source>Encode to File</source>
         <translation>Exportuj do pliku</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="644"/>
+        <location filename="../src/docks/encodedock.cpp" line="659"/>
         <source>Capture to File</source>
         <translation>Przechwyć do pliku</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="707"/>
-        <location filename="../src/docks/encodedock.cpp" line="728"/>
+        <location filename="../src/docks/encodedock.cpp" line="722"/>
+        <location filename="../src/docks/encodedock.cpp" line="743"/>
         <source>Stop Stream</source>
         <translation>Zatrzymaj streaming</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="720"/>
+        <location filename="../src/docks/encodedock.cpp" line="735"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>Wprowadź adres, port i parametry łącza URL:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="758"/>
+        <location filename="../src/docks/encodedock.cpp" line="773"/>
         <source>Add Encode Preset</source>
         <translation>Dodaj nowe ustawienia eksportu</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="801"/>
+        <location filename="../src/docks/encodedock.cpp" line="816"/>
         <source>Delete Preset</source>
         <translation>Usuń zapisane ustawienia</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="802"/>
+        <location filename="../src/docks/encodedock.cpp" line="817"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>Na pewno usunąć %1?</translation>
     </message>
@@ -1115,452 +1144,456 @@ with the framebuffer object extension.</source>
 Program wymaga OpenGL w wersji 2.0
 z rozszerzeniem buforowania klatkowego.</translation>
     </message>
-    <message>
-        <source>GPU Processing requires OpenGL version 3.2, but you have version %1.%2.
-Disabling GPU Processing.</source>
-        <translation type="vanished">Przetwarzanie GPU wymaga OpenGL w wersji 3.2, twoja wersja to %1.%2.
-Wyłączono przetwarzanie GPU.</translation>
-    </message>
 </context>
 <context>
     <name>HtmlEditor</name>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="14"/>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="157"/>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="656"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="158"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="735"/>
         <source>HTML Editor</source>
         <translation>Edytor HTML</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="36"/>
         <source>&amp;Edit</source>
-        <translation>&amp;Edytuj</translation>
+        <translation type="unfinished">&amp;Edytuj</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="53"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="52"/>
         <source>F&amp;ormat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="57"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="56"/>
         <source>St&amp;yle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="71"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="70"/>
         <source>&amp;Align</source>
-        <translation>&amp;Wyrównanie</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="107"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="101"/>
+        <source>&amp;File</source>
+        <translation type="unfinished">&amp;Plik</translation>
+    </message>
+    <message>
+        <location filename="../src/htmleditor/htmleditor.ui" line="115"/>
         <source>Standard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="173"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="181"/>
         <source>Tab 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="192"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="200"/>
         <source>about:blank</source>
         <translation>about:blank</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="201"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="209"/>
         <source>Tab 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="240"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="245"/>
         <source>&amp;New</source>
         <translation>&amp;Nowy</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="249"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="254"/>
         <source>&amp;Open...</source>
         <translation>&amp;Otwórz...</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="258"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="263"/>
         <source>&amp;Save</source>
         <translation>&amp;Zapisz</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="261"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="266"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="266"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="271"/>
         <source>Save &amp;As...</source>
         <translation>Zapisz &amp;Jako...</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="275"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="280"/>
         <source>&amp;Undo</source>
         <translation>%Cofnij</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="278"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="283"/>
         <source>Ctrl+Z</source>
         <translation>Ctrl+Z</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="287"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="292"/>
         <source>&amp;Redo</source>
         <translation>&amp;Ponów</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="290"/>
-        <source>Ctrl+Y</source>
-        <translation>Ctrl+Y</translation>
+        <location filename="../src/htmleditor/htmleditor.ui" line="295"/>
+        <source>Ctrl+Shift+Z</source>
+        <translation>Ctrl+Shift+Z</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="299"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="304"/>
         <source>Cu&amp;t</source>
         <translation>Wytni&amp;j</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="302"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="307"/>
         <source>Ctrl+X</source>
         <translation>Ctrl+X</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="311"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="316"/>
         <source>&amp;Copy</source>
         <translation>&amp;Kopiuj</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="314"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="319"/>
         <source>Ctrl+C</source>
         <translation>Ctrl+C</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="323"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="328"/>
         <source>&amp;Paste</source>
         <translation>&amp;Wklej</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="326"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="331"/>
         <source>Ctrl+V</source>
         <translation>Ctrl+V</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="335"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="340"/>
         <source>Select A&amp;ll</source>
         <translation>Zaznacz W&amp;szystko</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="338"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="343"/>
         <source>Ctrl+A</source>
         <translation>Ctrl+A</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="350"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="355"/>
         <source>&amp;Bold</source>
         <translation>&amp;Wytłuść</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="353"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="358"/>
         <source>Ctrl+B</source>
         <translation>Ctrl+B</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="365"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="370"/>
         <source>&amp;Italic</source>
         <translation>&amp;Kursywa</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="368"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="373"/>
         <source>Ctrl+I</source>
         <translation>Ctrl+I</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="380"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="385"/>
         <source>&amp;Underline</source>
         <translation>&amp;Podkreśl</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="383"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="388"/>
         <source>Ctrl+U</source>
         <translation>Ctrl+U</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="395"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="400"/>
         <source>&amp;Strikethrough</source>
         <translation>&amp;Przekreśl</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="404"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="409"/>
         <source>Align &amp;Left</source>
         <translation>Wyrównaj do &amp;Lewej</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="413"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="418"/>
         <source>Align &amp;Center</source>
         <translation>Wyrównaj do &amp;Środka</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="422"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="427"/>
         <source>Align &amp;Right</source>
         <translation>Wyrównaj do &amp;Prawej</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="431"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="436"/>
         <source>Align &amp;Justify</source>
         <translation>&amp;Wyjustuj</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="440"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="445"/>
         <source>I&amp;ncrease Indent</source>
         <translation>Z&amp;większ wcięcie</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="449"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="454"/>
         <source>&amp;Decrease Indent</source>
         <translation>&amp;Zmniejsz wcięcie</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="461"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="466"/>
         <source>Bulle&amp;ted List</source>
         <translation>Lis&amp;ta Wypunktowana</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="473"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="478"/>
         <source>&amp;Numbered List</source>
         <translation>&amp;Lista Numerowana</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="482"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="487"/>
         <source>Insert &amp;Image...</source>
         <translation>Wstaw &amp;Obraz</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="491"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="496"/>
         <source>Create Link...</source>
         <translation>Utwórz link...</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="500"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="505"/>
         <source>Zoom Out</source>
         <translation>Oddal</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="509"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="514"/>
         <source>Zoom In</source>
         <translation>Zbliż</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="514"/>
-        <source>E&amp;xit</source>
-        <translation>W&amp;yjdź</translation>
+        <location filename="../src/htmleditor/htmleditor.ui" line="523"/>
+        <source>C&amp;lose Window</source>
+        <translation>Z%amknij Okno</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="517"/>
-        <source>Ctrl+Q</source>
-        <translation>Ctrl+Q</translation>
+        <location filename="../src/htmleditor/htmleditor.ui" line="526"/>
+        <source>Close Window</source>
+        <translation>Zamknij okno</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="522"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="529"/>
+        <source>Ctrl+W</source>
+        <translation>CTRL+W</translation>
+    </message>
+    <message>
+        <location filename="../src/htmleditor/htmleditor.ui" line="534"/>
         <source>&amp;Paragraph</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="527"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="539"/>
         <source>Heading &amp;1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="532"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="544"/>
         <source>Heading &amp;2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="537"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="549"/>
         <source>Heading &amp;3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="542"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="554"/>
         <source>Heading &amp;4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="547"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="559"/>
         <source>Heading &amp;5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="552"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="564"/>
         <source>Heading &amp;6</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="557"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="569"/>
         <source>Pre&amp;formatted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="562"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="574"/>
         <source>&amp;Address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="567"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="579"/>
         <source>&amp;Font Name...</source>
         <translation>&amp;Nazwa Czcionki...</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="572"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="584"/>
         <source>Text &amp;Color...</source>
         <translation>Kolor &amp;Tekstu</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="577"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="589"/>
         <source>Bac&amp;kground Color...</source>
         <translation>Ko&amp;lor Tła...</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="585"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="597"/>
         <source>Font Si&amp;ze...</source>
         <translation>Rozmiar Czcion&amp;ki...</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="594"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="606"/>
         <source>Insert HTML...</source>
         <translation>Wstaw kod HTML...</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="597"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="609"/>
         <source>Insert HTML</source>
         <translation>Wstaw HTML</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="605"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="617"/>
         <source>Text Outline...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="613"/>
+        <location filename="../src/htmleditor/htmleditor.ui" line="625"/>
         <source>Text Shadow...</source>
         <translation>Cień tekstu...</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="60"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="62"/>
         <source>WYSIWYG Editor</source>
         <translation>Edytor WYSIWYG</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="61"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="63"/>
         <source>View Source</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="158"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="159"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>Dokument został zmieniony.
 Zapisać zmiany?</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="195"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="196"/>
         <source>Open File...</source>
         <translation>Otwórz plik</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="196"/>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="226"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="197"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="230"/>
         <source>HTML-Files (*.htm *.html);;All Files (*)</source>
         <translation>Pliki HTML (*.htm *.html);;All Files (*)</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="225"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="229"/>
         <source>Save as...</source>
         <translation>Zapisz jako...</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="239"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="243"/>
         <source>Common Graphics (*.png *.jpg *.jpeg *.gif);;</source>
         <translation>Pliki graficzne (*.png *.jpg *.jpeg *.gif);;</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="240"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="244"/>
         <source>Portable Network Graphics (PNG) (*.png);;</source>
         <translation>Plik (PNG) (*.png);;</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="241"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="245"/>
         <source>JPEG (*.jpg *.jpeg);;</source>
         <translation>JPEG (*.jpg *.jpeg);;</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="242"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="246"/>
         <source>Graphics Interchange Format (*.gif);;</source>
         <translation>Plik wymiany (*.gif);;</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="243"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="247"/>
         <source>All Files (*)</source>
         <translation>Wszystkie pliki (*)</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="245"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="249"/>
         <source>Open image...</source>
         <translation>Otwórz obraz...</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="292"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="296"/>
         <source>Create link</source>
         <translation>Utwórz link</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="293"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="297"/>
         <source>Enter URL</source>
         <translation>Wstaw adres URL</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="480"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="487"/>
         <source>Font</source>
         <translation>Czcionka</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="480"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="487"/>
         <source>Select font:</source>
         <translation>Czcionka:</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="490"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="497"/>
         <source>Font Size</source>
         <translation>Rozmiar czcionki</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="490"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="497"/>
         <source>Size in points:</source>
         <translation>Rozmiar w punktach:</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="555"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="633"/>
         <source>Open %1 ?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="556"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="634"/>
         <source>Open link</source>
         <translation>Otwórz link</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="565"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="643"/>
         <source>Text Outline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="582"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="660"/>
         <source>Text Shadow</source>
         <translation>Cienie</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="656"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="735"/>
         <source>%1[*] - %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2285,7 +2318,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="359"/>
-        <location filename="../src/mainwindow.cpp" line="1767"/>
+        <location filename="../src/mainwindow.cpp" line="1779"/>
         <source>Enter Full Screen</source>
         <translation>Otwórz pełny ekran</translation>
     </message>
@@ -2296,7 +2329,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="371"/>
-        <location filename="../src/mainwindow.cpp" line="151"/>
+        <location filename="../src/mainwindow.cpp" line="155"/>
         <source>Properties</source>
         <translation>Właściwości</translation>
     </message>
@@ -2312,7 +2345,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="398"/>
-        <location filename="../src/mainwindow.cpp" line="223"/>
+        <location filename="../src/mainwindow.cpp" line="227"/>
         <source>History</source>
         <translation>Historia</translation>
     </message>
@@ -2478,167 +2511,166 @@ p, li { white-space: pre-wrap; }
         <translation>Pokaż etykiety okien</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="123"/>
+        <location filename="../src/mainwindow.cpp" line="127"/>
         <source>Ctrl+Z</source>
         <translation>Ctrl+Z</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="124"/>
+        <location filename="../src/mainwindow.cpp" line="128"/>
         <source>Ctrl+Shift+Z</source>
         <translation>Ctrl+Shift+Z</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="388"/>
+        <location filename="../src/mainwindow.cpp" line="392"/>
         <source>Non-Broadcast</source>
         <translation>nie-telewizyjne</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="399"/>
+        <location filename="../src/mainwindow.cpp" line="403"/>
         <source>DVD Widescreen NTSC</source>
         <translation>DVD Widescreen NTSC</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="400"/>
+        <location filename="../src/mainwindow.cpp" line="404"/>
         <source>DVD Widescreen PAL</source>
         <translation>DVD Widescreen PAL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="405"/>
+        <location filename="../src/mainwindow.cpp" line="409"/>
         <source>Custom</source>
         <translation>Własny</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="424"/>
+        <location filename="../src/mainwindow.cpp" line="428"/>
         <source>Screen %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="455"/>
+        <location filename="../src/mainwindow.cpp" line="459"/>
         <source>Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="458"/>
+        <location filename="../src/mainwindow.cpp" line="462"/>
         <source>Internal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="461"/>
+        <location filename="../src/mainwindow.cpp" line="465"/>
         <source>External</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="475"/>
+        <location filename="../src/mainwindow.cpp" line="479"/>
         <source>DeckLink Keyer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="556"/>
-        <location filename="../src/mainwindow.cpp" line="558"/>
-        <location filename="../src/mainwindow.cpp" line="722"/>
-        <location filename="../src/mainwindow.cpp" line="2216"/>
+        <location filename="../src/mainwindow.cpp" line="563"/>
+        <location filename="../src/mainwindow.cpp" line="565"/>
+        <location filename="../src/mainwindow.cpp" line="731"/>
+        <location filename="../src/mainwindow.cpp" line="2232"/>
         <source>Failed to open </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="583"/>
+        <location filename="../src/mainwindow.cpp" line="590"/>
         <source>The file you opened uses GPU effects, but GPU processing is not enabled.
-Do you want to enable GPU processing and exit?</source>
-        <translation>Otwarty plik używa efektów GPU, ale przetwarzanie GPU jest wyłączone. Czy chcesz je włączyć i wyjść z programu?</translation>
+Do you want to enable GPU processing and restart?</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="600"/>
+        <location filename="../src/mainwindow.cpp" line="608"/>
         <source>The file you opened uses effects that are incompatible with GPU processing.
-Do you want to disable GPU processing and exit?</source>
-        <translation>Otwarty plik używa efektów niekompatybilnych z przetwarzaniem GPU. Czy chcesz wyłączyć przetwarzanie GPU i wyjść z programu?</translation>
+Do you want to disable GPU processing and restart?</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="628"/>
+        <location filename="../src/mainwindow.cpp" line="1987"/>
+        <source>You must restart Shotcut to switch to the new language.
+Do you want to restart now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="2036"/>
+        <source>You must restart Shotcut to switch using GPU processing.
+Do you want to restart now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="637"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation>Istnieje plik auto-save. Odzyskać teraz?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="733"/>
-        <location filename="../src/mainwindow.cpp" line="2201"/>
+        <location filename="../src/mainwindow.cpp" line="742"/>
+        <location filename="../src/mainwindow.cpp" line="2217"/>
         <source>Open File</source>
         <translation>Otwórz plik</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="939"/>
+        <location filename="../src/mainwindow.cpp" line="948"/>
         <source>%1[*] - %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="944"/>
+        <location filename="../src/mainwindow.cpp" line="953"/>
         <source>About Shotcut</source>
         <translation>O programie</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="945"/>
+        <location filename="../src/mainwindow.cpp" line="954"/>
         <source>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2014 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
         <translation>&lt;h1&gt;Shotcut wersja %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; jest darmowym, otwartym, wieloplatformowym programem do nieliniowej edycji wideo.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2014 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Ten program z dumą wykorzystuje następujące projekty:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; aplikacja i interface użytkownika&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; moduł autoringu multimediów&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; biblioteki formatów i kodeków&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; wtyczki wideo&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; wtyczki audio&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt;ikony z kolekcji&lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;Kod źródłowy programu można pobrać ze strony&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;Ten program jest rozpowszechniany w nadziei na poprawną funkcjonalność, ale BEZ JAKIEJKOLWIEK GWARANCJI; bez domniemanej gwarancji PRZYDATNOŚCI HANDLOWEJ albo PRZYDATNOŚCI DO OKREŚLONYCH ZASTOSOWAŃ.&lt;/small&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1360"/>
-        <location filename="../src/mainwindow.cpp" line="1385"/>
+        <location filename="../src/mainwindow.cpp" line="1370"/>
+        <location filename="../src/mainwindow.cpp" line="1395"/>
         <source>Saved %1</source>
         <translation>Zapisano %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1372"/>
+        <location filename="../src/mainwindow.cpp" line="1382"/>
         <source>Save XML</source>
         <translation>Zapisz plik XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1372"/>
+        <location filename="../src/mainwindow.cpp" line="1382"/>
         <source>MLT XML (*.mlt)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1397"/>
+        <location filename="../src/mainwindow.cpp" line="1407"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>Projekt został zmodyfikowany.
 Zapisać zmiany?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1421"/>
+        <location filename="../src/mainwindow.cpp" line="1431"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
         <translation>Nie dokończono zadania.
 Mimo wszystko zakończyć?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1770"/>
+        <location filename="../src/mainwindow.cpp" line="1782"/>
         <source>Exit Full Screen</source>
         <translation>Opuść pełny ekran</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1779"/>
+        <location filename="../src/mainwindow.cpp" line="1791"/>
         <source>GPU Processing is not supported</source>
         <translation>Przetwarzanie GPU jest niewspierane</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1975"/>
-        <source>You must restart Shotcut to switch to the new language.
-Do you want to exit now?</source>
-        <translation>Zmiana języka wymaga ponownego otwarcia programu.
-Zamknąć teraz?</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="2013"/>
+        <location filename="../src/mainwindow.cpp" line="2027"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2022"/>
-        <source>You must restart Shotcut to switch using GPU processing.
-Do you want to exit now?</source>
-        <translation>Konieczny restart programu po przełączeniu opcji przetwarzania GPU. Czy chcesz opuścić program teraz?</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="2202"/>
+        <location filename="../src/mainwindow.cpp" line="2218"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2967,42 +2999,42 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>MvcpThread</name>
     <message>
-        <location filename="../src/mvcp/mvcpthread.cpp" line="163"/>
+        <location filename="../src/mvcp/mvcpthread.cpp" line="165"/>
         <source>unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mvcp/mvcpthread.cpp" line="164"/>
+        <location filename="../src/mvcp/mvcpthread.cpp" line="166"/>
         <source>undefined</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mvcp/mvcpthread.cpp" line="165"/>
+        <location filename="../src/mvcp/mvcpthread.cpp" line="167"/>
         <source>offline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mvcp/mvcpthread.cpp" line="166"/>
+        <location filename="../src/mvcp/mvcpthread.cpp" line="168"/>
         <source>unloaded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mvcp/mvcpthread.cpp" line="167"/>
+        <location filename="../src/mvcp/mvcpthread.cpp" line="169"/>
         <source>stopped</source>
         <translation>zatrzymane</translation>
     </message>
     <message>
-        <location filename="../src/mvcp/mvcpthread.cpp" line="168"/>
+        <location filename="../src/mvcp/mvcpthread.cpp" line="170"/>
         <source>playing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mvcp/mvcpthread.cpp" line="169"/>
+        <location filename="../src/mvcp/mvcpthread.cpp" line="171"/>
         <source>paused</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mvcp/mvcpthread.cpp" line="170"/>
+        <location filename="../src/mvcp/mvcpthread.cpp" line="172"/>
         <source>disconnected</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3057,7 +3089,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="32"/>
-        <location filename="../src/openotherdialog.cpp" line="116"/>
+        <location filename="../src/openotherdialog.cpp" line="121"/>
         <source>Network</source>
         <translation>Sieć</translation>
     </message>
@@ -3068,78 +3100,84 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="39"/>
-        <location filename="../src/openotherdialog.cpp" line="118"/>
+        <location filename="../src/openotherdialog.cpp" line="123"/>
         <source>SDI/HDMI</source>
         <translation>SDI/HDMI</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="43"/>
-        <location filename="../src/openotherdialog.cpp" line="106"/>
+        <location filename="../src/openotherdialog.cpp" line="109"/>
         <source>Video4Linux</source>
         <translation>Video4Linux</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="45"/>
-        <location filename="../src/openotherdialog.cpp" line="108"/>
+        <location filename="../src/openotherdialog.cpp" line="111"/>
         <source>PulseAudio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="47"/>
-        <location filename="../src/openotherdialog.cpp" line="110"/>
+        <location filename="../src/openotherdialog.cpp" line="113"/>
         <source>JACK Audio</source>
         <translation>Audio JACK</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="49"/>
-        <location filename="../src/openotherdialog.cpp" line="112"/>
+        <location filename="../src/openotherdialog.cpp" line="115"/>
         <source>ALSA Audio</source>
         <translation>Audio ALSA</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="51"/>
-        <location filename="../src/openotherdialog.cpp" line="114"/>
+        <location filename="../src/openotherdialog.cpp" line="119"/>
         <source>Screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="56"/>
+        <location filename="../src/openotherdialog.cpp" line="54"/>
+        <location filename="../src/openotherdialog.cpp" line="117"/>
+        <source>DirectShow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/openotherdialog.cpp" line="59"/>
         <source>Generator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="58"/>
-        <location filename="../src/openotherdialog.cpp" line="120"/>
+        <location filename="../src/openotherdialog.cpp" line="61"/>
+        <location filename="../src/openotherdialog.cpp" line="125"/>
         <source>Color</source>
         <translation>Kolor</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="62"/>
-        <location filename="../src/openotherdialog.cpp" line="122"/>
+        <location filename="../src/openotherdialog.cpp" line="65"/>
+        <location filename="../src/openotherdialog.cpp" line="127"/>
         <source>Noise</source>
         <translation>Szum</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="66"/>
-        <location filename="../src/openotherdialog.cpp" line="124"/>
+        <location filename="../src/openotherdialog.cpp" line="69"/>
+        <location filename="../src/openotherdialog.cpp" line="129"/>
         <source>Ising</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="70"/>
-        <location filename="../src/openotherdialog.cpp" line="126"/>
+        <location filename="../src/openotherdialog.cpp" line="73"/>
+        <location filename="../src/openotherdialog.cpp" line="131"/>
         <source>Lissajous</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="74"/>
-        <location filename="../src/openotherdialog.cpp" line="128"/>
+        <location filename="../src/openotherdialog.cpp" line="77"/>
+        <location filename="../src/openotherdialog.cpp" line="133"/>
         <source>Plasma</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="78"/>
-        <location filename="../src/openotherdialog.cpp" line="130"/>
+        <location filename="../src/openotherdialog.cpp" line="81"/>
+        <location filename="../src/openotherdialog.cpp" line="135"/>
         <source>Color Bars</source>
         <translation>Ekran testowy</translation>
     </message>
@@ -3500,7 +3538,7 @@ selected cut.</source>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="185"/>
-        <location filename="../src/docks/playlistdock.cpp" line="379"/>
+        <location filename="../src/docks/playlistdock.cpp" line="385"/>
         <source>You cannot insert a playlist into a playlist!</source>
         <translation>Nie można wstawić playlistę do playlisty!</translation>
     </message>
@@ -3513,32 +3551,32 @@ selected cut.</source>
 <context>
     <name>PlaylistModel</name>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="267"/>
+        <location filename="../src/models/playlistmodel.cpp" line="269"/>
         <source>#</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="269"/>
+        <location filename="../src/models/playlistmodel.cpp" line="271"/>
         <source>Thumbnails</source>
         <translation>Miniatury</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="271"/>
+        <location filename="../src/models/playlistmodel.cpp" line="273"/>
         <source>Clip</source>
         <translation>Klip</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="273"/>
+        <location filename="../src/models/playlistmodel.cpp" line="275"/>
         <source>In</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="275"/>
+        <location filename="../src/models/playlistmodel.cpp" line="277"/>
         <source>Duration</source>
         <translation>Czas trwania</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="277"/>
+        <location filename="../src/models/playlistmodel.cpp" line="279"/>
         <source>Start</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3687,32 +3725,32 @@ selected cut.</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="426"/>
+        <location filename="../src/docks/playlistdock.cpp" line="432"/>
         <source>Append playlist item %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="446"/>
+        <location filename="../src/docks/playlistdock.cpp" line="452"/>
         <source>Insert playist item %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="466"/>
+        <location filename="../src/docks/playlistdock.cpp" line="472"/>
         <source>Update playlist item %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="488"/>
+        <location filename="../src/docks/playlistdock.cpp" line="494"/>
         <source>Remove playlist item %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="507"/>
+        <location filename="../src/docks/playlistdock.cpp" line="513"/>
         <source>Clear playlist</source>
         <translation>Wyczyść playlistę</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="533"/>
+        <location filename="../src/docks/playlistdock.cpp" line="539"/>
         <source>Move item from %1 to %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3974,9 +4012,9 @@ selected cut.</source>
         <translation>(domyślne)</translation>
     </message>
     <message>
-        <location filename="../src/qmltypes/qmlfilter.cpp" line="243"/>
+        <location filename="../src/qmltypes/qmlfilter.cpp" line="242"/>
         <source>Analyze %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Analizowanie %1</translation>
     </message>
 </context>
 <context>
@@ -4021,27 +4059,26 @@ selected cut.</source>
     </message>
     <message>
         <location filename="../src/widgets/servicepresetwidget.cpp" line="76"/>
-        <location filename="../src/widgets/servicepresetwidget.cpp" line="77"/>
         <source>(defaults)</source>
         <translation>(domyślne)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/servicepresetwidget.cpp" line="84"/>
+        <location filename="../src/widgets/servicepresetwidget.cpp" line="83"/>
         <source>Save Preset</source>
         <translation>Zapisz nowe ustawienia</translation>
     </message>
     <message>
-        <location filename="../src/widgets/servicepresetwidget.cpp" line="85"/>
+        <location filename="../src/widgets/servicepresetwidget.cpp" line="84"/>
         <source>Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/servicepresetwidget.cpp" line="136"/>
+        <location filename="../src/widgets/servicepresetwidget.cpp" line="135"/>
         <source>Delete Preset</source>
         <translation>Usuń zapisane ustawienia</translation>
     </message>
     <message>
-        <location filename="../src/widgets/servicepresetwidget.cpp" line="137"/>
+        <location filename="../src/widgets/servicepresetwidget.cpp" line="136"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>Na pewno usunąć %1?</translation>
     </message>
@@ -4049,24 +4086,24 @@ selected cut.</source>
 <context>
     <name>SizePositionUI</name>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="38"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="39"/>
         <source>Bottom Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Lewy dół</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="43"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="44"/>
         <source>Bottom Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Prawy dół</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="48"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="49"/>
         <source>Top Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Lewa góra</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="53"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="54"/>
         <source>Top Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Prawa góra</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="116"/>
@@ -4091,12 +4128,12 @@ selected cut.</source>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="175"/>
         <source>Fit</source>
-        <translation type="unfinished"></translation>
+        <translation>Dopasuj</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="181"/>
         <source>Fill</source>
-        <translation type="unfinished"></translation>
+        <translation>Wypełnij</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="188"/>
@@ -4106,17 +4143,17 @@ selected cut.</source>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="193"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Lewy</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="200"/>
         <source>Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Środek</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="207"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Prawy</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="215"/>
@@ -4126,7 +4163,7 @@ selected cut.</source>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="220"/>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Góra</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="227"/>
@@ -4136,7 +4173,7 @@ selected cut.</source>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="234"/>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Dół</translation>
     </message>
 </context>
 <context>
@@ -4230,7 +4267,7 @@ shifting following clips to the right (V)</source>
         <location filename="../src/qml/timeline/TrackHead.qml" line="125"/>
         <source>M</source>
         <comment>Mute</comment>
-        <translation type="unfinished"></translation>
+        <translation>M</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/TrackHead.qml" line="131"/>
@@ -4241,7 +4278,7 @@ shifting following clips to the right (V)</source>
         <location filename="../src/qml/timeline/TrackHead.qml" line="150"/>
         <source>H</source>
         <comment>Hide</comment>
-        <translation type="unfinished"></translation>
+        <translation>H</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/TrackHead.qml" line="156"/>
@@ -4631,7 +4668,7 @@ the screen capture to SDI/HDMI in this mode.</source>
         <translation>Zamień kanały</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/rotate/meta.qml" line="6"/>
+        <location filename="../src/qml/filters/rotate/meta.qml" line="7"/>
         <source>Rotate</source>
         <translation>Obróć</translation>
     </message>
@@ -4716,6 +4753,11 @@ the screen capture to SDI/HDMI in this mode.</source>
         <location filename="../src/qml/filters/dynamictext/meta.qml" line="7"/>
         <source>Text</source>
         <translation>Tekst</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/webvfx_threejs_text/meta.qml" line="7"/>
+        <source>3D Text (HTML)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4914,12 +4956,12 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="261"/>
         <source>Insert</source>
-        <translation type="unfinished"></translation>
+        <translation>Wstaw</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="261"/>
         <source>Overwrite</source>
-        <translation type="unfinished"></translation>
+        <translation>Nadpisz</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="327"/>
@@ -4979,7 +5021,7 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="369"/>
         <source>Ctrl+W</source>
-        <translation type="unfinished"></translation>
+        <translation>CTRL+W</translation>
     </message>
 </context>
 <context>
@@ -4988,12 +5030,12 @@ the screen capture to SDI/HDMI in this mode.</source>
         <location filename="../src/qml/filters/movit_diffusion/ui.qml" line="35"/>
         <location filename="../src/qml/filters/webvfx_circular_frame/ui.qml" line="46"/>
         <source>Radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Promień</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/movit_diffusion/ui.qml" line="53"/>
         <source>Blurriness</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozmazanie</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_gain/ui.qml" line="42"/>
@@ -5002,6 +5044,7 @@ the screen capture to SDI/HDMI in this mode.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx_circular_frame/ui.qml" line="62"/>
+        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="126"/>
         <source>Color</source>
         <translation>Kolor</translation>
     </message>
@@ -5010,18 +5053,18 @@ the screen capture to SDI/HDMI in this mode.</source>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="49"/>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="54"/>
         <location filename="../src/qml/filters/crop/ui.qml" line="176"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="311"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="318"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Lewy</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_balance/ui.qml" line="48"/>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="49"/>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="61"/>
         <location filename="../src/qml/filters/crop/ui.qml" line="193"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="323"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="330"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Prawy</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="44"/>
@@ -5044,13 +5087,28 @@ the screen capture to SDI/HDMI in this mode.</source>
         <translation>Kanał</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/rotate/ui.qml" line="41"/>
+        <location filename="../src/qml/filters/rotate/ui.qml" line="63"/>
         <source>Rotation</source>
         <translation>Obracanie</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/rotate/ui.qml" line="50"/>
+        <location filename="../src/qml/filters/rotate/ui.qml" line="70"/>
         <source> degree</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/rotate/ui.qml" line="77"/>
+        <source>Scale</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/rotate/ui.qml" line="94"/>
+        <source>X offset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/rotate/ui.qml" line="106"/>
+        <source>Y offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5063,7 +5121,7 @@ the screen capture to SDI/HDMI in this mode.</source>
         <location filename="../src/qml/filters/audio_loudness/ui.qml" line="35"/>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="36"/>
         <source>Analysis complete.</source>
-        <translation type="unfinished"></translation>
+        <translation>Analiza zakończona.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_loudness/ui.qml" line="39"/>
@@ -5109,7 +5167,7 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="136"/>
         <source>&lt;b&gt;Filter Options&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Opcje filtra&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="141"/>
@@ -5138,9 +5196,9 @@ the screen capture to SDI/HDMI in this mode.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="103"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="317"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="324"/>
         <source>Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Środek</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="125"/>
@@ -5149,22 +5207,24 @@ the screen capture to SDI/HDMI in this mode.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="142"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="335"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="342"/>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Góra</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="159"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="347"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="354"/>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Dół</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/ui.qml" line="71"/>
         <location filename="../src/qml/filters/crop/ui.qml" line="84"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="123"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="131"/>
+        <location filename="../src/qml/filters/rotate/ui.qml" line="53"/>
         <location filename="../src/qml/filters/sepia/ui.qml" line="39"/>
         <location filename="../src/qml/filters/wave/ui.qml" line="45"/>
+        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="69"/>
         <location filename="../src/qml/filters/white/ui.qml" line="67"/>
         <source>Preset</source>
         <translation>Zapisane ustawienia</translation>
@@ -5197,90 +5257,90 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../src/qml/filters/wave/ui.qml" line="93"/>
         <source>Deform horizontally?</source>
-        <translation type="unfinished"></translation>
+        <translation>Zniekształcić poziomo?</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/wave/ui.qml" line="107"/>
         <source>Deform vertically?</source>
-        <translation type="unfinished"></translation>
+        <translation>Zniekształcić pionowo?</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="56"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="59"/>
         <source>No File Loaded</source>
-        <translation type="unfinished"></translation>
+        <translation>Plik niezaładowany</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="58"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="61"/>
         <source>No HTML file loaded. Click &quot;Open&quot; or &quot;New&quot; to load a file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Brak załadowanego pliku HTML. Wybierz &quot;Otwórz&quot; lub &quot;Nowy&quot;, aby załadować plik.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="109"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="116"/>
         <source>&lt;b&gt;File:&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="121"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="128"/>
         <source>Use WebVfx JavaScript extension</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="124"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="131"/>
         <source>For Advanced Users: </source>
         <translation>Dla zaawansowanych użytkowników</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="125"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="132"/>
         <source>If you enable this, and you do not use the WebVfx JavaScript extension, your content will not render!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="137"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="144"/>
         <source>Confirm Selection</source>
         <translation>Potwierdź wybór</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="138"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="145"/>
         <source>Do you still want to use this?</source>
-        <translation type="unfinished"></translation>
+        <translation>Wciąż chcesz tego używać?</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="149"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="156"/>
         <source>Open...</source>
         <translation>Otwórz...</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="153"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="159"/>
         <source>Open HTML File</source>
-        <translation type="unfinished"></translation>
+        <translation>Otwórz plik HTML</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="157"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="163"/>
         <source>Load an existing HTML file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Załaduj istniejący plik HTML</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="162"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="168"/>
         <source>New...</source>
         <translation>Nowy...</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="166"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="171"/>
         <source>Save HTML File</source>
         <translation>Zapisz plik HTML</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="170"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="175"/>
         <source>Load new HTML file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Załaduj nowy plik HTML</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="181"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="187"/>
         <source>Edit...</source>
         <translation>Edycja...</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="198"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="207"/>
         <source>Reload</source>
         <translation>Przeładuj</translation>
     </message>
@@ -5297,22 +5357,22 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="44"/>
         <source>Bottom Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Lewy dół</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="49"/>
         <source>Bottom Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Prawy dół</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="54"/>
         <source>Top Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Lewa góra</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="59"/>
         <source>Top Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Prawa góra</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="64"/>
@@ -5320,99 +5380,103 @@ the screen capture to SDI/HDMI in this mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="135"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="143"/>
+        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="81"/>
         <source>Text</source>
         <translation>Tekst</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="152"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="159"/>
         <source>Insert field</source>
-        <translation type="unfinished"></translation>
+        <translation>Wstaw pole</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="158"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="165"/>
         <source>Timecode</source>
         <translation>Timecode</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="162"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="169"/>
         <source>Frame #</source>
         <comment>Frame number</comment>
-        <translation type="unfinished"></translation>
+        <translation>Klatka #</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="166"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="173"/>
         <source>File date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="170"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="177"/>
         <source>File name</source>
         <translation>Nazwa pliku</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="176"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="183"/>
+        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="94"/>
         <source>Font</source>
         <translation>Czcionka</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="202"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="210"/>
         <source>Normal</source>
         <translation>Normalna</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="202"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="210"/>
+        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="114"/>
         <source>Bold</source>
         <translation>Pogrubiona</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="202"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="210"/>
         <source>Light</source>
         <comment>thin font stroke</comment>
         <translation>Szczupła</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="217"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="224"/>
         <source>Outline</source>
         <translation>Obramowanie</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="227"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="234"/>
         <source>Thickness</source>
         <translation>Grubość</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="241"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="248"/>
         <source>Background</source>
         <translation>Tło</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="251"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="258"/>
         <source>Padding</source>
         <translation>Margines</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="265"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="272"/>
         <source>Position</source>
         <translation>Pozycja</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="285"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="292"/>
+        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="147"/>
         <source>Size</source>
         <translation>Rozmiar</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="306"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="313"/>
         <source>Horizontal fit</source>
         <translation>Wyrównanie w poziomie</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="330"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="337"/>
         <source>Vertical fit</source>
         <translation>Wyrównanie w pionie</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="341"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="348"/>
         <source>Middle</source>
         <translation>Środek</translation>
     </message>
@@ -5428,6 +5492,36 @@ the screen capture to SDI/HDMI in this mode.</source>
         <location filename="../src/qml/filters/opacity/ui.qml" line="42"/>
         <source>Opacity</source>
         <translation>Przezroczystość</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="33"/>
+        <source>3D Text</source>
+        <translation>Tekst 3D</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="121"/>
+        <source>Beveled</source>
+        <translation>Skośnie</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="163"/>
+        <source>Depth</source>
+        <translation>Głębia</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="180"/>
+        <source>Tilt</source>
+        <translation>Nachylenie</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="197"/>
+        <source>Horizontal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="214"/>
+        <source>Vertical</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5465,7 +5559,7 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="61"/>
         <source>Amount</source>
-        <translation type="unfinished"></translation>
+        <translation>Ilość</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="78"/>
@@ -5507,7 +5601,7 @@ the screen capture to SDI/HDMI in this mode.</source>
         <location filename="../src/qml/filters/blur/ui_movit.qml" line="34"/>
         <location filename="../src/qml/filters/glow/ui_movit.qml" line="64"/>
         <source>Radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Promień</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="66"/>
@@ -5549,12 +5643,12 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../src/qml/filters/vignette/ui_movit.qml" line="53"/>
         <source>Outer radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Promień zewnętrzny</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/ui_movit.qml" line="69"/>
         <source>Inner radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Promień wewnętrzny</translation>
     </message>
 </context>
 <context>
@@ -5567,7 +5661,7 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="55"/>
         <source>Radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Promień</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="71"/>
