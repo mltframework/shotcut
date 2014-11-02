@@ -99,11 +99,13 @@ QUrl QmlMetadata::vuiFilePath() const
 void QmlMetadata::setIsAudio(bool isAudio)
 {
     m_isAudio = isAudio;
+    emit changed();
 }
 
 void QmlMetadata::setIsHidden(bool isHidden)
 {
     m_isHidden = isHidden;
+    emit changed();
 }
 
 void QmlMetadata::setIsFavorite(bool isFavorite)
@@ -117,4 +119,5 @@ void QmlMetadata::setIsFavorite(bool isFavorite)
             Settings.setFilterFavorite(uniqueId(), "no");
         }
     }
+    emit changed();
 }

@@ -269,6 +269,8 @@ OTHER_FILES += \
     qml/views/filter/filterview.qml \
     qml/views/filter/AttachedFilters.qml \
     qml/views/filter/FilterMenu.qml \
+    qml/views/filter/FilterMenu.js \
+    qml/views/filter/FilterMenuDelegate.qml \
     qml/filters/movit_diffusion/meta.qml \
     qml/filters/movit_diffusion/ui.qml \
     qml/filters/vignette/meta_movit.qml \
@@ -393,6 +395,8 @@ lupdate_hack {
     qml/views/filter/filterview.qml \
     qml/views/filter/AttachedFilters.qml \
     qml/views/filter/FilterMenu.qml \
+    qml/views/filter/FilterMenu.js \
+    qml/views/filter/FilterMenuDelegate.qml \
     qml/filters/movit_diffusion/meta.qml \
     qml/filters/movit_diffusion/ui.qml \
     qml/filters/vignette/meta_movit.qml \

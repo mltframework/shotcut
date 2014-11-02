@@ -36,9 +36,9 @@ class QmlMetadata : public QObject
     Q_PROPERTY(QString vui READ vuiFileName WRITE setVuiFileName)
     Q_PROPERTY(QUrl qmlFilePath READ qmlFilePath )
     Q_PROPERTY(QUrl vuiFilePath READ vuiFilePath )
-    Q_PROPERTY(bool isAudio READ isAudio WRITE setIsAudio)
-    Q_PROPERTY(bool isHidden READ isHidden WRITE setIsHidden)
-    Q_PROPERTY(bool isFavorite READ isFavorite WRITE setIsFavorite)
+    Q_PROPERTY(bool isAudio READ isAudio WRITE setIsAudio NOTIFY changed)
+    Q_PROPERTY(bool isHidden READ isHidden WRITE setIsHidden NOTIFY changed)
+    Q_PROPERTY(bool isFavorite READ isFavorite WRITE setIsFavorite NOTIFY changed)
 
 public:
     enum PluginType {
@@ -73,6 +73,9 @@ public:
     void setIsHidden(bool isHidden);
     bool isFavorite() const { return m_isFavorite; }
     void setIsFavorite(bool isFavorite);
+
+signals:
+    void changed();
 
 private:
     PluginType m_type;
