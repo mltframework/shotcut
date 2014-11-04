@@ -24,6 +24,7 @@
 #include "mainwindow.h"
 #include "commands/timelinecommands.h"
 #include "docks/filtersdock.h"
+#include "controllers/filtercontroller.h"
 #include "settings.h"
 #include "qmltypes/qmlutilities.h"
 
@@ -49,7 +50,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     importPath.cd("modules");
     m_quickView.engine()->addImportPath(importPath.path());
     m_quickView.engine()->addImageProvider(QString("thumbnail"), new ThumbnailProvider);
-    QmlUtilities::setCommonProperties(m_quickView.rootContext());
+    QmlUtilities::setCommonProperties(&m_quickView);
     m_quickView.rootContext()->setContextProperty("timeline", this);
     m_quickView.rootContext()->setContextProperty("multitrack", &m_model);
     m_quickView.setResizeMode(QQuickView::SizeRootObjectToView);
@@ -251,7 +252,7 @@ void TimelineDock::selectTrackHead(int trackIndex)
         int i = m_model.trackList().at(trackIndex).mlt_index;
         Mlt::Producer* producer = m_model.tractor()->track(i);
         if (producer && producer->is_valid())
-            MAIN.filtersDock()->setProducer(producer);
+            emit trackSelected(producer);
         delete producer;
     }
 }
@@ -282,7 +283,7 @@ void TimelineDock::selectClip(int trackIndex, int clipIndex)
         // to the cut parent.
         info->producer->set(kFilterInProperty, info->frame_in);
         info->producer->set(kFilterOutProperty, info->frame_out);
-        MAIN.filtersDock()->setProducer(info->producer);
+        emit clipSelected(info->producer);
         MAIN.loadProducerWidget(info->producer);
         delete info;
     }

@@ -34,6 +34,8 @@
 class QOpenGLFunctions_3_2_Core;
 class QOffscreenSurface;
 class QOpenGLTexture;
+class QmlFilter;
+class QmlMetadata;
 
 namespace Mlt {
 
@@ -91,6 +93,7 @@ public slots:
     void setZoom(float zoom);
     void setOffsetX(int x);
     void setOffsetY(int y);
+    void setCurrentFilter(QmlFilter* filter, QmlMetadata* meta);
 
 signals:
     /** This method will be called each time a new frame is available.

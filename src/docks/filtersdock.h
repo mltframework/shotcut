@@ -1,6 +1,7 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2014 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
+ * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,68 +21,36 @@
 #define FILTERSDOCK_H
 
 #include <QDockWidget>
-#include <QDir>
-#include <QUrl>
-#include <QMap>
-#include <QFuture>
-#include "models/attachedfiltersmodel.h"
+#include <QObject>
+#include <QQuickView>
 
-namespace Ui {
-class FiltersDock;
-}
-
-class QActionGroup;
+class QmlFilter;
 class QmlMetadata;
-typedef QList<QAction*> QActionList;
+class MetadataModel;
+class AttachedFiltersModel;
 
 class FiltersDock : public QDockWidget
 {
     Q_OBJECT
     
 public:
-    explicit FiltersDock(QWidget *parent = 0);
-    ~FiltersDock();
-    AttachedFiltersModel* model() {
-        return &m_model;
-    }
-    void availablefilters();
-    QmlMetadata* qmlMetadataForService(Mlt::Service *service);
-    void addActionToMap(const QmlMetadata *meta, QAction* action);
+    explicit FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* attachedModel, QWidget *parent = 0);
+
+signals:
+    void attachFilterRequested(int metadataIndex);
+    void currentFilterRequested(int attachedIndex);
 
 public slots:
-    void onModelChanged();
-    void onProducerOpened();
-    void setProducer(Mlt::Producer *producer);
+    void setCurrentFilter(QmlFilter* filter, QmlMetadata* meta);
     void setFadeInDuration(int duration);
     void setFadeOutDuration(int duration);
 
 protected:
-    void resizeEvent(QResizeEvent *event);
-
-private slots:
-    void on_addAudioButton_clicked();
-    
-    void on_addVideoButton_clicked();
-    
-    void on_removeButton_clicked();
-    
-    void on_listView_clicked(const QModelIndex &index);
-    
-    void on_listView_doubleClicked(const QModelIndex &index);
-
-    void onActionTriggered(QAction* action);
+    bool event(QEvent *event);
 
 private:
-    Ui::FiltersDock *ui;
-    AttachedFiltersModel m_model;
-    QActionGroup* m_audioActions;
-    QActionGroup* m_videoActions;
-    QMap<QString, QAction*> m_actionMap;
-    QFuture<QActionList> m_filtersFuture;
-    QObject* m_quickObject;
-    
-    void loadWidgetsPanel(QWidget* widget = 0);
-    void loadQuickPanel(const QmlMetadata *metadata, int row = -1);
+    void resetQview();
+    QQuickView m_qview;
 };
 
 #endif // FILTERSDOCK_H

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2013-2014 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2014 Meltytech, LLC
+ * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,27 +16,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef QMLUTILITIES_H
-#define QMLUTILITIES_H
+#include "qmlview.h"
+#include <QQuickView>
+#include <QDebug>
 
-#include <QObject>
-#include <QDir>
-#include <QPoint>
-#include <QUrl>
-
-class QQuickView;
-
-class QmlUtilities : public QObject
+QmlView::QmlView(QQuickView* qview)
+    : QObject(qview)
+    , m_qview(qview)
 {
-    Q_OBJECT
+}
 
-public:
-    explicit QmlUtilities(QObject *parent = 0);
-
-    static void registerCommonTypes();
-    static void setCommonProperties(QQuickView* qview);
-    static QDir qmlDir();
-    static QUrl blankVui();
-};
-
-#endif // QMLUTILITIES_H
+QPoint QmlView::pos()
+{
+    return m_qview->mapToGlobal(QPoint(0,0));
+}

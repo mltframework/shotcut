@@ -7,4 +7,5 @@ Metadata {
     name: qsTr("Rotate")
     mlt_service: "affine"
     qml: "ui.qml"
+    isFavorite: true
 }

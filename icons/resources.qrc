@@ -21,6 +21,8 @@
         <file>dark/32x32/media-skip-forward.png</file>
         <file>dark/32x32/network-connect.png</file>
         <file>dark/32x32/run-build.png</file>
+        <file>dark/32x32/speaker.png</file>
+        <file>dark/32x32/video-television.png</file>
         <file>dark/32x32/view-filter.png</file>
         <file>dark/32x32/view-fullscreen.png</file>
         <file>dark/32x32/view-history.png</file>
@@ -48,6 +50,8 @@
         <file>light/32x32/media-skip-forward.png</file>
         <file>light/32x32/network-connect.png</file>
         <file>light/32x32/run-build.png</file>
+        <file>light/32x32/speaker.png</file>
+        <file>light/32x32/video-television.png</file>
         <file>light/32x32/view-filter.png</file>
         <file>light/32x32/view-fullscreen.png</file>
         <file>light/32x32/view-history.png</file>
@@ -73,11 +77,13 @@
         <file>oxygen/32x32/actions/media-skip-backward.png</file>
         <file>oxygen/32x32/actions/media-skip-forward.png</file>
         <file>oxygen/32x32/actions/network-connect.png</file>
+        <file>oxygen/32x32/actions/speaker.png</file>
         <file>oxygen/32x32/actions/view-filter.png</file>
         <file>oxygen/32x32/actions/view-fullscreen.png</file>
         <file>oxygen/32x32/actions/view-history.png</file>
         <file>oxygen/32x32/actions/view-media-playlist.png</file>
         <file>oxygen/32x32/actions/window-close.png</file>
+        <file>oxygen/32x32/devices/video-television.png</file>
         <file>oxygen/32x32/status/dialog-information.png</file>
         <file>oxygen/index.theme</file>
         <file>shotcut-logo-64.png</file>
@@ -181,5 +187,8 @@
         <file>light/16x16/scrub_drag.png</file>
         <file>oxygen/16x16/actions/target.png</file>
         <file>oxygen/16x16/actions/scrub_drag.png</file>
+        <file>light/32x32/bookmarks.png</file>
+        <file>dark/32x32/bookmarks.png</file>
+        <file>oxygen/32x32/places/bookmarks.png</file>
     </qresource>
 </RCC>

@@ -28,6 +28,7 @@
 #include "glwidget.h"
 #include "settings.h"
 #include "qmltypes/qmlutilities.h"
+#include "qmltypes/qmlfilter.h"
 #include "mainwindow.h"
 
 #define USE_GL_SYNC // Use glFinish() if not defined.
@@ -69,7 +70,7 @@ GLWidget::GLWidget(QObject *parent)
     QDir importPath = QmlUtilities::qmlDir();
     importPath.cd("modules");
     engine()->addImportPath(importPath.path());
-    QmlUtilities::setCommonProperties(rootContext());
+    QmlUtilities::setCommonProperties((QQuickView*)this);
     rootContext()->setContextProperty("video", this);
     setSource(QmlUtilities::blankVui());
 
@@ -615,6 +616,15 @@ void GLWidget::setOffsetY(int y)
     m_offset.setY(y);
     emit offsetChanged();
     update();
+}
+
+void GLWidget::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta)
+{
+    setSource(QUrl());
+    rootContext()->setContextProperty("filter", filter);
+    if (meta && QFile::exists(meta->vuiFilePath().toLocalFile())) {
+        setSource(meta->vuiFilePath());
+    }
 }
 
 void GLWidget::updateTexture(GLuint yName, GLuint uName, GLuint vName)

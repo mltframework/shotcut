@@ -6,4 +6,5 @@ Metadata {
     name: qsTr("White Balance")
     mlt_service: "frei0r.colgate"
     qml: "ui.qml"
+    isFavorite: true
 }

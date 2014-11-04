@@ -7,4 +7,5 @@ Metadata {
     mlt_service: "movit.white_balance"
     needsGPU: true
     qml: "ui.qml"
+    isFavorite: true
 }

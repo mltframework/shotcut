@@ -100,6 +100,9 @@ public:
     bool timelineShowWaveforms() const;
     void setTimelineShowWaveforms(bool);
 
+    QString filterFavorite(const QString& filterName);
+    void setFilterFavorite(const QString& filterName, const QString& value);
+
     void sync();
 
 signals:

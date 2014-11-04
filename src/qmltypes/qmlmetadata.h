@@ -22,6 +22,7 @@
 #include <QObject>
 #include <QString>
 #include <QDir>
+#include <QUrl>
 
 class QmlMetadata : public QObject
 {
@@ -33,8 +34,11 @@ class QmlMetadata : public QObject
     Q_PROPERTY(bool needsGPU READ needsGPU WRITE setNeedsGPU)
     Q_PROPERTY(QString qml READ qmlFileName WRITE setQmlFileName)
     Q_PROPERTY(QString vui READ vuiFileName WRITE setVuiFileName)
-    Q_PROPERTY(bool isAudio READ isAudio WRITE setIsAudio)
-    Q_PROPERTY(bool isHidden READ isHidden WRITE setIsHidden)
+    Q_PROPERTY(QUrl qmlFilePath READ qmlFilePath )
+    Q_PROPERTY(QUrl vuiFilePath READ vuiFilePath )
+    Q_PROPERTY(bool isAudio READ isAudio WRITE setIsAudio NOTIFY changed)
+    Q_PROPERTY(bool isHidden READ isHidden WRITE setIsHidden NOTIFY changed)
+    Q_PROPERTY(bool isFavorite READ isFavorite WRITE setIsFavorite NOTIFY changed)
 
 public:
     enum PluginType {
@@ -44,6 +48,7 @@ public:
     };
 
     explicit QmlMetadata(QObject *parent = 0);
+    void loadSettings();
 
     PluginType type() const { return m_type; }
     void setType(PluginType);
@@ -51,6 +56,7 @@ public:
     void setName(const QString&);
     QString mlt_service() const { return m_mlt_service; }
     void set_mlt_service(const QString&);
+    QString uniqueId() const;
     bool needsGPU() const { return m_needsGPU; }
     void setNeedsGPU(bool);
     QString qmlFileName() const { return m_qmlFileName; }
@@ -59,12 +65,17 @@ public:
     void setVuiFileName(const QString&);
     QDir path() const { return m_path; }
     void setPath(const QDir& path);
-    QString qmlFilePath() const;
-    QString vuiFilePath() const;
+    QUrl qmlFilePath() const;
+    QUrl vuiFilePath() const;
     bool isAudio() const { return m_isAudio; }
     void setIsAudio(bool isAudio);
     bool isHidden() const { return m_isHidden; }
     void setIsHidden(bool isHidden);
+    bool isFavorite() const { return m_isFavorite; }
+    void setIsFavorite(bool isFavorite);
+
+signals:
+    void changed();
 
 private:
     PluginType m_type;
@@ -76,6 +87,7 @@ private:
     QDir m_path;
     bool m_isAudio;
     bool m_isHidden;
+    bool m_isFavorite;
 };
 
 #endif // QMLMETADATA_H

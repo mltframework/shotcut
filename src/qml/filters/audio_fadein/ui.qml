@@ -25,6 +25,7 @@ Rectangle {
     width: 400
     height: 200
     color: 'transparent'
+    objectName: 'fadeIn'
     property alias duration: timeSpinner.value
 
     Component.onCompleted: {

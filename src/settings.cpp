@@ -340,6 +340,15 @@ void ShotcutSettings::setTimelineShowWaveforms(bool b)
     emit timelineShowWaveformsChanged();
 }
 
+QString ShotcutSettings::filterFavorite(const QString& filterName)
+{
+    return settings.value("filter/favorite/" + filterName, "").toString();
+}
+void ShotcutSettings::setFilterFavorite(const QString& filterName, const QString& value)
+{
+    settings.setValue("filter/favorite/" + filterName, value);
+}
+
 void ShotcutSettings::sync()
 {
     settings.sync();

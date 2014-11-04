@@ -26,25 +26,31 @@
 class AttachedFiltersModel : public QAbstractListModel
 {
     Q_OBJECT
+    Q_PROPERTY(bool ready READ isReady NOTIFY readyChanged)
 public:
     explicit AttachedFiltersModel(QObject *parent = 0);
 
+    bool isReady();
     Mlt::Filter* filterForRow(int row) const;
     int indexForRow(int row) const;
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     Qt::ItemFlags flags(const QModelIndex &index) const;
     QVariant data(const QModelIndex &index, int role) const;
     bool setData(const QModelIndex& index, const QVariant& value, int role = Qt::EditRole);
+    QHash<int, QByteArray> roleNames() const;
     Qt::DropActions supportedDropActions() const;
     bool insertRows(int row, int count, const QModelIndex &parent);
     bool removeRows(int row, int count, const QModelIndex &parent);
+    bool moveRows(const QModelIndex & sourceParent, int sourceRow, int count, const QModelIndex & destinationParent, int destinationRow);
  
 signals:
     void changed(bool modified = true);
+    void readyChanged();
 
 public slots:
     Mlt::Filter* add(const QString& mlt_service, const QString& shotcutName = QString());
     void remove(int row);
+    bool move(int fromRow, int toRow);
     void reset(Mlt::Producer *producer = 0);
 
 private:

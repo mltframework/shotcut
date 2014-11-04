@@ -8,4 +8,5 @@ Metadata {
     name: qsTr("Fade Out Audio")
     mlt_service: "volume"
     qml: "ui.qml"
+    isFavorite: true
 }

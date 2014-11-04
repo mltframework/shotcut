@@ -19,7 +19,7 @@
 #include "attachedfiltersmodel.h"
 #include "mltcontroller.h"
 #include "mainwindow.h"
-#include "docks/filtersdock.h"
+#include "controllers/filtercontroller.h"
 #include "qmltypes/qmlmetadata.h"
 #include <QTimer>
 #include <QDebug>
@@ -29,6 +29,11 @@ AttachedFiltersModel::AttachedFiltersModel(QObject *parent)
     , m_rows(0)
     , m_dropRow(-1)
 {
+}
+
+bool AttachedFiltersModel::isReady()
+{
+    return m_producer != NULL;
 }
 
 void AttachedFiltersModel::calculateRows()
@@ -115,7 +120,7 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
             Mlt::Filter* filter = filterForRow(index.row());
             if (filter && filter->is_valid()) {
                 // Relabel by QML UI
-                QmlMetadata* meta = MAIN.filtersDock()->qmlMetadataForService(filter);
+                QmlMetadata* meta = MAIN.filterController()->metadataForService(filter);
                 if (meta)
                     result = meta->name();
                 // Fallback is raw mlt_service name
@@ -155,6 +160,12 @@ bool AttachedFiltersModel::setData(const QModelIndex& index, const QVariant& val
     return false;
 }
 
+QHash<int, QByteArray> AttachedFiltersModel::roleNames() const {
+    QHash<int, QByteArray> roles = QAbstractListModel::roleNames();
+    roles[Qt::CheckStateRole] = "checkState";
+    return roles;
+}
+
 Qt::DropActions AttachedFiltersModel::supportedDropActions() const
 {
     return Qt::MoveAction;
@@ -183,6 +194,29 @@ bool AttachedFiltersModel::removeRows(int row, int count, const QModelIndex &par
     } else {
         return false;
     }
+}
+
+bool AttachedFiltersModel::moveRows(const QModelIndex & sourceParent, int sourceRow, int count, const QModelIndex & destinationParent, int destinationRow)
+{
+    if (!m_producer || !m_producer->is_valid() || sourceParent != destinationParent || count != 1) {
+        return false;
+    }
+
+    QModelIndex fromIndex = createIndex(sourceRow, 0);
+    QModelIndex toIndex = createIndex(destinationRow, 0);
+
+    if (fromIndex.isValid() && toIndex.isValid()) {
+        if (beginMoveRows(sourceParent, sourceRow, sourceRow, destinationParent, destinationRow)) {
+            if (destinationRow > sourceRow) {
+                // Moving down: Convert to MLT Service indexing
+                destinationRow--;
+            }
+            m_producer->move_filter(indexForRow(sourceRow), indexForRow(destinationRow));
+            endMoveRows();
+            return true;
+        }
+    }
+    return false;
 }
 
 Mlt::Filter *AttachedFiltersModel::add(const QString& mlt_service, const QString& shotcutName)
@@ -216,10 +250,27 @@ void AttachedFiltersModel::remove(int row)
     delete filter;
 }
 
+bool AttachedFiltersModel::move(int fromRow, int toRow)
+{
+    QModelIndex parent = QModelIndex();
+
+    if (fromRow < 0 || toRow < 0) {
+        return false;
+    }
+
+    if (toRow > fromRow) {
+        // Moving down: put it under the destination index
+        toRow++;
+    }
+
+    return moveRows(parent, fromRow, 1, parent, toRow);
+}
+
 void AttachedFiltersModel::reset(Mlt::Producer* producer)
 {
     beginResetModel();
     m_producer.reset(new Mlt::Producer(producer? producer : MLT.producer()));
     calculateRows();
     endResetModel();
+    emit readyChanged();
 }
