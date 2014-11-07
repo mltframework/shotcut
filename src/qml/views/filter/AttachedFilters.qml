@@ -18,11 +18,12 @@
 
 import QtQuick 2.0
 import QtQuick.Controls 1.1
+import QtQml.Models 2.1
 
 Rectangle {
     id: attachedFilters
     
-    property int selectedIndex: attachedFiltersView.currentIndex
+    property int selectedIndex: attachedFiltersView.modelCurrentIndex
     
     color: activePalette.base
 
@@ -35,13 +36,14 @@ Rectangle {
             id: background
             
             // Trick to make the model item available to the dragItem
-            property var rowData: model
+            property var modelData: model
+            property var viewData: ListView
 
             height: filterDelegateText.implicitHeight
             width: parent ? parent.width : undefined
             color: "transparent"
             border.width: 2
-            border.color: attachedFiltersView.dragTarget == index ? activePalette.highlight : "transparent"
+            border.color: attachedFiltersView.modelDragTarget == model.index ? activePalette.highlight : "transparent"
 
             Row {
                 height: parent.height
@@ -69,15 +71,12 @@ Rectangle {
                 Label { 
                     id: filterDelegateText
                     text: model.display
-                    color: attachedFiltersView.currentIndex == index ? activePalette.highlightedText : activePalette.windowText
+                    color: attachedFiltersView.modelCurrentIndex == model.index ? activePalette.highlightedText : activePalette.windowText
                     width: attachedFiltersView.width - 23
         
                     MouseArea {
                         id: mouseArea
                         anchors.fill: parent
-                        onClicked: {
-                            attachedFiltersView.currentIndex = index
-                        }
                         onDoubleClicked: {
                             model.checkState = !model.checkState
                             filterDelegateCheck.checkedState = model.checkState
@@ -87,21 +86,102 @@ Rectangle {
             }
         }
     }
+    
+    DelegateModel {
+        id: visualModel
+        model: attachedfiltersmodel
+        delegate: filterDelegate
+        
+        function itemIsLessThan(a, b) {
+            // First sort by type: gpu, video, audio.
+            // Then sort by index.
+            if (a.model.type == "gpu" && b.model.type != "gpu") {
+                return true
+            } else if (a.model.type == "video" && b.model.type == "audio") {
+                return true
+            } else if( a.model.type == b.model.type && a.model.index < b.model.index ) {
+                return true
+            } else {
+                return false
+            }
+        }
+        
+        function sort() {
+            items.changed.disconnect(sort)
+            
+            for( var i = 0; i < items.count; i++ ) {
+                var item = items.get(i)
+                var newIndex = i;
+
+                for( var j = i - 1; j >= 0; j-- ) {
+                    var prevItem = items.get(j)
+                    if( itemIsLessThan(item, prevItem) ) {
+                        newIndex = j
+                    } else {
+                        break
+                    }
+                }
+                
+                if( newIndex != i ) items.move(i, newIndex, 1)
+            }
+            
+            items.changed.connect(sort)
+        }
+        
+        function getModelIndex(visualIndex) {
+            if(visualIndex < 0 || visualIndex >= count) return -1
+        
+            var item = items.get(visualIndex)
+            if (item) {
+                return item.model.index
+            } else {
+                return -1
+            }
+        }
+        
+        Component.onCompleted: {
+            attachedfiltersmodel.rowsMoved.connect(sort)
+            items.changed.connect(sort)
+            sort()
+        }
+    }
+    
+    Component {
+        id: sectionDelegate
+
+        Item {
+            height: sectionText.implicitHeight
+            width: parent ? parent.width : undefined
+            Rectangle {
+                anchors.fill: parent
+                color: activePalette.highlight
+                opacity: .4
+            }
+            Text {
+                id: sectionText
+                anchors.fill: parent
+                text: section
+                color: activePalette.windowText
+            }
+        }
+    }
 
     ScrollView {
         anchors.fill: parent
         ListView {
             id: attachedFiltersView
             
-            property var dragTarget: -1
+            property var visualDragTarget: -1
+            property var modelDragTarget: visualModel.getModelIndex(visualDragTarget)
+            property var modelCurrentIndex: visualModel.getModelIndex(currentIndex)
             
-            function handleReset () {
+            function resetPosition() {
                 currentIndex = -1
+                positionViewAtBeginning()
             }
             
             anchors.fill: parent
-            model: attachedfiltersmodel
-            delegate: filterDelegate
+            model: visualModel
             boundsBehavior: Flickable.StopAtBounds
             snapMode: ListView.SnapToItem
             currentIndex: -1
@@ -110,42 +190,62 @@ Rectangle {
                         width: parent ? parent.width : undefined
                        }
             focus: true
+            section.property: "typeDisplay"
+            section.delegate: sectionDelegate
             
             Component.onCompleted: {
-                model.modelReset.connect(handleReset)
+                model.model.modelReset.connect(resetPosition)
             }
             
-            onCountChanged: currentIndex = count - 1
+            onCountChanged: {
+                if(currentIndex >= count) currentIndex = count - 1
+            }
 
             MouseArea {
                 property int oldIndex: -1
                 property var grabPos: Qt.point(0,0)
+                property var grabSection: ""
                 
                 function beginDrag() {
                     var grabbedItem = attachedFiltersView.itemAt(mouseX, mouseY)
                     oldIndex = attachedFiltersView.indexAt(mouseX, mouseY)
                     grabPos = Qt.point(mouseX - grabbedItem.x, mouseY - grabbedItem.y)
-                    dragItem.index = oldIndex
-                    dragItem.model = grabbedItem.rowData
+                    grabSection = grabbedItem.viewData.section
+                    dragItem.model = grabbedItem.modelData
                     dragItem.sourceComponent = filterDelegate
                     dragItem.x = mouseX - grabPos.x
                     dragItem.y = mouseY - grabPos.y
                     attachedFiltersView.currentIndex = oldIndex
+                    attachedFiltersView.visualDragTarget = oldIndex
                     cursorShape = Qt.DragMoveCursor
                     autoScrollTimer.running = true
                 }
                 
                 function endDrag() {
                     oldIndex = -1
-                    attachedFiltersView.dragTarget = -1
+                    attachedFiltersView.visualDragTarget = -1
                     dragItem.sourceComponent = null
                     cursorShape = Qt.ArrowCursor
                     autoScrollTimer.running = false
                 }
                 
+                function updateDragTarget() {
+                    var mouseItem = attachedFiltersView.itemAt(mouseX, mouseY)
+                    if(mouseItem && mouseItem.viewData.section == grabSection) {
+                        dragItem.x = mouseX - grabPos.x
+                        dragItem.y = mouseY - grabPos.y - attachedFiltersView.contentY
+                        attachedFiltersView.visualDragTarget = attachedFiltersView.indexAt(mouseX, mouseY)
+                    } 
+                }
+                
                 propagateComposedEvents: true
-                anchors.fill: parent
+                anchors.fill: attachedFiltersView.contentItem
                 z: 1
+                
+                onClicked: {
+                    attachedFiltersView.currentIndex = attachedFiltersView.indexAt(mouseX, mouseY)
+                    mouse.accepted = false
+                }
                 
                 onPressAndHold: {
                     if (oldIndex == -1) {
@@ -154,9 +254,10 @@ Rectangle {
                 }
                 onReleased: {
                     if(oldIndex != -1 
-                    && attachedFiltersView.dragTarget != -1
-                    && oldIndex != attachedFiltersView.dragTarget) {
-                        attachedfiltersmodel.move(oldIndex, attachedFiltersView.dragTarget)
+                    && attachedFiltersView.visualDragTarget != -1
+                    && oldIndex != attachedFiltersView.visualDragTarget) {
+                        attachedfiltersmodel.move(visualModel.getModelIndex(oldIndex), attachedFiltersView.modelDragTarget)
+                        attachedFiltersView.currentIndex = attachedFiltersView.visualDragTarget
                     }
                     endDrag()
                     mouse.accepted = true;
@@ -165,9 +266,7 @@ Rectangle {
                     if (oldIndex == -1) {
                         beginDrag()
                     }
-                    dragItem.x = mouseX - grabPos.x
-                    dragItem.y = mouseY - grabPos.y
-                    attachedFiltersView.dragTarget = attachedFiltersView.indexAt(mouseX, mouseY + attachedFiltersView.contentY)
+                    updateDragTarget()
                 }
                 onCanceled: endDrag()
                 
@@ -178,15 +277,16 @@ Rectangle {
                     repeat: true
                     onTriggered: {
                         // Make sure previous and next indices are always visible
-                        var nextIndex = attachedFiltersView.dragTarget + 1
-                        var prevIndex = attachedFiltersView.dragTarget - 1
+                        var nextIndex = attachedFiltersView.visualDragTarget + 1
+                        var prevIndex = attachedFiltersView.visualDragTarget - 1
                         if( nextIndex < attachedFiltersView.count ) {
                             attachedFiltersView.positionViewAtIndex(nextIndex, ListView.Contain)
-                        }
-                        if( prevIndex >= 0 ) {
+                            parent.updateDragTarget()
+                        } else if( prevIndex >= 0 ) {
                             attachedFiltersView.positionViewAtIndex(prevIndex, ListView.Contain)
+                            parent.updateDragTarget()
                         }
-                        attachedFiltersView.dragTarget = attachedFiltersView.indexAt(parent.mouseX, parent.mouseY + attachedFiltersView.contentY)
+
                     }
                 }
             }
@@ -196,7 +296,6 @@ Rectangle {
                 
                 // Emulate the delegate properties added by ListView
                 property var model : Object()
-                property int index
                 
                 onLoaded: {
                     item.color = activePalette.highlight

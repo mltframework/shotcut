@@ -36,21 +36,6 @@ bool AttachedFiltersModel::isReady()
     return m_producer != NULL;
 }
 
-void AttachedFiltersModel::calculateRows()
-{
-    m_rows =-0;
-    if (MLT.isPlaylist()) return;
-    if (m_producer && m_producer->is_valid()) {
-        int n = m_producer->filter_count();
-        while (n--) {
-            Mlt::Filter* filter = m_producer->filter(n);
-            if (filter && filter->is_valid() && !filter->get_int("_loader"))
-                m_rows++;
-            delete filter;
-        }
-    }
-}
-
 Mlt::Filter* AttachedFiltersModel::filterForRow(int row) const
 {
     Mlt::Filter* result = 0;
@@ -117,17 +102,17 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
     switch (role ) {
     case Qt::DisplayRole: {
             QVariant result;
-            Mlt::Filter* filter = filterForRow(index.row());
-            if (filter && filter->is_valid()) {
-                // Relabel by QML UI
-                QmlMetadata* meta = MAIN.filterController()->metadataForService(filter);
-                if (meta)
-                    result = meta->name();
+            const QmlMetadata* meta = m_metaList[index.row()];
+            if (meta) {
+                result = meta->name();
+            } else {
                 // Fallback is raw mlt_service name
-                else if (filter->get("mlt_service"))
+                Mlt::Filter* filter = filterForRow(index.row());
+                if (filter && filter->is_valid() && filter->get("mlt_service")) {
                     result = QString::fromUtf8(filter->get("mlt_service"));
+                }
+                delete filter;
             }
-            delete filter;
             return result;
         }
     case Qt::CheckStateRole: {
@@ -136,6 +121,31 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
             if (filter && filter->is_valid() && !filter->get_int("disable"))
                 result = Qt::Checked;
             delete filter;
+            return result;
+        }
+        break;
+    case TypeRole: {
+            QVariant result;
+            const QmlMetadata* meta = m_metaList[index.row()];
+            if (meta && meta->isAudio()) {
+                result = "audio";
+            } else if (meta && meta->needsGPU()) {
+                result = "gpu";
+            } else {
+                result = "video";
+            }
+            return result;
+        }
+    case TypeDisplayRole: {
+            QVariant result;
+            const QmlMetadata* meta = m_metaList[index.row()];
+            if (meta && meta->isAudio()) {
+                result = tr("Audio");
+            } else if (meta && meta->needsGPU()) {
+                result = tr("GPU");
+            } else {
+                result = tr("Video");
+            }
             return result;
         }
         break;
@@ -163,6 +173,8 @@ bool AttachedFiltersModel::setData(const QModelIndex& index, const QVariant& val
 QHash<int, QByteArray> AttachedFiltersModel::roleNames() const {
     QHash<int, QByteArray> roles = QAbstractListModel::roleNames();
     roles[Qt::CheckStateRole] = "checkState";
+    roles[TypeRole] = "type";
+    roles[TypeDisplayRole] = "typeDisplay";
     return roles;
 }
 
@@ -186,6 +198,7 @@ bool AttachedFiltersModel::removeRows(int row, int count, const QModelIndex &par
 {
     if (m_producer && m_producer->is_valid() && m_dropRow >= 0 && row != m_dropRow) {
         m_producer->move_filter(indexForRow(row), indexForRow(0) + m_dropRow);
+        m_metaList.move(row, m_dropRow);
         emit changed();
         emit dataChanged(createIndex(row, 0), createIndex(row, 0));
         emit dataChanged(createIndex(m_dropRow, 0), createIndex(m_dropRow, 0));
@@ -208,10 +221,11 @@ bool AttachedFiltersModel::moveRows(const QModelIndex & sourceParent, int source
     if (fromIndex.isValid() && toIndex.isValid()) {
         if (beginMoveRows(sourceParent, sourceRow, sourceRow, destinationParent, destinationRow)) {
             if (destinationRow > sourceRow) {
-                // Moving down: Convert to MLT Service indexing
+                // Moving down: Convert to "post move" indexing
                 destinationRow--;
             }
             m_producer->move_filter(indexForRow(sourceRow), indexForRow(destinationRow));
+            m_metaList.move(sourceRow, destinationRow);
             endMoveRows();
             return true;
         }
@@ -219,21 +233,22 @@ bool AttachedFiltersModel::moveRows(const QModelIndex & sourceParent, int source
     return false;
 }
 
-Mlt::Filter *AttachedFiltersModel::add(const QString& mlt_service, const QString& shotcutName)
+Mlt::Filter *AttachedFiltersModel::add(const QmlMetadata* meta)
 {
-    Mlt::Filter* filter = new Mlt::Filter(MLT.profile(), mlt_service.toUtf8().constData());
+    Mlt::Filter* filter = new Mlt::Filter(MLT.profile(), meta->mlt_service().toUtf8().constData());
     if (filter->is_valid()) {
-        if (!shotcutName.isEmpty())
-            filter->set("shotcut:filter", shotcutName.toUtf8().constData());
+        if (!meta->objectName().isEmpty())
+            filter->set("shotcut:filter", meta->objectName().toUtf8().constData());
         int count = rowCount();
         beginInsertRows(QModelIndex(), count, count);
         MLT.pause();
         m_producer->attach(*filter);
+        m_metaList.insert(m_rows, meta);
         m_rows++;
         endInsertRows();
         emit changed();
     }
-    else qWarning() << "Failed to load filter" << mlt_service;
+    else qWarning() << "Failed to load filter" << meta->mlt_service();
     return filter;
 }
 
@@ -243,6 +258,7 @@ void AttachedFiltersModel::remove(int row)
     if (filter && filter->is_valid()) {
         beginRemoveRows(QModelIndex(), row, row);
         m_producer->detach(*filter);
+        m_metaList.removeAt(row);
         m_rows--;
         endRemoveRows();
         emit changed();
@@ -269,8 +285,26 @@ bool AttachedFiltersModel::move(int fromRow, int toRow)
 void AttachedFiltersModel::reset(Mlt::Producer* producer)
 {
     beginResetModel();
-    m_producer.reset(new Mlt::Producer(producer? producer : MLT.producer()));
-    calculateRows();
+
+    m_producer.reset(new Mlt::Producer(producer ? producer : MLT.producer()));
+    m_metaList.clear();
+    m_rows = 0;
+
+    if (MLT.isPlaylist()) return;
+
+    if (m_producer && m_producer->is_valid()) {
+        int n = m_producer->filter_count();
+        while (n--) {
+            Mlt::Filter* filter = m_producer->filter(n);
+            if (filter && filter->is_valid() && !filter->get_int("_loader")) {
+                QmlMetadata* meta = MAIN.filterController()->metadataForService(filter);
+                m_metaList.prepend(meta);
+                m_rows++;
+            }
+            delete filter;
+        }
+    }
+
     endResetModel();
     emit readyChanged();
 }

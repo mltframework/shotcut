@@ -42,7 +42,7 @@ QmlFilter::QmlFilter(AttachedFiltersModel& model, const QmlMetadata &metadata, i
     , m_isNew(row < 0)
 {
     if (m_isNew) {
-        m_filter = m_model.add(m_metadata.mlt_service(), m_metadata.objectName());
+        m_filter = m_model.add(&m_metadata);
     }
     else {
         m_filter = model.filterForRow(row);

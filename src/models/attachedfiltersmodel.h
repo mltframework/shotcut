@@ -23,11 +23,18 @@
 #include <MltFilter.h>
 #include <MltProducer.h>
 
+class QmlMetadata;
+
 class AttachedFiltersModel : public QAbstractListModel
 {
     Q_OBJECT
     Q_PROPERTY(bool ready READ isReady NOTIFY readyChanged)
 public:
+    enum ModelRoles {
+        TypeRole = Qt::UserRole + 1,
+        TypeDisplayRole
+    };
+
     explicit AttachedFiltersModel(QObject *parent = 0);
 
     bool isReady();
@@ -48,7 +55,7 @@ signals:
     void readyChanged();
 
 public slots:
-    Mlt::Filter* add(const QString& mlt_service, const QString& shotcutName = QString());
+    Mlt::Filter* add(const QmlMetadata* meta);
     void remove(int row);
     bool move(int fromRow, int toRow);
     void reset(Mlt::Producer *producer = 0);
@@ -58,8 +65,8 @@ private:
     int m_dropRow;
     int m_removeRow;
     QScopedPointer<Mlt::Producer> m_producer;
-
-    void calculateRows();
+    typedef QList<const QmlMetadata*> MetadataList;
+    MetadataList m_metaList;
 };
 
 #endif // ATTACHEDFILTERSMODEL_H

@@ -122,7 +122,7 @@ Rectangle {
                 anchors.left: root.left
                 anchors.right: root.right
             }
-            PropertyChanges { target: attachedContainer; width: root.width; height: 125 }
+            PropertyChanges { target: attachedContainer; width: root.width; height: 165 }
         }
     ]
 }
