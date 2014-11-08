@@ -24,6 +24,17 @@
 #include <QTimer>
 #include <QDebug>
 
+static bool sortIsLess (const QmlMetadata* lhs, const QmlMetadata* rhs) {
+    // Sort order is: GPU, Video, Audio
+    if (rhs->needsGPU() && !lhs->needsGPU()) {
+        return true;
+    } else if (!rhs->isAudio() && lhs->isAudio()) {
+        return true;
+    }
+
+    return false;
+}
+
 AttachedFiltersModel::AttachedFiltersModel(QObject *parent)
     : QAbstractListModel(parent)
     , m_rows(0)
@@ -239,11 +250,22 @@ Mlt::Filter *AttachedFiltersModel::add(const QmlMetadata* meta)
     if (filter->is_valid()) {
         if (!meta->objectName().isEmpty())
             filter->set("shotcut:filter", meta->objectName().toUtf8().constData());
-        int count = rowCount();
-        beginInsertRows(QModelIndex(), count, count);
+
+        // Put the filter after the last filter that is greater than or equal
+        // in sort order.
+        int insertIndex = 0;
+        for (int i = m_rows - 1; i >= 0; i--) {
+            if (!sortIsLess(m_metaList[i], meta)) {
+                insertIndex = i + 1;
+                break;
+            }
+        }
+
+        beginInsertRows(QModelIndex(), insertIndex, insertIndex);
         MLT.pause();
         m_producer->attach(*filter);
-        m_metaList.insert(m_rows, meta);
+        m_producer->move_filter(indexForRow(m_rows), indexForRow(insertIndex));
+        m_metaList.insert(insertIndex, meta);
         m_rows++;
         endInsertRows();
         emit changed();
