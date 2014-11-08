@@ -6,4 +6,5 @@ Metadata {
     name: qsTr("Vignette")
     mlt_service: "vignette"
     qml: "ui_oldfilm.qml"
+    gpuAlt: "movit.vignette"
 }

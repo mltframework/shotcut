@@ -6,4 +6,5 @@ Metadata {
     name: qsTr("Crop")
     mlt_service: "crop"
     qml: "ui.qml"
+    gpuAlt: "crop"
 }

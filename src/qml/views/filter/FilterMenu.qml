@@ -125,11 +125,28 @@ Loader {
                             checked: true
                             iconName: 'bookmarks'
                             iconSource: 'qrc:///icons/oxygen/32x32/places/bookmarks.png'
-                            tooltip: checked ? qsTr('Show All') : qsTr('Show Favorite')
+                            tooltip: qsTr('Show Favorite Filters')
                             exclusiveGroup: typeGroup
                             onCheckedChanged: {
                                 if(checked) {
                                     menuListView.showType = Logic.visibility.FAVORITE
+                                }
+                            }
+                        }
+                        ToolButton {
+                            id: gpuButton
+                            visible: settings.playerGPU
+                            width: visible ? undefined : 0
+                            implicitWidth: 28
+                            implicitHeight: 24
+                            checkable: true
+                            iconName: 'cpu'
+                            iconSource: 'qrc:///icons/oxygen/32x32/devices/cpu.png'
+                            tooltip: qsTr('Show GPU Filters')
+                            exclusiveGroup: typeGroup
+                            onCheckedChanged: {
+                                if(checked) {
+                                    menuListView.showType = Logic.visibility.GPU
                                 }
                             }
                         }
@@ -140,7 +157,7 @@ Loader {
                             checkable: true
                             iconName: 'video-television'
                             iconSource: 'qrc:///icons/oxygen/32x32/devices/video-television.png'
-                            tooltip: checked ? qsTr('Hide Video') : qsTr('Show Video')
+                            tooltip: qsTr('Show Video Filters')
                             exclusiveGroup: typeGroup
                             onCheckedChanged: {
                                 if(checked) {
@@ -155,7 +172,7 @@ Loader {
                             checkable: true
                             iconName: 'speaker'
                             iconSource: 'qrc:///icons/oxygen/32x32/actions/speaker.png'
-                            tooltip: checked ? qsTr('Hide Audio') : qsTr('Show Audio')
+                            tooltip: qsTr('Show Audio Filters')
                             exclusiveGroup: typeGroup
                             onCheckedChanged: {
                                 if(checked) {

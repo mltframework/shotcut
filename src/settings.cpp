@@ -212,6 +212,7 @@ void ShotcutSettings::setPlayerGamma(const QString& s)
 void ShotcutSettings::setPlayerGPU(bool b)
 {
     settings.setValue("player/gpu", b);
+    emit playerGpuChanged();
 }
 
 bool ShotcutSettings::playerJACK() const

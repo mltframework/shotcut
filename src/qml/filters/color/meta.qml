@@ -7,4 +7,5 @@ Metadata {
     mlt_service: "lift_gamma_gain"
     qml: "ui.qml"
     isFavorite: true
+    gpuAlt: "movit.lift_gamma_gain"
 }

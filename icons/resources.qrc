@@ -6,6 +6,7 @@
         <file>dark/16x16/list-remove.png</file>
         <file>dark/16x16/player-volume.png</file>
         <file>dark/32x32/color-picker.png</file>
+        <file>dark/32x32/cpu.png</file>
         <file>dark/32x32/dialog-information.png</file>
         <file>dark/32x32/document-open-recent.png</file>
         <file>dark/32x32/document-open.png</file>
@@ -35,6 +36,7 @@
         <file>light/16x16/list-remove.png</file>
         <file>light/16x16/player-volume.png</file>
         <file>light/32x32/color-picker.png</file>
+        <file>light/32x32/cpu.png</file>
         <file>light/32x32/dialog-information.png</file>
         <file>light/32x32/document-open-recent.png</file>
         <file>light/32x32/document-open.png</file>
@@ -83,6 +85,7 @@
         <file>oxygen/32x32/actions/view-history.png</file>
         <file>oxygen/32x32/actions/view-media-playlist.png</file>
         <file>oxygen/32x32/actions/window-close.png</file>
+        <file>oxygen/32x32/devices/cpu.png</file>
         <file>oxygen/32x32/devices/video-television.png</file>
         <file>oxygen/32x32/status/dialog-information.png</file>
         <file>oxygen/index.theme</file>

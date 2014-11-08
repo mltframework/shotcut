@@ -8,4 +8,5 @@ Metadata {
     mlt_service: "brightness"
     qml: "ui.qml"
     isFavorite: true
+    gpuAlt: "movit.opacity"
 }

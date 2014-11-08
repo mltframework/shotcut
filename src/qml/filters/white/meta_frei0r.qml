@@ -7,4 +7,5 @@ Metadata {
     mlt_service: "frei0r.colgate"
     qml: "ui.qml"
     isFavorite: true
+    gpuAlt: "movit.white_balance"
 }

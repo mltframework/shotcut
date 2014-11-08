@@ -53,7 +53,7 @@ void FilterController::loadFilterMetadata() {
             qDebug() << "reading filter metadata" << dirName << fileName;
             QQmlComponent component(&engine, subdir.absoluteFilePath(fileName));
             QmlMetadata *meta = qobject_cast<QmlMetadata*>(component.create());
-            if (meta && (meta->isAudio() || (meta->needsGPU() == Settings.playerGPU()))) {
+            if (meta) {
                 // Check if mlt_service is available.
                 if (MLT.repository()->filters()->get_data(meta->mlt_service().toLatin1().constData())) {
                     qDebug() << "added filter" << meta->name();

@@ -8,4 +8,5 @@ Metadata {
     mlt_service: 'affine'
     qml: 'ui_affine.qml'
     vui: 'vui_affine.qml'
+    gpuAlt: 'movit.rect'
 }

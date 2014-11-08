@@ -30,6 +30,7 @@ class ShotcutSettings : public QObject
     Q_PROPERTY(bool timelineShowWaveforms READ timelineShowWaveforms WRITE setTimelineShowWaveforms NOTIFY timelineShowWaveformsChanged)
     Q_PROPERTY(QString openPath READ openPath WRITE setOpenPath NOTIFY openPathChanged)
     Q_PROPERTY(QString savePath READ savePath WRITE setSavePath NOTIFY savePathChanged)
+    Q_PROPERTY(bool playerGPU READ playerGPU NOTIFY playerGpuChanged)
 
 public:
     static ShotcutSettings& singleton();
@@ -109,6 +110,7 @@ signals:
     void openPathChanged();
     void savePathChanged();
     void timelineShowWaveformsChanged();
+    void playerGpuChanged();
 
 private:
     QSettings settings;

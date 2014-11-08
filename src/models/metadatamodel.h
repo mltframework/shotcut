@@ -34,7 +34,8 @@ public:
         HiddenRole,
         FavoriteRole,
         ServiceRole,
-        IsAudioRole
+        IsAudioRole,
+        NeedsGpuRole
     };
 
     explicit MetadataModel(QObject *parent = 0);

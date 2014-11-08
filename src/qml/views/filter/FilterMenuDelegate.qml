@@ -60,8 +60,8 @@ Item {
                 anchors.left: parent.left
                 anchors.verticalCenter: parent.verticalCenter
                 enabled: false
-                iconName: isAudio ? 'speaker' : 'video-television'
-                iconSource: isAudio ? 'qrc:///icons/oxygen/32x32/actions/speaker.png' : 'qrc:///icons/oxygen/32x32/devices/video-television.png'
+                iconName: needsGpu ? 'cpu' : isAudio ? 'speaker' : 'video-television'
+                iconSource: needsGpu ? 'qrc:///icons/oxygen/32x32/devices/cpu.png' : isAudio ? 'qrc:///icons/oxygen/32x32/actions/speaker.png' : 'qrc:///icons/oxygen/32x32/devices/video-television.png'
             }
             
             Label {

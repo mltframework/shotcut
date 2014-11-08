@@ -5,4 +5,5 @@ Metadata {
     type: Metadata.Filter
     name: qsTr("Mirror")
     mlt_service: "mirror"
+    gpuAlt: "movit.mirror"
 }

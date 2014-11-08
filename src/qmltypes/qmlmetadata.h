@@ -31,7 +31,7 @@ class QmlMetadata : public QObject
     Q_PROPERTY(PluginType type READ type WRITE setType)
     Q_PROPERTY(QString name READ name WRITE setName)
     Q_PROPERTY(QString mlt_service READ mlt_service WRITE set_mlt_service)
-    Q_PROPERTY(bool needsGPU READ needsGPU WRITE setNeedsGPU)
+    Q_PROPERTY(bool needsGPU READ needsGPU WRITE setNeedsGPU NOTIFY changed)
     Q_PROPERTY(QString qml READ qmlFileName WRITE setQmlFileName)
     Q_PROPERTY(QString vui READ vuiFileName WRITE setVuiFileName)
     Q_PROPERTY(QUrl qmlFilePath READ qmlFilePath )
@@ -39,6 +39,7 @@ class QmlMetadata : public QObject
     Q_PROPERTY(bool isAudio READ isAudio WRITE setIsAudio NOTIFY changed)
     Q_PROPERTY(bool isHidden READ isHidden WRITE setIsHidden NOTIFY changed)
     Q_PROPERTY(bool isFavorite READ isFavorite WRITE setIsFavorite NOTIFY changed)
+    Q_PROPERTY(QString gpuAlt READ gpuAlt WRITE setGpuAlt NOTIFY changed)
 
 public:
     enum PluginType {
@@ -73,6 +74,8 @@ public:
     void setIsHidden(bool isHidden);
     bool isFavorite() const { return m_isFavorite; }
     void setIsFavorite(bool isFavorite);
+    QString gpuAlt() const { return m_gpuAlt; }
+    void setGpuAlt(const QString&);
 
 signals:
     void changed();
@@ -88,6 +91,7 @@ private:
     bool m_isAudio;
     bool m_isHidden;
     bool m_isFavorite;
+    QString m_gpuAlt;
 };
 
 #endif // QMLMETADATA_H

@@ -6,4 +6,5 @@ Metadata {
     name: qsTr("Sharpen")
     mlt_service: "frei0r.sharpness"
     qml: "ui_frei0r.qml"
+    gpuAlt: "movit.sharpen"
 }

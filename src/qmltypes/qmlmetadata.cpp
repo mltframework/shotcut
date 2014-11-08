@@ -28,6 +28,7 @@ QmlMetadata::QmlMetadata(QObject *parent)
     , m_isAudio(false)
     , m_isHidden(false)
     , m_isFavorite(false)
+    , m_gpuAlt("")
 {
 }
 
@@ -69,6 +70,7 @@ QString QmlMetadata::uniqueId() const
 void QmlMetadata::setNeedsGPU(bool needs)
 {
     m_needsGPU = needs;
+    emit changed();
 }
 
 void QmlMetadata::setQmlFileName(const QString &fileName)
@@ -119,5 +121,11 @@ void QmlMetadata::setIsFavorite(bool isFavorite)
             Settings.setFilterFavorite(uniqueId(), "no");
         }
     }
+    emit changed();
+}
+
+void QmlMetadata::setGpuAlt(const QString& gpuAlt)
+{
+    m_gpuAlt = gpuAlt;
     emit changed();
 }

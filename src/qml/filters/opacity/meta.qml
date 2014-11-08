@@ -7,4 +7,5 @@ Metadata {
     name: qsTr("Opacity")
     mlt_service: "brightness"
     qml: "ui.qml"
+    gpuAlt: "movit.opacity"
 }

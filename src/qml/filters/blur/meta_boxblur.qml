@@ -6,4 +6,5 @@ Metadata {
     name: qsTr("Blur")
     mlt_service: "boxblur"
     qml: "ui_boxblur.qml"
+    gpuAlt: "movit.blur"
 }
