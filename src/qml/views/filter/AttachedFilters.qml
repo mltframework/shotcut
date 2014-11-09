@@ -92,7 +92,31 @@ Rectangle {
         model: attachedfiltersmodel
         delegate: filterDelegate
         
-        function itemIsLessThan(a, b) {
+        signal modelReset()
+        signal itemAboutToBeRemoved(int index)
+        signal itemAdded(int index)
+        
+        function getModelIndex(visualIndex) {
+            if(visualIndex < 0 || visualIndex >= count) return -1
+            var item = items.get(visualIndex)
+            if (item) {
+                return item.model.index
+            } else {
+                return -1
+            }
+        }
+        
+        function getVisualIndex(modelIndex) {
+            for( var i = 0; i < items.count; i++ ) {
+                var item = items.get(i)
+                if(item.model.index == modelIndex) {
+                    return i
+                }
+            }
+            return -1
+        }
+        
+        function _itemIsLessThan(a, b) {
             // First sort by type: gpu, video, audio.
             // Then sort by index.
             if (a.model.type == "gpu" && b.model.type != "gpu") {
@@ -106,8 +130,8 @@ Rectangle {
             }
         }
         
-        function sort() {
-            items.changed.disconnect(sort)
+        function _sort() {
+            items.changed.disconnect(_sort)
             
             for( var i = 0; i < items.count; i++ ) {
                 var item = items.get(i)
@@ -115,7 +139,7 @@ Rectangle {
 
                 for( var j = i - 1; j >= 0; j-- ) {
                     var prevItem = items.get(j)
-                    if( itemIsLessThan(item, prevItem) ) {
+                    if( _itemIsLessThan(item, prevItem) ) {
                         newIndex = j
                     } else {
                         break
@@ -125,24 +149,24 @@ Rectangle {
                 if( newIndex != i ) items.move(i, newIndex, 1)
             }
             
-            items.changed.connect(sort)
-        }
-        
-        function getModelIndex(visualIndex) {
-            if(visualIndex < 0 || visualIndex >= count) return -1
-        
-            var item = items.get(visualIndex)
-            if (item) {
-                return item.model.index
-            } else {
-                return -1
-            }
+            items.changed.connect(_sort)
         }
         
         Component.onCompleted: {
-            attachedfiltersmodel.rowsMoved.connect(sort)
-            items.changed.connect(sort)
+            model.rowsMoved.connect(_sort)
+            model.modelReset.connect(modelReset)
+            model.rowsAboutToBeRemoved.connect(rowsAboutToBeRemoved)
+            model.rowsInserted.connect(rowsAdded)
+            items.changed.connect(_sort)
             sort()
+        }
+        
+        function rowsAboutToBeRemoved(parent, row) {
+            itemAboutToBeRemoved(getVisualIndex(row))
+        }
+        
+        function rowsAdded(parent, row) {
+            itemAdded(getVisualIndex(row))
         }
     }
     
@@ -175,9 +199,19 @@ Rectangle {
             property var modelDragTarget: visualModel.getModelIndex(visualDragTarget)
             property var modelCurrentIndex: visualModel.getModelIndex(currentIndex)
             
-            function resetPosition() {
+            function setCurrentIndexAfterReset() {
                 currentIndex = -1
                 positionViewAtBeginning()
+            }
+            
+            function setCurrentIndexBeforeRemove(visualIndex) {
+                if (currentIndex == count - 1 ) currentIndex--
+                positionViewAtIndex(currentIndex, ListView.Contain)
+            }
+            
+            function setCurrentIndexAfterAdd(visualIndex) {
+                currentIndex = visualIndex
+                positionViewAtIndex(currentIndex, ListView.Contain)
             }
             
             anchors.fill: parent
@@ -194,11 +228,9 @@ Rectangle {
             section.delegate: sectionDelegate
             
             Component.onCompleted: {
-                model.model.modelReset.connect(resetPosition)
-            }
-            
-            onCountChanged: {
-                if(currentIndex >= count) currentIndex = count - 1
+                model.modelReset.connect(setCurrentIndexAfterReset)
+                model.itemAboutToBeRemoved.connect(setCurrentIndexBeforeRemove)
+                model.itemAdded.connect(setCurrentIndexAfterAdd)
             }
 
             MouseArea {
