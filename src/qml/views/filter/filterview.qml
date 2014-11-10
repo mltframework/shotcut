@@ -35,7 +35,7 @@ Rectangle {
     onHeightChanged: _setLayout()
     
     function _setLayout() {
-        if( height > width - 200 ) {
+        if (height > width - 200) {
             root.state = "portrait"
         } else {
             root.state = "landscape"

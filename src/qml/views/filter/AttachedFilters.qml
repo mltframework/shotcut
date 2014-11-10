@@ -97,7 +97,8 @@ Rectangle {
         signal itemAdded(int index)
         
         function getModelIndex(visualIndex) {
-            if(visualIndex < 0 || visualIndex >= count) return -1
+            if (visualIndex < 0 || visualIndex >= count)
+                return -1
             var item = items.get(visualIndex)
             if (item) {
                 return item.model.index

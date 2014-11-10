@@ -37,7 +37,8 @@ Loader {
             sourceComponent = null
         }
         onHasFocusChanged: {
-            if (!item.hasFocus) sourceComponent = null
+            if (!item.hasFocus)
+                sourceComponent = null
         }
     }
     
@@ -128,7 +129,7 @@ Loader {
                             tooltip: qsTr('Show Favorite Filters')
                             exclusiveGroup: typeGroup
                             onCheckedChanged: {
-                                if(checked) {
+                                if (checked) {
                                     menuListView.showType = Logic.visibility.FAVORITE
                                 }
                             }
@@ -145,7 +146,7 @@ Loader {
                             tooltip: qsTr('Show GPU Filters')
                             exclusiveGroup: typeGroup
                             onCheckedChanged: {
-                                if(checked) {
+                                if (checked) {
                                     menuListView.showType = Logic.visibility.GPU
                                 }
                             }
@@ -160,7 +161,7 @@ Loader {
                             tooltip: qsTr('Show Video Filters')
                             exclusiveGroup: typeGroup
                             onCheckedChanged: {
-                                if(checked) {
+                                if (checked) {
                                     menuListView.showType = Logic.visibility.VIDEO
                                 }
                             }
@@ -175,7 +176,7 @@ Loader {
                             tooltip: qsTr('Show Audio Filters')
                             exclusiveGroup: typeGroup
                             onCheckedChanged: {
-                                if(checked) {
+                                if (checked) {
                                     menuListView.showType = Logic.visibility.AUDIO
                                 }
                             }

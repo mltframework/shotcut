@@ -21,19 +21,19 @@ var visibility = {
     GPU: 1,
     VIDEO: 2,
     AUDIO: 3
-};
+}
 
 var ITEM_HEIGHT = 30
  
 function isVisible(meta, showType) {
-    if(meta.isHidden) return false
-    if(meta.needsGPU && !settings.playerGPU) return false
-    if(!meta.needsGPU && settings.playerGPU && meta.gpuAlt != "") return false
-    if(showType == visibility.FAVORITE && !meta.isFavorite) return false
-    if(showType == visibility.GPU && !meta.needsGPU) return false
-    if(showType == visibility.AUDIO && !meta.isAudio) return false
-    if(showType == visibility.VIDEO && meta.isAudio ) return false
-    if(showType == visibility.VIDEO && meta.needsGPU ) return false
+    if (meta.isHidden) return false
+    if (meta.needsGPU && !settings.playerGPU) return false
+    if (!meta.needsGPU && settings.playerGPU && meta.gpuAlt !== "") return false
+    if (showType == visibility.FAVORITE && !meta.isFavorite) return false
+    if (showType == visibility.GPU && !meta.needsGPU) return false
+    if (showType == visibility.AUDIO && !meta.isAudio) return false
+    if (showType == visibility.VIDEO && meta.isAudio ) return false
+    if (showType == visibility.VIDEO && meta.needsGPU ) return false
     return true
 }
 
@@ -41,9 +41,9 @@ function maxMenuHeight(showType, pad) {
     // Calculate the max possible height of the menu
     var i = 0
     var visibleItems = 0;
-    for( i = 0; i < metadatamodel.rowCount(); i++ ) {
+    for (i = 0; i < metadatamodel.rowCount(); i++) {
         var meta = metadatamodel.get(i)
-        if(Logic.isVisible(meta, showType)) {
+        if (Logic.isVisible(meta, showType)) {
             visibleItems++
         }
     }
@@ -60,10 +60,10 @@ function calcMenuRect(triggerItem, showType, pad) {
     
     // Calculate the y position
     result.y = triggerPos.y - result.height / 2 // Ideal position is centered
-    if( result.y < mainWinRect.y ) {
+    if (result.y < mainWinRect.y) {
         // Window would be higher than the application window. Move it down
         result.y = mainWinRect.y
-    } else if( result.y + result.height > mainWinRect.y + mainWinRect.height ) {
+    } else if (result.y + result.height > mainWinRect.y + mainWinRect.height) {
         // Window would be lower than the application window. Move it up
         result.y =  mainWinRect.y + mainWinRect.height - result.height
     }
