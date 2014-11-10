@@ -158,7 +158,7 @@ Rectangle {
             model.rowsAboutToBeRemoved.connect(rowsAboutToBeRemoved)
             model.rowsInserted.connect(rowsAdded)
             items.changed.connect(_sort)
-            sort()
+            _sort()
         }
         
         function rowsAboutToBeRemoved(parent, row) {
@@ -174,18 +174,20 @@ Rectangle {
         id: sectionDelegate
 
         Item {
-            height: sectionText.implicitHeight
+            height: sectionText.implicitHeight + 4
             width: parent ? parent.width : undefined
             Rectangle {
                 anchors.fill: parent
-                color: activePalette.highlight
-                opacity: .4
+                color: activePalette.alternateBase
             }
-            Text {
+            Label {
                 id: sectionText
                 anchors.fill: parent
+                anchors.topMargin: 2
+                anchors.leftMargin: 4
                 text: section
                 color: activePalette.windowText
+                font.bold: true
             }
         }
     }
@@ -226,7 +228,9 @@ Rectangle {
             focus: true
             section.property: "typeDisplay"
             section.delegate: sectionDelegate
-            
+            spacing: 4
+            highlightMoveVelocity: 1000
+
             Component.onCompleted: {
                 model.modelReset.connect(setCurrentIndexAfterReset)
                 model.itemAboutToBeRemoved.connect(setCurrentIndexBeforeRemove)
