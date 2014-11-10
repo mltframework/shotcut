@@ -43,7 +43,7 @@ Rectangle {
             width: parent ? parent.width : undefined
             color: "transparent"
             border.width: 2
-            border.color: attachedFiltersView.modelDragTarget == model.index ? activePalette.highlight : "transparent"
+            border.color: attachedFiltersView.modelDragTarget === model.index ? activePalette.highlight : "transparent"
 
             Row {
                 height: parent.height
@@ -71,7 +71,7 @@ Rectangle {
                 Label { 
                     id: filterDelegateText
                     text: model.display
-                    color: attachedFiltersView.modelCurrentIndex == model.index ? activePalette.highlightedText : activePalette.windowText
+                    color: attachedFiltersView.modelCurrentIndex === model.index ? activePalette.highlightedText : activePalette.windowText
                     width: attachedFiltersView.width - 23
         
                     MouseArea {
@@ -107,9 +107,9 @@ Rectangle {
         }
         
         function getVisualIndex(modelIndex) {
-            for( var i = 0; i < items.count; i++ ) {
+            for (var i = 0; i < items.count; i++) {
                 var item = items.get(i)
-                if(item.model.index == modelIndex) {
+                if (item.model.index === modelIndex) {
                     return i
                 }
             }
@@ -119,11 +119,11 @@ Rectangle {
         function _itemIsLessThan(a, b) {
             // First sort by type: gpu, video, audio.
             // Then sort by index.
-            if (a.model.type == "gpu" && b.model.type != "gpu") {
+            if (a.model.type === "gpu" && b.model.type !== "gpu") {
                 return true
-            } else if (a.model.type == "video" && b.model.type == "audio") {
+            } else if (a.model.type === "video" && b.model.type === "audio") {
                 return true
-            } else if( a.model.type == b.model.type && a.model.index < b.model.index ) {
+            } else if (a.model.type === b.model.type && a.model.index < b.model.index) {
                 return true
             } else {
                 return false
@@ -133,20 +133,21 @@ Rectangle {
         function _sort() {
             items.changed.disconnect(_sort)
             
-            for( var i = 0; i < items.count; i++ ) {
+            for (var i = 0; i < items.count; i++) {
                 var item = items.get(i)
-                var newIndex = i;
+                var newIndex = i
 
-                for( var j = i - 1; j >= 0; j-- ) {
+                for (var j = i - 1; j >= 0; j--) {
                     var prevItem = items.get(j)
-                    if( _itemIsLessThan(item, prevItem) ) {
+                    if (_itemIsLessThan(item, prevItem)) {
                         newIndex = j
                     } else {
                         break
                     }
                 }
                 
-                if( newIndex != i ) items.move(i, newIndex, 1)
+                if (newIndex != i)
+                    items.move(i, newIndex, 1)
             }
             
             items.changed.connect(_sort)
@@ -197,7 +198,7 @@ Rectangle {
         ListView {
             id: attachedFiltersView
             
-            property var visualDragTarget: -1
+            property int visualDragTarget: -1
             property var modelDragTarget: visualModel.getModelIndex(visualDragTarget)
             property var modelCurrentIndex: visualModel.getModelIndex(currentIndex)
             
@@ -207,7 +208,7 @@ Rectangle {
             }
             
             function setCurrentIndexBeforeRemove(visualIndex) {
-                if (currentIndex == count - 1 ) currentIndex--
+                if (currentIndex === count - 1 ) currentIndex--
                 positionViewAtIndex(currentIndex, ListView.Contain)
             }
             
@@ -222,9 +223,9 @@ Rectangle {
             snapMode: ListView.SnapToItem
             currentIndex: -1
             highlight: Rectangle { 
-                        color: activePalette.highlight
-                        width: parent ? parent.width : undefined
-                       }
+                color: activePalette.highlight
+                width: parent ? parent.width : undefined
+            }
             focus: true
             section.property: "typeDisplay"
             section.delegate: sectionDelegate
@@ -239,8 +240,8 @@ Rectangle {
 
             MouseArea {
                 property int oldIndex: -1
-                property var grabPos: Qt.point(0,0)
-                property var grabSection: ""
+                property point grabPos: Qt.point(0,0)
+                property string grabSection: ""
                 
                 function beginDrag() {
                     var grabbedItem = attachedFiltersView.itemAt(mouseX, mouseY)
@@ -267,7 +268,7 @@ Rectangle {
                 
                 function updateDragTarget() {
                     var mouseItem = attachedFiltersView.itemAt(mouseX, mouseY)
-                    if(mouseItem && mouseItem.viewData.section == grabSection) {
+                    if (mouseItem && mouseItem.viewData.section === grabSection) {
                         dragItem.x = mouseX - grabPos.x
                         dragItem.y = mouseY - grabPos.y - attachedFiltersView.contentY
                         attachedFiltersView.visualDragTarget = attachedFiltersView.indexAt(mouseX, mouseY)
@@ -284,14 +285,14 @@ Rectangle {
                 }
                 
                 onPressAndHold: {
-                    if (oldIndex == -1) {
+                    if (oldIndex === -1) {
                         beginDrag()
                     }
                 }
                 onReleased: {
-                    if(oldIndex != -1 
-                    && attachedFiltersView.visualDragTarget != -1
-                    && oldIndex != attachedFiltersView.visualDragTarget) {
+                    if (oldIndex !== -1
+                            && attachedFiltersView.visualDragTarget !== -1
+                            && oldIndex !== attachedFiltersView.visualDragTarget) {
                         attachedfiltersmodel.move(visualModel.getModelIndex(oldIndex), attachedFiltersView.modelDragTarget)
                         attachedFiltersView.currentIndex = attachedFiltersView.visualDragTarget
                     }
@@ -299,7 +300,7 @@ Rectangle {
                     mouse.accepted = true;
                 }
                 onPositionChanged: {
-                    if (oldIndex == -1) {
+                    if (oldIndex === -1) {
                         beginDrag()
                     }
                     updateDragTarget()
@@ -308,17 +309,17 @@ Rectangle {
                 
                 Timer {
                     id: autoScrollTimer
-                    interval: 500; 
-                    running: false;
+                    interval: 500
+                    running: false
                     repeat: true
                     onTriggered: {
                         // Make sure previous and next indices are always visible
                         var nextIndex = attachedFiltersView.visualDragTarget + 1
                         var prevIndex = attachedFiltersView.visualDragTarget - 1
-                        if( nextIndex < attachedFiltersView.count ) {
+                        if (nextIndex < attachedFiltersView.count) {
                             attachedFiltersView.positionViewAtIndex(nextIndex, ListView.Contain)
                             parent.updateDragTarget()
-                        } else if( prevIndex >= 0 ) {
+                        } else if (prevIndex >= 0) {
                             attachedFiltersView.positionViewAtIndex(prevIndex, ListView.Contain)
                             parent.updateDragTarget()
                         }
