@@ -46,7 +46,7 @@ void MeltJob::start()
 #ifdef Q_OS_WIN
     QFileInfo meltPath(shotcutPath, "qmelt.exe");
 #else   
-    QFileInfo meltPath(shotcutPath, QString(Settings.playerGPU()? "melt" : "qmelt"));
+    QFileInfo meltPath(shotcutPath, "qmelt");
 #endif
     setReadChannel(QProcess::StandardError);
     QStringList args;
