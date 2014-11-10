@@ -610,24 +610,6 @@ bool MainWindow::isCompatibleWithGpuMode(const QString &url)
                     QApplication::closeAllWindows();
                 }
                 return false;
-            } else if (gpuChecker.hasEffects() && !gpuChecker.needsGPU() && Settings.playerGPU()) {
-                QMessageBox dialog(QMessageBox::Question,
-                   qApp->applicationName(),
-                   tr("The file you opened uses effects that are incompatible with GPU processing.\n"
-                      "Do you want to disable GPU processing and restart?"),
-                   QMessageBox::No |
-                   QMessageBox::Yes,
-                   this);
-                dialog.setWindowModality(QmlApplication::dialogModality());
-                dialog.setDefaultButton(QMessageBox::Yes);
-                dialog.setEscapeButton(QMessageBox::No);
-                int r = dialog.exec();
-                if (r == QMessageBox::Yes) {
-                    Settings.setPlayerGPU(false);
-                    m_exitCode = EXIT_RESTART;
-                    QApplication::closeAllWindows();
-                }
-                return false;
             }
         }
     }
