@@ -23,8 +23,8 @@ QmlMetadata::QmlMetadata(QObject *parent)
     : QObject(parent)
     , m_type(Filter)
     , m_needsGPU(false)
-    , m_qmlFileName("ui.qml")
-    , m_vuiFileName("vui.qml")
+    , m_qmlFileName("")
+    , m_vuiFileName("")
     , m_isAudio(false)
     , m_isHidden(false)
     , m_isFavorite(false)
@@ -90,12 +90,20 @@ void QmlMetadata::setPath(const QDir &path)
 
 QUrl QmlMetadata::qmlFilePath() const
 {
-    return QUrl::fromLocalFile(m_path.absoluteFilePath(m_qmlFileName));
+    QUrl retVal = QUrl();
+    if (!m_qmlFileName.isEmpty()) {
+        retVal = QUrl::fromLocalFile(m_path.absoluteFilePath(m_qmlFileName));
+    }
+    return retVal;
 }
 
 QUrl QmlMetadata::vuiFilePath() const
 {
-    return QUrl::fromLocalFile(m_path.absoluteFilePath(m_vuiFileName));
+    QUrl retVal = QUrl();
+    if (!m_vuiFileName.isEmpty()) {
+        retVal = QUrl::fromLocalFile(m_path.absoluteFilePath(m_vuiFileName));
+    }
+    return retVal;
 }
 
 void QmlMetadata::setIsAudio(bool isAudio)
