@@ -18,14 +18,10 @@
 
 #include "timelinedock.h"
 #include "ui_timelinedock.h"
-#include "qmltypes/qmlutilities.h"
 #include "models/multitrackmodel.h"
 #include "qmltypes/thumbnailprovider.h"
 #include "mainwindow.h"
 #include "commands/timelinecommands.h"
-#include "docks/filtersdock.h"
-#include "controllers/filtercontroller.h"
-#include "settings.h"
 #include "qmltypes/qmlutilities.h"
 
 #include <QtQml>
