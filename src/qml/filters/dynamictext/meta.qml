@@ -6,4 +6,6 @@ Metadata {
     objectName: 'dynamicText'
     name: qsTr('Text')
     mlt_service: 'dynamictext'
+    qml: "ui.qml"
+    vui: 'vui.qml'
 }

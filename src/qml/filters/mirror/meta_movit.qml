@@ -6,4 +6,5 @@ Metadata {
     name: qsTr("Mirror")
     mlt_service: "movit.mirror"
     needsGPU: true
+    qml: "ui.qml"
 }

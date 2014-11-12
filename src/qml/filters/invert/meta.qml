@@ -5,4 +5,5 @@ Metadata {
     type: Metadata.Filter
     name: qsTr("Invert Colors")
     mlt_service: "invert"
+    qml: "ui.qml"
 }

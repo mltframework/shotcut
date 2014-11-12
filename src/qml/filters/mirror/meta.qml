@@ -6,4 +6,5 @@ Metadata {
     name: qsTr("Mirror")
     mlt_service: "mirror"
     gpuAlt: "movit.mirror"
+    qml: "ui.qml"
 }
