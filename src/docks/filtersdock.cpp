@@ -62,8 +62,11 @@ FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* att
 
 void FiltersDock::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta)
 {
+    m_qview.rootContext()->setContextProperty("metadata", NULL);
+    QMetaObject::invokeMethod(m_qview.rootObject(), "updateFilterConfig");
     m_qview.rootContext()->setContextProperty("filter", filter);
     m_qview.rootContext()->setContextProperty("metadata", meta);
+    QMetaObject::invokeMethod(m_qview.rootObject(), "updateFilterConfig");
 }
 
 void FiltersDock::setFadeInDuration(int duration)

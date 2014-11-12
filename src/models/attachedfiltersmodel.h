@@ -55,7 +55,7 @@ signals:
     void readyChanged();
 
 public slots:
-    Mlt::Filter* add(const QmlMetadata* meta);
+    int add(const QmlMetadata* meta);
     void remove(int row);
     bool move(int fromRow, int toRow);
     void reset(Mlt::Producer *producer = 0);

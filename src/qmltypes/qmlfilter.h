@@ -24,7 +24,6 @@
 #include <QVariant>
 #include <QRectF>
 #include <MltFilter.h>
-#include "models/attachedfiltersmodel.h"
 #include "qmlmetadata.h"
 
 class MeltJob;
@@ -40,10 +39,11 @@ class QmlFilter : public QObject
     Q_PROPERTY(double producerAspect READ producerAspect)
 
 public:
-    explicit QmlFilter(AttachedFiltersModel& model, const QmlMetadata& metadata, int row, QObject *parent = 0);
+    explicit QmlFilter(Mlt::Filter* mltFilter, const QmlMetadata* metadata, QObject *parent = 0);
     ~QmlFilter();
 
     bool isNew() const { return m_isNew; }
+    void setIsNew(bool isNew) { m_isNew = isNew; };
 
     Q_INVOKABLE QString get(QString name);
     Q_INVOKABLE double getDouble(QString name);
@@ -74,8 +74,7 @@ signals:
     void changed(); /// Use to let UI and VUI QML signal updates to each other.
 
 private:
-    AttachedFiltersModel& m_model;
-    const QmlMetadata& m_metadata;
+    const QmlMetadata* m_metadata;
     Mlt::Filter* m_filter;
     QString m_path;
     bool m_isNew;
@@ -88,13 +87,12 @@ class AnalyzeDelegate : public QObject
 {
     Q_OBJECT
 public:
-    explicit AnalyzeDelegate(AttachedFiltersModel& model, Mlt::Filter *filter);
+    explicit AnalyzeDelegate(Mlt::Filter *filter);
 
 public slots:
     void onAnalyzeFinished(MeltJob *job, bool isSuccess);
 
 private:
-    AttachedFiltersModel& m_model;
     Mlt::Filter m_filter;
 };
 

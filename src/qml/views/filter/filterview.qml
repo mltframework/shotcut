@@ -27,6 +27,10 @@ Rectangle {
     signal attachFilterRequested(int metadataIndex)
     signal removeFilterRequested(int attachedIndex)
     signal currentFilterRequested(int attachedIndex)
+    
+    function updateFilterConfig() {
+        filterConfig.source = metadata ? metadata.qmlFilePath : ""
+    }
 
     color: activePalette.window
     width: 400
@@ -63,9 +67,7 @@ Rectangle {
             Layout.fillWidth: true
             Layout.fillHeight: true
             onSelectedIndexChanged: {
-                filterConfig.source = ""
                 root.currentFilterRequested(selectedIndex)
-                filterConfig.source = metadata ? metadata.qmlFilePath : ""
             }
         }
 
@@ -86,10 +88,8 @@ Rectangle {
             opacity: enabled ? 1.0 : 0.5
             tooltip: qsTr('Remove Selected Filter')
             onClicked: {
-                filterConfig.source = ""
                 attachedfiltersmodel.remove(attachedFilters.selectedIndex)
                 root.currentFilterRequested(attachedFilters.selectedIndex)
-                filterConfig.source = metadata ? metadata.qmlFilePath : ""
             }
         }
         Item {

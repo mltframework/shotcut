@@ -114,8 +114,10 @@ void FilterController::attachFilter(int metadataIndex)
     QmlMetadata* meta = m_metadataModel.get(metadataIndex);
     QmlFilter* filter = NULL;
     if (meta) {
-        filter = new QmlFilter(m_attachedModel, *meta, -1);
-        m_currentFilterIndex = m_attachedModel.rowCount() - 1;
+        m_currentFilterIndex = m_attachedModel.add(meta);
+        Mlt::Filter* mltFilter = m_attachedModel.filterForRow(m_currentFilterIndex);
+        filter = new QmlFilter(mltFilter, meta);
+        filter->setIsNew(true);
     } else {
         m_currentFilterIndex = -1;
     }
@@ -136,7 +138,9 @@ void FilterController::setCurrentFilter(int attachedIndex)
     if (mltFilter && mltFilter->is_valid()) {
         meta = metadataForService(mltFilter);
         if (meta) {
-            filter = new QmlFilter(m_attachedModel, *meta, attachedIndex);
+            filter = new QmlFilter(mltFilter, meta);
+        } else {
+            delete mltFilter;
         }
     }
 
@@ -148,7 +152,6 @@ void FilterController::setCurrentFilter(int attachedIndex)
 
     emit currentFilterChanged(filter, meta);
     m_currentFilter.reset(filter);
-    delete mltFilter;
 }
 
 void FilterController::handleAttachedModelChange()

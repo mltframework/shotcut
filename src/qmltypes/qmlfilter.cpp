@@ -18,6 +18,8 @@
 
 #include "qmlfilter.h"
 #include "mltcontroller.h"
+#include "mainwindow.h"
+#include "controllers/filtercontroller.h"
 #include "jobqueue.h"
 #include <QStandardPaths>
 #include <QDir>
@@ -34,19 +36,13 @@ static const char* kHeightProperty = "meta.media.height";
 static const char* kAspectNumProperty = "meta.media.sample_aspect_num";
 static const char* kAspectDenProperty = "meta.media.sample_aspect_den";
 
-QmlFilter::QmlFilter(AttachedFiltersModel& model, const QmlMetadata &metadata, int row, QObject *parent)
+QmlFilter::QmlFilter(Mlt::Filter* mltFilter, const QmlMetadata* metadata, QObject* parent)
     : QObject(parent)
-    , m_model(model)
     , m_metadata(metadata)
-    , m_path(m_metadata.path().absolutePath().append('/'))
-    , m_isNew(row < 0)
+    , m_filter(mltFilter)
+    , m_path(m_metadata->path().absolutePath().append('/'))
+    , m_isNew(false)
 {
-    if (m_isNew) {
-        m_filter = m_model.add(&m_metadata);
-    }
-    else {
-        m_filter = model.filterForRow(row);
-    }
 }
 
 QmlFilter::~QmlFilter()
@@ -235,7 +231,7 @@ void QmlFilter::analyze(bool isAudio)
 
     MeltJob* job = new MeltJob(target, tmpName);
     if (job) {
-        AnalyzeDelegate* delegate = new AnalyzeDelegate(m_model, m_filter);
+        AnalyzeDelegate* delegate = new AnalyzeDelegate(m_filter);
         connect(job, &MeltJob::finished, delegate, &AnalyzeDelegate::onAnalyzeFinished);
         connect(job, &MeltJob::finished, this, &QmlFilter::analyzeFinished);
         QFileInfo info(QString::fromUtf8(service.get("resource")));
@@ -317,12 +313,11 @@ void QmlFilter::preset(const QString &name)
 
 QString QmlFilter::objectNameOrService()
 {
-    return m_metadata.objectName().isEmpty()? m_metadata.mlt_service() : m_metadata.objectName();
+    return m_metadata->objectName().isEmpty()? m_metadata->mlt_service() : m_metadata->objectName();
 }
 
-AnalyzeDelegate::AnalyzeDelegate(AttachedFiltersModel &model, Mlt::Filter* filter)
+AnalyzeDelegate::AnalyzeDelegate(Mlt::Filter* filter)
     : QObject(0)
-    , m_model(model)
     , m_filter(*filter)
 {}
 
@@ -357,7 +352,7 @@ void AnalyzeDelegate::onAnalyzeFinished(MeltJob *job, bool isSuccess)
                     QDomNode propertyNode = properties.at(j);
                     if (propertyNode.attributes().namedItem("name").toAttr().value() == "results") {
                         m_filter.set("results", propertyNode.toElement().text().toLatin1().constData());
-                        emit m_model.changed();
+                        emit MAIN.filterController()->attachedModel()->changed();
                     }
                 }
                 break;

@@ -244,8 +244,9 @@ bool AttachedFiltersModel::moveRows(const QModelIndex & sourceParent, int source
     return false;
 }
 
-Mlt::Filter *AttachedFiltersModel::add(const QmlMetadata* meta)
+int AttachedFiltersModel::add(const QmlMetadata* meta)
 {
+    int insertIndex = -1;
     Mlt::Filter* filter = new Mlt::Filter(MLT.profile(), meta->mlt_service().toUtf8().constData());
     if (filter->is_valid()) {
         if (!meta->objectName().isEmpty())
@@ -253,7 +254,7 @@ Mlt::Filter *AttachedFiltersModel::add(const QmlMetadata* meta)
 
         // Put the filter after the last filter that is greater than or equal
         // in sort order.
-        int insertIndex = 0;
+        insertIndex = 0;
         for (int i = m_rows - 1; i >= 0; i--) {
             if (!sortIsLess(m_metaList[i], meta)) {
                 insertIndex = i + 1;
@@ -271,7 +272,7 @@ Mlt::Filter *AttachedFiltersModel::add(const QmlMetadata* meta)
         emit changed();
     }
     else qWarning() << "Failed to load filter" << meta->mlt_service();
-    return filter;
+    return insertIndex;
 }
 
 void AttachedFiltersModel::remove(int row)
