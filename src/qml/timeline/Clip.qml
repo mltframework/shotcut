@@ -286,6 +286,7 @@ Rectangle {
                 parent.dropped(clipRoot)
             }
         }
+        onDoubleClicked: timeline.openClip(trackIndex, index)
     }
 
     Canvas {
