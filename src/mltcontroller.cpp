@@ -404,8 +404,7 @@ QString Controller::saveXML(const QString& filename, Service* service)
     c.set("no_root", 1);
     c.set("store", "shotcut");
     if (filename != "string") {
-        const char* path = QFileInfo(filename).absolutePath().toUtf8().constData();
-        c.set("root", path);
+        c.set("root", QFileInfo(filename).absolutePath().toUtf8().constData());
     }
     c.connect(s);
     c.start();
