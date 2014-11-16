@@ -401,6 +401,7 @@ QString Controller::saveXML(const QString& filename, Service* service)
         s.set("ignore_points", 0);
     c.set("time_format", "clock");
     c.set("no_meta", 1);
+    c.set("no_root", 1);
     c.set("store", "shotcut");
     if (QFile::exists(filename)) {
         const char* path = QFileInfo(filename).absolutePath().toUtf8().constData();
