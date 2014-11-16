@@ -403,7 +403,7 @@ QString Controller::saveXML(const QString& filename, Service* service)
     c.set("no_meta", 1);
     c.set("no_root", 1);
     c.set("store", "shotcut");
-    if (QFile::exists(filename)) {
+    if (filename != "string") {
         const char* path = QFileInfo(filename).absolutePath().toUtf8().constData();
         c.set("root", path);
     }
