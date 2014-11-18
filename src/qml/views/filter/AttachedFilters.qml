@@ -23,7 +23,11 @@ import QtQml.Models 2.1
 Rectangle {
     id: attachedFilters
     
-    property int selectedIndex: attachedFiltersView.modelCurrentIndex
+    signal filterClicked(int index)
+    
+    function setCurrentFilter(index) {
+        attachedFiltersView.currentIndex = index
+    }
     
     color: activePalette.base
 
@@ -38,12 +42,14 @@ Rectangle {
             // Trick to make the model item available to the dragItem
             property var modelData: model
             property var viewData: ListView
+            property int _dragTarget: ListView.view ? ListView.view.dragTarget : -1
+            property int _currentIndex: ListView.currentIndex ? ListView.currentIndex : -1
 
             height: filterDelegateText.implicitHeight
             width: parent ? parent.width : undefined
             color: "transparent"
             border.width: 2
-            border.color: attachedFiltersView.modelDragTarget === model.index ? activePalette.highlight : "transparent"
+            border.color: _dragTarget === model.index ? activePalette.highlight : "transparent"
 
             Row {
                 height: parent.height
@@ -71,8 +77,8 @@ Rectangle {
                 Label { 
                     id: filterDelegateText
                     text: model.display
-                    color: attachedFiltersView.modelCurrentIndex === model.index ? activePalette.highlightedText : activePalette.windowText
-                    width: attachedFiltersView.width - 23
+                    color: _currentIndex === model.index ? activePalette.highlightedText : activePalette.windowText
+                    width: background.ListView.width - 23
         
                     MouseArea {
                         id: mouseArea
@@ -84,91 +90,6 @@ Rectangle {
                     }
                 }
             }
-        }
-    }
-    
-    DelegateModel {
-        id: visualModel
-        model: attachedfiltersmodel
-        delegate: filterDelegate
-        
-        signal modelReset()
-        signal itemAboutToBeRemoved(int index)
-        signal itemAdded(int index)
-        
-        function getModelIndex(visualIndex) {
-            if (visualIndex < 0 || visualIndex >= count)
-                return -1
-            var item = items.get(visualIndex)
-            if (item) {
-                return item.model.index
-            } else {
-                return -1
-            }
-        }
-        
-        function getVisualIndex(modelIndex) {
-            for (var i = 0; i < items.count; i++) {
-                var item = items.get(i)
-                if (item.model.index === modelIndex) {
-                    return i
-                }
-            }
-            return -1
-        }
-        
-        function _itemIsLessThan(a, b) {
-            // First sort by type: gpu, video, audio.
-            // Then sort by index.
-            if (a.model.type === "gpu" && b.model.type !== "gpu") {
-                return true
-            } else if (a.model.type === "video" && b.model.type === "audio") {
-                return true
-            } else if (a.model.type === b.model.type && a.model.index < b.model.index) {
-                return true
-            } else {
-                return false
-            }
-        }
-        
-        function _sort() {
-            items.changed.disconnect(_sort)
-            
-            for (var i = 0; i < items.count; i++) {
-                var item = items.get(i)
-                var newIndex = i
-
-                for (var j = i - 1; j >= 0; j--) {
-                    var prevItem = items.get(j)
-                    if (_itemIsLessThan(item, prevItem)) {
-                        newIndex = j
-                    } else {
-                        break
-                    }
-                }
-                
-                if (newIndex != i)
-                    items.move(i, newIndex, 1)
-            }
-            
-            items.changed.connect(_sort)
-        }
-        
-        Component.onCompleted: {
-            model.rowsMoved.connect(_sort)
-            model.modelReset.connect(modelReset)
-            model.rowsAboutToBeRemoved.connect(rowsAboutToBeRemoved)
-            model.rowsInserted.connect(rowsAdded)
-            items.changed.connect(_sort)
-            _sort()
-        }
-        
-        function rowsAboutToBeRemoved(parent, row) {
-            itemAboutToBeRemoved(getVisualIndex(row))
-        }
-        
-        function rowsAdded(parent, row) {
-            itemAdded(getVisualIndex(row))
         }
     }
     
@@ -199,27 +120,11 @@ Rectangle {
         ListView {
             id: attachedFiltersView
             
-            property int visualDragTarget: -1
-            property var modelDragTarget: visualModel.getModelIndex(visualDragTarget)
-            property var modelCurrentIndex: visualModel.getModelIndex(currentIndex)
-            
-            function setCurrentIndexAfterReset() {
-                currentIndex = -1
-                positionViewAtBeginning()
-            }
-            
-            function setCurrentIndexBeforeRemove(visualIndex) {
-                if (currentIndex === count - 1 ) currentIndex--
-                positionViewAtIndex(currentIndex, ListView.Contain)
-            }
-            
-            function setCurrentIndexAfterAdd(visualIndex) {
-                currentIndex = visualIndex
-                positionViewAtIndex(currentIndex, ListView.Contain)
-            }
+            property int dragTarget: -1
             
             anchors.fill: parent
-            model: visualModel
+            model: attachedfiltersmodel
+            delegate: filterDelegate
             boundsBehavior: Flickable.StopAtBounds
             snapMode: ListView.SnapToItem
             currentIndex: -1
@@ -234,10 +139,10 @@ Rectangle {
             highlightMoveVelocity: 1000
 
             Component.onCompleted: {
-                model.modelReset.connect(setCurrentIndexAfterReset)
-                model.itemAboutToBeRemoved.connect(setCurrentIndexBeforeRemove)
-                model.itemAdded.connect(setCurrentIndexAfterAdd)
+                model.modelReset.connect(positionViewAtBeginning)
             }
+            
+            onCurrentIndexChanged: positionViewAtIndex(currentIndex, ListView.Contain)
 
             MouseArea {
                 property int oldIndex: -1
@@ -253,15 +158,15 @@ Rectangle {
                     dragItem.sourceComponent = filterDelegate
                     dragItem.x = mouseX - grabPos.x
                     dragItem.y = mouseY - grabPos.y
-                    attachedFiltersView.currentIndex = oldIndex
-                    attachedFiltersView.visualDragTarget = oldIndex
+                    filterClicked(oldIndex)
+                    attachedFiltersView.dragTarget = oldIndex
                     cursorShape = Qt.DragMoveCursor
                     autoScrollTimer.running = true
                 }
                 
                 function endDrag() {
                     oldIndex = -1
-                    attachedFiltersView.visualDragTarget = -1
+                    attachedFiltersView.dragTarget = -1
                     dragItem.sourceComponent = null
                     cursorShape = Qt.ArrowCursor
                     autoScrollTimer.running = false
@@ -272,7 +177,7 @@ Rectangle {
                     if (mouseItem && mouseItem.viewData.section === grabSection) {
                         dragItem.x = mouseX - grabPos.x
                         dragItem.y = mouseY - grabPos.y - attachedFiltersView.contentY
-                        attachedFiltersView.visualDragTarget = attachedFiltersView.indexAt(mouseX, mouseY)
+                        attachedFiltersView.dragTarget = attachedFiltersView.indexAt(mouseX, mouseY)
                     } 
                 }
                 
@@ -281,7 +186,7 @@ Rectangle {
                 z: 1
                 
                 onClicked: {
-                    attachedFiltersView.currentIndex = attachedFiltersView.indexAt(mouseX, mouseY)
+                    filterClicked(attachedFiltersView.indexAt(mouseX, mouseY))
                     mouse.accepted = false
                 }
                 
@@ -292,10 +197,9 @@ Rectangle {
                 }
                 onReleased: {
                     if (oldIndex !== -1
-                            && attachedFiltersView.visualDragTarget !== -1
-                            && oldIndex !== attachedFiltersView.visualDragTarget) {
-                        attachedfiltersmodel.move(visualModel.getModelIndex(oldIndex), attachedFiltersView.modelDragTarget)
-                        attachedFiltersView.currentIndex = attachedFiltersView.visualDragTarget
+                            && attachedFiltersView.dragTarget !== -1
+                            && oldIndex !== attachedFiltersView.dragTarget) {
+                        attachedfiltersmodel.move(oldIndex, attachedFiltersView.dragTarget)
                     }
                     endDrag()
                     mouse.accepted = true;
@@ -315,16 +219,16 @@ Rectangle {
                     repeat: true
                     onTriggered: {
                         // Make sure previous and next indices are always visible
-                        var nextIndex = attachedFiltersView.visualDragTarget + 1
-                        var prevIndex = attachedFiltersView.visualDragTarget - 1
+                        var nextIndex = attachedFiltersView.dragTarget + 1
+                        var prevIndex = attachedFiltersView.dragTarget - 1
                         if (nextIndex < attachedFiltersView.count) {
                             attachedFiltersView.positionViewAtIndex(nextIndex, ListView.Contain)
                             parent.updateDragTarget()
-                        } else if (prevIndex >= 0) {
+                        }
+                        if (prevIndex >= 0) {
                             attachedFiltersView.positionViewAtIndex(prevIndex, ListView.Contain)
                             parent.updateDragTarget()
                         }
-
                     }
                 }
             }

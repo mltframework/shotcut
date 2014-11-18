@@ -41,7 +41,7 @@ signals:
     void currentFilterRequested(int attachedIndex);
 
 public slots:
-    void setCurrentFilter(QmlFilter* filter, QmlMetadata* meta);
+    void setCurrentFilter(QmlFilter* filter, QmlMetadata* meta, int index);
     void setFadeInDuration(int duration);
     void setFadeOutDuration(int duration);
 

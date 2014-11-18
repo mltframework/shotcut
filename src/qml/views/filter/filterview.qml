@@ -28,7 +28,9 @@ Rectangle {
     signal removeFilterRequested(int attachedIndex)
     signal currentFilterRequested(int attachedIndex)
     
-    function updateFilterConfig() {
+    function setCurrentFilter(index) {
+        attachedFilters.setCurrentFilter(index)
+        removeButton.selectedIndex = index
         filterConfig.source = metadata ? metadata.qmlFilePath : ""
     }
 
@@ -66,8 +68,8 @@ Rectangle {
             Layout.columnSpan: 3
             Layout.fillWidth: true
             Layout.fillHeight: true
-            onSelectedIndexChanged: {
-                root.currentFilterRequested(selectedIndex)
+            onFilterClicked: {
+                root.currentFilterRequested(index)
             }
         }
 
@@ -82,14 +84,16 @@ Rectangle {
         }
         Button {
             id: removeButton
+            
+            property int selectedIndex: -1
+            
             Layout.minimumWidth: height
             iconName: 'list-remove'
-            enabled: attachedFilters.selectedIndex > -1 ? true : false
+            enabled: selectedIndex > -1 ? true : false
             opacity: enabled ? 1.0 : 0.5
             tooltip: qsTr('Remove Selected Filter')
             onClicked: {
-                attachedfiltersmodel.remove(attachedFilters.selectedIndex)
-                root.currentFilterRequested(attachedFilters.selectedIndex)
+                attachedfiltersmodel.remove(selectedIndex)
             }
         }
         Item {

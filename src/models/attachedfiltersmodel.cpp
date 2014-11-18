@@ -26,18 +26,27 @@
 
 static bool sortIsLess (const QmlMetadata* lhs, const QmlMetadata* rhs) {
     // Sort order is: GPU, Video, Audio
-    if (rhs->needsGPU() && !lhs->needsGPU()) {
+    // If metadata is NULL, assume it is video.
+    if (!lhs && !rhs) {
+        return false;
+    } else if (!lhs) {
+        if (rhs->needsGPU()) {
+            return true;
+        }
+    } else if (!rhs) {
+        if (lhs->isAudio()) {
+            return true;
+        }
+    } else if (rhs->needsGPU() && !lhs->needsGPU()) {
         return true;
     } else if (!rhs->isAudio() && lhs->isAudio()) {
         return true;
     }
-
     return false;
 }
 
 AttachedFiltersModel::AttachedFiltersModel(QObject *parent)
     : QAbstractListModel(parent)
-    , m_rows(0)
     , m_dropRow(-1)
 {
 }
@@ -47,44 +56,11 @@ bool AttachedFiltersModel::isReady()
     return m_producer != NULL;
 }
 
-Mlt::Filter* AttachedFiltersModel::filterForRow(int row) const
+Mlt::Filter* AttachedFiltersModel::getFilter(int row) const
 {
     Mlt::Filter* result = 0;
-    if (m_producer && m_producer->is_valid()) {
-        int count = m_producer->filter_count();
-        int j = 0;
-        for (int i = 0; i < count; i++) {
-            Mlt::Filter* filter = m_producer->filter(i);
-            if (filter && filter->is_valid() && !filter->get_int("_loader")) {
-                if (j == row) {
-                    result = filter;
-                    break;
-                }
-                j++;
-            }
-            delete filter;
-        }
-    }
-    return result;
-}
-
-int AttachedFiltersModel::indexForRow(int row) const
-{
-    int result = -1;
-    if (m_producer && m_producer->is_valid()) {
-        int count = m_producer->filter_count();
-        int j = 0;
-        for (int i = 0; i < count; i++) {
-            Mlt::Filter* filter = m_producer->filter(i);
-            if (filter && filter->is_valid() && !filter->get_int("_loader")) {
-                if (j == row) {
-                    result = i;
-                    break;
-                }
-                j++;
-            }
-            delete filter;
-        }
+    if (m_producer && m_producer->is_valid() && row < m_mltIndexMap.count()) {
+        result = m_producer->filter(m_mltIndexMap[row]);
     }
     return result;
 }
@@ -92,7 +68,7 @@ int AttachedFiltersModel::indexForRow(int row) const
 int AttachedFiltersModel::rowCount(const QModelIndex &parent) const
 {
     if (m_producer && m_producer->is_valid())
-        return m_rows;
+        return m_metaList.count();
     else
         return 0;
 }
@@ -118,7 +94,7 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
                 result = meta->name();
             } else {
                 // Fallback is raw mlt_service name
-                Mlt::Filter* filter = filterForRow(index.row());
+                Mlt::Filter* filter = getFilter(index.row());
                 if (filter && filter->is_valid() && filter->get("mlt_service")) {
                     result = QString::fromUtf8(filter->get("mlt_service"));
                 }
@@ -127,7 +103,7 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
             return result;
         }
     case Qt::CheckStateRole: {
-            Mlt::Filter* filter = filterForRow(index.row());
+            Mlt::Filter* filter = getFilter(index.row());
             QVariant result = Qt::Unchecked;
             if (filter && filter->is_valid() && !filter->get_int("disable"))
                 result = Qt::Checked;
@@ -135,18 +111,6 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
             return result;
         }
         break;
-    case TypeRole: {
-            QVariant result;
-            const QmlMetadata* meta = m_metaList[index.row()];
-            if (meta && meta->isAudio()) {
-                result = "audio";
-            } else if (meta && meta->needsGPU()) {
-                result = "gpu";
-            } else {
-                result = "video";
-            }
-            return result;
-        }
     case TypeDisplayRole: {
             QVariant result;
             const QmlMetadata* meta = m_metaList[index.row()];
@@ -169,7 +133,7 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
 bool AttachedFiltersModel::setData(const QModelIndex& index, const QVariant& value, int role)
 {
     if (role == Qt::CheckStateRole) {
-        Mlt::Filter* filter = filterForRow(index.row());
+        Mlt::Filter* filter = getFilter(index.row());
         if (filter && filter->is_valid()) {
             filter->set("disable", !filter->get_int("disable"));
             emit changed();
@@ -184,7 +148,6 @@ bool AttachedFiltersModel::setData(const QModelIndex& index, const QVariant& val
 QHash<int, QByteArray> AttachedFiltersModel::roleNames() const {
     QHash<int, QByteArray> roles = QAbstractListModel::roleNames();
     roles[Qt::CheckStateRole] = "checkState";
-    roles[TypeRole] = "type";
     roles[TypeDisplayRole] = "typeDisplay";
     return roles;
 }
@@ -208,13 +171,9 @@ bool AttachedFiltersModel::insertRows(int row, int count, const QModelIndex &par
 bool AttachedFiltersModel::removeRows(int row, int count, const QModelIndex &parent)
 {
     if (m_producer && m_producer->is_valid() && m_dropRow >= 0 && row != m_dropRow) {
-        m_producer->move_filter(indexForRow(row), indexForRow(0) + m_dropRow);
-        m_metaList.move(row, m_dropRow);
-        emit changed();
-        emit dataChanged(createIndex(row, 0), createIndex(row, 0));
-        emit dataChanged(createIndex(m_dropRow, 0), createIndex(m_dropRow, 0));
+        bool result = moveRows(parent, row, 1, parent, m_dropRow);
         m_dropRow = -1;
-        return true;
+        return result;
     } else {
         return false;
     }
@@ -235,7 +194,20 @@ bool AttachedFiltersModel::moveRows(const QModelIndex & sourceParent, int source
                 // Moving down: Convert to "post move" indexing
                 destinationRow--;
             }
-            m_producer->move_filter(indexForRow(sourceRow), indexForRow(destinationRow));
+            int mltSrcIndex = m_mltIndexMap[sourceRow];
+            int mltDstIndex = m_mltIndexMap[destinationRow];
+            m_producer->move_filter(mltSrcIndex, mltDstIndex);
+            // Adjust MLT index map for indices that just changed.
+            m_mltIndexMap.removeAt(sourceRow);
+            for (int i = 0; i < m_mltIndexMap.count(); i++) {
+                if (m_mltIndexMap[i] > mltSrcIndex) {
+                    m_mltIndexMap[i] = m_mltIndexMap[i] - 1;
+                }
+                if (m_mltIndexMap[i] >= mltDstIndex) {
+                    m_mltIndexMap[i] = m_mltIndexMap[i] + 1;
+                }
+            }
+            m_mltIndexMap.insert(destinationRow, mltDstIndex);
             m_metaList.move(sourceRow, destinationRow);
             endMoveRows();
             return true;
@@ -247,6 +219,7 @@ bool AttachedFiltersModel::moveRows(const QModelIndex & sourceParent, int source
 int AttachedFiltersModel::add(const QmlMetadata* meta)
 {
     int insertIndex = -1;
+    int mltIndex = -1;
     Mlt::Filter* filter = new Mlt::Filter(MLT.profile(), meta->mlt_service().toUtf8().constData());
     if (filter->is_valid()) {
         if (!meta->objectName().isEmpty())
@@ -255,37 +228,63 @@ int AttachedFiltersModel::add(const QmlMetadata* meta)
         // Put the filter after the last filter that is greater than or equal
         // in sort order.
         insertIndex = 0;
-        for (int i = m_rows - 1; i >= 0; i--) {
+        for (int i = m_metaList.count() - 1; i >= 0; i--) {
             if (!sortIsLess(m_metaList[i], meta)) {
                 insertIndex = i + 1;
                 break;
             }
         }
 
+        // Calculate the MLT index for the new filter.
+        if (m_mltIndexMap.count() == 0) {
+            mltIndex = m_mltIndexMap.count();
+        } else if (insertIndex == 0) {
+            mltIndex = m_mltIndexMap[0];
+        } else {
+            mltIndex = m_mltIndexMap[insertIndex -1] + 1;
+        }
+
         beginInsertRows(QModelIndex(), insertIndex, insertIndex);
         MLT.pause();
         m_producer->attach(*filter);
-        m_producer->move_filter(indexForRow(m_rows), indexForRow(insertIndex));
+        m_producer->move_filter(m_producer->filter_count() - 1, mltIndex);
+        // Adjust MLT index map for indices that just changed.
+        for (int i = 0; i < m_mltIndexMap.count(); i++) {
+            if (m_mltIndexMap[i] >= mltIndex) {
+                m_mltIndexMap[i] = m_mltIndexMap[i] + 1;
+            }
+        }
+        m_mltIndexMap.insert(insertIndex, mltIndex);
         m_metaList.insert(insertIndex, meta);
-        m_rows++;
         endInsertRows();
         emit changed();
     }
     else qWarning() << "Failed to load filter" << meta->mlt_service();
+    delete filter;
     return insertIndex;
 }
 
 void AttachedFiltersModel::remove(int row)
 {
-    Mlt::Filter* filter = filterForRow(row);
-    if (filter && filter->is_valid()) {
-        beginRemoveRows(QModelIndex(), row, row);
-        m_producer->detach(*filter);
-        m_metaList.removeAt(row);
-        m_rows--;
-        endRemoveRows();
-        emit changed();
+    if (row >= m_metaList.count()) {
+        qWarning() << "Invalid index:" << row;
+        return;
     }
+
+    beginRemoveRows(QModelIndex(), row, row);
+    int mltIndex = m_mltIndexMap[row];
+    Mlt::Filter* filter = m_producer->filter(mltIndex);
+    m_producer->detach(*filter);
+    // Adjust MLT index map for indices that just changed.
+    m_mltIndexMap.removeAt(row);
+    for (int i = 0; i < m_mltIndexMap.count(); i++) {
+        if (m_mltIndexMap[i] > mltIndex) {
+            m_mltIndexMap[i] = m_mltIndexMap[i] - 1;
+        }
+    }
+    m_metaList.removeAt(row);
+    endRemoveRows();
+    emit changed();
     delete filter;
 }
 
@@ -311,18 +310,26 @@ void AttachedFiltersModel::reset(Mlt::Producer* producer)
 
     m_producer.reset(new Mlt::Producer(producer ? producer : MLT.producer()));
     m_metaList.clear();
-    m_rows = 0;
+    m_mltIndexMap.clear();
 
     if (MLT.isPlaylist()) return;
-
     if (m_producer && m_producer->is_valid()) {
-        int n = m_producer->filter_count();
-        while (n--) {
-            Mlt::Filter* filter = m_producer->filter(n);
+        int count = m_producer->filter_count();
+        for (int i = 0; i < count; i++) {
+            Mlt::Filter* filter = m_producer->filter(i);
             if (filter && filter->is_valid() && !filter->get_int("_loader")) {
-                QmlMetadata* meta = MAIN.filterController()->metadataForService(filter);
-                m_metaList.prepend(meta);
-                m_rows++;
+                QmlMetadata* newMeta = MAIN.filterController()->metadataForService(filter);
+                int newIndex = m_metaList.count();
+                for (int j = newIndex - 1; j >= 0; j--) {
+                    const QmlMetadata* prevMeta = m_metaList[j];
+                    if (sortIsLess(prevMeta, newMeta)) {
+                        newIndex = j;
+                    } else {
+                        break;
+                    }
+                }
+                m_metaList.insert(newIndex, newMeta);
+                m_mltIndexMap.insert(newIndex, i);
             }
             delete filter;
         }

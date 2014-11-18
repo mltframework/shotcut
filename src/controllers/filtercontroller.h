@@ -39,7 +39,7 @@ public:
     QmlMetadata* metadataForService(Mlt::Service *service);
 
 signals:
-    void currentFilterChanged(QmlFilter* filter, QmlMetadata* meta);
+    void currentFilterChanged(QmlFilter* filter, QmlMetadata* meta, int index);
     void newMetadataFound(QmlMetadata* meta);
 
 public slots:
@@ -50,7 +50,7 @@ public slots:
 private slots:
     void handleAttachedModelChange();
     void addMetadata(QmlMetadata*);
-    void handleAttachedRowsAboutToBeRemoved(const QModelIndex & parent, int first, int last);
+    void handleAttachedRowsRemoved(const QModelIndex & parent, int first, int last);
 
 private:
     void loadFilterMetadata();

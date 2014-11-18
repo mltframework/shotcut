@@ -222,7 +222,7 @@ MainWindow::MainWindow()
     connect(m_filtersDock, SIGNAL(currentFilterRequested(int)), m_filterController, SLOT(setCurrentFilter(int)));
     connect(m_filtersDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onFiltersDockTriggered(bool)));
     connect(ui->actionFilters, SIGNAL(triggered()), this, SLOT(onFiltersDockTriggered()));
-    connect(m_filterController, SIGNAL(currentFilterChanged(QmlFilter*, QmlMetadata*)), m_filtersDock, SLOT(setCurrentFilter(QmlFilter*, QmlMetadata*)));
+    connect(m_filterController, SIGNAL(currentFilterChanged(QmlFilter*, QmlMetadata*, int)), m_filtersDock, SLOT(setCurrentFilter(QmlFilter*, QmlMetadata*, int)));
     connect(this, SIGNAL(producerOpened()), m_filterController, SLOT(setProducer()));
     connect(m_filterController->attachedModel(), SIGNAL(changed(bool)), SLOT(setWindowModified(bool)));
     connect(m_filterController->attachedModel(), SIGNAL(changed()), SLOT(updateAutoSave()));
@@ -323,7 +323,7 @@ MainWindow::MainWindow()
     connect(videoWidget, SIGNAL(dragStarted()), m_playlistDock, SLOT(onPlayerDragStarted()));
     connect(videoWidget, SIGNAL(seekTo(int)), m_player, SLOT(seek(int)));
     connect(videoWidget, SIGNAL(gpuNotSupported()), this, SLOT(onGpuNotSupported()));
-    connect(m_filterController, SIGNAL(currentFilterChanged(QmlFilter*, QmlMetadata*)), videoWidget, SLOT(setCurrentFilter(QmlFilter*, QmlMetadata*)));
+    connect(m_filterController, SIGNAL(currentFilterChanged(QmlFilter*, QmlMetadata*, int)), videoWidget, SLOT(setCurrentFilter(QmlFilter*, QmlMetadata*)));
 
     readWindowSettings();
     setCorner(Qt::TopLeftCorner, Qt::LeftDockWidgetArea);

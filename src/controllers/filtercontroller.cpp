@@ -37,7 +37,7 @@ FilterController::FilterController(QObject* parent) : QObject(parent),
     m_future = QtConcurrent::run(this, &FilterController::loadFilterMetadata);
 
     connect(&m_attachedModel, SIGNAL(changed()), this, SLOT(handleAttachedModelChange()));
-    connect(&m_attachedModel, SIGNAL(rowsAboutToBeRemoved(const QModelIndex&,int,int)), this, SLOT(handleAttachedRowsAboutToBeRemoved(const QModelIndex&,int,int)));
+    connect(&m_attachedModel, SIGNAL(rowsRemoved(const QModelIndex&,int,int)), this, SLOT(handleAttachedRowsRemoved(const QModelIndex&,int,int)));
 }
 
 void FilterController::loadFilterMetadata() {
@@ -115,42 +115,39 @@ void FilterController::attachFilter(int metadataIndex)
     QmlFilter* filter = NULL;
     if (meta) {
         m_currentFilterIndex = m_attachedModel.add(meta);
-        Mlt::Filter* mltFilter = m_attachedModel.filterForRow(m_currentFilterIndex);
+        Mlt::Filter* mltFilter = m_attachedModel.getFilter(m_currentFilterIndex);
         filter = new QmlFilter(mltFilter, meta);
         filter->setIsNew(true);
     } else {
         m_currentFilterIndex = -1;
     }
-    emit currentFilterChanged(filter, meta);
+    emit currentFilterChanged(filter, meta, m_currentFilterIndex);
     m_currentFilter.reset(filter);
 }
 
 void FilterController::setCurrentFilter(int attachedIndex)
 {
-    if( attachedIndex == m_currentFilterIndex ) {
+    if (attachedIndex == m_currentFilterIndex) {
         return;
     }
 
-    Mlt::Filter* mltFilter = m_attachedModel.filterForRow(attachedIndex);
+    Mlt::Filter* mltFilter = m_attachedModel.getFilter(attachedIndex);
     QmlMetadata* meta = NULL;
     QmlFilter* filter = NULL;
 
     if (mltFilter && mltFilter->is_valid()) {
+        m_currentFilterIndex = attachedIndex;
         meta = metadataForService(mltFilter);
         if (meta) {
             filter = new QmlFilter(mltFilter, meta);
         } else {
             delete mltFilter;
         }
-    }
-
-    if (meta) {
-        m_currentFilterIndex = attachedIndex;
     } else {
         m_currentFilterIndex = -1;
     }
 
-    emit currentFilterChanged(filter, meta);
+    emit currentFilterChanged(filter, meta, m_currentFilterIndex);
     m_currentFilter.reset(filter);
 }
 
@@ -159,11 +156,14 @@ void FilterController::handleAttachedModelChange()
     MLT.refreshConsumer();
 }
 
-void FilterController::handleAttachedRowsAboutToBeRemoved(const QModelIndex&, int first, int)
+void FilterController::handleAttachedRowsRemoved(const QModelIndex&, int first, int)
 {
-    if (m_currentFilterIndex >= first) {
-        setCurrentFilter(-1);
+    int newFilterIndex = first;
+    if (newFilterIndex >= m_attachedModel.rowCount()) {
+        newFilterIndex = m_attachedModel.rowCount() - 1;
     }
+    m_currentFilterIndex = -1; // Force update
+    setCurrentFilter(newFilterIndex);
 }
 
 void FilterController::addMetadata(QmlMetadata* meta)

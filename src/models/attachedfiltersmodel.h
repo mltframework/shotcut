@@ -31,15 +31,15 @@ class AttachedFiltersModel : public QAbstractListModel
     Q_PROPERTY(bool ready READ isReady NOTIFY readyChanged)
 public:
     enum ModelRoles {
-        TypeRole = Qt::UserRole + 1,
-        TypeDisplayRole
+        TypeDisplayRole = Qt::UserRole + 1
     };
 
     explicit AttachedFiltersModel(QObject *parent = 0);
 
     bool isReady();
-    Mlt::Filter* filterForRow(int row) const;
-    int indexForRow(int row) const;
+    Mlt::Filter* getFilter(int row) const;
+
+    // QAbstractListModel Implementation
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     Qt::ItemFlags flags(const QModelIndex &index) const;
     QVariant data(const QModelIndex &index, int role) const;
@@ -61,12 +61,13 @@ public slots:
     void reset(Mlt::Producer *producer = 0);
 
 private:
-    int m_rows;
     int m_dropRow;
     int m_removeRow;
     QScopedPointer<Mlt::Producer> m_producer;
     typedef QList<const QmlMetadata*> MetadataList;
     MetadataList m_metaList;
+    typedef QList<int> IndexMap;
+    IndexMap m_mltIndexMap;
 };
 
 #endif // ATTACHEDFILTERSMODEL_H
