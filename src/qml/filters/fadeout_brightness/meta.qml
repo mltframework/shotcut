@@ -9,4 +9,5 @@ Metadata {
     qml: "ui.qml"
     isFavorite: true
     gpuAlt: "movit.opacity"
+    allowMultiple: false
 }

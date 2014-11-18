@@ -9,4 +9,5 @@ Metadata {
     mlt_service: "volume"
     qml: "ui.qml"
     isFavorite: true
+    allowMultiple: false
 }

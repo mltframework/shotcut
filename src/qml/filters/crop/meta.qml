@@ -7,4 +7,5 @@ Metadata {
     mlt_service: "crop"
     qml: "ui.qml"
     gpuAlt: "crop"
+    allowMultiple: false
 }

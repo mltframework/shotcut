@@ -40,6 +40,7 @@ class QmlMetadata : public QObject
     Q_PROPERTY(bool isHidden READ isHidden WRITE setIsHidden NOTIFY changed)
     Q_PROPERTY(bool isFavorite READ isFavorite WRITE setIsFavorite NOTIFY changed)
     Q_PROPERTY(QString gpuAlt READ gpuAlt WRITE setGpuAlt NOTIFY changed)
+    Q_PROPERTY(bool allowMultiple READ allowMultiple WRITE setAllowMultiple)
 
 public:
     enum PluginType {
@@ -76,6 +77,8 @@ public:
     void setIsFavorite(bool isFavorite);
     QString gpuAlt() const { return m_gpuAlt; }
     void setGpuAlt(const QString&);
+    bool allowMultiple() const { return m_allowMultiple; }
+    void setAllowMultiple(bool allowMultiple);
 
 signals:
     void changed();
@@ -92,6 +95,7 @@ private:
     bool m_isHidden;
     bool m_isFavorite;
     QString m_gpuAlt;
+    bool m_allowMultiple;
 };
 
 #endif // QMLMETADATA_H

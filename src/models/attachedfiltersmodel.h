@@ -38,6 +38,7 @@ public:
 
     bool isReady();
     Mlt::Filter* getFilter(int row) const;
+    const QmlMetadata* getMetadata(int row) const;
 
     // QAbstractListModel Implementation
     int rowCount(const QModelIndex &parent = QModelIndex()) const;

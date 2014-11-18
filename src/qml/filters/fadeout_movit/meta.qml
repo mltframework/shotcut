@@ -9,4 +9,5 @@ Metadata {
     needsGPU: true
     qml: "ui.qml"
     isFavorite: true
+    allowMultiple: false
 }

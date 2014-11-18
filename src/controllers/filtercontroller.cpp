@@ -113,14 +113,24 @@ void FilterController::attachFilter(int metadataIndex)
 {
     QmlMetadata* meta = m_metadataModel.get(metadataIndex);
     QmlFilter* filter = NULL;
-    if (meta) {
-        m_currentFilterIndex = m_attachedModel.add(meta);
-        Mlt::Filter* mltFilter = m_attachedModel.getFilter(m_currentFilterIndex);
-        filter = new QmlFilter(mltFilter, meta);
-        filter->setIsNew(true);
-    } else {
-        m_currentFilterIndex = -1;
+
+    if (!meta) return;
+
+    if (meta->allowMultiple() == false) {
+        for (int i = 0; i < m_attachedModel.rowCount(); i++) {
+            const QmlMetadata* attachedMeta = m_attachedModel.getMetadata(i);
+            if (attachedMeta && meta->uniqueId() == attachedMeta->uniqueId()) {
+                emit errorOccurred(tr("Only one %1 filter is allowed.").arg(meta->name()));
+                setCurrentFilter(i);
+                return;
+            }
+        }
     }
+
+    m_currentFilterIndex = m_attachedModel.add(meta);
+    Mlt::Filter* mltFilter = m_attachedModel.getFilter(m_currentFilterIndex);
+    filter = new QmlFilter(mltFilter, meta);
+    filter->setIsNew(true);
     emit currentFilterChanged(filter, meta, m_currentFilterIndex);
     m_currentFilter.reset(filter);
 }

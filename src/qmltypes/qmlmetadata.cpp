@@ -29,6 +29,7 @@ QmlMetadata::QmlMetadata(QObject *parent)
     , m_isHidden(false)
     , m_isFavorite(false)
     , m_gpuAlt("")
+    , m_allowMultiple(true)
 {
 }
 
@@ -136,4 +137,9 @@ void QmlMetadata::setGpuAlt(const QString& gpuAlt)
 {
     m_gpuAlt = gpuAlt;
     emit changed();
+}
+
+void QmlMetadata::setAllowMultiple(bool allowMultiple)
+{
+    m_allowMultiple = allowMultiple;
 }

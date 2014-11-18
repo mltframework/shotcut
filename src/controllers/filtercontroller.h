@@ -41,6 +41,7 @@ public:
 signals:
     void currentFilterChanged(QmlFilter* filter, QmlMetadata* meta, int index);
     void newMetadataFound(QmlMetadata* meta);
+    void errorOccurred(QString);
 
 public slots:
     void setProducer(Mlt::Producer *producer = 0);

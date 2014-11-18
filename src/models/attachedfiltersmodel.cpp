@@ -65,6 +65,14 @@ Mlt::Filter* AttachedFiltersModel::getFilter(int row) const
     return result;
 }
 
+const QmlMetadata* AttachedFiltersModel::getMetadata(int row) const
+{
+    if (row < m_metaList.count()) {
+        return m_metaList[row];
+    }
+    return NULL;
+}
+
 int AttachedFiltersModel::rowCount(const QModelIndex &parent) const
 {
     if (m_producer && m_producer->is_valid())
