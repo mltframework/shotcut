@@ -26,7 +26,18 @@ Rectangle {
     signal filterClicked(int index)
     
     function setCurrentFilter(index) {
-        attachedFiltersView.currentIndex = index
+        indexDelay.index = index
+        indexDelay.running = true
+    }
+    
+    Timer {
+        id: indexDelay
+        property int index: 0
+        interval: 1
+        onTriggered: {
+            // Delay the index setting to allow model updates to complete
+            attachedFiltersView.currentIndex = index
+        }
     }
     
     color: activePalette.base

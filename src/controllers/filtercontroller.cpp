@@ -38,6 +38,8 @@ FilterController::FilterController(QObject* parent) : QObject(parent),
 
     connect(&m_attachedModel, SIGNAL(changed()), this, SLOT(handleAttachedModelChange()));
     connect(&m_attachedModel, SIGNAL(rowsRemoved(const QModelIndex&,int,int)), this, SLOT(handleAttachedRowsRemoved(const QModelIndex&,int,int)));
+    connect(&m_attachedModel, SIGNAL(rowsInserted(const QModelIndex&,int,int)), this, SLOT(handleAttachedRowsInserted(const QModelIndex&,int,int)));
+    connect(&m_attachedModel, SIGNAL(duplicateAddFailed(int)), this, SLOT(handleAttachDuplicateFailed(int)));
 }
 
 void FilterController::loadFilterMetadata() {
@@ -107,32 +109,7 @@ void FilterController::setProducer(Mlt::Producer *producer)
 {
     m_currentFilter.reset(NULL);
     m_attachedModel.reset(producer);
-}
-
-void FilterController::attachFilter(int metadataIndex)
-{
-    QmlMetadata* meta = m_metadataModel.get(metadataIndex);
-    QmlFilter* filter = NULL;
-
-    if (!meta) return;
-
-    if (meta->allowMultiple() == false) {
-        for (int i = 0; i < m_attachedModel.rowCount(); i++) {
-            const QmlMetadata* attachedMeta = m_attachedModel.getMetadata(i);
-            if (attachedMeta && meta->uniqueId() == attachedMeta->uniqueId()) {
-                emit errorOccurred(tr("Only one %1 filter is allowed.").arg(meta->name()));
-                setCurrentFilter(i);
-                return;
-            }
-        }
-    }
-
-    m_currentFilterIndex = m_attachedModel.add(meta);
-    Mlt::Filter* mltFilter = m_attachedModel.getFilter(m_currentFilterIndex);
-    filter = new QmlFilter(mltFilter, meta);
-    filter->setIsNew(true);
-    emit currentFilterChanged(filter, meta, m_currentFilterIndex);
-    m_currentFilter.reset(filter);
+    setCurrentFilter(-1);
 }
 
 void FilterController::setCurrentFilter(int attachedIndex)
@@ -140,21 +117,13 @@ void FilterController::setCurrentFilter(int attachedIndex)
     if (attachedIndex == m_currentFilterIndex) {
         return;
     }
+    m_currentFilterIndex = attachedIndex;
 
-    Mlt::Filter* mltFilter = m_attachedModel.getFilter(attachedIndex);
-    QmlMetadata* meta = NULL;
+    QmlMetadata* meta = m_attachedModel.getMetadata(m_currentFilterIndex);
     QmlFilter* filter = NULL;
-
-    if (mltFilter && mltFilter->is_valid()) {
-        m_currentFilterIndex = attachedIndex;
-        meta = metadataForService(mltFilter);
-        if (meta) {
-            filter = new QmlFilter(mltFilter, meta);
-        } else {
-            delete mltFilter;
-        }
-    } else {
-        m_currentFilterIndex = -1;
+    if (meta) {
+        Mlt::Filter* mltFilter = m_attachedModel.getFilter(m_currentFilterIndex);
+        filter = new QmlFilter(mltFilter, meta);
     }
 
     emit currentFilterChanged(filter, meta, m_currentFilterIndex);
@@ -172,12 +141,29 @@ void FilterController::handleAttachedRowsRemoved(const QModelIndex&, int first, 
     if (newFilterIndex >= m_attachedModel.rowCount()) {
         newFilterIndex = m_attachedModel.rowCount() - 1;
     }
-    m_currentFilterIndex = -1; // Force update
+    m_currentFilterIndex = -2; // Force update
     setCurrentFilter(newFilterIndex);
+}
+
+void FilterController::handleAttachedRowsInserted(const QModelIndex&, int first, int)
+{
+    m_currentFilterIndex = first;
+    Mlt::Filter* mltFilter = m_attachedModel.getFilter(m_currentFilterIndex);
+    QmlMetadata* meta = m_attachedModel.getMetadata(m_currentFilterIndex);
+    QmlFilter* filter = new QmlFilter(mltFilter, meta);
+    filter->setIsNew(true);
+    emit currentFilterChanged(filter, meta, m_currentFilterIndex);
+    m_currentFilter.reset(filter);
+}
+
+void FilterController::handleAttachDuplicateFailed(int index)
+{
+    const QmlMetadata* meta = m_attachedModel.getMetadata(index);
+    emit statusChanged(tr("Only one %1 filter is allowed.").arg(meta->name()));
+    setCurrentFilter(index);
 }
 
 void FilterController::addMetadata(QmlMetadata* meta)
 {
     m_metadataModel.add(meta);
 }
-

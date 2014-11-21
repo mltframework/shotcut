@@ -37,7 +37,6 @@ public:
     explicit FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* attachedModel, QWidget *parent = 0);
 
 signals:
-    void attachFilterRequested(int metadataIndex);
     void currentFilterRequested(int attachedIndex);
 
 public slots:

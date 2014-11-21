@@ -24,8 +24,6 @@ import Shotcut.Controls 1.0
 Rectangle {
     id: root
     
-    signal attachFilterRequested(int metadataIndex)
-    signal removeFilterRequested(int attachedIndex)
     signal currentFilterRequested(int attachedIndex)
     
     function setCurrentFilter(index) {
@@ -53,7 +51,7 @@ Rectangle {
     FilterMenu {
         id: filterMenu
         onFilterSelected: {
-            root.attachFilterRequested(index)
+            attachedfiltersmodel.add(metadatamodel.get(index))
         }
     }
 

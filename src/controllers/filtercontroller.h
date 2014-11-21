@@ -41,17 +41,18 @@ public:
 signals:
     void currentFilterChanged(QmlFilter* filter, QmlMetadata* meta, int index);
     void newMetadataFound(QmlMetadata* meta);
-    void errorOccurred(QString);
+    void statusChanged(QString);
 
 public slots:
     void setProducer(Mlt::Producer *producer = 0);
-    void attachFilter(int metadataIndex);
     void setCurrentFilter(int attachedIndex);
 
 private slots:
     void handleAttachedModelChange();
     void addMetadata(QmlMetadata*);
     void handleAttachedRowsRemoved(const QModelIndex & parent, int first, int last);
+    void handleAttachedRowsInserted(const QModelIndex & parent, int first, int last);
+    void handleAttachDuplicateFailed(int index);
 
 private:
     void loadFilterMetadata();

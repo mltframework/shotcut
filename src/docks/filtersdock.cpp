@@ -96,8 +96,6 @@ void FiltersDock::resetQview()
 {
     if (m_qview.status() != QQuickView::Null) {
         QObject* root = m_qview.rootObject();
-        QObject::disconnect(root, SIGNAL(attachFilterRequested(int)),
-                            this, SIGNAL(attachFilterRequested(int)));
         QObject::disconnect(root, SIGNAL(currentFilterRequested(int)),
                             this, SIGNAL(currentFilterRequested(int)));
 
@@ -119,8 +117,6 @@ void FiltersDock::resetQview()
     m_qview.setSource(source);
 
     QObject* root = m_qview.rootObject();
-    QObject::connect(root, SIGNAL(attachFilterRequested(int)),
-                     this, SIGNAL(attachFilterRequested(int)));
     QObject::connect(root, SIGNAL(currentFilterRequested(int)),
                      this, SIGNAL(currentFilterRequested(int)));
 }

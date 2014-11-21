@@ -218,7 +218,6 @@ MainWindow::MainWindow()
     m_filtersDock->hide();
     addDockWidget(Qt::LeftDockWidgetArea, m_filtersDock);
     ui->menuView->addAction(m_filtersDock->toggleViewAction());
-    connect(m_filtersDock, SIGNAL(attachFilterRequested(int)), m_filterController, SLOT(attachFilter(int)));
     connect(m_filtersDock, SIGNAL(currentFilterRequested(int)), m_filterController, SLOT(setCurrentFilter(int)));
     connect(m_filtersDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onFiltersDockTriggered(bool)));
     connect(ui->actionFilters, SIGNAL(triggered()), this, SLOT(onFiltersDockTriggered()));
@@ -226,7 +225,7 @@ MainWindow::MainWindow()
     connect(this, SIGNAL(producerOpened()), m_filterController, SLOT(setProducer()));
     connect(m_filterController->attachedModel(), SIGNAL(changed(bool)), SLOT(setWindowModified(bool)));
     connect(m_filterController->attachedModel(), SIGNAL(changed()), SLOT(updateAutoSave()));
-    connect(m_filterController, SIGNAL(errorOccurred(QString)), this, SLOT(showStatusMessage(QString)));
+    connect(m_filterController, SIGNAL(statusChanged(QString)), this, SLOT(showStatusMessage(QString)));
     connect(m_timelineDock, SIGNAL(fadeInChanged(int)), m_filtersDock, SLOT(setFadeInDuration(int)));
     connect(m_timelineDock, SIGNAL(fadeOutChanged(int)), m_filtersDock, SLOT(setFadeOutDuration(int)));
     connect(m_timelineDock, SIGNAL(trackSelected(Mlt::Producer*)), m_filterController, SLOT(setProducer(Mlt::Producer*)));

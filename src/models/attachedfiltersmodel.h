@@ -38,7 +38,7 @@ public:
 
     bool isReady();
     Mlt::Filter* getFilter(int row) const;
-    const QmlMetadata* getMetadata(int row) const;
+    QmlMetadata* getMetadata(int row) const;
 
     // QAbstractListModel Implementation
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
@@ -54,9 +54,10 @@ public:
 signals:
     void changed(bool modified = true);
     void readyChanged();
+    void duplicateAddFailed(int index);
 
 public slots:
-    int add(const QmlMetadata* meta);
+    void add(QmlMetadata* meta);
     void remove(int row);
     bool move(int fromRow, int toRow);
     void reset(Mlt::Producer *producer = 0);
@@ -65,7 +66,7 @@ private:
     int m_dropRow;
     int m_removeRow;
     QScopedPointer<Mlt::Producer> m_producer;
-    typedef QList<const QmlMetadata*> MetadataList;
+    typedef QList<QmlMetadata*> MetadataList;
     MetadataList m_metaList;
     typedef QList<int> IndexMap;
     IndexMap m_mltIndexMap;

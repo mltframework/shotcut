@@ -65,7 +65,7 @@ Mlt::Filter* AttachedFiltersModel::getFilter(int row) const
     return result;
 }
 
-const QmlMetadata* AttachedFiltersModel::getMetadata(int row) const
+QmlMetadata* AttachedFiltersModel::getMetadata(int row) const
 {
     if (row < m_metaList.count()) {
         return m_metaList[row];
@@ -224,8 +224,18 @@ bool AttachedFiltersModel::moveRows(const QModelIndex & sourceParent, int source
     return false;
 }
 
-int AttachedFiltersModel::add(const QmlMetadata* meta)
+void AttachedFiltersModel::add(QmlMetadata* meta)
 {
+    if (meta->allowMultiple() == false) {
+        for (int i = 0; i < m_metaList.count(); i++) {
+            const QmlMetadata* attachedMeta = m_metaList[i];
+            if (attachedMeta && meta->uniqueId() == attachedMeta->uniqueId()) {
+                emit duplicateAddFailed(i);
+                return;
+            }
+        }
+    }
+
     int insertIndex = -1;
     int mltIndex = -1;
     Mlt::Filter* filter = new Mlt::Filter(MLT.profile(), meta->mlt_service().toUtf8().constData());
@@ -269,7 +279,6 @@ int AttachedFiltersModel::add(const QmlMetadata* meta)
     }
     else qWarning() << "Failed to load filter" << meta->mlt_service();
     delete filter;
-    return insertIndex;
 }
 
 void AttachedFiltersModel::remove(int row)
