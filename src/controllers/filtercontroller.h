@@ -49,6 +49,7 @@ public slots:
 
 private slots:
     void handleAttachedModelChange();
+    void handleAttachedModelAboutToReset();
     void addMetadata(QmlMetadata*);
     void handleAttachedRowsRemoved(const QModelIndex & parent, int first, int last);
     void handleAttachedRowsInserted(const QModelIndex & parent, int first, int last);

@@ -344,6 +344,7 @@ Rectangle {
                 parent.anchors.left = undefined
                 parent.anchors.horizontalCenter = undefined
                 parent.opacity = 1
+                trackRoot.clipSelected(clipRoot, trackRoot)
             }
             onReleased: {
                 root.stopScrolling = false

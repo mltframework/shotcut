@@ -59,7 +59,7 @@ bool AttachedFiltersModel::isReady()
 Mlt::Filter* AttachedFiltersModel::getFilter(int row) const
 {
     Mlt::Filter* result = 0;
-    if (m_producer && m_producer->is_valid() && row < m_mltIndexMap.count()) {
+    if (m_producer && m_producer->is_valid() && row < m_mltIndexMap.count() && row >= 0) {
         result = m_producer->filter(m_mltIndexMap[row]);
     }
     return result;
@@ -67,10 +67,20 @@ Mlt::Filter* AttachedFiltersModel::getFilter(int row) const
 
 QmlMetadata* AttachedFiltersModel::getMetadata(int row) const
 {
-    if (row < m_metaList.count()) {
+    if (row < m_metaList.count() && row >= 0) {
         return m_metaList[row];
     }
     return NULL;
+}
+
+void AttachedFiltersModel::setProducer(Mlt::Producer* producer)
+{
+    if ((!producer && m_producer.isNull()) ||
+        (producer && !m_producer.isNull() && producer->get_parent() == m_producer->get_parent())) {
+        // No change
+        return;
+    }
+    reset(producer);
 }
 
 int AttachedFiltersModel::rowCount(const QModelIndex &parent) const
@@ -204,7 +214,9 @@ bool AttachedFiltersModel::moveRows(const QModelIndex & sourceParent, int source
             }
             int mltSrcIndex = m_mltIndexMap[sourceRow];
             int mltDstIndex = m_mltIndexMap[destinationRow];
+            m_event->block();
             m_producer->move_filter(mltSrcIndex, mltDstIndex);
+            m_event->unblock();
             // Adjust MLT index map for indices that just changed.
             m_mltIndexMap.removeAt(sourceRow);
             for (int i = 0; i < m_mltIndexMap.count(); i++) {
@@ -264,8 +276,10 @@ void AttachedFiltersModel::add(QmlMetadata* meta)
 
         beginInsertRows(QModelIndex(), insertIndex, insertIndex);
         MLT.pause();
+        m_event->block();
         m_producer->attach(*filter);
         m_producer->move_filter(m_producer->filter_count() - 1, mltIndex);
+        m_event->unblock();
         // Adjust MLT index map for indices that just changed.
         for (int i = 0; i < m_mltIndexMap.count(); i++) {
             if (m_mltIndexMap[i] >= mltIndex) {
@@ -291,7 +305,9 @@ void AttachedFiltersModel::remove(int row)
     beginRemoveRows(QModelIndex(), row, row);
     int mltIndex = m_mltIndexMap[row];
     Mlt::Filter* filter = m_producer->filter(mltIndex);
+    m_event->block();
     m_producer->detach(*filter);
+    m_event->unblock();
     // Adjust MLT index map for indices that just changed.
     m_mltIndexMap.removeAt(row);
     for (int i = 0; i < m_mltIndexMap.count(); i++) {
@@ -323,14 +339,17 @@ bool AttachedFiltersModel::move(int fromRow, int toRow)
 
 void AttachedFiltersModel::reset(Mlt::Producer* producer)
 {
-    beginResetModel();
+    if (MLT.isPlaylist()) return;
 
+    beginResetModel();
+    m_event.reset();
     m_producer.reset(new Mlt::Producer(producer ? producer : MLT.producer()));
     m_metaList.clear();
     m_mltIndexMap.clear();
 
-    if (MLT.isPlaylist()) return;
-    if (m_producer && m_producer->is_valid()) {
+    if (!m_producer.isNull() && m_producer->is_valid()) {
+        Mlt::Event* event = m_producer->listen("service-changed", this, (mlt_listener)AttachedFiltersModel::producerChanged);
+        m_event.reset(event);
         int count = m_producer->filter_count();
         for (int i = 0; i < count; i++) {
             Mlt::Filter* filter = m_producer->filter(i);
@@ -354,4 +373,9 @@ void AttachedFiltersModel::reset(Mlt::Producer* producer)
 
     endResetModel();
     emit readyChanged();
+}
+
+void AttachedFiltersModel::producerChanged(mlt_properties, AttachedFiltersModel* model)
+{
+    model->reset(model->m_producer.data());
 }

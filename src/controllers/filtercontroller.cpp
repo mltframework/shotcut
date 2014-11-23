@@ -37,6 +37,7 @@ FilterController::FilterController(QObject* parent) : QObject(parent),
     m_future = QtConcurrent::run(this, &FilterController::loadFilterMetadata);
 
     connect(&m_attachedModel, SIGNAL(changed()), this, SLOT(handleAttachedModelChange()));
+    connect(&m_attachedModel, SIGNAL(modelAboutToBeReset()), this, SLOT(handleAttachedModelAboutToReset()));
     connect(&m_attachedModel, SIGNAL(rowsRemoved(const QModelIndex&,int,int)), this, SLOT(handleAttachedRowsRemoved(const QModelIndex&,int,int)));
     connect(&m_attachedModel, SIGNAL(rowsInserted(const QModelIndex&,int,int)), this, SLOT(handleAttachedRowsInserted(const QModelIndex&,int,int)));
     connect(&m_attachedModel, SIGNAL(duplicateAddFailed(int)), this, SLOT(handleAttachDuplicateFailed(int)));
@@ -107,9 +108,7 @@ AttachedFiltersModel* FilterController::attachedModel()
 
 void FilterController::setProducer(Mlt::Producer *producer)
 {
-    m_currentFilter.reset(NULL);
-    m_attachedModel.reset(producer);
-    setCurrentFilter(-1);
+    m_attachedModel.setProducer(producer);
 }
 
 void FilterController::setCurrentFilter(int attachedIndex)
@@ -133,6 +132,11 @@ void FilterController::setCurrentFilter(int attachedIndex)
 void FilterController::handleAttachedModelChange()
 {
     MLT.refreshConsumer();
+}
+
+void FilterController::handleAttachedModelAboutToReset()
+{
+    setCurrentFilter(-1);
 }
 
 void FilterController::handleAttachedRowsRemoved(const QModelIndex&, int first, int)

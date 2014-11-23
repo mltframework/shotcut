@@ -22,6 +22,7 @@
 #include <QAbstractListModel>
 #include <MltFilter.h>
 #include <MltProducer.h>
+#include <MltEvent.h>
 
 class QmlMetadata;
 
@@ -39,6 +40,7 @@ public:
     bool isReady();
     Mlt::Filter* getFilter(int row) const;
     QmlMetadata* getMetadata(int row) const;
+    void setProducer(Mlt::Producer* producer = 0);
 
     // QAbstractListModel Implementation
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
@@ -60,12 +62,15 @@ public slots:
     void add(QmlMetadata* meta);
     void remove(int row);
     bool move(int fromRow, int toRow);
-    void reset(Mlt::Producer *producer = 0);
 
 private:
+    static void producerChanged(mlt_properties owner, AttachedFiltersModel* model);
+    void reset(Mlt::Producer *producer = 0);
+
     int m_dropRow;
     int m_removeRow;
     QScopedPointer<Mlt::Producer> m_producer;
+    QScopedPointer<Mlt::Event> m_event;
     typedef QList<QmlMetadata*> MetadataList;
     MetadataList m_metaList;
     typedef QList<int> IndexMap;
