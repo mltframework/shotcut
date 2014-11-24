@@ -76,7 +76,7 @@ void FilterController::loadFilterMetadata() {
 QmlMetadata *FilterController::metadataForService(Mlt::Service *service)
 {
     m_future.waitForFinished();
-    QmlMetadata* meta = NULL;
+    QmlMetadata* meta = 0;
     int rowCount = m_metadataModel.rowCount();
     QString uniqueId = service->get("shotcut:filter");
 
@@ -119,7 +119,7 @@ void FilterController::setCurrentFilter(int attachedIndex)
     m_currentFilterIndex = attachedIndex;
 
     QmlMetadata* meta = m_attachedModel.getMetadata(m_currentFilterIndex);
-    QmlFilter* filter = NULL;
+    QmlFilter* filter = 0;
     if (meta) {
         Mlt::Filter* mltFilter = m_attachedModel.getFilter(m_currentFilterIndex);
         filter = new QmlFilter(mltFilter, meta);

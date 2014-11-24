@@ -54,7 +54,7 @@ FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* att
     QmlUtilities::setCommonProperties(&m_qview);
     m_qview.rootContext()->setContextProperty("metadatamodel", metadataModel);
     m_qview.rootContext()->setContextProperty("attachedfiltersmodel", attachedModel);
-    setCurrentFilter(NULL, NULL, -1);
+    setCurrentFilter(0, 0, -1);
     resetQview();
 
     qDebug() << "end";

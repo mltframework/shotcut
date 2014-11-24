@@ -116,5 +116,5 @@ QmlMetadata* MetadataModel::get(int index) const
     if( index < m_list.size() ) {
         return m_list[index];
     }
-    return NULL;
+    return 0;
 }

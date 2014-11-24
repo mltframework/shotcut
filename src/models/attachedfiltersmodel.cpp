@@ -26,7 +26,7 @@
 
 static bool sortIsLess (const QmlMetadata* lhs, const QmlMetadata* rhs) {
     // Sort order is: GPU, Video, Audio
-    // If metadata is NULL, assume it is video.
+    // If there is no metadata, assume the filter is video.
     if (!lhs && !rhs) {
         return false;
     } else if (!lhs) {
@@ -53,7 +53,7 @@ AttachedFiltersModel::AttachedFiltersModel(QObject *parent)
 
 bool AttachedFiltersModel::isReady()
 {
-    return m_producer != NULL;
+    return m_producer;
 }
 
 Mlt::Filter* AttachedFiltersModel::getFilter(int row) const
@@ -70,7 +70,7 @@ QmlMetadata* AttachedFiltersModel::getMetadata(int row) const
     if (row < m_metaList.count() && row >= 0) {
         return m_metaList[row];
     }
-    return NULL;
+    return 0;
 }
 
 void AttachedFiltersModel::setProducer(Mlt::Producer* producer)
@@ -237,7 +237,7 @@ bool AttachedFiltersModel::moveRows(const QModelIndex & sourceParent, int source
 
 void AttachedFiltersModel::add(QmlMetadata* meta)
 {
-    if (meta->allowMultiple() == false) {
+    if (!meta->allowMultiple()) {
         for (int i = 0; i < m_metaList.count(); i++) {
             const QmlMetadata* attachedMeta = m_metaList[i];
             if (attachedMeta && meta->uniqueId() == attachedMeta->uniqueId()) {
