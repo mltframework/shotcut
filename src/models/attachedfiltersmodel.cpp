@@ -75,8 +75,7 @@ QmlMetadata* AttachedFiltersModel::getMetadata(int row) const
 
 void AttachedFiltersModel::setProducer(Mlt::Producer* producer)
 {
-    if ((!producer && m_producer.isNull()) ||
-        (producer && !m_producer.isNull() && producer->get_parent() == m_producer->get_parent())) {
+    if (producer && !m_producer.isNull() && producer->get_parent() == m_producer->get_parent()) {
         // No change
         return;
     }
