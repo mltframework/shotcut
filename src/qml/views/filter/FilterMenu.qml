@@ -107,7 +107,7 @@ Loader {
                     Rectangle {
                         id: separatorBar
                         anchors.horizontalCenter: parent.horizontalCenter
-                        width: parent.width - 20
+                        width: parent.width
                         height: 1
                         color: Qt.darker(activePalette.window, 1.5)
                     }
@@ -115,6 +115,7 @@ Loader {
                     RowLayout {
                         id: toolBar
                         height: 30
+                        width: parent.width
                         
                         ExclusiveGroup { id: typeGroup }
                         
@@ -180,6 +181,19 @@ Loader {
                                     menuListView.showType = Logic.visibility.AUDIO
                                 }
                             }
+                        }
+                        Item {
+                            Layout.fillWidth: true
+                        }
+                        ToolButton {
+                            id: closeButton
+                            visible: application.OS === 'OS X'
+                            implicitWidth: 28
+                            implicitHeight: 24
+                            iconName: 'window-close'
+                            iconSource: 'qrc:///icons/oxygen/32x32/actions/window-close.png'
+                            tooltip: qsTr('Close menu')
+                            onClicked: sourceComponent = null
                         }
                     }
                 }
