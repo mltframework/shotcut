@@ -127,7 +127,7 @@ Loader {
                             checked: true
                             iconName: 'bookmarks'
                             iconSource: 'qrc:///icons/oxygen/32x32/places/bookmarks.png'
-                            tooltip: qsTr('Show Favorite Filters')
+                            tooltip: qsTr('Show favorite filters')
                             exclusiveGroup: typeGroup
                             onCheckedChanged: {
                                 if (checked) {
@@ -144,7 +144,7 @@ Loader {
                             checkable: true
                             iconName: 'cpu'
                             iconSource: 'qrc:///icons/oxygen/32x32/devices/cpu.png'
-                            tooltip: qsTr('Show GPU Filters')
+                            tooltip: qsTr('Show GPU filters')
                             exclusiveGroup: typeGroup
                             onCheckedChanged: {
                                 if (checked) {
@@ -159,7 +159,7 @@ Loader {
                             checkable: true
                             iconName: 'video-television'
                             iconSource: 'qrc:///icons/oxygen/32x32/devices/video-television.png'
-                            tooltip: qsTr('Show Video Filters')
+                            tooltip: qsTr('Show video filters')
                             exclusiveGroup: typeGroup
                             onCheckedChanged: {
                                 if (checked) {
@@ -174,7 +174,7 @@ Loader {
                             checkable: true
                             iconName: 'speaker'
                             iconSource: 'qrc:///icons/oxygen/32x32/actions/speaker.png'
-                            tooltip: qsTr('Show Audio Filters')
+                            tooltip: qsTr('Show audio filters')
                             exclusiveGroup: typeGroup
                             onCheckedChanged: {
                                 if (checked) {

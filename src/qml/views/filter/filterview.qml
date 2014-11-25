@@ -77,7 +77,7 @@ Rectangle {
             iconName: 'list-add'
             enabled: attachedfiltersmodel.ready
             opacity: enabled ? 1.0 : 0.5
-            tooltip: qsTr('Add a Filter')
+            tooltip: qsTr('Add a filter')
             onClicked: filterMenu.popup(addButton)
         }
         Button {
@@ -89,7 +89,7 @@ Rectangle {
             iconName: 'list-remove'
             enabled: selectedIndex > -1 ? true : false
             opacity: enabled ? 1.0 : 0.5
-            tooltip: qsTr('Remove Selected Filter')
+            tooltip: qsTr('Remove selected filter')
             onClicked: {
                 attachedfiltersmodel.remove(selectedIndex)
             }
