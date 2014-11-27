@@ -2299,7 +2299,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.ui" line="331"/>
         <source>&amp;Undo</source>
-        <translation>%Cofnij</translation>
+        <translation>&amp;Cofnij</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="340"/>
