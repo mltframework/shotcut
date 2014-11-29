@@ -1157,6 +1157,8 @@ void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
         roles << DurationRole;
         roles << OutPointRole;
         emit dataChanged(modelIndex, modelIndex, roles);
+        QThreadPool::globalInstance()->start(
+            new AudioLevelsTask(clip->parent(), this, modelIndex));
 
         beginInsertRows(index(trackIndex), clipIndex + 1, clipIndex + 1);
         if (clip->is_blank()) {
