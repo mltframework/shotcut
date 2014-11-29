@@ -1193,6 +1193,9 @@ void MultitrackModel::joinClips(int trackIndex, int clipIndex)
         roles << DurationRole;
         roles << OutPointRole;
         emit dataChanged(modelIndex, modelIndex, roles);
+        QScopedPointer<Mlt::Producer> clip(playlist.get_clip(clipIndex));
+        QThreadPool::globalInstance()->start(
+            new AudioLevelsTask(clip->parent(), this, modelIndex));
 
         beginRemoveRows(index(trackIndex), clipIndex + 1, clipIndex + 1);
         playlist.remove(clipIndex + 1);
