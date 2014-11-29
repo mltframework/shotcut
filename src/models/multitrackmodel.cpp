@@ -1151,11 +1151,32 @@ void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
         int out = clip->get_out();
         int duration = position - playlist.clip_start(clipIndex);
 
+        // Remove fades that are usually not desired after split.
+        QScopedPointer<Mlt::Filter> filter(getFilter("fadeOutVolume", &clip->parent()));
+        if (filter && filter->is_valid())
+            clip->parent().detach(*filter);
+        filter.reset(getFilter("fadeOutBrightness", &clip->parent()));
+        if (filter && filter->is_valid())
+            clip->parent().detach(*filter);
+        filter.reset(getFilter("fadeOutMovit", &clip->parent()));
+        if (filter && filter->is_valid())
+            clip->parent().detach(*filter);
+        filter.reset(getFilter("fadeInVolume", &producer));
+        if (filter && filter->is_valid())
+            producer.detach(*filter);
+        filter.reset(getFilter("fadeInBrightness", &producer));
+        if (filter && filter->is_valid())
+            producer.detach(*filter);
+        filter.reset(getFilter("fadeInMovit", &producer));
+        if (filter && filter->is_valid())
+            producer.detach(*filter);
+
         playlist.resize_clip(clipIndex, in, in + duration - 1);
         QModelIndex modelIndex = createIndex(clipIndex, 0, trackIndex);
         QVector<int> roles;
         roles << DurationRole;
         roles << OutPointRole;
+        roles << FadeOutRole;
         emit dataChanged(modelIndex, modelIndex, roles);
         QThreadPool::globalInstance()->start(
             new AudioLevelsTask(clip->parent(), this, modelIndex));
@@ -1187,13 +1208,26 @@ void MultitrackModel::joinClips(int trackIndex, int clipIndex)
         int in = info->frame_in;
         int duration = info->frame_count + playlist.clip_length(clipIndex + 1);
 
+        // Move a fade out on the right clip onto the left clip.
+        QScopedPointer<Mlt::Producer> clip(playlist.get_clip(clipIndex));
+        info.reset(playlist.clip_info(clipIndex + 1));
+        QScopedPointer<Mlt::Filter> filter(getFilter("fadeOutVolume", info->producer));
+        if (filter && filter->is_valid())
+            clip->parent().attach(*filter);
+        filter.reset(getFilter("fadeOutBrightness", info->producer));
+        if (filter && filter->is_valid())
+            clip->parent().attach(*filter);
+        filter.reset(getFilter("fadeOutMovit", info->producer));
+        if (filter && filter->is_valid())
+            clip->parent().attach(*filter);
+
         playlist.resize_clip(clipIndex, in, in + duration - 1);
         QModelIndex modelIndex = createIndex(clipIndex, 0, trackIndex);
         QVector<int> roles;
         roles << DurationRole;
         roles << OutPointRole;
+        roles << FadeOutRole;
         emit dataChanged(modelIndex, modelIndex, roles);
-        QScopedPointer<Mlt::Producer> clip(playlist.get_clip(clipIndex));
         QThreadPool::globalInstance()->start(
             new AudioLevelsTask(clip->parent(), this, modelIndex));
 
