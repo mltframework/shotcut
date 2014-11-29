@@ -1798,7 +1798,7 @@ export FREI0R_PATH="\$INSTALL_DIR/lib/frei0r-1"
 export MLT_MOVIT_PATH="\$INSTALL_DIR/share/movit"
 export QT_PLUGIN_PATH="\$INSTALL_DIR/lib/qt5"
 export QML2_IMPORT_PATH="\$INSTALL_DIR/lib/qml"
-"\$INSTALL_DIR/bin/melt" \$@
+"\$INSTALL_DIR/bin/melt" "\$@"
 End-of-melt-wrapper
   if test 0 != $? ; then
     die "Unable to create wrapper script"
@@ -1821,7 +1821,7 @@ export FREI0R_PATH="\$INSTALL_DIR/lib/frei0r-1"
 export MLT_MOVIT_PATH="\$INSTALL_DIR/share/movit"
 export QT_PLUGIN_PATH="\$INSTALL_DIR/lib/qt5"
 export QML2_IMPORT_PATH="\$INSTALL_DIR/lib/qml"
-"\$INSTALL_DIR/bin/shotcut" \$@
+"\$INSTALL_DIR/bin/shotcut" "\$@"
 End-of-shotcut-wrapper
   if test 0 != $? ; then
     die "Unable to create wrapper script"
