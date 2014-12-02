@@ -66,6 +66,7 @@ public slots:
 private:
     static void producerChanged(mlt_properties owner, AttachedFiltersModel* model);
     void reset(Mlt::Producer *producer = 0);
+    int indexForRow(int row) const;
 
     int m_dropRow;
     int m_removeRow;
