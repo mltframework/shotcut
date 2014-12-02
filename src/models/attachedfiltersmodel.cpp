@@ -266,7 +266,7 @@ void AttachedFiltersModel::add(QmlMetadata* meta)
 
         // Calculate the MLT index for the new filter.
         if (m_mltIndexMap.count() == 0) {
-            mltIndex = m_mltIndexMap.count();
+            mltIndex = m_producer->filter_count();
         } else if (insertIndex == 0) {
             mltIndex = m_mltIndexMap[0];
         } else {
