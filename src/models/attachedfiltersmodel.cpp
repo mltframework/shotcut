@@ -229,6 +229,7 @@ bool AttachedFiltersModel::moveRows(const QModelIndex & sourceParent, int source
             m_mltIndexMap.insert(destinationRow, mltDstIndex);
             m_metaList.move(sourceRow, destinationRow);
             endMoveRows();
+            emit changed();
             return true;
         }
     }
