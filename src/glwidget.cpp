@@ -81,7 +81,7 @@ GLWidget::GLWidget(QObject *parent)
     }
 
     connect(this, SIGNAL(sceneGraphInitialized()), SLOT(initializeGL()), Qt::DirectConnection);
-    connect(this, SIGNAL(sceneGraphInitialized()), SLOT(setInitialScene()), Qt::QueuedConnection);
+    connect(this, SIGNAL(sceneGraphInitialized()), SLOT(setBlankScene()), Qt::QueuedConnection);
     connect(this, SIGNAL(beforeRendering()), SLOT(paintGL()), Qt::DirectConnection);
     qDebug() << "end";
 }
@@ -150,7 +150,7 @@ void GLWidget::initializeGL()
     qDebug() << "end";
 }
 
-void GLWidget::setInitialScene()
+void GLWidget::setBlankScene()
 {
     qDebug();
     setSource(QmlUtilities::blankVui());
@@ -626,10 +626,11 @@ void GLWidget::setOffsetY(int y)
 
 void GLWidget::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta)
 {
-    setSource(QUrl());
     rootContext()->setContextProperty("filter", filter);
     if (meta && QFile::exists(meta->vuiFilePath().toLocalFile())) {
         setSource(meta->vuiFilePath());
+    } else {
+        setBlankScene();
     }
 }
 

@@ -137,7 +137,7 @@ private:
 
 private slots:
     void initializeGL();
-    void setInitialScene();
+    void setBlankScene();
     void resizeGL(int width, int height);
     void updateTexture(GLuint yName, GLuint uName, GLuint vName);
     void paintGL();
