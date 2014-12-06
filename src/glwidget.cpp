@@ -72,7 +72,6 @@ GLWidget::GLWidget(QObject *parent)
     engine()->addImportPath(importPath.path());
     QmlUtilities::setCommonProperties((QQuickView*)this);
     rootContext()->setContextProperty("video", this);
-    setSource(QmlUtilities::blankVui());
 
     if (Settings.playerGPU())
         m_glslManager = new Filter(profile(), "glsl.manager");
@@ -82,6 +81,7 @@ GLWidget::GLWidget(QObject *parent)
     }
 
     connect(this, SIGNAL(sceneGraphInitialized()), SLOT(initializeGL()), Qt::DirectConnection);
+    connect(this, SIGNAL(sceneGraphInitialized()), SLOT(setInitialScene()), Qt::QueuedConnection);
     connect(this, SIGNAL(beforeRendering()), SLOT(paintGL()), Qt::DirectConnection);
     qDebug() << "end";
 }
@@ -148,6 +148,12 @@ void GLWidget::initializeGL()
     m_condition.wakeAll();
     m_isInitialized = true;
     qDebug() << "end";
+}
+
+void GLWidget::setInitialScene()
+{
+    qDebug();
+    setSource(QmlUtilities::blankVui());
 }
 
 void GLWidget::resizeGL(int width, int height)

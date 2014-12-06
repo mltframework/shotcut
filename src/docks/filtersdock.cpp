@@ -55,7 +55,7 @@ FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* att
     m_qview.rootContext()->setContextProperty("metadatamodel", metadataModel);
     m_qview.rootContext()->setContextProperty("attachedfiltersmodel", attachedModel);
     setCurrentFilter(0, 0, -1);
-    resetQview();
+    connect(&m_qview, SIGNAL(sceneGraphInitialized()), SLOT(resetQview()));
 
     qDebug() << "end";
 }
@@ -94,6 +94,7 @@ bool FiltersDock::event(QEvent *event)
 
 void FiltersDock::resetQview()
 {
+    qDebug();
     if (m_qview.status() != QQuickView::Null) {
         QObject* root = m_qview.rootObject();
         QObject::disconnect(root, SIGNAL(currentFilterRequested(int)),

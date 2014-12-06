@@ -28,10 +28,12 @@ DirectShowVideoWidget::DirectShowVideoWidget(QWidget *parent) :
     ui(new Ui::DirectShowVideoWidget)
 {
     ui->setupUi(this);
+#ifdef Q_OS_WIN
     foreach (const QByteArray &deviceName, QCamera::availableDevices())
         ui->videoCombo->addItem(QCamera::deviceDescription(deviceName));
     foreach (const QAudioDeviceInfo &deviceInfo, QAudioDeviceInfo::availableDevices(QAudio::AudioInput))
         ui->audioCombo->addItem(deviceInfo.deviceName());
+#endif
 }
 
 DirectShowVideoWidget::~DirectShowVideoWidget()

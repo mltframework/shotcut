@@ -47,8 +47,10 @@ public slots:
 protected:
     bool event(QEvent *event);
 
-private:
+private slots:
     void resetQview();
+
+private:
     QQuickView m_qview;
 };
 
