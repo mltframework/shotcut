@@ -93,6 +93,7 @@ public slots:
     void setZoom(float zoom);
     void setOffsetX(int x);
     void setOffsetY(int y);
+    void setBlankScene();
     void setCurrentFilter(QmlFilter* filter, QmlMetadata* meta);
 
 signals:
@@ -137,7 +138,6 @@ private:
 
 private slots:
     void initializeGL();
-    void setBlankScene();
     void resizeGL(int width, int height);
     void updateTexture(GLuint yName, GLuint uName, GLuint vName);
     void paintGL();

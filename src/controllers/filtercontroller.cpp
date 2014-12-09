@@ -125,6 +125,7 @@ void FilterController::setCurrentFilter(int attachedIndex)
         filter = new QmlFilter(mltFilter, meta);
     }
 
+    emit currentFilterAboutToChange();
     emit currentFilterChanged(filter, meta, m_currentFilterIndex);
     m_currentFilter.reset(filter);
 }
@@ -156,6 +157,7 @@ void FilterController::handleAttachedRowsInserted(const QModelIndex&, int first,
     QmlMetadata* meta = m_attachedModel.getMetadata(m_currentFilterIndex);
     QmlFilter* filter = new QmlFilter(mltFilter, meta);
     filter->setIsNew(true);
+    emit currentFilterAboutToChange();
     emit currentFilterChanged(filter, meta, m_currentFilterIndex);
     m_currentFilter.reset(filter);
 }

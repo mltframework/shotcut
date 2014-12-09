@@ -60,6 +60,12 @@ FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* att
     qDebug() << "end";
 }
 
+void FiltersDock::clearCurrentFilter()
+{
+    m_qview.rootContext()->setContextProperty("metadata", 0);
+    QMetaObject::invokeMethod(m_qview.rootObject(), "clearCurrentFilter");
+}
+
 void FiltersDock::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta, int index)
 {
     m_qview.rootContext()->setContextProperty("filter", filter);

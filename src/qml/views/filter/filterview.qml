@@ -26,6 +26,10 @@ Rectangle {
     
     signal currentFilterRequested(int attachedIndex)
     
+    function clearCurrentFilter() {
+        filterConfig.source = ""
+    }
+    
     function setCurrentFilter(index) {
         attachedFilters.setCurrentFilter(index)
         removeButton.selectedIndex = index

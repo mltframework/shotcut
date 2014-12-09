@@ -39,6 +39,7 @@ public:
     QmlMetadata* metadataForService(Mlt::Service *service);
 
 signals:
+    void currentFilterAboutToChange();
     void currentFilterChanged(QmlFilter* filter, QmlMetadata* meta, int index);
     void newMetadataFound(QmlMetadata* meta);
     void statusChanged(QString);
