@@ -1146,7 +1146,7 @@ void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
 
         // Make copy of clip.
         Mlt::Producer producer(MLT.profile(), "xml-string",
-            MLT.saveXML("xml-string", &clip->parent()).toUtf8().constData());
+            MLT.saveXML("string", &clip->parent()).toUtf8().constData());
         int in = clip->get_in();
         int out = clip->get_out();
         int duration = position - playlist.clip_start(clipIndex);
