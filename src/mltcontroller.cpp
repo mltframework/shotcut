@@ -390,27 +390,43 @@ void Controller::refreshConsumer()
         m_consumer->set("refresh", 1);
 }
 
-QString Controller::saveXML(const QString& filename, Service* service)
+void Controller::saveXML(const QString& filename, Service* service)
 {
     Consumer c(profile(), "xml", filename.toUtf8().constData());
+    Service s(service? service->get_service() : m_producer->get_service());
+    if (s.is_valid()) {
+        int ignore = s.get_int("ignore_points");
+        if (ignore)
+            s.set("ignore_points", 0);
+        c.set("time_format", "clock");
+        c.set("no_meta", 1);
+        c.set("store", "shotcut");
+        c.set("no_root", 1);
+        c.set("root", QFileInfo(filename).absolutePath().toUtf8().constData());
+        c.connect(s);
+        c.start();
+        if (ignore)
+            s.set("ignore_points", ignore);
+    }
+}
+
+QString Controller::XML(Service* service)
+{
+    static const char* propertyName = "string";
+    Consumer c(profile(), "xml", propertyName);
     Service s(service? service->get_service() : m_producer->get_service());
     if (!s.is_valid())
         return "";
     int ignore = s.get_int("ignore_points");
     if (ignore)
         s.set("ignore_points", 0);
-    c.set("time_format", "clock");
     c.set("no_meta", 1);
     c.set("store", "shotcut");
-    if (filename != "string") {
-        c.set("no_root", 1);
-        c.set("root", QFileInfo(filename).absolutePath().toUtf8().constData());
-    }
     c.connect(s);
     c.start();
     if (ignore)
         s.set("ignore_points", ignore);
-    return QString::fromUtf8(c.get(filename.toUtf8().constData()));
+    return QString::fromUtf8(c.get(propertyName));
 }
 
 int Controller::consumerChanged()
@@ -598,7 +614,7 @@ void Controller::restart()
     if (m_producer && m_producer->is_valid() && Settings.playerGPU()) {
         const char* position = m_consumer->frames_to_time(m_consumer->position());
         double speed = m_producer->get_speed();
-        QString xml = saveXML("string");
+        QString xml = XML();
         close();
         if (!setProducer(new Mlt::Producer(profile(), "xml-string", xml.toUtf8().constData()))) {
             m_producer->seek(position);

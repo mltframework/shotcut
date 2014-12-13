@@ -105,7 +105,8 @@ public:
     void onWindowResize();
     virtual void seek(int position);
     void refreshConsumer();
-    QString saveXML(const QString& filename, Service* service = 0);
+    void saveXML(const QString& filename, Service* service = 0);
+    QString XML(Service* service = 0);
     int consumerChanged();
     void setProfile(const QString& profile_name);
     QString resource() const;

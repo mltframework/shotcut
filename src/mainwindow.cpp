@@ -1945,7 +1945,7 @@ public:
                     p.set("length", qRound(MLT.profile().fps() * 600));
                     p.set("out", qRound(MLT.profile().fps() * Settings.imageDuration()) - 1);
                 }
-                MAIN.undoStack()->push(new Playlist::AppendCommand(*model, MLT.saveXML("string", &p)));
+                MAIN.undoStack()->push(new Playlist::AppendCommand(*model, MLT.XML(&p)));
             }
         }
     }

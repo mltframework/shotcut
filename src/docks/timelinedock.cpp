@@ -182,7 +182,7 @@ void TimelineDock::append(int trackIndex)
             trackIndex = m_quickView.rootObject()->property("currentTrack").toInt();
         MAIN.undoStack()->push(
             new Timeline::AppendCommand(m_model, trackIndex,
-                MLT.saveXML("string", MLT.isClip()? 0 : MLT.savedProducer())));
+                MLT.XML(MLT.isClip()? 0 : MLT.savedProducer())));
     }
 }
 
@@ -194,7 +194,7 @@ void TimelineDock::remove(int trackIndex, int clipIndex)
         clipIndex = m_quickView.rootObject()->property("currentClip").toInt();
     Mlt::Producer* clip = getClip(trackIndex, clipIndex);
     if (clip) {
-        QString xml = MLT.saveXML("string", clip);
+        QString xml = MLT.XML(clip);
         delete clip;
         QModelIndex idx = m_model.index(clipIndex, 0, m_model.index(trackIndex));
         int position = m_model.data(idx, MultitrackModel::StartRole).toInt();
@@ -211,7 +211,7 @@ void TimelineDock::lift(int trackIndex, int clipIndex)
         clipIndex = m_quickView.rootObject()->property("currentClip").toInt();
     Mlt::Producer* clip = getClip(trackIndex, clipIndex);
     if (clip) {
-        QString xml = MLT.saveXML("string", clip);
+        QString xml = MLT.XML(clip);
         delete clip;
         QModelIndex idx = m_model.index(clipIndex, 0, m_model.index(trackIndex));
         int position = m_model.data(idx, MultitrackModel::StartRole).toInt();
@@ -261,7 +261,7 @@ void TimelineDock::openClip(int trackIndex, int clipIndex)
         clipIndex = m_quickView.rootObject()->property("currentClip").toInt();
     QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
     if (info) {
-        QString xml = MLT.saveXML("string", info->producer);
+        QString xml = MLT.XML(info->producer);
         Mlt::Producer* p = new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
         QString service = p->get("mlt_service");
         if (service == "pixbuf" || service == "qimage")
@@ -364,7 +364,7 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml)
 {
     if (MLT.isSeekableClip() || MLT.savedProducer() || !xml.isEmpty()) {
         QString xmlToUse = !xml.isEmpty()? xml
-            : MLT.saveXML("string", MLT.isClip()? 0 : MLT.savedProducer());
+            : MLT.XML(MLT.isClip()? 0 : MLT.savedProducer());
         if (trackIndex < 0)
             trackIndex = m_quickView.rootObject()->property("currentTrack").toInt();
         if (position < 0)
@@ -378,7 +378,7 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml)
 {
     if (MLT.isSeekableClip() || MLT.savedProducer() || !xml.isEmpty()) {
         QString xmlToUse = !xml.isEmpty()? xml
-            : MLT.saveXML("string", MLT.isClip()? 0 : MLT.savedProducer());
+            : MLT.XML(MLT.isClip()? 0 : MLT.savedProducer());
         if (trackIndex < 0)
             trackIndex = m_quickView.rootObject()->property("currentTrack").toInt();
         if (position < 0)

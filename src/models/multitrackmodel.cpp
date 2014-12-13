@@ -977,7 +977,7 @@ QString MultitrackModel::overwrite(int trackIndex, Mlt::Producer& clip, int posi
         emit modified();
         emit seeked(playlist.clip_start(targetIndex) + playlist.clip_length(targetIndex));
     }
-    return MLT.saveXML("string", &result);
+    return MLT.XML(&result);
 }
 
 int MultitrackModel::insertClip(int trackIndex, Mlt::Producer &clip, int position)
@@ -1011,7 +1011,7 @@ int MultitrackModel::insertClip(int trackIndex, Mlt::Producer &clip, int positio
             endInsertRows();
             result = playlist.count() - 1;
         } else {
-//            qDebug() << __FUNCTION__ << "inserting" << position << MLT.saveXML("string", &clip);
+//            qDebug() << __FUNCTION__ << "inserting" << position << MLT.XML(&clip);
             int targetIndex = playlist.get_clip_index_at(position);
         
             if (position > playlist.clip_start(targetIndex)) {
@@ -1146,7 +1146,7 @@ void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
 
         // Make copy of clip.
         Mlt::Producer producer(MLT.profile(), "xml-string",
-            MLT.saveXML("string", &clip->parent()).toUtf8().constData());
+            MLT.XML(&clip->parent()).toUtf8().constData());
         int in = clip->get_in();
         int out = clip->get_out();
         int duration = position - playlist.clip_start(clipIndex);

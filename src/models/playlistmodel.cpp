@@ -323,7 +323,7 @@ QMimeData *PlaylistModel::mimeData(const QModelIndexList &indexes) const
     if (info) {
         Mlt::Producer* producer = info->producer;
         producer->set_in_and_out(info->frame_in, info->frame_out);
-        mimeData->setData(Mlt::XmlMimeType, MLT.saveXML("string", producer).toUtf8());
+        mimeData->setData(Mlt::XmlMimeType, MLT.XML(producer).toUtf8());
         producer->set_in_and_out(0, -1);
         delete info;
     }

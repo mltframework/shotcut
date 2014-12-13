@@ -172,7 +172,7 @@ void PlaylistDock::on_actionInsertCut_triggered()
 {
     if (MLT.isClip() || MLT.savedProducer()) {
         QMimeData mimeData;
-        mimeData.setData(Mlt::XmlMimeType, MLT.saveXML("string",
+        mimeData.setData(Mlt::XmlMimeType, MLT.XML(
             MLT.isClip()? 0 : MLT.savedProducer()).toUtf8());
         onDropped(&mimeData, ui->tableView->currentIndex().row());
     }
@@ -184,7 +184,7 @@ void PlaylistDock::on_actionAppendCut_triggered()
         if (!MLT.isClip())
             emit showStatusMessage(tr("You cannot insert a playlist into a playlist!"));
         else if (MLT.isSeekable())
-            MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.saveXML("string")));
+            MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.XML()));
         else {
             DurationDialog dialog(this);
             dialog.setDuration(MLT.profile().fps() * 5);
@@ -192,7 +192,7 @@ void PlaylistDock::on_actionAppendCut_triggered()
                 MLT.producer()->set_in_and_out(0, dialog.duration() - 1);
                 if (MLT.producer()->get("mlt_service") && !strcmp(MLT.producer()->get("mlt_service"), "avformat"))
                     MLT.producer()->set("mlt_service", "avformat-novalidate");
-                MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.saveXML("string")));
+                MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.XML()));
             }
         }
     }
@@ -231,7 +231,7 @@ void PlaylistDock::on_actionUpdate_triggered()
     if (info->resource && MLT.producer()->get("resource")
             && !strcmp(info->resource, MLT.producer()->get("resource"))) {
         if (MLT.isSeekable()) {
-            MAIN.undoStack()->push(new Playlist::UpdateCommand(m_model, MLT.saveXML("string"), index.row()));
+            MAIN.undoStack()->push(new Playlist::UpdateCommand(m_model, MLT.XML(), index.row()));
         }
         else {
             // change the duration
@@ -241,7 +241,7 @@ void PlaylistDock::on_actionUpdate_triggered()
                 MLT.producer()->set_in_and_out(0, dialog.duration() - 1);
                 if (MLT.producer()->get("mlt_service") && !strcmp(MLT.producer()->get("mlt_service"), "avformat"))
                     MLT.producer()->set("mlt_service", "avformat-novalidate");
-                MAIN.undoStack()->push(new Playlist::UpdateCommand(m_model, MLT.saveXML("string"), index.row()));
+                MAIN.undoStack()->push(new Playlist::UpdateCommand(m_model, MLT.XML(), index.row()));
             }
         }
     }
@@ -272,7 +272,7 @@ void PlaylistDock::on_actionOpen_triggered()
     if (!index.isValid() || !m_model.playlist()) return;
     Mlt::ClipInfo* i = m_model.playlist()->clip_info(index.row());
     if (i) {
-        QString xml = MLT.saveXML("string", i->producer);
+        QString xml = MLT.XML(i->producer);
         Mlt::Producer* p = new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
         QString service = p->get("mlt_service");
         if (service == "pixbuf" || service == "qimage")
@@ -312,7 +312,7 @@ void PlaylistDock::on_tableView_doubleClicked(const QModelIndex &index)
         if (qApp->keyboardModifiers() == Qt::ShiftModifier) {
             emit itemActivated(i->start);
         } else {
-            QString xml = MLT.saveXML("string", i->producer);
+            QString xml = MLT.XML(i->producer);
             Mlt::Producer* p = new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
             QString service = p->get("mlt_service");
             if (service == "pixbuf" || service == "qimage")
@@ -373,9 +373,9 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
             Mlt::Producer p(MLT.profile(), url.path().toUtf8().constData());
             if (p.is_valid()) {
                 if (row == -1)
-                    MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.saveXML("string", &p)));
+                    MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.XML(&p)));
                 else
-                    MAIN.undoStack()->push(new Playlist::InsertCommand(m_model, MLT.saveXML("string", &p), row));
+                    MAIN.undoStack()->push(new Playlist::InsertCommand(m_model, MLT.XML(&p), row));
             }
         }
     }
@@ -396,9 +396,9 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
                     if (MLT.producer()->get("mlt_service") && !strcmp(MLT.producer()->get("mlt_service"), "avformat"))
                         MLT.producer()->set("mlt_service", "avformat-novalidate");
                     if (row == -1)
-                        MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.saveXML("string")));
+                        MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.XML()));
                     else
-                        MAIN.undoStack()->push(new Playlist::InsertCommand(m_model, MLT.saveXML("string"), row));
+                        MAIN.undoStack()->push(new Playlist::InsertCommand(m_model, MLT.XML(), row));
                 }
             }
         }
@@ -470,7 +470,7 @@ UpdateCommand::UpdateCommand(PlaylistModel& model, const QString& xml, int row, 
     , m_row(row)
 {
     setText(QObject::tr("Update playlist item %1").arg(row + 1));
-    m_oldXml = MLT.saveXML("string", m_model.playlist()->get_clip(m_row));
+    m_oldXml = MLT.XML(m_model.playlist()->get_clip(m_row));
 }
 
 void UpdateCommand::redo()
@@ -490,7 +490,7 @@ RemoveCommand::RemoveCommand(PlaylistModel& model, int row, QUndoCommand *parent
     , m_model(model)
     , m_row(row)
 {
-    m_xml = MLT.saveXML("string", m_model.playlist()->get_clip(m_row));
+    m_xml = MLT.XML(m_model.playlist()->get_clip(m_row));
     setText(QObject::tr("Remove playlist item %1").arg(row + 1));
 }
 
@@ -509,7 +509,7 @@ ClearCommand::ClearCommand(PlaylistModel& model, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
 {
-    m_xml = MLT.saveXML("string", m_model.playlist());
+    m_xml = MLT.XML(m_model.playlist());
     setText(QObject::tr("Clear playlist"));
 }
 
