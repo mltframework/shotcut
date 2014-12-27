@@ -3473,7 +3473,7 @@ coupe sélectionnée.</translation>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="227"/>
         <source>Update</source>
-        <translation>Mis à jour</translation>
+        <translation>Mettre à jour</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="232"/>
