@@ -63,7 +63,7 @@ RowLayout {
         color: value
         onAccepted: {
             if (alpha) {
-                var alphaHex = (255 * currentColor.a).toString(16)
+                var alphaHex = Math.round(255 * currentColor.a).toString(16)
                 if (alphaHex.length === 1)
                     alphaHex = '0' + alphaHex
                 value = '#' + alphaHex + currentColor.toString().substr(1)
