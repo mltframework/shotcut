@@ -1,8 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="cs_CZ">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="cs_CZ" version="2.1">
 <context>
-    <name></name>
+    <name/>
     <message>
         <location filename="../src/main.cpp" line="191"/>
         <source>Loading plugins...</source>
@@ -1955,7 +1953,7 @@ tlačítkem myši na úkol k otevření nabídky pro zastavení nyní běžící
         <location filename="../src/widgets/lumamixtransition.ui" line="296"/>
         <source>Do not alter the audio levels during the
 course of the transition. Instead, set a
-fixed mixing level, or choose only clip A&apos;s
+fixed mixing level, or choose only clip A's
 audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>Neměňte zvukové úrovně během
 toku přechodu. Místo toho nastavte
@@ -2407,7 +2405,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.ui" line="437"/>
         <source>GPU Processing (experimental)</source>
-        <translation>Zpracování pomocí GPU (pokusné)</translation>
+        <translation>Zpracování pomocí grafického procesoru (pokusné)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="448"/>
@@ -2617,8 +2615,8 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/mainwindow.cpp" line="598"/>
         <source>The file you opened uses GPU effects, but GPU processing is not enabled.
 Do you want to enable GPU processing and restart?</source>
-        <translation>Soubor, který jste otevřel, používá efekty GPU, ale zpracování s pomocí GPU není povoleno.
-Chcete povolit zpracování s pomocí GPU a program spustit znovu?</translation>
+        <translation>Soubor, který jste otevřel, používá efekty grafického procesoru, ale zpracování pomocí grafického procesoru není povoleno.
+Chcete povolit zpracování pomocí grafického procesoru a program spustit znovu?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1977"/>
@@ -2632,7 +2630,7 @@ Chcete jej spustit znovu nyní?</translation>
         <source>You must restart Shotcut to switch using GPU processing.
 Do you want to restart now?</source>
         <translation>Musíte Shotcut spustit znovu kvůli přepnutí k používání
-zpracování s pomocí GPU.
+zpracování pomocí grafického procesoru.
 Chcete jej spustit znovut nyní?</translation>
     </message>
     <message>
@@ -2699,7 +2697,7 @@ Pořád ještě chcete program ukončit?</translation>
     <message>
         <location filename="../src/mainwindow.cpp" line="1781"/>
         <source>GPU Processing is not supported</source>
-        <translation>Zpracování pomocí GPU není podporováno</translation>
+        <translation>Zpracování pomocí grafického procesoru není podporováno</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="2017"/>
