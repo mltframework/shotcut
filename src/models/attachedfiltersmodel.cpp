@@ -75,11 +75,9 @@ QmlMetadata* AttachedFiltersModel::getMetadata(int row) const
 
 void AttachedFiltersModel::setProducer(Mlt::Producer* producer)
 {
-    if (producer && !m_producer.isNull() && producer->get_parent() == m_producer->get_parent()) {
-        // No change
-        return;
+    if (!producer || !m_producer || (producer->get_parent() != m_producer->get_parent())) {
+        reset(producer);
     }
-    reset(producer);
 }
 
 int AttachedFiltersModel::rowCount(const QModelIndex &parent) const
@@ -339,15 +337,18 @@ bool AttachedFiltersModel::move(int fromRow, int toRow)
 
 void AttachedFiltersModel::reset(Mlt::Producer* producer)
 {
-    if (MLT.isPlaylist()) return;
-
     beginResetModel();
     m_event.reset();
-    m_producer.reset(new Mlt::Producer(producer ? producer : MLT.producer()));
+    if (producer && producer->is_valid())
+        m_producer.reset(new Mlt::Producer(producer));
+    else if (MLT.isClip())
+        m_producer.reset(new Mlt::Producer(MLT.producer()));
+    else
+        m_producer.reset();
     m_metaList.clear();
     m_mltIndexMap.clear();
 
-    if (!m_producer.isNull() && m_producer->is_valid()) {
+    if (m_producer && m_producer->is_valid()) {
         Mlt::Event* event = m_producer->listen("service-changed", this, (mlt_listener)AttachedFiltersModel::producerChanged);
         m_event.reset(event);
         int count = m_producer->filter_count();
