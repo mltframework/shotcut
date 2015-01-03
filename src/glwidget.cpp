@@ -152,7 +152,6 @@ void GLWidget::initializeGL()
 
 void GLWidget::setBlankScene()
 {
-    qDebug();
     setSource(QmlUtilities::blankVui());
 }
 
