@@ -104,8 +104,6 @@ MainWindow::MainWindow()
     ui->mainToolBar->removeAction(ui->actionFullscreen);
     // OS X has a standard Full Screen shortcut we should use.
     ui->actionEnter_Full_Screen->setShortcut(QKeySequence((Qt::CTRL + Qt::META + Qt::Key_F)));
-#elif defined(Q_OS_WIN)
-    ui->actionRedo->setShortcut(QString("Ctrl+Y"));
 #endif
     setDockNestingEnabled(true);
 
