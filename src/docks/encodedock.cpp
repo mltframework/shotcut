@@ -311,8 +311,10 @@ MeltJob* EncodeDock::createMeltJob(const QString& target, int realtime, int pass
     consumerNode.setAttribute("mlt_service", "avformat");
     consumerNode.setAttribute("target", mytarget);
     collectProperties(consumerNode, realtime);
-    if (pass == 1 || pass == 2)
+    if (pass == 1 || pass == 2) {
         consumerNode.setAttribute("pass", pass);
+        consumerNode.setAttribute("passlogfile", mytarget + "_2pass.log");
+    }
     if (pass == 1) {
         consumerNode.setAttribute("fastfirstpass", 1);
         consumerNode.removeAttribute("acodec");
