@@ -844,7 +844,7 @@ in temporal compression</string>
               <item>
                <widget class="QSpinBox" name="videoCodecThreadsSpinner">
                 <property name="toolTip">
-                 <string>The recommended setting is 0 for the x264 codec and
+                 <string>The recommended setting is 0 for the x264 or x265 codecs and
 number of processor cores (including virtual) - 1 for other
 codecs. However, not all codecs are multi-threaded.</string>
                 </property>

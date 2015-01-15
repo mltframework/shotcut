@@ -217,7 +217,7 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
             else { // RateControlQuality
                 const QString& vcodec = ui->videoCodecCombo->currentText();
                 int vq = ui->videoQualitySpinner->value();
-                if (vcodec == "libx264")
+                if (vcodec == "libx264" || vcodec="libx265")
                     p->set("crf", TO_ABSOLUTE(51, 0, vq));
                 else
                     p->set("qscale", TO_ABSOLUTE(31, 1, vq));
@@ -249,7 +249,9 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                 p->set("r", ui->fpsSpinner->value());
             if (ui->videoCodecCombo->currentText() == "prores" || ui->formatCombo->currentText() == "image2")
                 p->set("threads", 1);
-            else if (ui->videoCodecThreadsSpinner->value() == 0 && ui->videoCodecCombo->currentText() != "libx264")
+            else if (ui->videoCodecThreadsSpinner->value() == 0
+                     && ui->videoCodecCombo->currentText() != "libx264"
+                     && ui->videoCodecCombo->currentText() != "libx265")
                 p->set("threads", QThread::idealThreadCount() - 1);
             else
                 p->set("threads", ui->videoCodecThreadsSpinner->value());
@@ -615,7 +617,7 @@ void EncodeDock::on_presetsTree_clicked(const QModelIndex &index)
             if (ui->videoRateControlCombo->currentIndex() == RateControlQuality && videoQuality > -1) {
                 const QString& vcodec = ui->videoCodecCombo->currentText();
                 //val = min + (max - min) * paramval;
-                if (vcodec == "libx264") // 0 (best, 100%) -51 (worst)
+                if (vcodec == "libx264" || vcodec="libx265") // 0 (best, 100%) -51 (worst)
                     ui->videoQualitySpinner->setValue(TO_RELATIVE(51, 0, videoQuality));
                 else // 1 (best, NOT 100%) - 31 (worst)
                     ui->videoQualitySpinner->setValue(TO_RELATIVE(31, 1, videoQuality));

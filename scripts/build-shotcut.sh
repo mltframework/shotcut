@@ -32,6 +32,8 @@ MOVIT_REVISION=
 LIBEPOXY_REVISION=
 X264_HEAD=1
 X264_REVISION=
+X265_HEAD=1
+X265_REVISION=
 LIBVPX_HEAD=1
 LIBVPX_REVISION=
 ENABLE_LAME=1
@@ -41,6 +43,7 @@ ENABLE_SWH_PLUGINS=1
 FFMPEG_HEAD=0
 FFMPEG_REVISION="origin/release/2.3"
 FFMPEG_SUPPORT_H264=1
+FFMPEG_SUPPORT_H265=1
 FFMPEG_SUPPORT_LIBVPX=1
 FFMPEG_SUPPORT_THEORA=1
 FFMPEG_SUPPORT_MP3=1
@@ -177,6 +180,9 @@ function to_key {
     ;;
     opus)
       echo 12
+    ;;
+    x265)
+      echo 13
     ;;
     *)
       echo UNKNOWN
@@ -327,6 +333,9 @@ function set_globals {
   if test "$FFMPEG_SUPPORT_H264" = 1 && test "$X264_HEAD" = 1 -o "$X264_REVISION" != ""; then
       SUBDIRS="x264 $SUBDIRS"
   fi
+  if test "$FFMPEG_SUPPORT_H265" = 1 && test "$X265_HEAD" = 1 -o "$X265_REVISION" != ""; then
+      SUBDIRS="x265 $SUBDIRS"
+  fi
   if test "$FFMPEG_SUPPORT_LIBVPX" = 1 && test "$LIBVPX_HEAD" = 1 -o "$LIBVPX_REVISION" != ""; then
       SUBDIRS="libvpx $SUBDIRS"
   fi
@@ -362,6 +371,7 @@ function set_globals {
   REPOLOCS[10]="git://github.com/georgmartius/vid.stab.git"
   REPOLOCS[11]="git://github.com/anholt/libepoxy.git"
   REPOLOCS[12]="git://git.opus-codec.org/opus.git"
+  REPOLOCS[13]="https://github.com/videolan/x265"
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
   REPOTYPES[0]="git"
@@ -377,6 +387,7 @@ function set_globals {
   REPOTYPES[10]="git"
   REPOTYPES[11]="git"
   REPOTYPES[12]="git"
+  REPOTYPES[13]="git"
 
   # And, set up the revisions
   REVISIONS[0]=""
@@ -425,6 +436,10 @@ function set_globals {
   REVISIONS[12]=""
   if test 0 = "$LIBOPUS_HEAD" -a "$LIBOPUS_REVISION" ; then
     REVISIONS[12]="$LIBOPUS_REVISION"
+  fi
+  REVISIONS[13]=""
+  if test 0 = "$X265_HEAD" -a "$X265_REVISION" ; then
+    REVISIONS[13]="$X265_REVISION"
   fi
 
   # Figure out the number of cores in the system. Used both by make and startup script
@@ -501,6 +516,9 @@ function set_globals {
   fi
   if test 1 = "$FFMPEG_SUPPORT_H264" ; then
     CONFIG[0]="${CONFIG[0]} --enable-libx264"
+  fi
+  if test 1 = "$FFMPEG_SUPPORT_H265" ; then
+    CONFIG[0]="${CONFIG[0]} --enable-libx265"
   fi
   if test 1 = "$FFMPEG_SUPPORT_LIBVPX" ; then
     CONFIG[0]="${CONFIG[0]} --enable-libvpx"
@@ -664,6 +682,17 @@ function set_globals {
     CFLAGS_[12]="$CFLAGS"
   fi
   LDFLAGS_[12]=$LDFLAGS
+
+  ######
+  # x265
+  CFLAGS_[13]=$CFLAGS
+  if test "$TARGET_OS" = "Win32" ; then
+    CONFIG[13]="cmake -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DCMAKE_TOOLCHAIN_FILE=my.cmake -DENABLE_CLI=OFF"
+  else
+    CONFIG[13]="cmake -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DENABLE_CLI=OFF"
+  fi
+  LDFLAGS_[13]=$LDFLAGS
+
 }
 
 ######################################################################
@@ -740,8 +769,8 @@ function prepare_feedback {
   # Script install adds 1
   NUMSTEPS=0
   if test 1 = "$GET" ; then
-    debug Adding 3 steps for get
-    NUMSTEPS=$(( $NUMSTEPS + 3 ))
+    debug Adding 9 steps for get
+    NUMSTEPS=$(( $NUMSTEPS + 9 ))
     if test 1 = "$ENABLE_FREI0R" ; then
       debug Adding 1 step for get frei0r
       NUMSTEPS=$(( $NUMSTEPS + 1 ))
@@ -756,7 +785,7 @@ function prepare_feedback {
     fi
   fi
   if test 1 = "$GET" -a 1 = "$SOURCES_CLEAN" ; then
-    debug Adding 3 steps for clean on get
+    debug Adding 9 steps for clean on get
     NUMSTEPS=$(( $NUMSTEPS + 3 ))
     if test 1 = "$ENABLE_FREI0R" ; then
       debug Adding 1 step for clean frei0r
@@ -772,8 +801,8 @@ function prepare_feedback {
     fi
   fi
   if test 1 = "$COMPILE_INSTALL" ; then
-    debug Adding 9 steps for compile-install
-    NUMSTEPS=$(( $NUMSTEPS + 9 ))
+    debug Adding 27 steps for configure-compile-install
+    NUMSTEPS=$(( $NUMSTEPS + 27 ))
     if test 1 = "$ENABLE_FREI0R" ; then
       debug Adding 3 steps for compile-install frei0r
       NUMSTEPS=$(( $NUMSTEPS + 3 ))
@@ -1335,6 +1364,11 @@ function configure_compile_install_subproject {
     if test ! -e configure ; then
       die "Unable to confirm presence of configure file for $1"
     fi
+  fi
+
+  # Special hack for x265
+  if test "x265" = "$1"; then
+    cd source
   fi
 
   cmd `lookup CONFIG $1` || die "Unable to configure $1"
