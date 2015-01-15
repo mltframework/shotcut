@@ -228,17 +228,9 @@ Player::Player(QWidget *parent)
 void Player::connectTransport(const TransportControllable* receiver)
 {
     if (receiver == m_currentTransport) return;
+    if (m_currentTransport)
+        disconnect(m_currentTransport);
     m_currentTransport = receiver;
-    disconnect(SIGNAL(played(double)));
-    disconnect(SIGNAL(paused()));
-    disconnect(SIGNAL(stopped()));
-    disconnect(SIGNAL(seeked(int)));
-    disconnect(SIGNAL(rewound()));
-    disconnect(SIGNAL(fastForwarded()));
-    disconnect(SIGNAL(previousSought(int)));
-    disconnect(SIGNAL(nextSought(int)));
-    disconnect(SIGNAL(inChanged(int)));
-    disconnect(SIGNAL(outChanged(int)));
     connect(this, SIGNAL(played(double)), receiver, SLOT(play(double)));
     connect(this, SIGNAL(paused()), receiver, SLOT(pause()));
     connect(this, SIGNAL(stopped()), receiver, SLOT(stop()));

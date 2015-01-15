@@ -43,6 +43,9 @@ signals:
     void producerChanged();
     void producerReopened();
 
+public slots:
+    void setOutPoint(int duration);
+
 private slots:
     void on_resetButton_clicked();
 

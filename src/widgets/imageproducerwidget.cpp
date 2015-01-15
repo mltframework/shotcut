@@ -81,6 +81,11 @@ void ImageProducerWidget::setProducer(Mlt::Producer* p)
     ui->repeatSpinBox->setEnabled(m_producer->get_int("shotcut_sequence"));
 }
 
+void ImageProducerWidget::setOutPoint(int duration)
+{
+    ui->durationSpinBox->setValue(duration + 1);
+}
+
 void ImageProducerWidget::reopen(Mlt::Producer* p)
 {
     int out = ui->durationSpinBox->value() - 1;

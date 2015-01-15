@@ -1708,8 +1708,11 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
         w = new X11grabWidget(this);
     else if (service.startsWith("avformat"))
         w = new AvformatProducerWidget(this);
-    else if (service == "pixbuf" || service == "qimage")
-        w = new ImageProducerWidget(this);
+    else if (service == "pixbuf" || service == "qimage") {
+        ImageProducerWidget* ipw = new ImageProducerWidget(this);
+        connect(m_player, SIGNAL(outChanged(int)), ipw, SLOT(setOutPoint(int)));
+        w = ipw;
+    }
     else if (service == "decklink" || resource.contains("decklink"))
         w = new DecklinkProducerWidget(this);
     else if (service == "color")
