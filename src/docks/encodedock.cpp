@@ -217,7 +217,7 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
             else { // RateControlQuality
                 const QString& vcodec = ui->videoCodecCombo->currentText();
                 int vq = ui->videoQualitySpinner->value();
-                if (vcodec == "libx264" || vcodec="libx265")
+                if (vcodec == "libx264" || vcodec == "libx265")
                     p->set("crf", TO_ABSOLUTE(51, 0, vq));
                 else
                     p->set("qscale", TO_ABSOLUTE(31, 1, vq));
@@ -617,7 +617,7 @@ void EncodeDock::on_presetsTree_clicked(const QModelIndex &index)
             if (ui->videoRateControlCombo->currentIndex() == RateControlQuality && videoQuality > -1) {
                 const QString& vcodec = ui->videoCodecCombo->currentText();
                 //val = min + (max - min) * paramval;
-                if (vcodec == "libx264" || vcodec="libx265") // 0 (best, 100%) -51 (worst)
+                if (vcodec == "libx264" || vcodec == "libx265") // 0 (best, 100%) -51 (worst)
                     ui->videoQualitySpinner->setValue(TO_RELATIVE(51, 0, videoQuality));
                 else // 1 (best, NOT 100%) - 31 (worst)
                     ui->videoQualitySpinner->setValue(TO_RELATIVE(31, 1, videoQuality));
