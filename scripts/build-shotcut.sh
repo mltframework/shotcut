@@ -581,7 +581,7 @@ function set_globals {
     # MinGW does not provide ffs(), but there is a gcc intrinsic for it.
     CFLAGS_[5]="$CFLAGS -Dffs=__builtin_ffs"
   elif test "$TARGET_OS" = "Darwin"; then
-    CFLAGS_[5]="$CFLAGS -I/opt/local/include -D__DARWIN__"
+    CFLAGS_[5]="$CFLAGS -I/opt/local/include"
   else
     CFLAGS_[5]="$CFLAGS"
   fi
