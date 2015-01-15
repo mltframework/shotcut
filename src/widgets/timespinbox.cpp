@@ -23,6 +23,7 @@
 TimeSpinBox::TimeSpinBox(QWidget *parent)
     : QSpinBox(parent)
 {
+    setLineEdit(new TimeSpinBoxLineEdit);
     setRange(0, INT_MAX);
     setFixedWidth(this->fontMetrics().width("HHH:MM:SS.MMM"));
     setAlignment(Qt::AlignRight);
@@ -50,3 +51,27 @@ QString TimeSpinBox::textFromValue(int val) const
     }
     return QString();
 }
+
+
+TimeSpinBoxLineEdit::TimeSpinBoxLineEdit(QWidget *parent)
+    : QLineEdit(parent)
+    , m_selectOnMousePress(false)
+{
+}
+
+void TimeSpinBoxLineEdit::focusInEvent(QFocusEvent *event)
+{
+    QLineEdit::focusInEvent(event);
+    selectAll();
+    m_selectOnMousePress = true;
+}
+
+void TimeSpinBoxLineEdit::mousePressEvent(QMouseEvent *event)
+{
+    QLineEdit::mousePressEvent(event);
+    if (m_selectOnMousePress) {
+        selectAll();
+        m_selectOnMousePress = false;
+    }
+}
+

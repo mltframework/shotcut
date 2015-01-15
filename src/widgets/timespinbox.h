@@ -20,6 +20,7 @@
 #define TIMESPINBOX_H
 
 #include <QSpinBox>
+#include <QLineEdit>
 
 class QRegExpValidator;
 
@@ -37,6 +38,21 @@ protected:
 
 private:
     QRegExpValidator* m_validator;
+};
+
+class TimeSpinBoxLineEdit : public QLineEdit
+{
+    Q_OBJECT
+
+public:
+    explicit TimeSpinBoxLineEdit(QWidget *parent = 0);
+
+protected:
+    void focusInEvent(QFocusEvent *event);
+    void mousePressEvent(QMouseEvent *event);
+
+private:
+    bool m_selectOnMousePress;
 };
 
 #endif // TIMESPINBOX_H
