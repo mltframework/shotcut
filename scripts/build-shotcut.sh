@@ -141,7 +141,7 @@ function parse_args {
 # Returns a numeric key from a known subproject
 # $1 : string: ffmpeg, mlt, etc.
 function to_key {
-  case $1 in 
+  case $1 in
     ffmpeg)
       echo 0
     ;;
@@ -214,7 +214,7 @@ function init_log_file {
 # Function that prints a trace line
 # $@ : arguments to be printed
 function trace {
-  if test "1" = "$TRACE" ; then 
+  if test "1" = "$TRACE" ; then
     echo "TRACE: $@"
   fi
 }
@@ -224,7 +224,7 @@ function trace {
 # Function that prints a debug line
 # $@ : arguments to be printed
 function debug {
-  if test "1" = "$DEBUG" ; then 
+  if test "1" = "$DEBUG" ; then
     echo "DEBUG: $@"
   fi
 }
@@ -282,8 +282,8 @@ function read_configuration {
   fi
   debug "Reading configuration from $CONFIGFILE"
   # This is for replacement in startup scripts
-  for LINE in `tr "\t" "=" < $CONFIGFILE`; do 
-    debug Setting $LINE 
+  for LINE in `tr "\t" "=" < $CONFIGFILE`; do
+    debug Setting $LINE
     CONFIGURATION="$CONFIGURATION$LINE   "
     #export $LINE || die "Invalid export line: $LINE. Unable to set configuration options from CONFIGFILE"
   done ||\
@@ -393,7 +393,7 @@ function set_globals {
   REVISIONS[0]=""
   if test 0 = "$FFMPEG_HEAD" -a "$FFMPEG_REVISION" ; then
     REVISIONS[0]="$FFMPEG_REVISION"
-  fi 
+  fi
   # Git, just use blank or the hash.
   REVISIONS[1]=""
   if test 0 = "$MLT_HEAD" -a "$MLT_REVISION" ; then
@@ -579,7 +579,7 @@ function set_globals {
     CFLAGS_[3]="-I. -fno-common -read_only_relocs suppress ${CFLAGS_[3]}"
   fi
   LDFLAGS_[3]=$LDFLAGS
-  
+
   ####
   # libvpx
   CONFIG[4]="./configure --prefix=$FINAL_INSTALL_DIR --enable-vp8 --enable-postproc --enable-multithread --enable-runtime-cpu-detect --disable-install-docs --disable-debug-libs --disable-examples --disable-unit-tests"
@@ -615,7 +615,7 @@ function set_globals {
   LDFLAGS_[6]=$LDFLAGS
 
   #####
-  # shotcut 
+  # shotcut
   if [ "$TARGET_OS" = "Darwin" ]; then
     CONFIG[7]="$QTDIR/bin/qmake -r -spec macx-g++ MLT_PREFIX=$FINAL_INSTALL_DIR"
   elif [ "$TARGET_OS" = "Win32" ]; then
@@ -646,7 +646,7 @@ function set_globals {
   CONFIG[9]="${CONFIG[9]} PREFIX=$FINAL_INSTALL_DIR MLT_SOURCE=$SOURCE_DIR/mlt"
   CFLAGS_[9]=$CFLAGS
   LDFLAGS_[9]=$LDFLAGS
-  
+
   ####
   # vid.stab
   if test "$TARGET_OS" = "Win32" ; then
@@ -816,7 +816,7 @@ function prepare_feedback {
       NUMSTEPS=$(( $NUMSTEPS + 3 ))
     fi
   fi
-  if test 1 = "$CREATE_STARTUP_SCRIPT" ; then 
+  if test 1 = "$CREATE_STARTUP_SCRIPT" ; then
     debug Adding 1 step for script creating
     NUMSTEPS=$(( $NUMSTEPS + 1 ))
   fi
@@ -843,14 +843,14 @@ function check_abort {
 # This is highly ineffective, I am sorry to say...
 function is_newer_equal {
   trace "Entering is_newer_equal @ = $@"
-  A1=`echo $1 | cut -d. -f1` 
-  A2=`echo $1 | cut -d. -f2` 
-  A3=`echo $1 | cut -d. -f3 | sed 's/^\([0-9]\{1,3\}\).*/\1/'` 
-  B1=`echo $2 | cut -d. -f1` 
-  B2=`echo $2 | cut -d. -f2` 
+  A1=`echo $1 | cut -d. -f1`
+  A2=`echo $1 | cut -d. -f2`
+  A3=`echo $1 | cut -d. -f3 | sed 's/^\([0-9]\{1,3\}\).*/\1/'`
+  B1=`echo $2 | cut -d. -f1`
+  B2=`echo $2 | cut -d. -f2`
   B3=`echo $2 | cut -d. -f3 | sed 's/^\([0-9]\{1,3\}\).*/\1/'`
-  debug "A = $A1 $A2 $A3, B = $B1 $B2 $B3" 
-  test "$A1" -gt "$B1" -o \( "$A1" = "$B1" -a "$A2" -gt "$B2" \) -o \( "$A1" = "$B1" -a "$A2" = "$B2" -a "$A3" -ge "$B3" \)  
+  debug "A = $A1 $A2 $A3, B = $B1 $B2 $B3"
+  test "$A1" -gt "$B1" -o \( "$A1" = "$B1" -a "$A2" -gt "$B2" \) -o \( "$A1" = "$B1" -a "$A2" = "$B2" -a "$A3" -ge "$B3" \)
 }
 
 ######################################################################
@@ -886,14 +886,14 @@ function clean_dirs {
   feedback_status Cleaning out all subdirs
   cmd cd $SOURCE_DIR || mkdir -p $SOURCE_DIR
   cmd cd $SOURCE_DIR || die "Unable to change to directory $SOURCE_DIR"
-  for DIR in $SUBDIRS ; do 
+  for DIR in $SUBDIRS ; do
     make_clean_dir $DIR
   done
   feedback_status Done cleaning out in source dirs
 }
 
 function get_win32_build {
- 
+
   if test "frei0r" = "$1" -o "vid.stab" = "$1" -o "x265" = "$1" ; then
       debug "Fix cmake modules for $1"
       cmd mkdir cmake 2>/dev/null
@@ -917,7 +917,7 @@ SET(CMAKE_RC_COMPILER ${CROSS}windres)
 SET(CMAKE_FIND_ROOT_PATH  /usr/i686-w64-mingw32 $FINAL_INSTALL_DIR)
 
 # adjust the default behaviour of the FIND_XXX() commands:
-# search headers and libraries in the target environment, search 
+# search headers and libraries in the target environment, search
 # programs in the host environment
 set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
 set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
@@ -1155,7 +1155,7 @@ function get_all_sources {
   log Changing to $SOURCE_DIR
   cd $SOURCE_DIR || mkdir -p "$SOURCE_DIR"
   cd $SOURCE_DIR || die "Unable to change to directory $SOURCE_DIR"
-  for DIR in $SUBDIRS ; do 
+  for DIR in $SUBDIRS ; do
     get_subproject $DIR
   done
   feedback_status Done getting all sources
@@ -1267,7 +1267,7 @@ function mlt_check_configure {
         if test "0" = "$MLT_DISABLE_SOX" ; then
           mlt_format_optional sox "sound effects/operations" "sox-dev"
           DODIE=1
-        fi 
+        fi
       ;;
       disable-jackrack)
         mlt_format_optional jackrack "sound effects/operations" "libjack-dev"
@@ -1286,7 +1286,7 @@ function mlt_check_configure {
       disable-frei0r)
         mlt_format_optional frei0r "plugin architecture. Several additional effects and transitions" "see http://frei0r.dyne.org/"
       ;;
-        
+
       # OTHERS
       disable-dv)
         mlt_format_optional dv "loading and saving of DV files" "libdv/libdv-dev"
@@ -1389,7 +1389,7 @@ SLIB_EXTRA_CMD=-"mv $$(@:$(SLIBSUF)=.orig.def) $$(@:$(SLIBSUF)=.def)"
   if test "mlt" = "$1" ; then
     mlt_check_configure
   fi
-  
+
   # Compile
   feedback_status Building $1 - this could take some time
   if test "movit" = "$1" ; then
@@ -1417,7 +1417,7 @@ SLIB_EXTRA_CMD=-"mv $$(@:$(SLIBSUF)=.orig.def) $$(@:$(SLIBSUF)=.def)"
     if test "shotcut" = "$1" ; then
       $SUDO install -c -m 755 shotcut "$FINAL_INSTALL_DIR"
     else
-      $SUDO make install > $TMPNAME 2>&1 
+      $SUDO make install > $TMPNAME 2>&1
     fi
     cat $TMPNAME 2>&1
     # If it contains error it returns 0. 1 matches, 255 errors
@@ -1502,9 +1502,9 @@ function configure_compile_install_all {
   log "Using install dir $FINAL_INSTALL_DIR"
   log "Found $CPUS cpus. Will use make -j $MAKEJ for compilation"
 
-  log Changing to $SOURCE_DIR 
+  log Changing to $SOURCE_DIR
   cd $SOURCE_DIR || die "Unable to change to directory $SOURCE_DIR"
-  for DIR in $SUBDIRS ; do 
+  for DIR in $SUBDIRS ; do
     configure_compile_install_subproject $DIR
   done
   feedback_status Done configuring, compiling and installing all sources
@@ -1523,11 +1523,11 @@ function get_dir_info {
   # trace "Entering get_dir_info @ = $@"
   pushd . &> /dev/null
   cd $1 || die "Unable to change directory to $1"
-  REPOTYPE=`lookup REPOTYPES $1`  
+  REPOTYPE=`lookup REPOTYPES $1`
   if test "xgit" = "x$REPOTYPE" ; then
     FIND_STR="\(commit\|Date\)"
     INFO_TEXT=`git --no-pager log -n1 | grep "$FIND_STR"`
-  else 
+  else
     FIND_STR="\(Revision\|Last\ Changed\ Date\)"
     INFO_TEXT=`svn info | grep "$FIND_STR"`
   fi
@@ -1541,14 +1541,14 @@ function get_dir_info {
 # sys_info
 # Returns some information about the system
 function sys_info {
-  echo 
+  echo
   echo uname -a at time of compilation:
   uname -a
   echo Information about cc at the time of compilation:
   LANG=C cc -v 2>&1
   if which dpkg ; then
     echo Found dpkg - running dpkg -l to grep libc6
-    dpkg -l | grep libc6 
+    dpkg -l | grep libc6
   else
     if which rpm ; then
       echo Found rpm - running rpm -qa to grep libc6
@@ -1587,7 +1587,7 @@ function fixlibs()
   done
 }
 
-function deploy_osx 
+function deploy_osx
 {
   trace "Entering deploy_osx @ = $@"
   pushd .
@@ -1720,7 +1720,7 @@ function deploy_osx
   cmd rm -rf staging
 }
 
-function deploy_win32 
+function deploy_win32
 {
   trace "Entering deploy_win32 @ = $@"
   pushd .
@@ -1789,7 +1789,7 @@ function create_startup_script {
   trace "Entering create_startup_script @ = $@"
   pushd .
 
-  log Changing to $FINAL_INSTALL_DIR 
+  log Changing to $FINAL_INSTALL_DIR
   cd $FINAL_INSTALL_DIR || die "Unable to change to directory $FINAL_INSTALL_DIR"
 
   TMPFILE=`mktemp -t build-shotcut.env.XXXXXXXXX`
@@ -1797,7 +1797,7 @@ function create_startup_script {
   cat > $TMPFILE <<End-of-environment-setup-template
 #!/bin/sh
 # Set up environment
-# Source this file using a bash/sh compatible shell, to get an environment, 
+# Source this file using a bash/sh compatible shell, to get an environment,
 # where you use the binaries and libraries for this melt build.
 INSTALL_DIR=\$(pwd)
 export PATH="\$INSTALL_DIR/bin":\$PATH
@@ -1822,7 +1822,7 @@ End-of-environment-setup-template
   cat > $TMPFILE <<End-of-melt-wrapper
 #!/bin/sh
 # Set up environment
-# Run this instead of trying to run bin/melt. It runs melt with the correct environment. 
+# Run this instead of trying to run bin/melt. It runs melt with the correct environment.
 CURRENT_DIR=\$(readlink -f "\$0")
 INSTALL_DIR=\$(dirname "\$CURRENT_DIR")
 export LD_LIBRARY_PATH="\$INSTALL_DIR/lib":"\$INSTALL_DIR/lib/frei0r-1":\$LD_LIBRARY_PATH
@@ -1845,7 +1845,7 @@ End-of-melt-wrapper
   cat > $TMPFILE <<End-of-shotcut-wrapper
 #!/bin/sh
 # Set up environment
-# Run this instead of trying to run bin/shotcut. It runs shotcut with the correct environment. 
+# Run this instead of trying to run bin/shotcut. It runs shotcut with the correct environment.
 CURRENT_DIR=\$(readlink -f "\$0")
 INSTALL_DIR=\$(dirname "\$CURRENT_DIR")
 export LD_LIBRARY_PATH="\$INSTALL_DIR/lib":"\$INSTALL_DIR/lib/frei0r-1":\$LD_LIBRARY_PATH
@@ -1930,11 +1930,11 @@ function perform_action {
     sys_info
     configure_compile_install_all
   fi
-  if test 1 = "$CREATE_STARTUP_SCRIPT" ; then 
+  if test 1 = "$CREATE_STARTUP_SCRIPT" ; then
     create_startup_script
   fi
   feedback_result SUCCESS "Everything succeeded"
-} 
+}
 
 ################################################################################
 # MAIN AND FRIENDS
@@ -1943,7 +1943,7 @@ function perform_action {
 #################################################################
 # kill_recursive
 # The intention of this is to be able to kill all children, whenever the
-# user aborts. 
+# user aborts.
 # This does not really work very very well, but its the best I can offer.
 # It may leave some defunct around(?)
 # $1 pid
@@ -1996,12 +1996,12 @@ function main {
   log "Checking for sudo requirement" 2>&1
   if test "1" = "$NEED_SUDO" ; then
     log "sudo is needed"
-        echo You have chosen to install as root. 
+        echo You have chosen to install as root.
         echo
         echo 'Please provide your sudo password below.  (If you have recently provided your sudo password to this script, you may not have to do that, because the password is cached).'
         echo
-        echo The password will be handled securely by the sudo program. 
-        echo 
+        echo The password will be handled securely by the sudo program.
+        echo
         echo If you fail to provide the password, you will have to provide it later when installing the different projects.
         sudo -v
         if test 0 != $? ; then
@@ -2010,12 +2010,12 @@ function main {
         SUDO=sudo
   fi
   log "Done checking for sudo requirement" 2>&1
-  
-  { 
+
+  {
   prepare_feedback
   perform_action
   } 2>&1
-  
+
   # All is well, that ends well
   exit 0
 }
@@ -2026,6 +2026,6 @@ if test 1 = "$DETACH"; then
   main &
   # Note, that we assume caller has setup stdin & stdout redirection
   disown -a
-else 
+else
   main
 fi
