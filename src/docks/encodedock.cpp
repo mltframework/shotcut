@@ -213,9 +213,11 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                     p->set("vb", ui->videoBitrateCombo->currentText().toLatin1().constData());
                     break;
                 case RateControlConstant: {
-                    const QString& b = ui->videoBitrateCombo->currentText();
-                    x265params = QString("bitrate=%1:vbv-bufsize=%2:vbv-maxrate=%3:strict-cbr=1:%4")
-                        .arg(b).arg(int(ui->videoBufferSizeSpinner->value() * 8 * 1024)).arg(b).arg(x265params);
+                    QString b = ui->videoBitrateCombo->currentText();
+                    // x265 does not expect bitrate suffixes and requires Kb/s
+                    b.replace('k', "").replace('M', "000");
+                    x265params = QString("bitrate=%1:vbv-bufsize=%2:vbv-maxrate=%3:%4")
+                        .arg(b).arg(int(ui->videoBufferSizeSpinner->value() * 8)).arg(b).arg(x265params);
                     break;
                     }
                 case RateControlQuality: {
