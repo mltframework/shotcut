@@ -896,6 +896,7 @@ function get_win32_build {
 
   if test "frei0r" = "$1" -o "vid.stab" = "$1" -o "x265" = "$1" ; then
       debug "Fix cmake modules for $1"
+      [ "x265" = "$1" ] && cd source
       cmd mkdir cmake 2>/dev/null
       cmd cp -r /usr/share/cmake-2.8/Modules cmake
       cmd sed 's/-rdynamic//' cmake/Modules/Platform/Linux-GNU.cmake >/tmp/Linux-GNU.cmake
