@@ -202,28 +202,58 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
             p->set("video_off", 1);
         }
         else {
+            const QString& vcodec = ui->videoCodecCombo->currentText();
             if (ui->videoCodecCombo->currentIndex() > 0)
-                p->set("vcodec", ui->videoCodecCombo->currentText().toLatin1().constData());
-            if (ui->videoRateControlCombo->currentIndex() == RateControlAverage) {
-                p->set("vb", ui->videoBitrateCombo->currentText().toLatin1().constData());
-            }
-            else if (ui->videoRateControlCombo->currentIndex() == RateControlConstant) {
-                const QString& b = ui->videoBitrateCombo->currentText();
-                p->set("vb", b.toLatin1().constData());
-                p->set("vminrate", b.toLatin1().constData());
-                p->set("vmaxrate", b.toLatin1().constData());
-                p->set("vbufsize", int(ui->videoBufferSizeSpinner->value() * 8 * 1024));
-            }
-            else { // RateControlQuality
-                const QString& vcodec = ui->videoCodecCombo->currentText();
-                int vq = ui->videoQualitySpinner->value();
-                if (vcodec == "libx264" || vcodec == "libx265")
+                p->set("vcodec", vcodec.toLatin1().constData());
+            if (vcodec == "libx265") {
+                // Most x265 parameters must be supplied through x265-params.
+                QString x265params = QString::fromUtf8(p->get("x265-params"));
+                switch (ui->videoRateControlCombo->currentIndex()) {
+                case RateControlAverage:
+                    p->set("vb", ui->videoBitrateCombo->currentText().toLatin1().constData());
+                    break;
+                case RateControlConstant: {
+                    const QString& b = ui->videoBitrateCombo->currentText();
+                    x265params = QString("bitrate=%1:vbv-bufsize=%2:vbv-maxrate=%3:strict-cbr=1:%4")
+                        .arg(b).arg(int(ui->videoBufferSizeSpinner->value() * 8 * 1024)).arg(b).arg(x265params);
+                    break;
+                    }
+                case RateControlQuality: {
+                    int vq = ui->videoQualitySpinner->value();
+                    x265params = QString("crf=%1:%2").arg(TO_ABSOLUTE(51, 0, vq)).arg(x265params);
+                    // Also set crf property so that custom presets can be interpreted properly.
                     p->set("crf", TO_ABSOLUTE(51, 0, vq));
-                else
-                    p->set("qscale", TO_ABSOLUTE(31, 1, vq));
+                    break;
+                    }
+                }
+                x265params = QString("keyint=%1:bframes=%2:%3").arg(ui->gopSpinner->value())
+                            .arg(ui->bFramesSpinner->value()).arg(x265params);
+                p->set("x265-params", x265params.toUtf8().constData());
+            } else {
+                switch (ui->videoRateControlCombo->currentIndex()) {
+                case RateControlAverage:
+                    p->set("vb", ui->videoBitrateCombo->currentText().toLatin1().constData());
+                    break;
+                case RateControlConstant: {
+                    const QString& b = ui->videoBitrateCombo->currentText();
+                    p->set("vb", b.toLatin1().constData());
+                    p->set("vminrate", b.toLatin1().constData());
+                    p->set("vmaxrate", b.toLatin1().constData());
+                    p->set("vbufsize", int(ui->videoBufferSizeSpinner->value() * 8 * 1024));
+                    break;
+                    }
+                case RateControlQuality: {
+                    int vq = ui->videoQualitySpinner->value();
+                    if (vcodec == "libx264")
+                        p->set("crf", TO_ABSOLUTE(51, 0, vq));
+                    else
+                        p->set("qscale", TO_ABSOLUTE(31, 1, vq));
+                    break;
+                    }
+                }
+                p->set("g", ui->gopSpinner->value());
+                p->set("bf", ui->bFramesSpinner->value());
             }
-            p->set("g", ui->gopSpinner->value());
-            p->set("bf", ui->bFramesSpinner->value());
             p->set("width", ui->widthSpinner->value());
             p->set("height", ui->heightSpinner->value());
             p->set("aspect", double(ui->aspectNumSpinner->value()) / double(ui->aspectDenSpinner->value()));
@@ -313,17 +343,25 @@ MeltJob* EncodeDock::createMeltJob(const QString& target, int realtime, int pass
     consumerNode.setAttribute("mlt_service", "avformat");
     consumerNode.setAttribute("target", mytarget);
     collectProperties(consumerNode, realtime);
-    if (pass == 1 || pass == 2) {
-        consumerNode.setAttribute("pass", pass);
-        consumerNode.setAttribute("passlogfile", mytarget + "_2pass.log");
+    if ("libx265" == ui->videoCodecCombo->currentText()) {
+        if (pass == 1 || pass == 2) {
+            QString x265params = consumerNode.attribute("x265-params");
+            x265params = QString("pass=%1:stats=%2:%3")
+                .arg(pass).arg(mytarget + "_2pass.log").arg(x265params);
+            consumerNode.setAttribute("x265-params", x265params);
+        }
+    } else {
+        if (pass == 1 || pass == 2) {
+            consumerNode.setAttribute("pass", pass);
+            consumerNode.setAttribute("passlogfile", mytarget + "_2pass.log");
+        } if (pass == 1) {
+            consumerNode.setAttribute("fastfirstpass", 1);
+            consumerNode.removeAttribute("acodec");
+            consumerNode.setAttribute("an", 1);
+        } else {
+            consumerNode.removeAttribute("fastfirstpass");
+        }
     }
-    if (pass == 1) {
-        consumerNode.setAttribute("fastfirstpass", 1);
-        consumerNode.removeAttribute("acodec");
-        consumerNode.setAttribute("an", 1);
-    }
-    else
-        consumerNode.removeAttribute("fastfirstpass");
     if (ui->formatCombo->currentIndex() == 0 &&
             ui->audioCodecCombo->currentIndex() == 0 &&
             (mytarget.endsWith(".mp4") || mytarget.endsWith(".mov")))
