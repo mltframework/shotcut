@@ -1460,13 +1460,21 @@ SLIB_EXTRA_CMD=-"mv $$(@:$(SLIBSUF)=.orig.def) $$(@:$(SLIBSUF)=.def)"
         cmd cp -a "$QTDIR"/qml "$FINAL_INSTALL_DIR"/lib
 
         log Copying some libs from system
-        #cmd install -p -c /usr/lib/libaudio.so* "$FINAL_INSTALL_DIR"/lib
         SOXLIB=$(ldd "$FINAL_INSTALL_DIR"/lib/mlt/libmltsox.so | awk '/libsox/ {print $3}')
         log SOXLIB=$SOXLIB
         cmd install -c "$SOXLIB" "$FINAL_INSTALL_DIR"/lib
         PNGLIB=$(ldd "$SOXLIB" | awk '/libpng/ {print $3}')
         log PNGLIB=$PNGLIB
         cmd install -c "$PNGLIB" "$FINAL_INSTALL_DIR"/lib
+        GSMLIB=$(ldd "$SOXLIB" | awk '/libgsm/ {print $3}')
+        log GSMLIB=$GSMLIB
+        cmd install -c "$GSMLIB" "$FINAL_INSTALL_DIR"/lib
+        EXIFLIB=$(ldd "$FINAL_INSTALL_DIR"/lib/mlt/libmltqt.so | awk '/libexif/ {print $3}')
+        log EXIFLIB=$EXIFLIB
+        cmd install -c "$EXIFLIB" "$FINAL_INSTALL_DIR"/lib
+        FFTWLIB=$(ldd "$FINAL_INSTALL_DIR"/lib/mlt/libmltopengl.so | awk '/libfftw/ {print $3}')
+        log FFTWLIB=$FFTWLIB
+        cmd install -c "$FFTWLIB" "$FINAL_INSTALL_DIR"/lib
       fi
     elif test "webvfx" = "$1" ; then
       cmd make -C webvfx install || die "Unable to install $1/webvfx"
