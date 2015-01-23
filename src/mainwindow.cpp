@@ -84,6 +84,17 @@ MainWindow::MainWindow()
     , m_autosaveFile(0)
     , m_exitCode(EXIT_SUCCESS)
 {
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    QLibrary libJack("jack");
+    if (!libJack.load()) {
+        QMessageBox::critical(this, qApp->applicationName(),
+            tr("Error: This program requires the JACK 1 library.\n\nPlease install it using your package manager. It may be named libjack0, jack-audio-connection-kit, jack, or similar."));
+        ::exit(EXIT_FAILURE);
+    } else {
+        libJack.unload();
+    }
+#endif
+
     qDebug() << "begin";
     new GLTestWidget(this);
     Database::singleton(this);
