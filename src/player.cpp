@@ -125,6 +125,7 @@ Player::Player(QWidget *parent)
     muteButton->setToolTip(tr("Silence the audio"));
     muteButton->setCheckable(true);
     muteButton->setChecked(Settings.playerMuted());
+    onMuteButtonToggled(Settings.playerMuted());
     volumeLayoutH->addWidget(muteButton);
     connect(muteButton, SIGNAL(toggled(bool)), this, SLOT(onMuteButtonToggled(bool)));
 
@@ -423,8 +424,8 @@ void Player::onProducerOpened(bool play)
         m_scrubber->setScale(m_duration);
     }
     m_positionSpinner->setEnabled(m_isSeekable);
-    onMuteButtonToggled(Settings.playerMuted());
     onVolumeChanged(m_volumeSlider->value());
+    onMuteButtonToggled(Settings.playerMuted());
     toggleZoom(Settings.playerZoom() > 0.0f);
 
     actionPlay->setEnabled(true);
