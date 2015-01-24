@@ -85,13 +85,21 @@ MainWindow::MainWindow()
     , m_exitCode(EXIT_SUCCESS)
 {
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    QLibrary libJack("jack");
+    QLibrary libJack("libjack.so.0");
     if (!libJack.load()) {
         QMessageBox::critical(this, qApp->applicationName(),
             tr("Error: This program requires the JACK 1 library.\n\nPlease install it using your package manager. It may be named libjack0, jack-audio-connection-kit, jack, or similar."));
         ::exit(EXIT_FAILURE);
     } else {
         libJack.unload();
+    }
+    QLibrary libSDL("libSDL-1.2.so.0");
+    if (!libSDL.load()) {
+        QMessageBox::critical(this, qApp->applicationName(),
+            tr("Error: This program requires the SDL 1.2 library.\n\nPlease install it using your package manager. It may be named libsdl1.2debian, SDL, or similar."));
+        ::exit(EXIT_FAILURE);
+    } else {
+        libSDL.unload();
     }
 #endif
 
