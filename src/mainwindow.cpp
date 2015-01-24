@@ -588,6 +588,8 @@ void MainWindow::open(Mlt::Producer* producer)
     if (ok && screen != QApplication::desktop()->screenNumber(this))
         m_player->moveVideoToScreen(screen);
 
+    m_player->setPauseAfterOpen(!MLT.isClip());
+
     // no else here because open() will delete the producer if open fails
     if (!MLT.setProducer(producer))
         emit producerOpened();
@@ -1541,7 +1543,6 @@ void MainWindow::onPlaylistCleared()
 void MainWindow::onPlaylistClosed()
 {
     m_player->resetProfile();
-    onPlaylistCleared();
     setCurrentFile("");
     setWindowModified(false);
     m_undoStack->clear();

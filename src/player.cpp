@@ -441,17 +441,21 @@ void Player::onProducerOpened(bool play)
     // calling play() here. Delays while purging the consumer on pause can
     // interfere with the play() call. So, we delay play a little to let
     // pause purging to complete.
-    if (play)
-        QTimer::singleShot(500, this, SLOT(postProducerOpened()));
+    if (play) {
+        if (m_pauseAfterOpen) {
+            m_pauseAfterOpen = false;
+            QTimer::singleShot(500, this, SLOT(postProducerOpened()));
+        } else {
+            // This seek purges the consumer to prevent latent end-of-stream detection.
+            seek(0);
+            QTimer::singleShot(500, this, SLOT(play()));
+        }
+    }
 }
 
 void Player::postProducerOpened()
 {
-    play();
-    if (m_pauseAfterOpen) {
-        m_pauseAfterOpen = false;
-        seek(MLT.producer()->position());
-    }
+    seek(MLT.producer()->position());
 }
 
 void Player::onMeltedUnitOpened()

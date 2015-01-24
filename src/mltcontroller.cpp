@@ -375,9 +375,13 @@ void Controller::seek(int position)
 {
     if (m_producer) {
         m_producer->set_speed(0);
-        if (m_consumer && m_consumer->is_valid())
-            m_consumer->purge();
         m_producer->seek(position);
+        if (m_consumer && m_consumer->is_valid()) {
+            if (m_consumer->is_stopped())
+                m_consumer->start();
+            else
+                m_consumer->purge();
+        }
     }
     if (m_jackFilter)
         mlt_events_fire(m_jackFilter->get_properties(), "jack-seek", &position, NULL);
