@@ -22,115 +22,6 @@
 #include "mainwindow.h"
 #include "settings.h"
 
-MeltJob::MeltJob(const QString& name, const QString& xml)
-    : QProcess(0)
-    , m_xml(xml)
-    , m_ran(false)
-    , m_killed(false)
-    , m_label(name)
-{
-    setObjectName(name);
-    connect(this, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(onFinished(int, QProcess::ExitStatus)));
-    connect(this, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
-}
-
-MeltJob::~MeltJob()
-{
-    QFile::remove(m_xml);
-}
-
-void MeltJob::start()
-{
-    QString shotcutPath = qApp->applicationDirPath();
-//    QString shotcutPath("/Applications/Shotcut.app/Contents/MacOS");
-#ifdef Q_OS_WIN
-    QFileInfo meltPath(shotcutPath, "qmelt.exe");
-#else   
-    QFileInfo meltPath(shotcutPath, "qmelt");
-#endif
-    setReadChannel(QProcess::StandardError);
-    QStringList args;
-    args << "-progress2";
-    args << m_xml;
-    qDebug() << meltPath.absoluteFilePath() << args;
-#ifdef Q_OS_WIN
-    QProcess::start(meltPath.absoluteFilePath(), args);
-#else
-    args.prepend(meltPath.absoluteFilePath());
-    QProcess::start("/usr/bin/nice", args);
-#endif
-    m_ran = true;
-}
-
-void MeltJob::setModelIndex(const QModelIndex& index)
-{
-    m_index = index;
-}
-
-QModelIndex MeltJob::modelIndex() const
-{
-    return m_index;
-}
-
-bool MeltJob::ran() const
-{
-    return m_ran;
-}
-
-bool MeltJob::stopped() const
-{
-    return m_killed;
-}
-
-void MeltJob::appendToLog(const QString& s)
-{
-    m_log.append(s);
-}
-
-QString MeltJob::log() const
-{
-    return m_log;
-}
-
-QString MeltJob::xml() const
-{
-    QFile f(m_xml);
-    f.open(QIODevice::ReadOnly);
-    QString s(f.readAll());
-    f.close();
-    return s;
-}
-
-void MeltJob::setLabel(const QString &label)
-{
-    m_label = label;
-}
-
-void MeltJob::stop()
-{
-    terminate();
-    QTimer::singleShot(2000, this, SLOT(kill()));
-    m_killed = true;
-}
-
-void MeltJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
-{
-    if (exitStatus == QProcess::NormalExit && exitCode == 0) {
-        qDebug() << "melt succeeeded";
-        emit finished(this, true);
-    } else {
-        qDebug() << "melt failed with" << exitCode;
-        emit finished(this, false);
-    }
-}
-
-void MeltJob::onReadyRead()
-{
-    emit messageAvailable(this);
-}
-
-///////////////////////////////////////////////////////////////////////////////
-
 JobQueue::JobQueue(QObject *parent) :
     QStandardItemModel(0, COLUMN_COUNT, parent),
     m_paused(false)
@@ -151,7 +42,7 @@ void JobQueue::cleanup()
     qDeleteAll(m_jobs);
 }
 
-MeltJob* JobQueue::add(MeltJob* job)
+AbstractJob* JobQueue::add(AbstractJob* job)
 {
     int row = rowCount();
     QList<QStandardItem*> items;
@@ -160,8 +51,8 @@ MeltJob* JobQueue::add(MeltJob* job)
     appendRow(items);
     job->setParent(this);
     job->setModelIndex(index(row, COLUMN_STATUS));
-    connect(job, SIGNAL(messageAvailable(MeltJob*)), this, SLOT(onMessageAvailable(MeltJob*)));
-    connect(job, SIGNAL(finished(MeltJob*, bool)), this, SLOT(onFinished(MeltJob*, bool)));
+    connect(job, SIGNAL(messageAvailable(AbstractJob*)), this, SLOT(onMessageAvailable(AbstractJob*)));
+    connect(job, SIGNAL(finished(AbstractJob*, bool)), this, SLOT(onFinished(AbstractJob*, bool)));
     m_mutex.lock();
     m_jobs.append(job);
     m_mutex.unlock();
@@ -171,7 +62,7 @@ MeltJob* JobQueue::add(MeltJob* job)
     return job;
 }
 
-void JobQueue::onMessageAvailable(MeltJob* job)
+void JobQueue::onMessageAvailable(AbstractJob* job)
 {
     QString msg = job->readLine();
 //    qDebug() << msg;
@@ -187,7 +78,7 @@ void JobQueue::onMessageAvailable(MeltJob* job)
     }
 }
 
-void JobQueue::onFinished(MeltJob* job, bool isSuccess)
+void JobQueue::onFinished(AbstractJob* job, bool isSuccess)
 {
     QStandardItem* item = itemFromIndex(job->modelIndex());
     if (item) {
@@ -206,7 +97,7 @@ void JobQueue::startNextJob()
     if (m_paused) return;
     QMutexLocker locker(&m_mutex);
     if (!m_jobs.isEmpty()) {
-        foreach(MeltJob* job, m_jobs) {
+        foreach(AbstractJob* job, m_jobs) {
             // if there is already a job started or running, then exit
             if (job->ran() && job->state() != QProcess::NotRunning)
                 break;
@@ -219,7 +110,7 @@ void JobQueue::startNextJob()
     }
 }
 
-MeltJob* JobQueue::jobFromIndex(const QModelIndex& index) const
+AbstractJob* JobQueue::jobFromIndex(const QModelIndex& index) const
 {
     return m_jobs.at(index.row());
 }
@@ -242,7 +133,7 @@ bool JobQueue::isPaused() const
 
 bool JobQueue::hasIncomplete() const
 {
-    foreach (MeltJob* job, m_jobs) {
+    foreach (AbstractJob* job, m_jobs) {
         if (!job->ran() || job->state() == QProcess::Running)
             return true;
     }

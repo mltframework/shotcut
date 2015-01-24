@@ -84,7 +84,10 @@ SOURCES += main.cpp\
     widgets/lumamixtransition.cpp \
     mltxmlgpuchecker.cpp \
     autosavefile.cpp \
-    widgets/directshowvideowidget.cpp
+    widgets/directshowvideowidget.cpp \
+    jobs/abstractjob.cpp \
+    jobs/meltjob.cpp \
+    jobs/encodejob.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -160,7 +163,10 @@ HEADERS  += mainwindow.h \
     widgets/lumamixtransition.h \
     mltxmlgpuchecker.h \
     autosavefile.h \
-    widgets/directshowvideowidget.h
+    widgets/directshowvideowidget.h \
+    jobs/abstractjob.h \
+    jobs/meltjob.h \
+    jobs/encodejob.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \

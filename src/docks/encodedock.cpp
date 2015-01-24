@@ -24,6 +24,7 @@
 #include "mainwindow.h"
 #include "settings.h"
 #include "qmltypes/qmlapplication.h"
+#include "jobs/encodejob.h"
 
 #include <QtDebug>
 #include <QtWidgets>
@@ -375,7 +376,7 @@ MeltJob* EncodeDock::createMeltJob(const QString& target, int realtime, int pass
     dom.save(ts, 2);
     f1.close();
 
-    return new MeltJob(target, tmpName);
+    return new EncodeJob(target, tmpName);
 }
 
 void EncodeDock::runMelt(const QString& target, int realtime)

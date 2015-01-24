@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Meltytech, LLC
+ * Copyright (c) 2012-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,36 +16,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef JOBSDOCK_H
-#define JOBSDOCK_H
+#ifndef ENCODEJOB_H
+#define ENCODEJOB_H
 
-#include <QDockWidget>
+#include "meltjob.h"
 
-class AbstractJob;
-
-namespace Ui {
-    class JobsDock;
-}
-
-class JobsDock : public QDockWidget
+class EncodeJob : public MeltJob
 {
-    Q_OBJECT
-
 public:
-    explicit JobsDock(QWidget *parent = 0);
-    ~JobsDock();
-    AbstractJob* currentJob() const;
-
-private:
-    Ui::JobsDock *ui;
+    EncodeJob(const QString& name, const QString& xml);
 
 private slots:
-    void on_treeView_customContextMenuRequested(const QPoint &pos);
-    void on_actionStopJob_triggered();
-    void on_actionViewLog_triggered();
-    void on_pauseButton_toggled(bool checked);
-    void on_actionRun_triggered();
-    void on_menuButton_clicked();
+    void onOpenTiggered();
+    void onShowFolderTriggered();
 };
 
-#endif // JOBSDOCK_H
+#endif // ENCODEJOB_H

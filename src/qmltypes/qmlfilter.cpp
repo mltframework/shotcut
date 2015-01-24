@@ -21,6 +21,7 @@
 #include "mainwindow.h"
 #include "controllers/filtercontroller.h"
 #include "jobqueue.h"
+#include "jobs/meltjob.h"
 #include <QStandardPaths>
 #include <QDir>
 #include <QIODevice>
@@ -229,11 +230,11 @@ void QmlFilter::analyze(bool isAudio)
     dom.save(ts, 2);
     f1.close();
 
-    MeltJob* job = new MeltJob(target, tmpName);
+    AbstractJob* job = new MeltJob(target, tmpName);
     if (job) {
         AnalyzeDelegate* delegate = new AnalyzeDelegate(m_filter);
-        connect(job, &MeltJob::finished, delegate, &AnalyzeDelegate::onAnalyzeFinished);
-        connect(job, &MeltJob::finished, this, &QmlFilter::analyzeFinished);
+        connect(job, &AbstractJob::finished, delegate, &AnalyzeDelegate::onAnalyzeFinished);
+        connect(job, &AbstractJob::finished, this, &QmlFilter::analyzeFinished);
         QFileInfo info(QString::fromUtf8(service.get("resource")));
         job->setLabel(tr("Analyze %1").arg(info.fileName()));
         JOBS.add(job);
@@ -321,7 +322,7 @@ AnalyzeDelegate::AnalyzeDelegate(Mlt::Filter* filter)
     , m_filter(*filter)
 {}
 
-void AnalyzeDelegate::onAnalyzeFinished(MeltJob *job, bool isSuccess)
+void AnalyzeDelegate::onAnalyzeFinished(AbstractJob *job, bool isSuccess)
 {
     QString fileName = job->objectName();
 

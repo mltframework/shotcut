@@ -26,7 +26,7 @@
 #include <MltFilter.h>
 #include "qmlmetadata.h"
 
-class MeltJob;
+class AbstractJob;
 
 class QmlFilter : public QObject
 {
@@ -90,7 +90,7 @@ public:
     explicit AnalyzeDelegate(Mlt::Filter *filter);
 
 public slots:
-    void onAnalyzeFinished(MeltJob *job, bool isSuccess);
+    void onAnalyzeFinished(AbstractJob *job, bool isSuccess);
 
 private:
     Mlt::Filter m_filter;

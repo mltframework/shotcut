@@ -48,7 +48,7 @@
          <x>0</x>
          <y>0</y>
          <width>232</width>
-         <height>235</height>
+         <height>225</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -167,33 +167,12 @@ the list. This does not stop a currently running job. Right-
     <string>View the messages of MLT and FFmpeg </string>
    </property>
   </action>
-  <action name="actionViewXml">
-   <property name="text">
-    <string>View XML</string>
-   </property>
-   <property name="toolTip">
-    <string>View the MLT XML for this job</string>
-   </property>
-  </action>
-  <action name="actionOpen">
-   <property name="text">
-    <string>Open</string>
-   </property>
-   <property name="toolTip">
-    <string>Open the output file in the Shotcut player</string>
-   </property>
-  </action>
   <action name="actionRun">
    <property name="text">
     <string>Run</string>
    </property>
    <property name="toolTip">
     <string>Restart a stopped job</string>
-   </property>
-  </action>
-  <action name="actionOpenFolder">
-   <property name="text">
-    <string>Show In Folder</string>
    </property>
   </action>
  </widget>
