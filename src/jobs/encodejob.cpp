@@ -21,7 +21,15 @@
 #include <QUrl>
 #include <QDesktopServices>
 #include <QFileInfo>
+#include <QFileDialog>
+#include <QTemporaryFile>
+#include <QDir>
+#include <QDomDocument>
+#include <QTextStream>
 #include "mainwindow.h"
+#include "settings.h"
+#include "jobqueue.h"
+#include "jobs/videoqualityjob.h"
 
 EncodeJob::EncodeJob(const QString &name, const QString &xml)
     : MeltJob(name, xml)
@@ -35,6 +43,10 @@ EncodeJob::EncodeJob(const QString &name, const QString &xml)
     action->setToolTip(tr("Show In Folder"));
     connect(action, &QAction::triggered, this, &EncodeJob::onShowFolderTriggered);
     m_successActions << action;
+
+    action = new QAction(tr("Measure Video Quality..."), this);
+    connect(action, &QAction::triggered, this, &EncodeJob::onVideoQualityTriggered);
+    m_successActions << action;
 }
 
 void EncodeJob::onOpenTiggered()
@@ -47,4 +59,64 @@ void EncodeJob::onShowFolderTriggered()
     QFileInfo fi(objectName());
     QUrl url(QString("file://").append(fi.path()), QUrl::TolerantMode);
     QDesktopServices::openUrl(url);
+}
+
+void EncodeJob::onVideoQualityTriggered()
+{
+    // Get the location and file name for the report.
+    QString directory = Settings.encodePath();
+    directory += "/.txt";
+    QString reportPath= QFileDialog::getSaveFileName(&MAIN, tr("Video Quality Report"), directory);
+    if (!reportPath.isEmpty()) {
+        QFileInfo fi(reportPath);
+        if (fi.suffix().isEmpty())
+            reportPath += ".txt";
+
+        // Get temp filename for the new XML.
+        QTemporaryFile tmp(QDir::tempPath().append("/shotcut-XXXXXX"));
+        tmp.open();
+        QString tmpName = tmp.fileName();
+        tmp.close();
+        tmpName.append(".mlt");
+
+        // Generate the XML for the comparison.
+        Mlt::Tractor tractor;
+        Mlt::Producer original(MLT.profile(), xmlPath().toUtf8().constData());
+        Mlt::Producer encoded(MLT.profile(), objectName().toUtf8().constData());
+        Mlt::Transition vqm(MLT.profile(), "vqm");
+        if (original.is_valid() && encoded.is_valid() && vqm.is_valid()) {
+            tractor.set_profile(MLT.profile());
+            tractor.set_track(original, 0);
+            tractor.set_track(encoded, 1);
+            tractor.plant_transition(vqm);
+            vqm.set("render", 0);
+            MLT.saveXML(tmpName, &tractor);
+
+            // Add consumer element to XML.
+            QFile f1(tmpName);
+            f1.open(QIODevice::ReadOnly);
+            QDomDocument dom(tmpName);
+            dom.setContent(&f1);
+            f1.close();
+
+            QDomElement consumerNode = dom.createElement("consumer");
+            QDomNodeList profiles = dom.elementsByTagName("profile");
+            if (profiles.isEmpty())
+                dom.documentElement().insertAfter(consumerNode, dom.documentElement());
+            else
+                dom.documentElement().insertAfter(consumerNode, profiles.at(profiles.length() - 1));
+            consumerNode.setAttribute("mlt_service", "null");
+            consumerNode.setAttribute("real_time", -1);
+            consumerNode.setAttribute("terminate_on_pause", 1);
+
+            // Save the new XML.
+            f1.open(QIODevice::WriteOnly);
+            QTextStream ts(&f1);
+            dom.save(ts, 2);
+            f1.close();
+
+            // Create job and add it to the queue.
+            JOBS.add(new VideoQualityJob(objectName(), tmpName, reportPath));
+        }
+    }
 }

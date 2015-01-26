@@ -28,6 +28,7 @@ public:
     virtual ~MeltJob();
     void start();
     QString xml() const;
+    QString xmlPath() const { return m_xml; }
 
 public slots:
     void onViewXmlTriggered();

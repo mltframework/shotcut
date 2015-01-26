@@ -16,20 +16,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef ENCODEJOB_H
-#define ENCODEJOB_H
+#ifndef VIDEOQUALITYJOB_H
+#define VIDEOQUALITYJOB_H
 
 #include "meltjob.h"
 
-class EncodeJob : public MeltJob
+class VideoQualityJob : public MeltJob
 {
 public:
-    EncodeJob(const QString& name, const QString& xml);
+    VideoQualityJob(const QString& name, const QString& xmlPath,
+                    const QString& reportPath);
 
 private slots:
     void onOpenTiggered();
+    void onViewReportTriggered();
     void onShowFolderTriggered();
-    void onVideoQualityTriggered();
+
+private:
+    QString m_reportPath;
 };
 
-#endif // ENCODEJOB_H
+#endif // VIDEOQUALITYJOB_H

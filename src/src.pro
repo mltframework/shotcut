@@ -87,7 +87,8 @@ SOURCES += main.cpp\
     widgets/directshowvideowidget.cpp \
     jobs/abstractjob.cpp \
     jobs/meltjob.cpp \
-    jobs/encodejob.cpp
+    jobs/encodejob.cpp \
+    jobs/videoqualityjob.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -166,7 +167,8 @@ HEADERS  += mainwindow.h \
     widgets/directshowvideowidget.h \
     jobs/abstractjob.h \
     jobs/meltjob.h \
-    jobs/encodejob.h
+    jobs/encodejob.h \
+    jobs/videoqualityjob.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
