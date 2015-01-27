@@ -1489,6 +1489,12 @@ SLIB_EXTRA_CMD=-"mv $$(@:$(SLIBSUF)=.orig.def) $$(@:$(SLIBSUF)=.def)"
     else
       cmd make install || die "Unable to install $1"
     fi
+    if test "x265" = "$1" -a "Darwin" = "$TARGET_OS" ; then
+      # replace @rpath with full path to lib
+      X265LIB=$(otool -D "$FINAL_INSTALL_DIR"/lib/libx265.dylib | tail -n 1)
+      log X265LIB=$X265LIB
+      cmd install_name_tool -id "$FINAL_INSTALL_DIR"/lib/$(basename "$X265LIB") "$FINAL_INSTALL_DIR"/lib/libx265.dylib
+    fi
   fi
   feedback_progress Done installing $1
 
