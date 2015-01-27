@@ -326,7 +326,6 @@ void MeltedPlaylistModel::refresh()
 void MeltedPlaylistModel::onUnitChanged(quint8 unit)
 {
     m_unit = unit;
-    bool update = m_list;
     beginResetModel();
     mvcp_list_close(m_list);
     m_list = 0;
