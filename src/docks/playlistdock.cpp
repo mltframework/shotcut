@@ -370,6 +370,7 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
         foreach (QUrl url, data->urls()) {
             Mlt::Producer p(MLT.profile(), url.path().toUtf8().constData());
             if (p.is_valid()) {
+                MLT.setImageDurationFromDefault(&p);
                 if (row == -1)
                     MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.XML(&p)));
                 else
