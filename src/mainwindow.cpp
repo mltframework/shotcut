@@ -1728,7 +1728,7 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
         w = new X11grabWidget(this);
     else if (service.startsWith("avformat"))
         w = new AvformatProducerWidget(this);
-    else if (service == "pixbuf" || service == "qimage") {
+    else if (MLT.isImageProducer(producer)) {
         ImageProducerWidget* ipw = new ImageProducerWidget(this);
         connect(m_player, SIGNAL(outChanged(int)), ipw, SLOT(setOutPoint(int)));
         w = ipw;
@@ -1960,8 +1960,7 @@ public:
         foreach (QString filename, filenames) {
             Mlt::Producer p(MLT.profile(), filename.toUtf8().constData());
             if (p.is_valid()) {
-                QString service(p.get("mlt_service"));
-                if (service == "pixbuf" || service == "qimage") {
+                if (MLT.isImageProducer(&p)) {
                     p.set("ttl", 1);
                     p.set("length", qRound(MLT.profile().fps() * 600));
                     p.set("out", qRound(MLT.profile().fps() * Settings.imageDuration()) - 1);

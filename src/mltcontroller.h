@@ -115,6 +115,7 @@ public:
     bool isSeekableClip();
     bool isPlaylist() const;
     bool isMultitrack() const;
+    bool isImageProducer(Service* service = 0) const;
     void rewind();
     void fastForward();
     void previous(int currentPosition);

@@ -177,8 +177,7 @@ int Controller::open(const QString &url)
                (m_producer->get_int("_original_type") == tractor_type && m_producer->get("shotcut")))
                 m_url = url;
         }
-        const char *service = m_producer->get("mlt_service");
-        if (service && (!strcmp(service, "pixbuf") || !strcmp(service, "qimage"))) {
+        if (MLT.isImageProducer()) {
             m_producer->set("length", qRound(profile().fps() * 600));
             m_producer->set("out", qRound(profile().fps() * Settings.imageDuration()) - 1);
         }
@@ -525,7 +524,15 @@ bool Controller::isMultitrack() const
     return m_producer && m_producer->is_valid()
         && !m_producer->get_int(kShotcutVirtualClip)
         && (m_producer->get_int("_original_type") == tractor_type || resource() == "<tractor>")
-        && (m_producer->get("shotcut"));
+            && (m_producer->get("shotcut"));
+}
+
+bool Controller::isImageProducer(Service* service) const
+{
+    if (!service)
+        service = (Service*) m_producer;
+    QString serviceName = service->get("mlt_service");
+    return (serviceName == "pixbuf" || serviceName == "qimage");
 }
 
 void Controller::rewind()
