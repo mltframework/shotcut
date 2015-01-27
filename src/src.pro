@@ -88,7 +88,8 @@ SOURCES += main.cpp\
     jobs/abstractjob.cpp \
     jobs/meltjob.cpp \
     jobs/encodejob.cpp \
-    jobs/videoqualityjob.cpp
+    jobs/videoqualityjob.cpp \
+    commands/playlistcommands.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -168,7 +169,8 @@ HEADERS  += mainwindow.h \
     jobs/abstractjob.h \
     jobs/meltjob.h \
     jobs/encodejob.h \
-    jobs/videoqualityjob.h
+    jobs/videoqualityjob.h \
+    commands/playlistcommands.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \

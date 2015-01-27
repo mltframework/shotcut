@@ -63,6 +63,7 @@
 #include "qmltypes/qmlutilities.h"
 #include "qmltypes/qmlapplication.h"
 #include "autosavefile.h"
+#include "commands/playlistcommands.h"
 
 #include <QtWidgets>
 #include <QDebug>
