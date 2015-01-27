@@ -21,6 +21,7 @@
 #include "ui_recentdock.h"
 #include "util.h"
 
+#include <QDir>
 #include <QDebug>
 
 static const int MaxItems = 100;
@@ -53,6 +54,7 @@ RecentDock::~RecentDock()
 
 void RecentDock::add(const QString &s)
 {
+    if (s.startsWith(QDir::tempPath())) return;
     QString name = remove(s);
     QStandardItem* item = new QStandardItem(name);
     item->setToolTip(s);
