@@ -1960,11 +1960,7 @@ public:
         foreach (QString filename, filenames) {
             Mlt::Producer p(MLT.profile(), filename.toUtf8().constData());
             if (p.is_valid()) {
-                if (MLT.isImageProducer(&p)) {
-                    p.set("ttl", 1);
-                    p.set("length", qRound(MLT.profile().fps() * 600));
-                    p.set("out", qRound(MLT.profile().fps() * Settings.imageDuration()) - 1);
-                }
+                MLT.setImageDurationFromDefault(&p);
                 MAIN.undoStack()->push(new Playlist::AppendCommand(*model, MLT.XML(&p)));
             }
         }

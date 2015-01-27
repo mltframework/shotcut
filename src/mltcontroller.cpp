@@ -177,10 +177,7 @@ int Controller::open(const QString &url)
                (m_producer->get_int("_original_type") == tractor_type && m_producer->get("shotcut")))
                 m_url = url;
         }
-        if (MLT.isImageProducer()) {
-            m_producer->set("length", qRound(profile().fps() * 600));
-            m_producer->set("out", qRound(profile().fps() * Settings.imageDuration()) - 1);
-        }
+        setImageDurationFromDefault(m_producer);
     }
     else {
         delete m_producer;
@@ -529,10 +526,11 @@ bool Controller::isMultitrack() const
 
 bool Controller::isImageProducer(Service* service) const
 {
-    if (!service)
-        service = (Service*) m_producer;
-    QString serviceName = service->get("mlt_service");
-    return (serviceName == "pixbuf" || serviceName == "qimage");
+    if (service && service->is_valid()) {
+        QString serviceName = service->get("mlt_service");
+        return (serviceName == "pixbuf" || serviceName == "qimage");
+    }
+    return false;
 }
 
 void Controller::rewind()
@@ -713,6 +711,17 @@ int Controller::realTime() const
 {
     int threadCount = QThread::idealThreadCount();
     return threadCount > 2? qMin(threadCount - 1, 4) : 1;
+}
+
+void Controller::setImageDurationFromDefault(Service* service) const
+{
+    if (service && service->is_valid()) {
+        if (isImageProducer(service)) {
+            service->set("ttl", 1);
+            service->set("length", qRound(m_profile->fps() * 600));
+            service->set("out", qRound(m_profile->fps() * Settings.imageDuration()) - 1);
+        }
+    }
 }
 
 void TransportControl::play(double speed)

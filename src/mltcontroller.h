@@ -115,7 +115,7 @@ public:
     bool isSeekableClip();
     bool isPlaylist() const;
     bool isMultitrack() const;
-    bool isImageProducer(Service* service = 0) const;
+    bool isImageProducer(Service* service) const;
     void rewind();
     void fastForward();
     void previous(int currentPosition);
@@ -129,6 +129,7 @@ public:
     void updateAvformatCaching(int trackCount);
     bool isAudioFilter(const QString& name);
     int realTime() const;
+    void setImageDurationFromDefault(Service* service) const;
 
     Mlt::Repository* repository() const {
         return m_repo;
