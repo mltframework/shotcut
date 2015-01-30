@@ -80,12 +80,11 @@ void EncodeJob::onVideoQualityTriggered()
         tmpName.append(".mlt");
 
         // Generate the XML for the comparison.
-        Mlt::Tractor tractor;
+        Mlt::Tractor tractor(MLT.profile());
         Mlt::Producer original(MLT.profile(), xmlPath().toUtf8().constData());
         Mlt::Producer encoded(MLT.profile(), objectName().toUtf8().constData());
         Mlt::Transition vqm(MLT.profile(), "vqm");
         if (original.is_valid() && encoded.is_valid() && vqm.is_valid()) {
-            tractor.set_profile(MLT.profile());
             tractor.set_track(original, 0);
             tractor.set_track(encoded, 1);
             tractor.plant_transition(vqm);

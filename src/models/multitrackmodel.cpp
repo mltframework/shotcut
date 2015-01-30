@@ -2096,8 +2096,7 @@ void MultitrackModel::audioLevelsReady(const QModelIndex& index)
 bool MultitrackModel::createIfNeeded()
 {
     if (!m_tractor) {
-        m_tractor = new Mlt::Tractor;
-        m_tractor->set_profile(MLT.profile());
+        m_tractor = new Mlt::Tractor(MLT.profile());
         MLT.profile().set_explicit(true);
         m_tractor->set("shotcut", 1);
         retainPlaylist();
@@ -2148,8 +2147,7 @@ void MultitrackModel::adjustBackgroundDuration()
 void MultitrackModel::addAudioTrack()
 {
     if (!m_tractor) {
-        m_tractor = new Mlt::Tractor;
-        m_tractor->set_profile(MLT.profile());
+        m_tractor = new Mlt::Tractor(MLT.profile());
         MLT.profile().set_explicit(true);
         m_tractor->set("shotcut", 1);
         retainPlaylist();
