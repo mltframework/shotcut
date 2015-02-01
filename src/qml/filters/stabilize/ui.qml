@@ -32,7 +32,7 @@ Rectangle {
             status.text = qsTr('Analyzing...')
         }
         else if (filter.get("results").length > 0 && 
-                 filter.get("results") == filter.get("filename") ) {
+                 filter.get("filename").indexOf(filter.get("results")) !== -1) {
             status.text = qsTr('Analysis complete.')
         }
         else
