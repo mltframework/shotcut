@@ -597,8 +597,6 @@ void MainWindow::open(Mlt::Producer* producer)
     if (ok && screen != QApplication::desktop()->screenNumber(this))
         m_player->moveVideoToScreen(screen);
 
-    m_player->setPauseAfterOpen(!MLT.isClip());
-
     // no else here because open() will delete the producer if open fails
     if (!MLT.setProducer(producer))
         emit producerOpened();
@@ -736,6 +734,7 @@ void MainWindow::open(QString url, const Mlt::Properties* properties)
         Mlt::Properties* props = const_cast<Mlt::Properties*>(properties);
         if (props && props->is_valid())
             mlt_properties_inherit(MLT.producer()->get_properties(), props->get_properties());
+        m_player->setPauseAfterOpen(!MLT.isClip());
         open(MLT.producer());
         m_recentDock->add(m_autosaveFile? m_autosaveFile->managedFileName() : url);
     }
