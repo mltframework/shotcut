@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Meltytech, LLC
+ * Copyright (c) 2012-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,6 +19,7 @@
 #include "timespinbox.h"
 #include "mltcontroller.h"
 #include <QRegExpValidator>
+#include <QKeyEvent>
 
 TimeSpinBox::TimeSpinBox(QWidget *parent)
     : QSpinBox(parent)
@@ -50,6 +51,14 @@ QString TimeSpinBox::textFromValue(int val) const
         return MLT.producer()->frames_to_time(val);
     }
     return QString();
+}
+
+void TimeSpinBox::keyPressEvent(QKeyEvent* event)
+{
+    if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return)
+        clearFocus();
+    else
+        QSpinBox::keyPressEvent(event);
 }
 
 

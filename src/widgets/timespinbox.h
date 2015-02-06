@@ -35,6 +35,7 @@ protected:
     QValidator::State validate(QString &input, int &pos) const;
     int valueFromText(const QString &text) const;
     QString textFromValue(int val) const;
+    void keyPressEvent(QKeyEvent *event);
 
 private:
     QRegExpValidator* m_validator;
