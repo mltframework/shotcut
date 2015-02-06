@@ -134,8 +134,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>341</width>
-         <height>447</height>
+         <width>329</width>
+         <height>465</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -919,7 +919,7 @@ codecs. However, not all codecs are multi-threaded.</string>
              </layout>
             </item>
             <item row="7" column="0">
-             <widget class="QLabel" name="label_24">
+             <widget class="QLabel" name="videoBufferSizeLabel">
               <property name="text">
                <string>Buffer size</string>
               </property>
@@ -929,12 +929,9 @@ codecs. However, not all codecs are multi-threaded.</string>
              </widget>
             </item>
             <item row="7" column="1">
-             <layout class="QHBoxLayout" name="horizontalLayout_18">
+             <layout class="QHBoxLayout" name="videoBufferSizeLayout">
               <item>
                <widget class="QDoubleSpinBox" name="videoBufferSizeSpinner">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
                 <property name="maximum">
                  <double>9999.000000000000000</double>
                 </property>
@@ -944,7 +941,7 @@ codecs. However, not all codecs are multi-threaded.</string>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="label_6">
+               <widget class="QLabel" name="videoBufferSizeSuffixLabel">
                 <property name="text">
                  <string>KiB</string>
                 </property>
@@ -966,7 +963,7 @@ codecs. However, not all codecs are multi-threaded.</string>
              </layout>
             </item>
             <item row="8" column="0">
-             <widget class="QLabel" name="label_25">
+             <widget class="QLabel" name="videoQualityLabel">
               <property name="text">
                <string>Quality</string>
               </property>
@@ -976,12 +973,9 @@ codecs. However, not all codecs are multi-threaded.</string>
              </widget>
             </item>
             <item row="8" column="1">
-             <layout class="QHBoxLayout" name="horizontalLayout_19">
+             <layout class="QHBoxLayout" name="videoQualityLayout">
               <item>
                <widget class="QSpinBox" name="videoQualitySpinner">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
                 <property name="suffix">
                  <string> %</string>
                 </property>
@@ -1146,7 +1140,7 @@ codecs. However, not all codecs are multi-threaded.</string>
              </layout>
             </item>
             <item row="5" column="0">
-             <widget class="QLabel" name="label_4">
+             <widget class="QLabel" name="audioBitrateLabel">
               <property name="text">
                <string>Bitrate</string>
               </property>
@@ -1156,7 +1150,7 @@ codecs. However, not all codecs are multi-threaded.</string>
              </widget>
             </item>
             <item row="5" column="1">
-             <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <layout class="QHBoxLayout" name="audioBitrateLayout">
               <item>
                <widget class="QComboBox" name="audioBitrateCombo">
                 <property name="toolTip">
@@ -1226,7 +1220,7 @@ codecs. However, not all codecs are multi-threaded.</string>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="label_5">
+               <widget class="QLabel" name="audioBitrateSuffixLabel">
                 <property name="text">
                  <string>b/s</string>
                 </property>
@@ -1314,7 +1308,7 @@ codecs. However, not all codecs are multi-threaded.</string>
              </layout>
             </item>
             <item row="6" column="0">
-             <widget class="QLabel" name="label_26">
+             <widget class="QLabel" name="audioQualityLabel">
               <property name="text">
                <string>Quality</string>
               </property>
@@ -1324,12 +1318,9 @@ codecs. However, not all codecs are multi-threaded.</string>
              </widget>
             </item>
             <item row="6" column="1">
-             <layout class="QHBoxLayout" name="horizontalLayout_20">
+             <layout class="QHBoxLayout" name="audioQualityLayout">
               <item>
                <widget class="QSpinBox" name="audioQualitySpinner">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
                 <property name="suffix">
                  <string> %</string>
                 </property>
@@ -1449,7 +1440,6 @@ codecs. However, not all codecs are multi-threaded.</string>
      </widget>
     </item>
    </layout>
-   <zorder>scrollArea</zorder>
   </widget>
  </widget>
  <customwidgets>

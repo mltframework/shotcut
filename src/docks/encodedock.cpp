@@ -87,6 +87,8 @@ EncodeDock::EncodeDock(QWidget *parent) :
     ui->videoCodecCombo->model()->sort(0);
     ui->videoCodecCombo->insertItem(0, tr("Default for format"));
     ui->videoCodecCombo->setCurrentIndex(0);
+    on_audioRateControlCombo_activated(ui->audioRateControlCombo->currentIndex());
+    on_videoRateControlCombo_activated(ui->videoRateControlCombo->currentIndex());
     qDebug() << "end";
 }
 
@@ -897,22 +899,37 @@ void EncodeDock::on_videoRateControlCombo_activated(int index)
 {
     switch (index) {
     case RateControlAverage:
-        ui->videoBitrateCombo->setEnabled(true);
-        ui->videoBufferSizeSpinner->setEnabled(false);
-        ui->videoQualitySpinner->setEnabled(false);
-        ui->dualPassCheckbox->setEnabled(true);
+        ui->videoBitrateCombo->show();
+        ui->videoBufferSizeSpinner->hide();
+        ui->videoQualitySpinner->hide();
+        ui->dualPassCheckbox->show();
+        ui->videoBitrateLabel->show();
+        ui->videoBitrateSuffixLabel->show();
+        ui->videoBufferSizeLabel->hide();
+        ui->videoBufferSizeSuffixLabel->hide();
+        ui->videoQualityLabel->hide();
         break;
     case RateControlConstant:
-        ui->videoBitrateCombo->setEnabled(true);
-        ui->videoBufferSizeSpinner->setEnabled(true);
-        ui->videoQualitySpinner->setEnabled(false);
-        ui->dualPassCheckbox->setEnabled(false);
+        ui->videoBitrateCombo->show();
+        ui->videoBufferSizeSpinner->show();
+        ui->videoQualitySpinner->hide();
+        ui->dualPassCheckbox->hide();
+        ui->videoBitrateLabel->show();
+        ui->videoBitrateSuffixLabel->show();
+        ui->videoBufferSizeLabel->show();
+        ui->videoBufferSizeSuffixLabel->show();
+        ui->videoQualityLabel->hide();
         break;
     case RateControlQuality:
-        ui->videoBitrateCombo->setEnabled(false);
-        ui->videoBufferSizeSpinner->setEnabled(false);
-        ui->videoQualitySpinner->setEnabled(true);
-        ui->dualPassCheckbox->setEnabled(false);
+        ui->videoBitrateCombo->hide();
+        ui->videoBufferSizeSpinner->hide();
+        ui->videoQualitySpinner->show();
+        ui->dualPassCheckbox->hide();
+        ui->videoBitrateLabel->hide();
+        ui->videoBitrateSuffixLabel->hide();
+        ui->videoBufferSizeLabel->hide();
+        ui->videoBufferSizeSuffixLabel->hide();
+        ui->videoQualityLabel->show();
         break;
     }
 }
@@ -924,16 +941,25 @@ void EncodeDock::on_audioRateControlCombo_activated(int index)
         return;
     switch (index) {
     case RateControlAverage:
-        ui->audioBitrateCombo->setEnabled(true);
-        ui->audioQualitySpinner->setEnabled(false);
+        ui->audioBitrateCombo->show();
+        ui->audioQualitySpinner->hide();
+        ui->audioBitrateLabel->show();
+        ui->audioBitrateSuffixLabel->show();
+        ui->audioQualityLabel->hide();
         break;
     case RateControlConstant:
-        ui->audioBitrateCombo->setEnabled(true);
-        ui->audioQualitySpinner->setEnabled(false);
+        ui->audioBitrateCombo->show();
+        ui->audioQualitySpinner->hide();
+        ui->audioBitrateLabel->show();
+        ui->audioBitrateSuffixLabel->show();
+        ui->audioQualityLabel->hide();
         break;
     case RateControlQuality:
-        ui->audioBitrateCombo->setEnabled(false);
-        ui->audioQualitySpinner->setEnabled(true);
+        ui->audioBitrateCombo->hide();
+        ui->audioQualitySpinner->show();
+        ui->audioBitrateLabel->hide();
+        ui->audioBitrateSuffixLabel->hide();
+        ui->audioQualityLabel->show();
         break;
     }
 }
