@@ -76,7 +76,7 @@
            <bool>true</bool>
           </property>
           <property name="textElideMode">
-           <enum>Qt::ElideLeft</enum>
+           <enum>Qt::ElideMiddle</enum>
           </property>
           <property name="rootIsDecorated">
            <bool>false</bool>
