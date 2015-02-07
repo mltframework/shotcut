@@ -263,9 +263,8 @@ void TimelineDock::openClip(int trackIndex, int clipIndex)
     if (info) {
         QString xml = MLT.XML(info->producer);
         Mlt::Producer* p = new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
-        if (MLT.isImageProducer(p))
-            p->set_in_and_out(info->frame_in, info->frame_out);
-        emit clipOpened(p, info->frame_in, info->frame_out);
+        p->set_in_and_out(info->frame_in, info->frame_out);
+        emit clipOpened(p);
     }
 }
 

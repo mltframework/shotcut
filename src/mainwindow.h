@@ -132,7 +132,7 @@ public slots:
     void updateAutoSave();
     void open(QString url, const Mlt::Properties* = 0);
     void openVideo();
-    void openCut(void*, int in, int out);
+    void openCut(void*);
     void showStatusMessage(QString);
     void seekPlaylist(int start);
     void seekTimeline(int position);
@@ -172,6 +172,7 @@ private slots:
     void onMultitrackClosed();
     void onMultitrackModified();
     void onCutModified();
+    void onFilterModelChanged();
     void updateMarkers();
     void updateThumbnails();
     void on_actionUndo_triggered();

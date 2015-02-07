@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Meltytech, LLC
+ * Copyright (c) 2012-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,9 +25,12 @@
 #include <QMenu>
 #include <QDebug>
 
+static const char* kPlaylistIndexProperty = "_shotcut:playlistIndex";
+
 PlaylistDock::PlaylistDock(QWidget *parent) :
     QDockWidget(parent),
-    ui(new Ui::PlaylistDock)
+    ui(new Ui::PlaylistDock),
+    m_doubleClicked(false)
 {
     qDebug() << "begin";
     ui->setupUi(this);
@@ -97,8 +100,10 @@ void PlaylistDock::incrementIndex()
         index = m_model.createIndex(0, 0);
     else
         index = m_model.incrementIndex(index);
-    if (index.isValid())
+    if (index.isValid()) {
         ui->tableView->setCurrentIndex(index);
+        on_tableView_clicked(index);
+    }
 }
 
 void PlaylistDock::decrementIndex()
@@ -108,15 +113,19 @@ void PlaylistDock::decrementIndex()
         index = m_model.createIndex(0, 0);
     else
         index = m_model.decrementIndex(index);
-    if (index.isValid())
+    if (index.isValid()) {
         ui->tableView->setCurrentIndex(index);
+        on_tableView_clicked(index);
+    }
 }
 
 void PlaylistDock::setIndex(int row)
 {
     QModelIndex index = m_model.createIndex(row, 0);
-    if (index.isValid())
+    if (index.isValid()) {
         ui->tableView->setCurrentIndex(index);
+        on_tableView_clicked(index);
+    }
 }
 
 void PlaylistDock::moveClipUp()
@@ -144,12 +153,11 @@ void PlaylistDock::on_menuButton_clicked()
             menu.addAction(ui->actionInsertCut);
         menu.addAction(ui->actionOpen);
 
-        Mlt::ClipInfo* info = m_model.playlist()->clip_info(index.row());
-        if (info && info->resource && MLT.producer()->get("resource")
-                && !strcmp(info->resource, MLT.producer()->get("resource"))) {
-            menu.addAction(ui->actionUpdate);
+        QScopedPointer<Mlt::ClipInfo> info(m_model.playlist()->clip_info(index.row()));
+        if (info && MLT.producer()->get_int(kPlaylistIndexProperty) == index.row() + 1) {
+            if (MLT.producer()->get_in() != info->frame_in || MLT.producer()->get_out() != info->frame_out)
+                menu.addAction(ui->actionUpdate);
         }
-        delete info;
 
         menu.addAction(ui->actionRemove);
         menu.addSeparator();
@@ -248,6 +256,7 @@ void PlaylistDock::on_actionUpdate_triggered()
     }
     else {
         emit showStatusMessage(tr("This clip does not match the selected cut in the playlist!"));
+        ui->updateButton->setEnabled(false);
     }
     delete info;
 }
@@ -267,6 +276,11 @@ void PlaylistDock::on_removeButton_clicked()
     }
 }
 
+void PlaylistDock::setUpdateButtonEnabled(bool modified)
+{
+    ui->updateButton->setEnabled(modified);
+}
+
 void PlaylistDock::on_actionOpen_triggered()
 {
     QModelIndex index = ui->tableView->currentIndex();
@@ -275,9 +289,9 @@ void PlaylistDock::on_actionOpen_triggered()
     if (i) {
         QString xml = MLT.XML(i->producer);
         Mlt::Producer* p = new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
-        if (MLT.isImageProducer(p))
-            p->set_in_and_out(i->frame_in, i->frame_out);
-        emit clipOpened(p, i->frame_in, i->frame_out);
+        p->set_in_and_out(i->frame_in, i->frame_out);
+        p->set(kPlaylistIndexProperty, index.row() + 1);
+        emit clipOpened(p);
         delete i;
     }
 }
@@ -292,20 +306,34 @@ void PlaylistDock::on_tableView_customContextMenuRequested(const QPoint &pos)
             menu.addAction(ui->actionInsertCut);
         menu.addAction(ui->actionOpen);
 
-        Mlt::ClipInfo* info = m_model.playlist()->clip_info(index.row());
-        if (info && info->resource && MLT.producer()->get("resource")
-                && !strcmp(info->resource, MLT.producer()->get("resource"))) {
-            menu.addAction(ui->actionUpdate);
+        QScopedPointer<Mlt::ClipInfo> info(m_model.playlist()->clip_info(index.row()));
+        if (info && MLT.producer()->get_int(kPlaylistIndexProperty) == index.row() + 1) {
+            if (MLT.producer()->get_in() != info->frame_in || MLT.producer()->get_out() != info->frame_out)
+                menu.addAction(ui->actionUpdate);
         }
-        delete info;
 
         menu.addAction(ui->actionRemove);
         menu.exec(mapToGlobal(pos));
     }
 }
 
+void PlaylistDock::on_tableView_clicked(const QModelIndex& index)
+{
+    if (!m_doubleClicked) {
+        bool enabled = false;
+        QScopedPointer<Mlt::ClipInfo> info(m_model.playlist()->clip_info(index.row()));
+        if (info && MLT.producer()->get_int(kPlaylistIndexProperty) == index.row() + 1) {
+            if (MLT.producer()->get_in() != info->frame_in || MLT.producer()->get_out() != info->frame_out)
+                enabled = true;
+        }
+        ui->updateButton->setEnabled(enabled);
+    }
+    m_doubleClicked = false;
+}
+
 void PlaylistDock::on_tableView_doubleClicked(const QModelIndex &index)
 {
+    m_doubleClicked = true;
     if (!m_model.playlist()) return;
     Mlt::ClipInfo* i = m_model.playlist()->clip_info(index.row());
     if (i) {
@@ -314,9 +342,9 @@ void PlaylistDock::on_tableView_doubleClicked(const QModelIndex &index)
         } else {
             QString xml = MLT.XML(i->producer);
             Mlt::Producer* p = new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
-            if (MLT.isImageProducer(p))
-                p->set_in_and_out(i->frame_in, i->frame_out);
-            emit clipOpened(p, i->frame_in, i->frame_out);
+            p->set_in_and_out(i->frame_in, i->frame_out);
+            p->set(kPlaylistIndexProperty, index.row() + 1);
+            emit clipOpened(p);
         }
         delete i;
     } else {
@@ -348,6 +376,7 @@ void PlaylistDock::on_actionClose_triggered()
 void PlaylistDock::onPlaylistCreated()
 {
     ui->removeButton->setEnabled(true);
+    ui->updateButton->setEnabled(false);
     ui->menuButton->setEnabled(true);
     ui->stackedWidget->setCurrentIndex(1);
 }
@@ -361,6 +390,7 @@ void PlaylistDock::onPlaylistLoaded()
 void PlaylistDock::onPlaylistCleared()
 {
     ui->removeButton->setEnabled(false);
+    ui->updateButton->setEnabled(false);
     ui->menuButton->setEnabled(false);
     ui->stackedWidget->setCurrentIndex(0);
 }
@@ -481,4 +511,9 @@ void PlaylistDock::on_actionInOnlyLarge_triggered(bool checked)
 void PlaylistDock::on_actionAddToTimeline_triggered()
 {
     emit addAllTimeline(m_model.playlist());
+}
+
+void PlaylistDock::on_updateButton_clicked()
+{
+    on_actionUpdate_triggered();
 }

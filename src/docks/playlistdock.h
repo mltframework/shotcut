@@ -40,7 +40,7 @@ public:
     int position();
 
 signals:
-    void clipOpened(void* producer, int in, int out);
+    void clipOpened(void* producer);
     void itemActivated(int start);
     void showStatusMessage(QString);
     void addAllTimeline(Mlt::Playlist*);
@@ -56,6 +56,7 @@ public slots:
     void on_actionAppendCut_triggered();
     void on_actionUpdate_triggered();
     void on_removeButton_clicked();
+    void setUpdateButtonEnabled(bool modified);
 
 private slots:
     void on_menuButton_clicked();
@@ -65,6 +66,8 @@ private slots:
     void on_actionAppendBlank_triggered();
 
     void on_tableView_customContextMenuRequested(const QPoint &pos);
+
+    void on_tableView_clicked(const QModelIndex &index);
 
     void on_tableView_doubleClicked(const QModelIndex &index);
 
@@ -100,10 +103,13 @@ private slots:
 
     void on_actionAddToTimeline_triggered();
 
+    void on_updateButton_clicked();
+
 private:
     Ui::PlaylistDock *ui;
     PlaylistModel m_model;
     int m_defaultRowHeight;
+    bool m_doubleClicked;
 };
 
 #endif // PLAYLISTDOCK_H

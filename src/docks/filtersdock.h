@@ -38,6 +38,7 @@ public:
 
 signals:
     void currentFilterRequested(int attachedIndex);
+    void changed(); /// Notifies when a filter parameter changes.
 
 public slots:
     void clearCurrentFilter();

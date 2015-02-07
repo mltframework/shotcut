@@ -54,7 +54,7 @@ public:
     bool moveRows(const QModelIndex & sourceParent, int sourceRow, int count, const QModelIndex & destinationParent, int destinationRow);
  
 signals:
-    void changed(bool modified = true);
+    void changed();
     void readyChanged();
     void duplicateAddFailed(int index);
 

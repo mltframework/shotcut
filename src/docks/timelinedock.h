@@ -51,7 +51,7 @@ public:
 signals:
     void seeked(int position);
     void positionChanged();
-    void clipOpened(void* producer, int in, int out);
+    void clipOpened(void* producer);
     void dragging(const QPointF& pos, int duration);
     void dropped();
     void dropAccepted(const QString &xml);

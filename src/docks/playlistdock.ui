@@ -164,6 +164,23 @@ selected cut.</string>
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="updateButton">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="toolTip">
+         <string>Update</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset theme="dialog-ok" resource="../../icons/resources.qrc">
+          <normaloff>:/icons/oxygen/32x32/actions/dialog-ok.png</normaloff>:/icons/oxygen/32x32/actions/dialog-ok.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="menuButton">
         <property name="enabled">
          <bool>false</bool>

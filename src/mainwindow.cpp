@@ -199,7 +199,7 @@ MainWindow::MainWindow()
     ui->menuView->addAction(m_playlistDock->toggleViewAction());
     connect(m_playlistDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onPlaylistDockTriggered(bool)));
     connect(ui->actionPlaylist, SIGNAL(triggered()), this, SLOT(onPlaylistDockTriggered()));
-    connect(m_playlistDock, SIGNAL(clipOpened(void*,int,int)), this, SLOT(openCut(void*, int, int)));
+    connect(m_playlistDock, SIGNAL(clipOpened(void*)), this, SLOT(openCut(void*)));
     connect(m_playlistDock, SIGNAL(itemActivated(int)), this, SLOT(seekPlaylist(int)));
     connect(m_playlistDock, SIGNAL(showStatusMessage(QString)), this, SLOT(showStatusMessage(QString)));
     connect(m_playlistDock->model(), SIGNAL(created()), this, SLOT(onPlaylistCreated()));
@@ -224,7 +224,7 @@ MainWindow::MainWindow()
     connect(m_timelineDock->model(), SIGNAL(closed()), SLOT(onMultitrackClosed()));
     connect(m_timelineDock->model(), SIGNAL(modified()), SLOT(onMultitrackModified()));
     connect(m_timelineDock->model(), SIGNAL(modified()), SLOT(updateAutoSave()));
-    connect(m_timelineDock, SIGNAL(clipOpened(void*,int,int)), SLOT(openCut(void*, int, int)));
+    connect(m_timelineDock, SIGNAL(clipOpened(void*)), SLOT(openCut(void*)));
     connect(m_timelineDock->model(), SIGNAL(seeked(int)), SLOT(seekTimeline(int)));
     connect(m_playlistDock, SIGNAL(addAllTimeline(Mlt::Playlist*)), SLOT(onTimelineDockTriggered()));
     connect(m_playlistDock, SIGNAL(addAllTimeline(Mlt::Playlist*)), m_timelineDock, SLOT(appendFromPlaylist(Mlt::Playlist*)));
@@ -242,8 +242,8 @@ MainWindow::MainWindow()
     connect(m_filterController, SIGNAL(currentFilterChanged(QmlFilter*, QmlMetadata*, int)), m_filtersDock, SLOT(setCurrentFilter(QmlFilter*, QmlMetadata*, int)), Qt::QueuedConnection);
     connect(m_filterController, SIGNAL(currentFilterAboutToChange()), m_filtersDock, SLOT(clearCurrentFilter()));
     connect(this, SIGNAL(producerOpened()), m_filterController, SLOT(setProducer()));
-    connect(m_filterController->attachedModel(), SIGNAL(changed(bool)), SLOT(setWindowModified(bool)));
-    connect(m_filterController->attachedModel(), SIGNAL(changed()), SLOT(updateAutoSave()));
+    connect(m_filterController->attachedModel(), SIGNAL(changed()), SLOT(onFilterModelChanged()));
+    connect(m_filtersDock, SIGNAL(changed()), SLOT(onFilterModelChanged()));
     connect(m_filterController, SIGNAL(statusChanged(QString)), this, SLOT(showStatusMessage(QString)));
     connect(m_timelineDock, SIGNAL(fadeInChanged(int)), m_filtersDock, SLOT(setFadeInDuration(int)));
     connect(m_timelineDock, SIGNAL(fadeOutChanged(int)), m_filtersDock, SLOT(setFadeOutDuration(int)));
@@ -601,6 +601,7 @@ void MainWindow::open(Mlt::Producer* producer)
     if (!MLT.setProducer(producer))
         emit producerOpened();
     m_player->setFocus();
+    m_playlistDock->setUpdateButtonEnabled(false);
 
     // Needed on Windows. Upon first file open, window is deactivated, perhaps OpenGL-related.
     activateWindow();
@@ -766,13 +767,12 @@ void MainWindow::openVideo()
     }
 }
 
-void MainWindow::openCut(void* producer, int in, int out)
+void MainWindow::openCut(void* producer)
 {
     m_player->setPauseAfterOpen(true);
-    open((Mlt::Producer*) producer);
-    m_player->setIn(in);
-    m_player->setOut(out);
-    MLT.seek(in);
+    Mlt::Producer* p = (Mlt::Producer*) producer;
+    open(p);
+    MLT.seek(p->get_in());
 }
 
 void MainWindow::showStatusMessage(QString message)
@@ -1595,10 +1595,20 @@ void MainWindow::onMultitrackModified()
 
 void MainWindow::onCutModified()
 {
-    if (!playlist()) {
+    if (!playlist() && !multitrack()) {
         setWindowModified(true);
         updateAutoSave();
     }
+    if (playlist())
+        m_playlistDock->setUpdateButtonEnabled(true);
+}
+
+void MainWindow::onFilterModelChanged()
+{
+    setWindowModified(true);
+    updateAutoSave();
+    if (playlist())
+        m_playlistDock->setUpdateButtonEnabled(true);
 }
 
 void MainWindow::updateMarkers()
