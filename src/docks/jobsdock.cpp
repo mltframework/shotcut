@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Meltytech, LLC
+ * Copyright (c) 2012-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -113,4 +113,17 @@ void JobsDock::on_actionRun_triggered()
 void JobsDock::on_menuButton_clicked()
 {
     on_treeView_customContextMenuRequested(ui->menuButton->mapToParent(QPoint(0, 0)));
+}
+
+void JobsDock::on_treeView_doubleClicked(const QModelIndex &index)
+{
+    AbstractJob* job = JOBS.jobFromIndex(index);
+    if (job && job->ran() && job->state() == QProcess::NotRunning && job->exitStatus() == QProcess::NormalExit) {
+        foreach (QAction* action, job->successActions()) {
+            if (action->text() == "Open") {
+                action->trigger();
+                break;
+            }
+        }
+    }
 }
