@@ -19,6 +19,7 @@
 #include "avformatproducerwidget.h"
 #include "ui_avformatproducerwidget.h"
 #include "util.h"
+#include "mltcontroller.h"
 #include <QtDebug>
 #include <QtWidgets>
 
@@ -28,7 +29,7 @@ AvformatProducerWidget::AvformatProducerWidget(QWidget *parent)
     , m_defaultDuration(-1)
 {
     ui->setupUi(this);
-    connect(MLT.videoWidget(), SIGNAL(frameReceived(Mlt::QFrame)), this, SLOT(onFrameReceived(Mlt::QFrame)));
+    connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
 }
 
 AvformatProducerWidget::~AvformatProducerWidget()
@@ -65,7 +66,7 @@ void AvformatProducerWidget::reopen(Mlt::Producer* p)
         setProducer(0);
         return;
     }
-    connect(MLT.videoWidget(), SIGNAL(frameReceived(Mlt::QFrame)), this, SLOT(onFrameReceived(Mlt::QFrame)));
+    connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
     emit producerReopened();
     emit producerChanged();
     MLT.seek(position);
@@ -73,9 +74,9 @@ void AvformatProducerWidget::reopen(Mlt::Producer* p)
     setProducer(p);
 }
 
-void AvformatProducerWidget::onFrameReceived(Mlt::QFrame)
+void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
 {
-    disconnect(MLT.videoWidget(), SIGNAL(frameReceived(Mlt::QFrame)), this, 0);
+    disconnect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, 0);
     ui->tabWidget->setTabEnabled(0, false);
     ui->tabWidget->setTabEnabled(1, false);
     ui->tabWidget->setTabEnabled(2, false);
@@ -232,7 +233,7 @@ void AvformatProducerWidget::on_resetButton_clicked()
     ui->durationSpinBox->setValue(m_defaultDuration);
     ui->syncSlider->setValue(0);
     reopen(p);
-    connect(MLT.videoWidget(), SIGNAL(frameReceived(Mlt::QFrame)), this, SLOT(onFrameReceived(Mlt::QFrame)));
+    connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
 }
 
 void AvformatProducerWidget::on_videoTrackComboBox_activated(int index)
@@ -241,7 +242,7 @@ void AvformatProducerWidget::on_videoTrackComboBox_activated(int index)
         Mlt::Producer* p = producer(MLT.profile());
         p->set("video_index", ui->videoTrackComboBox->itemData(index).toInt());
         reopen(p);
-        connect(MLT.videoWidget(), SIGNAL(frameReceived(Mlt::QFrame)), this, SLOT(onFrameReceived(Mlt::QFrame)));
+        connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
     }
 }
 
@@ -251,7 +252,7 @@ void AvformatProducerWidget::on_audioTrackComboBox_activated(int index)
         Mlt::Producer* p = producer(MLT.profile());
         p->set("audio_index", ui->audioTrackComboBox->itemData(index).toInt());
         reopen(p);
-        connect(MLT.videoWidget(), SIGNAL(frameReceived(Mlt::QFrame)), this, SLOT(onFrameReceived(Mlt::QFrame)));
+        connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
     }
 }
 
@@ -265,7 +266,7 @@ void AvformatProducerWidget::on_scanComboBox_activated(int index)
             // by setting them NULL.
             m_producer->set("force_progressive", QString::number(index).toLatin1().constData());
         emit producerChanged();
-        connect(MLT.videoWidget(), SIGNAL(frameReceived(Mlt::QFrame)), this, SLOT(onFrameReceived(Mlt::QFrame)));
+        connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
     }
 }
 
@@ -276,7 +277,7 @@ void AvformatProducerWidget::on_fieldOrderComboBox_activated(int index)
         if (m_producer->get("force_tff") || tff != index)
             m_producer->set("force_tff", QString::number(index).toLatin1().constData());
         emit producerChanged();
-        connect(MLT.videoWidget(), SIGNAL(frameReceived(Mlt::QFrame)), this, SLOT(onFrameReceived(Mlt::QFrame)));
+        connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
     }
 }
 
@@ -294,7 +295,7 @@ void AvformatProducerWidget::on_aspectNumSpinBox_valueChanged(int)
             m_producer->set("shotcut_aspect_den", ui->aspectDenSpinBox->text().toLatin1().constData());
         }
         emit producerChanged();
-        connect(MLT.videoWidget(), SIGNAL(frameReceived(Mlt::QFrame)), this, SLOT(onFrameReceived(Mlt::QFrame)));
+        connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
     }
 }
 

@@ -209,7 +209,7 @@ Player::Player(QWidget *parent)
     vlayout->addWidget(toolbar);
     vlayout->addLayout(tabLayout);
 
-    connect(MLT.videoWidget(), SIGNAL(frameReceived(Mlt::QFrame)), this, SLOT(onShowFrame(Mlt::QFrame)));
+    connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
     connect(actionPlay, SIGNAL(triggered()), this, SLOT(togglePlayPaused()));
     connect(actionPause, SIGNAL(triggered()), this, SLOT(pause()));
     connect(actionFastForward, SIGNAL(triggered()), this, SLOT(fastForward()));
@@ -540,9 +540,9 @@ void Player::onShowFrame(int position, double fps, int in, int out, int length, 
     m_scrubber->blockSignals(false);
 }
 
-void Player::onShowFrame(Mlt::QFrame frame)
+void Player::onFrameDisplayed(const SharedFrame& frame)
 {
-    int position = frame.frame()->get_position();
+    int position = frame.get_position();
     if (position < m_duration) {
         m_position = position;
         m_positionSpinner->blockSignals(true);
@@ -555,7 +555,7 @@ void Player::onShowFrame(Mlt::QFrame frame)
     if (m_seekPosition != SEEK_INACTIVE)
         emit seeked(m_seekPosition);
     m_seekPosition = SEEK_INACTIVE;
-    showAudio(frame.frame());
+    showAudio(frame);
 }
 
 void Player::updateSelection()
@@ -688,15 +688,15 @@ void Player::onTabBarClicked(int index)
     }
 }
 
-void Player::showAudio(Mlt::Frame* frame)
+void Player::showAudio(const SharedFrame& frame)
 {
-    if (frame->get_int("test_audio"))
+    if (frame.get_int("test_audio"))
         return;
     QVector<double> channels;
-    int n = frame->get_int("audio_channels");
+    int n = frame.get_int("audio_channels");
     while (n--) {
         QString s = QString("meta.media.audio_level.%1").arg(n);
-        channels << frame->get_double(s.toLatin1().constData());
+        channels << frame.get_double(s.toLatin1().constData());
     }
     emit audioLevels(channels);
 }

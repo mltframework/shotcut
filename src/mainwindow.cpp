@@ -50,6 +50,7 @@
 #include "mvcp/meltedunitsmodel.h"
 #include "mvcp/meltedplaylistmodel.h"
 #include "controllers/filtercontroller.h"
+#include "controllers/scopecontroller.h"
 #include "docks/filtersdock.h"
 #include "dialogs/customprofiledialog.h"
 #include "htmleditor/htmleditor.h"
@@ -171,6 +172,8 @@ MainWindow::MainWindow()
     configureVideoWidget();
 
     // Add the docks.
+    m_scopeController = new ScopeController(this, ui->menuView);
+
     m_propertiesDock = new QDockWidget(tr("Properties"), this);
     m_propertiesDock->hide();
     m_propertiesDock->setObjectName("propertiesDock");
@@ -342,6 +345,7 @@ MainWindow::MainWindow()
     connect(videoWidget, SIGNAL(dragStarted()), m_playlistDock, SLOT(onPlayerDragStarted()));
     connect(videoWidget, SIGNAL(seekTo(int)), m_player, SLOT(seek(int)));
     connect(videoWidget, SIGNAL(gpuNotSupported()), this, SLOT(onGpuNotSupported()));
+    connect(videoWidget, SIGNAL(frameDisplayed(const SharedFrame&)), m_scopeController, SLOT(onFrameDisplayed(const SharedFrame&)));
     connect(m_filterController, SIGNAL(currentFilterChanged(QmlFilter*, QmlMetadata*, int)), videoWidget, SLOT(setCurrentFilter(QmlFilter*, QmlMetadata*)), Qt::QueuedConnection);
     connect(m_filterController, SIGNAL(currentFilterAboutToChange()), videoWidget, SLOT(setBlankScene()));
 

@@ -89,7 +89,13 @@ SOURCES += main.cpp\
     jobs/meltjob.cpp \
     jobs/encodejob.cpp \
     jobs/videoqualityjob.cpp \
-    commands/playlistcommands.cpp
+    commands/playlistcommands.cpp \
+    docks/scopedock.cpp \
+    controllers/scopecontroller.cpp \
+    widgets/scopes/scopewidget.cpp \
+    widgets/scopes/audiowaveformscopewidget.cpp \
+    widgets/scopes/videowaveformscopewidget.cpp \
+    sharedframe.cpp
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -170,7 +176,14 @@ HEADERS  += mainwindow.h \
     jobs/meltjob.h \
     jobs/encodejob.h \
     jobs/videoqualityjob.h \
-    commands/playlistcommands.h
+    commands/playlistcommands.h \
+    docks/scopedock.h \
+    controllers/scopecontroller.h \
+    widgets/scopes/scopewidget.h \
+    widgets/scopes/audiowaveformscopewidget.h \
+    widgets/scopes/videowaveformscopewidget.h \
+    dataqueue.h \
+    sharedframe.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \

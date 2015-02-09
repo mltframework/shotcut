@@ -51,10 +51,10 @@ GLWidget::GLWidget(QObject *parent)
     , Controller()
     , m_shader(0)
     , m_glslManager(0)
+    , m_initSem(0)
     , m_isInitialized(false)
     , m_threadStartEvent(0)
     , m_threadStopEvent(0)
-    , m_lastFrame(0)
     , m_threadCreateEvent(0)
     , m_threadJoinEvent(0)
     , m_frameRenderer(0)
@@ -95,7 +95,6 @@ GLWidget::~GLWidget()
     delete m_threadStopEvent;
     delete m_threadCreateEvent;
     delete m_threadJoinEvent;
-    delete m_lastFrame;
     if (m_frameRenderer && m_frameRenderer->isRunning()) {
         QMetaObject::invokeMethod(m_frameRenderer, "cleanup");
         m_frameRenderer->quit();
@@ -141,11 +140,11 @@ void GLWidget::initializeGL()
     m_frameRenderer = new FrameRenderer(openglContext());
     openglContext()->makeCurrent(openglContext()->surface());
 
-    connect(this, SIGNAL(frameReceived(Mlt::QFrame)), m_frameRenderer, SLOT(showFrame(Mlt::QFrame)), Qt::QueuedConnection);
+    connect(m_frameRenderer, SIGNAL(frameDisplayed(const SharedFrame&)), this, SIGNAL(frameDisplayed(const SharedFrame&)), Qt::QueuedConnection);
     connect(m_frameRenderer, SIGNAL(textureReady(GLuint,GLuint,GLuint)), SLOT(updateTexture(GLuint,GLuint,GLuint)), Qt::DirectConnection);
     connect(this, SIGNAL(textureUpdated()), SLOT(update()), Qt::QueuedConnection);
 
-    m_condition.wakeAll();
+    m_initSem.release();
     m_isInitialized = true;
     qDebug() << "end";
 }
@@ -376,10 +375,11 @@ void GLWidget::mouseMoveEvent(QMouseEvent* event)
     mimeData->setData(Mlt::XmlMimeType, MLT.XML().toUtf8());
     drag->setMimeData(mimeData);
     mimeData->setText(QString::number(MLT.producer()->get_playtime()));
-    m_mutex.lock();
-    if (m_lastFrame && !m_glslManager)
-        drag->setPixmap(QPixmap::fromImage(MLT.image(m_lastFrame, 45 * MLT.profile().dar(), 45)).scaledToHeight(45));
-    m_mutex.unlock();
+    if (m_frameRenderer && !m_glslManager) {
+        Mlt::Frame displayFrame(m_frameRenderer->getDisplayFrame().clone(false, true));
+        QImage displayImage = MLT.image(&displayFrame, 45 * MLT.profile().dar(), 45).scaledToHeight(45);
+        drag->setPixmap(QPixmap::fromImage(displayImage));
+    }
     drag->setHotSpot(QPoint(0, 0));
     drag->exec(Qt::LinkAction);
 }
@@ -399,9 +399,7 @@ void GLWidget::createThread(RenderThread **thread, thread_function_t function, v
         qApp->processEvents();
 #else
     if (!m_isInitialized) {
-        m_mutex.lock();
-        m_condition.wait(&m_mutex);
-        m_mutex.unlock();
+        m_initSem.acquire();
     }
 #endif
     (*thread) = new RenderThread(function, data, m_glslManager? openglContext() : 0);
@@ -466,11 +464,6 @@ int GLWidget::setProducer(Mlt::Producer* producer, bool isMulti)
 {
     int error = Controller::setProducer(producer, isMulti);
 
-    m_mutex.lock();
-    delete m_lastFrame;
-    m_lastFrame = 0;
-    m_mutex.unlock();
-
     if (!error) {
         error = reconfigure(isMulti);
         if (!error) {
@@ -484,11 +477,6 @@ int GLWidget::setProducer(Mlt::Producer* producer, bool isMulti)
 int GLWidget::reconfigure(bool isMulti)
 {
     int error = 0;
-
-    m_mutex.lock();
-    delete m_lastFrame;
-    m_lastFrame = 0;
-    m_mutex.unlock();
 
     // use SDL for audio, OpenGL for video
     QString serviceName = property("mlt_service").toString();
@@ -588,14 +576,6 @@ int GLWidget::reconfigure(bool isMulti)
     return error;
 }
 
-void GLWidget::setLastFrame(mlt_frame frame)
-{
-    m_mutex.lock();
-    delete m_lastFrame;
-    m_lastFrame = new Mlt::Frame(frame);
-    m_mutex.unlock();
-}
-
 QPoint GLWidget::offset() const
 {
     return QPoint(m_offset.x() - (MLT.profile().width()  * m_zoom -  width()) / 2,
@@ -646,10 +626,11 @@ void GLWidget::on_frame_show(mlt_consumer, void* self, mlt_frame frame_ptr)
 {
     GLWidget* widget = static_cast<GLWidget*>(self);
     int timeout = (widget->consumer()->get_int("real_time") > 0)? 0: 1000;
-    if (widget->frameRenderer() && widget->frameRenderer()->semaphore()->tryAcquire(1, timeout)) {
-        Frame frame(frame_ptr);
-        widget->setLastFrame(frame_ptr);
-        emit widget->frameReceived(Mlt::QFrame(frame));
+    if (widget->m_frameRenderer && widget->m_frameRenderer->semaphore()->tryAcquire(1, timeout)) {
+        Mlt::Frame frame(frame_ptr);
+        if (frame.get_int("rendered")) {
+            QMetaObject::invokeMethod(widget->m_frameRenderer, "showFrame", Qt::QueuedConnection, Q_ARG(Mlt::Frame, frame));
+        }
     }
 }
 
@@ -687,10 +668,10 @@ void RenderThread::run()
 FrameRenderer::FrameRenderer(QOpenGLContext* shareContext)
      : QThread(0)
      , m_semaphore(3)
+     , m_frame()
      , m_context(0)
      , m_surface(0)
      , m_gl32(0)
-     , m_frame(0)
 {
     Q_ASSERT(shareContext);
     m_renderTexture[0] = m_renderTexture[1] = m_renderTexture[2] = 0;
@@ -713,24 +694,23 @@ FrameRenderer::~FrameRenderer()
     qDebug();
     delete m_context;
     delete m_gl32;
-    delete m_frame;
 }
 
-void FrameRenderer::showFrame(Mlt::QFrame frame)
+void FrameRenderer::showFrame(Mlt::Frame frame)
 {
-    if (m_context->isValid() && frame.frame()->get_int("rendered")) {
+    if (m_context->isValid()) {
         int width = 0;
         int height = 0;
 
         m_context->makeCurrent(m_surface);
 
         if (Settings.playerGPU()) {
-            frame.frame()->set("movit.convert.use_texture", 1);
+            frame.set("movit.convert.use_texture", 1);
             mlt_image_format format = mlt_image_glsl_texture;
-            const GLuint* textureId = (GLuint*) frame.frame()->get_image(format, width, height);
+            const GLuint* textureId = (GLuint*) frame.get_image(format, width, height);
 
 #ifdef USE_GL_SYNC
-            GLsync sync = (GLsync) frame.frame()->get_data("movit.convert.fence");
+            GLsync sync = (GLsync) frame.get_data("movit.convert.fence");
             if (sync) {
 #ifdef Q_OS_WIN
                 // On Windows, use QOpenGLFunctions_3_2_Core instead of getProcAddress.
@@ -753,15 +733,11 @@ void FrameRenderer::showFrame(Mlt::QFrame frame)
 #else
             glFinish();
 #endif // USE_GL_FENCE
-
-            // Manage reference to mlt_frame holding reference to GL texture.
-            delete m_frame;
-            m_frame = new Frame(*frame.frame());
             emit textureReady(*textureId);
         }
         else {
             mlt_image_format format = mlt_image_yuv420p;
-            const uint8_t* image = frame.frame()->get_image(format, width, height);
+            const uint8_t* image = frame.get_image(format, width, height);
 
             // Upload each plane of YUV to a texture.
             if (m_renderTexture[0] && m_renderTexture[1] && m_renderTexture[2])
@@ -821,8 +797,20 @@ void FrameRenderer::showFrame(Mlt::QFrame frame)
             emit textureReady(m_displayTexture[0], m_displayTexture[1], m_displayTexture[2]);
         }
         m_context->doneCurrent();
+
+        // Save this frame for future use and to keep a reference to the GL Texture.
+        m_frame = SharedFrame(frame);
+
+        // The frame is now done being modified and can be shared with the rest
+        // of the application.
+        emit frameDisplayed(m_frame);
     }
     m_semaphore.release();
+}
+
+SharedFrame FrameRenderer::getDisplayFrame()
+{
+    return m_frame;
 }
 
 void FrameRenderer::cleanup()

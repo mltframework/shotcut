@@ -57,7 +57,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     delete ui->scrollAreaWidgetContents;
     ui->scrollArea->setWidget(container);
 
-    connect(MLT.videoWidget(), SIGNAL(frameReceived(Mlt::QFrame)), this, SLOT(onShowFrame(Mlt::QFrame)));
+    connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onShowFrame(const SharedFrame&)));
 #ifdef Q_OS_WIN
     onVisibilityChanged(true);
 #else
@@ -159,10 +159,10 @@ void TimelineDock::close()
     hide();
 }
 
-void TimelineDock::onShowFrame(Mlt::QFrame frame)
+void TimelineDock::onShowFrame(const SharedFrame& frame)
 {
     if (MLT.isMultitrack()) {
-        m_position = frame.frame()->get_position();
+        m_position = frame.get_position();
         emit positionChanged();
     }
 }

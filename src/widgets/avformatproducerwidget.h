@@ -21,7 +21,7 @@
 
 #include <QWidget>
 #include "abstractproducerwidget.h"
-#include "mltcontroller.h"
+#include "sharedframe.h"
 
 namespace Ui {
     class AvformatProducerWidget;
@@ -43,7 +43,7 @@ signals:
     void producerReopened();
 
 private slots:
-    void onFrameReceived(Mlt::QFrame);
+    void onFrameDisplayed(const SharedFrame&);
 
     void on_resetButton_clicked();
 

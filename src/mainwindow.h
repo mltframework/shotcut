@@ -39,6 +39,7 @@ class MeltedPlaylistDock;
 class MeltedServerDock;
 class QActionGroup;
 class FilterController;
+class ScopeController;
 class FiltersDock;
 class HtmlEditor;
 class TimelineDock;
@@ -112,6 +113,7 @@ private:
     QActionGroup* m_keyerGroup;
     FiltersDock* m_filtersDock;
     FilterController* m_filterController;
+    ScopeController* m_scopeController;
     QMenu* m_customProfileMenu;
     QMenu* m_keyerMenu;
     QStringList m_multipleFiles;

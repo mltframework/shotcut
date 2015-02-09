@@ -37,61 +37,6 @@ static int alignWidth(int width)
     return (width + 7) / 8 * 8;
 }
 
-QFrame::QFrame(QObject *parent)
-    : QObject(parent)
-    , m_frame(0)
-{}
-
-QFrame::QFrame(const Frame& frame)
-    : QObject(0)
-{
-    Frame* f = const_cast<Frame*>(&frame);
-    m_frame = new Frame(f->get_frame());
-}
-
-QFrame::QFrame(const QFrame& qframe)
-    : QObject(0)
-{
-    Frame* frame = qframe.frame();
-    m_frame = new Frame(frame->get_frame());
-}
-
-QFrame::~QFrame() {
-    delete m_frame;
-}
-
-Frame* QFrame::frame() const {
-    return m_frame;
-}
-
-QProducer::QProducer(QObject *parent)
-    : QObject(parent)
-    , m_producer(0)
-{}
-
-QProducer::QProducer(const Producer& producer)
-    : QObject(0)
-{
-    Producer* p = const_cast<Producer*>(&producer);
-    m_producer = new Producer(p->get_producer());
-}
-
-QProducer::QProducer(const QProducer& qproducer)
-    : QObject(0)
-{
-    Producer* p = qproducer.producer();
-    m_producer = new Producer(p->get_producer());
-}
-
-QProducer::~QProducer() {
-    delete m_producer;
-}
-
-Producer* QProducer::producer() const {
-    return m_producer;
-}
-
-
 Controller::Controller()
     : m_producer(0)
     , m_consumer(0)
@@ -110,8 +55,8 @@ Controller::Controller()
 Controller& Controller::singleton(QObject *parent)
 {
     if (!instance) {
-        qRegisterMetaType<QFrame>("Mlt::QFrame");
-        qRegisterMetaType<QProducer>("Mlt::QProducer");
+        qRegisterMetaType<Mlt::Frame>("Mlt::Frame");
+        qRegisterMetaType<SharedFrame>("SharedFrame");
         instance = new GLWidget(parent);
     }
     return *instance;

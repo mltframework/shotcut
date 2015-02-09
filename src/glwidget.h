@@ -26,10 +26,10 @@
 #include <QOpenGLFramebufferObject>
 #include <QOpenGLContext>
 #include <QMutex>
-#include <QWaitCondition>
 #include <QThread>
 #include <QRect>
 #include "mltcontroller.h"
+#include "sharedframe.h"
 
 class QOpenGLFunctions_3_2_Core;
 class QOffscreenSurface;
@@ -63,7 +63,6 @@ public:
     void stopGlsl();
     int setProducer(Mlt::Producer*, bool isMulti = false);
     int reconfigure(bool isMulti);
-    void setLastFrame(mlt_frame frame);
 
     void play(double speed = 1.0) {
         Controller::play(speed);
@@ -84,7 +83,6 @@ public:
     QObject* videoWidget() { return this; }
     QQuickView* videoQuickView() { return this; }
     Filter* glslManager() const { return m_glslManager; }
-    FrameRenderer* frameRenderer() const { return m_frameRenderer; }
     QRect rect() const { return m_rect; }
     float zoom() const { return m_zoom * MLT.profile().width() / m_rect.width(); }
     QPoint offset() const;
@@ -97,10 +95,7 @@ public slots:
     void setCurrentFilter(QmlFilter* filter, QmlMetadata* meta);
 
 signals:
-    /** This method will be called each time a new frame is available.
-     * @param frame a Mlt::QFrame from which to get a QImage
-     */
-    void frameReceived(Mlt::QFrame frame);
+    void frameDisplayed(const SharedFrame& frame);
     void textureUpdated();
     void dragStarted();
     void seekTo(int x);
@@ -118,12 +113,10 @@ private:
     QOpenGLShaderProgram* m_shader;
     QPoint m_dragStart;
     Filter* m_glslManager;
-    QMutex m_mutex;
-    QWaitCondition m_condition;
+    QSemaphore m_initSem;
     bool m_isInitialized;
     Event* m_threadStartEvent;
     Event* m_threadStopEvent;
-    Mlt::Frame* m_lastFrame;
     Event* m_threadCreateEvent;
     Event* m_threadJoinEvent;
     FrameRenderer* m_frameRenderer;
@@ -135,6 +128,8 @@ private:
     int m_textureLocation[3];
     float m_zoom;
     QPoint m_offset;
+
+    static void on_frame_show(mlt_consumer, void* self, mlt_frame frame);
 
 private slots:
     void initializeGL();
@@ -148,8 +143,6 @@ protected:
     void mouseMoveEvent(QMouseEvent *);
     void keyPressEvent(QKeyEvent* event);
     void createShader();
-
-    static void on_frame_show(mlt_consumer, void* self, mlt_frame frame);
 };
 
 class RenderThread : public QThread
@@ -176,23 +169,25 @@ public:
     ~FrameRenderer();
     QSemaphore* semaphore() { return &m_semaphore; }
     QOpenGLContext* context() const { return m_context; }
+    SharedFrame getDisplayFrame();
+    Q_INVOKABLE void showFrame(Mlt::Frame frame);
 
 public slots:
-    void showFrame(Mlt::QFrame frame);
     void cleanup();
 
 signals:
     void textureReady(GLuint yName, GLuint uName = 0, GLuint vName = 0);
+    void frameDisplayed(const SharedFrame& frame);
 
 private:
     QSemaphore m_semaphore;
+    SharedFrame m_frame;
     QOpenGLContext* m_context;
     QOffscreenSurface* m_surface;
 public:
     GLuint m_renderTexture[3];
     GLuint m_displayTexture[3];
     QOpenGLFunctions_3_2_Core* m_gl32;
-    Frame* m_frame;
 };
 
 } // namespace

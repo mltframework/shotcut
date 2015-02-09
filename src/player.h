@@ -22,7 +22,7 @@
 #include <QWidget>
 #include <QIcon>
 #include <QSize>
-#include "mltcontroller.h"
+#include "sharedframe.h"
 
 class ScrubBar;
 class QSpinBox;
@@ -35,6 +35,7 @@ class QScrollBar;
 class QToolButton;
 class QTabBar;
 class QHBoxLayout;
+class TransportControllable;
 
 class Player : public QWidget
 {
@@ -90,7 +91,7 @@ public slots:
     void onMeltedUnitOpened();
     void onProducerModified();
     void onShowFrame(int position, double fps, int in, int out, int length, bool isPlaying);
-    void onShowFrame(Mlt::QFrame frame);
+    void onFrameDisplayed(const SharedFrame& frame);
     void onVolumeChanged(int);
     void onCaptureStateChanged(bool);
     void resetProfile();
@@ -108,7 +109,7 @@ protected:
 private:
     void setupActions(QWidget* widget);
     void retranslateUi(QWidget* widget);
-    void showAudio(Mlt::Frame* frame);
+    void showAudio(const SharedFrame& frame);
     void adjustScrollBars(float horizontal, float vertical);
 
     QAction *actionPlay;

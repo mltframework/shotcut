@@ -23,7 +23,7 @@
 #include <QQuickView>
 #include <QApplication>
 #include "models/multitrackmodel.h"
-#include "mltcontroller.h"
+#include "sharedframe.h"
 
 namespace Ui {
 class TimelineDock;
@@ -64,7 +64,7 @@ public slots:
     void addAudioTrack();
     void addVideoTrack();
     void close();
-    void onShowFrame(Mlt::QFrame frame);
+    void onShowFrame(const SharedFrame& frame);
     void onSeeked(int position);
     void append(int trackIndex);
     void remove(int trackIndex, int clipIndex);
