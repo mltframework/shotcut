@@ -136,23 +136,6 @@ Loader {
                             }
                         }
                         ToolButton {
-                            id: gpuButton
-                            visible: settings.playerGPU
-                            width: visible ? undefined : 0
-                            implicitWidth: 28
-                            implicitHeight: 24
-                            checkable: true
-                            iconName: 'cpu'
-                            iconSource: 'qrc:///icons/oxygen/32x32/devices/cpu.png'
-                            tooltip: qsTr('Show GPU filters')
-                            exclusiveGroup: typeGroup
-                            onCheckedChanged: {
-                                if (checked) {
-                                    menuListView.showType = Logic.visibility.GPU
-                                }
-                            }
-                        }
-                        ToolButton {
                             id: vidButton
                             implicitWidth: 28
                             implicitHeight: 24

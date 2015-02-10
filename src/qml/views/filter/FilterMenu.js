@@ -18,9 +18,8 @@
  
 var visibility = {
     FAVORITE: 0,
-    GPU: 1,
-    VIDEO: 2,
-    AUDIO: 3
+    VIDEO: 1,
+    AUDIO: 2
 }
 
 var ITEM_HEIGHT = 30
@@ -29,11 +28,9 @@ function isVisible(meta, showType) {
     if (meta.isHidden) return false
     if (meta.needsGPU && !settings.playerGPU) return false
     if (!meta.needsGPU && settings.playerGPU && meta.gpuAlt !== "") return false
-    if (showType == visibility.FAVORITE && !meta.isFavorite) return false
-    if (showType == visibility.GPU && !meta.needsGPU) return false
-    if (showType == visibility.AUDIO && !meta.isAudio) return false
-    if (showType == visibility.VIDEO && meta.isAudio ) return false
-    if (showType == visibility.VIDEO && meta.needsGPU ) return false
+    if (showType === visibility.FAVORITE && !meta.isFavorite) return false
+    if (showType === visibility.AUDIO && !meta.isAudio) return false
+    if (showType === visibility.VIDEO && meta.isAudio ) return false
     return true
 }
 
