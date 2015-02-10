@@ -75,25 +75,8 @@ void AudioWaveformScopeWidget::refreshScope()
 
     if (m_frame.is_valid() && m_frame.get_audio_samples() > 0) {
         int channels = m_frame.get_audio_channels();
-        Mlt::Frame resampledFrame = m_frame.clone(true, false, false);
-
-        if (currentSize == m_prevSize) {
-            delete m_filter;
-            m_filter = 0;
-        }
-
-        if (!m_filter) {
-            Mlt::Profile profile;
-            m_filter = new Mlt::Filter(profile, "resample");
-        }
-        m_filter->process(resampledFrame);
-        mlt_audio_format format = m_frame.get_audio_format();
-        int scaledFrequency = (m_frame.get_audio_frequency() * currentSize.width()) / m_frame.get_audio_samples();
-        int scaledSamples = 0;
-        int16_t* scaledAudio = (int16_t*)resampledFrame.get_audio(format, scaledFrequency, channels, scaledSamples);
-
-        scaledSamples = qMin(scaledSamples, currentSize.width());
-
+        int samples = m_frame.get_audio_samples();
+        int16_t* audio = (int16_t*)m_frame.get_audio();
         int waveAmplitude = currentSize.height() / 4;
         qreal scaleFactor = (qreal)waveAmplitude / (qreal)MAX_AMPLITUDE;
 
@@ -101,22 +84,44 @@ void AudioWaveformScopeWidget::refreshScope()
         {
             p.save();
             p.translate(0, waveAmplitude + (2 * c* waveAmplitude));
-            const int16_t* q = scaledAudio + c;
-            QPoint point(0, (qreal)*q * scaleFactor);
-            p.drawPoint(point);
-            QPoint prevPoint = point;
 
-            for (int i = 1; i < scaledSamples; i++)
+            // For each x position on the waveform, find the min and max sample
+            // values that apply to that position. Draw a vertical line from the
+            // min value to the max value.
+            QPoint high;
+            QPoint low;
+            int lastX = 0;
+            const int16_t* q = audio + c;
+            qreal max = *q;
+            qreal min = *q;
+
+            for (int i = 0; i <= samples; i++)
             {
-                q += channels;
-                point.setX(i);
-                point.setY((qreal)*q * scaleFactor);
-                if (qAbs( point.y() - prevPoint.y() ) < 2) {
-                    p.drawPoint(point);
-                } else {
-                    p.drawLine(prevPoint, point);
+                int x = ( i * currentSize.width() ) / samples;
+                if (x != lastX) {
+                    // The min and max have been determined for the previous x
+                    // So draw the line
+                    high.setX(lastX);
+                    high.setY(max * scaleFactor);
+                    low.setX(lastX);
+                    low.setY(min * scaleFactor);
+                    if (high.y() == low.y()) {
+                        p.drawPoint(high);
+                    } else {
+                        p.drawLine(low, high);
+                    }
+                    lastX = x;
+
+                    // Swap max and min so that the next line picks up where
+                    // this one left off.
+                    int tmp = max;
+                    max = min;
+                    min = tmp;
                 }
-                prevPoint = point;
+
+                if (*q > max) max = *q;
+                if (*q < min) min = *q;
+                q += channels;
             }
             p.restore();
         }
