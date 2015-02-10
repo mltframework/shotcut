@@ -61,6 +61,10 @@ bool SharedFrame::is_valid() const
 
 Mlt::Frame SharedFrame::clone(bool audio, bool image, bool alpha) const
 {
+    // TODO: Consider moving this implementation into MLT.
+    // It could be added to mlt_frame as an alternative to:
+    //     mlt_frame mlt_frame_clone( mlt_frame self, int is_deep );
+    // It could also be added to Mlt::Frame as a const function.
     void* data = 0;
     void* copy = 0;
     int size = 0;

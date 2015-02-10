@@ -26,7 +26,7 @@
 
 /*!
   \class DataQueue
-  \brief The DataQueue provides a thread save container for passing data between
+  \brief The DataQueue provides a thread safe container for passing data between
   objects.
 
   \threadsafe
@@ -37,9 +37,9 @@
 
   DataQueue provides configurable behavior for handling overflows. It can
   discard the oldest, discard the newest or block the object calling push()
-  until room has been freed in the queue bu another object calling pop().
+  until room has been freed in the queue by another object calling pop().
 
-  DataQueue is threadsave and is therefore most appropriate when passing data
+  DataQueue is threadsafe and is therefore most appropriate when passing data
   between objects operating in different thread contexts.
 */
 
