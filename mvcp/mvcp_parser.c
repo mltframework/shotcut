@@ -1,6 +1,6 @@
 /*
  * mvcp_parser.c -- MVCP Parser for Melted
- * Copyright (C) 2002-2009 Ushodaya Enterprises Limited
+ * Copyright (C) 2002-2015 Meltytech, LLC
  * Author: Charles Yates <charles.yates@pandora.be>
  *
  * This library is free software; you can redistribute it and/or

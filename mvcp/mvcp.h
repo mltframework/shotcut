@@ -1,7 +1,6 @@
 /*
  * mvcp.h -- High Level Client API for Melted
- * Copyright (C) 2002-2009 Ushodaya Enterprises Limited
- * Author: Charles Yates <charles.yates@pandora.be>
+ * Copyright (C) 2002-2015 Meltytech, LLC
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
