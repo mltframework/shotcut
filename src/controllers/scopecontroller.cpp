@@ -30,9 +30,9 @@ ScopeController::ScopeController(QMainWindow* mainWindow, QMenu* menu)
     qDebug() << "begin";
     QMenu* scopeMenu = menu->addMenu(tr("Scopes"));
     createScopeDock<AudioWaveformScopeWidget>(mainWindow, scopeMenu);
-    if (!Settings.playerGPU()) {
-        createScopeDock<VideoWaveformScopeWidget>(mainWindow, scopeMenu);
-    }
+//    if (!Settings.playerGPU()) {
+//        createScopeDock<VideoWaveformScopeWidget>(mainWindow, scopeMenu);
+//    }
     qDebug() << "end";
 }
 
