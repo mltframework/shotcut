@@ -20,7 +20,6 @@
 #define AUDIOWAVEFORMSCOPEWIDGET_H
 
 #include "scopewidget.h"
-#include <MltFilter.h>
 #include <QMutex>
 #include <QImage>
 #include <QTime>
@@ -35,19 +34,27 @@ public:
     QString getTitle();
 
 private:
+    // Functions run in scope thread.
     void refreshScope() Q_DECL_OVERRIDE;
+    void createGrid(const QSize& size);
+    
+    // Functions run in GUI thread.
     void paintEvent(QPaintEvent*) Q_DECL_OVERRIDE;
     void resizeEvent(QResizeEvent*) Q_DECL_OVERRIDE;
 
+    // Members accessed only in scope thread (no thread protection).
     SharedFrame m_frame;
-    Mlt::Filter* m_filter;
     QSize m_prevSize;
     QImage m_renderWave;
     QTime m_refreshTime;
+    int m_graphTopPadding;
+    int m_graphLeftPadding;
+    int m_channels;
 
-    // Variables accessed from multiple threads (mutex protected)
+    // Members accessed in multiple threads (mutex protected).
     QMutex m_mutex;
     QImage m_displayWave;
+    QImage m_displayGrid;
     QSize m_size;
 };
 
