@@ -67,8 +67,6 @@ private slots:
 
     void on_tableView_customContextMenuRequested(const QPoint &pos);
 
-    void on_tableView_clicked(const QModelIndex &index);
-
     void on_tableView_doubleClicked(const QModelIndex &index);
 
     void on_actionGoto_triggered();
@@ -109,7 +107,6 @@ private:
     Ui::PlaylistDock *ui;
     PlaylistModel m_model;
     int m_defaultRowHeight;
-    bool m_doubleClicked;
 };
 
 #endif // PLAYLISTDOCK_H

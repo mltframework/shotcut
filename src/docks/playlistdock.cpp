@@ -29,8 +29,7 @@ static const char* kPlaylistIndexProperty = "_shotcut:playlistIndex";
 
 PlaylistDock::PlaylistDock(QWidget *parent) :
     QDockWidget(parent),
-    ui(new Ui::PlaylistDock),
-    m_doubleClicked(false)
+    ui(new Ui::PlaylistDock)
 {
     qDebug() << "begin";
     ui->setupUi(this);
@@ -100,10 +99,8 @@ void PlaylistDock::incrementIndex()
         index = m_model.createIndex(0, 0);
     else
         index = m_model.incrementIndex(index);
-    if (index.isValid()) {
+    if (index.isValid())
         ui->tableView->setCurrentIndex(index);
-        on_tableView_clicked(index);
-    }
 }
 
 void PlaylistDock::decrementIndex()
@@ -113,19 +110,15 @@ void PlaylistDock::decrementIndex()
         index = m_model.createIndex(0, 0);
     else
         index = m_model.decrementIndex(index);
-    if (index.isValid()) {
+    if (index.isValid())
         ui->tableView->setCurrentIndex(index);
-        on_tableView_clicked(index);
-    }
 }
 
 void PlaylistDock::setIndex(int row)
 {
     QModelIndex index = m_model.createIndex(row, 0);
-    if (index.isValid()) {
+    if (index.isValid())
         ui->tableView->setCurrentIndex(index);
-        on_tableView_clicked(index);
-    }
 }
 
 void PlaylistDock::moveClipUp()
@@ -152,13 +145,7 @@ void PlaylistDock::on_menuButton_clicked()
         if (MLT.isClip())
             menu.addAction(ui->actionInsertCut);
         menu.addAction(ui->actionOpen);
-
-        QScopedPointer<Mlt::ClipInfo> info(m_model.playlist()->clip_info(index.row()));
-        if (info && MLT.producer()->get_int(kPlaylistIndexProperty) == index.row() + 1) {
-            if (MLT.producer()->get_in() != info->frame_in || MLT.producer()->get_out() != info->frame_out)
-                menu.addAction(ui->actionUpdate);
-        }
-
+        menu.addAction(ui->actionUpdate);
         menu.addAction(ui->actionRemove);
         menu.addSeparator();
     }
@@ -190,11 +177,13 @@ void PlaylistDock::on_actionInsertCut_triggered()
 void PlaylistDock::on_actionAppendCut_triggered()
 {
     if (MLT.producer() && MLT.producer()->is_valid()) {
-        if (!MLT.isClip())
+        if (!MLT.isClip()) {
             emit showStatusMessage(tr("You cannot insert a playlist into a playlist!"));
-        else if (MLT.isSeekable())
+        } else if (MLT.isSeekable()) {
             MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.XML()));
-        else {
+            MLT.producer()->set(kPlaylistIndexProperty, m_model.playlist()->count());
+            setUpdateButtonEnabled(true);
+        } else {
             DurationDialog dialog(this);
             dialog.setDuration(MLT.profile().fps() * 5);
             if (dialog.exec() == QDialog::Accepted) {
@@ -237,10 +226,11 @@ void PlaylistDock::on_actionUpdate_triggered()
     if (!index.isValid() || !m_model.playlist()) return;
     Mlt::ClipInfo* info = m_model.playlist()->clip_info(index.row());
     if (!info) return;
-    if (info->resource && MLT.producer()->get("resource")
-            && !strcmp(info->resource, MLT.producer()->get("resource"))) {
+    if (MLT.producer()->type() != playlist_type) {
         if (MLT.isSeekable()) {
             MAIN.undoStack()->push(new Playlist::UpdateCommand(m_model, MLT.XML(), index.row()));
+            MLT.producer()->set(kPlaylistIndexProperty, index.row() + 1);
+            setUpdateButtonEnabled(true);
         }
         else {
             // change the duration
@@ -255,8 +245,8 @@ void PlaylistDock::on_actionUpdate_triggered()
         }
     }
     else {
-        emit showStatusMessage(tr("This clip does not match the selected cut in the playlist!"));
-        ui->updateButton->setEnabled(false);
+        emit showStatusMessage(tr("You cannot insert a playlist into a playlist!"));
+        setUpdateButtonEnabled(false);
     }
     delete info;
 }
@@ -268,11 +258,18 @@ void PlaylistDock::on_removeButton_clicked()
     MAIN.undoStack()->push(new Playlist::RemoveCommand(m_model, index.row()));
     int count = m_model.playlist()->count();
     if (count == 0) return;
-    Mlt::ClipInfo* i = m_model.playlist()->clip_info(
-                index.row() >= count? count-1 : index.row());
-    if (i) {
-        emit itemActivated(i->start);
-        delete i;
+    int i = index.row() >= count? count-1 : index.row();
+    QScopedPointer<Mlt::ClipInfo> info(m_model.playlist()->clip_info(i));
+    if (info) {
+        emit itemActivated(info->start);
+        int j = MLT.producer()->get_int(kPlaylistIndexProperty);
+        if (j > i + 1) {
+            MLT.producer()->set(kPlaylistIndexProperty, j - 1);
+        } else if (j == i + 1) {
+            // Remove the playlist index property on the producer.
+            MLT.producer()->set(kPlaylistIndexProperty, 0, 0);
+            setUpdateButtonEnabled(false);
+        }
     }
 }
 
@@ -317,23 +314,8 @@ void PlaylistDock::on_tableView_customContextMenuRequested(const QPoint &pos)
     }
 }
 
-void PlaylistDock::on_tableView_clicked(const QModelIndex& index)
-{
-    if (!m_doubleClicked) {
-        bool enabled = false;
-        QScopedPointer<Mlt::ClipInfo> info(m_model.playlist()->clip_info(index.row()));
-        if (info && MLT.producer()->get_int(kPlaylistIndexProperty) == index.row() + 1) {
-            if (MLT.producer()->get_in() != info->frame_in || MLT.producer()->get_out() != info->frame_out)
-                enabled = true;
-        }
-        ui->updateButton->setEnabled(enabled);
-    }
-    m_doubleClicked = false;
-}
-
 void PlaylistDock::on_tableView_doubleClicked(const QModelIndex &index)
 {
-    m_doubleClicked = true;
     if (!m_model.playlist()) return;
     Mlt::ClipInfo* i = m_model.playlist()->clip_info(index.row());
     if (i) {
@@ -411,13 +393,17 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
     }
     else if (data && data->hasFormat(Mlt::XmlMimeType)) {
         if (MLT.producer() && MLT.producer()->is_valid()) {
-            if (MLT.producer()->type() == playlist_type)
+            if (MLT.producer()->type() == playlist_type) {
                 emit showStatusMessage(tr("You cannot insert a playlist into a playlist!"));
-            else if (MLT.isSeekable()) {
-                if (row == -1)
+            } else if (MLT.isSeekable()) {
+                if (row == -1) {
                     MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, data->data(Mlt::XmlMimeType)));
-                else
+                    MLT.producer()->set(kPlaylistIndexProperty, m_model.playlist()->count());
+                } else {
                     MAIN.undoStack()->push(new Playlist::InsertCommand(m_model, data->data(Mlt::XmlMimeType), row));
+                    MLT.producer()->set(kPlaylistIndexProperty, row + 1);
+                }
+                setUpdateButtonEnabled(true);
             } else {
                 DurationDialog dialog(this);
                 dialog.setDuration(MLT.profile().fps() * 5);
@@ -515,5 +501,11 @@ void PlaylistDock::on_actionAddToTimeline_triggered()
 
 void PlaylistDock::on_updateButton_clicked()
 {
-    on_actionUpdate_triggered();
+    QScopedPointer<Mlt::ClipInfo> info(
+        m_model.playlist()->clip_info(ui->tableView->currentIndex().row()));
+    int index = MLT.producer()->get_int(kPlaylistIndexProperty);
+    if (info && index > 0 && index <= m_model.playlist()->count()) {
+        MAIN.undoStack()->push(new Playlist::UpdateCommand(m_model, MLT.XML(), index - 1));
+        setUpdateButtonEnabled(false);
+    }
 }
