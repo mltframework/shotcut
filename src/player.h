@@ -60,7 +60,6 @@ public:
 
 signals:
     void endOfStream();
-    void seeked();
     void showStatusMessage(QString);
     void audioLevels(const QVector<double>&);
     void inChanged(int);
@@ -129,7 +128,6 @@ private:
     QIcon m_pauseIcon;
     QSlider* m_volumeSlider;
     AudioSignal* m_audioSignal;
-    int m_seekPosition;
     int m_previousIn;
     int m_previousOut;
     double m_savedVolume;

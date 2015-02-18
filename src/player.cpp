@@ -30,7 +30,6 @@
 Player::Player(QWidget *parent)
     : QWidget(parent)
     , m_position(0)
-    , m_seekPosition(SEEK_INACTIVE)
     , m_isMeltedPlaying(-1)
     , m_zoomToggleFactor(Settings.playerZoom() == 0.0f? 1.0f : Settings.playerZoom())
     , m_pauseAfterOpen(false)
@@ -385,11 +384,8 @@ void Player::togglePlayPaused()
 void Player::seek(int position)
 {
     if (m_isSeekable) {
-        emit seeked();
         if (position >= 0) {
-            if (m_seekPosition == SEEK_INACTIVE)
-                emit seeked(qMin(position, m_duration - 1));
-            m_seekPosition = qMin(position, m_duration - 1);
+            emit seeked(qMin(position, m_duration - 1));
         }
     }
     // Seek implies pause.
@@ -516,9 +512,6 @@ void Player::onShowFrame(int position, double fps, int in, int out, int length, 
         m_positionSpinner->blockSignals(false);
         m_scrubber->onSeek(position);
     }
-    if (m_seekPosition != SEEK_INACTIVE)
-        emit seeked(m_seekPosition);
-    m_seekPosition = SEEK_INACTIVE;
     if (m_isMeltedPlaying == -1 || isPlaying != m_isMeltedPlaying) {
         m_isMeltedPlaying = isPlaying;
         if (isPlaying) {
@@ -552,9 +545,6 @@ void Player::onFrameDisplayed(const SharedFrame& frame)
     }
     if (position >= m_duration)
         emit endOfStream();
-    if (m_seekPosition != SEEK_INACTIVE)
-        emit seeked(m_seekPosition);
-    m_seekPosition = SEEK_INACTIVE;
     showAudio(frame);
 }
 
