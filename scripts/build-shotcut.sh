@@ -184,6 +184,9 @@ function to_key {
     x265)
       echo 13
     ;;
+    eigen)
+      echo 14
+    ;;
     *)
       echo UNKNOWN
     ;;
@@ -328,7 +331,7 @@ function set_globals {
       SUBDIRS="frei0r $SUBDIRS"
   fi
   if test "$ENABLE_MOVIT" = 1 && test "$MOVIT_HEAD" = 1 -o "$MOVIT_REVISION" != ""; then
-      SUBDIRS="libepoxy movit $SUBDIRS"
+      SUBDIRS="libepoxy eigen movit $SUBDIRS"
   fi
   if test "$FFMPEG_SUPPORT_H264" = 1 && test "$X264_HEAD" = 1 -o "$X264_REVISION" != ""; then
       SUBDIRS="x264 $SUBDIRS"
@@ -372,6 +375,7 @@ function set_globals {
   REPOLOCS[11]="git://github.com/anholt/libepoxy.git"
   REPOLOCS[12]="git://git.opus-codec.org/opus.git"
   REPOLOCS[13]="https://github.com/videolan/x265"
+  REPOLOCS[14]="http://bitbucket.org/eigen/eigen/get/3.2.4.tar.gz"
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
   REPOTYPES[0]="git"
@@ -388,6 +392,7 @@ function set_globals {
   REPOTYPES[11]="git"
   REPOTYPES[12]="git"
   REPOTYPES[13]="git"
+  REPOTYPES[14]="http-tgz"
 
   # And, set up the revisions
   REVISIONS[0]=""
@@ -441,6 +446,7 @@ function set_globals {
   if test 0 = "$X265_HEAD" -a "$X265_REVISION" ; then
     REVISIONS[13]="$X265_REVISION"
   fi
+  REVISIONS[14]="eigen-eigen-10219c95fe65"
 
   # Figure out the number of cores in the system. Used both by make and startup script
   if test "$TARGET_OS" = "Darwin"; then
@@ -720,6 +726,9 @@ function set_globals {
   fi
   LDFLAGS_[13]=$LDFLAGS
 
+  #######
+  # eigen
+  CONFIG[14]="cmake -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR .."
 }
 
 ######################################################################
@@ -803,8 +812,8 @@ function prepare_feedback {
       NUMSTEPS=$(( $NUMSTEPS + 1 ))
     fi
     if test 1 = "$ENABLE_MOVIT" ; then
-      debug Adding 2 steps for get movit and libepoxy
-      NUMSTEPS=$(( $NUMSTEPS + 2 ))
+      debug Adding 3 steps for get movit, libepoxy, and eigen
+      NUMSTEPS=$(( $NUMSTEPS + 3 ))
     fi
     if test 1 = "$ENABLE_WEBVFX" ; then
       debug Adding 1 step for get webvfx
@@ -819,8 +828,8 @@ function prepare_feedback {
       NUMSTEPS=$(( $NUMSTEPS + 1 ))
     fi
     if test 1 = "$ENABLE_MOVIT" ; then
-      debug Adding 2 steps for clean movit and libepoxy
-      NUMSTEPS=$(( $NUMSTEPS + 2 ))
+      debug Adding 3 steps for clean movit, libepoxy, and eigen
+      NUMSTEPS=$(( $NUMSTEPS + 3 ))
     fi
     if test 1 = "$ENABLE_WEBVFX" ; then
       debug Adding 1 step for clean webvfx
@@ -835,8 +844,8 @@ function prepare_feedback {
       NUMSTEPS=$(( $NUMSTEPS + 3 ))
     fi
     if test 1 = "$ENABLE_MOVIT" ; then
-      debug Adding 6 steps for compile-install movit and libepoxy
-      NUMSTEPS=$(( $NUMSTEPS + 6 ))
+      debug Adding 9 steps for compile-install movit, libepoxy, and eigen
+      NUMSTEPS=$(( $NUMSTEPS + 9 ))
     fi
     if test 1 = "$ENABLE_WEBVFX" ; then
       debug Adding 3 steps for compile-install webvfx
@@ -1402,6 +1411,12 @@ function configure_compile_install_subproject {
   # Special hack for x265
   if test "x265" = "$1"; then
     cd source
+  fi
+
+  # Special hack for eigen
+  if test "eigen" = "$1"; then
+    cmd mkdir build 2> /dev/null
+    cmd cd build
   fi
 
   cmd `lookup CONFIG $1` || die "Unable to configure $1"
