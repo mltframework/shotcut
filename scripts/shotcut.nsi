@@ -92,6 +92,7 @@ Section "Create Start Menu Shortcuts"
 
   ;CreateDirectory "$SMPROGRAMS\Shotcut"
   ;CreateShortCut "$SMPROGRAMS\Shotcut\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
+  SetShellVarContext all
   CreateShortCut "$SMPROGRAMS\Shotcut.lnk" "$INSTDIR\shotcut.exe" "" "$INSTDIR\shotcut.exe" 0
   
 SectionEnd
@@ -114,6 +115,7 @@ Section "Uninstall"
   DeleteRegKey HKLM SOFTWARE\Shotcut
 
   ; Remove shortcuts, if any
+  SetShellVarContext all
   Delete "$SMPROGRAMS\Shotcut.lnk"
 
   ; Remove program files and directories
