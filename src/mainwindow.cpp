@@ -1895,17 +1895,13 @@ void MainWindow::onShuttle(float x)
 
 void MainWindow::on_actionRealtime_triggered(bool checked)
 {
-    MLT.videoWidget()->setProperty("realtime", checked);
+    Settings.setPlayerRealtime(checked);
     if (Settings.playerGPU())
         MLT.pause();
     if (MLT.consumer()) {
-        int threadCount = QThread::idealThreadCount();
-        threadCount = threadCount > 2? (threadCount > 3? 3 : 2) : 1;
-        threadCount = Settings.playerGPU()? 1 : threadCount;
-        MLT.consumer()->set("real_time", checked? 1 : -threadCount);
         MLT.restart();
     }
-    Settings.setPlayerRealtime(checked);
+
 }
 
 void MainWindow::on_actionProgressive_triggered(bool checked)

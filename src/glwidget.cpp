@@ -513,11 +513,7 @@ int GLWidget::reconfigure(bool isMulti)
         m_consumer->connect(*m_producer);
         // Make an event handler for when a frame's image should be displayed
         m_consumer->listen("consumer-frame-show", this, (mlt_listener) on_frame_show);
-        if (m_glslManager) {
-            m_consumer->set("real_time", property("realtime").toBool()? 1 : -1);
-        } else {
-            m_consumer->set("real_time", property("realtime").toBool()? 1 : -MLT.realTime());
-        }
+        m_consumer->set("real_time", MLT.realTime());
         m_consumer->set("mlt_image_format", "yuv422");
         m_consumer->set("color_trc", Settings.playerGamma().toLatin1().constData());
 

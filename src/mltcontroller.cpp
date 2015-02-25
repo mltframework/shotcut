@@ -188,8 +188,11 @@ void Controller::play(double speed)
 {
     if (m_producer)
         m_producer->set_speed(speed);
-    // If we are paused, then we need to "unlock" sdl_still.
     if (m_consumer) {
+        // Restore real_time behavior and work-ahead buffering
+        m_consumer->set("real_time", realTime());
+        m_consumer->set("buffer", 25);
+        m_consumer->set("prefill", 1);
         m_consumer->start();
         refreshConsumer();
     }
@@ -200,10 +203,18 @@ void Controller::play(double speed)
 void Controller::pause()
 {
     if (m_producer && m_producer->get_speed() != 0) {
+        if (m_consumer && m_consumer->is_valid()) {
+            // Flush all frames from the video task in the consumer.
+            m_consumer->stop();
+            // Disable real_time behavior and buffering for frame accurate seeking.
+            m_consumer->set("real_time", 0);
+            m_consumer->set("buffer", 0);
+            m_consumer->set("prefill", 0);
+        }
         m_producer->set_speed(0);
-        if (m_consumer->is_valid()) {
-            m_consumer->purge();
-            m_producer->seek(m_consumer->position() + 1);
+        m_producer->seek(m_consumer->position() + 1);
+        if (m_consumer && m_consumer->is_valid()) {
+            m_consumer->start();
         }
     }
     if (m_jackFilter)
@@ -315,18 +326,28 @@ void Controller::onWindowResize()
 void Controller::seek(int position)
 {
     if (m_producer) {
+        // Always pause before seeking (if not already paused).
+        if (m_consumer && m_consumer->is_valid() && m_producer->get_speed() != 0) {
+            // Flush all frames from the video task in the consumer.
+            m_consumer->stop();
+            // Disable real_time behavior and buffering for frame accurate seeking.
+            m_consumer->set("real_time", 0);
+            m_consumer->set("buffer", 0);
+            m_consumer->set("prefill", 0);
+        }
         m_producer->set_speed(0);
         m_producer->seek(position);
         if (m_consumer && m_consumer->is_valid()) {
-            if (m_consumer->is_stopped())
+            if (m_consumer->is_stopped()) {
                 m_consumer->start();
-            else
+            } else {
                 m_consumer->purge();
+                refreshConsumer();
+            }
         }
     }
     if (m_jackFilter)
         mlt_events_fire(m_jackFilter->get_properties(), "jack-seek", &position, NULL);
-    refreshConsumer();
 }
 
 void Controller::refreshConsumer()
@@ -565,6 +586,10 @@ void Controller::setOut(int out)
 void Controller::restart()
 {
     if (!m_consumer) return;
+    if (m_producer && m_producer->is_valid() && m_producer->get_speed() != 0) {
+        // Update the real_time property if not paused.
+        m_consumer->set("real_time", realTime());
+    }
     if (m_producer && m_producer->is_valid() && Settings.playerGPU()) {
         const char* position = m_consumer->frames_to_time(m_consumer->position());
         double speed = m_producer->get_speed();
@@ -654,8 +679,17 @@ bool Controller::isAudioFilter(const QString &name)
 
 int Controller::realTime() const
 {
-    int threadCount = QThread::idealThreadCount();
-    return threadCount > 2? qMin(threadCount - 1, 4) : 1;
+    int realtime = 1;
+    if (!Settings.playerRealtime()) {
+        if (Settings.playerGPU()) {
+            return -1;
+        } else {
+            int threadCount = QThread::idealThreadCount();
+            threadCount = threadCount > 2? qMin(threadCount - 1, 4) : 1;
+            realtime = -threadCount;
+        }
+    }
+    return realtime;
 }
 
 void Controller::setImageDurationFromDefault(Service* service) const
