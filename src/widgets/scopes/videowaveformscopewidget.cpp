@@ -23,12 +23,10 @@
 VideoWaveformScopeWidget::VideoWaveformScopeWidget()
   : ScopeWidget("VideoZoom")
   , m_frame()
-  , m_prevSize(0, 0)
   , m_renderImg()
   , m_refreshTime()
   , m_mutex(QMutex::NonRecursive)
   , m_displayImg()
-  , m_size(0, 0)
 {
     qDebug() << "begin";
     m_refreshTime.start();
@@ -36,18 +34,14 @@ VideoWaveformScopeWidget::VideoWaveformScopeWidget()
 }
 
 
-void VideoWaveformScopeWidget::refreshScope()
+void VideoWaveformScopeWidget::refreshScope(const QSize& size, bool full)
 {
-    m_mutex.lock();
-    QSize currentSize = m_size;
-    m_mutex.unlock();
-
     while (m_queue.count() > 0) {
         m_frame = m_queue.pop();
     }
 
-    if (m_prevSize == currentSize && m_refreshTime.elapsed() < 90) {
-        // When not resizing, limit refreshes to 90ms.
+    if (!full && m_refreshTime.elapsed() < 90) {
+        // Limit refreshes to 90ms unless there is a good reason.
         return;
     }
 
@@ -79,7 +73,6 @@ void VideoWaveformScopeWidget::refreshScope()
     m_displayImg.swap(m_renderImg);
     m_mutex.unlock();
 
-    m_prevSize = currentSize;
     m_refreshTime.restart();
 }
 
@@ -97,14 +90,6 @@ void VideoWaveformScopeWidget::paintEvent(QPaintEvent*)
     }
     m_mutex.unlock();
     p.end();
-}
-
-void VideoWaveformScopeWidget::resizeEvent(QResizeEvent*)
-{
-    m_mutex.lock();
-    m_size = size();
-    m_mutex.unlock();
-    requestRefresh();
 }
 
 QString VideoWaveformScopeWidget::getTitle()

@@ -24,6 +24,7 @@
 #include <QDebug>
 #include <QThread>
 #include <QFuture>
+#include <QMutex>
 #include "sharedframe.h"
 #include "dataqueue.h"
 
@@ -94,7 +95,7 @@ protected:
       protect any members that may be accessed concurrently by the refresh
       thread and the GUI thread.
     */
-    virtual void refreshScope() = 0;
+    virtual void refreshScope(const QSize& size, bool full) = 0;
 
     /*!
       Stores frames received by onNewFrame().
@@ -105,10 +106,17 @@ protected:
     DataQueue<SharedFrame> m_queue;
 
 private:
+    void resizeEvent(QResizeEvent*) Q_DECL_OVERRIDE;
+    void changeEvent(QEvent*) Q_DECL_OVERRIDE;
     Q_INVOKABLE void onRefreshThreadComplete() Q_DECL_FINAL;
     void refreshInThread() Q_DECL_FINAL;
     QFuture<void> m_future;
     bool m_refreshPending;
+
+    // Members accessed in multiple threads (mutex protected).
+    QMutex m_mutex;
+    bool m_forceRefresh;
+    QSize m_size;
 };
 
 #endif // SCOPEWIDGET_H

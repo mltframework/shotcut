@@ -50,7 +50,6 @@ static int graphCenterY(const QSize& widgetSize, int channel, int maxChan, int p
 AudioWaveformScopeWidget::AudioWaveformScopeWidget()
   : ScopeWidget("AudioWaveform")
   , m_frame()
-  , m_prevSize(0, 0)
   , m_renderWave()
   , m_refreshTime()
   , m_graphTopPadding(0)
@@ -58,7 +57,6 @@ AudioWaveformScopeWidget::AudioWaveformScopeWidget()
   , m_mutex(QMutex::NonRecursive)
   , m_displayWave()
   , m_displayGrid()
-  , m_size(0, 0)
 {
     qDebug() << "begin";
     setAutoFillBackground(true);
@@ -70,54 +68,60 @@ AudioWaveformScopeWidget::AudioWaveformScopeWidget()
 
 AudioWaveformScopeWidget::~AudioWaveformScopeWidget()
 {
-    qDebug() << "begin";
-    qDebug() << "end";
 }
 
-void AudioWaveformScopeWidget::refreshScope()
+void AudioWaveformScopeWidget::refreshScope(const QSize& size, bool full)
 {
     m_mutex.lock();
-    QSize currentSize = m_size;
+    QSize prevSize = m_displayWave.size();
     m_mutex.unlock();
 
     while (m_queue.count() > 0) {
         m_frame = m_queue.pop();
     }
     
+    // Check if a full refresh should be forced.
     int channels = m_frame.get_audio_channels();
     channels = channels ? channels : 2;
+    if (prevSize != size || channels != m_channels) {
+        m_channels = channels;
+        full = true;
+    }
 
-    if (m_prevSize == currentSize && m_refreshTime.elapsed() < 90) {
-        // When not resizing, limit refreshes to 90ms.
+    if (!full && m_refreshTime.elapsed() < 90) {
+        // Limit refreshes to 90ms unless there is a good reason.
         return;
     }
 
-    if (m_prevSize != currentSize || channels != m_channels) {
-        m_channels = channels;
-        createGrid(currentSize);
+    if (full) {
+        createGrid(size);
     }
 
-    if (m_renderWave.size() != currentSize) {
-        m_renderWave = QImage(currentSize, QImage::Format_ARGB32_Premultiplied);
+    if (m_renderWave.size() != size) {
+        m_renderWave = QImage(size, QImage::Format_ARGB32_Premultiplied);
     }
 
     m_renderWave.fill(Qt::transparent);
 
     QPainter p(&m_renderWave);
     p.setRenderHint(QPainter::Antialiasing, true);
-    p.setPen(palette().dark().color().rgb());
+    QColor penColor(palette().text().color());
+    penColor.setAlpha(255/2);
+    QPen pen(penColor);
+    pen.setWidth(0);
+    p.setPen(pen);
 
     if (m_frame.is_valid() && m_frame.get_audio_samples() > 0) {
 
         int samples = m_frame.get_audio_samples();
         int16_t* audio = (int16_t*)m_frame.get_audio();
-        int waveAmplitude = graphHeight(currentSize, m_channels, m_graphTopPadding) / 2;
+        int waveAmplitude = graphHeight(size, m_channels, m_graphTopPadding) / 2;
         qreal scaleFactor = (qreal)waveAmplitude / (qreal)MAX_AMPLITUDE;
 
         for (int c = 0; c < m_channels; c++)
         {
             p.save();
-            int y = graphCenterY(currentSize, c, m_channels, m_graphTopPadding);
+            int y = graphCenterY(size, c, m_channels, m_graphTopPadding);
             p.translate(0, y);
 
             // For each x position on the waveform, find the min and max sample
@@ -132,7 +136,7 @@ void AudioWaveformScopeWidget::refreshScope()
 
             for (int i = 0; i <= samples; i++)
             {
-                int x = ( i * currentSize.width() ) / samples;
+                int x = ( i * size.width() ) / samples;
                 if (x != lastX) {
                     // The min and max have been determined for the previous x
                     // So draw the line
@@ -156,7 +160,7 @@ void AudioWaveformScopeWidget::refreshScope()
 
                 if (*q > max) max = *q;
                 if (*q < min) min = *q;
-                q += channels;
+                q += m_channels;
             }
             p.restore();
         }
@@ -168,7 +172,6 @@ void AudioWaveformScopeWidget::refreshScope()
     m_displayWave.swap(m_renderWave);
     m_mutex.unlock();
 
-    m_prevSize = currentSize;
     m_refreshTime.restart();
 }
 
@@ -190,11 +193,7 @@ void AudioWaveformScopeWidget::createGrid(const QSize& size)
     m_displayGrid = QImage(size, QImage::Format_ARGB32_Premultiplied);
     m_displayGrid.fill(Qt::transparent);
     QPainter p(&m_displayGrid);
-    QColor penColor(palette().text().color());
-    penColor.setAlpha(255/2);
-    QPen pen(penColor);
-    pen.setWidth(0);
-    p.setPen(pen);
+    p.setPen(palette().text().color().rgb());
     p.setFont(font);
 
     for (int c = 0; c < m_channels; c++) {
@@ -240,18 +239,10 @@ void AudioWaveformScopeWidget::paintEvent(QPaintEvent*)
 
     QPainter p(this);
     m_mutex.lock();
-    p.drawImage(rect(), m_displayWave, m_displayWave.rect());
     p.drawImage(rect(), m_displayGrid, m_displayGrid.rect());
+    p.drawImage(rect(), m_displayWave, m_displayWave.rect());
     m_mutex.unlock();
     p.end();
-}
-
-void AudioWaveformScopeWidget::resizeEvent(QResizeEvent*)
-{
-    m_mutex.lock();
-    m_size = size();
-    m_mutex.unlock();
-    requestRefresh();
 }
 
 QString AudioWaveformScopeWidget::getTitle()

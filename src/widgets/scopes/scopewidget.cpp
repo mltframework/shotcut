@@ -25,6 +25,9 @@ ScopeWidget::ScopeWidget(const QString& name)
   , m_queue(3, DataQueue<SharedFrame>::OverflowModeDiscardOldest)
   , m_future()
   , m_refreshPending(false)
+  , m_mutex(QMutex::NonRecursive)
+  , m_forceRefresh(false)
+  , m_size(0, 0)
 {
     qDebug() << "begin" << m_future.isFinished();
     setObjectName(name);
@@ -52,8 +55,18 @@ void ScopeWidget::requestRefresh()
 
 void ScopeWidget::refreshInThread()
 {
+    if (m_size.isEmpty()) {
+        return;
+    }
+
+    m_mutex.lock();
+    QSize size = m_size;
+    bool full = m_forceRefresh;
+    m_forceRefresh = false;
+    m_mutex.unlock();
+
     m_refreshPending = false;
-    refreshScope();
+    refreshScope(size, full);
     // Tell the GUI thread that the refresh is complete.
     QMetaObject::invokeMethod(this, "onRefreshThreadComplete", Qt::QueuedConnection);
 }
@@ -64,4 +77,20 @@ void ScopeWidget::onRefreshThreadComplete()
     if (m_refreshPending) {
         requestRefresh();
     }
+}
+
+void ScopeWidget::resizeEvent(QResizeEvent*)
+{
+    m_mutex.lock();
+    m_size = size();
+    m_mutex.unlock();
+    requestRefresh();
+}
+
+void ScopeWidget::changeEvent(QEvent*)
+{
+    m_mutex.lock();
+    m_forceRefresh = true;
+    m_mutex.unlock();
+    requestRefresh();
 }

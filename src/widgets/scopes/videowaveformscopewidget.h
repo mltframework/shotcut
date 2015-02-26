@@ -33,9 +33,8 @@ public:
     QString getTitle();
 
 private:
-    void refreshScope() Q_DECL_OVERRIDE;
+    void refreshScope(const QSize& size, bool full) Q_DECL_OVERRIDE;
     void paintEvent(QPaintEvent*) Q_DECL_OVERRIDE;
-    void resizeEvent(QResizeEvent*) Q_DECL_OVERRIDE;
 
     SharedFrame m_frame;
     QSize m_prevSize;
@@ -45,7 +44,6 @@ private:
     // Variables accessed from multiple threads (mutex protected)
     QMutex m_mutex;
     QImage m_displayImg;
-    QSize m_size;
 };
 
 #endif // VIDEOWAVEFORMSCOPEWIDGET_H
