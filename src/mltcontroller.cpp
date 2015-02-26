@@ -40,7 +40,6 @@ static int alignWidth(int width)
 Controller::Controller()
     : m_producer(0)
     , m_consumer(0)
-    , m_volumeFilter(0)
     , m_jackFilter(0)
     , m_volume(1.0)
     , m_savedProducer(0)
@@ -115,8 +114,10 @@ int Controller::open(const QString &url)
             m_producer = new Mlt::Producer(profile(), url.toUtf8().constData());
         }
         // Convert avformat to avformat-novalidate so that XML loads faster.
-        if (!qstrcmp(m_producer->get("mlt_service"), "avformat"))
+        if (!qstrcmp(m_producer->get("mlt_service"), "avformat")) {
             m_producer->set("mlt_service", "avformat-novalidate");
+            m_producer->set("mute_on_pause", 0);
+        }
         if (m_url.isEmpty() && QString(m_producer->get("xml")) == "was here") {
             if (m_producer->get_int("_original_type") != tractor_type ||
                (m_producer->get_int("_original_type") == tractor_type && m_producer->get("shotcut")))
@@ -178,8 +179,6 @@ void Controller::closeConsumer()
         m_consumer->stop();
     delete m_consumer;
     m_consumer = 0;
-    delete m_volumeFilter;
-    m_volumeFilter = 0;
     delete m_jackFilter;
     m_jackFilter = 0;
 }
@@ -198,6 +197,7 @@ void Controller::play(double speed)
     }
     if (m_jackFilter)
         m_jackFilter->fire_event("jack-start");
+    setVolume(m_volume);
 }
 
 void Controller::pause()
@@ -219,6 +219,7 @@ void Controller::pause()
     }
     if (m_jackFilter)
         m_jackFilter->fire_event("jack-stop");
+    setVolume(m_volume);
 }
 
 void Controller::stop()
@@ -303,19 +304,26 @@ bool Controller::enableJack(bool enable)
 
 void Controller::setVolume(double volume)
 {
-    if (m_consumer) {
-        if (!m_volumeFilter) {
-            m_volumeFilter = new Filter(profile(), "volume");
-            m_consumer->attach(*m_volumeFilter);
-        }
-        m_volumeFilter->set("gain", volume);
-    }
     m_volume = volume;
+
+    // Keep the consumer muted when paused
+    if (m_producer && m_producer->get_speed() == 0) {
+        volume = 0.0;
+    }
+
+    if (m_consumer) {
+        if (m_consumer->get("mlt_service") == QString("multi")) {
+            m_consumer->set("0.volume", volume);
+        } else {
+            m_consumer->set("volume", volume);
+        }
+    }
+
 }
 
 double Controller::volume() const
 {
-    return m_volumeFilter? m_volumeFilter->get_double("gain") : m_volume;
+    return m_volume;
 }
 
 void Controller::onWindowResize()
@@ -348,6 +356,7 @@ void Controller::seek(int position)
     }
     if (m_jackFilter)
         mlt_events_fire(m_jackFilter->get_properties(), "jack-seek", &position, NULL);
+    setVolume(m_volume);
 }
 
 void Controller::refreshConsumer()
@@ -398,21 +407,17 @@ QString Controller::XML(Service* service)
 int Controller::consumerChanged()
 {
     int error = 0;
-    double gain = volume();
-
     if (m_consumer) {
         bool jackEnabled = m_jackFilter != 0;
         m_consumer->stop();
         delete m_consumer;
         m_consumer = 0;
-        delete m_volumeFilter;
-        m_volumeFilter = 0;
         delete m_jackFilter;
         m_jackFilter= 0;
         error = reconfigure(false);
         if (m_consumer) {
             enableJack(jackEnabled);
-            setVolume(gain);
+            setVolume(m_volume);
             m_consumer->start();
         }
     }

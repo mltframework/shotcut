@@ -132,7 +132,6 @@ protected:
 
 private:
     Mlt::Profile* m_profile;
-    Mlt::Filter* m_volumeFilter;
     Mlt::Filter* m_jackFilter;
     QString m_url;
     double m_volume;
