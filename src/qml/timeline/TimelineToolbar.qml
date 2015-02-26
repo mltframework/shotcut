@@ -25,6 +25,7 @@ Rectangle {
     property alias ripple: rippleButton.checked
     property alias scrub: scrubButton.checked
     property alias snap: snapButton.checked
+    property color checkedColor: Qt.rgba(activePalette.highlight.r, activePalette.highlight.g, activePalette.highlight.b, 0.3)
 
     SystemPalette { id: activePalette }
 
@@ -102,15 +103,7 @@ Rectangle {
             visible: snapButton.checked
             anchors.fill: snapButton
             source: snapButton
-            color: activePalette.highlight
-            cached: true
-        }
-        Blend {
-            visible: snapButton.checked
-            anchors.fill: snapButton
-            source: snapButton
-            foregroundSource: snapColorEffect
-            mode: 'color'
+            color: checkedColor
             cached: true
         }
         ColorOverlay {
@@ -118,15 +111,7 @@ Rectangle {
             visible: scrubButton.checked
             anchors.fill: scrubButton
             source: scrubButton
-            color: activePalette.highlight
-            cached: true
-        }
-        Blend {
-            visible: scrubButton.checked
-            anchors.fill: scrubButton
-            source: scrubButton
-            foregroundSource: scrubColorEffect
-            mode: 'color'
+            color: checkedColor
             cached: true
         }
         ColorOverlay {
@@ -134,15 +119,7 @@ Rectangle {
             visible: rippleButton.checked
             anchors.fill: rippleButton
             source: rippleButton
-            color: activePalette.highlight
-            cached: true
-        }
-        Blend {
-            visible: rippleButton.checked
-            anchors.fill: rippleButton
-            source: rippleButton
-            foregroundSource: rippleColorEffect
-            mode: 'color'
+            color: checkedColor
             cached: true
         }
       }
