@@ -204,16 +204,15 @@ void Controller::pause()
 {
     if (m_producer && m_producer->get_speed() != 0) {
         if (m_consumer && m_consumer->is_valid()) {
-            // Flush all frames from the video task in the consumer.
-            m_consumer->stop();
             // Disable real_time behavior and buffering for frame accurate seeking.
-            m_consumer->set("real_time", 0);
+            m_consumer->set("real_time", -1);
             m_consumer->set("buffer", 0);
             m_consumer->set("prefill", 0);
         }
         m_producer->set_speed(0);
         m_producer->seek(m_consumer->position() + 1);
         if (m_consumer && m_consumer->is_valid()) {
+            m_consumer->purge();
             m_consumer->start();
         }
     }
@@ -336,10 +335,8 @@ void Controller::seek(int position)
     if (m_producer) {
         // Always pause before seeking (if not already paused).
         if (m_consumer && m_consumer->is_valid() && m_producer->get_speed() != 0) {
-            // Flush all frames from the video task in the consumer.
-            m_consumer->stop();
             // Disable real_time behavior and buffering for frame accurate seeking.
-            m_consumer->set("real_time", 0);
+            m_consumer->set("real_time", -1);
             m_consumer->set("buffer", 0);
             m_consumer->set("prefill", 0);
         }
