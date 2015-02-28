@@ -181,6 +181,7 @@ void PlaylistDock::on_actionAppendCut_triggered()
             emit showStatusMessage(tr("You cannot insert a playlist into a playlist!"));
         } else if (MLT.isSeekable()) {
             MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.XML()));
+            qDebug() << m_model.playlist()->count();
             MLT.producer()->set(kPlaylistIndexProperty, m_model.playlist()->count());
             setUpdateButtonEnabled(true);
         } else {
@@ -501,10 +502,8 @@ void PlaylistDock::on_actionAddToTimeline_triggered()
 
 void PlaylistDock::on_updateButton_clicked()
 {
-    QScopedPointer<Mlt::ClipInfo> info(
-        m_model.playlist()->clip_info(ui->tableView->currentIndex().row()));
     int index = MLT.producer()->get_int(kPlaylistIndexProperty);
-    if (info && index > 0 && index <= m_model.playlist()->count()) {
+    if (index > 0 && index <= m_model.playlist()->count()) {
         MAIN.undoStack()->push(new Playlist::UpdateCommand(m_model, MLT.XML(), index - 1));
         setUpdateButtonEnabled(false);
     }
