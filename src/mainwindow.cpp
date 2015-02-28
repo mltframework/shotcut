@@ -158,7 +158,7 @@ MainWindow::MainWindow()
     // Add the player widget.
     m_player = new Player;
     MLT.videoWidget()->installEventFilter(this);
-    ui->stackedWidget->addWidget(m_player);
+    ui->centralWidget->layout()->addWidget(m_player);
     connect(this, SIGNAL(producerOpened()), m_player, SLOT(onProducerOpened()));
     connect(m_player, SIGNAL(showStatusMessage(QString)), this, SLOT(showStatusMessage(QString)));
     connect(m_player, SIGNAL(inChanged(int)), this, SLOT(onCutModified()));
@@ -1330,10 +1330,6 @@ void MainWindow::onProducerOpened()
 {
     m_meltedServerDock->disconnect(SIGNAL(positionUpdated(int,double,int,int,int,bool)));
 
-    // Remove the help page.
-    if (ui->stackedWidget->count() > 1)
-        delete ui->stackedWidget->widget(0);
-
     QWidget* w = loadProducerWidget(MLT.producer());
     if (w) {
         if (-1 != w->metaObject()->indexOfSignal("producerReopened()"))
@@ -1785,9 +1781,6 @@ void MainWindow::onMeltedUnitOpened()
     Mlt::Producer* producer = new Mlt::Producer(MLT.profile(), "color:");
     MLT.setProducer(producer);
     MLT.play(0);
-    // Remove the help page.
-    if (ui->stackedWidget->count() > 1)
-        delete ui->stackedWidget->widget(0);
     delete m_propertiesDock->widget();
     m_player->connectTransport(m_meltedPlaylistDock->transportControl());
     connect(m_meltedServerDock, SIGNAL(positionUpdated(int,double,int,int,int,bool)),
