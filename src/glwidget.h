@@ -56,8 +56,6 @@ public:
     GLWidget(QObject *parent = 0);
     ~GLWidget();
 
-    QSize minimumSizeHint() const;
-    QSize sizeHint() const;
     void createThread(RenderThread** thread, thread_function_t function, void* data);
     void startGlsl();
     void stopGlsl();

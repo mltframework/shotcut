@@ -104,16 +104,6 @@ GLWidget::~GLWidget()
     delete m_shader;
 }
 
-QSize GLWidget::minimumSizeHint() const
-{
-    return QSize(40, 30);
-}
-
-QSize GLWidget::sizeHint() const
-{
-    return QSize(400, 300);
-}
-
 void GLWidget::initializeGL()
 {
     qDebug() << "begin";
