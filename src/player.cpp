@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Meltytech, LLC
+ * Copyright (c) 2012-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,12 +20,13 @@
 #include "scrubbar.h"
 #include "mainwindow.h"
 #include "widgets/timespinbox.h"
-#include "widgets/audiosignal.h"
+#include "widgets/audioscale.h"
 #include "settings.h"
 #include <QtWidgets>
 
 #define VOLUME_KNEE (88)
 #define SEEK_INACTIVE (-1)
+#define VOLUME_SLIDER_HEIGHT (300)
 
 Player::Player(QWidget *parent)
     : QWidget(parent)
@@ -84,27 +85,26 @@ Player::Player(QWidget *parent)
     m_horizontalScroll->hide();
 
     // Add the volume and signal level meter
-    QVBoxLayout *volumeLayoutV = new QVBoxLayout;
+    m_volumePopup = new QFrame(this, Qt::Popup);
+    QVBoxLayout *volumeLayoutV = new QVBoxLayout(m_volumePopup);
+    volumeLayoutV->setContentsMargins(0, 0, 0, 0);
     volumeLayoutV->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding));
     QBoxLayout *volumeLayoutH = new QHBoxLayout;
     volumeLayoutH->setSpacing(0);
     volumeLayoutH->setContentsMargins(0, 0, 0, 0);
+    volumeLayoutH->addWidget(new AudioScale);
     m_volumeSlider = new QSlider(Qt::Vertical);
     m_volumeSlider->setFocusPolicy(Qt::NoFocus);
-    m_audioSignal = new AudioSignal(this);
-    m_volumeSlider->setMinimumHeight(m_audioSignal->minimumHeight());
+    m_volumeSlider->setMinimumHeight(VOLUME_SLIDER_HEIGHT);
     m_volumeSlider->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     volumeLayoutH->addWidget(m_volumeSlider);
-    volumeLayoutH->addWidget(m_audioSignal);
     volumeLayoutV->addLayout(volumeLayoutH);
-    m_videoLayout->addLayout(volumeLayoutV);
     m_volumeSlider->setRange(0, 99);
     m_volumeSlider->setValue(Settings.playerVolume());
     onVolumeChanged(m_volumeSlider->value());
     m_savedVolume = MLT.volume();
     m_volumeSlider->setToolTip(tr("Adjust the audio volume"));
     connect(m_volumeSlider, SIGNAL(valueChanged(int)), this, SLOT(onVolumeChanged(int)));
-    connect(this, SIGNAL(audioLevels(QVector<double>)), m_audioSignal, SLOT(slotAudioLevels(QVector<double>)));
 
     // Add mute-volume buttons layout
 #ifdef Q_OS_MAC
@@ -129,17 +129,9 @@ Player::Player(QWidget *parent)
     volumeLayoutH->addWidget(muteButton);
     connect(muteButton, SIGNAL(toggled(bool)), this, SLOT(onMuteButtonToggled(bool)));
 
-    // Add volume button
-    QPushButton* volumeButton = new QPushButton(this);
-    volumeButton->setFocusPolicy(Qt::NoFocus);
-    volumeButton->setObjectName(QString::fromUtf8("volumeButton"));
-    volumeButton->setToolTip(tr("Show or hide the volume control"));
-    volumeButton->setIcon(QIcon::fromTheme("player-volume", QIcon(":/icons/oxygen/16x16/actions/player-volume.png")));
-    volumeButton->setCheckable(true);
-    volumeButton->setChecked(Settings.playerVolumeVisible());
-    onVolumeButtonToggled(volumeButton->isChecked());
-    volumeLayoutH->addWidget(volumeButton);
-    connect(volumeButton, SIGNAL(toggled(bool)), this, SLOT(onVolumeButtonToggled(bool)));
+    // This hack realizes the volume popup geometry for on_actionVolume_triggered().
+    m_volumePopup->show();
+    m_volumePopup->hide();
 
     // Add the scrub bar.
     m_scrubber = new ScrubBar(this);
@@ -180,6 +172,7 @@ Player::Player(QWidget *parent)
     toolbar->addAction(actionFastForward);
     toolbar->addAction(actionSkipNext);
 
+    // Add zoom button to toolbar.
     m_zoomButton = new QToolButton;
     QMenu* zoomMenu = new QMenu(this);
     m_zoomFitAction = zoomMenu->addAction(
@@ -200,7 +193,10 @@ Player::Player(QWidget *parent)
     m_zoomButton->setCheckable(true);
     m_zoomButton->setToolTip(tr("Toggle zoom"));
     toolbar->addWidget(m_zoomButton);
+    toolbar->addAction(actionVolume);
+    m_volumeWidget = toolbar->widgetForAction(actionVolume);
 
+    // Add in-point and selected duration labels to toolbar.
     spacer = new QWidget(this);
     spacer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
     toolbar->addWidget(spacer);
@@ -270,6 +266,9 @@ void Player::setupActions(QWidget* widget)
     actionFastForward->setObjectName(QString::fromUtf8("actionFastForward"));
     actionFastForward->setIcon(QIcon::fromTheme("media-seek-forward", QIcon(":/icons/oxygen/32x32/actions/media-seek-forward.png")));
     actionFastForward->setDisabled(true);
+    actionVolume = new QAction(widget);
+    actionVolume->setObjectName(QString::fromUtf8("actionVolume"));
+    actionVolume->setIcon(QIcon::fromTheme("player-volume", QIcon(":/icons/oxygen/16x16/actions/player-volume.png")));
     retranslateUi(widget);
     QMetaObject::connectSlotsByName(widget);
 }
@@ -304,6 +303,10 @@ void Player::retranslateUi(QWidget* widget)
 #ifndef QT_NO_TOOLTIP
     actionFastForward->setToolTip(tr("Play quickly forwards (L)"));
 #endif // QT_NO_TOOLTIP
+    actionVolume->setText(tr("Volume"));
+#ifndef QT_NO_TOOLTIP
+    actionVolume->setToolTip(tr("Show the volume control"));
+#endif
 }
 
 void Player::setIn(int pos)
@@ -546,7 +549,6 @@ void Player::onFrameDisplayed(const SharedFrame& frame)
     }
     if (position >= m_duration)
         emit endOfStream();
-    showAudio(frame);
 }
 
 void Player::updateSelection()
@@ -679,19 +681,6 @@ void Player::onTabBarClicked(int index)
     }
 }
 
-void Player::showAudio(const SharedFrame& frame)
-{
-    if (frame.get_int("test_audio"))
-        return;
-    QVector<double> channels;
-    int n = frame.get_int("audio_channels");
-    while (n--) {
-        QString s = QString("meta.media.audio_level.%1").arg(n);
-        channels << frame.get_double(s.toLatin1().constData());
-    }
-    emit audioLevels(channels);
-}
-
 void Player::adjustScrollBars(float horizontal, float vertical)
 {
     if (MLT.profile().width() * m_zoomToggleFactor > m_videoWidget->width()) {
@@ -789,11 +778,15 @@ void Player::resetProfile()
     emit profileChanged();
 }
 
-void Player::onVolumeButtonToggled(bool checked)
+void Player::on_actionVolume_triggered()
 {
-    m_audioSignal->setVisible(checked);
-    m_volumeSlider->setVisible(checked);
-    Settings.setPlayerVolumeVisible(checked);
+    int x = (m_volumePopup->width() - m_volumeWidget->width()) / 2;
+    x = mapToParent(m_volumeWidget->geometry().bottomLeft()).x() - x;
+    int y = 8 - m_volumePopup->height();
+    m_volumePopup->move(mapToGlobal(m_scrubber->geometry().bottomLeft()) + QPoint(x, y));
+    m_volumePopup->show();
+    m_volumeWidget->hide();
+    m_volumeWidget->show();
 }
 
 void Player::onMuteButtonToggled(bool checked)
@@ -805,6 +798,7 @@ void Player::onMuteButtonToggled(bool checked)
         MLT.setVolume(m_savedVolume);
     }
     Settings.setPlayerMuted(checked);
+    m_volumePopup->hide();
 }
 
 void Player::setZoom(float factor, const QIcon& icon)

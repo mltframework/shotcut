@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2014 Meltytech, LLC
+ * Copyright (c) 2013-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -298,16 +298,6 @@ int ShotcutSettings::playerVolume() const
 void ShotcutSettings::setPlayerVolume(int i)
 {
     settings.setValue("player/volume", i);
-}
-
-bool ShotcutSettings::playerVolumeVisible() const
-{
-    return settings.value("player/volume-visible", false).toBool();
-}
-
-void ShotcutSettings::setPlayerVolumeVisible(bool b)
-{
-    settings.setValue("player/volume-visible", b);
 }
 
 float ShotcutSettings::playerZoom() const

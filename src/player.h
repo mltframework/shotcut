@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Meltytech, LLC
+ * Copyright (c) 2012-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -28,7 +28,7 @@ class ScrubBar;
 class QSpinBox;
 class QLabel;
 class TimeSpinBox;
-class AudioSignal;
+class QFrame;
 class QSlider;
 class QAction;
 class QScrollBar;
@@ -61,7 +61,6 @@ public:
 signals:
     void endOfStream();
     void showStatusMessage(QString);
-    void audioLevels(const QVector<double>&);
     void inChanged(int);
     void outChanged(int);
     void played(double speed);
@@ -108,7 +107,6 @@ protected:
 private:
     void setupActions(QWidget* widget);
     void retranslateUi(QWidget* widget);
-    void showAudio(const SharedFrame& frame);
     void adjustScrollBars(float horizontal, float vertical);
 
     QAction *actionPlay;
@@ -117,6 +115,7 @@ private:
     QAction *actionSkipPrevious;
     QAction *actionRewind;
     QAction *actionFastForward;
+    QAction *actionVolume;
 
     ScrubBar* m_scrubber;
     TimeSpinBox* m_positionSpinner;
@@ -126,8 +125,9 @@ private:
     int m_position;
     QIcon m_playIcon;
     QIcon m_pauseIcon;
+    QFrame* m_volumePopup;
     QSlider* m_volumeSlider;
-    AudioSignal* m_audioSignal;
+    QWidget* m_volumeWidget;
     int m_previousIn;
     int m_previousOut;
     double m_savedVolume;
@@ -156,7 +156,7 @@ private slots:
     void onOutChanged(int out);
     void on_actionSkipNext_triggered();
     void on_actionSkipPrevious_triggered();
-    void onVolumeButtonToggled(bool checked);
+    void on_actionVolume_triggered();
     void onMuteButtonToggled(bool checked);
     void setZoom(float factor, const QIcon &icon);
     void zoomFit();

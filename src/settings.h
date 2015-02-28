@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2014 Meltytech, LLC
+ * Copyright (c) 2013-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -90,8 +90,6 @@ public:
     void setPlayerRealtime(bool);
     int playerVolume() const;
     void setPlayerVolume(int);
-    bool playerVolumeVisible() const;
-    void setPlayerVolumeVisible(bool);
     float playerZoom() const;
     void setPlayerZoom(float);
 
