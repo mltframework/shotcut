@@ -32,6 +32,7 @@ namespace Ui {
 namespace Mlt {
     class Properties;
 }
+class AbstractJob;
 class MeltJob;
 
 class PresetsProxyModel : public QSortFilterProxyModel
@@ -67,7 +68,7 @@ private slots:
 
     void on_removePresetButton_clicked();
 
-    void onFinished(MeltJob*, bool isSuccess);
+    void onFinished(AbstractJob*, bool isSuccess);
 
     void on_stopCaptureButton_clicked();
 

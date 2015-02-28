@@ -385,7 +385,7 @@ void EncodeDock::runMelt(const QString& target, int realtime)
 {
     m_immediateJob = createMeltJob(target, realtime);
     if (m_immediateJob) {
-        connect(m_immediateJob, SIGNAL(finished(MeltJob*,bool)), this, SLOT(onFinished(MeltJob*,bool)));
+        connect(m_immediateJob, SIGNAL(finished(AbstractJob*,bool)), this, SLOT(onFinished(AbstractJob*,bool)));
         m_immediateJob->start();
     }
 }
@@ -877,7 +877,7 @@ void EncodeDock::on_removePresetButton_clicked()
     }
 }
 
-void EncodeDock::onFinished(MeltJob* job, bool isSuccess)
+void EncodeDock::onFinished(AbstractJob* job, bool isSuccess)
 {
     if (!MLT.isSeekable())
         ui->encodeButton->setText(tr("Capture File"));
