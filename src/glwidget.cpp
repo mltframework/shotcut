@@ -358,7 +358,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent* event)
         return;
     if ((event->pos() - m_dragStart).manhattanLength() < QApplication::startDragDistance())
         return;
-    if (!MLT.isClip())
+    if (!MLT.producer() || !MLT.isClip())
         return;
     QDrag *drag = new QDrag(this);
     QMimeData *mimeData = new QMimeData;
