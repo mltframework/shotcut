@@ -484,10 +484,6 @@ int GLWidget::reconfigure(bool isMulti)
         else
             m_consumer = new Mlt::FilteredConsumer(profile(), serviceName.toLatin1().constData());
 
-        Mlt::Filter* filter = new Mlt::Filter(profile(), "audiolevel");
-        if (filter->is_valid())
-            m_consumer->attach(*filter);
-        delete filter;
         delete m_threadStartEvent;
         m_threadStartEvent = 0;
         delete m_threadStopEvent;
