@@ -180,7 +180,7 @@ void AudioSignal::paintEvent(QPaintEvent* /*e*/)
         }
         int xp = peeks[i] * (horiz? w : h) - 2;
         p.fillRect(horiz? xp : y1 + dbsize, horiz? y1 : height() - xdelta - xp, horiz? 3 : y2, horiz? y2 : 3,
-                   QBrush(Qt::black,Qt::SolidPattern));
+                   palette().text());
     }
     if (showdb) {
         //draw db value at related pixel
