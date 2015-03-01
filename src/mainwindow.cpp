@@ -1781,7 +1781,8 @@ void MainWindow::onMeltedUnitOpened()
     Mlt::Producer* producer = new Mlt::Producer(MLT.profile(), "color:");
     MLT.setProducer(producer);
     MLT.play(0);
-    delete m_propertiesDock->widget();
+    QScrollArea* scrollArea = (QScrollArea*) m_propertiesDock->widget();
+    delete scrollArea->widget();
     m_player->connectTransport(m_meltedPlaylistDock->transportControl());
     connect(m_meltedServerDock, SIGNAL(positionUpdated(int,double,int,int,int,bool)),
             m_player, SLOT(onShowFrame(int,double,int,int,int,bool)));
