@@ -842,13 +842,7 @@ in temporal compression</string>
             <item row="11" column="1">
              <layout class="QHBoxLayout" name="horizontalLayout_15">
               <item>
-               <widget class="QSpinBox" name="videoCodecThreadsSpinner">
-                <property name="toolTip">
-                 <string>The recommended setting is 0 for the x264 or x265 codecs and
-number of processor cores (including virtual) - 1 for other
-codecs. However, not all codecs are multi-threaded.</string>
-                </property>
-               </widget>
+               <widget class="QSpinBox" name="videoCodecThreadsSpinner"/>
               </item>
               <item>
                <widget class="QLabel" name="label_21">
