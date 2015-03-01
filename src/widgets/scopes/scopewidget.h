@@ -76,6 +76,12 @@ public:
     */
     virtual QString getTitle() = 0;
 
+    /*!
+      Sets the preferred orientation on the scope.
+      This virtual function may be reimplemented by subclasses.
+    */
+    virtual void setOrientation(Qt::Orientation) {};
+
 public slots:
     //! Provides a new frame to the scope. Should be called by the application.
     void onNewFrame(const SharedFrame& frame) Q_DECL_FINAL;
@@ -105,9 +111,10 @@ protected:
     */
     DataQueue<SharedFrame> m_queue;
 
-private:
     void resizeEvent(QResizeEvent*) Q_DECL_OVERRIDE;
     void changeEvent(QEvent*) Q_DECL_OVERRIDE;
+
+private:
     Q_INVOKABLE void onRefreshThreadComplete() Q_DECL_FINAL;
     void refreshInThread() Q_DECL_FINAL;
     QFuture<void> m_future;

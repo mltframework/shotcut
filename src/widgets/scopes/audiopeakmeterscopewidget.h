@@ -35,6 +35,7 @@ public:
     explicit AudioPeakMeterScopeWidget();
     ~AudioPeakMeterScopeWidget();
     QString getTitle();
+    void setOrientation(Qt::Orientation orientation) Q_DECL_OVERRIDE;
 
 private:
     // Functions run in scope thread.

@@ -26,7 +26,7 @@ AudioPeakMeterScopeWidget::AudioPeakMeterScopeWidget()
   : ScopeWidget("AudioPeakMeter")
   , m_filter(0)
   , m_audioSignal(0)
-  , m_orientation(Qt::Horizontal)
+  , m_orientation((Qt::Orientation)-1)
 {
     qDebug() << "begin";
     Mlt::Profile profile;
@@ -38,12 +38,8 @@ AudioPeakMeterScopeWidget::AudioPeakMeterScopeWidget()
     QVBoxLayout *vlayout = new QVBoxLayout(this);
     vlayout->setContentsMargins(4, 4, 4, 4);
     m_audioSignal = new AudioSignal(this);
-    vlayout->addWidget(m_audioSignal);
-
-    m_audioSignal->setMinimumSize(41, 300);
     m_audioSignal->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-    setMinimumSize(49, 308);
-    setMaximumSize(49, 508);
+    vlayout->addWidget(m_audioSignal);
     qDebug() << "end";
 }
 
@@ -78,4 +74,21 @@ void AudioPeakMeterScopeWidget::refreshScope(const QSize& /*size*/, bool /*full*
 QString AudioPeakMeterScopeWidget::getTitle()
 {
    return tr("Audio Peak Meter");
+}
+
+void AudioPeakMeterScopeWidget::setOrientation(Qt::Orientation orientation)
+{
+    if (orientation != m_orientation) {
+        if (orientation == Qt::Vertical) {
+            m_audioSignal->setMinimumSize(41, 250);
+            setMinimumSize(49, 258);
+            setMaximumSize(49, 508);
+        } else {
+            m_audioSignal->setMinimumSize(250, 41);
+            setMinimumSize(258, 49);
+            setMaximumSize(508, 49);
+        }
+        updateGeometry();
+        m_orientation = orientation;
+    }
 }

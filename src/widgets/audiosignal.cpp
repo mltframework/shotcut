@@ -120,25 +120,43 @@ void AudioSignal::paintEvent(QPaintEvent* /*e*/)
     QPainter p(this);
     int numchan = channels.size();
     bool horiz = width() > height();
-    int dbsize = fontMetrics().width("-60") + 2;
-    bool showdb = width() > (dbsize + 2);
-    const int h = IEC_Scale(-dbscale[0]) * height() - 2;
+    int dbsize = 0;
+    bool showdb = false;
+    double h = 0;
+    double w = 0;
+
+    if (horiz) {
+        dbsize = fontMetrics().height() + 2;
+        showdb = height() > (dbsize + 2);
+        h = height();
+        w = IEC_Scale(-dbscale[0]) * width() - 2;
+
+    } else {
+        dbsize = fontMetrics().width("-60") + 2;
+        showdb = width() > (dbsize + 2);
+        h = IEC_Scale(-dbscale[0]) * height() - fontMetrics().height();
+        w = width();
+    }
 
     //valpixel=1.0 for 127, 1.0+(1/40) for 1 short oversample, 1.0+(2/40) for longer oversample
     for (int i = 0; i < numchan; i++) {
-        int maxx =  h  * channels[i];
-        int xdelta = h / 42 ;
-        int y2 = (showdb? width() - dbsize : width()) / numchan - 1;
-        int y1 = (showdb? width() - dbsize : width()) *  i / numchan;
-        int x2 = maxx >  xdelta ? xdelta - 3 : maxx - 3;
+        int maxx = 0;
+        int xdelta = 0;
+        int y2 = 0;
+        int y1 = 0;
+        int x2 = 0;
         if (horiz) {
-            dbsize = 9;
-            showdb = height() > dbsize;
-            maxx = width() * channels[i];
-            xdelta = width() / 42;
+            maxx = w * channels[i];
+            xdelta = w / 42;
             y2 = (showdb? height() - dbsize : height() ) / numchan - 1;
-            y1 = (showdb? height() - dbsize : height() ) * i/numchan;
-            x2 = maxx >  xdelta ? xdelta - 1 : maxx - 1;
+            y1 = (showdb? height() - dbsize : height() ) * i / numchan;
+            x2 = maxx > xdelta ? xdelta - 1 : maxx - 1;
+        } else {
+            maxx =  h  * channels[i];
+            xdelta = h / 42 ;
+            y2 = (showdb? width() - dbsize : width()) / numchan - 1;
+            y1 = (showdb? width() - dbsize : width()) *  i / numchan;
+            x2 = maxx > xdelta ? xdelta - 3 : maxx - 3;
         }
 
         for (int segment = 0; segment <= 42; segment++) {
@@ -160,21 +178,31 @@ void AudioSignal::paintEvent(QPaintEvent* /*e*/)
                 maxx -= xdelta;
             }
         }
-        int xp = peeks[i] * (horiz? width() : h) - 2;
+        int xp = peeks[i] * (horiz? w : h) - 2;
         p.fillRect(horiz? xp : y1 + dbsize, horiz? y1 : height() - xdelta - xp, horiz? 3 : y2, horiz? y2 : 3,
                    QBrush(Qt::black,Qt::SolidPattern));
     }
     if (showdb) {
         //draw db value at related pixel
+        double xf = 0;
+        double prevXf = horiz ? width() : height();
         for (int l = 0; l < dbscale.size(); l++) {
+            QString dbLabel = QString().sprintf("%d", dbscale[l]);
             if (!horiz) {
-                double xf = IEC_Scale(dbscale[l]) * h;
-                p.drawText(0, height() - xf + 2,
-                           QString().sprintf("%s%d", dbscale[l] >= 0? "  " : "", dbscale[l]));
+                xf = IEC_Scale(dbscale[l]) * h;
+                if (prevXf - xf > fontMetrics().height()) {
+                    if (dbscale[l] >= 0) {
+                        dbLabel = "  " + dbLabel;
+                    }
+                    p.drawText(0, height() - xf, dbLabel);
+                    prevXf = xf;
+                }
             } else {
-                double xf = IEC_Scale(dbscale[l]) * (double) width();
-                p.drawText(xf * 40.0/42.0 - 10, height() - 2,
-                           QString().sprintf("%d", dbscale[l]));
+                xf = IEC_Scale(dbscale[l]) * w - fontMetrics().width(dbLabel) / 2;
+                if (prevXf -xf > fontMetrics().width(dbLabel)) {
+                    p.drawText(xf, height() - 2, dbLabel);
+                    prevXf = xf;
+                }
             }
         }
     }

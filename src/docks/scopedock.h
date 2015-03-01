@@ -32,6 +32,9 @@ class ScopeDock Q_DECL_FINAL : public QDockWidget
 public:
    explicit ScopeDock(ScopeController* scopeController, ScopeWidget* scopeWidget);
 
+protected:
+   void resizeEvent(QResizeEvent*) Q_DECL_OVERRIDE;
+
 private:
    ScopeController* m_scopeController;
    ScopeWidget* m_scopeWidget;

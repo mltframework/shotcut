@@ -40,6 +40,16 @@ ScopeDock::ScopeDock(ScopeController* scopeController, ScopeWidget* scopeWidget)
     qDebug() << "end";
 }
 
+void ScopeDock::resizeEvent(QResizeEvent* e)
+{
+    if (width() > height()) {
+        m_scopeWidget->setOrientation(Qt::Horizontal);
+    } else {
+        m_scopeWidget->setOrientation(Qt::Vertical);
+    }
+    QDockWidget::resizeEvent(e);
+}
+
 void ScopeDock::onActionToggled(bool checked)
 {
     if(checked) {
