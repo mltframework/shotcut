@@ -338,7 +338,10 @@
      <normaloff>:/icons/light/16x16/audio-meter.png</normaloff>:/icons/light/16x16/audio-meter.png</iconset>
    </property>
    <property name="text">
-    <string>Audio Peak Meter</string>
+    <string>Peak Meter</string>
+   </property>
+   <property name="toolTip">
+    <string>Show or hide the audio peak meter</string>
    </property>
   </action>
   <action name="actionProperties">
