@@ -30,7 +30,7 @@ AudioScale::AudioScale(QWidget *parent) :
     setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
     setMinimumWidth(fontMetrics().width("-60"));
     setFocusPolicy(Qt::NoFocus);
-    dbscale << 5 << 0 << -5 << -10 << -15 << -20 << -25 << -30 << -35 << -40 << -50 << -70;
+    dbscale << 5 << 0 << -5 << -10 << -15 << -20 << -25 << -30 << -35 << -40 << -50;
 }
 
 //----------------------------------------------------------------------------

@@ -37,7 +37,7 @@ AudioSignal::AudioSignal(QWidget *parent): QWidget(parent)
     setMinimumHeight(300);
     setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     setMinimumWidth(fontMetrics().width("-60") + 20);
-    dbscale << 5 << 0 << -5 << -10 << -15 << -20 << -25 << -30 << -35 << -40 << -50 << -60;
+    dbscale << 0 << -5 << -10 << -15 << -20 << -25 << -30 << -35 << -40 << -50;
     connect(&m_timer,SIGNAL(timeout()),this,SLOT(slotNoAudioTimeout()));
 }
 
@@ -113,12 +113,12 @@ void AudioSignal::paintEvent(QPaintEvent* /*e*/)
         dbsize = fontMetrics().height() + 2;
         showdb = height() > (dbsize + 2);
         h = height();
-        w = IEC_Scale(-dbscale[0]) * width() - 2;
+        w = IEC_Scale(-dbscale[0]) * width();
 
     } else {
         dbsize = fontMetrics().width("-60") + 2;
         showdb = width() > (dbsize + 2);
-        h = IEC_Scale(-dbscale[0]) * height() - fontMetrics().height();
+        h = IEC_Scale(-dbscale[0]) * height();
         w = width();
     }
 
@@ -162,24 +162,27 @@ void AudioSignal::paintEvent(QPaintEvent* /*e*/)
                 maxx -= xdelta;
             }
         }
-        int xp = peeks[i] * (horiz? w : h) - 2;
-        p.fillRect(horiz? xp : y1 + dbsize, horiz? y1 : height() - xdelta - xp, horiz? 3 : y2, horiz? y2 : 3,
+        int xp = peeks[i] * (horiz? w : h);
+        p.fillRect(horiz? qMin(width() - 3, xp) : y1 + dbsize,
+                   horiz? y1 : qMax(0, height() - xdelta - xp),
+                   horiz? 3 : y2,
+                   horiz? y2 : 3,
                    palette().text());
     }
     if (showdb) {
         //draw db value at related pixel
         double xf = 0;
         double prevXf = horiz ? width() : height();
-        for (int l = 0; l < dbscale.size(); l++) {
-            QString dbLabel = QString().sprintf("%d", dbscale[l]);
+        foreach (int i, dbscale) {
+            QString dbLabel = QString().sprintf("%d", i);
             if (!horiz) {
-                xf = IEC_Scale(dbscale[l]) * h;
+                xf = IEC_Scale(i) * h;
                 if (prevXf - xf > fontMetrics().height()) {
                     p.drawText(dbsize - fontMetrics().width(dbLabel), height() - xf, dbLabel);
                     prevXf = xf;
                 }
             } else {
-                xf = IEC_Scale(dbscale[l]) * w - fontMetrics().width(dbLabel) / 2;
+                xf = IEC_Scale(i) * w - fontMetrics().width(dbLabel) / 2;
                 if (prevXf -xf > fontMetrics().width(dbLabel)) {
                     p.drawText(xf, height() - 2, dbLabel);
                     prevXf = xf;
