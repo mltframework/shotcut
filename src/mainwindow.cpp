@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2015 Meltytech, LLC
+ * Copyright (c) 2011-2014 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -1781,6 +1781,7 @@ void MainWindow::onMeltedUnitOpened()
     Mlt::Producer* producer = new Mlt::Producer(MLT.profile(), "color:");
     MLT.setProducer(producer);
     MLT.play(0);
+    delete m_propertiesDock->widget();
     m_player->connectTransport(m_meltedPlaylistDock->transportControl());
     connect(m_meltedServerDock, SIGNAL(positionUpdated(int,double,int,int,int,bool)),
             m_player, SLOT(onShowFrame(int,double,int,int,int,bool)));
