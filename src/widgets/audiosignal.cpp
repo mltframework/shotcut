@@ -191,10 +191,7 @@ void AudioSignal::paintEvent(QPaintEvent* /*e*/)
             if (!horiz) {
                 xf = IEC_Scale(dbscale[l]) * h;
                 if (prevXf - xf > fontMetrics().height()) {
-                    if (dbscale[l] >= 0) {
-                        dbLabel = "  " + dbLabel;
-                    }
-                    p.drawText(0, height() - xf, dbLabel);
+                    p.drawText(dbsize - fontMetrics().width(dbLabel), height() - xf, dbLabel);
                     prevXf = xf;
                 }
             } else {
