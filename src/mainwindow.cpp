@@ -173,6 +173,10 @@ MainWindow::MainWindow()
 
     // Add the docks.
     m_scopeController = new ScopeController(this, ui->menuView);
+    QDockWidget* audioMeterDock = findChild<QDockWidget*>("AudioPeakMeterDock");
+    if (audioMeterDock) {
+        connect(ui->actionAudioMeter, SIGNAL(triggered()), audioMeterDock->toggleViewAction(), SLOT(trigger()));
+    }
 
     m_propertiesDock = new QDockWidget(tr("Properties"), this);
     m_propertiesDock->hide();

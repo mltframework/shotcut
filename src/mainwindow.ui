@@ -187,6 +187,7 @@
    <addaction name="actionUndo"/>
    <addaction name="actionRedo"/>
    <addaction name="separator"/>
+   <addaction name="actionAudioMeter"/>
    <addaction name="actionProperties"/>
    <addaction name="actionRecent"/>
    <addaction name="actionPlaylist"/>
@@ -329,6 +330,15 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+F</string>
+   </property>
+  </action>
+  <action name="actionAudioMeter">
+   <property name="icon">
+    <iconset theme="audio-meter" resource="../icons/resources.qrc">
+     <normaloff>:/icons/light/16x16/audio-meter.png</normaloff>:/icons/light/16x16/audio-meter.png</iconset>
+   </property>
+   <property name="text">
+    <string>Audio Peak Meter</string>
    </property>
   </action>
   <action name="actionProperties">

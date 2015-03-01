@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/icons">
+        <file>dark/16x16/audio-meter.png</file>
         <file>dark/16x16/edit-undo.png</file>
         <file>dark/16x16/format-justify-fill.png</file>
         <file>dark/16x16/list-add.png</file>
@@ -30,6 +31,7 @@
         <file>dark/32x32/view-media-playlist.png</file>
         <file>dark/32x32/window-close.png</file>
         <file>dark/index.theme</file>
+        <file>light/16x16/audio-meter.png</file>
         <file>light/16x16/edit-undo.png</file>
         <file>light/16x16/format-justify-fill.png</file>
         <file>light/16x16/list-add.png</file>
