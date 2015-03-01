@@ -38,23 +38,7 @@ AudioSignal::AudioSignal(QWidget *parent): QWidget(parent)
     setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     setMinimumWidth(fontMetrics().width("-60") + 20);
     dbscale << 5 << 0 << -5 << -10 << -15 << -20 << -25 << -30 << -35 << -40 << -50 << -60;
-    setContextMenuPolicy(Qt::ActionsContextMenu);
-    m_aMonitoringEnabled = new QAction(tr("Monitor Audio Signal"), this);
-    m_aMonitoringEnabled->setCheckable(true);
-    m_aMonitoringEnabled->setChecked(true);
-    connect(m_aMonitoringEnabled, SIGNAL(toggled(bool)), this, SLOT(slotSwitchAudioMonitoring(bool)));
     connect(&m_timer,SIGNAL(timeout()),this,SLOT(slotNoAudioTimeout()));
-    addAction(m_aMonitoringEnabled);
-}
-
-AudioSignal::~AudioSignal()
-{
-    delete m_aMonitoringEnabled;
-}
-
-bool AudioSignal::monitoringEnabled() const
-{
-    return m_aMonitoringEnabled->isChecked();
 }
 
 //----------------------------------------------------------------------------
@@ -115,7 +99,7 @@ void AudioSignal::showAudio(const QVector<double>& arr)
 
 void AudioSignal::paintEvent(QPaintEvent* /*e*/)
 {
-    if (!m_aMonitoringEnabled->isChecked() || !isVisible())
+    if (!isVisible())
         return;
     QPainter p(this);
     int numchan = channels.size();
@@ -204,9 +188,4 @@ void AudioSignal::paintEvent(QPaintEvent* /*e*/)
         }
     }
     p.end();
-}
-
-void AudioSignal::slotSwitchAudioMonitoring(bool)
-{
-    emit updateAudioMonitoring();
 }

@@ -36,9 +36,6 @@ class AudioSignal : public QWidget
     Q_OBJECT
 public:
     AudioSignal(QWidget *parent = 0);
-    ~AudioSignal();
-    /** @brief Used for checking whether audio data needs to be delivered */
-    bool monitoringEnabled() const;
 
 private:
     double valueToPixel(double in);
@@ -46,7 +43,6 @@ private:
     QLabel* label;
     QVector<double> channels, peeks, peekage;
     QVector<int> dbscale;
-    QAction *m_aMonitoringEnabled;
 
 protected:
     void paintEvent(QPaintEvent*);
@@ -56,7 +52,6 @@ public slots:
     void slotAudioLevels(const QVector<double>& channels);
 
 private slots:
-    void slotSwitchAudioMonitoring(bool isOn);
     void slotNoAudioTimeout();
 
 signals:
