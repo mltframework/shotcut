@@ -60,7 +60,6 @@ AudioWaveformScopeWidget::AudioWaveformScopeWidget()
 {
     qDebug() << "begin";
     setAutoFillBackground(true);
-    setBackgroundRole(QPalette::Base);
     setMinimumSize(100, 100);
     m_refreshTime.start();
     qDebug() << "end";

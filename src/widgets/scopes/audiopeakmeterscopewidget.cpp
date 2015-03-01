@@ -33,7 +33,6 @@ AudioPeakMeterScopeWidget::AudioPeakMeterScopeWidget()
     m_filter = new Mlt::Filter(profile, "audiolevel");
     qRegisterMetaType< QVector<double> >("QVector<double>");
     setAutoFillBackground(true);
-    setBackgroundRole(QPalette::Base);
 
     QVBoxLayout *vlayout = new QVBoxLayout(this);
     vlayout->setContentsMargins(4, 4, 4, 4);
