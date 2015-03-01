@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "scopecontroller.h"
+#include "widgets/scopes/audiopeakmeterscopewidget.h"
 #include "widgets/scopes/audiowaveformscopewidget.h"
 #include "widgets/scopes/videowaveformscopewidget.h"
 #include "docks/scopedock.h"
@@ -29,6 +30,7 @@ ScopeController::ScopeController(QMainWindow* mainWindow, QMenu* menu)
 {
     qDebug() << "begin";
     QMenu* scopeMenu = menu->addMenu(tr("Scopes"));
+    createScopeDock<AudioPeakMeterScopeWidget>(mainWindow, scopeMenu);
     createScopeDock<AudioWaveformScopeWidget>(mainWindow, scopeMenu);
 //    if (!Settings.playerGPU()) {
 //        createScopeDock<VideoWaveformScopeWidget>(mainWindow, scopeMenu);

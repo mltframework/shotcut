@@ -93,6 +93,7 @@ SOURCES += main.cpp\
     docks/scopedock.cpp \
     controllers/scopecontroller.cpp \
     widgets/scopes/scopewidget.cpp \
+    widgets/scopes/audiopeakmeterscopewidget.cpp \
     widgets/scopes/audiowaveformscopewidget.cpp \
     widgets/scopes/videowaveformscopewidget.cpp \
     sharedframe.cpp \
@@ -181,6 +182,7 @@ HEADERS  += mainwindow.h \
     docks/scopedock.h \
     controllers/scopecontroller.h \
     widgets/scopes/scopewidget.h \
+    widgets/scopes/audiopeakmeterscopewidget.h \
     widgets/scopes/audiowaveformscopewidget.h \
     widgets/scopes/videowaveformscopewidget.h \
     dataqueue.h \
