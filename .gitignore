@@ -10,3 +10,9 @@ Makefile
 src/shotcut
 *.user
 *.qm
+*.dot
+*.frag
+*.log
+.directory
+*.orig
+.tx
