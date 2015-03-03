@@ -1037,8 +1037,8 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_player->rewind();
         break;
     case Qt::Key_K:
-        m_player->pause();
-        m_isKKeyPressed = true;
+            m_player->pause();
+            m_isKKeyPressed = true;
         break;
     case Qt::Key_L:
         if (m_isKKeyPressed)
@@ -1230,10 +1230,11 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
 
 void MainWindow::keyReleaseEvent(QKeyEvent* event)
 {
+    qDebug() << event->key();
     if (event->key() == Qt::Key_K)
         m_isKKeyPressed = false;
     else
-        QMainWindow::keyPressEvent(event);
+        QMainWindow::keyReleaseEvent(event);
 }
 
 // Drag-n-drop events
