@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2014 Meltytech, LLC
+ * Copyright (c) 2011-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -193,7 +193,7 @@ MainWindow::MainWindow()
 
     m_recentDock = new RecentDock(this);
     m_recentDock->hide();
-    addDockWidget(Qt::LeftDockWidgetArea, m_recentDock);
+    addDockWidget(Qt::RightDockWidgetArea, m_recentDock);
     ui->menuView->addAction(m_recentDock->toggleViewAction());
     connect(m_recentDock, SIGNAL(itemActivated(QString)), this, SLOT(open(QString)));
     connect(m_recentDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onRecentDockTriggered(bool)));
@@ -302,22 +302,25 @@ MainWindow::MainWindow()
     connect(&JOBS, SIGNAL(jobAdded()), m_jobsDock, SLOT(raise()));
     connect(m_jobsDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onJobsDockTriggered(bool)));
 
-    tabifyDockWidget(m_propertiesDock, m_recentDock);
-    tabifyDockWidget(m_recentDock, m_playlistDock);
+    tabifyDockWidget(m_propertiesDock, m_playlistDock);
     tabifyDockWidget(m_playlistDock, m_filtersDock);
     tabifyDockWidget(m_filtersDock, m_encodeDock);
+    QDockWidget* audioWaveformDock = findChild<QDockWidget*>("AudioWaveformDock");
+    splitDockWidget(m_recentDock, audioWaveformDock, Qt::Vertical);
+    splitDockWidget(audioMeterDock, m_recentDock, Qt::Horizontal);
+    tabifyDockWidget(m_recentDock, m_historyDock);
     tabifyDockWidget(m_historyDock, m_jobsDock);
     m_recentDock->raise();
 
     m_meltedServerDock = new MeltedServerDock(this);
     m_meltedServerDock->hide();
-    addDockWidget(Qt::TopDockWidgetArea, m_meltedServerDock);
+    addDockWidget(Qt::BottomDockWidgetArea, m_meltedServerDock);
     m_meltedServerDock->toggleViewAction()->setIcon(m_meltedServerDock->windowIcon());
     ui->menuView->addAction(m_meltedServerDock->toggleViewAction());
 
     m_meltedPlaylistDock = new MeltedPlaylistDock(this);
     m_meltedPlaylistDock->hide();
-    addDockWidget(Qt::TopDockWidgetArea, m_meltedPlaylistDock);
+    addDockWidget(Qt::BottomDockWidgetArea, m_meltedPlaylistDock);
     splitDockWidget(m_meltedServerDock, m_meltedPlaylistDock, Qt::Horizontal);
     m_meltedPlaylistDock->toggleViewAction()->setIcon(m_meltedPlaylistDock->windowIcon());
     ui->menuView->addAction(m_meltedPlaylistDock->toggleViewAction());
