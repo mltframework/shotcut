@@ -301,12 +301,12 @@ bool Controller::enableJack(bool enable)
 }
 
 
-void Controller::setVolume(double volume)
+void Controller::setVolume(double volume, bool muteOnPause)
 {
     m_volume = volume;
 
     // Keep the consumer muted when paused
-    if (m_producer && m_producer->get_speed() == 0) {
+    if (m_producer && m_producer->get_speed() == 0 && !muteOnPause) {
         volume = 0.0;
     }
 
@@ -353,7 +353,7 @@ void Controller::seek(int position)
     }
     if (m_jackFilter)
         mlt_events_fire(m_jackFilter->get_properties(), "jack-seek", &position, NULL);
-    setVolume(m_volume);
+    setVolume(m_volume, true);
 }
 
 void Controller::refreshConsumer()

@@ -72,7 +72,7 @@ public:
     virtual void pause();
     void stop();
     bool enableJack(bool enable = true);
-    void setVolume(double volume);
+    void setVolume(double volume, bool muteOnPause = false);
     double volume() const;
     void onWindowResize();
     virtual void seek(int position);
