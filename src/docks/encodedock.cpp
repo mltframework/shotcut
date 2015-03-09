@@ -186,7 +186,7 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                     else
                         p->set("vbr", "constrained");
                 }
-            } if (acodec == "libopus") {
+            } else if (acodec == "libopus") {
                 p->set("vbr", "on");
                 p->set("ab", ui->audioBitrateCombo->currentText().toLatin1().constData());
             } else {
