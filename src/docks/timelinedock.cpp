@@ -398,10 +398,21 @@ void TimelineDock::splitClip(int trackIndex, int clipIndex)
         trackIndex = m_quickView.rootObject()->property("currentTrack").toInt();
     if (clipIndex < 0)
         clipIndex = clipIndexAtPlayhead(trackIndex);
-    QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
-    if (info && m_position >= info->start && m_position < info->start + info->frame_count - 1) {
-        MAIN.undoStack()->push(
-            new Timeline::SplitCommand(m_model, trackIndex, clipIndex, m_position));
+    if (clipIndex >= 0 && trackIndex >= 0) {
+        int i = m_model.trackList().at(trackIndex).mlt_index;
+        QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
+        if (track) {
+            Mlt::Playlist playlist(*track);
+            if (!m_model.isTransition(playlist, clipIndex)) {
+                QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
+                if (info && m_position >= info->start && m_position < info->start + info->frame_count - 1) {
+                    MAIN.undoStack()->push(
+                        new Timeline::SplitCommand(m_model, trackIndex, clipIndex, m_position));
+                }
+            } else {
+                MAIN.showStatusMessage(tr("You cannot split a transition."));
+            }
+        }
     }
 }
 
