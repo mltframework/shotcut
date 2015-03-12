@@ -368,7 +368,8 @@ OTHER_FILES += \
     qml/filters/webvfx_threejs_text/fonts/helvetiker_bold.typeface.js \
     qml/filters/webvfx_threejs_text/fonts/helvetiker_regular.typeface.js \
     qml/filters/webvfx_threejs_text/fonts/optimer_bold.typeface.js \
-    qml/filters/webvfx_threejs_text/fonts/optimer_regular.typeface.js
+    qml/filters/webvfx_threejs_text/fonts/optimer_regular.typeface.js \
+    qml/modules/Shotcut/Controls/SaveDefaultButton.qml
 
 lupdate_hack {
     SOURCES += \
@@ -483,7 +484,8 @@ lupdate_hack {
     qml/filters/dynamictext/vui.qml \
     qml/filters/webvfx_threejs_text/meta.qml \
     qml/filters/webvfx_threejs_text/ui.qml \
-    qml/filters/webvfx_threejs_text/threejs_text.html
+	qml/filters/webvfx_threejs_text/threejs_text.html \
+	qml/modules/Shotcut/Controls/SaveDefaultButton.qml
 }
 
 TRANSLATIONS += \
