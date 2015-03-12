@@ -31,6 +31,11 @@ class ShotcutSettings : public QObject
     Q_PROPERTY(QString openPath READ openPath WRITE setOpenPath NOTIFY openPathChanged)
     Q_PROPERTY(QString savePath READ savePath WRITE setSavePath NOTIFY savePathChanged)
     Q_PROPERTY(bool playerGPU READ playerGPU NOTIFY playerGpuChanged)
+    Q_PROPERTY(double audioInDuration READ audioInDuration WRITE setAudioInDuration NOTIFY audioInDurationChanged)
+    Q_PROPERTY(double audioOutDuration READ audioOutDuration WRITE setAudioOutDuration NOTIFY audioOutDurationChanged)
+    Q_PROPERTY(double videoInDuration READ videoInDuration WRITE setVideoInDuration NOTIFY videoInDurationChanged)
+    Q_PROPERTY(double videoOutDuration READ videoOutDuration WRITE setVideoOutDuration NOTIFY videoOutDurationChanged)
+
 
 public:
     static ShotcutSettings& singleton();
@@ -102,6 +107,18 @@ public:
     QString filterFavorite(const QString& filterName);
     void setFilterFavorite(const QString& filterName, const QString& value);
 
+    double audioInDuration() const;
+    void setAudioInDuration(double);
+
+    double audioOutDuration() const;
+    void setAudioOutDuration(double);
+
+    double videoInDuration() const;
+    void setVideoInDuration(double);
+
+    double videoOutDuration() const;
+    void setVideoOutDuration(double);
+
     void sync();
 
 signals:
@@ -109,6 +126,10 @@ signals:
     void savePathChanged();
     void timelineShowWaveformsChanged();
     void playerGpuChanged();
+    void audioInDurationChanged();
+    void audioOutDurationChanged();
+    void videoInDurationChanged();
+    void videoOutDurationChanged();
 
 private:
     QSettings settings;

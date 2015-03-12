@@ -30,7 +30,7 @@ Rectangle {
 
     Component.onCompleted: {
         if (filter.isNew) {
-            duration = filter.framesFromTime('1:0')
+            duration = Math.ceil(settings.audioInDuration * profile.fps)
             filter.set('gain', 0)
             filter.set('end', 1)
             filter.set('in', filter.producerIn)
@@ -50,6 +50,12 @@ Rectangle {
                 maximumValue: 5000
                 value: filter.getDouble('out') - filter.getDouble('in') + 1
                 onValueChanged: filter.set('out', filter.getDouble('in') + value - 1)
+                onSetDefaultClicked: {
+                    duration = Math.ceil(settings.audioInDuration * profile.fps)
+                }
+                onSaveDefaultClicked: {
+                    settings.audioInDuration = duration / profile.fps
+                }
             }
         }
         Item {

@@ -340,6 +340,51 @@ void ShotcutSettings::setFilterFavorite(const QString& filterName, const QString
     settings.setValue("filter/favorite/" + filterName, value);
 }
 
+double ShotcutSettings::audioInDuration() const
+{
+    return settings.value("filter/audioInDuration", 1.0).toDouble();
+}
+
+void ShotcutSettings::setAudioInDuration(double d)
+{
+    settings.setValue("filter/audioInDuration", d);
+    emit audioInDurationChanged();
+}
+
+double ShotcutSettings::audioOutDuration() const
+{
+    return settings.value("filter/audioOutDuration", 1.0).toDouble();
+}
+
+void ShotcutSettings::setAudioOutDuration(double d)
+{
+    settings.setValue("filter/audioOutDuration", d);
+    emit audioOutDurationChanged();
+}
+
+
+double ShotcutSettings::videoInDuration() const
+{
+    return settings.value("filter/videoInDuration", 1.0).toDouble();
+}
+
+void ShotcutSettings::setVideoInDuration(double d)
+{
+    settings.setValue("filter/videoInDuration", d);
+    emit videoInDurationChanged();
+}
+
+double ShotcutSettings::videoOutDuration() const
+{
+    return settings.value("filter/videoOutDuration", 1.0).toDouble();
+}
+
+void ShotcutSettings::setVideoOutDuration(double d)
+{
+    settings.setValue("filter/videoOutDuration", d);
+    emit videoOutDurationChanged();
+}
+
 void ShotcutSettings::sync()
 {
     settings.sync();

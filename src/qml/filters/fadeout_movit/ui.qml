@@ -30,7 +30,7 @@ Rectangle {
 
     Component.onCompleted: {
         if (filter.isNew) {
-            duration = filter.framesFromTime('1:0')
+            duration = Math.ceil(settings.videoOutDuration * profile.fps)
             var out = filter.producerOut
             var inFrame = out - duration + 1
             filter.set('opacity', '0~=1; %1=0'.arg(duration - 1))
@@ -53,6 +53,12 @@ Rectangle {
                 maximumValue: 5000
                 value: filter.getDouble('out') - filter.getDouble('in') + 1
                 onValueChanged: filter.set('in', filter.getDouble('out') - duration + 1)
+                onSetDefaultClicked: {
+                    duration = Math.ceil(settings.videoOutDuration * profile.fps)
+                }
+                onSaveDefaultClicked: {
+                    settings.videoOutDuration = duration / profile.fps
+                }
             }
         }
         CheckBox {

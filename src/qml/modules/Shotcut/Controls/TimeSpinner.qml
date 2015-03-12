@@ -21,9 +21,12 @@ import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.1
 
 RowLayout {
+    id: root
     property int minimumValue: 0
     property int maximumValue: 99
     property int value: 0
+    signal setDefaultClicked()
+    signal saveDefaultClicked()
 
     spacing: 0
 
@@ -77,6 +80,12 @@ RowLayout {
             triggeredOnStart: true
             onTriggered: incrementAction.trigger()
         }
+    }
+    UndoButton {
+        onClicked: root.setDefaultClicked()
+    }
+    SaveDefaultButton {
+        onClicked: root.saveDefaultClicked()
     }
     Action {
         id: decrementAction

@@ -30,7 +30,7 @@ Rectangle {
 
     Component.onCompleted: {
         if (filter.isNew) {
-            duration = filter.framesFromTime('1:0')
+            duration = Math.ceil(settings.videoOutDuration * profile.fps)
             var out = filter.producerOut
             var inFrame = out - duration + 1
             filter.set('level', '0=1; %1=0'.arg(duration - 1))
@@ -59,6 +59,12 @@ Rectangle {
                         filter.set('alpha', '0=1; %1=0'.arg(duration - 1))
                     else
                         filter.set('level', '0=1; %1=0'.arg(duration - 1))
+                }
+                onSetDefaultClicked: {
+                    duration = Math.ceil(settings.videoOutDuration * profile.fps)
+                }
+                onSaveDefaultClicked: {
+                    settings.videoOutDuration = duration / profile.fps
                 }
             }
         }
