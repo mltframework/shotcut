@@ -377,7 +377,6 @@ lupdate_hack {
     qml/filters/saturation/ui_frei0r.qml \
     qml/filters/saturation/meta_movit.qml \
     qml/filters/saturation/ui_movit.qml \
-    qml/filters/webvfx_circular_frame/filter-demo.html \
     qml/filters/webvfx_circular_frame/ui.qml \
     qml/filters/webvfx_circular_frame/meta.qml \
     qml/modules/Shotcut/Controls/qmldir \
@@ -484,7 +483,6 @@ lupdate_hack {
     qml/filters/dynamictext/vui.qml \
     qml/filters/webvfx_threejs_text/meta.qml \
     qml/filters/webvfx_threejs_text/ui.qml \
-	qml/filters/webvfx_threejs_text/threejs_text.html \
 	qml/modules/Shotcut/Controls/SaveDefaultButton.qml
 }
 
