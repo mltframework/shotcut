@@ -152,6 +152,13 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="toneTab">
+       <layout class="QVBoxLayout" name="verticalLayout_15">
+        <item>
+         <widget class="ToneProducerWidget" name="toneWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </widget>
    </item>
@@ -250,6 +257,12 @@
    <class>DirectShowVideoWidget</class>
    <extends>QWidget</extends>
    <header>widgets/directshowvideowidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ToneProducerWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/toneproducerwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

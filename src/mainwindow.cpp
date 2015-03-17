@@ -29,6 +29,7 @@
 #include "widgets/directshowvideowidget.h"
 #include "widgets/isingwidget.h"
 #include "widgets/jackproducerwidget.h"
+#include "widgets/toneproducerwidget.h"
 #include "widgets/lissajouswidget.h"
 #include "widgets/networkproducerwidget.h"
 #include "widgets/noisewidget.h"
@@ -1769,6 +1770,8 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
         w = new ColorBarsWidget(this);
     else if (service == "webvfx")
         w = new WebvfxProducer(this);
+    else if (service == "tone")
+        w = new ToneProducerWidget(this);
     else if (producer->parent().get("shotcut:transition")) {
         w = new LumaMixTransition(producer->parent(), this);
         scrollArea->setWidget(w);

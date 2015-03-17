@@ -26,6 +26,7 @@ SOURCES += main.cpp\
     widgets/noisewidget.cpp \
     widgets/pulseaudiowidget.cpp \
     widgets/jackproducerwidget.cpp \
+    widgets/toneproducerwidget.cpp \
     widgets/alsawidget.cpp \
     widgets/x11grabwidget.cpp \
     player.cpp \
@@ -116,6 +117,7 @@ HEADERS  += mainwindow.h \
     widgets/noisewidget.h \
     widgets/pulseaudiowidget.h \
     widgets/jackproducerwidget.h \
+    widgets/toneproducerwidget.h \
     widgets/alsawidget.h \
     widgets/x11grabwidget.h \
     player.h \
@@ -202,6 +204,7 @@ FORMS    += mainwindow.ui \
     widgets/noisewidget.ui \
     widgets/pulseaudiowidget.ui \
     widgets/jackproducerwidget.ui \
+    widgets/toneproducerwidget.ui \
     widgets/alsawidget.ui \
     widgets/x11grabwidget.ui \
     widgets/servicepresetwidget.ui \
