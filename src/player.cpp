@@ -425,6 +425,7 @@ void Player::onProducerOpened(bool play)
     }
     m_positionSpinner->setEnabled(m_isSeekable);
     onVolumeChanged(m_volumeSlider->value());
+    m_savedVolume = MLT.volume();
     onMuteButtonToggled(Settings.playerMuted());
     toggleZoom(Settings.playerZoom() > 0.0f);
 
@@ -478,6 +479,7 @@ void Player::onMeltedUnitOpened()
     m_scrubber->setOutPoint(m_previousOut);
     m_positionSpinner->setEnabled(m_isSeekable);
     onVolumeChanged(m_volumeSlider->value());
+    m_savedVolume = MLT.volume();
     onMuteButtonToggled(Settings.playerMuted());
     actionPlay->setEnabled(true);
     actionSkipPrevious->setEnabled(m_isSeekable);
