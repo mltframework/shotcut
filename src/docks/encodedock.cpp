@@ -31,8 +31,8 @@
 #include <QtXml>
 
 // formulas to map absolute value ranges to percentages as int
-#define TO_ABSOLUTE(min, max, rel) qRound(float(min) + float((max) - (min)) * float(rel) / 100.0f)
-#define TO_RELATIVE(min, max, abs) qRound(100.0f * float((abs) - (min)) / float((max) - (min)))
+#define TO_ABSOLUTE(min, max, rel) qRound(float(min) + float((max) - (min) + 1) * float(rel) / 100.0f)
+#define TO_RELATIVE(min, max, abs) qRound(100.0f * float((abs) - (min)) / float((max) - (min) + 1))
 
 EncodeDock::EncodeDock(QWidget *parent) :
     QDockWidget(parent),
@@ -249,10 +249,14 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                     }
                 case RateControlQuality: {
                     int vq = ui->videoQualitySpinner->value();
-                    if (vcodec == "libx264")
+                    if (vcodec == "libx264") {
                         p->set("crf", TO_ABSOLUTE(51, 0, vq));
-                    else
+                    } else if (vcodec.startsWith("libvpx")) {
+                        p->set("crf", TO_ABSOLUTE(63, 0, vq));
+                        p->set("vb", 0); // VP9 needs this to prevent constrained quality mode.
+                    } else {
                         p->set("qscale", TO_ABSOLUTE(31, 1, vq));
+                    }
                     break;
                     }
                 }
@@ -660,8 +664,10 @@ void EncodeDock::on_presetsTree_clicked(const QModelIndex &index)
             if (ui->videoRateControlCombo->currentIndex() == RateControlQuality && videoQuality > -1) {
                 const QString& vcodec = ui->videoCodecCombo->currentText();
                 //val = min + (max - min) * paramval;
-                if (vcodec == "libx264" || vcodec == "libx265") // 0 (best, 100%) -51 (worst)
+                if (vcodec == "libx264" || vcodec == "libx265") // 0 (best, 100%) - 51 (worst)
                     ui->videoQualitySpinner->setValue(TO_RELATIVE(51, 0, videoQuality));
+                else if (vcodec.startsWith("libvpx")) // 0 (best, 100%) - 63 (worst)
+                    ui->videoQualitySpinner->setValue(TO_RELATIVE(63, 0, videoQuality));
                 else // 1 (best, NOT 100%) - 31 (worst)
                     ui->videoQualitySpinner->setValue(TO_RELATIVE(31, 1, videoQuality));
             }
