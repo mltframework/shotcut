@@ -38,6 +38,7 @@ RowLayout {
         onEditingFinished: value = clamp(filter.framesFromTime(text), minimumValue, maximumValue)
         Keys.onDownPressed: decrementAction.trigger()
         Keys.onUpPressed: incrementAction.trigger()
+        onFocusChanged: if (focus) selectAll()
     }
     Button {
         id: decrementButton
