@@ -76,7 +76,6 @@ void AvformatProducerWidget::reopen(Mlt::Producer* p)
 
 void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
 {
-    disconnect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, 0);
     ui->tabWidget->setTabEnabled(0, false);
     ui->tabWidget->setTabEnabled(1, false);
     ui->tabWidget->setTabEnabled(2, false);
@@ -166,6 +165,11 @@ void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
     int width = m_producer->get_int("meta.media.width");
     int height = m_producer->get_int("meta.media.height");
     ui->videoTableWidget->setItem(1, 1, new QTableWidgetItem(QString("%1x%2").arg(width).arg(height)));
+
+    // We can stop listening to this signal if this is audio-only or if we have
+    // received the video resolution.
+    if (videoIndex == 1 || width || height)
+        disconnect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, 0);
 
     double sar = m_producer->get_double("meta.media.sample_aspect_num");
     if (m_producer->get_double("meta.media.sample_aspect_den") > 0)
