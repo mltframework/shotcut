@@ -63,6 +63,7 @@ int MeltedClipsModel::rowCount(const QModelIndex &parent) const
 
 int MeltedClipsModel::columnCount(const QModelIndex &parent) const
 {
+    (void)parent; // not used
     return 2;
 }
 QVariant MeltedClipsModel::data(const QModelIndex &index, int role) const

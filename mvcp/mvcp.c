@@ -77,6 +77,7 @@ mvcp_error_code mvcp_connect( mvcp this )
 
 static mvcp_error_code mvcp_get_error_code( mvcp this, mvcp_response response )
 {
+	(void)this;
 	mvcp_error_code error = mvcp_server_unavailable;
 	switch( mvcp_response_get_error_code( response ) )
 	{

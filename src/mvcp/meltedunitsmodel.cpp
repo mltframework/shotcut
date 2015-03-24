@@ -36,11 +36,13 @@ MeltedUnitsModel::~MeltedUnitsModel()
 
 int MeltedUnitsModel::rowCount(const QModelIndex& parent) const
 {
+    (void)parent; // not used
     return m_units.size();
 }
 
 int MeltedUnitsModel::columnCount(const QModelIndex& parent) const
 {
+    (void)parent; // not used
     return 2;
 }
 
@@ -79,6 +81,7 @@ void MeltedUnitsModel::onConnected(MvcpThread *a_mvcp)
 
 void MeltedUnitsModel::onConnected(const QString &address, quint16 port, quint8 unit)
 {
+    (void)unit; // not used
     m_tokeniser = mvcp_tokeniser_init();
     m_statusSent = false;
     connect(&m_socket, SIGNAL(readyRead()), this, SLOT(readResponse()));

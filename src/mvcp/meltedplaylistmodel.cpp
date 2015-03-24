@@ -43,6 +43,8 @@ MeltedPlaylistModel::~MeltedPlaylistModel()
 
 int MeltedPlaylistModel::rowCount(const QModelIndex &parent) const
 {
+    (void)parent; // not used
+
     if (m_list)
         return mvcp_list_count(m_list);
     else
@@ -51,6 +53,7 @@ int MeltedPlaylistModel::rowCount(const QModelIndex &parent) const
 
 int MeltedPlaylistModel::columnCount(const QModelIndex &parent) const
 {
+    (void)parent; // not used
     return COLUMN_COUNT;
 }
 
@@ -138,6 +141,8 @@ Qt::DropActions MeltedPlaylistModel::supportedDropActions() const
 
 bool MeltedPlaylistModel::insertRows(int row, int count, const QModelIndex &parent)
 {
+    (void)count; // not used
+    (void)parent; // not used
     if (!m_list) return false;
     if (m_dropRow == -1)
         m_dropRow = row;
@@ -146,6 +151,8 @@ bool MeltedPlaylistModel::insertRows(int row, int count, const QModelIndex &pare
 
 bool MeltedPlaylistModel::removeRows(int row, int count, const QModelIndex &parent)
 {
+    (void)count; // not used
+    (void)parent; // not used
     if (!m_list) return false;
     if (row == m_dropRow) return false;
     emit moveClip(row, m_dropRow);
