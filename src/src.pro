@@ -564,3 +564,7 @@ win32:isEmpty(PREFIX) {
 unix:target.path = $$PREFIX/bin
 win32:target.path = $$PREFIX
 INSTALLS += target
+
+qmlfiles.files = $$PWD/qml
+qmlfiles.path = $$PREFIX/share/shotcut
+INSTALLS += qmlfiles
