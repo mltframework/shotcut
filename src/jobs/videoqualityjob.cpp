@@ -96,6 +96,5 @@ void VideoQualityJob::onViewReportTriggered()
 void VideoQualityJob::onShowFolderTriggered()
 {
     QFileInfo fi(m_reportPath);
-    QUrl url(QString("file://").append(fi.path()), QUrl::TolerantMode);
-    QDesktopServices::openUrl(url);
+    QDesktopServices::openUrl(QUrl::fromLocalFile(fi.path()));
 }

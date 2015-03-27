@@ -57,8 +57,7 @@ void EncodeJob::onOpenTiggered()
 void EncodeJob::onShowFolderTriggered()
 {
     QFileInfo fi(objectName());
-    QUrl url(QString("file://").append(fi.path()), QUrl::TolerantMode);
-    QDesktopServices::openUrl(url);
+    QDesktopServices::openUrl(QUrl::fromLocalFile(fi.path()));
 }
 
 void EncodeJob::onVideoQualityTriggered()

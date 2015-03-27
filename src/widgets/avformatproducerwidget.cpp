@@ -330,8 +330,7 @@ void AvformatProducerWidget::on_syncSlider_valueChanged(int value)
 void AvformatProducerWidget::on_actionOpenFolder_triggered()
 {
     QFileInfo fi(MLT.producer()->get("resource"));
-    QUrl url(QString("file://").append(fi.path()), QUrl::TolerantMode);
-    QDesktopServices::openUrl(url);
+    QDesktopServices::openUrl(QUrl::fromLocalFile(fi.path()));
 }
 
 void AvformatProducerWidget::on_menuButton_clicked()
