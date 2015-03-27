@@ -144,6 +144,10 @@ void LumaMixTransition::updateCustomLumaLabel(Mlt::Transition &transition)
 
 void LumaMixTransition::on_lumaCombo_activated(int index)
 {
+    if (index == 0) {
+        on_invertCheckBox_clicked(false);
+        ui->invertCheckBox->setChecked(false);
+    }
     ui->invertCheckBox->setEnabled(index > 0);
     ui->softnessSlider->setEnabled(index > 0);
     ui->softnessSpinner->setEnabled(index > 0);
