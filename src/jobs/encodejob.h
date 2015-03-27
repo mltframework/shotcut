@@ -23,6 +23,7 @@
 
 class EncodeJob : public MeltJob
 {
+    Q_OBJECT
 public:
     EncodeJob(const QString& name, const QString& xml);
 

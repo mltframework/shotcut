@@ -34,15 +34,15 @@ VideoQualityJob::VideoQualityJob(const QString& name, const QString& xmlPath,
 {
     QAction* action = new QAction(tr("Open"), this);
     action->setToolTip(tr("Open original and encoded side-by-side in the Shotcut player"));
-    connect(action, &QAction::triggered, this, &VideoQualityJob::onOpenTiggered);
+    connect(action, SLOT(triggered()), this, SLOT(onOpenTiggered()));
     m_successActions << action;
 
     action = new QAction(tr("View Report"), this);
-    connect(action, &QAction::triggered, this, &VideoQualityJob::onViewReportTriggered);
+    connect(action, SIGNAL(triggered()), this, SLOT(onViewReportTriggered()));
     m_successActions << action;
 
     action = new QAction(tr("Show In Folder"), this);
-    connect(action, &QAction::triggered, this, &VideoQualityJob::onShowFolderTriggered);
+    connect(action, SIGNAL(triggered()), this, SLOT(onShowFolderTriggered()));
     m_successActions << action;
 
     setLabel(tr("Measure %1").arg(objectName()));

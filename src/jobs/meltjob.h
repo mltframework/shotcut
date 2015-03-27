@@ -23,6 +23,7 @@
 
 class MeltJob : public AbstractJob
 {
+    Q_OBJECT
 public:
     MeltJob(const QString& name, const QString& xml);
     virtual ~MeltJob();

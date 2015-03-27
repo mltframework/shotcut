@@ -36,16 +36,16 @@ EncodeJob::EncodeJob(const QString &name, const QString &xml)
 {
     QAction* action = new QAction(tr("Open"), this);
     action->setToolTip(tr("Open the output file in the Shotcut player"));
-    connect(action, &QAction::triggered, this, &EncodeJob::onOpenTiggered);
+    connect(action, SIGNAL(triggered()), this, SLOT(onOpenTiggered()));
     m_successActions << action;
 
     action = new QAction(tr("Show In Folder"), this);
     action->setToolTip(tr("Show In Folder"));
-    connect(action, &QAction::triggered, this, &EncodeJob::onShowFolderTriggered);
+    connect(action, SIGNAL(triggered()), this, SLOT(onShowFolderTriggered()));
     m_successActions << action;
 
     action = new QAction(tr("Measure Video Quality..."), this);
-    connect(action, &QAction::triggered, this, &EncodeJob::onVideoQualityTriggered);
+    connect(action, SIGNAL(triggered()), this, SLOT(onVideoQualityTriggered()));
     m_successActions << action;
 }
 

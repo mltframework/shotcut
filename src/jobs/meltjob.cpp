@@ -34,7 +34,7 @@ MeltJob::MeltJob(const QString& name, const QString& xml)
 {
     QAction* action = new QAction(tr("View XML"), this);
     action->setToolTip(tr("View the MLT XML for this job"));
-    connect(action, &QAction::triggered, this, &MeltJob::onViewXmlTriggered);
+    connect(action, SIGNAL(triggered()), this, SLOT(onViewXmlTriggered()));
     m_standardActions << action;
 }
 
