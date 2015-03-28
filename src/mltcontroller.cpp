@@ -189,9 +189,15 @@ void Controller::play(double speed)
         m_producer->set_speed(speed);
     if (m_consumer) {
         // Restore real_time behavior and work-ahead buffering
-        m_consumer->set("real_time", realTime());
-        m_consumer->set("buffer", 25);
-        m_consumer->set("prefill", 1);
+        if (!Settings.playerGPU())
+        if (m_consumer->get_int("real_time") != realTime()) {
+            m_consumer->set("real_time", realTime());
+            m_consumer->set("buffer", 25);
+            m_consumer->set("prefill", 1);
+            // Changes to real_time require a consumer restart if running.
+            if (!m_consumer->is_stopped())
+                m_consumer->stop();
+        }
         m_consumer->start();
         refreshConsumer();
     }
@@ -203,6 +209,7 @@ void Controller::play(double speed)
 void Controller::pause()
 {
     if (m_producer && m_producer->get_speed() != 0) {
+        if (!Settings.playerGPU())
         if (m_consumer && m_consumer->is_valid()) {
             // Disable real_time behavior and buffering for frame accurate seeking.
             m_consumer->set("real_time", -1);
@@ -334,6 +341,7 @@ void Controller::seek(int position)
 {
     if (m_producer) {
         // Always pause before seeking (if not already paused).
+        if (!Settings.playerGPU())
         if (m_consumer && m_consumer->is_valid() && m_producer->get_speed() != 0) {
             // Disable real_time behavior and buffering for frame accurate seeking.
             m_consumer->set("real_time", -1);
