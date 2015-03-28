@@ -1234,7 +1234,6 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
 
 void MainWindow::keyReleaseEvent(QKeyEvent* event)
 {
-    qDebug() << event->key();
     if (event->key() == Qt::Key_K)
         m_isKKeyPressed = false;
     else
