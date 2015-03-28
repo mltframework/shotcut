@@ -448,9 +448,13 @@ void Player::onProducerOpened(bool play)
             m_pauseAfterOpen = false;
             QTimer::singleShot(500, this, SLOT(postProducerOpened()));
         } else {
-            // This seek purges the consumer to prevent latent end-of-stream detection.
-            seek(0);
-            QTimer::singleShot(500, this, SLOT(play()));
+            if (MLT.consumer()->is_stopped()) {
+                this->play();
+            } else {
+                // This seek purges the consumer to prevent latent end-of-stream detection.
+                seek(0);
+                QTimer::singleShot(500, this, SLOT(play()));
+            }
         }
     }
 }
