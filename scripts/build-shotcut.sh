@@ -1672,7 +1672,7 @@ function deploy_osx
   cmd cp -a src/qml "$BUILD_DIR"/MacOS/share/shotcut/
 
   # This little guy helps Qt 5 apps find the Qt plugins!
-  cmd printf "[Paths]\nPlugins=MacOS/lib/qt5\nQml2Imports=MacOS/lib/qml\n" > "$BUILD_DIR/Resources/qt.conf"
+  printf "[Paths]\nPlugins=MacOS/lib/qt5\nQml2Imports=MacOS/lib/qml\n" > "$BUILD_DIR/Resources/qt.conf"
 
   cmd cd "$BUILD_DIR/MacOS" || die "Unable to change directory to MacOS"
 
@@ -1811,7 +1811,7 @@ function deploy_win32
   cmd cp -pr "$QTDIR"/translations/qt_*.qm share/translations
   cmd cp -pr "$QTDIR"/translations/qtbase_*.qm share/translations
   cmd tar -xjf "$HOME/ladspa_plugins-win-0.4.15.tar.bz2"
-  cmd printf "[Paths]\nPlugins=lib/qt5\nQml2Imports=lib/qml\n" > qt.conf
+  printf "[Paths]\nPlugins=lib/qt5\nQml2Imports=lib/qml\n" > qt.conf
 
   if [ "$SDK" = "1" ]; then
     # Prepare src for archiving
