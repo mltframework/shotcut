@@ -1096,6 +1096,11 @@ function get_subproject {
           if test 0 != $? ; then
               # Found git repo
               debug "Found git repo, will update"
+
+              if ! git diff-index --quiet ${REVISION:-master}; then
+                  die "git repository has local changes, aborting checkout. Consider disabling ACTION_GET_COMPILE_INSTALL or ACTION_GET_ONLY in your build config if you want to compile with these changes"
+              fi
+
               feedback_status "Pulling git sources for $1"
               cmd git reset --hard || die "Unable to reset git tree for $1"
               cmd git checkout master || die "Unable to git checkout master"
