@@ -649,7 +649,7 @@ function set_globals {
     # DEFINES+=QT_STATIC is for QWebSockets
     CONFIG[7]="$QMAKE -r -spec mingw CONFIG+=link_pkgconfig PKGCONFIG+=mlt++ LIBS+=-L${QTDIR}/lib SHOTCUT_VERSION=$(date '+%y.%m.%d') DEFINES+=QT_STATIC"
   else
-    CONFIG[7]="$QTDIR/bin/qmake -r"
+    CONFIG[7]="$QTDIR/bin/qmake -r PREFIX=$FINAL_INSTALL_DIR"
     LD_LIBRARY_PATH_[7]="/usr/local/lib"
   fi
   CFLAGS_[7]=$CFLAGS
