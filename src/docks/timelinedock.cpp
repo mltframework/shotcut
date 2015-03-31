@@ -143,6 +143,20 @@ int TimelineDock::dockYOffset() const
 #endif
 }
 
+void TimelineDock::setCurrentTrack(int currentTrack)
+{
+    if (!m_quickView.rootObject())
+        return;
+    m_quickView.rootObject()->setProperty("currentTrack", currentTrack);
+}
+
+int TimelineDock::currentTrack() const
+{
+    if (!m_quickView.rootObject())
+        return 0;
+    return m_quickView.rootObject()->property("currentTrack").toInt();
+}
+
 void TimelineDock::addAudioTrack()
 {
     m_model.addAudioTrack();
@@ -529,6 +543,8 @@ void TimelineDock::onVisibilityChanged(bool visible)
         sourcePath.cd("timeline");
         m_quickView.setSource(QUrl::fromLocalFile(sourcePath.filePath("timeline.qml")));
         disconnect(this, SIGNAL(visibilityChanged(bool)), this, SLOT(onVisibilityChanged(bool)));
+        connect(m_quickView.rootObject(), SIGNAL(currentTrackChanged()),
+                this, SIGNAL(currentTrackChanged()));
     }
 }
 
