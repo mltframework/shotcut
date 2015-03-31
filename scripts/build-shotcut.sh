@@ -21,6 +21,7 @@ ACTION_GET_COMPILE_INSTALL=1
 ACTION_GET_ONLY=0
 ACTION_COMPILE_INSTALL=1
 CLEANUP=1
+ARCHIVE=1
 SOURCES_CLEAN=1
 INSTALL_AS_ROOT=0
 CREATE_STARTUP_SCRIPT=1
@@ -1975,7 +1976,7 @@ End-of-desktop-file
     cmd rm -rf Shotcut/Shotcut.app/share/doc
     cmd rm -rf Shotcut/Shotcut.app/share/man
   fi
-  cmd tar -cjvf "$tarball" Shotcut
+  test "1" = "$ARCHIVE" && cmd tar -cjvf "$tarball" Shotcut
   test "1" = "$CLEANUP" && cmd rm -rf Shotcut
   popd
 }
