@@ -29,6 +29,7 @@ ENABLE_FREI0R=1
 FREI0R_HEAD=1
 FREI0R_REVISION=
 ENABLE_MOVIT=1
+SUBDIRS=
 MOVIT_HEAD=1
 MOVIT_REVISION=
 LIBEPOXY_REVISION=
@@ -328,37 +329,40 @@ function set_globals {
 
   # Subdirs list, for number of common operations
   # Note, the function to_key depends on this
-  SUBDIRS="FFmpeg mlt shotcut"
-  if test "$ENABLE_FREI0R" = 1 ; then
-      SUBDIRS="frei0r $SUBDIRS"
+  if [ -z "$SUBDIRS" ]; then
+    SUBDIRS="FFmpeg mlt shotcut"
+    if test "$ENABLE_FREI0R" = 1 ; then
+        SUBDIRS="frei0r $SUBDIRS"
+    fi
+    if test "$ENABLE_MOVIT" = 1 && test "$MOVIT_HEAD" = 1 -o "$MOVIT_REVISION" != ""; then
+        SUBDIRS="libepoxy eigen movit $SUBDIRS"
+    fi
+    if test "$FFMPEG_SUPPORT_H264" = 1 && test "$X264_HEAD" = 1 -o "$X264_REVISION" != ""; then
+        SUBDIRS="x264 $SUBDIRS"
+    fi
+    if test "$FFMPEG_SUPPORT_H265" = 1 && test "$X265_HEAD" = 1 -o "$X265_REVISION" != ""; then
+        SUBDIRS="x265 $SUBDIRS"
+    fi
+    if test "$FFMPEG_SUPPORT_LIBVPX" = 1 && test "$LIBVPX_HEAD" = 1 -o "$LIBVPX_REVISION" != ""; then
+        SUBDIRS="libvpx $SUBDIRS"
+    fi
+    if test "$FFMPEG_SUPPORT_MP3" = 1 && test "$ENABLE_LAME" = 1; then
+        SUBDIRS="lame $SUBDIRS"
+    fi
+    if test "$FFMPEG_SUPPORT_OPUS" = 1 && test "$LIBOPUS_HEAD" = 1 -o "$LIBOPUS_REVISION" != ""; then
+        SUBDIRS="opus $SUBDIRS"
+    fi
+    if test "$ENABLE_SWH_PLUGINS" = "1" && test "$TARGET_OS" = "Darwin"; then
+        SUBDIRS="swh-plugins $SUBDIRS"
+    fi
+    if test "$ENABLE_WEBVFX" = "1" && test "$WEBVFX_HEAD" = 1 -o "$WEBVFX_REVISION" != ""; then
+        SUBDIRS="$SUBDIRS webvfx"
+    fi
+    if test "$ENABLE_VIDSTAB" = 1 ; then
+        SUBDIRS="vid.stab $SUBDIRS"
+    fi
   fi
-  if test "$ENABLE_MOVIT" = 1 && test "$MOVIT_HEAD" = 1 -o "$MOVIT_REVISION" != ""; then
-      SUBDIRS="libepoxy eigen movit $SUBDIRS"
-  fi
-  if test "$FFMPEG_SUPPORT_H264" = 1 && test "$X264_HEAD" = 1 -o "$X264_REVISION" != ""; then
-      SUBDIRS="x264 $SUBDIRS"
-  fi
-  if test "$FFMPEG_SUPPORT_H265" = 1 && test "$X265_HEAD" = 1 -o "$X265_REVISION" != ""; then
-      SUBDIRS="x265 $SUBDIRS"
-  fi
-  if test "$FFMPEG_SUPPORT_LIBVPX" = 1 && test "$LIBVPX_HEAD" = 1 -o "$LIBVPX_REVISION" != ""; then
-      SUBDIRS="libvpx $SUBDIRS"
-  fi
-  if test "$FFMPEG_SUPPORT_MP3" = 1 && test "$ENABLE_LAME" = 1; then
-      SUBDIRS="lame $SUBDIRS"
-  fi
-  if test "$FFMPEG_SUPPORT_OPUS" = 1 && test "$LIBOPUS_HEAD" = 1 -o "$LIBOPUS_REVISION" != ""; then
-      SUBDIRS="opus $SUBDIRS"
-  fi
-  if test "$ENABLE_SWH_PLUGINS" = "1" && test "$TARGET_OS" = "Darwin"; then
-      SUBDIRS="swh-plugins $SUBDIRS"
-  fi
-  if test "$ENABLE_WEBVFX" = "1" && test "$WEBVFX_HEAD" = 1 -o "$WEBVFX_REVISION" != ""; then
-      SUBDIRS="$SUBDIRS webvfx"
-  fi
-  if test "$ENABLE_VIDSTAB" = 1 ; then
-      SUBDIRS="vid.stab $SUBDIRS"
-  fi
+
   debug "SUBDIRS = $SUBDIRS"
 
   # REPOLOCS Array holds the repo urls
