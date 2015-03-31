@@ -58,6 +58,7 @@ VIDSTAB_HEAD=1
 VIDSTAB_REVISION=
 MLT_HEAD=1
 MLT_REVISION=
+LOG_COLORS=0
 SHOTCUT_HEAD=1
 SHOTCUT_REVISION=
 ENABLE_WEBVFX=1
@@ -221,7 +222,11 @@ function init_log_file {
 # $@ : arguments to be printed
 function trace {
   if test "1" = "$TRACE" ; then
-    echo "TRACE: $@"
+    if test "1" = "$LOG_COLORS"; then
+      echo -e "\e[35mTRACE:\e[0m $@"
+    else
+      echo "TRACE: $@"
+    fi
   fi
 }
 
@@ -231,7 +236,11 @@ function trace {
 # $@ : arguments to be printed
 function debug {
   if test "1" = "$DEBUG" ; then
-    echo "DEBUG: $@"
+    if test "1" = "$LOG_COLORS"; then
+      echo -e "\e[34mDEBUG:\e[0m $@"
+    else
+      echo "DEBUG: $@"
+    fi
   fi
 }
 
@@ -240,7 +249,11 @@ function debug {
 # Function that prints a log line
 # $@ : arguments to be printed
 function log {
-  echo "LOG: $@"
+  if test "1" = "$LOG_COLORS"; then
+    echo -e "\e[96mLOG:\e[0m $@"
+  else
+    echo "LOG: $@"
+  fi
 }
 
 #################################################################
@@ -248,7 +261,11 @@ function log {
 # Function that prints a warning line
 # $@ : arguments to be printed
 function warn {
-  echo "WARN: $@"
+  if test "1" = "$LOG_COLORS"; then
+    echo -e "\e[33mWARN:\e[0m $@"
+  else
+    echo "WARN: $@"
+  fi
 }
 
 #################################################################
@@ -256,7 +273,11 @@ function warn {
 # Function that prints a line and exists
 # $@ : arguments to be printed
 function die {
-  echo "ERROR: $@"
+  if test "1" = "$LOG_COLORS"; then
+    echo -e "\e[31mERROR:\e[0m $@"
+  else
+    echo "ERROR: $@"
+  fi
   feedback_result FAILURE "Some kind of error occured: $@"
   exit -1
 }
