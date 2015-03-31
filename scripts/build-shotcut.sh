@@ -61,9 +61,9 @@ ENABLE_WEBVFX=1
 WEBVFX_HEAD=1
 WEBVFX_REVISION=
 # QT_INCLUDE_DIR="$(pkg-config --variable=prefix QtCore)/include"
-QT_INCLUDE_DIR=
+QT_INCLUDE_DIR=${QTDIR:+${QTDIR}/include}
 # QT_LIB_DIR="$(pkg-config --variable=prefix QtCore)/lib"
-QT_LIB_DIR=
+QT_LIB_DIR=${QTDIR:+${QTDIR}/lib}
 MLT_DISABLE_SOX=0
 
 ################################################################################
@@ -502,10 +502,12 @@ function set_globals {
     export QTDIR="$HOME/Qt/5.2.0/clang_64"
     export RANLIB=ranlib
   else
-    if [ "$(uname -m)" = "x86_64" ]; then
-      export QTDIR="$HOME/Qt/5.2.0/gcc_64"
-    else
-      export QTDIR="$HOME/Qt/5.2.0/gcc"
+    if test -z "$QTDIR" ; then
+      if [ "$(uname -m)" = "x86_64" ]; then
+        export QTDIR="$HOME/Qt/5.2.0/gcc_64"
+      else
+        export QTDIR="$HOME/Qt/5.2.0/gcc"
+      fi
     fi
     export RANLIB=ranlib
   fi
