@@ -1007,6 +1007,7 @@ void MainWindow::on_actionAbout_Shotcut_triggered()
 
 void MainWindow::keyPressEvent(QKeyEvent* event)
 {
+
     switch (event->key()) {
     case Qt::Key_Home:
         m_player->seek(0);
@@ -1182,6 +1183,9 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_playlistDock->raise();
             m_playlistDock->setIndex(9);
         }
+        else if (m_timelineDock->isVisible()) {
+            m_timelineDock->zoomIn();
+        }
         break;
     case Qt::Key_X: // Avid Extract
         if (event->modifiers() == Qt::ShiftModifier) {
@@ -1219,6 +1223,14 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_timelineDock->raise();
             m_timelineDock->lift(-1, -1);
         }
+        break;
+    case Qt::Key_Minus:
+        if (m_timelineDock->isVisible())
+            m_timelineDock->zoomOut();
+        break;
+    case Qt::Key_Equal:
+        if (m_timelineDock->isVisible())
+            m_timelineDock->zoomIn();
         break;
     case Qt::Key_Enter: // Seek to current playlist item
     case Qt::Key_Return:

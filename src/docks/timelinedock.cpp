@@ -158,6 +158,21 @@ int TimelineDock::currentTrack() const
     return m_quickView.rootObject()->property("currentTrack").toInt();
 }
 
+void TimelineDock::zoomIn()
+{
+    QMetaObject::invokeMethod(m_quickView.rootObject(), "zoomIn");
+}
+
+void TimelineDock::zoomOut()
+{
+    QMetaObject::invokeMethod(m_quickView.rootObject(), "zoomOut");
+}
+
+void TimelineDock::resetZoom()
+{
+    QMetaObject::invokeMethod(m_quickView.rootObject(), "resetZoom");
+}
+
 void TimelineDock::addAudioTrack()
 {
     m_model.addAudioTrack();
@@ -233,18 +248,6 @@ void TimelineDock::lift(int trackIndex, int clipIndex)
         MAIN.undoStack()->push(
             new Timeline::LiftCommand(m_model, trackIndex, clipIndex, position, xml));
     }
-}
-
-void TimelineDock::pressKey(int key, Qt::KeyboardModifiers modifiers)
-{
-    QKeyEvent event(QEvent::KeyPress, key, modifiers);
-    MAIN.keyPressEvent(&event);
-}
-
-void TimelineDock::releaseKey(int key, Qt::KeyboardModifiers modifiers)
-{
-    QKeyEvent event(QEvent::KeyRelease, key, modifiers);
-    MAIN.keyReleaseEvent(&event);
 }
 
 void TimelineDock::selectTrack(int by)

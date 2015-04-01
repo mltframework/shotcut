@@ -27,6 +27,24 @@ Rectangle {
     SystemPalette { id: activePalette }
     color: activePalette.window
 
+    function zoomIn() {
+        scaleSlider.value += 0.0625
+        for (var i = 0; i < tracksRepeater.count; i++)
+            tracksRepeater.itemAt(i).redrawWaveforms()
+    }
+
+    function zoomOut() {
+        scaleSlider.value -= 0.0625
+        for (var i = 0; i < tracksRepeater.count; i++)
+            tracksRepeater.itemAt(i).redrawWaveforms()
+    }
+
+    function resetZoom() {
+        scaleSlider.value = 1.0
+        for (var i = 0; i < tracksRepeater.count; i++)
+            tracksRepeater.itemAt(i).redrawWaveforms()
+    }
+
     property int headerWidth: 140
     property int currentTrack: 0
     property int currentClip: -1
@@ -146,30 +164,28 @@ Rectangle {
             focus: true
             hoverEnabled: true
             property bool scim: false
-            onReleased: scrubTimer.stop()
-            onMouseXChanged: {
-                if (scim || pressedButtons === Qt.LeftButton) {
+            onReleased: scim = false
+            onExited: scim = false
+            onPositionChanged: {
+                if (mouse.modifiers === Qt.ShiftModifier || mouse.buttons === Qt.LeftButton) {
                     timeline.position = (scrollView.flickableItem.contentX + mouse.x) / multitrack.scaleFactor
-                    if ((scrollView.flickableItem.contentX > 0 && mouse.x < 50) || (mouse.x > scrollView.width - 50))
-                        scrubTimer.start()
+                    scim = true
                 }
+                else
+                    scim = false
             }
             Timer {
                 id: scrubTimer
                 interval: 25
                 repeat: true
+                running: parent.scim && parent.containsMouse && (parent.mouseX < 50 || parent.mouseX > parent.width - 50)
                 onTriggered: {
-                    if (parent.scim || parent.pressedButtons === Qt.LeftButton) {
-                        if (parent.mouseX < 50)
-                            timeline.position -= 10
-                        else if (parent.mouseX > scrollView.flickableItem.contentX - 50)
-                            timeline.position += 10
-                    }
-                    if (parent.mouseX >= 50 && parent.mouseX <= scrollView.width - 50)
-                        stop()
+                    if (parent.mouseX < 50)
+                        timeline.position -= 10
+                    else
+                        timeline.position += 10
                 }
             }
-        
 
             Column {
                 Flickable {
@@ -371,80 +387,6 @@ Rectangle {
                 timeline.close()
                 scaleSlider.value = 1
             }
-        }
-    }
-
-    Keys.onUpPressed: timeline.selectTrack(-1)
-    Keys.onDownPressed: timeline.selectTrack(1)
-    Keys.onPressed: {
-        tracksArea.scim = (event.modifiers === Qt.ShiftModifier)
-        switch (event.key) {
-        case Qt.Key_B:
-            timeline.overwrite(currentTrack)
-            break;
-        case Qt.Key_C:
-            timeline.append(currentTrack)
-            break;
-        case Qt.Key_S:
-            timeline.splitClip(currentTrack)
-            break;
-        case Qt.Key_V:
-            timeline.insert(currentTrack)
-            break;
-        case Qt.Key_X:
-            timeline.remove(currentClipTrack, currentClip)
-            currentClip = -1
-            break;
-        case Qt.Key_Z:
-            timeline.lift(currentClipTrack, currentClip)
-            currentClip = -1
-            break;
-        case Qt.Key_Delete:
-        case Qt.Key_Backspace:
-            if (event.modifiers & Qt.ShiftModifier)
-                timeline.remove(currentClipTrack, currentClip)
-            else
-                timeline.lift(currentClipTrack, currentClip)
-            currentClip = -1
-            break;
-        case Qt.Key_Equal:
-            scaleSlider.value += 0.0625
-            for (var i = 0; i < tracksRepeater.count; i++)
-                tracksRepeater.itemAt(i).redrawWaveforms()
-            break;
-        case Qt.Key_Minus:
-            scaleSlider.value -= 0.0625
-            for (var i = 0; i < tracksRepeater.count; i++)
-                tracksRepeater.itemAt(i).redrawWaveforms()
-            break;
-        case Qt.Key_0:
-            scaleSlider.value = 1.0
-            for (var i = 0; i < tracksRepeater.count; i++)
-                tracksRepeater.itemAt(i).redrawWaveforms()
-            break;
-        default:
-            timeline.pressKey(event.key, event.modifiers)
-            break;
-        }
-    }
-    Keys.onReleased: {
-        tracksArea.scim = false
-        switch (event.key) {
-        case Qt.Key_B:
-        case Qt.Key_C:
-        case Qt.Key_S:
-        case Qt.Key_V:
-        case Qt.Key_X:
-        case Qt.Key_Z:
-        case Qt.Key_Delete:
-        case Qt.Key_Backspace:
-        case Qt.Key_Equal:
-        case Qt.Key_Minus:
-        case Qt.Key_0:
-            break;
-        default:
-            timeline.releaseKey(event.key, event.modifiers)
-            break;
         }
     }
 

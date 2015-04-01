@@ -51,6 +51,9 @@ public:
     int dockYOffset() const;
     void setCurrentTrack(int currentTrack);
     int currentTrack() const;
+    void zoomIn();
+    void zoomOut();
+    void resetZoom();
 
 signals:
     void currentTrackChanged();
@@ -74,8 +77,6 @@ public slots:
     void append(int trackIndex);
     void remove(int trackIndex, int clipIndex);
     void lift(int trackIndex, int clipIndex);
-    void pressKey(int key, Qt::KeyboardModifiers modifiers);
-    void releaseKey(int key, Qt::KeyboardModifiers modifiers);
     void selectTrack(int by);
     void selectTrackHead(int trackIndex);
     void openClip(int trackIndex, int clipIndex);
