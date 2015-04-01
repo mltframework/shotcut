@@ -61,8 +61,8 @@ void AudioPeakMeterScopeWidget::refreshScope(const QSize& /*size*/, bool /*full*
             m_filter->process(mFrame);
             mFrame.get_audio( format, frequency, channels, samples );
             QVector<double> levels;
-            while (channels--) {
-                QString s = QString("meta.media.audio_level.%1").arg(channels);
+            for (int i = 0; i < channels; i++) {
+                QString s = QString("meta.media.audio_level.%1").arg(i);
                 levels << mFrame.get_double(s.toLatin1().constData());
             }
             QMetaObject::invokeMethod(m_audioSignal, "slotAudioLevels", Qt::QueuedConnection, Q_ARG(const QVector<double>&, levels));
