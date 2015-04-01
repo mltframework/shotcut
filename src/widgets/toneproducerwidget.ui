@@ -43,7 +43,7 @@
    <item>
     <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="0">
-      <widget class="QLabel">
+      <widget class="QLabel" name="label">
        <property name="text">
         <string>Frequency</string>
        </property>
@@ -54,17 +54,17 @@
      </item>
      <item row="0" column="1">
       <widget class="QSpinBox" name="frequencySpinBox">
-       <property name="maximum">
-        <number>20000</number>
+       <property name="suffix">
+        <string> Hz</string>
        </property>
        <property name="minimum">
         <number>20</number>
        </property>
+       <property name="maximum">
+        <number>20000</number>
+       </property>
        <property name="value">
         <number>1000</number>
-       </property>
-       <property name="suffix">
-        <string>Hz</string>
        </property>
       </widget>
      </item>
@@ -93,17 +93,17 @@
      </item>
      <item row="1" column="1">
       <widget class="QSpinBox" name="levelSpinBox">
-       <property name="maximum">
-        <number>0</number>
+       <property name="suffix">
+        <string> dB</string>
        </property>
        <property name="minimum">
         <number>-90</number>
        </property>
-       <property name="value">
+       <property name="maximum">
         <number>0</number>
        </property>
-       <property name="suffix">
-        <string>dB</string>
+       <property name="value">
+        <number>0</number>
        </property>
       </widget>
      </item>
