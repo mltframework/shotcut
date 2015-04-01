@@ -137,6 +137,7 @@ void ScrubBar::mousePressEvent(QMouseEvent * event)
 
 void ScrubBar::mouseReleaseEvent(QMouseEvent * event)
 {
+    (void)event; // not used.
     m_activeControl = CONTROL_NONE;
 }
 

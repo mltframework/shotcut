@@ -524,7 +524,7 @@ mac {
     # QMake from Qt 5.1.0 on OSX is messing with the environment in which it runs
     # pkg-config such that the PKG_CONFIG_PATH env var is not set.
     isEmpty(MLT_PREFIX) {
-        MLT_PREFIX = /opt/local
+		MLT_PREFIX = /usr/local
     }
     INCLUDEPATH += $$MLT_PREFIX/include/mlt++
     INCLUDEPATH += $$MLT_PREFIX/include/mlt

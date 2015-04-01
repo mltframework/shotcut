@@ -58,6 +58,7 @@ int mvcp_socket_connect( mvcp_socket connection )
 
 mvcp_socket mvcp_socket_init_fd( int fd )
 {
+    (void)fd; // not used
     return NULL;
 }
 
