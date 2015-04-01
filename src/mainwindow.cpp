@@ -1231,6 +1231,9 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
     case Qt::Key_F5:
         m_timelineDock->model()->reload();
         break;
+    case Qt::Key_F1:
+        qDebug() << "Current focusWidget:" << QApplication::focusWidget();
+        break;
     default:
         QMainWindow::keyPressEvent(event);
     }
