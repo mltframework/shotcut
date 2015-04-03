@@ -81,6 +81,8 @@ public slots:
     void append(int trackIndex);
     void remove(int trackIndex, int clipIndex);
     void lift(int trackIndex, int clipIndex);
+    void removeSelection();
+    void liftSelection();
     void selectTrack(int by);
     void selectTrackHead(int trackIndex);
     void openClip(int trackIndex, int clipIndex);

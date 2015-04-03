@@ -238,10 +238,7 @@ void TimelineDock::append(int trackIndex)
 
 void TimelineDock::remove(int trackIndex, int clipIndex)
 {
-    if (trackIndex < 0)
-        trackIndex = currentTrack();
-    if (clipIndex < 0)
-        clipIndex = m_quickView.rootObject()->property("currentClip").toInt();
+    Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
     Mlt::Producer* clip = getClip(trackIndex, clipIndex);
     if (clip) {
         QString xml = MLT.XML(clip);
@@ -255,10 +252,7 @@ void TimelineDock::remove(int trackIndex, int clipIndex)
 
 void TimelineDock::lift(int trackIndex, int clipIndex)
 {
-    if (trackIndex < 0)
-        trackIndex = currentTrack();
-    if (clipIndex < 0)
-        clipIndex = m_quickView.rootObject()->property("currentClip").toInt();
+    Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
     Mlt::Producer* clip = getClip(trackIndex, clipIndex);
     if (clip) {
         QString xml = MLT.XML(clip);
@@ -268,6 +262,22 @@ void TimelineDock::lift(int trackIndex, int clipIndex)
         MAIN.undoStack()->push(
             new Timeline::LiftCommand(m_model, trackIndex, clipIndex, position, xml));
     }
+}
+
+void TimelineDock::removeSelection()
+{
+    if (selection().isEmpty())
+        return;
+    foreach (int index, selection())
+        remove(currentTrack(), index);
+}
+
+void TimelineDock::liftSelection()
+{
+    if (selection().isEmpty())
+        return;
+    foreach (int index, selection())
+        lift(currentTrack(), index);
 }
 
 void TimelineDock::selectTrack(int by)
@@ -293,10 +303,7 @@ void TimelineDock::selectTrackHead(int trackIndex)
 
 void TimelineDock::openClip(int trackIndex, int clipIndex)
 {
-    if (trackIndex < 0)
-        trackIndex = currentTrack();
-    if (clipIndex < 0)
-        clipIndex = m_quickView.rootObject()->property("currentClip").toInt();
+    Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
     QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
     if (info) {
         QString xml = MLT.XML(info->producer);
@@ -457,10 +464,7 @@ void TimelineDock::splitClip(int trackIndex, int clipIndex)
 void TimelineDock::fadeIn(int trackIndex, int clipIndex, int duration)
 {
     if (duration < 0) return;
-    if (trackIndex < 0)
-        trackIndex = currentTrack();
-    if (clipIndex < 0)
-        clipIndex = m_quickView.rootObject()->property("currentClip").toInt();
+    Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
     MAIN.undoStack()->push(
         new Timeline::FadeInCommand(m_model, trackIndex, clipIndex, duration));
     emit fadeInChanged(duration);
@@ -469,10 +473,7 @@ void TimelineDock::fadeIn(int trackIndex, int clipIndex, int duration)
 void TimelineDock::fadeOut(int trackIndex, int clipIndex, int duration)
 {
     if (duration < 0) return;
-    if (trackIndex < 0)
-        trackIndex = currentTrack();
-    if (clipIndex < 0)
-        clipIndex = m_quickView.rootObject()->property("currentClip").toInt();
+    Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
     MAIN.undoStack()->push(
         new Timeline::FadeOutCommand(m_model, trackIndex, clipIndex, duration));
     emit fadeOutChanged(duration);

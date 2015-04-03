@@ -1195,7 +1195,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         } else {
             m_timelineDock->show();
             m_timelineDock->raise();
-            m_timelineDock->remove(-1, -1);
+            m_timelineDock->removeSelection();
         }
         break;
     case Qt::Key_Backspace:
@@ -1204,9 +1204,9 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_timelineDock->show();
             m_timelineDock->raise();
             if (event->modifiers() == Qt::ShiftModifier)
-                m_timelineDock->remove(-1, -1);
+                m_timelineDock->removeSelection();
             else
-                m_timelineDock->lift(-1, -1);
+                m_timelineDock->liftSelection();
         } else {
             m_playlistDock->show();
             m_playlistDock->raise();
@@ -1221,7 +1221,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         } else if (multitrack()) {
             m_timelineDock->show();
             m_timelineDock->raise();
-            m_timelineDock->lift(-1, -1);
+            m_timelineDock->liftSelection();
         }
         break;
     case Qt::Key_Minus:
