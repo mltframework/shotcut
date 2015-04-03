@@ -173,6 +173,26 @@ void TimelineDock::resetZoom()
     QMetaObject::invokeMethod(m_quickView.rootObject(), "resetZoom");
 }
 
+void TimelineDock::setSelection(QList<int> selection)
+{
+    qDebug() << "Setting selection to" << selection;
+    QVariantList list;
+    foreach (int idx, selection)
+        list << QVariant::fromValue(idx);
+    m_quickView.rootObject()->setProperty("selection", list);
+}
+
+QList<int> TimelineDock::selection() const
+{
+    if (!m_quickView.rootObject())
+        return QList<int>();
+
+    QList<int> ret;
+    foreach (QVariant v, m_quickView.rootObject()->property("selection").toList())
+        ret << v.toInt();
+    return ret;
+}
+
 void TimelineDock::addAudioTrack()
 {
     m_model.addAudioTrack();
@@ -549,6 +569,8 @@ void TimelineDock::onVisibilityChanged(bool visible)
         disconnect(this, SIGNAL(visibilityChanged(bool)), this, SLOT(onVisibilityChanged(bool)));
         connect(m_quickView.rootObject(), SIGNAL(currentTrackChanged()),
                 this, SIGNAL(currentTrackChanged()));
+        connect(m_quickView.rootObject(), SIGNAL(selectionChanged()),
+                this, SIGNAL(selectionChanged()));
     }
 }
 

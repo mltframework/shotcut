@@ -36,6 +36,7 @@ class TimelineDock : public QDockWidget
     Q_PROPERTY(int position READ position WRITE setPosition NOTIFY positionChanged)
     Q_PROPERTY(int yoffset READ dockYOffset)
     Q_PROPERTY(int currentTrack READ currentTrack WRITE setCurrentTrack NOTIFY currentTrackChanged)
+    Q_PROPERTY(QList<int> selection READ selection WRITE setSelection NOTIFY selectionChanged)
 
 public:
     explicit TimelineDock(QWidget *parent = 0);
@@ -54,9 +55,12 @@ public:
     void zoomIn();
     void zoomOut();
     void resetZoom();
+    void setSelection(QList<int> selection);
+    QList<int> selection() const;
 
 signals:
     void currentTrackChanged();
+    void selectionChanged();
     void seeked(int position);
     void positionChanged();
     void clipOpened(void* producer);
