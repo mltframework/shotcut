@@ -34,6 +34,7 @@ static const char* kFilterOutProperty = "_shotcut:filter_out";
 TimelineDock::TimelineDock(QWidget *parent) :
     QDockWidget(parent),
     ui(new Ui::TimelineDock),
+    m_quickView(this),
     m_position(-1)
 {
     qDebug() << "begin";

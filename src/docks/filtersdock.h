@@ -23,6 +23,7 @@
 #include <QDockWidget>
 #include <QObject>
 #include <QQuickView>
+#include "forwardingquickviewworkaround.h"
 
 class QmlFilter;
 class QmlMetadata;
@@ -53,7 +54,7 @@ private slots:
     void resetQview();
 
 private:
-    QQuickView m_qview;
+    ForwardingQuickViewWorkaround m_qview;
 };
 
 #endif // FILTERSDOCK_H

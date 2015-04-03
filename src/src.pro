@@ -189,7 +189,8 @@ HEADERS  += mainwindow.h \
     widgets/scopes/videowaveformscopewidget.h \
     dataqueue.h \
     sharedframe.h \
-    widgets/audioscale.h
+    widgets/audioscale.h \
+    forwardingquickviewworkaround.h \
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \

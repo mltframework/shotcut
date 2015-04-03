@@ -24,6 +24,7 @@
 #include <QApplication>
 #include "models/multitrackmodel.h"
 #include "sharedframe.h"
+#include "forwardingquickviewworkaround.h"
 
 namespace Ui {
 class TimelineDock;
@@ -104,7 +105,7 @@ protected:
 
 private:
     Ui::TimelineDock *ui;
-    QQuickView m_quickView;
+    ForwardingQuickViewWorkaround m_quickView;
     MultitrackModel m_model;
     int m_position;
 
