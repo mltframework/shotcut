@@ -106,6 +106,10 @@ MainWindow::MainWindow()
     }
 #endif
 
+    if (!qgetenv("OBSERVE_FOCUS").isEmpty())
+        connect(qApp, &QApplication::focusChanged,
+                this, &MainWindow::onFocusChanged);
+
     qDebug() << "begin";
     new GLTestWidget(this);
     Database::singleton(this);
@@ -2273,4 +2277,9 @@ void MainWindow::on_actionGammaRec709_triggered(bool checked)
     Settings.setPlayerGamma("bt709");
     MLT.restart();
     MLT.refreshConsumer();
+}
+
+void MainWindow::onFocusChanged(QWidget *, QWidget * now) const
+{
+    qDebug() << "Focuswidget changed to" << now;
 }

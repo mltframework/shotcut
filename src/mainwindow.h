@@ -216,6 +216,7 @@ private slots:
     void onAutosaveTimeout();
     void on_actionGammaSRGB_triggered(bool checked);
     void on_actionGammaRec709_triggered(bool checked);
+    void onFocusChanged(QWidget *old, QWidget * now) const;
 };
 
 #define MAIN MainWindow::singleton()
