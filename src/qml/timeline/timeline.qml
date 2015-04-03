@@ -53,6 +53,14 @@ Rectangle {
     property alias trackCount: tracksRepeater.count
     property bool stopScrolling: false
     property color shotcutBlue: Qt.rgba(23/255, 92/255, 118/255, 1.0)
+    property var selection: []
+
+    onSelectionChanged: {
+        if (selection.length) {
+            for (var i = 0; i < trackHeaderRepeater.count; i++)
+                trackHeaderRepeater.itemAt(i).selected = false
+        }
+    }
 
     MouseArea {
         anchors.fill: parent
@@ -120,18 +128,17 @@ Rectangle {
                             isHidden: model.hidden
                             isComposite: model.composite
                             isVideo: !model.audio
-                            color: (index === currentTrack)? selectedTrackColor : (index % 2)? activePalette.alternateBase : activePalette.base
                             width: headerWidth
                             height: model.audio? multitrack.trackHeight : multitrack.trackHeight * 2
+                            selected: false
+                            current: index === currentTrack
                             onClicked: {
+                                root.selection = []
                                 currentTrack = index
                                 timeline.selectTrackHead(currentTrack)
-                                currentClip = -1
-                                for (var i = 0; i < tracksRepeater.count; i++)
-                                    tracksRepeater.itemAt(i).resetStates();
                                 for (var i = 0; i < trackHeaderRepeater.count; i++)
-                                    trackHeaderRepeater.itemAt(i).state = 'normal'
-                                state = 'selected'
+                                    trackHeaderRepeater.itemAt(i).selected = false
+                                selected = true
                             }
                         }
                     }
@@ -399,15 +406,12 @@ Rectangle {
             height: audio? multitrack.trackHeight : multitrack.trackHeight * 2
             width: childrenRect.width
             isAudio: audio
+            isCurrentTrack: currentTrack === index
             timeScale: multitrack.scaleFactor
-            onClipSelected: {
-                currentClip = clip.DelegateModel.itemsIndex
-                currentClipTrack = track.DelegateModel.itemsIndex
-                for (var i = 0; i < tracksRepeater.count; i++)
-                    if (i !== track.DelegateModel.itemsIndex) tracksRepeater.itemAt(i).resetStates();
-                for (var i = 0; i < trackHeaderRepeater.count; i++)
-                    trackHeaderRepeater.itemAt(i).state = 'normal'
-                timeline.selectClip(currentClipTrack, currentClip)
+            selection: root.selection
+            onClipClicked: {
+                currentTrack = track.DelegateModel.itemsIndex
+                root.selection = [ clip.DelegateModel.itemsIndex ];
             }
             onClipDragged: {
                 // This provides continuous scrolling at the left/right edges.
