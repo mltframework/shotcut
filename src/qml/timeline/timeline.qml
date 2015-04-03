@@ -27,6 +27,8 @@ Rectangle {
     SystemPalette { id: activePalette }
     color: activePalette.window
 
+    signal clipClicked()
+
     function zoomIn() {
         scaleSlider.value += 0.0625
         for (var i = 0; i < tracksRepeater.count; i++)
@@ -61,6 +63,7 @@ Rectangle {
                 trackHeaderRepeater.itemAt(i).selected = false
         }
     }
+    onCurrentTrackChanged: selection = [];
 
     MouseArea {
         anchors.fill: parent
@@ -429,6 +432,7 @@ Rectangle {
             onClipClicked: {
                 currentTrack = track.DelegateModel.itemsIndex
                 root.selection = [ clip.DelegateModel.itemsIndex ];
+                root.clipClicked()
             }
             onClipDragged: {
                 // This provides continuous scrolling at the left/right edges.

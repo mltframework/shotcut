@@ -218,6 +218,16 @@ void TimelineDock::selectClipUnderPlayhead()
     setSelection(QList<int>() << clipIndexAtPlayhead(-1));
 }
 
+int TimelineDock::centerOfClip(int trackIndex, int clipIndex)
+{
+    Mlt::ClipInfo * clip = getClipInfo(trackIndex, clipIndex);
+    Q_ASSERT(clip);
+    int centerOfClip = clip->start + clip->frame_count / 2;
+    delete clip;
+    clip = 0;
+    return centerOfClip;
+}
+
 void TimelineDock::addAudioTrack()
 {
     m_model.addAudioTrack();
@@ -598,6 +608,10 @@ void TimelineDock::onVisibilityChanged(bool visible)
                 this, SIGNAL(currentTrackChanged()));
         connect(m_quickView.rootObject(), SIGNAL(selectionChanged()),
                 this, SIGNAL(selectionChanged()));
+        connect(m_quickView.rootObject(), SIGNAL(selectionChanged()),
+                this, SLOT(emitClipSelectedFromSelection()));
+        connect(m_quickView.rootObject(), SIGNAL(clipClicked()),
+                this, SIGNAL(clipClicked()));
     }
 }
 

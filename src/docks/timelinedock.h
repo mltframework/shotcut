@@ -60,6 +60,7 @@ public:
     void setSelection(QList<int> selection);
     QList<int> selection() const;
     void selectClipUnderPlayhead();
+    int centerOfClip(int trackIndex, int clipIndex);
 
 signals:
     void currentTrackChanged();
@@ -74,6 +75,7 @@ signals:
     void fadeOutChanged(int duration);
     void trackSelected(Mlt::Producer* producer);
     void clipSelected(Mlt::Producer* producer);
+    void clipClicked();
 
 public slots:
     void addAudioTrack();
