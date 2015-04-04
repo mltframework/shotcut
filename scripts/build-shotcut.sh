@@ -20,6 +20,8 @@ SOURCE_DIR="$INSTALL_DIR/src"
 ACTION_GET_COMPILE_INSTALL=1
 ACTION_GET_ONLY=0
 ACTION_COMPILE_INSTALL=1
+CLEANUP=1
+ARCHIVE=1
 SOURCES_CLEAN=1
 INSTALL_AS_ROOT=0
 CREATE_STARTUP_SCRIPT=1
@@ -27,6 +29,7 @@ ENABLE_FREI0R=1
 FREI0R_HEAD=1
 FREI0R_REVISION=
 ENABLE_MOVIT=1
+SUBDIRS=
 MOVIT_HEAD=1
 MOVIT_REVISION=
 LIBEPOXY_REVISION=
@@ -55,15 +58,16 @@ VIDSTAB_HEAD=1
 VIDSTAB_REVISION=
 MLT_HEAD=1
 MLT_REVISION=
+LOG_COLORS=0
 SHOTCUT_HEAD=1
 SHOTCUT_REVISION=
 ENABLE_WEBVFX=1
 WEBVFX_HEAD=1
 WEBVFX_REVISION=
 # QT_INCLUDE_DIR="$(pkg-config --variable=prefix QtCore)/include"
-QT_INCLUDE_DIR=
+QT_INCLUDE_DIR=${QTDIR:+${QTDIR}/include}
 # QT_LIB_DIR="$(pkg-config --variable=prefix QtCore)/lib"
-QT_LIB_DIR=
+QT_LIB_DIR=${QTDIR:+${QTDIR}/lib}
 MLT_DISABLE_SOX=0
 
 ################################################################################
@@ -218,7 +222,11 @@ function init_log_file {
 # $@ : arguments to be printed
 function trace {
   if test "1" = "$TRACE" ; then
-    echo "TRACE: $@"
+    if test "1" = "$LOG_COLORS"; then
+      echo -e "\e[35mTRACE:\e[0m $@"
+    else
+      echo "TRACE: $@"
+    fi
   fi
 }
 
@@ -228,7 +236,11 @@ function trace {
 # $@ : arguments to be printed
 function debug {
   if test "1" = "$DEBUG" ; then
-    echo "DEBUG: $@"
+    if test "1" = "$LOG_COLORS"; then
+      echo -e "\e[34mDEBUG:\e[0m $@"
+    else
+      echo "DEBUG: $@"
+    fi
   fi
 }
 
@@ -237,7 +249,11 @@ function debug {
 # Function that prints a log line
 # $@ : arguments to be printed
 function log {
-  echo "LOG: $@"
+  if test "1" = "$LOG_COLORS"; then
+    echo -e "\e[96mLOG:\e[0m $@"
+  else
+    echo "LOG: $@"
+  fi
 }
 
 #################################################################
@@ -245,7 +261,11 @@ function log {
 # Function that prints a warning line
 # $@ : arguments to be printed
 function warn {
-  echo "WARN: $@"
+  if test "1" = "$LOG_COLORS"; then
+    echo -e "\e[33mWARN:\e[0m $@"
+  else
+    echo "WARN: $@"
+  fi
 }
 
 #################################################################
@@ -253,7 +273,11 @@ function warn {
 # Function that prints a line and exists
 # $@ : arguments to be printed
 function die {
-  echo "ERROR: $@"
+  if test "1" = "$LOG_COLORS"; then
+    echo -e "\e[31mERROR:\e[0m $@"
+  else
+    echo "ERROR: $@"
+  fi
   feedback_result FAILURE "Some kind of error occured: $@"
   exit -1
 }
@@ -326,37 +350,40 @@ function set_globals {
 
   # Subdirs list, for number of common operations
   # Note, the function to_key depends on this
-  SUBDIRS="FFmpeg mlt shotcut"
-  if test "$ENABLE_FREI0R" = 1 ; then
-      SUBDIRS="frei0r $SUBDIRS"
+  if [ -z "$SUBDIRS" ]; then
+    SUBDIRS="FFmpeg mlt shotcut"
+    if test "$ENABLE_FREI0R" = 1 ; then
+        SUBDIRS="frei0r $SUBDIRS"
+    fi
+    if test "$ENABLE_MOVIT" = 1 && test "$MOVIT_HEAD" = 1 -o "$MOVIT_REVISION" != ""; then
+        SUBDIRS="libepoxy eigen movit $SUBDIRS"
+    fi
+    if test "$FFMPEG_SUPPORT_H264" = 1 && test "$X264_HEAD" = 1 -o "$X264_REVISION" != ""; then
+        SUBDIRS="x264 $SUBDIRS"
+    fi
+    if test "$FFMPEG_SUPPORT_H265" = 1 && test "$X265_HEAD" = 1 -o "$X265_REVISION" != ""; then
+        SUBDIRS="x265 $SUBDIRS"
+    fi
+    if test "$FFMPEG_SUPPORT_LIBVPX" = 1 && test "$LIBVPX_HEAD" = 1 -o "$LIBVPX_REVISION" != ""; then
+        SUBDIRS="libvpx $SUBDIRS"
+    fi
+    if test "$FFMPEG_SUPPORT_MP3" = 1 && test "$ENABLE_LAME" = 1; then
+        SUBDIRS="lame $SUBDIRS"
+    fi
+    if test "$FFMPEG_SUPPORT_OPUS" = 1 && test "$LIBOPUS_HEAD" = 1 -o "$LIBOPUS_REVISION" != ""; then
+        SUBDIRS="opus $SUBDIRS"
+    fi
+    if test "$ENABLE_SWH_PLUGINS" = "1" && test "$TARGET_OS" = "Darwin"; then
+        SUBDIRS="swh-plugins $SUBDIRS"
+    fi
+    if test "$ENABLE_WEBVFX" = "1" && test "$WEBVFX_HEAD" = 1 -o "$WEBVFX_REVISION" != ""; then
+        SUBDIRS="$SUBDIRS webvfx"
+    fi
+    if test "$ENABLE_VIDSTAB" = 1 ; then
+        SUBDIRS="vid.stab $SUBDIRS"
+    fi
   fi
-  if test "$ENABLE_MOVIT" = 1 && test "$MOVIT_HEAD" = 1 -o "$MOVIT_REVISION" != ""; then
-      SUBDIRS="libepoxy eigen movit $SUBDIRS"
-  fi
-  if test "$FFMPEG_SUPPORT_H264" = 1 && test "$X264_HEAD" = 1 -o "$X264_REVISION" != ""; then
-      SUBDIRS="x264 $SUBDIRS"
-  fi
-  if test "$FFMPEG_SUPPORT_H265" = 1 && test "$X265_HEAD" = 1 -o "$X265_REVISION" != ""; then
-      SUBDIRS="x265 $SUBDIRS"
-  fi
-  if test "$FFMPEG_SUPPORT_LIBVPX" = 1 && test "$LIBVPX_HEAD" = 1 -o "$LIBVPX_REVISION" != ""; then
-      SUBDIRS="libvpx $SUBDIRS"
-  fi
-  if test "$FFMPEG_SUPPORT_MP3" = 1 && test "$ENABLE_LAME" = 1; then
-      SUBDIRS="lame $SUBDIRS"
-  fi
-  if test "$FFMPEG_SUPPORT_OPUS" = 1 && test "$LIBOPUS_HEAD" = 1 -o "$LIBOPUS_REVISION" != ""; then
-      SUBDIRS="opus $SUBDIRS"
-  fi
-  if test "$ENABLE_SWH_PLUGINS" = "1" && test "$TARGET_OS" = "Darwin"; then
-      SUBDIRS="swh-plugins $SUBDIRS"
-  fi
-  if test "$ENABLE_WEBVFX" = "1" && test "$WEBVFX_HEAD" = 1 -o "$WEBVFX_REVISION" != ""; then
-      SUBDIRS="$SUBDIRS webvfx"
-  fi
-  if test "$ENABLE_VIDSTAB" = 1 ; then
-      SUBDIRS="vid.stab $SUBDIRS"
-  fi
+
   debug "SUBDIRS = $SUBDIRS"
 
   # REPOLOCS Array holds the repo urls
@@ -502,10 +529,12 @@ function set_globals {
     export QTDIR="$HOME/Qt/5.2.0/clang_64"
     export RANLIB=ranlib
   else
-    if [ "$(uname -m)" = "x86_64" ]; then
-      export QTDIR="$HOME/Qt/5.2.0/gcc_64"
-    else
-      export QTDIR="$HOME/Qt/5.2.0/gcc"
+    if test -z "$QTDIR" ; then
+      if [ "$(uname -m)" = "x86_64" ]; then
+        export QTDIR="$HOME/Qt/5.2.0/gcc_64"
+      else
+        export QTDIR="$HOME/Qt/5.2.0/gcc"
+      fi
     fi
     export RANLIB=ranlib
   fi
@@ -649,7 +678,7 @@ function set_globals {
     # DEFINES+=QT_STATIC is for QWebSockets
     CONFIG[7]="$QMAKE -r -spec mingw CONFIG+=link_pkgconfig PKGCONFIG+=mlt++ LIBS+=-L${QTDIR}/lib SHOTCUT_VERSION=$(date '+%y.%m.%d') DEFINES+=QT_STATIC"
   else
-    CONFIG[7]="$QTDIR/bin/qmake -r"
+    CONFIG[7]="$QTDIR/bin/qmake -r PREFIX=$FINAL_INSTALL_DIR"
     LD_LIBRARY_PATH_[7]="/usr/local/lib"
   fi
   CFLAGS_[7]=$CFLAGS
@@ -1096,6 +1125,11 @@ function get_subproject {
           if test 0 != $? ; then
               # Found git repo
               debug "Found git repo, will update"
+
+              if ! git diff-index --quiet ${REVISION:-master}; then
+                  die "git repository has local changes, aborting checkout. Consider disabling ACTION_GET_COMPILE_INSTALL or ACTION_GET_ONLY in your build config if you want to compile with these changes"
+              fi
+
               feedback_status "Pulling git sources for $1"
               cmd git reset --hard || die "Unable to reset git tree for $1"
               cmd git checkout master || die "Unable to git checkout master"
@@ -1967,8 +2001,8 @@ End-of-desktop-file
     cmd rm -rf Shotcut/Shotcut.app/share/doc
     cmd rm -rf Shotcut/Shotcut.app/share/man
   fi
-  cmd tar -cjvf "$tarball" Shotcut
-  cmd rm -rf Shotcut
+  test "1" = "$ARCHIVE" && cmd tar -cjvf "$tarball" Shotcut
+  test "1" = "$CLEANUP" && cmd rm -rf Shotcut
   popd
 }
 
