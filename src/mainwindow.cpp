@@ -1083,6 +1083,12 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_timelineDock->append(-1);
         }
         break;
+    case Qt::Key_D:
+        if (event->modifiers() == Qt::ControlModifier)
+            m_timelineDock->setSelection(QList<int>());
+        else
+            handled = false;
+        break;
     case Qt::Key_J:
         if (m_isKKeyPressed)
             m_player->seek(m_player->position() - 1);
