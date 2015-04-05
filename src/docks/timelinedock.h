@@ -53,6 +53,7 @@ public:
     int dockYOffset() const;
     void setCurrentTrack(int currentTrack);
     int currentTrack() const;
+    int clipCount(int trackIndex) const;
     void zoomIn();
     void zoomOut();
     void resetZoom();

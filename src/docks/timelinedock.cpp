@@ -138,6 +138,21 @@ int TimelineDock::clipIndexAtPosition(int trackIndex, int position)
     return result;
 }
 
+int TimelineDock::clipCount(int trackIndex) const
+{
+    if (trackIndex < 0)
+        trackIndex = currentTrack();
+    if (trackIndex >= 0 && trackIndex < m_model.trackList().size()) {
+        int i = m_model.trackList().at(trackIndex).mlt_index;
+        QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
+        if (track) {
+            Mlt::Playlist playlist(*track);
+            return playlist.count();
+        }
+    }
+    return 0;
+}
+
 int TimelineDock::dockYOffset() const
 {
     // XXX This is a workaround for menus appearing in wrong location in a Quick
