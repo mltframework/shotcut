@@ -213,6 +213,11 @@ QList<int> TimelineDock::selection() const
     return ret;
 }
 
+void TimelineDock::selectClipUnderPlayhead()
+{
+    setSelection(QList<int>() << clipIndexAtPlayhead(-1));
+}
+
 void TimelineDock::addAudioTrack()
 {
     m_model.addAudioTrack();

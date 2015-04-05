@@ -59,6 +59,7 @@ public:
     void resetZoom();
     void setSelection(QList<int> selection);
     QList<int> selection() const;
+    void selectClipUnderPlayhead();
 
 signals:
     void currentTrackChanged();
