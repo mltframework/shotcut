@@ -58,10 +58,12 @@ Rectangle {
             color: Qt.lighter(getColor())
         }
         GradientStop {
+            id: gradientStop2
             position: 1.0
             color: getColor()
         }
     }
+
     border.color: 'black'
     border.width: isBlank? 0 : 1
     clip: true
@@ -216,6 +218,18 @@ Rectangle {
             }
         },
         State {
+            name: 'selectedBlank'
+            when: clipRoot.selected && clipRoot.isBlank
+            PropertyChanges {
+                target: gradientStop2
+                color: '#77ffffff'
+            }
+            PropertyChanges {
+                target: gradientStop
+                color: 'transparent'
+            }
+        },
+        State {
             name: 'selected'
             when: clipRoot.selected
             PropertyChanges {
@@ -229,13 +243,6 @@ Rectangle {
         }
     ]
 
-    transitions: [
-        Transition {
-            to: '*'
-            ColorAnimation { target: gradientStop; duration: 100 }
-
-        }
-    ]
     onStateChanged: if (isTransition) transitionCanvas.requestPaint()
 
     MouseArea {

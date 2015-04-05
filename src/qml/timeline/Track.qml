@@ -49,6 +49,10 @@ Rectangle {
         Logic.snapDrop(clip, repeater)
     }
 
+    function clipAt(index) {
+        return repeater.itemAt(index)
+    }
+
     color: 'transparent'
 
     DelegateModel {

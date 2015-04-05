@@ -237,6 +237,23 @@ Rectangle {
                     }
                 }
             }
+
+            CornerSelectionShadow {
+                y: tracksRepeater.count ? tracksRepeater.itemAt(currentTrack).y + ruler.height - scrollView.flickableItem.contentY : 0
+                clip: root.selection.length ?
+                        tracksRepeater.itemAt(currentTrack).clipAt(root.selection[0]) : null
+                opacity: clip && clip.x + clip.width < scrollView.flickableItem.contentX ? 1 : 0
+            }
+
+            CornerSelectionShadow {
+                y: tracksRepeater.count ? tracksRepeater.itemAt(currentTrack).y + ruler.height - scrollView.flickableItem.contentY : 0
+                clip: root.selection.length ?
+                        tracksRepeater.itemAt(currentTrack).clipAt(root.selection[root.selection.length - 1]) : null
+                opacity: clip && clip.x > scrollView.flickableItem.contentX + scrollView.width ? 1 : 0
+                anchors.right: parent.right
+                mirrorGradient: true
+            }
+
             Rectangle {
                 id: cursor
                 visible: timeline.position > -1
