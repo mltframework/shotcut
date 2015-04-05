@@ -119,6 +119,11 @@ Mlt::Producer *TimelineDock::getClip(int trackIndex, int clipIndex)
 
 int TimelineDock::clipIndexAtPlayhead(int trackIndex)
 {
+    return clipIndexAtPosition(trackIndex, m_position);
+}
+
+int TimelineDock::clipIndexAtPosition(int trackIndex, int position)
+{
     int result = -1;
     if (trackIndex < 0)
         trackIndex = currentTrack();
@@ -127,7 +132,7 @@ int TimelineDock::clipIndexAtPlayhead(int trackIndex)
         QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
         if (track) {
             Mlt::Playlist playlist(*track);
-            result = playlist.get_clip_index_at(m_position);
+            result = playlist.get_clip_index_at(position);
         }
     }
     return result;

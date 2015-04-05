@@ -49,6 +49,7 @@ public:
     Mlt::ClipInfo* getClipInfo(int trackIndex, int clipIndex);
     Mlt::Producer* getClip(int trackIndex, int clipIndex);
     int clipIndexAtPlayhead(int trackIndex = -1);
+    int clipIndexAtPosition(int trackIndex, int position);
     int dockYOffset() const;
     void setCurrentTrack(int currentTrack);
     int currentTrack() const;
