@@ -26,25 +26,10 @@ SOURCES_CLEAN=1
 INSTALL_AS_ROOT=0
 CREATE_STARTUP_SCRIPT=1
 ENABLE_FREI0R=1
-FREI0R_HEAD=1
-FREI0R_REVISION=
 ENABLE_MOVIT=1
-SUBDIRS=
-MOVIT_HEAD=1
-MOVIT_REVISION=
-LIBEPOXY_REVISION=
-X264_HEAD=1
-X264_REVISION=
-X265_HEAD=1
-X265_REVISION=
-LIBVPX_HEAD=1
-LIBVPX_REVISION=
 ENABLE_LAME=1
-LIBOPUS_HEAD=1
-LIBOPUS_REVISION=
 ENABLE_SWH_PLUGINS=1
-FFMPEG_HEAD=0
-FFMPEG_REVISION="origin/release/2.3"
+SUBDIRS=
 FFMPEG_SUPPORT_H264=1
 FFMPEG_SUPPORT_H265=1
 FFMPEG_SUPPORT_LIBVPX=1
@@ -54,21 +39,41 @@ FFMPEG_SUPPORT_FAAC=0
 FFMPEG_SUPPORT_OPUS=1
 FFMPEG_ADDITIONAL_OPTIONS=
 ENABLE_VIDSTAB=1
-VIDSTAB_HEAD=1
-VIDSTAB_REVISION=
-MLT_HEAD=1
-MLT_REVISION=
-LOG_COLORS=0
-SHOTCUT_HEAD=1
-SHOTCUT_REVISION=
 ENABLE_WEBVFX=1
-WEBVFX_HEAD=1
-WEBVFX_REVISION=
+LOG_COLORS=0
 # QT_INCLUDE_DIR="$(pkg-config --variable=prefix QtCore)/include"
 QT_INCLUDE_DIR=${QTDIR:+${QTDIR}/include}
 # QT_LIB_DIR="$(pkg-config --variable=prefix QtCore)/lib"
 QT_LIB_DIR=${QTDIR:+${QTDIR}/lib}
 MLT_DISABLE_SOX=0
+
+# Revisions section
+# if XX_HEAD is set to 1, update-revs.sh will resolve the refspec
+# from FETCHFROM and assign it to XX_REVISION
+FREI0R_HEAD=1
+FREI0R_REVISION=baa08d27193d758b5139dfa503dbedc881298f1c #v1.4-25-gbaa08d2 FETCHFROM:origin/master
+MOVIT_HEAD=1
+MOVIT_REVISION=b757b4f1ca57c6dcabfe4ad696a2b887544d1a71 #1.1.3 FETCHFROM:origin/master
+LIBEPOXY_HEAD=1
+LIBEPOXY_REVISION=20062c25e7612cab023cdef44d3277ba1bd0b2de #v1.2-13-g20062c2 FETCHFROM:origin/master
+X264_HEAD=1
+X264_REVISION=121396c71b4907ca82301d1a529795d98daab5f8 #unknown-tag FETCHFROM:origin/master
+X265_HEAD=1
+X265_REVISION=5c5574c5a98f15ddf545479d80296765398f1f09 #1.6-154-g5c5574c FETCHFROM:origin/master
+LIBVPX_HEAD=1
+LIBVPX_REVISION=5e300cac2ca3c7cc628a05a41e1e270387c5a690 #v1.4.0-111-g5e300ca FETCHFROM:origin/master
+LIBOPUS_HEAD=1
+LIBOPUS_REVISION=36e0445e619a2814b05d4e48dbaee785b70aac4d #draft-ietf-codec-oggopus-06-21-g36e0445 FETCHFROM:origin/master
+VIDSTAB_HEAD=1
+VIDSTAB_REVISION=4ec5be1ba92325de8154106a1470a49242459125 #release-0.98a-14-g4ec5be1 FETCHFROM:origin/master
+MLT_HEAD=1
+MLT_REVISION=e8257fb4cea1700b6211ac28542f0d5be37427a4 #v0.9.6-17-ge8257fb FETCHFROM:origin/master
+SHOTCUT_HEAD=1
+SHOTCUT_REVISION=a1622c54fa72413bdb5ac115af1ef2b2b7ddba16 #v15.04-9-ga1622c5 FETCHFROM:origin/master
+WEBVFX_HEAD=1
+WEBVFX_REVISION=a54b0938757d53033424f411a0292926249313ba #0.4.4-44-ga54b093 FETCHFROM:origin/master
+FFMPEG_HEAD=0
+FFMPEG_REVISION="origin/release/2.3"
 
 ################################################################################
 # Location of config file - if not overriden on command line
@@ -390,7 +395,6 @@ function set_globals {
   REPOLOCS[0]="git://github.com/FFmpeg/FFmpeg.git"
   REPOLOCS[1]="git://github.com/mltframework/mlt.git"
   REPOLOCS[2]="git://github.com/ddennedy/frei0r.git"
-#  REPOLOCS[3]="git://git.videolan.org/x264.git"
   REPOLOCS[3]="git://repo.or.cz/x264.git"
   REPOLOCS[4]="http://git.chromium.org/webm/libvpx.git"
   REPOLOCS[5]="http://git.sesse.net/movit/"
@@ -422,57 +426,20 @@ function set_globals {
   REPOTYPES[14]="http-tgz"
 
   # And, set up the revisions
-  REVISIONS[0]=""
-  if test 0 = "$FFMPEG_HEAD" -a "$FFMPEG_REVISION" ; then
-    REVISIONS[0]="$FFMPEG_REVISION"
-  fi
-  # Git, just use blank or the hash.
-  REVISIONS[1]=""
-  if test 0 = "$MLT_HEAD" -a "$MLT_REVISION" ; then
-    REVISIONS[1]="$MLT_REVISION"
-  fi
-  REVISIONS[2]=""
-  if test 0 = "$FREI0R_HEAD" -a "$FREI0R_REVISION" ; then
-    REVISIONS[2]="$FREI0R_REVISION"
-  fi
-  REVISIONS[3]=""
-  if test 0 = "$X264_HEAD" -a "$X264_REVISION" ; then
-    REVISIONS[3]="$X264_REVISION"
-  fi
-  REVISIONS[4]=""
-  if test 0 = "$LIBVPX_HEAD" -a "$LIBVPX_REVISION" ; then
-    REVISIONS[4]="$LIBVPX_REVISION"
-  fi
-  REVISIONS[5]=""
-  if test 0 = "$MOVIT_HEAD" -a "$MOVIT_REVISION" ; then
-    REVISIONS[5]="$MOVIT_REVISION"
-  fi
+  REVISIONS[0]="$FFMPEG_REVISION"
+  REVISIONS[1]="$MLT_REVISION"
+  REVISIONS[2]="$FREI0R_REVISION"
+  REVISIONS[3]="$X264_REVISION"
+  REVISIONS[4]="$LIBVPX_REVISION"
+  REVISIONS[5]="$MOVIT_REVISION"
   REVISIONS[6]="lame-3.99.5"
-  REVISIONS[7]=""
-  if test 0 = "$SHOTCUT_HEAD" -a "$SHOTCUT_REVISION" ; then
-    REVISIONS[7]="$SHOTCUT_REVISION"
-  fi
+  REVISIONS[7]="$SHOTCUT_REVISION"
   REVISIONS[8]="swh-plugins-0.4.15+1"
-  REVISIONS[9]=""
-  if test 0 = "$WEBVFX_HEAD" -a "$WEBVFX_REVISION" ; then
-    REVISIONS[9]="$WEBVFX_REVISION"
-  fi
-  REVISIONS[10]=""
-  if test 0 = "$VIDSTAB_HEAD" -a "$VIDSTAB_REVISION" ; then
-    REVISIONS[10]="$VIDSTAB_REVISION"
-  fi
-  REVISIONS[11]=""
-  if test "$LIBEPOXY_REVISION" ; then
-    REVISIONS[11]="$LIBEPOXY_REVISION"
-  fi
-  REVISIONS[12]=""
-  if test 0 = "$LIBOPUS_HEAD" -a "$LIBOPUS_REVISION" ; then
-    REVISIONS[12]="$LIBOPUS_REVISION"
-  fi
-  REVISIONS[13]=""
-  if test 0 = "$X265_HEAD" -a "$X265_REVISION" ; then
-    REVISIONS[13]="$X265_REVISION"
-  fi
+  REVISIONS[9]="$WEBVFX_REVISION"
+  REVISIONS[10]="$VIDSTAB_REVISION"
+  REVISIONS[11]="$LIBEPOXY_REVISION"
+  REVISIONS[12]="$LIBOPUS_REVISION"
+  REVISIONS[13]="$X265_REVISION"
   REVISIONS[14]="eigen-eigen-10219c95fe65"
 
   # Figure out the number of cores in the system. Used both by make and startup script
@@ -1126,15 +1093,26 @@ function get_subproject {
               # Found git repo
               debug "Found git repo, will update"
 
-              if ! git diff-index --quiet ${REVISION:-master}; then
-                  die "git repository has local changes, aborting checkout. Consider disabling ACTION_GET_COMPILE_INSTALL or ACTION_GET_ONLY in your build config if you want to compile with these changes"
+              if [ -z "$REVISION" ]; then
+                  die "Building $1 without specifying a SHA is no longer supported"
               fi
 
               feedback_status "Pulling git sources for $1"
-              cmd git reset --hard || die "Unable to reset git tree for $1"
-              cmd git checkout master || die "Unable to git checkout master"
-              cmd git --no-pager pull $REPOLOC master || die "Unable to git pull sources for $1"
-              cmd git checkout $REVISION || die "Unable to git checkout $REVISION"
+              cmd git fetch $REPOLOC || die "Unable to git fetch from $REPOLOC"
+
+              if ! git rev-parse --verify $REVISION > /dev/null 2>&1; then
+                  die "$REVISION was not a reachable SHA after fetching from $REPOLOC"
+              fi
+
+              if ! git diff-index --quiet HEAD; then
+                  die "git repository has uncommited changes, aborting checkout. Consider disabling ACTION_GET_COMPILE_INSTALL or ACTION_GET_ONLY in your build config if you want to compile with these changes"
+              fi
+
+              if [ "$(git rev-parse $REVISION)" != "$(git rev-parse HEAD)" -a "$(git merge-base HEAD $REVISION)" ==  "$(git rev-parse $REVISION)" ]; then
+                  die "git repository HEAD is ahead of the remote, aborting checkout. Consider disabling ACTION_GET_COMPILE_INSTALL or ACTION_GET_ONLY in your build config if you want to compile with these changes"
+              fi
+
+              cmd git checkout -f $REVISION || die "Unable to checkout $REVISION"
           else
               # A dir with the expected name, but not a git repo, bailing out
               PWD=`pwd`
