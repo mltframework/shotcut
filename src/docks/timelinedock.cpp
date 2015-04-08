@@ -349,9 +349,14 @@ void TimelineDock::openClip(int trackIndex, int clipIndex)
     }
 }
 
-void TimelineDock::selectClip(int trackIndex, int clipIndex)
+void TimelineDock::emitClipSelectedFromSelection()
 {
-    Mlt::ClipInfo* info = getClipInfo(trackIndex, clipIndex);
+    if (selection().isEmpty() || currentTrack() == -1) {
+        emit clipSelected(0);
+        return;
+    }
+
+    Mlt::ClipInfo* info = getClipInfo(currentTrack(), selection().first());
     if (info && info->producer && info->producer->is_valid()) {
         // We need to set these special properties so time-based filters
         // can get information about the cut while still applying filters

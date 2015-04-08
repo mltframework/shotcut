@@ -91,7 +91,6 @@ public slots:
     void selectTrack(int by);
     void selectTrackHead(int trackIndex);
     void openClip(int trackIndex, int clipIndex);
-    void selectClip(int trackIndex, int clipIndex);
     void setTrackName(int trackIndex, const QString& value);
     void toggleTrackMute(int trackIndex);
     void toggleTrackHidden(int trackIndex);
@@ -123,6 +122,7 @@ private:
 
 private slots:
     void onVisibilityChanged(bool visible);
+    void emitClipSelectedFromSelection();
 };
 
 #endif // TIMELINEDOCK_H
