@@ -1208,6 +1208,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_playlistDock->raise();
             m_playlistDock->on_removeButton_clicked();
         }
+        break;
     case Qt::Key_Z: // Avid Lift
         if (event->modifiers() == Qt::ShiftModifier) {
             m_playlistDock->show();
