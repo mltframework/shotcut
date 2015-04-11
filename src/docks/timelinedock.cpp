@@ -253,10 +253,11 @@ void TimelineDock::remove(int trackIndex, int clipIndex)
 void TimelineDock::lift(int trackIndex, int clipIndex)
 {
     Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
-    Mlt::Producer* clip = getClip(trackIndex, clipIndex);
+    QScopedPointer<Mlt::Producer> clip(getClip(trackIndex, clipIndex));
     if (clip) {
-        QString xml = MLT.XML(clip);
-        delete clip;
+        if (clip->is_blank())
+            return;
+        QString xml = MLT.XML(clip.data());
         QModelIndex idx = m_model.index(clipIndex, 0, m_model.index(trackIndex));
         int position = m_model.data(idx, MultitrackModel::StartRole).toInt();
         MAIN.undoStack()->push(
