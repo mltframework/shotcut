@@ -106,6 +106,7 @@ public slots:
     void fadeOut(int trackIndex, int clipIndex = -1, int duration = -1);
     void seekPreviousEdit();
     void seekNextEdit();
+    void clearSelectionIfInvalid();
 
 protected:
     void dragEnterEvent(QDragEnterEvent* event);

@@ -53,6 +53,8 @@ TimelineDock::TimelineDock(QWidget *parent) :
     m_quickView.setResizeMode(QQuickView::SizeRootObjectToView);
     m_quickView.setColor(palette().window().color());
 
+    connect(&m_model, &MultitrackModel::modified, this, &TimelineDock::clearSelectionIfInvalid);
+
     QWidget* container = QWidget::createWindowContainer(&m_quickView, this);
     container->setFocusPolicy(Qt::TabFocus);
     delete ui->scrollAreaWidgetContents;
@@ -193,11 +195,14 @@ void TimelineDock::resetZoom()
     QMetaObject::invokeMethod(m_quickView.rootObject(), "resetZoom");
 }
 
-void TimelineDock::setSelection(QList<int> selection)
+void TimelineDock::setSelection(QList<int> newSelection)
 {
-    qDebug() << "Setting selection to" << selection;
+    qDebug() << "Setting selection to" << newSelection;
+    if (newSelection == selection())
+        return;
+
     QVariantList list;
-    foreach (int idx, selection)
+    foreach (int idx, newSelection)
         list << QVariant::fromValue(idx);
     m_quickView.rootObject()->setProperty("selection", list);
 }
@@ -226,6 +231,20 @@ int TimelineDock::centerOfClip(int trackIndex, int clipIndex)
     delete clip;
     clip = 0;
     return centerOfClip;
+}
+
+void TimelineDock::clearSelectionIfInvalid()
+{
+    int count = clipCount(currentTrack());
+
+    QList<int> newSelection;
+    foreach (int index, selection()) {
+        if (index >= count)
+            continue;
+
+        newSelection << index;
+    }
+    setSelection(newSelection);
 }
 
 void TimelineDock::addAudioTrack()
