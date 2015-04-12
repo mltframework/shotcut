@@ -1003,6 +1003,7 @@ int MultitrackModel::insertClip(int trackIndex, Mlt::Producer &clip, int positio
     createIfNeeded();
     int result = -1;
     int i = m_trackList.at(trackIndex).mlt_index;
+    int clipPlaytime = clip.get_playtime();
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     if (track) {
         Mlt::Playlist playlist(*track);
@@ -1065,6 +1066,31 @@ int MultitrackModel::insertClip(int trackIndex, Mlt::Producer &clip, int positio
             result = targetIndex;
         }
         if (result >= 0) {
+            //fill in/expand blanks in all the other tracks
+            for (int j = 0; j < m_trackList.count(); ++j) {
+                if (j == trackIndex)
+                    continue;
+
+                int mltIndex = m_trackList.at(j).mlt_index;
+
+                QScopedPointer<Mlt::Producer> otherTrack(m_tractor->track(mltIndex));
+                if (otherTrack) {
+                    Mlt::Playlist trackPlaylist(*otherTrack);
+                    int idx = trackPlaylist.get_clip_index_at(position);
+
+                    if (trackPlaylist.is_blank(idx)) {
+                        trackPlaylist.resize_clip(idx, 0, trackPlaylist.clip_length(idx) + clipPlaytime);
+                        QModelIndex modelIndex = createIndex(idx, 0, j);
+                        emit dataChanged(modelIndex, modelIndex, QVector<int>() << DurationRole);
+                    } else {
+                        splitClip(j, idx, position);
+                        beginInsertRows(index(j), idx + 1, idx + 1);
+                        trackPlaylist.insert_blank(idx + 1, clipPlaytime);
+                        endInsertRows();
+                    }
+                }
+            }
+
             QModelIndex index = createIndex(result, 0, trackIndex);
             QThreadPool::globalInstance()->start(
                 new AudioLevelsTask(clip.parent(), this, index));
