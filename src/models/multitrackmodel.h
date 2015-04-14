@@ -165,8 +165,11 @@ private:
     void retainPlaylist();
     void loadPlaylist();
 
+    friend class UndoHelper;
+
 private slots:
     void adjustBackgroundDuration();
+
 };
 
 #endif // MULTITRACKMODEL_H
