@@ -49,7 +49,6 @@ static int graphCenterY(const QSize& widgetSize, int channel, int maxChan, int p
 
 AudioWaveformScopeWidget::AudioWaveformScopeWidget()
   : ScopeWidget("AudioWaveform")
-  , m_frame()
   , m_renderWave()
   , m_refreshTime()
   , m_graphTopPadding(0)
@@ -75,12 +74,13 @@ void AudioWaveformScopeWidget::refreshScope(const QSize& size, bool full)
     QSize prevSize = m_displayWave.size();
     m_mutex.unlock();
 
+    SharedFrame sFrame;
     while (m_queue.count() > 0) {
-        m_frame = m_queue.pop();
+        sFrame = m_queue.pop();
     }
     
     // Check if a full refresh should be forced.
-    int channels = m_frame.get_audio_channels();
+    int channels = sFrame.get_audio_channels();
     channels = channels ? channels : 2;
     if (prevSize != size || channels != m_channels) {
         m_channels = channels;
@@ -110,10 +110,10 @@ void AudioWaveformScopeWidget::refreshScope(const QSize& size, bool full)
     pen.setWidth(0);
     p.setPen(pen);
 
-    if (m_frame.is_valid() && m_frame.get_audio_samples() > 0) {
+    if (sFrame.is_valid() && sFrame.get_audio_samples() > 0) {
 
-        int samples = m_frame.get_audio_samples();
-        int16_t* audio = (int16_t*)m_frame.get_audio();
+        int samples = sFrame.get_audio_samples();
+        int16_t* audio = (int16_t*)sFrame.get_audio();
         int waveAmplitude = graphHeight(size, m_channels, m_graphTopPadding) / 2;
         qreal scaleFactor = (qreal)waveAmplitude / (qreal)MAX_AMPLITUDE;
 
