@@ -1982,27 +1982,36 @@ End-of-desktop-file
   feedback_progress Done creating startup and environment script
   popd
 
-  log Creating archive
-  tarball="$INSTALL_DIR/shotcut.tar.bz2"
-  cmd rm "$tarball" 2>/dev/null
   cmd pushd "$INSTALL_DIR"
-  if [ "$SDK" = "1" ]; then
-    # Prepare src for archiving
-    pushd .
-    clean_dirs
-    popd
-    log Copying src
-    cmd -rf Shotcut/Shotcut.app/src 2> /dev/null
-    cmd cp -a "$SOURCE_DIR" Shotcut/Shotcut.app
-  else
-    cmd rm -rf Shotcut/Shotcut.app/include
-    cmd rm Shotcut/Shotcut.app/lib/*.a
-    cmd rm -rf Shotcut/Shotcut.app/lib/pkgconfig
-    cmd rm -rf Shotcut/Shotcut.app/share/doc
-    cmd rm -rf Shotcut/Shotcut.app/share/man
+
+  if [ "$ARCHIVE" = "1" ]; then
+    log Creating archive
+    tarball="$INSTALL_DIR/shotcut.tar.bz2"
+    cmd rm "$tarball" 2>/dev/null
+
+    if [ "$SDK" = "1" ]; then
+      # Prepare src for archiving
+      pushd .
+      clean_dirs
+      popd
+      log Copying src
+      cmd -rf Shotcut/Shotcut.app/src 2> /dev/null
+      cmd cp -a "$SOURCE_DIR" Shotcut/Shotcut.app
+    else
+      cmd rm -rf Shotcut/Shotcut.app/include
+      cmd rm Shotcut/Shotcut.app/lib/*.a
+      cmd rm -rf Shotcut/Shotcut.app/lib/pkgconfig
+      cmd rm -rf Shotcut/Shotcut.app/share/doc
+      cmd rm -rf Shotcut/Shotcut.app/share/man
+    fi
+    cmd tar -cjvf "$tarball" Shotcut
   fi
-  test "1" = "$ARCHIVE" && cmd tar -cjvf "$tarball" Shotcut
-  test "1" = "$CLEANUP" && cmd rm -rf Shotcut
+
+  if [ "$CLEANUP" = "1" ]; then
+    log Cleaning Up
+    cmd rm -rf Shotcut
+  fi
+
   popd
 }
 
