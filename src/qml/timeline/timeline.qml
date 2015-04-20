@@ -171,6 +171,7 @@ Rectangle {
             // This provides continuous scrubbing and scimming at the left/right edges.
             focus: true
             hoverEnabled: true
+            onClicked: timeline.position = (scrollView.flickableItem.contentX + mouse.x) / multitrack.scaleFactor
             property bool scim: false
             onReleased: scim = false
             onExited: scim = false
