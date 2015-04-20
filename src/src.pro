@@ -98,7 +98,9 @@ SOURCES += main.cpp\
     widgets/scopes/audiowaveformscopewidget.cpp \
     widgets/scopes/videowaveformscopewidget.cpp \
     sharedframe.cpp \
-    widgets/audioscale.cpp
+    widgets/audioscale.cpp \
+    widgets/playlisttable.cpp \
+
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -189,7 +191,9 @@ HEADERS  += mainwindow.h \
     widgets/scopes/videowaveformscopewidget.h \
     dataqueue.h \
     sharedframe.h \
-    widgets/audioscale.h
+    widgets/audioscale.h \
+    forwardingquickviewworkaround.h \
+    widgets/playlisttable.h \
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \

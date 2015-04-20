@@ -86,6 +86,7 @@ MainWindow::MainWindow()
     , m_htmlEditor(0)
     , m_autosaveFile(0)
     , m_exitCode(EXIT_SUCCESS)
+    , m_navigationPosition(0)
 {
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     QLibrary libJack("libjack.so.0");
@@ -105,6 +106,10 @@ MainWindow::MainWindow()
         libSDL.unload();
     }
 #endif
+
+    if (!qgetenv("OBSERVE_FOCUS").isEmpty())
+        connect(qApp, &QApplication::focusChanged,
+                this, &MainWindow::onFocusChanged);
 
     qDebug() << "begin";
     new GLTestWidget(this);
@@ -228,6 +233,7 @@ MainWindow::MainWindow()
     connect(ui->actionTimeline, SIGNAL(triggered()), SLOT(onTimelineDockTriggered()));
     connect(m_player, SIGNAL(seeked(int)), m_timelineDock, SLOT(onSeeked(int)));
     connect(m_timelineDock, SIGNAL(seeked(int)), SLOT(seekTimeline(int)));
+    connect(m_timelineDock, SIGNAL(clipClicked()), SLOT(moveNavigationPositionToCurrentSelection()));
     connect(m_timelineDock->model(), SIGNAL(created()), SLOT(onMultitrackCreated()));
     connect(m_timelineDock->model(), SIGNAL(closed()), SLOT(onMultitrackClosed()));
     connect(m_timelineDock->model(), SIGNAL(modified()), SLOT(onMultitrackModified()));
@@ -374,6 +380,16 @@ MainWindow::MainWindow()
     connect(leap, SIGNAL(jogLeftFrame()), SLOT(stepLeftOneFrame()));
     connect(leap, SIGNAL(jogLeftSecond()), SLOT(stepLeftOneSecond()));
     qDebug() << "end";
+}
+
+void MainWindow::moveNavigationPositionToCurrentSelection()
+{
+    TimelineDock * t = m_timelineDock;
+
+    if (t->selection().isEmpty())
+        return;
+
+    m_navigationPosition = t->centerOfClip(t->currentTrack(), t->selection().first());
 }
 
 MainWindow& MainWindow::singleton()
@@ -1003,6 +1019,9 @@ void MainWindow::on_actionAbout_Shotcut_triggered()
 
 void MainWindow::keyPressEvent(QKeyEvent* event)
 {
+    bool handled = true;
+
+
     switch (event->key()) {
     case Qt::Key_Home:
         m_player->seek(0);
@@ -1012,16 +1031,46 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_player->seek(MLT.producer()->get_length() - 1);
         break;
     case Qt::Key_Left:
-        stepLeftOneFrame();
+        if (event->modifiers() == Qt::ControlModifier && m_timelineDock->isVisible()) {
+            if (m_timelineDock->selection().isEmpty()) {
+                m_timelineDock->selectClipUnderPlayhead();
+            } else if (m_timelineDock->selection().size() == 1) {
+                int newIndex = m_timelineDock->selection().first() - 1;
+                if (newIndex < 0)
+                    break;
+                m_timelineDock->setSelection(QList<int>() << newIndex);
+                m_navigationPosition = m_timelineDock->centerOfClip(m_timelineDock->currentTrack(), newIndex);
+            }
+        } else {
+            stepLeftOneFrame();
+        }
         break;
     case Qt::Key_Right:
-        stepRightOneFrame();
+        if (event->modifiers() == Qt::ControlModifier && m_timelineDock->isVisible()) {
+            if (m_timelineDock->selection().isEmpty()) {
+                m_timelineDock->selectClipUnderPlayhead();
+            } else if (m_timelineDock->selection().size() == 1) {
+                int newIndex = m_timelineDock->selection().first() + 1;
+                if (newIndex >= m_timelineDock->clipCount(-1))
+                    break;
+                m_timelineDock->setSelection(QList<int>() << newIndex);
+                m_navigationPosition = m_timelineDock->centerOfClip(m_timelineDock->currentTrack(), newIndex);
+            }
+        } else {
+            stepRightOneFrame();
+        }
         break;
     case Qt::Key_PageUp:
         stepLeftOneSecond();
         break;
     case Qt::Key_PageDown:
         stepRightOneSecond();
+        break;
+    case Qt::Key_Space:
+        if (event->modifiers() == Qt::ControlModifier && m_timelineDock->isVisible())
+            m_timelineDock->selectClipUnderPlayhead();
+        else
+            handled = false;
         break;
     case Qt::Key_C:
         if (event->modifiers() == Qt::ShiftModifier) {
@@ -1033,6 +1082,12 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_timelineDock->raise();
             m_timelineDock->append(-1);
         }
+        break;
+    case Qt::Key_D:
+        if (event->modifiers() == Qt::ControlModifier)
+            m_timelineDock->setSelection(QList<int>());
+        else
+            handled = false;
         break;
     case Qt::Key_J:
         if (m_isKKeyPressed)
@@ -1101,7 +1156,21 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         break;
     case Qt::Key_Up:
         if (multitrack()) {
+            int newClipIndex = -1;
+            if (event->modifiers() == Qt::ControlModifier &&
+                    !m_timelineDock->selection().isEmpty() &&
+                    m_timelineDock->currentTrack() > 0) {
+
+                newClipIndex = m_timelineDock->clipIndexAtPosition(m_timelineDock->currentTrack() - 1, m_navigationPosition);
+            }
+
             m_timelineDock->selectTrack(-1);
+
+            if (newClipIndex >= 0) {
+                newClipIndex = qMin(newClipIndex, m_timelineDock->clipCount(m_timelineDock->currentTrack()) - 1);
+                m_timelineDock->setSelection(QList<int>() << newClipIndex);
+            }
+
         } else if (m_playlistDock->isVisible()) {
             m_playlistDock->raise();
             if (event->modifiers() == Qt::ControlModifier)
@@ -1111,7 +1180,21 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         break;
     case Qt::Key_Down:
         if (multitrack()) {
+            int newClipIndex = -1;
+            if (event->modifiers() == Qt::ControlModifier &&
+                    !m_timelineDock->selection().isEmpty() &&
+                    m_timelineDock->currentTrack() < m_timelineDock->model()->trackList().count() - 1) {
+
+                newClipIndex = m_timelineDock->clipIndexAtPosition(m_timelineDock->currentTrack() + 1, m_navigationPosition);
+            }
+
             m_timelineDock->selectTrack(1);
+
+            if (newClipIndex >= 0) {
+                newClipIndex = qMin(newClipIndex, m_timelineDock->clipCount(m_timelineDock->currentTrack()) - 1);
+                m_timelineDock->setSelection(QList<int>() << newClipIndex);
+            }
+
         } else if (m_playlistDock->isVisible()) {
             m_playlistDock->raise();
             if (event->modifiers() == Qt::ControlModifier)
@@ -1178,6 +1261,9 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_playlistDock->raise();
             m_playlistDock->setIndex(9);
         }
+        else if (m_timelineDock->isVisible()) {
+            m_timelineDock->zoomIn();
+        }
         break;
     case Qt::Key_X: // Avid Extract
         if (event->modifiers() == Qt::ShiftModifier) {
@@ -1187,7 +1273,9 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         } else {
             m_timelineDock->show();
             m_timelineDock->raise();
-            m_timelineDock->remove(-1, -1);
+            if (m_timelineDock->selection().isEmpty())
+                m_timelineDock->setSelection(QList<int>() << m_timelineDock->clipIndexAtPlayhead());
+            m_timelineDock->removeSelection();
         }
         break;
     case Qt::Key_Backspace:
@@ -1196,14 +1284,15 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_timelineDock->show();
             m_timelineDock->raise();
             if (event->modifiers() == Qt::ShiftModifier)
-                m_timelineDock->remove(-1, -1);
+                m_timelineDock->removeSelection();
             else
-                m_timelineDock->lift(-1, -1);
+                m_timelineDock->liftSelection();
         } else {
             m_playlistDock->show();
             m_playlistDock->raise();
             m_playlistDock->on_removeButton_clicked();
         }
+        break;
     case Qt::Key_Z: // Avid Lift
         if (event->modifiers() == Qt::ShiftModifier) {
             m_playlistDock->show();
@@ -1212,12 +1301,23 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         } else if (multitrack()) {
             m_timelineDock->show();
             m_timelineDock->raise();
-            m_timelineDock->lift(-1, -1);
+            m_timelineDock->liftSelection();
         }
+        break;
+    case Qt::Key_Minus:
+        if (m_timelineDock->isVisible())
+            m_timelineDock->zoomOut();
+        break;
+    case Qt::Key_Equal:
+        if (m_timelineDock->isVisible())
+            m_timelineDock->zoomIn();
         break;
     case Qt::Key_Enter: // Seek to current playlist item
     case Qt::Key_Return:
-        if (m_playlistDock->position() >= 0) {
+        if (!m_timelineDock->selection().isEmpty()) {
+            m_timelineDock->openClip(m_timelineDock->currentTrack(), m_timelineDock->selection().first());
+        }
+        else if (m_playlistDock->position() >= 0) {
             if (event->modifiers() == Qt::ShiftModifier)
                 seekPlaylist(m_playlistDock->position());
             else
@@ -1227,9 +1327,15 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
     case Qt::Key_F5:
         m_timelineDock->model()->reload();
         break;
+    case Qt::Key_F1:
+        qDebug() << "Current focusWidget:" << QApplication::focusWidget();
+        break;
     default:
-        QMainWindow::keyPressEvent(event);
+        break;
     }
+
+    if (!handled)
+        QMainWindow::keyPressEvent(event);
 }
 
 void MainWindow::keyReleaseEvent(QKeyEvent* event)
@@ -2273,4 +2379,9 @@ void MainWindow::on_actionGammaRec709_triggered(bool checked)
     Settings.setPlayerGamma("bt709");
     MLT.restart();
     MLT.refreshConsumer();
+}
+
+void MainWindow::onFocusChanged(QWidget *, QWidget * now) const
+{
+    qDebug() << "Focuswidget changed to" << now;
 }

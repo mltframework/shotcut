@@ -124,6 +124,7 @@ private:
     QMutex m_autosaveMutex;
     QTimer m_autosaveTimer;
     int m_exitCode;
+    int m_navigationPosition;
 
 #ifdef WITH_LIBLEAP
     LeapListener m_leapListener;
@@ -216,6 +217,8 @@ private slots:
     void onAutosaveTimeout();
     void on_actionGammaSRGB_triggered(bool checked);
     void on_actionGammaRec709_triggered(bool checked);
+    void onFocusChanged(QWidget *old, QWidget * now) const;
+    void moveNavigationPositionToCurrentSelection();
 };
 
 #define MAIN MainWindow::singleton()

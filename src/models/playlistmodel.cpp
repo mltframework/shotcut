@@ -566,8 +566,10 @@ void PlaylistModel::setPlaylist(Mlt::Playlist& playlist)
             m_playlist = 0;
             return;
         }
-        beginInsertRows(QModelIndex(), 0, m_playlist->count() - 1);
-        endInsertRows();
+        if (m_playlist->count()) {
+            beginInsertRows(QModelIndex(), 0, m_playlist->count() - 1);
+            endInsertRows();
+        }
         // do not let opening a clip change the profile!
         MLT.profile().set_explicit(true);
         if (Settings.playerGPU() && Settings.playlistThumbnails() != "hidden")
