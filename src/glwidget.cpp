@@ -440,7 +440,11 @@ static void onThreadStarted(mlt_properties owner, GLWidget* self)
 
 void GLWidget::stopGlsl()
 {
-    m_glslManager->fire_event("close glsl");
+    //TODO This is commented out for now because it is causing crashes.
+    //Technically, this should be the correct thing to do, but it appears
+    //some changes in the 15.01 and 15.03 releases have created regression
+    //with respect to restarting the consumer in GPU mode.
+//    m_glslManager->fire_event("close glsl");
     m_texture[0] = 0;
 }
 
