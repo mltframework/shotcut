@@ -24,6 +24,7 @@
 #include <QApplication>
 #include "models/multitrackmodel.h"
 #include "sharedframe.h"
+#include "forwardingquickviewworkaround.h"
 
 namespace Ui {
 class TimelineDock;
@@ -34,6 +35,8 @@ class TimelineDock : public QDockWidget
     Q_OBJECT
     Q_PROPERTY(int position READ position WRITE setPosition NOTIFY positionChanged)
     Q_PROPERTY(int yoffset READ dockYOffset)
+    Q_PROPERTY(int currentTrack READ currentTrack WRITE setCurrentTrack NOTIFY currentTrackChanged)
+    Q_PROPERTY(QList<int> selection READ selection WRITE setSelection NOTIFY selectionChanged)
 
 public:
     explicit TimelineDock(QWidget *parent = 0);
@@ -46,9 +49,22 @@ public:
     Mlt::ClipInfo* getClipInfo(int trackIndex, int clipIndex);
     Mlt::Producer* getClip(int trackIndex, int clipIndex);
     int clipIndexAtPlayhead(int trackIndex = -1);
+    int clipIndexAtPosition(int trackIndex, int position);
     int dockYOffset() const;
+    void setCurrentTrack(int currentTrack);
+    int currentTrack() const;
+    int clipCount(int trackIndex) const;
+    void zoomIn();
+    void zoomOut();
+    void resetZoom();
+    void setSelection(QList<int> selection);
+    QList<int> selection() const;
+    void selectClipUnderPlayhead();
+    int centerOfClip(int trackIndex, int clipIndex);
 
 signals:
+    void currentTrackChanged();
+    void selectionChanged();
     void seeked(int position);
     void positionChanged();
     void clipOpened(void* producer);
@@ -59,6 +75,7 @@ signals:
     void fadeOutChanged(int duration);
     void trackSelected(Mlt::Producer* producer);
     void clipSelected(Mlt::Producer* producer);
+    void clipClicked();
 
 public slots:
     void addAudioTrack();
@@ -69,12 +86,11 @@ public slots:
     void append(int trackIndex);
     void remove(int trackIndex, int clipIndex);
     void lift(int trackIndex, int clipIndex);
-    void pressKey(int key, Qt::KeyboardModifiers modifiers);
-    void releaseKey(int key, Qt::KeyboardModifiers modifiers);
+    void removeSelection();
+    void liftSelection();
     void selectTrack(int by);
     void selectTrackHead(int trackIndex);
     void openClip(int trackIndex, int clipIndex);
-    void selectClip(int trackIndex, int clipIndex);
     void setTrackName(int trackIndex, const QString& value);
     void toggleTrackMute(int trackIndex);
     void toggleTrackHidden(int trackIndex);
@@ -90,6 +106,7 @@ public slots:
     void fadeOut(int trackIndex, int clipIndex = -1, int duration = -1);
     void seekPreviousEdit();
     void seekNextEdit();
+    void clearSelectionIfInvalid();
 
 protected:
     void dragEnterEvent(QDragEnterEvent* event);
@@ -100,12 +117,13 @@ protected:
 
 private:
     Ui::TimelineDock *ui;
-    QQuickView m_quickView;
+    ForwardingQuickViewWorkaround m_quickView;
     MultitrackModel m_model;
     int m_position;
 
 private slots:
     void onVisibilityChanged(bool visible);
+    void emitClipSelectedFromSelection();
 };
 
 #endif // TIMELINEDOCK_H

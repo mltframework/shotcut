@@ -27,17 +27,14 @@ Rectangle {
     property bool isAudio
     property real timeScale: 1.0
     property bool placeHolderAdded: false
+    property bool isCurrentTrack: false
+    property var selection
 
-    signal clipSelected(var clip, var track)
+    signal clipClicked(var clip, var track)
     signal clipDragged(var clip, int x, int y)
     signal clipDropped(var clip)
     signal clipDraggedToTrack(var clip, int direction)
     signal checkSnap(var clip)
-
-    function resetStates(index) {
-        for (var i = 0; i < repeater.count; i++)
-            if (i !== index) repeater.itemAt(i).state = ''
-    }
 
     function redrawWaveforms() {
         for (var i = 0; i < repeater.count; i++)
@@ -50,6 +47,10 @@ Rectangle {
 
     function snapDrop(clip) {
         Logic.snapDrop(clip, repeater)
+    }
+
+    function clipAt(index) {
+        return repeater.itemAt(index)
     }
 
     color: 'transparent'
@@ -72,11 +73,9 @@ Rectangle {
             trackIndex: trackRoot.DelegateModel.itemsIndex
             fadeIn: model.fadeIn
             fadeOut: model.fadeOut
+            selected: trackRoot.isCurrentTrack && trackRoot.selection.indexOf(index) !== -1
 
-            onSelected: {
-                resetStates(clip.DelegateModel.itemsIndex);
-                trackRoot.clipSelected(clip, trackRoot);
-            }
+            onClicked: trackRoot.clipClicked(clip, trackRoot);
             onMoved: {
                 var fromTrack = clip.originalTrackIndex
                 var toTrack = clip.trackIndex

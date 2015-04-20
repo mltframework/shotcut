@@ -38,8 +38,9 @@ Rectangle {
     property int originalTrackIndex: trackIndex
     property int originalClipIndex: index
     property int originalX: x
+    property bool selected: false
 
-    signal selected(var clip)
+    signal clicked(var clip)
     signal moved(var clip)
     signal dragged(var clip, var mouse)
     signal dropped(var clip)
@@ -57,14 +58,15 @@ Rectangle {
             color: Qt.lighter(getColor())
         }
         GradientStop {
+            id: gradientStop2
             position: 1.0
             color: getColor()
         }
     }
+
     border.color: 'black'
     border.width: isBlank? 0 : 1
     clip: true
-    state: 'normal'
     Drag.active: mouseArea.drag.active
     Drag.proposedAction: Qt.MoveAction
     opacity: Drag.active? 0.5 : 1.0
@@ -146,7 +148,7 @@ Rectangle {
             cx.closePath()
             var grad = cx.createLinearGradient(0, 0, 0, height)
             var color = isAudio? 'darkseagreen' : root.shotcutBlue
-            grad.addColorStop(0, parent.state === 'selected'? Qt.darker(color) : Qt.lighter(color))
+            grad.addColorStop(0, clipRoot.selected ? Qt.darker(color) : Qt.lighter(color))
             grad.addColorStop(1, color)
             cx.fillStyle = grad
             cx.fill()
@@ -209,13 +211,27 @@ Rectangle {
     states: [
         State {
             name: 'normal'
+            when: !clipRoot.selected
             PropertyChanges {
                 target: clipRoot
                 z: 0
             }
         },
         State {
+            name: 'selectedBlank'
+            when: clipRoot.selected && clipRoot.isBlank
+            PropertyChanges {
+                target: gradientStop2
+                color: Qt.lighter(selectedTrackColor)
+            }
+            PropertyChanges {
+                target: gradientStop
+                color: Qt.darker(selectedTrackColor)
+            }
+        },
+        State {
             name: 'selected'
+            when: clipRoot.selected
             PropertyChanges {
                 target: clipRoot
                 z: 1
@@ -227,13 +243,6 @@ Rectangle {
         }
     ]
 
-    transitions: [
-        Transition {
-            to: '*'
-            ColorAnimation { target: gradientStop; duration: 100 }
-
-        }
-    ]
     onStateChanged: if (isTransition) transitionCanvas.requestPaint()
 
     MouseArea {
@@ -262,10 +271,10 @@ Rectangle {
             originalTrackIndex = trackIndex
             originalClipIndex = index
             startX = parent.x
-            parent.state = 'selected'
-            parent.selected(clipRoot)
             if (mouse.button === Qt.RightButton)
                 menu.popup()
+            else
+                clipRoot.clicked(clipRoot)
         }
         onPositionChanged: {
             if (mouse.y < 0 && trackIndex > 0)
@@ -344,7 +353,7 @@ Rectangle {
                 parent.anchors.left = undefined
                 parent.anchors.horizontalCenter = undefined
                 parent.opacity = 1
-                trackRoot.clipSelected(clipRoot, trackRoot)
+                // trackRoot.clipSelected(clipRoot, trackRoot) TODO
             }
             onReleased: {
                 root.stopScrolling = false

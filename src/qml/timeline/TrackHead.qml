@@ -23,25 +23,43 @@ import QtQuick.Layouts 1.0
 import Shotcut.Controls 1.0 as Shotcut
 
 Rectangle {
+    id: trackHeadRoot
     property string trackName: ''
     property bool isMute
     property bool isHidden
     property int isComposite
     property bool isVideo
+    property bool selected: false
+    property bool current: false
     signal clicked()
 
-    id: trackHeadRoot
     SystemPalette { id: activePalette }
-    color: activePalette.window
+    color: selected ? selectedTrackColor : (index % 2)? activePalette.alternateBase : activePalette.base
     clip: true
     state: 'normal'
     states: [
-        State { name: 'normal' },
         State {
             name: 'selected'
+            when: trackHeadRoot.selected
             PropertyChanges {
                 target: trackHeadRoot
                 color: isVideo? root.shotcutBlue : 'darkseagreen'
+            }
+        },
+        State {
+            name: 'current'
+            when: trackHeadRoot.current
+            PropertyChanges {
+                target: trackHeadRoot
+                color: selectedTrackColor
+            }
+        },
+        State {
+            when: !trackHeadRoot.selected && !trackHeadRoot.current
+            name: 'normal'
+            PropertyChanges {
+                target: trackHeadRoot
+                color: (index % 2)? activePalette.alternateBase : activePalette.base
             }
         }
     ]
