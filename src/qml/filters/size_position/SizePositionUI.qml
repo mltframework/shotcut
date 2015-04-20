@@ -23,6 +23,7 @@ import Shotcut.Controls 1.0
 
 Item {
     property string fillProperty
+    property string distortProperty
     property string rectProperty
     property string valignProperty
     property string halignProperty
@@ -33,6 +34,7 @@ Item {
     Component.onCompleted: {
         if (filter.isNew) {
             filter.set(fillProperty, 0)
+            filter.set(distortProperty, 0)
             filter.set(rectProperty,   '0/50%:50%x50%')
             filter.set(valignProperty, 'bottom')
             filter.set(halignProperty, 'left')
@@ -83,7 +85,9 @@ Item {
     }
 
     function setControls() {
-        if (filter.get(fillProperty) === '1')
+        if (filter.get(distortProperty) === '1')
+            distortRadioButton.checked = true
+        else if (filter.get(fillProperty) === '1')
             fillRadioButton.checked = true
         else
             fitRadioButton.checked = true
@@ -118,7 +122,7 @@ Item {
         }
         Preset {
             id: preset
-            parameters: [fillProperty, rectProperty, halignProperty, valignProperty]
+            parameters: [fillProperty, distortProperty, rectProperty, halignProperty, valignProperty]
             Layout.columnSpan: 4
             onPresetSelected: setControls()
         }
@@ -174,13 +178,28 @@ Item {
                 id: fitRadioButton
                 text: qsTr('Fit')
                 exclusiveGroup: sizeGroup
-                onClicked: filter.set(fillProperty, 0)
+                onClicked: {
+                    filter.set(fillProperty, 0)
+                    filter.set(distortProperty, 0)
+                }
             }
             RadioButton {
                 id: fillRadioButton
                 text: qsTr('Fill')
                 exclusiveGroup: sizeGroup
-                onClicked: filter.set(fillProperty, 1)
+                onClicked: {
+                    filter.set(fillProperty, 1)
+                    filter.set(distortProperty, 0)
+                }
+            }
+            RadioButton {
+                id: distortRadioButton
+                text: qsTr('Distort')
+                exclusiveGroup: sizeGroup
+                onClicked: {
+                    filter.set(fillProperty, 1)
+                    filter.set(distortProperty, 1)
+                }
             }
         }
 

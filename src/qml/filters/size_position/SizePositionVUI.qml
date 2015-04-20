@@ -22,6 +22,7 @@ import Shotcut.Controls 1.0
 Flickable {
     property string rectProperty
     property string fillProperty
+    property string distortProperty
     property string halignProperty
     property string valignProperty
     property var _locale: Qt.locale(application.numericLocale)
@@ -38,7 +39,7 @@ Flickable {
     contentY: video.offset.y
 
     function getAspectRatio() {
-        return (filter.get(fillProperty) === '1')? filter.producerAspect : 0.0
+        return (filter.get(fillProperty) === '1' && filter.get(distortProperty) === '0')? filter.producerAspect : 0.0
     }
 
     Component.onCompleted: {
