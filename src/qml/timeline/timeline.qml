@@ -49,8 +49,6 @@ Rectangle {
 
     property int headerWidth: 140
     property int currentTrack: 0
-    property int currentClip: -1
-    property int currentClipTrack: -1
     property color selectedTrackColor: Qt.rgba(0.8, 0.8, 0, 0.3);
     property alias trackCount: tracksRepeater.count
     property bool stopScrolling: false
