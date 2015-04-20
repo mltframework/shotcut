@@ -51,7 +51,7 @@ Rectangle {
     property int currentTrack: 0
     property int currentClip: -1
     property int currentClipTrack: -1
-    property color selectedTrackColor: Qt.tint(activePalette.base, Qt.rgba(0.8, 0.8, 0, 0.3));
+    property color selectedTrackColor: Qt.rgba(0.8, 0.8, 0, 0.3);
     property alias trackCount: tracksRepeater.count
     property bool stopScrolling: false
     property color shotcutBlue: Qt.rgba(23/255, 92/255, 118/255, 1.0)

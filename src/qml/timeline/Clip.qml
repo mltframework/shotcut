@@ -222,11 +222,11 @@ Rectangle {
             when: clipRoot.selected && clipRoot.isBlank
             PropertyChanges {
                 target: gradientStop2
-                color: '#77ffffff'
+                color: Qt.lighter(selectedTrackColor)
             }
             PropertyChanges {
                 target: gradientStop
-                color: 'transparent'
+                color: Qt.darker(selectedTrackColor)
             }
         },
         State {
