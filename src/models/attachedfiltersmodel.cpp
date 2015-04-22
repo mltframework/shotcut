@@ -80,6 +80,19 @@ void AttachedFiltersModel::setProducer(Mlt::Producer* producer)
     }
 }
 
+QString AttachedFiltersModel::trackTitle() const
+{
+    if (m_producer.isNull())
+        return QString();
+
+    return QString::fromUtf8(m_producer->get("shotcut:name"));
+}
+
+bool AttachedFiltersModel::isProducerSelected() const
+{
+    return !m_producer.isNull();
+}
+
 int AttachedFiltersModel::rowCount(const QModelIndex &parent) const
 {
     if (m_producer && m_producer->is_valid())
@@ -373,6 +386,8 @@ void AttachedFiltersModel::reset(Mlt::Producer* producer)
     }
 
     endResetModel();
+    emit trackTitleChanged();
+    emit isProducerSelectedChanged();
     emit readyChanged();
 }
 

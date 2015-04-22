@@ -64,6 +64,16 @@ Rectangle {
         columns: 3
         anchors.top: parent.top
         anchors.left: parent.left
+
+        Text {
+            text: qsTr("Track: %1").arg(attachedfiltersmodel.trackTitle)
+            height: visible ? implicitHeight : 0
+            visible: attachedfiltersmodel.trackTitle != ""
+            wrapMode: Text.Wrap
+            color: activePalette.text
+            Layout.columnSpan: 3
+            Layout.fillWidth: true
+        }
         
         AttachedFilters {
             id: attachedFilters
@@ -72,6 +82,12 @@ Rectangle {
             Layout.fillHeight: true
             onFilterClicked: {
                 root.currentFilterRequested(index)
+            }
+            Text {
+                anchors.centerIn: parent
+                text: qsTr("Nothing selected")
+                color: activePalette.text
+                visible: !attachedfiltersmodel.isProducerSelected
             }
         }
 
