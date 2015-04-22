@@ -1,6 +1,7 @@
 /***************************************************************************
  *   Copyright (C) 2010 by Marco Gittler (g.marco@freenet.de)              *
  *   Copyright (C) 2012 by Dan Dennedy (dan@dennedy.org)                   *
+ *   Copyright (C) 2015 Meltytech, LLC                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -19,15 +20,8 @@
  ***************************************************************************/
 
 #include "audiosignal.h"
-
-#include <QVBoxLayout>
 #include <QLabel>
-#include <QAction>
 #include <QPainter>
-#include <QDebug>
-#include <QList>
-
-#include <math.h>
 
 AudioSignal::AudioSignal(QWidget *parent): QWidget(parent)
 {
@@ -38,7 +32,6 @@ AudioSignal::AudioSignal(QWidget *parent): QWidget(parent)
     setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     setMinimumWidth(fontMetrics().width("-60") + 20);
     dbscale << 0 << -5 << -10 << -15 << -20 << -25 << -30 << -35 << -40 << -50;
-    connect(&m_timer,SIGNAL(timeout()),this,SLOT(slotNoAudioTimeout()));
 }
 
 //----------------------------------------------------------------------------
@@ -66,28 +59,18 @@ static inline double IEC_Scale(double dB)
 	return fScale;
 }
 
-void AudioSignal::slotAudioLevels(const QVector<double>& channels)
+void AudioSignal::showAudio(const QVector<double>& dbLevels)
 {
-    showAudio(channels);
-    m_timer.start(1000);
-}
-
-void AudioSignal::slotNoAudioTimeout()
-{
-    peeks.fill(0);
-    showAudio(QVector<double>(2, 0));
-    m_timer.stop();
-}
-
-void AudioSignal::showAudio(const QVector<double>& arr)
-{
-    channels = arr;
-    if (peeks.size() != channels.size()) {
-        peeks = QVector<double>(channels.size(), 0);
-        peekage = QVector<double>(channels.size(), 0);
+    if (peeks.size() != dbLevels.size()) {
+        channels = QVector<double>(dbLevels.size(), 0);
+        peeks = QVector<double>(dbLevels.size(), 0);
+        peekage = QVector<double>(dbLevels.size(), 0);
     }
-    for (int chan = 0; chan < peeks.size(); chan++)
+    for (int chan = 0; chan < dbLevels.size(); chan++)
     {
+        // Scale all levels.
+        channels[chan] = IEC_Scale(dbLevels[chan]);
+        // Save peaks
         peekage[chan] = peekage[chan] + 1;
         if (peeks[chan] < channels[chan] || peekage[chan] > 50) {
             peekage[chan] = 0;

@@ -21,6 +21,7 @@
 #include <QVBoxLayout>
 #include <MltProfile.h>
 #include "widgets/audiosignal.h"
+#include <cmath> // log10()
 
 AudioPeakMeterScopeWidget::AudioPeakMeterScopeWidget()
   : ScopeWidget("AudioPeakMeter")
@@ -31,6 +32,7 @@ AudioPeakMeterScopeWidget::AudioPeakMeterScopeWidget()
     qDebug() << "begin";
     Mlt::Profile profile;
     m_filter = new Mlt::Filter(profile, "audiolevel");
+    m_filter->set("iec_scale", 0);
     qRegisterMetaType< QVector<double> >("QVector<double>");
     setAutoFillBackground(true);
 
@@ -63,9 +65,14 @@ void AudioPeakMeterScopeWidget::refreshScope(const QSize& /*size*/, bool /*full*
             QVector<double> levels;
             for (int i = 0; i < channels; i++) {
                 QString s = QString("meta.media.audio_level.%1").arg(i);
-                levels << mFrame.get_double(s.toLatin1().constData());
+                double audioLevel = mFrame.get_double(s.toLatin1().constData());
+                if (audioLevel == 0.0) {
+                    levels << 0.0;
+                } else {
+                    levels << 20 * log10(audioLevel);
+                }
             }
-            QMetaObject::invokeMethod(m_audioSignal, "slotAudioLevels", Qt::QueuedConnection, Q_ARG(const QVector<double>&, levels));
+            QMetaObject::invokeMethod(m_audioSignal, "showAudio", Qt::QueuedConnection, Q_ARG(const QVector<double>&, levels));
         }
     }
 }
