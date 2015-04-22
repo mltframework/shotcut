@@ -67,7 +67,7 @@ void AudioPeakMeterScopeWidget::refreshScope(const QSize& /*size*/, bool /*full*
                 QString s = QString("meta.media.audio_level.%1").arg(i);
                 double audioLevel = mFrame.get_double(s.toLatin1().constData());
                 if (audioLevel == 0.0) {
-                    levels << 0.0;
+                    levels << -100.0;
                 } else {
                     levels << 20 * log10(audioLevel);
                 }
