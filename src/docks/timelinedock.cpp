@@ -548,10 +548,9 @@ void TimelineDock::appendFromPlaylist(Mlt::Playlist *playlist)
 
 void TimelineDock::splitClip(int trackIndex, int clipIndex)
 {
-    if (trackIndex < 0)
-        trackIndex = currentTrack();
-    if (clipIndex < 0)
-        clipIndex = clipIndexAtPlayhead(trackIndex);
+    if (trackIndex < 0 || clipIndex < 0)
+        chooseClipAtPosition(m_position, &trackIndex, &clipIndex);
+    setCurrentTrack(trackIndex);
     if (clipIndex >= 0 && trackIndex >= 0) {
         int i = m_model.trackList().at(trackIndex).mlt_index;
         QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
