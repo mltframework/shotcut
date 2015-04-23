@@ -140,6 +140,43 @@ int TimelineDock::clipIndexAtPosition(int trackIndex, int position)
     return result;
 }
 
+bool TimelineDock::isBlank(int trackIndex, int clipIndex)
+{
+    Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
+    QScopedPointer<Mlt::Producer> clip(getClip(trackIndex, clipIndex));
+    return !clip || clip->is_blank();
+}
+
+void TimelineDock::chooseClipAtPosition(int position, int * trackIndex, int * clipIndex)
+{
+    QScopedPointer<Mlt::Producer> clip;
+
+    // Start by checking for a hit at the specified track
+    if (*trackIndex != -1) {
+        *clipIndex = clipIndexAtPosition(*trackIndex, position);
+        if (*clipIndex != -1 && !isBlank(*trackIndex, *clipIndex))
+            return;
+    }
+
+    // Next we try the current track
+    *trackIndex = currentTrack();
+    *clipIndex = clipIndexAtPosition(*trackIndex, position);
+
+    if (*clipIndex != -1 && !isBlank(*trackIndex, *clipIndex))
+        return;
+
+    // if there was no hit, look through the other tracks
+    for (*trackIndex = 0; *trackIndex < m_model.trackList().size(); (*trackIndex)++) {
+        if (*trackIndex == currentTrack())
+            continue;
+        *clipIndex = clipIndexAtPosition(*trackIndex, position);
+        if (*clipIndex != -1 && !isBlank(*trackIndex, *clipIndex))
+            return;
+    }
+    *trackIndex = -1;
+    *clipIndex = -1;
+}
+
 int TimelineDock::clipCount(int trackIndex) const
 {
     if (trackIndex < 0)

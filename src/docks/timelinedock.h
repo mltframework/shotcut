@@ -50,6 +50,7 @@ public:
     Mlt::Producer* getClip(int trackIndex, int clipIndex);
     int clipIndexAtPlayhead(int trackIndex = -1);
     int clipIndexAtPosition(int trackIndex, int position);
+    void chooseClipAtPosition(int position, int * trackIndex, int * clipIndex);
     int dockYOffset() const;
     void setCurrentTrack(int currentTrack);
     int currentTrack() const;
@@ -116,6 +117,7 @@ protected:
     bool event(QEvent *event);
 
 private:
+    bool isBlank(int trackIndex, int clipIndex);
     Ui::TimelineDock *ui;
     ForwardingQuickViewWorkaround m_quickView;
     MultitrackModel m_model;
