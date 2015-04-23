@@ -257,7 +257,19 @@ QList<int> TimelineDock::selection() const
 
 void TimelineDock::selectClipUnderPlayhead()
 {
-    setSelection(QList<int>() << clipIndexAtPlayhead(-1));
+    int track = -1, clip = -1;
+    chooseClipAtPosition(m_position, &track, &clip);
+    if (clip == -1) {
+        int idx = clipIndexAtPlayhead(-1);
+        if (idx == -1)
+            setSelection(QList<int>());
+        else
+            setSelection(QList<int>() << clipIndexAtPlayhead(-1));
+        return;
+    }
+
+    setCurrentTrack(track);
+    setSelection(QList<int>() << clip);
 }
 
 int TimelineDock::centerOfClip(int trackIndex, int clipIndex)
