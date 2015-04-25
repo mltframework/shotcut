@@ -23,6 +23,8 @@
 #include <QtDebug>
 #include <QtWidgets>
 
+static const char* kCommentProperty = "shotcut:comment";
+
 AvformatProducerWidget::AvformatProducerWidget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::AvformatProducerWidget)
@@ -86,7 +88,7 @@ void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
     QString name = Util::baseName(s);
     ui->filenameLabel->setText(ui->filenameLabel->fontMetrics().elidedText(name, Qt::ElideLeft, width() - 30));
     ui->filenameLabel->setToolTip(s);
-    ui->notesTextEdit->setPlainText(QString::fromUtf8(m_producer->get("meta.attr.comment.markup")));
+    ui->notesTextEdit->setPlainText(QString::fromUtf8(m_producer->get(kCommentProperty)));
     ui->durationSpinBox->setValue(m_producer->get_length());
 
     // populate the track combos
@@ -349,5 +351,5 @@ void AvformatProducerWidget::on_actionCopyFullFilePath_triggered()
 
 void AvformatProducerWidget::on_notesTextEdit_textChanged()
 {
-    m_producer->set("meta.attr.comment.markup", ui->notesTextEdit->toPlainText().toUtf8().constData());
+    m_producer->set(kCommentProperty, ui->notesTextEdit->toPlainText().toUtf8().constData());
 }
