@@ -140,6 +140,43 @@ int TimelineDock::clipIndexAtPosition(int trackIndex, int position)
     return result;
 }
 
+bool TimelineDock::isBlank(int trackIndex, int clipIndex)
+{
+    Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
+    QScopedPointer<Mlt::Producer> clip(getClip(trackIndex, clipIndex));
+    return !clip || clip->is_blank();
+}
+
+void TimelineDock::chooseClipAtPosition(int position, int * trackIndex, int * clipIndex)
+{
+    QScopedPointer<Mlt::Producer> clip;
+
+    // Start by checking for a hit at the specified track
+    if (*trackIndex != -1) {
+        *clipIndex = clipIndexAtPosition(*trackIndex, position);
+        if (*clipIndex != -1 && !isBlank(*trackIndex, *clipIndex))
+            return;
+    }
+
+    // Next we try the current track
+    *trackIndex = currentTrack();
+    *clipIndex = clipIndexAtPosition(*trackIndex, position);
+
+    if (*clipIndex != -1 && !isBlank(*trackIndex, *clipIndex))
+        return;
+
+    // if there was no hit, look through the other tracks
+    for (*trackIndex = 0; *trackIndex < m_model.trackList().size(); (*trackIndex)++) {
+        if (*trackIndex == currentTrack())
+            continue;
+        *clipIndex = clipIndexAtPosition(*trackIndex, position);
+        if (*clipIndex != -1 && !isBlank(*trackIndex, *clipIndex))
+            return;
+    }
+    *trackIndex = -1;
+    *clipIndex = -1;
+}
+
 int TimelineDock::clipCount(int trackIndex) const
 {
     if (trackIndex < 0)
@@ -220,7 +257,19 @@ QList<int> TimelineDock::selection() const
 
 void TimelineDock::selectClipUnderPlayhead()
 {
-    setSelection(QList<int>() << clipIndexAtPlayhead(-1));
+    int track = -1, clip = -1;
+    chooseClipAtPosition(m_position, &track, &clip);
+    if (clip == -1) {
+        int idx = clipIndexAtPlayhead(-1);
+        if (idx == -1)
+            setSelection(QList<int>());
+        else
+            setSelection(QList<int>() << clipIndexAtPlayhead(-1));
+        return;
+    }
+
+    setCurrentTrack(track);
+    setSelection(QList<int>() << clip);
 }
 
 int TimelineDock::centerOfClip(int trackIndex, int clipIndex)
@@ -499,10 +548,9 @@ void TimelineDock::appendFromPlaylist(Mlt::Playlist *playlist)
 
 void TimelineDock::splitClip(int trackIndex, int clipIndex)
 {
-    if (trackIndex < 0)
-        trackIndex = currentTrack();
-    if (clipIndex < 0)
-        clipIndex = clipIndexAtPlayhead(trackIndex);
+    if (trackIndex < 0 || clipIndex < 0)
+        chooseClipAtPosition(m_position, &trackIndex, &clipIndex);
+    setCurrentTrack(trackIndex);
     if (clipIndex >= 0 && trackIndex >= 0) {
         int i = m_model.trackList().at(trackIndex).mlt_index;
         QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
