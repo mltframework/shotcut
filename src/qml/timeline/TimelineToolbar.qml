@@ -146,7 +146,7 @@ Rectangle {
         tooltip: qsTr('Ripple Delete - Remove current clip\nshifting following clips to the left (X)')
         iconName: 'list-remove'
         iconSource: 'qrc:///icons/oxygen/16x16/actions/list-remove.png'
-        onTriggered: if (selection.length) timeline.remove(currentTrack, selection[0])
+        onTriggered: timeline.remove(currentTrack, selection[0])
     }
 
     Action {
@@ -154,7 +154,7 @@ Rectangle {
         tooltip: qsTr('Lift - Remove current clip without\naffecting position of other clips (Z)')
         iconName: 'lift'
         iconSource: 'qrc:///icons/oxygen/16x16/actions/lift.png'
-        onTriggered: if (selection.length) timeline.lift(currentTrack, selection[0])
+        onTriggered: timeline.lift(currentTrack, selection[0])
     }
 
     Action {

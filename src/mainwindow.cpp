@@ -1273,8 +1273,6 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         } else {
             m_timelineDock->show();
             m_timelineDock->raise();
-            if (m_timelineDock->selection().isEmpty())
-                m_timelineDock->selectClipUnderPlayhead();
             m_timelineDock->removeSelection();
         }
         break;
@@ -1301,8 +1299,6 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         } else if (multitrack()) {
             m_timelineDock->show();
             m_timelineDock->raise();
-            if (m_timelineDock->selection().isEmpty())
-                m_timelineDock->selectClipUnderPlayhead();
             m_timelineDock->liftSelection();
         }
         break;

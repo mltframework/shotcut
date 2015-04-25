@@ -371,6 +371,8 @@ void TimelineDock::lift(int trackIndex, int clipIndex)
 void TimelineDock::removeSelection()
 {
     if (selection().isEmpty())
+        selectClipUnderPlayhead();
+    if (selection().isEmpty())
         return;
     foreach (int index, selection())
         remove(currentTrack(), index);
@@ -378,6 +380,8 @@ void TimelineDock::removeSelection()
 
 void TimelineDock::liftSelection()
 {
+    if (selection().isEmpty())
+        selectClipUnderPlayhead();
     if (selection().isEmpty())
         return;
     foreach (int index, selection())
