@@ -1861,8 +1861,12 @@ function deploy_win32
     cmd zip -gr shotcut-sdk.zip Shotcut
   else
     log Making installer
+	cmd osslsigncode sign -pkcs12 "$HOME/CodeSignCertificates.p12" -readpass "$HOME/CodeSignCertificates.pass" -n Shotcut -i http://www.meltytech.com -t http://timestamp.digicert.com -in shotcut.exe -out shotcut-signed.exe
+	cmd mv shotcut-signed.exe shotcut.exe
     cmd cd ..
     cmd makensis shotcut.nsi
+	cmd osslsigncode sign -pkcs12 "$HOME/CodeSignCertificates.p12" -readpass "$HOME/CodeSignCertificates.pass" -n "Shotcut Installer" -i http://www.meltytech.com -t http://timestamp.digicert.com -in shotcut-setup.exe -out shotcut-setup-signed.exe
+	cmd mv shotcut-setup-signed.exe shotcut-setup.exe
   fi
 
   popd
