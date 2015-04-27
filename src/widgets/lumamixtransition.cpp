@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Meltytech, LLC
+ * Copyright (c) 2014-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,8 +22,11 @@
 #include "mltcontroller.h"
 #include <QFileDialog>
 #include <QFileInfo>
+#include <QDebug>
 
-static const int kLumaComboCustomIndex = 23;
+static const int kLumaComboDissolveIndex = 0;
+static const int kLumaComboCutIndex = 1;
+static const int kLumaComboCustomIndex = 24;
 
 LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
     : QWidget(parent)
@@ -36,7 +39,12 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
     if (transition && transition->is_valid()) {
         QString resource = transition->get("resource");
         if (!resource.isEmpty() && resource.indexOf("%luma") != -1) {
-            ui->lumaCombo->setCurrentIndex(resource.midRef(resource.indexOf("%luma") + 5).left(2).toInt());
+            ui->lumaCombo->setCurrentIndex(resource.midRef(resource.indexOf("%luma") + 5).left(2).toInt() + 1);
+        } else if (!resource.isEmpty() && resource.startsWith("color:")) {
+            ui->lumaCombo->setCurrentIndex(kLumaComboCutIndex);
+            ui->softnessLabel->setText(tr("Position"));
+            ui->softnessSlider->setValue(qRound(QColor(resource.mid(6)).redF() * 100.0));
+            ui->invertCheckBox->setDisabled(true);
         } else if (!resource.isEmpty()) {
             ui->lumaCombo->setCurrentIndex(kLumaComboCustomIndex);
         } else {
@@ -45,7 +53,7 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
             ui->softnessSpinner->setDisabled(true);
         }
         ui->invertCheckBox->setChecked(transition->get_int("invert"));
-        if (transition->get("softness"))
+        if (transition->get("softness") && !resource.startsWith("color:"))
             ui->softnessSlider->setValue(qRound(transition->get_double("softness") * 100.0));
         updateCustomLumaLabel(*transition);
     }
@@ -80,7 +88,14 @@ void LumaMixTransition::on_softnessSlider_valueChanged(int value)
 {
     QScopedPointer<Mlt::Transition> transition(getTransition("luma"));
     if (transition && transition->is_valid()) {
-        transition->set("softness", value / 100.0);
+        if (kLumaComboCutIndex == ui->lumaCombo->currentIndex()) {
+            qreal r = qreal(value) / 100.0;
+            QColor color = QColor::fromRgbF(r, r, r);
+            QString resource = QString("color:%1").arg(color.name());
+            transition->set("resource", resource.toLatin1().constData());
+        } else {
+            transition->set("softness", value / 100.0);
+        }
         MLT.refreshConsumer();
     }
 }
@@ -132,10 +147,10 @@ Mlt::Transition *LumaMixTransition::getTransition(const QString &name)
 void LumaMixTransition::updateCustomLumaLabel(Mlt::Transition &transition)
 {
     QString resource = transition.get("resource");
-    if (resource.isEmpty() || resource.indexOf("%luma") != -1) {
+    if (resource.isEmpty() || resource.indexOf("%luma") != -1 || resource.startsWith("color:")) {
         ui->customLumaLabel->hide();
         ui->customLumaLabel->setToolTip(QString());
-    } else if (!resource.isEmpty()) {
+    } else if (!resource.isEmpty() && !resource.startsWith("color:")) {
         ui->customLumaLabel->setText(QFileInfo(transition.get("resource")).fileName());
         ui->customLumaLabel->setToolTip(transition.get("resource"));
         ui->customLumaLabel->show();
@@ -144,19 +159,24 @@ void LumaMixTransition::updateCustomLumaLabel(Mlt::Transition &transition)
 
 void LumaMixTransition::on_lumaCombo_activated(int index)
 {
-    if (index == 0) {
+    if (index == kLumaComboDissolveIndex || index == kLumaComboCutIndex) {
         on_invertCheckBox_clicked(false);
         ui->invertCheckBox->setChecked(false);
     }
-    ui->invertCheckBox->setEnabled(index > 0);
-    ui->softnessSlider->setEnabled(index > 0);
-    ui->softnessSpinner->setEnabled(index > 0);
+    ui->invertCheckBox->setEnabled( index != kLumaComboDissolveIndex && index != kLumaComboCutIndex);
+    ui->softnessSlider->setEnabled( index != kLumaComboDissolveIndex);
+    ui->softnessSpinner->setEnabled(index != kLumaComboDissolveIndex);
 
     QScopedPointer<Mlt::Transition> transition(getTransition("luma"));
     if (transition && transition->is_valid()) {
-        if (index == 0) {
+        if (index == kLumaComboDissolveIndex) {
             transition->set("resource", "");
+            ui->softnessLabel->setText(tr("Softness"));
+        } else if (index == kLumaComboCutIndex) { // Cut
+            ui->softnessLabel->setText(tr("Position"));
+            ui->softnessSlider->setValue(50);
         } else if (index == kLumaComboCustomIndex) {
+            ui->softnessLabel->setText(tr("Softness"));
             // Custom file
             QString path = Settings.openPath();
 #ifdef Q_OS_MAC
@@ -168,12 +188,18 @@ void LumaMixTransition::on_lumaCombo_activated(int index)
             if (!filename.isEmpty())
                 transition->set("resource", filename.toUtf8().constData());
         } else {
-            transition->set("resource", QString("%luma%1.pgm").arg(index, 2, 10, QChar('0')).toLatin1().constData());
+            ui->softnessLabel->setText(tr("Softness"));
+            transition->set("resource", QString("%luma%1.pgm").arg(index - 1, 2, 10, QChar('0')).toLatin1().constData());
         }
         if (qstrcmp(transition->get("resource"), "")) {
             transition->set("progressive", 1);
-            transition->set("invert", ui->invertCheckBox->isChecked());
-            transition->set("softness", ui->softnessSlider->value() / 100.0);
+            if (index == kLumaComboCutIndex) {
+                transition->set("invert", 0);
+                transition->set("softness", 0);
+            } else {
+                transition->set("invert", ui->invertCheckBox->isChecked());
+                transition->set("softness", ui->softnessSlider->value() / 100.0);
+            }
         }
         updateCustomLumaLabel(*transition);
         MLT.refreshConsumer();

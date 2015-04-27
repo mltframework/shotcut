@@ -66,6 +66,11 @@
          </item>
          <item>
           <property name="text">
+           <string>Cut</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
            <string>Bar Horizontal</string>
           </property>
          </item>
@@ -216,7 +221,7 @@
      <item row="3" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
-        <widget class="QLabel" name="label_3">
+        <widget class="QLabel" name="softnessLabel">
          <property name="text">
           <string>Softness</string>
          </property>
