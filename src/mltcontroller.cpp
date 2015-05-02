@@ -46,7 +46,7 @@ Controller::Controller()
 {
     qDebug() << "begin";
     m_repo = Mlt::Factory::init();
-    m_profile = new Mlt::Profile;
+    m_profile = new Mlt::Profile("atsc_1080p_25");
     updateAvformatCaching(0);
     qDebug() << "end";
 }
@@ -431,16 +431,18 @@ int Controller::consumerChanged()
 
 void Controller::setProfile(const QString& profile_name)
 {
-    Mlt::Profile tmp(profile_name.toLatin1().constData());
-    m_profile->set_colorspace(tmp.colorspace());
-    m_profile->set_frame_rate(tmp.frame_rate_num(), tmp.frame_rate_den());
-    m_profile->set_height(tmp.height());
-    m_profile->set_progressive(tmp.progressive());
-    m_profile->set_sample_aspect(tmp.sample_aspect_num(), tmp.sample_aspect_den());
-    m_profile->set_display_aspect(tmp.display_aspect_num(), tmp.display_aspect_den());
-    m_profile->set_width(alignWidth(tmp.width()));
-    m_profile->set_explicit(!profile_name.isEmpty());
-    restart();
+    if (!profile_name.isEmpty()) {
+        Mlt::Profile tmp(profile_name.toLatin1().constData());
+        m_profile->set_colorspace(tmp.colorspace());
+        m_profile->set_frame_rate(tmp.frame_rate_num(), tmp.frame_rate_den());
+        m_profile->set_height(tmp.height());
+        m_profile->set_progressive(tmp.progressive());
+        m_profile->set_sample_aspect(tmp.sample_aspect_num(), tmp.sample_aspect_den());
+        m_profile->set_display_aspect(tmp.display_aspect_num(), tmp.display_aspect_den());
+        m_profile->set_width(alignWidth(tmp.width()));
+        m_profile->set_explicit(!profile_name.isEmpty());
+        restart();
+    }
 }
 
 QString Controller::resource() const
