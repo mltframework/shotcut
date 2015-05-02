@@ -93,7 +93,7 @@ bool AttachedFiltersModel::isProducerSelected() const
     return !m_producer.isNull();
 }
 
-int AttachedFiltersModel::rowCount(const QModelIndex &parent) const
+int AttachedFiltersModel::rowCount(const QModelIndex &) const
 {
     if (m_producer && m_producer->is_valid())
         return m_metaList.count();
@@ -158,7 +158,7 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-bool AttachedFiltersModel::setData(const QModelIndex& index, const QVariant& value, int role)
+bool AttachedFiltersModel::setData(const QModelIndex& index, const QVariant& , int role)
 {
     if (role == Qt::CheckStateRole) {
         Mlt::Filter* filter = getFilter(index.row());
@@ -185,7 +185,7 @@ Qt::DropActions AttachedFiltersModel::supportedDropActions() const
     return Qt::MoveAction;
 }
 
-bool AttachedFiltersModel::insertRows(int row, int count, const QModelIndex &parent)
+bool AttachedFiltersModel::insertRows(int row, int , const QModelIndex &)
 {
     if (m_producer && m_producer->is_valid()) {
         if (m_dropRow == -1)
@@ -196,7 +196,7 @@ bool AttachedFiltersModel::insertRows(int row, int count, const QModelIndex &par
     }
 }
 
-bool AttachedFiltersModel::removeRows(int row, int count, const QModelIndex &parent)
+bool AttachedFiltersModel::removeRows(int row, int , const QModelIndex &parent)
 {
     if (m_producer && m_producer->is_valid() && m_dropRow >= 0 && row != m_dropRow) {
         bool result = moveRows(parent, row, 1, parent, m_dropRow);
