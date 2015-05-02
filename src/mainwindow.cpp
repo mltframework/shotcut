@@ -760,6 +760,9 @@ void MainWindow::open(QString url, const Mlt::Properties* properties)
         setCurrentFile("");
         setWindowModified(modified);
         MLT.resetURL();
+        // Return to automatic video mode if selected.
+        if (m_profileGroup->checkedAction()->data().toString().isEmpty())
+            MLT.profile().set_explicit(false);
     }
     if (!MLT.open(url)) {
         Mlt::Properties* props = const_cast<Mlt::Properties*>(properties);
