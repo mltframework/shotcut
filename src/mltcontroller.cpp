@@ -195,8 +195,8 @@ void Controller::play(double speed)
             m_consumer->set("buffer", 25);
             m_consumer->set("prefill", 1);
             // Changes to real_time require a consumer restart if running.
-            /* if (!m_consumer->is_stopped()) */
-            /*     m_consumer->stop(); */
+            if (!m_consumer->is_stopped())
+                m_consumer->stop();
         }
         m_consumer->start();
         refreshConsumer();
