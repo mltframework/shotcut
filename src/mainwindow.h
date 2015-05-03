@@ -93,6 +93,7 @@ private:
     void changeDeinterlacer(bool checked, const char* method);
     void changeInterpolation(bool checked, const char* method);
     bool checkAutoSave(QString &url);
+    void stepLeftBySeconds(int sec);
 
     Ui::MainWindow* ui;
     Player* m_player;
