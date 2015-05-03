@@ -1222,57 +1222,17 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         }
         break;
     case Qt::Key_1:
-        if (m_playlistDock->isVisible()) {
-            m_playlistDock->raise();
-            m_playlistDock->setIndex(0);
-        }
-        break;
     case Qt::Key_2:
-        if (m_playlistDock->isVisible()) {
-            m_playlistDock->raise();
-            m_playlistDock->setIndex(1);
-        }
-        break;
     case Qt::Key_3:
-        if (m_playlistDock->isVisible()) {
-            m_playlistDock->raise();
-            m_playlistDock->setIndex(2);
-        }
-        break;
     case Qt::Key_4:
-        if (m_playlistDock->isVisible()) {
-            m_playlistDock->raise();
-            m_playlistDock->setIndex(3);
-        }
-        break;
     case Qt::Key_5:
-        if (m_playlistDock->isVisible()) {
-            m_playlistDock->raise();
-            m_playlistDock->setIndex(4);
-        }
-        break;
     case Qt::Key_6:
-        if (m_playlistDock->isVisible()) {
-            m_playlistDock->raise();
-            m_playlistDock->setIndex(5);
-        }
-        break;
     case Qt::Key_7:
-        if (m_playlistDock->isVisible()) {
-            m_playlistDock->raise();
-            m_playlistDock->setIndex(6);
-        }
-        break;
     case Qt::Key_8:
-        if (m_playlistDock->isVisible()) {
-            m_playlistDock->raise();
-            m_playlistDock->setIndex(7);
-        }
-        break;
     case Qt::Key_9:
         if (m_playlistDock->isVisible()) {
             m_playlistDock->raise();
-            m_playlistDock->setIndex(8);
+            m_playlistDock->setIndex(event->key() - Qt::Key_1);
         }
         break;
     case Qt::Key_0:
