@@ -143,8 +143,8 @@ int TimelineDock::clipIndexAtPosition(int trackIndex, int position)
 bool TimelineDock::isBlank(int trackIndex, int clipIndex)
 {
     Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
-    QScopedPointer<Mlt::Producer> clip(getClip(trackIndex, clipIndex));
-    return !clip || clip->is_blank();
+    return m_model.index(clipIndex, 0, m_model.index(trackIndex))
+        .data(MultitrackModel::IsBlankRole).toBool();
 }
 
 void TimelineDock::chooseClipAtPosition(int position, int * trackIndex, int * clipIndex)
