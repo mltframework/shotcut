@@ -47,7 +47,7 @@ public:
     void setPosition(int position);
     Q_INVOKABLE QString timecode(int frames);
     Mlt::ClipInfo* getClipInfo(int trackIndex, int clipIndex);
-    Mlt::Producer* getClip(int trackIndex, int clipIndex);
+    Mlt::Producer* producerForClip(int trackIndex, int clipIndex);
     int clipIndexAtPlayhead(int trackIndex = -1);
     int clipIndexAtPosition(int trackIndex, int position);
     void chooseClipAtPosition(int position, int * trackIndex, int * clipIndex);

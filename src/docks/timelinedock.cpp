@@ -104,7 +104,7 @@ Mlt::ClipInfo *TimelineDock::getClipInfo(int trackIndex, int clipIndex)
     return result;
 }
 
-Mlt::Producer *TimelineDock::getClip(int trackIndex, int clipIndex)
+Mlt::Producer *TimelineDock::producerForClip(int trackIndex, int clipIndex)
 {
     Mlt::Producer* result = 0;
     Mlt::ClipInfo* info = getClipInfo(trackIndex, clipIndex);
@@ -342,7 +342,7 @@ void TimelineDock::append(int trackIndex)
 void TimelineDock::remove(int trackIndex, int clipIndex)
 {
     Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
-    Mlt::Producer* clip = getClip(trackIndex, clipIndex);
+    Mlt::Producer* clip = producerForClip(trackIndex, clipIndex);
     if (clip) {
         QString xml = MLT.XML(clip);
         delete clip;
@@ -356,7 +356,7 @@ void TimelineDock::remove(int trackIndex, int clipIndex)
 void TimelineDock::lift(int trackIndex, int clipIndex)
 {
     Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
-    QScopedPointer<Mlt::Producer> clip(getClip(trackIndex, clipIndex));
+    QScopedPointer<Mlt::Producer> clip(producerForClip(trackIndex, clipIndex));
     if (clip) {
         if (clip->is_blank())
             return;
