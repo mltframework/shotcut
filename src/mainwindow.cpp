@@ -1034,7 +1034,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_player->seek(MLT.producer()->get_length() - 1);
         break;
     case Qt::Key_Left:
-        if (event->modifiers() == Qt::ControlModifier && m_timelineDock->isVisible()) {
+        if ((event->modifiers() & Qt::ControlModifier) && m_timelineDock->isVisible()) {
             if (m_timelineDock->selection().isEmpty()) {
                 m_timelineDock->selectClipUnderPlayhead();
             } else if (m_timelineDock->selection().size() == 1) {
@@ -1049,7 +1049,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         }
         break;
     case Qt::Key_Right:
-        if (event->modifiers() == Qt::ControlModifier && m_timelineDock->isVisible()) {
+        if ((event->modifiers() & Qt::ControlModifier) && m_timelineDock->isVisible()) {
             if (m_timelineDock->selection().isEmpty()) {
                 m_timelineDock->selectClipUnderPlayhead();
             } else if (m_timelineDock->selection().size() == 1) {
@@ -1070,7 +1070,12 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         stepRightOneSecond();
         break;
     case Qt::Key_Space:
+#ifdef Q_OS_MAC
+        // Spotlight defaults to Cmd+Space, so also accept Ctrl+Space.
+        if ((event->modifiers() == Qt::MetaModifier || (event->modifiers() & Qt::ControlModifier)) && m_timelineDock->isVisible())
+#else
         if (event->modifiers() == Qt::ControlModifier && m_timelineDock->isVisible())
+#endif
             m_timelineDock->selectClipUnderPlayhead();
         else
             handled = false;
@@ -1087,7 +1092,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         }
         break;
     case Qt::Key_D:
-        if (event->modifiers() == Qt::ControlModifier)
+        if (event->modifiers() & Qt::ControlModifier)
             m_timelineDock->setSelection(QList<int>());
         else
             handled = false;
@@ -1160,7 +1165,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
     case Qt::Key_Up:
         if (multitrack()) {
             int newClipIndex = -1;
-            if (event->modifiers() == Qt::ControlModifier &&
+            if ((event->modifiers() & Qt::ControlModifier) &&
                     !m_timelineDock->selection().isEmpty() &&
                     m_timelineDock->currentTrack() > 0) {
 
@@ -1176,7 +1181,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
 
         } else if (m_playlistDock->isVisible()) {
             m_playlistDock->raise();
-            if (event->modifiers() == Qt::ControlModifier)
+            if (event->modifiers() & Qt::ControlModifier)
                 m_playlistDock->moveClipUp();
             m_playlistDock->decrementIndex();
         }
@@ -1184,7 +1189,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
     case Qt::Key_Down:
         if (multitrack()) {
             int newClipIndex = -1;
-            if (event->modifiers() == Qt::ControlModifier &&
+            if ((event->modifiers() & Qt::ControlModifier) &&
                     !m_timelineDock->selection().isEmpty() &&
                     m_timelineDock->currentTrack() < m_timelineDock->model()->trackList().count() - 1) {
 
@@ -1200,7 +1205,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
 
         } else if (m_playlistDock->isVisible()) {
             m_playlistDock->raise();
-            if (event->modifiers() == Qt::ControlModifier)
+            if (event->modifiers() & Qt::ControlModifier)
                 m_playlistDock->moveClipDown();
             m_playlistDock->incrementIndex();
         }
