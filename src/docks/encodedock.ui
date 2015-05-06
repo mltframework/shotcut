@@ -793,7 +793,7 @@
               <item>
                <widget class="QSpinBox" name="bFramesSpinner">
                 <property name="toolTip">
-                 <string>B frames are the bidrectional &quot;delta&quot; pictures
+                 <string>B frames are the bidirectional &quot;delta&quot; pictures
 in temporal compression</string>
                 </property>
                 <property name="maximum">
