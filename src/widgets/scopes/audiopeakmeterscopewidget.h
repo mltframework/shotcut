@@ -25,7 +25,7 @@
 #include <QVector>
 #include <MltFilter.h>
 
-class AudioSignal;
+class AudioMeterWidget;
 
 class AudioPeakMeterScopeWidget Q_DECL_FINAL : public ScopeWidget
 {
@@ -45,7 +45,7 @@ private:
     Mlt::Filter* m_filter;
 
     // Members accessed by GUI thread.
-    AudioSignal* m_audioSignal;
+    AudioMeterWidget* m_audioMeter;
     Qt::Orientation m_orientation;
 };
 

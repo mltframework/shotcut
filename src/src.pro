@@ -36,7 +36,7 @@ SOURCES += main.cpp\
     widgets/avformatproducerwidget.cpp \
     widgets/imageproducerwidget.cpp \
     widgets/timespinbox.cpp \
-    widgets/audiosignal.cpp \
+    widgets/audiometerwidget.cpp \
     docks/recentdock.cpp \
     docks/encodedock.cpp \
     dialogs/addencodepresetdialog.cpp \
@@ -128,7 +128,8 @@ HEADERS  += mainwindow.h \
     widgets/avformatproducerwidget.h \
     widgets/imageproducerwidget.h \
     widgets/timespinbox.h \
-    widgets/audiosignal.h \
+    widgets/iecscale.h \
+    widgets/audiometerwidget.h \
     docks/recentdock.h \
     docks/encodedock.h \
     dialogs/addencodepresetdialog.h \

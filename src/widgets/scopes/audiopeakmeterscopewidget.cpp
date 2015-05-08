@@ -20,13 +20,13 @@
 #include <QDebug>
 #include <QVBoxLayout>
 #include <MltProfile.h>
-#include "widgets/audiosignal.h"
+#include "widgets/audiometerwidget.h"
 #include <cmath> // log10()
 
 AudioPeakMeterScopeWidget::AudioPeakMeterScopeWidget()
   : ScopeWidget("AudioPeakMeter")
   , m_filter(0)
-  , m_audioSignal(0)
+  , m_audioMeter(0)
   , m_orientation((Qt::Orientation)-1)
 {
     qDebug() << "begin";
@@ -38,9 +38,12 @@ AudioPeakMeterScopeWidget::AudioPeakMeterScopeWidget()
 
     QVBoxLayout *vlayout = new QVBoxLayout(this);
     vlayout->setContentsMargins(4, 4, 4, 4);
-    m_audioSignal = new AudioSignal(this);
-    m_audioSignal->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-    vlayout->addWidget(m_audioSignal);
+    m_audioMeter = new AudioMeterWidget(this);
+    m_audioMeter->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    QVector<int> dbscale;
+    dbscale << -50 << -40 << -35 << -30 << -25 << -20 << -15 << -10 << -5 << 0 << 3;
+    m_audioMeter->setDbLabels(dbscale);
+    vlayout->addWidget(m_audioMeter);
     qDebug() << "end";
 }
 
@@ -72,7 +75,7 @@ void AudioPeakMeterScopeWidget::refreshScope(const QSize& /*size*/, bool /*full*
                     levels << 20 * log10(audioLevel);
                 }
             }
-            QMetaObject::invokeMethod(m_audioSignal, "showAudio", Qt::QueuedConnection, Q_ARG(const QVector<double>&, levels));
+            QMetaObject::invokeMethod(m_audioMeter, "showAudio", Qt::QueuedConnection, Q_ARG(const QVector<double>&, levels));
         }
     }
 }
@@ -86,11 +89,11 @@ void AudioPeakMeterScopeWidget::setOrientation(Qt::Orientation orientation)
 {
     if (orientation != m_orientation) {
         if (orientation == Qt::Vertical) {
-            m_audioSignal->setMinimumSize(41, 250);
+            m_audioMeter->setMinimumSize(41, 250);
             setMinimumSize(49, 258);
             setMaximumSize(49, 508);
         } else {
-            m_audioSignal->setMinimumSize(250, 41);
+            m_audioMeter->setMinimumSize(250, 41);
             setMinimumSize(258, 49);
             setMaximumSize(508, 49);
         }
