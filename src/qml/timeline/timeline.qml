@@ -128,11 +128,13 @@ Rectangle {
                             isMute: model.mute
                             isHidden: model.hidden
                             isComposite: model.composite
+                            isLocked: model.locked
                             isVideo: !model.audio
                             width: headerWidth
                             height: model.audio? multitrack.trackHeight : multitrack.trackHeight * 2
                             selected: false
                             current: index === currentTrack
+                            onIsLockedChanged: tracksRepeater.itemAt(index).isLocked = isLocked
                             onClicked: {
                                 root.selection = []
                                 currentTrack = index
@@ -423,7 +425,6 @@ Rectangle {
             model: multitrack
             rootIndex: trackDelegateModel.modelIndex(index)
             height: audio? multitrack.trackHeight : multitrack.trackHeight * 2
-            width: childrenRect.width
             isAudio: audio
             isCurrentTrack: currentTrack === index
             timeScale: multitrack.scaleFactor
@@ -474,6 +475,33 @@ Rectangle {
             onCheckSnap: {
                 for (var i = 0; i < tracksRepeater.count; i++)
                     tracksRepeater.itemAt(i).snapClip(clip)
+            }
+            Canvas {
+                anchors.fill: parent
+                opacity: parent.isLocked
+                visible: opacity
+                Behavior on opacity { NumberAnimation {} }
+                onVisibleChanged: if (visible) requestPaint()
+                onWidthChanged: requestPaint()
+                onPaint: {
+                    var cx = getContext('2d');
+                    if (cx === null) return
+                    cx.strokeStyle = activePalette.alternateBase;
+                    cx.lineWidth = 2
+                    for (var currentX = -height; currentX < width; currentX += 20) {
+                        cx.beginPath();
+                        cx.moveTo(currentX + height, 0);
+                        cx.lineTo(currentX, height);
+                        cx.stroke();
+                    }
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    onPressed: {
+                        mouse.accepted = true;
+                        trackHeaderRepeater.itemAt(index).pulseLockButton()
+                    }
+                }
             }
         }
     }

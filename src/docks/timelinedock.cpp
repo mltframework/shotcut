@@ -282,6 +282,13 @@ int TimelineDock::centerOfClip(int trackIndex, int clipIndex)
     return centerOfClip;
 }
 
+bool TimelineDock::isTrackLocked(int trackIndex) const
+{
+    int i = m_model.trackList().at(trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
+    return track->get_int("shotcut:lock");
+}
+
 void TimelineDock::clearSelectionIfInvalid()
 {
     int count = clipCount(currentTrack());
@@ -463,6 +470,12 @@ void TimelineDock::setTrackComposite(int trackIndex, Qt::CheckState composite)
 {
     MAIN.undoStack()->push(
         new Timeline::CompositeTrackCommand(m_model, trackIndex, composite));
+}
+
+void TimelineDock::setTrackLock(int trackIndex, Qt::CheckState lock)
+{
+    MAIN.undoStack()->push(
+        new Timeline::LockTrackCommand(m_model, trackIndex, lock));
 }
 
 bool TimelineDock::moveClip(int fromTrack, int toTrack, int clipIndex, int position)

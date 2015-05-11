@@ -28,6 +28,7 @@ Rectangle {
     property real timeScale: 1.0
     property bool placeHolderAdded: false
     property bool isCurrentTrack: false
+    property bool isLocked: false
     property var selection
 
     signal clipClicked(var clip, var track)
@@ -54,6 +55,7 @@ Rectangle {
     }
 
     color: 'transparent'
+    width: clipRow.width
 
     DelegateModel {
         id: trackModel
@@ -189,6 +191,7 @@ Rectangle {
     }
 
     Row {
+        id: clipRow
         Repeater { id: repeater; model: trackModel }
     }
 }

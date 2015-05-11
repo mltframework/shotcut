@@ -162,6 +162,19 @@ private:
     Qt::CheckState m_oldValue;
 };
 
+class LockTrackCommand : public QUndoCommand
+{
+public:
+    LockTrackCommand(MultitrackModel& model, int trackIndex, Qt::CheckState value, QUndoCommand * parent = 0);
+    void redo();
+    void undo();
+private:
+    MultitrackModel& m_model;
+    int m_trackIndex;
+    Qt::CheckState m_value;
+    Qt::CheckState m_oldValue;
+};
+
 class MoveClipCommand : public QUndoCommand
 {
 public:

@@ -40,6 +40,7 @@ static const char* kTrackNameProperty = "shotcut:name";
 static const char* kShotcutPlaylistProperty = "shotcut:playlist";
 static const char* kAudioTrackProperty = "shotcut:audio";
 static const char* kVideoTrackProperty = "shotcut:video";
+static const char* kTrackLockProperty = "shotcut:lock";
 static const char* kBackgroundTrackId = "background";
 static const char* kPlaylistTrackId = "main bin";
 static const char* kTrackHeightProperty = "shotcut:trackHeight";
@@ -308,6 +309,8 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                 return playlist.get_int("hide") & 1;
             case IsAudioRole:
                 return m_trackList[index.row()].type == AudioTrackType;
+            case IsLockedRole:
+                return track->get_int(kTrackLockProperty) ? Qt::Checked : Qt::Unchecked;
             case IsCompositeRole: {
                 QScopedPointer<Mlt::Transition> transition(getTransition("frei0r.cairoblend", i));
                 if (!transition)
@@ -372,6 +375,7 @@ QHash<int, QByteArray> MultitrackModel::roleNames() const
     roles[IsAudioRole] = "audio";
     roles[AudioLevelsRole] = "audioLevels";
     roles[IsCompositeRole] = "composite";
+    roles[IsLockedRole] = "locked";
     roles[FadeInRole] = "fadeIn";
     roles[FadeOutRole] = "fadeOut";
     roles[IsTransitionRole] = "isTransition";
@@ -460,6 +464,19 @@ void MultitrackModel::setTrackComposite(int row, Qt::CheckState composite)
         emit dataChanged(modelIndex, modelIndex, roles);
         emit modified();
     }
+}
+
+void MultitrackModel::setTrackLock(int row, Qt::CheckState hold)
+{
+    int i = m_trackList.at(row).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    track->set(kTrackLockProperty, hold == Qt::Checked);
+
+    QModelIndex modelIndex = index(row, 0);
+    QVector<int> roles;
+    roles << IsLockedRole;
+    emit dataChanged(modelIndex, modelIndex, roles);
+    emit modified();
 }
 
 bool MultitrackModel::trimClipInValid(int trackIndex, int clipIndex, int delta)
