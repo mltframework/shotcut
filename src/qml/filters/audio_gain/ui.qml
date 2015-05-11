@@ -30,7 +30,7 @@ Rectangle {
         if (filter.isNew) {
             // Set default parameter values
             filter.set(gainParameter, 1.0)
-            slider.value = filter.getDouble(gainParameter) * 100
+            slider.value = 20 * Math.log(filter.getDouble(gainParameter))
         }
     }
 
@@ -42,16 +42,16 @@ Rectangle {
             Label { text: qsTr('Gain') }
             SliderSpinner {
                 id: slider
-                minimumValue: 0
-                maximumValue: 300
-                suffix: ' %'
+                minimumValue: -50
+                maximumValue: 24
+                suffix: ' dB'
                 decimals: 1
                 spinnerWidth: 80
-                value: filter.getDouble(gainParameter) * 100
-                onValueChanged:filter.set(gainParameter, value / 100)
+                value: 20 * Math.log10(filter.getDouble(gainParameter)) / Math.LN10
+                onValueChanged:filter.set(gainParameter, Math.pow(10, value / 20))
             }
             UndoButton {
-                onClicked: slider.value = 100
+                onClicked: slider.value = 0
             }
         }
         Item {
