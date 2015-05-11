@@ -1076,6 +1076,10 @@ int MultitrackModel::insertClip(int trackIndex, Mlt::Producer &clip, int positio
                 int mltIndex = m_trackList.at(j).mlt_index;
 
                 QScopedPointer<Mlt::Producer> otherTrack(m_tractor->track(mltIndex));
+
+                if (otherTrack->get_int(kTrackLockProperty))
+                    continue;
+
                 if (otherTrack) {
                     Mlt::Playlist trackPlaylist(*otherTrack);
                     int idx = trackPlaylist.get_clip_index_at(position);
