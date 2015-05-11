@@ -64,6 +64,7 @@ public:
         IsAudioRole,
         AudioLevelsRole, /// clip only
         IsCompositeRole, /// track only
+        IsLockedRole,    /// track only
         FadeInRole,      /// clip only
         FadeOutRole,     /// clip only
         IsTransitionRole /// clip only
@@ -114,6 +115,7 @@ public slots:
     void setTrackMute(int row, bool mute);
     void setTrackHidden(int row, bool hidden);
     void setTrackComposite(int row, Qt::CheckState composite);
+    void setTrackLock(int row, Qt::CheckState hold);
     int trimClipIn(int trackIndex, int clipIndex, int delta);
     void notifyClipIn(int trackIndex, int clipIndex);
     int trimClipOut(int trackIndex, int clipIndex, int delta);
