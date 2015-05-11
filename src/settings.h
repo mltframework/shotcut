@@ -28,6 +28,7 @@ class ShotcutSettings : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(bool timelineShowWaveforms READ timelineShowWaveforms WRITE setTimelineShowWaveforms NOTIFY timelineShowWaveformsChanged)
+    Q_PROPERTY(bool rippleAllTracks READ rippleAllTracks WRITE setRippleAllTracks NOTIFY rippleAllTracksChanged)
     Q_PROPERTY(QString openPath READ openPath WRITE setOpenPath NOTIFY openPathChanged)
     Q_PROPERTY(QString savePath READ savePath WRITE setSavePath NOTIFY savePathChanged)
     Q_PROPERTY(bool playerGPU READ playerGPU NOTIFY playerGpuChanged)
@@ -121,6 +122,9 @@ public:
 
     void sync();
 
+    bool rippleAllTracks() const;
+    void setRippleAllTracks(bool rippleAllTracks);
+
 signals:
     void openPathChanged();
     void savePathChanged();
@@ -130,6 +134,7 @@ signals:
     void audioOutDurationChanged();
     void videoInDurationChanged();
     void videoOutDurationChanged();
+    void rippleAllTracksChanged();
 
 private:
     QSettings settings;

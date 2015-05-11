@@ -37,6 +37,17 @@ ShotcutSettings &ShotcutSettings::singleton()
     return *instance;
 }
 
+bool ShotcutSettings::rippleAllTracks() const
+{
+    return settings.value("rippleAllTracks", false).toBool();;
+}
+
+void ShotcutSettings::setRippleAllTracks(bool rippleAllTracks)
+{
+    settings.setValue("rippleAllTracks", rippleAllTracks);
+    emit rippleAllTracksChanged();
+}
+
 QString ShotcutSettings::language() const
 {
     return settings.value("language", QLocale::system().name()).toString();

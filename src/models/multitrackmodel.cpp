@@ -1065,7 +1065,7 @@ int MultitrackModel::insertClip(int trackIndex, Mlt::Producer &clip, int positio
             endInsertRows();
             result = targetIndex;
         }
-        if (result >= 0) {
+        if (result >= 0 && Settings.rippleAllTracks()) {
             //fill in/expand blanks in all the other tracks
             for (int j = 0; j < m_trackList.count(); ++j) {
                 if (j == trackIndex)
