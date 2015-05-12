@@ -1832,7 +1832,7 @@ function deploy_win32
   cmd mv COPYING COPYING.txt
   cmd cp -p "$QTDIR"/bin/Qt5{Concurrent,Core,Declarative,Gui,Multimedia,MultimediaQuick,MultimediaWidgets,Network,OpenGL,Positioning,PrintSupport,Qml,QmlParticles,Quick,Script,Sensors,Sql,Svg,V8,WebKit,WebKitWidgets,Widgets,Xml,XmlPatterns}.dll .
   cmd cp -p "$QTDIR"/bin/{icudt51,icuin51,icuuc51,libstdc++-6,libwinpthread-1}.dll .
-  if [ "$TARGET_OS"  "Win32" ]; then
+  if [ "$TARGET_OS" = "Win32" ]; then
     cmd cp -p "$QTDIR"/bin/{icudt51,icuin51,icuuc51,libgcc_s_dw2-1,libstdc++-6,libwinpthread-1}.dll .
   else
     cmd cp -p "$QTDIR"/bin/{icudt52,icuin52,icuuc52,libgcc_s_sjlj-1,libstdc++-6,libwinpthread-1}.dll .
@@ -1844,7 +1844,11 @@ function deploy_win32
   cmd cp -pr "$QTDIR"/qml lib
   cmd cp -pr "$QTDIR"/translations/qt_*.qm share/translations
   cmd cp -pr "$QTDIR"/translations/qtbase_*.qm share/translations
-  cmd tar -xjf "$HOME/ladspa_plugins-win-0.4.15.tar.bz2"
+  if [ "$TARGET_OS" = "Win32" ]; then
+	cmd tar -xjf "$HOME/ladspa_plugins-win-0.4.15.tar.bz2"
+  else
+	cmd tar -xjf "$HOME/swh-plugins-win64-0.4.15.tar.bz2"
+  fi
   printf "[Paths]\nPlugins=lib/qt5\nQml2Imports=lib/qml\n" > qt.conf
 
   if [ "$SDK" = "1" ]; then
