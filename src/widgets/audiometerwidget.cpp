@@ -51,7 +51,13 @@ void AudioMeterWidget::setChannelLabels(const QStringList& labels)
 
 void AudioMeterWidget::setChannelLabelUnits(const QString& units)
 {
-	m_chanLabelUnits = units;
+    m_chanLabelUnits = units;
+}
+
+void AudioMeterWidget::setOrientation(Qt::Orientation orientation)
+{
+    m_orient = orientation;
+    calcGraphRect();
 }
 
 void AudioMeterWidget::showAudio(const QVector<double>& dbLevels)
@@ -350,7 +356,6 @@ void AudioMeterWidget::paintEvent(QPaintEvent* /*e*/)
 
 void AudioMeterWidget::resizeEvent(QResizeEvent*)
 {
-    m_orient = width() > height() ? Qt::Horizontal : Qt::Vertical;
     calcGraphRect();
 }
 

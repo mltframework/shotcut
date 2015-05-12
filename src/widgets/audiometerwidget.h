@@ -35,6 +35,7 @@ public:
     void setDbLabels(const QVector<int>& labels);
     void setChannelLabels(const QStringList& labels);
     void setChannelLabelUnits(const QString& units);
+    void setOrientation(Qt::Orientation orientation);
 
 public slots:
     void showAudio(const QVector<double>& dbLevels);

@@ -99,5 +99,6 @@ void AudioPeakMeterScopeWidget::setOrientation(Qt::Orientation orientation)
         }
         updateGeometry();
         m_orientation = orientation;
+        m_audioMeter->setOrientation(orientation);
     }
 }

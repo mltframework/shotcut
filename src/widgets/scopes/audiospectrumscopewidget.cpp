@@ -120,6 +120,7 @@ AudioSpectrumScopeWidget::AudioSpectrumScopeWidget()
     vlayout->addWidget(m_audioMeter);
 
     // Config the size.
+    m_audioMeter->setOrientation(Qt::Vertical);
     m_audioMeter->setMinimumSize(200, 200);
     m_audioMeter->setMaximumSize(600, 600);
     setMinimumSize(204, 204);
