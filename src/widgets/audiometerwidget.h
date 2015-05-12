@@ -34,6 +34,7 @@ public:
     AudioMeterWidget(QWidget *parent = 0);
     void setDbLabels(const QVector<int>& labels);
     void setChannelLabels(const QStringList& labels);
+    void setChannelLabelUnits(const QString& units);
 
 public slots:
     void showAudio(const QVector<double>& dbLevels);
@@ -41,6 +42,7 @@ public slots:
 protected:
     void paintEvent(QPaintEvent*) Q_DECL_OVERRIDE;
     void resizeEvent(QResizeEvent*) Q_DECL_OVERRIDE;
+    void mouseMoveEvent(QMouseEvent*) Q_DECL_OVERRIDE;
 
 private:
     void calcGraphRect();
@@ -48,6 +50,7 @@ private:
     void drawChanLabels(QPainter&);
     void drawBars(QPainter&);
     void drawPeaks(QPainter&);
+    void updateToolTip();
     QRectF m_graphRect;
     QSizeF m_barSize;
     Qt::Orientation m_orient;
@@ -57,6 +60,7 @@ private:
     QStringList m_chanLabels;
     QLinearGradient m_gradient;
     double m_maxDb;
+    QString m_chanLabelUnits;
 };
 
 #endif

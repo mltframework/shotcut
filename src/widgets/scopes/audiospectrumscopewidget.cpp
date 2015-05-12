@@ -116,6 +116,7 @@ AudioSpectrumScopeWidget::AudioSpectrumScopeWidget()
         freqLabels << BAND_TAB[i].label;
     }
     m_audioMeter->setChannelLabels(freqLabels);
+    m_audioMeter->setChannelLabelUnits("Hz");
     vlayout->addWidget(m_audioMeter);
 
     // Config the size.

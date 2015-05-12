@@ -21,6 +21,7 @@
 #include <QPainter>
 #include <QColor>
 #include <QtAlgorithms>
+#include <QToolTip>
 
 static const int TEXT_PAD = 2;
 
@@ -29,6 +30,7 @@ AudioMeterWidget::AudioMeterWidget(QWidget *parent): QWidget(parent)
     const QFont& font = QWidget::font();
     const int fontSize = font.pointSize() - (font.pointSize() > 10? 2 : (font.pointSize() > 8? 1 : 0));
     QWidget::setFont(QFont(font.family(), fontSize));
+    QWidget::setMouseTracking(true);
 }
 
 void AudioMeterWidget::setDbLabels(const QVector<int>& labels)
@@ -47,6 +49,11 @@ void AudioMeterWidget::setChannelLabels(const QStringList& labels)
     calcGraphRect();
 }
 
+void AudioMeterWidget::setChannelLabelUnits(const QString& units)
+{
+	m_chanLabelUnits = units;
+}
+
 void AudioMeterWidget::showAudio(const QVector<double>& dbLevels)
 {
     m_levels = dbLevels;
@@ -63,6 +70,7 @@ void AudioMeterWidget::showAudio(const QVector<double>& dbLevels)
         }
     }
     update();
+    updateToolTip();
 }
 
 void AudioMeterWidget::calcGraphRect()
@@ -233,15 +241,15 @@ void AudioMeterWidget::drawBars(QPainter& p)
             double level = IEC_ScaleMax(m_levels[i], m_maxDb);
             bar.setLeft(m_graphRect.left());
             bar.setRight(bar.left() + m_barSize.width() * level);
-            bar.setBottom(m_graphRect.bottom() - i * m_barSize.height() + 1);
-            bar.setTop(bar.bottom() - m_barSize.height() + 2);
+            bar.setBottom(m_graphRect.bottom() - i * m_barSize.height() - 1);
+            bar.setTop(bar.bottom() - m_barSize.height() + 1);
             p.drawRoundedRect(bar, 3, 3);
         }
     } else {
         for (int i = 0; i < chanCount; i++) {
             double level = IEC_ScaleMax(m_levels[i], m_maxDb);
             bar.setLeft(m_graphRect.left() + i * m_barSize.width() + 1);
-            bar.setRight(bar.left() + m_barSize.width() - 2);
+            bar.setRight(bar.left() + m_barSize.width() - 1);
             bar.setBottom(m_graphRect.bottom());
             bar.setTop(bar.bottom() - m_barSize.height() * level);
             p.drawRoundedRect(bar, 3, 3);
@@ -283,6 +291,42 @@ void AudioMeterWidget::drawPeaks(QPainter& p)
     }
 }
 
+void AudioMeterWidget::updateToolTip()
+{
+    QString text = "";
+    int chan = -1;
+    QPoint mousePos = mapFromGlobal(QCursor::pos());
+
+    if (this->rect().contains(mousePos)) {
+        if (m_orient == Qt::Horizontal) {
+            if (mousePos.y() <= m_graphRect.bottom() && mousePos.y() >= m_graphRect.top()) {
+                chan = (int)(m_graphRect.bottom() - mousePos.y()) / (int)m_barSize.height();
+            }
+        } else {
+            if (mousePos.x() >= m_graphRect.left() && mousePos.x() <= m_graphRect.right()) {
+                chan = (int)(mousePos.x() - m_graphRect.left()) / (int)m_barSize.width();
+            }
+        }
+    }
+
+    if (chan >=0 && m_levels.size() > chan) {
+        if (m_levels[chan] < -90) {
+            text = "-inf dB";
+        } else {
+            text = QString("%1dB").arg(m_levels[chan], 0, 'f', 1);
+        }
+
+        if (m_chanLabels.size() > chan) {
+            if (!m_chanLabelUnits.isEmpty()) {
+                text = QString("%1%2: %3").arg(m_chanLabels[chan], m_chanLabelUnits, text);
+            } else {
+                text = QString("%1: %2").arg(m_chanLabels[chan], text);
+            }
+        }
+    }
+    QToolTip::showText(QCursor::pos(), text);
+}
+
 void AudioMeterWidget::paintEvent(QPaintEvent* /*e*/)
 {
     if (!isVisible())
@@ -308,4 +352,9 @@ void AudioMeterWidget::resizeEvent(QResizeEvent*)
 {
     m_orient = width() > height() ? Qt::Horizontal : Qt::Vertical;
     calcGraphRect();
+}
+
+void AudioMeterWidget::mouseMoveEvent(QMouseEvent*)
+{
+    updateToolTip();
 }
