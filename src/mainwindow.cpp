@@ -704,6 +704,11 @@ bool MainWindow::checkAutoSave(QString &url)
     return false;
 }
 
+void MainWindow::stepLeftBySeconds(int sec)
+{
+    m_player->seek(m_player->position() + sec * qRound(MLT.profile().fps()));
+}
+
 void MainWindow::doAutosave()
 {
     m_autosaveMutex.lock();
@@ -1064,10 +1069,16 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         }
         break;
     case Qt::Key_PageUp:
-        stepLeftOneSecond();
-        break;
     case Qt::Key_PageDown:
-        stepRightOneSecond();
+        {
+            int directionMultiplier = event->key() == Qt::Key_PageUp ? -1 : 1;
+            int seconds = 1;
+            if (event->modifiers() & Qt::ControlModifier)
+                seconds *= 5;
+            if (event->modifiers() & Qt::ShiftModifier)
+                seconds *= 2;
+            stepLeftBySeconds(seconds * directionMultiplier);
+        }
         break;
     case Qt::Key_Space:
 #ifdef Q_OS_MAC
@@ -1211,57 +1222,17 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         }
         break;
     case Qt::Key_1:
-        if (m_playlistDock->isVisible()) {
-            m_playlistDock->raise();
-            m_playlistDock->setIndex(0);
-        }
-        break;
     case Qt::Key_2:
-        if (m_playlistDock->isVisible()) {
-            m_playlistDock->raise();
-            m_playlistDock->setIndex(1);
-        }
-        break;
     case Qt::Key_3:
-        if (m_playlistDock->isVisible()) {
-            m_playlistDock->raise();
-            m_playlistDock->setIndex(2);
-        }
-        break;
     case Qt::Key_4:
-        if (m_playlistDock->isVisible()) {
-            m_playlistDock->raise();
-            m_playlistDock->setIndex(3);
-        }
-        break;
     case Qt::Key_5:
-        if (m_playlistDock->isVisible()) {
-            m_playlistDock->raise();
-            m_playlistDock->setIndex(4);
-        }
-        break;
     case Qt::Key_6:
-        if (m_playlistDock->isVisible()) {
-            m_playlistDock->raise();
-            m_playlistDock->setIndex(5);
-        }
-        break;
     case Qt::Key_7:
-        if (m_playlistDock->isVisible()) {
-            m_playlistDock->raise();
-            m_playlistDock->setIndex(6);
-        }
-        break;
     case Qt::Key_8:
-        if (m_playlistDock->isVisible()) {
-            m_playlistDock->raise();
-            m_playlistDock->setIndex(7);
-        }
-        break;
     case Qt::Key_9:
         if (m_playlistDock->isVisible()) {
             m_playlistDock->raise();
-            m_playlistDock->setIndex(8);
+            m_playlistDock->setIndex(event->key() - Qt::Key_1);
         }
         break;
     case Qt::Key_0:
@@ -1978,12 +1949,12 @@ void MainWindow::stepRightOneFrame()
 
 void MainWindow::stepLeftOneSecond()
 {
-    m_player->seek(m_player->position() - qRound(MLT.profile().fps()));
+    stepLeftBySeconds(-1);
 }
 
 void MainWindow::stepRightOneSecond()
 {
-    m_player->seek(m_player->position() + qRound(MLT.profile().fps()));
+    stepLeftBySeconds(1);
 }
 
 void MainWindow::setInToCurrent()
