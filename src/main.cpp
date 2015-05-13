@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Meltytech, LLC
+ * Copyright (c) 2011-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,6 +24,7 @@
 #include <ConsoleAppender.h>
 #include <QSysInfo>
 #include <QProcess>
+#include <QCommandLineParser>
 #include <framework/mlt_log.h>
 
 static void mlt_log_handler(void *service, int mlt_level, const char *format, va_list args)
@@ -82,6 +83,7 @@ public:
     QTranslator qtBaseTranslator;
     QTranslator shotcutTranslator;
     QString resourceArg;
+    bool isFullScreen;
 
     Application(int &argc, char **argv)
         : QApplication(argc, argv)
@@ -160,8 +162,24 @@ public:
             installTranslator(&qtBaseTranslator);
         if (shotcutTranslator.load("shotcut_" + locale, dir.absolutePath()))
             installTranslator(&shotcutTranslator);
-        if (argc > 1)
-            resourceArg = QString::fromUtf8(argv[1]);
+
+        QCommandLineParser parser;
+        parser.addHelpOption();
+        parser.addVersionOption();
+        QCommandLineOption fullscreenOption("fullscreen",
+            QCoreApplication::translate("main", "Fill the screen with the Shotcut window."));
+        parser.addOption(fullscreenOption);
+        QCommandLineOption gpuOption("gpu",
+            QCoreApplication::translate("main", "Use GPU processing."));
+        parser.addOption(gpuOption);
+        parser.addPositionalArgument("resource",
+            QCoreApplication::translate("main", "A file to open."));
+        parser.process(arguments());
+        isFullScreen = parser.isSet(fullscreenOption);
+        if (parser.isSet(gpuOption))
+            Settings.setPlayerGPU(true);
+        if (!parser.positionalArguments().isEmpty())
+            resourceArg = parser.positionalArguments().first();
     }
 
     ~Application()
@@ -188,17 +206,20 @@ int main(int argc, char **argv)
 #endif
     Application a(argc, argv);
     QSplashScreen splash(QPixmap(":/icons/shotcut-logo-640.png"));
-    splash.showMessage(QCoreApplication::translate("", "Loading plugins..."), Qt::AlignHCenter | Qt::AlignBottom);
+    splash.showMessage(QCoreApplication::translate("main", "Loading plugins..."), Qt::AlignHCenter | Qt::AlignBottom);
     splash.show();
 
     a.setProperty("system-style", a.style()->objectName());
     MainWindow::changeTheme(Settings.theme());
 
     a.mainWindow = &MAIN;
+    a.mainWindow->setFullScreen(a.isFullScreen);
     a.mainWindow->show();
     splash.finish(a.mainWindow);
+
     if (!a.resourceArg.isEmpty())
         a.mainWindow->open(a.resourceArg);
+
     int result = a.exec();
 
     if (EXIT_RESTART == result) {

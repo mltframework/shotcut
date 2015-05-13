@@ -722,6 +722,15 @@ void MainWindow::doAutosave()
     m_autosaveMutex.unlock();
 }
 
+void MainWindow::setFullScreen(bool isFullScreen)
+{
+    if (isFullScreen) {
+        showFullScreen();
+        ui->actionEnter_Full_Screen->setVisible(false);
+        ui->actionFullscreen->setVisible(false);
+    }
+}
+
 static void autosaveTask(MainWindow* p)
 {
     qDebug() << "running";

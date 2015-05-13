@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Meltytech, LLC
+ * Copyright (c) 2011-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -65,6 +65,7 @@ public:
     Mlt::Producer* multitrack() const;
     QWidget* loadProducerWidget(Mlt::Producer* producer);
     void doAutosave();
+    void setFullScreen(bool isFullScreen);
 
     void keyPressEvent(QKeyEvent*);
     void keyReleaseEvent(QKeyEvent *);
