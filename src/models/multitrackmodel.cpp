@@ -690,6 +690,8 @@ bool MultitrackModel::moveClipValid(int fromTrack, int toTrack, int clipIndex, i
             Mlt::Producer* trackFrom = m_tractor->track(m_trackList.at(fromTrack).mlt_index);
             Mlt::Playlist playlistFrom(*trackFrom);
             delete trackFrom;
+            if (clipIndex < 0 || clipIndex >= playlistFrom.count())
+                return false;
             QScopedPointer<Mlt::Producer> clip(playlistFrom.get_clip(clipIndex));
             if (position >= playlist.get_playtime())
                 result = true;
