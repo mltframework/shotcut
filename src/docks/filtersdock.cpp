@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2014 Meltytech, LLC
+ * Copyright (c) 2013-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  * Author: Brian Matherly <code@brianmatherly.com>
  *
@@ -41,6 +41,7 @@ FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* att
     QIcon filterIcon = QIcon::fromTheme("view-filter", QIcon(":/icons/oxygen/32x32/actions/view-filter.png"));
     setWindowIcon(filterIcon);
     toggleViewAction()->setIcon(windowIcon());
+    setMinimumWidth(300);
 
     QWidget* container = QWidget::createWindowContainer(&m_qview, this);
     container->setFocusPolicy(Qt::TabFocus);

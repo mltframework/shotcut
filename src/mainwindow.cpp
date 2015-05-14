@@ -189,6 +189,7 @@ MainWindow::MainWindow()
     m_propertiesDock->setObjectName("propertiesDock");
     m_propertiesDock->setWindowIcon(ui->actionProperties->icon());
     m_propertiesDock->toggleViewAction()->setIcon(ui->actionProperties->icon());
+    m_propertiesDock->setMinimumWidth(300);
     QScrollArea* scroll = new QScrollArea;
     scroll->setWidgetResizable(true);
     m_propertiesDock->setWidget(scroll);
@@ -269,6 +270,7 @@ MainWindow::MainWindow()
     m_historyDock->setObjectName("historyDock");
     m_historyDock->setWindowIcon(ui->actionHistory->icon());
     m_historyDock->toggleViewAction()->setIcon(ui->actionHistory->icon());
+    m_historyDock->setMinimumWidth(150);
     addDockWidget(Qt::RightDockWidgetArea, m_historyDock);
     ui->menuView->addAction(m_historyDock->toggleViewAction());
     connect(m_historyDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onHistoryDockTriggered(bool)));
