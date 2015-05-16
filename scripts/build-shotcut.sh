@@ -706,7 +706,7 @@ function set_globals {
   ####
   # vid.stab
   if test "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ; then
-    CONFIG[10]="cmake -DCMAKE_INSTALL_PREFIX:PATH=$FINAL_INSTALL_DIR -DCMAKE_TOOLCHAIN_FILE=my.cmake"
+	CONFIG[10]="cmake -DCMAKE_INSTALL_PREFIX:PATH=$FINAL_INSTALL_DIR -DCMAKE_TOOLCHAIN_FILE=my.cmake -DUSE_OMP=OFF"
   else
     CONFIG[10]="cmake -DCMAKE_INSTALL_PREFIX:PATH=$FINAL_INSTALL_DIR"
   fi
