@@ -39,7 +39,6 @@ DecklinkProducerWidget::DecklinkProducerWidget(QWidget *parent) :
     ui->profileCombo->addItem("SD NTSC", "dv_ntsc");
     ui->profileCombo->addItem("SD PAL", "dv_pal");
 
-#ifndef Q_OS_WIN64
     Mlt::Profile profile;
     Mlt::Producer p(profile, "decklink:");
     if (p.is_valid()) {
@@ -51,7 +50,6 @@ DecklinkProducerWidget::DecklinkProducerWidget(QWidget *parent) :
                 ui->deviceCombo->addItem(device);
         }
     }
-#endif
 }
 
 DecklinkProducerWidget::~DecklinkProducerWidget()

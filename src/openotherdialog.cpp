@@ -35,12 +35,10 @@ OpenOtherDialog::OpenOtherDialog(QWidget *parent) :
 
     // populate the device group
     group = new QTreeWidgetItem(ui->treeWidget, QStringList(tr("Device")));
-#ifndef Q_OS_WIN64
     if (MLT.repository()->producers()->get_data("decklink")) {
         QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("SDI/HDMI")));
         item->setData(0, Qt::UserRole, ui->decklinkTab->objectName());
     }
-#endif
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("Video4Linux")));
     item->setData(0, Qt::UserRole, ui->v4lTab->objectName());

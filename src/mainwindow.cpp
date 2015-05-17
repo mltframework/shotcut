@@ -499,7 +499,6 @@ void MainWindow::setupSettingsMenu()
     }
 #endif
 
-#ifndef Q_OS_WIN64
     Mlt::Profile profile;
     Mlt::Consumer decklink(profile, "decklink:");
     if (decklink.is_valid()) {
@@ -528,7 +527,6 @@ void MainWindow::setupSettingsMenu()
             }
         }
     }
-#endif
     if (m_externalGroup->actions().count() > 1)
         ui->menuExternal->addActions(m_externalGroup->actions());
     else {
