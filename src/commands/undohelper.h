@@ -52,7 +52,8 @@ private:
         int newClipIndex;
         bool isBlank;
         QString xml;
-        Mlt::ClipInfo clipInfo;
+        int frame_in;
+        int frame_out;
 
         int changes;
         Info()
@@ -61,6 +62,8 @@ private:
             , newTrackIndex(-1)
             , newClipIndex(-1)
             , isBlank(false)
+            , frame_in(-1)
+            , frame_out(-1)
             , changes(NoChange)
         {}
     };

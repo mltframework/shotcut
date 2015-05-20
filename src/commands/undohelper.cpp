@@ -50,7 +50,10 @@ void UndoHelper::recordBeforeState()
             QScopedPointer<Mlt::Producer> clip(playlist.get_clip(j));
             Info& info = m_state[uid];
             info.xml = MLT.XML(clip.data());
-            playlist.clip_info(j, &info.clipInfo);
+            Mlt::ClipInfo clipInfo;
+            playlist.clip_info(j, &clipInfo);
+            info.frame_in = clipInfo.frame_in;
+            info.frame_out = clipInfo.frame_out;
             info.oldTrackIndex = i;
             info.oldClipIndex = j;
             info.isBlank = playlist.is_blank(j);
@@ -104,10 +107,8 @@ void UndoHelper::recordAfterState()
 
                 Mlt::ClipInfo newInfo;
                 playlist.clip_info(j, &newInfo);
-                /* Only in/out point changes are handled at the point of writing, but the whole
-                 * clipinfo struct is available */
-                if (info.clipInfo.frame_in != newInfo.frame_in
-                        || info.clipInfo.frame_out != newInfo.frame_out) {
+                /* Only in/out point changes are handled at this time. */
+                if (info.frame_in != newInfo.frame_in || info.frame_out != newInfo.frame_out) {
                     UNDOLOG << "In/out changed:" << uid;
                     info.changes |= ClipInfoModified;
                 }
@@ -197,12 +198,12 @@ void UndoHelper::undoChanges()
             QModelIndex modelIndex = m_model.createIndex(currentIndex, 0, info.oldTrackIndex);
             m_model.beginInsertRows(modelIndex.parent(), currentIndex, currentIndex);
             if (info.isBlank) {
-                playlist.insert_blank(currentIndex, info.clipInfo.frame_out);
+                playlist.insert_blank(currentIndex, info.frame_out);
                 UNDOLOG << "inserting isBlank at " << currentIndex;
             } else {
                 UNDOLOG << "inserting clip at " << currentIndex;
                 Mlt::Producer restoredClip(MLT.profile(), "xml-string", info.xml.toUtf8().constData());
-                playlist.insert(restoredClip, currentIndex, info.clipInfo.frame_in, info.clipInfo.frame_out);
+                playlist.insert(restoredClip, currentIndex, info.frame_in, info.frame_out);
             }
             m_model.endInsertRows();
 
@@ -213,8 +214,7 @@ void UndoHelper::undoChanges()
         /* Only in/out points handled so far */
         if (info.changes & ClipInfoModified) {
             UNDOLOG << "resizing clip at" << currentIndex;
-            playlist.resize_clip(currentIndex, info.clipInfo.frame_in, info.clipInfo.frame_out);
-            /* TODO: What other clipinfo changes might we want to cover? */
+            playlist.resize_clip(currentIndex, info.frame_in, info.frame_out);
 
             QModelIndex modelIndex = m_model.createIndex(currentIndex, 0, info.oldTrackIndex);
             QVector<int> roles;
