@@ -1250,7 +1250,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_playlistDock->setIndex(9);
         }
         else if (m_timelineDock->isVisible()) {
-            m_timelineDock->zoomIn();
+            m_timelineDock->resetZoom();
         }
         break;
     case Qt::Key_X: // Avid Extract
