@@ -43,13 +43,13 @@ void UndoHelper::recordBeforeState()
     for (int i = 0; i < m_model.trackList().count(); ++i)
     {
         int mltIndex = m_model.trackList()[i].mlt_index;
-        Mlt::Producer * trackProducer = m_model.tractor()->track(mltIndex);
+        QScopedPointer<Mlt::Producer> trackProducer(m_model.tractor()->track(mltIndex));
         Mlt::Playlist playlist(*trackProducer);
 
         for (int j = 0; j < playlist.count(); ++j) {
-            Mlt::Producer * clip = playlist.get_clip(j);
+            QScopedPointer<Mlt::Producer> clip(playlist.get_clip(j));
             Info& info = m_state[uid];
-            info.xml = MLT.XML(clip);
+            info.xml = MLT.XML(clip.data());
             playlist.clip_info(j, &info.clipInfo);
             info.oldTrackIndex = i;
             info.oldClipIndex = j;
@@ -69,11 +69,11 @@ void UndoHelper::recordAfterState()
     for (int i = 0; i < m_model.trackList().count(); ++i)
     {
         int mltIndex = m_model.trackList()[i].mlt_index;
-        Mlt::Producer * trackProducer = m_model.tractor()->track(mltIndex);
+        QScopedPointer<Mlt::Producer> trackProducer(m_model.tractor()->track(mltIndex));
         Mlt::Playlist playlist(*trackProducer);
 
         for (int j = 0; j < playlist.count(); ++j) {
-            Mlt::Producer * clip = playlist.get_clip(j);
+            QScopedPointer<Mlt::Producer> clip(playlist.get_clip(j));
             int uid = clip->get_int(kUndoIdProperty);
 
             /* Clips that do not have the undo id set are new */
@@ -96,7 +96,7 @@ void UndoHelper::recordAfterState()
                     info.changes |= Moved;
                 }
 
-                QString newXml = MLT.XML(clip);
+                QString newXml = MLT.XML(clip.data());
                 if (info.xml != newXml) {
                     UNDOLOG << "Modified xml:" << uid;
                     info.changes |= XMLModified;
@@ -134,9 +134,10 @@ void UndoHelper::undoChanges()
     typedef QPair<int,int> ClipLoc;
     foreach (const ClipLoc& loc, m_clipsAdded) {
         int mltIndex = m_model.trackList()[loc.first].mlt_index;
-        Mlt::Producer* trackProducer = m_model.tractor()->track(mltIndex);
+        QScopedPointer<Mlt::Producer> trackProducer(m_model.tractor()->track(mltIndex));
         Mlt::Playlist playlist(*trackProducer);
-        playlist.get_clip(loc.second)->set(kUndoIdProperty, -1);
+        QScopedPointer<Mlt::Producer> clip(playlist.get_clip(loc.second));
+        clip->set(kUndoIdProperty, -1);
     }
 
     /* We need the uid as it was before on some operations, so we locate the clip using its
@@ -147,9 +148,10 @@ void UndoHelper::undoChanges()
             continue;
 
         int mltIndex = m_model.trackList()[m_state[uid].newTrackIndex].mlt_index;
-        Mlt::Producer* trackProducer = m_model.tractor()->track(mltIndex);
+        QScopedPointer<Mlt::Producer> trackProducer(m_model.tractor()->track(mltIndex));
         Mlt::Playlist playlist(*trackProducer);
-        playlist.get_clip(m_state[uid].newClipIndex)->set(kUndoIdProperty, uid);
+        QScopedPointer<Mlt::Producer> clip(playlist.get_clip(m_state[uid].newClipIndex));
+        clip->set(kUndoIdProperty, uid);
     }
 
     /* We're walking through the list in the order of uids, which is the order in which the
@@ -163,7 +165,7 @@ void UndoHelper::undoChanges()
         int currentIndex = info.oldClipIndex;
 
         int mltIndex = m_model.trackList()[info.oldTrackIndex].mlt_index;
-        Mlt::Producer* trackProducer = m_model.tractor()->track(mltIndex);
+        QScopedPointer<Mlt::Producer> trackProducer(m_model.tractor()->track(mltIndex));
         Mlt::Playlist playlist(*trackProducer);
 
         /* Clips that were moved are simply searched for using the uid, and moved in place. We
@@ -225,10 +227,10 @@ void UndoHelper::undoChanges()
      * were added, and clearing the temporarily used uid property */
     int trackIndex = 0;
     foreach (const Track & track, m_model.trackList()) {
-        Mlt::Producer* trackProducer = m_model.tractor()->track(track.mlt_index);
+        QScopedPointer<Mlt::Producer> trackProducer(m_model.tractor()->track(track.mlt_index));
         Mlt::Playlist playlist(*trackProducer);
         for (int i = playlist.count() - 1; i >= 0; --i) {
-            Mlt::Producer * clip = playlist.get_clip(i);
+            QScopedPointer<Mlt::Producer> clip(playlist.get_clip(i));
             if (clip->get_int(kUndoIdProperty) < 0) {
                 UNDOLOG << "Removing clip at" << i;
                 m_model.beginRemoveRows(m_model.index(trackIndex), i, i);
@@ -255,11 +257,11 @@ void UndoHelper::debugPrintState()
     {
         int mltIndex = m_model.trackList()[i].mlt_index;
         QString trackStr = QString("   track %1 (mlt-idx %2):").arg(i).arg(mltIndex);
-        Mlt::Producer * trackProducer = m_model.tractor()->track(mltIndex);
+        QScopedPointer<Mlt::Producer> trackProducer(m_model.tractor()->track(mltIndex));
         Mlt::Playlist playlist(*trackProducer);
 
         for (int j = 0; j < playlist.count(); ++j) {
-            Mlt::Producer * clip = playlist.get_clip(j);
+            QScopedPointer<Mlt::Producer> clip(playlist.get_clip(j));
             Mlt::ClipInfo info;
             playlist.clip_info(j, &info);
             trackStr += QString(" [ %1 -> %2 (%3 frames) %4]").arg(info.frame_in).arg(info.frame_out).arg(info.frame_count).arg(clip->is_blank() ? "blank " : "");
