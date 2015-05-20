@@ -98,6 +98,20 @@ Rectangle {
             iconSource: 'qrc:///icons/oxygen/16x16/actions/target.png'
             tooltip: qsTr('Ripple (insert) when source is dropped')
         }
+        ToolButton {
+            id: rippleAllTracksButton
+            implicitWidth: 28
+            implicitHeight: 24
+            checkable: true
+            iconName: 'target-plus'
+            iconSource: 'qrc:///icons/oxygen/16x16/actions/target-plus.png'
+            tooltip: qsTr('Ripple on all tracks')
+            checked: settings.rippleAllTracks
+            onCheckedChanged: {
+                if (settings.rippleAllTracks != checked)
+                    settings.rippleAllTracks = checked
+            }
+        }
         ColorOverlay {
             id: snapColorEffect
             visible: snapButton.checked

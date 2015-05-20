@@ -23,6 +23,8 @@
 #include <QUndoCommand>
 #include <QString>
 
+class UndoHelper;
+
 namespace Timeline
 {
 
@@ -46,8 +48,8 @@ public:
 private:
     MultitrackModel& m_model;
     int m_trackIndex;
-    int m_clipIndex;
     QString m_xml;
+    UndoHelper * m_undoHelper;
 };
 
 class InsertCommand : public QUndoCommand
@@ -59,9 +61,10 @@ public:
 private:
     MultitrackModel& m_model;
     int m_trackIndex;
-    int m_clipIndex;
     int m_position;
     QString m_xml;
+    QStringList m_oldTracks;
+    UndoHelper * m_undoHelper;
 };
 
 class OverwriteCommand : public QUndoCommand
@@ -76,6 +79,7 @@ private:
     QString m_playlistXml;
     int m_position;
     QString m_xml;
+    UndoHelper * m_undoHelper;
 };
 
 class LiftCommand : public QUndoCommand
@@ -90,6 +94,7 @@ private:
     int m_clipIndex;
     int m_position;
     QString m_xml;
+    UndoHelper * m_undoHelper;
 };
 
 class RemoveCommand : public QUndoCommand
@@ -104,6 +109,7 @@ private:
     int m_clipIndex;
     int m_position;
     QString m_xml;
+    UndoHelper * m_undoHelper;
 };
 
 class NameTrackCommand : public QUndoCommand
@@ -156,6 +162,19 @@ private:
     Qt::CheckState m_oldValue;
 };
 
+class LockTrackCommand : public QUndoCommand
+{
+public:
+    LockTrackCommand(MultitrackModel& model, int trackIndex, Qt::CheckState value, QUndoCommand * parent = 0);
+    void redo();
+    void undo();
+private:
+    MultitrackModel& m_model;
+    int m_trackIndex;
+    Qt::CheckState m_value;
+    Qt::CheckState m_oldValue;
+};
+
 class MoveClipCommand : public QUndoCommand
 {
 public:
@@ -167,9 +186,9 @@ private:
     int m_fromTrackIndex;
     int m_toTrackIndex;
     int m_fromClipIndex;
-    int m_toClipIndex;
     int m_fromStart;
     int m_toStart;
+    UndoHelper * m_undoHelper;
 };
 
 class TrimClipInCommand : public QUndoCommand

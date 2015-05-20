@@ -62,6 +62,7 @@ public:
     QList<int> selection() const;
     void selectClipUnderPlayhead();
     int centerOfClip(int trackIndex, int clipIndex);
+    bool isTrackLocked(int trackIndex) const;
 
 signals:
     void currentTrackChanged();
@@ -96,6 +97,7 @@ public slots:
     void toggleTrackMute(int trackIndex);
     void toggleTrackHidden(int trackIndex);
     void setTrackComposite(int trackIndex, Qt::CheckState composite);
+    void setTrackLock(int trackIndex, Qt::CheckState composite);
     bool moveClip(int fromTrack, int toTrack, int clipIndex, int position);
     bool trimClipIn(int trackIndex, int clipIndex, int delta);
     bool trimClipOut(int trackIndex, int clipIndex, int delta);
