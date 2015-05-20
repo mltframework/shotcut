@@ -101,6 +101,7 @@ SOURCES += main.cpp\
     sharedframe.cpp \
     widgets/audioscale.cpp \
     widgets/playlisttable.cpp \
+    commands/undohelper.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -197,6 +198,7 @@ HEADERS  += mainwindow.h \
     widgets/audioscale.h \
     forwardingquickviewworkaround.h \
     widgets/playlisttable.h \
+    commands/undohelper.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \

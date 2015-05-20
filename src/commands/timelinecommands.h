@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2014 Meltytech, LLC
+ * Copyright (c) 2013-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,10 +20,9 @@
 #define COMMANDS_H
 
 #include "models/multitrackmodel.h"
+#include "undohelper.h"
 #include <QUndoCommand>
 #include <QString>
-
-class UndoHelper;
 
 namespace Timeline
 {
@@ -49,7 +48,7 @@ private:
     MultitrackModel& m_model;
     int m_trackIndex;
     QString m_xml;
-    UndoHelper * m_undoHelper;
+    UndoHelper m_undoHelper;
 };
 
 class InsertCommand : public QUndoCommand
@@ -64,7 +63,7 @@ private:
     int m_position;
     QString m_xml;
     QStringList m_oldTracks;
-    UndoHelper * m_undoHelper;
+    UndoHelper m_undoHelper;
 };
 
 class OverwriteCommand : public QUndoCommand
@@ -79,7 +78,7 @@ private:
     QString m_playlistXml;
     int m_position;
     QString m_xml;
-    UndoHelper * m_undoHelper;
+    UndoHelper m_undoHelper;
 };
 
 class LiftCommand : public QUndoCommand
@@ -94,7 +93,7 @@ private:
     int m_clipIndex;
     int m_position;
     QString m_xml;
-    UndoHelper * m_undoHelper;
+    UndoHelper m_undoHelper;
 };
 
 class RemoveCommand : public QUndoCommand
@@ -109,7 +108,7 @@ private:
     int m_clipIndex;
     int m_position;
     QString m_xml;
-    UndoHelper * m_undoHelper;
+    UndoHelper m_undoHelper;
 };
 
 class NameTrackCommand : public QUndoCommand
@@ -175,7 +174,7 @@ private:
     int m_fromClipIndex;
     int m_fromStart;
     int m_toStart;
-    UndoHelper * m_undoHelper;
+    UndoHelper m_undoHelper;
 };
 
 class TrimClipInCommand : public QUndoCommand
