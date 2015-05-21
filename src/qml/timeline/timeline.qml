@@ -476,25 +476,13 @@ Rectangle {
                 for (var i = 0; i < tracksRepeater.count; i++)
                     tracksRepeater.itemAt(i).snapClip(clip)
             }
-            Canvas {
+            Image {
                 anchors.fill: parent
+                source: "qrc:///icons/light/16x16/track-locked.png"
+                fillMode: Image.Tile
                 opacity: parent.isLocked
                 visible: opacity
                 Behavior on opacity { NumberAnimation {} }
-                onVisibleChanged: if (visible) requestPaint()
-                onWidthChanged: requestPaint()
-                onPaint: {
-                    var cx = getContext('2d');
-                    if (cx === null) return
-                    cx.strokeStyle = activePalette.alternateBase;
-                    cx.lineWidth = 2
-                    for (var currentX = -height; currentX < width; currentX += 20) {
-                        cx.beginPath();
-                        cx.moveTo(currentX + height, 0);
-                        cx.lineTo(currentX, height);
-                        cx.stroke();
-                    }
-                }
                 MouseArea {
                     anchors.fill: parent
                     onPressed: {

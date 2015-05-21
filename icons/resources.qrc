@@ -198,5 +198,6 @@
         <file>dark/16x16/dialog-ok.png</file>
         <file>light/16x16/dialog-ok.png</file>
         <file>oxygen/32x32/actions/dialog-ok.png</file>
+        <file>light/16x16/track-locked.png</file>
     </qresource>
 </RCC>
