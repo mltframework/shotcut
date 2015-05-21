@@ -115,7 +115,7 @@ public slots:
     void setTrackMute(int row, bool mute);
     void setTrackHidden(int row, bool hidden);
     void setTrackComposite(int row, Qt::CheckState composite);
-    void setTrackLock(int row, Qt::CheckState hold);
+    void setTrackLock(int row, bool lock);
     int trimClipIn(int trackIndex, int clipIndex, int delta);
     void notifyClipIn(int trackIndex, int clipIndex);
     int trimClipOut(int trackIndex, int clipIndex, int delta);

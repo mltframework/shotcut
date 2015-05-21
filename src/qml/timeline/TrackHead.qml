@@ -28,7 +28,7 @@ Rectangle {
     property bool isMute
     property bool isHidden
     property int isComposite
-    property int isLocked
+    property bool isLocked
     property bool isVideo
     property bool selected: false
     property bool current: false
@@ -211,6 +211,7 @@ Rectangle {
 
             CheckBox {
                 id: lockButton
+                checked: isLocked
                 style: CheckBoxStyle {
                     indicator: Rectangle {
                         implicitWidth: 16
@@ -220,7 +221,7 @@ Rectangle {
                         border.color: activePalette.shadow
                         border.width: 1
                         Text {
-                            id: compositeText
+                            id: lockText
                             anchors.horizontalCenter: parent.horizontalCenter
                             anchors.verticalCenter: parent.verticalCenter
                             text: qsTr('L', 'Lock')
@@ -245,7 +246,7 @@ Rectangle {
                     }
                 }
 
-                onClicked: timeline.setTrackLock(index, checkedState)
+                onClicked: timeline.setTrackLock(index, !isLocked)
                 Shotcut.ToolTip { text: qsTr('Lock track') }
             }
         }

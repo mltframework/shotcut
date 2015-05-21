@@ -310,7 +310,7 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
             case IsAudioRole:
                 return m_trackList[index.row()].type == AudioTrackType;
             case IsLockedRole:
-                return track->get_int(kTrackLockProperty) ? Qt::Checked : Qt::Unchecked;
+                return track->get_int(kTrackLockProperty);
             case IsCompositeRole: {
                 QScopedPointer<Mlt::Transition> transition(getTransition("frei0r.cairoblend", i));
                 if (!transition)
@@ -466,11 +466,11 @@ void MultitrackModel::setTrackComposite(int row, Qt::CheckState composite)
     }
 }
 
-void MultitrackModel::setTrackLock(int row, Qt::CheckState hold)
+void MultitrackModel::setTrackLock(int row, bool lock)
 {
     int i = m_trackList.at(row).mlt_index;
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
-    track->set(kTrackLockProperty, hold == Qt::Checked);
+    track->set(kTrackLockProperty, lock);
 
     QModelIndex modelIndex = index(row, 0);
     QVector<int> roles;

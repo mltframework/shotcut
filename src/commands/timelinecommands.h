@@ -164,14 +164,14 @@ private:
 class LockTrackCommand : public QUndoCommand
 {
 public:
-    LockTrackCommand(MultitrackModel& model, int trackIndex, Qt::CheckState value, QUndoCommand * parent = 0);
+    LockTrackCommand(MultitrackModel& model, int trackIndex, bool value, QUndoCommand * parent = 0);
     void redo();
     void undo();
 private:
     MultitrackModel& m_model;
     int m_trackIndex;
-    Qt::CheckState m_value;
-    Qt::CheckState m_oldValue;
+    bool m_value;
+    bool m_oldValue;
 };
 
 class MoveClipCommand : public QUndoCommand

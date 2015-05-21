@@ -30,6 +30,7 @@
 
 static const char* kFilterInProperty = "_shotcut:filter_in";
 static const char* kFilterOutProperty = "_shotcut:filter_out";
+static const char* kTrackLockProperty = "shotcut:lock";
 
 TimelineDock::TimelineDock(QWidget *parent) :
     QDockWidget(parent),
@@ -286,7 +287,7 @@ bool TimelineDock::isTrackLocked(int trackIndex) const
 {
     int i = m_model.trackList().at(trackIndex).mlt_index;
     QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
-    return track->get_int("shotcut:lock");
+    return track->get_int(kTrackLockProperty);
 }
 
 void TimelineDock::clearSelectionIfInvalid()
@@ -472,7 +473,7 @@ void TimelineDock::setTrackComposite(int trackIndex, Qt::CheckState composite)
         new Timeline::CompositeTrackCommand(m_model, trackIndex, composite));
 }
 
-void TimelineDock::setTrackLock(int trackIndex, Qt::CheckState lock)
+void TimelineDock::setTrackLock(int trackIndex, bool lock)
 {
     MAIN.undoStack()->push(
         new Timeline::LockTrackCommand(m_model, trackIndex, lock));

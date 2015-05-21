@@ -226,12 +226,12 @@ void CompositeTrackCommand::undo()
     m_model.setTrackComposite(m_trackIndex, m_oldValue);
 }
 
-LockTrackCommand::LockTrackCommand(MultitrackModel &model, int trackIndex, Qt::CheckState value, QUndoCommand *parent)
+LockTrackCommand::LockTrackCommand(MultitrackModel &model, int trackIndex, bool value, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_value(value)
-    , m_oldValue(Qt::CheckState(model.data(m_model.index(trackIndex), MultitrackModel::IsLockedRole).toInt()))
+    , m_oldValue(model.data(m_model.index(trackIndex), MultitrackModel::IsLockedRole).toBool())
 {
     setText(QObject::tr("Lock track"));
 }
