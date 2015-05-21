@@ -1117,9 +1117,6 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         else
             handled = false;
         break;
-    case Qt::Key_H:
-        m_timelineDock->setTrackLock(m_timelineDock->currentTrack(), !m_timelineDock->isTrackLocked(m_timelineDock->currentTrack()));
-        break;
     case Qt::Key_J:
         if (m_isKKeyPressed)
             m_player->seek(m_player->position() - 1);
@@ -1131,7 +1128,9 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_isKKeyPressed = true;
         break;
     case Qt::Key_L:
-        if (m_isKKeyPressed)
+        if (event->modifiers() & Qt::AltModifier && m_timelineDock->isVisible())
+            m_timelineDock->setTrackLock(m_timelineDock->currentTrack(), !m_timelineDock->isTrackLocked(m_timelineDock->currentTrack()));
+        else if (m_isKKeyPressed)
             m_player->seek(m_player->position() + 1);
         else
             m_player->fastForward();
