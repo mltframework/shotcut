@@ -18,7 +18,9 @@
 
 #include "undohelper.h"
 #include "mltcontroller.h"
+#include "models/audiolevelstask.h"
 #include <QtDebug>
+#include <QScopedPointer>
 
 #ifdef UNDOHELPER_DEBUG
 #define UNDOLOG qDebug()
@@ -176,7 +178,8 @@ void UndoHelper::undoChanges()
             Q_ASSERT(info.newTrackIndex == info.oldTrackIndex && "cross-track moves are unsupported so far");
             int clipCurrentlyAt = -1;
             for (int i = 0; i < playlist.count(); ++i) {
-                if (playlist.get_clip(i)->get_int(kUndoIdProperty) == uid) {
+                QScopedPointer<Mlt::Producer> clip(playlist.get_clip(i));
+                if (clip->get_int(kUndoIdProperty) == uid) {
                     clipCurrentlyAt = i;
                     break;
                 }
@@ -208,7 +211,9 @@ void UndoHelper::undoChanges()
             m_model.endInsertRows();
 
             /* just in case we might need the uid later in the procedure */
-            playlist.get_clip(currentIndex)->set(kUndoIdProperty, uid);
+            QScopedPointer<Mlt::Producer> clip(playlist.get_clip(currentIndex));
+            clip->set(kUndoIdProperty, uid);
+            AudioLevelsTask::start(clip->parent(), &m_model, modelIndex);
         }
 
         /* Only in/out points handled so far */
@@ -220,6 +225,8 @@ void UndoHelper::undoChanges()
             QVector<int> roles;
             roles << MultitrackModel::DurationRole;
             emit m_model.dataChanged(modelIndex, modelIndex, roles);
+            QScopedPointer<Mlt::Producer> clip(playlist.get_clip(currentIndex));
+            AudioLevelsTask::start(clip->parent(), &m_model, modelIndex);
         }
     }
 
