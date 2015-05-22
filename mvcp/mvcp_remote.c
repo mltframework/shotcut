@@ -194,7 +194,7 @@ static mvcp_response mvcp_remote_execute( mvcp_remote remote, char *command )
 {
 	mvcp_response response = NULL;
 	pthread_mutex_lock( &remote->mutex );
-	if ( mvcp_socket_write_data( remote->socket, command, strlen( command ) ) == strlen( command ) )
+	if ( (size_t) mvcp_socket_write_data( remote->socket, command, strlen( command ) ) == strlen( command ) )
 	{
 		response = mvcp_response_init( );
 		mvcp_socket_write_data( remote->socket, "\r\n", 2 );
@@ -211,7 +211,7 @@ static mvcp_response mvcp_remote_receive( mvcp_remote remote, char *command, cha
 {
 	mvcp_response response = NULL;
 	pthread_mutex_lock( &remote->mutex );
-	if ( mvcp_socket_write_data( remote->socket, command, strlen( command ) ) == strlen( command ) )
+	if ( (size_t) mvcp_socket_write_data( remote->socket, command, strlen( command ) ) == strlen( command ) )
 	{
 		char temp[ 20 ];
 		int length = strlen( buffer );
