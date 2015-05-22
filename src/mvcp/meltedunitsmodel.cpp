@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2013 Meltytech, LLC
+ * Copyright (c) 2012-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -36,11 +36,13 @@ MeltedUnitsModel::~MeltedUnitsModel()
 
 int MeltedUnitsModel::rowCount(const QModelIndex& parent) const
 {
+    Q_UNUSED(parent)
     return m_units.size();
 }
 
 int MeltedUnitsModel::columnCount(const QModelIndex& parent) const
 {
+    Q_UNUSED(parent)
     return 2;
 }
 
@@ -77,7 +79,7 @@ void MeltedUnitsModel::onConnected(MvcpThread *a_mvcp)
     m_mvcp->uls();
 }
 
-void MeltedUnitsModel::onConnected(const QString &address, quint16 port, quint8 unit)
+void MeltedUnitsModel::onConnected(const QString &address, quint16 port, quint8 /*unit*/)
 {
     m_tokeniser = mvcp_tokeniser_init();
     m_statusSent = false;

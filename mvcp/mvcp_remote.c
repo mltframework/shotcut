@@ -233,6 +233,10 @@ static mvcp_response mvcp_remote_receive( mvcp_remote remote, char *command, cha
 
 static mvcp_response mvcp_remote_push( mvcp_remote remote, char *command, mlt_service service )
 {
+	(void) remote; // unused
+	(void) command; // unused
+	(void) service; // unused
+
 	mvcp_response response = NULL;
 #ifndef MVCP_EMBEDDED
 	if ( service != NULL )

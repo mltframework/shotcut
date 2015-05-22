@@ -56,7 +56,7 @@ int mvcp_socket_connect( mvcp_socket connection )
 /** Convenience constructor for a connected file descriptor.
 */
 
-mvcp_socket mvcp_socket_init_fd( int fd )
+mvcp_socket mvcp_socket_init_fd( int /*fd*/ )
 {
     return NULL;
 }

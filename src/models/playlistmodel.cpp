@@ -289,6 +289,8 @@ Qt::DropActions PlaylistModel::supportedDropActions() const
 
 bool PlaylistModel::insertRows(int row, int count, const QModelIndex& parent)
 {
+    Q_UNUSED(count)
+    Q_UNUSED(parent)
     if (!m_playlist) return false;
     if (m_dropRow == -1)
         m_dropRow = row;
@@ -297,6 +299,8 @@ bool PlaylistModel::insertRows(int row, int count, const QModelIndex& parent)
 
 bool PlaylistModel::removeRows(int row, int count, const QModelIndex& parent)
 {
+    Q_UNUSED(count)
+    Q_UNUSED(parent)
     if (!m_playlist || row == m_dropRow || m_dropRow == -1 ) return false;
     if (row < m_dropRow)
         emit moveClip(row, m_dropRow - 1);
@@ -330,6 +334,8 @@ QMimeData *PlaylistModel::mimeData(const QModelIndexList &indexes) const
 
 bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
 {
+    Q_UNUSED(column)
+    Q_UNUSED(parent)
     // Internal reorder
     if (action == Qt::MoveAction) {
         m_dropRow = row;

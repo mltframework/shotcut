@@ -36,6 +36,7 @@ VideoWaveformScopeWidget::VideoWaveformScopeWidget()
 
 void VideoWaveformScopeWidget::refreshScope(const QSize& size, bool full)
 {
+    Q_UNUSED(size)
     while (m_queue.count() > 0) {
         m_frame = m_queue.pop();
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  * Some ideas came from Qt-Plus: https://github.com/liuyanghejerry/Qt-Plus
  * and Steinar Gunderson's Movit demo app.
@@ -117,6 +117,7 @@ void ColorWheel::mouseMoveEvent(QMouseEvent *event)
 
 void ColorWheel::mouseReleaseEvent(QMouseEvent *event)
 {
+    Q_UNUSED(event)
     m_isMouseDown = false;
     m_isInWheel = false;
     m_isInSquare = false;
@@ -134,6 +135,7 @@ void ColorWheel::resizeEvent(QResizeEvent *event)
 
 void ColorWheel::paintEvent(QPaintEvent *event)
 {
+    Q_UNUSED(event)
     QPainter painter(this);
 //    QStyleOption opt;
 //    opt.init(this);

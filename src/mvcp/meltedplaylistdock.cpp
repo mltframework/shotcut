@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2014 Meltytech, LLC
+ * Copyright (c) 2012-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -86,6 +86,7 @@ void MeltedPlaylistDock::keyPressEvent(QKeyEvent *ev)
 
 void MeltedPlaylistDock::on_tableView_clicked(const QModelIndex &index)
 {
+    Q_UNUSED(index)
     ui->removeButton->setEnabled(true);
 }
 
@@ -282,11 +283,13 @@ void TransportControl::fastForward()
 
 void TransportControl::previous(int currentPosition)
 {
+    Q_UNUSED(currentPosition)
     m_model.previous();
 }
 
 void TransportControl::next(int currentPosition)
 {
+    Q_UNUSED(currentPosition)
     m_model.next();
 }
 

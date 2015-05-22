@@ -886,6 +886,7 @@ void EncodeDock::on_removePresetButton_clicked()
 
 void EncodeDock::onFinished(AbstractJob* job, bool isSuccess)
 {
+    Q_UNUSED(isSuccess)
     if (!MLT.isSeekable())
         ui->encodeButton->setText(tr("Capture File"));
     ui->streamButton->setText(tr("Stream"));

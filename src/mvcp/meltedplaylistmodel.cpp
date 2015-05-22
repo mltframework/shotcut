@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2013 Meltytech, LLC
+ * Copyright (c) 2012-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -43,6 +43,7 @@ MeltedPlaylistModel::~MeltedPlaylistModel()
 
 int MeltedPlaylistModel::rowCount(const QModelIndex &parent) const
 {
+    Q_UNUSED(parent)
     if (m_list)
         return mvcp_list_count(m_list);
     else
@@ -51,6 +52,7 @@ int MeltedPlaylistModel::rowCount(const QModelIndex &parent) const
 
 int MeltedPlaylistModel::columnCount(const QModelIndex &parent) const
 {
+    Q_UNUSED(parent)
     return COLUMN_COUNT;
 }
 
@@ -138,6 +140,8 @@ Qt::DropActions MeltedPlaylistModel::supportedDropActions() const
 
 bool MeltedPlaylistModel::insertRows(int row, int count, const QModelIndex &parent)
 {
+    Q_UNUSED(count)
+    Q_UNUSED(parent)
     if (!m_list) return false;
     if (m_dropRow == -1)
         m_dropRow = row;
@@ -146,6 +150,8 @@ bool MeltedPlaylistModel::insertRows(int row, int count, const QModelIndex &pare
 
 bool MeltedPlaylistModel::removeRows(int row, int count, const QModelIndex &parent)
 {
+    Q_UNUSED(count)
+    Q_UNUSED(parent)
     if (!m_list) return false;
     if (row == m_dropRow) return false;
     emit moveClip(row, m_dropRow);

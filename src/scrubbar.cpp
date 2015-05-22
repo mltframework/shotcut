@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Meltytech, LLC
+ * Copyright (c) 2011-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -137,6 +137,7 @@ void ScrubBar::mousePressEvent(QMouseEvent * event)
 
 void ScrubBar::mouseReleaseEvent(QMouseEvent * event)
 {
+    Q_UNUSED(event)
     m_activeControl = CONTROL_NONE;
 }
 
