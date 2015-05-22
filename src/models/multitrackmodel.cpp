@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2014 Meltytech, LLC
+ * Copyright (c) 2013-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,15 +19,11 @@
 #include "multitrackmodel.h"
 #include "mltcontroller.h"
 #include "mainwindow.h"
-#include "database.h"
 #include "settings.h"
 #include "docks/playlistdock.h"
 #include "util.h"
+#include "audiolevelstask.h"
 #include <QScopedPointer>
-#include <QThreadPool>
-#include <QPersistentModelIndex>
-#include <QCryptographicHash>
-#include <QRgb>
 #include <QApplication>
 #include <qmath.h>
 #include <QTimer>
@@ -49,132 +45,6 @@ static const char* kShotcutFilterProperty = "shotcut:filter";
 static const char* kShotcutTransitionProperty = "shotcut:transition";
 static const char* kShotcutDefaultTransition = "lumaMix";
 
-static void deleteQVariantList(QVariantList* list)
-{
-    delete list;
-}
-
-class AudioLevelsTask : public QRunnable
-{
-    Mlt::Producer m_producer;
-    MultitrackModel* m_model;
-    QPersistentModelIndex m_index;
-    Mlt::Producer* m_tempProducer;
-
-public:
-    AudioLevelsTask(Mlt::Producer& producer, MultitrackModel* model, const QModelIndex& index)
-        : QRunnable()
-        , m_producer(producer)
-        , m_model(model)
-        , m_index(index)
-        , m_tempProducer(0)
-    {
-    }
-
-    ~AudioLevelsTask()
-    {
-        delete m_tempProducer;
-    }
-
-    Mlt::Producer* tempProducer()
-    {
-        if (!m_tempProducer) {
-            QString service = m_producer.get("mlt_service");
-            if (service == "avformat-novalidate")
-                service = "avformat";
-            else if (service.startsWith("xml"))
-                service = "xml-nogl";
-            m_tempProducer = new Mlt::Producer(MLT.profile(), service.toUtf8().constData(), m_producer.get("resource"));
-            if (m_tempProducer->is_valid()) {
-                Mlt::Filter channels(MLT.profile(), "audiochannels");
-                Mlt::Filter converter(MLT.profile(), "audioconvert");
-                Mlt::Filter levels(MLT.profile(), "audiolevel");
-                m_tempProducer->attach(channels);
-                m_tempProducer->attach(converter);
-                m_tempProducer->attach(levels);
-            }
-        }
-        return m_tempProducer;
-    }
-
-    QString cacheKey()
-    {
-        QString key = QString("%1 audiolevels").arg(m_producer.get("resource"));
-        QCryptographicHash hash(QCryptographicHash::Sha1);
-        hash.addData(key.toUtf8());
-        return hash.result().toHex();
-    }
-
-    void run()
-    {
-        int n = tempProducer()->get_playtime();
-        // 2 channels interleaved of uchar values
-        QVariantList* levels = new QVariantList;
-        QImage image = DB.getThumbnail(cacheKey());
-        if (image.isNull()) {
-            const char* key[2] = { "meta.media.audio_level.0", "meta.media.audio_level.1"};
-            // TODO: use project channel count
-            int channels = 2;
-
-            // for each frame
-            for (int i = 0; i < n; i++) {
-                Mlt::Frame* frame = m_tempProducer->get_frame();
-                if (frame && frame->is_valid() && !frame->get_int("test_audio")) {
-                    mlt_audio_format format = mlt_audio_s16;
-                    int frequency = 48000;
-                    int samples = mlt_sample_calculator(m_producer.get_fps(), frequency, i);
-                    frame->get_audio(format, frequency, channels, samples);
-                    // for each channel
-                    for (int channel = 0; channel < channels; channel++)
-                        // Convert real to uint for caching as image.
-                        // Scale by 0.9 because values may exceed 1.0 to indicate clipping.
-                        *levels << 256 * qMin(frame->get_double(key[channel]) * 0.9, 1.0);
-                } else if (!levels->isEmpty()) {
-                    for (int channel = 0; channel < channels; channel++)
-                        *levels << levels->last();
-                }
-                delete frame;
-            }
-            if (levels->size() > 0) {
-                // Put into an image for caching.
-                int count = levels->size();
-                QImage image((count + 3) / 4, channels, QImage::Format_ARGB32);
-                n = image.width() * image.height();
-                for (int i = 0; i < n; i ++) {
-                    QRgb p; 
-                    if ((4*i + 3) < count) {
-                        p = qRgba(levels->at(4*i).toInt(), levels->at(4*i+1).toInt(), levels->at(4*i+2).toInt(), levels->at(4*i+3).toInt());
-                    } else {
-                        int last = levels->last().toInt();
-                        int r = (4*i+0) < count? levels->at(4*i+0).toInt() : last;
-                        int g = (4*i+1) < count? levels->at(4*i+1).toInt() : last;
-                        int b = (4*i+2) < count? levels->at(4*i+2).toInt() : last;
-                        int a = last;
-                        p = qRgba(r, g, b, a);
-                    }
-                    image.setPixel(i / 2, i % channels, p);
-                }
-                DB.putThumbnail(cacheKey(), image);
-            }
-        } else {
-            // convert cached image
-            int channels = 2;
-            int n = image.width() * image.height();
-            for (int i = 0; i < n; i++) {
-                QRgb p = image.pixel(i / 2, i % channels);
-                *levels << qRed(p);
-                *levels << qGreen(p);
-                *levels << qBlue(p);
-                *levels << qAlpha(p);
-            }
-        }
-        if (levels->size() > 0) {
-            m_producer.set(kAudioLevelsProperty, levels, 0, (mlt_destructor) deleteQVariantList);
-            if (m_index.isValid())
-                m_model->audioLevelsReady(m_index);
-        }
-    }
-};
 
 MultitrackModel::MultitrackModel(QObject *parent)
     : QAbstractItemModel(parent)
@@ -857,8 +727,7 @@ int MultitrackModel::overwriteClip(int trackIndex, Mlt::Producer& clip, int posi
                 QVector<int> roles;
                 roles << DurationRole;
                 emit dataChanged(modelIndex, modelIndex, roles);
-                QThreadPool::globalInstance()->start(
-                    new AudioLevelsTask(clip.parent(), this, modelIndex));
+                AudioLevelsTask::start(clip.parent(), this, modelIndex);
                 ++targetIndex;
             } else if (position < 0) {
                 clip.set_in_and_out(-position, clip.get_out());
@@ -880,8 +749,7 @@ int MultitrackModel::overwriteClip(int trackIndex, Mlt::Producer& clip, int posi
                 QVector<int> roles;
                 roles << DurationRole;
                 emit dataChanged(modelIndex, modelIndex, roles);
-                QThreadPool::globalInstance()->start(
-                    new AudioLevelsTask(clip.parent(), this, modelIndex));
+                AudioLevelsTask::start(clip.parent(), this, modelIndex);
             } else {
 //                qDebug() << "remove item on right";
                 beginRemoveRows(index(trackIndex), targetIndex, targetIndex);
@@ -899,8 +767,7 @@ int MultitrackModel::overwriteClip(int trackIndex, Mlt::Producer& clip, int posi
         }
         if (result >= 0) {
             QModelIndex index = createIndex(result, 0, trackIndex);
-            QThreadPool::globalInstance()->start(
-                new AudioLevelsTask(clip.parent(), this, index));
+            AudioLevelsTask::start(clip.parent(), this, index);
             emit modified();
             emit seeked(playlist.clip_start(result) + playlist.clip_length(result));
         }
@@ -992,8 +859,7 @@ QString MultitrackModel::overwrite(int trackIndex, Mlt::Producer& clip, int posi
             endInsertRows();
         }
         QModelIndex index = createIndex(targetIndex, 0, trackIndex);
-        QThreadPool::globalInstance()->start(
-            new AudioLevelsTask(clip.parent(), this, index));
+        AudioLevelsTask::start(clip.parent(), this, index);
         emit modified();
         emit seeked(playlist.clip_start(targetIndex) + playlist.clip_length(targetIndex));
     }
@@ -1043,15 +909,13 @@ int MultitrackModel::insertClip(int trackIndex, Mlt::Producer &clip, int positio
                 QVector<int> roles;
                 roles << DurationRole;
                 emit dataChanged(modelIndex, modelIndex, roles);
-                QThreadPool::globalInstance()->start(
-                    new AudioLevelsTask(clip.parent(), this, modelIndex));
+                AudioLevelsTask::start(clip.parent(), this, modelIndex);
                 ++targetIndex;
 
                 // Notify item on right was adjusted.
                 modelIndex = createIndex(targetIndex, 0, trackIndex);
                 emit dataChanged(modelIndex, modelIndex, roles);
-                QThreadPool::globalInstance()->start(
-                    new AudioLevelsTask(clip.parent(), this, modelIndex));
+                AudioLevelsTask::start(clip.parent(), this, modelIndex);
             }
 
             // Insert clip between split blanks.
@@ -1098,8 +962,7 @@ int MultitrackModel::insertClip(int trackIndex, Mlt::Producer &clip, int positio
             }
 
             QModelIndex index = createIndex(result, 0, trackIndex);
-            QThreadPool::globalInstance()->start(
-                new AudioLevelsTask(clip.parent(), this, index));
+            AudioLevelsTask::start(clip.parent(), this, index);
             emit modified();
             emit seeked(playlist.clip_start(result) + playlist.clip_length(result));
         }
@@ -1125,8 +988,7 @@ int MultitrackModel::appendClip(int trackIndex, Mlt::Producer &clip)
         playlist.append(clip.parent(), in, out);
         endInsertRows();
         QModelIndex index = createIndex(i, 0, trackIndex);
-        QThreadPool::globalInstance()->start(
-            new AudioLevelsTask(clip.parent(), this, index));
+        AudioLevelsTask::start(clip.parent(), this, index);
         emit modified();
         emit seeked(playlist.clip_start(i) + playlist.clip_length(i));
         return i;
@@ -1256,8 +1118,7 @@ void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
         roles << OutPointRole;
         roles << FadeOutRole;
         emit dataChanged(modelIndex, modelIndex, roles);
-        QThreadPool::globalInstance()->start(
-            new AudioLevelsTask(clip->parent(), this, modelIndex));
+        AudioLevelsTask::start(clip->parent(), this, modelIndex);
 
         beginInsertRows(index(trackIndex), clipIndex + 1, clipIndex + 1);
         if (clip->is_blank()) {
@@ -1267,8 +1128,7 @@ void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
             playlist.insert(producer, clipIndex + 1, in + duration, out);
             endInsertRows();
             modelIndex = createIndex(clipIndex + 1, 0, trackIndex);
-            QThreadPool::globalInstance()->start(
-                new AudioLevelsTask(producer.parent(), this, modelIndex));
+            AudioLevelsTask::start(producer.parent(), this, modelIndex);
         }
         emit modified();
     }
@@ -1306,8 +1166,7 @@ void MultitrackModel::joinClips(int trackIndex, int clipIndex)
         roles << OutPointRole;
         roles << FadeOutRole;
         emit dataChanged(modelIndex, modelIndex, roles);
-        QThreadPool::globalInstance()->start(
-            new AudioLevelsTask(clip->parent(), this, modelIndex));
+        AudioLevelsTask::start(clip->parent(), this, modelIndex);
 
         beginRemoveRows(index(trackIndex), clipIndex + 1, clipIndex + 1);
         playlist.remove(clipIndex + 1);
@@ -1334,8 +1193,7 @@ void MultitrackModel::appendFromPlaylist(Mlt::Playlist *from, int trackIndex)
             clip->set_in_and_out(0, clip->get_length() - 1);
             playlist.append(clip->parent(), in, out);
             QModelIndex modelIndex = createIndex(i, 0, trackIndex);
-            QThreadPool::globalInstance()->start(
-                new AudioLevelsTask(clip->parent(), this, modelIndex));
+            AudioLevelsTask::start(clip->parent(), this, modelIndex);
         }
         endInsertRows();
         emit modified();
@@ -1375,8 +1233,7 @@ void MultitrackModel::overwriteFromPlaylist(Mlt::Playlist& from, int trackIndex,
                 } else {
                     playlist.insert(*clip, targetIndex);
                     QModelIndex modelIndex = createIndex(targetIndex, 0, trackIndex);
-                    QThreadPool::globalInstance()->start(
-                        new AudioLevelsTask(clip->parent(), this, modelIndex));
+                    AudioLevelsTask::start(clip->parent(), this, modelIndex);
                 }
                 ++targetIndex;
             }
@@ -2043,8 +1900,7 @@ void MultitrackModel::relocateClip(Mlt::Playlist& playlist, int trackIndex, int 
     beginInsertRows(parentIndex, targetIndex, targetIndex);
     playlist.insert(*clip, targetIndex, clip->get_in(), clip->get_out());
     endInsertRows();
-    QThreadPool::globalInstance()->start(
-        new AudioLevelsTask(clip->parent(), this, createIndex(targetIndex, 0, trackIndex)));
+    AudioLevelsTask::start(clip->parent(), this, createIndex(targetIndex, 0, trackIndex));
     if (clipIndex >= targetIndex)
         ++clipIndex;
 
@@ -2492,8 +2348,7 @@ void MultitrackModel::getAudioLevels()
             QScopedPointer<Mlt::Producer> clip(playlist.get_clip(clipIx));
             if (clip && clip->is_valid() && !clip->is_blank() && clip->get_int("audio_index") > -1) {
                 QModelIndex index = createIndex(clipIx, 0, trackIx);
-                QThreadPool::globalInstance()->start(
-                    new AudioLevelsTask(clip->parent(), this, index));
+                AudioLevelsTask::start(clip->parent(), this, index);
             }
         }
     }
