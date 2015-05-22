@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Meltytech, LLC
+ * Copyright (c) 2012-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,10 +20,9 @@
 #include "ui_avformatproducerwidget.h"
 #include "util.h"
 #include "mltcontroller.h"
+#include "shotcut_mlt_properties.h"
 #include <QtDebug>
 #include <QtWidgets>
-
-static const char* kCommentProperty = "shotcut:comment";
 
 AvformatProducerWidget::AvformatProducerWidget(QWidget *parent)
     : QWidget(parent)
@@ -190,10 +189,10 @@ void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
             dar_denominator = 9;
         }
     }
-    if (m_producer->get("shotcut_aspect_num"))
-        dar_numerator = m_producer->get_int("shotcut_aspect_num");
-    if (m_producer->get("shotcut_aspect_den"))
-        dar_denominator = m_producer->get_int("shotcut_aspect_den");
+    if (m_producer->get(kAspectRatioNumerator))
+        dar_numerator = m_producer->get_int(kAspectRatioNumerator);
+    if (m_producer->get(kAspectRatioDenominator))
+        dar_denominator = m_producer->get_int(kAspectRatioDenominator);
     ui->aspectNumSpinBox->blockSignals(true);
     ui->aspectNumSpinBox->setValue(dar_numerator);
     ui->aspectNumSpinBox->blockSignals(false);
@@ -297,8 +296,8 @@ void AvformatProducerWidget::on_aspectNumSpinBox_valueChanged(int)
             sar /= m_producer->get_double("meta.media.sample_aspect_den");
         if (m_producer->get("force_aspect_ratio") || new_sar != sar) {
             m_producer->set("force_aspect_ratio", QString::number(new_sar).toLatin1().constData());
-            m_producer->set("shotcut_aspect_num", ui->aspectNumSpinBox->text().toLatin1().constData());
-            m_producer->set("shotcut_aspect_den", ui->aspectDenSpinBox->text().toLatin1().constData());
+            m_producer->set(kAspectRatioNumerator, ui->aspectNumSpinBox->text().toLatin1().constData());
+            m_producer->set(kAspectRatioDenominator, ui->aspectDenSpinBox->text().toLatin1().constData());
         }
         emit producerChanged();
         connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
@@ -319,7 +318,8 @@ void AvformatProducerWidget::on_durationSpinBox_editingFinished()
     Mlt::Producer* p = producer(MLT.profile());
     p->pass_list(*m_producer, "audio_index, video_index, force_aspect_ratio,"
                  "force_progressive, force_tff,"
-                 "shotcut_aspect_num, shotcut_aspect_den");
+                 kAspectRatioNumerator ","
+                 kAspectRatioDenominator);
     reopen(p);
 }
 

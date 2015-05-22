@@ -23,6 +23,7 @@
 #include "docks/playlistdock.h"
 #include "util.h"
 #include "audiolevelstask.h"
+#include "shotcut_mlt_properties.h"
 #include <QScopedPointer>
 #include <QApplication>
 #include <qmath.h>
@@ -31,18 +32,6 @@
 #include <QtDebug>
 
 static const quintptr NO_PARENT_ID = quintptr(-1);
-static const char* kAudioLevelsProperty = "shotcut:audio-levels";
-static const char* kTrackNameProperty = "shotcut:name";
-static const char* kShotcutPlaylistProperty = "shotcut:playlist";
-static const char* kAudioTrackProperty = "shotcut:audio";
-static const char* kVideoTrackProperty = "shotcut:video";
-static const char* kTrackLockProperty = "shotcut:lock";
-static const char* kBackgroundTrackId = "background";
-static const char* kPlaylistTrackId = "main bin";
-static const char* kTrackHeightProperty = "shotcut:trackHeight";
-static const char* kTimelineScaleProperty = "shotcut:scaleFactor";
-static const char* kShotcutFilterProperty = "shotcut:filter";
-static const char* kShotcutTransitionProperty = "shotcut:transition";
 static const char* kShotcutDefaultTransition = "lumaMix";
 
 

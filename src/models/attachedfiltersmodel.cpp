@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,6 +21,7 @@
 #include "mainwindow.h"
 #include "controllers/filtercontroller.h"
 #include "qmltypes/qmlmetadata.h"
+#include "shotcut_mlt_properties.h"
 #include <QTimer>
 #include <QDebug>
 
@@ -85,7 +86,7 @@ QString AttachedFiltersModel::trackTitle() const
     if (m_producer.isNull())
         return QString();
 
-    return QString::fromUtf8(m_producer->get("shotcut:name"));
+    return QString::fromUtf8(m_producer->get(kTrackNameProperty));
 }
 
 bool AttachedFiltersModel::isProducerSelected() const
@@ -264,7 +265,7 @@ void AttachedFiltersModel::add(QmlMetadata* meta)
     Mlt::Filter* filter = new Mlt::Filter(MLT.profile(), meta->mlt_service().toUtf8().constData());
     if (filter->is_valid()) {
         if (!meta->objectName().isEmpty())
-            filter->set("shotcut:filter", meta->objectName().toUtf8().constData());
+            filter->set(kShotcutFilterProperty, meta->objectName().toUtf8().constData());
 
         // Put the filter after the last filter that is greater than or equal
         // in sort order.

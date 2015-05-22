@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2014 Meltytech, LLC
+ * Copyright (c) 2011-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,12 +25,12 @@
 #include <Mlt.h>
 #include "glwidget.h"
 #include "settings.h"
+#include "shotcut_mlt_properties.h"
 
 namespace Mlt {
 
 static Controller* instance = 0;
 const QString XmlMimeType("application/mlt+xml");
-static const char* kShotcutVirtualClip = "shotcut:virtual";
 
 static int alignWidth(int width)
 {
@@ -567,7 +567,7 @@ void Controller::setIn(int in)
         for (int i = 0; i < n; i++) {
             Filter* filter = m_producer->filter(i);
             if (filter && filter->is_valid() && filter->get_length() > 0) {
-                if (QString(filter->get("shotcut:filter")).startsWith("fadeIn"))
+                if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeIn"))
                     filter->set_in_and_out(in, in + filter->get_length() - 1);
             }
             delete filter;
@@ -585,7 +585,7 @@ void Controller::setOut(int out)
         for (int i = 0; i < n; i++) {
             Filter* filter = m_producer->filter(i);
             if (filter && filter->is_valid() && filter->get_length() > 0) {
-                if (QString(filter->get("shotcut:filter")).startsWith("fadeOut")) {
+                if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeOut")) {
                     int in = out - filter->get_length() + 1;
                     filter->set_in_and_out(in, out);
                 }

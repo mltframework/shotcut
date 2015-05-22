@@ -19,6 +19,7 @@
 #include "undohelper.h"
 #include "mltcontroller.h"
 #include "models/audiolevelstask.h"
+#include "shotcut_mlt_properties.h"
 #include <QtDebug>
 #include <QScopedPointer>
 
@@ -28,7 +29,6 @@
 #define UNDOLOG if (false) qDebug()
 #endif
 
-static const char* kUndoIdProperty = "temporary_undo_id";
 UndoHelper::UndoHelper(MultitrackModel& model)
     : m_model(model)
 {

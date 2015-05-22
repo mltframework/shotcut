@@ -200,7 +200,8 @@ HEADERS  += mainwindow.h \
     forwardingquickviewworkaround.h \
     widgets/playlisttable.h \
     commands/undohelper.h \
-    models/audiolevelstask.h
+    models/audiolevelstask.h \
+    shotcut_mlt_properties.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \

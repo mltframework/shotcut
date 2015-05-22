@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2014 Meltytech, LLC
+ * Copyright (c) 2012-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,6 +20,7 @@
 #include "ui_imageproducerwidget.h"
 #include "settings.h"
 #include "mainwindow.h"
+#include "shotcut_mlt_properties.h"
 #include <QFileInfo>
 
 ImageProducerWidget::ImageProducerWidget(QWidget *parent) :
@@ -47,8 +48,8 @@ void ImageProducerWidget::setProducer(Mlt::Producer* p)
     if (m_defaultDuration == -1)
         m_defaultDuration = m_producer->get_length();
     QString s;
-    if (m_producer->get("shotcut_resource"))
-        s = QString::fromUtf8(m_producer->get("shotcut_resource"));
+    if (m_producer->get(kShotcutResourceProperty))
+        s = QString::fromUtf8(m_producer->get(kShotcutResourceProperty));
     else {
         s = QString::fromUtf8(m_producer->get("resource"));
         p->set("ttl", 1);
@@ -58,9 +59,9 @@ void ImageProducerWidget::setProducer(Mlt::Producer* p)
     ui->widthLineEdit->setText(p->get("meta.media.width"));
     ui->heightLineEdit->setText(p->get("meta.media.height"));
     ui->aspectNumSpinBox->blockSignals(true);
-    if (p->get("shotcut_aspect_num") && p->get("shotcut_aspect_den")) {
-        ui->aspectNumSpinBox->setValue(p->get_int("shotcut_aspect_num"));
-        ui->aspectDenSpinBox->setValue(p->get_int("shotcut_aspect_den"));
+    if (p->get(kAspectRatioNumerator) && p->get(kAspectRatioDenominator)) {
+        ui->aspectNumSpinBox->setValue(p->get_int(kAspectRatioNumerator));
+        ui->aspectDenSpinBox->setValue(p->get_int(kAspectRatioDenominator));
     }
     else {
         double sar = m_producer->get_double("aspect_ratio");
@@ -77,8 +78,8 @@ void ImageProducerWidget::setProducer(Mlt::Producer* p)
     ui->aspectNumSpinBox->blockSignals(false);
     if (m_producer->get_int("ttl"))
         ui->repeatSpinBox->setValue(m_producer->get_int("ttl"));
-    ui->sequenceCheckBox->setChecked(m_producer->get_int("shotcut_sequence"));
-    ui->repeatSpinBox->setEnabled(m_producer->get_int("shotcut_sequence"));
+    ui->sequenceCheckBox->setChecked(m_producer->get_int(kShotcutSequenceProperty));
+    ui->repeatSpinBox->setEnabled(m_producer->get_int(kShotcutSequenceProperty));
 }
 
 void ImageProducerWidget::setOutPoint(int duration)
@@ -109,9 +110,9 @@ void ImageProducerWidget::reopen(Mlt::Producer* p)
 
 void ImageProducerWidget::on_resetButton_clicked()
 {
-    const char *s = m_producer->get("shotcut_resource");
+    const char *s = m_producer->get(kShotcutResourceProperty);
     if (!s)
-        s = m_producer->get("resource");
+        s = m_producer->get(kShotcutResourceProperty);
     Mlt::Producer* p = new Mlt::Producer(MLT.profile(), s);
     reopen(p);
 }
@@ -124,8 +125,8 @@ void ImageProducerWidget::on_aspectNumSpinBox_valueChanged(int)
         double sar = m_producer->get_double("aspect_ratio");
         if (m_producer->get("force_aspect_ratio") || new_sar != sar) {
             m_producer->set("force_aspect_ratio", QString::number(new_sar).toLatin1().constData());
-            m_producer->set("shotcut_aspect_num", ui->aspectNumSpinBox->text().toLatin1().constData());
-            m_producer->set("shotcut_aspect_den", ui->aspectDenSpinBox->text().toLatin1().constData());
+            m_producer->set(kAspectRatioNumerator, ui->aspectNumSpinBox->text().toLatin1().constData());
+            m_producer->set(kAspectRatioDenominator, ui->aspectDenSpinBox->text().toLatin1().constData());
         }
         emit producerChanged();
     }
@@ -144,7 +145,7 @@ void ImageProducerWidget::on_durationSpinBox_editingFinished()
         return;
     Mlt::Producer* p = producer(MLT.profile());
     p->pass_list(*m_producer, "force_aspect_ratio, shotcut_aspect_num, shotcut_aspect_den,"
-        "shotcut_resource, resource, ttl, shotcut_sequence");
+        kShotcutResourceProperty ", resource, ttl," kShotcutSequenceProperty);
     reopen(p);
 }
 
@@ -152,9 +153,9 @@ void ImageProducerWidget::on_sequenceCheckBox_clicked(bool checked)
 {
     QString resource = m_producer->get("resource");
     ui->repeatSpinBox->setEnabled(checked);
-    if (checked && !m_producer->get("shotcut_resource"))
-        m_producer->set("shotcut_resource", resource.toUtf8().constData());
-    m_producer->set("shotcut_sequence", checked);
+    if (checked && !m_producer->get(kShotcutResourceProperty))
+        m_producer->set(kShotcutResourceProperty, resource.toUtf8().constData());
+    m_producer->set(kShotcutSequenceProperty, checked);
     m_producer->set("ttl", ui->repeatSpinBox->value());
     if (checked) {
         QFileInfo info(resource);
@@ -188,13 +189,14 @@ void ImageProducerWidget::on_sequenceCheckBox_clicked(bool checked)
         }
     }
     else {
-        m_producer->set("resource", m_producer->get("shotcut_resource"));
+        m_producer->set("resource", m_producer->get(kShotcutResourceProperty));
         m_producer->set("length", qRound(MLT.profile().fps() * 600));
         ui->durationSpinBox->setValue(qRound(MLT.profile().fps() * Settings.imageDuration()));
     }
     Mlt::Producer* p = producer(MLT.profile());
-    p->pass_list(*m_producer, "force_aspect_ratio, shotcut_aspect_num, shotcut_aspect_den, "
-        "shotcut_resource, resource, ttl, shotcut_sequence, length");
+    p->pass_list(*m_producer, "force_aspect_ratio,"
+        kAspectRatioNumerator "," kAspectRatioDenominator ","
+        kShotcutResourceProperty ", resource, ttl, length," kShotcutSequenceProperty);
     reopen(p);
 }
 

@@ -66,6 +66,7 @@
 #include "qmltypes/qmlapplication.h"
 #include "autosavefile.h"
 #include "commands/playlistcommands.h"
+#include "shotcut_mlt_properties.h"
 
 #include <QtWidgets>
 #include <QDebug>
@@ -1572,7 +1573,7 @@ void MainWindow::onEncodeTriggered(bool checked)
 void MainWindow::onCaptureStateChanged(bool started)
 {
     if (started && MLT.resource().startsWith("x11grab:")
-                && !MLT.producer()->get_int("shotcut_bgcapture"))
+                && !MLT.producer()->get_int(kBackgroundCaptureProperty))
         showMinimized();
 }
 
@@ -1865,7 +1866,7 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
         w = new WebvfxProducer(this);
     else if (service == "tone")
         w = new ToneProducerWidget(this);
-    else if (producer->parent().get("shotcut:transition")) {
+    else if (producer->parent().get(kShotcutTransitionProperty)) {
         w = new LumaMixTransition(producer->parent(), this);
         scrollArea->setWidget(w);
         return w;

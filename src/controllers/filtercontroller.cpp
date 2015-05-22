@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Meltytech, LLC
+ * Copyright (c) 2014-2015 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,6 +15,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+#include "shotcut_mlt_properties.h"
 #include "filtercontroller.h"
 #include <QQmlEngine>
 #include <QDir>
@@ -78,7 +80,7 @@ QmlMetadata *FilterController::metadataForService(Mlt::Service *service)
     m_future.waitForFinished();
     QmlMetadata* meta = 0;
     int rowCount = m_metadataModel.rowCount();
-    QString uniqueId = service->get("shotcut:filter");
+    QString uniqueId = service->get(kShotcutFilterProperty);
 
     // Fallback to mlt_service for legacy filters
     if (uniqueId.isEmpty()) {

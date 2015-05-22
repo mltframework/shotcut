@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Meltytech, LLC
+ * Copyright (c) 2012-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,6 +18,7 @@
 
 #include "playlistmodel.h"
 #include "util.h"
+#include "shotcut_mlt_properties.h"
 #include <QUrl>
 #include <QImage>
 #include <QColor>
@@ -31,9 +32,6 @@
 
 #include "settings.h"
 #include "database.h"
-
-static const char* kThumbnailInProperty = "shotcut:thumbnail-in";
-static const char* kThumbnailOutProperty = "shotcut:thumbnail-out";
 
 static void deleteQImage(QImage* image)
 {

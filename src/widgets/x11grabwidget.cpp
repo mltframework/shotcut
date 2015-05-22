@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Meltytech, LLC
+ * Copyright (c) 2012-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,6 +22,7 @@
 #include "jackproducerwidget.h"
 #include "alsawidget.h"
 #include "mltcontroller.h"
+#include "shotcut_mlt_properties.h"
 #include <QtWidgets>
 
 X11grabWidget::X11grabWidget(QWidget *parent) :
@@ -112,7 +113,7 @@ Mlt::Producer* X11grabWidget::producer(Mlt::Profile& profile)
     p->set("draw_mouse", ui->drawMouseCheckBox->isChecked()? 1: 0);
     p->set("follow_mouse", ui->positionComboBox->currentIndex() - 1);
     p->set("audio_ix", ui->audioComboBox->currentIndex());
-    p->set("shotcut_bgcapture", ui->backgroundCheckBox->isChecked()? 1: 0);
+    p->set(kBackgroundCaptureProperty, ui->backgroundCheckBox->isChecked()? 1: 0);
     p->set("force_seekable", 0);
     return p;
 }
@@ -129,7 +130,7 @@ Mlt::Properties* X11grabWidget::getPreset() const
     p->set("draw_mouse", ui->drawMouseCheckBox->isChecked()? 1: 0);
     p->set("follow_mouse", ui->positionComboBox->currentIndex() - 1);
     p->set("audio_ix", ui->audioComboBox->currentIndex());
-    p->set("shotcut_bgcapture", ui->backgroundCheckBox->isChecked()? 1: 0);
+    p->set(kBackgroundCaptureProperty, ui->backgroundCheckBox->isChecked()? 1: 0);
     return p;
 }
 
@@ -145,7 +146,7 @@ void X11grabWidget::loadPreset(Mlt::Properties& p)
     ui->positionComboBox->setCurrentIndex(p.get_int("follow_mouse") + 1);
     ui->audioComboBox->setCurrentIndex(p.get_int("audio_ix"));
     on_audioComboBox_activated(p.get_int("audio_ix"));
-    ui->backgroundCheckBox->setChecked(p.get_int("shotcut_bgcapture"));
+    ui->backgroundCheckBox->setChecked(p.get_int(kBackgroundCaptureProperty));
 }
 
 void X11grabWidget::on_preset_selected(void* p)

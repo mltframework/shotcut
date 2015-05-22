@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2014 Meltytech, LLC
+ * Copyright (c) 2013-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,14 +23,12 @@
 #include "mainwindow.h"
 #include "commands/timelinecommands.h"
 #include "qmltypes/qmlutilities.h"
+#include "shotcut_mlt_properties.h"
 
 #include <QtQml>
 #include <QtQuick>
 #include <QDebug>
 
-static const char* kFilterInProperty = "_shotcut:filter_in";
-static const char* kFilterOutProperty = "_shotcut:filter_out";
-static const char* kTrackLockProperty = "shotcut:lock";
 
 TimelineDock::TimelineDock(QWidget *parent) :
     QDockWidget(parent),

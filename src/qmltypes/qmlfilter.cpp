@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2014 Meltytech, LLC
+ * Copyright (c) 2013-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,6 +22,7 @@
 #include "controllers/filtercontroller.h"
 #include "jobqueue.h"
 #include "jobs/meltjob.h"
+#include "shotcut_mlt_properties.h"
 #include <QStandardPaths>
 #include <QDir>
 #include <QIODevice>
@@ -30,8 +31,6 @@
 #include <QtXml>
 #include <MltProducer.h>
 
-static const char* kFilterInProperty = "_shotcut:filter_in";
-static const char* kFilterOutProperty = "_shotcut:filter_out";
 static const char* kWidthProperty = "meta.media.width";
 static const char* kHeightProperty = "meta.media.height";
 static const char* kAspectNumProperty = "meta.media.sample_aspect_num";

@@ -21,11 +21,10 @@
 #include "dialogs/durationdialog.h"
 #include "mainwindow.h"
 #include "settings.h"
+#include "shotcut_mlt_properties.h"
 #include <commands/playlistcommands.h>
 #include <QMenu>
 #include <QDebug>
-
-static const char* kPlaylistIndexProperty = "_shotcut:playlistIndex";
 
 PlaylistDock::PlaylistDock(QWidget *parent) :
     QDockWidget(parent),

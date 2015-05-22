@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2014 Meltytech, LLC
+ * Copyright (c) 2012-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,6 +25,7 @@
 #include "settings.h"
 #include "qmltypes/qmlapplication.h"
 #include "jobs/encodejob.h"
+#include "shotcut_mlt_properties.h"
 
 #include <QtDebug>
 #include <QtWidgets>
@@ -723,7 +724,7 @@ void EncodeDock::on_encodeButton_clicked()
         if (seekable)
             // Batch encode
             enqueueMelt(outputFilename, Settings.playerGPU()? -1 : -MLT.realTime());
-        else if (MLT.producer()->get_int("shotcut_bgcapture")) {
+        else if (MLT.producer()->get_int(kBackgroundCaptureProperty)) {
             MLT.stop();
             runMelt(outputFilename);
             ui->stopCaptureButton->show();
@@ -797,7 +798,7 @@ void EncodeDock::on_streamButton_clicked()
         if (MLT.isSeekable())
             // Stream in background
             runMelt(url, 1);
-        else if (MLT.producer()->get_int("shotcut_bgcapture")) {
+        else if (MLT.producer()->get_int(kBackgroundCaptureProperty)) {
             // Stream Shotcut screencast
             MLT.stop();
             runMelt(url, 1);

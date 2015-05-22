@@ -19,14 +19,13 @@
 #include "audiolevelstask.h"
 #include "database.h"
 #include "mltcontroller.h"
+#include "shotcut_mlt_properties.h"
 #include <QString>
 #include <QVariantList>
 #include <QImage>
 #include <QCryptographicHash>
 #include <QRgb>
 #include <QThreadPool>
-
-static const char* kAudioLevelsProperty = "shotcut:audio-levels";
 
 static void deleteQVariantList(QVariantList* list)
 {
