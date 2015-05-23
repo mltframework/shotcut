@@ -365,7 +365,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent* event)
     mimeData->setData(Mlt::XmlMimeType, MLT.XML().toUtf8());
     drag->setMimeData(mimeData);
     mimeData->setText(QString::number(MLT.producer()->get_playtime()));
-    if (m_frameRenderer && !m_glslManager) {
+    if (m_frameRenderer && !m_glslManager && m_frameRenderer->getDisplayFrame().is_valid()) {
         Mlt::Frame displayFrame(m_frameRenderer->getDisplayFrame().clone(false, true));
         QImage displayImage = MLT.image(&displayFrame, 45 * MLT.profile().dar(), 45).scaledToHeight(45);
         drag->setPixmap(QPixmap::fromImage(displayImage));
