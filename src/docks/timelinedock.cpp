@@ -151,7 +151,7 @@ void TimelineDock::chooseClipAtPosition(int position, int * trackIndex, int * cl
     QScopedPointer<Mlt::Producer> clip;
 
     // Start by checking for a hit at the specified track
-    if (*trackIndex != -1) {
+    if (*trackIndex != -1 && !isTrackLocked(*trackIndex)) {
         *clipIndex = clipIndexAtPosition(*trackIndex, position);
         if (*clipIndex != -1 && !isBlank(*trackIndex, *clipIndex))
             return;
@@ -161,12 +161,15 @@ void TimelineDock::chooseClipAtPosition(int position, int * trackIndex, int * cl
     *trackIndex = currentTrack();
     *clipIndex = clipIndexAtPosition(*trackIndex, position);
 
-    if (*clipIndex != -1 && !isBlank(*trackIndex, *clipIndex))
+    if (!isTrackLocked(*trackIndex) && *clipIndex != -1 && !isBlank(*trackIndex, *clipIndex)) {
         return;
+    }
 
     // if there was no hit, look through the other tracks
     for (*trackIndex = 0; *trackIndex < m_model.trackList().size(); (*trackIndex)++) {
         if (*trackIndex == currentTrack())
+            continue;
+        if (isTrackLocked(*trackIndex))
             continue;
         *clipIndex = clipIndexAtPosition(*trackIndex, position);
         if (*clipIndex != -1 && !isBlank(*trackIndex, *clipIndex))
@@ -259,6 +262,8 @@ void TimelineDock::selectClipUnderPlayhead()
     int track = -1, clip = -1;
     chooseClipAtPosition(m_position, &track, &clip);
     if (clip == -1) {
+        if (isTrackLocked(currentTrack()))
+            return;
         int idx = clipIndexAtPlayhead(-1);
         if (idx == -1)
             setSelection(QList<int>());
