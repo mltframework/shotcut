@@ -120,6 +120,7 @@ protected:
 
 private:
     bool isBlank(int trackIndex, int clipIndex);
+    void pulseLockButtonOnTrack(int trackIndex);
     Ui::TimelineDock *ui;
     ForwardingQuickViewWorkaround m_quickView;
     MultitrackModel m_model;

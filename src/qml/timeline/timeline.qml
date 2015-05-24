@@ -47,6 +47,10 @@ Rectangle {
             tracksRepeater.itemAt(i).redrawWaveforms()
     }
 
+    function pulseLockButtonOnTrack(index) {
+        trackHeaderRepeater.itemAt(index).pulseLockButton()
+    }
+
     property int headerWidth: 140
     property int currentTrack: 0
     property color selectedTrackColor: Qt.rgba(0.8, 0.8, 0, 0.3);

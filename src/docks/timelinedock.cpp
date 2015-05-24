@@ -146,6 +146,12 @@ bool TimelineDock::isBlank(int trackIndex, int clipIndex)
         .data(MultitrackModel::IsBlankRole).toBool();
 }
 
+void TimelineDock::pulseLockButtonOnTrack(int trackIndex)
+{
+    QMetaObject::invokeMethod(m_quickView.rootObject(), "pulseLockButtonOnTrack",
+            Qt::DirectConnection, Q_ARG(QVariant, trackIndex));
+}
+
 void TimelineDock::chooseClipAtPosition(int position, int * trackIndex, int * clipIndex)
 {
     QScopedPointer<Mlt::Producer> clip;
@@ -262,13 +268,15 @@ void TimelineDock::selectClipUnderPlayhead()
     int track = -1, clip = -1;
     chooseClipAtPosition(m_position, &track, &clip);
     if (clip == -1) {
-        if (isTrackLocked(currentTrack()))
+        if (isTrackLocked(currentTrack())) {
+            pulseLockButtonOnTrack(currentTrack());
             return;
+        }
         int idx = clipIndexAtPlayhead(-1);
         if (idx == -1)
             setSelection(QList<int>());
         else
-            setSelection(QList<int>() << clipIndexAtPlayhead(-1));
+            setSelection(QList<int>() << idx);
         return;
     }
 
@@ -341,6 +349,10 @@ void TimelineDock::onSeeked(int position)
 
 void TimelineDock::append(int trackIndex)
 {
+    if (isTrackLocked(trackIndex)) {
+        pulseLockButtonOnTrack(trackIndex);
+        return;
+    }
     if (MLT.isSeekableClip() || MLT.savedProducer()) {
         if (trackIndex < 0)
             trackIndex = currentTrack();
@@ -352,6 +364,10 @@ void TimelineDock::append(int trackIndex)
 
 void TimelineDock::remove(int trackIndex, int clipIndex)
 {
+    if (isTrackLocked(trackIndex)) {
+        pulseLockButtonOnTrack(trackIndex);
+        return;
+    }
     Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
     Mlt::Producer* clip = producerForClip(trackIndex, clipIndex);
     if (clip) {
@@ -366,6 +382,10 @@ void TimelineDock::remove(int trackIndex, int clipIndex)
 
 void TimelineDock::lift(int trackIndex, int clipIndex)
 {
+    if (isTrackLocked(trackIndex)) {
+        pulseLockButtonOnTrack(trackIndex);
+        return;
+    }
     Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
     QScopedPointer<Mlt::Producer> clip(producerForClip(trackIndex, clipIndex));
     if (clip) {
@@ -381,6 +401,10 @@ void TimelineDock::lift(int trackIndex, int clipIndex)
 
 void TimelineDock::removeSelection()
 {
+    if (isTrackLocked(currentTrack())) {
+        pulseLockButtonOnTrack(currentTrack());
+        return;
+    }
     if (selection().isEmpty())
         selectClipUnderPlayhead();
     if (selection().isEmpty())
@@ -391,6 +415,10 @@ void TimelineDock::removeSelection()
 
 void TimelineDock::liftSelection()
 {
+    if (isTrackLocked(currentTrack())) {
+        pulseLockButtonOnTrack(currentTrack());
+        return;
+    }
     if (selection().isEmpty())
         selectClipUnderPlayhead();
     if (selection().isEmpty())
@@ -535,6 +563,10 @@ bool TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta)
 
 void TimelineDock::insert(int trackIndex, int position, const QString &xml)
 {
+    if (isTrackLocked(trackIndex)) {
+        pulseLockButtonOnTrack(trackIndex);
+        return;
+    }
     if (MLT.isSeekableClip() || MLT.savedProducer() || !xml.isEmpty()) {
         QString xmlToUse = !xml.isEmpty()? xml
             : MLT.XML(MLT.isClip()? 0 : MLT.savedProducer());
@@ -549,6 +581,10 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml)
 
 void TimelineDock::overwrite(int trackIndex, int position, const QString &xml)
 {
+    if (isTrackLocked(trackIndex)) {
+        pulseLockButtonOnTrack(trackIndex);
+        return;
+    }
     if (MLT.isSeekableClip() || MLT.savedProducer() || !xml.isEmpty()) {
         QString xmlToUse = !xml.isEmpty()? xml
             : MLT.XML(MLT.isClip()? 0 : MLT.savedProducer());
@@ -564,6 +600,10 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml)
 void TimelineDock::appendFromPlaylist(Mlt::Playlist *playlist)
 {
     int trackIndex = currentTrack();
+    if (isTrackLocked(trackIndex)) {
+        pulseLockButtonOnTrack(trackIndex);
+        return;
+    }
     m_model.appendFromPlaylist(playlist, trackIndex);
 }
 
@@ -571,6 +611,8 @@ void TimelineDock::splitClip(int trackIndex, int clipIndex)
 {
     if (trackIndex < 0 || clipIndex < 0)
         chooseClipAtPosition(m_position, &trackIndex, &clipIndex);
+    if (trackIndex < 0 || clipIndex < 0)
+        return;
     setCurrentTrack(trackIndex);
     if (clipIndex >= 0 && trackIndex >= 0) {
         int i = m_model.trackList().at(trackIndex).mlt_index;
@@ -592,6 +634,10 @@ void TimelineDock::splitClip(int trackIndex, int clipIndex)
 
 void TimelineDock::fadeIn(int trackIndex, int clipIndex, int duration)
 {
+    if (isTrackLocked(trackIndex)) {
+        pulseLockButtonOnTrack(trackIndex);
+        return;
+    }
     if (duration < 0) return;
     Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
     MAIN.undoStack()->push(
@@ -601,6 +647,10 @@ void TimelineDock::fadeIn(int trackIndex, int clipIndex, int duration)
 
 void TimelineDock::fadeOut(int trackIndex, int clipIndex, int duration)
 {
+    if (isTrackLocked(trackIndex)) {
+        pulseLockButtonOnTrack(trackIndex);
+        return;
+    }
     if (duration < 0) return;
     Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
     MAIN.undoStack()->push(
