@@ -86,8 +86,9 @@ public:
     void audioLevelsReady(const QModelIndex &index);
     bool createIfNeeded();
     void addBackgroundTrack();
-    void addAudioTrack();
-    void addVideoTrack();
+    int addAudioTrack();
+    int addVideoTrack();
+    void removeTrack(int trackIndex);
     void load();
     Q_INVOKABLE void reload();
     void close();

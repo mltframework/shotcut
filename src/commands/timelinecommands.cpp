@@ -608,4 +608,28 @@ bool AddTransitionByTrimOutCommand::mergeWith(const QUndoCommand *other)
     return true;
 }
 
+AddTrackCommand::AddTrackCommand(MultitrackModel& model, bool isVideo, QUndoCommand* parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_isVideo(isVideo)
+{
+    if (isVideo)
+        setText(QObject::tr("Add video track"));
+    else
+        setText(QObject::tr("Add audio track"));
+}
+
+void AddTrackCommand::redo()
+{
+    if (m_isVideo)
+        m_trackIndex = m_model.addVideoTrack();
+    else
+        m_trackIndex = m_model.addAudioTrack();
+}
+
+void AddTrackCommand::undo()
+{
+    m_model.removeTrack(m_trackIndex);
+}
+
 } // namespace

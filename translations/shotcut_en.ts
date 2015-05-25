@@ -3974,6 +3974,16 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/commands/timelinecommands.cpp" line="617"/>
+        <source>Add video track</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/commands/timelinecommands.cpp" line="619"/>
+        <source>Add audio track</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/mltxmlgpuchecker.cpp" line="38"/>
         <source>The file is not a MLT XML file.</source>
         <translation type="unfinished"></translation>
@@ -4273,7 +4283,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="631"/>
+        <location filename="../src/docks/timelinedock.cpp" line="633"/>
         <source>You cannot split a transition.</source>
         <translation type="unfinished"></translation>
     </message>

@@ -319,12 +319,14 @@ void TimelineDock::clearSelectionIfInvalid()
 
 void TimelineDock::addAudioTrack()
 {
-    m_model.addAudioTrack();
+    MAIN.undoStack()->push(
+        new Timeline::AddTrackCommand(m_model, false));
 }
 
 void TimelineDock::addVideoTrack()
 {
-    m_model.addVideoTrack();
+    MAIN.undoStack()->push(
+        new Timeline::AddTrackCommand(m_model, true));
 }
 
 void TimelineDock::close()

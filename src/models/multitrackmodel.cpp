@@ -2135,7 +2135,7 @@ void MultitrackModel::adjustBackgroundDuration()
     }
 }
 
-void MultitrackModel::addAudioTrack()
+int MultitrackModel::addAudioTrack()
 {
     if (!m_tractor) {
         m_tractor = new Mlt::Tractor(MLT.profile());
@@ -2145,7 +2145,7 @@ void MultitrackModel::addAudioTrack()
         addBackgroundTrack();
         addAudioTrack();
         emit created();
-        return;
+        return 0;
     }
 
     // Get the new track index.
@@ -2182,13 +2182,14 @@ void MultitrackModel::addAudioTrack()
     beginInsertRows(QModelIndex(), m_trackList.count(), m_trackList.count());
     m_trackList.append(t);
     endInsertRows();
+    return m_trackList.count() - 1;
 }
 
-void MultitrackModel::addVideoTrack()
+int MultitrackModel::addVideoTrack()
 {
     if (!m_tractor) {
         createIfNeeded();
-        return;
+        return 0;
     }
 
     // Get the new track index.
@@ -2232,6 +2233,44 @@ void MultitrackModel::addVideoTrack()
     beginInsertRows(QModelIndex(), 0, 0);
     m_trackList.prepend(t);
     endInsertRows();
+    return 0;
+}
+
+void MultitrackModel::removeTrack(int trackIndex)
+{
+    if (trackIndex >= 0 && trackIndex < m_trackList.size()) {
+        const Track track = m_trackList.value(trackIndex);
+        QScopedPointer<Mlt::Transition> transition(getTransition("frei0r.cairoblend", track.mlt_index));
+
+        // Remove transitions.
+        if (!transition)
+            transition.reset(getTransition("movit.overlay", track.mlt_index));
+        if (transition)
+            m_tractor->field()->disconnect_service(*transition);
+        transition.reset(getTransition("mix", track.mlt_index));
+        if (transition)
+            m_tractor->field()->disconnect_service(*transition);
+
+        // Remove track.
+        beginRemoveRows(QModelIndex(), trackIndex, trackIndex);
+        m_tractor->remove_track(track.mlt_index);
+        m_trackList.removeAt(trackIndex);
+
+        // Renumber other tracks.
+        foreach (Track t, m_trackList) {
+            if (t.mlt_index > track.mlt_index)
+                --t.mlt_index;
+            //TODO rename track if its name is still default.
+//            QString trackName;
+//            if (VideoTrackType == t.type)
+//                trackName = QString("V%1").arg(t.number + 1);
+//            else
+//                trackName = QString("A%1").arg(t.number + 1);
+            if (t.number > track.number && t.type == track.type)
+                --t.number;
+        }
+        endRemoveRows();
+    }
 }
 
 void MultitrackModel::retainPlaylist()

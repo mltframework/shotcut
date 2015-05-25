@@ -353,6 +353,18 @@ private:
     bool m_notify;
 };
 
+class AddTrackCommand: public QUndoCommand
+{
+public:
+    AddTrackCommand(MultitrackModel& model, bool isVideo, QUndoCommand* parent = 0);
+    void redo();
+    void undo();
+private:
+    MultitrackModel& m_model;
+    int m_trackIndex;
+    bool m_isVideo;
+};
+
 } // namespace
 
 #endif
