@@ -351,13 +351,13 @@ void TimelineDock::onSeeked(int position)
 
 void TimelineDock::append(int trackIndex)
 {
+    if (trackIndex < 0)
+        trackIndex = currentTrack();
     if (isTrackLocked(trackIndex)) {
         pulseLockButtonOnTrack(trackIndex);
         return;
     }
     if (MLT.isSeekableClip() || MLT.savedProducer()) {
-        if (trackIndex < 0)
-            trackIndex = currentTrack();
         MAIN.undoStack()->push(
             new Timeline::AppendCommand(m_model, trackIndex,
                 MLT.XML(MLT.isClip()? 0 : MLT.savedProducer())));
@@ -565,6 +565,8 @@ bool TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta)
 
 void TimelineDock::insert(int trackIndex, int position, const QString &xml)
 {
+    if (trackIndex < 0)
+        trackIndex = currentTrack();
     if (isTrackLocked(trackIndex)) {
         pulseLockButtonOnTrack(trackIndex);
         return;
@@ -572,8 +574,6 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml)
     if (MLT.isSeekableClip() || MLT.savedProducer() || !xml.isEmpty()) {
         QString xmlToUse = !xml.isEmpty()? xml
             : MLT.XML(MLT.isClip()? 0 : MLT.savedProducer());
-        if (trackIndex < 0)
-            trackIndex = currentTrack();
         if (position < 0)
             position = m_position;
         MAIN.undoStack()->push(
@@ -583,6 +583,8 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml)
 
 void TimelineDock::overwrite(int trackIndex, int position, const QString &xml)
 {
+    if (trackIndex < 0)
+        trackIndex = currentTrack();
     if (isTrackLocked(trackIndex)) {
         pulseLockButtonOnTrack(trackIndex);
         return;
@@ -590,8 +592,6 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml)
     if (MLT.isSeekableClip() || MLT.savedProducer() || !xml.isEmpty()) {
         QString xmlToUse = !xml.isEmpty()? xml
             : MLT.XML(MLT.isClip()? 0 : MLT.savedProducer());
-        if (trackIndex < 0)
-            trackIndex = currentTrack();
         if (position < 0)
             position = m_position;
         MAIN.undoStack()->push(
