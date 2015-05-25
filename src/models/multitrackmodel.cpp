@@ -989,14 +989,20 @@ void MultitrackModel::removeClip(int trackIndex, int clipIndex)
 {
     int i = m_trackList.at(trackIndex).mlt_index;
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    int clipPlaytime = -1;
+    int clipStart = -1;
+
     if (track) {
         Mlt::Playlist playlist(*track);
         if (clipIndex < playlist.count()) {
             // Shotcut does not like the behavior of remove() on a
             // transition (MLT mix clip). So, we null mlt_mix to prevent it.
             QScopedPointer<Mlt::Producer> producer(playlist.get_clip(clipIndex));
-            if (producer)
+            if (producer) {
                 producer->parent().set("mlt_mix", NULL, 0);
+                clipPlaytime = producer->get_playtime();
+                clipStart = playlist.clip_start(clipIndex);
+            }
 
 #ifdef Q_OS_MAC
             // XXX Remove this when Qt is upgraded to > 5.2.
@@ -1030,6 +1036,68 @@ void MultitrackModel::removeClip(int trackIndex, int clipIndex)
             endRemoveRows();
             consolidateBlanks(playlist, trackIndex);
 #endif
+            // Ripple all unlocked tracks.
+            if (clipPlaytime > 0)
+            for (int j = 0; j < m_trackList.count(); ++j) {
+                if (j == trackIndex)
+                    continue;
+
+                int mltIndex = m_trackList.at(j).mlt_index;
+                QScopedPointer<Mlt::Producer> otherTrack(m_tractor->track(mltIndex));
+                if (otherTrack) {
+                    if (otherTrack->get_int(kTrackLockProperty))
+                        continue;
+
+                    Mlt::Playlist otherPlaylist(*otherTrack);
+                    int remaining = clipPlaytime;
+                    int start = otherPlaylist.get_clip_index_at(clipStart);
+                    int end = otherPlaylist.get_clip_index_at(clipStart + clipPlaytime - 1);
+                    for (int k = start; k <= end && remaining > 0; ++k) {
+                        int duration = otherPlaylist.clip_length(k);
+                        if (duration <= 0)
+                            break;
+                        if (otherPlaylist.clip_start(k) < clipStart) {
+                            // Clip on other track starts before removed clip.
+                            int otherEnd = otherPlaylist.clip_start(k) + otherPlaylist.clip_length(k);
+                            if (otherEnd > clipStart + remaining) {
+                                duration = remaining;
+                                beginInsertRows(index(j), k + 1, k + 1);
+                                otherPlaylist.remove_region(clipStart, duration);
+                                endInsertRows();
+                            } else {
+                                duration = otherEnd - clipStart;
+                                otherPlaylist.remove_region(clipStart, duration);
+                            }
+                            QModelIndex modelIndex = createIndex(k, 0, j);
+                            emit dataChanged(modelIndex, modelIndex, QVector<int>() << DurationRole);
+                            if (!otherPlaylist.is_blank(k)) {
+                                QScopedPointer<Mlt::Producer> clip(otherPlaylist.get_clip(k));
+                                AudioLevelsTask::start(*clip, this, modelIndex);
+                            }
+                        } else if (duration <= remaining) {
+                            // Clip on other track is being removed.
+                            beginRemoveRows(index(j), k, k);
+                            otherPlaylist.remove(k--);
+                            endRemoveRows();
+                        } else {
+                            // Clip on other track is longer than removed clip.
+                            duration = remaining;
+                            otherPlaylist.remove_region(clipStart, remaining);
+                            QModelIndex modelIndex = createIndex(k, 0, j);
+                            QVector<int> roles;
+                            roles << InPointRole;
+                            roles << DurationRole;
+                            emit dataChanged(modelIndex, modelIndex, roles);
+                            if (!otherPlaylist.is_blank(k)) {
+                                QScopedPointer<Mlt::Producer> clip(otherPlaylist.get_clip(k));
+                                AudioLevelsTask::start(*clip, this, modelIndex);
+                            }
+                        }
+                        remaining -= duration;
+                    }
+                    consolidateBlanks(otherPlaylist, j);
+                }
+            }
             emit modified();
         }
     }
