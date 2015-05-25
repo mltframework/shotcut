@@ -23,6 +23,7 @@
 
 class VideoQualityJob : public MeltJob
 {
+    Q_OBJECT
 public:
     VideoQualityJob(const QString& name, const QString& xmlPath,
                     const QString& reportPath);
