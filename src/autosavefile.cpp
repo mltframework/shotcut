@@ -24,7 +24,6 @@
 #include <QtCore/QStandardPaths>
 #include <QtCore/QCryptographicHash>
 
-static const int padding = 8;
 static const QLatin1String subdir("/autosave");
 static const QLatin1String extension(".mlt");
 

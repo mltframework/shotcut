@@ -177,8 +177,6 @@ not been filled in with new information when the signal returns.
 
 QT_BEGIN_NAMESPACE
 
-const quint64 FRAME_SIZE_IN_BYTES = 512 * 512 * 2;	//maximum size of a frame when sending a message
-
 /*!
  * \brief Creates a new QWebSocket with the given \a origin, the \a version of the protocol to use and \a parent.
  *

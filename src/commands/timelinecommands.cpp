@@ -97,12 +97,11 @@ void OverwriteCommand::undo()
 }
 
 LiftCommand::LiftCommand(MultitrackModel &model, int trackIndex,
-    int clipIndex, int position, const QString &xml, QUndoCommand *parent)
+    int clipIndex, const QString &xml, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_clipIndex(clipIndex)
-    , m_position(position)
     , m_xml(xml)
     , m_undoHelper(m_model)
 {
@@ -122,12 +121,11 @@ void LiftCommand::undo()
 }
 
 RemoveCommand::RemoveCommand(MultitrackModel &model, int trackIndex,
-    int clipIndex, int position, const QString &xml, QUndoCommand *parent)
+    int clipIndex, const QString &xml, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_clipIndex(clipIndex)
-    , m_position(position)
     , m_xml(xml)
     , m_undoHelper(m_model)
 {
