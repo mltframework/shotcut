@@ -701,6 +701,7 @@ int MultitrackModel::overwriteClip(int trackIndex, Mlt::Producer& clip, int posi
             beginInsertRows(index(trackIndex), n, n);
             playlist.append(clip.parent(), in, out);
             endInsertRows();
+            AudioLevelsTask::start(clip.parent(), this, createIndex(n, 0, trackIndex));
             result = playlist.count() - 1;
         } else if (position + clip.get_playtime() > playlist.get_playtime()
             // Handle straddling - new clip larger than another with blanks on both sides.
