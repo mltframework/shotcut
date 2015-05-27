@@ -202,11 +202,6 @@ Rectangle {
                 }
                 onClicked: timeline.setTrackComposite(index, checkedState)
                 Shotcut.ToolTip { text: qsTr('Composite') }
-                MouseArea {
-                    anchors.fill: parent
-                    acceptedButtons: Qt.RightButton
-                    onClicked: compositeMenu.popup()
-                }
             }
 
             CheckBox {
@@ -249,25 +244,6 @@ Rectangle {
                 onClicked: timeline.setTrackLock(index, !isLocked)
                 Shotcut.ToolTip { text: qsTr('Lock track') }
             }
-        }
-    }
-
-    Menu {
-        id: compositeMenu
-        // XXX This is a workaround for menus appearing in wrong location in a Quick
-        // view used in a DockWidget on OS X.
-        Component.onCompleted: if (timeline.yoffset) __yOffset = timeline.yoffset
-        MenuItem {
-            text: qsTr('No Compositing')
-            onTriggered: { timeline.setTrackComposite(index, Qt.Unchecked); compositeButton.checkedState = Qt.Unchecked }
-        }
-        MenuItem {
-            text: qsTr('Composite')
-            onTriggered: { timeline.setTrackComposite(index, Qt.PartiallyChecked); compositeButton.checkedState = Qt.PartiallyChecked }
-        }
-        MenuItem {
-            text: qsTr('Composite And Fill')
-            onTriggered: { timeline.setTrackComposite(index, Qt.Checked); compositeButton.checkedState = Qt.Checked }
         }
     }
 }
