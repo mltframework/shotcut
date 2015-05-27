@@ -915,7 +915,7 @@ int MultitrackModel::insertClip(int trackIndex, Mlt::Producer &clip, int positio
                 clip.set_in_and_out(0, clip.get_length() - 1);
                 playlist.insert(clip.parent(), targetIndex, in, out);
             } else {
-                playlist.insert_blank(targetIndex, clip.get_int("blank_length") - 1);
+                playlist.insert_blank(targetIndex, clipPlaytime - 1);
             }
             endInsertRows();
             result = targetIndex;
