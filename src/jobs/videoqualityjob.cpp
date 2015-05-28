@@ -34,7 +34,7 @@ VideoQualityJob::VideoQualityJob(const QString& name, const QString& xmlPath,
 {
     QAction* action = new QAction(tr("Open"), this);
     action->setToolTip(tr("Open original and encoded side-by-side in the Shotcut player"));
-    connect(action, SLOT(triggered()), this, SLOT(onOpenTiggered()));
+    connect(action, SIGNAL(triggered()), this, SLOT(onOpenTiggered()));
     m_successActions << action;
 
     action = new QAction(tr("View Report"), this);
