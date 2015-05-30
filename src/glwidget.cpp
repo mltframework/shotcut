@@ -616,6 +616,8 @@ void GLWidget::on_frame_show(mlt_consumer, void* self, mlt_frame frame_ptr)
         Mlt::Frame frame(frame_ptr);
         if (frame.get_int("rendered")) {
             QMetaObject::invokeMethod(widget->m_frameRenderer, "showFrame", Qt::QueuedConnection, Q_ARG(Mlt::Frame, frame));
+        } else {
+            widget->m_frameRenderer->semaphore()->release();
         }
     }
 }
