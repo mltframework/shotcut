@@ -327,15 +327,17 @@ void MultitrackModel::setTrackComposite(int row, Qt::CheckState composite)
 
 void MultitrackModel::setTrackLock(int row, bool lock)
 {
-    int i = m_trackList.at(row).mlt_index;
-    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
-    track->set(kTrackLockProperty, lock);
+    if (row < m_trackList.size()) {
+        int i = m_trackList.at(row).mlt_index;
+        QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+        track->set(kTrackLockProperty, lock);
 
-    QModelIndex modelIndex = index(row, 0);
-    QVector<int> roles;
-    roles << IsLockedRole;
-    emit dataChanged(modelIndex, modelIndex, roles);
-    emit modified();
+        QModelIndex modelIndex = index(row, 0);
+        QVector<int> roles;
+        roles << IsLockedRole;
+        emit dataChanged(modelIndex, modelIndex, roles);
+        emit modified();
+    }
 }
 
 bool MultitrackModel::trimClipInValid(int trackIndex, int clipIndex, int delta)

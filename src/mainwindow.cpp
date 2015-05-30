@@ -1118,6 +1118,15 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         else
             handled = false;
         break;
+    case Qt::Key_H:
+#ifdef Q_OS_MAC
+        // OS X uses Cmd+H to hide an app.
+        if (event->modifiers() & Qt::MetaModifier && m_timelineDock->isVisible())
+#else
+        if (event->modifiers() & Qt::ControlModifier && m_timelineDock->isVisible())
+#endif
+            m_timelineDock->toggleTrackHidden(m_timelineDock->currentTrack());
+        break;
     case Qt::Key_J:
         if (m_isKKeyPressed)
             m_player->seek(m_player->position() - 1);
@@ -1129,12 +1138,29 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_isKKeyPressed = true;
         break;
     case Qt::Key_L:
-        if (event->modifiers() & Qt::AltModifier && m_timelineDock->isVisible())
+#ifdef Q_OS_MAC
+        // OS X uses Cmd+H to hide an app and Cmd+M to minimize. Therefore, we force
+        // it to be the apple keyboard control key aka meta. Therefore, to be
+        // consistent with all track header toggles, we make the lock toggle also use
+        // meta.
+        if (event->modifiers() & Qt::MetaModifier && m_timelineDock->isVisible())
+#else
+        if (event->modifiers() & Qt::ControlModifier && m_timelineDock->isVisible())
+#endif
             m_timelineDock->setTrackLock(m_timelineDock->currentTrack(), !m_timelineDock->isTrackLocked(m_timelineDock->currentTrack()));
         else if (m_isKKeyPressed)
             m_player->seek(m_player->position() + 1);
         else
             m_player->fastForward();
+        break;
+    case Qt::Key_M:
+#ifdef Q_OS_MAC
+        // OS X uses Cmd+M to minimize an app.
+        if (event->modifiers() & Qt::MetaModifier && m_timelineDock->isVisible())
+#else
+        if (event->modifiers() & Qt::ControlModifier && m_timelineDock->isVisible())
+#endif
+            m_timelineDock->toggleTrackMute(m_timelineDock->currentTrack());
         break;
     case Qt::Key_I:
         setInToCurrent();
