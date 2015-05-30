@@ -392,12 +392,12 @@ Rectangle {
         MenuItem {
             enabled: multitrack.trackHeight >= 50
             text: qsTr('Make Tracks Shorter')
-            shortcut: qsTr('Ctrl+-')
+            shortcut: 'Ctrl+-'
             onTriggered: makeTracksShorter()
         }
         MenuItem {
             text: qsTr('Make Tracks Taller')
-            shortcut: qsTr('Ctrl+=')
+            shortcut: 'Ctrl+='
             onTriggered: makeTracksTaller()
         }
         MenuSeparator {}
