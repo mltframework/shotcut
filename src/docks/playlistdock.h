@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Meltytech, LLC
+ * Copyright (c) 2012-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -57,6 +57,7 @@ public slots:
     void on_actionUpdate_triggered();
     void on_removeButton_clicked();
     void setUpdateButtonEnabled(bool modified);
+    void on_actionClose_triggered();
 
 private slots:
     void on_menuButton_clicked();
@@ -72,8 +73,6 @@ private slots:
     void on_actionGoto_triggered();
 
     void on_actionRemoveAll_triggered();
-
-    void on_actionClose_triggered();
 
     void onPlaylistCreated();
 

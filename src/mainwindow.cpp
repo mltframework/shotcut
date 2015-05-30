@@ -1289,6 +1289,16 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_timelineDock->resetZoom();
         }
         break;
+    case Qt::Key_W:
+        if (event->modifiers() & Qt::ControlModifier) {
+            if (multitrack())
+                m_timelineDock->close();
+            else if (playlist())
+                m_playlistDock->on_actionClose_triggered();
+            else
+                onMultitrackClosed();
+        }
+        break;
     case Qt::Key_X: // Avid Extract
         if (event->modifiers() == Qt::ShiftModifier) {
             m_playlistDock->show();

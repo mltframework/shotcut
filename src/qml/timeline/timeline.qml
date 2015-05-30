@@ -422,7 +422,7 @@ Rectangle {
         MenuSeparator {}
         MenuItem {
             text: qsTr('Close')
-            shortcut: qsTr('Ctrl+W')
+            shortcut: 'Ctrl+W'
             onTriggered: {
                 timeline.close()
                 scaleSlider.value = 1

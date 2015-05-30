@@ -337,8 +337,8 @@ void TimelineDock::addVideoTrack()
 
 void TimelineDock::close()
 {
-    m_model.close();
-    hide();
+    if (MAIN.continueModified())
+        m_model.close();
 }
 
 void TimelineDock::onShowFrame(const SharedFrame& frame)
