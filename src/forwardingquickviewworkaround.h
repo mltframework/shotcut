@@ -39,6 +39,12 @@ protected:
         if (!e->isAccepted())
             qApp->sendEvent(m_receiver, e);
     }
+
+    void keyReleaseEvent(QKeyEvent* e) {
+        QQuickView::keyReleaseEvent(e);
+        if (!e->isAccepted())
+            qApp->sendEvent(m_receiver, e);
+    }
 };
 
 
