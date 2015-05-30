@@ -1844,6 +1844,46 @@ function deploy_win32
   cmd cp -pr "$QTDIR"/qml lib
   cmd cp -pr "$QTDIR"/translations/qt_*.qm share/translations
   cmd cp -pr "$QTDIR"/translations/qtbase_*.qm share/translations
+  if [ "$SDK" != "1" ]; then
+    cmd rm lib/qt5/accessible/qtaccessiblequickd.dll
+    cmd rm lib/qt5/accessible/qtaccessiblewidgetsd.dll
+    cmd rm lib/qt5/iconengines/qsvgicond.dll
+    cmd rm lib/qt5/imageformats/qgifd.dll
+    cmd rm lib/qt5/imageformats/qicod.dll
+    cmd rm lib/qt5/imageformats/qjpegd.dll
+    cmd rm lib/qt5/imageformats/qmngd.dll
+    cmd rm lib/qt5/imageformats/qsvgd.dll
+    cmd rm lib/qt5/imageformats/qtgad.dll
+    cmd rm lib/qt5/imageformats/qtiffd.dll
+    cmd rm lib/qt5/imageformats/qwbmpd.dll
+    cmd rm lib/qt5/mediaservice/dsengined.dll
+    cmd rm lib/qt5/mediaservice/qtmedia_audioengined.dll
+    cmd rm lib/qt5/platforms/qminimald.dll
+    cmd rm lib/qt5/platforms/qoffscreend.dll
+    cmd rm lib/qt5/platforms/qwindowsd.dll
+    cmd rm lib/qml/Qt/labs/folderlistmodel/qmlfolderlistmodelplugind.dll
+    cmd rm lib/qml/Qt/labs/settings/qmlsettingsplugind.dll
+    cmd rm lib/qml/QtBluetooth/declarative_bluetoothd.dll
+    cmd rm lib/qml/QtMultimedia/declarative_multimediad.dll
+    cmd rm lib/qml/QtNfc/declarative_nfcd.dll
+    cmd rm lib/qml/QtPositioning/declarative_positioningd.dll
+    cmd rm lib/qml/QtQml/Models.2/modelsplugind.dll
+    cmd rm lib/qml/QtQuick/Controls/qtquickcontrolsplugind.dll
+    cmd rm lib/qml/QtQuick/Dialogs/dialogplugind.dll
+    cmd rm lib/qml/QtQuick/Dialogs/Private/dialogsprivateplugind.dll
+    cmd rm lib/qml/QtQuick/Layouts/qquicklayoutsplugind.dll
+    cmd rm lib/qml/QtQuick/LocalStorage/qmllocalstorageplugind.dll
+    cmd rm lib/qml/QtQuick/Particles.2/particlesplugind.dll
+    cmd rm lib/qml/QtQuick/PrivateWidgets/widgetsplugind.dll
+    cmd rm lib/qml/QtQuick/Window.2/windowplugind.dll
+    cmd rm lib/qml/QtQuick/XmlListModel/qmlxmllistmodelplugind.dll
+    cmd rm lib/qml/QtQuick.2/qtquick2plugind.dll
+    cmd rm lib/qml/QtSensors/declarative_sensorsd.dll
+    cmd rm lib/qml/QtTest/qmltestplugind.dll
+    cmd rm lib/qml/QtWebKit/experimental/qmlwebkitexperimentalplugind.dll
+    cmd rm lib/qml/QtWebKit/qmlwebkitplugind.dll
+    cmd rm lib/qml/QtWinExtras/qml_winextrasd.dll
+  fi
   if [ "$TARGET_OS" = "Win32" ]; then
 	cmd tar -xjf "$HOME/ladspa_plugins-win-0.4.15.tar.bz2"
   else
