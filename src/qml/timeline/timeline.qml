@@ -381,12 +381,12 @@ Rectangle {
         Component.onCompleted: if (timeline.yoffset) __yOffset = timeline.yoffset
         MenuItem {
             text: qsTr('Add Audio Track')
-            shortcut: qsTr('Ctrl+U')
+            shortcut: 'Ctrl+U'
             onTriggered: timeline.addAudioTrack();
         }
         MenuItem {
             text: qsTr('Add Video Track')
-            shortcut: qsTr('Ctrl+Y')
+            shortcut: 'Ctrl+Y'
             onTriggered: timeline.addVideoTrack();
         }
         MenuItem {

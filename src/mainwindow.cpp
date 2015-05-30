@@ -1172,6 +1172,13 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         if (multitrack())
             m_timelineDock->splitClip();
         break;
+    case Qt::Key_U:
+        if (event->modifiers() == Qt::ControlModifier) {
+            m_timelineDock->show();
+            m_timelineDock->raise();
+            m_timelineDock->addAudioTrack();
+        }
+        break;
     case Qt::Key_V: // Avid Splice In
         if (event->modifiers() == Qt::ShiftModifier) {
             m_playlistDock->show();
@@ -1306,6 +1313,13 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_playlistDock->show();
             m_playlistDock->raise();
             m_playlistDock->on_removeButton_clicked();
+        }
+        break;
+    case Qt::Key_Y:
+        if (event->modifiers() == Qt::ControlModifier) {
+            m_timelineDock->show();
+            m_timelineDock->raise();
+            m_timelineDock->addVideoTrack();
         }
         break;
     case Qt::Key_Z: // Avid Lift
