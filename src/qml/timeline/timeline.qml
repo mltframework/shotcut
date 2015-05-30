@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2014 Meltytech, LLC
+ * Copyright (c) 2013-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -45,6 +45,14 @@ Rectangle {
         scaleSlider.value = 1.0
         for (var i = 0; i < tracksRepeater.count; i++)
             tracksRepeater.itemAt(i).redrawWaveforms()
+    }
+
+    function makeTracksTaller() {
+        multitrack.trackHeight += 20
+    }
+
+    function makeTracksShorter() {
+        multitrack.trackHeight = Math.max(30, multitrack.trackHeight - 20)
     }
 
     function pulseLockButtonOnTrack(index) {
@@ -384,13 +392,13 @@ Rectangle {
         MenuItem {
             enabled: multitrack.trackHeight >= 50
             text: qsTr('Make Tracks Shorter')
-            shortcut: qsTr('Ctrl+K')
-            onTriggered: multitrack.trackHeight = Math.max(30, multitrack.trackHeight - 20)
+            shortcut: qsTr('Ctrl+-')
+            onTriggered: makeTracksShorter()
         }
         MenuItem {
             text: qsTr('Make Tracks Taller')
-            shortcut: qsTr('Ctrl+L')
-            onTriggered: multitrack.trackHeight += 20
+            shortcut: qsTr('Ctrl+=')
+            onTriggered: makeTracksTaller()
         }
         MenuSeparator {}
         MenuItem {

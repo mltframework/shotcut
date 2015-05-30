@@ -236,6 +236,16 @@ void TimelineDock::resetZoom()
     QMetaObject::invokeMethod(m_quickView.rootObject(), "resetZoom");
 }
 
+void TimelineDock::makeTracksShorter()
+{
+    QMetaObject::invokeMethod(m_quickView.rootObject(), "makeTracksShorter");
+}
+
+void TimelineDock::makeTracksTaller()
+{
+    QMetaObject::invokeMethod(m_quickView.rootObject(), "makeTracksTaller");
+}
+
 void TimelineDock::setSelection(QList<int> newSelection)
 {
     qDebug() << "Setting selection to" << newSelection;

@@ -58,6 +58,8 @@ public:
     void zoomIn();
     void zoomOut();
     void resetZoom();
+    void makeTracksShorter();
+    void makeTracksTaller();
     void setSelection(QList<int> selection);
     QList<int> selection() const;
     void selectClipUnderPlayhead();

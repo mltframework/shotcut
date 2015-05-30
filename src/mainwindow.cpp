@@ -1294,12 +1294,21 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         }
         break;
     case Qt::Key_Minus:
-        if (m_timelineDock->isVisible())
-            m_timelineDock->zoomOut();
+        if (m_timelineDock->isVisible()) {
+            if (event->modifiers() & Qt::ControlModifier)
+                m_timelineDock->makeTracksShorter();
+            else
+                m_timelineDock->zoomOut();
+        }
         break;
     case Qt::Key_Equal:
-        if (m_timelineDock->isVisible())
-            m_timelineDock->zoomIn();
+    case Qt::Key_Plus:
+        if (m_timelineDock->isVisible()) {
+            if (event->modifiers() & Qt::ControlModifier)
+                m_timelineDock->makeTracksTaller();
+            else
+                m_timelineDock->zoomIn();
+        }
         break;
     case Qt::Key_Enter: // Seek to current playlist item
     case Qt::Key_Return:
