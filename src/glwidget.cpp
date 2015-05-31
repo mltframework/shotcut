@@ -610,14 +610,12 @@ void GLWidget::updateTexture(GLuint yName, GLuint uName, GLuint vName)
 // MLT consumer-frame-show event handler
 void GLWidget::on_frame_show(mlt_consumer, void* self, mlt_frame frame_ptr)
 {
-    GLWidget* widget = static_cast<GLWidget*>(self);
-    int timeout = (widget->consumer()->get_int("real_time") > 0)? 0: 1000;
-    if (widget->m_frameRenderer && widget->m_frameRenderer->semaphore()->tryAcquire(1, timeout)) {
-        Mlt::Frame frame(frame_ptr);
-        if (frame.get_int("rendered")) {
+    Mlt::Frame frame(frame_ptr);
+    if (frame.get_int("rendered")) {
+        GLWidget* widget = static_cast<GLWidget*>(self);
+        int timeout = (widget->consumer()->get_int("real_time") > 0)? 0: 1000;
+        if (widget->m_frameRenderer && widget->m_frameRenderer->semaphore()->tryAcquire(1, timeout)) {
             QMetaObject::invokeMethod(widget->m_frameRenderer, "showFrame", Qt::QueuedConnection, Q_ARG(Mlt::Frame, frame));
-        } else {
-            widget->m_frameRenderer->semaphore()->release();
         }
     }
 }
