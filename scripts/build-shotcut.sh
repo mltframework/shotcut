@@ -2034,6 +2034,14 @@ End-of-desktop-file
 
   cmd pushd "$INSTALL_DIR"
 
+  VERSION_INFO=Shotcut/Shotcut.app/versions
+  rm -f $VERSION_INFO
+  for DIR in $SUBDIRS; do
+    if [ -d $SOURCE_DIR/$DIR/.git ]; then
+      echo $DIR $(git -C $SOURCE_DIR/$DIR rev-parse HEAD) $(git -C $SOURCE_DIR/$DIR describe HEAD) >> $VERSION_INFO
+    fi
+  done
+
   if [ "$ARCHIVE" = "1" ]; then
     log Creating archive
     tarball="$INSTALL_DIR/shotcut.tar.bz2"
