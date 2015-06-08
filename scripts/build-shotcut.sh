@@ -2034,11 +2034,13 @@ End-of-desktop-file
 
   cmd pushd "$INSTALL_DIR"
 
-  VERSION_INFO=Shotcut/Shotcut.app/versions
+  VERSION_INFO=$(readlink -f Shotcut/Shotcut.app/versions)
   rm -f $VERSION_INFO
   for DIR in $SUBDIRS; do
     if [ -d $SOURCE_DIR/$DIR/.git ]; then
-      echo $DIR $(git -C $SOURCE_DIR/$DIR rev-parse HEAD) $(git -C $SOURCE_DIR/$DIR describe HEAD) >> $VERSION_INFO
+      pushd $SOURCE_DIR/$DIR > /dev/null
+      echo $DIR $(git rev-parse HEAD) $(git describe --tags) >> $VERSION_INFO
+      popd > /dev/null
     fi
   done
 
