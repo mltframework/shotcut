@@ -382,8 +382,10 @@ int MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta)
         for (int j = 0; j < n; j++) {
             Mlt::Filter* filter = info->producer->filter(j);
             if (filter && filter->is_valid() && filter->get_length() > 0) {
-                if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeIn"))
+                if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeIn")
+                        || QString(filter->get("mlt_service")) == "webvfx") {
                     filter->set_in_and_out(in, in + filter->get_length() - 1);
+                }
             }
             delete filter;
         }
@@ -527,8 +529,10 @@ int MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta)
         for (int j = 0; j < n; j++) {
             Mlt::Filter* filter = info->producer->filter(j);
             if (filter && filter->is_valid() && filter->get_length() > 0) {
-                if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeOut"))
+                if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeOut")
+                        || QString(filter->get("mlt_service")) == "webvfx") {
                     filter->set_in_and_out(out - filter->get_length() + 1, out);
+                }
             }
             delete filter;
         }
