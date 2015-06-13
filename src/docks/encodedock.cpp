@@ -35,6 +35,8 @@
 #define TO_ABSOLUTE(min, max, rel) qRound(float(min) + float((max) - (min) + 1) * float(rel) / 100.0f)
 #define TO_RELATIVE(min, max, abs) qRound(100.0f * float((abs) - (min)) / float((max) - (min) + 1))
 
+static double getBufferSize(Mlt::Properties& preset, const char* property);
+
 EncodeDock::EncodeDock(QWidget *parent) :
     QDockWidget(parent),
     ui(new Ui::EncodeDock),
@@ -71,7 +73,6 @@ EncodeDock::EncodeDock(QWidget *parent) :
     delete p;
     ui->formatCombo->model()->sort(0);
     ui->formatCombo->insertItem(0, tr("Automatic from extension"));
-    ui->formatCombo->setCurrentIndex(0);
 
     p = new Mlt::Properties(c.get_data("acodec"));
     for (int i = 0; i < p->count(); i++)
@@ -79,7 +80,6 @@ EncodeDock::EncodeDock(QWidget *parent) :
     delete p;
     ui->audioCodecCombo->model()->sort(0);
     ui->audioCodecCombo->insertItem(0, tr("Default for format"));
-    ui->audioCodecCombo->setCurrentIndex(0);
 
     p = new Mlt::Properties(c.get_data("vcodec"));
     for (int i = 0; i < p->count(); i++)
@@ -87,9 +87,9 @@ EncodeDock::EncodeDock(QWidget *parent) :
     delete p;
     ui->videoCodecCombo->model()->sort(0);
     ui->videoCodecCombo->insertItem(0, tr("Default for format"));
-    ui->videoCodecCombo->setCurrentIndex(0);
-    on_audioRateControlCombo_activated(ui->audioRateControlCombo->currentIndex());
-    on_videoRateControlCombo_activated(ui->videoRateControlCombo->currentIndex());
+
+    on_resetButton_clicked();
+
     qDebug() << "end";
 }
 
@@ -98,6 +98,166 @@ EncodeDock::~EncodeDock()
     delete ui;
     delete m_presets;
     delete m_profiles;
+}
+
+void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
+{
+    int audioQuality = -1;
+    int videoQuality = -1;
+    QStringList other;
+
+    ui->disableAudioCheckbox->setChecked(preset.get_int("an"));
+    ui->disableVideoCheckbox->setChecked(preset.get_int("vn"));
+    m_extension.clear();
+    for (int i = 0; i < preset.count(); i++) {
+        QString name(preset.get_name(i));
+        if (name == "f") {
+            for (int i = 0; i < ui->formatCombo->count(); i++)
+                if (ui->formatCombo->itemText(i) == preset.get("f"))
+                    ui->formatCombo->setCurrentIndex(i);
+        }
+        else if (name == "acodec") {
+            for (int i = 0; i < ui->audioCodecCombo->count(); i++)
+                if (ui->audioCodecCombo->itemText(i) == preset.get("acodec"))
+                    ui->audioCodecCombo->setCurrentIndex(i);
+            if (ui->audioCodecCombo->currentText() == "libopus")
+                // reset libopus to VBR (its default)
+                ui->audioRateControlCombo->setCurrentIndex(RateControlQuality);
+        }
+        else if (name == "vcodec") {
+            for (int i = 0; i < ui->videoCodecCombo->count(); i++)
+                if (ui->videoCodecCombo->itemText(i) == preset.get("vcodec"))
+                    ui->videoCodecCombo->setCurrentIndex(i);
+        }
+        else if (name == "ar")
+            ui->sampleRateCombo->lineEdit()->setText(preset.get("ar"));
+        else if (name == "ab")
+            ui->audioBitrateCombo->lineEdit()->setText(preset.get("ab"));
+        else if (name == "vb")
+            ui->videoBitrateCombo->lineEdit()->setText(preset.get("vb"));
+        else if (name == "g")
+            ui->gopSpinner->setValue(preset.get_int("g"));
+        else if (name == "bf")
+            ui->bFramesSpinner->setValue(preset.get_int("bf"));
+        else if (name == "deinterlace") {
+            ui->scanModeCombo->setCurrentIndex(preset.get_int("deinterlace"));
+            ui->scanModeCombo->setEnabled(false);
+        }
+        else if (name == "progressive") {
+            ui->scanModeCombo->setCurrentIndex(preset.get_int("progressive"));
+            ui->scanModeCombo->setEnabled(false);
+        }
+        else if (name == "top_field_first") {
+            ui->fieldOrderCombo->setCurrentIndex(preset.get_int("top_field_first"));
+        }
+        else if (name == "width") {
+            ui->widthSpinner->setValue(preset.get_int("width"));
+            ui->widthSpinner->setEnabled(false);
+        }
+        else if (name == "height") {
+            ui->heightSpinner->setValue(preset.get_int("height"));
+            ui->heightSpinner->setEnabled(false);
+        }
+        else if (name == "aspect") {
+            double dar = preset.get_double("aspect");
+            if (int(dar * 100) == 133) {
+                ui->aspectNumSpinner->setValue(4);
+                ui->aspectDenSpinner->setValue(3);
+            }
+            else if (int(dar * 100) == 177) {
+                ui->aspectNumSpinner->setValue(16);
+                ui->aspectDenSpinner->setValue(9);
+            }
+            else {
+                ui->aspectNumSpinner->setValue(dar * 1000);
+                ui->aspectDenSpinner->setValue(1000);
+            }
+            ui->aspectNumSpinner->setEnabled(false);
+            ui->aspectDenSpinner->setEnabled(false);
+        }
+        else if (name == "r") {
+            ui->fpsSpinner->setValue(preset.get_double("r"));
+            ui->fpsSpinner->setEnabled(false);
+        }
+        else if (name == "pix_fmt") {
+            QString pix_fmt(preset.get("pix_fmt"));
+            if (pix_fmt != "yuv420p")
+                other.append(QString("%1=%2").arg(name).arg(pix_fmt));
+        }
+        else if (name == "pass")
+            ui->dualPassCheckbox->setChecked(true);
+        else if (name == "aq") {
+            ui->audioRateControlCombo->setCurrentIndex(RateControlQuality);
+            audioQuality = preset.get_int("aq");
+        }
+        else if (name == "vbr") {
+            // libopus rate mode
+            QString value(preset.get("vbr"));
+            if (value == "off")
+                ui->audioRateControlCombo->setCurrentIndex(RateControlConstant);
+            else if (value == "constrained")
+                ui->audioRateControlCombo->setCurrentIndex(RateControlAverage);
+            else
+                ui->audioRateControlCombo->setCurrentIndex(RateControlQuality);
+        }
+        else if (name == "vq") {
+            ui->videoRateControlCombo->setCurrentIndex(RateControlQuality);
+            videoQuality = preset.get_int("vq");
+        }
+        else if (name == "qscale") {
+            ui->videoRateControlCombo->setCurrentIndex(RateControlQuality);
+            videoQuality = preset.get_int("qscale");
+        }
+        else if (name == "crf") {
+            ui->videoRateControlCombo->setCurrentIndex(RateControlQuality);
+            videoQuality = preset.get_int("crf");
+        }
+        else if (name == "bufsize") {
+            // traditionally this means video only
+            ui->videoRateControlCombo->setCurrentIndex(RateControlConstant);
+            ui->videoBufferSizeSpinner->setValue(getBufferSize(preset, "bufsize"));
+        }
+        else if (name == "vbufsize") {
+            ui->videoRateControlCombo->setCurrentIndex(RateControlConstant);
+            ui->videoBufferSizeSpinner->setValue(getBufferSize(preset, "vbufsize"));
+        }
+        else if (name == "threads") {
+            // TODO: should we save the thread count and restore it if preset is not 1?
+            if (preset.get_int("threads") == 1)
+                ui->videoCodecThreadsSpinner->setValue(1);
+        }
+        else if (name == "meta.preset.extension")
+            m_extension = preset.get("meta.preset.extension");
+        else if (name != "an" && name != "vn" && name != "threads"
+                 && !name.startsWith('_') && !name.startsWith("meta.preset."))
+            other.append(QString("%1=%2").arg(name).arg(preset.get(i)));
+    }
+    ui->advancedTextEdit->setPlainText(other.join("\n"));
+
+    // normalize the quality settings
+    // quality depends on codec
+    if (ui->audioRateControlCombo->currentIndex() == RateControlQuality && audioQuality > -1) {
+        const QString& acodec = ui->audioCodecCombo->currentText();
+        if (acodec == "libmp3lame") // 0 (best) - 9 (worst)
+            ui->audioQualitySpinner->setValue(TO_RELATIVE(9, 0, audioQuality));
+        if (acodec == "libvorbis" || acodec == "vorbis") // 0 (worst) - 10 (best)
+            ui->audioQualitySpinner->setValue(TO_RELATIVE(0, 10, audioQuality));
+        else
+            // aac: 0 (worst) - 500 (best)
+            ui->audioQualitySpinner->setValue(TO_RELATIVE(0, 500, audioQuality));
+    }
+    if (ui->videoRateControlCombo->currentIndex() == RateControlQuality && videoQuality > -1) {
+        const QString& vcodec = ui->videoCodecCombo->currentText();
+        //val = min + (max - min) * paramval;
+        if (vcodec == "libx264" || vcodec == "libx265") // 0 (best, 100%) - 51 (worst)
+            ui->videoQualitySpinner->setValue(TO_RELATIVE(51, 0, videoQuality));
+        else if (vcodec.startsWith("libvpx")) // 0 (best, 100%) - 63 (worst)
+            ui->videoQualitySpinner->setValue(TO_RELATIVE(63, 0, videoQuality));
+        else // 1 (best, NOT 100%) - 31 (worst)
+            ui->videoQualitySpinner->setValue(TO_RELATIVE(31, 1, videoQuality));
+    }
+    on_audioRateControlCombo_activated(ui->audioRateControlCombo->currentIndex());
+    on_videoRateControlCombo_activated(ui->videoRateControlCombo->currentIndex());
 }
 
 void EncodeDock::onProducerOpened()
@@ -446,29 +606,34 @@ void EncodeDock::resetOptions()
     ui->scanModeCombo->setEnabled(true);
     ui->fpsSpinner->setEnabled(true);
 
-    ui->videoCodecCombo->setCurrentIndex(0);
-    ui->videoRateControlCombo->setCurrentIndex(0);
     ui->videoBitrateCombo->lineEdit()->setText("2M");
     ui->videoBufferSizeSpinner->setValue(224);
-    ui->videoQualitySpinner->setValue(50);
-    ui->gopSpinner->setValue(100);
-    ui->bFramesSpinner->setValue(0);
+    ui->gopSpinner->setValue(200);
+    ui->bFramesSpinner->setValue(3);
     ui->videoCodecThreadsSpinner->setValue(0);
     ui->dualPassCheckbox->setChecked(false);
     ui->disableVideoCheckbox->setChecked(false);
 
     ui->sampleRateCombo->lineEdit()->setText("48000");
-    ui->audioCodecCombo->setCurrentIndex(0);
-    ui->audioBitrateCombo->lineEdit()->setText("128k");
+    ui->audioBitrateCombo->lineEdit()->setText("256k");
     ui->audioQualitySpinner->setValue(50);
     ui->disableAudioCheckbox->setChecked(false);
-    ui->advancedTextEdit->setPlainText("");
+
+    Mlt::Properties preset;
+    preset.set("f", "mp4");
+    preset.set("movflags", "+faststart");
+    preset.set("vcodec", "libx264");
+    preset.set("crf", "21");
+    preset.set("preset", "fast");
+    preset.set("acodec", "aac");
+    preset.set("meta.preset.extension", "mp4");
+    loadPresetFromProperties(preset);
 }
 
-static double getBufferSize(Mlt::Properties* preset, const char* property)
+static double getBufferSize(Mlt::Properties& preset, const char* property)
 {
-    double size = preset->get_double(property);
-    const QString& s = preset->get(property);
+    double size = preset.get_double(property);
+    const QString& s = preset.get(property);
     // evaluate suffix
     if (s.endsWith('k')) size *= 1000;
     if (s.endsWith('M')) size *= 1000000;
@@ -495,9 +660,6 @@ void EncodeDock::on_presetsTree_clicked(const QModelIndex &index)
             preset = new Mlt::Properties((mlt_properties) m_presets->get_data(name.toLatin1().constData()));
         }
         if (preset->is_valid()) {
-            int audioQuality = -1;
-            int videoQuality = -1;
-            QStringList other;
             QStringList textParts = name.split('/');
 
             resetOptions();
@@ -522,158 +684,7 @@ void EncodeDock::on_presetsTree_clicked(const QModelIndex &index)
                     ui->fpsSpinner->setEnabled(false);
                 }
             }
-            ui->disableAudioCheckbox->setChecked(preset->get_int("an"));
-            ui->disableVideoCheckbox->setChecked(preset->get_int("vn"));
-            m_extension.clear();
-            for (int i = 0; i < preset->count(); i++) {
-                QString name(preset->get_name(i));
-                if (name == "f") {
-                    for (int i = 0; i < ui->formatCombo->count(); i++)
-                        if (ui->formatCombo->itemText(i) == preset->get("f"))
-                            ui->formatCombo->setCurrentIndex(i);
-                }
-                else if (name == "acodec") {
-                    for (int i = 0; i < ui->audioCodecCombo->count(); i++)
-                        if (ui->audioCodecCombo->itemText(i) == preset->get("acodec"))
-                            ui->audioCodecCombo->setCurrentIndex(i);
-                    if (ui->audioCodecCombo->currentText() == "libopus")
-                        // reset libopus to VBR (its default)
-                        ui->audioRateControlCombo->setCurrentIndex(RateControlQuality);
-                }
-                else if (name == "vcodec") {
-                    for (int i = 0; i < ui->videoCodecCombo->count(); i++)
-                        if (ui->videoCodecCombo->itemText(i) == preset->get("vcodec"))
-                            ui->videoCodecCombo->setCurrentIndex(i);
-                }
-                else if (name == "ar")
-                    ui->sampleRateCombo->lineEdit()->setText(preset->get("ar"));
-                else if (name == "ab")
-                    ui->audioBitrateCombo->lineEdit()->setText(preset->get("ab"));
-                else if (name == "vb")
-                    ui->videoBitrateCombo->lineEdit()->setText(preset->get("vb"));
-                else if (name == "g")
-                    ui->gopSpinner->setValue(preset->get_int("g"));
-                else if (name == "bf")
-                    ui->bFramesSpinner->setValue(preset->get_int("bf"));
-                else if (name == "deinterlace") {
-                    ui->scanModeCombo->setCurrentIndex(preset->get_int("deinterlace"));
-                    ui->scanModeCombo->setEnabled(false);
-                }
-                else if (name == "progressive") {
-                    ui->scanModeCombo->setCurrentIndex(preset->get_int("progressive"));
-                    ui->scanModeCombo->setEnabled(false);
-                }
-                else if (name == "top_field_first") {
-                    ui->fieldOrderCombo->setCurrentIndex(preset->get_int("top_field_first"));
-                }
-                else if (name == "width") {
-                    ui->widthSpinner->setValue(preset->get_int("width"));
-                    ui->widthSpinner->setEnabled(false);
-                }
-                else if (name == "height") {
-                    ui->heightSpinner->setValue(preset->get_int("height"));
-                    ui->heightSpinner->setEnabled(false);
-                }
-                else if (name == "aspect") {
-                    double dar = preset->get_double("aspect");
-                    if (int(dar * 100) == 133) {
-                        ui->aspectNumSpinner->setValue(4);
-                        ui->aspectDenSpinner->setValue(3);
-                    }
-                    else if (int(dar * 100) == 177) {
-                        ui->aspectNumSpinner->setValue(16);
-                        ui->aspectDenSpinner->setValue(9);
-                    }
-                    else {
-                        ui->aspectNumSpinner->setValue(dar * 1000);
-                        ui->aspectDenSpinner->setValue(1000);
-                    }
-                    ui->aspectNumSpinner->setEnabled(false);
-                    ui->aspectDenSpinner->setEnabled(false);
-                }
-                else if (name == "r") {
-                    ui->fpsSpinner->setValue(preset->get_double("r"));
-                    ui->fpsSpinner->setEnabled(false);
-                }
-                else if (name == "pix_fmt") {
-                    QString pix_fmt(preset->get("pix_fmt"));
-                    if (pix_fmt != "yuv420p")
-                        other.append(QString("%1=%2").arg(name).arg(pix_fmt));
-                }
-                else if (name == "pass")
-                    ui->dualPassCheckbox->setChecked(true);
-                else if (name == "aq") {
-                    ui->audioRateControlCombo->setCurrentIndex(RateControlQuality);
-                    audioQuality = preset->get_int("aq");
-                }
-                else if (name == "vbr") {
-                    // libopus rate mode
-                    QString value(preset->get("vbr"));
-                    if (value == "off")
-                        ui->audioRateControlCombo->setCurrentIndex(RateControlConstant);
-                    else if (value == "constrained")
-                        ui->audioRateControlCombo->setCurrentIndex(RateControlAverage);
-                    else
-                        ui->audioRateControlCombo->setCurrentIndex(RateControlQuality);
-                }
-                else if (name == "vq") {
-                    ui->videoRateControlCombo->setCurrentIndex(RateControlQuality);
-                    videoQuality = preset->get_int("vq");
-                }
-                else if (name == "qscale") {
-                    ui->videoRateControlCombo->setCurrentIndex(RateControlQuality);
-                    videoQuality = preset->get_int("qscale");
-                }
-                else if (name == "crf") {
-                    ui->videoRateControlCombo->setCurrentIndex(RateControlQuality);
-                    videoQuality = preset->get_int("crf");
-                }
-                else if (name == "bufsize") {
-                    // traditionally this means video only
-                    ui->videoRateControlCombo->setCurrentIndex(RateControlConstant);
-                    ui->videoBufferSizeSpinner->setValue(getBufferSize(preset, "bufsize"));
-                }
-                else if (name == "vbufsize") {
-                    ui->videoRateControlCombo->setCurrentIndex(RateControlConstant);
-                    ui->videoBufferSizeSpinner->setValue(getBufferSize(preset, "vbufsize"));
-                }
-                else if (name == "threads") {
-                    // TODO: should we save the thread count and restore it if preset is not 1?
-                    if (preset->get_int("threads") == 1)
-                        ui->videoCodecThreadsSpinner->setValue(1);
-                }
-                else if (name == "meta.preset.extension")
-                    m_extension = preset->get("meta.preset.extension");
-                else if (name != "an" && name != "vn" && name != "threads"
-                         && !name.startsWith('_') && !name.startsWith("meta.preset."))
-                    other.append(QString("%1=%2").arg(name).arg(preset->get(i)));
-            }
-            ui->advancedTextEdit->setPlainText(other.join("\n"));
-
-            // normalize the quality settings
-            // quality depends on codec
-            if (ui->audioRateControlCombo->currentIndex() == RateControlQuality && audioQuality > -1) {
-                const QString& acodec = ui->audioCodecCombo->currentText();
-                if (acodec == "libmp3lame") // 0 (best) - 9 (worst)
-                    ui->audioQualitySpinner->setValue(TO_RELATIVE(9, 0, audioQuality));
-                if (acodec == "libvorbis" || acodec == "vorbis") // 0 (worst) - 10 (best)
-                    ui->audioQualitySpinner->setValue(TO_RELATIVE(0, 10, audioQuality));
-                else
-                    // aac: 0 (worst) - 500 (best)
-                    ui->audioQualitySpinner->setValue(TO_RELATIVE(0, 500, audioQuality));
-            }
-            if (ui->videoRateControlCombo->currentIndex() == RateControlQuality && videoQuality > -1) {
-                const QString& vcodec = ui->videoCodecCombo->currentText();
-                //val = min + (max - min) * paramval;
-                if (vcodec == "libx264" || vcodec == "libx265") // 0 (best, 100%) - 51 (worst)
-                    ui->videoQualitySpinner->setValue(TO_RELATIVE(51, 0, videoQuality));
-                else if (vcodec.startsWith("libvpx")) // 0 (best, 100%) - 63 (worst)
-                    ui->videoQualitySpinner->setValue(TO_RELATIVE(63, 0, videoQuality));
-                else // 1 (best, NOT 100%) - 31 (worst)
-                    ui->videoQualitySpinner->setValue(TO_RELATIVE(31, 1, videoQuality));
-            }
-            on_audioRateControlCombo_activated(ui->audioRateControlCombo->currentIndex());
-            on_videoRateControlCombo_activated(ui->videoRateControlCombo->currentIndex());
+            loadPresetFromProperties(*preset);
         }
         delete preset;
     }
