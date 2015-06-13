@@ -721,9 +721,12 @@ void EncodeDock::on_encodeButton_clicked()
                 outputFilename += m_extension;
             }
         }
-        if (seekable)
+        if (seekable) {
             // Batch encode
-            enqueueMelt(outputFilename, Settings.playerGPU()? -1 : -MLT.realTime());
+            int threadCount = QThread::idealThreadCount();
+            threadCount = (threadCount > 2) ? qMin(threadCount - 1, 4) : 1;
+            enqueueMelt(outputFilename, Settings.playerGPU()? -1 : -threadCount);
+        }
         else if (MLT.producer()->get_int(kBackgroundCaptureProperty)) {
             MLT.stop();
             runMelt(outputFilename);
