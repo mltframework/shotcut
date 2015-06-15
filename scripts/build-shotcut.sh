@@ -1990,6 +1990,7 @@ End-of-melt-wrapper
 #!/bin/sh
 # Set up environment
 # Run this instead of trying to run bin/shotcut. It runs shotcut with the correct environment.
+RELATIVE_PATH=\$(pwd)
 CURRENT_DIR=\$(readlink -f "\$0")
 INSTALL_DIR=\$(dirname "\$CURRENT_DIR")
 export LD_LIBRARY_PATH="\$INSTALL_DIR/lib":\$LD_LIBRARY_PATH
@@ -2001,7 +2002,7 @@ export MLT_MOVIT_PATH="\$INSTALL_DIR/share/movit"
 cd "\$INSTALL_DIR"
 export QT_PLUGIN_PATH="lib/qt5"
 export QML2_IMPORT_PATH="lib/qml"
-bin/shotcut "\$@"
+bin/shotcut --relativepath \$RELATIVE_PATH "\$@"
 End-of-shotcut-wrapper
   if test 0 != $? ; then
     die "Unable to create wrapper script"
