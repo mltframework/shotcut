@@ -174,12 +174,19 @@ public:
         parser.addOption(gpuOption);
         parser.addPositionalArgument("resource",
             QCoreApplication::translate("main", "A file to open."));
+        QCommandLineOption relpathOption("relativepath",
+            QCoreApplication::translate("main", "The relative path of passed filename"), "relativepath");
+        parser.addOption(relpathOption);
         parser.process(arguments());
         isFullScreen = parser.isSet(fullscreenOption);
         if (parser.isSet(gpuOption))
             Settings.setPlayerGPU(true);
         if (!parser.positionalArguments().isEmpty())
+        {
             resourceArg = parser.positionalArguments().first();
+            if (parser.isSet(relpathOption))
+                resourceArg = QDir::cleanPath(parser.value(relpathOption.valueName()) + QDir::separator() + resourceArg);
+        }
     }
 
     ~Application()
