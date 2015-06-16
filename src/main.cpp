@@ -213,8 +213,8 @@ int main(int argc, char **argv)
     MainWindow::changeTheme(Settings.theme());
 
     a.mainWindow = &MAIN;
-    a.mainWindow->setFullScreen(a.isFullScreen);
     a.mainWindow->show();
+    a.mainWindow->setFullScreen(a.isFullScreen);
     splash.finish(a.mainWindow);
 
     if (!a.resourceArg.isEmpty())
