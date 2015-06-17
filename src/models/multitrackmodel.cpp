@@ -1055,54 +1055,7 @@ void MultitrackModel::removeClip(int trackIndex, int clipIndex)
                     if (otherTrack->get_int(kTrackLockProperty))
                         continue;
 
-                    Mlt::Playlist otherPlaylist(*otherTrack);
-                    int remaining = clipPlaytime;
-                    int start = otherPlaylist.get_clip_index_at(clipStart);
-                    int end = otherPlaylist.get_clip_index_at(clipStart + clipPlaytime - 1);
-                    for (int k = start; k <= end && remaining > 0; ++k) {
-                        int duration = otherPlaylist.clip_length(k);
-                        if (duration <= 0)
-                            break;
-                        if (otherPlaylist.clip_start(k) < clipStart) {
-                            // Clip on other track starts before removed clip.
-                            int otherEnd = otherPlaylist.clip_start(k) + otherPlaylist.clip_length(k);
-                            if (otherEnd > clipStart + remaining) {
-                                duration = remaining;
-                                beginInsertRows(index(j), k + 1, k + 1);
-                                otherPlaylist.remove_region(clipStart, duration);
-                                endInsertRows();
-                            } else {
-                                duration = otherEnd - clipStart;
-                                otherPlaylist.remove_region(clipStart, duration);
-                            }
-                            QModelIndex modelIndex = createIndex(k, 0, j);
-                            emit dataChanged(modelIndex, modelIndex, QVector<int>() << DurationRole);
-                            if (!otherPlaylist.is_blank(k)) {
-                                QScopedPointer<Mlt::Producer> clip(otherPlaylist.get_clip(k));
-                                AudioLevelsTask::start(*clip, this, modelIndex);
-                            }
-                        } else if (duration <= remaining) {
-                            // Clip on other track is being removed.
-                            beginRemoveRows(index(j), k, k);
-                            otherPlaylist.remove(k--);
-                            endRemoveRows();
-                        } else {
-                            // Clip on other track is longer than removed clip.
-                            duration = remaining;
-                            otherPlaylist.remove_region(clipStart, remaining);
-                            QModelIndex modelIndex = createIndex(k, 0, j);
-                            QVector<int> roles;
-                            roles << InPointRole;
-                            roles << DurationRole;
-                            emit dataChanged(modelIndex, modelIndex, roles);
-                            if (!otherPlaylist.is_blank(k)) {
-                                QScopedPointer<Mlt::Producer> clip(otherPlaylist.get_clip(k));
-                                AudioLevelsTask::start(*clip, this, modelIndex);
-                            }
-                        }
-                        remaining -= duration;
-                    }
-                    consolidateBlanks(otherPlaylist, j);
+                    removeRegion(j, clipStart, clipPlaytime);
                 }
             }
             emit modified();
@@ -2299,6 +2252,64 @@ void MultitrackModel::loadPlaylist()
             MAIN.playlistDock()->model()->setPlaylist(playlist);
     }
     retainPlaylist();
+}
+
+void MultitrackModel::removeRegion(int trackIndex, int position, int length)
+{
+    int i = m_trackList.at(trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    if (track) {
+        Mlt::Playlist playlist(*track);
+        int clipIndex = playlist.get_clip_index_at(position);
+
+        if (clipIndex >= 0 && clipIndex < playlist.count())
+        {
+            int clipStart = playlist.clip_start(clipIndex);
+            int playtime = playlist.get_playtime();
+            playlist.block(playlist.get_playlist());
+
+            if (position + length > playtime)
+                length -= (position + length - playtime);
+
+            if (clipStart < position) {
+                beginInsertRows(index(trackIndex), clipIndex + 1, clipIndex + 1);
+                playlist.split_at(position);
+                endInsertRows();
+                QModelIndex modelIndex = createIndex(clipIndex, 0, trackIndex);
+                QVector<int> roles;
+                roles << DurationRole;
+                roles << OutPointRole;
+                emit dataChanged(modelIndex, modelIndex, roles);
+                ++clipIndex;
+            }
+
+            while (length > 0) {
+                if (playlist.clip_length(clipIndex) > length) {
+                    beginInsertRows(index(trackIndex), clipIndex + 1, clipIndex + 1);
+                    playlist.split_at(position + length);
+                    endInsertRows();
+                    QModelIndex modelIndex = createIndex(clipIndex, 0, trackIndex);
+                    QVector<int> roles;
+                    roles << DurationRole;
+                    roles << OutPointRole;
+                    emit dataChanged(modelIndex, modelIndex, roles);
+                }
+                length -= playlist.clip_length(clipIndex);
+                if (clipIndex < playlist.count()) {
+                    // Shotcut does not like the behavior of remove() on a
+                    // transition (MLT mix clip). So, we null mlt_mix to prevent it.
+                    QScopedPointer<Mlt::Producer> producer(playlist.get_clip(clipIndex));
+                    if (producer)
+                        producer->parent().set("mlt_mix", NULL, 0);
+                    beginRemoveRows(index(trackIndex), clipIndex, clipIndex);
+                    playlist.remove(clipIndex);
+                    endRemoveRows();
+                }
+            }
+            playlist.unblock(playlist.get_playlist());
+            consolidateBlanks(playlist, trackIndex);
+        }
+    }
 }
 
 bool MultitrackModel::isTransition(Mlt::Playlist &playlist, int clipIndex) const

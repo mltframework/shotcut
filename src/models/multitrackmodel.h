@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2014 Meltytech, LLC
+ * Copyright (c) 2013-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -167,6 +167,7 @@ private:
     void removeBlankPlaceholder(Mlt::Playlist& playlist, int trackIndex);
     void retainPlaylist();
     void loadPlaylist();
+    void removeRegion(int trackIndex, int position, int length);
 
     friend class UndoHelper;
 
