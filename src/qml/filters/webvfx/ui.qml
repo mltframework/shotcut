@@ -31,6 +31,21 @@ Rectangle {
 
     SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
     Shotcut.File { id: htmlFile }
+    Shotcut.File {
+        id: customUiFile
+        url: {
+            if (!htmlFile.url || !htmlFile.exists())
+                return "";
+            var uiFile = htmlFile.url.toString();
+            return uiFile.substr(0, uiFile.lastIndexOf(".")) + "_ui.qml";
+        }
+        onUrlChanged: {
+            if (exists())
+                customUILoader.source = url;
+            else
+                customUILoader.source = "";
+        }
+    }
 
     Component.onCompleted: {
         var resource = filter.get('resource')
@@ -214,6 +229,12 @@ Rectangle {
             Layout.columnSpan: 2
             Layout.fillWidth: true
             visible: editButton.visible
+        }
+
+        Loader {
+            id: customUILoader
+            Layout.columnSpan: 4
+            Layout.fillWidth: true
         }
 
         Item {

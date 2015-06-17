@@ -353,6 +353,7 @@ OTHER_FILES += \
     qml/filters/white/ui.qml \
     qml/modules/Shotcut/Controls/SliderSpinner.qml \
     qml/modules/Shotcut/Controls/RectangleControl.qml \
+    qml/modules/Shotcut/Controls/SimplePropertyUI.qml \
     qml/filters/size_position/SizePositionUI.qml \
     qml/filters/size_position/SizePositionVUI.qml \
     qml/filters/size_position/meta_affine.qml \
