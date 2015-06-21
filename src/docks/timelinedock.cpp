@@ -246,27 +246,59 @@ void TimelineDock::makeTracksTaller()
     QMetaObject::invokeMethod(m_quickView.rootObject(), "makeTracksTaller");
 }
 
-void TimelineDock::setSelection(QList<int> newSelection)
+void TimelineDock::clearSelection()
+{
+    setSelection(QVariantList());
+}
+
+void TimelineDock::setSelection(const QVariantList & newSelection)
 {
     qDebug() << "Setting selection to" << newSelection;
     if (newSelection == selection())
         return;
 
-    QVariantList list;
-    foreach (int idx, newSelection)
-        list << QVariant::fromValue(idx);
-    m_quickView.rootObject()->setProperty("selection", list);
+    m_quickView.rootObject()->setProperty("selection", newSelection);
 }
 
-QList<int> TimelineDock::selection() const
+void TimelineDock::setSelection(int trackIndex, int clipIndex)
+{
+    setSelection(QList<ClipIndex>() << ClipIndex(trackIndex, clipIndex));
+}
+
+void TimelineDock::setSelection(const ClipIndex& selection)
+{
+    setSelection(QList<ClipIndex>() << selection);
+}
+
+void TimelineDock::setSelection(const QList<ClipIndex> & newSelection)
+{
+    setSelection(reinterpret_cast<const QVariantList&>(newSelection));
+}
+
+QVariantList TimelineDock::selection() const
 {
     if (!m_quickView.rootObject())
-        return QList<int>();
+        return QVariantList();
 
-    QList<int> ret;
-    foreach (QVariant v, m_quickView.rootObject()->property("selection").toList())
-        ret << v.toInt();
-    return ret;
+    return m_quickView.rootObject()->property("selection").toList();
+}
+
+struct ClipIndexSorter {
+    bool operator()(const QVariant& a, const QVariant& b) {
+        ClipIndex clipA(a);
+        ClipIndex clipB(b);
+        if (clipA.trackIndex() == clipB.trackIndex())
+            return clipA.clipIndex() < clipB.clipIndex();
+        else
+            return clipA.trackIndex() < clipB.trackIndex();
+    }
+};
+
+QVariantList TimelineDock::sortedSelection() const
+{
+    QVariantList sorted = selection();
+    std::sort(sorted.begin(), sorted.end(), ClipIndexSorter());
+    return sorted;
 }
 
 void TimelineDock::selectClipUnderPlayhead()
@@ -280,14 +312,14 @@ void TimelineDock::selectClipUnderPlayhead()
         }
         int idx = clipIndexAtPlayhead(-1);
         if (idx == -1)
-            setSelection(QList<int>());
+            clearSelection();
         else
-            setSelection(QList<int>() << idx);
+            setSelection(currentTrack(), idx);
         return;
     }
 
     setCurrentTrack(track);
-    setSelection(QList<int>() << clip);
+    setSelection(currentTrack(), clip);
 }
 
 int TimelineDock::centerOfClip(int trackIndex, int clipIndex)
@@ -311,14 +343,13 @@ bool TimelineDock::isTrackLocked(int trackIndex) const
 
 void TimelineDock::clearSelectionIfInvalid()
 {
-    int count = clipCount(currentTrack());
-
-    QList<int> newSelection;
-    foreach (int index, selection()) {
-        if (index >= count)
+    QVariantList newSelection;
+    foreach (QVariant clip, selection()) {
+        ClipIndex clipMap(clip);
+        if (clipMap.clipIndex() >= clipCount(clipMap.trackIndex()))
             continue;
 
-        newSelection << index;
+        newSelection << clip;
     }
     setSelection(newSelection);
 }
@@ -415,8 +446,12 @@ void TimelineDock::removeSelection()
         selectClipUnderPlayhead();
     if (selection().isEmpty())
         return;
-    foreach (int index, selection())
-        remove(currentTrack(), index);
+    QVariantList sorted = sortedSelection();
+    for (int i = sorted.size() - 1; i >= 0; --i)
+    {
+        ClipIndex clip(sorted[i]);
+        remove(clip.trackIndex(), clip.clipIndex());
+    }
 }
 
 void TimelineDock::liftSelection()
@@ -429,8 +464,12 @@ void TimelineDock::liftSelection()
         selectClipUnderPlayhead();
     if (selection().isEmpty())
         return;
-    foreach (int index, selection())
-        lift(currentTrack(), index);
+    QVariantList sorted = sortedSelection();
+    for (int i = sorted.size() - 1; i >= 0; --i)
+    {
+        ClipIndex clip(sorted[i]);
+        lift(clip.trackIndex(), clip.clipIndex());
+    }
 }
 
 void TimelineDock::selectTrack(int by)
@@ -473,7 +512,8 @@ void TimelineDock::emitClipSelectedFromSelection()
         return;
     }
 
-    Mlt::ClipInfo* info = getClipInfo(currentTrack(), selection().first());
+    ClipIndex clip(selection().first());
+    Mlt::ClipInfo* info = getClipInfo(clip.trackIndex(), clip.clipIndex());
     if (info && info->producer && info->producer->is_valid()) {
         // We need to set these special properties so time-based filters
         // can get information about the cut while still applying filters

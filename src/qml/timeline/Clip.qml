@@ -40,6 +40,7 @@ Rectangle {
     property int originalX: x
     property bool selected: false
 
+    signal ctrlClicked(var clip)
     signal clicked(var clip)
     signal moved(var clip)
     signal dragged(var clip, var mouse)
@@ -274,6 +275,8 @@ Rectangle {
             startX = parent.x
             if (mouse.button === Qt.RightButton)
                 menu.popup()
+            else if (mouse.modifiers & Qt.ControlModifier)
+                clipRoot.ctrlClicked(clipRoot)
             else
                 clipRoot.clicked(clipRoot)
         }

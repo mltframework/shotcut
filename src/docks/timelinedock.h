@@ -30,13 +30,50 @@ namespace Ui {
 class TimelineDock;
 }
 
+class ClipIndex : public QVariant
+{
+public:
+    ClipIndex(const QVariant& copy)
+    {
+        Q_ASSERT(copy.canConvert<QVariantMap>());
+        Q_ASSERT(copy.toMap().contains("trackIndex"));
+        Q_ASSERT(copy.toMap().contains("clipIndex"));
+        *this = static_cast<const ClipIndex&>(copy);
+    }
+
+    ClipIndex(int trackIndex, int clipIndex)
+    {
+        QVariantMap map;
+        map["trackIndex"] = trackIndex;
+        map["clipIndex"] = clipIndex;
+        *this = QVariant::fromValue(map);
+    }
+
+    ClipIndex()
+    {
+        QVariantMap map;
+        map["trackIndex"] = QVariant::fromValue(-1);
+        map["clipIndex"] = QVariant::fromValue(-1);
+        *this = QVariant::fromValue(map);
+    }
+
+    int trackIndex() const
+    {
+        return toMap()["trackIndex"].toInt();
+    }
+    int clipIndex() const
+    {
+        return toMap()["clipIndex"].toInt();
+    }
+};
+
 class TimelineDock : public QDockWidget
 {
     Q_OBJECT
     Q_PROPERTY(int position READ position WRITE setPosition NOTIFY positionChanged)
     Q_PROPERTY(int yoffset READ dockYOffset)
     Q_PROPERTY(int currentTrack READ currentTrack WRITE setCurrentTrack NOTIFY currentTrackChanged)
-    Q_PROPERTY(QList<int> selection READ selection WRITE setSelection NOTIFY selectionChanged)
+    Q_PROPERTY(QVariantList selection READ selection WRITE setSelection NOTIFY selectionChanged)
 
 public:
     explicit TimelineDock(QWidget *parent = 0);
@@ -60,8 +97,13 @@ public:
     void resetZoom();
     void makeTracksShorter();
     void makeTracksTaller();
-    void setSelection(QList<int> selection);
-    QList<int> selection() const;
+    void clearSelection();
+    void setSelection(const QVariantList &selection);
+    void setSelection(const QList<ClipIndex>& selection);
+    void setSelection(const ClipIndex& selection);
+    void setSelection(int trackIndex, int clipIndex);
+    QVariantList selection() const;
+    QVariantList sortedSelection() const;
     void selectClipUnderPlayhead();
     int centerOfClip(int trackIndex, int clipIndex);
     bool isTrackLocked(int trackIndex) const;
