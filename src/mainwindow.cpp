@@ -859,7 +859,7 @@ void MainWindow::seekTimeline(int position)
 {
     if (!multitrack()) return;
     // we bypass this->open() to prevent sending producerOpened signal to self, which causes to reload playlist
-    if ((void*) MLT.producer()->get_producer() != (void*) multitrack()->get_producer()) {
+    if (MLT.producer() && (void*) MLT.producer()->get_producer() != (void*) multitrack()->get_producer()) {
         MLT.setProducer(new Mlt::Producer(*multitrack()));
         m_player->setIn(-1);
         m_player->setOut(-1);
