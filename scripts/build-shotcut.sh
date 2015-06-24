@@ -1194,7 +1194,7 @@ function get_subproject {
                   cmd $(wget -O - $REPOLOC | tar -xz) || die "Unable to download source for $1 from $REPOLOC"
               fi
           fi
-          cmd mv "$REVISION" "$1" || due "Unable to rename $REVISION to $1"
+          cmd mv "$REVISION" "$1" || die "Unable to rename $REVISION to $1"
       fi
   fi # git/svn
 
