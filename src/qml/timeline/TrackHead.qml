@@ -77,10 +77,12 @@ Rectangle {
 
     MouseArea {
         anchors.fill: parent
-        acceptedButtons: Qt.LeftButton
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
         onClicked: {
             parent.clicked()
             nameEdit.visible = false
+            if (mouse.button == Qt.RightButton)
+                menu.popup()
         }
     }
     Column {

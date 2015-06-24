@@ -390,6 +390,10 @@ Rectangle {
             onTriggered: timeline.addVideoTrack();
         }
         MenuItem {
+            text: qsTr('Insert Track')
+            onTriggered: timeline.insertTrack()
+        }
+        MenuItem {
             enabled: multitrack.trackHeight >= 50
             text: qsTr('Make Tracks Shorter')
             shortcut: 'Ctrl+-'

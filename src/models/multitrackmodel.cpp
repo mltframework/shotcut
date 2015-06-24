@@ -2205,7 +2205,7 @@ int MultitrackModel::addVideoTrack()
 void MultitrackModel::removeTrack(int trackIndex)
 {
     if (trackIndex >= 0 && trackIndex < m_trackList.size()) {
-        const Track track = m_trackList.value(trackIndex);
+        const Track& track = m_trackList.value(trackIndex);
         QScopedPointer<Mlt::Transition> transition(getTransition("frei0r.cairoblend", track.mlt_index));
 
         // Remove transitions.
@@ -2217,25 +2217,41 @@ void MultitrackModel::removeTrack(int trackIndex)
         if (transition)
             m_tractor->field()->disconnect_service(*transition);
 
+//        foreach (Track t, m_trackList) qDebug() << (t.type == VideoTrackType?"Video":"Audio") << "track number" << t.number << "mlt_index" << t.mlt_index;
+//        qDebug() << trackIndex << "mlt_index" << track.mlt_index;
+
         // Remove track.
         beginRemoveRows(QModelIndex(), trackIndex, trackIndex);
         m_tractor->remove_track(track.mlt_index);
         m_trackList.removeAt(trackIndex);
+        endRemoveRows();
+
+//        foreach (Track t, m_trackList) qDebug() << (t.type == VideoTrackType?"Video":"Audio") << "track number" << t.number << "mlt_index" << t.mlt_index;
 
         // Renumber other tracks.
+        int row = 0;
         foreach (Track t, m_trackList) {
             if (t.mlt_index > track.mlt_index)
-                --t.mlt_index;
-            //TODO rename track if its name is still default.
-//            QString trackName;
-//            if (VideoTrackType == t.type)
-//                trackName = QString("V%1").arg(t.number + 1);
-//            else
-//                trackName = QString("A%1").arg(t.number + 1);
-            if (t.number > track.number && t.type == track.type)
-                --t.number;
+                --m_trackList[row].mlt_index;
+            if (t.type == track.type && t.number > track.number) {
+                --m_trackList[row].number;
+
+                // Rename default track names.
+                QScopedPointer<Mlt::Producer> mltTrack(m_tractor->track(m_trackList[row].mlt_index));
+                QString trackNameTemplate = (t.type == VideoTrackType)? QString("V%1") : QString("A%1");
+                QString trackName = trackNameTemplate.arg(t.number + 1);
+                if (mltTrack && mltTrack->get(kTrackNameProperty) == trackName) {
+                    trackName = trackNameTemplate.arg(m_trackList[row].number + 1);
+                    mltTrack->set(kTrackNameProperty, trackName.toUtf8().constData());
+                    QModelIndex modelIndex = index(row, 0);
+                    QVector<int> roles;
+                    roles << NameRole;
+                    emit dataChanged(modelIndex, modelIndex, roles);
+                }
+            }
+            ++row;
         }
-        endRemoveRows();
+//        foreach (Track t, m_trackList) qDebug() << (t.type == VideoTrackType?"Video":"Audio") << "track number" << t.number << "mlt_index" << t.mlt_index;
     }
 }
 
@@ -2324,6 +2340,106 @@ bool MultitrackModel::isTransition(Mlt::Playlist &playlist, int clipIndex) const
     if (producer && producer->parent().get(kShotcutTransitionProperty))
         return true;
     return false;
+}
+
+void MultitrackModel::insertTrack(int trackIndex)
+{
+    if (!m_tractor || trackIndex == 0) {
+        addVideoTrack();
+        return;
+    } else if (trackIndex >= m_trackList.count()) {
+        addAudioTrack();
+        return;
+    }
+
+    // Get the new track index.
+    Track& track = m_trackList[trackIndex];
+    int i = track.mlt_index;
+    if (track.type == VideoTrackType)
+        ++i;
+
+//    foreach (Track t, m_trackList) qDebug() << (t.type == VideoTrackType?"Video":"Audio") << "track number" << t.number << "mlt_index" << t.mlt_index;
+//    qDebug() << "trackIndex" << trackIndex << "mlt_index" << i;
+
+    // Get the new, logical video-only index.
+    int videoTrackCount = 0;
+    int last_mlt_index = 0;
+    int row = 0;
+    foreach (Track t, m_trackList) {
+        if (t.type == track.type) {
+            if ((t.type == VideoTrackType && t.number > track.number) ||
+                (t.type == AudioTrackType && t.number >= track.number)) {
+                // Rename default track names.
+                QScopedPointer<Mlt::Producer> mltTrack(m_tractor->track(t.mlt_index));
+                QString trackNameTemplate = (t.type == VideoTrackType)? QString("V%1") : QString("A%1");
+                QString trackName = trackNameTemplate.arg(++t.number);
+                if (mltTrack && mltTrack->get(kTrackNameProperty) == trackName) {
+                    trackName = trackNameTemplate.arg(t.number + 1);
+                    mltTrack->set(kTrackNameProperty, trackName.toUtf8().constData());
+                    QModelIndex modelIndex = index(row, 0);
+                    QVector<int> roles;
+                    roles << NameRole;
+                    emit dataChanged(modelIndex, modelIndex, roles);
+                }
+                ++m_trackList[row].number;
+            }
+        }
+        if (t.mlt_index >= i)
+            ++m_trackList[row].mlt_index;
+        if (t.type == VideoTrackType) {
+            ++videoTrackCount;
+            last_mlt_index = t.mlt_index;
+        }
+        ++row;
+    }
+
+//    foreach (Track t, m_trackList) qDebug() << (t.type == VideoTrackType?"Video":"Audio") << "track number" << t.number << "mlt_index" << t.mlt_index;
+
+    // Create the MLT track.
+    Mlt::Playlist playlist(MLT.profile());
+    if (track.type == VideoTrackType) {
+        playlist.set(kVideoTrackProperty, 1);
+    } else if (track.type == AudioTrackType) {
+        playlist.set(kAudioTrackProperty, 1);
+        playlist.set("hide", 1);
+    }
+    playlist.blank(0);
+    m_tractor->insert_track(playlist, i);
+    track = m_trackList[trackIndex];
+    MLT.updateAvformatCaching(m_tractor->count());
+
+    // Add the mix transition.
+    Mlt::Transition mix(MLT.profile(), "mix");
+    mix.set("always_active", 1);
+    mix.set("combine", 1);
+    m_tractor->plant_transition(mix, 0, i);
+
+    if (track.type == VideoTrackType) {
+        // Add the composite transition.
+        Mlt::Transition composite(MLT.profile(), Settings.playerGPU()? "movit.overlay" : "frei0r.cairoblend");
+        composite.set("disable", 1);
+        m_tractor->plant_transition(composite, last_mlt_index, i);
+    }
+
+    // Add the shotcut logical video track.
+    Track t;
+    t.mlt_index = i;
+    t.type = track.type;
+    QString trackName;
+    if (t.type == VideoTrackType) {
+        t.number = videoTrackCount - trackIndex;
+        trackName = QString("V%1");
+    } else if (t.type == AudioTrackType) {
+        t.number = trackIndex - videoTrackCount;
+        trackName = QString("A%1");
+    }
+    trackName = trackName.arg(t.number + 1);
+    playlist.set(kTrackNameProperty, trackName.toUtf8().constData());
+    beginInsertRows(QModelIndex(), trackIndex, trackIndex);
+    m_trackList.insert(trackIndex, t);
+    endInsertRows();
+    emit modified();
+//    foreach (Track t, m_trackList) qDebug() << (t.type == VideoTrackType?"Video":"Audio") << "track number" << t.number << "mlt_index" << t.mlt_index;
 }
 
 void MultitrackModel::load()

@@ -363,6 +363,17 @@ private:
     bool m_isVideo;
 };
 
+class InsertTrackCommand : public QUndoCommand
+{
+public:
+    InsertTrackCommand(MultitrackModel& model, int trackIndex, QUndoCommand* parent = 0);
+    void redo();
+    void undo();
+private:
+    MultitrackModel& m_model;
+    int m_trackIndex;
+};
+
 } // namespace
 
 #endif

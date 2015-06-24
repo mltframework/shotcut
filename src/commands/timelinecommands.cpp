@@ -630,4 +630,22 @@ void AddTrackCommand::undo()
     m_model.removeTrack(m_trackIndex);
 }
 
+InsertTrackCommand::InsertTrackCommand(MultitrackModel& model, int trackIndex, QUndoCommand* parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_trackIndex(trackIndex)
+{
+    setText(QObject::tr("Insert track"));
+}
+
+void InsertTrackCommand::redo()
+{
+    m_model.insertTrack(m_trackIndex);
+}
+
+void InsertTrackCommand::undo()
+{
+    m_model.removeTrack(m_trackIndex);
+}
+
 } // namespace
