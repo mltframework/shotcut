@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2014 Meltytech, LLC
+ * Copyright (c) 2013-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -30,8 +30,16 @@ Rectangle {
         if (filter.isNew) {
             // Set default parameter values
             filter.set(gainParameter, 1.0)
-            slider.value = 20 * Math.log(filter.getDouble(gainParameter))
+            slider.value = toDb(filter.getDouble(gainParameter))
         }
+    }
+
+    function toDb(value) {
+        return 20 * Math.log(value) / Math.LN10
+    }
+
+    function fromDb(value) {
+        return Math.pow(10, value / 20);
     }
 
     ColumnLayout {
@@ -47,8 +55,8 @@ Rectangle {
                 suffix: ' dB'
                 decimals: 1
                 spinnerWidth: 80
-                value: 20 * Math.log10(filter.getDouble(gainParameter)) / Math.LN10
-                onValueChanged:filter.set(gainParameter, Math.pow(10, value / 20))
+                value: toDb(filter.getDouble(gainParameter))
+                onValueChanged: filter.set(gainParameter, fromDb(value))
             }
             UndoButton {
                 onClicked: slider.value = 0
