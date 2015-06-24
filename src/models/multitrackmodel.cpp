@@ -2171,6 +2171,12 @@ int MultitrackModel::addVideoTrack()
     // Add the composite transition.
     Mlt::Transition composite(MLT.profile(), Settings.playerGPU()? "movit.overlay" : "frei0r.cairoblend");
     composite.set("disable", 1);
+    foreach (Track t, m_trackList) {
+        if (t.type == VideoTrackType) {
+            composite.set("disable", 0);
+            break;
+        }
+    }
 
     // Get the new, logical video-only index.
     int v = 0;
