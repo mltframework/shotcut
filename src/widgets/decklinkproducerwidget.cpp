@@ -38,6 +38,14 @@ DecklinkProducerWidget::DecklinkProducerWidget(QWidget *parent) :
     ui->profileCombo->addItem("HD 1080p 30 fps", "atsc_1080p_30");
     ui->profileCombo->addItem("SD NTSC", "dv_ntsc");
     ui->profileCombo->addItem("SD PAL", "dv_pal");
+    ui->profileCombo->addItem("UHD 2160p 23.98 fps", "uhd_2160p_2398");
+    ui->profileCombo->addItem("UHD 2160p 24 fps", "uhd_2160p_24");
+    ui->profileCombo->addItem("UHD 2160p 25 fps", "uhd_2160p_25");
+    ui->profileCombo->addItem("UHD 2160p 29.97 fps", "uhd_2160p_2997");
+    ui->profileCombo->addItem("UHD 2160p 30 fps", "uhd_2160p_30");
+    ui->profileCombo->addItem("UHD 2160p 50 fps", "uhd_2160p_50");
+    ui->profileCombo->addItem("UHD 2160p 59.94 fps", "uhd_2160p_5994");
+    ui->profileCombo->addItem("UHD 2160p 60 fps", "uhd_2160p_60");
 
     Mlt::Profile profile;
     Mlt::Producer p(profile, "decklink:");
