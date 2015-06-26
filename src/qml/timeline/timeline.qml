@@ -394,6 +394,10 @@ Rectangle {
             onTriggered: timeline.insertTrack()
         }
         MenuItem {
+            text: qsTr('Remove Track')
+            onTriggered: timeline.removeTrack()
+        }
+        MenuItem {
             enabled: multitrack.trackHeight >= 50
             text: qsTr('Make Tracks Shorter')
             shortcut: 'Ctrl+-'

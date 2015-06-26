@@ -113,6 +113,7 @@ public slots:
     void seekNextEdit();
     void clearSelectionIfInvalid();
     void insertTrack();
+    void removeTrack();
 
 protected:
     void dragEnterEvent(QDragEnterEvent* event);

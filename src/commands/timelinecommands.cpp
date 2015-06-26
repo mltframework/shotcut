@@ -18,6 +18,7 @@
 
 #include "timelinecommands.h"
 #include "mltcontroller.h"
+#include "shotcut_mlt_properties.h"
 #include <QtDebug>
 
 namespace Timeline {
@@ -634,18 +635,71 @@ InsertTrackCommand::InsertTrackCommand(MultitrackModel& model, int trackIndex, Q
     : QUndoCommand(parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
+    , m_trackType(model.trackList().at(trackIndex).type)
 {
-    setText(QObject::tr("Insert track"));
+    if (m_trackType == AudioTrackType)
+        setText(QObject::tr("Insert audio track"));
+    else if (m_trackType == VideoTrackType)
+        setText(QObject::tr("Insert video track"));
 }
 
 void InsertTrackCommand::redo()
 {
-    m_model.insertTrack(m_trackIndex);
+    m_model.insertTrack(m_trackIndex, m_trackType);
 }
 
 void InsertTrackCommand::undo()
 {
     m_model.removeTrack(m_trackIndex);
+}
+
+RemoveTrackCommand::RemoveTrackCommand(MultitrackModel& model, int trackIndex, QUndoCommand* parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_trackIndex(trackIndex)
+    , m_trackType(model.trackList().at(trackIndex).type)
+{
+    if (m_trackType == AudioTrackType)
+        setText(QObject::tr("Remove audio track"));
+    else if (m_trackType == VideoTrackType)
+        setText(QObject::tr("Remove video track"));
+
+    // Save track XML.
+    int mlt_index = m_model.trackList().at(m_trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> producer(m_model.tractor()->multitrack()->track(mlt_index));
+    if (producer && producer->is_valid()) {
+        m_xml = MLT.XML(producer.data());
+        m_trackName = QString::fromUtf8(producer->get(kTrackNameProperty));
+        qDebug() << m_xml;
+    }
+}
+
+void RemoveTrackCommand::redo()
+{
+    m_model.removeTrack(m_trackIndex);
+}
+
+void RemoveTrackCommand::undo()
+{
+    m_model.insertTrack(m_trackIndex, m_trackType);
+    m_model.setTrackName(m_trackIndex, m_trackName);
+
+    // Restore track from XML.
+    Mlt::Producer producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
+    Mlt::Playlist playlist(producer);
+    m_model.appendFromPlaylist(&playlist, m_trackIndex);
+
+    // Re-attach filters.
+    int n = playlist.filter_count();
+    if (n > 0) {
+        int mlt_index = m_model.trackList().at(m_trackIndex).mlt_index;
+        QScopedPointer<Mlt::Producer> producer(m_model.tractor()->multitrack()->track(mlt_index));
+        for (int i = 0; i < n; ++i) {
+            QScopedPointer<Mlt::Filter> filter(playlist.filter(i));
+            if (filter && filter->is_valid())
+                producer->attach(*filter);
+        }
+    }
 }
 
 } // namespace

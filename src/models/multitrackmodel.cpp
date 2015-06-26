@@ -1205,12 +1205,16 @@ void MultitrackModel::appendFromPlaylist(Mlt::Playlist *from, int trackIndex)
         beginInsertRows(index(trackIndex), i, i + from->count() - 1);
         for (int j = 0; j < from->count(); j++) {
             QScopedPointer<Mlt::Producer> clip(from->get_clip(j));
-            int in = clip->get_in();
-            int out = clip->get_out();
-            clip->set_in_and_out(0, clip->get_length() - 1);
-            playlist.append(clip->parent(), in, out);
-            QModelIndex modelIndex = createIndex(i, 0, trackIndex);
-            AudioLevelsTask::start(clip->parent(), this, modelIndex);
+            if (!clip->is_blank()) {
+                int in = clip->get_in();
+                int out = clip->get_out();
+                clip->set_in_and_out(0, clip->get_length() - 1);
+                playlist.append(clip->parent(), in, out);
+                QModelIndex modelIndex = createIndex(i, 0, trackIndex);
+                AudioLevelsTask::start(clip->parent(), this, modelIndex);
+            } else {
+                playlist.blank(clip->get_out());
+            }
         }
         endInsertRows();
         emit modified();
@@ -2342,21 +2346,25 @@ bool MultitrackModel::isTransition(Mlt::Playlist &playlist, int clipIndex) const
     return false;
 }
 
-void MultitrackModel::insertTrack(int trackIndex)
+void MultitrackModel::insertTrack(int trackIndex, TrackType type)
 {
-    if (!m_tractor || trackIndex == 0) {
+    // Get the new track index.
+    Track& track = m_trackList[qMax(0, qMin(trackIndex, m_trackList.count() - 1))];
+    int i = track.mlt_index;
+    if (type == VideoTrackType)
+        ++i;
+
+    if (!m_tractor || trackIndex <= 0) {
         addVideoTrack();
         return;
     } else if (trackIndex >= m_trackList.count()) {
-        addAudioTrack();
-        return;
+        if (type == AudioTrackType) {
+            addAudioTrack();
+            return;
+        } else if (type == VideoTrackType) {
+            i = track.mlt_index;
+        }
     }
-
-    // Get the new track index.
-    Track& track = m_trackList[trackIndex];
-    int i = track.mlt_index;
-    if (track.type == VideoTrackType)
-        ++i;
 
 //    foreach (Track t, m_trackList) qDebug() << (t.type == VideoTrackType?"Video":"Audio") << "track number" << t.number << "mlt_index" << t.mlt_index;
 //    qDebug() << "trackIndex" << trackIndex << "mlt_index" << i;
@@ -2405,7 +2413,6 @@ void MultitrackModel::insertTrack(int trackIndex)
     }
     playlist.blank(0);
     m_tractor->insert_track(playlist, i);
-    track = m_trackList[trackIndex];
     MLT.updateAvformatCaching(m_tractor->count());
 
     // Add the mix transition.
@@ -2414,7 +2421,7 @@ void MultitrackModel::insertTrack(int trackIndex)
     mix.set("combine", 1);
     m_tractor->plant_transition(mix, 0, i);
 
-    if (track.type == VideoTrackType) {
+    if (type == VideoTrackType) {
         // Add the composite transition.
         Mlt::Transition composite(MLT.profile(), Settings.playerGPU()? "movit.overlay" : "frei0r.cairoblend");
         composite.set("disable", 1);
@@ -2424,7 +2431,7 @@ void MultitrackModel::insertTrack(int trackIndex)
     // Add the shotcut logical video track.
     Track t;
     t.mlt_index = i;
-    t.type = track.type;
+    t.type = type;
     QString trackName;
     if (t.type == VideoTrackType) {
         t.number = videoTrackCount - trackIndex;

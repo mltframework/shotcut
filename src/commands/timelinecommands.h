@@ -372,6 +372,21 @@ public:
 private:
     MultitrackModel& m_model;
     int m_trackIndex;
+    TrackType m_trackType;
+};
+
+class RemoveTrackCommand : public QUndoCommand
+{
+public:
+    RemoveTrackCommand(MultitrackModel& model, int trackIndex, QUndoCommand* parent = 0);
+    void redo();
+    void undo();
+private:
+    MultitrackModel& m_model;
+    int m_trackIndex;
+    QString m_xml;
+    TrackType m_trackType;
+    QString m_trackName;
 };
 
 } // namespace

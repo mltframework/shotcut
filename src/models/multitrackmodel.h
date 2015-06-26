@@ -100,7 +100,7 @@ public:
     double scaleFactor() const;
     void setScaleFactor(double scale);
     bool isTransition(Mlt::Playlist& playlist, int clipIndex) const;
-    void insertTrack(int trackIndex);
+    void insertTrack(int trackIndex, TrackType type = VideoTrackType);
 
 signals:
     void created();

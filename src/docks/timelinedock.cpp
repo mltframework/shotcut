@@ -326,7 +326,13 @@ void TimelineDock::clearSelectionIfInvalid()
 void TimelineDock::insertTrack()
 {
     MAIN.undoStack()->push(
-        new Timeline::InsertTrackCommand(m_model, currentTrack()));
+                new Timeline::InsertTrackCommand(m_model, currentTrack()));
+}
+
+void TimelineDock::removeTrack()
+{
+    MAIN.undoStack()->push(
+                new Timeline::RemoveTrackCommand(m_model, currentTrack()));
 }
 
 void TimelineDock::addAudioTrack()
