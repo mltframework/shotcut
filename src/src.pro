@@ -394,7 +394,13 @@ OTHER_FILES += \
     qml/filters/tcolor/meta.qml \
     qml/filters/tcolor/ui.qml \
     qml/filters/oldfilm/meta.qml \
-    qml/filters/oldfilm/ui.qml
+    qml/filters/oldfilm/ui.qml \
+    qml/filters/audio_bandpass/meta.qml \
+    qml/filters/audio_bandpass/ui.qml \
+    qml/filters/audio_highpass/meta.qml \
+    qml/filters/audio_highpass/ui.qml \
+    qml/filters/audio_lowpass/meta.qml \
+    qml/filters/audio_lowpass/ui.qml
 
 lupdate_hack {
     SOURCES += \
@@ -518,7 +524,13 @@ lupdate_hack {
     qml/filters/tcolor/meta.qml \
     qml/filters/tcolor/ui.qml \
     qml/filters/oldfilm/meta.qml \
-    qml/filters/oldfilm/ui.qml
+    qml/filters/oldfilm/ui.qml \
+    qml/filters/audio_bandpass/meta.qml \
+    qml/filters/audio_bandpass/ui.qml \
+    qml/filters/audio_highpass/meta.qml \
+    qml/filters/audio_highpass/ui.qml \
+    qml/filters/audio_lowpass/meta.qml \
+    qml/filters/audio_lowpass/ui.qml
 }
 
 TRANSLATIONS += \
