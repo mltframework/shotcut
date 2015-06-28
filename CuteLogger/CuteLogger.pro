@@ -38,15 +38,6 @@ symbian {
     DEPLOYMENT += addFiles
 }
 
-unix:!symbian {
-    maemo5 {
-        target.path = /opt/usr/lib
-    } else {
-        target.path = $(INSTALL_ROOT)/usr/lib
-    }
-    INSTALLS += target
-}
-
 OTHER_FILES += \
     Doxyfile \
     LICENSE.LGPL \
