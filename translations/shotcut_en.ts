@@ -5019,7 +5019,7 @@ the screen capture to SDI/HDMI in this mode.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/tcolor/meta.qml" line="6"/>
-        <source>Old Film: Technocolor</source>
+        <source>Old Film: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
