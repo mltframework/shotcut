@@ -74,7 +74,10 @@ Rectangle {
             onClicked: rotationSlider.value = 0
         }
 
-        Label { text: qsTr('Scale') }
+        Label {
+            text: qsTr('Scale')
+            Layout.alignment: Qt.AlignRight
+        }
         SliderSpinner {
             id: scaleSlider
             minimumValue: 0.1

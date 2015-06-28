@@ -384,7 +384,17 @@ OTHER_FILES += \
     qml/filters/webvfx_threejs_text/fonts/helvetiker_regular.typeface.js \
     qml/filters/webvfx_threejs_text/fonts/optimer_bold.typeface.js \
     qml/filters/webvfx_threejs_text/fonts/optimer_regular.typeface.js \
-    qml/modules/Shotcut/Controls/SaveDefaultButton.qml
+    qml/modules/Shotcut/Controls/SaveDefaultButton.qml \
+    qml/filters/dust/meta.qml \
+    qml/filters/dust/ui.qml \
+    qml/filters/lines/meta.qml \
+    qml/filters/lines/ui.qml \
+    qml/filters/grain/meta.qml \
+    qml/filters/grain/ui.qml \
+    qml/filters/tcolor/meta.qml \
+    qml/filters/tcolor/ui.qml \
+    qml/filters/oldfilm/meta.qml \
+    qml/filters/oldfilm/ui.qml
 
 lupdate_hack {
     SOURCES += \
@@ -498,7 +508,17 @@ lupdate_hack {
     qml/filters/dynamictext/vui.qml \
     qml/filters/webvfx_threejs_text/meta.qml \
     qml/filters/webvfx_threejs_text/ui.qml \
-	qml/modules/Shotcut/Controls/SaveDefaultButton.qml
+    qml/modules/Shotcut/Controls/SaveDefaultButton.qml \
+    qml/filters/dust/meta.qml \
+    qml/filters/dust/ui.qml \
+    qml/filters/lines/meta.qml \
+    qml/filters/lines/ui.qml \
+    qml/filters/grain/meta.qml \
+    qml/filters/grain/ui.qml \
+    qml/filters/tcolor/meta.qml \
+    qml/filters/tcolor/ui.qml \
+    qml/filters/oldfilm/meta.qml \
+    qml/filters/oldfilm/ui.qml
 }
 
 TRANSLATIONS += \
