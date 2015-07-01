@@ -400,7 +400,9 @@ OTHER_FILES += \
     qml/filters/audio_highpass/meta.qml \
     qml/filters/audio_highpass/ui.qml \
     qml/filters/audio_lowpass/meta.qml \
-    qml/filters/audio_lowpass/ui.qml
+    qml/filters/audio_lowpass/ui.qml \
+    qml/filters/audio_notch/meta.qml \
+    qml/filters/audio_notch/ui.qml
 
 lupdate_hack {
     SOURCES += \
@@ -530,7 +532,9 @@ lupdate_hack {
     qml/filters/audio_highpass/meta.qml \
     qml/filters/audio_highpass/ui.qml \
     qml/filters/audio_lowpass/meta.qml \
-    qml/filters/audio_lowpass/ui.qml
+    qml/filters/audio_lowpass/ui.qml \
+    qml/filters/audio_notch/meta.qml \
+    qml/filters/audio_notch/ui.qml
 }
 
 TRANSLATIONS += \
