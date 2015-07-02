@@ -397,6 +397,8 @@ OTHER_FILES += \
     qml/filters/oldfilm/ui.qml \
     qml/filters/audio_bandpass/meta.qml \
     qml/filters/audio_bandpass/ui.qml \
+    qml/filters/audio_basstreble/meta.qml \
+    qml/filters/audio_basstreble/ui.qml \
     qml/filters/audio_highpass/meta.qml \
     qml/filters/audio_highpass/ui.qml \
     qml/filters/audio_lowpass/meta.qml \
@@ -529,6 +531,8 @@ lupdate_hack {
     qml/filters/oldfilm/ui.qml \
     qml/filters/audio_bandpass/meta.qml \
     qml/filters/audio_bandpass/ui.qml \
+    qml/filters/audio_basstreble/meta.qml \
+    qml/filters/audio_basstreble/ui.qml \
     qml/filters/audio_highpass/meta.qml \
     qml/filters/audio_highpass/ui.qml \
     qml/filters/audio_lowpass/meta.qml \
