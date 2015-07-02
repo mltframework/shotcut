@@ -331,7 +331,8 @@ void TimelineDock::insertTrack()
 
 void TimelineDock::removeTrack()
 {
-    MAIN.undoStack()->push(
+    if (m_model.trackList().size() > 0)
+        MAIN.undoStack()->push(
                 new Timeline::RemoveTrackCommand(m_model, currentTrack()));
 }
 

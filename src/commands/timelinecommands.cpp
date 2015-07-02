@@ -635,7 +635,7 @@ InsertTrackCommand::InsertTrackCommand(MultitrackModel& model, int trackIndex, Q
     : QUndoCommand(parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
-    , m_trackType(model.trackList().at(trackIndex).type)
+    , m_trackType(model.trackList().size() > 0 ? model.trackList().at(trackIndex).type : VideoTrackType)
 {
     if (m_trackType == AudioTrackType)
         setText(QObject::tr("Insert audio track"));

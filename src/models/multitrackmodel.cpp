@@ -2348,16 +2348,18 @@ bool MultitrackModel::isTransition(Mlt::Playlist &playlist, int clipIndex) const
 
 void MultitrackModel::insertTrack(int trackIndex, TrackType type)
 {
+    if (!m_tractor || trackIndex <= 0) {
+        addVideoTrack();
+        return;
+    }
+
     // Get the new track index.
     Track& track = m_trackList[qMax(0, qMin(trackIndex, m_trackList.count() - 1))];
     int i = track.mlt_index;
     if (type == VideoTrackType)
         ++i;
 
-    if (!m_tractor || trackIndex <= 0) {
-        addVideoTrack();
-        return;
-    } else if (trackIndex >= m_trackList.count()) {
+    if (trackIndex >= m_trackList.count()) {
         if (type == AudioTrackType) {
             addAudioTrack();
             return;
