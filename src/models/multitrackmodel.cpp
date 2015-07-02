@@ -2424,7 +2424,6 @@ void MultitrackModel::insertTrack(int trackIndex, TrackType type)
     if (type == VideoTrackType) {
         // Add the composite transition.
         Mlt::Transition composite(MLT.profile(), Settings.playerGPU()? "movit.overlay" : "frei0r.cairoblend");
-        composite.set("disable", 1);
         m_tractor->plant_transition(composite, last_mlt_index, i);
     }
 
