@@ -199,12 +199,21 @@ int TimelineDock::clipCount(int trackIndex) const
 int TimelineDock::dockYOffset() const
 {
     // XXX This is a workaround for menus appearing in wrong location in a Quick
-    // view used in a DockWidget on OS X.
-#ifdef Q_OS_MAC
+    // view used in a DockWidget.
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 5, 0))
+#  if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     return mapToParent(QPoint(0, 0)).y();
-#else
+#  else
     return 0;
+#  endif
+#else
+#  if defined(Q_OS_MAC)
+    return mapToParent(QPoint(0, 0)).y();
+#  else
+    return 0;
+#  endif
 #endif
+
 }
 
 void TimelineDock::setCurrentTrack(int currentTrack)
