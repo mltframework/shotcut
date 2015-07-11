@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Meltytech, LLC
+ * Copyright (c) 2014-2015 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,6 +27,9 @@ class QmlMetadata;
 class MetadataModel : public QAbstractListModel
 {
     Q_OBJECT
+    Q_ENUMS(MetadataFilter)
+    Q_PROPERTY(MetadataFilter filter READ filter WRITE setFilter NOTIFY filterChanged)
+
 public:
 
     enum ModelRoles {
@@ -35,7 +38,15 @@ public:
         FavoriteRole,
         ServiceRole,
         IsAudioRole,
-        NeedsGpuRole
+        NeedsGpuRole,
+        VisibleRole
+    };
+
+    enum MetadataFilter {
+        NoFilter,
+        FavoritesFilter,
+        VideoFilter,
+        AudioFilter
     };
 
     explicit MetadataModel(QObject *parent = 0);
@@ -50,10 +61,17 @@ public:
     // Direct access to QmlMetadata
     void add(QmlMetadata* data);
     Q_INVOKABLE QmlMetadata* get(int index) const;
+    MetadataFilter filter() const { return m_filter; }
+    void setFilter(MetadataFilter);
+    Q_INVOKABLE bool isVisible(int row) const;
+
+signals:
+    void filterChanged();
 
 private:
     typedef QList<QmlMetadata*> MetadataList;
     MetadataList m_list;
+    MetadataFilter m_filter;
 };
 
 #endif // METADATAMODEL_H

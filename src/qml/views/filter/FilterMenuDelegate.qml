@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Meltytech, LLC
+ * Copyright (c) 2014-2015 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,13 +23,13 @@ import 'FilterMenu.js' as Logic
 Item {
     id: wrapper
     
-    visible: Logic.isVisible(metadatamodel.get(index), ListView.view.showType)
+    visible: isVisible
     height: visible ? Logic.ITEM_HEIGHT : 0
-    
+
     Behavior on height {
         NumberAnimation { duration: 200 }
     }
-    
+
     SystemPalette { id: activePalette }
 
     Row {

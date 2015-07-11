@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Meltytech, LLC
+ * Copyright (c) 2014-2015 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,164 +21,138 @@ import QtQuick.Window 2.1
 import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.1
 import 'FilterMenu.js' as Logic
+import org.shotcut.qml 1.0 as Shotcut
 
-Loader {
+Window {
+    id: filterWindow
+    visible: false
+
+    property bool hasFocus: activeFocusItem != null
+
     signal filterSelected(int index)
-    
+
     function popup(triggerItem) {
-        sourceComponent = menuComponent
-        item.popup(triggerItem)
-    }
-    
-    Connections {
-        target: item
-        onItemSelected: {
-            filterSelected(index)
-            sourceComponent = null
-        }
-        onHasFocusChanged: {
-            if (!item.hasFocus)
-                sourceComponent = null
-        }
-    }
-    
-    Component {
-        id: menuComponent
-        
-        Window {
-            id: filterWindow
-            
-            property bool hasFocus: activeFocusItem != null
-            
-            signal itemSelected(int index)
+        var menuRect = Logic.calcMenuRect(triggerItem, toolBar.height + 2)
+        filterWindow.x = menuRect.x
+        filterWindow.y = menuRect.y
+        filterWindow.height = menuRect.height
+        filterWindow.visible = true
+        filterWindow.requestActivate()
 
-            function popup(triggerItem) {
-                var menuRect = Logic.calcMenuRect(triggerItem, menuListView.showType, toolBar.height + 2)
-                filterWindow.x = menuRect.x
-                filterWindow.y = menuRect.y
-                filterWindow.height = menuRect.height
-                filterWindow.visible = true
-                filterWindow.requestActivate()
-                
+    }
+
+    color: Qt.darker(activePalette.window, 1.5) // Border color
+    flags: Qt.ToolTip
+    width: 220
+    height: 200
+    onHasFocusChanged: if (!hasFocus) visible = false
+
+    SystemPalette { id: activePalette }
+
+    Rectangle {
+        id: menuColorRect
+        anchors.fill: parent
+        anchors.margins: 1
+        color: activePalette.base
+
+        Column {
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.margins: 2
+
+            ScrollView {
+                width: parent.width
+                height: filterWindow.height - toolBar.height - 2
+                ListView {
+                    id: menuListView
+
+                    function itemSelected(index) {
+                        filterWindow.visible = false
+                        filterSelected(index)
+                    }
+
+                    anchors.fill: parent
+                    model: metadatamodel
+                    delegate: FilterMenuDelegate {}
+                    boundsBehavior: Flickable.StopAtBounds
+                    snapMode: ListView.SnapToItem
+                    currentIndex: -1
+                    focus: true
+                }
             }
 
-            color: Qt.darker(activePalette.window, 1.5) // Border color
-            flags: Qt.ToolTip
-            width: 220
-            height: 200
-
-            Component.onCompleted: {
-                menuListView.itemSelected.connect(filterWindow.itemSelected)
-            }
-            
-            SystemPalette { id: activePalette }
-            
             Rectangle {
-                id: menuColorRect
-                anchors.fill: parent
-                anchors.margins: 1
-                color: activePalette.base
-                
-                Column {
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    anchors.margins: 2
-                            
-                    ScrollView {
-                        width: parent.width
-                        height: filterWindow.height - toolBar.height - 2
-                        ListView {
-                            id: menuListView
-                            
-                            property var showType: Logic.visibility.FAVORITE
-                            
-                            signal itemSelected(int index)
-                            
-                            anchors.fill: parent
-                            model: metadatamodel
-                            delegate: FilterMenuDelegate {}
-                            boundsBehavior: Flickable.StopAtBounds
-                            snapMode: ListView.SnapToItem
-                            currentIndex: -1
-                            focus: true
-                        }
-                    }
-                    
-                    Rectangle {
-                        id: separatorBar
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        width: parent.width
-                        height: 1
-                        color: Qt.darker(activePalette.window, 1.5)
-                    }
+                id: separatorBar
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: parent.width
+                height: 1
+                color: Qt.darker(activePalette.window, 1.5)
+            }
 
-                    RowLayout {
-                        id: toolBar
-                        height: 30
-                        width: parent.width
-                        
-                        ExclusiveGroup { id: typeGroup }
-                        
-                        ToolButton {
-                            id: favButton
-                            implicitWidth: 28
-                            implicitHeight: 24
-                            checkable: true
-                            checked: true
-                            iconName: 'bookmarks'
-                            iconSource: 'qrc:///icons/oxygen/32x32/places/bookmarks.png'
-                            tooltip: qsTr('Show favorite filters')
-                            exclusiveGroup: typeGroup
-                            onCheckedChanged: {
-                                if (checked) {
-                                    menuListView.showType = Logic.visibility.FAVORITE
-                                }
-                            }
-                        }
-                        ToolButton {
-                            id: vidButton
-                            implicitWidth: 28
-                            implicitHeight: 24
-                            checkable: true
-                            iconName: 'video-television'
-                            iconSource: 'qrc:///icons/oxygen/32x32/devices/video-television.png'
-                            tooltip: qsTr('Show video filters')
-                            exclusiveGroup: typeGroup
-                            onCheckedChanged: {
-                                if (checked) {
-                                    menuListView.showType = Logic.visibility.VIDEO
-                                }
-                            }
-                        }
-                        ToolButton {
-                            id: audButton
-                            implicitWidth: 28
-                            implicitHeight: 24
-                            checkable: true
-                            iconName: 'speaker'
-                            iconSource: 'qrc:///icons/oxygen/32x32/actions/speaker.png'
-                            tooltip: qsTr('Show audio filters')
-                            exclusiveGroup: typeGroup
-                            onCheckedChanged: {
-                                if (checked) {
-                                    menuListView.showType = Logic.visibility.AUDIO
-                                }
-                            }
-                        }
-                        Item {
-                            Layout.fillWidth: true
-                        }
-                        ToolButton {
-                            id: closeButton
-                            visible: application.OS === 'OS X'
-                            implicitWidth: 28
-                            implicitHeight: 24
-                            iconName: 'window-close'
-                            iconSource: 'qrc:///icons/oxygen/32x32/actions/window-close.png'
-                            tooltip: qsTr('Close menu')
-                            onClicked: sourceComponent = null
+            RowLayout {
+                id: toolBar
+                height: 30
+                width: parent.width
+
+                ExclusiveGroup { id: typeGroup }
+
+                ToolButton {
+                    id: favButton
+                    implicitWidth: 28
+                    implicitHeight: 24
+                    checkable: true
+                    checked: true
+                    iconName: 'bookmarks'
+                    iconSource: 'qrc:///icons/oxygen/32x32/places/bookmarks.png'
+                    tooltip: qsTr('Show favorite filters')
+                    exclusiveGroup: typeGroup
+                    onCheckedChanged: {
+                        if (checked) {
+                            metadatamodel.filter = Shotcut.MetadataModel.FavoritesFilter
                         }
                     }
+                }
+                ToolButton {
+                    id: vidButton
+                    implicitWidth: 28
+                    implicitHeight: 24
+                    checkable: true
+                    iconName: 'video-television'
+                    iconSource: 'qrc:///icons/oxygen/32x32/devices/video-television.png'
+                    tooltip: qsTr('Show video filters')
+                    exclusiveGroup: typeGroup
+                    onCheckedChanged: {
+                        if (checked) {
+                            metadatamodel.filter = Shotcut.MetadataModel.VideoFilter
+                        }
+                    }
+                }
+                ToolButton {
+                    id: audButton
+                    implicitWidth: 28
+                    implicitHeight: 24
+                    checkable: true
+                    iconName: 'speaker'
+                    iconSource: 'qrc:///icons/oxygen/32x32/actions/speaker.png'
+                    tooltip: qsTr('Show audio filters')
+                    exclusiveGroup: typeGroup
+                    onCheckedChanged: {
+                        if (checked) {
+                            metadatamodel.filter = Shotcut.MetadataModel.AudioFilter
+                        }
+                    }
+                }
+                Item {
+                    Layout.fillWidth: true
+                }
+                ToolButton {
+                    id: closeButton
+                    implicitWidth: 28
+                    implicitHeight: 24
+                    iconName: 'window-close'
+                    iconSource: 'qrc:///icons/oxygen/32x32/actions/window-close.png'
+                    tooltip: qsTr('Close menu')
+                    onClicked: filterWindow.visible = false
                 }
             }
         }

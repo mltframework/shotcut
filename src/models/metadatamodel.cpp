@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Meltytech, LLC
+ * Copyright (c) 2014-2015 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,10 +18,12 @@
 
 #include "metadatamodel.h"
 #include "qmltypes/qmlmetadata.h"
+#include "settings.h"
 #include <QDebug>
 
 MetadataModel::MetadataModel(QObject *parent)
     : QAbstractListModel(parent)
+    , m_filter(FavoritesFilter)
 {
 }
 
@@ -56,6 +58,9 @@ QVariant MetadataModel::data(const QModelIndex &index, int role) const
             case NeedsGpuRole:
                 result = meta->needsGPU();
                 break;
+            case VisibleRole:
+                result = isVisible(index.row());
+                break;
         }
     }
 
@@ -85,6 +90,7 @@ QHash<int, QByteArray> MetadataModel::roleNames() const {
     roles[ServiceRole] = "service";
     roles[IsAudioRole] = "isAudio";
     roles[NeedsGpuRole] = "needsGpu";
+    roles[VisibleRole] = "isVisible";
     return roles;
 }
 
@@ -117,4 +123,24 @@ QmlMetadata* MetadataModel::get(int index) const
         return m_list[index];
     }
     return 0;
+}
+
+void MetadataModel::setFilter(MetadataFilter filter)
+{
+    beginResetModel();
+    m_filter = filter;
+    emit filterChanged();
+    endResetModel();
+}
+
+bool MetadataModel::isVisible(int row) const
+{
+    QmlMetadata* meta = m_list.at(row);
+    if (meta->isHidden()) return false;
+    if (meta->needsGPU() && !Settings.playerGPU()) return false;
+    if (!meta->needsGPU() && Settings.playerGPU() && !meta->gpuAlt().isEmpty()) return false;
+    if (m_filter == FavoritesFilter && !meta->isFavorite()) return false;
+    if (m_filter == AudioFilter && !meta->isAudio()) return false;
+    if (m_filter == VideoFilter && meta->isAudio()) return false;
+    return true;
 }

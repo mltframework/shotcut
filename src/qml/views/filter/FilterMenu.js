@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Meltytech, LLC
+ * Copyright (c) 2014-2015 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,44 +16,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
  
-var visibility = {
-    FAVORITE: 0,
-    VIDEO: 1,
-    AUDIO: 2
-}
-
 var ITEM_HEIGHT = 30
  
-function isVisible(meta, showType) {
-    if (meta.isHidden) return false
-    if (meta.needsGPU && !settings.playerGPU) return false
-    if (!meta.needsGPU && settings.playerGPU && meta.gpuAlt !== "") return false
-    if (showType === visibility.FAVORITE && !meta.isFavorite) return false
-    if (showType === visibility.AUDIO && !meta.isAudio) return false
-    if (showType === visibility.VIDEO && meta.isAudio ) return false
-    return true
-}
-
-function maxMenuHeight(showType, pad) {
+function maxMenuHeight(pad) {
     // Calculate the max possible height of the menu
     var i = 0
     var visibleItems = 0;
     for (i = 0; i < metadatamodel.rowCount(); i++) {
-        var meta = metadatamodel.get(i)
-        if (Logic.isVisible(meta, showType)) {
-            visibleItems++
-        }
+        if (metadatamodel.isVisible(i))
+            visibleItems++;
     }
     return (visibleItems * ITEM_HEIGHT) + pad
 }
 
-function calcMenuRect(triggerItem, showType, pad) {
+function calcMenuRect(triggerItem, pad) {
     var result = Qt.rect(0, 0, 0, 0)
     var itemPos = triggerItem.mapToItem(null,0,0)
     var triggerPos = Qt.point(itemPos.x + view.pos.x, itemPos.y + view.pos.y)
     var mainWinRect = application.mainWinRect
     
-    result.height = Math.min(maxMenuHeight(showType, pad), mainWinRect.height)
+    result.height = Math.min(maxMenuHeight(pad), mainWinRect.height)
     
     // Calculate the y position
     result.y = triggerPos.y - result.height / 2 // Ideal position is centered
