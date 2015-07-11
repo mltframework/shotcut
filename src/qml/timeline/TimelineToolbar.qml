@@ -21,7 +21,7 @@ import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.0
 import QtGraphicalEffects 1.0
 
-Rectangle {
+ToolBar {
     property alias ripple: rippleButton.checked
     property alias scrub: scrubButton.checked
     property alias snap: snapButton.checked
@@ -31,10 +31,9 @@ Rectangle {
 
     width: 200
     height: 24
-    color: activePalette.window
+    anchors.margins: 0
 
-    ToolBar {
-      RowLayout {
+    RowLayout {
         ToolButton {
             action: menuAction
             implicitWidth: 28
@@ -122,7 +121,6 @@ Rectangle {
             color: checkedColor
             cached: true
         }
-      }
     }
 
     Action {
