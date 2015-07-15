@@ -152,7 +152,14 @@ Item {
             Layout.maximumHeight: 80
             Layout.minimumWidth: preset.width
             Layout.maximumWidth: preset.width
-            onTextChanged: filter.set('argument', text)
+            property int maxLength: 256
+            onTextChanged: {
+                if (length > maxLength) {
+                    text = text.substring(0, maxLength)
+                    cursorPosition = maxLength
+                }
+                filter.set('argument', text)
+            }
         }
 
         Label {
