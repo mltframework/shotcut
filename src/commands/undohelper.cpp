@@ -51,7 +51,7 @@ void UndoHelper::recordBeforeState()
         for (int j = 0; j < playlist.count(); ++j) {
             QScopedPointer<Mlt::Producer> clip(playlist.get_clip(j));
             Info& info = m_state[uid];
-            info.xml = MLT.XML(clip.data());
+            info.xml = MLT.XML(&clip->parent());
             Mlt::ClipInfo clipInfo;
             playlist.clip_info(j, &clipInfo);
             info.frame_in = clipInfo.frame_in;
@@ -101,7 +101,7 @@ void UndoHelper::recordAfterState()
                     info.changes |= Moved;
                 }
 
-                QString newXml = MLT.XML(clip.data());
+                QString newXml = MLT.XML(&clip->parent());
                 if (info.xml != newXml) {
                     UNDOLOG << "Modified xml:" << uid;
                     info.changes |= XMLModified;
