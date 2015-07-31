@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Meltytech, LLC
+ * Copyright (c) 2014-2015 Meltytech, LLC
  * Author: Brian Matherly <pez4brian@yahoo.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,12 +25,19 @@ import Shotcut.Controls 1.0 as Shotcut
 import org.shotcut.qml 1.0 as Shotcut
 
 Rectangle {
+    id: webvfxRoot
     width: 400
     height: 200
     color: 'transparent'
+    property string settingsSavePath: settings.savePath
 
     SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
     Shotcut.File { id: htmlFile }
+
+    // This signal is used to workaround context properties not available in
+    // the FileDialog onAccepted signal handler on Qt 5.5.
+    signal fileSaved(string path)
+    onFileSaved: settings.savePath = path
 
     Component.onCompleted: {
         var resource = filter.get('resource')
@@ -70,12 +77,12 @@ Rectangle {
         modality: Qt.WindowModal
         selectMultiple: false
         selectFolder: false
-        folder: settings.savePath
+        folder: settingsSavePath
         nameFilters: [ "HTML-Files (*.htm *.html)", "All Files (*)" ]
         selectedNameFilter: "HTML-Files (*.htm *.html)"
         onAccepted: {
             htmlFile.url = fileDialog.fileUrl
-            settings.savePath = htmlFile.path
+            webvfxRoot.fileSaved(htmlFile.path)
 
             if (fileDialog.selectExisting == false) {
                 if (!htmlFile.suffix()) {
