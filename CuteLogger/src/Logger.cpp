@@ -258,6 +258,8 @@ static void qtLoggerMessageHandler(QtMsgType type, const QMessageLogContext& con
     case QtFatalMsg:
       level = Logger::Fatal;
       break;
+    case QtInfoMsg:
+      level = Logger::Info;
   }
 
   Logger::write(level, context.file, context.line, context.function, msg);
