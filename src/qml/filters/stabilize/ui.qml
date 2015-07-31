@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2014 Meltytech, LLC
+ * Copyright (c) 2013-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,7 +27,8 @@ Rectangle {
     width: 400
     height: 200
     color: 'transparent'
-    
+    property string settingsSavePath: settings.savePath
+
     function setStatus( inProgress ) {
         if (inProgress) {
             status.text = qsTr('Analyzing...')
@@ -68,6 +69,7 @@ Rectangle {
         selectExisting: false
         selectMultiple: false
         selectFolder: false
+        folder: settingsSavePath
         nameFilters: [ "Stabilize Results (*.stab)" ]
         selectedNameFilter: "Stabilize Results (*.stab)"
         onAccepted: {
