@@ -331,6 +331,17 @@ void ShotcutSettings::setTimelineShowWaveforms(bool b)
     emit timelineShowWaveformsChanged();
 }
 
+bool ShotcutSettings::timelineRippleAllTracks() const
+{
+    return settings.value("timeline/rippleAllTracks", false).toBool();
+}
+
+void ShotcutSettings::setTimelineRippleAllTracks(bool b)
+{
+    settings.setValue("timeline/rippleAllTracks", b);
+    emit timelineRippleAllTracksChanged();
+}
+
 QString ShotcutSettings::filterFavorite(const QString& filterName)
 {
     return settings.value("filter/favorite/" + filterName, "").toString();

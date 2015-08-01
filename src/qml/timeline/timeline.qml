@@ -397,6 +397,7 @@ Rectangle {
             text: qsTr('Remove Track')
             onTriggered: timeline.removeTrack()
         }
+        MenuSeparator {}
         MenuItem {
             enabled: multitrack.trackHeight >= 50
             text: qsTr('Make Tracks Shorter')
@@ -409,6 +410,12 @@ Rectangle {
             onTriggered: makeTracksTaller()
         }
         MenuSeparator {}
+        MenuItem {
+            text: qsTr("Ripple All Tracks")
+            checkable: true
+            checked: settings.timelineRippleAllTracks
+            onTriggered: settings.timelineRippleAllTracks = checked
+        }
         MenuItem {
             text: qsTr('Show Audio Waveforms')
             checkable: true
