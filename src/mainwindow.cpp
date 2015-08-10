@@ -243,7 +243,7 @@ MainWindow::MainWindow()
     connect(m_timelineDock, SIGNAL(clipOpened(void*)), SLOT(openCut(void*)));
     connect(m_timelineDock->model(), SIGNAL(seeked(int)), SLOT(seekTimeline(int)));
     connect(m_playlistDock, SIGNAL(addAllTimeline(Mlt::Playlist*)), SLOT(onTimelineDockTriggered()));
-    connect(m_playlistDock, SIGNAL(addAllTimeline(Mlt::Playlist*)), m_timelineDock, SLOT(appendFromPlaylist(Mlt::Playlist*)));
+    connect(m_playlistDock, SIGNAL(addAllTimeline(Mlt::Playlist*)), SLOT(onAddAllToTimeline(Mlt::Playlist*)));
     connect(m_player, SIGNAL(previousSought()), m_timelineDock, SLOT(seekPreviousEdit()));
     connect(m_player, SIGNAL(nextSought()), m_timelineDock, SLOT(seekNextEdit()));
 
@@ -393,6 +393,18 @@ void MainWindow::moveNavigationPositionToCurrentSelection()
         return;
 
     m_navigationPosition = t->centerOfClip(t->currentTrack(), t->selection().first());
+}
+
+void MainWindow::onAddAllToTimeline(Mlt::Playlist* playlist)
+{
+    // We stop the player because of a bug on Windows that results in some
+    // strange memory leak when using Add All To Timeline, more noticeable
+    // with (high res?) still image files.
+    if (MLT.isSeekable())
+        m_player->pause();
+    else
+        m_player->stop();
+    m_timelineDock->appendFromPlaylist(playlist);
 }
 
 MainWindow& MainWindow::singleton()

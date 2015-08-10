@@ -221,6 +221,7 @@ private slots:
     void on_actionGammaRec709_triggered(bool checked);
     void onFocusChanged(QWidget *old, QWidget * now) const;
     void moveNavigationPositionToCurrentSelection();
+    void onAddAllToTimeline(Mlt::Playlist* playlist);
 };
 
 #define MAIN MainWindow::singleton()
