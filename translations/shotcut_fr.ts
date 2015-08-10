@@ -2332,7 +2332,7 @@ duration of the transition.</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="329"/>
-        <location filename="../src/mainwindow.cpp" line="1978"/>
+        <location filename="../src/mainwindow.cpp" line="1990"/>
         <source>Enter Full Screen</source>
         <translation>Passer en Plein Écran</translation>
     </message>
@@ -2545,85 +2545,85 @@ duration of the transition.</source>
         <translation>Ctrl+Maj+Z</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="459"/>
+        <location filename="../src/mainwindow.cpp" line="471"/>
         <source>Non-Broadcast</source>
         <translation>Non Broadcast</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="470"/>
+        <location filename="../src/mainwindow.cpp" line="482"/>
         <source>DVD Widescreen NTSC</source>
         <translation>DVD écran large NTSC</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="471"/>
+        <location filename="../src/mainwindow.cpp" line="483"/>
         <source>DVD Widescreen PAL</source>
         <translation>DVD écran large PAL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="476"/>
+        <location filename="../src/mainwindow.cpp" line="488"/>
         <source>Custom</source>
         <translation>Personnalisé</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="495"/>
+        <location filename="../src/mainwindow.cpp" line="507"/>
         <source>Screen %1</source>
         <translation>Ecran %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="526"/>
+        <location filename="../src/mainwindow.cpp" line="538"/>
         <source>Off</source>
         <translation>Eteint</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="529"/>
+        <location filename="../src/mainwindow.cpp" line="541"/>
         <source>Internal</source>
         <translation>Interne</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="532"/>
+        <location filename="../src/mainwindow.cpp" line="544"/>
         <source>External</source>
         <translation>Externe</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="546"/>
+        <location filename="../src/mainwindow.cpp" line="558"/>
         <source>DeckLink Keyer</source>
         <translation>DeckLink Keyer</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="634"/>
-        <location filename="../src/mainwindow.cpp" line="636"/>
-        <location filename="../src/mainwindow.cpp" line="803"/>
-        <location filename="../src/mainwindow.cpp" line="2422"/>
+        <location filename="../src/mainwindow.cpp" line="646"/>
+        <location filename="../src/mainwindow.cpp" line="648"/>
+        <location filename="../src/mainwindow.cpp" line="815"/>
+        <location filename="../src/mainwindow.cpp" line="2434"/>
         <source>Failed to open </source>
         <translation>Échec à l&apos;ouverture</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="662"/>
+        <location filename="../src/mainwindow.cpp" line="674"/>
         <source>The file you opened uses GPU effects, but GPU processing is not enabled.
 Do you want to enable GPU processing and restart?</source>
         <translation>Le fichier que vous avez ouvert utilise des effets GPU, mais le traitement GPU est désactivé.
 Voulez vous activer le traitement GPU et redémarrer ?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1025"/>
+        <location filename="../src/mainwindow.cpp" line="1037"/>
         <source>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2015 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
         <translation>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; est un &amp;eacute;diteur vid&amp;eacute;o gratuit, open source pour toutes les plateformes.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2015 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Sous licence &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Ce programme utilise les composants suivants :&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;Le code source de ce programme peut &amp;ecirc;tre t&amp;eacute;l&amp;eacute;charg&amp;eacute; depuis &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;Ce programme est distribu&amp;eacute; dans l&apos;espoir qu&apos;il sera utile, mais SANS AUCUNE GARANTIE; notamment, sans garantie implicite de VALEUR COMMERCIALE ou d&apos;ADEQUATION A UN BUT PARTICULIER.&lt;/small&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2177"/>
+        <location filename="../src/mainwindow.cpp" line="2189"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>Vous devez redémarrer Shotcut pour modifier la langue. Voulez vous redémarrer maintenant ?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2226"/>
+        <location filename="../src/mainwindow.cpp" line="2238"/>
         <source>You must restart Shotcut to switch using GPU processing.
 Do you want to restart now?</source>
         <translation>Vous devez redémarrer Shotcut pour activer/désactiver le traitement GPU.
 Voulez vous redémarrer maintenant ?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="691"/>
+        <location filename="../src/mainwindow.cpp" line="703"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation>Des fichiers de sauvegarde automatique existent. Voulez vous restaurer ces fichiers maintenant ?</translation>
     </message>
@@ -2646,70 +2646,70 @@ Please install it using your package manager. It may be named libsdl1.2debian, S
 Vous pouvez l&apos;installer avec votre gestionnaire de paquets. Elle peut se nommer libsdl1.2debian, SDL, ou approchant.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="814"/>
-        <location filename="../src/mainwindow.cpp" line="2407"/>
+        <location filename="../src/mainwindow.cpp" line="826"/>
+        <location filename="../src/mainwindow.cpp" line="2419"/>
         <source>Open File</source>
         <translation>Ouvrir un Fichier</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1019"/>
+        <location filename="../src/mainwindow.cpp" line="1031"/>
         <source>%1[*] - %2</source>
         <translation>%1[*] - %2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1024"/>
+        <location filename="../src/mainwindow.cpp" line="1036"/>
         <source>About Shotcut</source>
         <translation>À propos de Shotcut</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1557"/>
-        <location filename="../src/mainwindow.cpp" line="1582"/>
+        <location filename="../src/mainwindow.cpp" line="1569"/>
+        <location filename="../src/mainwindow.cpp" line="1594"/>
         <source>Saved %1</source>
         <translation>%1 enregistré</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1569"/>
+        <location filename="../src/mainwindow.cpp" line="1581"/>
         <source>Save XML</source>
         <translation>Enregistrer en XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1569"/>
+        <location filename="../src/mainwindow.cpp" line="1581"/>
         <source>MLT XML (*.mlt)</source>
         <translation>XML MLT (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1594"/>
+        <location filename="../src/mainwindow.cpp" line="1606"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>Ce projet a été modifié.
 Voulez-vous enregistrer vos modifications ?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1618"/>
+        <location filename="../src/mainwindow.cpp" line="1630"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
         <translation>Il y a des tâches non terminées.
 Voulez vous malgré tout quitter ?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1981"/>
+        <location filename="../src/mainwindow.cpp" line="1993"/>
         <source>Exit Full Screen</source>
         <translation>Sortir du Plein Écran</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1990"/>
+        <location filename="../src/mainwindow.cpp" line="2002"/>
         <source>GPU Processing is not supported</source>
         <translation>Le traitement GPU n&apos;est pas supporté</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2217"/>
+        <location filename="../src/mainwindow.cpp" line="2229"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>Échec de connexion à JACK.
 Veuillez vérifier que JACK est installé et fonctionne.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2408"/>
+        <location filename="../src/mainwindow.cpp" line="2420"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;Tous les fichiers (*)</translation>
     </message>
@@ -4223,7 +4223,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/SimplePropertyUI.qml" line="14"/>
         <source>Custom Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Propriétés personnalisées</translation>
     </message>
 </context>
 <context>
@@ -4886,22 +4886,22 @@ La capture se fait en arrière-plan, mais vous ne pourrez pas envoyer simultané
 <context>
     <name>main</name>
     <message>
-        <location filename="../src/main.cpp" line="170"/>
+        <location filename="../src/main.cpp" line="180"/>
         <source>Fill the screen with the Shotcut window.</source>
         <translation>Mettre la fenêtre de Shotcut en plein écran</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="173"/>
+        <location filename="../src/main.cpp" line="183"/>
         <source>Use GPU processing.</source>
         <translation>Utiliser le processeur graphique (GPU).</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="176"/>
+        <location filename="../src/main.cpp" line="186"/>
         <source>A file to open.</source>
         <translation>Un fichier à ouvrir.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="209"/>
+        <location filename="../src/main.cpp" line="219"/>
         <source>Loading plugins...</source>
         <translation>Chargement des greffons ...</translation>
     </message>
@@ -5078,37 +5078,37 @@ La capture se fait en arrière-plan, mais vous ne pourrez pas envoyer simultané
     <message>
         <location filename="../src/qml/filters/audio_basstreble/meta.qml" line="7"/>
         <source>Bass &amp; Treble</source>
-        <translation type="unfinished"></translation>
+        <translation>Graves et aigus</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/meta.qml" line="7"/>
         <source>Compressor</source>
-        <translation type="unfinished"></translation>
+        <translation>Compresseur</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_delay/meta.qml" line="7"/>
         <source>Delay</source>
-        <translation type="unfinished"></translation>
+        <translation>Delay</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_expander/meta.qml" line="7"/>
         <source>Expander</source>
-        <translation type="unfinished"></translation>
+        <translation>Expanseur</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/meta.qml" line="7"/>
         <source>Limiter</source>
-        <translation type="unfinished"></translation>
+        <translation>Limiteur</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_notch/meta.qml" line="7"/>
         <source>Notch</source>
-        <translation type="unfinished"></translation>
+        <translation>Noeud</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/meta.qml" line="7"/>
         <source>Reverb</source>
-        <translation type="unfinished"></translation>
+        <translation>Reverb</translation>
     </message>
 </context>
 <context>
@@ -5347,7 +5347,7 @@ La capture se fait en arrière-plan, mais vous ne pourrez pas envoyer simultané
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="414"/>
         <source>Ripple All Tracks</source>
-        <translation type="unfinished"></translation>
+        <translation>Propager toutes les pistes</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="420"/>
@@ -5879,7 +5879,7 @@ La capture se fait en arrière-plan, mais vous ne pourrez pas envoyer simultané
     <message>
         <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="203"/>
         <source>Bass</source>
-        <translation type="unfinished"></translation>
+        <translation>Graves</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="224"/>
@@ -5890,7 +5890,7 @@ La capture se fait en arrière-plan, mais vous ne pourrez pas envoyer simultané
     <message>
         <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="245"/>
         <source>Treble</source>
-        <translation type="unfinished"></translation>
+        <translation>Aigus</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fadein_brightness/ui.qml" line="71"/>
@@ -6030,224 +6030,224 @@ La capture se fait en arrière-plan, mais vous ne pourrez pas envoyer simultané
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="70"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="70"/>
         <source>RMS</source>
-        <translation type="unfinished"></translation>
+        <translation>RMS</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="72"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="72"/>
         <source>The balance between the RMS and peak envelope followers. RMS is generally better for subtle, musical compression and peak is better for heavier, fast compression and percussion.</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;équilibre entre les enveloppes RMS et pic. Le RMS est en général meilleur pour de la compression musicale, subtile et le pic est plus adapté pour les compressions plus intenses, rapides ou percussives.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="80"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="80"/>
         <source>Peak</source>
-        <translation type="unfinished"></translation>
+        <translation>Pic</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="92"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="92"/>
         <source>Attack</source>
-        <translation type="unfinished"></translation>
+        <translation>Attaque</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="111"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="111"/>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="104"/>
         <source>Release</source>
-        <translation type="unfinished"></translation>
+        <translation>Release</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="130"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="130"/>
         <source>Threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>Seuil</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="132"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="132"/>
         <source>The point at which the compressor will start to kick in.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le point au delà duquel le compresseur se déclanche.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="151"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="151"/>
         <source>Ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>Taux</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="153"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="153"/>
         <source>The gain reduction ratio used when the signal level exceeds the threshold.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le taux de réduction de gain appliqué lorsque le niveau du signal dépasse le seuil.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="171"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="171"/>
         <source>Knee radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Rayon de l&apos;incurvation</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="173"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="173"/>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="221"/>
         <source>The distance from the threshold where the knee curve starts.</source>
-        <translation type="unfinished"></translation>
+        <translation>La distance entre le seuil et le début de l&apos;incurvation.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="192"/>
         <source>Makeup gain</source>
-        <translation type="unfinished"></translation>
+        <translation>Gain de compensation</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="194"/>
         <source>The gain of the makeup input signal.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le gain appliqué au signal pour compenser la perte globale de volume.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="215"/>
         <source>About dynamic range compression</source>
-        <translation type="unfinished"></translation>
+        <translation>A propos de la compression dynamique</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_delay/ui.qml" line="62"/>
         <source>Delay</source>
-        <translation type="unfinished"></translation>
+        <translation>Delay</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_delay/ui.qml" line="64"/>
         <source>The neutral delay time is 2 seconds. Times above 2 seconds will have reduced quality and times below will have increased CPU usage.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le temps de delay neutre est de 2 secondes. Les durées supérieures à 2 secondes auront une qualité réduites, et celles supérieures augmenteront l&apos;utilisation du processeur.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_delay/ui.qml" line="83"/>
         <source>Feedback</source>
-        <translation type="unfinished"></translation>
+        <translation>Retour</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="192"/>
         <source>Attenuation</source>
-        <translation type="unfinished"></translation>
+        <translation>Atténuation</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="194"/>
         <source>The gain of the output signal. Used to correct for excessive amplitude caused by the extra dynamic range.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le gain du signal de sortie. Utilisé pour corriger l&apos;amplitude excessive créée par l&apos;augmentation du champ dynamique.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="62"/>
         <source>Input gain</source>
-        <translation type="unfinished"></translation>
+        <translation>Gain d&apos;entrée</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="64"/>
         <source>Gain that is applied to the input stage. Can be used to trim gain to bring it roughly under the limit or to push the signal against the limit.</source>
-        <translation type="unfinished"></translation>
+        <translation>Gain appliqué au signal d&apos;entrée. Peut être utilisé pour ajuster artificiellement le gain en dessous de la limite ou pour le faire dépasser la limite.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="83"/>
         <source>Limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Limite</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="85"/>
         <source>The maximum output amplitude. Peaks over this level will be attenuated as smoothly as possible to bring them as close as possible to this level.</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;amplitude maximum de sortie. Les pics au delà de ce niveau seront atténués aussi doucement que possible pour les ramener à ce niveau.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="106"/>
         <source>The time taken for the limiter&apos;s attenuation to return to 0 dB&apos;s.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le temps pris par l&apos;atténuation du limiteur pour retourner à 0 dB.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="38"/>
         <source>Quick fix</source>
-        <translation type="unfinished"></translation>
+        <translation>Réparation rapide</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="47"/>
         <source>Small hall</source>
-        <translation type="unfinished"></translation>
+        <translation>Petit hall</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="56"/>
         <source>Large hall</source>
-        <translation type="unfinished"></translation>
+        <translation>Grand hall</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="65"/>
         <source>Sewer</source>
-        <translation type="unfinished"></translation>
+        <translation>Égouts</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="74"/>
         <source>Church</source>
-        <translation type="unfinished"></translation>
+        <translation>Église</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="116"/>
         <source>Room size</source>
-        <translation type="unfinished"></translation>
+        <translation>Taille de la pièce</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="118"/>
         <source>The size of the room, in meters. Excessivly large, and excessivly small values will make it sound a bit unrealistic.Values of around 30 sound good.</source>
-        <translation type="unfinished"></translation>
+        <translation>La taille de la pièce, en mètres. Des valeurs excessivement grandes ou petites rendront le son peu réaliste. Des valeurs autour de 30 sonnent bien.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="136"/>
         <source>Reverb time</source>
-        <translation type="unfinished"></translation>
+        <translation>Temps de réverb</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="156"/>
         <source>Damping</source>
-        <translation type="unfinished"></translation>
+        <translation>Amortissement</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="158"/>
         <source>This controls the high frequency damping (a lowpass filter), values near 1 will make it sound very bright, values near 0 will make it sound very dark.</source>
-        <translation type="unfinished"></translation>
+        <translation>Contrôle l&apos;atténuation des fréquences aiguës (filtre passe-bas), des valeurs proches de 1 donneront un son très clair, des valeurs proches de 0 rendront le son très sombre.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="177"/>
         <source>Input bandwidth</source>
-        <translation type="unfinished"></translation>
+        <translation>Bande passante d&apos;entrée</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="179"/>
         <source>This is like a damping control for the input, it has a similar effect to the damping control, but is subtly different.</source>
-        <translation type="unfinished"></translation>
+        <translation>Similaire à un contrôle d&apos;amortissement pour l&apos;entrée, a un effet similaire au contrôle d&apos;amortissement, mais est très légèrement différent.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="198"/>
         <source>Dry signal level</source>
-        <translation type="unfinished"></translation>
+        <translation>Niveau du signal brut</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="200"/>
         <source>The amount of dry signal to be mixed with the reverberated signal.</source>
-        <translation type="unfinished"></translation>
+        <translation>La portion du signal brut à mixer avec le signal sur lequel a été appliqué la réverb.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="219"/>
         <source>Early reflection level</source>
-        <translation type="unfinished"></translation>
+        <translation>Niveau de réflexions primaires</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="239"/>
         <source>Tail level</source>
-        <translation type="unfinished"></translation>
+        <translation>Niveau de traîne</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="241"/>
         <source>The quantity of early reflections (scatter reflections directly from the source).</source>
-        <translation type="unfinished"></translation>
+        <translation>La quantité des réflexions primaires (réflexions dispersées directement depuis la source)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="261"/>
         <source>About reverb</source>
-        <translation type="unfinished"></translation>
+        <translation>A propos de la réverb</translation>
     </message>
 </context>
 <context>

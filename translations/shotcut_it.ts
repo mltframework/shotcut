@@ -2337,7 +2337,7 @@ durata della transizione.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="329"/>
-        <location filename="../src/mainwindow.cpp" line="1978"/>
+        <location filename="../src/mainwindow.cpp" line="1990"/>
         <source>Enter Full Screen</source>
         <translation>Vai a schermo pieno</translation>
     </message>
@@ -2550,86 +2550,86 @@ durata della transizione.</translation>
         <translation>Ctrl+Maiusc+Z</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="459"/>
+        <location filename="../src/mainwindow.cpp" line="471"/>
         <source>Non-Broadcast</source>
         <translation>Non broadcast</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="470"/>
+        <location filename="../src/mainwindow.cpp" line="482"/>
         <source>DVD Widescreen NTSC</source>
         <translation>DVD Widescreen NTSC</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="471"/>
+        <location filename="../src/mainwindow.cpp" line="483"/>
         <source>DVD Widescreen PAL</source>
         <translation>DVD Widescreen PAL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="476"/>
+        <location filename="../src/mainwindow.cpp" line="488"/>
         <source>Custom</source>
         <translation>Personalizzato</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="495"/>
+        <location filename="../src/mainwindow.cpp" line="507"/>
         <source>Screen %1</source>
         <translation>Schermo %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="526"/>
+        <location filename="../src/mainwindow.cpp" line="538"/>
         <source>Off</source>
         <translation>Off</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="529"/>
+        <location filename="../src/mainwindow.cpp" line="541"/>
         <source>Internal</source>
         <translation>Interno</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="532"/>
+        <location filename="../src/mainwindow.cpp" line="544"/>
         <source>External</source>
         <translation>Esterno</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="546"/>
+        <location filename="../src/mainwindow.cpp" line="558"/>
         <source>DeckLink Keyer</source>
         <translation>DeckLink Keyer</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="634"/>
-        <location filename="../src/mainwindow.cpp" line="636"/>
-        <location filename="../src/mainwindow.cpp" line="803"/>
-        <location filename="../src/mainwindow.cpp" line="2422"/>
+        <location filename="../src/mainwindow.cpp" line="646"/>
+        <location filename="../src/mainwindow.cpp" line="648"/>
+        <location filename="../src/mainwindow.cpp" line="815"/>
+        <location filename="../src/mainwindow.cpp" line="2434"/>
         <source>Failed to open </source>
         <translation>Impossibile aprire</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="662"/>
+        <location filename="../src/mainwindow.cpp" line="674"/>
         <source>The file you opened uses GPU effects, but GPU processing is not enabled.
 Do you want to enable GPU processing and restart?</source>
         <translation>Il file che hai aperto usa gli effetti GPU, ma l&apos;eleborazione GPU non è abilitata.
 Vuoi abilitare l&apos;elaborazione GPU e riavviare?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1025"/>
+        <location filename="../src/mainwindow.cpp" line="1037"/>
         <source>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2015 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
         <translation>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt;è un editor video gratuito, open source, cross platform.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2015 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licenziato sotto la &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Questo programma usa i seguenti progetti:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; applicazione e UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; formato multimedia e librerie codec&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; codificatore H.264&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; codificatori VP8 e VP9&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; codificatore MP3&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; plugin video&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; plugin audio&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; collezione di icone di &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; collezione di icone&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;Il codice sorgente usato per sviluppare questo programma può essere scaricato da &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;Questo programma è distributo con la speranza che possa essere utile, ma SENZA NESSUNA GARANZIA; incluso SENZA garanzie impiclite come quella di COMMERCIABILITA&apos; o FUNZIONALITA A UNOS PECIFICO USO.&lt;/small&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2177"/>
+        <location filename="../src/mainwindow.cpp" line="2189"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>Devi riavviare Shotcut per usare la nuova lingua.
 Vuoi riavviare ora Shotcut?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2226"/>
+        <location filename="../src/mainwindow.cpp" line="2238"/>
         <source>You must restart Shotcut to switch using GPU processing.
 Do you want to restart now?</source>
         <translation>Devi riavviare Shotcut per cambiare lo stato dell&apos;elaborazione GPU.
 Vuoi riavviare ora Shotcut?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="691"/>
+        <location filename="../src/mainwindow.cpp" line="703"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation>Il file di autosalvataggio esiste.. Vuoi recuperarlo ora?</translation>
     </message>
@@ -2652,70 +2652,70 @@ Please install it using your package manager. It may be named libsdl1.2debian, S
 Installala usando il gestore pacchetti. Potrebbe chiamarsi libjsdl1.2debian, SDL, o similare.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="814"/>
-        <location filename="../src/mainwindow.cpp" line="2407"/>
+        <location filename="../src/mainwindow.cpp" line="826"/>
+        <location filename="../src/mainwindow.cpp" line="2419"/>
         <source>Open File</source>
         <translation>Apri file</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1019"/>
+        <location filename="../src/mainwindow.cpp" line="1031"/>
         <source>%1[*] - %2</source>
         <translation>%1[*] - %2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1024"/>
+        <location filename="../src/mainwindow.cpp" line="1036"/>
         <source>About Shotcut</source>
         <translation>Informazioni su Shotcut</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1557"/>
-        <location filename="../src/mainwindow.cpp" line="1582"/>
+        <location filename="../src/mainwindow.cpp" line="1569"/>
+        <location filename="../src/mainwindow.cpp" line="1594"/>
         <source>Saved %1</source>
         <translation>Salvato %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1569"/>
+        <location filename="../src/mainwindow.cpp" line="1581"/>
         <source>Save XML</source>
         <translation>Salva XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1569"/>
+        <location filename="../src/mainwindow.cpp" line="1581"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1594"/>
+        <location filename="../src/mainwindow.cpp" line="1606"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>Il progetto è stato modificato.
 Vuoi salvare le tue modifiche?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1618"/>
+        <location filename="../src/mainwindow.cpp" line="1630"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
         <translation>Ci sono attività incomplete.
 Vuoi vermanete uscire dal programma?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1981"/>
+        <location filename="../src/mainwindow.cpp" line="1993"/>
         <source>Exit Full Screen</source>
         <translation>Esci da schermo pieno</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1990"/>
+        <location filename="../src/mainwindow.cpp" line="2002"/>
         <source>GPU Processing is not supported</source>
         <translation>Elaborazione GPU non supportata</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2217"/>
+        <location filename="../src/mainwindow.cpp" line="2229"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>Impossibile connettersi a JACK.
 Verifica che JACK è installato e in esecuzione.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2408"/>
+        <location filename="../src/mainwindow.cpp" line="2420"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>XML MLT (*.mlt);;Tutti i file (*)</translation>
     </message>
@@ -4897,22 +4897,22 @@ schermate catturate su SD/HDMI.</translation>
 <context>
     <name>main</name>
     <message>
-        <location filename="../src/main.cpp" line="170"/>
+        <location filename="../src/main.cpp" line="180"/>
         <source>Fill the screen with the Shotcut window.</source>
         <translation>Riempi lo schermo con la fienstra Shotcut.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="173"/>
+        <location filename="../src/main.cpp" line="183"/>
         <source>Use GPU processing.</source>
         <translation>Usa elaborazione GPU.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="176"/>
+        <location filename="../src/main.cpp" line="186"/>
         <source>A file to open.</source>
         <translation>Un file da aprire.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="209"/>
+        <location filename="../src/main.cpp" line="219"/>
         <source>Loading plugins...</source>
         <translation>Caricamento plugin...</translation>
     </message>

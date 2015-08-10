@@ -2331,7 +2331,7 @@ duration of the transition.</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="329"/>
-        <location filename="../src/mainwindow.cpp" line="1978"/>
+        <location filename="../src/mainwindow.cpp" line="1990"/>
         <source>Enter Full Screen</source>
         <translation>进入全屏模式</translation>
     </message>
@@ -2544,86 +2544,86 @@ duration of the transition.</source>
         <translation>Ctrl+Shift+Z</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="459"/>
+        <location filename="../src/mainwindow.cpp" line="471"/>
         <source>Non-Broadcast</source>
         <translation>非广播</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="470"/>
+        <location filename="../src/mainwindow.cpp" line="482"/>
         <source>DVD Widescreen NTSC</source>
         <translation>DVD Widescreen NTSC</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="471"/>
+        <location filename="../src/mainwindow.cpp" line="483"/>
         <source>DVD Widescreen PAL</source>
         <translation>DVD Widescreen PAL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="476"/>
+        <location filename="../src/mainwindow.cpp" line="488"/>
         <source>Custom</source>
         <translation>自定义</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="495"/>
+        <location filename="../src/mainwindow.cpp" line="507"/>
         <source>Screen %1</source>
         <translation>屏幕 %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="526"/>
+        <location filename="../src/mainwindow.cpp" line="538"/>
         <source>Off</source>
         <translation>关</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="529"/>
+        <location filename="../src/mainwindow.cpp" line="541"/>
         <source>Internal</source>
         <translation>内部</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="532"/>
+        <location filename="../src/mainwindow.cpp" line="544"/>
         <source>External</source>
         <translation>外部</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="546"/>
+        <location filename="../src/mainwindow.cpp" line="558"/>
         <source>DeckLink Keyer</source>
         <translation>DeckLink Keyer</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="634"/>
-        <location filename="../src/mainwindow.cpp" line="636"/>
-        <location filename="../src/mainwindow.cpp" line="803"/>
-        <location filename="../src/mainwindow.cpp" line="2422"/>
+        <location filename="../src/mainwindow.cpp" line="646"/>
+        <location filename="../src/mainwindow.cpp" line="648"/>
+        <location filename="../src/mainwindow.cpp" line="815"/>
+        <location filename="../src/mainwindow.cpp" line="2434"/>
         <source>Failed to open </source>
         <translation>打开失败</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="662"/>
+        <location filename="../src/mainwindow.cpp" line="674"/>
         <source>The file you opened uses GPU effects, but GPU processing is not enabled.
 Do you want to enable GPU processing and restart?</source>
         <translation>您打开的文件使用 GPU 效果，但 GPU 处理未被启用。
 您想启用 GPU 处理并重新启动吗？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1025"/>
+        <location filename="../src/mainwindow.cpp" line="1037"/>
         <source>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2015 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
         <translation>&lt;h1&gt;Shotcut 版本 %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; 是一个免费、开源、跨平台视频编辑器。&lt;/p&gt;&lt;small&gt;&lt;p&gt;版权所有 &amp;copy; 2011-2015 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;许可协议 &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;本程序自豪的采用了下列项目：&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; 应用程序和 UI 框架&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; 多媒体创作框架&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; 多媒体格式及编码库&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 编码器&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 和 VP9 编码器&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 编码器&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; 视频插件&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; 音频插件&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; 图标收藏集，由 &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; 图标收藏集&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;用于构建本程序的源代码可从 &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt; 下载，&lt;/p&gt;本程序渴望被分发，这将是有益的，但不作任何担保，无适销性或针对特定用途的保证。&lt;/small&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2177"/>
+        <location filename="../src/mainwindow.cpp" line="2189"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>您必须重新启动 Shotcut 才能切换到新的语言。
 您想立即重启吗？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2226"/>
+        <location filename="../src/mainwindow.cpp" line="2238"/>
         <source>You must restart Shotcut to switch using GPU processing.
 Do you want to restart now?</source>
         <translation>您必须重新启动 Shotcut 才能切换到使用 GPU 处理。
 您想立即重启吗？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="691"/>
+        <location filename="../src/mainwindow.cpp" line="703"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation>自动保存文件不存在。您想恢复它们吗？</translation>
     </message>
@@ -2646,70 +2646,70 @@ Please install it using your package manager. It may be named libsdl1.2debian, S
 请使用您的软件包管理器进行安装。它可能名为 libsdl1.2debian、SDL 或类似名称。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="814"/>
-        <location filename="../src/mainwindow.cpp" line="2407"/>
+        <location filename="../src/mainwindow.cpp" line="826"/>
+        <location filename="../src/mainwindow.cpp" line="2419"/>
         <source>Open File</source>
         <translation>打开文件</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1019"/>
+        <location filename="../src/mainwindow.cpp" line="1031"/>
         <source>%1[*] - %2</source>
         <translation>%1[*] - %2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1024"/>
+        <location filename="../src/mainwindow.cpp" line="1036"/>
         <source>About Shotcut</source>
         <translation>关于 Shotcut</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1557"/>
-        <location filename="../src/mainwindow.cpp" line="1582"/>
+        <location filename="../src/mainwindow.cpp" line="1569"/>
+        <location filename="../src/mainwindow.cpp" line="1594"/>
         <source>Saved %1</source>
         <translation>已保存 %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1569"/>
+        <location filename="../src/mainwindow.cpp" line="1581"/>
         <source>Save XML</source>
         <translation>保存 XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1569"/>
+        <location filename="../src/mainwindow.cpp" line="1581"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1594"/>
+        <location filename="../src/mainwindow.cpp" line="1606"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>项目已被修改。
 您想保存您的更改吗？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1618"/>
+        <location filename="../src/mainwindow.cpp" line="1630"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
         <translation>仍有未完成的任务。
 您确定要退出吗？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1981"/>
+        <location filename="../src/mainwindow.cpp" line="1993"/>
         <source>Exit Full Screen</source>
         <translation>退出全屏模式</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1990"/>
+        <location filename="../src/mainwindow.cpp" line="2002"/>
         <source>GPU Processing is not supported</source>
         <translation>不支持 GPU 处理</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2217"/>
+        <location filename="../src/mainwindow.cpp" line="2229"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>连接 JACK 失败。
 请验证 JACK 已经安装并正在运行。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2408"/>
+        <location filename="../src/mainwindow.cpp" line="2420"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;所有文件 (*)</translation>
     </message>
@@ -4018,32 +4018,32 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="616"/>
         <source>Add video track</source>
-        <translation type="unfinished"></translation>
+        <translation>添加视频轨道</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="618"/>
         <source>Add audio track</source>
-        <translation type="unfinished"></translation>
+        <translation>添加音频轨道</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="641"/>
         <source>Insert audio track</source>
-        <translation type="unfinished"></translation>
+        <translation>插入音频轨道</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="643"/>
         <source>Insert video track</source>
-        <translation type="unfinished"></translation>
+        <translation>插入视频轨道</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="663"/>
         <source>Remove audio track</source>
-        <translation type="unfinished"></translation>
+        <translation>移除音频轨道</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="665"/>
         <source>Remove video track</source>
-        <translation type="unfinished"></translation>
+        <translation>移除视频轨道</translation>
     </message>
     <message>
         <location filename="../src/mltxmlgpuchecker.cpp" line="38"/>
@@ -4223,7 +4223,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/SimplePropertyUI.qml" line="14"/>
         <source>Custom Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>自定义属性</translation>
     </message>
 </context>
 <context>
@@ -4484,7 +4484,7 @@ shifting following clips to the right (V)</source>
         <location filename="../src/qml/timeline/TrackHead.qml" line="224"/>
         <source>L</source>
         <comment>Lock</comment>
-        <translation type="unfinished"></translation>
+        <translation>L</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/TrackHead.qml" line="247"/>
@@ -4891,22 +4891,22 @@ the screen capture to SDI/HDMI in this mode.</source>
 <context>
     <name>main</name>
     <message>
-        <location filename="../src/main.cpp" line="170"/>
+        <location filename="../src/main.cpp" line="180"/>
         <source>Fill the screen with the Shotcut window.</source>
         <translation>将 Shotcut 窗口填满屏幕。</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="173"/>
+        <location filename="../src/main.cpp" line="183"/>
         <source>Use GPU processing.</source>
         <translation>使用 GPU 处理。</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="176"/>
+        <location filename="../src/main.cpp" line="186"/>
         <source>A file to open.</source>
         <translation>要打开的一个文件。</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="209"/>
+        <location filename="../src/main.cpp" line="219"/>
         <source>Loading plugins...</source>
         <translation>正在载入插件...</translation>
     </message>
@@ -5088,22 +5088,22 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../src/qml/filters/audio_compressor/meta.qml" line="7"/>
         <source>Compressor</source>
-        <translation type="unfinished"></translation>
+        <translation>压缩器</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_delay/meta.qml" line="7"/>
         <source>Delay</source>
-        <translation type="unfinished"></translation>
+        <translation>延迟</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_expander/meta.qml" line="7"/>
         <source>Expander</source>
-        <translation type="unfinished"></translation>
+        <translation>扩展器</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/meta.qml" line="7"/>
         <source>Limiter</source>
-        <translation type="unfinished"></translation>
+        <translation>限制器</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_notch/meta.qml" line="7"/>
@@ -5113,7 +5113,7 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../src/qml/filters/audio_reverb/meta.qml" line="7"/>
         <source>Reverb</source>
-        <translation type="unfinished"></translation>
+        <translation>混淆</translation>
     </message>
 </context>
 <context>
@@ -6060,13 +6060,13 @@ the screen capture to SDI/HDMI in this mode.</source>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="111"/>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="104"/>
         <source>Release</source>
-        <translation type="unfinished"></translation>
+        <translation>发布</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="130"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="130"/>
         <source>Threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>门限</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="132"/>
@@ -6112,12 +6112,12 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="215"/>
         <source>About dynamic range compression</source>
-        <translation type="unfinished"></translation>
+        <translation>关于动态范围压缩</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_delay/ui.qml" line="62"/>
         <source>Delay</source>
-        <translation type="unfinished"></translation>
+        <translation>延迟</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_delay/ui.qml" line="64"/>
@@ -6127,12 +6127,12 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../src/qml/filters/audio_delay/ui.qml" line="83"/>
         <source>Feedback</source>
-        <translation type="unfinished"></translation>
+        <translation>反馈</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="192"/>
         <source>Attenuation</source>
-        <translation type="unfinished"></translation>
+        <translation>衰减</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="194"/>
@@ -6152,7 +6152,7 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="83"/>
         <source>Limit</source>
-        <translation type="unfinished"></translation>
+        <translation>限制</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="85"/>
@@ -6167,7 +6167,7 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="38"/>
         <source>Quick fix</source>
-        <translation type="unfinished"></translation>
+        <translation>快速修复</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="47"/>
@@ -6192,7 +6192,7 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="116"/>
         <source>Room size</source>
-        <translation type="unfinished"></translation>
+        <translation>房间大小</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="118"/>
@@ -6217,7 +6217,7 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="177"/>
         <source>Input bandwidth</source>
-        <translation type="unfinished"></translation>
+        <translation>输入带宽</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="179"/>
@@ -6252,7 +6252,7 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="261"/>
         <source>About reverb</source>
-        <translation type="unfinished"></translation>
+        <translation>关于混响</translation>
     </message>
 </context>
 <context>

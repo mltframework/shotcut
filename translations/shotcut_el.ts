@@ -2337,7 +2337,7 @@ duration of the transition.</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="329"/>
-        <location filename="../src/mainwindow.cpp" line="1978"/>
+        <location filename="../src/mainwindow.cpp" line="1990"/>
         <source>Enter Full Screen</source>
         <translation>Πλήρης Οθόνη</translation>
     </message>
@@ -2550,86 +2550,86 @@ duration of the transition.</source>
         <translation>Ctrl+Shift+Z</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="459"/>
+        <location filename="../src/mainwindow.cpp" line="471"/>
         <source>Non-Broadcast</source>
         <translation>Μη-Εκπεμπόμενο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="470"/>
+        <location filename="../src/mainwindow.cpp" line="482"/>
         <source>DVD Widescreen NTSC</source>
         <translation>DVD Ευρείας Οθόνης NTSC</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="471"/>
+        <location filename="../src/mainwindow.cpp" line="483"/>
         <source>DVD Widescreen PAL</source>
         <translation>DVD Ευρείας Οθόνης PAL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="476"/>
+        <location filename="../src/mainwindow.cpp" line="488"/>
         <source>Custom</source>
         <translation>Προσαρμοσμένο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="495"/>
+        <location filename="../src/mainwindow.cpp" line="507"/>
         <source>Screen %1</source>
         <translation>Οθόνη %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="526"/>
+        <location filename="../src/mainwindow.cpp" line="538"/>
         <source>Off</source>
         <translation>Απενεργοποίηση</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="529"/>
+        <location filename="../src/mainwindow.cpp" line="541"/>
         <source>Internal</source>
         <translation>Εσωτερικό</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="532"/>
+        <location filename="../src/mainwindow.cpp" line="544"/>
         <source>External</source>
         <translation>Εξωτερικό</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="546"/>
+        <location filename="../src/mainwindow.cpp" line="558"/>
         <source>DeckLink Keyer</source>
         <translation>DeckLink Keyer</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="634"/>
-        <location filename="../src/mainwindow.cpp" line="636"/>
-        <location filename="../src/mainwindow.cpp" line="803"/>
-        <location filename="../src/mainwindow.cpp" line="2422"/>
+        <location filename="../src/mainwindow.cpp" line="646"/>
+        <location filename="../src/mainwindow.cpp" line="648"/>
+        <location filename="../src/mainwindow.cpp" line="815"/>
+        <location filename="../src/mainwindow.cpp" line="2434"/>
         <source>Failed to open </source>
         <translation>Αποτυχία ανοίγματος</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="662"/>
+        <location filename="../src/mainwindow.cpp" line="674"/>
         <source>The file you opened uses GPU effects, but GPU processing is not enabled.
 Do you want to enable GPU processing and restart?</source>
         <translation>Το αρχείο που ανοίξατε χρησιμοποιεί εφέ GPU, αλλά η επεξεργασία GPU δεν είναι ενεργοποιημένη.
 Θέλετε να ενεργοποιηθεί η επεξεργασία GPU και να επανεκινήσετε;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1025"/>
+        <location filename="../src/mainwindow.cpp" line="1037"/>
         <source>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2015 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
         <translation>&lt;h1&gt;Έκδοση Shotcut %1&lt;/h1&gt;&lt;p&gt;Ο &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; είναι ένας ελεύθερος, ανοικτού κώδικα, για όλες τις πλατφόρμες, επεξεργαστής βίντεο.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Πνευματικά δικαιώματα &amp;copy; 2011-2015 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Αδειοδοτημένο υπό την &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Αυτό το πρόγραμμα χρησιμοποιεί υπερήφανα τα παρακάτω έργα:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;Ο πηγαίος κώδικας για το κτίσιμο αυτού του προγράμματος μπορεί να μεταφορτωθεί από  &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;Το πρόγραμμα αυτό διανέμετε με την ελπίδα πως θα είναι χρήσιμο,  ΧΩΡΙΣ όμως ΚΑΜΙΑ ΕΓΓΥΗΣΗ; χωρίς ακόμη την εγγύηση  ΕΜΠΟΡΕΥΣΙΜΟΤΗΤΑΣ ή ΚΑΤΑΛΛΗΛΟΤΗΤΑΣ ΓΙΑ ΕΝΑ ΣΥΓΚΕΚΡΙΜΕΝΟ ΣΚΟΠΟ.&lt;/small&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2177"/>
+        <location filename="../src/mainwindow.cpp" line="2189"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>Πρέπει να επανακινήσετε τον shotcut για την αλλαγή γλώσσας.
 Θέλετε να επανακινήσετε τώρα;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2226"/>
+        <location filename="../src/mainwindow.cpp" line="2238"/>
         <source>You must restart Shotcut to switch using GPU processing.
 Do you want to restart now?</source>
         <translation>Πρέπει να επανακινήσετε τον shotcut για την επεξεργασία με GPU.
 Θέλετε να επανακινήσετε τώρα;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="691"/>
+        <location filename="../src/mainwindow.cpp" line="703"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation>Υπάρχουν αρχεία αυτόματης αποθήκευσης. Θέλετε να τα ανακτίσετε τώρα;</translation>
     </message>
@@ -2652,70 +2652,70 @@ Please install it using your package manager. It may be named libsdl1.2debian, S
 Παρακαλώ εγκαταστήστε την χρησιμοποιώντας τον διαχειριστή πακέτων. Μπορεί να ονομάζεται  libsdl1.2debian, SDL ή παρόμοια.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="814"/>
-        <location filename="../src/mainwindow.cpp" line="2407"/>
+        <location filename="../src/mainwindow.cpp" line="826"/>
+        <location filename="../src/mainwindow.cpp" line="2419"/>
         <source>Open File</source>
         <translation>Άνοιγμα Αρχείου</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1019"/>
+        <location filename="../src/mainwindow.cpp" line="1031"/>
         <source>%1[*] - %2</source>
         <translation>%1[*] - %2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1024"/>
+        <location filename="../src/mainwindow.cpp" line="1036"/>
         <source>About Shotcut</source>
         <translation>Σχετικά με τον Shotcut</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1557"/>
-        <location filename="../src/mainwindow.cpp" line="1582"/>
+        <location filename="../src/mainwindow.cpp" line="1569"/>
+        <location filename="../src/mainwindow.cpp" line="1594"/>
         <source>Saved %1</source>
         <translation>Αποθήκευση %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1569"/>
+        <location filename="../src/mainwindow.cpp" line="1581"/>
         <source>Save XML</source>
         <translation>Αποθήκευση XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1569"/>
+        <location filename="../src/mainwindow.cpp" line="1581"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1594"/>
+        <location filename="../src/mainwindow.cpp" line="1606"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>Το έργο έχει τροποποιηθεί.
 Θέλετε να αποθηκευτούν οι αλλαγές σας;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1618"/>
+        <location filename="../src/mainwindow.cpp" line="1630"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
         <translation>Υπάρχουν μη ολοκληρωμένες εργασίες.
 Θέλετε ακόμη να εξέρθετε;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1981"/>
+        <location filename="../src/mainwindow.cpp" line="1993"/>
         <source>Exit Full Screen</source>
         <translation>Έξοδος Πλήρης Οθόνης</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1990"/>
+        <location filename="../src/mainwindow.cpp" line="2002"/>
         <source>GPU Processing is not supported</source>
         <translation>Δεν υποστηρίζεται η επεξεργασία GPU</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2217"/>
+        <location filename="../src/mainwindow.cpp" line="2229"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>Αποτυχία σύνδεσης στο JACK.
 Παρακαλώ επαληθεύστε ότι το JACK είναι εγκατεστημένο και εκτελείται.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2408"/>
+        <location filename="../src/mainwindow.cpp" line="2420"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;Όλα τα Αρχεία (*)</translation>
     </message>
@@ -4229,7 +4229,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/SimplePropertyUI.qml" line="14"/>
         <source>Custom Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Προσαρμοσμένες Ιδιότητες</translation>
     </message>
 </context>
 <context>
@@ -4896,22 +4896,22 @@ the screen capture to SDI/HDMI in this mode.</source>
 <context>
     <name>main</name>
     <message>
-        <location filename="../src/main.cpp" line="170"/>
+        <location filename="../src/main.cpp" line="180"/>
         <source>Fill the screen with the Shotcut window.</source>
         <translation>Πλήρωση της οθόνης με το παράθυρο του Shotcut.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="173"/>
+        <location filename="../src/main.cpp" line="183"/>
         <source>Use GPU processing.</source>
         <translation>Χρήση επεξεργασίας GPU.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="176"/>
+        <location filename="../src/main.cpp" line="186"/>
         <source>A file to open.</source>
         <translation>Έναν αρχείο για άνοιγμα.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="209"/>
+        <location filename="../src/main.cpp" line="219"/>
         <source>Loading plugins...</source>
         <translation>Φόρτωση αρθωμάτων...</translation>
     </message>
@@ -5088,37 +5088,37 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../src/qml/filters/audio_basstreble/meta.qml" line="7"/>
         <source>Bass &amp; Treble</source>
-        <translation type="unfinished"></translation>
+        <translation>Μπάσο &amp; Πρίμα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/meta.qml" line="7"/>
         <source>Compressor</source>
-        <translation type="unfinished"></translation>
+        <translation>Συμπιεστής</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_delay/meta.qml" line="7"/>
         <source>Delay</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθυστέρηση</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_expander/meta.qml" line="7"/>
         <source>Expander</source>
-        <translation type="unfinished"></translation>
+        <translation>Διαστολέας</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/meta.qml" line="7"/>
         <source>Limiter</source>
-        <translation type="unfinished"></translation>
+        <translation>Περιοριστής</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_notch/meta.qml" line="7"/>
         <source>Notch</source>
-        <translation type="unfinished"></translation>
+        <translation>Εγκοπή</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/meta.qml" line="7"/>
         <source>Reverb</source>
-        <translation type="unfinished"></translation>
+        <translation>Αντήχηση</translation>
     </message>
 </context>
 <context>
@@ -5357,7 +5357,7 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="414"/>
         <source>Ripple All Tracks</source>
-        <translation type="unfinished"></translation>
+        <translation>Ριπή σε όλα τα Κομμάτια</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="420"/>
@@ -5889,7 +5889,7 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="203"/>
         <source>Bass</source>
-        <translation type="unfinished"></translation>
+        <translation>Μπάσο</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="224"/>
@@ -5900,7 +5900,7 @@ the screen capture to SDI/HDMI in this mode.</source>
     <message>
         <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="245"/>
         <source>Treble</source>
-        <translation type="unfinished"></translation>
+        <translation>Πρίμα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fadein_brightness/ui.qml" line="71"/>
@@ -6040,224 +6040,224 @@ the screen capture to SDI/HDMI in this mode.</source>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="70"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="70"/>
         <source>RMS</source>
-        <translation type="unfinished"></translation>
+        <translation>RMS</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="72"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="72"/>
         <source>The balance between the RMS and peak envelope followers. RMS is generally better for subtle, musical compression and peak is better for heavier, fast compression and percussion.</source>
-        <translation type="unfinished"></translation>
+        <translation>Η ισορροπία μεταξύ της RMS και κορυφής του ανιχνευτή φακέλου. Η RMS είναι γενικά καλύτερη για ελαφριά συμπίεση και η κορυφή είναι καλύτερη για πιο βαριά και γρήγορη συμπίεση.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="80"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="80"/>
         <source>Peak</source>
-        <translation type="unfinished"></translation>
+        <translation>Κορυφή</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="92"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="92"/>
         <source>Attack</source>
-        <translation type="unfinished"></translation>
+        <translation>Επίθεση</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="111"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="111"/>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="104"/>
         <source>Release</source>
-        <translation type="unfinished"></translation>
+        <translation>Απελευθέρωση</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="130"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="130"/>
         <source>Threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>Κατώφλι</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="132"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="132"/>
         <source>The point at which the compressor will start to kick in.</source>
-        <translation type="unfinished"></translation>
+        <translation>Το σημείο στο οποίο θα αρχίσει να ενεργοποιείται ο συμπιεστής.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="151"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="151"/>
         <source>Ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>Λόγος</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="153"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="153"/>
         <source>The gain reduction ratio used when the signal level exceeds the threshold.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ο λόγος μείωσης του κέρδους χρησιμοποιείτε όταν το σήμα υπερβαίνει το κατώφλι.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="171"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="171"/>
         <source>Knee radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Ακτίνα γόνατου</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="173"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="173"/>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="221"/>
         <source>The distance from the threshold where the knee curve starts.</source>
-        <translation type="unfinished"></translation>
+        <translation>Η απόσταση από την αρχή της καμπύλης του γόνατου του κατωφλιού.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="192"/>
         <source>Makeup gain</source>
-        <translation type="unfinished"></translation>
+        <translation>Κέρδος αποκατάστασης</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="194"/>
         <source>The gain of the makeup input signal.</source>
-        <translation type="unfinished"></translation>
+        <translation>Το κέρδος της αποκατάστασης του σήματος εισόδου.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="215"/>
         <source>About dynamic range compression</source>
-        <translation type="unfinished"></translation>
+        <translation>Περί του δυναμικού εύρους της συμπίεσης</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_delay/ui.qml" line="62"/>
         <source>Delay</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθυστέρηση</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_delay/ui.qml" line="64"/>
         <source>The neutral delay time is 2 seconds. Times above 2 seconds will have reduced quality and times below will have increased CPU usage.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ο ουδέτερος χρόνος καθυστέρησης είναι 2 δευτερόλεπτα. Χρόνοι πάνω από 2 δευτερόλεπτα θα έχουν μειωμένη ποιότητα και χρόνοι κάτω, θα έχουν αυξημένη χρήση της CPU.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_delay/ui.qml" line="83"/>
         <source>Feedback</source>
-        <translation type="unfinished"></translation>
+        <translation>Ανάδραση</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="192"/>
         <source>Attenuation</source>
-        <translation type="unfinished"></translation>
+        <translation>Εξασθένηση</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="194"/>
         <source>The gain of the output signal. Used to correct for excessive amplitude caused by the extra dynamic range.</source>
-        <translation type="unfinished"></translation>
+        <translation>Το κέρδος του σήματος εξόδου. Χρησιμοποιείται για την διόρθωση εκτεταμένου πλάτους που προκαλείται από το επιπλέον δυναμικό εύρος.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="62"/>
         <source>Input gain</source>
-        <translation type="unfinished"></translation>
+        <translation>Κέρδος εισόδου</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="64"/>
         <source>Gain that is applied to the input stage. Can be used to trim gain to bring it roughly under the limit or to push the signal against the limit.</source>
-        <translation type="unfinished"></translation>
+        <translation>Κέρδος που εφαρμόζεται στο στάδιο εισόδου. Μπορεί να χρησιμοποιηθεί για να φέρει το σήμα κάτω από το όριο ή για να ανεβάσει το σήμα στο όριο.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="83"/>
         <source>Limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Όριο</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="85"/>
         <source>The maximum output amplitude. Peaks over this level will be attenuated as smoothly as possible to bring them as close as possible to this level.</source>
-        <translation type="unfinished"></translation>
+        <translation>Το μέγιστο πλάτος εξόδου. Κορυφές πάνω από αυτό το επίπεδο θα εξασθενήσουν όσο ποιο ομαλά γίνετε για να έρθουν όσο πιο κοντά σε αυτό το επίπεδο.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="106"/>
         <source>The time taken for the limiter&apos;s attenuation to return to 0 dB&apos;s.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ο χρόνος που χρειάζεται για την εξασθένηση του περιοριστή να επιστρέψει στα 0 dB&apos;s.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="38"/>
         <source>Quick fix</source>
-        <translation type="unfinished"></translation>
+        <translation>Γρήγορη λύση</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="47"/>
         <source>Small hall</source>
-        <translation type="unfinished"></translation>
+        <translation>Μικρή αίθουσα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="56"/>
         <source>Large hall</source>
-        <translation type="unfinished"></translation>
+        <translation>Μεγάλη αίθουσα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="65"/>
         <source>Sewer</source>
-        <translation type="unfinished"></translation>
+        <translation>Υπόνομος</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="74"/>
         <source>Church</source>
-        <translation type="unfinished"></translation>
+        <translation>Εκκλησία</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="116"/>
         <source>Room size</source>
-        <translation type="unfinished"></translation>
+        <translation>Μέγεθος δωματίου</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="118"/>
         <source>The size of the room, in meters. Excessivly large, and excessivly small values will make it sound a bit unrealistic.Values of around 30 sound good.</source>
-        <translation type="unfinished"></translation>
+        <translation>Το μέγεθος του δωματίου, σε μέτρα. Υπερβολικά μεγάλες, και υπερβολικά μικρές τιμές θα κάνουν τον ήχο λίγο μη ρεαλιστικό. Τιμές γύρω στα 30 είναι καλά.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="136"/>
         <source>Reverb time</source>
-        <translation type="unfinished"></translation>
+        <translation>Χρόνος αντήχησης</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="156"/>
         <source>Damping</source>
-        <translation type="unfinished"></translation>
+        <translation>Απόσβεση</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="158"/>
         <source>This controls the high frequency damping (a lowpass filter), values near 1 will make it sound very bright, values near 0 will make it sound very dark.</source>
-        <translation type="unfinished"></translation>
+        <translation>Αυτό ελέγχει την απόσβεση υψηλών συχνοτήτων (φίλτρο χαμηλών συχνοτήτων). Τιμές κοντά στο 1 θα κάνει τον ήχο πολύ φωτεινό, τιμές κοντά στο 0 θα κάνουν τον ήχο πολύ σκοτεινό.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="177"/>
         <source>Input bandwidth</source>
-        <translation type="unfinished"></translation>
+        <translation>Εύρος εισόδου</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="179"/>
         <source>This is like a damping control for the input, it has a similar effect to the damping control, but is subtly different.</source>
-        <translation type="unfinished"></translation>
+        <translation>Αυτό είναι σαν ένας έλεγχος απόσβεσης για την είσοδο. Έχει παρόμοιο αποτέλεσμα με τον έλεγχο απόσβεσης, αλλά είναι ελαφρά διαφορετικό.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="198"/>
         <source>Dry signal level</source>
-        <translation type="unfinished"></translation>
+        <translation>Επίπεδο Καθαρού σήματος</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="200"/>
         <source>The amount of dry signal to be mixed with the reverberated signal.</source>
-        <translation type="unfinished"></translation>
+        <translation>Το ποσό του καθαρού σήματος για την μίξη με το σήμα που έχει υποστεί αντήχηση.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="219"/>
         <source>Early reflection level</source>
-        <translation type="unfinished"></translation>
+        <translation>Επίπεδο πρώιμης αντανάκλασης</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="239"/>
         <source>Tail level</source>
-        <translation type="unfinished"></translation>
+        <translation>Επίπεδο Ουράς</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="241"/>
         <source>The quantity of early reflections (scatter reflections directly from the source).</source>
-        <translation type="unfinished"></translation>
+        <translation>Η ποσότητα της πρωίμων αντανακλάσεων (αντανακλάσεις διασποράς απευθείας από την πηγή). </translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="261"/>
         <source>About reverb</source>
-        <translation type="unfinished"></translation>
+        <translation>Περί αντήχησης</translation>
     </message>
 </context>
 <context>

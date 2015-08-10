@@ -2337,7 +2337,7 @@ overgangens længde. </translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="329"/>
-        <location filename="../src/mainwindow.cpp" line="1978"/>
+        <location filename="../src/mainwindow.cpp" line="1990"/>
         <source>Enter Full Screen</source>
         <translation>Åben fuld skærm</translation>
     </message>
@@ -2550,87 +2550,87 @@ overgangens længde. </translation>
         <translation>Ctrl+Shift+Z</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="459"/>
+        <location filename="../src/mainwindow.cpp" line="471"/>
         <source>Non-Broadcast</source>
         <translation>Non-Broadcast</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="470"/>
+        <location filename="../src/mainwindow.cpp" line="482"/>
         <source>DVD Widescreen NTSC</source>
         <translation>DVD Widescreen NTSC</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="471"/>
+        <location filename="../src/mainwindow.cpp" line="483"/>
         <source>DVD Widescreen PAL</source>
         <translation>DVD Widescreen PAL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="476"/>
+        <location filename="../src/mainwindow.cpp" line="488"/>
         <source>Custom</source>
         <translation>Tilpasset</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="495"/>
+        <location filename="../src/mainwindow.cpp" line="507"/>
         <source>Screen %1</source>
         <translation>Skærm %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="526"/>
+        <location filename="../src/mainwindow.cpp" line="538"/>
         <source>Off</source>
         <translation>Off</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="529"/>
+        <location filename="../src/mainwindow.cpp" line="541"/>
         <source>Internal</source>
         <translation>Intern</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="532"/>
+        <location filename="../src/mainwindow.cpp" line="544"/>
         <source>External</source>
         <translation>Ekstern</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="546"/>
+        <location filename="../src/mainwindow.cpp" line="558"/>
         <source>DeckLink Keyer</source>
         <translation>DeckLink Keyer</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="634"/>
-        <location filename="../src/mainwindow.cpp" line="636"/>
-        <location filename="../src/mainwindow.cpp" line="803"/>
-        <location filename="../src/mainwindow.cpp" line="2422"/>
+        <location filename="../src/mainwindow.cpp" line="646"/>
+        <location filename="../src/mainwindow.cpp" line="648"/>
+        <location filename="../src/mainwindow.cpp" line="815"/>
+        <location filename="../src/mainwindow.cpp" line="2434"/>
         <source>Failed to open </source>
         <translation>Kunne ikke åbne</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="662"/>
+        <location filename="../src/mainwindow.cpp" line="674"/>
         <source>The file you opened uses GPU effects, but GPU processing is not enabled.
 Do you want to enable GPU processing and restart?</source>
         <translation>Den åbnede fil bruger GPU effekter, men GPU processing er ikke slået til.
 Skal GPU processing slås til og Shotcut genstartes?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1025"/>
+        <location filename="../src/mainwindow.cpp" line="1037"/>
         <source>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2015 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
         <translation>&lt;H1&gt; Shotcut version% 1 &lt;/ h1&gt; &lt;p&gt; &lt;a href=&quot;http://www.shotcut.org/&quot;&gt; Shotcut &lt;/a&gt; er en gratis, open source, cross-platform video editor. &lt;/ p&gt; &lt;small&gt; &lt;p&gt; Copyright &amp; copy; 2011-2015 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt; Meltytech &lt;/a&gt;, LLC &lt;/ p&gt; &lt;p&gt; Licenseret under &lt;a href = &quot;http: //www.gnu. org / licenser / gpl.html &quot;&gt; GNU General Public License v3.0 &lt;/a&gt; &lt;/ p&gt; &lt;p&gt; Dette program benytter følgende projekter: &lt;ul&gt; &lt;li&gt; &lt;a href =&quot; http: // www.qt-project.org/&quot;&gt;Qt &lt;/a&gt; brugerinterface &lt;/ li&gt; &lt;li&gt; &lt;a href=&quot;http://www.mltframework.org/&quot;&gt; MLT &lt;/a&gt; multimedia authoring &lt;/ li&gt; &lt;li&gt; &lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt; FFmpeg &lt;/a&gt; multimedie format og kodek biblioteker &lt;/ li&gt; &lt;li&gt; &lt;a href = &quot;http: / /www.videolan.org/developers/x264.html&quot;&gt;x264 &lt;/a&gt; H.264 encoder &lt;/ li&gt; &lt;li&gt; &lt;a href=&quot;http://www.webmproject.org/&quot;&gt; WebM &lt;/ a&gt; VP8 og VP9 encodere &lt;/ li&gt; &lt;li&gt; &lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt; LAME &lt;/a&gt; MP3 encoder &lt;/ li&gt; &lt;li&gt; &lt;a href = &quot;http : //www.dyne.org/software/frei0r/ &quot;&gt; Frei0r &lt;/a&gt; video plugins &lt;/ li&gt; &lt;li&gt; &lt;a href=&quot;http://www.ladspa.org/&quot;&gt; LADSPA &lt;/ a &gt; lyd plugins &lt;/ li&gt; &lt;li&gt; &lt;a href=&quot;http://www.defaulticon.com/&quot;&gt; DefaultIcon &lt;/a&gt; ikoner &lt;a href = &quot;http://www.interactivemania.com/ &quot;&gt; interactivemania &lt;/a&gt; &lt;/ li&gt; &lt;li&gt; &lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt; Oxygen &lt;/a&gt; ikoner &lt;/ li&gt; &lt;/ ul&gt; &lt;/ p&gt; &lt;p&gt; Kildekoden bruges til at compile dette program kan downloades fra &lt;a href=&quot;http://www.shotcut.org/&quot;&gt; shotcut.org &lt;/a&gt;. &lt;/ p&gt; Dette program er distribueret i håb om at det vil være nyttigt, men UDEN NOGEN GARANTI; selv uden selv de underforståede garantier for SALGBARHED eller TILPASNING TIL SÆRLIGE FORMÅL. &lt;/ small&gt;
 </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2177"/>
+        <location filename="../src/mainwindow.cpp" line="2189"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>Shotcut skal genstartes for at skifte sprog
 Vil du genstarte Shotcut nu?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2226"/>
+        <location filename="../src/mainwindow.cpp" line="2238"/>
         <source>You must restart Shotcut to switch using GPU processing.
 Do you want to restart now?</source>
         <translation>Shotcut skal genstarets for at skifte til GPU processing. 
 Vil du genstarte Shotcut nu?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="691"/>
+        <location filename="../src/mainwindow.cpp" line="703"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation>Automatisk gemte filer eksisterer. Vil du gendanne dem nu?</translation>
     </message>
@@ -2653,70 +2653,70 @@ Please install it using your package manager. It may be named libsdl1.2debian, S
 Installer det ved at brug af pakke manageren. Det kan hedder libsdl1.2debian, SDL, eller lignende.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="814"/>
-        <location filename="../src/mainwindow.cpp" line="2407"/>
+        <location filename="../src/mainwindow.cpp" line="826"/>
+        <location filename="../src/mainwindow.cpp" line="2419"/>
         <source>Open File</source>
         <translation>Åbn fil</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1019"/>
+        <location filename="../src/mainwindow.cpp" line="1031"/>
         <source>%1[*] - %2</source>
         <translation>%1[*] - %2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1024"/>
+        <location filename="../src/mainwindow.cpp" line="1036"/>
         <source>About Shotcut</source>
         <translation>&amp;Om Shotcut</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1557"/>
-        <location filename="../src/mainwindow.cpp" line="1582"/>
+        <location filename="../src/mainwindow.cpp" line="1569"/>
+        <location filename="../src/mainwindow.cpp" line="1594"/>
         <source>Saved %1</source>
         <translation>Gem %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1569"/>
+        <location filename="../src/mainwindow.cpp" line="1581"/>
         <source>Save XML</source>
         <translation>Gem XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1569"/>
+        <location filename="../src/mainwindow.cpp" line="1581"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1594"/>
+        <location filename="../src/mainwindow.cpp" line="1606"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>Projektet er blevet ændret. 
 Ønsker du at gemme dine ændringer? </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1618"/>
+        <location filename="../src/mainwindow.cpp" line="1630"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
         <translation>Der er ufærdige jobs.
 Vil du stadig lukke programmet?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1981"/>
+        <location filename="../src/mainwindow.cpp" line="1993"/>
         <source>Exit Full Screen</source>
         <translation>Afslut fuldskærm</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1990"/>
+        <location filename="../src/mainwindow.cpp" line="2002"/>
         <source>GPU Processing is not supported</source>
         <translation>GPU processing ikke understøttet</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2217"/>
+        <location filename="../src/mainwindow.cpp" line="2229"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>Det lykkes ikke at forbinde til JACK.
 Verificér at JACK er installeret og kører.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2408"/>
+        <location filename="../src/mainwindow.cpp" line="2420"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;Alle filer (*)</translation>
     </message>
@@ -4230,7 +4230,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/SimplePropertyUI.qml" line="14"/>
         <source>Custom Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Brugerdefinerede egenskaber</translation>
     </message>
 </context>
 <context>
@@ -4897,22 +4897,22 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
 <context>
     <name>main</name>
     <message>
-        <location filename="../src/main.cpp" line="170"/>
+        <location filename="../src/main.cpp" line="180"/>
         <source>Fill the screen with the Shotcut window.</source>
         <translation>Fyld skærmen med Shotcut vinduet.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="173"/>
+        <location filename="../src/main.cpp" line="183"/>
         <source>Use GPU processing.</source>
         <translation>Brug GPU processor.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="176"/>
+        <location filename="../src/main.cpp" line="186"/>
         <source>A file to open.</source>
         <translation>En fil til at åbne.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="209"/>
+        <location filename="../src/main.cpp" line="219"/>
         <source>Loading plugins...</source>
         <translation>Indlæser plugins...</translation>
     </message>
@@ -5089,37 +5089,37 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
     <message>
         <location filename="../src/qml/filters/audio_basstreble/meta.qml" line="7"/>
         <source>Bass &amp; Treble</source>
-        <translation type="unfinished"></translation>
+        <translation>Bas &amp; diskant</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/meta.qml" line="7"/>
         <source>Compressor</source>
-        <translation type="unfinished"></translation>
+        <translation>Kompressor</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_delay/meta.qml" line="7"/>
         <source>Delay</source>
-        <translation type="unfinished"></translation>
+        <translation>Delay</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_expander/meta.qml" line="7"/>
         <source>Expander</source>
-        <translation type="unfinished"></translation>
+        <translation>Expander</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/meta.qml" line="7"/>
         <source>Limiter</source>
-        <translation type="unfinished"></translation>
+        <translation>Limiter</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_notch/meta.qml" line="7"/>
         <source>Notch</source>
-        <translation type="unfinished"></translation>
+        <translation>Notch</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/meta.qml" line="7"/>
         <source>Reverb</source>
-        <translation type="unfinished"></translation>
+        <translation>Reverb</translation>
     </message>
 </context>
 <context>
@@ -5358,7 +5358,7 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="414"/>
         <source>Ripple All Tracks</source>
-        <translation type="unfinished"></translation>
+        <translation>Skub alle spor</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="420"/>
@@ -5890,7 +5890,7 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
     <message>
         <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="203"/>
         <source>Bass</source>
-        <translation type="unfinished"></translation>
+        <translation>Bas</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="224"/>
@@ -5901,7 +5901,7 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
     <message>
         <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="245"/>
         <source>Treble</source>
-        <translation type="unfinished"></translation>
+        <translation>Diskant</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fadein_brightness/ui.qml" line="71"/>
@@ -6041,7 +6041,7 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="70"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="70"/>
         <source>RMS</source>
-        <translation type="unfinished"></translation>
+        <translation>RMS</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="72"/>
@@ -6053,26 +6053,26 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="80"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="80"/>
         <source>Peak</source>
-        <translation type="unfinished"></translation>
+        <translation>Peak</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="92"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="92"/>
         <source>Attack</source>
-        <translation type="unfinished"></translation>
+        <translation>Attack</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="111"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="111"/>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="104"/>
         <source>Release</source>
-        <translation type="unfinished"></translation>
+        <translation>Release</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="130"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="130"/>
         <source>Threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>Threshold</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="132"/>
@@ -6084,7 +6084,7 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="151"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="151"/>
         <source>Ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>Ratio</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="153"/>
@@ -6096,7 +6096,7 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="171"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="171"/>
         <source>Knee radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Knee radius</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="173"/>
@@ -6108,7 +6108,7 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="192"/>
         <source>Makeup gain</source>
-        <translation type="unfinished"></translation>
+        <translation>Makeup gain</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="194"/>
@@ -6123,7 +6123,7 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
     <message>
         <location filename="../src/qml/filters/audio_delay/ui.qml" line="62"/>
         <source>Delay</source>
-        <translation type="unfinished"></translation>
+        <translation>Forsinkelse</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_delay/ui.qml" line="64"/>
@@ -6133,12 +6133,12 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
     <message>
         <location filename="../src/qml/filters/audio_delay/ui.qml" line="83"/>
         <source>Feedback</source>
-        <translation type="unfinished"></translation>
+        <translation>Feedback</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="192"/>
         <source>Attenuation</source>
-        <translation type="unfinished"></translation>
+        <translation>Attenuation</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="194"/>
@@ -6148,7 +6148,7 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
     <message>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="62"/>
         <source>Input gain</source>
-        <translation type="unfinished"></translation>
+        <translation>Input gain</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="64"/>
@@ -6158,7 +6158,7 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
     <message>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="83"/>
         <source>Limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Limit</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="85"/>
@@ -6178,27 +6178,27 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="47"/>
         <source>Small hall</source>
-        <translation type="unfinished"></translation>
+        <translation>Lille hal</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="56"/>
         <source>Large hall</source>
-        <translation type="unfinished"></translation>
+        <translation>Stor hal</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="65"/>
         <source>Sewer</source>
-        <translation type="unfinished"></translation>
+        <translation>Kloark</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="74"/>
         <source>Church</source>
-        <translation type="unfinished"></translation>
+        <translation>Kirke</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="116"/>
         <source>Room size</source>
-        <translation type="unfinished"></translation>
+        <translation>Rum størrelse</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="118"/>
@@ -6208,12 +6208,12 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="136"/>
         <source>Reverb time</source>
-        <translation type="unfinished"></translation>
+        <translation>Reverb tid</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="156"/>
         <source>Damping</source>
-        <translation type="unfinished"></translation>
+        <translation>Dæmpning</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="158"/>
@@ -6223,7 +6223,7 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="177"/>
         <source>Input bandwidth</source>
-        <translation type="unfinished"></translation>
+        <translation>Input båndbredde</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="179"/>
@@ -6233,7 +6233,7 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="198"/>
         <source>Dry signal level</source>
-        <translation type="unfinished"></translation>
+        <translation>Tørt signal niveau</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="200"/>
@@ -6243,12 +6243,12 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="219"/>
         <source>Early reflection level</source>
-        <translation type="unfinished"></translation>
+        <translation>Tidligt reflektions niveau</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="239"/>
         <source>Tail level</source>
-        <translation type="unfinished"></translation>
+        <translation>Hale niveau</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="241"/>
@@ -6258,7 +6258,7 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="261"/>
         <source>About reverb</source>
-        <translation type="unfinished"></translation>
+        <translation>Om reverb</translation>
     </message>
 </context>
 <context>
