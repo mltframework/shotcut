@@ -1365,7 +1365,11 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         }
         break;
     case Qt::Key_Up:
-        if (multitrack()) {
+        if (m_playlistDock->isVisible() && event->modifiers() & Qt::AltModifier) {
+            m_playlistDock->raise();
+            m_playlistDock->decrementIndex();
+            m_playlistDock->on_actionOpen_triggered();
+        } else if (multitrack()) {
             int newClipIndex = -1;
             if ((event->modifiers() & Qt::ControlModifier) &&
                     !m_timelineDock->selection().isEmpty() &&
@@ -1389,7 +1393,11 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         }
         break;
     case Qt::Key_Down:
-        if (multitrack()) {
+        if (m_playlistDock->isVisible() && event->modifiers() & Qt::AltModifier) {
+            m_playlistDock->raise();
+            m_playlistDock->incrementIndex();
+            m_playlistDock->on_actionOpen_triggered();
+        } else if (multitrack()) {
             int newClipIndex = -1;
             if ((event->modifiers() & Qt::ControlModifier) &&
                     !m_timelineDock->selection().isEmpty() &&
