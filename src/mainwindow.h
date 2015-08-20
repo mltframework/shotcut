@@ -222,6 +222,7 @@ private slots:
     void onFocusChanged(QWidget *old, QWidget * now) const;
     void moveNavigationPositionToCurrentSelection();
     void onAddAllToTimeline(Mlt::Playlist* playlist);
+    void on_actionScrubAudio_triggered(bool checked);
 };
 
 #define MAIN MainWindow::singleton()

@@ -94,6 +94,8 @@ public:
     void setPlayerProgressive(bool);
     bool playerRealtime() const;
     void setPlayerRealtime(bool);
+    bool playerScrubAudio() const;
+    void setPlayerScrubAudio(bool);
     int playerVolume() const;
     void setPlayerVolume(int);
     float playerZoom() const;

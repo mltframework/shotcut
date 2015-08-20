@@ -290,6 +290,16 @@ void ShotcutSettings::setPlayerRealtime(bool b)
     settings.setValue("player/realtime", b);
 }
 
+bool ShotcutSettings::playerScrubAudio() const
+{
+    return settings.value("player/scrubAudio", true).toBool();
+}
+
+void ShotcutSettings::setPlayerScrubAudio(bool b)
+{
+    settings.setValue("player/scrubAudio", b);
+}
+
 int ShotcutSettings::playerVolume() const
 {
     return settings.value("player/volume", 88).toInt();

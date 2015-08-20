@@ -896,6 +896,7 @@ void MainWindow::readPlayerSettings()
     qDebug() << "begin";
     ui->actionRealtime->setChecked(Settings.playerRealtime());
     ui->actionProgressive->setChecked(Settings.playerProgressive());
+    ui->actionScrubAudio->setChecked(Settings.playerScrubAudio());
     ui->actionJack->setChecked(Settings.playerJACK());
     ui->actionGPU->setChecked(Settings.playerGPU());
     MLT.videoWidget()->setProperty("gpu", ui->actionGPU->isChecked());
@@ -2456,4 +2457,9 @@ void MainWindow::on_actionGammaRec709_triggered(bool checked)
 void MainWindow::onFocusChanged(QWidget *, QWidget * now) const
 {
     qDebug() << "Focuswidget changed to" << now;
+}
+
+void MainWindow::on_actionScrubAudio_triggered(bool checked)
+{
+    Settings.setPlayerScrubAudio(checked);
 }

@@ -538,7 +538,6 @@ int GLWidget::reconfigure(bool isMulti)
             m_consumer->set("deinterlace_method", property("deinterlace_method").toString().toLatin1().constData());
             m_consumer->set("buffer", 25);
             m_consumer->set("prefill", 1);
-            m_consumer->set("scrub_audio", 1);
             if (property("keyer").isValid())
                 m_consumer->set("keyer", property("keyer").toInt());
         }

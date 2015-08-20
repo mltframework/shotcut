@@ -76,7 +76,7 @@ public:
     double volume() const;
     void onWindowResize();
     virtual void seek(int position);
-    void refreshConsumer();
+    void refreshConsumer(bool scrubAudio = false);
     void saveXML(const QString& filename, Service* service = 0);
     QString XML(Service* service = 0);
     int consumerChanged();
