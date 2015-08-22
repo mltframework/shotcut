@@ -757,6 +757,11 @@ void Player::setPauseAfterOpen(bool pause)
     m_pauseAfterOpen = pause;
 }
 
+Player::TabIndex Player::tabIndex() const
+{
+    return (TabIndex)m_tabs->currentIndex();
+}
+
 //----------------------------------------------------------------------------
 // IEC standard dB scaling -- as borrowed from meterbridge (c) Steve Harris
 

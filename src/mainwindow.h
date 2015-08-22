@@ -153,8 +153,8 @@ public slots:
     void stepRightOneFrame();
     void stepLeftOneSecond();
     void stepRightOneSecond();
-    void setInToCurrent();
-    void setOutToCurrent();
+    void setInToCurrent(bool ripple);
+    void setOutToCurrent(bool ripple);
     void onShuttle(float x);
 
 private slots:

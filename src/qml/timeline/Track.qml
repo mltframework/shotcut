@@ -118,7 +118,7 @@ Rectangle {
                     delta = Logic.snapTrimIn(clip, delta)
                 if (delta != 0) {
                     if (timeline.trimClipIn(trackRoot.DelegateModel.itemsIndex,
-                                            clip.DelegateModel.itemsIndex, delta)) {
+                                            clip.DelegateModel.itemsIndex, delta, false)) {
                         // Show amount trimmed as a time in a "bubble" help.
                         var s = timeline.timecode(Math.abs(clip.originalX))
                         s = '%1%2 = %3'.arg((clip.originalX < 0)? '-' : (clip.originalX > 0)? '+' : '')
@@ -143,7 +143,7 @@ Rectangle {
                     delta = Logic.snapTrimOut(clip, delta)
                 if (delta != 0) {
                     if (timeline.trimClipOut(trackRoot.DelegateModel.itemsIndex,
-                                             clip.DelegateModel.itemsIndex, delta)) {
+                                             clip.DelegateModel.itemsIndex, delta, false)) {
                         // Show amount trimmed as a time in a "bubble" help.
                         var s = timeline.timecode(Math.abs(clip.originalX))
                         s = '%1%2 = %3'.arg((clip.originalX < 0)? '+' : (clip.originalX > 0)? '-' : '')

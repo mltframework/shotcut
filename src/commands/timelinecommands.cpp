@@ -272,31 +272,28 @@ void MoveClipCommand::undo()
     m_undoHelper.undoChanges();
 }
 
-TrimClipInCommand::TrimClipInCommand(MultitrackModel &model, int trackIndex, int clipIndex, int delta, QUndoCommand *parent)
+TrimClipInCommand::TrimClipInCommand(MultitrackModel &model, int trackIndex, int clipIndex, int delta, bool ripple, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_clipIndex(clipIndex)
     , m_delta(delta)
-    , m_notify(false)
+    , m_ripple(ripple)
+    , m_undoHelper(m_model)
 {
     setText(QObject::tr("Trim clip in point"));
 }
 
 void TrimClipInCommand::redo()
 {
-    m_clipIndex = m_model.trimClipIn(m_trackIndex, m_clipIndex, m_delta);
-    if (m_notify && m_clipIndex >= 0)
-        m_model.notifyClipIn(m_trackIndex, m_clipIndex);
+    m_undoHelper.recordBeforeState();
+    m_clipIndex = m_model.trimClipIn(m_trackIndex, m_clipIndex, m_delta, m_ripple);
+    m_undoHelper.recordAfterState();
 }
 
 void TrimClipInCommand::undo()
 {
-    if (m_clipIndex >= 0) {
-        m_clipIndex = m_model.trimClipIn(m_trackIndex, m_clipIndex, -m_delta);
-        m_model.notifyClipIn(m_trackIndex, m_clipIndex);
-        m_notify = true;
-    }
+    m_undoHelper.undoChanges();
 }
 
 bool TrimClipInCommand::mergeWith(const QUndoCommand *other)
@@ -304,35 +301,33 @@ bool TrimClipInCommand::mergeWith(const QUndoCommand *other)
     const TrimClipInCommand* that = static_cast<const TrimClipInCommand*>(other);
     if (that->id() != id() || that->m_trackIndex != m_trackIndex || that->m_clipIndex != m_clipIndex)
         return false;
+    m_undoHelper.recordAfterState();
     m_delta += static_cast<const TrimClipInCommand*>(other)->m_delta;
     return true;
 }
 
-TrimClipOutCommand::TrimClipOutCommand(MultitrackModel &model, int trackIndex, int clipIndex, int delta, QUndoCommand *parent)
+TrimClipOutCommand::TrimClipOutCommand(MultitrackModel &model, int trackIndex, int clipIndex, int delta, bool ripple, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_clipIndex(clipIndex)
     , m_delta(delta)
-    , m_notify(false)
+    , m_ripple(ripple)
+    , m_undoHelper(m_model)
 {
     setText(QObject::tr("Trim clip out point"));
 }
 
 void TrimClipOutCommand::redo()
 {
-    m_clipIndex = m_model.trimClipOut(m_trackIndex, m_clipIndex, m_delta);
-    if (m_notify && m_clipIndex >= 0)
-        m_model.notifyClipOut(m_trackIndex, m_clipIndex);
+    m_undoHelper.recordBeforeState();
+    m_clipIndex = m_model.trimClipOut(m_trackIndex, m_clipIndex, m_delta, m_ripple);
+    m_undoHelper.recordAfterState();
 }
 
 void TrimClipOutCommand::undo()
 {
-    if (m_clipIndex >= 0) {
-        m_model.trimClipOut(m_trackIndex, m_clipIndex, -m_delta);
-        m_model.notifyClipOut(m_trackIndex, m_clipIndex);
-        m_notify = true;
-    }
+    m_undoHelper.undoChanges();
 }
 
 bool TrimClipOutCommand::mergeWith(const QUndoCommand *other)
@@ -340,6 +335,7 @@ bool TrimClipOutCommand::mergeWith(const QUndoCommand *other)
     const TrimClipOutCommand* that = static_cast<const TrimClipOutCommand*>(other);
     if (that->id() != id() || that->m_trackIndex != m_trackIndex || that->m_clipIndex != m_clipIndex)
         return false;
+    m_undoHelper.recordAfterState();
     m_delta += static_cast<const TrimClipOutCommand*>(other)->m_delta;
     return true;
 }
@@ -559,7 +555,7 @@ void AddTransitionByTrimInCommand::undo()
         QModelIndex modelIndex = m_model.index(m_clipIndex, 0, m_model.index(m_trackIndex));
         m_delta = -m_model.data(modelIndex, MultitrackModel::DurationRole).toInt();
         m_model.liftClip(m_trackIndex, m_clipIndex);
-        m_model.trimClipOut(m_trackIndex, m_clipIndex - 1, m_delta);
+        m_model.trimClipOut(m_trackIndex, m_clipIndex - 1, m_delta, false);
         m_model.notifyClipOut(m_trackIndex, m_clipIndex - 1);
         m_notify = true;
     }
@@ -598,7 +594,7 @@ void AddTransitionByTrimOutCommand::undo()
         QModelIndex modelIndex = m_model.index(m_clipIndex + 1, 0, m_model.index(m_trackIndex));
         m_delta = -m_model.data(modelIndex, MultitrackModel::DurationRole).toInt();
         m_model.liftClip(m_trackIndex, m_clipIndex + 1);
-        m_model.trimClipIn(m_trackIndex, m_clipIndex + 2, m_delta);
+        m_model.trimClipIn(m_trackIndex, m_clipIndex + 2, m_delta, false);
         m_model.notifyClipIn(m_trackIndex, m_clipIndex + 1);
         m_notify = true;
     }

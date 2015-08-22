@@ -58,6 +58,7 @@ public:
     }
     void moveVideoToScreen(int screen = -1);
     void setPauseAfterOpen(bool pause);
+    TabIndex tabIndex() const;
 
 signals:
     void endOfStream();

@@ -42,6 +42,11 @@ public:
     explicit TimelineDock(QWidget *parent = 0);
     ~TimelineDock();
 
+    enum TrimLocation {
+        TrimInPoint,
+        TrimOutPoint
+    };
+
     MultitrackModel* model() { return &m_model; }
     int position() const { return m_position; }
     void setPosition(int position);
@@ -65,6 +70,7 @@ public:
     void selectClipUnderPlayhead();
     int centerOfClip(int trackIndex, int clipIndex);
     bool isTrackLocked(int trackIndex) const;
+    void trimClipAtPlayhead(TrimLocation location, bool ripple);
 
 signals:
     void currentTrackChanged();

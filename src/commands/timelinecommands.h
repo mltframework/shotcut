@@ -191,7 +191,7 @@ private:
 class TrimClipInCommand : public QUndoCommand
 {
 public:
-    TrimClipInCommand(MultitrackModel& model, int trackIndex, int clipIndex, int delta, QUndoCommand * parent = 0);
+    TrimClipInCommand(MultitrackModel& model, int trackIndex, int clipIndex, int delta, bool ripple, QUndoCommand * parent = 0);
     void redo();
     void undo();
 protected:
@@ -202,13 +202,14 @@ private:
     int m_trackIndex;
     int m_clipIndex;
     int m_delta;
-    bool m_notify;
+    bool m_ripple;
+    UndoHelper m_undoHelper;
 };
 
 class TrimClipOutCommand : public QUndoCommand
 {
 public:
-    TrimClipOutCommand(MultitrackModel& model, int trackIndex, int clipIndex, int delta, QUndoCommand * parent = 0);
+    TrimClipOutCommand(MultitrackModel& model, int trackIndex, int clipIndex, int delta, bool ripple, QUndoCommand * parent = 0);
     void redo();
     void undo();
 protected:
@@ -219,7 +220,8 @@ private:
     int m_trackIndex;
     int m_clipIndex;
     int m_delta;
-    bool m_notify;
+    bool m_ripple;
+    UndoHelper m_undoHelper;
 };
 
 class SplitCommand : public QUndoCommand
