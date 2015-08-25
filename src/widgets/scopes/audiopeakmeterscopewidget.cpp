@@ -21,6 +21,7 @@
 #include <QVBoxLayout>
 #include <MltProfile.h>
 #include "widgets/audiometerwidget.h"
+#include "mltcontroller.h"
 #include <cmath> // log10()
 
 AudioPeakMeterScopeWidget::AudioPeakMeterScopeWidget()
@@ -30,8 +31,7 @@ AudioPeakMeterScopeWidget::AudioPeakMeterScopeWidget()
   , m_orientation((Qt::Orientation)-1)
 {
     qDebug() << "begin";
-    Mlt::Profile profile;
-    m_filter = new Mlt::Filter(profile, "audiolevel");
+    m_filter = new Mlt::Filter(MLT.profile(), "audiolevel");
     m_filter->set("iec_scale", 0);
     qRegisterMetaType< QVector<double> >("QVector<double>");
     setAutoFillBackground(true);
