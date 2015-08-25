@@ -199,7 +199,7 @@ void Controller::play(double speed)
                 m_consumer->stop();
         }
         m_consumer->start();
-        refreshConsumer();
+        refreshConsumer(Settings.playerScrubAudio());
     }
     if (m_jackFilter)
         m_jackFilter->fire_event("jack-start");
@@ -339,6 +339,7 @@ void Controller::onWindowResize()
 
 void Controller::seek(int position)
 {
+    setVolume(m_volume, false);
     if (m_producer) {
         // Always pause before seeking (if not already paused).
         if (!Settings.playerGPU())
@@ -355,19 +356,21 @@ void Controller::seek(int position)
                 m_consumer->start();
             } else {
                 m_consumer->purge();
-                refreshConsumer();
+                refreshConsumer(Settings.playerScrubAudio());
             }
         }
     }
     if (m_jackFilter)
         mlt_events_fire(m_jackFilter->get_properties(), "jack-seek", &position, NULL);
-    setVolume(m_volume, false);
 }
 
-void Controller::refreshConsumer()
+void Controller::refreshConsumer(bool scrubAudio)
 {
-    if (m_consumer) // need to refresh consumer when paused
+    if (m_consumer) {
+        // need to refresh consumer when paused
+        m_consumer->set("scrub_audio", scrubAudio);
         m_consumer->set("refresh", 1);
+    }
 }
 
 void Controller::saveXML(const QString& filename, Service* service)

@@ -154,6 +154,12 @@ Rectangle {
             }
             
             onCurrentIndexChanged: positionViewAtIndex(currentIndex, ListView.Contain)
+            onCountChanged: {
+                if (count > 0 && currentIndex == -1) {
+                    currentIndex = 0;
+                    filterClicked(currentIndex);
+                }
+            }
 
             MouseArea {
                 property int oldIndex: -1

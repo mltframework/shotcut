@@ -133,8 +133,10 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
             ui->sampleRateCombo->lineEdit()->setText(preset.get("ar"));
         else if (name == "ab")
             ui->audioBitrateCombo->lineEdit()->setText(preset.get("ab"));
-        else if (name == "vb")
+        else if (name == "vb") {
+            ui->videoRateControlCombo->setCurrentIndex(RateControlAverage);
             ui->videoBitrateCombo->lineEdit()->setText(preset.get("vb"));
+        }
         else if (name == "g")
             ui->gopSpinner->setValue(preset.get_int("g"));
         else if (name == "bf")

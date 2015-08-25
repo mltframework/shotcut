@@ -353,6 +353,7 @@ OTHER_FILES += \
     qml/filters/white/ui.qml \
     qml/modules/Shotcut/Controls/SliderSpinner.qml \
     qml/modules/Shotcut/Controls/RectangleControl.qml \
+    qml/modules/Shotcut/Controls/SimplePropertyUI.qml \
     qml/filters/size_position/SizePositionUI.qml \
     qml/filters/size_position/SizePositionVUI.qml \
     qml/filters/size_position/meta_affine.qml \
@@ -404,7 +405,17 @@ OTHER_FILES += \
     qml/filters/audio_lowpass/meta.qml \
     qml/filters/audio_lowpass/ui.qml \
     qml/filters/audio_notch/meta.qml \
-    qml/filters/audio_notch/ui.qml
+    qml/filters/audio_notch/ui.qml \
+    qml/filters/audio_compressor/meta.qml \
+    qml/filters/audio_compressor/ui.qml \
+    qml/filters/audio_delay/meta.qml \
+    qml/filters/audio_delay/ui.qml \
+    qml/filters/audio_expander/meta.qml \
+    qml/filters/audio_expander/ui.qml \
+    qml/filters/audio_limiter/meta.qml \
+    qml/filters/audio_limiter/ui.qml \
+    qml/filters/audio_reverb/meta.qml \
+    qml/filters/audio_reverb/ui.qml
 
 lupdate_hack {
     SOURCES += \
@@ -538,7 +549,17 @@ lupdate_hack {
     qml/filters/audio_lowpass/meta.qml \
     qml/filters/audio_lowpass/ui.qml \
     qml/filters/audio_notch/meta.qml \
-    qml/filters/audio_notch/ui.qml
+    qml/filters/audio_notch/ui.qml \
+    qml/filters/audio_compressor/meta.qml \
+    qml/filters/audio_compressor/ui.qml \
+    qml/filters/audio_delay/meta.qml \
+    qml/filters/audio_delay/ui.qml \
+    qml/filters/audio_expander/meta.qml \
+    qml/filters/audio_expander/ui.qml \
+    qml/filters/audio_limiter/meta.qml \
+    qml/filters/audio_limiter/ui.qml \
+    qml/filters/audio_reverb/meta.qml \
+    qml/filters/audio_reverb/ui.qml
 }
 
 TRANSLATIONS += \
@@ -546,6 +567,7 @@ TRANSLATIONS += \
     ../translations/shotcut_cs.ts \
     ../translations/shotcut_da.ts \
     ../translations/shotcut_de.ts \
+    ../translations/shotcut_el.ts \
     ../translations/shotcut_en.ts \
     ../translations/shotcut_es.ts \
     ../translations/shotcut_fr.ts \

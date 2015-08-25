@@ -33,6 +33,21 @@ Rectangle {
 
     SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
     Shotcut.File { id: htmlFile }
+    Shotcut.File {
+        id: customUiFile
+        url: {
+            if (!htmlFile.url || !htmlFile.exists())
+                return "";
+            var uiFile = htmlFile.url.toString();
+            return uiFile.substr(0, uiFile.lastIndexOf(".")) + "_ui.qml";
+        }
+        onUrlChanged: {
+            if (exists())
+                customUILoader.source = url;
+            else
+                customUILoader.source = "";
+        }
+    }
 
     // This signal is used to workaround context properties not available in
     // the FileDialog onAccepted signal handler on Qt 5.5.
@@ -221,6 +236,12 @@ Rectangle {
             Layout.columnSpan: 2
             Layout.fillWidth: true
             visible: editButton.visible
+        }
+
+        Loader {
+            id: customUILoader
+            Layout.columnSpan: 4
+            Layout.fillWidth: true
         }
 
         Item {

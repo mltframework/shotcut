@@ -7,3 +7,4 @@ TimeSpinner 1.0 TimeSpinner.qml
 SaveDefaultButton 1.0 SaveDefaultButton.qml
 SliderSpinner 1.0 SliderSpinner.qml
 RectangleControl 1.0 RectangleControl.qml
+SimplePropertyUI 1.0 SimplePropertyUI.qml

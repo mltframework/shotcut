@@ -17,6 +17,7 @@
  */
 
 #include <QtWidgets>
+#include <QtGlobal>
 #include "mainwindow.h"
 #include "settings.h"
 #include <Logger.h>
@@ -26,6 +27,15 @@
 #include <QProcess>
 #include <QCommandLineParser>
 #include <framework/mlt_log.h>
+
+#ifdef Q_OS_WIN
+extern "C"
+{
+    // Inform the driver we could make use of the discrete gpu
+    __declspec(dllexport) DWORD NvOptimusEnablement = 0x00000001;
+    __declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;
+}
+#endif
 
 static void mlt_log_handler(void *service, int mlt_level, const char *format, va_list args)
 {

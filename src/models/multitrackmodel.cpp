@@ -929,6 +929,7 @@ int MultitrackModel::insertClip(int trackIndex, Mlt::Producer &clip, int positio
         }
         if (result >= 0) {
             //fill in/expand blanks in all the other tracks
+            if (Settings.timelineRippleAllTracks())
             for (int j = 0; j < m_trackList.count(); ++j) {
                 if (j == trackIndex)
                     continue;
@@ -1044,7 +1045,7 @@ void MultitrackModel::removeClip(int trackIndex, int clipIndex)
             consolidateBlanks(playlist, trackIndex);
 #endif
             // Ripple all unlocked tracks.
-            if (clipPlaytime > 0)
+            if (clipPlaytime > 0 && Settings.timelineRippleAllTracks())
             for (int j = 0; j < m_trackList.count(); ++j) {
                 if (j == trackIndex)
                     continue;

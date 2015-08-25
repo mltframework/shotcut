@@ -243,7 +243,7 @@ MainWindow::MainWindow()
     connect(m_timelineDock, SIGNAL(clipOpened(void*)), SLOT(openCut(void*)));
     connect(m_timelineDock->model(), SIGNAL(seeked(int)), SLOT(seekTimeline(int)));
     connect(m_playlistDock, SIGNAL(addAllTimeline(Mlt::Playlist*)), SLOT(onTimelineDockTriggered()));
-    connect(m_playlistDock, SIGNAL(addAllTimeline(Mlt::Playlist*)), m_timelineDock, SLOT(appendFromPlaylist(Mlt::Playlist*)));
+    connect(m_playlistDock, SIGNAL(addAllTimeline(Mlt::Playlist*)), SLOT(onAddAllToTimeline(Mlt::Playlist*)));
     connect(m_player, SIGNAL(previousSought()), m_timelineDock, SLOT(seekPreviousEdit()));
     connect(m_player, SIGNAL(nextSought()), m_timelineDock, SLOT(seekNextEdit()));
 
@@ -393,6 +393,18 @@ void MainWindow::moveNavigationPositionToCurrentSelection()
         return;
 
     m_navigationPosition = t->centerOfClip(t->currentTrack(), t->selection().first());
+}
+
+void MainWindow::onAddAllToTimeline(Mlt::Playlist* playlist)
+{
+    // We stop the player because of a bug on Windows that results in some
+    // strange memory leak when using Add All To Timeline, more noticeable
+    // with (high res?) still image files.
+    if (MLT.isSeekable())
+        m_player->pause();
+    else
+        m_player->stop();
+    m_timelineDock->appendFromPlaylist(playlist);
 }
 
 MainWindow& MainWindow::singleton()
@@ -571,6 +583,10 @@ void MainWindow::setupSettingsMenu()
     a = new QAction(QLocale::languageToString(QLocale::English), m_languagesGroup);
     a->setCheckable(true);
     a->setData("en");
+    ui->menuLanguage->addActions(m_languagesGroup->actions());
+    a = new QAction(QLocale::languageToString(QLocale::Greek), m_languagesGroup);
+    a->setCheckable(true);
+    a->setData("el");
     ui->menuLanguage->addActions(m_languagesGroup->actions());
     a = new QAction(QLocale::languageToString(QLocale::French), m_languagesGroup);
     a->setCheckable(true);
@@ -880,6 +896,7 @@ void MainWindow::readPlayerSettings()
     qDebug() << "begin";
     ui->actionRealtime->setChecked(Settings.playerRealtime());
     ui->actionProgressive->setChecked(Settings.playerProgressive());
+    ui->actionScrubAudio->setChecked(Settings.playerScrubAudio());
     ui->actionJack->setChecked(Settings.playerJACK());
     ui->actionGPU->setChecked(Settings.playerGPU());
     MLT.videoWidget()->setProperty("gpu", ui->actionGPU->isChecked());
@@ -2440,4 +2457,9 @@ void MainWindow::on_actionGammaRec709_triggered(bool checked)
 void MainWindow::onFocusChanged(QWidget *, QWidget * now) const
 {
     qDebug() << "Focuswidget changed to" << now;
+}
+
+void MainWindow::on_actionScrubAudio_triggered(bool checked)
+{
+    Settings.setPlayerScrubAudio(checked);
 }

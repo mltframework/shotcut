@@ -7,7 +7,7 @@
 
 **Warning**: Shotcut is currently in very early stage and active development. So do not expect a final product for now.
 
-Binaries are regularly build and are available at http://www.shotcut.org, on the Download section.
+Binaries are regularly built and are available at http://www.shotcut.org, on the Download section.
 
 ## Contributors
 

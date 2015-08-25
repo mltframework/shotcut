@@ -136,6 +136,7 @@
      <addaction name="actionGammaRec709"/>
     </widget>
     <addaction name="actionGPU"/>
+    <addaction name="actionScrubAudio"/>
     <addaction name="actionJack"/>
     <addaction name="actionRealtime"/>
     <addaction name="actionProgressive"/>
@@ -631,6 +632,14 @@
    </property>
    <property name="text">
     <string>Rec. 709 (TV)</string>
+   </property>
+  </action>
+  <action name="actionScrubAudio">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Scrub Audio</string>
    </property>
   </action>
  </widget>

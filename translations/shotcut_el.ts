@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="de">
+<TS version="2.1" language="el_GR">
 <context>
     <name>AddEncodePresetDialog</name>
     <message>
         <location filename="../src/dialogs/addencodepresetdialog.ui" line="17"/>
         <source>Dialog</source>
-        <translation>Dialog</translation>
+        <translation>Διάλογος</translation>
     </message>
     <message>
         <location filename="../src/dialogs/addencodepresetdialog.ui" line="25"/>
         <source>Name</source>
-        <translation>Name</translation>
+        <translation>Όνομα</translation>
     </message>
     <message>
         <location filename="../src/dialogs/addencodepresetdialog.ui" line="53"/>
         <source>Make final changes to the preset including removing items you do not want to include, or copy/paste the clipboard.</source>
-        <translation>Endgültige Änderungen am Preset, sowie das Entfernen von Einträgen die Sie nicht inkludieren wollen anwenden, oder die Zwischenablage kopieren/einfügen.</translation>
+        <translation>Πραγματοποίηση τελικών αλλαγών στις προεπιλογές συμπεριλαμβανομένου και της αφαίρεσης αντικειμένων  που δεν θέλετε να συμπεριληφθούν, ή αντιγραφή επικόλληση του πρόχειρου.</translation>
     </message>
 </context>
 <context>
@@ -24,32 +24,32 @@
     <message>
         <location filename="../src/widgets/alsawidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Formular</translation>
+        <translation>Φόρμα</translation>
     </message>
     <message>
         <location filename="../src/widgets/alsawidget.ui" line="26"/>
         <source>ALSA Audio</source>
-        <translation>ALSA Audio</translation>
+        <translation>Ήχος ALSA</translation>
     </message>
     <message>
         <location filename="../src/widgets/alsawidget.ui" line="61"/>
         <source>Apply</source>
-        <translation>Anwenden</translation>
+        <translation>Εφαρμογή</translation>
     </message>
     <message>
         <location filename="../src/widgets/alsawidget.ui" line="68"/>
         <source>PCM Device</source>
-        <translation>Soundkarte</translation>
+        <translation>Συσκευή PCM</translation>
     </message>
     <message>
         <location filename="../src/widgets/alsawidget.ui" line="78"/>
         <source>default</source>
-        <translation>standard</translation>
+        <translation>προκαθορισμένο</translation>
     </message>
     <message>
         <location filename="../src/widgets/alsawidget.ui" line="85"/>
         <source>Channels</source>
-        <translation>Kanäle</translation>
+        <translation>Κανάλια</translation>
     </message>
 </context>
 <context>
@@ -57,7 +57,7 @@
     <message>
         <location filename="../src/models/attachedfiltersmodel.cpp" line="147"/>
         <source>Audio</source>
-        <translation>Audio</translation>
+        <translation>Ήχος</translation>
     </message>
     <message>
         <location filename="../src/models/attachedfiltersmodel.cpp" line="149"/>
@@ -67,7 +67,7 @@
     <message>
         <location filename="../src/models/attachedfiltersmodel.cpp" line="151"/>
         <source>Video</source>
-        <translation>Video</translation>
+        <translation>Βίντεο</translation>
     </message>
 </context>
 <context>
@@ -75,7 +75,7 @@
     <message>
         <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="85"/>
         <source>Audio Peak Meter</source>
-        <translation>Audio-Pegelmesser</translation>
+        <translation>Μετρητής Κορυφών Ήχου</translation>
     </message>
 </context>
 <context>
@@ -83,7 +83,7 @@
     <message>
         <location filename="../src/widgets/scopes/audiospectrumscopewidget.cpp" line="212"/>
         <source>Audio Spectrum</source>
-        <translation>Audiospektrum</translation>
+        <translation>Φάσμα Ήχου</translation>
     </message>
 </context>
 <context>
@@ -101,7 +101,7 @@
     <message>
         <location filename="../src/widgets/scopes/audiowaveformscopewidget.cpp" line="249"/>
         <source>Audio Waveform</source>
-        <translation>Audio-Wellenform</translation>
+        <translation>Κυματομορφή Ήχου</translation>
     </message>
 </context>
 <context>
@@ -109,33 +109,33 @@
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Formular</translation>
+        <translation>Φόρμα</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="33"/>
         <source>Comments:</source>
-        <translation>Kommentare:</translation>
+        <translation>Σχόλια:</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="61"/>
         <source>Duration</source>
-        <translation>Spieldauer</translation>
+        <translation>Διάρκεια</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="109"/>
         <source>Video</source>
-        <translation>Video</translation>
+        <translation>Βίντεο</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="117"/>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="419"/>
         <source>Track</source>
-        <translation>Spur</translation>
+        <translation>Κομμάτι</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="149"/>
         <source>Aspect ratio</source>
-        <translation>Seitenverhältnis</translation>
+        <translation>Αναλογία εικόνας</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="180"/>
@@ -145,17 +145,17 @@
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="221"/>
         <source>Scan mode</source>
-        <translation>Abtastmodus</translation>
+        <translation>Τρόπος σάρωσης</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="247"/>
         <source>Interlaced</source>
-        <translation>Zeilensprungverfahren (interlaced)</translation>
+        <translation>Πεπλεγμένος</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="252"/>
         <source>Progressive</source>
-        <translation>Vollbildverfahren (progressive)</translation>
+        <translation>Προοδευτικός</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="318"/>
@@ -163,87 +163,87 @@
         <location filename="../src/widgets/avformatproducerwidget.ui" line="505"/>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="535"/>
         <source>Codec</source>
-        <translation>Codec</translation>
+        <translation>Κωδικοποιητής</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="323"/>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="353"/>
         <source>Resolution</source>
-        <translation>Auflösung</translation>
+        <translation>Ανάλυση</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="328"/>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="358"/>
         <source>Frame rate</source>
-        <translation>Framerate</translation>
+        <translation>Ρυθμός καρέ</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="333"/>
         <source>Pixel format</source>
-        <translation>Pixelformat</translation>
+        <translation>Μορφή εικονοστοιχείων</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="338"/>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="525"/>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="665"/>
         <source>Name</source>
-        <translation>Name</translation>
+        <translation>Όνομα</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="343"/>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="530"/>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="670"/>
         <source>Value</source>
-        <translation>Wert</translation>
+        <translation>Τιμή</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="363"/>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="520"/>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="550"/>
         <source>Format</source>
-        <translation>Format</translation>
+        <translation>Μορφή</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="371"/>
         <source>Field order</source>
-        <translation>Halbbild-Reihenfolge</translation>
+        <translation>Σειρά πεδίων</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="384"/>
         <source>Bottom Field First</source>
-        <translation>Bottom Field First</translation>
+        <translation>Κατώτατο Πεδίο Πρώτα</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="389"/>
         <source>Top Field First</source>
-        <translation>Top Field First</translation>
+        <translation>Κορυφαίο Πεδίο Πρώτα</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="413"/>
         <source>Audio</source>
-        <translation>Audio</translation>
+        <translation>Ήχος</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="510"/>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="540"/>
         <source>Channels</source>
-        <translation>Kanäle</translation>
+        <translation>Κανάλια</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="515"/>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="545"/>
         <source>Sample rate</source>
-        <translation>Samplerate</translation>
+        <translation>Ρυθμός δειγμάτων</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="558"/>
         <source>Adjust the audio/video synchronization. The center position is equivalent to no alteration.</source>
-        <translation>Audio/Video Synchronizität einstellen. Die Mittelstellung bedeutet keine Veränderung.</translation>
+        <translation>Ρυθμίστε τον συγχρονισμό ήχου/βίντεο. Η μεσαία θέση είναι ισοδύναμη με μη αλλαγή.</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="577"/>
         <source>Sync</source>
-        <translation>Sync</translation>
+        <translation>Συγχρονισμός</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="602"/>
@@ -253,33 +253,33 @@
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="631"/>
         <source>Metadata</source>
-        <translation>Metadaten</translation>
+        <translation>Μεταδεδομένα</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="684"/>
         <source>Reset</source>
-        <translation>Zurücksetzen</translation>
+        <translation>Επαναφορά</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="691"/>
         <source>Display a menu of additional actions</source>
-        <translation>Menü mit zusätzlichen Aktionen anzeigen</translation>
+        <translation>Προβολή μενού με επιπλέον ενέργειες</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="733"/>
         <source>Show in Folder</source>
-        <translation>In Ordner anzeigen</translation>
+        <translation>Προβολή σε Φάκελο</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="738"/>
         <source>Copy Full File Path</source>
-        <translation>Vollen Dateipfad kopieren</translation>
+        <translation>Αντιγραφή Όλης της Διαδρομής Αρχείου</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="116"/>
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="145"/>
         <source>None</source>
-        <translation>Keinen</translation>
+        <translation>Κανένα</translation>
     </message>
 </context>
 <context>
@@ -287,22 +287,22 @@
     <message>
         <location filename="../src/qml/timeline/Clip.qml" line="592"/>
         <source>Remove</source>
-        <translation>Entfernen</translation>
+        <translation>Αφαίρεση</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/Clip.qml" line="597"/>
         <source>Lift</source>
-        <translation>Wegnehmen</translation>
+        <translation>Ανασήκωση</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/Clip.qml" line="602"/>
         <source>Open As Clip</source>
-        <translation>Als Clip öffnen</translation>
+        <translation>Άνοιγμα Ως Κλιπ</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/Clip.qml" line="607"/>
         <source>Split At Playhead (S)</source>
-        <translation>An Abspielposition trennen (S)</translation>
+        <translation>Διαχωρισμός στην Κεφαλή Αναπαραγωγής</translation>
     </message>
 </context>
 <context>
@@ -310,42 +310,42 @@
     <message>
         <location filename="../src/widgets/colorbarswidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Formular</translation>
+        <translation>Φόρμα</translation>
     </message>
     <message>
         <location filename="../src/widgets/colorbarswidget.ui" line="26"/>
         <source>Color Bars</source>
-        <translation>Farbbalken</translation>
+        <translation>Μπάρες Χρώματος</translation>
     </message>
     <message>
         <location filename="../src/widgets/colorbarswidget.ui" line="45"/>
         <source>Type</source>
-        <translation>Typ</translation>
+        <translation>Τύπος</translation>
     </message>
     <message>
         <location filename="../src/widgets/colorbarswidget.ui" line="62"/>
         <source>100% PAL color bars</source>
-        <translation>100% PAL Farbbalken</translation>
+        <translation>100% μπάρες χρώματος PAL</translation>
     </message>
     <message>
         <location filename="../src/widgets/colorbarswidget.ui" line="67"/>
         <source>100% PAL color bars with red</source>
-        <translation>100% PAL Farbbalken mit Rot</translation>
+        <translation>100% μπάρες χρώματος PAL με κόκκινο</translation>
     </message>
     <message>
         <location filename="../src/widgets/colorbarswidget.ui" line="72"/>
         <source>95% BBC PAL color bars</source>
-        <translation>95% BBC PAL Farbbalken</translation>
+        <translation>95% μπάρες χρώματος BBC PAL</translation>
     </message>
     <message>
         <location filename="../src/widgets/colorbarswidget.ui" line="77"/>
         <source>75% EBU color bars</source>
-        <translation>75% EBU Farbbalken</translation>
+        <translation>75% μπάρες χρώματος EBU</translation>
     </message>
     <message>
         <location filename="../src/widgets/colorbarswidget.ui" line="82"/>
         <source>SMPTE color bars</source>
-        <translation>SMPTE Farbbalken</translation>
+        <translation>Μπάρες χρώματος SMPTE</translation>
     </message>
     <message>
         <location filename="../src/widgets/colorbarswidget.ui" line="87"/>
@@ -360,7 +360,7 @@
     <message>
         <location filename="../src/widgets/colorbarswidget.ui" line="97"/>
         <source>Simplified FuBK</source>
-        <translation>FuBK (vereinfacht)</translation>
+        <translation>Απλοποιημένο FuBK</translation>
     </message>
 </context>
 <context>
@@ -368,17 +368,17 @@
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="56"/>
         <source>Click to open color dialog</source>
-        <translation>Hier clicken um Farb-Dialog zu öffnen</translation>
+        <translation>Κλικ για άνοιγμα διαλόγου χρώματος</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="61"/>
         <source>Please choose a color</source>
-        <translation>Bitte wählen Sie eine Farbe</translation>
+        <translation>Παρακαλώ επιλέξτε ένα χρώμα</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="80"/>
         <source>Pick a color on the screen. By pressing the mouse button and then moving your mouse you can select a section of the screen from which to get an average color.</source>
-        <translation>Wählen Sie eine Farbe auf dem Bildschirm. Während Sie den Knopf auf der Maus gedrückt halten, können Sie mit der Maus herumfahren um einen Bereich am Bildschrim auszuwählen, von dem dann der durchschnittliche Farbwert genommen wird.</translation>
+        <translation>Επιλέξτε ένα χρώμα στην οθόνη. Πατώντας το πλήκτρο του ποντικιού και μετακινώντας το ποντίκι, μπορείτε να επιλέξετε μια περιοχή της οθόνης και θα εξαχθεί ένα μέσο χρώμα. </translation>
     </message>
 </context>
 <context>
@@ -386,17 +386,17 @@
     <message>
         <location filename="../src/widgets/colorproducerwidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Formular</translation>
+        <translation>Φόρμα</translation>
     </message>
     <message>
         <location filename="../src/widgets/colorproducerwidget.ui" line="26"/>
         <source>Color</source>
-        <translation>Farbe</translation>
+        <translation>Χρώμα</translation>
     </message>
     <message>
         <location filename="../src/widgets/colorproducerwidget.ui" line="48"/>
         <source>Color...</source>
-        <translation>Farbe...</translation>
+        <translation>Χρώμα...</translation>
     </message>
     <message>
         <location filename="../src/widgets/colorproducerwidget.ui" line="61"/>
@@ -409,17 +409,17 @@
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="14"/>
         <source>Add Custom Video Mode</source>
-        <translation>Eigenen Videomodus hinzufügen</translation>
+        <translation>Προσθήκη Προσαρμοσμένου Ρυθμού Βίντεο</translation>
     </message>
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="29"/>
         <source>Colorspace</source>
-        <translation>Farbraum</translation>
+        <translation>Χρωματικός</translation>
     </message>
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="76"/>
         <source>Resolution</source>
-        <translation>Auflösung</translation>
+        <translation>Ανάλυση</translation>
     </message>
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="110"/>
@@ -429,22 +429,22 @@
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="145"/>
         <source>Name</source>
-        <translation>Name</translation>
+        <translation>Όνομα</translation>
     </message>
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="167"/>
         <source>Interlaced</source>
-        <translation>Zeilensprungverfahren (interlaced)</translation>
+        <translation>Πεπλεγμένος</translation>
     </message>
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="172"/>
         <source>Progressive</source>
-        <translation>Vollbildverfahren (progressive)</translation>
+        <translation>Προοδευτικός</translation>
     </message>
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="195"/>
         <source>Aspect ratio</source>
-        <translation>Seitenverhältnis</translation>
+        <translation>Αναλογία εικόνας</translation>
     </message>
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="226"/>
@@ -454,12 +454,12 @@
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="261"/>
         <source>Frames/sec</source>
-        <translation>Bilder/Sek.</translation>
+        <translation>Καρέ/δευτ</translation>
     </message>
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="307"/>
         <source>Scan mode</source>
-        <translation>Abtastmodus</translation>
+        <translation>Τρόπος σάρωσης</translation>
     </message>
 </context>
 <context>
@@ -467,33 +467,33 @@
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="663"/>
         <source>Received Continuation frame, while there is nothing to continue.</source>
-        <translation>Continuation-Frame erhalten. Es ist aber nichts fortzuführen (continue).</translation>
+        <translation>Λήφθηκε καρέ Συνέχισης, ενός δεν υπάρχει κάτι για συνέχιση. </translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="669"/>
         <source>All data frames after the initial data frame must have opcode 0 (continuation).</source>
-        <translation>Alle Daten-Frames nach dem anfänglichen Daten-Frame müssen den Opcode 0 haben (continuation).</translation>
+        <translation>Όλα τα καρέ δεδομένων μετά τα αρχικά, πρέπει να έχουν κωδικό εντολής 0 (συνέχιση).</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="681"/>
         <source>Received message is too big.</source>
-        <translation>Empfangene Nachricht ist zu groß.</translation>
+        <translation>Το ληφθέν μήνυμα είναι πολύ μεγάλο.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="692"/>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="806"/>
         <source>Invalid UTF-8 code encountered.</source>
-        <translation>Ungültiger UTF-8 Code gefunden.</translation>
+        <translation>Άκυρος κωδικός UTF-8.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="785"/>
         <source>Payload of close frame is too small.</source>
-        <translation>Payload des Schlussframes ist zu klein.</translation>
+        <translation>Το φορτίο του καρέ κλεισίματος είναι πολύ μικρό.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="793"/>
         <source>Invalid close code %1 detected.</source>
-        <translation>Ungültiger Schlusscode %1 erkannt.</translation>
+        <translation>Ανίχνευση άκυρου κωδικού κλεισίματος 1%.</translation>
     </message>
 </context>
 <context>
@@ -501,7 +501,7 @@
     <message>
         <location filename="../src/widgets/decklinkproducerwidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Formular</translation>
+        <translation>Φόρμα</translation>
     </message>
     <message>
         <location filename="../src/widgets/decklinkproducerwidget.ui" line="26"/>
@@ -511,22 +511,22 @@
     <message>
         <location filename="../src/widgets/decklinkproducerwidget.ui" line="64"/>
         <source>Device</source>
-        <translation>Gerät</translation>
+        <translation>Συκευή</translation>
     </message>
     <message>
         <location filename="../src/widgets/decklinkproducerwidget.ui" line="74"/>
         <source>Signal mode</source>
-        <translation>Signalmodus</translation>
+        <translation>Τρόπος σήματος</translation>
     </message>
     <message>
         <location filename="../src/widgets/decklinkproducerwidget.ui" line="92"/>
         <source>Please be aware that not every card model supports automatic signal detection, and not all cards support all of the signal modes.</source>
-        <translation>Hinweis: Nicht jedes Kartenmodell unterstützt automatische Signalerkennung, und nicht alle Karten unterstützen alle Signalmodi.</translation>
+        <translation>Παρακαλώ προσέξτε πως ο αυτόματος εντοπισμός σήματος δεν υποστηρίζεται από οποιαδήποτε κάρτα, και δεν υποστηρίζουν όλους τους τρόπους σήματος. </translation>
     </message>
     <message>
         <location filename="../src/widgets/decklinkproducerwidget.cpp" line="28"/>
         <source>Detect Automatically</source>
-        <translation>Automatisch erkennen</translation>
+        <translation>Αυτόματος Εντοπισμός</translation>
     </message>
 </context>
 <context>
@@ -534,12 +534,12 @@
     <message>
         <location filename="../src/htmleditor/inserthtmldialog.ui" line="14"/>
         <source>Insert HTML</source>
-        <translation>HTML einfügen</translation>
+        <translation>Εισαγωγή HTML</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/inserthtmldialog.ui" line="20"/>
         <source>HTML Code:</source>
-        <translation>HTML-Code:</translation>
+        <translation>Κώδικας HTML:</translation>
     </message>
 </context>
 <context>
@@ -547,7 +547,7 @@
     <message>
         <location filename="../src/widgets/directshowvideowidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Formular</translation>
+        <translation>Φόρμα</translation>
     </message>
     <message>
         <location filename="../src/widgets/directshowvideowidget.ui" line="26"/>
@@ -558,17 +558,17 @@
         <location filename="../src/widgets/directshowvideowidget.ui" line="59"/>
         <location filename="../src/widgets/directshowvideowidget.ui" line="88"/>
         <source>None</source>
-        <translation>Keine</translation>
+        <translation>Κανένα</translation>
     </message>
     <message>
         <location filename="../src/widgets/directshowvideowidget.ui" line="67"/>
         <source>Video Input</source>
-        <translation>Video-Eingang</translation>
+        <translation>Είσοδος Βίντεο</translation>
     </message>
     <message>
         <location filename="../src/widgets/directshowvideowidget.ui" line="77"/>
         <source>Audio Input</source>
-        <translation>Audioeingang</translation>
+        <translation>Είσοδος Ήχου</translation>
     </message>
 </context>
 <context>
@@ -576,12 +576,12 @@
     <message>
         <location filename="../src/dialogs/durationdialog.ui" line="17"/>
         <source>Set Duration</source>
-        <translation>Spieldauer angeben</translation>
+        <translation>Ρύθμιση Διάρκειας</translation>
     </message>
     <message>
         <location filename="../src/dialogs/durationdialog.ui" line="25"/>
         <source>Duration</source>
-        <translation>Spieldauer</translation>
+        <translation>Διάρκεια</translation>
     </message>
 </context>
 <context>
@@ -589,42 +589,42 @@
     <message>
         <location filename="../src/docks/encodedock.ui" line="27"/>
         <source>Encode</source>
-        <translation>Enkodieren</translation>
+        <translation>Κωδικοποίηση</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="54"/>
         <source>search</source>
-        <translation>Suche</translation>
+        <translation>εύρεση</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="85"/>
         <source>Add current settings as a new custom preset</source>
-        <translation>Neue Voreinstellung aus aktuellen Einstellungen hinzufügen</translation>
+        <translation>Εισαγωγή των τρέχων ρυθμίσεων ως νέο προκαθορισμένο</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="99"/>
         <source>Delete currently selected preset</source>
-        <translation>Aktuell ausgewählte Voreinstellung löschen</translation>
+        <translation>Διαγραφή των επιλεγμένων προκαθορισμένων</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="171"/>
         <source>Format</source>
-        <translation>Format</translation>
+        <translation>Μορφή</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="209"/>
         <source>Video</source>
-        <translation>Video</translation>
+        <translation>Βίντεο</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="279"/>
         <source>Resolution</source>
-        <translation>Auflösung</translation>
+        <translation>Ανάλυση</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="289"/>
         <source>Frames/sec</source>
-        <translation>Bilder/Sek.</translation>
+        <translation>Καρέ/δευτ</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="317"/>
@@ -634,22 +634,22 @@
     <message>
         <location filename="../src/docks/encodedock.ui" line="355"/>
         <source>Bottom Field First</source>
-        <translation>Bottom Field First</translation>
+        <translation>Κατώτατο Πεδίο Πρώτα</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="360"/>
         <source>Top Field First</source>
-        <translation>Top Field First</translation>
+        <translation>Κορυφαίο Πεδίο Πρώτα</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="383"/>
         <source>Field order</source>
-        <translation>Halbbild Reihenfolge</translation>
+        <translation>Σειρά πεδίων</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="393"/>
         <source>Aspect ratio</source>
-        <translation>Seitenverhältnis</translation>
+        <translation>Αναλογία εικόνας</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="421"/>
@@ -659,24 +659,24 @@
     <message>
         <location filename="../src/docks/encodedock.ui" line="456"/>
         <source>Scan mode</source>
-        <translation>Abtastmodus</translation>
+        <translation>Τρόπος σάρωσης</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="475"/>
         <source>Interlaced</source>
-        <translation>Zeilensprungverfahren (interlaced)</translation>
+        <translation>Πεπλεγμένος</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="480"/>
         <source>Progressive</source>
-        <translation>Vollbildverfahren (progressive)</translation>
+        <translation>Προοδευτικός</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="507"/>
         <location filename="../src/docks/encodedock.ui" line="516"/>
         <location filename="../src/docks/encodedock.ui" line="1109"/>
         <source>Codec</source>
-        <translation>Codec</translation>
+        <translation>Κωδικοποιητής</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="546"/>
@@ -686,18 +686,18 @@
     <message>
         <location filename="../src/docks/encodedock.ui" line="558"/>
         <source>GOP = group of pictures, which is the maximum key frame interval</source>
-        <translation>GOP (Group Of Pictures) = Maximale Anzahl an Bildern bis zum nächsten Keyframe</translation>
+        <translation>GOP. Group Of Pictures, που είναι το μέγιστο κλειδί ενδιάμεσων καρέ</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="571"/>
         <source>frames</source>
-        <translation>Bilder</translation>
+        <translation>καρέ</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="595"/>
         <location filename="../src/docks/encodedock.ui" line="1151"/>
         <source>The average bit rate</source>
-        <translation>Durschschnittliche Bitrate</translation>
+        <translation>Ο μέσος ρυθμός bit</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="605"/>
@@ -848,68 +848,68 @@
         <location filename="../src/docks/encodedock.ui" line="748"/>
         <location filename="../src/docks/encodedock.ui" line="1219"/>
         <source>b/s</source>
-        <translation>bps</translation>
+        <translation>b/s</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="770"/>
         <source>Disable video</source>
-        <translation>Video deaktivieren</translation>
+        <translation>Απενεργοποίηση βίντεο</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="777"/>
         <source>Dual pass</source>
-        <translation>Dual pass</translation>
+        <translation>Διπλό πέρασμα</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="784"/>
         <source>B frames</source>
-        <translation>B-Frames</translation>
+        <translation>Β καρέ</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="796"/>
         <source>B frames are the bidirectional &quot;delta&quot; pictures
 in temporal compression</source>
-        <translation>B-Frames sind bidirektionale &quot;Delta&quot;-Bilder,
-die bei zeitlicher Kompression verwendet werden</translation>
+        <translation>Τα Β καρέ είναι οι αμφίδρομες εικόνες &quot;δέλτα&quot;
+στην προσωρινή συμπίεση</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="835"/>
         <source>Codec threads</source>
-        <translation>Codec Threads</translation>
+        <translation>Νήματα Κωδικοποιητή</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="850"/>
         <source>(0 = auto)</source>
-        <translation>(0 = automatisch)</translation>
+        <translation>(0 = αυτόματα)</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="872"/>
         <location filename="../src/docks/encodedock.ui" line="1261"/>
         <source>Rate control</source>
-        <translation>Bitratenmodus</translation>
+        <translation>Έλεγχος Ρυθμού</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="885"/>
         <location filename="../src/docks/encodedock.ui" line="1274"/>
         <source>Average Bitrate</source>
-        <translation>Durschschnittlich (AVR)</translation>
+        <translation>Μέσος Ρυθμός Bit</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="890"/>
         <location filename="../src/docks/encodedock.ui" line="1279"/>
         <source>Constant Bitrate</source>
-        <translation>Konstant (CBR)</translation>
+        <translation>Σταθερός Ρυθμός Bit</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="895"/>
         <location filename="../src/docks/encodedock.ui" line="1284"/>
         <source>Quality-based VBR</source>
-        <translation>Qualitätsbasiert (VBR)</translation>
+        <translation>Βασισμένος στην ποιότητα VBR</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="918"/>
         <source>Buffer size</source>
-        <translation>Puffergröße</translation>
+        <translation>Μέγεθος απομωνωτή</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="940"/>
@@ -920,7 +920,7 @@ die bei zeitlicher Kompression verwendet werden</translation>
         <location filename="../src/docks/encodedock.ui" line="962"/>
         <location filename="../src/docks/encodedock.ui" line="1307"/>
         <source>Quality</source>
-        <translation>Qualität</translation>
+        <translation>Ποιότητα</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="974"/>
@@ -932,12 +932,12 @@ die bei zeitlicher Kompression verwendet werden</translation>
         <location filename="../src/docks/encodedock.ui" line="1005"/>
         <location filename="../src/docks/encodedock.ui" line="1139"/>
         <source>Bitrate</source>
-        <translation>Bitrate</translation>
+        <translation>Ρυθμός Bit</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1016"/>
         <source>Audio</source>
-        <translation>Audio</translation>
+        <translation>Ήχος</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1034"/>
@@ -982,12 +982,12 @@ die bei zeitlicher Kompression verwendet werden</translation>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1077"/>
         <source>KHz</source>
-        <translation>kHz</translation>
+        <translation>KHz</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1099"/>
         <source>Sample rate</source>
-        <translation>Samplerate</translation>
+        <translation>Ρυθμός δειγμάτων</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1161"/>
@@ -1022,18 +1022,18 @@ die bei zeitlicher Kompression verwendet werden</translation>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1241"/>
         <source>Disable audio</source>
-        <translation>Audio deaktivieren</translation>
+        <translation>Απενεργοποίηση ήχου</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1351"/>
         <source>Other</source>
-        <translation>Sonstiges</translation>
+        <translation>Άλλα</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1369"/>
         <location filename="../src/docks/encodedock.cpp" line="268"/>
         <source>Encode File</source>
-        <translation>Datei kodieren</translation>
+        <translation>Κωδικοποίηση Αρχείου</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1376"/>
@@ -1041,93 +1041,93 @@ die bei zeitlicher Kompression verwendet werden</translation>
         <location filename="../src/docks/encodedock.cpp" line="804"/>
         <location filename="../src/docks/encodedock.cpp" line="908"/>
         <source>Stream</source>
-        <translation>Stream</translation>
+        <translation>Ροή</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1383"/>
         <source>Reset options to defaults</source>
-        <translation>Einstellungen auf Standard zurücksetzen</translation>
+        <translation>Επαναφορά επιλογών στις προεπιλογές</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1386"/>
         <source>Reset</source>
-        <translation>Zurücksetzen</translation>
+        <translation>Επαναφορά</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1413"/>
         <source>Stop Screen Capture</source>
-        <translation>Bildschirmaufnahme beenden</translation>
+        <translation>Στάση της Εγγραφής Οθόνης</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="75"/>
         <source>Automatic from extension</source>
-        <translation>Automatische Dateiendung</translation>
+        <translation>Αυτόματα από την επέκταση</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="82"/>
         <location filename="../src/docks/encodedock.cpp" line="89"/>
         <source>Default for format</source>
-        <translation>Standard für Format</translation>
+        <translation>Προεπιλογή για το φορμά</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="270"/>
         <location filename="../src/docks/encodedock.cpp" line="709"/>
         <location filename="../src/docks/encodedock.cpp" line="907"/>
         <source>Capture File</source>
-        <translation>Aufnahmedatei</translation>
+        <translation>Καταγραφή Αρχείου</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="278"/>
         <location filename="../src/docks/encodedock.cpp" line="653"/>
         <source>Custom</source>
-        <translation>Benutzerdefiniert</translation>
+        <translation>Προσαρμοσμένο</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="290"/>
         <source>Stock</source>
-        <translation>Standard</translation>
+        <translation>Στοκ</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="704"/>
         <location filename="../src/docks/encodedock.cpp" line="752"/>
         <source>Stop Capture</source>
-        <translation>Aufnahme beenden</translation>
+        <translation>Στάση Καταγραφής</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="726"/>
         <source>Encode to File</source>
-        <translation>In Datei enkodieren</translation>
+        <translation>Κωδικοποίηση σε Αρχείο</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="726"/>
         <source>Capture to File</source>
-        <translation>In Datei aufzeichnen</translation>
+        <translation>Καταγραφή σε Αρχείο</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="792"/>
         <location filename="../src/docks/encodedock.cpp" line="813"/>
         <source>Stop Stream</source>
-        <translation>Streaming beenden</translation>
+        <translation>Στάση Ροής</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="805"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
-        <translation>Netzwerk-Protokoll, Adresse, Port und Parameter als URL angeben:</translation>
+        <translation>Εισαγωγή πρωτοκόλλου δικτύου, διεύθυνση, πόρτα και παραμέτρους σαν ένα URL:</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="843"/>
         <source>Add Encode Preset</source>
-        <translation>Encoding-Voreinstellung hinzufügen</translation>
+        <translation>Εισαγωγή Πρότυπου Κωδικοποίησης</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="886"/>
         <source>Delete Preset</source>
-        <translation>Voreinstellung löschen</translation>
+        <translation>Διαγραφή Πρότυπου</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="887"/>
         <source>Are you sure you want to delete %1?</source>
-        <translation>Sind Sie sicher, dass Sie %1 löschen wollen?</translation>
+        <translation>Είστε βέβαιοι πως θέλετε να διαγραφή το %1;</translation>
     </message>
 </context>
 <context>
@@ -1135,28 +1135,28 @@ die bei zeitlicher Kompression verwendet werden</translation>
     <message>
         <location filename="../src/jobs/encodejob.cpp" line="37"/>
         <source>Open</source>
-        <translation>Öffnen</translation>
+        <translation>Άνοιγμα</translation>
     </message>
     <message>
         <location filename="../src/jobs/encodejob.cpp" line="38"/>
         <source>Open the output file in the Shotcut player</source>
-        <translation>Ausgabedatei in Shotcut-Player öffnen</translation>
+        <translation>Άνοιγμα του αρχείου εξόδου στην αναπαραγωγή του Shotcut</translation>
     </message>
     <message>
         <location filename="../src/jobs/encodejob.cpp" line="42"/>
         <location filename="../src/jobs/encodejob.cpp" line="43"/>
         <source>Show In Folder</source>
-        <translation>In Ordner anzeigen</translation>
+        <translation>Προβολή σε Φάκελο</translation>
     </message>
     <message>
         <location filename="../src/jobs/encodejob.cpp" line="47"/>
         <source>Measure Video Quality...</source>
-        <translation>Videoqualität messen...</translation>
+        <translation>Μέτρηση της Ποιότητας Βίντεο...</translation>
     </message>
     <message>
         <location filename="../src/jobs/encodejob.cpp" line="68"/>
         <source>Video Quality Report</source>
-        <translation>Videoqualitätsbericht</translation>
+        <translation>Αναφορά της Ποιότητας Βίντεο</translation>
     </message>
 </context>
 <context>
@@ -1164,7 +1164,7 @@ die bei zeitlicher Kompression verwendet werden</translation>
     <message>
         <location filename="../src/controllers/filtercontroller.cpp" line="170"/>
         <source>Only one %1 filter is allowed.</source>
-        <translation>Nur ein %1 filter ist erlaubt.</translation>
+        <translation>Μόνο ένα %1 φίλτρο επιτρέπεται.</translation>
     </message>
 </context>
 <context>
@@ -1172,22 +1172,22 @@ die bei zeitlicher Kompression verwendet werden</translation>
     <message>
         <location filename="../src/qml/views/filter/FilterMenu.qml" line="107"/>
         <source>Show favorite filters</source>
-        <translation>Filter-Favoriten anzeigen</translation>
+        <translation>Εμφάνιση αγαπημένων φίλτρων</translation>
     </message>
     <message>
         <location filename="../src/qml/views/filter/FilterMenu.qml" line="122"/>
         <source>Show video filters</source>
-        <translation>Videofilter anzeigen</translation>
+        <translation>Εμφάνιση φίλτρων βίντεο</translation>
     </message>
     <message>
         <location filename="../src/qml/views/filter/FilterMenu.qml" line="137"/>
         <source>Show audio filters</source>
-        <translation>Audiofilter anzeigen</translation>
+        <translation>Εμφάνιση φίλτρων ήχου</translation>
     </message>
     <message>
         <location filename="../src/qml/views/filter/FilterMenu.qml" line="154"/>
         <source>Close menu</source>
-        <translation>Menü schließen</translation>
+        <translation>Κλείσιμο μενού</translation>
     </message>
 </context>
 <context>
@@ -1195,7 +1195,7 @@ die bei zeitlicher Kompression verwendet werden</translation>
     <message>
         <location filename="../src/docks/filtersdock.cpp" line="36"/>
         <source>Filters</source>
-        <translation>Filter</translation>
+        <translation>Φίλτρα</translation>
     </message>
 </context>
 <context>
@@ -1205,9 +1205,9 @@ die bei zeitlicher Kompression verwendet werden</translation>
         <source>Error:
 This program requires OpenGL version 2.0
 with the framebuffer object extension.</source>
-        <translation>Fehler:
-Dieses Programm benötigt OpenGL Version 2.0
-mit Framebuffer Objekt-Erweiterung</translation>
+        <translation>Σφάλμα:
+Αυτό το πρόγραμμα απαιτεί OpenGL 2.0
+με επέκταση αντικειμένου framebuffer.</translation>
     </message>
 </context>
 <context>
@@ -1217,375 +1217,375 @@ mit Framebuffer Objekt-Erweiterung</translation>
         <location filename="../src/htmleditor/htmleditor.cpp" line="158"/>
         <location filename="../src/htmleditor/htmleditor.cpp" line="735"/>
         <source>HTML Editor</source>
-        <translation>HTML-Editor</translation>
+        <translation>Επεξεργαστής HTML</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="36"/>
         <source>&amp;Edit</source>
-        <translation>B&amp;earbeiten</translation>
+        <translation>&amp;Επεξεργασία</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="52"/>
         <source>F&amp;ormat</source>
-        <translation>F&amp;ormat</translation>
+        <translation>Μορ&amp;φή</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="56"/>
         <source>St&amp;yle</source>
-        <translation>St&amp;il</translation>
+        <translation>Στ&amp;υλ</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="70"/>
         <source>&amp;Align</source>
-        <translation>&amp;Ausrichten</translation>
+        <translation>Ευ&amp;θυγράμμιση</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="101"/>
         <source>&amp;File</source>
-        <translation>&amp;Datei</translation>
+        <translation>&amp;Αρχείο</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="115"/>
         <source>Standard</source>
-        <translation>Standard</translation>
+        <translation>Πρότυπο</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="181"/>
         <source>Tab 1</source>
-        <translation>Tab 1</translation>
+        <translation>Καρτέλα 1</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="200"/>
         <source>about:blank</source>
-        <translation>about:blank</translation>
+        <translation>περί: </translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="209"/>
         <source>Tab 2</source>
-        <translation>Tab 2</translation>
+        <translation>Καρτέλα 2</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="245"/>
         <source>&amp;New</source>
-        <translation>&amp;Neu</translation>
+        <translation>&amp;Νέο</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="254"/>
         <source>&amp;Open...</source>
-        <translation>&amp;Öffnen...</translation>
+        <translation>Ά&amp;νοιγμα</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="263"/>
         <source>&amp;Save</source>
-        <translation>&amp;Speichern</translation>
+        <translation>Αποθήκευ&amp;ση</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="266"/>
         <source>Ctrl+S</source>
-        <translation>Strg+S</translation>
+        <translation>Ctrl+S</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="271"/>
         <source>Save &amp;As...</source>
-        <translation>Speichern &amp;unter</translation>
+        <translation>Αποθήκευση &amp;Ως...</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="280"/>
         <source>&amp;Undo</source>
-        <translation>&amp;Rückgängig</translation>
+        <translation>&amp;Αναίρεση</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="283"/>
         <source>Ctrl+Z</source>
-        <translation>Strg+Z</translation>
+        <translation>Ctrl+Z</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="292"/>
         <source>&amp;Redo</source>
-        <translation>&amp;Wiederherstellen</translation>
+        <translation>Ε&amp;πανάληψη</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="295"/>
         <source>Ctrl+Shift+Z</source>
-        <translation>Strg+Shift+Z</translation>
+        <translation>Ctrl+Shift+Z</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="304"/>
         <source>Cu&amp;t</source>
-        <translation>Au&amp;sschneiden</translation>
+        <translation>Απο&amp;κοπή</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="307"/>
         <source>Ctrl+X</source>
-        <translation>Strg+X</translation>
+        <translation>Ctrl+X</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="316"/>
         <source>&amp;Copy</source>
-        <translation>&amp;Kopieren</translation>
+        <translation>Αντι&amp;γραφή</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="319"/>
         <source>Ctrl+C</source>
-        <translation>Strg+C</translation>
+        <translation>Ctrl+C</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="328"/>
         <source>&amp;Paste</source>
-        <translation>&amp;Einfügen</translation>
+        <translation>Ε&amp;πικόλληση</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="331"/>
         <source>Ctrl+V</source>
-        <translation>Strg+V</translation>
+        <translation>Ctrl+V</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="340"/>
         <source>Select A&amp;ll</source>
-        <translation>A&amp;lle auswählen</translation>
+        <translation>Επιλογή Ό&amp;λων</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="343"/>
         <source>Ctrl+A</source>
-        <translation>Strg+A</translation>
+        <translation>Ctrl+A</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="355"/>
         <source>&amp;Bold</source>
-        <translation>&amp;Fett</translation>
+        <translation>&amp;Έντονα</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="358"/>
         <source>Ctrl+B</source>
-        <translation>Strg+B</translation>
+        <translation>Ctrl+B</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="370"/>
         <source>&amp;Italic</source>
-        <translation>&amp;Kursiv</translation>
+        <translation>&amp;Πλάγια</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="373"/>
         <source>Ctrl+I</source>
-        <translation>Strg+I</translation>
+        <translation>Ctrl+I</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="385"/>
         <source>&amp;Underline</source>
-        <translation>&amp;Unterstrichen</translation>
+        <translation>&amp;Υπογράμμιση</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="388"/>
         <source>Ctrl+U</source>
-        <translation>Strg+U</translation>
+        <translation>Ctrl+U</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="400"/>
         <source>&amp;Strikethrough</source>
-        <translation>Durch&amp;streichen</translation>
+        <translation>&amp;Διαγράμμιση</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="409"/>
         <source>Align &amp;Left</source>
-        <translation>&amp;Links ausrichten</translation>
+        <translation>Στοίχιση &amp;Αριστερά</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="418"/>
         <source>Align &amp;Center</source>
-        <translation>&amp;Mitte ausrichten</translation>
+        <translation>Στο &amp;Κέντρο</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="427"/>
         <source>Align &amp;Right</source>
-        <translation>&amp;Rechts ausrichten</translation>
+        <translation>Στοίχιση &amp;Δεξιά</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="436"/>
         <source>Align &amp;Justify</source>
-        <translation>&amp;Blocksatz ausrichten</translation>
+        <translation>&amp;Πλήρης Στοίχηση</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="445"/>
         <source>I&amp;ncrease Indent</source>
-        <translation>Ei&amp;nrückung erhöhen</translation>
+        <translation>&amp;Αύξηση Εσοχής</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="454"/>
         <source>&amp;Decrease Indent</source>
-        <translation>Einrückung vermin&amp;dern</translation>
+        <translation>&amp;Μείωση Εσοχής</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="466"/>
         <source>Bulle&amp;ted List</source>
-        <translation>Bulle&amp;t-Liste</translation>
+        <translation>Λίστα &amp;Κουκίδων</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="478"/>
         <source>&amp;Numbered List</source>
-        <translation>&amp;Nummerierte Liste</translation>
+        <translation>Λίστα &amp;Αρίθμισης</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="487"/>
         <source>Insert &amp;Image...</source>
-        <translation>B&amp;ild einfügen...</translation>
+        <translation>Εισαγωγή &amp;Εικόνας</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="496"/>
         <source>Create Link...</source>
-        <translation>Link erstellen...</translation>
+        <translation>Δημιουργία Συνδέσμου....</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="505"/>
         <source>Zoom Out</source>
-        <translation>Hineinzoomen</translation>
+        <translation>Σμίκρυνση </translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="514"/>
         <source>Zoom In</source>
-        <translation>Hinauszoomen</translation>
+        <translation>Μεγέθυνση</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="523"/>
         <source>C&amp;lose Window</source>
-        <translation>Fenster sch&amp;ließen</translation>
+        <translation>&amp;Κλείσιμο Παραθύρου</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="526"/>
         <source>Close Window</source>
-        <translation>Fenster schließen</translation>
+        <translation>Κλείσιμο Παραθύρου</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="529"/>
         <source>Ctrl+W</source>
-        <translation>Strg+W</translation>
+        <translation>Ctrl+W</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="534"/>
         <source>&amp;Paragraph</source>
-        <translation>Absat&amp;z</translation>
+        <translation>Παρά&amp;γραφος</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="539"/>
         <source>Heading &amp;1</source>
-        <translation>Überschrift &amp;1</translation>
+        <translation>Επικεφαλίδα &amp;1</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="544"/>
         <source>Heading &amp;2</source>
-        <translation>Überschrift &amp;2</translation>
+        <translation>Επικεφαλίδα &amp;2</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="549"/>
         <source>Heading &amp;3</source>
-        <translation>Überschrift &amp;3</translation>
+        <translation>Επικεφαλίδα &amp;3</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="554"/>
         <source>Heading &amp;4</source>
-        <translation>Überschrift &amp;4</translation>
+        <translation>Επικεφαλίδα &amp;4</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="559"/>
         <source>Heading &amp;5</source>
-        <translation>Überschrift &amp;5</translation>
+        <translation>Επικεφαλίδα &amp;5</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="564"/>
         <source>Heading &amp;6</source>
-        <translation>Überschrift &amp;6</translation>
+        <translation>Επικεφαλίδα &amp;6</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="569"/>
         <source>Pre&amp;formatted</source>
-        <translation>Vor&amp;formattiert</translation>
+        <translation>Προ&amp;μορφοποιημένο</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="574"/>
         <source>&amp;Address</source>
-        <translation>&amp;Adresse</translation>
+        <translation>&amp;Διεύθυνση</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="579"/>
         <source>&amp;Font Name...</source>
-        <translation>&amp;Schriftartname...</translation>
+        <translation>Όνομα &amp;Γραμματοσειράς...</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="584"/>
         <source>Text &amp;Color...</source>
-        <translation>Text&amp;Farbe...</translation>
+        <translation>Κείμενο και &amp;Χρώμα...</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="589"/>
         <source>Bac&amp;kground Color...</source>
-        <translation>Hinter&amp;grundfarbe...</translation>
+        <translation>&amp;Φόντο και Χρώμα...</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="597"/>
         <source>Font Si&amp;ze...</source>
-        <translation>Schrift&amp;größe...</translation>
+        <translation>&amp;Μέγεθος Γραμματοσειράς...</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="606"/>
         <source>Insert HTML...</source>
-        <translation>HTML einfügen...</translation>
+        <translation>Εισαγωγή HTML...</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="609"/>
         <source>Insert HTML</source>
-        <translation>HTML einfügen</translation>
+        <translation>Εισαγωγή HTML</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="617"/>
         <source>Text Outline...</source>
-        <translation>Textumriss...</translation>
+        <translation>Περίγραμμα Κειμένου...</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="625"/>
         <source>Text Shadow...</source>
-        <translation>Text-Schatten...</translation>
+        <translation>Σκίαση Κειμένου...</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="62"/>
         <source>WYSIWYG Editor</source>
-        <translation>WYSIWYG-Editor</translation>
+        <translation>WYSIWYG Κειμενογράφος</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="63"/>
         <source>View Source</source>
-        <translation>Quelltext ansehen</translation>
+        <translation>Προβολή Πηγής</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="159"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
-        <translation>Das Dokument wurde modifiziert.
-Wollen Sie die Änderungen speichern?</translation>
+        <translation>Το έγγραφο έχει τροποποιηθεί.
+Θέλετε να αποθηκεύσετε τις αλλαγές;</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="196"/>
         <source>Open File...</source>
-        <translation>Datei öffnen...</translation>
+        <translation>Άνοιγμα Αρχείου...</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="197"/>
         <location filename="../src/htmleditor/htmleditor.cpp" line="230"/>
         <source>HTML-Files (*.htm *.html);;All Files (*)</source>
-        <translation>HTML-Dateien (*.htm *.html);;Alle Dateien (*)</translation>
+        <translation>HTML-Αρχεία (*.htm *.html);;Όλα τα Αρχεία (*)</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="229"/>
         <source>Save as...</source>
-        <translation>Speichern unter...</translation>
+        <translation>Αποθήκευση Ως...</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="243"/>
         <source>Common Graphics (*.png *.jpg *.jpeg *.gif);;</source>
-        <translation>Allgemeine Grafiken (*.png *.jpg *.jpeg *.gif);;</translation>
+        <translation>Κοινά Γραφικά </translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="244"/>
         <source>Portable Network Graphics (PNG) (*.png);;</source>
-        <translation>Portable Netzwerkgrafiken (PNG) (*.png);;</translation>
+        <translation>Φορητά Γραφικά Δικτύου (PNG) (*.png);;</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="245"/>
@@ -1595,67 +1595,67 @@ Wollen Sie die Änderungen speichern?</translation>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="246"/>
         <source>Graphics Interchange Format (*.gif);;</source>
-        <translation>Graphics Interchange Format (*.gif);;</translation>
+        <translation>Φορμά Εναλλαγής Γραφικών </translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="247"/>
         <source>All Files (*)</source>
-        <translation>Alle Dateien (*)</translation>
+        <translation>Όλα τα Αρχεία (*)</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="249"/>
         <source>Open image...</source>
-        <translation>Bild öffnen...</translation>
+        <translation>Άνοιγμα εικόνας...</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="296"/>
         <source>Create link</source>
-        <translation>Link erstellen</translation>
+        <translation>Δημιουργία συνδέσμου</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="297"/>
         <source>Enter URL</source>
-        <translation>URL eingeben</translation>
+        <translation>Εισαγωγή URL</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="487"/>
         <source>Font</source>
-        <translation>Schriftart</translation>
+        <translation>Γραμματοσειρά</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="487"/>
         <source>Select font:</source>
-        <translation>Schriftart auswählen:</translation>
+        <translation>Επιλογή γραμματοσειράς:</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="497"/>
         <source>Font Size</source>
-        <translation>Schriftgröße</translation>
+        <translation>Μέγεθος Γραμματοσειράς</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="497"/>
         <source>Size in points:</source>
-        <translation>Größe in Punkten:</translation>
+        <translation>Μέγεθος σε στιγμές:</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="633"/>
         <source>Open %1 ?</source>
-        <translation>%1 öffnen ?</translation>
+        <translation>Άνοιγμα %1 ;</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="634"/>
         <source>Open link</source>
-        <translation>Link öffnen</translation>
+        <translation>Άνοιγμα συνδέσμου</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="643"/>
         <source>Text Outline</source>
-        <translation>Textumriss</translation>
+        <translation>Περίγραμμα Κειμένου</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="660"/>
         <source>Text Shadow</source>
-        <translation>Text-Schatten</translation>
+        <translation>Σκίαση Κειμένου</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="735"/>
@@ -1668,17 +1668,17 @@ Wollen Sie die Änderungen speichern?</translation>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Formular</translation>
+        <translation>Φόρμα</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="26"/>
         <source>TextLabel</source>
-        <translation>TextBezeichnung</translation>
+        <translation>ΕτικέταΚειμένου</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="41"/>
         <source>Resolution</source>
-        <translation>Auflösung</translation>
+        <translation>Ανάλυση</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="75"/>
@@ -1688,12 +1688,12 @@ Wollen Sie die Änderungen speichern?</translation>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="103"/>
         <source>Duration</source>
-        <translation>Spieldauer</translation>
+        <translation>Διάρκεια</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="113"/>
         <source>Pixel aspect ratio</source>
-        <translation>Pixel-Seitenverhältnis</translation>
+        <translation>Αναλογία εικόνας σε Εικονοστοιχεία</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="144"/>
@@ -1703,47 +1703,47 @@ Wollen Sie die Änderungen speichern?</translation>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="179"/>
         <source>Repeat</source>
-        <translation>Wiederholung</translation>
+        <translation>Επανάληψη</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="197"/>
         <source> frames</source>
-        <translation> Frames</translation>
+        <translation>καρέ</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="213"/>
         <source>per picture</source>
-        <translation>pro Bild</translation>
+        <translation>ανά εικόνα</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="172"/>
         <source>Image sequence</source>
-        <translation>Bildsequenz</translation>
+        <translation>Ακολουθία εικόνων</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="252"/>
         <source>Make the current duration value the default value</source>
-        <translation>Aktuelle Dauer als Standardwert übernehmen</translation>
+        <translation>Να γίνει η τρέχουσα τιμή διάρκειας η προκαθορισμένη τιμή.</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="255"/>
         <source>Set Default</source>
-        <translation>Als Standard setzen</translation>
+        <translation>Καθορισμός Πρότυπου</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="268"/>
         <source>Reset</source>
-        <translation>Zurücksetzen</translation>
+        <translation>Επαναφορά</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.cpp" line="180"/>
         <source>Getting length of image sequence...</source>
-        <translation>Erfasse Länge der Bildsequenz...</translation>
+        <translation>Λήψη του μήκους των εικόνων της ακολουθίας...</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.cpp" line="188"/>
         <source>Reloading image sequence...</source>
-        <translation>Neuladen der Bildsequenz...</translation>
+        <translation>Επαναφόρτωση της ακολουθίας εικόνων...</translation>
     </message>
 </context>
 <context>
@@ -1751,27 +1751,27 @@ Wollen Sie die Änderungen speichern?</translation>
     <message>
         <location filename="../src/widgets/isingwidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Formular</translation>
+        <translation>Φόρμα</translation>
     </message>
     <message>
         <location filename="../src/widgets/isingwidget.ui" line="26"/>
         <source>Ising Model</source>
-        <translation>Ising-Modell</translation>
+        <translation>Μοντέλο Ising</translation>
     </message>
     <message>
         <location filename="../src/widgets/isingwidget.ui" line="48"/>
         <source>Noise Temperature</source>
-        <translation>Rausch-Temperatur</translation>
+        <translation>Θερμοκρασία Θορύβου</translation>
     </message>
     <message>
         <location filename="../src/widgets/isingwidget.ui" line="113"/>
         <source>Border Growth</source>
-        <translation>Rand-Zuwachs</translation>
+        <translation>Ανάπτυξη Ορίων</translation>
     </message>
     <message>
         <location filename="../src/widgets/isingwidget.ui" line="181"/>
         <source>Spontaneous Growth</source>
-        <translation>Spontaner Zuwachs</translation>
+        <translation>Αυθόρμητη Ανάπτυξη</translation>
     </message>
 </context>
 <context>
@@ -1779,17 +1779,17 @@ Wollen Sie die Änderungen speichern?</translation>
     <message>
         <location filename="../src/widgets/jackproducerwidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Formular</translation>
+        <translation>Φόρμα</translation>
     </message>
     <message>
         <location filename="../src/widgets/jackproducerwidget.ui" line="26"/>
         <source>JACK Audio</source>
-        <translation>JACK Audio</translation>
+        <translation>Ήχος JACK</translation>
     </message>
     <message>
         <location filename="../src/widgets/jackproducerwidget.ui" line="43"/>
         <source>You need to manually connect the JACK input ports.</source>
-        <translation>JACK Input-Ports müssen manuell verbunden werden</translation>
+        <translation>Πρέπει να συνδέσετε χειροκίνητα την πόρτα εισόδου του JACK.</translation>
     </message>
 </context>
 <context>
@@ -1797,22 +1797,22 @@ Wollen Sie die Änderungen speichern?</translation>
     <message>
         <location filename="../src/jobqueue.cpp" line="50"/>
         <source>pending</source>
-        <translation>ausstehend</translation>
+        <translation>εκρεμεί</translation>
     </message>
     <message>
         <location filename="../src/jobqueue.cpp" line="86"/>
         <source>done</source>
-        <translation>erledigt</translation>
+        <translation>έτοιμο</translation>
     </message>
     <message>
         <location filename="../src/jobqueue.cpp" line="88"/>
         <source>stopped</source>
-        <translation>gestoppt</translation>
+        <translation>σταμάτησε</translation>
     </message>
     <message>
         <location filename="../src/jobqueue.cpp" line="90"/>
         <source>failed</source>
-        <translation>fehlgeschlagen</translation>
+        <translation>απέτυχε</translation>
     </message>
 </context>
 <context>
@@ -1820,71 +1820,71 @@ Wollen Sie die Änderungen speichern?</translation>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="18"/>
         <source>Jobs</source>
-        <translation>Aufträge</translation>
+        <translation>Εργασίες</translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="104"/>
         <source>Stop automatically processing the next pending job in
 the list. This does not stop a currently running job. Right-
 -click a job to open a menu to stop a currently running job.</source>
-        <translation>Aufhören, automatisch den nächsten wartenden Job in
-der Liste zu verarbeiten. Dies beendet nicht den aktuell laufenden Job.
-Rechtsklick auf einen Job öffnet ein Menü um den aktuellen Job zu beenden.</translation>
+        <translation>Αυτόματο σταμάτημα της επεξεργασίας της επόμενης σε εκκρεμότητα
+εργασίας στην λίστα. Αυτό δεν σταματά μία τρέχουσα εργασία. Δεξί κλικ 
+σε μία εργασία για να ανοίξει ένα μενού σταματήματος μίας τρέχουσας εργασίας.</translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="109"/>
         <source>Pause</source>
-        <translation>Pause</translation>
+        <translation>Παύση</translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="119"/>
         <source>Remove all of the completed and failed jobs from the list</source>
-        <translation>Alle erledigten und fehlgeschlagenen Jobs aus der Liste entfernen</translation>
+        <translation>Αφαίρεση όλων των ολοκληρωμένων και αποτυχημένων εργασιών από την λίστα</translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="122"/>
         <source>Clean</source>
-        <translation>Löschen</translation>
+        <translation>Καθάρισμα</translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="129"/>
         <source>Display a menu of additional actions</source>
-        <translation>Menü mit zusätzlichen Aktionen anzeigen</translation>
+        <translation>Προβολή μενού με επιπλέον ενέργειες</translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="156"/>
         <source>Stop This Job</source>
-        <translation>Diesen Job beenden</translation>
+        <translation>Σταμάτημα αυτής της Εργασίας</translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="159"/>
         <source>Stop the currently selected job</source>
-        <translation>Aktuell ausgewählten Job beenden</translation>
+        <translation>Σταμάτημα της επιλεγμένης εργασίας</translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="164"/>
         <source>View Log</source>
-        <translation>Protokoll anzeigen</translation>
+        <translation>Προβολή Καταγραφής</translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="167"/>
         <source>View the messages of MLT and FFmpeg </source>
-        <translation>Nachrichten von MLT und FFmpeg ansehen</translation>
+        <translation>Προβολή των μηνυμάτων του MLT και του FFmpeg</translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="172"/>
         <source>Run</source>
-        <translation>Starten</translation>
+        <translation>Εκτέλεση</translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="175"/>
         <source>Restart a stopped job</source>
-        <translation>Beendeten Job neu starten</translation>
+        <translation>Επανεκίνηση μία σταματημένης εργασίας</translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.cpp" line="91"/>
         <source>Job Log</source>
-        <translation>Job-Protokoll</translation>
+        <translation>Ημερολόγιο Εργασίας</translation>
     </message>
 </context>
 <context>
@@ -1892,7 +1892,7 @@ Rechtsklick auf einen Job öffnet ein Menü um den aktuellen Job zu beenden.</tr
     <message>
         <location filename="../src/widgets/lissajouswidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Formular</translation>
+        <translation>Φόρμα</translation>
     </message>
     <message>
         <location filename="../src/widgets/lissajouswidget.ui" line="26"/>
@@ -1902,12 +1902,12 @@ Rechtsklick auf einen Job öffnet ein Menü um den aktuellen Job zu beenden.</tr
     <message>
         <location filename="../src/widgets/lissajouswidget.ui" line="48"/>
         <source>X Ratio</source>
-        <translation>X-Verhältnis</translation>
+        <translation>X Αναλογία</translation>
     </message>
     <message>
         <location filename="../src/widgets/lissajouswidget.ui" line="113"/>
         <source>Y Ratio</source>
-        <translation>Y-Verhältnis</translation>
+        <translation>Y Αναλογία</translation>
     </message>
 </context>
 <context>
@@ -1915,17 +1915,17 @@ Rechtsklick auf einen Job öffnet ein Menü um den aktuellen Job zu beenden.</tr
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="14"/>
         <source>Form</source>
-        <translation>Formular</translation>
+        <translation>Φόρμα</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="26"/>
         <source>Transition</source>
-        <translation>Überblendung</translation>
+        <translation>Μετάβαση</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="239"/>
         <source>Change the softness of the edge of the wipe</source>
-        <translation>Unschärfe der Kante des Wischeffekts einstellen</translation>
+        <translation>Αλλαγή της απαλότητας της αιχμής της σάρωσης</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="255"/>
@@ -1936,17 +1936,17 @@ Rechtsklick auf einen Job öffnet ein Menü um den aktuellen Job zu beenden.</tr
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="45"/>
         <source>Video</source>
-        <translation>Video</translation>
+        <translation>Βίντεο</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="214"/>
         <source>Swap the appearance of the A and B clips</source>
-        <translation>Anzeige von A und B Clip vertauschen</translation>
+        <translation>Ανταλλαγή της εμφάνισης των A και B κλιπ</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="217"/>
         <source>Invert Wipe</source>
-        <translation>Umgekehrter Wischeffekt</translation>
+        <translation>Αντιστροφή Σάρωσης</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="226"/>
@@ -1954,7 +1954,7 @@ Rechtsklick auf einen Job öffnet ein Menü um den aktuellen Job zu beenden.</tr
         <location filename="../src/widgets/lumamixtransition.cpp" line="179"/>
         <location filename="../src/widgets/lumamixtransition.cpp" line="191"/>
         <source>Softness</source>
-        <translation>Weichheit</translation>
+        <translation>Απαλότητα</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="301"/>
@@ -1962,15 +1962,15 @@ Rechtsklick auf einen Job öffnet ein Menü um den aktuellen Job zu beenden.</tr
 course of the transition. Instead, set a
 fixed mixing level, or choose only clip A&apos;s
 audio (0%) or clip B&apos;s audio (100%).</source>
-        <translation>Audio Lautstärke während der Überblendung
-nicht verändern. Stattdessen einen fixen Pegel
-setzen, oder nur Clip A&apos;s Tonspur (0%) oder
-Clip B&apos;s Tonspur wählen.</translation>
+        <translation>Μην αλλάζετε τα επίπεδα ήχου κατά την
+διάρκεια της μετάβασης. Αντ&apos; αυτού, θέστε
+ένα σταθερό επίπεδο μίξης, ή επιλέξτε μόνο
+τον ήχο του κλιπ A (0%) ή του B (100%).</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="307"/>
         <source>Mix:</source>
-        <translation>Mischen:</translation>
+        <translation>Μίξη:</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="317"/>
@@ -1985,167 +1985,167 @@ Clip B&apos;s Tonspur wählen.</translation>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="64"/>
         <source>Dissolve</source>
-        <translation>Auflösen</translation>
+        <translation>Διάλυση</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="69"/>
         <source>Cut</source>
-        <translation>Ausschneiden</translation>
+        <translation>Κόψιμο</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="74"/>
         <source>Bar Horizontal</source>
-        <translation>Balken horizontal</translation>
+        <translation>Οριζόντιες Μπάρες</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="79"/>
         <source>Bar Vertical</source>
-        <translation>Balken vertikal</translation>
+        <translation>Κάθετες Μπάρες</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="84"/>
         <source>Barn Door Horizonal</source>
-        <translation>Scheunentor horizontal</translation>
+        <translation>Οριζόντια Πόρτα Στάβλου</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="89"/>
         <source>Barn Door Vertical</source>
-        <translation>Scheunentor vertikal</translation>
+        <translation>Κάθετη Πόρτα Στάβλου</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="94"/>
         <source>Barn Door Diagonal SW-NE</source>
-        <translation>Scheunentoor diagonal (SW-NO)</translation>
+        <translation>Διαγώνια Πόρτα Στάβλου SW-NE</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="99"/>
         <source>Barn Door Diagonal NW-SE</source>
-        <translation>Scheunentoor diagonal (NW-SO)</translation>
+        <translation>Διαγώνια Πόρτα Στάβλου NW-SE</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="104"/>
         <source>Diagonal Top Left</source>
-        <translation>Diagonal oben links</translation>
+        <translation>Διαγώνια Πάνω Αριστερά</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="109"/>
         <source>Diagonal Top Right</source>
-        <translation>Diagonal oben rechts</translation>
+        <translation>Διαγώνια Πάνω Δεξιά</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="114"/>
         <source>Matrix Waterfall Horizontal</source>
-        <translation>Matrix Wasserfall horizontal</translation>
+        <translation>Οριζόντιο Πλέγμα Καταράχτη </translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="119"/>
         <source>Matrix Waterfall Vertical</source>
-        <translation>Matrix Wasserfall vertikal</translation>
+        <translation>Κάθετο Πλέγμα Καταρράχτη </translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="124"/>
         <source>Matrix Snake Horizontal</source>
-        <translation>Matrix Schlange horizontal</translation>
+        <translation>Οριζόντιο Πλέγμα Φιδιού</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="129"/>
         <source>Matrix Snake Parallel Horizontal</source>
-        <translation>Matrix Schlange parallel horizontal</translation>
+        <translation>Παράλληλα Οριζόντιο Πλέγμα Φιδιού</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="134"/>
         <source>Matrix Snake Vertical</source>
-        <translation>Matrix Schlange vertikal</translation>
+        <translation>Κάθετο Πλέγμα Φιδιού</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="139"/>
         <source>Matrix Snake Parallel Vertical</source>
-        <translation>Matrix Schlange parallel vertikal</translation>
+        <translation>Παράλληλα Κάθετο Πλέγμα Φιδιού</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="144"/>
         <source>Barn V Up</source>
-        <translation>Scheune V hinauf</translation>
+        <translation>Στάβλος V Πάνω</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="149"/>
         <source>Iris Circle</source>
-        <translation>Iris-Kreis</translation>
+        <translation>Ίριδα Κύκλος</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="154"/>
         <source>Double Iris</source>
-        <translation>Doppelte Iris</translation>
+        <translation>Διπλή Ίριδα</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="159"/>
         <source>Iris Box</source>
-        <translation>Iris Box</translation>
+        <translation>Ίριδα Κουτί</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="164"/>
         <source>Box Bottom Right</source>
-        <translation>Box unten rechts</translation>
+        <translation>Κουτί Δεξιά Κάτω</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="169"/>
         <source>Box Bottom Left</source>
-        <translation>Box unten links</translation>
+        <translation>Κουτί Αριστερά Κάτω</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="174"/>
         <source>Box Right Center</source>
-        <translation>Box Mitte rechts</translation>
+        <translation>Κουτί Δεξιά Κέντρο</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="179"/>
         <source>Clock Top</source>
-        <translation>Uhr oben</translation>
+        <translation>Ρολόι Πάνω</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="184"/>
         <source>Custom...</source>
-        <translation>Benutzerdefiniert...</translation>
+        <translation>Προσαρμοσμένο...</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="282"/>
         <source>Automatically fade-out the audio of clip A
 and fade-in the audio of clip B over the
 duration of the transition.</source>
-        <translation>Audio von Clip A automatisch ausfaden
-und Audio von Clip B während der Dauer
-der Überblendung einfaden.</translation>
+        <translation>Αυτόματο &quot;σβήσιμο&quot; του ήχου του κλιπ A
+και σταδιακή εισαγωγή του ήχου από το 
+κλιπ B κατά την διάρκεια της μετάβασης.</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="287"/>
         <source>Cross-fade</source>
-        <translation>Überblendung</translation>
+        <translation>Διασταυρούμενο &quot;σβήσιμο&quot;</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="270"/>
         <source>Audio</source>
-        <translation>Audio</translation>
+        <translation>Ήχος</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="207"/>
         <source>TextLabel</source>
-        <translation>TextBezeichnung</translation>
+        <translation>ΕτικέταΚειμένου</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.cpp" line="45"/>
         <location filename="../src/widgets/lumamixtransition.cpp" line="176"/>
         <source>Position</source>
-        <translation>Position</translation>
+        <translation>Θέση</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.cpp" line="185"/>
         <source>Open File</source>
-        <translation>Datei öffnen</translation>
+        <translation>Άνοιγμα Αρχείου</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.cpp" line="186"/>
         <source>Images (*.bmp *.jpeg *.jpg *.pgm *.png *.svg *.tga *.tif *.tiff);;All Files (*)</source>
-        <translation>Bilder (*.bmp *.jpeg *.jpg *.pgm *.png *.svg *.tga *.tif *.tiff);;Alle Dateien (*)</translation>
+        <translation>Εικόνες (*.bmp *.jpeg *.jpg *.pgm *.png *.svg *.tga *.tif *.tiff);;All Files (*)</translation>
     </message>
 </context>
 <context>
@@ -2158,57 +2158,57 @@ der Überblendung einfaden.</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="47"/>
         <source>&amp;File</source>
-        <translation>&amp;Datei</translation>
+        <translation>&amp;Αρχείο</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="59"/>
         <source>&amp;View</source>
-        <translation>&amp;Ansicht</translation>
+        <translation>Προ&amp;βολή</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="69"/>
         <source>&amp;Edit</source>
-        <translation>&amp;Bearbeiten</translation>
+        <translation>&amp;Επεξεργασία</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="74"/>
         <source>&amp;Help</source>
-        <translation>&amp;Hilfe</translation>
+        <translation>&amp;Βοήθεια</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="86"/>
         <source>Settings</source>
-        <translation>Einstellungen</translation>
+        <translation>Ρυθμίσεις</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="90"/>
         <source>Deinterlacer</source>
-        <translation>Deinterlacer</translation>
+        <translation>Αποπλέκτης</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="99"/>
         <source>Interpolation</source>
-        <translation>Interpolation</translation>
+        <translation>Παρεμβολή</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="108"/>
         <source>Video Mode</source>
-        <translation>Videomodus</translation>
+        <translation>Ρυθμός Βίντεο</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="114"/>
         <source>External Monitor</source>
-        <translation>Externer Bildschirm</translation>
+        <translation>Εξωτερική Οθόνη</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="120"/>
         <source>Language</source>
-        <translation>Sprache</translation>
+        <translation>Γλώσσα</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="125"/>
         <source>Theme</source>
-        <translation>Theme</translation>
+        <translation>Θέμα</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="133"/>
@@ -2218,117 +2218,117 @@ der Überblendung einfaden.</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="158"/>
         <source>Toolbar</source>
-        <translation>Werkzeugleiste</translation>
+        <translation>Εργαλιοθήκη </translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="207"/>
         <source>&amp;Open File...</source>
-        <translation>&amp;Datei öffnen</translation>
+        <translation>Ά&amp;νοιγμα Αρχείου...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="210"/>
         <source>Open a video, audio or image file</source>
-        <translation>Video-, Audio- oder Bilddatei öffnen</translation>
+        <translation>Άνοιγμα ενός αρχείου βίντεο, ήχου ή εικόνας</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="213"/>
         <source>Ctrl+O</source>
-        <translation>Strg+O</translation>
+        <translation>Ctrl+O</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="221"/>
         <source>E&amp;xit</source>
-        <translation>&amp;Beenden</translation>
+        <translation>Έ&amp;ξοδος</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="224"/>
         <source>Quit the application</source>
-        <translation>Die Applikation beenden</translation>
+        <translation>Κλείνει την εφαρμογή</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="227"/>
         <source>Ctrl+Q</source>
-        <translation>Strg+Q</translation>
+        <translation>Ctrl+Q</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="232"/>
         <source>&amp;About Shotcut</source>
-        <translation>&amp;Über Shotcut</translation>
+        <translation>&amp;Σχετικά με τον Shotcut</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="237"/>
         <source>About Qt</source>
-        <translation>Über Qt</translation>
+        <translation>Σχετικά με το Qt</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="242"/>
         <source>Open Other...</source>
-        <translation>Andere öffnen...</translation>
+        <translation>Άνοιγμα Άλλου</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="245"/>
         <source>Open a device, stream or generator</source>
-        <translation>Öffne ein Gerät, Stream oder Generator</translation>
+        <translation>Άνοιγμα μίας συσκευής, ροής ή γεννήτριας</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="248"/>
         <source>Ctrl+Shift+O</source>
-        <translation>Strg+Shift+O</translation>
+        <translation>Ctrl+Shift+O</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="260"/>
         <source>&amp;Save</source>
-        <translation>&amp;Speichern</translation>
+        <translation>Α&amp;ποθήκευση</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="263"/>
         <source>Save project as a MLT XML file</source>
-        <translation>Projekt als MLT XML-Datei speichern</translation>
+        <translation>Αποθήκευση έργου ως αρχείο MLT XML</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="266"/>
         <source>Ctrl+S</source>
-        <translation>Strg+S</translation>
+        <translation>Ctrl+S</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="274"/>
         <source>Save &amp;As...</source>
-        <translation>Speichern &amp;unter</translation>
+        <translation>Αποθήκευση &amp;Ως...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="277"/>
         <source>Save project to a different MLT XML file</source>
-        <translation>Projekt als MLT-XML unter anderem Dateinamen speichern</translation>
+        <translation>Αποθήκευση έργου σε διαφορετικό αρχείο MLT XML</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="280"/>
         <source>Ctrl+Shift+S</source>
-        <translation>Strg+Shift+S</translation>
+        <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="289"/>
         <source>Encode</source>
-        <translation>Kodieren</translation>
+        <translation>Κωδικοποίηση</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="292"/>
         <source>Show the Encode and Jobs panels</source>
-        <translation>Kodieren- und Job-Panels anzeigen</translation>
+        <translation>Εμφάνιση του πίνακα Εργασίας και Κωδικοποίησης</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="301"/>
         <source>&amp;Undo</source>
-        <translation>&amp;Rückgängig</translation>
+        <translation>Α&amp;ναίρεση</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="310"/>
         <source>&amp;Redo</source>
-        <translation>&amp;Wiederherstellen</translation>
+        <translation>&amp;Επανάληψη</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="315"/>
         <source>Forum...</source>
-        <translation>Forum...</translation>
+        <translation>Φόρουμ...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="320"/>
@@ -2339,195 +2339,195 @@ der Überblendung einfaden.</translation>
         <location filename="../src/mainwindow.ui" line="329"/>
         <location filename="../src/mainwindow.cpp" line="1990"/>
         <source>Enter Full Screen</source>
-        <translation>Vollbildmodus</translation>
+        <translation>Πλήρης Οθόνη</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="332"/>
         <source>Ctrl+Shift+F</source>
-        <translation>Strg+Shift+F</translation>
+        <translation>Ctrl+Shift+F</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="341"/>
         <source>Peak Meter</source>
-        <translation>Pegelmesser</translation>
+        <translation>Μετρητής Κορυφών</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="344"/>
         <source>Show or hide the audio peak meter</source>
-        <translation>Audiopegelmesser anzeigen oder ausblenden</translation>
+        <translation>Εμφάνιση ή απόκρυψη του μετρητή κορυφών ήχου</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="353"/>
         <location filename="../src/mainwindow.cpp" line="188"/>
         <source>Properties</source>
-        <translation>Eigenschaften</translation>
+        <translation>Ιδιότητες</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="362"/>
         <source>Recent</source>
-        <translation>Zuletzt geöffnet</translation>
+        <translation>Πρόσφατα</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="371"/>
         <source>Playlist</source>
-        <translation>Wiedergabeliste</translation>
+        <translation>Λίστα</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="380"/>
         <location filename="../src/mainwindow.cpp" line="269"/>
         <source>History</source>
-        <translation>Verlauf</translation>
+        <translation>Ιστορικό</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="389"/>
         <source>Full Screen</source>
-        <translation>Vollbild</translation>
+        <translation>Πλήρης Οθόνη</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="400"/>
         <source>Realtime (frame dropping)</source>
-        <translation>Echtzeit (Bilder auslassen)</translation>
+        <translation>Πραγματικός χρόνος (απόρυψη καρέ)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="411"/>
         <source>Progressive</source>
-        <translation>Vollbildverfahren (progressive)</translation>
+        <translation>Προοδευτικός</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="419"/>
         <source>GPU Processing (experimental)</source>
-        <translation>GPU-Verarbeitung (experimentell)</translation>
+        <translation>Επεξεργασία GPU (πειραματικό)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="430"/>
         <source>One Field (fast)</source>
-        <translation>Ein Halbbild (schnell)</translation>
+        <translation>Ένα πεδίο (γρήγορο)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="438"/>
         <source>Linear Blend (fast)</source>
-        <translation>Linear überblenden (schnell)</translation>
+        <translation>Γραμμική Μίξη (γρήγορο)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="446"/>
         <source>YADIF - temporal only (good)</source>
-        <translation>YADIF - nur zeitlich (gut)</translation>
+        <translation>YADIF - χρονικά μόνο (καλό)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="454"/>
         <source>YADIF - temporal + spatial (best)</source>
-        <translation>YADIF - zeitlich + räumlich (am besten)</translation>
+        <translation>YADIF - χρονικά + χωρικά (κάλλιστο)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="465"/>
         <source>Nearest Neighbor (fast)</source>
-        <translation>Nearest Neighbour (schnell)</translation>
+        <translation>Πλησιέστερος Γείτονας (γρήγορο)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="473"/>
         <source>Bilinear (good)</source>
-        <translation>Bilinear (gut)</translation>
+        <translation>Διαγραμμικό (καλό)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="481"/>
         <source>Bicubic (better)</source>
-        <translation>Bikubisch (besser)</translation>
+        <translation>Δικυβικό (καλύτερο)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="489"/>
         <source>Hyper/Lanczos (best)</source>
-        <translation>Hyper/Lanczos (am besten)</translation>
+        <translation>Hyper/Lanczos (κάλλιστο)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="500"/>
         <source>Automatic</source>
-        <translation>Automatisch</translation>
+        <translation>Αυτόματα</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="511"/>
         <source>None</source>
-        <translation>Keines</translation>
+        <translation>Κανένα</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="519"/>
         <source>Use JACK Audio</source>
-        <translation>JACK Audio verwenden</translation>
+        <translation>Χρήση Ήχου JACK</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="528"/>
         <source>Filters</source>
-        <translation>Filter</translation>
+        <translation>Φίλτρα</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="531"/>
         <source>Modify the video image or audio</source>
-        <translation>Videobild oder Ton verändern</translation>
+        <translation>Τροποποίηση του βίντεο, εικόνας ή ήχου</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="536"/>
         <source>Add...</source>
-        <translation>Hinzufügen...</translation>
+        <translation>Προσθήκη...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="544"/>
         <source>System</source>
-        <translation>System</translation>
+        <translation>Σύστημα</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="547"/>
         <source>Use the user or platform style, colors, and icons.</source>
-        <translation>Verwende Farben und Symbole im Benutzer- oder Platform-Stil.</translation>
+        <translation>Χρήση στυλ, χρώματα και εικονίδια του χρήστη ή της πλατφόρμας.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="555"/>
         <source>Fusion Dark</source>
-        <translation>Fusion Dark</translation>
+        <translation>Σκοτεινή Τήξη</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="563"/>
         <source>Fusion Light</source>
-        <translation>Fusion Light</translation>
+        <translation>Φωτηνή Τήξη</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="568"/>
         <source>Tutorials...</source>
-        <translation>Übungsbeispiele...</translation>
+        <translation>Βοηθήματα...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="577"/>
         <source>Timeline</source>
-        <translation>Zeitachse</translation>
+        <translation>Χρονολόγιο</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="582"/>
         <location filename="../src/mainwindow.ui" line="585"/>
         <source>Restore Default Layout</source>
-        <translation>Standard-Layout wiederherstellen</translation>
+        <translation>Επαναφορά Προκαθορισμένης Διάταξης</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="601"/>
         <source>Show Toolbar</source>
-        <translation>Werkzeugleiste anzeigen</translation>
+        <translation>Εμφάνιση Εργαλειοθήκης</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="606"/>
         <source>Upgrade...</source>
-        <translation>Aktualisieren...</translation>
+        <translation>Αναβάθμιση...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="611"/>
         <source>Open MLT XML As Clip...</source>
-        <translation>MLT XML als Clip öffnen...</translation>
+        <translation>Άνοιγμα MLT XML ως Κλιπ...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="614"/>
         <source>Open a MLT XML project file as a virtual clip</source>
-        <translation>MLT XML Projektdatei als virtuellen Clip öffnen</translation>
+        <translation>Άνοιγμα ενός αρχείου έργου MLT XML ως εικονικό κλιπ</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="625"/>
         <source>sRGB (computer)</source>
-        <translation>sRGB (Computer)</translation>
+        <translation>sRGB (υπολογιστής)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="633"/>
@@ -2537,57 +2537,57 @@ der Überblendung einfaden.</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="593"/>
         <source>Show Title Bars</source>
-        <translation>Titelleisten anzeigen</translation>
+        <translation>Εμφάνιση Μπάρας Τίτλων</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="154"/>
         <source>Ctrl+Z</source>
-        <translation>Strg+Z</translation>
+        <translation>Ctrl+Z</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="155"/>
         <source>Ctrl+Shift+Z</source>
-        <translation>Strg+Shift+Z</translation>
+        <translation>Ctrl+Shift+Z</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="471"/>
         <source>Non-Broadcast</source>
-        <translation>Nicht-Broadcast</translation>
+        <translation>Μη-Εκπεμπόμενο</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="482"/>
         <source>DVD Widescreen NTSC</source>
-        <translation>DVD Widescreen NTSC</translation>
+        <translation>DVD Ευρείας Οθόνης NTSC</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="483"/>
         <source>DVD Widescreen PAL</source>
-        <translation>DVD Widescreen PAL</translation>
+        <translation>DVD Ευρείας Οθόνης PAL</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="488"/>
         <source>Custom</source>
-        <translation>Benutzerdefiniert</translation>
+        <translation>Προσαρμοσμένο</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="507"/>
         <source>Screen %1</source>
-        <translation>Bildschirm %1</translation>
+        <translation>Οθόνη %1</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="538"/>
         <source>Off</source>
-        <translation>Aus</translation>
+        <translation>Απενεργοποίηση</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="541"/>
         <source>Internal</source>
-        <translation>Intern</translation>
+        <translation>Εσωτερικό</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="544"/>
         <source>External</source>
-        <translation>Extern</translation>
+        <translation>Εξωτερικό</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="558"/>
@@ -2600,62 +2600,62 @@ der Überblendung einfaden.</translation>
         <location filename="../src/mainwindow.cpp" line="815"/>
         <location filename="../src/mainwindow.cpp" line="2434"/>
         <source>Failed to open </source>
-        <translation>Öffnen fehlgeschlagen</translation>
+        <translation>Αποτυχία ανοίγματος</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="674"/>
         <source>The file you opened uses GPU effects, but GPU processing is not enabled.
 Do you want to enable GPU processing and restart?</source>
-        <translation>Die Datei die Sie geöffnet haben, verwendet GPU Effekte, aber GPU-Verarbeitung ist nicht aktiviert.
-Wollen Sie GPU-Verarbeitung aktivieren und Shotcut neu starten?</translation>
+        <translation>Το αρχείο που ανοίξατε χρησιμοποιεί εφέ GPU, αλλά η επεξεργασία GPU δεν είναι ενεργοποιημένη.
+Θέλετε να ενεργοποιηθεί η επεξεργασία GPU και να επανεκινήσετε;</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1037"/>
         <source>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2015 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
-        <translation>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; ist ein plattformunabhängiger, Freie Software/Open Source Videoeditor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2015 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Lizensiert unter der &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Dieses Programm verwendet stolz folgende Projekte:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; Programm- und UI-Framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; Multimedia Authoring Framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; Programmbibliotheken für Multimedia-Formate und Codecs&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 Encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 und VP9 Encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 Encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; Audio Plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; Iconsammlung von &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; Iconsammlung&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;Der Quellcode aus dem diese Software gebaut wurde, kann unter &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt; heruntergeladen werden.&lt;/p&gt;Die Veröffentlichung dieses Programms erfolgt in der Hoffnung, daß es Ihnen von Nutzen sein wird, aber OHNE IRGENDEINE GARANTIE, sogar ohne die implizite Garantie der MARKTREIFE oder der VERWENDBARKEIT FÜR EINEN BESTIMMTEN ZWECK. Details finden Sie in der GNU General Public License.&lt;/small&gt;</translation>
+        <translation>&lt;h1&gt;Έκδοση Shotcut %1&lt;/h1&gt;&lt;p&gt;Ο &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; είναι ένας ελεύθερος, ανοικτού κώδικα, για όλες τις πλατφόρμες, επεξεργαστής βίντεο.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Πνευματικά δικαιώματα &amp;copy; 2011-2015 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Αδειοδοτημένο υπό την &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Αυτό το πρόγραμμα χρησιμοποιεί υπερήφανα τα παρακάτω έργα:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;Ο πηγαίος κώδικας για το κτίσιμο αυτού του προγράμματος μπορεί να μεταφορτωθεί από  &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;Το πρόγραμμα αυτό διανέμετε με την ελπίδα πως θα είναι χρήσιμο,  ΧΩΡΙΣ όμως ΚΑΜΙΑ ΕΓΓΥΗΣΗ; χωρίς ακόμη την εγγύηση  ΕΜΠΟΡΕΥΣΙΜΟΤΗΤΑΣ ή ΚΑΤΑΛΛΗΛΟΤΗΤΑΣ ΓΙΑ ΕΝΑ ΣΥΓΚΕΚΡΙΜΕΝΟ ΣΚΟΠΟ.&lt;/small&gt;</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="2189"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
-        <translation>Shotcut muss neu gestartet werden um die Sprache zu wechseln
-Wollen Sie Shotcut jetzt neu starten?</translation>
+        <translation>Πρέπει να επανακινήσετε τον shotcut για την αλλαγή γλώσσας.
+Θέλετε να επανακινήσετε τώρα;</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="2238"/>
         <source>You must restart Shotcut to switch using GPU processing.
 Do you want to restart now?</source>
-        <translation>Shotcut muss neu gestartet werden um OpenGL Unterstützung zu aktivieren
-Wollen Sie Shotcut jetzt neu starten?</translation>
+        <translation>Πρέπει να επανακινήσετε τον shotcut για την επεξεργασία με GPU.
+Θέλετε να επανακινήσετε τώρα;</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="703"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
-        <translation>Automatisch gespeicherte Dateien existieren. Wollen Sie diese wiederherstellen?</translation>
+        <translation>Υπάρχουν αρχεία αυτόματης αποθήκευσης. Θέλετε να τα ανακτίσετε τώρα;</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="96"/>
         <source>Error: This program requires the JACK 1 library.
 
 Please install it using your package manager. It may be named libjack0, jack-audio-connection-kit, jack, or similar.</source>
-        <translation>Fehler: Dieses Programm benötigt die JACK 1 Programmbibliothek.
+        <translation>Σφάλμα: Αυτό το πρόγραμμα απαιτεί την βιβλιοθήκη JACK 1.
 
-Bitte installieren Sie es mit der Paketverwaltung. Das Paket kann &quot;libjack0&quot;, &quot;jack-audio-connection-kit&quot;, &quot;jack&quot; - oder ähnlich heißen.</translation>
+Παρακαλώ εγκαταστήστε την χρησιμοποιώντας τον διαχειριστή πακέτων. Μπορεί να ονομάζεται  libjack0, jack-audio-connection-kit, jack ή παρόμοια.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="104"/>
         <source>Error: This program requires the SDL 1.2 library.
 
 Please install it using your package manager. It may be named libsdl1.2debian, SDL, or similar.</source>
-        <translation>Fehler: Dieses Programm benötigt die SDL 1.2 Programmbibliothek.
+        <translation>Σφάλμα: Αυτό το πρόγραμμα απαιτεί την βιβλιοθήκη SDL 1.2.
 
-Bitte installieren sie es, mit Hilfe der Paketverwaltung. Das Paket kann &quot;libsdl1.2debian&quot;, &quot;SDL&quot; - oder ähnlich heißen.</translation>
+Παρακαλώ εγκαταστήστε την χρησιμοποιώντας τον διαχειριστή πακέτων. Μπορεί να ονομάζεται  libsdl1.2debian, SDL ή παρόμοια.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="826"/>
         <location filename="../src/mainwindow.cpp" line="2419"/>
         <source>Open File</source>
-        <translation>Datei öffnen</translation>
+        <translation>Άνοιγμα Αρχείου</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1031"/>
@@ -2665,18 +2665,18 @@ Bitte installieren sie es, mit Hilfe der Paketverwaltung. Das Paket kann &quot;l
     <message>
         <location filename="../src/mainwindow.cpp" line="1036"/>
         <source>About Shotcut</source>
-        <translation>Über Shotcut</translation>
+        <translation>Σχετικά με τον Shotcut</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1569"/>
         <location filename="../src/mainwindow.cpp" line="1594"/>
         <source>Saved %1</source>
-        <translation>%1 gespeichert</translation>
+        <translation>Αποθήκευση %1</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1581"/>
         <source>Save XML</source>
-        <translation>XML speichern</translation>
+        <translation>Αποθήκευση XML</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1581"/>
@@ -2687,36 +2687,37 @@ Bitte installieren sie es, mit Hilfe der Paketverwaltung. Das Paket kann &quot;l
         <location filename="../src/mainwindow.cpp" line="1606"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
-        <translation>Das Projekt wurde bearbeitet. Möchten Sie Ihre Änderungen speichern? </translation>
+        <translation>Το έργο έχει τροποποιηθεί.
+Θέλετε να αποθηκευτούν οι αλλαγές σας;</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1630"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
-        <translation>Es gibt noch unvollständige Jobs.
-Wollen Sie trotzdem beenden?</translation>
+        <translation>Υπάρχουν μη ολοκληρωμένες εργασίες.
+Θέλετε ακόμη να εξέρθετε;</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1993"/>
         <source>Exit Full Screen</source>
-        <translation>Vollbildmodus verlassen</translation>
+        <translation>Έξοδος Πλήρης Οθόνης</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="2002"/>
         <source>GPU Processing is not supported</source>
-        <translation>GPU-Verarbeitung wird nicht unterstützt</translation>
+        <translation>Δεν υποστηρίζεται η επεξεργασία GPU</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="2229"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
-        <translation>Verbdindung zu JACK fehlgeschlagen.
-Bitte überprüfen Sie, dass JACK installiert ist und läuft.</translation>
+        <translation>Αποτυχία σύνδεσης στο JACK.
+Παρακαλώ επαληθεύστε ότι το JACK είναι εγκατεστημένο και εκτελείται.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="2420"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
-        <translation>MLT XML (*.mlt);;Alle Dateien (*)</translation>
+        <translation>MLT XML (*.mlt);;Όλα τα Αρχεία (*)</translation>
     </message>
 </context>
 <context>
@@ -2724,12 +2725,12 @@ Bitte überprüfen Sie, dass JACK installiert ist und läuft.</translation>
     <message>
         <location filename="../src/jobs/meltjob.cpp" line="35"/>
         <source>View XML</source>
-        <translation>XML ansehen</translation>
+        <translation>Προβολή XML</translation>
     </message>
     <message>
         <location filename="../src/jobs/meltjob.cpp" line="36"/>
         <source>View the MLT XML for this job</source>
-        <translation>MLT XML für diesen Job ansehen</translation>
+        <translation>Προβολή του MLT XML για αυτή την εργασία</translation>
     </message>
     <message>
         <location filename="../src/jobs/meltjob.cpp" line="81"/>
@@ -2762,22 +2763,22 @@ Bitte überprüfen Sie, dass JACK installiert ist und läuft.</translation>
     <message>
         <location filename="../src/mvcp/meltedclipsmodel.cpp" line="102"/>
         <source>item</source>
-        <translation>Element</translation>
+        <translation>αντικείμενο</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedclipsmodel.cpp" line="102"/>
         <source>items</source>
-        <translation>Elemente</translation>
+        <translation>αντικείμενα</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedclipsmodel.cpp" line="117"/>
         <source>Clip</source>
-        <translation>Clip</translation>
+        <translation>Κλιπ</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedclipsmodel.cpp" line="117"/>
         <source>Size</source>
-        <translation>Größe</translation>
+        <translation>Μέγεθος</translation>
     </message>
 </context>
 <context>
@@ -2785,87 +2786,87 @@ Bitte überprüfen Sie, dass JACK installiert ist und läuft.</translation>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="18"/>
         <source>Melted Playlist</source>
-        <translation>Melted Wiedergabeliste</translation>
+        <translation>Λίστα Melted</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="67"/>
         <source>Add something to the playlist</source>
-        <translation>Etwas zur Wiedergabeliste hinzufügen</translation>
+        <translation>Προσθαίστε κάτι στην λίστα</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="84"/>
         <source>Remove cut</source>
-        <translation>Schnitt entfernen</translation>
+        <translation>Αφαίρεση κόψιμου</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="98"/>
         <source>Display a menu of additional actions</source>
-        <translation>Menü mit zusätzlichen Aktionen anzeigen</translation>
+        <translation>Προβολή μενού με επιπλέον ενέργειες</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="128"/>
         <source>Insert Cut</source>
-        <translation>Schnitt einfügen</translation>
+        <translation>Εισαγωγή Κόψιμου</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="137"/>
         <source>Append Cut</source>
-        <translation>Schnitt anhängen</translation>
+        <translation>Προσάρτηση Κόψιμου</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="142"/>
         <source>Open As Clip</source>
-        <translation>Als Clip öffnen</translation>
+        <translation>Άνοιγμα Ως Κλιπ</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="145"/>
         <source>Open the cut in the player</source>
-        <translation>Schnitt im Player öffnen</translation>
+        <translation>Άνοιγμα του κοψίματος στην αναπαραγωγή</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="150"/>
         <source>Remove</source>
-        <translation>Entfernen</translation>
+        <translation>Αφαίρεση</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="155"/>
         <source>Goto</source>
-        <translation>Gehe zu</translation>
+        <translation>Μετάβαση</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="158"/>
         <source>Go to the start of this cut in the playlist</source>
-        <translation>Zum Anfang dieses Schnitts in der Playlist springen</translation>
+        <translation>Μετάβαση στην αρχή αυτού του κοψίματος στην λίστα</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="163"/>
         <source>Remove All</source>
-        <translation>Alle entfernen</translation>
+        <translation>Αφαίρεση Όλων</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="166"/>
         <source>Remove all items from the playlist</source>
-        <translation>Alle Einträge aus der Wiedergabeliste entfernen</translation>
+        <translation>Αφαίρεση όλων των αντικειμένων από την λίστα</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="171"/>
         <source>Wipe</source>
-        <translation>Wischeffekt</translation>
+        <translation>Σάρωση</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="174"/>
         <source>Remove all items before the currently playing clip</source>
-        <translation>Alle Einträge vor dem aktuell spielenden Clip entfernen</translation>
+        <translation>Αφαίρεση όλων των αντικειμένων πριν το αναπαραγώμενο κλιπ</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="179"/>
         <source>Clean</source>
-        <translation>Löschen</translation>
+        <translation>Καθάρισμα</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="182"/>
         <source>Remove all items except the currently playing clip</source>
-        <translation>Alle Einträge außer dem aktuell spielenden Clip entfernen</translation>
+        <translation>Αφαίρεση όλων των αντικειμένων εκτός του αναπαραγόμενου κλιπ</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.cpp" line="198"/>
@@ -2875,11 +2876,11 @@ Bitte überprüfen Sie, dass JACK installiert ist und läuft.</translation>
 IMPORTANT: You cannot Undo this action!
 
 Do you want to continue?</source>
-        <translation>&quot;Alle entfernen&quot; entfernt alle Clips aus der Wiedergabeliste.
+        <translation>Η &quot;Αφαίρεση Όλων&quot; θα αφαιρέσει όλα τα κλιπ στην λίστα.
 
-WICHTIG: Diese Aktion kann nicht rückgängig gemacht werden!
+ΣΗΜΑΝΤΙΚΟ: Δεν μπορείτε να ανερέσετε αυτή την ενέργεια!
 
-Wollen Sie fortfahren?</translation>
+Θέλετε να συνεχίσετε;</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.cpp" line="232"/>
@@ -2889,11 +2890,12 @@ except the currently playing clip.
 IMPORTANT: You cannot Undo this action!
 
 Do you want to continue?</source>
-        <translation>&quot;Löschen&quot; entfernt alle Clips aus der Wiedergabeliste, außer dem Clip der aktuell spielt.
+        <translation>Το &quot;Καθάρισμα&quot; θα αφαιρέσει όλα τα κλιπ στην λίστα
+εκτός του αναπαραγόμενου κλιπ.
 
-WICHTIG: Diese Aktion kann nicht rückgängig gemacht werden!
+ΣΗΜΑΝΤΙΚΟ:Δεν μπορείτε να ανερέσετε αυτή την ενέργεια!
 
-Wollen Sie fortfahren?</translation>
+Θέλετε να συνεχίσετε;</translation>
     </message>
 </context>
 <context>
@@ -2906,17 +2908,17 @@ Wollen Sie fortfahren?</translation>
     <message>
         <location filename="../src/mvcp/meltedplaylistmodel.cpp" line="114"/>
         <source>Clip</source>
-        <translation>Clip</translation>
+        <translation>Κλιπ</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistmodel.cpp" line="116"/>
         <source>In</source>
-        <translation>Innen</translation>
+        <translation>Είσοδος</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistmodel.cpp" line="118"/>
         <source>Out</source>
-        <translation>Außen</translation>
+        <translation>Έξοδος</translation>
     </message>
 </context>
 <context>
@@ -2924,18 +2926,18 @@ Wollen Sie fortfahren?</translation>
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="18"/>
         <source>Melted Server</source>
-        <translation>Melted Server</translation>
+        <translation>Διακομιστής Melted</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="52"/>
         <source>Enter the server address and press Enter</source>
-        <translation>Serveradresse eingeben und Enter drücken</translation>
+        <translation>Εισάγετε την διεύθυνση του διακομιστή και πιέστε enter</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="59"/>
         <location filename="../src/mvcp/meltedserverdock.cpp" line="160"/>
         <source>Connect</source>
-        <translation>Verbinden</translation>
+        <translation>Σύνδεση</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="93"/>
@@ -2955,64 +2957,64 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Einzelklick&lt;/span&gt; auf einen Eintrag um dessen Playlist zu öffnen.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Μονό-κλικ&lt;/span&gt; σε μια ενότητα για να ανοίξει η λίστα της.&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Doppelklick&lt;/span&gt; auf einen Eintrag um es im Player zu steuern, oder &lt;span style=&quot; font-weight:600;&quot;&gt;Rechtsklick&lt;/span&gt; auf einen Eintrag um Abspielaktionen zu wählen.&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Einzelklick&lt;/span&gt; auf einen Playlist-Eintrag um Bearbeitungsoperationen auszuwählen (z.B. Einfügen).&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Διπλό-κλικ&lt;/span&gt; σε μια ενότητα για τον έλεγχό της στην αναπαραγωγή, ή &lt;span style=&quot; font-weight:600;&quot;&gt;δεξί-κλικ&lt;/span&gt; στην μονάδα για τις ενέργειες ελέγχου μεταφοράς.&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Μονό-κλικ&lt;/span&gt; σε μία λίστα για την επιλογή ενεργειών τροποποίησης (π.χ. Εισαγωγή).&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Doppelklick&lt;/span&gt;  auf einen Playlist-Eintrag um an dessen Position zu springen.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Διπλό-κλικ&lt;/span&gt; σε ένα αντικείμενο λίστας για την αναζήτηση της ενότητας σε αυτό.&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Drag-n-drop&lt;/span&gt; aus der Clipliste des Servers in die Playlist, oder &lt;span style=&quot; font-weight:600;&quot;&gt;Einzelklick&lt;/span&gt; auf einen Clip um ihn für Aktionen wie &lt;span style=&quot; font-weight:600;&quot;&gt;Hinzufügen&lt;/span&gt; und &lt;span style=&quot; font-weight:600;&quot;&gt;Einfügen&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Σύρσιμο και Εναπόθεση&lt;/span&gt; από το δέντρο των κλιπ του διακομιστή στην λίστα, ή &lt;span style=&quot; font-weight:600;&quot;&gt;Μονό κλικ&lt;/span&gt; σε ένα κλιπ για χρήση του με ενέργειες.&lt;span style=&quot; font-weight:600;&quot;&gt;Προσθήκη&lt;/span&gt; και &lt;span style=&quot; font-weight:600;&quot;&gt;Εισαγωγή&lt;/span&gt; ενεργειών.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="195"/>
         <source>Console</source>
-        <translation>Konsole</translation>
+        <translation>Κονσόλα</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="208"/>
         <source>Display a menu of additional actions</source>
-        <translation>Menü mit zusätzlichen Aktionen anzeigen</translation>
+        <translation>Προβολή μενού με επιπλέον ενέργειες</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="238"/>
         <source>Play</source>
-        <translation>Abspielen</translation>
+        <translation>Αναπαραγωγή</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="243"/>
         <source>Pause</source>
-        <translation>Pause</translation>
+        <translation>Παύση</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="248"/>
         <source>Stop</source>
-        <translation>Stopp</translation>
+        <translation>Στοπ</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="253"/>
         <source>Rewind</source>
-        <translation>Zurückspulen</translation>
+        <translation>Πίσω</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="258"/>
         <source>Fast Forward</source>
-        <translation>Vorspulen</translation>
+        <translation>Γρήγορα Εμπρός</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="263"/>
         <source>Map Clips Root</source>
-        <translation>Map Clips Wurzelverzeichnis</translation>
+        <translation>Χαρτογράφηση Πηγής Κλιπ </translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedserverdock.cpp" line="152"/>
         <source>Disconnect</source>
-        <translation>Verbindung trennen</translation>
+        <translation>Αποσύνδεση</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedserverdock.cpp" line="257"/>
         <source>Choose Directory</source>
-        <translation>Verzeichnis wählen</translation>
+        <translation>Επιλογή Καταλόγου</translation>
     </message>
 </context>
 <context>
@@ -3020,52 +3022,52 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mvcp/meltedunitsmodel.cpp" line="70"/>
         <source>Unit</source>
-        <translation>Einheit</translation>
+        <translation>Μονάδα</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedunitsmodel.cpp" line="70"/>
         <source>Status</source>
-        <translation>Status</translation>
+        <translation>Κατάσταση</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedunitsmodel.cpp" line="111"/>
         <source>unknown</source>
-        <translation>unbekannt</translation>
+        <translation>άγνωστο</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedunitsmodel.cpp" line="112"/>
         <source>undefined</source>
-        <translation>undefiniert</translation>
+        <translation>απροσδιόριστο</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedunitsmodel.cpp" line="113"/>
         <source>offline</source>
-        <translation>offline</translation>
+        <translation>εκτός σύνδεσης</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedunitsmodel.cpp" line="114"/>
         <source>unloaded</source>
-        <translation>entladen</translation>
+        <translation>μη φορτωμένο</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedunitsmodel.cpp" line="115"/>
         <source>stopped</source>
-        <translation>gestoppt</translation>
+        <translation>σταμάτησε</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedunitsmodel.cpp" line="116"/>
         <source>playing</source>
-        <translation>spielt</translation>
+        <translation>σε αναπαραγωγή</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedunitsmodel.cpp" line="117"/>
         <source>paused</source>
-        <translation>pausiert</translation>
+        <translation>σε παύση</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedunitsmodel.cpp" line="118"/>
         <source>disconnected</source>
-        <translation>Verbindung getrennt</translation>
+        <translation>αποσυνδεδεμένο</translation>
     </message>
 </context>
 <context>
@@ -3073,42 +3075,42 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mvcp/mvcpthread.cpp" line="165"/>
         <source>unknown</source>
-        <translation>unbekannt</translation>
+        <translation>άγνωστο</translation>
     </message>
     <message>
         <location filename="../src/mvcp/mvcpthread.cpp" line="166"/>
         <source>undefined</source>
-        <translation>undefiniert</translation>
+        <translation>απροσδιόριστο</translation>
     </message>
     <message>
         <location filename="../src/mvcp/mvcpthread.cpp" line="167"/>
         <source>offline</source>
-        <translation>offline</translation>
+        <translation>εκτός σύνδεσης</translation>
     </message>
     <message>
         <location filename="../src/mvcp/mvcpthread.cpp" line="168"/>
         <source>unloaded</source>
-        <translation>entladen</translation>
+        <translation>μη φορτωμένο</translation>
     </message>
     <message>
         <location filename="../src/mvcp/mvcpthread.cpp" line="169"/>
         <source>stopped</source>
-        <translation>gestoppt</translation>
+        <translation>σταμάτησε</translation>
     </message>
     <message>
         <location filename="../src/mvcp/mvcpthread.cpp" line="170"/>
         <source>playing</source>
-        <translation>spielt</translation>
+        <translation>σε αναπαραγωγή</translation>
     </message>
     <message>
         <location filename="../src/mvcp/mvcpthread.cpp" line="171"/>
         <source>paused</source>
-        <translation>pausiert</translation>
+        <translation>σε παύση</translation>
     </message>
     <message>
         <location filename="../src/mvcp/mvcpthread.cpp" line="172"/>
         <source>disconnected</source>
-        <translation>Verbindung getrennt</translation>
+        <translation>αποσυνδεδεμένο</translation>
     </message>
 </context>
 <context>
@@ -3116,12 +3118,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/widgets/networkproducerwidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Formular</translation>
+        <translation>Φόρμα</translation>
     </message>
     <message>
         <location filename="../src/widgets/networkproducerwidget.ui" line="26"/>
         <source>Network Stream</source>
-        <translation>Netzwerkstream</translation>
+        <translation>Ροή Δικτύου</translation>
     </message>
     <message>
         <location filename="../src/widgets/networkproducerwidget.ui" line="48"/>
@@ -3131,7 +3133,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/widgets/networkproducerwidget.ui" line="64"/>
         <source>Apply</source>
-        <translation>Anwenden</translation>
+        <translation>Εφαρμογή</translation>
     </message>
 </context>
 <context>
@@ -3139,12 +3141,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/widgets/noisewidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Formular</translation>
+        <translation>Φόρμα</translation>
     </message>
     <message>
         <location filename="../src/widgets/noisewidget.ui" line="26"/>
         <source>Noise</source>
-        <translation>Rauschen</translation>
+        <translation>Θόρυβος</translation>
     </message>
 </context>
 <context>
@@ -3152,7 +3154,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/openotherdialog.ui" line="17"/>
         <source>Open Other</source>
-        <translation>Andere öffnen...</translation>
+        <translation>Άνοιγμα Άλλου</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.ui" line="43"/>
@@ -3163,12 +3165,12 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/openotherdialog.cpp" line="32"/>
         <location filename="../src/openotherdialog.cpp" line="125"/>
         <source>Network</source>
-        <translation>Netzwerk</translation>
+        <translation>Δίκτυο</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="37"/>
         <source>Device</source>
-        <translation>Gerät</translation>
+        <translation>Συκευή</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="39"/>
@@ -3192,19 +3194,19 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/openotherdialog.cpp" line="47"/>
         <location filename="../src/openotherdialog.cpp" line="117"/>
         <source>JACK Audio</source>
-        <translation>JACK Audio</translation>
+        <translation>Ήχος JACK</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="49"/>
         <location filename="../src/openotherdialog.cpp" line="119"/>
         <source>ALSA Audio</source>
-        <translation>ALSA Audio</translation>
+        <translation>Ήχος ALSA</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="51"/>
         <location filename="../src/openotherdialog.cpp" line="123"/>
         <source>Screen</source>
-        <translation>Bildschirm</translation>
+        <translation>Οθόνη</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="54"/>
@@ -3215,19 +3217,19 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/openotherdialog.cpp" line="59"/>
         <source>Generator</source>
-        <translation>Generator</translation>
+        <translation>Γεννήτρια</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="61"/>
         <location filename="../src/openotherdialog.cpp" line="129"/>
         <source>Color</source>
-        <translation>Farbe</translation>
+        <translation>Χρώμα</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="65"/>
         <location filename="../src/openotherdialog.cpp" line="131"/>
         <source>Noise</source>
-        <translation>Rauschen</translation>
+        <translation>Θόρυβος</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="69"/>
@@ -3251,13 +3253,13 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/openotherdialog.cpp" line="81"/>
         <location filename="../src/openotherdialog.cpp" line="139"/>
         <source>Color Bars</source>
-        <translation>Farbbalken</translation>
+        <translation>Μπάρες Χρώματος</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="85"/>
         <location filename="../src/openotherdialog.cpp" line="141"/>
         <source>Audio Tone</source>
-        <translation>Audioton</translation>
+        <translation>Χροιά Ήχου</translation>
     </message>
 </context>
 <context>
@@ -3265,7 +3267,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/widgets/plasmawidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Formular</translation>
+        <translation>Φόρμα</translation>
     </message>
     <message>
         <location filename="../src/widgets/plasmawidget.ui" line="26"/>
@@ -3275,32 +3277,32 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/widgets/plasmawidget.ui" line="48"/>
         <source>Speed 1</source>
-        <translation>Geschwindigkeit 1</translation>
+        <translation>Ταχύτητα 1</translation>
     </message>
     <message>
         <location filename="../src/widgets/plasmawidget.ui" line="119"/>
         <source>Speed 2</source>
-        <translation>Geschwindigkeit 2</translation>
+        <translation>Ταχύτητα 2</translation>
     </message>
     <message>
         <location filename="../src/widgets/plasmawidget.ui" line="187"/>
         <source>Speed 3</source>
-        <translation>Geschwindigkeit 3</translation>
+        <translation>Ταχύτητα 3</translation>
     </message>
     <message>
         <location filename="../src/widgets/plasmawidget.ui" line="259"/>
         <source>Speed 4</source>
-        <translation>Geschwindigkeit 4</translation>
+        <translation>Ταχύτητα 4</translation>
     </message>
     <message>
         <location filename="../src/widgets/plasmawidget.ui" line="330"/>
         <source>Move 1</source>
-        <translation>Bewegung 1</translation>
+        <translation>Κίνηση 1</translation>
     </message>
     <message>
         <location filename="../src/widgets/plasmawidget.ui" line="398"/>
         <source>Move 2</source>
-        <translation>Bewegung 2</translation>
+        <translation>Κίνηση 2</translation>
     </message>
 </context>
 <context>
@@ -3308,72 +3310,72 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/player.cpp" line="55"/>
         <source>Source</source>
-        <translation>Quelle</translation>
+        <translation>Πηγή</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="56"/>
         <source>Program</source>
-        <translation>Programm</translation>
+        <translation>Πρόγραμμα</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="106"/>
         <source>Adjust the audio volume</source>
-        <translation>Lautstärke einstellen</translation>
+        <translation>Ρύθμιση της έντασης ήχου</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="125"/>
         <source>Silence the audio</source>
-        <translation>Den Ton deaktivieren</translation>
+        <translation>Σίγαση του ήχου</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="144"/>
         <source>Transport Controls</source>
-        <translation>Transportsteuerung</translation>
+        <translation>Χειριστήρια Μεταφοράς</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="151"/>
         <source>Current position</source>
-        <translation>Aktuelle Position</translation>
+        <translation>Τρέχουσα Θέση</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="155"/>
         <source>Total Duration</source>
-        <translation>Gesamtspieldauer</translation>
+        <translation>Συνολική Διάρκεια</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="160"/>
         <source>In Point</source>
-        <translation>In-Punkt</translation>
+        <translation>Σημείο Εισόδου</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="164"/>
         <source>Selected Duration</source>
-        <translation>Spieldauer (Auswahl)</translation>
+        <translation>Επιλεγμένη Διάρκεια</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="180"/>
         <source>Zoom Fit</source>
-        <translation>Zoom passend</translation>
+        <translation>Ταίριγμα Μεγέθηνσης</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="183"/>
         <source>Zoom 100%</source>
-        <translation>Zoom 100%</translation>
+        <translation>Μεγέθυνση 100%</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="186"/>
         <source>Zoom 50%</source>
-        <translation>Zoom 50%</translation>
+        <translation>Μεγέθυνση 50%</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="189"/>
         <source>Zoom 200%</source>
-        <translation>Zoom 200%</translation>
+        <translation>Μεγέθυνση 200%</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="194"/>
         <source>Toggle zoom</source>
-        <translation>Zoom umschalten</translation>
+        <translation>Εναλλαγή μεγέθυνσης</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="279"/>
@@ -3382,7 +3384,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/player.cpp" line="534"/>
         <location filename="../src/player.cpp" line="647"/>
         <source>Play</source>
-        <translation>Abspielen</translation>
+        <translation>Αναπαραγωγή</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="281"/>
@@ -3391,7 +3393,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/player.cpp" line="535"/>
         <location filename="../src/player.cpp" line="648"/>
         <source>Start playback (L)</source>
-        <translation>Playback starten (L)</translation>
+        <translation>Έναρξη αναπαραγωγής (L)</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="284"/>
@@ -3399,7 +3401,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/player.cpp" line="529"/>
         <location filename="../src/player.cpp" line="654"/>
         <source>Pause</source>
-        <translation>Pause</translation>
+        <translation>Παύση</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="286"/>
@@ -3407,72 +3409,72 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/player.cpp" line="530"/>
         <location filename="../src/player.cpp" line="655"/>
         <source>Pause playback (K)</source>
-        <translation>Playback pausieren (K)</translation>
+        <translation>Παύση αναπαραγωγής (K)</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="288"/>
         <source>Skip Next</source>
-        <translation>Nächstes überspringen</translation>
+        <translation>Πράληψη Επόμενου</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="290"/>
         <source>Skip to the next point (Alt+Right)</source>
-        <translation>Springe zum nächsten Punkt (Alt+Rechts)</translation>
+        <translation>Μεταπήδηση στο επόμενο σημείο (Alt+Right)</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="293"/>
         <source>Skip Previous</source>
-        <translation>Vorheriges überspringen</translation>
+        <translation>Παράληψη Προηγούμενου</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="295"/>
         <source>Skip to the previous point (Alt+Left)</source>
-        <translation>Springe zum vorherigen Punkt (Alt+Links)</translation>
+        <translation>Μεταπήδηση στο προηγούμενο σημείο (Alt+Right)</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="298"/>
         <source>Rewind</source>
-        <translation>Zurückspulen</translation>
+        <translation>Πίσω</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="300"/>
         <source>Play quickly backwards (J)</source>
-        <translation>Schnell rückwärts abspielen (J)</translation>
+        <translation>Γρήγορη αναπαραγωγή προς τα πίσω (J)</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="302"/>
         <source>Fast Forward</source>
-        <translation>Vorspulen</translation>
+        <translation>Γρήγορα Εμπρός</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="304"/>
         <source>Play quickly forwards (L)</source>
-        <translation>Schnell vorwärts abspielen (L)</translation>
+        <translation>Γρήγορη αναπαραγωγή προς τα εμπρός (L)</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="306"/>
         <source>Volume</source>
-        <translation>Lautstärke</translation>
+        <translation>Ένταση</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="308"/>
         <source>Show the volume control</source>
-        <translation>Lautstärkenregler anzeigen</translation>
+        <translation>Εμφάνιση του ελέγχου ήχου</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="359"/>
         <source>Stop</source>
-        <translation>Stopp</translation>
+        <translation>Στοπ</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="360"/>
         <source>Stop playback (K)</source>
-        <translation>Playback beenden (K)</translation>
+        <translation>Στάση αναπαραγωγής (K)</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="421"/>
         <source>Live</source>
-        <translation>Live</translation>
+        <translation>Ζωντανά</translation>
     </message>
 </context>
 <context>
@@ -3480,47 +3482,47 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/docks/playlistdock.ui" line="18"/>
         <source>Playlist</source>
-        <translation>Wiedergabeliste</translation>
+        <translation>Λίστα</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="129"/>
         <source>Add something to the playlist</source>
-        <translation>Etwas zur Wiedergabeliste hinzufügen</translation>
+        <translation>Προσθαίστε κάτι στην λίστα</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="152"/>
         <source>Remove cut</source>
-        <translation>Schnitt entfernen</translation>
+        <translation>Αφαίρεση κόψιμου</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="186"/>
         <source>Display a menu of additional actions</source>
-        <translation>Menü mit zusätzlichen Aktionen anzeigen</translation>
+        <translation>Προβολή μενού με επιπλέον ενέργειες</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="216"/>
         <source>Insert Cut</source>
-        <translation>Schnitt einfügen</translation>
+        <translation>Εισαγωγή Κόψιμου</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="226"/>
         <source>Append Cut</source>
-        <translation>Schnitt anhängen</translation>
+        <translation>Προσάρτηση Κόψιμου</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="231"/>
         <source>Insert Blank</source>
-        <translation>Leervideo einfügen</translation>
+        <translation>Εισαγωγή Κενού</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="236"/>
         <source>Append Blank</source>
-        <translation>Leervideo anhängen</translation>
+        <translation>Προσάρτηση Κενού</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="169"/>
         <source>Update</source>
-        <translation>Aktualisieren</translation>
+        <translation>Ενημέρωση</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="59"/>
@@ -3532,101 +3534,108 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;You can freely preview clips without necessarily adding them to the playlist or closing it.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;To trim or adjust a playlist item &lt;span style=&quot; font-weight:600;&quot;&gt;Double-click&lt;/span&gt; to open it, make the changes, and click the &lt;span style=&quot; font-weight:600;&quot;&gt;Update&lt;/span&gt; icon.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Drag-n-drop&lt;/span&gt; to rearrange the items.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Διπλό κλικ&lt;/span&gt; σε ένα αντικείμενο της λίστας για να ανοίξει στην αναπαραγωγή.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt; Μπορείτε ελεύθερα να βλέπετε κλιπ χωρίς να τα προσθέτετε υποχρεωτικά στην λίστα ή να το κλείνετε.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Για την περικοπή ή την ρύθμιση ενός αντικειμένου της λίστας &lt;span style=&quot; font-weight:600;&quot;&gt;Διπλό-κλικ&lt;/span&gt; για να το ανοίξετε, εκτέλεση των αλλαγών, και κλικ στο&lt;span style=&quot; font-weight:600;&quot;&gt;Ενημέρωση&lt;/span&gt; icon.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Σύρσιμο και Εναπόθεση&lt;/span&gt; για την ανακατάταξη των αντικειμένων.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="92"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Double-click a playlist item to open it in the player.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Doppelklick auf einen Wiedergabelisten-Eintrag um es im Player zu öffnen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Διπλό κλι σε ένα αντικείμενο της λίστας για να ανοίξει στην αναπαραγωγή.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="241"/>
         <source>Replace</source>
-        <translation>Ersetzen</translation>
+        <translation>Αντικατάσταση</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="246"/>
         <source>Open As Clip</source>
-        <translation>Als Clip öffnen</translation>
+        <translation>Άνοιγμα Ως Κλιπ</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="249"/>
         <source>Open the cut in the player</source>
-        <translation>Schnitt im Player öffnen</translation>
+        <translation>Άνοιγμα του κοψίματος στην αναπαραγωγή</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="254"/>
         <source>Remove</source>
-        <translation>Entfernen</translation>
+        <translation>Αφαίρεση</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="259"/>
         <source>Goto</source>
-        <translation>Gehe zu</translation>
+        <translation>Μετάβαση</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="262"/>
         <source>Go to the start of this cut in the playlist</source>
-        <translation>Zum Anfang dieses Schnitts in der Playlist springen</translation>
+        <translation>Μετάβαση στην αρχή αυτού του κοψίματος στην λίστα</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="267"/>
         <source>Remove All</source>
-        <translation>Alle entfernen</translation>
+        <translation>Αφαίρεση Όλων</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="270"/>
         <source>Remove all items from the playlist</source>
-        <translation>Alle Einträge aus der Wiedergabeliste entfernen</translation>
+        <translation>Αφαίρεση όλων των αντικειμένων από την λίστα</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="275"/>
         <source>Close</source>
-        <translation>Schließen</translation>
+        <translation>Κλείσιμο</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="283"/>
         <source>Hidden</source>
-        <translation>Versteckt</translation>
+        <translation>Κρυμμένο</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="291"/>
         <location filename="../src/docks/playlistdock.ui" line="294"/>
         <source>In and Out - Left/Right</source>
-        <translation>&quot;In&quot; und &quot;Out&quot; - Links/Rechts</translation>
+        <translation>Είσοδος και Έξοδος - Αριστερά/Δεξιά</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="302"/>
         <location filename="../src/docks/playlistdock.ui" line="305"/>
         <source>In and Out - Top/Bottom</source>
-        <translation>&quot;In&quot; und &quot;Out&quot; - Oben/Unten</translation>
+        <translation>Είσοδος και Έξοδος - Πάνω/Κάτω</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="313"/>
         <source>In Only - Small</source>
-        <translation>Nur &quot;In&quot; - Klein</translation>
+        <translation>Είσοδος Μόνο - Μικρό</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="321"/>
         <source>In Only - Large</source>
-        <translation>Nur &quot;In&quot; - Groß</translation>
+        <translation>Είσοδος Μόνο - Μεγάλο</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="326"/>
         <source>Add All to Timeline</source>
-        <translation>Alles zur Zeitachse hinzufügen</translation>
+        <translation>Εισαγωγή Όλων στο Χρονολόγιο</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="155"/>
         <source>Thumbnails</source>
-        <translation>Vorschaubilder</translation>
+        <translation>Μικρογραφίες</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="180"/>
         <location filename="../src/docks/playlistdock.cpp" line="248"/>
         <location filename="../src/docks/playlistdock.cpp" line="397"/>
         <source>You cannot insert a playlist into a playlist!</source>
-        <translation>Eine Wiedergabeliste kann nicht in eine Wiedergabeliste eingefügt werden!</translation>
+        <translation>Δεν μπορείτε να εισάγετε μία λίστα σε άλλη λίστα!</translation>
     </message>
 </context>
 <context>
@@ -3639,27 +3648,27 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/models/playlistmodel.cpp" line="269"/>
         <source>Thumbnails</source>
-        <translation>Vorschaubilder</translation>
+        <translation>Μικρογραφίες</translation>
     </message>
     <message>
         <location filename="../src/models/playlistmodel.cpp" line="271"/>
         <source>Clip</source>
-        <translation>Clip</translation>
+        <translation>Κλιπ</translation>
     </message>
     <message>
         <location filename="../src/models/playlistmodel.cpp" line="273"/>
         <source>In</source>
-        <translation>In</translation>
+        <translation>Είσοδος</translation>
     </message>
     <message>
         <location filename="../src/models/playlistmodel.cpp" line="275"/>
         <source>Duration</source>
-        <translation>Laufzeit</translation>
+        <translation>Διάρκεια</translation>
     </message>
     <message>
         <location filename="../src/models/playlistmodel.cpp" line="277"/>
         <source>Start</source>
-        <translation>Anfang</translation>
+        <translation>Εκκίνηση</translation>
     </message>
 </context>
 <context>
@@ -3667,44 +3676,44 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="49"/>
         <source>Save</source>
-        <translation>Speichern</translation>
+        <translation>Αποθήκευση</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="58"/>
         <source>Delete</source>
-        <translation>Löschen</translation>
+        <translation>Διαγραφή</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="70"/>
         <source>Save Preset</source>
-        <translation>Voreinstellung speichern</translation>
+        <translation>Αποθήκευση Πρότυπου</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="84"/>
         <source>Name:</source>
-        <translation>Name:</translation>
+        <translation>Όνομα:</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="106"/>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="141"/>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>ΟΚ</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="111"/>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="152"/>
         <source>Cancel</source>
-        <translation>Abbrechen</translation>
+        <translation>Άκυρο</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="123"/>
         <source>Delete Preset</source>
-        <translation>Voreinstellung löschen</translation>
+        <translation>Διαγραφή Πρότυπου</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="132"/>
         <source>Are you sure you want to delete %1?</source>
-        <translation>Sind Sie sicher, dass Sie %1 löschen wollen?</translation>
+        <translation>Είστε βέβαιοι πως θέλετε να διαγραφή το %1;</translation>
     </message>
 </context>
 <context>
@@ -3712,7 +3721,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/widgets/pulseaudiowidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Formular</translation>
+        <translation>Φόρμα</translation>
     </message>
     <message>
         <location filename="../src/widgets/pulseaudiowidget.ui" line="26"/>
@@ -3725,72 +3734,72 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mvcp/qconsole.cpp" line="757"/>
         <source>Undo</source>
-        <translation>Rückgängig</translation>
+        <translation>Αναίρεση</translation>
     </message>
     <message>
         <location filename="../src/mvcp/qconsole.cpp" line="758"/>
         <source>Ctrl+Z</source>
-        <translation>Strg+Z</translation>
+        <translation>Ctrl+Z</translation>
     </message>
     <message>
         <location filename="../src/mvcp/qconsole.cpp" line="759"/>
         <source>Redo</source>
-        <translation>Wiederherstellen</translation>
+        <translation>Επανάληψη</translation>
     </message>
     <message>
         <location filename="../src/mvcp/qconsole.cpp" line="760"/>
         <source>Ctrl+Y</source>
-        <translation>Strg+Y</translation>
+        <translation>Ctrl+Y</translation>
     </message>
     <message>
         <location filename="../src/mvcp/qconsole.cpp" line="761"/>
         <source>Cut</source>
-        <translation>Ausschneiden</translation>
+        <translation>Κόψιμο</translation>
     </message>
     <message>
         <location filename="../src/mvcp/qconsole.cpp" line="762"/>
         <source>Ctrl+X</source>
-        <translation>Strg+X</translation>
+        <translation>Ctrl+X</translation>
     </message>
     <message>
         <location filename="../src/mvcp/qconsole.cpp" line="763"/>
         <source>Copy</source>
-        <translation>Kopieren</translation>
+        <translation>Αντιγραφή</translation>
     </message>
     <message>
         <location filename="../src/mvcp/qconsole.cpp" line="764"/>
         <source>Ctrl+Ins</source>
-        <translation>Strg+Einf</translation>
+        <translation>Ctrl+Ins</translation>
     </message>
     <message>
         <location filename="../src/mvcp/qconsole.cpp" line="765"/>
         <source>Paste</source>
-        <translation>Einfügen</translation>
+        <translation>Επικόλληση</translation>
     </message>
     <message>
         <location filename="../src/mvcp/qconsole.cpp" line="766"/>
         <source>Ctrl+V</source>
-        <translation>Strg+V</translation>
+        <translation>Ctrl+V</translation>
     </message>
     <message>
         <location filename="../src/mvcp/qconsole.cpp" line="767"/>
         <source>Delete</source>
-        <translation>Löschen</translation>
+        <translation>Διαγραφή</translation>
     </message>
     <message>
         <location filename="../src/mvcp/qconsole.cpp" line="768"/>
         <source>Del</source>
-        <translation>Entf</translation>
+        <translation>Διαγραφή</translation>
     </message>
     <message>
         <location filename="../src/mvcp/qconsole.cpp" line="769"/>
         <source>Select All</source>
-        <translation>Alles auswählen</translation>
+        <translation>Επιλογή Όλων</translation>
     </message>
     <message>
         <location filename="../src/mvcp/qconsole.cpp" line="770"/>
         <source>Ctrl+A</source>
-        <translation>Strg+A</translation>
+        <translation>Ctrl+A</translation>
     </message>
     <message>
         <location filename="../src/mvcp/qconsole.cpp" line="835"/>
@@ -3808,244 +3817,244 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/commands/playlistcommands.cpp" line="31"/>
         <source>Append playlist item %1</source>
-        <translation>Eintrag %1 zu Wiedergabeliste hinzufügen</translation>
+        <translation>Προσάρτηση του αντικειμένου λίστας %1</translation>
     </message>
     <message>
         <location filename="../src/commands/playlistcommands.cpp" line="51"/>
         <source>Insert playist item %1</source>
-        <translation>Eintrag %1 in Wiedergabeliste einfügen</translation>
+        <translation>Εισαγωγή του αντικειμένου λίστας %1</translation>
     </message>
     <message>
         <location filename="../src/commands/playlistcommands.cpp" line="71"/>
         <source>Update playlist item %1</source>
-        <translation>Eintrag %1 in Wiedergabeliste aktualisieren</translation>
+        <translation>Ενημέρωση του αντικειμένου λίστας %1</translation>
     </message>
     <message>
         <location filename="../src/commands/playlistcommands.cpp" line="93"/>
         <source>Remove playlist item %1</source>
-        <translation>Eintrag %1 aus Wiedergabeliste löschen</translation>
+        <translation>Αφαίρεση του αντικειμένου λίστας %1</translation>
     </message>
     <message>
         <location filename="../src/commands/playlistcommands.cpp" line="112"/>
         <source>Clear playlist</source>
-        <translation>Wiedergabeliste löschen</translation>
+        <translation>Καθαρισμός λίστας</translation>
     </message>
     <message>
         <location filename="../src/commands/playlistcommands.cpp" line="138"/>
         <source>Move item from %1 to %2</source>
-        <translation>Eintrag von %1 nach %2 verschieben</translation>
+        <translation>Μετακίνηση στου αντικειμένου %1 στο %2</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.cpp" line="317"/>
         <source>Append %1</source>
-        <translation>%1 anhängen</translation>
+        <translation>Προσάρτηση %1</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.cpp" line="343"/>
         <source>Remove %1 at %2</source>
-        <translation>%1 an %2 entfernen</translation>
+        <translation>Αφαίρεση %1 στο %2</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.cpp" line="369"/>
         <source>Insert %1 at %2</source>
-        <translation>%1 an %2 einfügen</translation>
+        <translation>Εισαγωγή %1 στο %2</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.cpp" line="393"/>
         <source>Move %1 from %2 to %3</source>
-        <translation>%1 von %2 nach %3 verschieben</translation>
+        <translation>Μετακίνηση του %1 από το %2 στο %3</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="328"/>
         <source>Timeout when reading data from socket.</source>
-        <translation>Timeout während Daten vom Socket gelesen wurden.</translation>
+        <translation>Λήξη χρόνου κατά την ανάγνωση δεδομένων από το socket.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="393"/>
         <source>Error occurred while reading from the network: %1</source>
-        <translation>Fehler beim Lesen vom Netzwerk: %1</translation>
+        <translation>Σφάλμα κατά την ανάγνωση από το δίκτυο: %1 </translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="405"/>
         <source>Lengths smaller than 126 must be expressed as one byte.</source>
-        <translation>Längen kleiner als 126 müssen als ein Byte dargestellt werden.</translation>
+        <translation>Μεγέθη μεγαλύτερα του 126 πρέπει να εκφράζονται ως ένα byte.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="429"/>
         <source>Something went wrong during reading from the network.</source>
-        <translation>Ein Fehler trat auf, während vom Netzwerk gelesen wurde.</translation>
+        <translation>Κάτι πήγε στραβά κατά την ανάγνωση από το δίκτυο.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="443"/>
         <source>Lengths smaller than 65536 (2^16) must be expressed as 2 bytes.</source>
-        <translation>Längen kleiner als 65536 (2^16) müssen als 2 Byte dargestellt werden.</translation>
+        <translation>Μεγέθη μικρότερα του 65536 (2^16) πρέπει να εκφράζονται ως 2 bytes.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="467"/>
         <source>Error while reading from the network: %1.</source>
-        <translation>Fehler beim Lesen vom Netzwerk: %1.</translation>
+        <translation>Σφάλμα κατά την ανάγνωση από το δίκτυο: %1.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="490"/>
         <source>Maximum framesize exceeded.</source>
-        <translation>Maximale Einzelbildgröße überschritten.</translation>
+        <translation>Ξεπεράστηκε το μέγιστο μέγεθος πλαισίου.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="502"/>
         <source>Some serious error occurred while reading from the network.</source>
-        <translation>Schwerer Fehler beim Lesen vom Netzwerk.</translation>
+        <translation>Προέκυψε κάποιο σοβαρό σφάλμα κατά την ανάγνωση από το δίκτυο.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="563"/>
         <source>Rsv field is non-zero</source>
-        <translation>Rsv-Feld ist nicht Null</translation>
+        <translation>Το πεδίο Rsv είναι μη μηδενικό</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="567"/>
         <source>Used reserved opcode</source>
-        <translation>Reservierter Opcode wurde benutzt</translation>
+        <translation>Χρησιμοποιήθηκε ανεστραμμένος κωδικός εντολής </translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="573"/>
         <source>Controle frame is larger than 125 bytes</source>
-        <translation>Kontrollbild ist größer als 125 Bytes</translation>
+        <translation>Το πλαίσιο ελέγχου είναι μεγαλύτερο από 125 bytes</translation>
     </message>
     <message>
         <location filename="../QWebSockets/dataprocessor_p.cpp" line="577"/>
         <source>Controle frames cannot be fragmented</source>
-        <translation>Kontrollbilder dürfen nicht fragmentiert sein</translation>
+        <translation>Τα πλαίσια ελέγχου δεν μπορεί να είναι κατακερματισμένα</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="33"/>
         <source>Append to track</source>
-        <translation>An Spur anhängen</translation>
+        <translation>Προσάρτηση στο κομμάτι</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="59"/>
         <source>Insert into track</source>
-        <translation>In Spur einfügen</translation>
+        <translation>Εισαγωγή μέσα στο κομμάτι</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="84"/>
         <source>Overwrite onto track</source>
-        <translation>Auf Spur überschreiben</translation>
+        <translation>Επικάληψη πάνω στο κομμάτι</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="109"/>
         <source>Lift from track</source>
-        <translation>Aus Spur &quot;wegheben&quot;</translation>
+        <translation>Ανασήκωση από το κομμάτι</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="133"/>
         <source>Remove from track</source>
-        <translation>Aus Spur löschen</translation>
+        <translation>Αφαίρεση από το κομμάτι</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="157"/>
         <source>Change track name</source>
-        <translation>Spurnamen ändern</translation>
+        <translation>Αλλαγή ονόματος του κομματιού</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="176"/>
         <source>Toggle track mute</source>
-        <translation>Spur stumm schalten (ein/aus)</translation>
+        <translation>Εναλαγή της σίγασης κομματιού</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="195"/>
         <source>Toggle track hidden</source>
-        <translation>Spur verstecken/anzeigen</translation>
+        <translation>Εναλλαγή της απόκρυψης κομματιού</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="215"/>
         <source>Change track compositing</source>
-        <translation>Zusammenmischen der Spur ändern</translation>
+        <translation>Αλλαγή σύνθεσης κομματιού</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="235"/>
         <source>Lock track</source>
-        <translation>Spur sperren</translation>
+        <translation>Κλείδομα κομματιού</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="260"/>
         <source>Move clip</source>
-        <translation>Clip verschieben</translation>
+        <translation>Μετακίνηση κομματιού</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="283"/>
         <source>Trim clip in point</source>
-        <translation>Clip In-Point verschieben</translation>
+        <translation>Περικοπή του κομματιού εντός σημείου</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="319"/>
         <source>Trim clip out point</source>
-        <translation>Clip Out-Point verschieben</translation>
+        <translation>Περικοπή του κομματιού εκτός σημείου</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="355"/>
         <source>Split clip</source>
-        <translation>Clip trennen</translation>
+        <translation>Διαχωρισμός κλιπ</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="377"/>
         <source>Adjust fade in</source>
-        <translation>Einfaden einstellen</translation>
+        <translation>Ρύθμιση βαθμιαίας εισόδου</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="408"/>
         <source>Adjust fade out</source>
-        <translation>Ausfaden einstellen</translation>
+        <translation>Ρύθμιση βαθμιαίας εξόδου</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="438"/>
         <location filename="../src/commands/timelinecommands.cpp" line="541"/>
         <location filename="../src/commands/timelinecommands.cpp" line="580"/>
         <source>Add transition</source>
-        <translation>Überblendung hinzufügen</translation>
+        <translation>Προσθήκη μετάβασης</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="469"/>
         <source>Trim transition in point</source>
-        <translation>Überblendung In-Point verschieben</translation>
+        <translation>Περικοπή μετάβασης εντός σημείου</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="505"/>
         <source>Trim transition out point</source>
-        <translation>Überblendung Out-Point verschieben</translation>
+        <translation>Περικοπή μετάβασης εκτός σημείου</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="616"/>
         <source>Add video track</source>
-        <translation>Videospur hinzufügen</translation>
+        <translation>Προσθήκη κομματιού βίντεο</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="618"/>
         <source>Add audio track</source>
-        <translation>Audiospur hinzufügen</translation>
+        <translation>Προσθήκη κομματιού ήχου</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="641"/>
         <source>Insert audio track</source>
-        <translation>Tonspur einfügen</translation>
+        <translation>Εισαγωγή κομματιού ήχου</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="643"/>
         <source>Insert video track</source>
-        <translation>Videospur einfügen</translation>
+        <translation>Εισαγωγή κομματιού βίντεο</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="663"/>
         <source>Remove audio track</source>
-        <translation>Audiospur löschen</translation>
+        <translation>Αφαίρεση κομματιού ήχου</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="665"/>
         <source>Remove video track</source>
-        <translation>Videospur löschen</translation>
+        <translation>Αφαίρεση κοματιού βίντεο</translation>
     </message>
     <message>
         <location filename="../src/mltxmlgpuchecker.cpp" line="38"/>
         <source>The file is not a MLT XML file.</source>
-        <translation>Die Datei ist keine MLT XML-Datei.</translation>
+        <translation>Το αρχείο δεν είναι αρχείο MLT XML.</translation>
     </message>
 </context>
 <context>
@@ -4053,43 +4062,43 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../QWebSockets/qwebsocket_p.cpp" line="105"/>
         <source>Connection closed</source>
-        <translation>Verbindung geschlossen</translation>
+        <translation>Η σύνδεση έκλεισε</translation>
     </message>
     <message>
         <location filename="../QWebSockets/qwebsocket_p.cpp" line="564"/>
         <source>Error writing bytes to socket: %1.</source>
-        <translation>Fehler beim Schreiben von Daten auf Socket: %1.</translation>
+        <translation>Σφάλμα κατά την εγγραφλή στο socket: %1</translation>
     </message>
     <message>
         <location filename="../QWebSockets/qwebsocket_p.cpp" line="576"/>
         <source>Bytes written %1 != %2.</source>
-        <translation>Geschriebene Bytes %1 != %2.</translation>
+        <translation>Bytes που γράφτηκαν %1 != %2.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/qwebsocket_p.cpp" line="705"/>
         <location filename="../QWebSockets/qwebsocket_p.cpp" line="746"/>
         <source>Invalid statusline in response: %1.</source>
-        <translation>Ungültige Statuszeile in Antwort: %1.</translation>
+        <translation>Εσφαλμένη γραμμή κατάστασης στην απάντηση: %1.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/qwebsocket_p.cpp" line="741"/>
         <source>Accept-Key received from server %1 does not match the client key %2.</source>
-        <translation>Accept-Key erhalten von Server %1 stimmt nicht mit dem Client-Key %2 überein.</translation>
+        <translation>Το κλειδί-αποδοχής από τον διακομιστή %1 δεν ταιριάζει με το κλειδί του πελάτη %2.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/qwebsocket_p.cpp" line="758"/>
         <source>Handshake: Server requests a version that we don&apos;t support: %1.</source>
-        <translation>Handshake: Server benötigt eine Version die nicht unterstützt wird: %1.</translation>
+        <translation>Χειραψία: Ο διακομιστής ζητά μία έκδοση που δεν υποστηρίζουμε: %1.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/qwebsocket_p.cpp" line="764"/>
         <source>Unknown error condition encountered. Aborting connection.</source>
-        <translation>Ein unbekannter Fehler ist aufgetreten: Verbindung abgebrochen.</translation>
+        <translation>Αντιμετώπιση εσφαλμένης κατάστασης. Απόρηψη σύνδεσης.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/qwebsocket_p.cpp" line="771"/>
         <source>Unhandled http status code: %1.</source>
-        <translation>Unbehandelter HTTP Statuscode: %1.</translation>
+        <translation>Ανεπίλυτος κωδικός κατάστασης http: %1.</translation>
     </message>
 </context>
 <context>
@@ -4097,27 +4106,27 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../QWebSockets/qwebsocketserver_p.cpp" line="58"/>
         <source>Server closed.</source>
-        <translation>Server geschlossen.</translation>
+        <translation>Ο διακομιστης είναι κλειστός.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/qwebsocketserver_p.cpp" line="335"/>
         <source>Upgrading to websocket failed.</source>
-        <translation>Websocket-Erweiterung fehlgeschlagen.</translation>
+        <translation>Αποτυχία αναβάθμισης σε websocket.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/qwebsocketserver_p.cpp" line="341"/>
         <source>Cannot upgrade to websocket.</source>
-        <translation>Kann Websocket nicht erweitern.</translation>
+        <translation>Δεν μπορεί να γίνει αναβάθμιση σε websocket.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/qwebsocketserver_p.cpp" line="347"/>
         <source>Invalid response received.</source>
-        <translation>Ungültige Antwort erhalten.</translation>
+        <translation>Έγινε λήψη εσφαλμένης απάντησης.</translation>
     </message>
     <message>
         <location filename="../QWebSockets/qwebsocketserver_p.cpp" line="352"/>
         <source>Closing socket because of invalid or unsupported request.</source>
-        <translation>Socket wird wegen ungültigem oder nicht-unterstützer Anfrage geschlossen.</translation>
+        <translation>Κλείσιμο του socket λόγο μη υποστηριζόμενου αιτήματος.</translation>
     </message>
 </context>
 <context>
@@ -4125,12 +4134,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/qmltypes/qmlfilter.cpp" line="165"/>
         <source>(defaults)</source>
-        <translation>(Standardeinstellungen)</translation>
+        <translation>(προκαθορισμένα)</translation>
     </message>
     <message>
         <location filename="../src/qmltypes/qmlfilter.cpp" line="238"/>
         <source>Analyze %1</source>
-        <translation>Analysiere %1</translation>
+        <translation>Ανάλυση %1</translation>
     </message>
 </context>
 <context>
@@ -4138,17 +4147,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/docks/recentdock.ui" line="24"/>
         <source>Recent</source>
-        <translation>Kürzlich</translation>
+        <translation>Πρόσφατα</translation>
     </message>
     <message>
         <location filename="../src/docks/recentdock.ui" line="46"/>
         <source>Show only files with name matching text</source>
-        <translation>Nur Dateien mit übereinstimmendem Text anzeigen</translation>
+        <translation>Εμφάνιση μόνο αρχείων με όνομα που ταιριάζει στο κείμενο</translation>
     </message>
     <message>
         <location filename="../src/docks/recentdock.ui" line="49"/>
         <source>search</source>
-        <translation>Suche</translation>
+        <translation>εύρεση</translation>
     </message>
 </context>
 <context>
@@ -4156,7 +4165,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/SaveDefaultButton.qml" line="24"/>
         <source>Set as default</source>
-        <translation>Als Standard festlegen</translation>
+        <translation>Καθορισμός ως προεπιλογή</translation>
     </message>
 </context>
 <context>
@@ -4164,7 +4173,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/controllers/scopecontroller.cpp" line="33"/>
         <source>Scopes</source>
-        <translation>Oszilloskop-Ansichten</translation>
+        <translation>Πεδία</translation>
     </message>
 </context>
 <context>
@@ -4172,47 +4181,47 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/widgets/servicepresetwidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Formular</translation>
+        <translation>Φόρμα</translation>
     </message>
     <message>
         <location filename="../src/widgets/servicepresetwidget.ui" line="25"/>
         <source>Preset</source>
-        <translation>Voreinstellung</translation>
+        <translation>Προκαθορισμένα</translation>
     </message>
     <message>
         <location filename="../src/widgets/servicepresetwidget.ui" line="45"/>
         <source>Save</source>
-        <translation>Speichern</translation>
+        <translation>Αποθήκευση</translation>
     </message>
     <message>
         <location filename="../src/widgets/servicepresetwidget.ui" line="52"/>
         <source>Delete</source>
-        <translation>Löschen</translation>
+        <translation>Διαγραφή</translation>
     </message>
     <message>
         <location filename="../src/widgets/servicepresetwidget.cpp" line="76"/>
         <source>(defaults)</source>
-        <translation>(Standardeinstellungen)</translation>
+        <translation>(προκαθορισμένα)</translation>
     </message>
     <message>
         <location filename="../src/widgets/servicepresetwidget.cpp" line="83"/>
         <source>Save Preset</source>
-        <translation>Voreinstellung speichern</translation>
+        <translation>Αποθήκευση Πρότυπου</translation>
     </message>
     <message>
         <location filename="../src/widgets/servicepresetwidget.cpp" line="84"/>
         <source>Name:</source>
-        <translation>Name:</translation>
+        <translation>Όνομα:</translation>
     </message>
     <message>
         <location filename="../src/widgets/servicepresetwidget.cpp" line="135"/>
         <source>Delete Preset</source>
-        <translation>Voreinstellung löschen</translation>
+        <translation>Διαγραφή Πρότυπου</translation>
     </message>
     <message>
         <location filename="../src/widgets/servicepresetwidget.cpp" line="136"/>
         <source>Are you sure you want to delete %1?</source>
-        <translation>Sind Sie sicher, dass Sie %1 löschen wollen?</translation>
+        <translation>Είστε βέβαιοι πως θέλετε να διαγραφή το %1;</translation>
     </message>
 </context>
 <context>
@@ -4220,7 +4229,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/SimplePropertyUI.qml" line="14"/>
         <source>Custom Properties</source>
-        <translation>Benutzerdefinierte Einstellungen</translation>
+        <translation>Προσαρμοσμένες Ιδιότητες</translation>
     </message>
 </context>
 <context>
@@ -4228,97 +4237,97 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="41"/>
         <source>Bottom Left</source>
-        <translation>Unten links</translation>
+        <translation>Αριστερά Κάτω</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="46"/>
         <source>Bottom Right</source>
-        <translation>Unten rechts</translation>
+        <translation>Δεξιά Κάτω</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="51"/>
         <source>Top Left</source>
-        <translation>Oben links</translation>
+        <translation>Αριστερά Πάνω</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="56"/>
         <source>Top Right</source>
-        <translation>Oben rechts</translation>
+        <translation>Δεξιά Πάνω</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="120"/>
         <source>Preset</source>
-        <translation>Voreinstellung</translation>
+        <translation>Προκαθορισμένα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="131"/>
         <source>Position</source>
-        <translation>Position</translation>
+        <translation>Θέση</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="151"/>
         <source>Size</source>
-        <translation>Größe</translation>
+        <translation>Μέγεθος</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="172"/>
         <source>Size mode</source>
-        <translation>Größenmodus</translation>
+        <translation>Μέγεθος τρόπου</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="179"/>
         <source>Fit</source>
-        <translation>Angepasst</translation>
+        <translation>Ταίριασμα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="188"/>
         <source>Fill</source>
-        <translation>Anfüllen</translation>
+        <translation>Γέμισμα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="197"/>
         <source>Distort</source>
-        <translation>Verzerren</translation>
+        <translation>Παραμόρφωση</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="207"/>
         <source>Horizontal fit</source>
-        <translation>Horizontal angepasst</translation>
+        <translation>Οριζόντιο ταίριασμα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="212"/>
         <source>Left</source>
-        <translation>Links</translation>
+        <translation>Αριστερά</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="219"/>
         <source>Center</source>
-        <translation>Mitte</translation>
+        <translation>Κέντρο</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="226"/>
         <source>Right</source>
-        <translation>Rechts</translation>
+        <translation>Δεξιά</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="234"/>
         <source>Vertical fit</source>
-        <translation>Vertikal angepasst</translation>
+        <translation>Κατακόριφο ταίριασμα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="239"/>
         <source>Top</source>
-        <translation>Oben</translation>
+        <translation>Πάνω</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="246"/>
         <source>Middle</source>
-        <translation>Mitte</translation>
+        <translation>Μέση</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="253"/>
         <source>Bottom</source>
-        <translation>Unten</translation>
+        <translation>Κάτω</translation>
     </message>
 </context>
 <context>
@@ -4326,7 +4335,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/dialogs/textviewerdialog.ui" line="17"/>
         <source>Dialog</source>
-        <translation>Dialog</translation>
+        <translation>Διάλογος</translation>
     </message>
 </context>
 <context>
@@ -4334,12 +4343,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/TimeSpinner.qml" line="47"/>
         <source>Decrement</source>
-        <translation>Verringern</translation>
+        <translation>Μείωση</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/TimeSpinner.qml" line="68"/>
         <source>Increment</source>
-        <translation>Erhöhen</translation>
+        <translation>Αύξηση</translation>
     </message>
 </context>
 <context>
@@ -4347,12 +4356,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/docks/timelinedock.ui" line="33"/>
         <source>Timeline</source>
-        <translation>Zeitachse</translation>
+        <translation>Χρονολόγιο</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="657"/>
         <source>You cannot split a transition.</source>
-        <translation>Eine Überblendung kann nicht getrennt werden.</translation>
+        <translation>Δεν μπορείτε να χωρήσετε μία μετάβαση.</translation>
     </message>
 </context>
 <context>
@@ -4360,58 +4369,58 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/qml/timeline/TimelineToolbar.qml" line="80"/>
         <source>Toggle snapping</source>
-        <translation>Einrasten an/aus</translation>
+        <translation>Ενναλαγή προσκόλησης</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/TimelineToolbar.qml" line="89"/>
         <source>Scrub while dragging</source>
-        <translation>Während ziehen abspielen</translation>
+        <translation>Τρίψιμο κατά το σύρσιμο</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/TimelineToolbar.qml" line="98"/>
         <source>Ripple (insert) when source is dropped</source>
-        <translation>Ripple (einfügen) wenn Quelle fallen gelassen wird</translation>
+        <translation>Ρυτίδωμα (εισαγωγή) όταν χαθεί η πηγή</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/TimelineToolbar.qml" line="128"/>
         <source>Display a menu of additional actions</source>
-        <translation>Menü mit zusätzlichen Aktionen anzeigen</translation>
+        <translation>Προβολή μενού με επιπλέον ενέργειες</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/TimelineToolbar.qml" line="136"/>
         <source>Append to the current track (C)</source>
-        <translation>Zu aktueller Spur hinzufügen (C)</translation>
+        <translation>Προσάρτηση στο τρέχον κομμάτι (C)</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/TimelineToolbar.qml" line="144"/>
         <source>Ripple Delete - Remove current clip
 shifting following clips to the left (X)</source>
-        <translation>Ripple Delete - Aktuellen Clip löschen
-und die danach folgende Clips nach links verschieben (X)</translation>
+        <translation>Διαγραφή Ρυτίδωσης - Αφαίρεση τρέχον κλιπ
+μετακινώντας τα ακόλουθα κλιπ στα αριστερά (Χ)</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/TimelineToolbar.qml" line="152"/>
         <source>Lift - Remove current clip without
 affecting position of other clips (Z)</source>
-        <translation>Wegheben - Den aktuellen Clip entfernen ohne
-die Position anderer Clips zu beeinflussen (Z)</translation>
+        <translation>Ανασήκωση - Αφαίρεση του τρέχον κλιπ χωρίς
+να επηρεαστούν οι θέσεις των άλλων κλιπ (Z)</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/TimelineToolbar.qml" line="160"/>
         <source>Insert clip into the current track
 shifting following clips to the right (V)</source>
-        <translation>Clip auf aktueller Spur einfügen.
-Nachfolgende Clips werden nach rechts verschoben (V)</translation>
+        <translation>Εισαγωγή κλιπ στο τρέχον κομμάτι
+μετακινώντας τα ακόλουθα κλιπ δεξιά (V)</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/TimelineToolbar.qml" line="168"/>
         <source>Overwrite clip onto the current track (B)</source>
-        <translation>Clip auf aktueller Spur überschreibend einfügen (B)</translation>
+        <translation>Επικάληψη κλιπ πάνω στο τρέχον κομμάτι (B)</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/TimelineToolbar.qml" line="176"/>
         <source>Split At Playhead (S)</source>
-        <translation>An Abspielposition trennen (S)</translation>
+        <translation>Διαχωρισμός στην Κεφαλή Αναπαραγωγής</translation>
     </message>
 </context>
 <context>
@@ -4419,17 +4428,17 @@ Nachfolgende Clips werden nach rechts verschoben (V)</translation>
     <message>
         <location filename="../src/widgets/toneproducerwidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Formular</translation>
+        <translation>Φόρμα</translation>
     </message>
     <message>
         <location filename="../src/widgets/toneproducerwidget.ui" line="26"/>
         <source>Audio Tone</source>
-        <translation>Audioton</translation>
+        <translation>Χροιά Ήχου</translation>
     </message>
     <message>
         <location filename="../src/widgets/toneproducerwidget.ui" line="48"/>
         <source>Frequency</source>
-        <translation>Frequenz</translation>
+        <translation>Συχνότητα</translation>
     </message>
     <message>
         <location filename="../src/widgets/toneproducerwidget.ui" line="58"/>
@@ -4444,7 +4453,7 @@ Nachfolgende Clips werden nach rechts verschoben (V)</translation>
     <message>
         <location filename="../src/widgets/toneproducerwidget.ui" line="87"/>
         <source>Level</source>
-        <translation>Pegel</translation>
+        <translation>Επίπεδο</translation>
     </message>
 </context>
 <context>
@@ -4458,7 +4467,7 @@ Nachfolgende Clips werden nach rechts verschoben (V)</translation>
     <message>
         <location filename="../src/qml/timeline/TrackHead.qml" line="156"/>
         <source>Mute</source>
-        <translation>Stumm</translation>
+        <translation>Σίγαση</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/TrackHead.qml" line="175"/>
@@ -4469,7 +4478,7 @@ Nachfolgende Clips werden nach rechts verschoben (V)</translation>
     <message>
         <location filename="../src/qml/timeline/TrackHead.qml" line="181"/>
         <source>Hide</source>
-        <translation>Verstecken</translation>
+        <translation>Απόκρυψη</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/TrackHead.qml" line="200"/>
@@ -4486,12 +4495,12 @@ Nachfolgende Clips werden nach rechts verschoben (V)</translation>
     <message>
         <location filename="../src/qml/timeline/TrackHead.qml" line="247"/>
         <source>Lock track</source>
-        <translation>Spur sperren</translation>
+        <translation>Κλείδομα κομματιού</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/TrackHead.qml" line="206"/>
         <source>Composite</source>
-        <translation>Zusammenmischen</translation>
+        <translation>Σύνθετο</translation>
     </message>
 </context>
 <context>
@@ -4499,7 +4508,7 @@ Nachfolgende Clips werden nach rechts verschoben (V)</translation>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/UndoButton.qml" line="24"/>
         <source>Reset to default</source>
-        <translation>Auf Standardeinstellungen/werte zurücksetzen</translation>
+        <translation>Επαναφορά στις προεπιλογές</translation>
     </message>
 </context>
 <context>
@@ -4507,7 +4516,7 @@ Nachfolgende Clips werden nach rechts verschoben (V)</translation>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Formular</translation>
+        <translation>Φόρμα</translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="26"/>
@@ -4517,12 +4526,12 @@ Nachfolgende Clips werden nach rechts verschoben (V)</translation>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="39"/>
         <source>Device</source>
-        <translation>Gerät</translation>
+        <translation>Συκευή</translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="49"/>
         <source>Set the path to the video device file</source>
-        <translation>Pfad des Video-Devicefiles angeben</translation>
+        <translation>Καθορισμός της διαδρομής στο αρχείο της συσκευλης βίντεο</translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="52"/>
@@ -4532,12 +4541,12 @@ Nachfolgende Clips werden nach rechts verschoben (V)</translation>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="72"/>
         <source>Resolution</source>
-        <translation>Auflösung</translation>
+        <translation>Ανάλυση</translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="82"/>
         <source>Width</source>
-        <translation>Breite</translation>
+        <translation>Πλάτος</translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="101"/>
@@ -4547,17 +4556,17 @@ Nachfolgende Clips werden nach rechts verschoben (V)</translation>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="108"/>
         <source>Height</source>
-        <translation>Höhe</translation>
+        <translation>Ύψος</translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="121"/>
         <source>pixels</source>
-        <translation>Pixel</translation>
+        <translation>εικονοστοιχεία</translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="128"/>
         <source>Frame rate</source>
-        <translation>Bildwechselfrequenz</translation>
+        <translation>Ρυθμός καρέ</translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="151"/>
@@ -4567,22 +4576,22 @@ Nachfolgende Clips werden nach rechts verschoben (V)</translation>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="158"/>
         <source>TV Tuner</source>
-        <translation>TV Tuner</translation>
+        <translation>Δέκτης TV</translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="170"/>
         <source>Standard</source>
-        <translation>Standard</translation>
+        <translation>Πρότυπο</translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="180"/>
         <source>Set the television standard</source>
-        <translation>Fernsehstandard auswählen</translation>
+        <translation>Καθορισμός του πρότυπου τηλεόρασης</translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="184"/>
         <source>Automatic</source>
-        <translation>Automatisch</translation>
+        <translation>Αυτόματα</translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="189"/>
@@ -4602,17 +4611,17 @@ Nachfolgende Clips werden nach rechts verschoben (V)</translation>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="207"/>
         <source>Channel</source>
-        <translation>Kanal</translation>
+        <translation>Κανάλι</translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="223"/>
         <source>Audio Input</source>
-        <translation>Audioeingang</translation>
+        <translation>Είσοδος Ήχου</translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="234"/>
         <source>None</source>
-        <translation>Keinen</translation>
+        <translation>Κανένα</translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="239"/>
@@ -4632,7 +4641,7 @@ Nachfolgende Clips werden nach rechts verschoben (V)</translation>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="280"/>
         <source>Apply</source>
-        <translation>Anwenden</translation>
+        <translation>Εφαρμογή</translation>
     </message>
 </context>
 <context>
@@ -4640,32 +4649,32 @@ Nachfolgende Clips werden nach rechts verschoben (V)</translation>
     <message>
         <location filename="../src/jobs/videoqualityjob.cpp" line="35"/>
         <source>Open</source>
-        <translation>Öffnen</translation>
+        <translation>Άνοιγμα</translation>
     </message>
     <message>
         <location filename="../src/jobs/videoqualityjob.cpp" line="36"/>
         <source>Open original and encoded side-by-side in the Shotcut player</source>
-        <translation>Original und enkodierte Version Seite-an-Seite in Shotcut-Player öffnen</translation>
+        <translation>Άνοιγμα του αρχικού και του κωδικοποιημένου πλάι-πλάι στην αναπαραγωγή</translation>
     </message>
     <message>
         <location filename="../src/jobs/videoqualityjob.cpp" line="40"/>
         <source>View Report</source>
-        <translation>Bericht ansehen</translation>
+        <translation>Προβολή Αναφοράς</translation>
     </message>
     <message>
         <location filename="../src/jobs/videoqualityjob.cpp" line="44"/>
         <source>Show In Folder</source>
-        <translation>In Ordner anzeigen</translation>
+        <translation>Προβολή σε Φάκελο</translation>
     </message>
     <message>
         <location filename="../src/jobs/videoqualityjob.cpp" line="48"/>
         <source>Measure %1</source>
-        <translation>Messe %1</translation>
+        <translation>Μέτρηση %1</translation>
     </message>
     <message>
         <location filename="../src/jobs/videoqualityjob.cpp" line="87"/>
         <source>Video Quality Measurement</source>
-        <translation>Videoqualitätsmessung</translation>
+        <translation>Μέτρηση της Ποιότητας  Βίντεο</translation>
     </message>
 </context>
 <context>
@@ -4673,7 +4682,7 @@ Nachfolgende Clips werden nach rechts verschoben (V)</translation>
     <message>
         <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="98"/>
         <source>Video Waveform</source>
-        <translation>Video-Wellenform</translation>
+        <translation>Κυματομορφή Βίντεο</translation>
     </message>
 </context>
 <context>
@@ -4681,27 +4690,27 @@ Nachfolgende Clips werden nach rechts verschoben (V)</translation>
     <message>
         <location filename="../src/widgets/webvfxproducer.ui" line="14"/>
         <source>Form</source>
-        <translation>Formular</translation>
+        <translation>Φόρμα</translation>
     </message>
     <message>
         <location filename="../src/widgets/webvfxproducer.ui" line="23"/>
         <source>Make background transparent</source>
-        <translation>Hintergrund transparent machen</translation>
+        <translation>Επιβολή διαφανούς φόντου</translation>
     </message>
     <message>
         <location filename="../src/widgets/webvfxproducer.ui" line="30"/>
         <source>Reload</source>
-        <translation>Neu laden</translation>
+        <translation>Επαναφόρτωση</translation>
     </message>
     <message>
         <location filename="../src/widgets/webvfxproducer.ui" line="50"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;For Advanced Users&lt;/span&gt;&lt;br/&gt;If you enable this, and you do not use the WebVfx JavaScript extension, your content will not render!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Für erfahrene Anwender&lt;/span&gt;&lt;br/&gt;Der Inhalt wird nur dargestellt, wenn die WebVfx JavaScript Erweiterung verwendet wird!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Για Πεπειραμένους Χρήστες&lt;/span&gt;&lt;br/&gt;Αν το ενεργοποιήσετε, και δεν χρησιμοποιήσετε την επέκταση WebVfx JavaScript, το περιεχόμενο σας δεν θα αποδοθεί!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/widgets/webvfxproducer.ui" line="53"/>
         <source>Use WebVfx JavaScript extension</source>
-        <translation>WebVfx JavaScript Erweiterung verwenden</translation>
+        <translation>Χρήση WebVfx JavaScript επέκτασης </translation>
     </message>
 </context>
 <context>
@@ -4709,24 +4718,24 @@ Nachfolgende Clips werden nach rechts verschoben (V)</translation>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Formular</translation>
+        <translation>Φόρμα</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="26"/>
         <source>Screen</source>
-        <translation>Bildschirm</translation>
+        <translation>Οθόνη</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="39"/>
         <source>Display</source>
-        <translation>Anzeige</translation>
+        <translation>Οθόνη</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="49"/>
         <source>An X11 display name of the form hostname:displaynumber.screennumber
 Most users do not need to change this.</source>
-        <translation>Ein X11 Bildschirmname im Format Hostname:Anzeigenummer.Bildschirmnummer
-Die meisten Benutzer müssen diese Einstellung nicht verändern.</translation>
+        <translation>Ένα όνομα οθόνης X11 της μορφής hostname:displaynumber.screennumber
+Οι περισότεροι χρήστες δεν χριάζεται να το αλλάξουν.</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="53"/>
@@ -4736,22 +4745,22 @@ Die meisten Benutzer müssen diese Einstellung nicht verändern.</translation>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="73"/>
         <source>Position</source>
-        <translation>Position</translation>
+        <translation>Θέση</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="87"/>
         <source>Center Under Mouse</source>
-        <translation>Auf Maus zentrieren</translation>
+        <translation>Κεντράρισμα Κάτω από το Ποντίκι</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="92"/>
         <source>Fixed</source>
-        <translation>Fest</translation>
+        <translation>Σταθερό</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="97"/>
         <source>Follow Mouse</source>
-        <translation>Maus folgen</translation>
+        <translation>Ακολούθησε το Ποντίκι</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="105"/>
@@ -4761,7 +4770,7 @@ Die meisten Benutzer müssen diese Einstellung nicht verändern.</translation>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="118"/>
         <source>The horizontal coordinate from the left edge when using a fixed capture region.</source>
-        <translation>Die horizontale Koordinate vom linken Rand aus, wenn eine fixe Capture-Region verwendet wird</translation>
+        <translation>Η οριζόντια συντεταγμένη από το αριστερό άκρο όταν χρησιμοποιείται μία σταθερή περιοχή λήψης.</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="128"/>
@@ -4771,23 +4780,23 @@ Die meisten Benutzer müssen diese Einstellung nicht verändern.</translation>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="138"/>
         <source>The vertical coordinate from the top edge when using a fixed capture region.</source>
-        <translation>Die vertikale Koordinate vom oberen Rand aus, wenn eine fixe Capture-Region verwendet wird</translation>
+        <translation>Η κάθετη συντεταγμένη από το πάνω άκρο όταν χρησιμοποιείται μία σταθερή περιοχή λήψης.</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="148"/>
         <location filename="../src/widgets/x11grabwidget.ui" line="204"/>
         <source>pixels</source>
-        <translation>Pixel</translation>
+        <translation>εικονοστοιχεία</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="155"/>
         <source>Resolution</source>
-        <translation>Auflösung</translation>
+        <translation>Ανάλυση</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="165"/>
         <source>Width of the capture region</source>
-        <translation>Breite der aufzuzeichnenden Region</translation>
+        <translation>Πλάτος της περιοχής λήψης</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="184"/>
@@ -4797,32 +4806,32 @@ Die meisten Benutzer müssen diese Einstellung nicht verändern.</translation>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="191"/>
         <source>Height of the capture region</source>
-        <translation>Höhe der aufzuzeichnenden Region</translation>
+        <translation>Ύψος της περιοχής λήψης</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="211"/>
         <source>Show the capture region</source>
-        <translation>Anzeigen welche Region aufgezeichnet wird</translation>
+        <translation>Εμφάνιση της περιοχής λήψης</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="218"/>
         <source>Draw the mouse cursor</source>
-        <translation>Mauszeiger anzeigen</translation>
+        <translation>Σύρετε τον κέρσορα του ποντικιού</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="228"/>
         <source>Audio Input</source>
-        <translation>Audioeingang</translation>
+        <translation>Είσοδος Ήχου</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="238"/>
         <source>Choose an audio input method to use during capture.</source>
-        <translation>Audioeingangsmethode für die Aufzeichnung auswählen.</translation>
+        <translation>Επιλέξτε μία είσοδο ήχου για χρήση κατά την λήψη.</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="242"/>
         <source>None</source>
-        <translation>Keine</translation>
+        <translation>Κανένα</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="247"/>
@@ -4842,7 +4851,7 @@ Die meisten Benutzer müssen diese Einstellung nicht verändern.</translation>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="288"/>
         <source>Apply</source>
-        <translation>Anwenden</translation>
+        <translation>Εφαρμογή</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="295"/>
@@ -4850,13 +4859,15 @@ Die meisten Benutzer müssen diese Einstellung nicht verändern.</translation>
 It makes the capture run in the background, but
 you will not be able to simultaneously send
 the screen capture to SDI/HDMI in this mode.</source>
-        <translation>Diese Option verwenden damit Shotcut sich selbst aufzeichnet.
-Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die Bildschirmaufzeichnung währenddessen nicht an SDI/HDMI senden.</translation>
+        <translation>Χρησιμοποιείστε αυτό όταν θα κάνετε λήψη του ίδιου του Shotcut.
+Αναγκάζει την λήψη να τρέχει στο παρασκήνιο, αλλά
+δεν θα μπορείτε να στείλετε ταυτόχρονα
+την οθόνη λήψης σε SDI/HDMI με τον τρόπο αυτό.</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="301"/>
         <source>Capture Shotcut</source>
-        <translation>Shotcut aufzeichnen</translation>
+        <translation>Λήψη Shotcut</translation>
     </message>
 </context>
 <context>
@@ -4864,22 +4875,22 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
     <message>
         <location filename="../src/qml/views/filter/filterview.qml" line="69"/>
         <source>Track: %1</source>
-        <translation>Spur: %1</translation>
+        <translation>Κομμάτι %1</translation>
     </message>
     <message>
         <location filename="../src/qml/views/filter/filterview.qml" line="88"/>
         <source>Nothing selected</source>
-        <translation>Nichts ausgewählt</translation>
+        <translation>Δεν είναι επιλεγμένο κάτι</translation>
     </message>
     <message>
         <location filename="../src/qml/views/filter/filterview.qml" line="100"/>
         <source>Add a filter</source>
-        <translation>Filter hinzufügen</translation>
+        <translation>Προσθήκη ενός φίλτρου</translation>
     </message>
     <message>
         <location filename="../src/qml/views/filter/filterview.qml" line="112"/>
         <source>Remove selected filter</source>
-        <translation>Ausgewählten Filter entfernen</translation>
+        <translation>Αφαίρεση επιλεγμένου φίλτρου</translation>
     </message>
 </context>
 <context>
@@ -4887,22 +4898,22 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
     <message>
         <location filename="../src/main.cpp" line="180"/>
         <source>Fill the screen with the Shotcut window.</source>
-        <translation>Bildschirm mit dem Shotcut-Fenster ausfüllen.</translation>
+        <translation>Πλήρωση της οθόνης με το παράθυρο του Shotcut.</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="183"/>
         <source>Use GPU processing.</source>
-        <translation>GPU-Verarbeitung verwenden.</translation>
+        <translation>Χρήση επεξεργασίας GPU.</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="186"/>
         <source>A file to open.</source>
-        <translation>Zu öffnende Datei.</translation>
+        <translation>Έναν αρχείο για άνοιγμα.</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="219"/>
         <source>Loading plugins...</source>
-        <translation>Lade Plugins...</translation>
+        <translation>Φόρτωση αρθωμάτων...</translation>
     </message>
 </context>
 <context>
@@ -4910,204 +4921,204 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
     <message>
         <location filename="../src/qml/filters/webvfx_circular_frame/meta.qml" line="7"/>
         <source>Circular Frame (HTML)</source>
-        <translation>Runder Rahmen (HTML)</translation>
+        <translation>Κυκλικό Πλαίσιο (HTML)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/meta.qml" line="7"/>
         <source>Copy Channel</source>
-        <translation>Kanal kopieren</translation>
+        <translation>Αντιγραφή Καναλιού</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_gain/meta.qml" line="7"/>
         <source>Gain</source>
-        <translation>Verstärkungsgrad</translation>
+        <translation>Κέρδος</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_balance/meta.qml" line="7"/>
         <source>Balance</source>
-        <translation>Balance</translation>
+        <translation>Ισορροποία</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_pan/meta.qml" line="7"/>
         <source>Pan</source>
-        <translation>Panning</translation>
+        <translation>Pan</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_mono/meta.qml" line="7"/>
         <source>Downmix</source>
-        <translation>Downmix</translation>
+        <translation>Κάτω Μίξη</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_swapchannels/meta.qml" line="7"/>
         <source>Swap Channels</source>
-        <translation>Kanäle vertauschen</translation>
+        <translation>Εναλλαγή Καναλιών</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/rotate/meta.qml" line="7"/>
         <source>Rotate</source>
-        <translation>Rotieren</translation>
+        <translation>Περιστροφή</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/meta.qml" line="6"/>
         <source>Stabilize</source>
-        <translation>Stabilisieren</translation>
+        <translation>Σταθεροποίηση</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/invert/meta.qml" line="6"/>
         <source>Invert Colors</source>
-        <translation>Farben invertieren</translation>
+        <translation>Αντιστροφα Χρώματα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sepia/meta.qml" line="6"/>
         <source>Sepia Tone</source>
-        <translation>Sepiatönung</translation>
+        <translation>Τόνος Σέπια</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/movit_diffusion/meta.qml" line="6"/>
         <source>Diffusion</source>
-        <translation>Diffusion</translation>
+        <translation>Διάχυση</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_loudness/meta.qml" line="7"/>
         <source>Normalize</source>
-        <translation>Normalisieren</translation>
+        <translation>Κανονικοποίηση</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/meta.qml" line="6"/>
         <source>Crop</source>
-        <translation>Zuschneiden</translation>
+        <translation>Περικοπή</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/meta.qml" line="6"/>
         <source>Color Grading</source>
-        <translation>Farbkorrektur</translation>
+        <translation>Διαβάθμιση Χρωμάτων</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/wave/meta.qml" line="6"/>
         <source>Wave</source>
-        <translation>Welle</translation>
+        <translation>Κύματα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mirror/meta.qml" line="6"/>
         <source>Mirror</source>
-        <translation>Spiegeln</translation>
+        <translation>Καθρέπτης </translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/meta.qml" line="6"/>
         <source>Overlay HTML</source>
-        <translation>HTML überlagern</translation>
+        <translation>Υπέρθεση HTML</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_fadein/meta.qml" line="8"/>
         <source>Fade In Audio</source>
-        <translation>Audio einfaden</translation>
+        <translation>Βαθμιαίος Ήχος</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_fadeout/meta.qml" line="8"/>
         <source>Fade Out Audio</source>
-        <translation>Audio ausfaden</translation>
+        <translation>Ξεθώριασμα Ήχου</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fadein_brightness/meta.qml" line="7"/>
         <location filename="../src/qml/filters/fadein_movit/meta.qml" line="7"/>
         <source>Fade In Video</source>
-        <translation>Video einfaden</translation>
+        <translation>Βαθμιαίο Βίντεο</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fadeout_brightness/meta.qml" line="7"/>
         <location filename="../src/qml/filters/fadeout_movit/meta.qml" line="7"/>
         <source>Fade Out Video</source>
-        <translation>Video ausfaden</translation>
+        <translation>Ξεθώριασμα Βίντεο</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/opacity/meta.qml" line="7"/>
         <source>Opacity</source>
-        <translation>Deckkraft</translation>
+        <translation>Αδιαφάνεια</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/meta.qml" line="7"/>
         <source>Text</source>
-        <translation>Text</translation>
+        <translation>Κείμενο</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx_threejs_text/meta.qml" line="7"/>
         <source>3D Text (HTML)</source>
-        <translation>3D Text (HTML)</translation>
+        <translation>3D Κείμενο (HTML)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_bandpass/meta.qml" line="7"/>
         <source>Band Pass</source>
-        <translation>Bandpass Filter</translation>
+        <translation>Διείλευση Ζώνης</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_highpass/meta.qml" line="7"/>
         <source>High Pass</source>
-        <translation>Highpass Filter</translation>
+        <translation>Υψηλή Διέλευση</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_lowpass/meta.qml" line="7"/>
         <source>Low Pass</source>
-        <translation>Lowpass Filter</translation>
+        <translation>Χαμιλή Διέλευση</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dust/meta.qml" line="6"/>
         <source>Old Film: Dust</source>
-        <translation>Alter Film: Staub</translation>
+        <translation>Παλιό Φιλμ:  Σκόνη</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/grain/meta.qml" line="6"/>
         <source>Old Film: Grain</source>
-        <translation>Alter Film: Körnigkeit</translation>
+        <translation>Παλιό Φιλμ: Κόκος</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lines/meta.qml" line="6"/>
         <source>Old Film: Scratches</source>
-        <translation>Alter Film: Kratzer</translation>
+        <translation>Παλιό Φιλμ:  Γρατσουνιές</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/oldfilm/meta.qml" line="6"/>
         <source>Old Film: Projector</source>
-        <translation>Alter Film: Projektor</translation>
+        <translation>Παλιό Φιλμ:  Προβολέας</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/tcolor/meta.qml" line="6"/>
         <source>Old Film: %1</source>
-        <translation>Alter Film: %1</translation>
+        <translation>Παλιό Φιλμ:  %1</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_basstreble/meta.qml" line="7"/>
         <source>Bass &amp; Treble</source>
-        <translation>Bässe &amp; Höhen</translation>
+        <translation>Μπάσο &amp; Πρίμα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/meta.qml" line="7"/>
         <source>Compressor</source>
-        <translation>Kompressor</translation>
+        <translation>Συμπιεστής</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_delay/meta.qml" line="7"/>
         <source>Delay</source>
-        <translation>Delay</translation>
+        <translation>Καθυστέρηση</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_expander/meta.qml" line="7"/>
         <source>Expander</source>
-        <translation>Expander</translation>
+        <translation>Διαστολέας</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/meta.qml" line="7"/>
         <source>Limiter</source>
-        <translation>Limiter</translation>
+        <translation>Περιοριστής</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_notch/meta.qml" line="7"/>
         <source>Notch</source>
-        <translation>Kerbe</translation>
+        <translation>Εγκοπή</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/meta.qml" line="7"/>
         <source>Reverb</source>
-        <translation>Hall</translation>
+        <translation>Αντήχηση</translation>
     </message>
 </context>
 <context>
@@ -5115,7 +5126,7 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
     <message>
         <location filename="../src/qml/filters/size_position/meta_affine.qml" line="7"/>
         <source>Size and Position</source>
-        <translation>Größe und Position</translation>
+        <translation>Μέγεθος και Θέση</translation>
     </message>
 </context>
 <context>
@@ -5123,7 +5134,7 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
     <message>
         <location filename="../src/qml/filters/blur/meta_boxblur.qml" line="6"/>
         <source>Blur</source>
-        <translation>Weichzeichnung</translation>
+        <translation>Θόλωμα</translation>
     </message>
 </context>
 <context>
@@ -5131,22 +5142,22 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
     <message>
         <location filename="../src/qml/filters/saturation/meta_frei0r.qml" line="6"/>
         <source>Saturation</source>
-        <translation>Sättigung</translation>
+        <translation>Κορεσμός</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glow/meta_frei0r.qml" line="6"/>
         <source>Glow</source>
-        <translation>Glühen</translation>
+        <translation>Λάμψη</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/meta_frei0r.qml" line="6"/>
         <source>Sharpen</source>
-        <translation>Scharfzeichnung</translation>
+        <translation>Όξυνση </translation>
     </message>
     <message>
         <location filename="../src/qml/filters/white/meta_frei0r.qml" line="6"/>
         <source>White Balance</source>
-        <translation>Weißabgleich</translation>
+        <translation>Ισορροπία Λευκού</translation>
     </message>
 </context>
 <context>
@@ -5154,7 +5165,7 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
     <message>
         <location filename="../src/qml/filters/color/meta_frei0r_coloradj.qml" line="7"/>
         <source>Color Grading</source>
-        <translation>Farbkorrektur</translation>
+        <translation>Διαβάθμιση Χρωμάτων</translation>
     </message>
 </context>
 <context>
@@ -5162,57 +5173,57 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
     <message>
         <location filename="../src/qml/filters/saturation/meta_movit.qml" line="6"/>
         <source>Saturation</source>
-        <translation>Sättigung</translation>
+        <translation>Κορεσμός</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/meta_movit.qml" line="6"/>
         <source>Vignette</source>
-        <translation>Vignettierung</translation>
+        <translation>Βινιέτα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/meta_movit.qml" line="6"/>
         <source>Color Grading</source>
-        <translation>Farbkorrektur</translation>
+        <translation>Διαβάθμιση Χρωμάτων</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/meta_movit.qml" line="6"/>
         <source>Crop</source>
-        <translation>Zuschneiden</translation>
+        <translation>Περικοπή</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glow/meta_movit.qml" line="6"/>
         <source>Glow</source>
-        <translation>Glühen</translation>
+        <translation>Λάμψη</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blur/meta_movit.qml" line="6"/>
         <source>Blur</source>
-        <translation>Weichzeichnung</translation>
+        <translation>Θόλωμα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/meta_movit.qml" line="6"/>
         <source>Sharpen</source>
-        <translation>Scharfzeichnung</translation>
+        <translation>Όξυνση </translation>
     </message>
     <message>
         <location filename="../src/qml/filters/white/meta_movit.qml" line="6"/>
         <source>White Balance</source>
-        <translation>Weißabgleich</translation>
+        <translation>Ισορροπία Λευκού</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mirror/meta_movit.qml" line="6"/>
         <source>Mirror</source>
-        <translation>Spiegeln</translation>
+        <translation>Καθρέπτης </translation>
     </message>
     <message>
         <location filename="../src/qml/filters/opacity/meta_movit.qml" line="7"/>
         <source>Opacity</source>
-        <translation>Deckkraft</translation>
+        <translation>Αδιαφάνεια</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/meta_movit.qml" line="7"/>
         <source>Size and Position</source>
-        <translation>Größe und Position</translation>
+        <translation>Μέγεθος και Θέση</translation>
     </message>
 </context>
 <context>
@@ -5220,7 +5231,7 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
     <message>
         <location filename="../src/qml/filters/vignette/meta_oldfilm.qml" line="6"/>
         <source>Vignette</source>
-        <translation>Vignettierung</translation>
+        <translation>Βινιέτα</translation>
     </message>
 </context>
 <context>
@@ -5228,32 +5239,32 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
     <message>
         <location filename="../src/qml/htmleditor/text_outline.qml" line="22"/>
         <source>Width</source>
-        <translation>Breite</translation>
+        <translation>Πλάτος</translation>
     </message>
     <message>
         <location filename="../src/qml/htmleditor/text_outline.qml" line="34"/>
         <source>pixels</source>
-        <translation>Pixel</translation>
+        <translation>εικονοστοιχεία</translation>
     </message>
     <message>
         <location filename="../src/qml/htmleditor/text_outline.qml" line="37"/>
         <source>Color</source>
-        <translation>Farbe</translation>
+        <translation>Χρώμα</translation>
     </message>
     <message>
         <location filename="../src/qml/htmleditor/text_outline.qml" line="73"/>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>ΟΚ</translation>
     </message>
     <message>
         <location filename="../src/qml/htmleditor/text_outline.qml" line="85"/>
         <source>Cancel</source>
-        <translation>Abbrechen</translation>
+        <translation>Άκυρο</translation>
     </message>
     <message>
         <location filename="../src/qml/htmleditor/text_outline.qml" line="92"/>
         <source>Please choose a color</source>
-        <translation>Bitte wählen Sie eine Farbe</translation>
+        <translation>Παρακαλώ επιλέξτε ένα χρώμα</translation>
     </message>
 </context>
 <context>
@@ -5261,44 +5272,44 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
     <message>
         <location filename="../src/qml/htmleditor/text_shadow.qml" line="22"/>
         <source>Horizontal</source>
-        <translation>Horizontal</translation>
+        <translation>Οριζόντια</translation>
     </message>
     <message>
         <location filename="../src/qml/htmleditor/text_shadow.qml" line="34"/>
         <location filename="../src/qml/htmleditor/text_shadow.qml" line="49"/>
         <location filename="../src/qml/htmleditor/text_shadow.qml" line="64"/>
         <source>pixels</source>
-        <translation>Pixel</translation>
+        <translation>εικονοστοιχεία</translation>
     </message>
     <message>
         <location filename="../src/qml/htmleditor/text_shadow.qml" line="37"/>
         <source>Vertical</source>
-        <translation>Vertikal</translation>
+        <translation>Κάθετα</translation>
     </message>
     <message>
         <location filename="../src/qml/htmleditor/text_shadow.qml" line="52"/>
         <source>Softness</source>
-        <translation>Weichheit</translation>
+        <translation>Απαλότητα</translation>
     </message>
     <message>
         <location filename="../src/qml/htmleditor/text_shadow.qml" line="67"/>
         <source>Color</source>
-        <translation>Farbe</translation>
+        <translation>Χρώμα</translation>
     </message>
     <message>
         <location filename="../src/qml/htmleditor/text_shadow.qml" line="103"/>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>ΟΚ</translation>
     </message>
     <message>
         <location filename="../src/qml/htmleditor/text_shadow.qml" line="119"/>
         <source>Cancel</source>
-        <translation>Abbrechen</translation>
+        <translation>Άκυρο</translation>
     </message>
     <message>
         <location filename="../src/qml/htmleditor/text_shadow.qml" line="126"/>
         <source>Please choose a color</source>
-        <translation>Bitte wählen Sie eine Farbe</translation>
+        <translation>Παρακαλώ επιλέξτε ένα χρώμα</translation>
     </message>
 </context>
 <context>
@@ -5306,62 +5317,62 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="317"/>
         <source>Insert</source>
-        <translation>Einfügen</translation>
+        <translation>Εισαγωγή</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="317"/>
         <source>Overwrite</source>
-        <translation>Überschreiben</translation>
+        <translation>Επικάληψη </translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="383"/>
         <source>Add Audio Track</source>
-        <translation>Audiospur hinzufügen</translation>
+        <translation>Προσθήκη κομματιού ήχου</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="388"/>
         <source>Add Video Track</source>
-        <translation>Videospur hinzufügen</translation>
+        <translation>Προσθήκη κομματιού βίντεο</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="393"/>
         <source>Insert Track</source>
-        <translation>Spur einfügen</translation>
+        <translation>Εισαγωγή κομματιού</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="397"/>
         <source>Remove Track</source>
-        <translation>Spur löschen</translation>
+        <translation>Αφαίρεση κομματιού</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="403"/>
         <source>Make Tracks Shorter</source>
-        <translation>Spur kürzen</translation>
+        <translation>Κόντεμα Κομματιού</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="408"/>
         <source>Make Tracks Taller</source>
-        <translation>Spurenhöhe vergrößern</translation>
+        <translation>Ψήλωμα Κομματιού</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="414"/>
         <source>Ripple All Tracks</source>
-        <translation type="unfinished"></translation>
+        <translation>Ριπή σε όλα τα Κομμάτια</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="420"/>
         <source>Show Audio Waveforms</source>
-        <translation>Audio-Wellenform darstellen</translation>
+        <translation>Εμφάνιση Κυματομορφών Ήχου</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="432"/>
         <source>Reload</source>
-        <translation>Neu laden</translation>
+        <translation>Επαναφόρτωση</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="439"/>
         <source>Close</source>
-        <translation>Schließen</translation>
+        <translation>Κλείσιμο</translation>
     </message>
 </context>
 <context>
@@ -5370,23 +5381,23 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
         <location filename="../src/qml/filters/movit_diffusion/ui.qml" line="35"/>
         <location filename="../src/qml/filters/webvfx_circular_frame/ui.qml" line="46"/>
         <source>Radius</source>
-        <translation>Radius</translation>
+        <translation>Ακτίνα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/movit_diffusion/ui.qml" line="53"/>
         <source>Blurriness</source>
-        <translation>Verschwommenheit</translation>
+        <translation>Θολώτητα </translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_gain/ui.qml" line="50"/>
         <source>Gain</source>
-        <translation>Verstärkungsgrad</translation>
+        <translation>Κέρδος</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx_circular_frame/ui.qml" line="62"/>
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="126"/>
         <source>Color</source>
-        <translation>Farbe</translation>
+        <translation>Χρώμα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_balance/ui.qml" line="41"/>
@@ -5395,7 +5406,7 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
         <location filename="../src/qml/filters/crop/ui.qml" line="176"/>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="325"/>
         <source>Left</source>
-        <translation>Links</translation>
+        <translation>Αριστερά</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_balance/ui.qml" line="48"/>
@@ -5404,125 +5415,125 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
         <location filename="../src/qml/filters/crop/ui.qml" line="193"/>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="337"/>
         <source>Right</source>
-        <translation>Rechts</translation>
+        <translation>Δεξιά</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="44"/>
         <source>Copy from</source>
-        <translation>Kopieren von</translation>
+        <translation>Αντιγραφή από</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="47"/>
         <source>Left to right</source>
-        <translation>Links nach Rechts</translation>
+        <translation>Αριστερά στα δεξιά</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="47"/>
         <source>Right to left</source>
-        <translation>Rechts nach Links</translation>
+        <translation>Δεξιά στα αριστερά</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="43"/>
         <source>Channel</source>
-        <translation>Kanal</translation>
+        <translation>Κανάλι</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/rotate/ui.qml" line="63"/>
         <source>Rotation</source>
-        <translation>Rotation</translation>
+        <translation>Περιστροφή</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/rotate/ui.qml" line="70"/>
         <source> degree</source>
-        <translation>Grad</translation>
+        <translation>μοίρες</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/rotate/ui.qml" line="78"/>
         <source>Scale</source>
-        <translation>Skalieren</translation>
+        <translation>Κλίμακα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/rotate/ui.qml" line="97"/>
         <source>X offset</source>
-        <translation>X-Offset</translation>
+        <translation>X οφσετ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/rotate/ui.qml" line="109"/>
         <source>Y offset</source>
-        <translation>Y-Offset</translation>
+        <translation>Y όφσετ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_loudness/ui.qml" line="32"/>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="32"/>
         <source>Analyzing...</source>
-        <translation>Analysiere...</translation>
+        <translation>Ανάλυση...</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_loudness/ui.qml" line="35"/>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="36"/>
         <source>Analysis complete.</source>
-        <translation>Analyse abgeschlossen.</translation>
+        <translation>Ολοκληρώση Ανάλυσης.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_loudness/ui.qml" line="39"/>
         <source>Click &quot;Analyze&quot; to use this filter.</source>
-        <translation>Klicken Sie auf &quot;Analysieren&quot; um diesen Filter zu verwenden.</translation>
+        <translation>Κλικ στο &quot;Ανάλυση&quot; για χρήση του φίλτρου.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_loudness/ui.qml" line="56"/>
         <source>Target Loudness</source>
-        <translation>Ziel &quot;Loudness&quot;</translation>
+        <translation>Στόχος Ηχηρότητας</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="40"/>
         <source>Click Analyze to use this filter.</source>
-        <translation>Auf &quot;Analysieren&quot; klicken um diesen Filter zu verwenden</translation>
+        <translation>Κλικ στο Ανάλυση για χρήση του φίλτρου.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="55"/>
         <source>Select a file to store analysis results.</source>
-        <translation>Wählen Sie ein File aus um Analyseergebnisse zu speichern.</translation>
+        <translation>Επιλέξτε ένα αρχείο για αποθήκευση των αποτελεσμάτων της ανάλυσης.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="97"/>
         <source>&lt;b&gt;Analyze Options&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Analyseoptionen&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;Επιλογές Ανάλυσης&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="102"/>
         <source>Shakiness</source>
-        <translation>Wackeligkeit</translation>
+        <translation>Τρέμουλο</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="119"/>
         <source>Accuracy</source>
-        <translation>Genauigkeit</translation>
+        <translation>Ακρίβεια</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_loudness/ui.qml" line="75"/>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="162"/>
         <source>Analyze</source>
-        <translation>Analysieren</translation>
+        <translation>Ανάλυση</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="136"/>
         <source>&lt;b&gt;Filter Options&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Filteroptionen&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;Επιλογές Φίλτρου&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="141"/>
         <source>Zoom</source>
-        <translation>Zoom</translation>
+        <translation>Μεγέθυνση</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sepia/ui.qml" line="53"/>
         <source>Yellow-Blue</source>
-        <translation>Gelb-Blau</translation>
+        <translation>Κίτρινο-Μπλε</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sepia/ui.qml" line="68"/>
         <source>Cyan-Red</source>
-        <translation>Cyan-Rot</translation>
+        <translation>Κυανό-Κόκκινο</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_fadein/ui.qml" line="46"/>
@@ -5532,30 +5543,30 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
         <location filename="../src/qml/filters/fadeout_brightness/ui.qml" line="49"/>
         <location filename="../src/qml/filters/fadeout_movit/ui.qml" line="49"/>
         <source>Duration</source>
-        <translation>Laufzeit</translation>
+        <translation>Διάρκεια</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="103"/>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="331"/>
         <source>Center</source>
-        <translation>Mitte</translation>
+        <translation>Κέντρο</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="125"/>
         <source>Center bias</source>
-        <translation>Ausrichtung Mitte</translation>
+        <translation>Κεντρική πόλωση</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="142"/>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="349"/>
         <source>Top</source>
-        <translation>Oben</translation>
+        <translation>Πάνω</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="159"/>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="361"/>
         <source>Bottom</source>
-        <translation>Unten</translation>
+        <translation>Κάτω</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="53"/>
@@ -5582,19 +5593,19 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="69"/>
         <location filename="../src/qml/filters/white/ui.qml" line="67"/>
         <source>Preset</source>
-        <translation>Voreinstellung</translation>
+        <translation>Προκαθορισμένα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="64"/>
         <location filename="../src/qml/filters/audio_notch/ui.qml" line="64"/>
         <source>Center frequency</source>
-        <translation>Mittelfrequenz</translation>
+        <translation>Κεντρική συχνότητα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="82"/>
         <location filename="../src/qml/filters/audio_notch/ui.qml" line="82"/>
         <source>Bandwidth</source>
-        <translation>Bandbreite</translation>
+        <translation>Εύρος</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="100"/>
@@ -5602,7 +5613,7 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
         <location filename="../src/qml/filters/audio_lowpass/ui.qml" line="84"/>
         <location filename="../src/qml/filters/audio_notch/ui.qml" line="100"/>
         <source>Rolloff rate</source>
-        <translation>Dämpfungsrate</translation>
+        <translation>Ρυθμός Απόσβεσης</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="117"/>
@@ -5611,7 +5622,7 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
         <location filename="../src/qml/filters/audio_lowpass/ui.qml" line="102"/>
         <location filename="../src/qml/filters/audio_notch/ui.qml" line="117"/>
         <source>Dry</source>
-        <translation>Dry</translation>
+        <translation>Στεγνό</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="126"/>
@@ -5620,276 +5631,276 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
         <location filename="../src/qml/filters/audio_lowpass/ui.qml" line="111"/>
         <location filename="../src/qml/filters/audio_notch/ui.qml" line="126"/>
         <source>Wet</source>
-        <translation>Wet</translation>
+        <translation>Βρεγμένο</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/ui.qml" line="83"/>
         <source>Shadows (Lift)</source>
-        <translation>Schatten (Anheben)</translation>
+        <translation>Σκιές (Ανασήκωση)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/ui.qml" line="88"/>
         <source>Midtones (Gamma)</source>
-        <translation>Mitteltöne (Gamma)</translation>
+        <translation>Μέσοι τόνοι (Γάμα)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/ui.qml" line="93"/>
         <source>Highlights (Gain)</source>
-        <translation>Glanzlichter (Gain)</translation>
+        <translation>Επισημάνσεις (Κέρδος)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/wave/ui.qml" line="61"/>
         <source>Amplitude</source>
-        <translation>Amplitude</translation>
+        <translation>Ύψος</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/wave/ui.qml" line="76"/>
         <source>Speed</source>
-        <translation>Geschwindigkeit</translation>
+        <translation>Ταχύτητα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/wave/ui.qml" line="93"/>
         <source>Deform horizontally?</source>
-        <translation>Horizontal verzerren?</translation>
+        <translation>Οριζόντια Παραμόρφωση;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/wave/ui.qml" line="107"/>
         <source>Deform vertically?</source>
-        <translation>Vertikal verzerren?</translation>
+        <translation>Κάθετη Παραμόρφωση;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="74"/>
         <source>No File Loaded</source>
-        <translation>Keine Datei geladen</translation>
+        <translation>Δεν Φορτώθηκε Αρχείο</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="76"/>
         <source>No HTML file loaded. Click &quot;Open&quot; or &quot;New&quot; to load a file.</source>
-        <translation>Keine HTML-Datei geladen. Klicken Sie auf &quot;Öffnen&quot; oder &quot;Neu&quot; um eine Datei zu laden.</translation>
+        <translation>Δεν φορτώθηκε αρχείο HTML. Κλικ στο &quot;Άνοιγμα&quot; ή &quot;Νέο&quot; για να φορτώσετε κάποιο αρχείο.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="131"/>
         <source>&lt;b&gt;File:&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Datei:&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;Αρχείο:&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="143"/>
         <source>Use WebVfx JavaScript extension</source>
-        <translation>WebVfx JavaScript Erweiterung verwenden</translation>
+        <translation>Χρήση WebVfx JavaScript επέκτασης </translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="146"/>
         <source>For Advanced Users: </source>
-        <translation>Für fortgeschrittene Benutzer:</translation>
+        <translation>Για Πεπιραμένους Χρήστες:</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="147"/>
         <source>If you enable this, and you do not use the WebVfx JavaScript extension, your content will not render!</source>
-        <translation>Falls Sie diese Funktion aktivieren, jedoch nicht die WebVfx JavaScript Erweiterung verwenden, wird ihr Inhalt nicht rendern!</translation>
+        <translation>Αν ενεργοπιήσετε αυτό, και δεν κάνετε χρήση της επέκτασης WebVfx JavaScript, το περιεχόμενο σας δεν θα αποδοθεί!</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="159"/>
         <source>Confirm Selection</source>
-        <translation>Auswahl bestätigen</translation>
+        <translation>Επιβεβαίωση Επιλογής</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="160"/>
         <source>Do you still want to use this?</source>
-        <translation>Wollen Sie das noch verwenden?</translation>
+        <translation>Θέλετε ακόμη να το κάνετε;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="171"/>
         <source>Open...</source>
-        <translation>Öffnen...</translation>
+        <translation>Άνοιγμα...</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="174"/>
         <source>Open HTML File</source>
-        <translation>HTML-Datei öffnen</translation>
+        <translation>Άνοιγμα Αρχείου HTML</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="178"/>
         <source>Load an existing HTML file.</source>
-        <translation>Eine vorhandene HTML-Datei laden.</translation>
+        <translation>Φόρτωση ενός υπάρχον αρχείου HTML.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="183"/>
         <source>New...</source>
-        <translation>Neu...</translation>
+        <translation>Νέο...</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="186"/>
         <source>Save HTML File</source>
-        <translation>HTML-Datei speichern</translation>
+        <translation>Αποθήκευση HTML Αρχείου</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="190"/>
         <source>Load new HTML file.</source>
-        <translation>Neue HTML-Datei laden.</translation>
+        <translation>Φόρτωση νέου HTML αρχείου.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="202"/>
         <source>Edit...</source>
-        <translation>Bearbeiten...</translation>
+        <translation>Επεξεργασία...</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="222"/>
         <source>Reload</source>
-        <translation>Neu laden</translation>
+        <translation>Επαναφόρτωση</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/white/ui.qml" line="81"/>
         <source>Neutral color</source>
-        <translation>Neutrale Farbe</translation>
+        <translation>Ουδέτερο χρώμα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/white/ui.qml" line="104"/>
         <source>Color temperature</source>
-        <translation>Farbtemperatur</translation>
+        <translation>Θερμοκρασία χρώματος</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="44"/>
         <source>Bottom Left</source>
-        <translation>Unten links</translation>
+        <translation>Αριστερά Κάτω</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="49"/>
         <source>Bottom Right</source>
-        <translation>Unten rechts</translation>
+        <translation>Δεξιά Κάτω</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="54"/>
         <source>Top Left</source>
-        <translation>Oben links</translation>
+        <translation>Αριστερά Πάνω</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="59"/>
         <source>Top Right</source>
-        <translation>Oben rechts</translation>
+        <translation>Δεξιά Πάνω</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="64"/>
         <source>Lower Third</source>
-        <translation>Unteres Drittel</translation>
+        <translation>Χαμηλότερο Τρίτο</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="143"/>
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="81"/>
         <source>Text</source>
-        <translation>Text</translation>
+        <translation>Κείμενο</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="166"/>
         <source>Insert field</source>
-        <translation>Einfügenfeld</translation>
+        <translation>Εισαγωγή πεδίου</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="172"/>
         <source>Timecode</source>
-        <translation>Timecode</translation>
+        <translation>Χρόνος</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="176"/>
         <source>Frame #</source>
         <comment>Frame number</comment>
-        <translation>Bild #</translation>
+        <translation>Καρέ #</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="180"/>
         <source>File date</source>
-        <translation>Dateidatum</translation>
+        <translation>Ημερομηνία αρχείου</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="184"/>
         <source>File name</source>
-        <translation>Dateiname</translation>
+        <translation>Όνομα αρχείου</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="190"/>
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="94"/>
         <source>Font</source>
-        <translation>Schriftart</translation>
+        <translation>Γραμματοσειρά</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="217"/>
         <source>Normal</source>
-        <translation>Normal</translation>
+        <translation>Κανονικό</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="217"/>
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="114"/>
         <source>Bold</source>
-        <translation>Fett</translation>
+        <translation>Έντονα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="217"/>
         <source>Light</source>
         <comment>thin font stroke</comment>
-        <translation>Dünn</translation>
+        <translation>Ελαφρύ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="231"/>
         <source>Outline</source>
-        <translation>Kontur</translation>
+        <translation>Περίγραμμα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="241"/>
         <source>Thickness</source>
-        <translation>Stärke</translation>
+        <translation>Πάχος</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="255"/>
         <source>Background</source>
-        <translation>Hintergrund</translation>
+        <translation>Φόντο</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="265"/>
         <source>Padding</source>
-        <translation>Auffüllen</translation>
+        <translation>Πλήρωση</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="279"/>
         <source>Position</source>
-        <translation>Position</translation>
+        <translation>Θέση</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dust/ui.qml" line="60"/>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="299"/>
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="147"/>
         <source>Size</source>
-        <translation>Größe</translation>
+        <translation>Μέγεθος</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dust/ui.qml" line="76"/>
         <location filename="../src/qml/filters/lines/ui.qml" line="79"/>
         <source>Amount</source>
-        <translation>Anteil</translation>
+        <translation>Ποσότητα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="320"/>
         <source>Horizontal fit</source>
-        <translation>Horizontal angepasst</translation>
+        <translation>Οριζόντιο ταίριασμα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="344"/>
         <source>Vertical fit</source>
-        <translation>Vertikal angepasst</translation>
+        <translation>Κατακόριφο ταίριασμα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="203"/>
         <source>Bass</source>
-        <translation>Bässe</translation>
+        <translation>Μπάσο</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="224"/>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="355"/>
         <source>Middle</source>
-        <translation>Mitte</translation>
+        <translation>Μέση</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="245"/>
         <source>Treble</source>
-        <translation>Höhen</translation>
+        <translation>Πρίμα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fadein_brightness/ui.qml" line="71"/>
@@ -5897,133 +5908,133 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
         <location filename="../src/qml/filters/fadeout_brightness/ui.qml" line="73"/>
         <location filename="../src/qml/filters/fadeout_movit/ui.qml" line="66"/>
         <source>Adjust opacity instead of fade with black</source>
-        <translation>Deckkraft einstellen, anstatt mit Schwarz zu überblenden</translation>
+        <translation>Ρύθμιση αδιαφάνειας ή ξεθώριασμα με μαύρο.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/opacity/ui.qml" line="42"/>
         <source>Opacity</source>
-        <translation>Deckkraft</translation>
+        <translation>Αδιαφάνεια</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="33"/>
         <source>3D Text</source>
-        <translation>3D Text</translation>
+        <translation>3D Κείμενο</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="121"/>
         <source>Beveled</source>
-        <translation>Abgeflachte Kante</translation>
+        <translation>Λοξευμένο </translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="163"/>
         <source>Depth</source>
-        <translation>Tiefe</translation>
+        <translation>Βάθος</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="180"/>
         <source>Tilt</source>
-        <translation>Neigen</translation>
+        <translation>Κλίση</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="197"/>
         <source>Horizontal</source>
-        <translation>Horizontal</translation>
+        <translation>Οριζόντια</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="214"/>
         <source>Vertical</source>
-        <translation>Vertikal</translation>
+        <translation>Κάθετα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_highpass/ui.qml" line="61"/>
         <location filename="../src/qml/filters/audio_lowpass/ui.qml" line="64"/>
         <source>Cutoff frequency</source>
-        <translation>Cutoff Frequenz</translation>
+        <translation>Συχνότητα αποκοπής</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/grain/ui.qml" line="61"/>
         <source>Noise</source>
-        <translation>Rauschen</translation>
+        <translation>Θόρυβος</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/grain/ui.qml" line="77"/>
         <source>Brightness</source>
-        <translation>Helligkeit</translation>
+        <translation>Φωτεινότητα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lines/ui.qml" line="64"/>
         <source>Width</source>
-        <translation>Breite</translation>
+        <translation>Πλάτος</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lines/ui.qml" line="94"/>
         <source>Darkness</source>
-        <translation>Dunkelheit</translation>
+        <translation>Σκωτεινότητα </translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lines/ui.qml" line="109"/>
         <source>Lightness</source>
-        <translation>Helligkeit</translation>
+        <translation>Ελαφρότητα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/oldfilm/ui.qml" line="72"/>
         <source>Vertical amount</source>
-        <translation>Vertikaler Wert</translation>
+        <translation>Κατακόρυθο ποσό</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/oldfilm/ui.qml" line="87"/>
         <source>Vertical frequency</source>
-        <translation>Vertikale Frequenz</translation>
+        <translation>Κατακόρυφη συχνότητα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/oldfilm/ui.qml" line="103"/>
         <source>Brightness up</source>
-        <translation>Helligkeit rauf</translation>
+        <translation>Φωτεινώτητα πάνω</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/oldfilm/ui.qml" line="118"/>
         <source>Brightness down</source>
-        <translation>Helligkeit runter</translation>
+        <translation>Φωτεινότητα κάτω</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/oldfilm/ui.qml" line="133"/>
         <source>Brightness frequency</source>
-        <translation>Helligkeit Frequenz</translation>
+        <translation>Συχνότητα Φωτεινώτητας</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/oldfilm/ui.qml" line="149"/>
         <source>Uneven develop up</source>
-        <translation type="unfinished"></translation>
+        <translation>Άνιση ανάπτυξη προς επάνω</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/oldfilm/ui.qml" line="164"/>
         <source>Uneven develop down</source>
-        <translation type="unfinished"></translation>
+        <translation>Άνιση ανάπτυξη προς κάτω</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/oldfilm/ui.qml" line="179"/>
         <source>Uneven develop duration</source>
-        <translation type="unfinished"></translation>
+        <translation>Άνιση ανάπτυξη διάρκειας</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/tcolor/ui.qml" line="60"/>
         <source>Green</source>
-        <translation>Grün</translation>
+        <translation>Πράσσινο </translation>
     </message>
     <message>
         <location filename="../src/qml/filters/tcolor/ui.qml" line="68"/>
         <source> Red</source>
-        <translation>Rot</translation>
+        <translation>Κόκκινο</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/tcolor/ui.qml" line="76"/>
         <source>Yellow</source>
-        <translation>Gelb</translation>
+        <translation>Κίτρινο</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/tcolor/ui.qml" line="84"/>
         <source>Blue</source>
-        <translation>Blau</translation>
+        <translation>Μπλε</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="70"/>
@@ -6035,218 +6046,218 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="72"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="72"/>
         <source>The balance between the RMS and peak envelope followers. RMS is generally better for subtle, musical compression and peak is better for heavier, fast compression and percussion.</source>
-        <translation type="unfinished"></translation>
+        <translation>Η ισορροπία μεταξύ της RMS και κορυφής του ανιχνευτή φακέλου. Η RMS είναι γενικά καλύτερη για ελαφριά συμπίεση και η κορυφή είναι καλύτερη για πιο βαριά και γρήγορη συμπίεση.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="80"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="80"/>
         <source>Peak</source>
-        <translation>Pegelspitze</translation>
+        <translation>Κορυφή</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="92"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="92"/>
         <source>Attack</source>
-        <translation>Ansprechzeit (Attack)</translation>
+        <translation>Επίθεση</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="111"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="111"/>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="104"/>
         <source>Release</source>
-        <translation>Abklingzeit (Release)</translation>
+        <translation>Απελευθέρωση</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="130"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="130"/>
         <source>Threshold</source>
-        <translation>Grenzwert (Threshold)</translation>
+        <translation>Κατώφλι</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="132"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="132"/>
         <source>The point at which the compressor will start to kick in.</source>
-        <translation>Der Punkt, an dem der Kompressor einsetzt.</translation>
+        <translation>Το σημείο στο οποίο θα αρχίσει να ενεργοποιείται ο συμπιεστής.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="151"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="151"/>
         <source>Ratio</source>
-        <translation>Verhältnis (Ratio)</translation>
+        <translation>Λόγος</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="153"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="153"/>
         <source>The gain reduction ratio used when the signal level exceeds the threshold.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ο λόγος μείωσης του κέρδους χρησιμοποιείτε όταν το σήμα υπερβαίνει το κατώφλι.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="171"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="171"/>
         <source>Knee radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Ακτίνα γόνατου</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="173"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="173"/>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="221"/>
         <source>The distance from the threshold where the knee curve starts.</source>
-        <translation type="unfinished"></translation>
+        <translation>Η απόσταση από την αρχή της καμπύλης του γόνατου του κατωφλιού.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="192"/>
         <source>Makeup gain</source>
-        <translation type="unfinished"></translation>
+        <translation>Κέρδος αποκατάστασης</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="194"/>
         <source>The gain of the makeup input signal.</source>
-        <translation type="unfinished"></translation>
+        <translation>Το κέρδος της αποκατάστασης του σήματος εισόδου.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="215"/>
         <source>About dynamic range compression</source>
-        <translation type="unfinished"></translation>
+        <translation>Περί του δυναμικού εύρους της συμπίεσης</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_delay/ui.qml" line="62"/>
         <source>Delay</source>
-        <translation>Delay</translation>
+        <translation>Καθυστέρηση</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_delay/ui.qml" line="64"/>
         <source>The neutral delay time is 2 seconds. Times above 2 seconds will have reduced quality and times below will have increased CPU usage.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ο ουδέτερος χρόνος καθυστέρησης είναι 2 δευτερόλεπτα. Χρόνοι πάνω από 2 δευτερόλεπτα θα έχουν μειωμένη ποιότητα και χρόνοι κάτω, θα έχουν αυξημένη χρήση της CPU.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_delay/ui.qml" line="83"/>
         <source>Feedback</source>
-        <translation>Rückmeldung</translation>
+        <translation>Ανάδραση</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="192"/>
         <source>Attenuation</source>
-        <translation type="unfinished"></translation>
+        <translation>Εξασθένηση</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="194"/>
         <source>The gain of the output signal. Used to correct for excessive amplitude caused by the extra dynamic range.</source>
-        <translation type="unfinished"></translation>
+        <translation>Το κέρδος του σήματος εξόδου. Χρησιμοποιείται για την διόρθωση εκτεταμένου πλάτους που προκαλείται από το επιπλέον δυναμικό εύρος.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="62"/>
         <source>Input gain</source>
-        <translation>Eingangsverstärkung</translation>
+        <translation>Κέρδος εισόδου</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="64"/>
         <source>Gain that is applied to the input stage. Can be used to trim gain to bring it roughly under the limit or to push the signal against the limit.</source>
-        <translation type="unfinished"></translation>
+        <translation>Κέρδος που εφαρμόζεται στο στάδιο εισόδου. Μπορεί να χρησιμοποιηθεί για να φέρει το σήμα κάτω από το όριο ή για να ανεβάσει το σήμα στο όριο.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="83"/>
         <source>Limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Όριο</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="85"/>
         <source>The maximum output amplitude. Peaks over this level will be attenuated as smoothly as possible to bring them as close as possible to this level.</source>
-        <translation type="unfinished"></translation>
+        <translation>Το μέγιστο πλάτος εξόδου. Κορυφές πάνω από αυτό το επίπεδο θα εξασθενήσουν όσο ποιο ομαλά γίνετε για να έρθουν όσο πιο κοντά σε αυτό το επίπεδο.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="106"/>
         <source>The time taken for the limiter&apos;s attenuation to return to 0 dB&apos;s.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ο χρόνος που χρειάζεται για την εξασθένηση του περιοριστή να επιστρέψει στα 0 dB&apos;s.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="38"/>
         <source>Quick fix</source>
-        <translation type="unfinished"></translation>
+        <translation>Γρήγορη λύση</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="47"/>
         <source>Small hall</source>
-        <translation type="unfinished"></translation>
+        <translation>Μικρή αίθουσα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="56"/>
         <source>Large hall</source>
-        <translation type="unfinished"></translation>
+        <translation>Μεγάλη αίθουσα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="65"/>
         <source>Sewer</source>
-        <translation type="unfinished"></translation>
+        <translation>Υπόνομος</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="74"/>
         <source>Church</source>
-        <translation>Kirche</translation>
+        <translation>Εκκλησία</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="116"/>
         <source>Room size</source>
-        <translation>Raumgröße</translation>
+        <translation>Μέγεθος δωματίου</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="118"/>
         <source>The size of the room, in meters. Excessivly large, and excessivly small values will make it sound a bit unrealistic.Values of around 30 sound good.</source>
-        <translation type="unfinished"></translation>
+        <translation>Το μέγεθος του δωματίου, σε μέτρα. Υπερβολικά μεγάλες, και υπερβολικά μικρές τιμές θα κάνουν τον ήχο λίγο μη ρεαλιστικό. Τιμές γύρω στα 30 είναι καλά.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="136"/>
         <source>Reverb time</source>
-        <translation type="unfinished"></translation>
+        <translation>Χρόνος αντήχησης</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="156"/>
         <source>Damping</source>
-        <translation type="unfinished"></translation>
+        <translation>Απόσβεση</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="158"/>
         <source>This controls the high frequency damping (a lowpass filter), values near 1 will make it sound very bright, values near 0 will make it sound very dark.</source>
-        <translation type="unfinished"></translation>
+        <translation>Αυτό ελέγχει την απόσβεση υψηλών συχνοτήτων (φίλτρο χαμηλών συχνοτήτων). Τιμές κοντά στο 1 θα κάνει τον ήχο πολύ φωτεινό, τιμές κοντά στο 0 θα κάνουν τον ήχο πολύ σκοτεινό.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="177"/>
         <source>Input bandwidth</source>
-        <translation>Eingangsbandbreite</translation>
+        <translation>Εύρος εισόδου</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="179"/>
         <source>This is like a damping control for the input, it has a similar effect to the damping control, but is subtly different.</source>
-        <translation type="unfinished"></translation>
+        <translation>Αυτό είναι σαν ένας έλεγχος απόσβεσης για την είσοδο. Έχει παρόμοιο αποτέλεσμα με τον έλεγχο απόσβεσης, αλλά είναι ελαφρά διαφορετικό.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="198"/>
         <source>Dry signal level</source>
-        <translation type="unfinished"></translation>
+        <translation>Επίπεδο Καθαρού σήματος</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="200"/>
         <source>The amount of dry signal to be mixed with the reverberated signal.</source>
-        <translation type="unfinished"></translation>
+        <translation>Το ποσό του καθαρού σήματος για την μίξη με το σήμα που έχει υποστεί αντήχηση.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="219"/>
         <source>Early reflection level</source>
-        <translation type="unfinished"></translation>
+        <translation>Επίπεδο πρώιμης αντανάκλασης</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="239"/>
         <source>Tail level</source>
-        <translation type="unfinished"></translation>
+        <translation>Επίπεδο Ουράς</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="241"/>
         <source>The quantity of early reflections (scatter reflections directly from the source).</source>
-        <translation type="unfinished"></translation>
+        <translation>Η ποσότητα της πρωίμων αντανακλάσεων (αντανακλάσεις διασποράς απευθείας από την πηγή). </translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="261"/>
         <source>About reverb</source>
-        <translation type="unfinished"></translation>
+        <translation>Περί αντήχησης</translation>
     </message>
 </context>
 <context>
@@ -6254,12 +6265,12 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
     <message>
         <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="45"/>
         <source>Width</source>
-        <translation>Breite</translation>
+        <translation>Πλάτος</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="61"/>
         <source>Height</source>
-        <translation>Höhe</translation>
+        <translation>Ύψος</translation>
     </message>
 </context>
 <context>
@@ -6267,29 +6278,29 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
     <message>
         <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="58"/>
         <source>Saturation</source>
-        <translation>Sättigung</translation>
+        <translation>Κορεσμός</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glow/ui_frei0r.qml" line="46"/>
         <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="45"/>
         <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="48"/>
         <source>Preset</source>
-        <translation>Voreinstellung</translation>
+        <translation>Προκαθορισμένα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glow/ui_frei0r.qml" line="58"/>
         <source>Blur</source>
-        <translation>Weichzeichnung</translation>
+        <translation>Θόλωμα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="61"/>
         <source>Amount</source>
-        <translation>Anteil</translation>
+        <translation>Ποσότητα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="78"/>
         <source>Size</source>
-        <translation>Größe</translation>
+        <translation>Μέγεθος</translation>
     </message>
 </context>
 <context>
@@ -6297,22 +6308,22 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
     <message>
         <location filename="../src/qml/filters/color/ui_frei0r_coloradj.qml" line="61"/>
         <source>Mode</source>
-        <translation>Modus</translation>
+        <translation>Τρόπος</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/ui_frei0r_coloradj.qml" line="65"/>
         <source>Shadows (Lift)</source>
-        <translation>Schatten (Anheben)</translation>
+        <translation>Σκιές (Ανασήκωση)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/ui_frei0r_coloradj.qml" line="65"/>
         <source>Midtones (Gamma)</source>
-        <translation>Mitteltöne (Gamma)</translation>
+        <translation>Μέσοι τόνοι (Γάμα)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/ui_frei0r_coloradj.qml" line="65"/>
         <source>Highlights (Gain)</source>
-        <translation>Highlights (Gain)</translation>
+        <translation>Επισημάνσεις (Κέρδος)</translation>
     </message>
 </context>
 <context>
@@ -6320,60 +6331,60 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
     <message>
         <location filename="../src/qml/filters/saturation/ui_movit.qml" line="44"/>
         <source>Saturation</source>
-        <translation>Sättigung</translation>
+        <translation>Κορεσμός</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blur/ui_movit.qml" line="34"/>
         <location filename="../src/qml/filters/glow/ui_movit.qml" line="64"/>
         <source>Radius</source>
-        <translation>Radius</translation>
+        <translation>Ακτίνα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="66"/>
         <source>Circle radius</source>
-        <translation>Kreisradius</translation>
+        <translation>Ακτίνα Κύκλου</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="84"/>
         <source>Gaussian radius</source>
-        <translation>Gauß&apos;scher Radius</translation>
+        <translation>Ακτίνα Gaussian</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="102"/>
         <source>Correlation</source>
-        <translation>Korrelation</translation>
+        <translation>Συσχέτιση</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="119"/>
         <source>Noise</source>
-        <translation>Rauschen</translation>
+        <translation>Θόρυβος</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glow/ui_movit.qml" line="49"/>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="50"/>
         <location filename="../src/qml/filters/vignette/ui_movit.qml" line="39"/>
         <source>Preset</source>
-        <translation>Voreinstellung</translation>
+        <translation>Προκαθορισμένα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glow/ui_movit.qml" line="81"/>
         <source>Highlight blurriness</source>
-        <translation>Highlight Weichzeichnungs-Intensität</translation>
+        <translation>Επισίμανση θολότητας</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glow/ui_movit.qml" line="98"/>
         <source>Highlight cutoff</source>
-        <translation>Highlight Cutoff</translation>
+        <translation>Επισίμανση αποκοπής</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/ui_movit.qml" line="53"/>
         <source>Outer radius</source>
-        <translation>Äußerer Radius</translation>
+        <translation>Εξωτερική ακτίνα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/ui_movit.qml" line="69"/>
         <source>Inner radius</source>
-        <translation>Innerer Radius</translation>
+        <translation>Εσωτερική ακτίνα</translation>
     </message>
 </context>
 <context>
@@ -6381,27 +6392,27 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
     <message>
         <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="39"/>
         <source>Preset</source>
-        <translation>Voreinstellung</translation>
+        <translation>Προκαθορισμένα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="55"/>
         <source>Radius</source>
-        <translation>Radius</translation>
+        <translation>Ακτίνα</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="71"/>
         <source>Feathering</source>
-        <translation>Weiche Auswahlkante</translation>
+        <translation>Πτέρωση</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="89"/>
         <source>Non-linear feathering</source>
-        <translation>Weiche Auswahlkante (non-linear)</translation>
+        <translation>Μη-γραμμική πτέρωση</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="101"/>
         <source>Opacity</source>
-        <translation>Deckkraft</translation>
+        <translation>Αδιαφάνεια</translation>
     </message>
 </context>
 </TS>

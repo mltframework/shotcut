@@ -290,6 +290,16 @@ void ShotcutSettings::setPlayerRealtime(bool b)
     settings.setValue("player/realtime", b);
 }
 
+bool ShotcutSettings::playerScrubAudio() const
+{
+    return settings.value("player/scrubAudio", true).toBool();
+}
+
+void ShotcutSettings::setPlayerScrubAudio(bool b)
+{
+    settings.setValue("player/scrubAudio", b);
+}
+
 int ShotcutSettings::playerVolume() const
 {
     return settings.value("player/volume", 88).toInt();
@@ -329,6 +339,17 @@ void ShotcutSettings::setTimelineShowWaveforms(bool b)
 {
     settings.setValue("timeline/waveforms", b);
     emit timelineShowWaveformsChanged();
+}
+
+bool ShotcutSettings::timelineRippleAllTracks() const
+{
+    return settings.value("timeline/rippleAllTracks", false).toBool();
+}
+
+void ShotcutSettings::setTimelineRippleAllTracks(bool b)
+{
+    settings.setValue("timeline/rippleAllTracks", b);
+    emit timelineRippleAllTracksChanged();
 }
 
 QString ShotcutSettings::filterFavorite(const QString& filterName)
