@@ -184,11 +184,11 @@ void GLWidget::createShader()
 {
     m_shader = new QOpenGLShaderProgram;
     m_shader->addShaderFromSourceCode(QOpenGLShader::Vertex,
-                                     "uniform mat4 projection;"
-                                      "uniform mat4 modelView;"
-                                     "attribute vec4 vertex;"
-                                     "attribute vec2 texCoord;"
-                                     "varying vec2 coordinates;"
+                                     "uniform highp mat4 projection;"
+                                     "uniform highp mat4 modelView;"
+                                     "attribute highp vec4 vertex;"
+                                     "attribute highp vec2 texCoord;"
+                                     "varying highp vec2 coordinates;"
                                      "void main(void) {"
                                      "  gl_Position = projection * modelView * vertex;"
                                      "  coordinates = texCoord;"
@@ -196,7 +196,7 @@ void GLWidget::createShader()
     if (m_glslManager) {
         m_shader->addShaderFromSourceCode(QOpenGLShader::Fragment,
                                           "uniform sampler2D tex;"
-                                          "varying vec2 coordinates;"
+                                          "varying highp vec2 coordinates;"
                                           "void main(void) {"
                                           "  gl_FragColor = texture2D(tex, coordinates);"
                                           "}");
@@ -205,14 +205,14 @@ void GLWidget::createShader()
     } else {
         m_shader->addShaderFromSourceCode(QOpenGLShader::Fragment,
                                           "uniform sampler2D Ytex, Utex, Vtex;"
-                                          "uniform int colorspace;"
-                                          "varying vec2 coordinates;"
+                                          "uniform lowp int colorspace;"
+                                          "varying highp vec2 coordinates;"
                                           "void main(void) {"
-                                          "  vec3 texel;"
+                                          "  mediump vec3 texel;"
                                           "  texel.r = texture2D(Ytex, coordinates).r - 0.0625;" // Y
                                           "  texel.g = texture2D(Utex, coordinates).r - 0.5;"    // U
                                           "  texel.b = texture2D(Vtex, coordinates).r - 0.5;"    // V
-                                          "  mat3 coefficients;"
+                                          "  mediump mat3 coefficients;"
                                           "  if (colorspace == 601) {"
                                           "    coefficients = mat3("
                                           "      1.1643,  1.1643,  1.1643," // column 1
