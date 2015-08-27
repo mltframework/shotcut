@@ -41,7 +41,6 @@ public:
 signals:
     void currentFilterAboutToChange();
     void currentFilterChanged(QmlFilter* filter, QmlMetadata* meta, int index);
-    void newMetadataFound(QmlMetadata* meta);
     void statusChanged(QString);
 
 public slots:

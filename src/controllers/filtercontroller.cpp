@@ -22,7 +22,6 @@
 #include <QDir>
 #include <QDebug>
 #include <QQmlComponent>
-#include <QtConcurrent/QtConcurrentRun>
 #include "mltcontroller.h"
 #include "settings.h"
 #include "qmltypes/qmlmetadata.h"
@@ -34,9 +33,7 @@ FilterController::FilterController(QObject* parent) : QObject(parent),
  m_attachedModel(this),
  m_currentFilterIndex(-1)
 {
-    // Process filters in a separate thread and add them to the model asynchronously.
-    connect(this, SIGNAL(newMetadataFound(QmlMetadata*)), this, SLOT(addMetadata(QmlMetadata*)), Qt::QueuedConnection);
-    m_future = QtConcurrent::run(this, &FilterController::loadFilterMetadata);
+    loadFilterMetadata();
 
     connect(&m_attachedModel, SIGNAL(changed()), this, SLOT(handleAttachedModelChange()));
     connect(&m_attachedModel, SIGNAL(modelAboutToBeReset()), this, SLOT(handleAttachedModelAboutToReset()));
@@ -46,7 +43,6 @@ FilterController::FilterController(QObject* parent) : QObject(parent),
 }
 
 void FilterController::loadFilterMetadata() {
-    QQmlEngine engine;
     QDir dir = QmlUtilities::qmlDir();
     dir.cd("filters");
     foreach (QString dirName, dir.entryList(QDir::AllDirs | QDir::NoDotAndDotDot | QDir::Executable)) {
@@ -56,7 +52,7 @@ void FilterController::loadFilterMetadata() {
         subdir.setNameFilters(QStringList("meta*.qml"));
         foreach (QString fileName, subdir.entryList()) {
             qDebug() << "reading filter metadata" << dirName << fileName;
-            QQmlComponent component(&engine, subdir.absoluteFilePath(fileName));
+            QQmlComponent component(QmlUtilities::sharedEngine(), subdir.absoluteFilePath(fileName));
             QmlMetadata *meta = qobject_cast<QmlMetadata*>(component.create());
             if (meta) {
                 // Check if mlt_service is available.
@@ -65,8 +61,7 @@ void FilterController::loadFilterMetadata() {
                     meta->loadSettings();
                     meta->setPath(subdir);
                     meta->setParent(0);
-                    meta->moveToThread(this->thread());
-                    emit newMetadataFound(meta);
+                    addMetadata(meta);
                 }
             } else if (!meta) {
                 qWarning() << component.errorString();
@@ -77,7 +72,6 @@ void FilterController::loadFilterMetadata() {
 
 QmlMetadata *FilterController::metadataForService(Mlt::Service *service)
 {
-    m_future.waitForFinished();
     QmlMetadata* meta = 0;
     int rowCount = m_metadataModel.rowCount();
     QString uniqueId = service->get(kShotcutFilterProperty);

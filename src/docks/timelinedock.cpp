@@ -33,7 +33,7 @@
 TimelineDock::TimelineDock(QWidget *parent) :
     QDockWidget(parent),
     ui(new Ui::TimelineDock),
-    m_quickView(this),
+    m_quickView(QmlUtilities::sharedEngine(), this),
     m_position(-1)
 {
     qDebug() << "begin";

@@ -34,7 +34,7 @@
 
 FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* attachedModel, QWidget *parent) :
     QDockWidget(tr("Filters"), parent),
-    m_qview(this)
+    m_qview(QmlUtilities::sharedEngine(), this)
 {
     qDebug() << "begin";
     setObjectName("FiltersDock");
