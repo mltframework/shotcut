@@ -25,6 +25,7 @@
 #include <QUrl>
 
 class QQuickView;
+class QQmlEngine;
 
 class QmlUtilities : public QObject
 {
@@ -37,6 +38,7 @@ public:
     static void setCommonProperties(QQuickView* qview);
     static QDir qmlDir();
     static QUrl blankVui();
+    static QQmlEngine * sharedEngine();
 };
 
 #endif // QMLUTILITIES_H

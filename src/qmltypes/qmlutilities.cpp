@@ -31,6 +31,7 @@
 #include <QSysInfo>
 #include <QCursor>
 #include <QtQml>
+#include <QQmlEngine>
 #include <QQmlContext>
 #include <QQuickView>
 
@@ -71,6 +72,14 @@ QDir QmlUtilities::qmlDir()
     dir.cd("shotcut");
     dir.cd("qml");
     return dir;
+}
+
+QQmlEngine * QmlUtilities::sharedEngine()
+{
+    static QQmlEngine * s_engine = 0;
+    if (!s_engine)
+        s_engine = new QQmlEngine;
+    return s_engine;
 }
 
 QUrl QmlUtilities::blankVui()
