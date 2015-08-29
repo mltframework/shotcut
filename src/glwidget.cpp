@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2014 Meltytech, LLC
+ * Copyright (c) 2011-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * GL shader based on BSD licensed code from Peter Bengtsson:
@@ -80,6 +80,7 @@ GLWidget::GLWidget(QObject *parent)
         m_glslManager = 0;
     }
 
+    connect(this, SIGNAL(openglContextCreated(QOpenGLContext*)), SLOT(onOpenGLContextCreated(QOpenGLContext*)));
     connect(this, SIGNAL(sceneGraphInitialized()), SLOT(initializeGL()), Qt::DirectConnection);
     connect(this, SIGNAL(sceneGraphInitialized()), SLOT(setBlankScene()), Qt::QueuedConnection);
     connect(this, SIGNAL(beforeRendering()), SLOT(paintGL()), Qt::DirectConnection);
@@ -127,7 +128,7 @@ void GLWidget::initializeGL()
 #endif
 
     openglContext()->doneCurrent();
-    m_frameRenderer = new FrameRenderer(openglContext());
+    m_frameRenderer = new FrameRenderer(openglContext(), &m_offscreenSurface);
     openglContext()->makeCurrent(this);
 
     connect(m_frameRenderer, SIGNAL(frameDisplayed(const SharedFrame&)), this, SIGNAL(frameDisplayed(const SharedFrame&)), Qt::QueuedConnection);
@@ -392,7 +393,7 @@ void GLWidget::createThread(RenderThread **thread, thread_function_t function, v
         m_initSem.acquire();
     }
 #endif
-    (*thread) = new RenderThread(function, data, m_glslManager? openglContext() : 0);
+    (*thread) = new RenderThread(function, data, m_glslManager? openglContext() : 0, &m_offscreenSurface);
     (*thread)->start();
 }
 
@@ -619,21 +620,24 @@ void GLWidget::on_frame_show(mlt_consumer, void* self, mlt_frame frame_ptr)
     }
 }
 
-RenderThread::RenderThread(thread_function_t function, void *data, QOpenGLContext *context)
+void GLWidget::onOpenGLContextCreated(QOpenGLContext* context)
+{
+    m_offscreenSurface.setFormat(context->format());
+    m_offscreenSurface.create();
+}
+
+RenderThread::RenderThread(thread_function_t function, void *data, QOpenGLContext *context, QSurface* surface)
     : QThread(0)
     , m_function(function)
     , m_data(data)
     , m_context(0)
-    , m_surface(0)
+    , m_surface(surface)
 {
     if (context) {
         m_context = new QOpenGLContext;
         m_context->setFormat(context->format());
         m_context->setShareContext(context);
         m_context->create();
-        m_surface = new QOffscreenSurface;
-        m_surface->setFormat(m_context->format());
-        m_surface->create();
         m_context->moveToThread(this);
     }
 }
@@ -650,12 +654,12 @@ void RenderThread::run()
     }
 }
 
-FrameRenderer::FrameRenderer(QOpenGLContext* shareContext)
+FrameRenderer::FrameRenderer(QOpenGLContext* shareContext, QSurface* surface)
      : QThread(0)
      , m_semaphore(3)
      , m_frame()
      , m_context(0)
-     , m_surface(0)
+     , m_surface(surface)
      , m_gl32(0)
 {
     Q_ASSERT(shareContext);
@@ -665,9 +669,6 @@ FrameRenderer::FrameRenderer(QOpenGLContext* shareContext)
     m_context->setFormat(shareContext->format());
     m_context->setShareContext(shareContext);
     m_context->create();
-    m_surface = new QOffscreenSurface;
-    m_surface->setFormat(m_context->format());
-    m_surface->create();
     m_context->moveToThread(this);
     setObjectName("FrameRenderer");
     moveToThread(this);

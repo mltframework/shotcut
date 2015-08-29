@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2014 Meltytech, LLC
+ * Copyright (c) 2011-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -25,6 +25,7 @@
 #include <QOpenGLShaderProgram>
 #include <QOpenGLFramebufferObject>
 #include <QOpenGLContext>
+#include <QOffscreenSurface>
 #include <QMutex>
 #include <QThread>
 #include <QRect>
@@ -32,7 +33,6 @@
 #include "sharedframe.h"
 
 class QOpenGLFunctions_3_2_Core;
-class QOffscreenSurface;
 class QOpenGLTexture;
 class QmlFilter;
 class QmlMetadata;
@@ -126,10 +126,12 @@ private:
     int m_textureLocation[3];
     float m_zoom;
     QPoint m_offset;
+    QOffscreenSurface m_offscreenSurface;
 
     static void on_frame_show(mlt_consumer, void* self, mlt_frame frame);
 
 private slots:
+    void onOpenGLContextCreated(QOpenGLContext* context);
     void initializeGL();
     void resizeGL(int width, int height);
     void updateTexture(GLuint yName, GLuint uName, GLuint vName);
@@ -147,7 +149,7 @@ class RenderThread : public QThread
 {
     Q_OBJECT
 public:
-    RenderThread(thread_function_t function, void* data, QOpenGLContext *context);
+    RenderThread(thread_function_t function, void* data, QOpenGLContext *context, QSurface* surface);
 
 protected:
     void run();
@@ -156,14 +158,14 @@ private:
     thread_function_t m_function;
     void* m_data;
     QOpenGLContext* m_context;
-    QOffscreenSurface* m_surface;
+    QSurface* m_surface;
 };
 
 class FrameRenderer : public QThread
 {
     Q_OBJECT
 public:
-    FrameRenderer(QOpenGLContext* shareContext);
+    FrameRenderer(QOpenGLContext* shareContext, QSurface* surface);
     ~FrameRenderer();
     QSemaphore* semaphore() { return &m_semaphore; }
     QOpenGLContext* context() const { return m_context; }
@@ -181,7 +183,7 @@ private:
     QSemaphore m_semaphore;
     SharedFrame m_frame;
     QOpenGLContext* m_context;
-    QOffscreenSurface* m_surface;
+    QSurface* m_surface;
 public:
     GLuint m_renderTexture[3];
     GLuint m_displayTexture[3];
