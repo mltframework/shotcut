@@ -86,6 +86,7 @@ public:
     QPoint offset() const;
 
 public slots:
+    void onFrameDisplayed(const SharedFrame& frame);
     void setZoom(float zoom);
     void setOffsetX(int x);
     void setOffsetY(int y);
@@ -128,6 +129,8 @@ private:
     QPoint m_offset;
     QOffscreenSurface m_offscreenSurface;
     QOpenGLContext* m_shareContext;
+    SharedFrame m_sharedFrame;
+    QMutex m_mutex;
 
     static void on_frame_show(mlt_consumer, void* self, mlt_frame frame);
 

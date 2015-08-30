@@ -124,6 +124,9 @@ public:
     double videoOutDuration() const;
     void setVideoOutDuration(double);
 
+    int drawMethod() const;
+    void setDrawMethod(int);
+
     void sync();
 
 signals:

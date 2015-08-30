@@ -174,6 +174,11 @@ const uint8_t* SharedFrame::get_image() const
     return (uint8_t*)d->f.get_image(format, width, height, 0);
 }
 
+const uint8_t* SharedFrame::get_image(mlt_image_format& format, int& width, int& height) const
+{
+    return (uint8_t*) d->f.get_image(format, width, height);
+}
+
 mlt_audio_format SharedFrame::get_audio_format() const
 {
     return (mlt_audio_format)d->f.get_int( "audio_format" );
