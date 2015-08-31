@@ -64,7 +64,6 @@ public:
     int get_image_width() const;
     int get_image_height() const;
     const uint8_t* get_image() const;
-    const uint8_t* get_image(mlt_image_format& format, int& width, int& height) const;
     mlt_audio_format get_audio_format() const;
     int get_audio_channels() const;
     int get_audio_frequency() const;

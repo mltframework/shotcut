@@ -264,10 +264,9 @@ void GLWidget::createShader()
 
 static void uploadTextures(QOpenGLContext* context, SharedFrame& frame, GLuint texture[])
 {
-    mlt_image_format format = mlt_image_yuv420p;
-    int width = 0;
-    int height = 0;
-    const uint8_t* image = frame.get_image(format, width, height);
+    int width = frame.get_image_width();
+    int height = frame.get_image_height();
+    const uint8_t* image = frame.get_image();
     QOpenGLFunctions* f = context->functions();
 
     // Upload each plane of YUV to a texture.
@@ -791,8 +790,14 @@ void FrameRenderer::showFrame(Mlt::Frame frame)
     int width = 0;
     int height = 0;
 
-    // Save this frame for future use and to keep a reference to the GL Texture.
-    m_frame = SharedFrame(frame);
+    if (!Settings.playerGPU()) {
+        // Convert the image format before creating the SharedFrame.
+        mlt_image_format format = mlt_image_yuv420p;
+        int width = 0;
+        int height = 0;
+        frame.get_image(format, width, height);
+        m_frame = SharedFrame(frame);
+    }
 
     if (m_context && m_context->isValid()) {
         if (Settings.playerGPU()) {
@@ -827,8 +832,12 @@ void FrameRenderer::showFrame(Mlt::Frame frame)
 #endif // USE_GL_FENCE
             emit textureReady(*textureId);
             m_context->doneCurrent();
+
+            // Save this frame for future use and to keep a reference to the GL Texture.
+            m_frame = SharedFrame(frame);
         }
         else {
+            // Using a threaded OpenGL to upload textures.
             m_context->makeCurrent(m_surface);
             QOpenGLFunctions* f = m_context->functions();
 
