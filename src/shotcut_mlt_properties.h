@@ -64,5 +64,6 @@
 #define kThumbnailInProperty "_shotcut:thumbnail-in"
 #define kThumbnailOutProperty "_shotcut:thumbnail-out"
 #define kUndoIdProperty "_shotcut:undo_id"
+#define kUuidProperty "_shotcut:uuid"
 
 #endif // SHOTCUT_MLT_PROPERTIES_H
