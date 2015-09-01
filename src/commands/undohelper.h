@@ -67,8 +67,9 @@ private:
             , changes(NoChange)
         {}
     };
-    QMap<int,Info> m_state;
-    QList<QPair<int,int> > m_clipsAdded;
+    QMap<QUuid,Info> m_state;
+    QList<QUuid> m_clipsAdded;
+    QList<QUuid> m_insertedOrder;
     MultitrackModel & m_model;
 };
 
