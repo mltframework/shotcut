@@ -1500,8 +1500,18 @@ void MainWindow::dropEvent(QDropEvent *event)
     }
     else if (mimeData->hasUrls()) {
         if (mimeData->urls().length() > 1) {
-            foreach (QUrl url, mimeData->urls())
-                m_multipleFiles.append(url.path());
+            foreach (QUrl url, mimeData->urls()) {
+                QString path = url.url();
+                if (url.scheme() == "file")
+                    path = url.url(QUrl::RemoveScheme);
+                if (path.length() > 2 && path.startsWith("///"))
+#ifdef Q_OS_WIN
+                    path.remove(0, 3);
+#else
+                    path.remove(0, 2);
+#endif
+                m_multipleFiles.append(path);
+            }
         }
         QString path = mimeData->urls().first().url();
         if (mimeData->urls().first().scheme() == "file")
