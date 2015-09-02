@@ -113,7 +113,9 @@ MainWindow::MainWindow()
                 this, &MainWindow::onFocusChanged);
 
     qDebug() << "begin";
+#ifndef Q_OS_WIN
     new GLTestWidget(this);
+#endif
     Database::singleton(this);
     m_autosaveTimer.setSingleShot(true);
     m_autosaveTimer.setInterval(AUTOSAVE_TIMEOUT_MS);
