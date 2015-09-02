@@ -415,7 +415,9 @@ OTHER_FILES += \
     qml/filters/audio_limiter/meta.qml \
     qml/filters/audio_limiter/ui.qml \
     qml/filters/audio_reverb/meta.qml \
-    qml/filters/audio_reverb/ui.qml
+    qml/filters/audio_reverb/ui.qml \
+    qml/filters/audio_mute/meta.qml \
+    qml/filters/audio_mute/ui.qml
 
 lupdate_hack {
     SOURCES += \
@@ -559,7 +561,9 @@ lupdate_hack {
     qml/filters/audio_limiter/meta.qml \
     qml/filters/audio_limiter/ui.qml \
     qml/filters/audio_reverb/meta.qml \
-    qml/filters/audio_reverb/ui.qml
+    qml/filters/audio_reverb/ui.qml \
+    qml/filters/audio_mute/meta.qml \
+    qml/filters/audio_mute/ui.qml
 }
 
 TRANSLATIONS += \

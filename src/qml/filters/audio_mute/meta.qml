@@ -3,8 +3,9 @@ import org.shotcut.qml 1.0
 
 Metadata {
     type: Metadata.Filter
+    objectName: 'muteVolume'
     isAudio: true
-    name: qsTr("Gain / Volume")
+    name: qsTr("Mute")
     mlt_service: "volume"
     qml: "ui.qml"
     isFavorite: true
