@@ -1074,7 +1074,7 @@ in temporal compression</string>
               <item>
                <widget class="QLabel" name="label_9">
                 <property name="text">
-                 <string>KHz</string>
+                 <string>Hz</string>
                 </property>
                </widget>
               </item>
