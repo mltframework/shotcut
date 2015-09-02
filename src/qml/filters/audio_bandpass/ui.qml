@@ -34,7 +34,7 @@ Rectangle {
             filter.set('wetness', 1.0)
             filter.savePreset(preset.parameters)
         }
-        setcontrols()
+        setControls()
     }
 
     function setControls() {
