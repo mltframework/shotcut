@@ -223,6 +223,9 @@ private slots:
     void moveNavigationPositionToCurrentSelection();
     void onAddAllToTimeline(Mlt::Playlist* playlist);
     void on_actionScrubAudio_triggered(bool checked);
+#ifdef Q_OS_WIN
+    void onDrawingMethodTriggered(QAction*);
+#endif
 };
 
 #define MAIN MainWindow::singleton()

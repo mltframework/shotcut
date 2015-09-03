@@ -506,16 +506,16 @@ function set_globals {
     FFMPEG_SUPPORT_THEORA=0
     if test "$TARGET_OS" = "Win32" ; then
       export HOST=i686-w64-mingw32
-      export QTDIR="$HOME/Qt/5.2.0/mingw48_32"
-      export QMAKE="$HOME/Qt/5.2.0/gcc/bin/qmake"
-      export LRELEASE="$HOME/Qt/5.2.0/gcc/bin/lrelease"
+      export QTDIR="$HOME/qt-5.5.0-x86-mingw510r0-dw2"
+      export QMAKE="$HOME/Qt/5.5/gcc/bin/qmake"
+      export LRELEASE="$HOME/Qt/5.5/gcc/bin/lrelease"
     else
       export HOST=x86_64-w64-mingw32
-      export QTDIR="$HOME/qt-5.2.0-x64-mingw-opengl"
-      export QMAKE="$HOME/Qt/5.2.0/gcc_64/bin/qmake"
-      export LRELEASE="$HOME/Qt/5.2.0/gcc_64/bin/lrelease"
+      export QTDIR="$HOME/qt-5.5.0-x64-mingw510r0-seh"
+      export QMAKE="$HOME/Qt/5.5/gcc_64/bin/qmake"
+      export LRELEASE="$HOME/Qt/5.5/gcc_64/bin/lrelease"
     fi
-    export CROSS=${HOST}-
+    export CROSS=${HOST}.static-
     export CC=${CROSS}gcc
     export CXX=${CROSS}g++
     export AR=${CROSS}ar
@@ -526,14 +526,14 @@ function set_globals {
     export CMAKE_ROOT="${SOURCE_DIR}/vid.stab/cmake"
     export PKG_CONFIG=pkg-config
   elif test "$TARGET_OS" = "Darwin"; then
-    export QTDIR="$HOME/Qt/5.2.0/clang_64"
+    export QTDIR="$HOME/Qt/5.5/clang_64"
     export RANLIB=ranlib
   else
     if test -z "$QTDIR" ; then
       if [ "$(uname -m)" = "x86_64" ]; then
-        export QTDIR="$HOME/Qt/5.2.0/gcc_64"
+        export QTDIR="$HOME/Qt/5.5/gcc_64"
       else
-        export QTDIR="$HOME/Qt/5.2.0/gcc"
+        export QTDIR="$HOME/Qt/5.5/gcc"
       fi
     fi
     export RANLIB=ranlib
@@ -664,10 +664,11 @@ function set_globals {
   CONFIG[6]="./configure --prefix=$FINAL_INSTALL_DIR --disable-decoder --disable-frontend"
   if test "$TARGET_OS" = "Win32" ; then
     CONFIG[6]="${CONFIG[6]} --libdir=$FINAL_INSTALL_DIR/lib --host=x86-w64-mingw32"
+    CFLAGS_[6]="$CFLAGS -msse"
   elif test "$TARGET_OS" = "Win64" ; then
     CONFIG[6]="${CONFIG[6]} --libdir=$FINAL_INSTALL_DIR/lib --host=x86_64-w64-mingw32"
+    CFLAGS_[6]=$CFLAGS
   fi
-  CFLAGS_[6]=$CFLAGS
   LDFLAGS_[6]=$LDFLAGS
 
   #####
@@ -676,7 +677,7 @@ function set_globals {
     CONFIG[7]="$QTDIR/bin/qmake -r -spec macx-g++ MLT_PREFIX=$FINAL_INSTALL_DIR"
   elif [ "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ]; then
     # DEFINES+=QT_STATIC is for QWebSockets
-    CONFIG[7]="$QMAKE -r -spec mingw CONFIG+=link_pkgconfig PKGCONFIG+=mlt++ LIBS+=-L${QTDIR}/lib SHOTCUT_VERSION=$(date '+%y.%m.%d') DEFINES+=QT_STATIC"
+    CONFIG[7]="$QMAKE -r -spec mkspecs/mingw CONFIG+=link_pkgconfig PKGCONFIG+=mlt++ LIBS+=-L${QTDIR}/lib SHOTCUT_VERSION=$(date '+%y.%m.%d') DEFINES+=QT_STATIC"
   else
     CONFIG[7]="$QTDIR/bin/qmake -r PREFIX=$FINAL_INSTALL_DIR"
     LD_LIBRARY_PATH_[7]="/usr/local/lib"
@@ -695,7 +696,7 @@ function set_globals {
   if [ "$TARGET_OS" = "Darwin" ]; then
     CONFIG[9]="$QTDIR/bin/qmake -r -spec macx-g++ MLT_PREFIX=$FINAL_INSTALL_DIR"
   elif [ "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ]; then
-    CONFIG[9]="$QMAKE -r -spec mingw LIBS+=-L${QTDIR}/lib INCLUDEPATH+=$FINAL_INSTALL_DIR/include"
+    CONFIG[9]="$QMAKE -r -spec mkspecs/mingw LIBS+=-L${QTDIR}/lib INCLUDEPATH+=$FINAL_INSTALL_DIR/include"
   else
     CONFIG[9]="$QTDIR/bin/qmake -r"
   fi
@@ -706,7 +707,9 @@ function set_globals {
   ####
   # vid.stab
   if test "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ; then
-	CONFIG[10]="cmake -DCMAKE_INSTALL_PREFIX:PATH=$FINAL_INSTALL_DIR -DCMAKE_TOOLCHAIN_FILE=my.cmake -DUSE_OMP=OFF"
+      CONFIG[10]="cmake -DCMAKE_INSTALL_PREFIX:PATH=$FINAL_INSTALL_DIR -DCMAKE_TOOLCHAIN_FILE=my.cmake"
+  elif test "$TARGET_OS" = "Darwin" ; then
+    CONFIG[10]="cmake -DCMAKE_INSTALL_PREFIX:PATH=$FINAL_INSTALL_DIR -DCMAKE_C_COMPILER=gcc-mp-5 -DCMAKE_CXX_COMPILER=g++-mp-5"
   else
     CONFIG[10]="cmake -DCMAKE_INSTALL_PREFIX:PATH=$FINAL_INSTALL_DIR"
   fi
@@ -977,10 +980,11 @@ SET(CMAKE_C_COMPILER ${CROSS}gcc)
 SET(CMAKE_CXX_COMPILER ${CROSS}g++)
 SET(CMAKE_LINKER ${CROSS}ld)
 SET(CMAKE_STRIP ${CROSS}strip)
-SET(CMAKE_RC_COMPILER ${CROSS}windres)
+# workaround CMake not identifying correct resource compiler and using the wrong switches.
+SET(CMAKE_RC_COMPILER /usr/bin/${HOST}-windres)
 
 # here is the target environment located
-SET(CMAKE_FIND_ROOT_PATH  /usr/$HOST $FINAL_INSTALL_DIR)
+SET(CMAKE_FIND_ROOT_PATH $(dirname $(dirname $(which ${CROSS}gcc)))/$HOST.static $FINAL_INSTALL_DIR)
 
 # adjust the default behaviour of the FIND_XXX() commands:
 # search headers and libraries in the target environment, search
@@ -1181,6 +1185,7 @@ function get_subproject {
           # No svn info
           feedback_status "Getting SVN sources for $1"
           cmd svn --non-interactive co $REPOLOC . $REVISION || die "Unable to get SVN source for $1 from $REPOLOC $REVISION"
+          cmd cd $1 || die "Unable to change to directory $1"
       fi
   elif test "http-tgz" = "$REPOTYPE" ; then
       if test ! -d "$1" ; then
@@ -1196,6 +1201,7 @@ function get_subproject {
           fi
           cmd mv "$REVISION" "$1" || die "Unable to rename $REVISION to $1"
       fi
+      cmd cd $1 || die "Unable to change to directory $1"
   fi # git/svn
 
   if test "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ; then
@@ -1653,7 +1659,7 @@ function fixlibs()
   target=$(dirname "$1")/$(basename "$1")
   trace fixlibs $target
   libs=$(otool -L "$target" |
-    awk '/^\t\/opt\/local/ || /^\t\/Applications\// || /^\t\/Users\// || /^\tlibwebvfx/ || /^\tlibvidstab/ {print $1}')
+    awk '/^\t@rpath\/Qt/ || /^\t\/opt\/local/ || /^\t\/Applications\// || /^\t\/Users\// || /^\tlibwebvfx/ || /^\tlibvidstab/ {print $1}')
 
   # if the target is a lib, change its id
   #if [ $(echo "$1" | grep '\.dylib$') ] || [ $(echo "$1" | grep '\.so$') ]; then
@@ -1663,7 +1669,8 @@ function fixlibs()
   for lib in $libs; do
     if [ $(basename "$lib") != $(basename "$target") ]; then
       newlib=$(basename "$lib")
-      cmd cp -n "$lib" lib/
+      libpath=$(echo $lib | sed "s|@rpath\/Qt|${QTDIR}\/lib\/Qt|")
+      cmd cp -n "$libpath" lib/
       cmd install_name_tool -change "$lib" "@executable_path/lib/$newlib" "$target"
     fi
   done
@@ -1713,7 +1720,7 @@ function deploy_osx
   log Copying supplementary executables
   cmd cp -a "$FINAL_INSTALL_DIR"/bin/{melt,ffmpeg,qmelt} .
   mkdir lib 2>/dev/null
-  for exe in $(find . -perm +u+x -maxdepth 1); do
+  for exe in $(find . -type f -perm +u+x -maxdepth 1); do
     log fixing library paths of executable "$exe"
     fixlibs "$exe"
   done
@@ -1830,64 +1837,76 @@ function deploy_win32
     cmd rm -rf share/doc share/man share/ffmpeg/examples share/aclocal share/glib-2.0 share/gtk-2.0 share/gtk-doc share/themes share/locale
   fi
   cmd mv COPYING COPYING.txt
-  cmd cp -p "$QTDIR"/bin/Qt5{Concurrent,Core,Declarative,Gui,Multimedia,MultimediaQuick,MultimediaWidgets,Network,OpenGL,Positioning,PrintSupport,Qml,QmlParticles,Quick,Script,Sensors,Sql,Svg,V8,WebKit,WebKitWidgets,Widgets,Xml,XmlPatterns}.dll .
-  cmd cp -p "$QTDIR"/bin/{icudt51,icuin51,icuuc51,libstdc++-6,libwinpthread-1}.dll .
+  cmd cp -p "$QTDIR"/bin/Qt5{Concurrent,Core,Declarative,Gui,Multimedia,MultimediaQuick_p,MultimediaWidgets,Network,OpenGL,Positioning,PrintSupport,Qml,QuickParticles,Quick,Script,Sensors,Sql,Svg,WebChannel,WebKit,WebKitWidgets,Widgets,Xml,XmlPatterns}.dll .
   if [ "$TARGET_OS" = "Win32" ]; then
-    cmd cp -p "$QTDIR"/bin/{icudt51,icuin51,icuuc51,libgcc_s_dw2-1,libstdc++-6,libwinpthread-1}.dll .
+    cmd cp -p "$QTDIR"/bin/{icudt55,icuin55,icuuc55,libgcc_s_dw2-1,libstdc++-6,libwinpthread-1,libEGL,libGLESv2,opengl32sw,d3dcompiler_47}.dll .
   else
-    cmd cp -p "$QTDIR"/bin/{icudt52,icuin52,icuuc52,libgcc_s_sjlj-1,libstdc++-6,libwinpthread-1}.dll .
-    #cmd cp -p "$FINAL_INSTALL_DIR"/bin/libgcc_s_seh-1.dll .
+    cmd cp -p "$QTDIR"/bin/{icudt55,icuin55,icuuc55,libgcc_s_seh-1,libstdc++-6,libwinpthread-1,libEGL,libGLESv2,opengl32sw,d3dcompiler_47}.dll .
   fi
   cmd mkdir -p lib/qt5/sqldrivers
-  cmd cp -pr "$QTDIR"/plugins/{accessible,iconengines,imageformats,mediaservice,platforms} lib/qt5
-  cmd cp -p "$QTDIR"/plugins/sqldrivers/qsqlite.dll lib/qt5/sqldrivers
+  cmd cp -pr "$QTDIR"/plugins/{iconengines,imageformats,mediaservice,platforms} lib/qt5
+  cmd cp -p  "$QTDIR"/plugins/sqldrivers/qsqlite.dll lib/qt5/sqldrivers
   cmd cp -pr "$QTDIR"/qml lib
   cmd cp -pr "$QTDIR"/translations/qt_*.qm share/translations
   cmd cp -pr "$QTDIR"/translations/qtbase_*.qm share/translations
   if [ "$SDK" != "1" ]; then
-    cmd rm lib/qt5/accessible/qtaccessiblequickd.dll
-    cmd rm lib/qt5/accessible/qtaccessiblewidgetsd.dll
     cmd rm lib/qt5/iconengines/qsvgicond.dll
+    cmd rm lib/qt5/imageformats/qddsd.dll
     cmd rm lib/qt5/imageformats/qgifd.dll
     cmd rm lib/qt5/imageformats/qicod.dll
+    cmd rm lib/qt5/imageformats/qjp2d.dll
     cmd rm lib/qt5/imageformats/qjpegd.dll
     cmd rm lib/qt5/imageformats/qmngd.dll
     cmd rm lib/qt5/imageformats/qsvgd.dll
     cmd rm lib/qt5/imageformats/qtgad.dll
     cmd rm lib/qt5/imageformats/qtiffd.dll
     cmd rm lib/qt5/imageformats/qwbmpd.dll
+    cmd rm lib/qt5/imageformats/qwebpd.dll
     cmd rm lib/qt5/mediaservice/dsengined.dll
     cmd rm lib/qt5/mediaservice/qtmedia_audioengined.dll
     cmd rm lib/qt5/platforms/qminimald.dll
     cmd rm lib/qt5/platforms/qoffscreend.dll
     cmd rm lib/qt5/platforms/qwindowsd.dll
-    cmd rm lib/qml/Qt/labs/folderlistmodel/qmlfolderlistmodelplugind.dll
-    cmd rm lib/qml/Qt/labs/settings/qmlsettingsplugind.dll
-    cmd rm lib/qml/QtBluetooth/declarative_bluetoothd.dll
-    cmd rm lib/qml/QtMultimedia/declarative_multimediad.dll
-    cmd rm lib/qml/QtNfc/declarative_nfcd.dll
-    cmd rm lib/qml/QtPositioning/declarative_positioningd.dll
+
+    cmd rm lib/qml/QtLocation/declarative_locationd.dll
+    cmd rm lib/qml/QtQml/StateMachine/qtqmlstatemachined.dll
     cmd rm lib/qml/QtQml/Models.2/modelsplugind.dll
-    cmd rm lib/qml/QtQuick/Controls/qtquickcontrolsplugind.dll
+    cmd rm lib/qml/QtCanvas3D/qtcanvas3dd.dll
+    cmd rm lib/qml/QtPositioning/declarative_positioningd.dll
+    cmd rm lib/qml/QtWinExtras/qml_winextrasd.dll
+    cmd rm lib/qml/QtWebKit/qmlwebkitplugind.dll
+    cmd rm lib/qml/QtWebKit/experimental/qmlwebkitexperimentalplugind.dll
+    cmd rm lib/qml/QtQuick.2/qtquick2plugind.dll
+    cmd rm lib/qml/Enginio/enginioplugind.dll
+    cmd rm lib/qml/Qt/labs/settings/qmlsettingsplugind.dll
+    cmd rm lib/qml/Qt/labs/folderlistmodel/qmlfolderlistmodelplugind.dll
+    cmd rm lib/qml/QtWebSockets/declarative_qmlwebsocketsd.dll
+    cmd rm lib/qml/QtBluetooth/declarative_bluetoothd.dll
+    cmd rm lib/qml/QtTest/qmltestplugind.dll
+    cmd rm lib/qml/QtQuick/LocalStorage/qmllocalstorageplugind.dll
+    cmd rm lib/qml/QtQuick/Window.2/windowplugind.dll
     cmd rm lib/qml/QtQuick/Dialogs/dialogplugind.dll
     cmd rm lib/qml/QtQuick/Dialogs/Private/dialogsprivateplugind.dll
-    cmd rm lib/qml/QtQuick/Layouts/qquicklayoutsplugind.dll
-    cmd rm lib/qml/QtQuick/LocalStorage/qmllocalstorageplugind.dll
-    cmd rm lib/qml/QtQuick/Particles.2/particlesplugind.dll
     cmd rm lib/qml/QtQuick/PrivateWidgets/widgetsplugind.dll
-    cmd rm lib/qml/QtQuick/Window.2/windowplugind.dll
+    cmd rm lib/qml/QtQuick/Scene3D/qtquickscene3dplugind.dll
+    cmd rm lib/qml/QtQuick/Layouts/qquicklayoutsplugind.dll
+    cmd rm lib/qml/QtQuick/Controls/qtquickcontrolsplugind.dll
+    cmd rm lib/qml/QtQuick/Controls/Styles/Flat/qtquickextrasflatplugind.dll
+    cmd rm lib/qml/QtQuick/Particles.2/particlesplugind.dll
+    cmd rm lib/qml/QtQuick/Extras/qtquickextrasplugind.dll
     cmd rm lib/qml/QtQuick/XmlListModel/qmlxmllistmodelplugind.dll
-    cmd rm lib/qml/QtQuick.2/qtquick2plugind.dll
     cmd rm lib/qml/QtSensors/declarative_sensorsd.dll
-    cmd rm lib/qml/QtTest/qmltestplugind.dll
-    cmd rm lib/qml/QtWebKit/experimental/qmlwebkitexperimentalplugind.dll
-    cmd rm lib/qml/QtWebKit/qmlwebkitplugind.dll
-    cmd rm lib/qml/QtWinExtras/qml_winextrasd.dll
+    cmd rm lib/qml/QtMultimedia/declarative_multimediad.dll
+    cmd rm lib/qml/QtNfc/declarative_nfcd.dll
+    cmd rm lib/qml/QtWebChannel/declarative_webchanneld.dll
+    cmd rm lib/qml/Qt3D/Renderer/quick3drendererplugind.dll
+    cmd rm lib/qml/Qt3D/quick3dcoreplugind.dll
+    cmd rm lib/qml/Qt3D/Input/quick3dinputplugind.dll
   fi
   if [ "$TARGET_OS" = "Win32" ]; then
-	cmd tar -xjf "$HOME/ladspa_plugins-win-0.4.15.tar.bz2"
+    cmd tar -xjf "$HOME/ladspa_plugins-win-0.4.15.tar.bz2"
   else
-	cmd tar -xjf "$HOME/swh-plugins-win64-0.4.15.tar.bz2"
+    cmd tar -xjf "$HOME/swh-plugins-win64-0.4.15.tar.bz2"
   fi
   printf "[Paths]\nPlugins=lib/qt5\nQml2Imports=lib/qml\n" > qt.conf
 
@@ -1897,7 +1916,7 @@ function deploy_win32
     clean_dirs
     popd
     log Copying src
-    cmd -rf src 2> /dev/null
+    cmd rm -rf src 2> /dev/null
     cmd cp -a $SOURCE_DIR .
 
     log Creating archive

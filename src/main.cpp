@@ -111,6 +111,15 @@ public:
         setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
         setAttribute(Qt::AA_DontShowIconsInMenus);
 #endif
+#if defined(Q_OS_WIN)
+        if (Settings.playerGPU()) {
+            QCoreApplication::setAttribute(Qt::AA_UseDesktopOpenGL);
+        } else if (Settings.drawMethod() >= Qt::AA_UseDesktopOpenGL &&
+                   Settings.drawMethod() <= Qt::AA_UseSoftwareOpenGL) {
+            QCoreApplication::setAttribute(Qt::ApplicationAttribute(Settings.drawMethod()));
+        }
+#endif
+
         // Startup logging.
         dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation).first();
         if (!dir.exists()) dir.mkpath(dir.path());

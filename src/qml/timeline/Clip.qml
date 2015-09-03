@@ -140,6 +140,7 @@ Rectangle {
         visible: isTransition
         anchors.fill: parent
         onPaint: {
+            if (!visible) return // workaround QTBUG-47714
             var cx = getContext('2d')
             if (cx === null) return
             cx.beginPath()
@@ -310,6 +311,7 @@ Rectangle {
         opacity: 0.5
         onWidthChanged: requestPaint()
         onPaint: {
+            if (!visible) return // workaround QTBUG-47714
             var cx = getContext('2d')
             if (cx === null) return
             cx.beginPath()
@@ -405,6 +407,7 @@ Rectangle {
         opacity: 0.5
         onWidthChanged: requestPaint()
         onPaint: {
+            if (!visible) return // workaround QTBUG-47714
             var cx = getContext('2d')
             if (cx === null) return
             cx.beginPath()

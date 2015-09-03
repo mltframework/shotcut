@@ -288,6 +288,7 @@ Rectangle {
                 height: 5
                 property bool init: true
                 onPaint: {
+                    if (!visible) return;
                     if (init) {
                         init = false;
                         var cx = getContext('2d');
@@ -302,6 +303,7 @@ Rectangle {
                         cx.closePath();
                     }
                 }
+                onVisibleChanged: requestPaint()
             }
         }
     }

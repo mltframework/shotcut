@@ -406,6 +406,16 @@ void ShotcutSettings::setVideoOutDuration(double d)
     emit videoOutDurationChanged();
 }
 
+int ShotcutSettings::drawMethod() const
+{
+    return settings.value("opengl", 0).toInt();
+}
+
+void ShotcutSettings::setDrawMethod(int i)
+{
+    settings.setValue("opengl", i);
+}
+
 void ShotcutSettings::sync()
 {
     settings.sync();

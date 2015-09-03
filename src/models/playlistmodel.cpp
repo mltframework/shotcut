@@ -401,18 +401,22 @@ QModelIndex PlaylistModel::createIndex(int row, int column) const
 void PlaylistModel::clear()
 {
     if (!m_playlist) return;
-    beginRemoveRows(QModelIndex(), 0, rowCount() - 1);
-    m_playlist->clear();
-    endRemoveRows();
+    if (rowCount()) {
+        beginRemoveRows(QModelIndex(), 0, rowCount() - 1);
+        m_playlist->clear();
+        endRemoveRows();
+    }
     emit cleared();
 }
 
 void PlaylistModel::load()
 {
     if (m_playlist) {
-        beginRemoveRows(QModelIndex(), 0, rowCount() - 1);
-        m_playlist->clear();
-        endRemoveRows();
+        if (rowCount()) {
+            beginRemoveRows(QModelIndex(), 0, rowCount() - 1);
+            m_playlist->clear();
+            endRemoveRows();
+        }
         delete m_playlist;
     }
     // In some versions of MLT, the resource property is the XML filename,
@@ -559,9 +563,11 @@ void PlaylistModel::setPlaylist(Mlt::Playlist& playlist)
 {
     if (playlist.is_valid()) {
         if (m_playlist) {
-            beginRemoveRows(QModelIndex(), 0, rowCount() - 1);
-            m_playlist->clear();
-            endRemoveRows();
+            if (rowCount()) {
+                beginRemoveRows(QModelIndex(), 0, rowCount() - 1);
+                m_playlist->clear();
+                endRemoveRows();
+            }
             delete m_playlist;
         }
         m_playlist = new Mlt::Playlist(playlist);

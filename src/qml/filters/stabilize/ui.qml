@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2014 Meltytech, LLC
+ * Copyright (c) 2013-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,10 +23,12 @@ import QtQuick.Layouts 1.0
 import Shotcut.Controls 1.0
 
 Rectangle {
+    id: stabilizeRoot
     width: 400
     height: 200
     color: 'transparent'
-    
+    property string settingsSavePath: settings.savePath
+
     function setStatus( inProgress ) {
         if (inProgress) {
             status.text = qsTr('Analyzing...')
@@ -38,6 +40,16 @@ Rectangle {
         else
         {
             status.text = qsTr('Click Analyze to use this filter.')
+        }
+    }
+
+    // This signal is used to workaround context properties not available in
+    // the FileDialog onAccepted signal handler on Qt 5.5.
+    signal fileSaved(string filename)
+    onFileSaved: {
+        var lastPathSeparator = filename.lastIndexOf('/')
+        if (lastPathSeparator !== -1) {
+            settings.savePath = filename.substring(0, lastPathSeparator)
         }
     }
 
@@ -57,6 +69,7 @@ Rectangle {
         selectExisting: false
         selectMultiple: false
         selectFolder: false
+        folder: settingsSavePath
         nameFilters: [ "Stabilize Results (*.stab)" ]
         selectedNameFilter: "Stabilize Results (*.stab)"
         onAccepted: {
@@ -67,11 +80,7 @@ Rectangle {
                 // In Windows, the prefix is a little different
                 filename = filename.substring(1)
             }
-
-            var lastPathSeparator = filename.lastIndexOf('/')
-            if (lastPathSeparator !== -1) {
-                settings.savePath = filename.substring(0, lastPathSeparator)
-            }
+            stabilizeRoot.fileSaved(filename)
 
             var extension = ".stab"
             // Force file extension to ".stab"

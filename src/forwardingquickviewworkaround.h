@@ -25,8 +25,8 @@
 class ForwardingQuickViewWorkaround : public QQuickView
 {
 public:
-    ForwardingQuickViewWorkaround(QObject * receiver)
-        : QQuickView(0)
+    ForwardingQuickViewWorkaround(QQmlEngine * engine, QObject * receiver)
+        : QQuickView(engine, 0)
         , m_receiver(receiver)
     {
     }

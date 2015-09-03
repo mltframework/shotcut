@@ -101,7 +101,7 @@ Player::Player(QWidget *parent)
     volumeLayoutV->addLayout(volumeLayoutH);
     m_volumeSlider->setRange(0, 99);
     m_volumeSlider->setValue(Settings.playerVolume());
-    onVolumeChanged(m_volumeSlider->value());
+    setVolume(m_volumeSlider->value());
     m_savedVolume = MLT.volume();
     m_volumeSlider->setToolTip(tr("Adjust the audio volume"));
     connect(m_volumeSlider, SIGNAL(valueChanged(int)), this, SLOT(onVolumeChanged(int)));
@@ -118,16 +118,16 @@ Player::Player(QWidget *parent)
     volumeLayoutV->addLayout(volumeLayoutH);
 
     // Add mute button
-    QPushButton* muteButton = new QPushButton(this);
-    muteButton->setFocusPolicy(Qt::NoFocus);
-    muteButton->setObjectName(QString::fromUtf8("muteButton"));
-    muteButton->setIcon(QIcon::fromTheme("dialog-cancel", QIcon(":/icons/oxygen/16x16/actions/dialog-cancel.png")));
-    muteButton->setToolTip(tr("Silence the audio"));
-    muteButton->setCheckable(true);
-    muteButton->setChecked(Settings.playerMuted());
+    m_muteButton = new QPushButton(this);
+    m_muteButton->setFocusPolicy(Qt::NoFocus);
+    m_muteButton->setObjectName(QString::fromUtf8("muteButton"));
+    m_muteButton->setIcon(QIcon::fromTheme("dialog-cancel", QIcon(":/icons/oxygen/16x16/actions/dialog-cancel.png")));
+    m_muteButton->setToolTip(tr("Silence the audio"));
+    m_muteButton->setCheckable(true);
+    m_muteButton->setChecked(Settings.playerMuted());
     onMuteButtonToggled(Settings.playerMuted());
-    volumeLayoutH->addWidget(muteButton);
-    connect(muteButton, SIGNAL(toggled(bool)), this, SLOT(onMuteButtonToggled(bool)));
+    volumeLayoutH->addWidget(m_muteButton);
+    connect(m_muteButton, SIGNAL(toggled(bool)), this, SLOT(onMuteButtonToggled(bool)));
 
     // This hack realizes the volume popup geometry for on_actionVolume_triggered().
     m_volumePopup->show();
@@ -424,7 +424,7 @@ void Player::onProducerOpened(bool play)
         m_scrubber->setScale(m_duration);
     }
     m_positionSpinner->setEnabled(m_isSeekable);
-    onVolumeChanged(m_volumeSlider->value());
+    setVolume(m_volumeSlider->value());
     m_savedVolume = MLT.volume();
     onMuteButtonToggled(Settings.playerMuted());
     toggleZoom(Settings.playerZoom() > 0.0f);
@@ -482,7 +482,7 @@ void Player::onMeltedUnitOpened()
     m_previousOut = MLT.producer()->get_out();
     m_scrubber->setOutPoint(m_previousOut);
     m_positionSpinner->setEnabled(m_isSeekable);
-    onVolumeChanged(m_volumeSlider->value());
+    setVolume(m_volumeSlider->value());
     m_savedVolume = MLT.volume();
     onMuteButtonToggled(Settings.playerMuted());
     actionPlay->setEnabled(true);
@@ -716,6 +716,13 @@ void Player::adjustScrollBars(float horizontal, float vertical)
     }
 }
 
+double Player::setVolume(int volume)
+{
+    const double gain = double(volume) / VOLUME_KNEE;
+    MLT.setVolume(gain);
+    return gain;
+}
+
 void Player::moveVideoToScreen(int screen)
 {
     if (screen == m_monitorScreen) return;
@@ -767,11 +774,11 @@ static inline float IEC_dB ( float fScale )
 
 void Player::onVolumeChanged(int volume)
 {
-    const double gain = double(volume) / VOLUME_KNEE;
-    MLT.setVolume(gain);
+    const double gain = setVolume(volume);
     emit showStatusMessage(QString("%L1 dB").arg(IEC_dB(gain)));
     Settings.setPlayerVolume(volume);
     Settings.setPlayerMuted(false);
+    m_muteButton->setChecked(false);
 }
 
 void Player::onCaptureStateChanged(bool active)

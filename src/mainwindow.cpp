@@ -113,7 +113,9 @@ MainWindow::MainWindow()
                 this, &MainWindow::onFocusChanged);
 
     qDebug() << "begin";
+#ifndef Q_OS_WIN
     new GLTestWidget(this);
+#endif
     Database::singleton(this);
     m_autosaveTimer.setSingleShot(true);
     m_autosaveTimer.setInterval(AUTOSAVE_TIMEOUT_MS);
@@ -628,6 +630,47 @@ void MainWindow::setupSettingsMenu()
         ui->actionFusionLight->setChecked(true);
     else
         ui->actionSystemTheme->setChecked(true);
+
+    // Setup the drawing method actions.
+#ifdef Q_OS_WIN
+    if (!Settings.playerGPU()) {
+        group = new QActionGroup(this);
+        ui->actionDrawingAutomatic->setData(0);
+        group->addAction(ui->actionDrawingAutomatic);
+        ui->actionDrawingDirectX->setData(Qt::AA_UseOpenGLES);
+        group->addAction(ui->actionDrawingDirectX);
+        ui->actionDrawingOpenGL->setData(Qt::AA_UseDesktopOpenGL);
+        group->addAction(ui->actionDrawingOpenGL);
+        ui->actionDrawingSoftware->setData(Qt::AA_UseSoftwareOpenGL);
+        group->addAction(ui->actionDrawingSoftware);
+        connect(group, SIGNAL(triggered(QAction*)), this, SLOT(onDrawingMethodTriggered(QAction*)));
+        switch (Settings.drawMethod()) {
+        case Qt::AA_UseDesktopOpenGL:
+            ui->actionDrawingOpenGL->setChecked(true);
+            break;
+        case Qt::AA_UseOpenGLES:
+            delete ui->actionGPU;
+            ui->actionGPU = 0;
+            ui->actionDrawingDirectX->setChecked(true);
+            break;
+        case Qt::AA_UseSoftwareOpenGL:
+            delete ui->actionGPU;
+            ui->actionGPU = 0;
+            ui->actionDrawingSoftware->setChecked(true);
+            break;
+        default:
+            ui->actionDrawingAutomatic->setChecked(true);
+            break;
+        }
+    } else {
+        // GPU mode only works with OpenGL.
+        delete ui->menuDrawingMethod;
+        ui->menuDrawingMethod = 0;
+    }
+#else
+    delete ui->menuDrawingMethod;
+    ui->menuDrawingMethod = 0;
+#endif
     qDebug() << "end";
 }
 
@@ -898,8 +941,10 @@ void MainWindow::readPlayerSettings()
     ui->actionProgressive->setChecked(Settings.playerProgressive());
     ui->actionScrubAudio->setChecked(Settings.playerScrubAudio());
     ui->actionJack->setChecked(Settings.playerJACK());
-    ui->actionGPU->setChecked(Settings.playerGPU());
-    MLT.videoWidget()->setProperty("gpu", ui->actionGPU->isChecked());
+    if (ui->actionGPU) {
+        ui->actionGPU->setChecked(Settings.playerGPU());
+        MLT.videoWidget()->setProperty("gpu", ui->actionGPU->isChecked());
+    }
     QString deinterlacer = Settings.playerDeinterlacer();
     QString interpolation = Settings.playerInterpolation();
 
@@ -1362,7 +1407,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_playlistDock->show();
             m_playlistDock->raise();
             m_playlistDock->on_removeButton_clicked();
-        } else if (multitrack()) {
+        } else if (multitrack() && event->modifiers() == Qt::NoModifier) {
             m_timelineDock->show();
             m_timelineDock->raise();
             m_timelineDock->liftSelection();
@@ -1457,8 +1502,18 @@ void MainWindow::dropEvent(QDropEvent *event)
     }
     else if (mimeData->hasUrls()) {
         if (mimeData->urls().length() > 1) {
-            foreach (QUrl url, mimeData->urls())
-                m_multipleFiles.append(url.path());
+            foreach (QUrl url, mimeData->urls()) {
+                QString path = url.url();
+                if (url.scheme() == "file")
+                    path = url.url(QUrl::RemoveScheme);
+                if (path.length() > 2 && path.startsWith("///"))
+#ifdef Q_OS_WIN
+                    path.remove(0, 3);
+#else
+                    path.remove(0, 2);
+#endif
+                m_multipleFiles.append(path);
+            }
         }
         QString path = mimeData->urls().first().url();
         if (mimeData->urls().first().scheme() == "file")
@@ -1998,8 +2053,10 @@ void MainWindow::on_actionEnter_Full_Screen_triggered()
 void MainWindow::onGpuNotSupported()
 {
     Settings.setPlayerGPU(false);
-    ui->actionGPU->setChecked(false);
-    ui->actionGPU->setDisabled(true);
+    if (ui->actionGPU) {
+        ui->actionGPU->setChecked(false);
+        ui->actionGPU->setDisabled(true);
+    }
     showStatusMessage(tr("GPU Processing is not supported"));
 }
 
@@ -2463,3 +2520,23 @@ void MainWindow::on_actionScrubAudio_triggered(bool checked)
 {
     Settings.setPlayerScrubAudio(checked);
 }
+
+#ifdef Q_OS_WIN
+void MainWindow::onDrawingMethodTriggered(QAction *action)
+{
+    Settings.setDrawMethod(action->data().toInt());
+    QMessageBox dialog(QMessageBox::Information,
+                       qApp->applicationName(),
+                       tr("You must restart Shotcut to change the drawing method.\n"
+                          "Do you want to restart now?"),
+                       QMessageBox::No | QMessageBox::Yes,
+                       this);
+    dialog.setDefaultButton(QMessageBox::Yes);
+    dialog.setEscapeButton(QMessageBox::No);
+    dialog.setWindowModality(QmlApplication::dialogModality());
+    if (dialog.exec() == QMessageBox::Yes) {
+        m_exitCode = EXIT_RESTART;
+        QApplication::closeAllWindows();
+    }
+}
+#endif
