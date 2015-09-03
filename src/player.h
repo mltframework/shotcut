@@ -35,6 +35,7 @@ class QScrollBar;
 class QToolButton;
 class QTabBar;
 class QHBoxLayout;
+class QPushButton;
 class TransportControllable;
 
 class Player : public QWidget
@@ -108,6 +109,7 @@ private:
     void setupActions(QWidget* widget);
     void retranslateUi(QWidget* widget);
     void adjustScrollBars(float horizontal, float vertical);
+    double setVolume(int volume);
 
     QAction *actionPlay;
     QAction *actionPause;
@@ -128,6 +130,7 @@ private:
     QFrame* m_volumePopup;
     QSlider* m_volumeSlider;
     QWidget* m_volumeWidget;
+    QPushButton* m_muteButton;
     int m_previousIn;
     int m_previousOut;
     double m_savedVolume;
