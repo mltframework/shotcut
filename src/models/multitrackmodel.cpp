@@ -2070,6 +2070,8 @@ void MultitrackModel::addBackgroundTrack()
     Mlt::Producer producer(MLT.profile(), "color:black");
     producer.set("length", 1);
     producer.set("id", "black");
+    // Allow mixing against frames produced by this producer.
+    producer.set("set.test_audio", 0);
     playlist.append(producer);
     m_tractor->set_track(playlist, m_tractor->count());
 }
@@ -2664,6 +2666,15 @@ void MultitrackModel::convertOldDoc()
             if (transition && transition->get_a_track() != 0)
                 transition->set("a_track", a_track);
         }
+    }
+
+    // Ensure the background track clears the test_audio flag on frames.
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(0));
+    if (track) {
+        Mlt::Playlist playlist(*track);
+        QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(0));
+        if (info && info->producer->is_valid() && QString(info->producer->get("id")) == "black")
+            info->producer->set("set.test_audio", 0);
     }
 }
 
