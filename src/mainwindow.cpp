@@ -631,7 +631,7 @@ void MainWindow::setupSettingsMenu()
     else
         ui->actionSystemTheme->setChecked(true);
 
-    // Setup the drawing method actions.
+    // Setup the display method actions.
 #ifdef Q_OS_WIN
     if (!Settings.playerGPU()) {
         group = new QActionGroup(this);
@@ -2527,7 +2527,7 @@ void MainWindow::onDrawingMethodTriggered(QAction *action)
     Settings.setDrawMethod(action->data().toInt());
     QMessageBox dialog(QMessageBox::Information,
                        qApp->applicationName(),
-                       tr("You must restart Shotcut to change the drawing method.\n"
+                       tr("You must restart Shotcut to change the display method.\n"
                           "Do you want to restart now?"),
                        QMessageBox::No | QMessageBox::Yes,
                        this);

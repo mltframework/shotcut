@@ -137,7 +137,7 @@
     </widget>
     <widget class="QMenu" name="menuDrawingMethod">
      <property name="title">
-      <string>Drawing Method</string>
+      <string>Display Method</string>
      </property>
      <addaction name="actionDrawingAutomatic"/>
      <addaction name="actionDrawingOpenGL"/>
