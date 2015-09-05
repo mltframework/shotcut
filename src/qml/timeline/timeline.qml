@@ -380,7 +380,7 @@ Rectangle {
         id: menu
 
         // XXX This is a workaround for menus appearing in wrong location in a Quick
-        // view used in a DockWidget on OS X.
+        // view used in a DockWidget.
         function open() {
             if (timeline.yoffset) __yOffset = timeline.yoffset
             popup()
