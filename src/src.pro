@@ -2,6 +2,7 @@ CONFIG   += link_prl
 
 QT       += widgets opengl xml network printsupport qml quick sql webkitwidgets
 QT       += multimedia
+QT       += qml-private core-private quick-private gui-private
 
 TARGET = shotcut
 TEMPLATE = app

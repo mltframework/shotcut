@@ -137,6 +137,7 @@ Rectangle {
 
     Canvas {
         id: transitionCanvas
+        Component.onCompleted: view.applyQTBUG47714Workaround(transitionCanvas);
         visible: isTransition
         anchors.fill: parent
         onPaint: {
@@ -162,6 +163,7 @@ Rectangle {
 
     Canvas {
         id: waveform
+        Component.onCompleted: view.applyQTBUG47714Workaround(waveform);
         visible: !isBlank && settings.timelineShowWaveforms
         height: isAudio? parent.height : parent.height / 2
         anchors.left: parent.left
@@ -302,6 +304,7 @@ Rectangle {
 
     Canvas {
         id: fadeInCanvas
+        Component.onCompleted: view.applyQTBUG47714Workaround(fadeInCanvas);
         visible: !isBlank && !isTransition
         width: parent.fadeIn * timeScale
         height: parent.height - parent.border.width * 2
@@ -398,6 +401,7 @@ Rectangle {
 
     Canvas {
         id: fadeOutCanvas
+        Component.onCompleted: view.applyQTBUG47714Workaround(fadeOutCanvas);
         visible: !isBlank && !isTransition
         width: parent.fadeOut * timeScale
         height: parent.height - parent.border.width * 2

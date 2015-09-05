@@ -281,6 +281,7 @@ Rectangle {
             }
             Canvas {
                 id: playhead
+                Component.onCompleted: view.applyQTBUG47714Workaround(playhead);
                 visible: timeline.position > -1
                 x: timeline.position * multitrack.scaleFactor - scrollView.flickableItem.contentX - 5
                 y: 0

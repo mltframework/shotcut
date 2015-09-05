@@ -32,6 +32,7 @@ class QmlView : public QObject
 public:
     explicit QmlView(QQuickView* qview);
     QPoint pos();
+    Q_INVOKABLE void applyQTBUG47714Workaround(QObject * item);
 
 private:
     QQuickView* m_qview;
