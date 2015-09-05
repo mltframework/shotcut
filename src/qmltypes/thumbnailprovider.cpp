@@ -27,9 +27,7 @@
 
 ThumbnailProvider::ThumbnailProvider() :
     QQuickImageProvider(QQmlImageProviderBase::Image
-#ifndef Q_OS_WIN64
-        ,QQmlImageProviderBase::ForceAsynchronousImageLoading
-#endif
+    ,QQmlImageProviderBase::ForceAsynchronousImageLoading
     )
 {
 }
