@@ -180,7 +180,6 @@ void PlaylistDock::on_actionAppendCut_triggered()
             emit showStatusMessage(tr("You cannot insert a playlist into a playlist!"));
         } else if (MLT.isSeekable()) {
             MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.XML()));
-            qDebug() << m_model.playlist()->count();
             MLT.producer()->set(kPlaylistIndexProperty, m_model.playlist()->count());
             setUpdateButtonEnabled(true);
         } else {
