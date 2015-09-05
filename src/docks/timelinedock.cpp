@@ -201,10 +201,10 @@ int TimelineDock::dockYOffset() const
     // XXX This is a workaround for menus appearing in wrong location in a Quick
     // view used in a DockWidget.
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 5, 0))
-#  if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    return mapToParent(QPoint(0, 0)).y();
-#  else
+#  if defined(Q_OS_MAC)
     return 0;
+#  else
+    return mapToParent(QPoint(0, 0)).y();
 #  endif
 #else
 #  if defined(Q_OS_MAC)
