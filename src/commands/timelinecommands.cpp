@@ -282,6 +282,8 @@ TrimClipInCommand::TrimClipInCommand(MultitrackModel &model, int trackIndex, int
     , m_undoHelper(m_model)
 {
     setText(QObject::tr("Trim clip in point"));
+    if (!ripple)
+        m_undoHelper.setHints(UndoHelper::SkipXML);
 }
 
 void TrimClipInCommand::redo()
@@ -316,6 +318,8 @@ TrimClipOutCommand::TrimClipOutCommand(MultitrackModel &model, int trackIndex, i
     , m_undoHelper(m_model)
 {
     setText(QObject::tr("Trim clip out point"));
+    if (!ripple)
+        m_undoHelper.setHints(UndoHelper::SkipXML);
 }
 
 void TrimClipOutCommand::redo()
