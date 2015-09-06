@@ -39,70 +39,62 @@ QPoint QmlView::pos()
     return m_qview->mapToGlobal(QPoint(0,0));
 }
 
-class QTBUG47714WorkaroundRenderListener : public QObject
+QTBUG47714WorkaroundRenderListener::QTBUG47714WorkaroundRenderListener(QQuickItem * item)
+    : item(item)
+    , oldTexture(0)
 {
-public:
-    QTBUG47714WorkaroundRenderListener(QQuickItem * item)
-        : item(item)
-        , oldTexture(0)
-    {
-        startTimer(0);
-    }
+    startTimer(0);
+}
 
-    void timerEvent(QTimerEvent * event)
-    {
-        if (item) {
-            QQuickWindow * window = item->window();
-            connect(window, &QQuickWindow::beforeSynchronizing,
-                    this, &QTBUG47714WorkaroundRenderListener::beforeSync);
-            connect(window, &QQuickWindow::afterSynchronizing,
-                    this, &QTBUG47714WorkaroundRenderListener::afterSync);
-        }
-        killTimer(event->timerId());
-    }
-
-    QSGSimpleTextureNode * nodeFromItem()
-    {
-        if (item.isNull())
-        {
-            deleteLater();
-            return 0;
-        }
-        QQuickItemPrivate * priv = QQuickItemPrivate::get(item);
-        QSGTransformNode * tnode = priv->itemNode();
-        QSGGeometryNode * geom = 0;
-        if (tnode->firstChild()->type() == QSGNode::GeometryNodeType)
-            geom = static_cast<QSGGeometryNode*>(tnode->firstChild());
-        else if (tnode->firstChild()->type() == QSGNode::OpacityNodeType
-                && tnode->firstChild()->firstChild()
-                && tnode->firstChild()->firstChild()->type() == QSGNode::GeometryNodeType)
-            geom = static_cast<QSGGeometryNode*>(tnode->firstChild()->firstChild());
-
-        return dynamic_cast<QSGSimpleTextureNode*>(geom);
-    }
-
-
-    void beforeSync()
-    {
-        QSGSimpleTextureNode * texNode = nodeFromItem();
-        if (texNode)
-            texNode->setOwnsTexture(false);
-    }
-
-    void afterSync()
-    {
-        QSGSimpleTextureNode * texNode = nodeFromItem();
-        if (texNode) {
-            oldTexture = texNode->texture();
-        } else {
-            delete oldTexture;
-            oldTexture = 0;
+void QTBUG47714WorkaroundRenderListener::timerEvent(QTimerEvent * event)
+{
+    if (item) {
+        QQuickWindow * window = item->window();
+        if (window) {
+            connect(window, SIGNAL(beforeSynchronizing()), SLOT(beforeSync()));
+            connect(window, SIGNAL(afterSynchronizing()), SLOT(afterSync()));
         }
     }
+    killTimer(event->timerId());
+}
 
-    QPointer<QQuickItem> item;
-    QSGTexture * oldTexture;
-};
+QSGSimpleTextureNode * QTBUG47714WorkaroundRenderListener::nodeFromItem()
+{
+    if (item.isNull())
+    {
+        deleteLater();
+        return 0;
+    }
+    QQuickItemPrivate * priv = QQuickItemPrivate::get(item);
+    QSGTransformNode * tnode = priv->itemNode();
+    QSGGeometryNode * geom = 0;
+    if (tnode->firstChild()->type() == QSGNode::GeometryNodeType)
+        geom = static_cast<QSGGeometryNode*>(tnode->firstChild());
+    else if (tnode->firstChild()->type() == QSGNode::OpacityNodeType
+            && tnode->firstChild()->firstChild()
+            && tnode->firstChild()->firstChild()->type() == QSGNode::GeometryNodeType)
+        geom = static_cast<QSGGeometryNode*>(tnode->firstChild()->firstChild());
+
+    return dynamic_cast<QSGSimpleTextureNode*>(geom);
+}
+
+void QTBUG47714WorkaroundRenderListener::beforeSync()
+{
+    QSGSimpleTextureNode * texNode = nodeFromItem();
+    if (texNode)
+        texNode->setOwnsTexture(false);
+}
+
+void QTBUG47714WorkaroundRenderListener::afterSync()
+{
+    QSGSimpleTextureNode * texNode = nodeFromItem();
+    if (texNode) {
+        oldTexture = texNode->texture();
+    } else {
+        delete oldTexture;
+        oldTexture = 0;
+    }
+}
 
 void QmlView::applyQTBUG47714Workaround(QObject * item)
 {
