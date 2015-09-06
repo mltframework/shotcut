@@ -22,6 +22,7 @@
 #include <QDir>
 #include <QDebug>
 #include <QQmlComponent>
+#include <QTimerEvent>
 #include "mltcontroller.h"
 #include "settings.h"
 #include "qmltypes/qmlmetadata.h"
@@ -33,8 +34,7 @@ FilterController::FilterController(QObject* parent) : QObject(parent),
  m_attachedModel(this),
  m_currentFilterIndex(-1)
 {
-    loadFilterMetadata();
-
+    startTimer(0);
     connect(&m_attachedModel, SIGNAL(changed()), this, SLOT(handleAttachedModelChange()));
     connect(&m_attachedModel, SIGNAL(modelAboutToBeReset()), this, SLOT(handleAttachedModelAboutToReset()));
     connect(&m_attachedModel, SIGNAL(rowsRemoved(const QModelIndex&,int,int)), this, SLOT(handleAttachedRowsRemoved(const QModelIndex&,int,int)));
@@ -90,6 +90,12 @@ QmlMetadata *FilterController::metadataForService(Mlt::Service *service)
     }
 
     return meta;
+}
+
+void FilterController::timerEvent(QTimerEvent* event)
+{
+    loadFilterMetadata();
+    killTimer(event->timerId());
 }
 
 MetadataModel* FilterController::metadataModel()

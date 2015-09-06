@@ -27,6 +27,8 @@
 #include "qmltypes/qmlmetadata.h"
 #include "qmltypes/qmlfilter.h"
 
+class QTimerEvent;
+
 class FilterController : public QObject
 {
     Q_OBJECT
@@ -37,6 +39,9 @@ public:
     AttachedFiltersModel* attachedModel();
 
     QmlMetadata* metadataForService(Mlt::Service *service);
+
+protected:
+    void timerEvent(QTimerEvent*);
 
 signals:
     void currentFilterAboutToChange();
