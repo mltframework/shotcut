@@ -28,11 +28,17 @@
 class UndoHelper
 {
 public:
+    enum OptimizationHints
+    {
+        NoHints,
+        SkipXML
+    };
     UndoHelper(MultitrackModel & model);
 
     void recordBeforeState();
     void recordAfterState();
     void undoChanges();
+    void setHints(OptimizationHints hints);
 
 private:
     void debugPrintState();
@@ -71,6 +77,7 @@ private:
     QList<QUuid> m_clipsAdded;
     QList<QUuid> m_insertedOrder;
     MultitrackModel & m_model;
+    OptimizationHints m_hints;
 };
 
 #endif // UNDOHELPER_H

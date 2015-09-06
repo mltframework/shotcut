@@ -32,6 +32,7 @@
 
 UndoHelper::UndoHelper(MultitrackModel& model)
     : m_model(model)
+    , m_hints(NoHints)
 {
 }
 
@@ -54,7 +55,8 @@ void UndoHelper::recordBeforeState()
             QUuid uid = MLT.ensureHasUuid(*clip);
             m_insertedOrder << uid;
             Info& info = m_state[uid];
-            info.xml = MLT.XML(&clip->parent());
+            if (!(m_hints & SkipXML))
+                info.xml = MLT.XML(&clip->parent());
             Mlt::ClipInfo clipInfo;
             playlist.clip_info(j, &clipInfo);
             info.frame_in = clipInfo.frame_in;
@@ -103,10 +105,12 @@ void UndoHelper::recordAfterState()
                     info.changes |= Moved;
                 }
 
-                QString newXml = MLT.XML(&clip->parent());
-                if (info.xml != newXml) {
-                    UNDOLOG << "Modified xml:" << uid;
-                    info.changes |= XMLModified;
+                if (!(m_hints & SkipXML)) {
+                    QString newXml = MLT.XML(&clip->parent());
+                    if (info.xml != newXml) {
+                        UNDOLOG << "Modified xml:" << uid;
+                        info.changes |= XMLModified;
+                    }
                 }
 
                 Mlt::ClipInfo newInfo;
@@ -182,6 +186,9 @@ void UndoHelper::undoChanges()
                 UNDOLOG << "inserting isBlank at " << currentIndex;
             } else {
                 UNDOLOG << "inserting clip at " << currentIndex;
+                qDebug() << m_hints;
+                Q_ASSERT(!(m_hints & SkipXML) && "Cannot restore clip without stored XML");
+                Q_ASSERT(!info.xml.isEmpty());
                 Mlt::Producer restoredClip(MLT.profile(), "xml-string", info.xml.toUtf8().constData());
                 playlist.insert(restoredClip, currentIndex, info.frame_in, info.frame_out);
             }
@@ -231,6 +238,11 @@ void UndoHelper::undoChanges()
 #ifdef UNDOHELPER_DEBUG
     debugPrintState();
 #endif
+}
+
+void UndoHelper::setHints(OptimizationHints hints)
+{
+    m_hints = hints;
 }
 
 void UndoHelper::debugPrintState()
