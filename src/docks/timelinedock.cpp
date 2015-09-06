@@ -257,9 +257,9 @@ void TimelineDock::makeTracksTaller()
 
 void TimelineDock::setSelection(QList<int> newSelection)
 {
-    qDebug() << "Setting selection to" << newSelection;
     if (newSelection == selection())
         return;
+    qDebug() << "Changing selection to" << newSelection;
 
     QVariantList list;
     foreach (int idx, newSelection)
