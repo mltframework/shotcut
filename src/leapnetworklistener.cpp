@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -29,27 +29,31 @@ LeapNetworkListener::LeapNetworkListener(QObject *parent) :
 
 void LeapNetworkListener::start()
 {
-    QUrl url("http://localhost:6437/v2.json");
-    connect(&m_socket, &QWebSocket::connected, this, &LeapNetworkListener::onConnected);
-    connect(&m_socket, &QWebSocket::disconnected, this, &LeapNetworkListener::onDisconnected);
-    connect(&m_socket, &QWebSocket::textFrameReceived, this, &LeapNetworkListener::onMessage);
+    qDebug();
+    QUrl url("ws://localhost:6437/v2.json");
+    connect(&m_socket, SIGNAL(connected()), SLOT(onConnected()));
+    connect(&m_socket, SIGNAL(disconnected()), SLOT(onDisconnected()));
+    connect(&m_socket, SIGNAL(textFrameReceived(QString,bool)), SLOT(onMessage(QString)));
+    connect(&m_socket, SIGNAL(error(QAbstractSocket::SocketError)), SLOT(onError(QAbstractSocket::SocketError)));
     connect(&m_timer, SIGNAL(timeout()), this, SLOT(heartbeat()));
     m_socket.open(url);
 }
 
 void LeapNetworkListener::onConnected()
 {
-    m_socket.write("{\"enableGestures\": true}");
+    qDebug() << "Connected to Leap Motion";
+    m_socket.sendTextMessage("{\"enableGestures\": true}");
 }
 
 void LeapNetworkListener::onDisconnected()
 {
+    qDebug() << "Disconnected from Leap Motion";
     m_timer.stop();
 }
 
 void LeapNetworkListener::heartbeat()
 {
-    m_socket.write("{\"heartbeat\": true}");
+    m_socket.sendTextMessage("{\"heartbeat\": true}");
 }
 
 void LeapNetworkListener::onMessage(const QString &s)
@@ -99,4 +103,10 @@ void LeapNetworkListener::onMessage(const QString &s)
             m_timer.start(90);
         }
     }
+}
+
+void LeapNetworkListener::onError(QAbstractSocket::SocketError error)
+{
+    Q_UNUSED(error)
+    qDebug() << "Leap Motion WebSocket error:" << m_socket.errorString();
 }

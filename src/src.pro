@@ -1,14 +1,13 @@
 CONFIG   += link_prl
 
 QT       += widgets opengl xml network printsupport qml quick sql webkitwidgets
-QT       += multimedia
+QT       += multimedia websockets
 QT       += qml-private core-private quick-private gui-private
 
 TARGET = shotcut
 TEMPLATE = app
 
 win32:DEFINES += QT_STATIC
-include (../QWebSockets/qwebsockets.pri)
 
 SOURCES += main.cpp\
     mainwindow.cpp \

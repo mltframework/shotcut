@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@
 #include <QObject>
 #include <QTimer>
 #include <QString>
-#include "../QWebSockets/qwebsocket.h"
+#include <QWebSocket>
 
 class LeapNetworkListener : public QObject
 {
@@ -44,6 +44,7 @@ private slots:
     void onDisconnected();
     void heartbeat();
     void onMessage(const QString& s);
+    void onError(QAbstractSocket::SocketError error);
 
 private:
     QWebSocket m_socket;
