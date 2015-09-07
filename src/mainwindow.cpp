@@ -605,18 +605,25 @@ void MainWindow::setupSettingsMenu()
     a->setCheckable(true);
     a->setData("pl");
     ui->menuLanguage->addActions(m_languagesGroup->actions());
-    a = new QAction(QLocale::languageToString(QLocale::Portuguese), m_languagesGroup);
+    a = new QAction(QLocale::languageToString(QLocale::Portuguese).append(" (Brazil)"), m_languagesGroup);
     a->setCheckable(true);
-    a->setData("pt");
+    a->setData("pt_BR");
+    ui->menuLanguage->addActions(m_languagesGroup->actions());
+    a = new QAction(QLocale::languageToString(QLocale::Portuguese).append(" (Portugal)"), m_languagesGroup);
+    a->setCheckable(true);
+    a->setData("pt_PT");
     ui->menuLanguage->addActions(m_languagesGroup->actions());
     a = new QAction(QLocale::languageToString(QLocale::Spanish), m_languagesGroup);
     a->setCheckable(true);
     a->setData("es");
     ui->menuLanguage->addActions(m_languagesGroup->actions());
     const QString locale = Settings.language();
-    foreach (QAction* action, m_languagesGroup->actions())
-        if (locale.startsWith(action->data().toString()))
+    foreach (QAction* action, m_languagesGroup->actions()) {
+        if (action->data().toString().startsWith(locale)) {
             action->setChecked(true);
+            break;
+        }
+    }
     connect(m_languagesGroup, SIGNAL(triggered(QAction*)), this, SLOT(onLanguageTriggered(QAction*)));
 
     // Setup the themes actions

@@ -577,7 +577,8 @@ TRANSLATIONS += \
     ../translations/shotcut_fr.ts \
     ../translations/shotcut_it.ts \
     ../translations/shotcut_pl.ts \
-    ../translations/shotcut_pt.ts \
+    ../translations/shotcut_pt_BR.ts \
+    ../translations/shotcut_pt_PT.ts \
     ../translations/shotcut_zh.ts
 
 INCLUDEPATH = ../CuteLogger/include ../mvcp

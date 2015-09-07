@@ -154,7 +154,7 @@ public:
         LOG_INFO() << "install dir =" <<  applicationDirPath();
 
         // Load translations
-        const QString locale = Settings.language();
+        QString locale = Settings.language();
         QLocale::setDefault(QLocale(locale));
 
         dir = applicationDirPath();
@@ -171,6 +171,8 @@ public:
         dir.cd("shotcut");
         dir.cd("translations");
     #endif
+        if (locale.startsWith("pt_"))
+            locale = "pt";
         if (qtTranslator.load("qt_" + locale, QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
             installTranslator(&qtTranslator);
         else if (qtTranslator.load("qt_" + locale, dir.absolutePath()))
@@ -179,7 +181,7 @@ public:
             installTranslator(&qtBaseTranslator);
         else if (qtBaseTranslator.load("qtbase_" + locale, dir.absolutePath()))
             installTranslator(&qtBaseTranslator);
-        if (shotcutTranslator.load("shotcut_" + locale, dir.absolutePath()))
+        if (shotcutTranslator.load("shotcut_" + Settings.language(), dir.absolutePath()))
             installTranslator(&shotcutTranslator);
 
         QCommandLineParser parser;
