@@ -648,8 +648,10 @@ void MainWindow::setupSettingsMenu()
         group->addAction(ui->actionDrawingDirectX);
         ui->actionDrawingOpenGL->setData(Qt::AA_UseDesktopOpenGL);
         group->addAction(ui->actionDrawingOpenGL);
-        ui->actionDrawingSoftware->setData(Qt::AA_UseSoftwareOpenGL);
-        group->addAction(ui->actionDrawingSoftware);
+        // Software rendering is not currently working.
+        delete ui->actionDrawingSoftware;
+        // ui->actionDrawingSoftware->setData(Qt::AA_UseSoftwareOpenGL);
+        // group->addAction(ui->actionDrawingSoftware);
         connect(group, SIGNAL(triggered(QAction*)), this, SLOT(onDrawingMethodTriggered(QAction*)));
         switch (Settings.drawMethod()) {
         case Qt::AA_UseDesktopOpenGL:
