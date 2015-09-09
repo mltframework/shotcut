@@ -83,6 +83,10 @@ Player::Player(QWidget *parent)
     m_horizontalScroll = new QScrollBar(Qt::Horizontal);
     glayout->addWidget(m_horizontalScroll, 1, 0);
     m_horizontalScroll->hide();
+#ifdef Q_OS_WIN
+    // Workaround video not showing on Windows with Qt 5.5 upgrade.
+    m_videoWidget->hide();
+#endif
 
     // Add the volume and signal level meter
     m_volumePopup = new QFrame(this, Qt::Popup);
@@ -400,6 +404,10 @@ void Player::seek(int position)
 
 void Player::onProducerOpened(bool play)
 {
+#ifdef Q_OS_WIN
+    // Workaround video not showing on Windows with Qt 5.5 upgrade.
+    m_videoWidget->show();
+#endif
     m_duration = MLT.producer()->get_length();
     m_isSeekable = MLT.isSeekable();
     MLT.producer()->set("ignore_points", 1);
