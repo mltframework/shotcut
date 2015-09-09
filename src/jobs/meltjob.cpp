@@ -55,6 +55,7 @@ void MeltJob::start()
     setReadChannel(QProcess::StandardError);
     QStringList args;
     args << "-progress2";
+    args << "-abort";
     args << m_xml;
     qDebug() << meltPath.absoluteFilePath() << args;
 #ifdef Q_OS_WIN
