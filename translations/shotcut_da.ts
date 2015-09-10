@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="da_DK" version="2.1">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="da_DK">
 <context>
     <name>AddEncodePresetDialog</name>
     <message>
@@ -283,22 +285,22 @@
 <context>
     <name>Clip</name>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="595"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="599"/>
         <source>Remove</source>
         <translation>Fjern</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="600"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="604"/>
         <source>Lift</source>
         <translation>Løft</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="605"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="609"/>
         <source>Open As Clip</source>
         <translation>Åben som klip</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="610"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="614"/>
         <source>Split At Playhead (S)</source>
         <translation>Del ved afspilningsmærket (S)</translation>
     </message>
@@ -463,35 +465,28 @@
 <context>
     <name>DataProcessor</name>
     <message>
-        <location filename="../QWebSockets/dataprocessor_p.cpp" line="663"/>
         <source>Received Continuation frame, while there is nothing to continue.</source>
-        <translation>Har modtaget et fortsættelses billede, men kan ikke fortsætte.</translation>
+        <translation type="vanished">Har modtaget et fortsættelses billede, men kan ikke fortsætte.</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/dataprocessor_p.cpp" line="669"/>
         <source>All data frames after the initial data frame must have opcode 0 (continuation).</source>
-        <translation>Alle data billeder efter det første billede skal have opcode 0 (fortsættelse)</translation>
+        <translation type="vanished">Alle data billeder efter det første billede skal have opcode 0 (fortsættelse)</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/dataprocessor_p.cpp" line="681"/>
         <source>Received message is too big.</source>
-        <translation>Den modtagne besked er for stor.</translation>
+        <translation type="vanished">Den modtagne besked er for stor.</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/dataprocessor_p.cpp" line="692"/>
-        <location filename="../QWebSockets/dataprocessor_p.cpp" line="806"/>
         <source>Invalid UTF-8 code encountered.</source>
-        <translation>Ugyldig UTF-8 kode. </translation>
+        <translation type="vanished">Ugyldig UTF-8 kode. </translation>
     </message>
     <message>
-        <location filename="../QWebSockets/dataprocessor_p.cpp" line="785"/>
         <source>Payload of close frame is too small.</source>
-        <translation>Vægt af lukket billede er for lille.</translation>
+        <translation type="vanished">Vægt af lukket billede er for lille.</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/dataprocessor_p.cpp" line="793"/>
         <source>Invalid close code %1 detected.</source>
-        <translation>Ugyldig lukket kode %1 fundet.</translation>
+        <translation type="vanished">Ugyldig lukket kode %1 fundet.</translation>
     </message>
 </context>
 <context>
@@ -980,7 +975,7 @@ i temporal komprimering</translation>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1077"/>
         <source>Hz</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1099"/>
@@ -1160,7 +1155,7 @@ i temporal komprimering</translation>
 <context>
     <name>FilterController</name>
     <message>
-        <location filename="../src/controllers/filtercontroller.cpp" line="164"/>
+        <location filename="../src/controllers/filtercontroller.cpp" line="170"/>
         <source>Only one %1 filter is allowed.</source>
         <translation>Kun et %1 filter er tilladt.</translation>
     </message>
@@ -1958,7 +1953,7 @@ på et job for at åbne en menu for at stoppe et kørende job.</translation>
         <location filename="../src/widgets/lumamixtransition.ui" line="301"/>
         <source>Do not alter the audio levels during the
 course of the transition. Instead, set a
-fixed mixing level, or choose only clip A's
+fixed mixing level, or choose only clip A&apos;s
 audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>Ændrer ikke lydniveauer gennem
 overgangen. Indsæt istedet et fast
@@ -2216,7 +2211,7 @@ overgangens længde. </translation>
     <message>
         <location filename="../src/mainwindow.ui" line="140"/>
         <source>Display Method</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="169"/>
@@ -2340,7 +2335,7 @@ overgangens længde. </translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="340"/>
-        <location filename="../src/mainwindow.cpp" line="2046"/>
+        <location filename="../src/mainwindow.cpp" line="2055"/>
         <source>Enter Full Screen</source>
         <translation>Åben fuld skærm</translation>
     </message>
@@ -2541,13 +2536,13 @@ overgangens længde. </translation>
     <message>
         <location filename="../src/mainwindow.ui" line="652"/>
         <source>Scrub Audio</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="687"/>
         <source>Software (Mesa)</source>
         <extracomment>Do not translate &quot;Mesa&quot;</extracomment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="604"/>
@@ -2610,48 +2605,48 @@ overgangens længde. </translation>
         <translation>DeckLink Keyer</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="689"/>
-        <location filename="../src/mainwindow.cpp" line="691"/>
-        <location filename="../src/mainwindow.cpp" line="858"/>
-        <location filename="../src/mainwindow.cpp" line="2492"/>
+        <location filename="../src/mainwindow.cpp" line="698"/>
+        <location filename="../src/mainwindow.cpp" line="700"/>
+        <location filename="../src/mainwindow.cpp" line="867"/>
+        <location filename="../src/mainwindow.cpp" line="2502"/>
         <source>Failed to open </source>
         <translation>Kunne ikke åbne</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="717"/>
+        <location filename="../src/mainwindow.cpp" line="726"/>
         <source>The file you opened uses GPU effects, but GPU processing is not enabled.
 Do you want to enable GPU processing and restart?</source>
         <translation>Den åbnede fil bruger GPU effekter, men GPU processing er ikke slået til.
 Skal GPU processing slås til og Shotcut genstartes?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1083"/>
+        <location filename="../src/mainwindow.cpp" line="1092"/>
         <source>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2015 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
         <translation>&lt;H1&gt; Shotcut version% 1 &lt;/ h1&gt; &lt;p&gt; &lt;a href=&quot;http://www.shotcut.org/&quot;&gt; Shotcut &lt;/a&gt; er en gratis, open source, cross-platform video editor. &lt;/ p&gt; &lt;small&gt; &lt;p&gt; Copyright &amp; copy; 2011-2015 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt; Meltytech &lt;/a&gt;, LLC &lt;/ p&gt; &lt;p&gt; Licenseret under &lt;a href = &quot;http: //www.gnu. org / licenser / gpl.html &quot;&gt; GNU General Public License v3.0 &lt;/a&gt; &lt;/ p&gt; &lt;p&gt; Dette program benytter følgende projekter: &lt;ul&gt; &lt;li&gt; &lt;a href =&quot; http: // www.qt-project.org/&quot;&gt;Qt &lt;/a&gt; brugerinterface &lt;/ li&gt; &lt;li&gt; &lt;a href=&quot;http://www.mltframework.org/&quot;&gt; MLT &lt;/a&gt; multimedia authoring &lt;/ li&gt; &lt;li&gt; &lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt; FFmpeg &lt;/a&gt; multimedie format og kodek biblioteker &lt;/ li&gt; &lt;li&gt; &lt;a href = &quot;http: / /www.videolan.org/developers/x264.html&quot;&gt;x264 &lt;/a&gt; H.264 encoder &lt;/ li&gt; &lt;li&gt; &lt;a href=&quot;http://www.webmproject.org/&quot;&gt; WebM &lt;/ a&gt; VP8 og VP9 encodere &lt;/ li&gt; &lt;li&gt; &lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt; LAME &lt;/a&gt; MP3 encoder &lt;/ li&gt; &lt;li&gt; &lt;a href = &quot;http : //www.dyne.org/software/frei0r/ &quot;&gt; Frei0r &lt;/a&gt; video plugins &lt;/ li&gt; &lt;li&gt; &lt;a href=&quot;http://www.ladspa.org/&quot;&gt; LADSPA &lt;/ a &gt; lyd plugins &lt;/ li&gt; &lt;li&gt; &lt;a href=&quot;http://www.defaulticon.com/&quot;&gt; DefaultIcon &lt;/a&gt; ikoner &lt;a href = &quot;http://www.interactivemania.com/ &quot;&gt; interactivemania &lt;/a&gt; &lt;/ li&gt; &lt;li&gt; &lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt; Oxygen &lt;/a&gt; ikoner &lt;/ li&gt; &lt;/ ul&gt; &lt;/ p&gt; &lt;p&gt; Kildekoden bruges til at compile dette program kan downloades fra &lt;a href=&quot;http://www.shotcut.org/&quot;&gt; shotcut.org &lt;/a&gt;. &lt;/ p&gt; Dette program er distribueret i håb om at det vil være nyttigt, men UDEN NOGEN GARANTI; selv uden selv de underforståede garantier for SALGBARHED eller TILPASNING TIL SÆRLIGE FORMÅL. &lt;/ small&gt;
 </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2247"/>
+        <location filename="../src/mainwindow.cpp" line="2257"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>Shotcut skal genstartes for at skifte sprog
 Vil du genstarte Shotcut nu?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2296"/>
+        <location filename="../src/mainwindow.cpp" line="2306"/>
         <source>You must restart Shotcut to switch using GPU processing.
 Do you want to restart now?</source>
         <translation>Shotcut skal genstarets for at skifte til GPU processing. 
 Vil du genstarte Shotcut nu?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2530"/>
+        <location filename="../src/mainwindow.cpp" line="2540"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="746"/>
+        <location filename="../src/mainwindow.cpp" line="755"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation>Automatisk gemte filer eksisterer. Vil du gendanne dem nu?</translation>
     </message>
@@ -2674,70 +2669,70 @@ Please install it using your package manager. It may be named libsdl1.2debian, S
 Installer det ved at brug af pakke manageren. Det kan hedder libsdl1.2debian, SDL, eller lignende.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="869"/>
-        <location filename="../src/mainwindow.cpp" line="2477"/>
+        <location filename="../src/mainwindow.cpp" line="878"/>
+        <location filename="../src/mainwindow.cpp" line="2487"/>
         <source>Open File</source>
         <translation>Åbn fil</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1077"/>
+        <location filename="../src/mainwindow.cpp" line="1086"/>
         <source>%1[*] - %2</source>
         <translation>%1[*] - %2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1082"/>
+        <location filename="../src/mainwindow.cpp" line="1091"/>
         <source>About Shotcut</source>
         <translation>&amp;Om Shotcut</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1625"/>
-        <location filename="../src/mainwindow.cpp" line="1650"/>
+        <location filename="../src/mainwindow.cpp" line="1634"/>
+        <location filename="../src/mainwindow.cpp" line="1659"/>
         <source>Saved %1</source>
         <translation>Gem %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1637"/>
+        <location filename="../src/mainwindow.cpp" line="1646"/>
         <source>Save XML</source>
         <translation>Gem XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1637"/>
+        <location filename="../src/mainwindow.cpp" line="1646"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1662"/>
+        <location filename="../src/mainwindow.cpp" line="1671"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>Projektet er blevet ændret. 
 Ønsker du at gemme dine ændringer? </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1686"/>
+        <location filename="../src/mainwindow.cpp" line="1695"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
         <translation>Der er ufærdige jobs.
 Vil du stadig lukke programmet?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2049"/>
+        <location filename="../src/mainwindow.cpp" line="2058"/>
         <source>Exit Full Screen</source>
         <translation>Afslut fuldskærm</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2060"/>
+        <location filename="../src/mainwindow.cpp" line="2070"/>
         <source>GPU Processing is not supported</source>
         <translation>GPU processing ikke understøttet</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2287"/>
+        <location filename="../src/mainwindow.cpp" line="2297"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>Det lykkes ikke at forbinde til JACK.
 Verificér at JACK er installeret og kører.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2478"/>
+        <location filename="../src/mainwindow.cpp" line="2488"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;Alle filer (*)</translation>
     </message>
@@ -2755,7 +2750,7 @@ Verificér at JACK er installeret og kører.</translation>
         <translation>Se MLT XML for dette job</translation>
     </message>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="81"/>
+        <location filename="../src/jobs/meltjob.cpp" line="82"/>
         <source>MLT XML</source>
         <translation>MLT XML</translation>
     </message>
@@ -3340,161 +3335,161 @@ p, li { white-space: pre-wrap; }
         <translation>Program</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="106"/>
+        <location filename="../src/player.cpp" line="110"/>
         <source>Adjust the audio volume</source>
         <translation>Justér lydstyrken</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="125"/>
+        <location filename="../src/player.cpp" line="129"/>
         <source>Silence the audio</source>
         <translation>Erstat lyd med stilhed</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="144"/>
+        <location filename="../src/player.cpp" line="148"/>
         <source>Transport Controls</source>
         <translation>Indsæt kontrolelementer</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="151"/>
+        <location filename="../src/player.cpp" line="155"/>
         <source>Current position</source>
         <translation>Nuværende position</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="155"/>
+        <location filename="../src/player.cpp" line="159"/>
         <source>Total Duration</source>
         <translation>Variation i alt</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="160"/>
+        <location filename="../src/player.cpp" line="164"/>
         <source>In Point</source>
         <translation>Indpunkt</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="164"/>
+        <location filename="../src/player.cpp" line="168"/>
         <source>Selected Duration</source>
         <translation>Valgte varighed</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="180"/>
+        <location filename="../src/player.cpp" line="184"/>
         <source>Zoom Fit</source>
         <translation>Tilpas zoom</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="183"/>
+        <location filename="../src/player.cpp" line="187"/>
         <source>Zoom 100%</source>
         <translation>Zoom 100%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="186"/>
+        <location filename="../src/player.cpp" line="190"/>
         <source>Zoom 50%</source>
         <translation>Zoom 50%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="189"/>
+        <location filename="../src/player.cpp" line="193"/>
         <source>Zoom 200%</source>
         <translation>Zoom 200%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="194"/>
+        <location filename="../src/player.cpp" line="198"/>
         <source>Toggle zoom</source>
         <translation>Slå zoom til/fra</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="279"/>
-        <location filename="../src/player.cpp" line="374"/>
-        <location filename="../src/player.cpp" line="397"/>
-        <location filename="../src/player.cpp" line="534"/>
-        <location filename="../src/player.cpp" line="647"/>
+        <location filename="../src/player.cpp" line="283"/>
+        <location filename="../src/player.cpp" line="378"/>
+        <location filename="../src/player.cpp" line="401"/>
+        <location filename="../src/player.cpp" line="542"/>
+        <location filename="../src/player.cpp" line="655"/>
         <source>Play</source>
         <translation>Afspil</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="281"/>
-        <location filename="../src/player.cpp" line="375"/>
-        <location filename="../src/player.cpp" line="398"/>
-        <location filename="../src/player.cpp" line="535"/>
-        <location filename="../src/player.cpp" line="648"/>
+        <location filename="../src/player.cpp" line="285"/>
+        <location filename="../src/player.cpp" line="379"/>
+        <location filename="../src/player.cpp" line="402"/>
+        <location filename="../src/player.cpp" line="543"/>
+        <location filename="../src/player.cpp" line="656"/>
         <source>Start playback (L)</source>
         <translation>Start afspilning (L)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="284"/>
-        <location filename="../src/player.cpp" line="354"/>
-        <location filename="../src/player.cpp" line="529"/>
-        <location filename="../src/player.cpp" line="654"/>
+        <location filename="../src/player.cpp" line="288"/>
+        <location filename="../src/player.cpp" line="358"/>
+        <location filename="../src/player.cpp" line="537"/>
+        <location filename="../src/player.cpp" line="662"/>
         <source>Pause</source>
         <translation>Pause</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="286"/>
-        <location filename="../src/player.cpp" line="355"/>
-        <location filename="../src/player.cpp" line="530"/>
-        <location filename="../src/player.cpp" line="655"/>
+        <location filename="../src/player.cpp" line="290"/>
+        <location filename="../src/player.cpp" line="359"/>
+        <location filename="../src/player.cpp" line="538"/>
+        <location filename="../src/player.cpp" line="663"/>
         <source>Pause playback (K)</source>
         <translation>Sæt afspilning på pause (K)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="288"/>
+        <location filename="../src/player.cpp" line="292"/>
         <source>Skip Next</source>
         <translation>Spring næste over</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="290"/>
+        <location filename="../src/player.cpp" line="294"/>
         <source>Skip to the next point (Alt+Right)</source>
         <translation>Hop til næste punkt (Alt+Højre)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="293"/>
+        <location filename="../src/player.cpp" line="297"/>
         <source>Skip Previous</source>
         <translation>Spring forrige over</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="295"/>
+        <location filename="../src/player.cpp" line="299"/>
         <source>Skip to the previous point (Alt+Left)</source>
         <translation>Hop til forrige punkt (Alt+Venstre)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="298"/>
+        <location filename="../src/player.cpp" line="302"/>
         <source>Rewind</source>
         <translation>Spol tilbage</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="300"/>
+        <location filename="../src/player.cpp" line="304"/>
         <source>Play quickly backwards (J)</source>
         <translation>Afspil hurtigt baglæns (J)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="302"/>
+        <location filename="../src/player.cpp" line="306"/>
         <source>Fast Forward</source>
         <translation>Hurtig frem</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="304"/>
+        <location filename="../src/player.cpp" line="308"/>
         <source>Play quickly forwards (L)</source>
         <translation>Afspil hurtigt forlæns (L)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="306"/>
+        <location filename="../src/player.cpp" line="310"/>
         <source>Volume</source>
         <translation>Lydniveau</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="308"/>
+        <location filename="../src/player.cpp" line="312"/>
         <source>Show the volume control</source>
         <translation>Vis kontrol for lydniveau</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="359"/>
+        <location filename="../src/player.cpp" line="363"/>
         <source>Stop</source>
         <translation>Stop</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="360"/>
+        <location filename="../src/player.cpp" line="364"/>
         <source>Stop playback (K)</source>
         <translation>Stop afspilning (K)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="421"/>
+        <location filename="../src/player.cpp" line="429"/>
         <source>Live</source>
         <translation>Live</translation>
     </message>
@@ -3887,64 +3882,52 @@ p, li { white-space: pre-wrap; }
         <translation>Flyt %1 fra %2 til %3</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/dataprocessor_p.cpp" line="328"/>
         <source>Timeout when reading data from socket.</source>
-        <translation>Timeout ved læsning af data fra sokkel.</translation>
+        <translation type="vanished">Timeout ved læsning af data fra sokkel.</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/dataprocessor_p.cpp" line="393"/>
         <source>Error occurred while reading from the network: %1</source>
-        <translation>Der opstod en fejl under læsning fra netværket: %1</translation>
+        <translation type="vanished">Der opstod en fejl under læsning fra netværket: %1</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/dataprocessor_p.cpp" line="405"/>
         <source>Lengths smaller than 126 must be expressed as one byte.</source>
-        <translation>Længder mindre end 126, skal udtrykkes som en byte.</translation>
+        <translation type="vanished">Længder mindre end 126, skal udtrykkes som en byte.</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/dataprocessor_p.cpp" line="429"/>
         <source>Something went wrong during reading from the network.</source>
-        <translation>Noget gik galt under læsning fra netværket.</translation>
+        <translation type="vanished">Noget gik galt under læsning fra netværket.</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/dataprocessor_p.cpp" line="443"/>
         <source>Lengths smaller than 65536 (2^16) must be expressed as 2 bytes.</source>
-        <translation>Længder mindre end 65536 (2 ^ 16) skal udtrykkes som 2 byte.</translation>
+        <translation type="vanished">Længder mindre end 65536 (2 ^ 16) skal udtrykkes som 2 byte.</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/dataprocessor_p.cpp" line="467"/>
         <source>Error while reading from the network: %1.</source>
-        <translation>Der opstod en fejl under læsning fra netværket: %1.</translation>
+        <translation type="vanished">Der opstod en fejl under læsning fra netværket: %1.</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/dataprocessor_p.cpp" line="490"/>
         <source>Maximum framesize exceeded.</source>
-        <translation>Maksimal billedstørrelse overskredet.</translation>
+        <translation type="vanished">Maksimal billedstørrelse overskredet.</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/dataprocessor_p.cpp" line="502"/>
         <source>Some serious error occurred while reading from the network.</source>
-        <translation>Nogle alvorlige fejl opstod under læsning fra netværket.</translation>
+        <translation type="vanished">Nogle alvorlige fejl opstod under læsning fra netværket.</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/dataprocessor_p.cpp" line="563"/>
         <source>Rsv field is non-zero</source>
-        <translation>RSV felt er forskellig fra nul</translation>
+        <translation type="vanished">RSV felt er forskellig fra nul</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/dataprocessor_p.cpp" line="567"/>
         <source>Used reserved opcode</source>
-        <translation>Reserveret opcode brugt</translation>
+        <translation type="vanished">Reserveret opcode brugt</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/dataprocessor_p.cpp" line="573"/>
         <source>Controle frame is larger than 125 bytes</source>
-        <translation>Kontrol billeder er større end 125 bytes</translation>
+        <translation type="vanished">Kontrol billeder er større end 125 bytes</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/dataprocessor_p.cpp" line="577"/>
         <source>Controle frames cannot be fragmented</source>
-        <translation>Kontrol billeder kan ikke være fragmenteret</translation>
+        <translation type="vanished">Kontrol billeder kan ikke være fragmenteret</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="33"/>
@@ -4082,73 +4065,59 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QWebSocketPrivate</name>
     <message>
-        <location filename="../QWebSockets/qwebsocket_p.cpp" line="105"/>
         <source>Connection closed</source>
-        <translation>Forbindelsen lukket</translation>
+        <translation type="vanished">Forbindelsen lukket</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/qwebsocket_p.cpp" line="564"/>
         <source>Error writing bytes to socket: %1.</source>
-        <translation>Fejl ved skrivning til sokkel: %s</translation>
+        <translation type="vanished">Fejl ved skrivning til sokkel: %s</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/qwebsocket_p.cpp" line="576"/>
         <source>Bytes written %1 != %2.</source>
-        <translation>Bytes skrevet %1 != %2.</translation>
+        <translation type="vanished">Bytes skrevet %1 != %2.</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/qwebsocket_p.cpp" line="705"/>
-        <location filename="../QWebSockets/qwebsocket_p.cpp" line="746"/>
         <source>Invalid statusline in response: %1.</source>
-        <translation>Ugyldig status linie i svar: %1.</translation>
+        <translation type="vanished">Ugyldig status linie i svar: %1.</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/qwebsocket_p.cpp" line="741"/>
         <source>Accept-Key received from server %1 does not match the client key %2.</source>
-        <translation>Accept-nøglen modtaget fra serveren% 1 matcher ikke klient-nøglen% 2.</translation>
+        <translation type="vanished">Accept-nøglen modtaget fra serveren% 1 matcher ikke klient-nøglen% 2.</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/qwebsocket_p.cpp" line="758"/>
         <source>Handshake: Server requests a version that we don&apos;t support: %1.</source>
-        <translation>Håndtryk: Server anmoder om en version, som vi ikke understøtter:% 1.</translation>
+        <translation type="vanished">Håndtryk: Server anmoder om en version, som vi ikke understøtter:% 1.</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/qwebsocket_p.cpp" line="764"/>
         <source>Unknown error condition encountered. Aborting connection.</source>
-        <translation>Ukendt fejltilstand mødt. Afbryder forbindelsen.</translation>
+        <translation type="vanished">Ukendt fejltilstand mødt. Afbryder forbindelsen.</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/qwebsocket_p.cpp" line="771"/>
         <source>Unhandled http status code: %1.</source>
-        <translation>Ubehandlet http status kode:% 1.</translation>
+        <translation type="vanished">Ubehandlet http status kode:% 1.</translation>
     </message>
 </context>
 <context>
     <name>QWebSocketServerPrivate</name>
     <message>
-        <location filename="../QWebSockets/qwebsocketserver_p.cpp" line="58"/>
         <source>Server closed.</source>
-        <translation>Server lukket.</translation>
+        <translation type="vanished">Server lukket.</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/qwebsocketserver_p.cpp" line="335"/>
         <source>Upgrading to websocket failed.</source>
-        <translation>Opdatering af websokkel forfejlet.</translation>
+        <translation type="vanished">Opdatering af websokkel forfejlet.</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/qwebsocketserver_p.cpp" line="341"/>
         <source>Cannot upgrade to websocket.</source>
-        <translation>Kan ikke opgradere websokkel.</translation>
+        <translation type="vanished">Kan ikke opgradere websokkel.</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/qwebsocketserver_p.cpp" line="347"/>
         <source>Invalid response received.</source>
-        <translation>Ukorrekt svar modtaget,</translation>
+        <translation type="vanished">Ukorrekt svar modtaget,</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/qwebsocketserver_p.cpp" line="352"/>
         <source>Closing socket because of invalid or unsupported request.</source>
-        <translation>Lukker sokkel pga. forkert eller ikke understøttet ønske.</translation>
+        <translation type="vanished">Lukker sokkel pga. forkert eller ikke understøttet ønske.</translation>
     </message>
 </context>
 <context>
@@ -4918,22 +4887,22 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
 <context>
     <name>main</name>
     <message>
-        <location filename="../src/main.cpp" line="189"/>
+        <location filename="../src/main.cpp" line="191"/>
         <source>Fill the screen with the Shotcut window.</source>
         <translation>Fyld skærmen med Shotcut vinduet.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="192"/>
+        <location filename="../src/main.cpp" line="194"/>
         <source>Use GPU processing.</source>
         <translation>Brug GPU processor.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="195"/>
+        <location filename="../src/main.cpp" line="197"/>
         <source>A file to open.</source>
         <translation>En fil til at åbne.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="228"/>
+        <location filename="../src/main.cpp" line="230"/>
         <source>Loading plugins...</source>
         <translation>Indlæser plugins...</translation>
     </message>
@@ -5140,12 +5109,12 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
     <message>
         <location filename="../src/qml/filters/audio_gain/meta.qml" line="7"/>
         <source>Gain / Volume</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_mute/meta.qml" line="8"/>
         <source>Mute</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished">Mute</translation>
     </message>
 </context>
 <context>
@@ -5342,62 +5311,62 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
 <context>
     <name>timeline</name>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="319"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="320"/>
         <source>Insert</source>
         <translation>Indsæt</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="319"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="320"/>
         <source>Overwrite</source>
         <translation>Overskriv</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="385"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="391"/>
         <source>Add Audio Track</source>
         <translation>Tilføj lydspor</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="390"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="396"/>
         <source>Add Video Track</source>
         <translation>Tilføj videospor</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="395"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="401"/>
         <source>Insert Track</source>
         <translation>Indsæt spor</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="399"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="405"/>
         <source>Remove Track</source>
         <translation>Fjern spor</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="405"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="411"/>
         <source>Make Tracks Shorter</source>
         <translation>Gør spor smallere</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="410"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="416"/>
         <source>Make Tracks Taller</source>
         <translation>Gør spor højere</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="416"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="422"/>
         <source>Ripple All Tracks</source>
         <translation>Skub alle spor</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="422"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="428"/>
         <source>Show Audio Waveforms</source>
         <translation>Vis lyd-waveforms</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="434"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="440"/>
         <source>Reload</source>
         <translation>Genindlæs</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="441"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="447"/>
         <source>Close</source>
         <translation>Luk</translation>
     </message>
@@ -6073,7 +6042,7 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="72"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="72"/>
         <source>The balance between the RMS and peak envelope followers. RMS is generally better for subtle, musical compression and peak is better for heavier, fast compression and percussion.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="80"/>
@@ -6104,7 +6073,7 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="132"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="132"/>
         <source>The point at which the compressor will start to kick in.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="151"/>
@@ -6116,7 +6085,7 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="153"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="153"/>
         <source>The gain reduction ratio used when the signal level exceeds the threshold.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="171"/>
@@ -6129,7 +6098,7 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="173"/>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="221"/>
         <source>The distance from the threshold where the knee curve starts.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="192"/>
@@ -6139,12 +6108,12 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="194"/>
         <source>The gain of the makeup input signal.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="215"/>
         <source>About dynamic range compression</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_delay/ui.qml" line="62"/>
@@ -6154,7 +6123,7 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
     <message>
         <location filename="../src/qml/filters/audio_delay/ui.qml" line="64"/>
         <source>The neutral delay time is 2 seconds. Times above 2 seconds will have reduced quality and times below will have increased CPU usage.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_delay/ui.qml" line="83"/>
@@ -6169,7 +6138,7 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
     <message>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="194"/>
         <source>The gain of the output signal. Used to correct for excessive amplitude caused by the extra dynamic range.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="62"/>
@@ -6179,7 +6148,7 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
     <message>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="64"/>
         <source>Gain that is applied to the input stage. Can be used to trim gain to bring it roughly under the limit or to push the signal against the limit.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="83"/>
@@ -6189,17 +6158,17 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
     <message>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="85"/>
         <source>The maximum output amplitude. Peaks over this level will be attenuated as smoothly as possible to bring them as close as possible to this level.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="106"/>
         <source>The time taken for the limiter&apos;s attenuation to return to 0 dB&apos;s.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="38"/>
         <source>Quick fix</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="47"/>
@@ -6229,7 +6198,7 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="118"/>
         <source>The size of the room, in meters. Excessivly large, and excessivly small values will make it sound a bit unrealistic.Values of around 30 sound good.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="136"/>
@@ -6244,7 +6213,7 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="158"/>
         <source>This controls the high frequency damping (a lowpass filter), values near 1 will make it sound very bright, values near 0 will make it sound very dark.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="177"/>
@@ -6254,7 +6223,7 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="179"/>
         <source>This is like a damping control for the input, it has a similar effect to the damping control, but is subtly different.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="198"/>
@@ -6264,7 +6233,7 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="200"/>
         <source>The amount of dry signal to be mixed with the reverberated signal.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="219"/>
@@ -6279,7 +6248,7 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="241"/>
         <source>The quantity of early reflections (scatter reflections directly from the source).</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="261"/>

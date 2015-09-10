@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="pt_BR" version="2.1">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="pt_BR">
 <context>
     <name>AddEncodePresetDialog</name>
     <message>
@@ -283,22 +285,22 @@
 <context>
     <name>Clip</name>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="595"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="599"/>
         <source>Remove</source>
         <translation>Remover </translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="600"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="604"/>
         <source>Lift</source>
         <translation>Elevação</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="605"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="609"/>
         <source>Open As Clip</source>
         <translation>Abrir Como Clipe</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="610"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="614"/>
         <source>Split At Playhead (S)</source>
         <translation>Dividir em Indicador de Reprodução (S)</translation>
     </message>
@@ -463,35 +465,28 @@
 <context>
     <name>DataProcessor</name>
     <message>
-        <location filename="../QWebSockets/dataprocessor_p.cpp" line="663"/>
         <source>Received Continuation frame, while there is nothing to continue.</source>
-        <translation>Quadro de continuação recebida, enquanto não há nada para continuar.</translation>
+        <translation type="vanished">Quadro de continuação recebida, enquanto não há nada para continuar.</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/dataprocessor_p.cpp" line="669"/>
         <source>All data frames after the initial data frame must have opcode 0 (continuation).</source>
-        <translation>Todos os quadros de dados após o quadro inicial de dados deve ter o código de operação 0 (continuação).</translation>
+        <translation type="vanished">Todos os quadros de dados após o quadro inicial de dados deve ter o código de operação 0 (continuação).</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/dataprocessor_p.cpp" line="681"/>
         <source>Received message is too big.</source>
-        <translation>A mensagem recebida é muito grande.</translation>
+        <translation type="vanished">A mensagem recebida é muito grande.</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/dataprocessor_p.cpp" line="692"/>
-        <location filename="../QWebSockets/dataprocessor_p.cpp" line="806"/>
         <source>Invalid UTF-8 code encountered.</source>
-        <translation>Foi encontrado um código inválido UTF-8.</translation>
+        <translation type="vanished">Foi encontrado um código inválido UTF-8.</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/dataprocessor_p.cpp" line="785"/>
         <source>Payload of close frame is too small.</source>
-        <translation>A reprodução do quadro fechado é muito pequeno.</translation>
+        <translation type="vanished">A reprodução do quadro fechado é muito pequeno.</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/dataprocessor_p.cpp" line="793"/>
         <source>Invalid close code %1 detected.</source>
-        <translation>Foi detectado o código inválido de fechamento %1.</translation>
+        <translation type="vanished">Foi detectado o código inválido de fechamento %1.</translation>
     </message>
 </context>
 <context>
@@ -1160,7 +1155,7 @@ em compressão temporal</translation>
 <context>
     <name>FilterController</name>
     <message>
-        <location filename="../src/controllers/filtercontroller.cpp" line="164"/>
+        <location filename="../src/controllers/filtercontroller.cpp" line="170"/>
         <source>Only one %1 filter is allowed.</source>
         <translation>Apenas um filtro %1 é permitido.</translation>
     </message>
@@ -1958,7 +1953,7 @@ na lista. Isto não paralisa um trabalho em execução. Botão direito do mouse
         <location filename="../src/widgets/lumamixtransition.ui" line="301"/>
         <source>Do not alter the audio levels during the
 course of the transition. Instead, set a
-fixed mixing level, or choose only clip A's
+fixed mixing level, or choose only clip A&apos;s
 audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>Não altere os níveis de áudio durante o
 curso da transição. Em vez disso, defina um
@@ -2340,7 +2335,7 @@ decorrer da transição.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="340"/>
-        <location filename="../src/mainwindow.cpp" line="2046"/>
+        <location filename="../src/mainwindow.cpp" line="2055"/>
         <source>Enter Full Screen</source>
         <translation>Entrar em Tela Cheia</translation>
     </message>
@@ -2610,47 +2605,47 @@ decorrer da transição.</translation>
         <translation>DeckLink Keyer</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="689"/>
-        <location filename="../src/mainwindow.cpp" line="691"/>
-        <location filename="../src/mainwindow.cpp" line="858"/>
-        <location filename="../src/mainwindow.cpp" line="2492"/>
+        <location filename="../src/mainwindow.cpp" line="698"/>
+        <location filename="../src/mainwindow.cpp" line="700"/>
+        <location filename="../src/mainwindow.cpp" line="867"/>
+        <location filename="../src/mainwindow.cpp" line="2502"/>
         <source>Failed to open </source>
         <translation>Falha ao abrir</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="717"/>
+        <location filename="../src/mainwindow.cpp" line="726"/>
         <source>The file you opened uses GPU effects, but GPU processing is not enabled.
 Do you want to enable GPU processing and restart?</source>
         <translation>O arquivo aberto usa efeitos de GPU, mas o processamento pela GPU não está ativado. 
 Você deseja ativar o processamento de GPU e reiniciar?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1083"/>
+        <location filename="../src/mainwindow.cpp" line="1092"/>
         <source>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2015 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
         <translation>&lt;h1&gt;Shotcut versão %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; é um editor de vídeo multi-plataformas, livre e open source.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2015 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licenciado sob a &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Esse programa orgulhosamente usa os seguintes projetos:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; aplicativo e UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; framework de edição multimídia&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; biblioteca de codecs e formatos multimídia&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; codificador H.264&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; codificadores VP8 e VP9&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; codificador MP3&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; plugins de vídeo&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; plugins de áudio&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; coleção de ícones por &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; coleção de ícones&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;O código fonte usado para desenvolver esse programa pode ser baixado em &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;Esse programa é distribuído na esperança de que será útil, mas SEM NENHUMA GARANTIA; inclusive sem a garantia implícita de COMERCIABILIDADE ou CONVENIÊNCIA PARA UM PROPÓSITO ESPECÍFICO.&lt;/small&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2247"/>
+        <location filename="../src/mainwindow.cpp" line="2257"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>Você deve reiniciar o Shotcut para mudar para o novo idioma. 
 Você gostaria de reiniciar agora?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2296"/>
+        <location filename="../src/mainwindow.cpp" line="2306"/>
         <source>You must restart Shotcut to switch using GPU processing.
 Do you want to restart now?</source>
         <translation>Você deve reiniciar o Shotcut para alternar o uso do processamento GPU. Você gostaria de reiniciar agora?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2530"/>
+        <location filename="../src/mainwindow.cpp" line="2540"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
         <translation>Você deve reiniciar o Shotcut para mudar o display method.
 Deseja reiniciar agora?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="746"/>
+        <location filename="../src/mainwindow.cpp" line="755"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation>Existem arquivos salvos automaticamente. Gostaria de recuperá-los agora?</translation>
     </message>
@@ -2673,70 +2668,70 @@ Please install it using your package manager. It may be named libsdl1.2debian, S
 Por favor instale-a usando seu gerenciador de pacotes. Pode se chamar libsdl1.2debian, SDL ou similar.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="869"/>
-        <location filename="../src/mainwindow.cpp" line="2477"/>
+        <location filename="../src/mainwindow.cpp" line="878"/>
+        <location filename="../src/mainwindow.cpp" line="2487"/>
         <source>Open File</source>
         <translation>Abrir Arquivo</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1077"/>
+        <location filename="../src/mainwindow.cpp" line="1086"/>
         <source>%1[*] - %2</source>
         <translation>%1[*] - %2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1082"/>
+        <location filename="../src/mainwindow.cpp" line="1091"/>
         <source>About Shotcut</source>
         <translation>Sobre o Shotcut</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1625"/>
-        <location filename="../src/mainwindow.cpp" line="1650"/>
+        <location filename="../src/mainwindow.cpp" line="1634"/>
+        <location filename="../src/mainwindow.cpp" line="1659"/>
         <source>Saved %1</source>
         <translation>%1 Salvo</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1637"/>
+        <location filename="../src/mainwindow.cpp" line="1646"/>
         <source>Save XML</source>
         <translation>Salvar XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1637"/>
+        <location filename="../src/mainwindow.cpp" line="1646"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt) </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1662"/>
+        <location filename="../src/mainwindow.cpp" line="1671"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>O projeto foi modificado.
 Você deseja salvar as alterações?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1686"/>
+        <location filename="../src/mainwindow.cpp" line="1695"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
         <translation>Existem tarefas pendentes.
 Você ainda deseja sair?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2049"/>
+        <location filename="../src/mainwindow.cpp" line="2058"/>
         <source>Exit Full Screen</source>
         <translation>Sair da Tela Cheia</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2060"/>
+        <location filename="../src/mainwindow.cpp" line="2070"/>
         <source>GPU Processing is not supported</source>
         <translation>O processamento GPU não é suportado</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2287"/>
+        <location filename="../src/mainwindow.cpp" line="2297"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>Falha ao conectar ao JACK.
 Verifique que o JACK esteja instalando e sendo executado.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2478"/>
+        <location filename="../src/mainwindow.cpp" line="2488"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;Todos os arquivos (*)</translation>
     </message>
@@ -2754,7 +2749,7 @@ Verifique que o JACK esteja instalando e sendo executado.</translation>
         <translation>Visualizar MLT XML para este trabalho</translation>
     </message>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="81"/>
+        <location filename="../src/jobs/meltjob.cpp" line="82"/>
         <source>MLT XML</source>
         <translation>MLT XML</translation>
     </message>
@@ -3339,161 +3334,161 @@ p, li { white-space: pre-wrap; }
         <translation>Programa</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="106"/>
+        <location filename="../src/player.cpp" line="110"/>
         <source>Adjust the audio volume</source>
         <translation>Ajustar volume de áudio</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="125"/>
+        <location filename="../src/player.cpp" line="129"/>
         <source>Silence the audio</source>
         <translation>Silenciar o áudio</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="144"/>
+        <location filename="../src/player.cpp" line="148"/>
         <source>Transport Controls</source>
         <translation>Controles de Transporte</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="151"/>
+        <location filename="../src/player.cpp" line="155"/>
         <source>Current position</source>
         <translation>Posição atual</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="155"/>
+        <location filename="../src/player.cpp" line="159"/>
         <source>Total Duration</source>
         <translation>Duração Total</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="160"/>
+        <location filename="../src/player.cpp" line="164"/>
         <source>In Point</source>
         <translation>Ponto de entrada</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="164"/>
+        <location filename="../src/player.cpp" line="168"/>
         <source>Selected Duration</source>
         <translation>Selecionar Duração</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="180"/>
+        <location filename="../src/player.cpp" line="184"/>
         <source>Zoom Fit</source>
         <translation>Ajustar Ampliação</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="183"/>
+        <location filename="../src/player.cpp" line="187"/>
         <source>Zoom 100%</source>
         <translation>Ampliar 100%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="186"/>
+        <location filename="../src/player.cpp" line="190"/>
         <source>Zoom 50%</source>
         <translation>Ampliar 50%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="189"/>
+        <location filename="../src/player.cpp" line="193"/>
         <source>Zoom 200%</source>
         <translation>Ampliar 200%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="194"/>
+        <location filename="../src/player.cpp" line="198"/>
         <source>Toggle zoom</source>
         <translation>Alternar ampliação</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="279"/>
-        <location filename="../src/player.cpp" line="374"/>
-        <location filename="../src/player.cpp" line="397"/>
-        <location filename="../src/player.cpp" line="534"/>
-        <location filename="../src/player.cpp" line="647"/>
+        <location filename="../src/player.cpp" line="283"/>
+        <location filename="../src/player.cpp" line="378"/>
+        <location filename="../src/player.cpp" line="401"/>
+        <location filename="../src/player.cpp" line="542"/>
+        <location filename="../src/player.cpp" line="655"/>
         <source>Play</source>
         <translation>Reproduzir</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="281"/>
-        <location filename="../src/player.cpp" line="375"/>
-        <location filename="../src/player.cpp" line="398"/>
-        <location filename="../src/player.cpp" line="535"/>
-        <location filename="../src/player.cpp" line="648"/>
+        <location filename="../src/player.cpp" line="285"/>
+        <location filename="../src/player.cpp" line="379"/>
+        <location filename="../src/player.cpp" line="402"/>
+        <location filename="../src/player.cpp" line="543"/>
+        <location filename="../src/player.cpp" line="656"/>
         <source>Start playback (L)</source>
         <translation>Iniciar reprodução (L)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="284"/>
-        <location filename="../src/player.cpp" line="354"/>
-        <location filename="../src/player.cpp" line="529"/>
-        <location filename="../src/player.cpp" line="654"/>
+        <location filename="../src/player.cpp" line="288"/>
+        <location filename="../src/player.cpp" line="358"/>
+        <location filename="../src/player.cpp" line="537"/>
+        <location filename="../src/player.cpp" line="662"/>
         <source>Pause</source>
         <translation>Pausa</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="286"/>
-        <location filename="../src/player.cpp" line="355"/>
-        <location filename="../src/player.cpp" line="530"/>
-        <location filename="../src/player.cpp" line="655"/>
+        <location filename="../src/player.cpp" line="290"/>
+        <location filename="../src/player.cpp" line="359"/>
+        <location filename="../src/player.cpp" line="538"/>
+        <location filename="../src/player.cpp" line="663"/>
         <source>Pause playback (K)</source>
         <translation>Pausar reprodução (K)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="288"/>
+        <location filename="../src/player.cpp" line="292"/>
         <source>Skip Next</source>
         <translation>Pular Seguinte</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="290"/>
+        <location filename="../src/player.cpp" line="294"/>
         <source>Skip to the next point (Alt+Right)</source>
         <translation>Pular para o ponto seguinte (Alt+Direita)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="293"/>
+        <location filename="../src/player.cpp" line="297"/>
         <source>Skip Previous</source>
         <translation>Pular Anterior</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="295"/>
+        <location filename="../src/player.cpp" line="299"/>
         <source>Skip to the previous point (Alt+Left)</source>
         <translation>Pular para o ponto anterior (Alt+Esquerda)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="298"/>
+        <location filename="../src/player.cpp" line="302"/>
         <source>Rewind</source>
         <translation>Rebobinar </translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="300"/>
+        <location filename="../src/player.cpp" line="304"/>
         <source>Play quickly backwards (J)</source>
         <translation>Reproduzir rapidamente para trás (J)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="302"/>
+        <location filename="../src/player.cpp" line="306"/>
         <source>Fast Forward</source>
         <translation>Adiantar </translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="304"/>
+        <location filename="../src/player.cpp" line="308"/>
         <source>Play quickly forwards (L)</source>
         <translation>Reproduzir rapidamente para frente (L)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="306"/>
+        <location filename="../src/player.cpp" line="310"/>
         <source>Volume</source>
         <translation>Volume</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="308"/>
+        <location filename="../src/player.cpp" line="312"/>
         <source>Show the volume control</source>
         <translation>Exibir o controle de volume</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="359"/>
+        <location filename="../src/player.cpp" line="363"/>
         <source>Stop</source>
         <translation>Parar</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="360"/>
+        <location filename="../src/player.cpp" line="364"/>
         <source>Stop playback (K)</source>
         <translation>Parar reprodução (K)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="421"/>
+        <location filename="../src/player.cpp" line="429"/>
         <source>Live</source>
         <translation>Ao Vivo</translation>
     </message>
@@ -3886,64 +3881,52 @@ p, li { white-space: pre-wrap; }
         <translation>Mover %1 de %2 para %3</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/dataprocessor_p.cpp" line="328"/>
         <source>Timeout when reading data from socket.</source>
-        <translation>Tempo esgotado na leitura dos dados do soquete.</translation>
+        <translation type="vanished">Tempo esgotado na leitura dos dados do soquete.</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/dataprocessor_p.cpp" line="393"/>
         <source>Error occurred while reading from the network: %1</source>
-        <translation>Ocorreu um erro durante a leitura da rede: %1</translation>
+        <translation type="vanished">Ocorreu um erro durante a leitura da rede: %1</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/dataprocessor_p.cpp" line="405"/>
         <source>Lengths smaller than 126 must be expressed as one byte.</source>
-        <translation>Comprimentos menores do que 126 devem ser expressos como um byte.</translation>
+        <translation type="vanished">Comprimentos menores do que 126 devem ser expressos como um byte.</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/dataprocessor_p.cpp" line="429"/>
         <source>Something went wrong during reading from the network.</source>
-        <translation>Algo deu errado durante a leitura da rede.</translation>
+        <translation type="vanished">Algo deu errado durante a leitura da rede.</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/dataprocessor_p.cpp" line="443"/>
         <source>Lengths smaller than 65536 (2^16) must be expressed as 2 bytes.</source>
-        <translation>Comprimentos menores que 65536 (2^16) devem ser expressos como 2 bytes.</translation>
+        <translation type="vanished">Comprimentos menores que 65536 (2^16) devem ser expressos como 2 bytes.</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/dataprocessor_p.cpp" line="467"/>
         <source>Error while reading from the network: %1.</source>
-        <translation>Erro ao ler da rede: %1.</translation>
+        <translation type="vanished">Erro ao ler da rede: %1.</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/dataprocessor_p.cpp" line="490"/>
         <source>Maximum framesize exceeded.</source>
-        <translation>O tamanho máximo de quadros foi excedido.</translation>
+        <translation type="vanished">O tamanho máximo de quadros foi excedido.</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/dataprocessor_p.cpp" line="502"/>
         <source>Some serious error occurred while reading from the network.</source>
-        <translation>Ocorreu algum erro grave durante a leitura da rede.</translation>
+        <translation type="vanished">Ocorreu algum erro grave durante a leitura da rede.</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/dataprocessor_p.cpp" line="563"/>
         <source>Rsv field is non-zero</source>
-        <translation>O campo rsv é diferente de zero</translation>
+        <translation type="vanished">O campo rsv é diferente de zero</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/dataprocessor_p.cpp" line="567"/>
         <source>Used reserved opcode</source>
-        <translation>Código de operação reservada utilizado</translation>
+        <translation type="vanished">Código de operação reservada utilizado</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/dataprocessor_p.cpp" line="573"/>
         <source>Controle frame is larger than 125 bytes</source>
-        <translation>O Controle do quadro é maior que 125 bytes</translation>
+        <translation type="vanished">O Controle do quadro é maior que 125 bytes</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/dataprocessor_p.cpp" line="577"/>
         <source>Controle frames cannot be fragmented</source>
-        <translation>O controle de quadros não pode ser fragmentado</translation>
+        <translation type="vanished">O controle de quadros não pode ser fragmentado</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="33"/>
@@ -4081,73 +4064,59 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QWebSocketPrivate</name>
     <message>
-        <location filename="../QWebSockets/qwebsocket_p.cpp" line="105"/>
         <source>Connection closed</source>
-        <translation>Conexão fechada</translation>
+        <translation type="vanished">Conexão fechada</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/qwebsocket_p.cpp" line="564"/>
         <source>Error writing bytes to socket: %1.</source>
-        <translation>Erro ao gravar bytes para o soquete: %1.</translation>
+        <translation type="vanished">Erro ao gravar bytes para o soquete: %1.</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/qwebsocket_p.cpp" line="576"/>
         <source>Bytes written %1 != %2.</source>
-        <translation>%1 != %2 bytes gravados.</translation>
+        <translation type="vanished">%1 != %2 bytes gravados.</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/qwebsocket_p.cpp" line="705"/>
-        <location filename="../QWebSockets/qwebsocket_p.cpp" line="746"/>
         <source>Invalid statusline in response: %1.</source>
-        <translation>Linha de status inválida em resposta: %1.</translation>
+        <translation type="vanished">Linha de status inválida em resposta: %1.</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/qwebsocket_p.cpp" line="741"/>
         <source>Accept-Key received from server %1 does not match the client key %2.</source>
-        <translation>A chave aceita recebida do servidor %1 não corresponde com a chave de cliente %2.</translation>
+        <translation type="vanished">A chave aceita recebida do servidor %1 não corresponde com a chave de cliente %2.</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/qwebsocket_p.cpp" line="758"/>
         <source>Handshake: Server requests a version that we don&apos;t support: %1.</source>
-        <translation>Handshake: O servidor solicita uma versão que não é suportada: %1</translation>
+        <translation type="vanished">Handshake: O servidor solicita uma versão que não é suportada: %1</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/qwebsocket_p.cpp" line="764"/>
         <source>Unknown error condition encountered. Aborting connection.</source>
-        <translation>Condição de erro desconhecida encontrada. Abortando conexão.</translation>
+        <translation type="vanished">Condição de erro desconhecida encontrada. Abortando conexão.</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/qwebsocket_p.cpp" line="771"/>
         <source>Unhandled http status code: %1.</source>
-        <translation>Código de status http não manipulado: %1.</translation>
+        <translation type="vanished">Código de status http não manipulado: %1.</translation>
     </message>
 </context>
 <context>
     <name>QWebSocketServerPrivate</name>
     <message>
-        <location filename="../QWebSockets/qwebsocketserver_p.cpp" line="58"/>
         <source>Server closed.</source>
-        <translation>O servidor foi fechado.</translation>
+        <translation type="vanished">O servidor foi fechado.</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/qwebsocketserver_p.cpp" line="335"/>
         <source>Upgrading to websocket failed.</source>
-        <translation>A atualização para o soquete web falhou.</translation>
+        <translation type="vanished">A atualização para o soquete web falhou.</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/qwebsocketserver_p.cpp" line="341"/>
         <source>Cannot upgrade to websocket.</source>
-        <translation>Não é possível atualizar para o soquete web.</translation>
+        <translation type="vanished">Não é possível atualizar para o soquete web.</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/qwebsocketserver_p.cpp" line="347"/>
         <source>Invalid response received.</source>
-        <translation>Resposta inválida recebida.</translation>
+        <translation type="vanished">Resposta inválida recebida.</translation>
     </message>
     <message>
-        <location filename="../QWebSockets/qwebsocketserver_p.cpp" line="352"/>
         <source>Closing socket because of invalid or unsupported request.</source>
-        <translation>Fechando soquete por causa de pedido inválido ou não suportado.</translation>
+        <translation type="vanished">Fechando soquete por causa de pedido inválido ou não suportado.</translation>
     </message>
 </context>
 <context>
@@ -4917,22 +4886,22 @@ a captura de tela para SDI/HDMI neste modo.</translation>
 <context>
     <name>main</name>
     <message>
-        <location filename="../src/main.cpp" line="189"/>
+        <location filename="../src/main.cpp" line="191"/>
         <source>Fill the screen with the Shotcut window.</source>
         <translation>Ocupar a tela com a janela do Shotcut.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="192"/>
+        <location filename="../src/main.cpp" line="194"/>
         <source>Use GPU processing.</source>
         <translation>Usar processamento por GPU.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="195"/>
+        <location filename="../src/main.cpp" line="197"/>
         <source>A file to open.</source>
         <translation>Um arquivo a ser aberto.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="228"/>
+        <location filename="../src/main.cpp" line="230"/>
         <source>Loading plugins...</source>
         <translation>Carregando plugins...</translation>
     </message>
@@ -5341,62 +5310,62 @@ a captura de tela para SDI/HDMI neste modo.</translation>
 <context>
     <name>timeline</name>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="319"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="320"/>
         <source>Insert</source>
         <translation>Inserir</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="319"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="320"/>
         <source>Overwrite</source>
         <translation>Substituir</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="385"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="391"/>
         <source>Add Audio Track</source>
         <translation>Adicionar Faixa de Áudio</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="390"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="396"/>
         <source>Add Video Track</source>
         <translation>Adicionar Faixa de Vídeo</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="395"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="401"/>
         <source>Insert Track</source>
         <translation>Inserir faixa</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="399"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="405"/>
         <source>Remove Track</source>
         <translation>Remover faixa</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="405"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="411"/>
         <source>Make Tracks Shorter</source>
         <translation>Criar Faixas Menores</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="410"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="416"/>
         <source>Make Tracks Taller</source>
         <translation>Criar Faixas Maiores</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="416"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="422"/>
         <source>Ripple All Tracks</source>
         <translation>Ripple em todas as faixas</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="422"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="428"/>
         <source>Show Audio Waveforms</source>
         <translation>Mostrar Formas de Onda de Áudio</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="434"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="440"/>
         <source>Reload</source>
         <translation>Recarregar</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="441"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="447"/>
         <source>Close</source>
         <translation>Fechar</translation>
     </message>
