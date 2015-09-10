@@ -121,6 +121,15 @@ void GLWidget::initializeGL()
     qDebug() << "OpenGL renderer" << QString::fromUtf8((const char*) glGetString(GL_RENDERER));
     qDebug() << "OpenGL threaded?" << openglContext()->supportsThreadedOpenGL();
     qDebug() << "OpenGL ES?" << openglContext()->isOpenGLES();
+
+    if (m_glslManager && openglContext()->isOpenGLES()) {
+        delete m_glslManager;
+        m_glslManager = 0;
+        // Need to destroy MLT global reference to prevent filters from trying to use GPU.
+        mlt_properties_set_data(mlt_global_properties(), "glslManager", NULL, 0, NULL, NULL);
+        emit gpuNotSupported();
+    }
+
     createShader();
 
 #if defined(USE_GL_SYNC) && !defined(Q_OS_WIN)

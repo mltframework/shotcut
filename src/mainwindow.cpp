@@ -2066,7 +2066,8 @@ void MainWindow::onGpuNotSupported()
         ui->actionGPU->setChecked(false);
         ui->actionGPU->setDisabled(true);
     }
-    showStatusMessage(tr("GPU Processing is not supported"));
+    QMessageBox::critical(this, qApp->applicationName(),
+        tr("GPU Processing is not supported"));
 }
 
 void MainWindow::editHTML(const QString &fileName)
