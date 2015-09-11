@@ -400,7 +400,7 @@ function set_globals {
   REPOLOCS[9]="git://github.com/mltframework/webvfx.git"
   REPOLOCS[10]="git://github.com/georgmartius/vid.stab.git"
   REPOLOCS[11]="git://github.com/anholt/libepoxy.git"
-  REPOLOCS[12]="git://git.opus-codec.org/opus.git"
+  REPOLOCS[12]="http://git.opus-codec.org/opus.git"
   REPOLOCS[13]="https://github.com/videolan/x265"
   REPOLOCS[14]="http://bitbucket.org/eigen/eigen/get/3.2.4.tar.gz"
 
