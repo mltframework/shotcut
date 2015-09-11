@@ -60,13 +60,17 @@ void QTBUG47714WorkaroundRenderListener::timerEvent(QTimerEvent * event)
 
 QSGSimpleTextureNode * QTBUG47714WorkaroundRenderListener::nodeFromItem()
 {
-    if (item.isNull())
+    if (item.isNull() || !QQuickItemPrivate::get(item))
     {
         deleteLater();
         return 0;
     }
     QQuickItemPrivate * priv = QQuickItemPrivate::get(item);
     QSGTransformNode * tnode = priv->itemNode();
+    if (!tnode || !tnode->firstChild()) {
+        deleteLater();
+        return 0;
+    }
     QSGGeometryNode * geom = 0;
     if (tnode->firstChild()->type() == QSGNode::GeometryNodeType)
         geom = static_cast<QSGGeometryNode*>(tnode->firstChild());
