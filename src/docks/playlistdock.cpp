@@ -381,7 +381,8 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
 {
     if (data && data->hasUrls()) {
         foreach (QUrl url, data->urls()) {
-            Mlt::Producer p(MLT.profile(), url.path().toUtf8().constData());
+            QString path = MAIN.removeFileScheme(url);
+            Mlt::Producer p(MLT.profile(), path.toUtf8().constData());
             if (p.is_valid()) {
                 MLT.setImageDurationFromDefault(&p);
                 if (row == -1)

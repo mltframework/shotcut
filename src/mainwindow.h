@@ -22,6 +22,7 @@
 #include <QMainWindow>
 #include <QMutex>
 #include <QTimer>
+#include <QUrl>
 #include "mltcontroller.h"
 
 #define EXIT_RESTART (42)
@@ -66,6 +67,7 @@ public:
     QWidget* loadProducerWidget(Mlt::Producer* producer);
     void doAutosave();
     void setFullScreen(bool isFullScreen);
+    QString removeFileScheme(QUrl& url);
 
     void keyPressEvent(QKeyEvent*);
     void keyReleaseEvent(QKeyEvent *);

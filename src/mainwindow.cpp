@@ -808,6 +808,20 @@ void MainWindow::setFullScreen(bool isFullScreen)
     }
 }
 
+QString MainWindow::removeFileScheme(QUrl &url)
+{
+    QString path = url.url();
+    if (url.scheme() == "file")
+        path = url.url(QUrl::RemoveScheme);
+    if (path.length() > 2 && path.startsWith("///"))
+#ifdef Q_OS_WIN
+        path.remove(0, 3);
+#else
+        path.remove(0, 2);
+#endif
+    return path;
+}
+
 static void autosaveTask(MainWindow* p)
 {
     qDebug() << "running";
@@ -1512,27 +1526,11 @@ void MainWindow::dropEvent(QDropEvent *event)
     else if (mimeData->hasUrls()) {
         if (mimeData->urls().length() > 1) {
             foreach (QUrl url, mimeData->urls()) {
-                QString path = url.url();
-                if (url.scheme() == "file")
-                    path = url.url(QUrl::RemoveScheme);
-                if (path.length() > 2 && path.startsWith("///"))
-#ifdef Q_OS_WIN
-                    path.remove(0, 3);
-#else
-                    path.remove(0, 2);
-#endif
+                QString path = removeFileScheme(url);
                 m_multipleFiles.append(path);
             }
         }
-        QString path = mimeData->urls().first().url();
-        if (mimeData->urls().first().scheme() == "file")
-            path = mimeData->urls().first().url(QUrl::RemoveScheme);
-        if (path.length() > 2 && path.startsWith("///"))
-#ifdef Q_OS_WIN
-            path.remove(0, 3);
-#else
-            path.remove(0, 2);
-#endif
+        QString path = removeFileScheme(mimeData->urls().first());
         open(path);
         event->acceptProposedAction();
     }
