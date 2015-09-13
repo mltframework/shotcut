@@ -102,10 +102,5 @@ void QTBUG47714WorkaroundRenderListener::afterSync()
 
 void QmlView::applyQTBUG47714Workaround(QObject * item)
 {
-#ifdef Q_OS_WIN
-    QQuickItem* quickItem = static_cast<QQuickItem*>(item);
-    if (quickItem && quickItem->window() && quickItem->window()->openglContext() &&
-       !quickItem->window()->openglContext()->isOpenGLES())
-#endif
     new QTBUG47714WorkaroundRenderListener(static_cast<QQuickItem*>(item));
 }
