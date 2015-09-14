@@ -48,18 +48,17 @@ TimelineDock::TimelineDock(QWidget *parent) :
     m_quickView.engine()->addImportPath(importPath.path());
     m_quickView.engine()->addImageProvider(QString("thumbnail"), new ThumbnailProvider);
     QmlUtilities::setCommonProperties(m_quickView.rootContext());
-    m_quickView.rootContext()->setContextProperty("view", new QmlView(&m_quickView));
+    m_quickView.rootContext()->setContextProperty("view", new QmlView(m_quickView.quickWindow()));
     m_quickView.rootContext()->setContextProperty("timeline", this);
     m_quickView.rootContext()->setContextProperty("multitrack", &m_model);
-    m_quickView.setResizeMode(QQuickView::SizeRootObjectToView);
-    m_quickView.setColor(palette().window().color());
+    m_quickView.setResizeMode(QQuickWidget::SizeRootObjectToView);
+    m_quickView.setClearColor(palette().window().color());
 
     connect(&m_model, &MultitrackModel::modified, this, &TimelineDock::clearSelectionIfInvalid);
 
-    QWidget* container = QWidget::createWindowContainer(&m_quickView, this);
-    container->setFocusPolicy(Qt::TabFocus);
+    m_quickView.setFocusPolicy(Qt::StrongFocus);
     delete ui->scrollAreaWidgetContents;
-    ui->scrollArea->setWidget(container);
+    ui->scrollArea->setWidget(&m_quickView);
 
     connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onShowFrame(const SharedFrame&)));
 #ifdef Q_OS_WIN
