@@ -30,6 +30,7 @@
 #include <QtDebug>
 #include <QtWidgets>
 #include <QtXml>
+#include <QtMath>
 
 // formulas to map absolute value ranges to percentages as int
 #define TO_ABSOLUTE(min, max, rel) qRound(float(min) + float((max) - (min) + 1) * float(rel) / 100.0f)
@@ -640,7 +641,7 @@ static double getBufferSize(Mlt::Properties& preset, const char* property)
     if (s.endsWith('k')) size *= 1000;
     if (s.endsWith('M')) size *= 1000000;
     // convert to KiB
-    return size / 1024 / 8;
+    return double(qCeil(size / 1024 / 8 * 100)) / 100;
 }
 
 void EncodeDock::on_presetsTree_clicked(const QModelIndex &index)
