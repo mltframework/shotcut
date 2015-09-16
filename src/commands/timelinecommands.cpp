@@ -448,10 +448,15 @@ void AddTransitionCommand::undo()
     if (m_transitionIndex >= 0) {
         m_model.removeTransition(m_trackIndex, m_transitionIndex);
         // Delete the blank that was inserted.
-        if (m_transitionIndex == m_clipIndex) { // dragged left
-            m_model.removeClip(m_trackIndex, m_clipIndex + 1);
-        } else {
-            m_model.removeClip(m_trackIndex, m_clipIndex);
+        int i = m_model.trackList().at(m_trackIndex).mlt_index;
+        QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
+        if (track) {
+            Mlt::Playlist playlist(*track);
+            if (playlist.is_blank(m_clipIndex + 1) && m_transitionIndex == m_clipIndex) { // dragged left
+                m_model.removeClip(m_trackIndex, m_clipIndex + 1);
+            } else if (playlist.is_blank(m_clipIndex)) {
+                m_model.removeClip(m_trackIndex, m_clipIndex);
+            }
         }
     } else {
         qWarning() << "Failed to undo the transition!";

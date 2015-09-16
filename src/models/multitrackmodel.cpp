@@ -1432,6 +1432,7 @@ bool MultitrackModel::addTransitionValid(int fromTrack, int toTrack, int clipInd
 
         if (fromTrack == toTrack)
         if (!playlist.is_blank_at(position))
+        if (!playlist.is_blank(clipIndex + 1) || targetIndex < clipIndex)
         if ((targetIndex == (clipIndex - 1) && endOfCurrentClip > endOfPreviousClip && !isTransition(playlist, clipIndex - 1)) ||
             (targetIndex == clipIndex && position < startOfNextClip && !isTransition(playlist, clipIndex + 1))) {
             result = true;
