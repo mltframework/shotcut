@@ -43,36 +43,38 @@ QImage ThumbnailProvider::requestImage(const QString &id, QSize *size, const QSi
         QString service = id.section('/', 0, 0);
         QString resource = id.section('/', 1);
         int frameNumber = id.mid(index + 1).toInt();
+        Mlt::Properties properties;
 
-        if (service == "avformat-novalidate")
-            service = "avformat";
-        else if (service.startsWith("xml"))
-            service = "xml-nogl";
         resource = resource.left(resource.lastIndexOf('#'));
+        properties.set("_profile", MLT.profile().get_profile(), 0);
 
-        Mlt::Producer producer(MLT.profile(), service.toUtf8().constData(), resource.toUtf8().constData());
-        if (producer.is_valid()) {
-            QString key = cacheKey(producer, frameNumber);
-            result = DB.getThumbnail(key);
-            if (result.isNull()) {
+        QString key = cacheKey(properties, resource, frameNumber);
+        result = DB.getThumbnail(key);
+        if (result.isNull()) {
+            if (service == "avformat-novalidate")
+                service = "avformat";
+            else if (service.startsWith("xml"))
+                service = "xml-nogl";
+            Mlt::Producer producer(MLT.profile(), service.toUtf8().constData(), resource.toUtf8().constData());
+            if (producer.is_valid()) {
                 result = makeThumbnail(producer, frameNumber, requestedSize);
                 DB.putThumbnail(key, result);
             }
-            if (size)
-                *size = result.size();
         }
+        if (size)
+            *size = result.size();
     }
     return result;
 }
 
-QString ThumbnailProvider::cacheKey(Mlt::Producer& producer, int frameNumber)
+QString ThumbnailProvider::cacheKey(Mlt::Properties& properties, const QString& resource, int frameNumber)
 {
-    QString time = producer.frames_to_time(frameNumber, mlt_time_clock);
+    QString time = properties.frames_to_time(frameNumber, mlt_time_clock);
     // Reduce the precision to centiseconds to increase chance for cache hit
     // without much loss of accuracy.
     time = time.left(time.size() - 1);
     QString key = QString("%1 %2")
-            .arg(producer.get("resource"))
+            .arg(resource)
             .arg(time);
     QCryptographicHash hash(QCryptographicHash::Sha1);
     hash.addData(key.toUtf8());

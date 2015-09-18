@@ -29,7 +29,7 @@ public:
     QImage requestImage(const QString &id, QSize *size, const QSize &requestedSize);
 
 private:
-    QString cacheKey(Mlt::Producer &, int frameNumber);
+    QString cacheKey(Mlt::Properties& properties, const QString& resource, int frameNumber);
     QImage makeThumbnail(Mlt::Producer&, int frameNumber, const QSize& requestedSize);
 };
 
