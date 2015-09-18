@@ -29,8 +29,9 @@ Rectangle {
     property bool placeHolderAdded: false
     property bool isCurrentTrack: false
     property bool isLocked: false
-    property var selection
+    property var selectedClipsOnThisTrack
 
+    signal clipCtrlClicked(var clip, var track)
     signal clipClicked(var clip, var track)
     signal clipDragged(var clip, int x, int y)
     signal clipDropped(var clip)
@@ -75,9 +76,10 @@ Rectangle {
             trackIndex: trackRoot.DelegateModel.itemsIndex
             fadeIn: model.fadeIn
             fadeOut: model.fadeOut
-            selected: trackRoot.isCurrentTrack && trackRoot.selection.indexOf(index) !== -1
+            selected: trackRoot.selectedClipsOnThisTrack.indexOf(index) !== -1
 
             onClicked: trackRoot.clipClicked(clip, trackRoot);
+            onCtrlClicked: trackRoot.clipCtrlClicked(clip, trackRoot);
             onMoved: {
                 var fromTrack = clip.originalTrackIndex
                 var toTrack = clip.trackIndex

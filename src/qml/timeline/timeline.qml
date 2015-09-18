@@ -73,7 +73,6 @@ Rectangle {
                 trackHeaderRepeater.itemAt(i).selected = false
         }
     }
-    onCurrentTrackChanged: selection = [];
 
     MouseArea {
         anchors.fill: parent
@@ -257,14 +256,14 @@ Rectangle {
             CornerSelectionShadow {
                 y: tracksRepeater.count ? tracksRepeater.itemAt(currentTrack).y + ruler.height - scrollView.flickableItem.contentY : 0
                 clip: root.selection.length ?
-                        tracksRepeater.itemAt(currentTrack).clipAt(root.selection[0]) : null
+                        tracksRepeater.itemAt(currentTrack).clipAt(root.selection[0].clipIndex) : null
                 opacity: clip && clip.x + clip.width < scrollView.flickableItem.contentX ? 1 : 0
             }
 
             CornerSelectionShadow {
                 y: tracksRepeater.count ? tracksRepeater.itemAt(currentTrack).y + ruler.height - scrollView.flickableItem.contentY : 0
                 clip: root.selection.length ?
-                        tracksRepeater.itemAt(currentTrack).clipAt(root.selection[root.selection.length - 1]) : null
+                        tracksRepeater.itemAt(currentTrack).clipAt(root.selection[root.selection.length - 1].clipIndex) : null
                 opacity: clip && clip.x > scrollView.flickableItem.contentX + scrollView.width ? 1 : 0
                 anchors.right: parent.right
                 mirrorGradient: true
@@ -463,10 +462,40 @@ Rectangle {
             isAudio: audio
             isCurrentTrack: currentTrack === index
             timeScale: multitrack.scaleFactor
-            selection: root.selection
+            selectedClipsOnThisTrack: {
+                var selectedList = [];
+                for (var idx in root.selection) {
+                    if (root.selection[idx].trackIndex === index)
+                        selectedList.push(root.selection[idx].clipIndex);
+                }
+                return selectedList;
+            }
+            onClipCtrlClicked: {
+                currentTrack = track.DelegateModel.itemsIndex
+                var newSelection = root.selection;
+                if (selectedClipsOnThisTrack.indexOf(clip.DelegateModel.itemsIndex) == -1) {
+                    newSelection.push({
+                        trackIndex: index,
+                        clipIndex: clip.DelegateModel.itemsIndex
+                    });
+                } else {
+                    for (var i = 0; i < newSelection.length; i++) {
+                        if (newSelection[i].trackIndex === index &&
+                                newSelection[i].clipIndex === clip.DelegateModel.itemsIndex) {
+                            newSelection.splice(i, 1);
+                            break;
+                        }
+                    }
+                }
+                root.selection = newSelection;
+                root.clipClicked()
+            }
             onClipClicked: {
                 currentTrack = track.DelegateModel.itemsIndex
-                root.selection = [ clip.DelegateModel.itemsIndex ];
+                root.selection = [{
+                    trackIndex: index,
+                    clipIndex: clip.DelegateModel.itemsIndex
+                }];
                 root.clipClicked()
             }
             onClipDragged: {
