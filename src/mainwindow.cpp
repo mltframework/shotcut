@@ -2220,6 +2220,11 @@ public:
         foreach (QString filename, filenames) {
             Mlt::Producer p(MLT.profile(), filename.toUtf8().constData());
             if (p.is_valid()) {
+                // Convert avformat to avformat-novalidate so that XML loads faster.
+                if (!qstrcmp(p.get("mlt_service"), "avformat")) {
+                    p.set("mlt_service", "avformat-novalidate");
+                    p.set("mute_on_pause", 0);
+                }
                 MLT.setImageDurationFromDefault(&p);
                 MAIN.undoStack()->push(new Playlist::AppendCommand(*model, MLT.XML(&p)));
             }

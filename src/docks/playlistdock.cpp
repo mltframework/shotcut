@@ -384,6 +384,11 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
             QString path = MAIN.removeFileScheme(url);
             Mlt::Producer p(MLT.profile(), path.toUtf8().constData());
             if (p.is_valid()) {
+                // Convert avformat to avformat-novalidate so that XML loads faster.
+                if (!qstrcmp(p.get("mlt_service"), "avformat")) {
+                    p.set("mlt_service", "avformat-novalidate");
+                    p.set("mute_on_pause", 0);
+                }
                 MLT.setImageDurationFromDefault(&p);
                 if (row == -1)
                     MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.XML(&p)));
