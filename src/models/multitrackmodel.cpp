@@ -2479,6 +2479,7 @@ void MultitrackModel::load()
 
     loadPlaylist();
     addBlackTrackIfNeeded();
+    MLT.updateAvformatCaching(m_tractor->count());
     refreshTrackList();
     convertOldDoc();
     consolidateBlanksAllTracks();
