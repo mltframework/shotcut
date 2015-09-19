@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2014 Meltytech, LLC
+ * Copyright (c) 2013-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -260,14 +260,10 @@ Rectangle {
         id: mouseArea
         anchors.fill: parent
         enabled: !isBlank
-        acceptedButtons: Qt.LeftButton | Qt.RightButton
+        acceptedButtons: Qt.LeftButton
         propagateComposedEvents: true
         drag.target: parent
         drag.axis: Drag.XAxis
-        cursorShape: (trimInMouseArea.drag.active || trimOutMouseArea.drag.active)? Qt.SizeHorCursor :
-            (fadeInMouseArea.drag.active || fadeOutMouseArea.drag.active)? Qt.PointingHandCursor :
-            drag.active? Qt.ClosedHandCursor :
-            isBlank? Qt.ArrowCursor : Qt.OpenHandCursor
         property int startX
         onPressed: {
             root.stopScrolling = true
@@ -275,10 +271,7 @@ Rectangle {
             originalTrackIndex = trackIndex
             originalClipIndex = index
             startX = parent.x
-            if (mouse.button === Qt.RightButton)
-                menu.popup()
-            else
-                clipRoot.clicked(clipRoot)
+            clipRoot.clicked(clipRoot)
         }
         onPositionChanged: {
             if (mouse.y < 0 && trackIndex > 0)
@@ -300,6 +293,16 @@ Rectangle {
             }
         }
         onDoubleClicked: timeline.openClip(trackIndex, index)
+        MouseArea {
+            anchors.fill: parent
+            acceptedButtons: Qt.RightButton
+            propagateComposedEvents: true
+            cursorShape: (trimInMouseArea.drag.active || trimOutMouseArea.drag.active)? Qt.SizeHorCursor :
+                (fadeInMouseArea.drag.active || fadeOutMouseArea.drag.active)? Qt.PointingHandCursor :
+                drag.active? Qt.ClosedHandCursor :
+                isBlank? Qt.ArrowCursor : Qt.OpenHandCursor
+            onClicked: menu.popup()
+        }
     }
 
     Canvas {
@@ -577,7 +580,7 @@ Rectangle {
             onPositionChanged: {
                 if (mouse.buttons === Qt.LeftButton) {
                     var newDuration = Math.round((parent.x + parent.width) / timeScale)
-                    var delta = duration - newDuration 
+                    var delta = duration - newDuration
                     if (Math.abs(delta) > 0) {
                         if (clipDuration - originalX - delta > 0)
                             originalX += delta
