@@ -152,8 +152,10 @@ Item {
             Layout.maximumHeight: 80
             Layout.minimumWidth: preset.width
             Layout.maximumWidth: preset.width
+            text: '__empty__' // workaround initialization problem
             property int maxLength: 256
             onTextChanged: {
+                if (text === '__empty__') return
                 if (length > maxLength) {
                     text = text.substring(0, maxLength)
                     cursorPosition = maxLength
