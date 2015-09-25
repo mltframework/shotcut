@@ -146,6 +146,7 @@ void TimelineDock::pulseLockButtonOnTrack(int trackIndex)
 {
     QMetaObject::invokeMethod(m_quickView.rootObject(), "pulseLockButtonOnTrack",
             Qt::DirectConnection, Q_ARG(QVariant, trackIndex));
+    MAIN.showStatusMessage(tr("This track is locked"));
 }
 
 void TimelineDock::chooseClipAtPosition(int position, int * trackIndex, int * clipIndex)
