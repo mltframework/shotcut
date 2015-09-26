@@ -119,15 +119,29 @@ Rectangle {
         }
     }
 
-    Loader {
-        id: filterConfig
+    ScrollView {
+        id: filterConfigScrollView
+        function expandWidth() {
+            filterConfig.item.width =
+                Math.max(filterConfig.minimumWidth,
+                         filterConfigScrollView.width - 20 /* scroll bar */)
+        }
+        onWidthChanged: expandWidth()
+        Loader {
+            id: filterConfig
+            property int minimumWidth: 0
+            onLoaded: {
+                minimumWidth = item.width
+                filterConfigScrollView.expandWidth()
+            }
+        }
     }
         
     states: [
         State {
             name: "landscape"
             AnchorChanges {
-                target: filterConfig
+                target: filterConfigScrollView
                 anchors.top: root.top
                 anchors.bottom: root.bottom
                 anchors.left: attachedContainer.right
@@ -138,7 +152,7 @@ Rectangle {
         State {
             name: "portrait"
             AnchorChanges {
-                target: filterConfig
+                target: filterConfigScrollView
                 anchors.top: attachedContainer.bottom
                 anchors.bottom: root.bottom
                 anchors.left: root.left
