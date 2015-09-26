@@ -22,11 +22,10 @@ import QtQuick.Layouts 1.1
 import QtQuick.Controls.Styles 1.1
 import Shotcut.Controls 1.0
 
-Rectangle {
+Item {
     id: background
-    width: 500
-    height: 300
-    color: 'transparent'
+    width: 350
+    height: 200
 
     SystemPalette { id: activePalette }
 

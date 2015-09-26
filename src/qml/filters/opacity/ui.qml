@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Meltytech, LLC
+ * Copyright (c) 2014-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,6 +22,8 @@ import QtQuick.Layouts 1.0
 import Shotcut.Controls 1.0
 
 Item {
+    width: 350
+    height: 50
     Component.onCompleted: {
         filter.set('start', 1)
         if (filter.isNew) {

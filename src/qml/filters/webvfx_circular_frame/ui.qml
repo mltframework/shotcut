@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2014 Meltytech, LLC
+ * Copyright (c) 2013-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,7 +25,7 @@ import Shotcut.Controls 1.0
 
 Rectangle {
     width: 400
-    height: 200
+    height: 100
     color: 'transparent'
     Component.onCompleted: {
         if (filter.isNew) {

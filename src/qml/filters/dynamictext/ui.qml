@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Meltytech, LLC
+ * Copyright (c) 2014-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -28,6 +28,8 @@ Item {
     property string halignProperty: 'halign'
     property rect filterRect: filter.getRect(rectProperty)
     property var _locale: Qt.locale(application.numericLocale)
+    width: 500
+    height: 350
 
     Component.onCompleted: {
         if (filter.isNew) {

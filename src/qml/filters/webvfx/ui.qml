@@ -24,11 +24,10 @@ import QtQuick.Window 2.1
 import Shotcut.Controls 1.0 as Shotcut
 import org.shotcut.qml 1.0 as Shotcut
 
-Rectangle {
+Item {
     id: webvfxRoot
-    width: 400
-    height: 200
-    color: 'transparent'
+    width: 350
+    height: 100
     property string settingsSavePath: settings.savePath
 
     SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }

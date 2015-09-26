@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Meltytech, LLC
+ * Copyright (c) 2014-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,10 +21,9 @@ import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.0
 import Shotcut.Controls 1.0
 
-Rectangle {
-    width: 400
-    height: 200
-    color: 'transparent'
+Item {
+    width: 350
+    height: 150
 
     Component.onCompleted: {
         if (filter.isNew) {

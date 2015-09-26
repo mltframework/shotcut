@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Meltytech, LLC
+ * Copyright (c) 2014-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,15 +21,14 @@ import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.0
 import Shotcut.Controls 1.0
 
-Rectangle {
+Item {
     property string paramRed: '0'
     property string paramGreen: '1'
     property string paramBlue: '2'
     property string paramAction: '3'
     property var defaultParameters: [paramRed, paramGreen, paramBlue, paramAction]
-    width: 400
-    height: 200
-    color: 'transparent'
+    width: 450
+    height: 250
     
     function loadWheels() {
         wheel.color = Qt.rgba(filter.getDouble(paramRed),

@@ -18,10 +18,9 @@
 
 import QtQuick 2.1
 
-Rectangle {
-    width: 400
-    height: 200
-    color: 'transparent'
+Item {
+    width: 350
+    height: 10
     property string gainParameter: 'gain'
     Component.onCompleted: {
         if (filter.isNew) {

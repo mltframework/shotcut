@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Meltytech, LLC
+ * Copyright (c) 2014-2015 Meltytech, LLC
  * Author: Brian Matherly <pez4brian@yahoo.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,10 +18,9 @@
 
 import QtQuick 2.1
 
-Rectangle {
-    width: 400
-    height: 200
-    color: 'transparent'
+Item {
+    width: 350
+    height: 10
 
     Component.onCompleted: {
         if (filter.get("mlt_service").indexOf("movit.") == 0 ) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Meltytech, LLC
+ * Copyright (c) 2014-2015 Meltytech, LLC
  * Author: Brian Matherly <pez4brian@yahoo.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,11 +21,10 @@ import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.0
 import Shotcut.Controls 1.0
 
-Rectangle {
+Item {
     property var defaultParameters: ['left', 'right', 'top', 'bottom', 'center', 'center_bias']
-    width: 400
+    width: 350
     height: 200
-    color: 'transparent'
     
     function setEnabled() {
         if (filter.get('center') == 1) {

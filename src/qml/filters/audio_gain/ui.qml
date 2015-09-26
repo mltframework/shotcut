@@ -21,10 +21,9 @@ import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.0
 import Shotcut.Controls 1.0
 
-Rectangle {
-    width: 400
-    height: 200
-    color: 'transparent'
+Item {
+    width: 300
+    height: 50
     property string gainParameter: 'gain'
     Component.onCompleted: {
         if (filter.isNew) {

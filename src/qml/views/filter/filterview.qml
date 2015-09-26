@@ -122,9 +122,11 @@ Rectangle {
     ScrollView {
         id: filterConfigScrollView
         function expandWidth() {
-            filterConfig.item.width =
-                Math.max(filterConfig.minimumWidth,
-                         filterConfigScrollView.width - 20 /* scroll bar */)
+            if (filterConfig.item) {
+                filterConfig.item.width =
+                    Math.max(filterConfig.minimumWidth,
+                             filterConfigScrollView.width - 20 /* scroll bar */)
+            }
         }
         onWidthChanged: expandWidth()
         Loader {

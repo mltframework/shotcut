@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Meltytech, LLC
+ * Copyright (c) 2014-2015 Meltytech, LLC
  * Author: Brian Matherly <pez4brian@yahoo.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,16 +22,15 @@ import QtQuick.Layouts 1.1
 import Shotcut.Controls 1.0
 import QtQuick.Controls.Styles 1.1
 
-Rectangle {
+Item {
     property var defaultParameters: []
     property var neutralParam: ""
     property var tempParam: ""
     property var defaultNeutral: "#7f7f7f"
     property var defaultTemp: 6500.0
     property var tempScale: 15000.0
-    width: 400
-    height: 200
-    color: 'transparent'
+    width: 350
+    height: 100
     Component.onCompleted: {
         if (filter.get("mlt_service").indexOf("movit.") == 0 ) {
             // Movit filter

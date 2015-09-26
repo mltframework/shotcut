@@ -21,10 +21,9 @@ import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.0
 import Shotcut.Controls 1.0
 
-Rectangle {
-    width: 400
-    height: 200
-    color: 'transparent'
+Item {
+    width: 350
+    height: 100
     Component.onCompleted: {
         if (filter.isNew) {
             // Set default parameter values

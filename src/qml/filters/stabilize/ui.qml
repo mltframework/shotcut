@@ -22,11 +22,10 @@ import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.0
 import Shotcut.Controls 1.0
 
-Rectangle {
+Item {
     id: stabilizeRoot
-    width: 400
-    height: 200
-    color: 'transparent'
+    width: 350
+    height: 150
     property string settingsSavePath: settings.savePath
 
     function setStatus( inProgress ) {

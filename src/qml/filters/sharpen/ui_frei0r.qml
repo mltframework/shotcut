@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Meltytech, LLC
+ * Copyright (c) 2014-2015 Meltytech, LLC
  * Author: Brian Matherly <pez4brian@yahoo.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,13 +21,12 @@ import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.0
 import Shotcut.Controls 1.0
 
-Rectangle {
+Item {
     property string paramAmount: '0'
     property string paramSize: '1'
     property var defaultParameters: [paramAmount, paramSize]
-    width: 400
-    height: 200
-    color: 'transparent'
+    width: 350
+    height: 100
     Component.onCompleted: {
         if (filter.isNew) {
             // Set default parameter values

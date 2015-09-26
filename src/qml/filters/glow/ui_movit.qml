@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Meltytech, LLC
+ * Copyright (c) 2014-2015 Meltytech, LLC
  * Author: Brian Matherly <pez4brian@yahoo.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,11 +21,10 @@ import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.0
 import Shotcut.Controls 1.0
 
-Rectangle {
+Item {
     property var defaultParameters: ['radius','blur_mix','highlight_cutoff']
-    width: 400
-    height: 200
-    color: 'transparent'
+    width: 350
+    height: 125
     Component.onCompleted: {
         filter.set('start', 1)
         if (filter.isNew) {
