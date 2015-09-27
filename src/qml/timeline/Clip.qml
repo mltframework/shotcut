@@ -19,6 +19,7 @@
 import QtQuick 2.2
 import QtQuick.Controls 1.0
 import QtGraphicalEffects 1.0
+import QtQml.Models 2.2
 
 Rectangle {
     id: clipRoot
@@ -83,32 +84,11 @@ Rectangle {
     }
 
     function generateWaveform() {
-        var width = waveform.parent.width - waveform.parent.border.width * 2;
-        waveform.width = width;
-
-        if (!waveform.visible) return;
-        if (typeof audioLevels == 'undefined') return;
-
-        var cx = waveform.getContext('2d');
-        if (cx === null) return
-        // TODO use project channel count
-        var channels = 2;
-        var height = waveform.height;
-        var color = getColor();
-        cx.beginPath();
-        cx.moveTo(-1, height);
-        for (var i = 0; i < width; i++) {
-            var j = Math.round(i / timeScale);
-            var level = Math.max(audioLevels[j * channels], audioLevels[j * channels + 1]) / 256;
-            cx.lineTo(i, height - level * height);
-        }
-        cx.lineTo(width, height);
-        cx.closePath();
-        cx.fillStyle = Qt.lighter(color);
-        cx.fill();
-        cx.strokeStyle = Qt.darker(color);
-        cx.stroke();
-        waveform.requestPaint();
+        // This is needed to make the model have the correct count.
+        // Model as a property expression is not working in all cases.
+        waveformRepeater.model = Math.ceil(waveform.innerWidth / waveform.maxWidth)
+        for (var i = 0; i < waveformRepeater.count; i++)
+            waveformRepeater.itemAt(0).requestPaint()
     }
 
     onAudioLevelsChanged: generateWaveform()
@@ -161,15 +141,50 @@ Rectangle {
         }
     }
 
-    Canvas {
+    Row {
         id: waveform
-        Component.onCompleted: view.applyQTBUG47714Workaround(waveform);
         visible: !isBlank && settings.timelineShowWaveforms
         height: isAudio? parent.height : parent.height / 2
         anchors.left: parent.left
         anchors.bottom: parent.bottom
         anchors.margins: parent.border.width
         opacity: 0.7
+        property int maxWidth: 10000
+        property int innerWidth: clipRoot.width - clipRoot.border.width * 2
+
+        Repeater {
+            id: waveformRepeater
+            Canvas {
+                Component.onCompleted: view.applyQTBUG47714Workaround(this)
+                width: Math.min(waveform.innerWidth, waveform.maxWidth)
+                clip: true
+                height: waveform.height
+                renderStrategy: Canvas.Threaded
+                onPaint: {
+                    if (typeof clipRoot.audioLevels == 'undefined') return;
+                    var cx = getContext('2d');
+                    if (cx === null) return
+                    // TODO use project channel count
+                    var channels = 2;
+                    var color = getColor();
+                    var offset = index * Math.round(waveform.maxWidth / timeScale) * channels;
+                    cx.clearRect(0, 0, width, height);
+                    cx.beginPath();
+                    cx.moveTo(-1, height);
+                    for (var i = 0; i < width; i++) {
+                        var j = Math.round(i / timeScale) * channels;
+                        var level = Math.max(audioLevels[offset + j], audioLevels[offset + j + 1]) / 256;
+                        cx.lineTo(i, height - level * height);
+                    }
+                    cx.lineTo(width, height);
+                    cx.closePath();
+                    cx.fillStyle = Qt.lighter(color);
+                    cx.fill();
+                    cx.strokeStyle = Qt.darker(color);
+                    cx.stroke();
+                }
+            }
+        }
     }
 
     Rectangle {
