@@ -17,7 +17,7 @@
  */
 
 import QtQuick 2.1
-import QtQuick.Controls 1.0
+import QtQuick.Controls 1.3
 import QtQuick.Layouts 1.0
 import Shotcut.Controls 1.0
 
@@ -27,6 +27,10 @@ Rectangle {
     signal currentFilterRequested(int attachedIndex)
     
     function clearCurrentFilter() {
+        if (filterConfig.item) {
+            filterConfig.item.width = 1
+            filterConfig.item.height = 1
+        }
         filterConfig.source = ""
     }
     
