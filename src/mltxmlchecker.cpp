@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Meltytech, LLC
+ * Copyright (c) 2014-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,18 +16,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "mltxmlgpuchecker.h"
+#include "mltxmlchecker.h"
 #include "mltcontroller.h"
 #include <QIODevice>
 #include <QDebug>
 
-MltXmlGpuChecker::MltXmlGpuChecker()
+MltXmlChecker::MltXmlChecker()
     : m_needsGPU(false)
     , m_hasEffects(false)
 {
 }
 
-bool MltXmlGpuChecker::check(QIODevice *device)
+bool MltXmlChecker::check(QIODevice *device)
 {
     qDebug() << "begin";
     m_xml.setDevice(device);
@@ -42,12 +42,12 @@ bool MltXmlGpuChecker::check(QIODevice *device)
     return m_xml.error() == QXmlStreamReader::NoError;
 }
 
-QString MltXmlGpuChecker::errorString() const
+QString MltXmlChecker::errorString() const
 {
     return m_xml.errorString();
 }
 
-void MltXmlGpuChecker::readMlt()
+void MltXmlChecker::readMlt()
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "mlt");
 
@@ -67,7 +67,7 @@ void MltXmlGpuChecker::readMlt()
     }
 }
 
-void MltXmlGpuChecker::readProperty()
+void MltXmlChecker::readProperty()
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "property");
 

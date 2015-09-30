@@ -83,7 +83,6 @@ SOURCES += main.cpp\
     commands/timelinecommands.cpp \
     util.cpp \
     widgets/lumamixtransition.cpp \
-    mltxmlgpuchecker.cpp \
     autosavefile.cpp \
     widgets/directshowvideowidget.cpp \
     jobs/abstractjob.cpp \
@@ -102,7 +101,8 @@ SOURCES += main.cpp\
     widgets/audioscale.cpp \
     widgets/playlisttable.cpp \
     commands/undohelper.cpp \
-    models/audiolevelstask.cpp
+    models/audiolevelstask.cpp \
+    mltxmlchecker.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -179,7 +179,6 @@ HEADERS  += mainwindow.h \
     commands/timelinecommands.h \
     util.h \
     widgets/lumamixtransition.h \
-    mltxmlgpuchecker.h \
     autosavefile.h \
     widgets/directshowvideowidget.h \
     jobs/abstractjob.h \
@@ -201,7 +200,8 @@ HEADERS  += mainwindow.h \
     widgets/playlisttable.h \
     commands/undohelper.h \
     models/audiolevelstask.h \
-    shotcut_mlt_properties.h
+    shotcut_mlt_properties.h \
+    mltxmlchecker.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \

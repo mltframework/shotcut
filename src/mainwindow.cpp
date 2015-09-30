@@ -61,7 +61,7 @@
 #include "widgets/gltestwidget.h"
 #include "docks/timelinedock.h"
 #include "widgets/lumamixtransition.h"
-#include "mltxmlgpuchecker.h"
+#include "mltxmlchecker.h"
 #include "qmltypes/qmlutilities.h"
 #include "qmltypes/qmlapplication.h"
 #include "autosavefile.h"
@@ -716,7 +716,7 @@ void MainWindow::open(Mlt::Producer* producer)
 
 bool MainWindow::isCompatibleWithGpuMode(const QString &url)
 {
-    MltXmlGpuChecker gpuChecker;
+    MltXmlChecker gpuChecker;
     QFile file(url);
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         if (gpuChecker.check(&file)) {

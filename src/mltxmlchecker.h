@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Meltytech, LLC
+ * Copyright (c) 2014-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,17 +16,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef MLTXMLGPUCHECKER_H
-#define MLTXMLGPUCHECKER_H
+#ifndef MLTXMLCHECKER_H
+#define MLTXMLCHECKER_H
 
 #include <QXmlStreamReader>
 
 class QUIDevice;
 
-class MltXmlGpuChecker
+class MltXmlChecker
 {
 public:
-    MltXmlGpuChecker();
+    MltXmlChecker();
     bool check(QIODevice *device);
     QString errorString() const;
     bool needsGPU() const { return m_needsGPU; }
@@ -41,4 +41,4 @@ private:
     bool m_hasEffects;
 };
 
-#endif // MLTXMLGPUCHECKER_H
+#endif // MLTXMLCHECKER_H
