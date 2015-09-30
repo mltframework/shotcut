@@ -24,6 +24,7 @@
 #include <QTimer>
 #include <QUrl>
 #include "mltcontroller.h"
+#include "mltxmlchecker.h"
 
 #define EXIT_RESTART (42)
 
@@ -135,7 +136,7 @@ private:
 #endif
 
 public slots:
-    bool isCompatibleWithGpuMode(const QString& url);
+    bool isCompatibleWithGpuMode(MltXmlChecker& checker);
     void updateAutoSave();
     void open(QString url, const Mlt::Properties* = 0);
     void openVideo();
