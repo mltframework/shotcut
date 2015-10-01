@@ -285,22 +285,22 @@
 <context>
     <name>Clip</name>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="599"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="617"/>
         <source>Remove</source>
         <translation>Odstranit</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="604"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="622"/>
         <source>Lift</source>
         <translation>Vyzvednout</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="609"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="627"/>
         <source>Open As Clip</source>
         <translation>Otevřít jako záběr</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="614"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="632"/>
         <source>Split At Playhead (S)</source>
         <translation>Rozdělit v poloze přehrávání (S)</translation>
     </message>
@@ -460,33 +460,6 @@
         <location filename="../src/dialogs/customprofiledialog.ui" line="307"/>
         <source>Scan mode</source>
         <translation>Režim prohledávání</translation>
-    </message>
-</context>
-<context>
-    <name>DataProcessor</name>
-    <message>
-        <source>Received Continuation frame, while there is nothing to continue.</source>
-        <translation type="vanished">Přijat pokračovací snímek, i když není, co by pokračovalo.</translation>
-    </message>
-    <message>
-        <source>All data frames after the initial data frame must have opcode 0 (continuation).</source>
-        <translation type="vanished">Všechny datové snímky po počátečním datovém snímku musí mít kód operace 0 (pokračování).</translation>
-    </message>
-    <message>
-        <source>Received message is too big.</source>
-        <translation type="vanished">Přijatá zpráva je příliš velká.</translation>
-    </message>
-    <message>
-        <source>Invalid UTF-8 code encountered.</source>
-        <translation type="vanished">Narazilo se na neplatný kód UTF-8.</translation>
-    </message>
-    <message>
-        <source>Payload of close frame is too small.</source>
-        <translation type="vanished">Užitečné zatížení uzavírajícího snímku je příliš malé.</translation>
-    </message>
-    <message>
-        <source>Invalid close code %1 detected.</source>
-        <translation type="vanished">Zjištěn neplatný kód závěru %1.</translation>
     </message>
 </context>
 <context>
@@ -1024,15 +997,15 @@ v dočasném zhuštění</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1369"/>
-        <location filename="../src/docks/encodedock.cpp" line="268"/>
+        <location filename="../src/docks/encodedock.cpp" line="269"/>
         <source>Encode File</source>
         <translation>Zakódovat soubor</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1376"/>
-        <location filename="../src/docks/encodedock.cpp" line="797"/>
-        <location filename="../src/docks/encodedock.cpp" line="804"/>
-        <location filename="../src/docks/encodedock.cpp" line="908"/>
+        <location filename="../src/docks/encodedock.cpp" line="798"/>
+        <location filename="../src/docks/encodedock.cpp" line="805"/>
+        <location filename="../src/docks/encodedock.cpp" line="909"/>
         <source>Stream</source>
         <translation>Proud</translation>
     </message>
@@ -1052,73 +1025,73 @@ v dočasném zhuštění</translation>
         <translation>Zastavit zachytávání obrazovky</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="75"/>
+        <location filename="../src/docks/encodedock.cpp" line="76"/>
         <source>Automatic from extension</source>
         <translation>Automaticky podle přípony</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="82"/>
-        <location filename="../src/docks/encodedock.cpp" line="89"/>
+        <location filename="../src/docks/encodedock.cpp" line="83"/>
+        <location filename="../src/docks/encodedock.cpp" line="90"/>
         <source>Default for format</source>
         <translation>Výchozí pro formát</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="270"/>
-        <location filename="../src/docks/encodedock.cpp" line="709"/>
-        <location filename="../src/docks/encodedock.cpp" line="907"/>
+        <location filename="../src/docks/encodedock.cpp" line="271"/>
+        <location filename="../src/docks/encodedock.cpp" line="710"/>
+        <location filename="../src/docks/encodedock.cpp" line="908"/>
         <source>Capture File</source>
         <translation>Zachytit soubor</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="278"/>
-        <location filename="../src/docks/encodedock.cpp" line="653"/>
+        <location filename="../src/docks/encodedock.cpp" line="279"/>
+        <location filename="../src/docks/encodedock.cpp" line="654"/>
         <source>Custom</source>
         <translation>Vlastní</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="290"/>
+        <location filename="../src/docks/encodedock.cpp" line="291"/>
         <source>Stock</source>
         <translation>Tovární</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="704"/>
-        <location filename="../src/docks/encodedock.cpp" line="752"/>
+        <location filename="../src/docks/encodedock.cpp" line="705"/>
+        <location filename="../src/docks/encodedock.cpp" line="753"/>
         <source>Stop Capture</source>
         <translation>Zastavit zachytávání</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="726"/>
+        <location filename="../src/docks/encodedock.cpp" line="727"/>
         <source>Encode to File</source>
         <translation>Zakódovat do souboru</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="726"/>
+        <location filename="../src/docks/encodedock.cpp" line="727"/>
         <source>Capture to File</source>
         <translation>Zachytit do souboru</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="792"/>
-        <location filename="../src/docks/encodedock.cpp" line="813"/>
+        <location filename="../src/docks/encodedock.cpp" line="793"/>
+        <location filename="../src/docks/encodedock.cpp" line="814"/>
         <source>Stop Stream</source>
         <translation>Zastavit proud</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="805"/>
+        <location filename="../src/docks/encodedock.cpp" line="806"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>Zadejte schéma síťového protokolu, adresu, přípojku a parametry jako adresu (URL):</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="843"/>
+        <location filename="../src/docks/encodedock.cpp" line="844"/>
         <source>Add Encode Preset</source>
         <translation>Přidat přednastavení zakódování</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="886"/>
+        <location filename="../src/docks/encodedock.cpp" line="887"/>
         <source>Delete Preset</source>
         <translation>Smazat přednastavení</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="887"/>
+        <location filename="../src/docks/encodedock.cpp" line="888"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>Opravdu chcete smazat %1?</translation>
     </message>
@@ -2335,7 +2308,7 @@ trvání přechodu.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="340"/>
-        <location filename="../src/mainwindow.cpp" line="2055"/>
+        <location filename="../src/mainwindow.cpp" line="2106"/>
         <source>Enter Full Screen</source>
         <translation>Vstoupit do režimu na celou obrazovku</translation>
     </message>
@@ -2356,7 +2329,7 @@ trvání přechodu.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="364"/>
-        <location filename="../src/mainwindow.cpp" line="190"/>
+        <location filename="../src/mainwindow.cpp" line="189"/>
         <source>Properties</source>
         <translation>Vlastnosti</translation>
     </message>
@@ -2372,7 +2345,7 @@ trvání přechodu.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="391"/>
-        <location filename="../src/mainwindow.cpp" line="271"/>
+        <location filename="../src/mainwindow.cpp" line="270"/>
         <source>History</source>
         <translation>Historie</translation>
     </message>
@@ -2550,89 +2523,108 @@ trvání přechodu.</translation>
         <translation>Ukázat titulkové proužky</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="156"/>
+        <location filename="../src/mainwindow.cpp" line="155"/>
         <source>Ctrl+Z</source>
         <translation>Ctrl+Z</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="157"/>
+        <location filename="../src/mainwindow.cpp" line="156"/>
         <source>Ctrl+Shift+Z</source>
         <translation>Ctrl+Shift+Z</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="473"/>
+        <location filename="../src/mainwindow.cpp" line="472"/>
         <source>Non-Broadcast</source>
         <translation>Nestandardní</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="484"/>
+        <location filename="../src/mainwindow.cpp" line="483"/>
         <source>DVD Widescreen NTSC</source>
         <translation>Širokoúhlé DVD NTSC</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="485"/>
+        <location filename="../src/mainwindow.cpp" line="484"/>
         <source>DVD Widescreen PAL</source>
         <translation>Širokoúhlé DVD PAL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="490"/>
+        <location filename="../src/mainwindow.cpp" line="489"/>
         <source>Custom</source>
         <translation>Vlastní</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="509"/>
+        <location filename="../src/mainwindow.cpp" line="508"/>
         <source>Screen %1</source>
         <translation>Obrazovka %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="540"/>
+        <location filename="../src/mainwindow.cpp" line="539"/>
         <source>Off</source>
         <translation>Vypnuto</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="543"/>
+        <location filename="../src/mainwindow.cpp" line="542"/>
         <source>Internal</source>
         <translation>Vnitřní</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="546"/>
+        <location filename="../src/mainwindow.cpp" line="545"/>
         <source>External</source>
         <translation>Vnější</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="560"/>
+        <location filename="../src/mainwindow.cpp" line="559"/>
         <source>DeckLink Keyer</source>
         <translation>Klíčovač DeckLink</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="698"/>
-        <location filename="../src/mainwindow.cpp" line="700"/>
-        <location filename="../src/mainwindow.cpp" line="867"/>
-        <location filename="../src/mainwindow.cpp" line="2502"/>
+        <location filename="../src/mainwindow.cpp" line="705"/>
+        <location filename="../src/mainwindow.cpp" line="707"/>
+        <location filename="../src/mainwindow.cpp" line="934"/>
+        <location filename="../src/mainwindow.cpp" line="2562"/>
         <source>Failed to open </source>
         <translation>Nepodařilo se otevřít</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="726"/>
+        <location filename="../src/mainwindow.cpp" line="729"/>
         <source>The file you opened uses GPU effects, but GPU processing is not enabled.
 Do you want to enable GPU processing and restart?</source>
         <translation>Soubor, který jste otevřel, používá efekty grafického procesoru, ale zpracování pomocí grafického procesoru není povoleno.
 Chcete povolit zpracování pomocí grafického procesoru a program spustit znovu?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1092"/>
+        <location filename="../src/mainwindow.cpp" line="753"/>
+        <source>Shotcut noticed some problems in your project.
+Do you want Shotcut to try to repair it?
+
+If you choose Yes, Shotcut will create a copy of your project
+with &quot;- Repaired&quot; in the file name and open it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="767"/>
+        <source>Repaired</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="790"/>
+        <source>Repairing the project failed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1159"/>
         <source>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2015 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
         <translation>&lt;h1&gt;Verze Shotcutu %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; je svobodný, s otevřeným zdrojovým kódem, editor videa pro různé operační systémy.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Autorské právo &amp;copy; 2011-2015 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licencováno pod &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Tento program hrdě používá následující projekty:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; aplikace a systém pro uživatelské rozhraní&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimediální authoringový systém&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; knihovny multimediálních formátů a kodeků&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; kodéry H.264 &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 a VP9&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; kodér MP3&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; přídavné moduly pro obraz (video)&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; přídavné moduly pro zvuk (audio)&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; sbírka ikon od &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; sbírka ikon&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;Zdrojový kód použitý k sestavení programu lze stáhnout z &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;Program je šířen s nadějí, že bude užitečný, ale BEZ JAKÉKOLI ZÁRUKY; bez předpokládané záruky PRODEJNOSTI nebo VHODNOSTI PRO URČITÝ ÚČEL.&lt;/small&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2257"/>
+        <location filename="../src/mainwindow.cpp" line="2313"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>Musíte Shotcut spustit kvůli přepnutí rozhraní na nový jazyk znovu.
 Chcete jej spustit znovu nyní?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2306"/>
+        <location filename="../src/mainwindow.cpp" line="2362"/>
         <source>You must restart Shotcut to switch using GPU processing.
 Do you want to restart now?</source>
         <translation>Musíte Shotcut spustit znovu kvůli přepnutí k používání
@@ -2640,19 +2632,19 @@ zpracování pomocí grafického procesoru.
 Chcete jej spustit znovut nyní?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2540"/>
+        <location filename="../src/mainwindow.cpp" line="2600"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
         <translation>Musíte Shotcut spustit kvůli změně způsobu zobrazení znovu.
 Chcete jej spustit znovu nyní?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="755"/>
+        <location filename="../src/mainwindow.cpp" line="804"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation>Existují automaticky uložené soubory. Chcete je nyní obnovit?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="96"/>
+        <location filename="../src/mainwindow.cpp" line="95"/>
         <source>Error: This program requires the JACK 1 library.
 
 Please install it using your package manager. It may be named libjack0, jack-audio-connection-kit, jack, or similar.</source>
@@ -2661,7 +2653,7 @@ Please install it using your package manager. It may be named libjack0, jack-aud
 Nainstalujte ji, prosím, pomocí správce balíčků. Může být pojmenována libjack0, jack-audio-connection-kit, jack, nebo tak nějak.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="104"/>
+        <location filename="../src/mainwindow.cpp" line="103"/>
         <source>Error: This program requires the SDL 1.2 library.
 
 Please install it using your package manager. It may be named libsdl1.2debian, SDL, or similar.</source>
@@ -2670,70 +2662,70 @@ Please install it using your package manager. It may be named libsdl1.2debian, S
 Nainstalujte ji, prosím, pomocí správce balíčků. Může být pojmenována libsdl1.2debian, SDL, nebo tak nějak.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="878"/>
-        <location filename="../src/mainwindow.cpp" line="2487"/>
+        <location filename="../src/mainwindow.cpp" line="945"/>
+        <location filename="../src/mainwindow.cpp" line="2543"/>
         <source>Open File</source>
         <translation>Otevřít soubor</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1086"/>
+        <location filename="../src/mainwindow.cpp" line="1153"/>
         <source>%1[*] - %2</source>
         <translation>%1[*] - %2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1091"/>
+        <location filename="../src/mainwindow.cpp" line="1158"/>
         <source>About Shotcut</source>
         <translation>O programu Shotcut</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1634"/>
-        <location filename="../src/mainwindow.cpp" line="1659"/>
+        <location filename="../src/mainwindow.cpp" line="1685"/>
+        <location filename="../src/mainwindow.cpp" line="1710"/>
         <source>Saved %1</source>
         <translation>Uloženo %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1646"/>
+        <location filename="../src/mainwindow.cpp" line="1697"/>
         <source>Save XML</source>
         <translation>Uložit XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1646"/>
+        <location filename="../src/mainwindow.cpp" line="1697"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1671"/>
+        <location filename="../src/mainwindow.cpp" line="1722"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>Projekt byl změněn.
 Chcete uložit své změny?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1695"/>
+        <location filename="../src/mainwindow.cpp" line="1746"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
         <translation>Jsou tu nedokončené úkoly.
 Pořád ještě chcete program ukončit?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2058"/>
+        <location filename="../src/mainwindow.cpp" line="2109"/>
         <source>Exit Full Screen</source>
         <translation>Opustit režim na celou obrazovku</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2070"/>
+        <location filename="../src/mainwindow.cpp" line="2121"/>
         <source>GPU Processing is not supported</source>
         <translation>Zpracování pomocí grafického procesoru není podporováno</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2297"/>
+        <location filename="../src/mainwindow.cpp" line="2353"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>Nepodařilo se spojit se s JACKem.
 Ověřte, prosím, že je JACK nainstalován a běží.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2488"/>
+        <location filename="../src/mainwindow.cpp" line="2544"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;Všechny soubory (*)</translation>
     </message>
@@ -3650,7 +3642,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="180"/>
         <location filename="../src/docks/playlistdock.cpp" line="248"/>
-        <location filename="../src/docks/playlistdock.cpp" line="397"/>
+        <location filename="../src/docks/playlistdock.cpp" line="403"/>
         <source>You cannot insert a playlist into a playlist!</source>
         <translation>Nemůžete vložit seznam záběrů do seznamu záběrů!</translation>
     </message>
@@ -3882,54 +3874,6 @@ p, li { white-space: pre-wrap; }
         <translation>Přesunout %1 z %2 do %3</translation>
     </message>
     <message>
-        <source>Timeout when reading data from socket.</source>
-        <translation type="vanished">Překročení času při čtení dat ze zásuvky (socket).</translation>
-    </message>
-    <message>
-        <source>Error occurred while reading from the network: %1</source>
-        <translation type="vanished">Při čtení ze sítě se vyskytla chyba: %1</translation>
-    </message>
-    <message>
-        <source>Lengths smaller than 126 must be expressed as one byte.</source>
-        <translation type="vanished">Délky menší než 126 musí být vyjádřeny jako jeden byty.</translation>
-    </message>
-    <message>
-        <source>Something went wrong during reading from the network.</source>
-        <translation type="vanished">Něco se během čtení ze sítě nepodařilo.</translation>
-    </message>
-    <message>
-        <source>Lengths smaller than 65536 (2^16) must be expressed as 2 bytes.</source>
-        <translation type="vanished">Délky menší než 65536 (2^16) musí být vyjádřeny jako dva byty.</translation>
-    </message>
-    <message>
-        <source>Error while reading from the network: %1.</source>
-        <translation type="vanished">Chyba při čtení ze sítě: %1.</translation>
-    </message>
-    <message>
-        <source>Maximum framesize exceeded.</source>
-        <translation type="vanished">Překročena největší možná velikost snímku.</translation>
-    </message>
-    <message>
-        <source>Some serious error occurred while reading from the network.</source>
-        <translation type="vanished">Během čtení ze sítě se vyskytla vážná chyba.</translation>
-    </message>
-    <message>
-        <source>Rsv field is non-zero</source>
-        <translation type="vanished">Pole Rsv je nenulové</translation>
-    </message>
-    <message>
-        <source>Used reserved opcode</source>
-        <translation type="vanished">Použit vyhrazený kód operace</translation>
-    </message>
-    <message>
-        <source>Controle frame is larger than 125 bytes</source>
-        <translation type="vanished">Řídící snímek je větší než 125 bytů</translation>
-    </message>
-    <message>
-        <source>Controle frames cannot be fragmented</source>
-        <translation type="vanished">Řídící snímky nelze rozkouskovat</translation>
-    </message>
-    <message>
         <location filename="../src/commands/timelinecommands.cpp" line="33"/>
         <source>Append to track</source>
         <translation>Připojit ke stopě</translation>
@@ -4011,113 +3955,55 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="438"/>
-        <location filename="../src/commands/timelinecommands.cpp" line="541"/>
-        <location filename="../src/commands/timelinecommands.cpp" line="580"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="546"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="585"/>
         <source>Add transition</source>
         <translation>Přidat přechod</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="469"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="474"/>
         <source>Trim transition in point</source>
         <translation>Oříznout přechod na bodě</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="505"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="510"/>
         <source>Trim transition out point</source>
         <translation>Oříznout přechod mimo bod</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="616"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="621"/>
         <source>Add video track</source>
         <translation>Přidat obrazovou stopu</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="618"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="623"/>
         <source>Add audio track</source>
         <translation>Přidat zvukovou stopu</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="641"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="646"/>
         <source>Insert audio track</source>
         <translation>Vložit do zvukové stopy</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="643"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="648"/>
         <source>Insert video track</source>
         <translation>Vložit do obrazové stopy</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="663"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="668"/>
         <source>Remove audio track</source>
         <translation> Odstranit zvukovou stopu</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="665"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="670"/>
         <source>Remove video track</source>
         <translation> Odstranit obrazovou stopu</translation>
     </message>
     <message>
-        <location filename="../src/mltxmlgpuchecker.cpp" line="38"/>
+        <location filename="../src/mltxmlchecker.cpp" line="61"/>
         <source>The file is not a MLT XML file.</source>
         <translation>Soubor není souborem MLT XML.</translation>
-    </message>
-</context>
-<context>
-    <name>QWebSocketPrivate</name>
-    <message>
-        <source>Connection closed</source>
-        <translation type="vanished">Spojení ukončeno</translation>
-    </message>
-    <message>
-        <source>Error writing bytes to socket: %1.</source>
-        <translation type="vanished">Chyba při zápisu bytů do zásuvky (socket): %1.</translation>
-    </message>
-    <message>
-        <source>Bytes written %1 != %2.</source>
-        <translation type="vanished">Zapsaných bytů %1 != %2.</translation>
-    </message>
-    <message>
-        <source>Invalid statusline in response: %1.</source>
-        <translation type="vanished">Neplatný stavový řádek v odpovědi: %1.</translation>
-    </message>
-    <message>
-        <source>Accept-Key received from server %1 does not match the client key %2.</source>
-        <translation type="vanished">Accept-Key přijatý od serveru %1 neodpovídá klientskému klíči %2.</translation>
-    </message>
-    <message>
-        <source>Handshake: Server requests a version that we don&apos;t support: %1.</source>
-        <translation type="vanished">Podání ruky: Server požaduje verzi, jež není podporována: %1.</translation>
-    </message>
-    <message>
-        <source>Unknown error condition encountered. Aborting connection.</source>
-        <translation type="vanished">Narazilo se na neznámou chybovou podmínku. Spojení přerušeno.</translation>
-    </message>
-    <message>
-        <source>Unhandled http status code: %1.</source>
-        <translation type="vanished">Nezpracovaný stavový kód http: %1.</translation>
-    </message>
-</context>
-<context>
-    <name>QWebSocketServerPrivate</name>
-    <message>
-        <source>Server closed.</source>
-        <translation type="vanished">Server zavřen.</translation>
-    </message>
-    <message>
-        <source>Upgrading to websocket failed.</source>
-        <translation type="vanished">Povýšení websocketu se nezdařilo.</translation>
-    </message>
-    <message>
-        <source>Cannot upgrade to websocket.</source>
-        <translation type="vanished">Nelze povýšit websocket.</translation>
-    </message>
-    <message>
-        <source>Invalid response received.</source>
-        <translation type="vanished">Přijata neplatná odpověď.</translation>
-    </message>
-    <message>
-        <source>Closing socket because of invalid or unsupported request.</source>
-        <translation type="vanished">Zásuvka (socket) se zavírá z důvodu neplatného nebo nepodporovaného požadavku.</translation>
     </message>
 </context>
 <context>
@@ -4226,97 +4112,97 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>SizePositionUI</name>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="41"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="43"/>
         <source>Bottom Left</source>
         <translation>Dole vlevo</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="46"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="48"/>
         <source>Bottom Right</source>
         <translation>Dole vpravo</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="51"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="53"/>
         <source>Top Left</source>
         <translation>Nahoře vlevo</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="56"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="58"/>
         <source>Top Right</source>
         <translation>Nahoře vpravo</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="120"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="122"/>
         <source>Preset</source>
         <translation>Přednastavení</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="131"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="133"/>
         <source>Position</source>
         <translation>Poloha</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="151"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="153"/>
         <source>Size</source>
         <translation>Velikost</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="172"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="174"/>
         <source>Size mode</source>
         <translation>Režim velikosti</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="179"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="181"/>
         <source>Fit</source>
         <translation>Umístit</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="188"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="190"/>
         <source>Fill</source>
         <translation>Vyplnit</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="197"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="199"/>
         <source>Distort</source>
         <translation>Zkreslit</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="207"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="209"/>
         <source>Horizontal fit</source>
         <translation>Vodorovné umístění</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="212"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="214"/>
         <source>Left</source>
         <translation>Vlevo</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="219"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="221"/>
         <source>Center</source>
         <translation>Střed</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="226"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="228"/>
         <source>Right</source>
         <translation>Vpravo</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="234"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="236"/>
         <source>Vertical fit</source>
         <translation>Svislé umístění</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="239"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="241"/>
         <source>Top</source>
         <translation>Nahoře</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="246"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="248"/>
         <source>Middle</source>
         <translation>Střed</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="253"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="255"/>
         <source>Bottom</source>
         <translation>Dole</translation>
     </message>
@@ -4866,22 +4752,22 @@ obrazovky do SDI/HDMI.</translation>
 <context>
     <name>filterview</name>
     <message>
-        <location filename="../src/qml/views/filter/filterview.qml" line="69"/>
+        <location filename="../src/qml/views/filter/filterview.qml" line="73"/>
         <source>Track: %1</source>
         <translation>Stopa: %1</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/filterview.qml" line="88"/>
+        <location filename="../src/qml/views/filter/filterview.qml" line="92"/>
         <source>Nothing selected</source>
         <translation>Nic není vybráno</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/filterview.qml" line="100"/>
+        <location filename="../src/qml/views/filter/filterview.qml" line="104"/>
         <source>Add a filter</source>
         <translation>Přidat filtr</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/filterview.qml" line="112"/>
+        <location filename="../src/qml/views/filter/filterview.qml" line="116"/>
         <source>Remove selected filter</source>
         <translation>Odstranit vybraný filtr</translation>
     </message>
@@ -4889,22 +4775,22 @@ obrazovky do SDI/HDMI.</translation>
 <context>
     <name>main</name>
     <message>
-        <location filename="../src/main.cpp" line="191"/>
+        <location filename="../src/main.cpp" line="190"/>
         <source>Fill the screen with the Shotcut window.</source>
         <translation>Vyplnit obrazovku oknem Shotcutu.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="194"/>
+        <location filename="../src/main.cpp" line="193"/>
         <source>Use GPU processing.</source>
         <translation>Použít zpracování GPU.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="197"/>
+        <location filename="../src/main.cpp" line="196"/>
         <source>A file to open.</source>
         <translation>Soubor k otevření.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="230"/>
+        <location filename="../src/main.cpp" line="229"/>
         <source>Loading plugins...</source>
         <translation>Nahrávají se přídavné moduly...</translation>
     </message>
@@ -5376,18 +5262,18 @@ obrazovky do SDI/HDMI.</translation>
 <context>
     <name>ui</name>
     <message>
-        <location filename="../src/qml/filters/movit_diffusion/ui.qml" line="35"/>
+        <location filename="../src/qml/filters/movit_diffusion/ui.qml" line="34"/>
         <location filename="../src/qml/filters/webvfx_circular_frame/ui.qml" line="46"/>
         <source>Radius</source>
         <translation>Poloměr</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/movit_diffusion/ui.qml" line="53"/>
+        <location filename="../src/qml/filters/movit_diffusion/ui.qml" line="52"/>
         <source>Blurriness</source>
         <translation>Rozmazanost</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_gain/ui.qml" line="50"/>
+        <location filename="../src/qml/filters/audio_gain/ui.qml" line="49"/>
         <source>Gain</source>
         <translation>Zesílení</translation>
     </message>
@@ -5398,518 +5284,518 @@ obrazovky do SDI/HDMI.</translation>
         <translation>Barva</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_balance/ui.qml" line="41"/>
-        <location filename="../src/qml/filters/audio_pan/ui.qml" line="49"/>
-        <location filename="../src/qml/filters/audio_pan/ui.qml" line="54"/>
-        <location filename="../src/qml/filters/crop/ui.qml" line="176"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="325"/>
+        <location filename="../src/qml/filters/audio_balance/ui.qml" line="40"/>
+        <location filename="../src/qml/filters/audio_pan/ui.qml" line="48"/>
+        <location filename="../src/qml/filters/audio_pan/ui.qml" line="53"/>
+        <location filename="../src/qml/filters/crop/ui.qml" line="175"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="329"/>
         <source>Left</source>
         <translation>Vlevo</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_balance/ui.qml" line="48"/>
-        <location filename="../src/qml/filters/audio_pan/ui.qml" line="49"/>
-        <location filename="../src/qml/filters/audio_pan/ui.qml" line="61"/>
-        <location filename="../src/qml/filters/crop/ui.qml" line="193"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="337"/>
+        <location filename="../src/qml/filters/audio_balance/ui.qml" line="47"/>
+        <location filename="../src/qml/filters/audio_pan/ui.qml" line="48"/>
+        <location filename="../src/qml/filters/audio_pan/ui.qml" line="60"/>
+        <location filename="../src/qml/filters/crop/ui.qml" line="192"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="341"/>
         <source>Right</source>
         <translation>Vpravo</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="44"/>
+        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="43"/>
         <source>Copy from</source>
         <translation>Kopírovat z</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="47"/>
+        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="46"/>
         <source>Left to right</source>
         <translation>Zleva doprava</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="47"/>
+        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="46"/>
         <source>Right to left</source>
         <translation>Zprava doleva</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_pan/ui.qml" line="43"/>
+        <location filename="../src/qml/filters/audio_pan/ui.qml" line="42"/>
         <source>Channel</source>
         <translation>Kanál</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/rotate/ui.qml" line="63"/>
+        <location filename="../src/qml/filters/rotate/ui.qml" line="62"/>
         <source>Rotation</source>
         <translation>Otočení</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/rotate/ui.qml" line="70"/>
+        <location filename="../src/qml/filters/rotate/ui.qml" line="69"/>
         <source> degree</source>
         <translation>stupeň</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/rotate/ui.qml" line="78"/>
+        <location filename="../src/qml/filters/rotate/ui.qml" line="77"/>
         <source>Scale</source>
         <translation>Měřítko</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/rotate/ui.qml" line="97"/>
+        <location filename="../src/qml/filters/rotate/ui.qml" line="96"/>
         <source>X offset</source>
         <translation>Posun x</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/rotate/ui.qml" line="109"/>
+        <location filename="../src/qml/filters/rotate/ui.qml" line="108"/>
         <source>Y offset</source>
         <translation>Posun y</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_loudness/ui.qml" line="32"/>
-        <location filename="../src/qml/filters/stabilize/ui.qml" line="34"/>
+        <location filename="../src/qml/filters/audio_loudness/ui.qml" line="31"/>
+        <location filename="../src/qml/filters/stabilize/ui.qml" line="33"/>
         <source>Analyzing...</source>
         <translation>Vyhodnocuje se...</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_loudness/ui.qml" line="35"/>
-        <location filename="../src/qml/filters/stabilize/ui.qml" line="38"/>
+        <location filename="../src/qml/filters/audio_loudness/ui.qml" line="34"/>
+        <location filename="../src/qml/filters/stabilize/ui.qml" line="37"/>
         <source>Analysis complete.</source>
         <translation>Rozbor dokončen.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_loudness/ui.qml" line="39"/>
+        <location filename="../src/qml/filters/audio_loudness/ui.qml" line="38"/>
         <source>Click &quot;Analyze&quot; to use this filter.</source>
         <translation>Klepněte na Vyhodnotit pro použití tohoto filtru.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_loudness/ui.qml" line="56"/>
+        <location filename="../src/qml/filters/audio_loudness/ui.qml" line="55"/>
         <source>Target Loudness</source>
         <translation>Cílový hlasitost</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/stabilize/ui.qml" line="42"/>
+        <location filename="../src/qml/filters/stabilize/ui.qml" line="41"/>
         <source>Click Analyze to use this filter.</source>
         <translation>Klepněte na Vyhodnotit pro použití tohoto filtru.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/stabilize/ui.qml" line="67"/>
+        <location filename="../src/qml/filters/stabilize/ui.qml" line="66"/>
         <source>Select a file to store analysis results.</source>
         <translation>Vyberte soubor pro ukládání výsledků rozboru.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/stabilize/ui.qml" line="106"/>
+        <location filename="../src/qml/filters/stabilize/ui.qml" line="105"/>
         <source>&lt;b&gt;Analyze Options&lt;/b&gt;</source>
         <translation>&lt;b&gt;Volby pro vyhodnocení&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/stabilize/ui.qml" line="111"/>
+        <location filename="../src/qml/filters/stabilize/ui.qml" line="110"/>
         <source>Shakiness</source>
         <translation>Roztřesenost</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/stabilize/ui.qml" line="128"/>
+        <location filename="../src/qml/filters/stabilize/ui.qml" line="127"/>
         <source>Accuracy</source>
         <translation>Přesnost</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_loudness/ui.qml" line="75"/>
-        <location filename="../src/qml/filters/stabilize/ui.qml" line="171"/>
+        <location filename="../src/qml/filters/audio_loudness/ui.qml" line="74"/>
+        <location filename="../src/qml/filters/stabilize/ui.qml" line="170"/>
         <source>Analyze</source>
         <translation>Vyhodnotit</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/stabilize/ui.qml" line="145"/>
+        <location filename="../src/qml/filters/stabilize/ui.qml" line="144"/>
         <source>&lt;b&gt;Filter Options&lt;/b&gt;</source>
         <translation>&lt;b&gt;Volby pro filtr&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/stabilize/ui.qml" line="150"/>
+        <location filename="../src/qml/filters/stabilize/ui.qml" line="149"/>
         <source>Zoom</source>
         <translation>Zvětšení</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/sepia/ui.qml" line="53"/>
+        <location filename="../src/qml/filters/sepia/ui.qml" line="52"/>
         <source>Yellow-Blue</source>
         <translation>Žlutomodrá</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/sepia/ui.qml" line="68"/>
+        <location filename="../src/qml/filters/sepia/ui.qml" line="67"/>
         <source>Cyan-Red</source>
         <translation>Modrozelenočervená</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_fadein/ui.qml" line="46"/>
-        <location filename="../src/qml/filters/audio_fadeout/ui.qml" line="46"/>
-        <location filename="../src/qml/filters/fadein_brightness/ui.qml" line="47"/>
-        <location filename="../src/qml/filters/fadein_movit/ui.qml" line="47"/>
-        <location filename="../src/qml/filters/fadeout_brightness/ui.qml" line="49"/>
-        <location filename="../src/qml/filters/fadeout_movit/ui.qml" line="49"/>
+        <location filename="../src/qml/filters/audio_fadein/ui.qml" line="45"/>
+        <location filename="../src/qml/filters/audio_fadeout/ui.qml" line="45"/>
+        <location filename="../src/qml/filters/fadein_brightness/ui.qml" line="46"/>
+        <location filename="../src/qml/filters/fadein_movit/ui.qml" line="46"/>
+        <location filename="../src/qml/filters/fadeout_brightness/ui.qml" line="48"/>
+        <location filename="../src/qml/filters/fadeout_movit/ui.qml" line="48"/>
         <source>Duration</source>
         <translation>Doba trvání</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/crop/ui.qml" line="103"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="331"/>
+        <location filename="../src/qml/filters/crop/ui.qml" line="102"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="335"/>
         <source>Center</source>
         <translation>Střed</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/crop/ui.qml" line="125"/>
+        <location filename="../src/qml/filters/crop/ui.qml" line="124"/>
         <source>Center bias</source>
         <translation>Vychýlení středu</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/crop/ui.qml" line="142"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="349"/>
+        <location filename="../src/qml/filters/crop/ui.qml" line="141"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="353"/>
         <source>Top</source>
         <translation>Nahoře</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/crop/ui.qml" line="159"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="361"/>
+        <location filename="../src/qml/filters/crop/ui.qml" line="158"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="365"/>
         <source>Bottom</source>
         <translation>Dole</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="53"/>
-        <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="171"/>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="59"/>
-        <location filename="../src/qml/filters/audio_delay/ui.qml" line="51"/>
-        <location filename="../src/qml/filters/audio_expander/ui.qml" line="59"/>
-        <location filename="../src/qml/filters/audio_highpass/ui.qml" line="51"/>
-        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="51"/>
-        <location filename="../src/qml/filters/audio_lowpass/ui.qml" line="53"/>
-        <location filename="../src/qml/filters/audio_notch/ui.qml" line="53"/>
-        <location filename="../src/qml/filters/audio_reverb/ui.qml" line="105"/>
-        <location filename="../src/qml/filters/color/ui.qml" line="71"/>
-        <location filename="../src/qml/filters/crop/ui.qml" line="84"/>
-        <location filename="../src/qml/filters/dust/ui.qml" line="49"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="131"/>
-        <location filename="../src/qml/filters/grain/ui.qml" line="50"/>
-        <location filename="../src/qml/filters/lines/ui.qml" line="53"/>
-        <location filename="../src/qml/filters/oldfilm/ui.qml" line="61"/>
-        <location filename="../src/qml/filters/rotate/ui.qml" line="53"/>
-        <location filename="../src/qml/filters/sepia/ui.qml" line="39"/>
-        <location filename="../src/qml/filters/tcolor/ui.qml" line="49"/>
-        <location filename="../src/qml/filters/wave/ui.qml" line="45"/>
+        <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="52"/>
+        <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="170"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="58"/>
+        <location filename="../src/qml/filters/audio_delay/ui.qml" line="50"/>
+        <location filename="../src/qml/filters/audio_expander/ui.qml" line="58"/>
+        <location filename="../src/qml/filters/audio_highpass/ui.qml" line="50"/>
+        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="50"/>
+        <location filename="../src/qml/filters/audio_lowpass/ui.qml" line="52"/>
+        <location filename="../src/qml/filters/audio_notch/ui.qml" line="52"/>
+        <location filename="../src/qml/filters/audio_reverb/ui.qml" line="104"/>
+        <location filename="../src/qml/filters/color/ui.qml" line="70"/>
+        <location filename="../src/qml/filters/crop/ui.qml" line="83"/>
+        <location filename="../src/qml/filters/dust/ui.qml" line="48"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="133"/>
+        <location filename="../src/qml/filters/grain/ui.qml" line="49"/>
+        <location filename="../src/qml/filters/lines/ui.qml" line="52"/>
+        <location filename="../src/qml/filters/oldfilm/ui.qml" line="60"/>
+        <location filename="../src/qml/filters/rotate/ui.qml" line="52"/>
+        <location filename="../src/qml/filters/sepia/ui.qml" line="38"/>
+        <location filename="../src/qml/filters/tcolor/ui.qml" line="48"/>
+        <location filename="../src/qml/filters/wave/ui.qml" line="44"/>
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="69"/>
-        <location filename="../src/qml/filters/white/ui.qml" line="67"/>
+        <location filename="../src/qml/filters/white/ui.qml" line="66"/>
         <source>Preset</source>
         <translation>Přednastavení</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="64"/>
-        <location filename="../src/qml/filters/audio_notch/ui.qml" line="64"/>
+        <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="63"/>
+        <location filename="../src/qml/filters/audio_notch/ui.qml" line="63"/>
         <source>Center frequency</source>
         <translation>Středový kmitočet</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="82"/>
-        <location filename="../src/qml/filters/audio_notch/ui.qml" line="82"/>
+        <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="81"/>
+        <location filename="../src/qml/filters/audio_notch/ui.qml" line="81"/>
         <source>Bandwidth</source>
         <translation>Šířka pásma</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="100"/>
-        <location filename="../src/qml/filters/audio_highpass/ui.qml" line="79"/>
-        <location filename="../src/qml/filters/audio_lowpass/ui.qml" line="84"/>
-        <location filename="../src/qml/filters/audio_notch/ui.qml" line="100"/>
+        <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="99"/>
+        <location filename="../src/qml/filters/audio_highpass/ui.qml" line="78"/>
+        <location filename="../src/qml/filters/audio_lowpass/ui.qml" line="83"/>
+        <location filename="../src/qml/filters/audio_notch/ui.qml" line="99"/>
         <source>Rolloff rate</source>
         <translation>Rychlost sjetí</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="117"/>
-        <location filename="../src/qml/filters/audio_delay/ui.qml" line="103"/>
-        <location filename="../src/qml/filters/audio_highpass/ui.qml" line="96"/>
-        <location filename="../src/qml/filters/audio_lowpass/ui.qml" line="102"/>
-        <location filename="../src/qml/filters/audio_notch/ui.qml" line="117"/>
+        <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="116"/>
+        <location filename="../src/qml/filters/audio_delay/ui.qml" line="102"/>
+        <location filename="../src/qml/filters/audio_highpass/ui.qml" line="95"/>
+        <location filename="../src/qml/filters/audio_lowpass/ui.qml" line="101"/>
+        <location filename="../src/qml/filters/audio_notch/ui.qml" line="116"/>
         <source>Dry</source>
         <translation>Původní (nefiltrovaný) signál</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="126"/>
-        <location filename="../src/qml/filters/audio_delay/ui.qml" line="112"/>
-        <location filename="../src/qml/filters/audio_highpass/ui.qml" line="105"/>
-        <location filename="../src/qml/filters/audio_lowpass/ui.qml" line="111"/>
-        <location filename="../src/qml/filters/audio_notch/ui.qml" line="126"/>
+        <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="125"/>
+        <location filename="../src/qml/filters/audio_delay/ui.qml" line="111"/>
+        <location filename="../src/qml/filters/audio_highpass/ui.qml" line="104"/>
+        <location filename="../src/qml/filters/audio_lowpass/ui.qml" line="110"/>
+        <location filename="../src/qml/filters/audio_notch/ui.qml" line="125"/>
         <source>Wet</source>
         <translation>Filtrovaný signál</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/color/ui.qml" line="83"/>
+        <location filename="../src/qml/filters/color/ui.qml" line="82"/>
         <source>Shadows (Lift)</source>
         <translation>Stíny</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/color/ui.qml" line="88"/>
+        <location filename="../src/qml/filters/color/ui.qml" line="87"/>
         <source>Midtones (Gamma)</source>
         <translation>Středové tóny (gamma)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/color/ui.qml" line="93"/>
+        <location filename="../src/qml/filters/color/ui.qml" line="92"/>
         <source>Highlights (Gain)</source>
         <translation>Světlá místa (zesílení)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/wave/ui.qml" line="61"/>
+        <location filename="../src/qml/filters/wave/ui.qml" line="60"/>
         <source>Amplitude</source>
         <translation>Rozkmit</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/wave/ui.qml" line="76"/>
+        <location filename="../src/qml/filters/wave/ui.qml" line="75"/>
         <source>Speed</source>
         <translation>Rychlost</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/wave/ui.qml" line="93"/>
+        <location filename="../src/qml/filters/wave/ui.qml" line="92"/>
         <source>Deform horizontally?</source>
         <translation>Změnit tvar vodorovně?</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/wave/ui.qml" line="107"/>
+        <location filename="../src/qml/filters/wave/ui.qml" line="106"/>
         <source>Deform vertically?</source>
         <translation>Změnit tvar svisle?</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="81"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="80"/>
         <source>No File Loaded</source>
         <translation>Nenahrán žádný soubor</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="83"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="82"/>
         <source>No HTML file loaded. Click &quot;Open&quot; or &quot;New&quot; to load a file.</source>
         <translation>Nenahrán žádný soubor HTML. Klepněte na Otevřít nebo Nový pro nahrání souboru.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="138"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="137"/>
         <source>&lt;b&gt;File:&lt;/b&gt;</source>
         <translation>&lt;b&gt;Soubor:&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="150"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="149"/>
         <source>Use WebVfx JavaScript extension</source>
         <translation>Použít rozšíření WebVfx JavaScript</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="153"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="152"/>
         <source>For Advanced Users: </source>
         <translation>Pro pokročilé uživatele:</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="154"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="153"/>
         <source>If you enable this, and you do not use the WebVfx JavaScript extension, your content will not render!</source>
         <translation>Pokud toto povolíte, a nepoužíváte rozšíření WebVfx JavaScript, obsah se nevykreslí!</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="166"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="165"/>
         <source>Confirm Selection</source>
         <translation>Potvrdit výběr</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="167"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="166"/>
         <source>Do you still want to use this?</source>
         <translation>Pořád to chcete použít?</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="178"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="177"/>
         <source>Open...</source>
         <translation>Otevřít...</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="181"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="180"/>
         <source>Open HTML File</source>
         <translation>Otevřít soubor HTML</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="185"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="184"/>
         <source>Load an existing HTML file.</source>
         <translation>Nahrát stávající soubor HTML.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="190"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="189"/>
         <source>New...</source>
         <translation>Nový...</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="193"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="192"/>
         <source>Save HTML File</source>
         <translation>Uložit soubor HTML</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="197"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="196"/>
         <source>Load new HTML file.</source>
         <translation>Nahrát nový soubor HTML.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="209"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="208"/>
         <source>Edit...</source>
         <translation>Upravit...</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="229"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="228"/>
         <source>Reload</source>
         <translation>Nahrát znovu</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/white/ui.qml" line="81"/>
+        <location filename="../src/qml/filters/white/ui.qml" line="80"/>
         <source>Neutral color</source>
         <translation>Neutrální barva</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/white/ui.qml" line="104"/>
+        <location filename="../src/qml/filters/white/ui.qml" line="103"/>
         <source>Color temperature</source>
         <translation>Teplota barvy</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="44"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="46"/>
         <source>Bottom Left</source>
         <translation>Dole vlevo</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="49"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="51"/>
         <source>Bottom Right</source>
         <translation>Dole vpravo</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="54"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="56"/>
         <source>Top Left</source>
         <translation>Nahoře vlevo</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="59"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="61"/>
         <source>Top Right</source>
         <translation>Nahoře vpravo</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="64"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="66"/>
         <source>Lower Third</source>
         <translation>Spodní třetina</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="143"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="145"/>
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="81"/>
         <source>Text</source>
         <translation>Text</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="166"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="170"/>
         <source>Insert field</source>
         <translation>Pole pro vkládání</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="172"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="176"/>
         <source>Timecode</source>
         <translation>Časový kód</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="176"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="180"/>
         <source>Frame #</source>
         <comment>Frame number</comment>
         <translation>Snímek #</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="180"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="184"/>
         <source>File date</source>
         <translation>Datum souboru</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="184"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="188"/>
         <source>File name</source>
         <translation>Název souboru</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="190"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="194"/>
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="94"/>
         <source>Font</source>
         <translation>Písmo</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="217"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="221"/>
         <source>Normal</source>
         <translation>Normální</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="217"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="221"/>
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="114"/>
         <source>Bold</source>
         <translation>Tučné</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="217"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="221"/>
         <source>Light</source>
         <comment>thin font stroke</comment>
         <translation>Lehké</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="231"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="235"/>
         <source>Outline</source>
         <translation>Obrys</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="241"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="245"/>
         <source>Thickness</source>
         <translation>Tloušťka</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="255"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="259"/>
         <source>Background</source>
         <translation>Pozadí</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="265"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="269"/>
         <source>Padding</source>
         <translation>Odstup</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="279"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="283"/>
         <source>Position</source>
         <translation>Poloha</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dust/ui.qml" line="60"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="299"/>
+        <location filename="../src/qml/filters/dust/ui.qml" line="59"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="303"/>
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="147"/>
         <source>Size</source>
         <translation>Velikost</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dust/ui.qml" line="76"/>
-        <location filename="../src/qml/filters/lines/ui.qml" line="79"/>
+        <location filename="../src/qml/filters/dust/ui.qml" line="75"/>
+        <location filename="../src/qml/filters/lines/ui.qml" line="78"/>
         <source>Amount</source>
         <translation>Množství</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="320"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="324"/>
         <source>Horizontal fit</source>
         <translation>Vodorovné umístění</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="344"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="348"/>
         <source>Vertical fit</source>
         <translation>Svislé umístění</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="203"/>
+        <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="202"/>
         <source>Bass</source>
         <translation>Hloubky</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="224"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="355"/>
+        <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="223"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="359"/>
         <source>Middle</source>
         <translation>Střed</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="245"/>
+        <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="244"/>
         <source>Treble</source>
         <translation>Výšky</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/fadein_brightness/ui.qml" line="71"/>
-        <location filename="../src/qml/filters/fadein_movit/ui.qml" line="64"/>
-        <location filename="../src/qml/filters/fadeout_brightness/ui.qml" line="73"/>
-        <location filename="../src/qml/filters/fadeout_movit/ui.qml" line="66"/>
+        <location filename="../src/qml/filters/fadein_brightness/ui.qml" line="70"/>
+        <location filename="../src/qml/filters/fadein_movit/ui.qml" line="63"/>
+        <location filename="../src/qml/filters/fadeout_brightness/ui.qml" line="72"/>
+        <location filename="../src/qml/filters/fadeout_movit/ui.qml" line="65"/>
         <source>Adjust opacity instead of fade with black</source>
         <translation>Přizpůsobit neprůhlednost namísto prolínání s černou</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/opacity/ui.qml" line="42"/>
+        <location filename="../src/qml/filters/opacity/ui.qml" line="44"/>
         <source>Opacity</source>
         <translation>Neprůhlednost</translation>
     </message>
@@ -5944,317 +5830,317 @@ obrazovky do SDI/HDMI.</translation>
         <translation>Svislý</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_highpass/ui.qml" line="61"/>
-        <location filename="../src/qml/filters/audio_lowpass/ui.qml" line="64"/>
+        <location filename="../src/qml/filters/audio_highpass/ui.qml" line="60"/>
+        <location filename="../src/qml/filters/audio_lowpass/ui.qml" line="63"/>
         <source>Cutoff frequency</source>
         <translation>Kmitočet ukončení</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/grain/ui.qml" line="61"/>
+        <location filename="../src/qml/filters/grain/ui.qml" line="60"/>
         <source>Noise</source>
         <translation>Šum</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/grain/ui.qml" line="77"/>
+        <location filename="../src/qml/filters/grain/ui.qml" line="76"/>
         <source>Brightness</source>
         <translation>Jas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lines/ui.qml" line="64"/>
+        <location filename="../src/qml/filters/lines/ui.qml" line="63"/>
         <source>Width</source>
         <translation>Šířka</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lines/ui.qml" line="94"/>
+        <location filename="../src/qml/filters/lines/ui.qml" line="93"/>
         <source>Darkness</source>
         <translation>Temnost</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lines/ui.qml" line="109"/>
+        <location filename="../src/qml/filters/lines/ui.qml" line="108"/>
         <source>Lightness</source>
         <translation>Světlost</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/oldfilm/ui.qml" line="72"/>
+        <location filename="../src/qml/filters/oldfilm/ui.qml" line="71"/>
         <source>Vertical amount</source>
         <translation>Svislé množství</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/oldfilm/ui.qml" line="87"/>
+        <location filename="../src/qml/filters/oldfilm/ui.qml" line="86"/>
         <source>Vertical frequency</source>
         <translation>Svislý kmitočet</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/oldfilm/ui.qml" line="103"/>
+        <location filename="../src/qml/filters/oldfilm/ui.qml" line="102"/>
         <source>Brightness up</source>
         <translation>Jas nahoru</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/oldfilm/ui.qml" line="118"/>
+        <location filename="../src/qml/filters/oldfilm/ui.qml" line="117"/>
         <source>Brightness down</source>
         <translation>Jas dolů</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/oldfilm/ui.qml" line="133"/>
+        <location filename="../src/qml/filters/oldfilm/ui.qml" line="132"/>
         <source>Brightness frequency</source>
         <translation>Častost jasu</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/oldfilm/ui.qml" line="149"/>
+        <location filename="../src/qml/filters/oldfilm/ui.qml" line="148"/>
         <source>Uneven develop up</source>
         <translation>Více nepravidelností provedení</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/oldfilm/ui.qml" line="164"/>
+        <location filename="../src/qml/filters/oldfilm/ui.qml" line="163"/>
         <source>Uneven develop down</source>
         <translation>Méně nepravidelností provedení</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/oldfilm/ui.qml" line="179"/>
+        <location filename="../src/qml/filters/oldfilm/ui.qml" line="178"/>
         <source>Uneven develop duration</source>
         <translation>Doba trvání nepravidelností provedení</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/tcolor/ui.qml" line="60"/>
+        <location filename="../src/qml/filters/tcolor/ui.qml" line="59"/>
         <source>Green</source>
         <translation>Zelená</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/tcolor/ui.qml" line="68"/>
+        <location filename="../src/qml/filters/tcolor/ui.qml" line="67"/>
         <source> Red</source>
         <translation>Červená</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/tcolor/ui.qml" line="76"/>
+        <location filename="../src/qml/filters/tcolor/ui.qml" line="75"/>
         <source>Yellow</source>
         <translation>Žlutá</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/tcolor/ui.qml" line="84"/>
+        <location filename="../src/qml/filters/tcolor/ui.qml" line="83"/>
         <source>Blue</source>
         <translation>Modrá</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="70"/>
-        <location filename="../src/qml/filters/audio_expander/ui.qml" line="70"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="69"/>
+        <location filename="../src/qml/filters/audio_expander/ui.qml" line="69"/>
         <source>RMS</source>
         <translation>RMS</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="72"/>
-        <location filename="../src/qml/filters/audio_expander/ui.qml" line="72"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="71"/>
+        <location filename="../src/qml/filters/audio_expander/ui.qml" line="71"/>
         <source>The balance between the RMS and peak envelope followers. RMS is generally better for subtle, musical compression and peak is better for heavier, fast compression and percussion.</source>
         <translation>Rovnováha mezi obálkami RMS a vrcholy. RMS je obecně lepší pro jemnou hudební kompresi, a vrchol je lépe připůsoben rychlou silnější kompresi nebo bicí.
 </translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="80"/>
-        <location filename="../src/qml/filters/audio_expander/ui.qml" line="80"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="79"/>
+        <location filename="../src/qml/filters/audio_expander/ui.qml" line="79"/>
         <source>Peak</source>
         <translation>Vrchol</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="92"/>
-        <location filename="../src/qml/filters/audio_expander/ui.qml" line="92"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="91"/>
+        <location filename="../src/qml/filters/audio_expander/ui.qml" line="91"/>
         <source>Attack</source>
         <translation>Náběh</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="111"/>
-        <location filename="../src/qml/filters/audio_expander/ui.qml" line="111"/>
-        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="104"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="110"/>
+        <location filename="../src/qml/filters/audio_expander/ui.qml" line="110"/>
+        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="103"/>
         <source>Release</source>
         <translation>Uvolnění</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="130"/>
-        <location filename="../src/qml/filters/audio_expander/ui.qml" line="130"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="129"/>
+        <location filename="../src/qml/filters/audio_expander/ui.qml" line="129"/>
         <source>Threshold</source>
         <translation>Práh</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="132"/>
-        <location filename="../src/qml/filters/audio_expander/ui.qml" line="132"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="131"/>
+        <location filename="../src/qml/filters/audio_expander/ui.qml" line="131"/>
         <source>The point at which the compressor will start to kick in.</source>
         <translation>Bod, na kterém kompresor začne zmenšovat dynamický rozsah původního signálu.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="151"/>
-        <location filename="../src/qml/filters/audio_expander/ui.qml" line="151"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="150"/>
+        <location filename="../src/qml/filters/audio_expander/ui.qml" line="150"/>
         <source>Ratio</source>
         <translation>Poměr</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="153"/>
-        <location filename="../src/qml/filters/audio_expander/ui.qml" line="153"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="152"/>
+        <location filename="../src/qml/filters/audio_expander/ui.qml" line="152"/>
         <source>The gain reduction ratio used when the signal level exceeds the threshold.</source>
         <translation>Poměr zmenšení zesílení použitý, když úroveň signálu překročí práh.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="171"/>
-        <location filename="../src/qml/filters/audio_expander/ui.qml" line="171"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="170"/>
+        <location filename="../src/qml/filters/audio_expander/ui.qml" line="170"/>
         <source>Knee radius</source>
         <translation>Poloměr kolene</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="173"/>
-        <location filename="../src/qml/filters/audio_expander/ui.qml" line="173"/>
-        <location filename="../src/qml/filters/audio_reverb/ui.qml" line="221"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="172"/>
+        <location filename="../src/qml/filters/audio_expander/ui.qml" line="172"/>
+        <location filename="../src/qml/filters/audio_reverb/ui.qml" line="220"/>
         <source>The distance from the threshold where the knee curve starts.</source>
         <translation>Vzdálenost od prahu, kde začíná kolenová křivka.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="192"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="191"/>
         <source>Makeup gain</source>
         <translation>Vyrovnávací zesílení</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="194"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="193"/>
         <source>The gain of the makeup input signal.</source>
         <translation>Zesílení použité na signál pro vyrovnání celkové ztráty na hlasitosti.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="215"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="214"/>
         <source>About dynamic range compression</source>
         <translation>O zmenšení dynamického rozsahu signálu</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_delay/ui.qml" line="62"/>
+        <location filename="../src/qml/filters/audio_delay/ui.qml" line="61"/>
         <source>Delay</source>
         <translation>Ozvěna</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_delay/ui.qml" line="64"/>
+        <location filename="../src/qml/filters/audio_delay/ui.qml" line="63"/>
         <source>The neutral delay time is 2 seconds. Times above 2 seconds will have reduced quality and times below will have increased CPU usage.</source>
         <translation>Neutrální čas zpoždění je 2 sekundy. Doby trvání delší než 2 sekundy budou mít zmenšenou jakost a ty pod zvýší zatížení procesoru.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_delay/ui.qml" line="83"/>
+        <location filename="../src/qml/filters/audio_delay/ui.qml" line="82"/>
         <source>Feedback</source>
         <translation>Navrácení</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_expander/ui.qml" line="192"/>
+        <location filename="../src/qml/filters/audio_expander/ui.qml" line="191"/>
         <source>Attenuation</source>
         <translation>Útlum</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_expander/ui.qml" line="194"/>
+        <location filename="../src/qml/filters/audio_expander/ui.qml" line="193"/>
         <source>The gain of the output signal. Used to correct for excessive amplitude caused by the extra dynamic range.</source>
         <translation>Zesílení výstupního signálu. Používá se k opravě přehnaného rozkmitu způsobeného nezvyklým dynamickým rozsahem.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="62"/>
+        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="61"/>
         <source>Input gain</source>
         <translation>Vstupní zesílení</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="64"/>
+        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="63"/>
         <source>Gain that is applied to the input stage. Can be used to trim gain to bring it roughly under the limit or to push the signal against the limit.</source>
         <translation>Zesílení, které je použito na vstupní úroveň. Dá se použít k ořezání zesílení, aby se dostalo zhruba pod mez, nebo k postrčení signálu proti mezi.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="83"/>
+        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="82"/>
         <source>Limit</source>
         <translation>Omezení</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="85"/>
+        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="84"/>
         <source>The maximum output amplitude. Peaks over this level will be attenuated as smoothly as possible to bring them as close as possible to this level.</source>
         <translation>Největší výstupní rozkmit. Vrcholové hodnoty nad touto zvukovou hladinou budou zeslabeny tak jemně, jak jen je to možné, aby byly přivedeny na tuto úroveň zvuku.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="106"/>
+        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="105"/>
         <source>The time taken for the limiter&apos;s attenuation to return to 0 dB&apos;s.</source>
         <translation>Čas vzatý zeslabením limiteru (komprese dynamiky - zmenšení dynamického rozsahu zpracovávaného signálu, limiter - kompresní poměr nastaven na maximum) pro návrat na 0 dB.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_reverb/ui.qml" line="38"/>
+        <location filename="../src/qml/filters/audio_reverb/ui.qml" line="37"/>
         <source>Quick fix</source>
         <translation>Rychlá oprava</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_reverb/ui.qml" line="47"/>
+        <location filename="../src/qml/filters/audio_reverb/ui.qml" line="46"/>
         <source>Small hall</source>
         <translation>Malá hala</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_reverb/ui.qml" line="56"/>
+        <location filename="../src/qml/filters/audio_reverb/ui.qml" line="55"/>
         <source>Large hall</source>
         <translation>Velká hala</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_reverb/ui.qml" line="65"/>
+        <location filename="../src/qml/filters/audio_reverb/ui.qml" line="64"/>
         <source>Sewer</source>
         <translation>Kanál</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_reverb/ui.qml" line="74"/>
+        <location filename="../src/qml/filters/audio_reverb/ui.qml" line="73"/>
         <source>Church</source>
         <translation>Kostel</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_reverb/ui.qml" line="116"/>
+        <location filename="../src/qml/filters/audio_reverb/ui.qml" line="115"/>
         <source>Room size</source>
         <translation>Místnost</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_reverb/ui.qml" line="118"/>
+        <location filename="../src/qml/filters/audio_reverb/ui.qml" line="117"/>
         <source>The size of the room, in meters. Excessivly large, and excessivly small values will make it sound a bit unrealistic.Values of around 30 sound good.</source>
         <translation>Velikost místnosti v metrech. Nadměrně velké a nepřiměřeně malé hodnoty dávají málo realistický zvuk. Hodnoty okolo 30 zní dobře.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_reverb/ui.qml" line="136"/>
+        <location filename="../src/qml/filters/audio_reverb/ui.qml" line="135"/>
         <source>Reverb time</source>
         <translation>Čas dozvuku</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_reverb/ui.qml" line="156"/>
+        <location filename="../src/qml/filters/audio_reverb/ui.qml" line="155"/>
         <source>Damping</source>
         <translation>Tlumení</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_reverb/ui.qml" line="158"/>
+        <location filename="../src/qml/filters/audio_reverb/ui.qml" line="157"/>
         <source>This controls the high frequency damping (a lowpass filter), values near 1 will make it sound very bright, values near 0 will make it sound very dark.</source>
         <translation>Ovládání zeslabení vysokých kmitočtů (filtr spodní pásmové propusti), hodnoty blízké 1 povedou k velice jasnému zvuku, hodnoty blízké 0 vrátí velmi temný zvuk.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_reverb/ui.qml" line="177"/>
+        <location filename="../src/qml/filters/audio_reverb/ui.qml" line="176"/>
         <source>Input bandwidth</source>
         <translation>Šířka pásma vstupu</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_reverb/ui.qml" line="179"/>
+        <location filename="../src/qml/filters/audio_reverb/ui.qml" line="178"/>
         <source>This is like a damping control for the input, it has a similar effect to the damping control, but is subtly different.</source>
         <translation>Podobné ovládání tlumení pro vstup, má podobný účinek na ovládání tlumení, ale je velmi lehce odlišné.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_reverb/ui.qml" line="198"/>
+        <location filename="../src/qml/filters/audio_reverb/ui.qml" line="197"/>
         <source>Dry signal level</source>
         <translation>Úroveň nezpracovaného signálu</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_reverb/ui.qml" line="200"/>
+        <location filename="../src/qml/filters/audio_reverb/ui.qml" line="199"/>
         <source>The amount of dry signal to be mixed with the reverberated signal.</source>
         <translation>Množství nezpracovaného signálu ke smíchání se signálem, na nějž byl použit dozvuk.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_reverb/ui.qml" line="219"/>
+        <location filename="../src/qml/filters/audio_reverb/ui.qml" line="218"/>
         <source>Early reflection level</source>
         <translation>Úroveň prvotních odrazů</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_reverb/ui.qml" line="239"/>
+        <location filename="../src/qml/filters/audio_reverb/ui.qml" line="238"/>
         <source>Tail level</source>
         <translation>Úroveň koncové části</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_reverb/ui.qml" line="241"/>
+        <location filename="../src/qml/filters/audio_reverb/ui.qml" line="240"/>
         <source>The quantity of early reflections (scatter reflections directly from the source).</source>
         <translation>Množství prvotních odrazů (odrazy rozptýlené přímo od zdroje)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_reverb/ui.qml" line="261"/>
+        <location filename="../src/qml/filters/audio_reverb/ui.qml" line="260"/>
         <source>About reverb</source>
         <translation>O dozvuku</translation>
     </message>
@@ -6262,12 +6148,12 @@ obrazovky do SDI/HDMI.</translation>
 <context>
     <name>ui_boxblur</name>
     <message>
-        <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="45"/>
+        <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="44"/>
         <source>Width</source>
         <translation>Šířka</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="61"/>
+        <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="60"/>
         <source>Height</source>
         <translation>Výška</translation>
     </message>
@@ -6275,29 +6161,29 @@ obrazovky do SDI/HDMI.</translation>
 <context>
     <name>ui_frei0r</name>
     <message>
-        <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="58"/>
+        <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="57"/>
         <source>Saturation</source>
         <translation>Sytost</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/glow/ui_frei0r.qml" line="46"/>
-        <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="45"/>
-        <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="48"/>
+        <location filename="../src/qml/filters/glow/ui_frei0r.qml" line="45"/>
+        <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="44"/>
+        <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="47"/>
         <source>Preset</source>
         <translation>Přednastavení</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/glow/ui_frei0r.qml" line="58"/>
+        <location filename="../src/qml/filters/glow/ui_frei0r.qml" line="57"/>
         <source>Blur</source>
         <translation>Rozmazání</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="61"/>
+        <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="60"/>
         <source>Amount</source>
         <translation>Množství</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="78"/>
+        <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="77"/>
         <source>Size</source>
         <translation>Velikost</translation>
     </message>
@@ -6305,22 +6191,22 @@ obrazovky do SDI/HDMI.</translation>
 <context>
     <name>ui_frei0r_coloradj</name>
     <message>
-        <location filename="../src/qml/filters/color/ui_frei0r_coloradj.qml" line="61"/>
+        <location filename="../src/qml/filters/color/ui_frei0r_coloradj.qml" line="60"/>
         <source>Mode</source>
         <translation>Režim</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/color/ui_frei0r_coloradj.qml" line="65"/>
+        <location filename="../src/qml/filters/color/ui_frei0r_coloradj.qml" line="64"/>
         <source>Shadows (Lift)</source>
         <translation>Stíny</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/color/ui_frei0r_coloradj.qml" line="65"/>
+        <location filename="../src/qml/filters/color/ui_frei0r_coloradj.qml" line="64"/>
         <source>Midtones (Gamma)</source>
         <translation>Středové tóny (gamma)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/color/ui_frei0r_coloradj.qml" line="65"/>
+        <location filename="../src/qml/filters/color/ui_frei0r_coloradj.qml" line="64"/>
         <source>Highlights (Gain)</source>
         <translation>Světlá místa (zesílení)</translation>
     </message>
@@ -6328,60 +6214,60 @@ obrazovky do SDI/HDMI.</translation>
 <context>
     <name>ui_movit</name>
     <message>
-        <location filename="../src/qml/filters/saturation/ui_movit.qml" line="44"/>
+        <location filename="../src/qml/filters/saturation/ui_movit.qml" line="43"/>
         <source>Saturation</source>
         <translation>Sytost</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blur/ui_movit.qml" line="34"/>
-        <location filename="../src/qml/filters/glow/ui_movit.qml" line="64"/>
+        <location filename="../src/qml/filters/blur/ui_movit.qml" line="33"/>
+        <location filename="../src/qml/filters/glow/ui_movit.qml" line="63"/>
         <source>Radius</source>
         <translation>Poloměr</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="66"/>
+        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="65"/>
         <source>Circle radius</source>
         <translation>Poloměr kruhu</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="84"/>
+        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="83"/>
         <source>Gaussian radius</source>
         <translation>Gaussův poloměr</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="102"/>
+        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="101"/>
         <source>Correlation</source>
         <translation>Souvztažnost</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="119"/>
+        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="118"/>
         <source>Noise</source>
         <translation>Šum</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/glow/ui_movit.qml" line="49"/>
-        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="50"/>
-        <location filename="../src/qml/filters/vignette/ui_movit.qml" line="39"/>
+        <location filename="../src/qml/filters/glow/ui_movit.qml" line="48"/>
+        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="49"/>
+        <location filename="../src/qml/filters/vignette/ui_movit.qml" line="38"/>
         <source>Preset</source>
         <translation>Přednastavení</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/glow/ui_movit.qml" line="81"/>
+        <location filename="../src/qml/filters/glow/ui_movit.qml" line="80"/>
         <source>Highlight blurriness</source>
         <translation>Rozmazanost světlého místa</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/glow/ui_movit.qml" line="98"/>
+        <location filename="../src/qml/filters/glow/ui_movit.qml" line="97"/>
         <source>Highlight cutoff</source>
         <translation>Přerušení zvýraznění</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vignette/ui_movit.qml" line="53"/>
+        <location filename="../src/qml/filters/vignette/ui_movit.qml" line="52"/>
         <source>Outer radius</source>
         <translation>Vnější poloměr</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vignette/ui_movit.qml" line="69"/>
+        <location filename="../src/qml/filters/vignette/ui_movit.qml" line="68"/>
         <source>Inner radius</source>
         <translation>Vnitřní poloměr</translation>
     </message>
@@ -6389,27 +6275,27 @@ obrazovky do SDI/HDMI.</translation>
 <context>
     <name>ui_oldfilm</name>
     <message>
-        <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="39"/>
+        <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="38"/>
         <source>Preset</source>
         <translation>Přednastavení</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="55"/>
+        <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="54"/>
         <source>Radius</source>
         <translation>Poloměr</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="71"/>
+        <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="70"/>
         <source>Feathering</source>
         <translation>Měkký výběrový okraj</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="89"/>
+        <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="88"/>
         <source>Non-linear feathering</source>
         <translation>Měkký výběrový okraj (nelineární)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="101"/>
+        <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="100"/>
         <source>Opacity</source>
         <translation>Neprůhlednost</translation>
     </message>
