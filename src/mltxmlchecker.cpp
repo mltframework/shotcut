@@ -25,12 +25,14 @@
 MltXmlChecker::MltXmlChecker()
     : m_needsGPU(false)
     , m_hasEffects(false)
+    , m_isCorrected(false)
     , m_decimalPoint(QLocale::system().decimalPoint())
     , m_tempFile(QDir::tempPath().append("/shotcut-XXXXXX.mlt"))
     , m_hasComma(false)
     , m_hasPeriod(false)
     , m_valueChanged(false)
 {
+    qDebug() << "decimal point" << m_decimalPoint;
 }
 
 bool MltXmlChecker::check(const QString& fileName)
