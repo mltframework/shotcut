@@ -581,6 +581,10 @@ void MainWindow::setupSettingsMenu()
     a->setCheckable(true);
     a->setData("da");
     ui->menuLanguage->addActions(m_languagesGroup->actions());
+    a = new QAction(QLocale::languageToString(QLocale::Dutch), m_languagesGroup);
+    a->setCheckable(true);
+    a->setData("nl");
+    ui->menuLanguage->addActions(m_languagesGroup->actions());
     a = new QAction(QLocale::languageToString(QLocale::English), m_languagesGroup);
     a->setCheckable(true);
     a->setData("en");
@@ -615,6 +619,10 @@ void MainWindow::setupSettingsMenu()
     a = new QAction(QLocale::languageToString(QLocale::Spanish), m_languagesGroup);
     a->setCheckable(true);
     a->setData("es");
+    ui->menuLanguage->addActions(m_languagesGroup->actions());
+    a = new QAction(QLocale::languageToString(QLocale::Russian), m_languagesGroup);
+    a->setCheckable(true);
+    a->setData("ru");
     ui->menuLanguage->addActions(m_languagesGroup->actions());
     const QString locale = Settings.language();
     foreach (QAction* action, m_languagesGroup->actions()) {
