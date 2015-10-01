@@ -386,6 +386,7 @@ void Controller::saveXML(const QString& filename, Service* service)
         c.set("store", "shotcut");
         c.set("no_root", 1);
         c.set("root", QFileInfo(filename).absolutePath().toUtf8().constData());
+        c.set("title", QString("Shotcut version ").append(SHOTCUT_VERSION).toUtf8().constData());
         c.connect(s);
         c.start();
         if (ignore)
