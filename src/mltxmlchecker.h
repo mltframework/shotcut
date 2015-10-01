@@ -20,6 +20,9 @@
 #define MLTXMLCHECKER_H
 
 #include <QXmlStreamReader>
+#include <QXmlStreamWriter>
+#include <QTemporaryFile>
+#include <QString>
 
 class QUIDevice;
 
@@ -27,18 +30,30 @@ class MltXmlChecker
 {
 public:
     MltXmlChecker();
-    bool check(QIODevice *device);
+    bool check(const QString& fileName);
     QString errorString() const;
     bool needsGPU() const { return m_needsGPU; }
     bool hasEffects() const { return m_hasEffects; }
+    bool isCorrected() const { return m_isCorrected; }
+    QString tempFileName() const { return m_tempFile.fileName(); }
 
 private:
     void readMlt();
-    void readProperty();
+    bool readMltService();
+    void checkInAndOutPoints();
+    bool checkNumericString(QString& value);
+    bool checkNumericProperty();
 
     QXmlStreamReader m_xml;
+    QXmlStreamWriter m_newXml;
     bool m_needsGPU;
     bool m_hasEffects;
+    bool m_isCorrected;
+    QChar m_decimalPoint;
+    QTemporaryFile m_tempFile;
+    bool m_hasComma;
+    bool m_hasPeriod;
+    bool m_valueChanged;
 };
 
 #endif // MLTXMLCHECKER_H

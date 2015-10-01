@@ -737,6 +737,54 @@ bool MainWindow::isCompatibleWithGpuMode(MltXmlChecker& checker)
     return true;
 }
 
+bool MainWindow::isXmlRepaired(MltXmlChecker& checker, QString& fileName)
+{
+    if (checker.isCorrected()) {
+        QMessageBox dialog(QMessageBox::Question,
+           qApp->applicationName(),
+           tr("Shotcut noticed some problems in your project.\n"
+              "Do you want Shotcut to try to repair it?\n\n"
+              "If you choose Yes, Shotcut will create a copy of your project\n"
+              "with \"- Repaired\" in the file name and open it."),
+           QMessageBox::No |
+           QMessageBox::Yes,
+           this);
+        dialog.setWindowModality(QmlApplication::dialogModality());
+        dialog.setDefaultButton(QMessageBox::Yes);
+        dialog.setEscapeButton(QMessageBox::No);
+        int r = dialog.exec();
+        if (r == QMessageBox::Yes) {
+            QFileInfo fi(fileName);
+            QFile repaired(QString("%1/%2 - %3.%4").arg(fi.path())
+                .arg(fi.completeBaseName()).arg(tr("Repaired")).arg(fi.suffix()));
+            repaired.open(QIODevice::WriteOnly);
+            qDebug() << "repaired MLT XML file name" << repaired.fileName();
+            QFile temp(checker.tempFileName());
+            if (temp.exists() && repaired.exists()) {
+                temp.open(QIODevice::ReadOnly);
+                QByteArray xml = temp.readAll();
+                temp.close();
+
+                qint64 n = repaired.write(xml);
+                while (n > 0 && n < xml.size()) {
+                    qint64 x = repaired.write(xml.right(xml.size() - n));
+                    if (x > 0)
+                        n += x;
+                    else
+                        n = x;
+                }
+                repaired.close();
+                if (n == xml.size()) {
+                    fileName = repaired.fileName();
+                    return true;
+                }
+            }
+            QMessageBox::warning(this, qApp->applicationName(), tr("Repairing the project failed."));
+        }
+    }
+    return false;
+}
+
 bool MainWindow::checkAutoSave(QString &url)
 {
     QMutexLocker locker(&m_autosaveMutex);
@@ -836,15 +884,10 @@ void MainWindow::updateAutoSave()
 void MainWindow::open(QString url, const Mlt::Properties* properties)
 {
     bool modified = false;
-    {
-        MltXmlChecker checker;
-        QFile file(url);
-        if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-            if (checker.check(&file)) {
-                if (!isCompatibleWithGpuMode(checker))
-                    return;
-            }
-        }
+    MltXmlChecker checker;
+    if (checker.check(url)) {
+        if (!isCompatibleWithGpuMode(checker))
+            return;
     }
     if (url.endsWith(".mlt") || url.endsWith(".xml")) {
         // only check for a modified project when loading a project, not a simple producer
@@ -857,7 +900,8 @@ void MainWindow::open(QString url, const Mlt::Properties* properties)
             m_timelineDock->model()->close();
         // let the new project change the profile
         MLT.profile().set_explicit(false);
-        modified = checkAutoSave(url);
+        if (!isXmlRepaired(checker, url))
+            modified = checkAutoSave(url);
         setWindowModified(modified);
     }
     if (!playlist() && !multitrack()) {
@@ -2491,16 +2535,12 @@ void MainWindow::on_actionOpenXML_triggered()
     QStringList filenames = QFileDialog::getOpenFileNames(this, tr("Open File"), path,
         tr("MLT XML (*.mlt);;All Files (*)"));
     if (filenames.length() > 0) {
-        const QString& url = filenames.first();
-        {
-            MltXmlChecker checker;
-            QFile file(url);
-            if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-                if (checker.check(&file)) {
-                    if (!isCompatibleWithGpuMode(checker))
-                        return;
-                }
-            }
+        QString url = filenames.first();
+        MltXmlChecker checker;
+        if (checker.check(url)) {
+            if (!isCompatibleWithGpuMode(checker))
+                return;
+            isXmlRepaired(checker, url);
         }
         Settings.setOpenPath(QFileInfo(url).path());
         activateWindow();

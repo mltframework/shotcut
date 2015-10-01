@@ -137,6 +137,7 @@ private:
 
 public slots:
     bool isCompatibleWithGpuMode(MltXmlChecker& checker);
+    bool isXmlRepaired(MltXmlChecker& checker, QString& fileName);
     void updateAutoSave();
     void open(QString url, const Mlt::Properties* = 0);
     void openVideo();
