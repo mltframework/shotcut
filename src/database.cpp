@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,6 +21,7 @@
 #include <QtSql>
 #include <QStandardPaths>
 #include <QDir>
+#include <QMutexLocker>
 #include <QtDebug>
 
 static Database* instance = 0;
@@ -70,6 +71,7 @@ Database::~Database()
 
 bool Database::upgradeVersion1()
 {
+    QMutexLocker lock(&m_mutex);
     bool success = false;
     QSqlQuery query;
     if (query.exec("CREATE TABLE thumbnails (hash TEXT PRIMARY KEY NOT NULL, accessed DATETIME NOT NULL, image BLOB);")) {
@@ -84,6 +86,7 @@ bool Database::upgradeVersion1()
 
 bool Database::putThumbnail(const QString& hash, const QImage& image)
 {
+    QMutexLocker lock(&m_mutex);
     QByteArray ba;
     QBuffer buffer(&ba);
     buffer.open(QIODevice::WriteOnly);
@@ -105,6 +108,7 @@ bool Database::putThumbnail(const QString& hash, const QImage& image)
 
 QImage Database::getThumbnail(const QString &hash)
 {
+    QMutexLocker lock(&m_mutex);
     QImage result;
     QSqlQuery query;
     query.prepare("SELECT image FROM thumbnails WHERE hash = :hash;");
