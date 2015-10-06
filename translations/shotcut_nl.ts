@@ -2613,7 +2613,7 @@ with &quot;- Repaired&quot; in the file name and open it.</source>
     <message>
         <location filename="../src/mainwindow.cpp" line="1159"/>
         <source>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2015 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
-        <translation>&lt;h1&gt; Shotcut versie% 1 &lt;/ h1&gt; &lt;p&gt; &lt;a href=&quot;http://www.shotcut.org/&quot;&gt; Shotcut &lt;/a&gt; is een gratis, open source, cross-platform video editor. &lt;/ p&gt; &lt;small&gt; &lt;p&gt; Copyright &amp; copy; 2011-2015 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt; Meltytech &lt;/a&gt;, LLC &lt;/ p&gt; &lt;p&gt; Licentie &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt; GNU General Public License v3.0 &lt;/a&gt; &lt;/ p&gt; &lt;p&gt; Dit programma gebruikt trots de volgende projecten: &lt;ul&gt; &lt;li&gt; &lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt &lt;/a&gt; applicatie en UI framework &lt;/ li&gt; &lt;li&gt; &lt;a href=&quot;http://www.mltframework.org/&quot;&gt; MLT &lt;/a&gt; multimedia authoring framework &lt;/ li&gt; &lt;li&gt; &lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt; FFmpeg &lt;/a&gt; multimedia-formaat en codec bibliotheken &lt;/ li&gt; &lt;li&gt; &lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264 &lt;/a&gt; H.264 encoder &lt;/ li&gt; &lt;li&gt; &lt;a href=&quot;http://www.webmproject.org/&quot;&gt; WebM &lt;/ a&gt; VP8 en VP9 encoders &lt;/ li&gt; &lt;li&gt; &lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt; &lt;/a&gt; LAME MP3 encoder &lt;/ li&gt; &lt;li&gt; &lt;a href=&quot;http://www.dyne.org/software/frei0r/ &quot;&gt; Frei0r &lt;/a&gt; video plugins &lt;/ li&gt; &lt;li&gt; &lt;a href=&quot;http://www.ladspa.org/&quot;&gt; LADSPA &lt;/ a &gt; audio plugins &lt;/ li&gt; &lt;li&gt; &lt;a href=&quot;http://www.defaulticon.com/&quot;&gt; DefaultIcon &lt;/a&gt; icoon collectie van &lt;a href=&quot;http://www.interactivemania.com/ &quot;&gt; interactivemania &lt;/a&gt; &lt;/ li&gt; &lt;li&gt; &lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt; Oxygen &lt;/a&gt; icoon collectie &lt;/ li&gt; &lt;/ ul&gt; &lt;/ p&gt; &lt;p&gt; De broncode die werd gebruikt om dit programma op te bouwen kan worden gedownload van &lt;a href=&quot;http://www.shotcut.org/&quot;&gt; shotcut.org &lt;/a&gt;. &lt;/ p&gt; Dit programma wordt verspreid in de hoop dat het nuttig zal zijn, maar ZONDER ENIGE GARANTIE; zonder zelfs de impliciete garantie van verkoopbaarheid of geschiktheid voor een bepaald doel. &lt;/ small&gt;</translation>
+        <translation>&lt;h1&gt;Shotcut versie %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is een gratis, open source, cross-platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2015 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt; &lt;p&gt;Licentie onder &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Dit programma gebruikt trots de volgende projecten:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; applicatie en UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt;multimedia-formaat en codec bibliotheken&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 en VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt;video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt;audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icoon collectie van &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icoon collectie&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;De broncode die werd gebruikt om dit programma op te bouwen kan worden gedownload van &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;Dit programma wordt verspreid in de hoop dat het nuttig zal zijn, maar ZONDER ENIGE GARANTIE; zonder zelfs de impliciete garantie van verkoopbaarheid of geschiktheid voor een bepaald doel.&lt;/small&gt;</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="2313"/>
@@ -5276,7 +5276,7 @@ te sturen naar SDI/HDMI in deze modus.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx_circular_frame/ui.qml" line="62"/>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="126"/>
+        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="127"/>
         <source>Color</source>
         <translation>Kleur</translation>
     </message>
@@ -5471,7 +5471,7 @@ te sturen naar SDI/HDMI in deze modus.</translation>
         <location filename="../src/qml/filters/sepia/ui.qml" line="38"/>
         <location filename="../src/qml/filters/tcolor/ui.qml" line="48"/>
         <location filename="../src/qml/filters/wave/ui.qml" line="44"/>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="69"/>
+        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="70"/>
         <location filename="../src/qml/filters/white/ui.qml" line="66"/>
         <source>Preset</source>
         <translation>Preset</translation>
@@ -5666,7 +5666,7 @@ te sturen naar SDI/HDMI in deze modus.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="145"/>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="81"/>
+        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="82"/>
         <source>Text</source>
         <translation>Tekst</translation>
     </message>
@@ -5698,7 +5698,7 @@ te sturen naar SDI/HDMI in deze modus.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="194"/>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="94"/>
+        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="95"/>
         <source>Font</source>
         <translation>Lettertype</translation>
     </message>
@@ -5709,7 +5709,7 @@ te sturen naar SDI/HDMI in deze modus.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="221"/>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="114"/>
+        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="115"/>
         <source>Bold</source>
         <translation>Vet</translation>
     </message>
@@ -5747,7 +5747,7 @@ te sturen naar SDI/HDMI in deze modus.</translation>
     <message>
         <location filename="../src/qml/filters/dust/ui.qml" line="59"/>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="303"/>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="147"/>
+        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="148"/>
         <source>Size</source>
         <translation>Grootte</translation>
     </message>
@@ -5802,27 +5802,27 @@ te sturen naar SDI/HDMI in deze modus.</translation>
         <translation>3D Tekst</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="121"/>
+        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="122"/>
         <source>Beveled</source>
         <translation>Afgeschuind</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="163"/>
+        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="164"/>
         <source>Depth</source>
         <translation>Diepte</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="180"/>
+        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="181"/>
         <source>Tilt</source>
         <translation>Kantelen</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="197"/>
+        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="198"/>
         <source>Horizontal</source>
         <translation>Horizontaal</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="214"/>
+        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="215"/>
         <source>Vertical</source>
         <translation>Verticaal</translation>
     </message>
