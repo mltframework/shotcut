@@ -41,6 +41,7 @@ Item {
             filter.set('size', 70)
             filter.set('horizontal', 0.5)
             filter.set('vertical', 0.5)
+            filter.savePreset(preset.parameters)
 
             setControls();
         }
