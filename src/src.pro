@@ -417,7 +417,11 @@ OTHER_FILES += \
     qml/filters/audio_reverb/meta.qml \
     qml/filters/audio_reverb/ui.qml \
     qml/filters/audio_mute/meta.qml \
-    qml/filters/audio_mute/ui.qml
+    qml/filters/audio_mute/ui.qml \
+    qml/filters/webvfx_ruttetraizer/meta.qml \
+    qml/filters/webvfx_ruttetraizer/ui.qml \
+    qml/filters/webvfx_ruttetraizer/ruttetraizer.html \
+    qml/filters/webvfx_ruttetraizer/three.js
 
 lupdate_hack {
     SOURCES += \
@@ -563,7 +567,8 @@ lupdate_hack {
     qml/filters/audio_reverb/meta.qml \
     qml/filters/audio_reverb/ui.qml \
     qml/filters/audio_mute/meta.qml \
-    qml/filters/audio_mute/ui.qml
+    qml/filters/audio_mute/ui.qml \
+    qml/filters/webvfx_ruttetraizer/ui.qml \
 }
 
 TRANSLATIONS += \
