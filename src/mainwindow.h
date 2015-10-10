@@ -77,6 +77,7 @@ signals:
     void producerOpened();
     void profileChanged();
     void openFailed(QString);
+    void aboutToShutDown();
 
 protected:
     MainWindow();

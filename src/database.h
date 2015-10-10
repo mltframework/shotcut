@@ -19,26 +19,42 @@
 #ifndef DATABASE_H
 #define DATABASE_H
 
-#include <QObject>
+#include <QThread>
 #include <QImage>
 #include <QMutex>
+#include <QWaitCondition>
 
-class Database : public QObject
+struct DatabaseJob;
+class QTimer;
+class Database : public QThread
 {
     Q_OBJECT
     explicit Database(QObject *parent = 0);
 
 public:
     static Database& singleton(QWidget* parent = 0);
-    ~Database();
 
     bool upgradeVersion1();
     bool putThumbnail(const QString& hash, const QImage& image);
     QImage getThumbnail(const QString& hash);
 
+private slots:
+    void commitTransaction();
+
+private slots:
+    void shutdown();
+
 private:
+    void doJob(DatabaseJob * job);
+    void submitAndWaitForJob(DatabaseJob * job);
     void deleteOldThumbnails();
+    void run();
+
+    QList<DatabaseJob*> m_jobs;
     QMutex m_mutex;
+    QWaitCondition m_waitForFinished;
+    QWaitCondition m_waitForNewJob;
+    QTimer * m_commitTimer;
 };
 
 #define DB Database::singleton()
