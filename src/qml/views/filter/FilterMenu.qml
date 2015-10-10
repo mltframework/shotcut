@@ -152,7 +152,7 @@ Window {
                     iconName: 'window-close'
                     iconSource: 'qrc:///icons/oxygen/32x32/actions/window-close.png'
                     tooltip: qsTr('Close menu')
-                    onClicked: filterWindow.visible = false
+                    onClicked: filterWindow.close()
                 }
             }
         }
