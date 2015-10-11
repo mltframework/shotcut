@@ -43,14 +43,7 @@ FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* att
     setWindowIcon(filterIcon);
     toggleViewAction()->setIcon(windowIcon());
     setMinimumWidth(300);
-
     m_qview.setFocusPolicy(Qt::TabFocus);
-
-//    QScrollArea *scrollArea = new QScrollArea(this);
-//    scrollArea->setFrameShape(QFrame::NoFrame);
-////    scrollArea->setWidgetResizable(true);
-//    scrollArea->setWidget(&m_qview);
-//    setWidget(scrollArea);
     setWidget(&m_qview);
 
     QmlUtilities::setCommonProperties(m_qview.rootContext());
@@ -74,7 +67,7 @@ void FiltersDock::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta, int ind
 {
     m_qview.rootContext()->setContextProperty("filter", filter);
     m_qview.rootContext()->setContextProperty("metadata", meta);
-//    QMetaObject::invokeMethod(m_qview.rootObject(), "setCurrentFilter", Q_ARG(QVariant, QVariant(index)));
+    QMetaObject::invokeMethod(m_qview.rootObject(), "setCurrentFilter", Q_ARG(QVariant, QVariant(index)));
     if (filter)
         connect(filter, SIGNAL(changed()), SIGNAL(changed()));
 }
@@ -126,10 +119,9 @@ void FiltersDock::resetQview()
 
     m_qview.setResizeMode(QQuickWidget::SizeRootObjectToView);
     m_qview.quickWindow()->setColor(palette().window().color());
-    m_qview.setSource(QUrl(""));
-//    QUrl source = QUrl::fromLocalFile(viewPath.absoluteFilePath("filterview.qml"));
-//    m_qview.setSource(source);
+    QUrl source = QUrl::fromLocalFile(viewPath.absoluteFilePath("filterview.qml"));
+    m_qview.setSource(source);
 
-//    QObject::connect(m_qview.rootObject(), SIGNAL(currentFilterRequested(int)),
-//        SIGNAL(currentFilterRequested(int)));
+    QObject::connect(m_qview.rootObject(), SIGNAL(currentFilterRequested(int)),
+        SIGNAL(currentFilterRequested(int)));
 }

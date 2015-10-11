@@ -223,6 +223,7 @@ int main(int argc, char **argv)
 {
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     QCoreApplication::setAttribute(Qt::AA_X11InitThreads);
+    QCoreApplication::setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
 #endif
     Application a(argc, argv);
     QSplashScreen splash(QPixmap(":/icons/shotcut-logo-640.png"));
