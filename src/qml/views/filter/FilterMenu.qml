@@ -37,6 +37,7 @@ Window {
         filterWindow.y = menuRect.y
         filterWindow.height = menuRect.height
         filterWindow.visible = true
+        filterWindow.show()
         filterWindow.requestActivate()
 
     }
