@@ -43,7 +43,7 @@ FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* att
     setWindowIcon(filterIcon);
     toggleViewAction()->setIcon(windowIcon());
     setMinimumWidth(300);
-    m_qview.setFocusPolicy(Qt::TabFocus);
+    m_qview.setFocusPolicy(Qt::StrongFocus);
     setWidget(&m_qview);
 
     QmlUtilities::setCommonProperties(m_qview.rootContext());

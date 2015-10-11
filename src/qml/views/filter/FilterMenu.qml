@@ -36,7 +36,7 @@ Window {
         filterWindow.x = menuRect.x
         filterWindow.y = menuRect.y
         filterWindow.height = menuRect.height
-        filterWindow.visible = true
+        filterWindow.show()
         filterWindow.requestActivate()
 
     }
@@ -45,7 +45,7 @@ Window {
     flags: Qt.ToolTip
     width: 220
     height: 200
-    onHasFocusChanged: if (!hasFocus) visible = false
+    onHasFocusChanged: if (!hasFocus) close()
 
     SystemPalette { id: activePalette }
 
@@ -67,7 +67,7 @@ Window {
                     id: menuListView
 
                     function itemSelected(index) {
-                        filterWindow.visible = false
+                        filterWindow.close()
                         filterSelected(index)
                     }
 
