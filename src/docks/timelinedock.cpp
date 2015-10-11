@@ -23,6 +23,7 @@
 #include "mainwindow.h"
 #include "commands/timelinecommands.h"
 #include "qmltypes/qmlutilities.h"
+#include "qmltypes/qmlview.h"
 #include "shotcut_mlt_properties.h"
 
 #include <QtQml>
@@ -46,7 +47,8 @@ TimelineDock::TimelineDock(QWidget *parent) :
     importPath.cd("modules");
     m_quickView.engine()->addImportPath(importPath.path());
     m_quickView.engine()->addImageProvider(QString("thumbnail"), new ThumbnailProvider);
-    QmlUtilities::setCommonProperties(&m_quickView);
+    QmlUtilities::setCommonProperties(m_quickView.rootContext());
+    m_quickView.rootContext()->setContextProperty("view", new QmlView(&m_quickView));
     m_quickView.rootContext()->setContextProperty("timeline", this);
     m_quickView.rootContext()->setContextProperty("multitrack", &m_model);
     m_quickView.setResizeMode(QQuickView::SizeRootObjectToView);

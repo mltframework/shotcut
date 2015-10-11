@@ -24,7 +24,7 @@
 #include <QPoint>
 #include <QUrl>
 
-class QQuickView;
+class QQmlContext;
 class QQmlEngine;
 
 class QmlUtilities : public QObject
@@ -35,7 +35,7 @@ public:
     explicit QmlUtilities(QObject *parent = 0);
 
     static void registerCommonTypes();
-    static void setCommonProperties(QQuickView* qview);
+    static void setCommonProperties(QQmlContext* context);
     static QDir qmlDir();
     static QUrl blankVui();
     static QQmlEngine * sharedEngine();
