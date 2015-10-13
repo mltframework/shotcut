@@ -107,8 +107,8 @@ public:
         setApplicationName("Shotcut");
         setApplicationVersion(SHOTCUT_VERSION);
         setAttribute(Qt::AA_UseHighDpiPixmaps);
-#if defined(Q_OS_MAC)
         setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
+#if defined(Q_OS_MAC)
         setAttribute(Qt::AA_DontShowIconsInMenus);
 #endif
 #if defined(Q_OS_WIN)
@@ -223,7 +223,6 @@ int main(int argc, char **argv)
 {
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     QCoreApplication::setAttribute(Qt::AA_X11InitThreads);
-    QCoreApplication::setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
 #endif
     Application a(argc, argv);
     QSplashScreen splash(QPixmap(":/icons/shotcut-logo-640.png"));
