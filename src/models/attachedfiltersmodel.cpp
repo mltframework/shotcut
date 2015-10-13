@@ -287,7 +287,8 @@ void AttachedFiltersModel::add(QmlMetadata* meta)
         }
 
         beginInsertRows(QModelIndex(), insertIndex, insertIndex);
-        MLT.pause();
+        if (MLT.isSeekable())
+            MLT.pause();
         m_event->block();
         m_producer->attach(*filter);
         m_producer->move_filter(m_producer->filter_count() - 1, mltIndex);
