@@ -46,7 +46,7 @@ Window {
     flags: Qt.ToolTip
     width: 220
     height: 200
-    onHasFocusChanged: if (!hasFocus) visible = false
+    onHasFocusChanged: if (!hasFocus) filterWindow.close()
 
     SystemPalette { id: activePalette }
 
@@ -68,7 +68,7 @@ Window {
                     id: menuListView
 
                     function itemSelected(index) {
-                        filterWindow.visible = false
+                        filterWindow.close()
                         filterSelected(index)
                     }
 
