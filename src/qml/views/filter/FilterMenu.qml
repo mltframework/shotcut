@@ -45,7 +45,7 @@ Window {
     flags: Qt.ToolTip
     width: 220
     height: 200
-    onHasFocusChanged: if (!hasFocus) close()
+    onHasFocusChanged: if (!hasFocus) filterWindow.close()
 
     SystemPalette { id: activePalette }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Meltytech, LLC
+ * Copyright (c) 2011-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -59,7 +59,6 @@ public:
     static void destroy();
 
     virtual QObject* videoWidget() = 0;
-    virtual QQuickView* videoQuickView() = 0;
     virtual int setProducer(Mlt::Producer*, bool isMulti = false);
     virtual int open(const QString& url);
     bool openXML(const QString& filename);

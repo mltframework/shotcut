@@ -78,7 +78,7 @@ Rectangle {
     MouseArea {
         anchors.fill: parent
         acceptedButtons: Qt.RightButton
-        onClicked: menu.open()
+        onClicked: menu.popup()
     }
 
     DropArea {
@@ -379,13 +379,6 @@ Rectangle {
 
     Menu {
         id: menu
-
-        // XXX This is a workaround for menus appearing in wrong location in a Quick
-        // view used in a DockWidget.
-        function open() {
-            if (timeline.yoffset) __yOffset = timeline.yoffset
-            popup()
-        }
 
         MenuItem {
             text: qsTr('Add Audio Track')

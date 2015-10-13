@@ -19,14 +19,14 @@
 #ifndef _FORWARDINGQUICKVIEWWORKAROUND_H
 #define _FORWARDINGQUICKVIEWWORKAROUND_H
 
-#include <QQuickView>
+#include <QQuickWidget>
 #include <QCoreApplication>
 
-class ForwardingQuickViewWorkaround : public QQuickView
+class ForwardingQuickViewWorkaround : public QQuickWidget
 {
 public:
     ForwardingQuickViewWorkaround(QQmlEngine * engine, QObject * receiver)
-        : QQuickView(engine, 0)
+        : QQuickWidget(engine, 0)
         , m_receiver(receiver)
     {
     }
@@ -35,13 +35,13 @@ protected:
     QObject * m_receiver;
 
     void keyPressEvent(QKeyEvent* e) {
-        QQuickView::keyPressEvent(e);
+        QQuickWidget::keyPressEvent(e);
         if (!e->isAccepted())
             qApp->sendEvent(m_receiver, e);
     }
 
     void keyReleaseEvent(QKeyEvent* e) {
-        QQuickView::keyReleaseEvent(e);
+        QQuickWidget::keyReleaseEvent(e);
         if (!e->isAccepted())
             qApp->sendEvent(m_receiver, e);
     }

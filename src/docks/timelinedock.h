@@ -20,7 +20,7 @@
 #define TIMELINEDOCK_H
 
 #include <QDockWidget>
-#include <QQuickView>
+#include <QQuickWidget>
 #include <QApplication>
 #include "models/multitrackmodel.h"
 #include "sharedframe.h"
@@ -34,7 +34,6 @@ class TimelineDock : public QDockWidget
 {
     Q_OBJECT
     Q_PROPERTY(int position READ position WRITE setPosition NOTIFY positionChanged)
-    Q_PROPERTY(int yoffset READ dockYOffset)
     Q_PROPERTY(int currentTrack READ currentTrack WRITE setCurrentTrack NOTIFY currentTrackChanged)
     Q_PROPERTY(QList<int> selection READ selection WRITE setSelection NOTIFY selectionChanged)
 
@@ -51,7 +50,6 @@ public:
     int clipIndexAtPlayhead(int trackIndex = -1);
     int clipIndexAtPosition(int trackIndex, int position);
     void chooseClipAtPosition(int position, int * trackIndex, int * clipIndex);
-    int dockYOffset() const;
     void setCurrentTrack(int currentTrack);
     int currentTrack() const;
     int clipCount(int trackIndex) const;

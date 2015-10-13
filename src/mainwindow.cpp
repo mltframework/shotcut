@@ -383,6 +383,9 @@ MainWindow::MainWindow()
     connect(leap, SIGNAL(jogRightSecond()), SLOT(stepRightOneSecond()));
     connect(leap, SIGNAL(jogLeftFrame()), SLOT(stepLeftOneFrame()));
     connect(leap, SIGNAL(jogLeftSecond()), SLOT(stepLeftOneSecond()));
+
+    m_timelineDock->setFocusPolicy(Qt::StrongFocus);
+
     qDebug() << "end";
 }
 
