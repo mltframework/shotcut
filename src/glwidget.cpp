@@ -51,7 +51,7 @@ static ClientWaitSync_fp ClientWaitSync = 0;
 using namespace Mlt;
 
 GLWidget::GLWidget(QObject *parent)
-    : QQuickView(QmlUtilities::sharedEngine(), (QWindow*) parent)
+    : QQuickWidget(QmlUtilities::sharedEngine(), (QWidget*) parent)
     , Controller()
     , m_shader(0)
     , m_glslManager(0)
@@ -68,10 +68,10 @@ GLWidget::GLWidget(QObject *parent)
 {
     qDebug() << "begin";
     m_texture[0] = m_texture[1] = m_texture[2] = 0;
-    setPersistentOpenGLContext(true);
-    setPersistentSceneGraph(true);
-    setClearBeforeRendering(false);
-    setResizeMode(QQuickView::SizeRootObjectToView);
+    quickWindow()->setPersistentOpenGLContext(true);
+    quickWindow()->setPersistentSceneGraph(true);
+    quickWindow()->setClearBeforeRendering(false);
+    setResizeMode(QQuickWidget::SizeRootObjectToView);
     QDir importPath = QmlUtilities::qmlDir();
     importPath.cd("modules");
     engine()->addImportPath(importPath.path());
@@ -119,10 +119,10 @@ void GLWidget::initializeGL()
     initializeOpenGLFunctions();
     qDebug() << "OpenGL vendor" << QString::fromUtf8((const char*) glGetString(GL_VENDOR));
     qDebug() << "OpenGL renderer" << QString::fromUtf8((const char*) glGetString(GL_RENDERER));
-    qDebug() << "OpenGL threaded?" << openglContext()->supportsThreadedOpenGL();
-    qDebug() << "OpenGL ES?" << openglContext()->isOpenGLES();
+    qDebug() << "OpenGL threaded?" << quickWindow()->openglContext()->supportsThreadedOpenGL();
+    qDebug() << "OpenGL ES?" << quickWindow()->openglContext()->isOpenGLES();
 
-    if (m_glslManager && openglContext()->isOpenGLES()) {
+    if (m_glslManager && quickWindow()->openglContext()->isOpenGLES()) {
         delete m_glslManager;
         m_glslManager = 0;
         // Need to destroy MLT global reference to prevent filters from trying to use GPU.
@@ -135,8 +135,8 @@ void GLWidget::initializeGL()
 #if defined(USE_GL_SYNC) && !defined(Q_OS_WIN)
     // getProcAddress is not working for me on Windows.
     if (Settings.playerGPU()) {
-        if (m_glslManager && openglContext()->hasExtension("GL_ARB_sync")) {
-            ClientWaitSync = (ClientWaitSync_fp) openglContext()->getProcAddress("glClientWaitSync");
+        if (m_glslManager && quickWindow()->openglContext()->hasExtension("GL_ARB_sync")) {
+            ClientWaitSync = (ClientWaitSync_fp) quickWindow()->openglContext()->getProcAddress("glClientWaitSync");
         }
         if (!ClientWaitSync) {
             emit gpuNotSupported();
@@ -146,22 +146,22 @@ void GLWidget::initializeGL()
     }
 #endif
 
-    openglContext()->doneCurrent();
+    quickWindow()->openglContext()->doneCurrent();
     if (m_glslManager) {
         // Create a context sharing with this context for the RenderThread context.
         // This is needed because openglContext() is active in another thread
         // at the time that RenderThread is created.
         // See this Qt bug for more info: https://bugreports.qt.io/browse/QTBUG-44677
         m_shareContext = new QOpenGLContext;
-        m_shareContext->setFormat(openglContext()->format());
-        m_shareContext->setShareContext(openglContext());
+        m_shareContext->setFormat(quickWindow()->openglContext()->format());
+        m_shareContext->setShareContext(quickWindow()->openglContext());
         m_shareContext->create();
     }
-    m_frameRenderer = new FrameRenderer(openglContext(), &m_offscreenSurface);
-    openglContext()->makeCurrent(this);
+    m_frameRenderer = new FrameRenderer(quickWindow()->openglContext(), &m_offscreenSurface);
+    quickWindow()->openglContext()->makeCurrent(quickWindow());
 
     connect(m_frameRenderer, SIGNAL(frameDisplayed(const SharedFrame&)), this, SIGNAL(frameDisplayed(const SharedFrame&)), Qt::QueuedConnection);
-    if (openglContext()->supportsThreadedOpenGL())
+    if (quickWindow()->openglContext()->supportsThreadedOpenGL())
         connect(m_frameRenderer, SIGNAL(textureReady(GLuint,GLuint,GLuint)), SLOT(updateTexture(GLuint,GLuint,GLuint)), Qt::DirectConnection);
     else
         connect(m_frameRenderer, SIGNAL(frameDisplayed(const SharedFrame&)), SLOT(onFrameDisplayed(const SharedFrame&)), Qt::QueuedConnection);
@@ -209,7 +209,7 @@ void GLWidget::resizeGL(int width, int height)
 
 void GLWidget::resizeEvent(QResizeEvent* event)
 {
-    QQuickView::resizeEvent(event);
+    QQuickWidget::resizeEvent(event);
     resizeGL(event->size().width(), event->size().height());
 }
 
@@ -330,7 +330,7 @@ static void uploadTextures(QOpenGLContext* context, SharedFrame& frame, GLuint t
 
 void GLWidget::paintGL()
 {
-    QOpenGLFunctions* f = openglContext()->functions();
+    QOpenGLFunctions* f = quickWindow()->openglContext()->functions();
     int width = this->width() * devicePixelRatio();
     int height = this->height() * devicePixelRatio();
 
@@ -344,13 +344,13 @@ void GLWidget::paintGL()
     glClear(GL_COLOR_BUFFER_BIT);
     check_error(f);
 
-    if (!openglContext()->supportsThreadedOpenGL()) {
+    if (!quickWindow()->openglContext()->supportsThreadedOpenGL()) {
         m_mutex.lock();
         if (!m_sharedFrame.is_valid()) {
             m_mutex.unlock();
             return;
         }
-        uploadTextures(openglContext(), m_sharedFrame, m_texture);
+        uploadTextures(quickWindow()->openglContext(), m_sharedFrame, m_texture);
         m_mutex.unlock();
     }
 
@@ -439,7 +439,7 @@ void GLWidget::paintGL()
 
 void GLWidget::mousePressEvent(QMouseEvent* event)
 {
-    QQuickView::mousePressEvent(event);
+    QQuickWidget::mousePressEvent(event);
     if (event->isAccepted()) return;
     if (event->button() == Qt::LeftButton)
         m_dragStart = event->pos();
@@ -449,7 +449,7 @@ void GLWidget::mousePressEvent(QMouseEvent* event)
 
 void GLWidget::mouseMoveEvent(QMouseEvent* event)
 {
-    QQuickView::mouseMoveEvent(event);
+    QQuickWidget::mouseMoveEvent(event);
     if (event->isAccepted()) return;
     if (event->modifiers() == Qt::ShiftModifier && m_producer) {
         emit seekTo(m_producer->get_length() * event->x() / width());
@@ -477,7 +477,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent* event)
 
 void GLWidget::keyPressEvent(QKeyEvent* event)
 {
-    QQuickView::keyPressEvent(event);
+    QQuickWidget::keyPressEvent(event);
     if (event->isAccepted()) return;
     MAIN.keyPressEvent(event);
 }
