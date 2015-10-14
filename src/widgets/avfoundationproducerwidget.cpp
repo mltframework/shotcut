@@ -49,8 +49,8 @@ AvfoundationProducerWidget::~AvfoundationProducerWidget()
 Mlt::Producer *AvfoundationProducerWidget::producer(Mlt::Profile& profile)
 {
     QString resource = QString("avfoundation:%1:%2?pixel_format=yuyv422")
-            .arg(ui->videoCombo->currentText())
-            .arg(ui->audioCombo->currentText());
+            .arg(ui->videoCombo->currentText().replace(tr("None"), "none"))
+            .arg(ui->audioCombo->currentText().replace(tr("None"), "none"));
     qDebug() << resource;
     Mlt::Producer* p = new Mlt::Producer(profile, resource.toLatin1().constData());
     if (!p || !p->is_valid()) {
@@ -70,6 +70,8 @@ void AvfoundationProducerWidget::setProducer(Mlt::Producer *producer)
 {
     QStringList resource = QString(producer->get("resource")).split('?');
     resource = resource[0].split(':');
+    ui->videoCombo->setCurrentIndex(0);
+    ui->audioCombo->setCurrentIndex(0);
     if (resource.size() > 2) {
         for (int i = 1; i < ui->videoCombo->count(); i++) {
             if (ui->videoCombo->itemText(i) == resource[1]) {
