@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Meltytech, LLC
+ * Copyright (c) 2012-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -53,6 +53,9 @@ OpenOtherDialog::OpenOtherDialog(QWidget *parent) :
 #elif defined(Q_OS_WIN)
     QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("DirectShow")));
     item->setData(0, Qt::UserRole, ui->dshowVideoTab->objectName());
+#elif defined(Q_OS_MAC)
+    QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("OS X A/V Device")));
+    item->setData(0, Qt::UserRole, ui->avfoundationTab->objectName());
 #endif
 
     // populate the generators
@@ -195,6 +198,8 @@ void OpenOtherDialog::on_treeWidget_currentItemChanged(QTreeWidgetItem *current,
                     m_current = ui->dshowVideoWidget;
                 else if (w == ui->toneTab)
                     m_current = ui->toneWidget;
+                else if (w == ui->avfoundationTab)
+                    m_current = ui->avfoundationWidget;
                 break;
             }
         }

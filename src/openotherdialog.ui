@@ -69,6 +69,13 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="avfoundationTab">
+       <layout class="QVBoxLayout" name="verticalLayout_15">
+        <item>
+         <widget class="AvfoundationProducerWidget" name="avfoundationWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="colorTab">
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
@@ -257,6 +264,12 @@
    <class>DirectShowVideoWidget</class>
    <extends>QWidget</extends>
    <header>widgets/directshowvideowidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>AvfoundationProducerWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/avfoundationproducerwidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

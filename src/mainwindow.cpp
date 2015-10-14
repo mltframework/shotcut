@@ -66,6 +66,7 @@
 #include "autosavefile.h"
 #include "commands/playlistcommands.h"
 #include "shotcut_mlt_properties.h"
+#include "widgets/avfoundationproducerwidget.h"
 
 #include <QtWidgets>
 #include <QDebug>
@@ -2039,6 +2040,8 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
         w = new AlsaWidget(this);
     else if (resource.startsWith("dshow:"))
         w = new DirectShowVideoWidget(this);
+    else if (resource.startsWith("avfoundation:"))
+        w = new AvfoundationProducerWidget(this);
     else if (resource.startsWith("x11grab:"))
         w = new X11grabWidget(this);
     else if (service.startsWith("avformat"))

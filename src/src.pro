@@ -102,7 +102,8 @@ SOURCES += main.cpp\
     widgets/playlisttable.cpp \
     commands/undohelper.cpp \
     models/audiolevelstask.cpp \
-    mltxmlchecker.cpp
+    mltxmlchecker.cpp \
+    widgets/avfoundationproducerwidget.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -201,7 +202,8 @@ HEADERS  += mainwindow.h \
     commands/undohelper.h \
     models/audiolevelstask.h \
     shotcut_mlt_properties.h \
-    mltxmlchecker.h
+    mltxmlchecker.h \
+    widgets/avfoundationproducerwidget.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
@@ -237,7 +239,8 @@ FORMS    += mainwindow.ui \
     widgets/webvfxproducer.ui \
     docks/timelinedock.ui \
     widgets/lumamixtransition.ui \
-    widgets/directshowvideowidget.ui
+    widgets/directshowvideowidget.ui \
+    widgets/avfoundationproducerwidget.ui
 
 RESOURCES += \
     ../icons/resources.qrc \
