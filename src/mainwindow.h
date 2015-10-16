@@ -231,6 +231,7 @@ private slots:
 #ifdef Q_OS_WIN
     void onDrawingMethodTriggered(QAction*);
 #endif
+    void on_actionApplicationLog_triggered();
 };
 
 #define MAIN MainWindow::singleton()

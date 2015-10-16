@@ -39,7 +39,7 @@
      <x>0</x>
      <y>0</y>
      <width>832</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -685,6 +685,11 @@
    </property>
    <property name="text">
     <string extracomment="Do not translate &quot;Mesa&quot;">Software (Mesa)</string>
+   </property>
+  </action>
+  <action name="actionApplicationLog">
+   <property name="text">
+    <string>Application Log...</string>
    </property>
   </action>
  </widget>

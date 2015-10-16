@@ -67,6 +67,7 @@
 #include "commands/playlistcommands.h"
 #include "shotcut_mlt_properties.h"
 #include "widgets/avfoundationproducerwidget.h"
+#include "dialogs/textviewerdialog.h"
 
 #include <QtWidgets>
 #include <QDebug>
@@ -358,6 +359,9 @@ MainWindow::MainWindow()
     connect(m_meltedServerDock, SIGNAL(connected(QString,quint16)), unitsModel, SLOT(onConnected(QString,quint16)));
     connect(unitsModel, SIGNAL(clipIndexChanged(quint8, int)), playlistModel, SLOT(onClipIndexChanged(quint8, int)));
     connect(unitsModel, SIGNAL(generationChanged(quint8)), playlistModel, SLOT(onGenerationChanged(quint8)));
+
+    ui->menuView->addSeparator();
+    ui->menuView->addAction(ui->actionApplicationLog);
 
     // connect video widget signals
     Mlt::GLWidget* videoWidget = (Mlt::GLWidget*) &(MLT);
@@ -2614,3 +2618,15 @@ void MainWindow::onDrawingMethodTriggered(QAction *action)
     }
 }
 #endif
+
+void MainWindow::on_actionApplicationLog_triggered()
+{
+    TextViewerDialog dialog(this);
+    QDir dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation).first();
+    QFile logFile(dir.filePath("shotcut-log.txt"));
+    logFile.open(QIODevice::ReadOnly | QIODevice::Text);
+    dialog.setText(logFile.readAll());
+    logFile.close();
+    dialog.setWindowTitle(tr("Application Log"));
+    dialog.exec();
+}
