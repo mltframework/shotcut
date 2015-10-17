@@ -53,6 +53,8 @@ EncodeDock::EncodeDock(QWidget *parent) :
     delete ui->stopCaptureButton;
 #endif
     ui->videoCodecThreadsSpinner->setMaximum(QThread::idealThreadCount());
+    if (QThread::idealThreadCount() < 3)
+        ui->parallelCheckbox->setHidden(true);
     toggleViewAction()->setIcon(windowIcon());
 
     m_presetsModel.setSourceModel(new QStandardItemModel(this));
@@ -229,11 +231,37 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
             if (preset.get_int("threads") == 1)
                 ui->videoCodecThreadsSpinner->setValue(1);
         }
-        else if (name == "meta.preset.extension")
+        else if (name == "meta.preset.extension") {
             m_extension = preset.get("meta.preset.extension");
+        }
+        else if (name == "deinterlace_method") {
+            name = preset.get("deinterlace_method");
+            if (name == "onefield")
+                ui->deinterlacerCombo->setCurrentIndex(0);
+            else if (name == "linearblend")
+                ui->deinterlacerCombo->setCurrentIndex(1);
+            else if (name == "yadif-nospatial")
+                ui->deinterlacerCombo->setCurrentIndex(2);
+            else if (name == "yadif")
+                ui->deinterlacerCombo->setCurrentIndex(3);
+            ui->deinterlacerCombo->setDisabled(true);
+        }
+        else if (name == "rescale") {
+            name = preset.get("rescale");
+            if (name == "nearest" || name == "neighbor")
+                ui->interpolationCombo->setCurrentIndex(0);
+            else if (name == "bilinear")
+                ui->interpolationCombo->setCurrentIndex(1);
+            else if (name == "bicubic")
+                ui->interpolationCombo->setCurrentIndex(2);
+            else if (name == "hyper" || name == "lanczos")
+                ui->interpolationCombo->setCurrentIndex(3);
+            ui->interpolationCombo->setDisabled(true);
+        }
         else if (name != "an" && name != "vn" && name != "threads"
-                 && !name.startsWith('_') && !name.startsWith("meta.preset."))
+                 && !name.startsWith('_') && !name.startsWith("meta.preset.")) {
             other.append(QString("%1=%2").arg(name).arg(preset.get(i)));
+        }
     }
     ui->advancedTextEdit->setPlainText(other.join("\n"));
 
@@ -432,6 +460,34 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
             p->set("aspect", double(ui->aspectNumSpinner->value()) / double(ui->aspectDenSpinner->value()));
             p->set("progressive", ui->scanModeCombo->currentIndex());
             p->set("top_field_first", ui->fieldOrderCombo->currentIndex());
+            switch (ui->deinterlacerCombo->currentIndex()) {
+            case 0:
+                p->set("deinterlace_method", "onefield");
+                break;
+            case 1:
+                p->set("deinterlace_method", "linearblend");
+                break;
+            case 2:
+                p->set("deinterlace_method", "yadif-nospatial");
+                break;
+            default:
+                p->set("deinterlace_method", "yadif");
+                break;
+            }
+            switch (ui->interpolationCombo->currentIndex()) {
+            case 0:
+                p->set("rescale", "nearest");
+                break;
+            case 1:
+                p->set("rescale", "bilinear");
+                break;
+            case 2:
+                p->set("rescale", "bicubic");
+                break;
+            default:
+                p->set("rescale", "hyper");
+                break;
+            }
             if (qFloor(ui->fpsSpinner->value() * 10.0) == 239) {
                 p->set("frame_rate_num", 24000);
                 p->set("frame_rate_den", 1001);
@@ -608,6 +664,10 @@ void EncodeDock::resetOptions()
     ui->aspectDenSpinner->setEnabled(true);
     ui->scanModeCombo->setEnabled(true);
     ui->fpsSpinner->setEnabled(true);
+    ui->deinterlacerCombo->setEnabled(true);
+    ui->deinterlacerCombo->setCurrentIndex(3);
+    ui->interpolationCombo->setEnabled(true);
+    ui->interpolationCombo->setCurrentIndex(1);
 
     ui->videoBitrateCombo->lineEdit()->setText("2M");
     ui->videoBufferSizeSpinner->setValue(224);
@@ -738,12 +798,16 @@ void EncodeDock::on_encodeButton_clicked()
         if (seekable) {
             // Batch encode
             int threadCount = QThread::idealThreadCount();
-            threadCount = (threadCount > 2) ? qMin(threadCount - 1, 4) : 1;
+            if (threadCount > 2 && ui->parallelCheckbox->isChecked())
+                threadCount = qMin(threadCount - 1, 4);
+            else
+                threadCount = 1;
             enqueueMelt(outputFilename, Settings.playerGPU()? -1 : -threadCount);
         }
         else if (MLT.producer()->get_int(kBackgroundCaptureProperty)) {
+            // Capture Shotcut screencast
             MLT.stop();
-            runMelt(outputFilename);
+            runMelt(outputFilename, -1);
             ui->stopCaptureButton->show();
         }
         else {
@@ -992,6 +1056,7 @@ void EncodeDock::on_audioRateControlCombo_activated(int index)
 void EncodeDock::on_scanModeCombo_currentIndexChanged(int index)
 {
     ui->fieldOrderCombo->setDisabled(index);
+    ui->deinterlacerCombo->setEnabled(index);
 }
 
 void EncodeDock::on_presetsSearch_textChanged(const QString &search)

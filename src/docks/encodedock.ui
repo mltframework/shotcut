@@ -134,8 +134,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>329</width>
-         <height>465</height>
+         <width>356</width>
+         <height>454</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -227,6 +227,136 @@
                <property name="verticalSpacing">
                 <number>3</number>
                </property>
+               <item row="7" column="0">
+                <widget class="QLabel" name="label_4">
+                 <property name="text">
+                  <string>Interpolation</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="0">
+                <widget class="QLabel" name="label_15">
+                 <property name="text">
+                  <string>Field order</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="label_13">
+                 <property name="text">
+                  <string>Aspect ratio</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1" colspan="2">
+                <layout class="QHBoxLayout" name="horizontalLayout_7">
+                 <property name="spacing">
+                  <number>2</number>
+                 </property>
+                 <item>
+                  <widget class="QSpinBox" name="widthSpinner">
+                   <property name="minimum">
+                    <number>16</number>
+                   </property>
+                   <property name="maximum">
+                    <number>4096</number>
+                   </property>
+                   <property name="value">
+                    <number>1280</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_11">
+                   <property name="text">
+                    <string>x</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QSpinBox" name="heightSpinner">
+                   <property name="minimum">
+                    <number>1</number>
+                   </property>
+                   <property name="maximum">
+                    <number>4096</number>
+                   </property>
+                   <property name="value">
+                    <number>720</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_7">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </item>
+               <item row="4" column="0">
+                <widget class="QLabel" name="label_14">
+                 <property name="text">
+                  <string>Scan mode</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="1" colspan="2">
+                <layout class="QHBoxLayout" name="horizontalLayout_9">
+                 <property name="spacing">
+                  <number>2</number>
+                 </property>
+                 <item>
+                  <widget class="QComboBox" name="scanModeCombo">
+                   <property name="currentIndex">
+                    <number>1</number>
+                   </property>
+                   <item>
+                    <property name="text">
+                     <string>Interlaced</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Progressive</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_9">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </item>
                <item row="3" column="1" colspan="2">
                 <layout class="QHBoxLayout" name="horizontalLayout_16">
                  <item>
@@ -350,6 +480,9 @@
                 <layout class="QHBoxLayout" name="horizontalLayout_10">
                  <item>
                   <widget class="QComboBox" name="fieldOrderCombo">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
                    <item>
                     <property name="text">
                      <string>Bottom Field First</string>
@@ -377,66 +510,37 @@
                  </item>
                 </layout>
                </item>
-               <item row="5" column="0">
-                <widget class="QLabel" name="label_15">
-                 <property name="text">
-                  <string>Field order</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0">
-                <widget class="QLabel" name="label_13">
-                 <property name="text">
-                  <string>Aspect ratio</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="1" colspan="2">
-                <layout class="QHBoxLayout" name="horizontalLayout_7">
-                 <property name="spacing">
-                  <number>2</number>
-                 </property>
+               <item row="6" column="1" colspan="2">
+                <layout class="QHBoxLayout" name="horizontalLayout_3">
                  <item>
-                  <widget class="QSpinBox" name="widthSpinner">
-                   <property name="minimum">
-                    <number>16</number>
+                  <widget class="QComboBox" name="deinterlacerCombo">
+                   <property name="currentIndex">
+                    <number>3</number>
                    </property>
-                   <property name="maximum">
-                    <number>4096</number>
-                   </property>
-                   <property name="value">
-                    <number>1280</number>
-                   </property>
+                   <item>
+                    <property name="text">
+                     <string>One Field (fast)</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Linear Blend (fast)</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>YADIF - temporal only (good)</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>YADIF - temporal + spatial (best)</string>
+                    </property>
+                   </item>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLabel" name="label_11">
-                   <property name="text">
-                    <string>x</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QSpinBox" name="heightSpinner">
-                   <property name="minimum">
-                    <number>1</number>
-                   </property>
-                   <property name="maximum">
-                    <number>4096</number>
-                   </property>
-                   <property name="value">
-                    <number>720</number>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <spacer name="horizontalSpacer_7">
+                  <spacer name="horizontalSpacer_21">
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
@@ -450,40 +554,47 @@
                  </item>
                 </layout>
                </item>
-               <item row="4" column="0">
-                <widget class="QLabel" name="label_14">
+               <item row="6" column="0">
+                <widget class="QLabel" name="label_2">
                  <property name="text">
-                  <string>Scan mode</string>
+                  <string>Deinterlacer</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                  </property>
                 </widget>
                </item>
-               <item row="4" column="1" colspan="2">
-                <layout class="QHBoxLayout" name="horizontalLayout_9">
-                 <property name="spacing">
-                  <number>2</number>
-                 </property>
+               <item row="7" column="1" colspan="2">
+                <layout class="QHBoxLayout" name="horizontalLayout_18">
                  <item>
-                  <widget class="QComboBox" name="scanModeCombo">
+                  <widget class="QComboBox" name="interpolationCombo">
                    <property name="currentIndex">
                     <number>1</number>
                    </property>
                    <item>
                     <property name="text">
-                     <string>Interlaced</string>
+                     <string>Nearest Neighbor (fast)</string>
                     </property>
                    </item>
                    <item>
                     <property name="text">
-                     <string>Progressive</string>
+                     <string>Bilinear (good)</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Bicubic (better)</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Hyper/Lanczos (best)</string>
                     </property>
                    </item>
                   </widget>
                  </item>
                  <item>
-                  <spacer name="horizontalSpacer_9">
+                  <spacer name="horizontalSpacer_22">
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
@@ -496,6 +607,24 @@
                   </spacer>
                  </item>
                 </layout>
+               </item>
+               <item row="8" column="1" colspan="2">
+                <widget class="QCheckBox" name="parallelCheckbox">
+                 <property name="toolTip">
+                  <string>This enables multiple image processing threads.
+Sometimes, this can be a problem, and you can
+test if turning this off helps. For example, some
+interlaced AVCHD in conjunction with the YADIF
+deinterlacer has been reported as problematic
+with parallel processing enabled.</string>
+                 </property>
+                 <property name="text">
+                  <string>Parallel processing</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                </widget>
                </item>
               </layout>
              </widget>
