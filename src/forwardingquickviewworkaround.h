@@ -21,30 +21,27 @@
 
 #include <QQuickWidget>
 #include <QCoreApplication>
+#include <QPointer>
 
 class ForwardingQuickViewWorkaround : public QQuickWidget
 {
+    Q_OBJECT
 public:
-    ForwardingQuickViewWorkaround(QQmlEngine * engine, QObject * receiver)
-        : QQuickWidget(engine, 0)
-        , m_receiver(receiver)
-    {
-    }
+    ForwardingQuickViewWorkaround(QQmlEngine * engine, QObject * receiver);
 
 protected:
+    void keyPressEvent(QKeyEvent* e);
+    void keyReleaseEvent(QKeyEvent* e);
+    bool eventFilter(QObject* target, QEvent* event);
+
+private slots:
+    void onFocusObjectChanged(QObject *obj);
+
+private:
     QObject * m_receiver;
+    QPointer<QObject> m_previousFocusObject;
+    bool m_insideEventFilter;
 
-    void keyPressEvent(QKeyEvent* e) {
-        QQuickWidget::keyPressEvent(e);
-        if (!e->isAccepted())
-            qApp->sendEvent(m_receiver, e);
-    }
-
-    void keyReleaseEvent(QKeyEvent* e) {
-        QQuickWidget::keyReleaseEvent(e);
-        if (!e->isAccepted())
-            qApp->sendEvent(m_receiver, e);
-    }
 };
 
 

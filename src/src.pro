@@ -14,6 +14,7 @@ SOURCES += main.cpp\
     mltcontroller.cpp \
     scrubbar.cpp \
     openotherdialog.cpp \
+    forwardingquickviewworkaround.cpp \
     controllers/filtercontroller.cpp \
     widgets/plasmawidget.cpp \
     widgets/lissajouswidget.cpp \

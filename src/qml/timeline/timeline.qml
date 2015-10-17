@@ -176,7 +176,6 @@ Rectangle {
                 onValueChanged: Logic.scrollIfNeeded()
             }
         }
-
         MouseArea {
             id: tracksArea
             width: root.width - headerWidth
