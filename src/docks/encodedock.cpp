@@ -47,11 +47,7 @@ EncodeDock::EncodeDock(QWidget *parent) :
 {
     qDebug() << "begin";
     ui->setupUi(this);
-#ifdef Q_OS_UNIX
     ui->stopCaptureButton->hide();
-#else
-    delete ui->stopCaptureButton;
-#endif
     ui->videoCodecThreadsSpinner->setMaximum(QThread::idealThreadCount());
     if (QThread::idealThreadCount() < 3)
         ui->parallelCheckbox->setHidden(true);
