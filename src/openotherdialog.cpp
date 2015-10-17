@@ -53,6 +53,8 @@ OpenOtherDialog::OpenOtherDialog(QWidget *parent) :
 #elif defined(Q_OS_WIN)
     QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("DirectShow")));
     item->setData(0, Qt::UserRole, ui->dshowVideoTab->objectName());
+    item = new QTreeWidgetItem(group, QStringList(tr("Screen")));
+    item->setData(0, Qt::UserRole, ui->gdigrabTab->objectName());
 #elif defined(Q_OS_MAC)
     QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("OS X A/V Device")));
     item->setData(0, Qt::UserRole, ui->avfoundationTab->objectName());
@@ -122,7 +124,7 @@ void OpenOtherDialog::load(Mlt::Producer* producer)
             selectTreeWidget(tr("ALSA Audio"));
         else if (resource.startsWith("dshow:"))
             selectTreeWidget(tr("DirectShow"));
-        else if (resource.startsWith("x11grab:"))
+        else if (resource.startsWith("x11grab:") || resource.startsWith("gdigrab:"))
             selectTreeWidget(tr("Screen"));
         else if (service.startsWith("avformat"))
             selectTreeWidget(tr("Network"));
@@ -194,6 +196,8 @@ void OpenOtherDialog::on_treeWidget_currentItemChanged(QTreeWidgetItem *current,
                     m_current = ui->alsaWidget;
                 else if (w == ui->x11grabTab)
                     m_current = ui->x11grabWidget;
+                else if (w == ui->gdigrabTab)
+                    m_current = ui->gdigrabWidget;
                 else if (w == ui->dshowVideoTab)
                     m_current = ui->dshowVideoWidget;
                 else if (w == ui->toneTab)

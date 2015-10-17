@@ -159,6 +159,13 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="gdigrabTab">
+       <layout class="QVBoxLayout" name="verticalLayout_16">
+        <item>
+         <widget class="GDIgrabWidget" name="gdigrabWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="toneTab">
        <layout class="QVBoxLayout" name="verticalLayout_15">
         <item>
@@ -258,6 +265,12 @@
    <class>X11grabWidget</class>
    <extends>QWidget</extends>
    <header>widgets/x11grabwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>GDIgrabWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/gdigrabwidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

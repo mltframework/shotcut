@@ -103,7 +103,8 @@ SOURCES += main.cpp\
     commands/undohelper.cpp \
     models/audiolevelstask.cpp \
     mltxmlchecker.cpp \
-    widgets/avfoundationproducerwidget.cpp
+    widgets/avfoundationproducerwidget.cpp \
+    widgets/gdigrabwidget.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -203,7 +204,8 @@ HEADERS  += mainwindow.h \
     models/audiolevelstask.h \
     shotcut_mlt_properties.h \
     mltxmlchecker.h \
-    widgets/avfoundationproducerwidget.h
+    widgets/avfoundationproducerwidget.h \
+    widgets/gdigrabwidget.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
@@ -240,7 +242,8 @@ FORMS    += mainwindow.ui \
     docks/timelinedock.ui \
     widgets/lumamixtransition.ui \
     widgets/directshowvideowidget.ui \
-    widgets/avfoundationproducerwidget.ui
+    widgets/avfoundationproducerwidget.ui \
+    widgets/gdigrabwidget.ui
 
 RESOURCES += \
     ../icons/resources.qrc \

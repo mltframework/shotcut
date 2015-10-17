@@ -68,6 +68,7 @@
 #include "shotcut_mlt_properties.h"
 #include "widgets/avfoundationproducerwidget.h"
 #include "dialogs/textviewerdialog.h"
+#include "widgets/gdigrabwidget.h"
 
 #include <QtWidgets>
 #include <QDebug>
@@ -1767,7 +1768,7 @@ void MainWindow::onEncodeTriggered(bool checked)
 
 void MainWindow::onCaptureStateChanged(bool started)
 {
-    if (started && MLT.resource().startsWith("x11grab:")
+    if (started && (MLT.resource().startsWith("x11grab:") || MLT.resource().startsWith("gdigrab:"))
                 && !MLT.producer()->get_int(kBackgroundCaptureProperty))
         showMinimized();
 }
@@ -2038,6 +2039,8 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
         w = new AvfoundationProducerWidget(this);
     else if (resource.startsWith("x11grab:"))
         w = new X11grabWidget(this);
+    else if (resource.startsWith("gdigrab:"))
+        w = new GDIgrabWidget(this);
     else if (service.startsWith("avformat"))
         w = new AvformatProducerWidget(this);
     else if (MLT.isImageProducer(producer)) {
