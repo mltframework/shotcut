@@ -69,7 +69,7 @@ Rectangle {
         anchors.top: parent.top
         anchors.left: parent.left
 
-        Text {
+        Label {
             text: qsTr("Track: %1").arg(attachedfiltersmodel.trackTitle)
             height: visible ? implicitHeight : 0
             visible: attachedfiltersmodel.trackTitle != ""
@@ -87,7 +87,7 @@ Rectangle {
             onFilterClicked: {
                 root.currentFilterRequested(index)
             }
-            Text {
+            Label {
                 anchors.centerIn: parent
                 text: qsTr("Nothing selected")
                 color: activePalette.text
