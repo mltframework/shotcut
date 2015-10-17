@@ -74,7 +74,8 @@ Player::Player(QWidget *parent)
     glayout->setContentsMargins(0, 0, 0, 0);
 
     // Add the video widgets.
-    m_videoWidget = QWidget::createWindowContainer(qobject_cast<QWindow*>(MLT.videoWidget()));
+    m_videoWidget = qobject_cast<QWidget*>(MLT.videoWidget());
+    Q_ASSERT(m_videoWidget);
     m_videoWidget->setMinimumSize(QSize(320, 180));
     glayout->addWidget(m_videoWidget, 0, 0);
     m_verticalScroll = new QScrollBar(Qt::Vertical);

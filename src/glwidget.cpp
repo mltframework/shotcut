@@ -85,10 +85,9 @@ GLWidget::GLWidget(QObject *parent)
         m_glslManager = 0;
     }
 
-    connect(this, SIGNAL(openglContextCreated(QOpenGLContext*)), SLOT(onOpenGLContextCreated(QOpenGLContext*)), Qt::DirectConnection);
-    connect(this, SIGNAL(sceneGraphInitialized()), SLOT(initializeGL()), Qt::DirectConnection);
-    connect(this, SIGNAL(sceneGraphInitialized()), SLOT(setBlankScene()), Qt::QueuedConnection);
-    connect(this, SIGNAL(beforeRendering()), SLOT(paintGL()), Qt::DirectConnection);
+    connect(quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(initializeGL()), Qt::DirectConnection);
+    connect(quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(setBlankScene()), Qt::QueuedConnection);
+    connect(quickWindow(), SIGNAL(beforeRendering()), SLOT(paintGL()), Qt::DirectConnection);
     qDebug() << "end";
 }
 
@@ -114,6 +113,11 @@ GLWidget::~GLWidget()
 void GLWidget::initializeGL()
 {
     qDebug() << "begin";
+    Q_ASSERT(!m_offscreenSurface.isValid());
+    m_offscreenSurface.setFormat(quickWindow()->openglContext()->format());
+    m_offscreenSurface.create();
+    Q_ASSERT(m_offscreenSurface.isValid());
+
     if (m_isInitialized) return;
 
     initializeOpenGLFunctions();
@@ -165,7 +169,7 @@ void GLWidget::initializeGL()
         connect(m_frameRenderer, SIGNAL(textureReady(GLuint,GLuint,GLuint)), SLOT(updateTexture(GLuint,GLuint,GLuint)), Qt::DirectConnection);
     else
         connect(m_frameRenderer, SIGNAL(frameDisplayed(const SharedFrame&)), SLOT(onFrameDisplayed(const SharedFrame&)), Qt::QueuedConnection);
-    connect(this, SIGNAL(textureUpdated()), SLOT(update()), Qt::QueuedConnection);
+    connect(this, SIGNAL(textureUpdated()), quickWindow(), SLOT(update()), Qt::QueuedConnection);
 
     m_initSem.release();
     m_isInitialized = true;
@@ -728,12 +732,6 @@ void GLWidget::on_frame_show(mlt_consumer, void* self, mlt_frame frame_ptr)
     }
 }
 
-void GLWidget::onOpenGLContextCreated(QOpenGLContext* context)
-{
-    m_offscreenSurface.setFormat(context->format());
-    m_offscreenSurface.create();
-}
-
 RenderThread::RenderThread(thread_function_t function, void *data, QOpenGLContext *context, QSurface* surface)
     : QThread(0)
     , m_function(function)
@@ -806,6 +804,7 @@ void FrameRenderer::showFrame(Mlt::Frame frame)
         m_frame = SharedFrame(frame);
     }
 
+    Q_ASSERT(m_surface->surfaceHandle());
     if (m_context && m_context->isValid()) {
         if (Settings.playerGPU()) {
             frame.set("movit.convert.use_texture", 1);

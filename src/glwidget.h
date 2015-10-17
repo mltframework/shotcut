@@ -134,7 +134,6 @@ private:
     static void on_frame_show(mlt_consumer, void* self, mlt_frame frame);
 
 private slots:
-    void onOpenGLContextCreated(QOpenGLContext* context);
     void initializeGL();
     void resizeGL(int width, int height);
     void updateTexture(GLuint yName, GLuint uName, GLuint vName);
