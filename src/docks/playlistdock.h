@@ -57,7 +57,6 @@ public slots:
     void on_actionUpdate_triggered();
     void on_removeButton_clicked();
     void setUpdateButtonEnabled(bool modified);
-    void on_actionClose_triggered();
 
 private slots:
     void on_menuButton_clicked();

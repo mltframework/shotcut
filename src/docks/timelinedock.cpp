@@ -357,12 +357,6 @@ void TimelineDock::addVideoTrack()
         new Timeline::AddTrackCommand(m_model, true));
 }
 
-void TimelineDock::close()
-{
-    if (MAIN.continueModified())
-        m_model.close();
-}
-
 void TimelineDock::onShowFrame(const SharedFrame& frame)
 {
     if (MLT.isMultitrack()) {

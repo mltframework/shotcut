@@ -442,15 +442,6 @@ Rectangle {
                 multitrack.reload()
             }
         }
-        MenuSeparator {}
-        MenuItem {
-            text: qsTr('Close')
-            shortcut: 'Ctrl+W'
-            onTriggered: {
-                timeline.close()
-                scaleSlider.value = 1
-            }
-        }
     }
 
     DelegateModel {

@@ -270,11 +270,6 @@ p, li { white-space: pre-wrap; }
     <string>Remove all items from the playlist</string>
    </property>
   </action>
-  <action name="actionClose">
-   <property name="text">
-    <string>Close</string>
-   </property>
-  </action>
   <action name="actionThumbnailsHidden">
    <property name="checkable">
     <bool>true</bool>

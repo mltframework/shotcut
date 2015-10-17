@@ -150,7 +150,6 @@ void PlaylistDock::on_menuButton_clicked()
     }
     menu.addAction(ui->actionRemoveAll);
     menu.addAction(ui->actionAddToTimeline);
-    menu.addAction(ui->actionClose);
     menu.addSeparator();
     QMenu* subMenu = menu.addMenu(tr("Thumbnails"));
     QActionGroup group(this);
@@ -347,12 +346,6 @@ void PlaylistDock::on_actionGoto_triggered()
 void PlaylistDock::on_actionRemoveAll_triggered()
 {
     MAIN.undoStack()->push(new Playlist::ClearCommand(m_model));
-}
-
-void PlaylistDock::on_actionClose_triggered()
-{
-    if (MAIN.continueModified())
-        m_model.close();
 }
 
 void PlaylistDock::onPlaylistCreated()

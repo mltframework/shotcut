@@ -232,6 +232,7 @@ private slots:
     void onDrawingMethodTriggered(QAction*);
 #endif
     void on_actionApplicationLog_triggered();
+    void on_actionClose_triggered();
 };
 
 #define MAIN MainWindow::singleton()

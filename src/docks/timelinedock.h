@@ -84,7 +84,6 @@ signals:
 public slots:
     void addAudioTrack();
     void addVideoTrack();
-    void close();
     void onShowFrame(const SharedFrame& frame);
     void onSeeked(int position);
     void append(int trackIndex);
