@@ -39,7 +39,7 @@
      <x>0</x>
      <y>0</y>
      <width>832</width>
-     <height>22</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -144,7 +144,11 @@
      <addaction name="actionDrawingDirectX"/>
      <addaction name="actionDrawingSoftware"/>
     </widget>
+    <addaction name="actionProject"/>
     <addaction name="actionGPU"/>
+    <addaction name="menuProfile"/>
+    <addaction name="separator"/>
+    <addaction name="actionPlayer"/>
     <addaction name="actionScrubAudio"/>
     <addaction name="actionJack"/>
     <addaction name="actionRealtime"/>
@@ -152,8 +156,9 @@
     <addaction name="menuDeinterlacer"/>
     <addaction name="menuInterpolation"/>
     <addaction name="menuExternal"/>
-    <addaction name="menuProfile"/>
     <addaction name="menuGamma"/>
+    <addaction name="separator"/>
+    <addaction name="actionUser_Interface"/>
     <addaction name="menuLanguage"/>
     <addaction name="menuTheme"/>
     <addaction name="menuDrawingMethod"/>
@@ -242,10 +247,16 @@
    <property name="text">
     <string>&amp;About Shotcut</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::AboutRole</enum>
+   </property>
   </action>
   <action name="actionAbout_Qt">
    <property name="text">
     <string>About Qt</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::AboutQtRole</enum>
    </property>
   </action>
   <action name="actionOpenOther">
@@ -690,6 +701,30 @@
   <action name="actionApplicationLog">
    <property name="text">
     <string>Application Log...</string>
+   </property>
+  </action>
+  <action name="actionProject">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Project</string>
+   </property>
+  </action>
+  <action name="actionPlayer">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Player</string>
+   </property>
+  </action>
+  <action name="actionUser_Interface">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>User Interface</string>
    </property>
   </action>
  </widget>
