@@ -286,6 +286,7 @@ Rectangle {
             originalTrackIndex = trackIndex
             originalClipIndex = index
             startX = parent.x
+            clipRoot.forceActiveFocus();
             clipRoot.clicked(clipRoot)
         }
         onPositionChanged: {
