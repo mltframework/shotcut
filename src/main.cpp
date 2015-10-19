@@ -107,8 +107,8 @@ public:
         setApplicationName("Shotcut");
         setApplicationVersion(SHOTCUT_VERSION);
         setAttribute(Qt::AA_UseHighDpiPixmaps);
-#if defined(Q_OS_MAC)
         setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
+#if defined(Q_OS_MAC)
         setAttribute(Qt::AA_DontShowIconsInMenus);
 #endif
 #if defined(Q_OS_WIN)

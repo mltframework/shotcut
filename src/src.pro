@@ -1,7 +1,7 @@
 CONFIG   += link_prl
 
 QT       += widgets opengl xml network printsupport qml quick sql webkitwidgets
-QT       += multimedia websockets
+QT       += multimedia websockets quickwidgets
 QT       += qml-private core-private quick-private gui-private
 
 TARGET = shotcut
@@ -14,6 +14,7 @@ SOURCES += main.cpp\
     mltcontroller.cpp \
     scrubbar.cpp \
     openotherdialog.cpp \
+    forwardingquickviewworkaround.cpp \
     controllers/filtercontroller.cpp \
     widgets/plasmawidget.cpp \
     widgets/lissajouswidget.cpp \

@@ -29,6 +29,7 @@
 #include <QIcon>
 #include "qmltypes/qmlfilter.h"
 #include "qmltypes/qmlutilities.h"
+#include "qmltypes/qmlview.h"
 #include "models/metadatamodel.h"
 #include "models/attachedfiltersmodel.h"
 
@@ -42,21 +43,15 @@ FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* att
     setWindowIcon(filterIcon);
     toggleViewAction()->setIcon(windowIcon());
     setMinimumWidth(300);
+    m_qview.setFocusPolicy(Qt::StrongFocus);
+    setWidget(&m_qview);
 
-    QWidget* container = QWidget::createWindowContainer(&m_qview, this);
-    container->setFocusPolicy(Qt::TabFocus);
-
-    QScrollArea *scrollArea = new QScrollArea(this);
-    scrollArea->setFrameShape(QFrame::NoFrame);
-    scrollArea->setWidgetResizable(true);
-    scrollArea->setWidget(container);
-    setWidget(scrollArea);
-
-    QmlUtilities::setCommonProperties(&m_qview);
+    QmlUtilities::setCommonProperties(m_qview.rootContext());
+    m_qview.rootContext()->setContextProperty("view", new QmlView(m_qview.quickWindow()));
     m_qview.rootContext()->setContextProperty("metadatamodel", metadataModel);
     m_qview.rootContext()->setContextProperty("attachedfiltersmodel", attachedModel);
     setCurrentFilter(0, 0, -1);
-    connect(&m_qview, SIGNAL(sceneGraphInitialized()), SLOT(resetQview()));
+    connect(m_qview.quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(resetQview()));
 
     qDebug() << "end";
 }
@@ -105,7 +100,7 @@ bool FiltersDock::event(QEvent *event)
 void FiltersDock::resetQview()
 {
     qDebug();
-    if (m_qview.status() != QQuickView::Null) {
+    if (m_qview.status() != QQuickWidget::Null) {
         QObject* root = m_qview.rootObject();
         QObject::disconnect(root, SIGNAL(currentFilterRequested(int)),
                             this, SIGNAL(currentFilterRequested(int)));
@@ -122,12 +117,11 @@ void FiltersDock::resetQview()
     modulePath.cd("modules");
     m_qview.engine()->addImportPath(modulePath.path());
 
-    m_qview.setResizeMode(QQuickView::SizeRootObjectToView);
-    m_qview.setColor(palette().window().color());
+    m_qview.setResizeMode(QQuickWidget::SizeRootObjectToView);
+    m_qview.quickWindow()->setColor(palette().window().color());
     QUrl source = QUrl::fromLocalFile(viewPath.absoluteFilePath("filterview.qml"));
     m_qview.setSource(source);
 
-    QObject* root = m_qview.rootObject();
-    QObject::connect(root, SIGNAL(currentFilterRequested(int)),
-                     this, SIGNAL(currentFilterRequested(int)));
+    QObject::connect(m_qview.rootObject(), SIGNAL(currentFilterRequested(int)),
+        SIGNAL(currentFilterRequested(int)));
 }

@@ -17,7 +17,7 @@
  */
 
 #include "qmlview.h"
-#include <QQuickView>
+#include <QWindow>
 #include <QDebug>
 #include <QSGMaterial>
 #include <QSGSimpleTextureNode>
@@ -28,7 +28,7 @@
 #include <private/qsgrenderer_p.h>
 #include <private/qquickcanvasitem_p.h>
 
-QmlView::QmlView(QQuickView* qview)
+QmlView::QmlView(QWindow* qview)
     : QObject(qview)
     , m_qview(qview)
 {

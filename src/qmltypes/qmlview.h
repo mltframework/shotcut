@@ -25,7 +25,7 @@
 #include <QQuickItem>
 #include <QSGTexture>
 
-class QQuickView;
+class QWindow;
 class QTimerEvent;
 class QSGSimpleTextureNode;
 
@@ -35,12 +35,12 @@ class QmlView : public QObject
     Q_PROPERTY(QPoint pos READ pos);
 
 public:
-    explicit QmlView(QQuickView* qview);
+    explicit QmlView(QWindow* qview);
     QPoint pos();
     Q_INVOKABLE void applyQTBUG47714Workaround(QObject * item);
 
 private:
-    QQuickView* m_qview;
+    QWindow* m_qview;
 };
 
 class QTBUG47714WorkaroundRenderListener : public QObject

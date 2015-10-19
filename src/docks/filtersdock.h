@@ -20,10 +20,12 @@
 #ifndef FILTERSDOCK_H
 #define FILTERSDOCK_H
 
+#include "forwardingquickviewworkaround.h"
+
 #include <QDockWidget>
 #include <QObject>
 #include <QQuickView>
-#include "forwardingquickviewworkaround.h"
+#include <QQuickWidget>
 
 class QmlFilter;
 class QmlMetadata;

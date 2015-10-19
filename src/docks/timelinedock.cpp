@@ -23,6 +23,7 @@
 #include "mainwindow.h"
 #include "commands/timelinecommands.h"
 #include "qmltypes/qmlutilities.h"
+#include "qmltypes/qmlview.h"
 #include "shotcut_mlt_properties.h"
 
 #include <QtQml>
@@ -46,18 +47,18 @@ TimelineDock::TimelineDock(QWidget *parent) :
     importPath.cd("modules");
     m_quickView.engine()->addImportPath(importPath.path());
     m_quickView.engine()->addImageProvider(QString("thumbnail"), new ThumbnailProvider);
-    QmlUtilities::setCommonProperties(&m_quickView);
+    QmlUtilities::setCommonProperties(m_quickView.rootContext());
+    m_quickView.rootContext()->setContextProperty("view", new QmlView(m_quickView.quickWindow()));
     m_quickView.rootContext()->setContextProperty("timeline", this);
     m_quickView.rootContext()->setContextProperty("multitrack", &m_model);
-    m_quickView.setResizeMode(QQuickView::SizeRootObjectToView);
-    m_quickView.setColor(palette().window().color());
+    m_quickView.setResizeMode(QQuickWidget::SizeRootObjectToView);
+    m_quickView.setClearColor(palette().window().color());
 
     connect(&m_model, &MultitrackModel::modified, this, &TimelineDock::clearSelectionIfInvalid);
 
-    QWidget* container = QWidget::createWindowContainer(&m_quickView, this);
-    container->setFocusPolicy(Qt::TabFocus);
+    m_quickView.setFocusPolicy(Qt::StrongFocus);
     delete ui->scrollAreaWidgetContents;
-    ui->scrollArea->setWidget(container);
+    ui->scrollArea->setWidget(&m_quickView);
 
     connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onShowFrame(const SharedFrame&)));
 #ifdef Q_OS_WIN
@@ -194,26 +195,6 @@ int TimelineDock::clipCount(int trackIndex) const
         }
     }
     return 0;
-}
-
-int TimelineDock::dockYOffset() const
-{
-    // XXX This is a workaround for menus appearing in wrong location in a Quick
-    // view used in a DockWidget.
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 5, 0))
-#  if defined(Q_OS_MAC)
-    return 0;
-#  else
-    return mapToParent(QPoint(0, 0)).y();
-#  endif
-#else
-#  if defined(Q_OS_MAC)
-    return mapToParent(QPoint(0, 0)).y();
-#  else
-    return 0;
-#  endif
-#endif
-
 }
 
 void TimelineDock::setCurrentTrack(int currentTrack)

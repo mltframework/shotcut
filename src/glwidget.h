@@ -20,7 +20,7 @@
 #define GLWIDGET_H
 
 #include <QSemaphore>
-#include <QQuickView>
+#include <QQuickWidget>
 #include <QOpenGLFunctions>
 #include <QOpenGLShaderProgram>
 #include <QOpenGLFramebufferObject>
@@ -45,7 +45,7 @@ class FrameRenderer;
 
 typedef void* ( *thread_function_t )( void* );
 
-class GLWidget : public QQuickView, public Controller, protected QOpenGLFunctions
+class GLWidget : public QQuickWidget, public Controller, protected QOpenGLFunctions
 {
     Q_OBJECT
     Q_PROPERTY(QRect rect READ rect NOTIFY rectChanged)
@@ -79,7 +79,6 @@ public:
     int displayHeight() const { return m_rect.height(); }
 
     QObject* videoWidget() { return this; }
-    QQuickView* videoQuickView() { return this; }
     Filter* glslManager() const { return m_glslManager; }
     QRect rect() const { return m_rect; }
     float zoom() const { return m_zoom * MLT.profile().width() / m_rect.width(); }
@@ -135,7 +134,6 @@ private:
     static void on_frame_show(mlt_consumer, void* self, mlt_frame frame);
 
 private slots:
-    void onOpenGLContextCreated(QOpenGLContext* context);
     void initializeGL();
     void resizeGL(int width, int height);
     void updateTexture(GLuint yName, GLuint uName, GLuint vName);
