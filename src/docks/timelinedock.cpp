@@ -147,6 +147,7 @@ void TimelineDock::pulseLockButtonOnTrack(int trackIndex)
 {
     QMetaObject::invokeMethod(m_quickView.rootObject(), "pulseLockButtonOnTrack",
             Qt::DirectConnection, Q_ARG(QVariant, trackIndex));
+    MAIN.showStatusMessage(tr("This track is locked"));
 }
 
 void TimelineDock::chooseClipAtPosition(int position, int * trackIndex, int * clipIndex)
@@ -238,9 +239,9 @@ void TimelineDock::makeTracksTaller()
 
 void TimelineDock::setSelection(QList<int> newSelection)
 {
-    qDebug() << "Setting selection to" << newSelection;
     if (newSelection == selection())
         return;
+    qDebug() << "Changing selection to" << newSelection;
 
     QVariantList list;
     foreach (int idx, newSelection)
@@ -297,6 +298,36 @@ bool TimelineDock::isTrackLocked(int trackIndex) const
     int i = m_model.trackList().at(trackIndex).mlt_index;
     QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
     return track->get_int(kTrackLockProperty);
+}
+
+void TimelineDock::trimClipAtPlayhead(TrimLocation location, bool ripple)
+{
+    int trackIndex = currentTrack(), clipIndex = -1;
+    chooseClipAtPosition(m_position, &trackIndex, &clipIndex);
+    if (trackIndex < 0 || clipIndex < 0)
+        return;
+    setCurrentTrack(trackIndex);
+
+    int i = m_model.trackList().at(trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
+    if (!track)
+        return;
+
+    Mlt::Playlist playlist(*track);
+    QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
+
+    if (!info)
+        return;
+
+    if (location == TrimInPoint) {
+        MAIN.undoStack()->push(
+            new Timeline::TrimClipInCommand(m_model, trackIndex, clipIndex, m_position - info->start, ripple));
+        if (ripple)
+            setPosition(info->start);
+    } else {
+        MAIN.undoStack()->push(
+            new Timeline::TrimClipOutCommand(m_model, trackIndex, clipIndex, info->start + info->frame_count - m_position, ripple));
+    }
 }
 
 void TimelineDock::clearSelectionIfInvalid()
@@ -540,7 +571,7 @@ bool TimelineDock::trimClipIn(int trackIndex, int clipIndex, int delta)
     }
     else if (m_model.trimClipInValid(trackIndex, clipIndex, delta)) {
         MAIN.undoStack()->push(
-            new Timeline::TrimClipInCommand(m_model, trackIndex, clipIndex, delta));
+            new Timeline::TrimClipInCommand(m_model, trackIndex, clipIndex, delta, false));
     }
     else return false;
     return true;
@@ -558,7 +589,7 @@ bool TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta)
     }
     else if (m_model.trimClipOutValid(trackIndex, clipIndex, delta)) {
         MAIN.undoStack()->push(
-                new Timeline::TrimClipOutCommand(m_model, trackIndex, clipIndex, delta));
+                new Timeline::TrimClipOutCommand(m_model, trackIndex, clipIndex, delta, false));
     }
     else return false;
     return true;

@@ -101,6 +101,7 @@ public:
     void setScaleFactor(double scale);
     bool isTransition(Mlt::Playlist& playlist, int clipIndex) const;
     void insertTrack(int trackIndex, TrackType type = VideoTrackType);
+    void insertOrAdjustBlankAt(QList<int> tracks, int position, int length);
 
 signals:
     void created();
@@ -118,9 +119,9 @@ public slots:
     void setTrackHidden(int row, bool hidden);
     void setTrackComposite(int row, Qt::CheckState composite);
     void setTrackLock(int row, bool lock);
-    int trimClipIn(int trackIndex, int clipIndex, int delta);
+    int trimClipIn(int trackIndex, int clipIndex, int delta, bool ripple);
     void notifyClipIn(int trackIndex, int clipIndex);
-    int trimClipOut(int trackIndex, int clipIndex, int delta);
+    int trimClipOut(int trackIndex, int clipIndex, int delta, bool ripple);
     void notifyClipOut(int trackIndex, int clipIndex);
     bool moveClipValid(int fromTrack, int toTrack, int clipIndex, int position);
     bool moveClip(int fromTrack, int toTrack, int clipIndex, int position);

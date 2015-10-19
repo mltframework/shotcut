@@ -153,8 +153,13 @@ Rectangle {
                 model.modelReset.connect(positionViewAtBeginning)
             }
             
-            onCurrentIndexChanged: positionViewAtIndex(currentIndex, ListView.Contain)
-            onCountChanged: {
+            onCurrentIndexChanged: {
+                possiblySelectFirstFilter();
+                positionViewAtIndex(currentIndex, ListView.Contain);
+            }
+            onCountChanged: possiblySelectFirstFilter();
+
+            function possiblySelectFirstFilter() {
                 if (count > 0 && currentIndex == -1) {
                     currentIndex = 0;
                     filterClicked(currentIndex);

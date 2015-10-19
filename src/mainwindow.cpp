@@ -1318,10 +1318,10 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_timelineDock->toggleTrackMute(m_timelineDock->currentTrack());
         break;
     case Qt::Key_I:
-        setInToCurrent();
+        setInToCurrent(event->modifiers() & Qt::ShiftModifier);
         break;
     case Qt::Key_O:
-        setOutToCurrent();
+        setOutToCurrent(event->modifiers() & Qt::ShiftModifier);
         break;
     case Qt::Key_S:
         if (multitrack())
@@ -1374,7 +1374,11 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         }
         break;
     case Qt::Key_Up:
-        if (multitrack()) {
+        if (m_playlistDock->isVisible() && event->modifiers() & Qt::AltModifier) {
+            m_playlistDock->raise();
+            m_playlistDock->decrementIndex();
+            m_playlistDock->on_actionOpen_triggered();
+        } else if (multitrack()) {
             int newClipIndex = -1;
             if ((event->modifiers() & Qt::ControlModifier) &&
                     !m_timelineDock->selection().isEmpty() &&
@@ -1398,7 +1402,11 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         }
         break;
     case Qt::Key_Down:
-        if (multitrack()) {
+        if (m_playlistDock->isVisible() && event->modifiers() & Qt::AltModifier) {
+            m_playlistDock->raise();
+            m_playlistDock->incrementIndex();
+            m_playlistDock->on_actionOpen_triggered();
+        } else if (multitrack()) {
             int newClipIndex = -1;
             if ((event->modifiers() & Qt::ControlModifier) &&
                     !m_timelineDock->selection().isEmpty() &&
@@ -2175,16 +2183,22 @@ void MainWindow::stepRightOneSecond()
     stepLeftBySeconds(1);
 }
 
-void MainWindow::setInToCurrent()
+void MainWindow::setInToCurrent(bool ripple)
 {
-    if (MLT.isSeekable() && MLT.isClip())
+    if (m_player->tabIndex() == Player::ProgramTabIndex && multitrack()) {
+        m_timelineDock->trimClipAtPlayhead(TimelineDock::TrimInPoint, ripple);
+    } else if (MLT.isSeekable() && MLT.isClip()) {
         m_player->setIn(m_player->position());
+    }
 }
 
-void MainWindow::setOutToCurrent()
+void MainWindow::setOutToCurrent(bool ripple)
 {
-    if (MLT.isSeekable() && MLT.isClip())
+    if (m_player->tabIndex() == Player::ProgramTabIndex && multitrack()) {
+        m_timelineDock->trimClipAtPlayhead(TimelineDock::TrimOutPoint, ripple);
+    } else if (MLT.isSeekable() && MLT.isClip()) {
         m_player->setOut(m_player->position());
+    }
 }
 
 void MainWindow::onShuttle(float x)

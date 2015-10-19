@@ -21,6 +21,7 @@
 #include <QPalette>
 #include <QMetaType>
 #include <QFileInfo>
+#include <QUuid>
 #include <QDebug>
 #include <Mlt.h>
 #include "glwidget.h"
@@ -719,6 +720,28 @@ void Controller::setImageDurationFromDefault(Service* service) const
             service->set("length", qRound(m_profile->fps() * 600));
             service->set("out", qRound(m_profile->fps() * Settings.imageDuration()) - 1);
         }
+    }
+}
+
+QUuid Controller::uuid(Mlt::Properties &properties) const
+{
+    return QUuid(properties.get(kUuidProperty));
+}
+
+void Controller::setUuid(Mlt::Properties &properties, QUuid uid) const
+{
+    properties.set(kUuidProperty,
+            (uid.toByteArray() + '\n').data());
+}
+
+QUuid Controller::ensureHasUuid(Mlt::Properties& properties) const
+{
+    if (properties.get(kUuidProperty)) {
+        return uuid(properties);
+    } else {
+        QUuid newUid = QUuid::createUuid();
+        setUuid(properties, newUid);
+        return newUid;
     }
 }
 
