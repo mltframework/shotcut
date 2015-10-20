@@ -74,6 +74,7 @@ void AbstractJob::setLabel(const QString &label)
 
 void AbstractJob::stop()
 {
+    closeWriteChannel();
     terminate();
     QTimer::singleShot(2000, this, SLOT(kill()));
     m_killed = true;

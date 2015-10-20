@@ -805,6 +805,8 @@ void EncodeDock::on_encodeButton_clicked()
             MLT.stop();
             runMelt(outputFilename, -1);
             ui->stopCaptureButton->show();
+            if (MLT.resource().startsWith("gdigrab:"))
+                MAIN.showMinimized();
         }
         else {
             // Capture to file

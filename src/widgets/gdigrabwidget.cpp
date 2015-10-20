@@ -98,7 +98,7 @@ Mlt::Producer* GDIgrabWidget::producer(Mlt::Profile& profile)
     p->set("show_region", ui->showRegionCheckBox->isChecked()? 1: 0);
     p->set("draw_mouse", ui->drawMouseCheckBox->isChecked()? 1: 0);
     p->set("audio_ix", ui->audioComboBox->currentIndex());
-    p->set(kBackgroundCaptureProperty, ui->backgroundCheckBox->isChecked()? 1: 0);
+    p->set(kBackgroundCaptureProperty, 1);
     p->set("force_seekable", 0);
     return p;
 }
@@ -113,7 +113,7 @@ Mlt::Properties* GDIgrabWidget::getPreset() const
     p->set("show_region", ui->showRegionCheckBox->isChecked()? 1: 0);
     p->set("draw_mouse", ui->drawMouseCheckBox->isChecked()? 1: 0);
     p->set("audio_ix", ui->audioComboBox->currentIndex());
-    p->set(kBackgroundCaptureProperty, ui->backgroundCheckBox->isChecked()? 1: 0);
+    p->set(kBackgroundCaptureProperty, 1);
     return p;
 }
 
@@ -126,7 +126,6 @@ void GDIgrabWidget::loadPreset(Mlt::Properties& p)
     ui->showRegionCheckBox->setChecked(p.get_int("show_region"));
     ui->drawMouseCheckBox->setChecked(p.get_int("draw_mouse"));
     ui->audioComboBox->setCurrentIndex(p.get_int("audio_ix"));
-    ui->backgroundCheckBox->setChecked(p.get_int(kBackgroundCaptureProperty));
 }
 
 void GDIgrabWidget::on_preset_selected(void* p)

@@ -59,6 +59,7 @@ void MeltJob::start()
     args << m_xml;
     qDebug() << meltPath.absoluteFilePath() << args;
 #ifdef Q_OS_WIN
+    args << "-getc";
     QProcess::start(meltPath.absoluteFilePath(), args);
 #else
     args.prepend(meltPath.absoluteFilePath());
