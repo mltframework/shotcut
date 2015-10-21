@@ -508,6 +508,8 @@ void TimelineDock::emitClipSelectedFromSelection()
         // to the cut parent.
         info->producer->set(kFilterInProperty, info->frame_in);
         info->producer->set(kFilterOutProperty, info->frame_out);
+        if (MLT.isImageProducer(info->producer))
+            info->producer->set("out", info->cut->get_int("out"));
         emit clipSelected(info->producer);
         MAIN.loadProducerWidget(info->producer);
         delete info;
