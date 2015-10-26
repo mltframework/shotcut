@@ -14,7 +14,6 @@ SOURCES += main.cpp\
     mltcontroller.cpp \
     scrubbar.cpp \
     openotherdialog.cpp \
-    forwardingquickviewworkaround.cpp \
     controllers/filtercontroller.cpp \
     widgets/plasmawidget.cpp \
     widgets/lissajouswidget.cpp \
@@ -199,7 +198,6 @@ HEADERS  += mainwindow.h \
     dataqueue.h \
     sharedframe.h \
     widgets/audioscale.h \
-    forwardingquickviewworkaround.h \
     widgets/playlisttable.h \
     commands/undohelper.h \
     models/audiolevelstask.h \

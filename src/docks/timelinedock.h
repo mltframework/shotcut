@@ -24,7 +24,6 @@
 #include <QApplication>
 #include "models/multitrackmodel.h"
 #include "sharedframe.h"
-#include "forwardingquickviewworkaround.h"
 
 namespace Ui {
 class TimelineDock;
@@ -129,7 +128,7 @@ private:
     bool isBlank(int trackIndex, int clipIndex);
     void pulseLockButtonOnTrack(int trackIndex);
     Ui::TimelineDock *ui;
-    ForwardingQuickViewWorkaround m_quickView;
+    QQuickWidget m_quickView;
     MultitrackModel m_model;
     int m_position;
 

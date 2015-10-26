@@ -20,8 +20,6 @@
 #ifndef FILTERSDOCK_H
 #define FILTERSDOCK_H
 
-#include "forwardingquickviewworkaround.h"
-
 #include <QDockWidget>
 #include <QObject>
 #include <QQuickView>
@@ -56,7 +54,7 @@ private slots:
     void resetQview();
 
 private:
-    ForwardingQuickViewWorkaround m_qview;
+    QQuickWidget m_qview;
 };
 
 #endif // FILTERSDOCK_H
