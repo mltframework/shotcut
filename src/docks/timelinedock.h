@@ -69,6 +69,7 @@ public:
     int centerOfClip(int trackIndex, int clipIndex);
     bool isTrackLocked(int trackIndex) const;
     void trimClipAtPlayhead(TrimLocation location, bool ripple);
+    bool isRipple() const;
 
 signals:
     void currentTrackChanged();
@@ -104,8 +105,8 @@ public slots:
     void setTrackComposite(int trackIndex, Qt::CheckState composite);
     void setTrackLock(int trackIndex, bool lock);
     bool moveClip(int fromTrack, int toTrack, int clipIndex, int position);
-    bool trimClipIn(int trackIndex, int clipIndex, int delta);
-    bool trimClipOut(int trackIndex, int clipIndex, int delta);
+    bool trimClipIn(int trackIndex, int clipIndex, int delta, bool ripple);
+    bool trimClipOut(int trackIndex, int clipIndex, int delta, bool ripple);
     void insert(int trackIndex, int position = -1, const QString &xml = QString());
     void overwrite(int trackIndex, int position = -1, const QString &xml = QString());
     void appendFromPlaylist(Mlt::Playlist* playlist);

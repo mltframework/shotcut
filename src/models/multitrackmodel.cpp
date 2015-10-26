@@ -340,7 +340,7 @@ void MultitrackModel::setTrackLock(int row, bool lock)
     }
 }
 
-bool MultitrackModel::trimClipInValid(int trackIndex, int clipIndex, int delta)
+bool MultitrackModel::trimClipInValid(int trackIndex, int clipIndex, int delta, bool ripple)
 {
     bool result = true;
     int i = m_trackList.at(trackIndex).mlt_index;
@@ -353,7 +353,7 @@ bool MultitrackModel::trimClipInValid(int trackIndex, int clipIndex, int delta)
             result = false;
         else if (delta < 0 && clipIndex <= 0)
             result = false;
-        else if (delta < 0 && clipIndex > 0 && !playlist.is_blank(clipIndex - 1))
+        else if (!ripple && delta < 0 && clipIndex > 0 && !playlist.is_blank(clipIndex - 1))
             result = false;
         else if (delta > 0 && clipIndex > 0 && isTransition(playlist, clipIndex - 1))
             result = false;
@@ -466,7 +466,7 @@ void MultitrackModel::notifyClipIn(int trackIndex, int clipIndex)
     m_isMakingTransition = false;
 }
 
-bool MultitrackModel::trimClipOutValid(int trackIndex, int clipIndex, int delta)
+bool MultitrackModel::trimClipOutValid(int trackIndex, int clipIndex, int delta, bool ripple)
 {
     bool result = true;
     int i = m_trackList.at(trackIndex).mlt_index;
@@ -476,7 +476,7 @@ bool MultitrackModel::trimClipOutValid(int trackIndex, int clipIndex, int delta)
         QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
         if (!info || (info->frame_out - delta) >= info->length || (info->frame_out - delta) < info->frame_in)
             result = false;
-        else if (delta < 0 && (clipIndex + 1) < playlist.count() && !playlist.is_blank(clipIndex + 1))
+        else if (!ripple && delta < 0 && (clipIndex + 1) < playlist.count() && !playlist.is_blank(clipIndex + 1))
             result = false;
         else if (delta > 0 && (clipIndex + 1) < playlist.count() && isTransition(playlist, clipIndex + 1))
             return false;

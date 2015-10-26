@@ -313,9 +313,7 @@ void TimelineDock::trimClipAtPlayhead(TrimLocation location, bool ripple)
     if (!track)
         return;
 
-    Mlt::Playlist playlist(*track);
     QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
-
     if (!info)
         return;
 
@@ -328,6 +326,11 @@ void TimelineDock::trimClipAtPlayhead(TrimLocation location, bool ripple)
         MAIN.undoStack()->push(
             new Timeline::TrimClipOutCommand(m_model, trackIndex, clipIndex, info->start + info->frame_count - m_position, ripple));
     }
+}
+
+bool TimelineDock::isRipple() const
+{
+    return m_quickView.rootObject()->property("ripple").toBool();
 }
 
 void TimelineDock::clearSelectionIfInvalid()
@@ -561,9 +564,9 @@ bool TimelineDock::moveClip(int fromTrack, int toTrack, int clipIndex, int posit
     }
 }
 
-bool TimelineDock::trimClipIn(int trackIndex, int clipIndex, int delta)
+bool TimelineDock::trimClipIn(int trackIndex, int clipIndex, int delta, bool ripple)
 {
-    if (m_model.addTransitionByTrimInValid(trackIndex, clipIndex, delta)) {
+    if (!ripple && m_model.addTransitionByTrimInValid(trackIndex, clipIndex, delta)) {
         MAIN.undoStack()->push(
             new Timeline::AddTransitionByTrimInCommand(m_model, trackIndex, clipIndex, delta));
     }
@@ -571,17 +574,17 @@ bool TimelineDock::trimClipIn(int trackIndex, int clipIndex, int delta)
         MAIN.undoStack()->push(
             new Timeline::TrimTransitionOutCommand(m_model, trackIndex, clipIndex, delta));
     }
-    else if (m_model.trimClipInValid(trackIndex, clipIndex, delta)) {
+    else if (m_model.trimClipInValid(trackIndex, clipIndex, delta, ripple)) {
         MAIN.undoStack()->push(
-            new Timeline::TrimClipInCommand(m_model, trackIndex, clipIndex, delta, false));
+            new Timeline::TrimClipInCommand(m_model, trackIndex, clipIndex, delta, ripple));
     }
     else return false;
     return true;
 }
 
-bool TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta)
+bool TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta, bool ripple)
 {
-    if (m_model.addTransitionByTrimOutValid(trackIndex, clipIndex, delta)) {
+    if (!ripple && m_model.addTransitionByTrimOutValid(trackIndex, clipIndex, delta)) {
         MAIN.undoStack()->push(
             new Timeline::AddTransitionByTrimOutCommand(m_model, trackIndex, clipIndex, delta));
     }
@@ -589,9 +592,9 @@ bool TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta)
         MAIN.undoStack()->push(
             new Timeline::TrimTransitionInCommand(m_model, trackIndex, clipIndex, delta));
     }
-    else if (m_model.trimClipOutValid(trackIndex, clipIndex, delta)) {
+    else if (m_model.trimClipOutValid(trackIndex, clipIndex, delta, ripple)) {
         MAIN.undoStack()->push(
-                new Timeline::TrimClipOutCommand(m_model, trackIndex, clipIndex, delta, false));
+                new Timeline::TrimClipOutCommand(m_model, trackIndex, clipIndex, delta, ripple));
     }
     else return false;
     return true;

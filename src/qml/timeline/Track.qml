@@ -114,11 +114,11 @@ Rectangle {
             }
             onTrimmingIn: {
                 var originalDelta = delta
-                if (!(mouse.modifiers & Qt.AltModifier) && toolbar.snap)
+                if (!(mouse.modifiers & Qt.AltModifier) && toolbar.snap && !toolbar.ripple)
                     delta = Logic.snapTrimIn(clip, delta)
                 if (delta != 0) {
                     if (timeline.trimClipIn(trackRoot.DelegateModel.itemsIndex,
-                                            clip.DelegateModel.itemsIndex, delta, false)) {
+                                            clip.DelegateModel.itemsIndex, delta, toolbar.ripple)) {
                         // Show amount trimmed as a time in a "bubble" help.
                         var s = timeline.timecode(Math.abs(clip.originalX))
                         s = '%1%2 = %3'.arg((clip.originalX < 0)? '-' : (clip.originalX > 0)? '+' : '')
@@ -139,11 +139,11 @@ Rectangle {
             }
             onTrimmingOut: {
                 var originalDelta = delta
-                if (!(mouse.modifiers & Qt.AltModifier) && toolbar.snap)
+                if (!(mouse.modifiers & Qt.AltModifier) && toolbar.snap && !toolbar.ripple)
                     delta = Logic.snapTrimOut(clip, delta)
                 if (delta != 0) {
                     if (timeline.trimClipOut(trackRoot.DelegateModel.itemsIndex,
-                                             clip.DelegateModel.itemsIndex, delta, false)) {
+                                             clip.DelegateModel.itemsIndex, delta, toolbar.ripple)) {
                         // Show amount trimmed as a time in a "bubble" help.
                         var s = timeline.timecode(Math.abs(clip.originalX))
                         s = '%1%2 = %3'.arg((clip.originalX < 0)? '+' : (clip.originalX > 0)? '-' : '')

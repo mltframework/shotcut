@@ -93,8 +93,8 @@ public:
     Q_INVOKABLE void reload();
     void close();
     int clipIndex(int trackIndex, int position);
-    bool trimClipInValid(int trackIndex, int clipIndex, int delta);
-    bool trimClipOutValid(int trackIndex, int clipIndex, int delta);
+    bool trimClipInValid(int trackIndex, int clipIndex, int delta, bool ripple);
+    bool trimClipOutValid(int trackIndex, int clipIndex, int delta, bool ripple);
     int trackHeight() const;
     void setTrackHeight(int height);
     double scaleFactor() const;

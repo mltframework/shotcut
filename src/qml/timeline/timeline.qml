@@ -66,6 +66,7 @@ Rectangle {
     property bool stopScrolling: false
     property color shotcutBlue: Qt.rgba(23/255, 92/255, 118/255, 1.0)
     property var selection: []
+    property alias ripple: toolbar.ripple
 
     onSelectionChanged: {
         if (selection.length) {
@@ -362,6 +363,7 @@ Rectangle {
         }
         function hide() {
             bubbleHelp.state = 'invisible'
+            bubbleHelp.opacity = 0
         }
     }
     DropShadow {

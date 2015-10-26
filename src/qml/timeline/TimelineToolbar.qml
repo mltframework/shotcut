@@ -95,7 +95,8 @@ ToolBar {
             checkable: true
             iconName: 'target'
             iconSource: 'qrc:///icons/oxygen/16x16/actions/target.png'
-            tooltip: qsTr('Ripple (insert) when source is dropped')
+            tooltip: qsTr('Ripple trim and drop')
+            text: qsTr('Ripple')
         }
         ColorOverlay {
             id: snapColorEffect
