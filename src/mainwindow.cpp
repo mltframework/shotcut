@@ -75,6 +75,17 @@
 #include <QThreadPool>
 #include <QtConcurrent/QtConcurrentRun>
 #include <QMutexLocker>
+#include <QQuickItem>
+
+static bool eventDebugCallback(void **data)
+{
+    QEvent *event = reinterpret_cast<QEvent*>(data[1]);
+    if (event->type() == QEvent::KeyPress || event->type() == QEvent::KeyRelease) {
+        QObject *receiver = reinterpret_cast<QObject*>(data[0]);
+        qDebug() << event << "->" << receiver;
+    }
+    return false;
+}
 
 static const int STATUS_TIMEOUT_MS = 5000;
 static const int AUTOSAVE_TIMEOUT_MS = 10000;
@@ -113,6 +124,9 @@ MainWindow::MainWindow()
     if (!qgetenv("OBSERVE_FOCUS").isEmpty())
         connect(qApp, &QApplication::focusChanged,
                 this, &MainWindow::onFocusChanged);
+
+    if (!qgetenv("EVENT_DEBUG").isEmpty())
+        QInternal::registerCallback(QInternal::EventNotifyCallback, eventDebugCallback);
 
     qDebug() << "begin";
 #ifndef Q_OS_WIN
