@@ -549,11 +549,13 @@ Rectangle {
             }
             onPositionChanged: {
                 if (mouse.buttons === Qt.LeftButton) {
-                    var delta = Math.round((parent.x - startX) / timeScale)
+                    var newX = parent.x - startX
+                    var delta = Math.round(newX / timeScale)
                     if (Math.abs(delta) > 0) {
                         if (clipDuration + originalX + delta > 0)
                             originalX += delta
                         clipRoot.trimmingIn(clipRoot, delta, mouse)
+                        clipRoot.x += newX
                     }
                 }
             }
