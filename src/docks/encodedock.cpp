@@ -759,13 +759,11 @@ void EncodeDock::on_encodeButton_clicked()
     if (!MLT.producer())
         return;
     if (ui->encodeButton->text() == tr("Stop Capture")) {
-        bool isMulti = false;
         MLT.closeConsumer();
-        MLT.setProducer(MLT.producer(), isMulti);
-        MLT.play();
         ui->encodeButton->setText(tr("Capture File"));
         emit captureStateChanged(false);
         ui->streamButton->setDisabled(false);
+        MAIN.open(m_outputFilename);
         return;
     }
     bool seekable = MLT.isSeekable();
@@ -779,16 +777,16 @@ void EncodeDock::on_encodeButton_clicked()
         directory.append("/.mp4");
     }
 #endif
-    QString outputFilename = QFileDialog::getSaveFileName(this,
+    m_outputFilename = QFileDialog::getSaveFileName(this,
         seekable? tr("Encode to File") : tr("Capture to File"), directory);
-    if (!outputFilename.isEmpty()) {
-        QFileInfo fi(outputFilename);
+    if (!m_outputFilename.isEmpty()) {
+        QFileInfo fi(m_outputFilename);
         MLT.pause();
         Settings.setEncodePath(fi.path());
         if (!m_extension.isEmpty()) {
             if (fi.suffix().isEmpty()) {
-                outputFilename += '.';
-                outputFilename += m_extension;
+                m_outputFilename += '.';
+                m_outputFilename += m_extension;
             }
         }
         if (seekable) {
@@ -798,12 +796,12 @@ void EncodeDock::on_encodeButton_clicked()
                 threadCount = qMin(threadCount - 1, 4);
             else
                 threadCount = 1;
-            enqueueMelt(outputFilename, Settings.playerGPU()? -1 : -threadCount);
+            enqueueMelt(m_outputFilename, Settings.playerGPU()? -1 : -threadCount);
         }
         else if (MLT.producer()->get_int(kBackgroundCaptureProperty)) {
             // Capture Shotcut screencast
             MLT.stop();
-            runMelt(outputFilename, -1);
+            runMelt(m_outputFilename, -1);
             ui->stopCaptureButton->show();
             if (MLT.resource().startsWith("gdigrab:"))
                 MAIN.showMinimized();
@@ -813,7 +811,7 @@ void EncodeDock::on_encodeButton_clicked()
             // use multi consumer to encode and preview simultaneously
             ui->dualPassCheckbox->setChecked(false);
             ui->encodeButton->setText(tr("Stop Capture"));
-            encode(outputFilename);
+            encode(m_outputFilename);
             emit captureStateChanged(true);
             ui->streamButton->setDisabled(true);
         }
@@ -889,6 +887,7 @@ void EncodeDock::on_streamButton_clicked()
             emit captureStateChanged(true);
             emit ui->encodeButton->setDisabled(true);
         }
+        m_outputFilename.clear();
     }
 }
 
@@ -980,6 +979,8 @@ void EncodeDock::on_stopCaptureButton_clicked()
     ui->stopCaptureButton->hide();
     if (m_immediateJob)
         m_immediateJob->stop();
+    if (!m_outputFilename.isEmpty())
+        MAIN.open(m_outputFilename);
 }
 
 void EncodeDock::on_videoRateControlCombo_activated(int index)

@@ -94,6 +94,7 @@ private:
     QString m_extension;
     Mlt::Properties *m_profiles;
     PresetsProxyModel m_presetsModel;
+    QString m_outputFilename;
 
     void loadPresets();
     Mlt::Properties* collectProperties(int realtime);
