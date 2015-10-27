@@ -1805,7 +1805,9 @@ void MainWindow::onEncodeTriggered(bool checked)
 
 void MainWindow::onCaptureStateChanged(bool started)
 {
-    if (started && (MLT.resource().startsWith("x11grab:") || MLT.resource().startsWith("gdigrab:"))
+    if (started && (MLT.resource().startsWith("x11grab:") ||
+                    MLT.resource().startsWith("gdigrab:") ||
+                    MLT.resource().startsWith("avfoundation"))
                 && !MLT.producer()->get_int(kBackgroundCaptureProperty))
         showMinimized();
 }

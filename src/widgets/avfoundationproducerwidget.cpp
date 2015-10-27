@@ -22,6 +22,8 @@
 #include <QCamera>
 #include <QString>
 #include <QAudioDeviceInfo>
+#include <QDesktopWidget>
+#include "shotcut_mlt_properties.h"
 
 AvfoundationProducerWidget::AvfoundationProducerWidget(QWidget *parent) :
     QWidget(parent),
@@ -31,7 +33,8 @@ AvfoundationProducerWidget::AvfoundationProducerWidget(QWidget *parent) :
 #ifdef Q_OS_MAC
     foreach (const QByteArray &deviceName, QCamera::availableDevices())
         ui->videoCombo->addItem(QCamera::deviceDescription(deviceName));
-    ui->videoCombo->addItem("Capture screen 0");
+    for (int i = 0; i < QApplication::desktop()->screenCount(); i++)
+        ui->videoCombo->addItem(QString("Capture screen %1").arg(i));
     foreach (const QAudioDeviceInfo &deviceInfo, QAudioDeviceInfo::availableDevices(QAudio::AudioInput))
         ui->audioCombo->addItem(deviceInfo.deviceName());
     if (ui->videoCombo->count() > 1)
@@ -63,6 +66,7 @@ Mlt::Producer *AvfoundationProducerWidget::producer(Mlt::Profile& profile)
         p->set("error", 1);
     }
     p->set("force_seekable", 0);
+    p->set(kBackgroundCaptureProperty, ui->backgroundCheckBox->isChecked()? 1: 0);
     return p;
 }
 
@@ -76,18 +80,27 @@ void AvfoundationProducerWidget::setProducer(Mlt::Producer *producer)
         for (int i = 1; i < ui->videoCombo->count(); i++) {
             if (ui->videoCombo->itemText(i) == resource[1]) {
                 ui->videoCombo->setCurrentIndex(i);
+                ui->backgroundCheckBox->setEnabled(resource[1].startsWith("Capture screen"));
+                break;
             }
+        }
+        for (int i = 1; i < ui->audioCombo->count(); i++) {
             if (ui->audioCombo->itemText(i) == resource[2]) {
                 ui->audioCombo->setCurrentIndex(i);
+                break;
             }
         }
     }
+    ui->backgroundCheckBox->setChecked(producer->get_int(kBackgroundCaptureProperty));
     AbstractProducerWidget::setProducer(producer);
 }
 
 void AvfoundationProducerWidget::on_videoCombo_activated(int index)
 {
     Q_UNUSED(index)
+    ui->backgroundCheckBox->setEnabled(ui->videoCombo->currentText().startsWith("Capture screen"));
+    if (!ui->backgroundCheckBox->isEnabled())
+        ui->backgroundCheckBox->setChecked(false);
     if (m_producer) {
         MLT.pause();
         delete m_producer;
