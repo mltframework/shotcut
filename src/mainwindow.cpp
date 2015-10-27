@@ -75,6 +75,17 @@
 #include <QThreadPool>
 #include <QtConcurrent/QtConcurrentRun>
 #include <QMutexLocker>
+#include <QQuickItem>
+
+static bool eventDebugCallback(void **data)
+{
+    QEvent *event = reinterpret_cast<QEvent*>(data[1]);
+    if (event->type() == QEvent::KeyPress || event->type() == QEvent::KeyRelease) {
+        QObject *receiver = reinterpret_cast<QObject*>(data[0]);
+        qDebug() << event << "->" << receiver;
+    }
+    return false;
+}
 
 static const int STATUS_TIMEOUT_MS = 5000;
 static const int AUTOSAVE_TIMEOUT_MS = 10000;
@@ -113,6 +124,9 @@ MainWindow::MainWindow()
     if (!qgetenv("OBSERVE_FOCUS").isEmpty())
         connect(qApp, &QApplication::focusChanged,
                 this, &MainWindow::onFocusChanged);
+
+    if (!qgetenv("EVENT_DEBUG").isEmpty())
+        QInternal::registerCallback(QInternal::EventNotifyCallback, eventDebugCallback);
 
     qDebug() << "begin";
 #ifndef Q_OS_WIN
@@ -1551,12 +1565,22 @@ void MainWindow::keyReleaseEvent(QKeyEvent* event)
 
 bool MainWindow::eventFilter(QObject* target, QEvent* event)
 {
-    if (event->type() == QEvent::DragEnter) {
+    if (event->type() == QEvent::DragEnter && target == MLT.videoWidget()) {
         dragEnterEvent(static_cast<QDragEnterEvent*>(event));
         return true;
-    } else if (event->type() == QEvent::Drop) {
+    } else if (event->type() == QEvent::Drop && target == MLT.videoWidget()) {
         dropEvent(static_cast<QDropEvent*>(event));
         return true;
+    } else if (event->type() == QEvent::KeyPress || event->type() == QEvent::KeyRelease) {
+        QQuickWidget * focusedQuickWidget = qobject_cast<QQuickWidget*>(qApp->focusWidget());
+        if (focusedQuickWidget) {
+            event->accept();
+            focusedQuickWidget->quickWindow()->sendEvent(focusedQuickWidget->quickWindow()->activeFocusItem(), event);
+            QWidget * w = focusedQuickWidget->parentWidget();
+            if (!event->isAccepted())
+                qApp->sendEvent(w, event);
+            return true;
+        }
     }
     return QMainWindow::eventFilter(target, event);
 }
@@ -1623,6 +1647,8 @@ void MainWindow::showEvent(QShowEvent* event)
     on_actionShowTitleBars_triggered(Settings.showTitleBars());
     ui->actionShowToolbar->setChecked(Settings.showToolBar());
     on_actionShowToolbar_triggered(Settings.showToolBar());
+
+    windowHandle()->installEventFilter(this);
 }
 
 void MainWindow::on_actionOpenOther_triggered()

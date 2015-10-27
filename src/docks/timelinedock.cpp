@@ -57,8 +57,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     connect(&m_model, &MultitrackModel::modified, this, &TimelineDock::clearSelectionIfInvalid);
 
     m_quickView.setFocusPolicy(Qt::StrongFocus);
-    delete ui->scrollAreaWidgetContents;
-    ui->scrollArea->setWidget(&m_quickView);
+    setWidget(&m_quickView);
 
     connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onShowFrame(const SharedFrame&)));
 #ifdef Q_OS_WIN
