@@ -75,6 +75,17 @@ void AvformatProducerWidget::reopen(Mlt::Producer* p)
     setProducer(p);
 }
 
+void AvformatProducerWidget::recreateProducer()
+{
+    Mlt::Producer* p = producer(MLT.profile());
+    p->pass_list(*m_producer, "audio_index, video_index, force_aspect_ratio,"
+                 "video_delay, force_progressive, force_tff,"
+                 kAspectRatioNumerator ","
+                 kAspectRatioDenominator);
+    reopen(p);
+    connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
+}
+
 void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
 {
     ui->tabWidget->setTabEnabled(0, false);
@@ -244,20 +255,16 @@ void AvformatProducerWidget::on_resetButton_clicked()
 void AvformatProducerWidget::on_videoTrackComboBox_activated(int index)
 {
     if (m_producer) {
-        Mlt::Producer* p = producer(MLT.profile());
-        p->set("video_index", ui->videoTrackComboBox->itemData(index).toInt());
-        reopen(p);
-        connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
+        m_producer->set("video_index", ui->videoTrackComboBox->itemData(index).toInt());
+        recreateProducer();
     }
 }
 
 void AvformatProducerWidget::on_audioTrackComboBox_activated(int index)
 {
     if (m_producer) {
-        Mlt::Producer* p = producer(MLT.profile());
-        p->set("audio_index", ui->audioTrackComboBox->itemData(index).toInt());
-        reopen(p);
-        connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
+        m_producer->set("audio_index", ui->audioTrackComboBox->itemData(index).toInt());
+        recreateProducer();
     }
 }
 
@@ -315,12 +322,7 @@ void AvformatProducerWidget::on_durationSpinBox_editingFinished()
         return;
     if (ui->durationSpinBox->value() == m_producer->get_length())
         return;
-    Mlt::Producer* p = producer(MLT.profile());
-    p->pass_list(*m_producer, "audio_index, video_index, force_aspect_ratio,"
-                 "force_progressive, force_tff,"
-                 kAspectRatioNumerator ","
-                 kAspectRatioDenominator);
-    reopen(p);
+    recreateProducer();
 }
 
 void AvformatProducerWidget::on_syncSlider_valueChanged(int value)

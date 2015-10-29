@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Meltytech, LLC
+ * Copyright (c) 2012-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -76,6 +76,7 @@ private:
     int m_defaultDuration;
 
     void reopen(Mlt::Producer* p);
+    void recreateProducer();
 };
 
 #endif // AVFORMATPRODUCERWIDGET_H

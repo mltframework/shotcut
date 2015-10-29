@@ -1669,7 +1669,7 @@ void MainWindow::onProducerOpened()
     QWidget* w = loadProducerWidget(MLT.producer());
     if (w) {
         if (-1 != w->metaObject()->indexOfSignal("producerReopened()"))
-            connect(w, SIGNAL(producerChanged()), m_player, SLOT(onProducerOpened()));
+            connect(w, SIGNAL(producerReopened()), m_player, SLOT(onProducerOpened()));
     }
     else if (MLT.isPlaylist()) {
         m_playlistDock->model()->load();
