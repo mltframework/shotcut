@@ -31,6 +31,7 @@
 MeltJob::MeltJob(const QString& name, const QString& xml)
     : AbstractJob(name)
     , m_xml(xml)
+    , m_isStreaming(false)
 {
     QAction* action = new QAction(tr("View XML"), this);
     action->setToolTip(tr("View the MLT XML for this job"));
@@ -59,7 +60,7 @@ void MeltJob::start()
     args << m_xml;
     qDebug() << meltPath.absoluteFilePath() << args;
 #ifdef Q_OS_WIN
-    args << "-getc";
+    if (m_isStreaming) args << "-getc";
     QProcess::start(meltPath.absoluteFilePath(), args);
 #else
     args.prepend(meltPath.absoluteFilePath());
@@ -75,6 +76,11 @@ QString MeltJob::xml() const
     QString s(f.readAll());
     f.close();
     return s;
+}
+
+void MeltJob::setIsStreaming(bool streaming)
+{
+    m_isStreaming = streaming;
 }
 
 void MeltJob::onViewXmlTriggered()

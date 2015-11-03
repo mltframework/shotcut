@@ -605,6 +605,7 @@ void EncodeDock::runMelt(const QString& target, int realtime)
 {
     m_immediateJob = createMeltJob(target, realtime);
     if (m_immediateJob) {
+        m_immediateJob->setIsStreaming(true);
         connect(m_immediateJob, SIGNAL(finished(AbstractJob*,bool)), this, SLOT(onFinished(AbstractJob*,bool)));
         m_immediateJob->start();
     }

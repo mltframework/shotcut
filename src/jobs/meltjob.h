@@ -30,12 +30,14 @@ public:
     void start();
     QString xml() const;
     QString xmlPath() const { return m_xml; }
+    void setIsStreaming(bool streaming);
 
 public slots:
     void onViewXmlTriggered();
 
 private:
     QString m_xml;
+    bool m_isStreaming;
 
 };
 
