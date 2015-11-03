@@ -82,6 +82,8 @@ private slots:
 
     void on_resetButton_clicked();
 
+    void openCaptureFile();
+
 private:
     enum {
         RateControlAverage = 0,

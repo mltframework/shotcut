@@ -31,6 +31,7 @@
 #include <QtWidgets>
 #include <QtXml>
 #include <QtMath>
+#include <QTimer>
 
 // formulas to map absolute value ranges to percentages as int
 #define TO_ABSOLUTE(min, max, rel) qRound(float(min) + float((max) - (min) + 1) * float(rel) / 100.0f)
@@ -764,7 +765,7 @@ void EncodeDock::on_encodeButton_clicked()
         ui->encodeButton->setText(tr("Capture File"));
         emit captureStateChanged(false);
         ui->streamButton->setDisabled(false);
-        MAIN.open(m_outputFilename);
+        QTimer::singleShot(1000, this, SLOT(openCaptureFile()));
         return;
     }
     bool seekable = MLT.isSeekable();
@@ -981,7 +982,7 @@ void EncodeDock::on_stopCaptureButton_clicked()
     if (m_immediateJob)
         m_immediateJob->stop();
     if (!m_outputFilename.isEmpty())
-        MAIN.open(m_outputFilename);
+        QTimer::singleShot(1000, this, SLOT(openCaptureFile()));
 }
 
 void EncodeDock::on_videoRateControlCombo_activated(int index)
@@ -1076,4 +1077,9 @@ void EncodeDock::on_resetButton_clicked()
 {
     resetOptions();
     onProfileChanged();
+}
+
+void EncodeDock::openCaptureFile()
+{
+    MAIN.open(m_outputFilename);
 }
