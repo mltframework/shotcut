@@ -684,21 +684,21 @@ void GLWidget::setZoom(float zoom)
 {
     m_zoom = zoom;
     emit zoomChanged();
-    update();
+    quickWindow()->update();
 }
 
 void GLWidget::setOffsetX(int x)
 {
     m_offset.setX(x);
     emit offsetChanged();
-    update();
+    quickWindow()->update();
 }
 
 void GLWidget::setOffsetY(int y)
 {
     m_offset.setY(y);
     emit offsetChanged();
-    update();
+    quickWindow()->update();
 }
 
 void GLWidget::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta)
