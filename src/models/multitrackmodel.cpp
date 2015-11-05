@@ -2105,6 +2105,8 @@ bool MultitrackModel::createIfNeeded()
         addBackgroundTrack();
         addVideoTrack();
         emit created();
+    } else if (!m_trackList.count()) {
+        addVideoTrack();
     }
     return true;
 }
