@@ -404,6 +404,8 @@ void TimelineDock::append(int trackIndex)
 
 void TimelineDock::remove(int trackIndex, int clipIndex)
 {
+    if (!m_model.trackList().count())
+        return;
     if (isTrackLocked(trackIndex)) {
         pulseLockButtonOnTrack(trackIndex);
         return;
@@ -420,6 +422,8 @@ void TimelineDock::remove(int trackIndex, int clipIndex)
 
 void TimelineDock::lift(int trackIndex, int clipIndex)
 {
+    if (!m_model.trackList().count())
+        return;
     if (isTrackLocked(trackIndex)) {
         pulseLockButtonOnTrack(trackIndex);
         return;
