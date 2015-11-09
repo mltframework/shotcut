@@ -351,7 +351,7 @@ void AnalyzeDelegate::onAnalyzeFinished(AbstractJob *job, bool isSuccess)
                 for (int j = 0; j < properties.size(); j++) {
                     QDomNode propertyNode = properties.at(j);
                     if (propertyNode.attributes().namedItem("name").toAttr().value() == "results") {
-                        m_filter.set("results", propertyNode.toElement().text().toLatin1().constData());
+                        m_filter.set("results", propertyNode.toElement().text().toUtf8().constData());
                         emit MAIN.filterController()->attachedModel()->changed();
                     }
                 }
