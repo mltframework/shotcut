@@ -1256,7 +1256,7 @@ void MultitrackModel::appendFromPlaylist(Mlt::Playlist *from, int trackIndex)
                 int out = clip->get_out();
                 clip->set_in_and_out(0, clip->get_length() - 1);
                 playlist.append(clip->parent(), in, out);
-                QModelIndex modelIndex = createIndex(i, 0, trackIndex);
+                QModelIndex modelIndex = createIndex(j, 0, trackIndex);
                 AudioLevelsTask::start(clip->parent(), this, modelIndex);
             } else {
                 playlist.blank(clip->get_out());
