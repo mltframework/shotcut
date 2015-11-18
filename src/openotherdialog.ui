@@ -167,7 +167,7 @@
        </layout>
       </widget>
       <widget class="QWidget" name="toneTab">
-       <layout class="QVBoxLayout" name="verticalLayout_15">
+       <layout class="QVBoxLayout" name="verticalLayout_17">
         <item>
          <widget class="ToneProducerWidget" name="toneWidget" native="true"/>
         </item>
