@@ -444,8 +444,7 @@ void Player::onProducerOpened(bool play)
     actionRewind->setEnabled(m_isSeekable);
     actionFastForward->setEnabled(m_isSeekable);
 
-    if (!MLT.profile().is_explicit())
-        emit profileChanged();
+    emit profileChanged();
     connectTransport(MLT.transportControl());
 
     // Closing the previous producer might call pause() milliseconds before
