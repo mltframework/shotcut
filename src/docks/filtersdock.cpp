@@ -124,4 +124,5 @@ void FiltersDock::resetQview()
 
     QObject::connect(m_qview.rootObject(), SIGNAL(currentFilterRequested(int)),
         SIGNAL(currentFilterRequested(int)));
+    emit currentFilterRequested(-1);
 }
