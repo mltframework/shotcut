@@ -68,11 +68,13 @@ EncodeDock::EncodeDock(QWidget *parent) :
     c.stop();
 
     Mlt::Properties* p = new Mlt::Properties(c.get_data("f"));
+    ui->formatCombo->blockSignals(true);
     for (int i = 0; i < p->count(); i++)
         ui->formatCombo->addItem(p->get(i));
     delete p;
     ui->formatCombo->model()->sort(0);
     ui->formatCombo->insertItem(0, tr("Automatic from extension"));
+    ui->formatCombo->blockSignals(false);
 
     p = new Mlt::Properties(c.get_data("acodec"));
     for (int i = 0; i < p->count(); i++)
@@ -113,8 +115,12 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
         QString name(preset.get_name(i));
         if (name == "f") {
             for (int i = 0; i < ui->formatCombo->count(); i++)
-                if (ui->formatCombo->itemText(i) == preset.get("f"))
+                if (ui->formatCombo->itemText(i) == preset.get("f")) {
+                    ui->formatCombo->blockSignals(true);
                     ui->formatCombo->setCurrentIndex(i);
+                    ui->formatCombo->blockSignals(false);
+                    break;
+                }
         }
         else if (name == "acodec") {
             for (int i = 0; i < ui->audioCodecCombo->count(); i++)
@@ -1082,4 +1088,10 @@ void EncodeDock::on_resetButton_clicked()
 void EncodeDock::openCaptureFile()
 {
     MAIN.open(m_outputFilename);
+}
+
+void EncodeDock::on_formatCombo_currentIndexChanged(int index)
+{
+    Q_UNUSED(index);
+    m_extension.clear();
 }

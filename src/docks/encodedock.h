@@ -84,6 +84,8 @@ private slots:
 
     void openCaptureFile();
 
+    void on_formatCombo_currentIndexChanged(int index);
+
 private:
     enum {
         RateControlAverage = 0,
