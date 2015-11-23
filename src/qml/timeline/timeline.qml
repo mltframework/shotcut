@@ -144,7 +144,7 @@ Rectangle {
                             isLocked: model.locked
                             isVideo: !model.audio
                             width: headerWidth
-                            height: model.audio? multitrack.trackHeight : multitrack.trackHeight * 2
+                            height: Logic.trackHeight(model.audio)
                             selected: false
                             current: index === currentTrack
                             onIsLockedChanged: tracksRepeater.itemAt(index).isLocked = isLocked
@@ -242,7 +242,7 @@ Rectangle {
                                 delegate: Rectangle {
                                     width: tracksContainer.width
                                     color: (index === currentTrack)? selectedTrackColor : (index % 2)? activePalette.alternateBase : activePalette.base
-                                    height: audio? multitrack.trackHeight : multitrack.trackHeight * 2
+                                    height: Logic.trackHeight(audio)
                                 }
                             }
                         }
@@ -444,7 +444,7 @@ Rectangle {
         Track {
             model: multitrack
             rootIndex: trackDelegateModel.modelIndex(index)
-            height: audio? multitrack.trackHeight : multitrack.trackHeight * 2
+            height: Logic.trackHeight(audio)
             isAudio: audio
             isCurrentTrack: currentTrack === index
             timeScale: multitrack.scaleFactor
