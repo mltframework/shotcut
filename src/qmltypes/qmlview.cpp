@@ -102,5 +102,9 @@ void QTBUG47714WorkaroundRenderListener::afterSync()
 
 void QmlView::applyQTBUG47714Workaround(QObject * item)
 {
+#if QT_VERSION > 0x050500
+    Q_UNUSED(item);
+#else
     new QTBUG47714WorkaroundRenderListener(static_cast<QQuickItem*>(item));
+#endif
 }

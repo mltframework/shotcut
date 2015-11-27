@@ -113,12 +113,12 @@ GLWidget::~GLWidget()
 void GLWidget::initializeGL()
 {
     qDebug() << "begin";
+    if (m_isInitialized) return;
+
     Q_ASSERT(!m_offscreenSurface.isValid());
     m_offscreenSurface.setFormat(quickWindow()->openglContext()->format());
     m_offscreenSurface.create();
     Q_ASSERT(m_offscreenSurface.isValid());
-
-    if (m_isInitialized) return;
 
     initializeOpenGLFunctions();
     qDebug() << "OpenGL vendor" << QString::fromUtf8((const char*) glGetString(GL_VENDOR));
