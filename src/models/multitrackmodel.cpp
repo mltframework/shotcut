@@ -374,7 +374,7 @@ int MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta, bool r
             continue;
 
         //when not rippling, never touch the other tracks
-        if (trackIndex != i && !ripple)
+        if (trackIndex != i && (!ripple || !Settings.timelineRippleAllTracks()))
             continue;
 
         if (Settings.timelineRippleAllTracks()) {
@@ -528,7 +528,7 @@ int MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta, bool 
         QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
 
         //when not rippling, never touch the other tracks
-        if (trackIndex != i && !ripple)
+        if (trackIndex != i && (!ripple || !Settings.timelineRippleAllTracks()))
             continue;
 
         if (Settings.timelineRippleAllTracks()) {
