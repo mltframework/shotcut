@@ -69,6 +69,7 @@ public:
     void doAutosave();
     void setFullScreen(bool isFullScreen);
     QString removeFileScheme(QUrl& url);
+    QString untitledFileName() const;
 
     void keyPressEvent(QKeyEvent*);
     void keyReleaseEvent(QKeyEvent *);

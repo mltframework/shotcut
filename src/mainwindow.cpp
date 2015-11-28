@@ -894,6 +894,13 @@ QString MainWindow::removeFileScheme(QUrl &url)
     return path;
 }
 
+QString MainWindow::untitledFileName() const
+{
+    QDir dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation).first();
+    if (!dir.exists()) dir.mkpath(dir.path());
+    return dir.filePath("__untitled__.mlt");
+}
+
 static void autosaveTask(MainWindow* p)
 {
     qDebug() << "running";
@@ -951,9 +958,14 @@ void MainWindow::open(QString url, const Mlt::Properties* properties)
             mlt_properties_inherit(MLT.producer()->get_properties(), props->get_properties());
         m_player->setPauseAfterOpen(!MLT.isClip());
         open(MLT.producer());
-        m_recentDock->add(m_autosaveFile? m_autosaveFile->managedFileName() : url);
+        if (m_autosaveFile) {
+            if (m_autosaveFile->managedFileName() != untitledFileName())
+                m_recentDock->add(m_autosaveFile->managedFileName());
+        } else {
+            m_recentDock->add(url);
+        }
     }
-    else {
+    else if (url != untitledFileName()) {
         ui->statusBar->showMessage(tr("Failed to open ") + url, STATUS_TIMEOUT_MS);
         emit openFailed(url);
     }
@@ -1170,7 +1182,10 @@ void MainWindow::configureVideoWidget()
 void MainWindow::setCurrentFile(const QString &filename)
 {
     QString shownName = "Untitled";
-    m_currentFile = filename;
+    if (filename == untitledFileName())
+        m_currentFile = "";
+    else
+        m_currentFile = filename;
     if (!m_currentFile.isEmpty())
         shownName = QFileInfo(m_currentFile).fileName();
     setWindowTitle(tr("%1[*] - %2").arg(shownName).arg(qApp->applicationName()));

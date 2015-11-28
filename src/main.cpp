@@ -239,6 +239,8 @@ int main(int argc, char **argv)
 
     if (!a.resourceArg.isEmpty())
         a.mainWindow->open(a.resourceArg);
+    else
+        a.mainWindow->open(a.mainWindow->untitledFileName());
 
     int result = a.exec();
 
