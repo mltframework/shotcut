@@ -85,6 +85,10 @@ static bool eventDebugCallback(void **data)
         QObject *receiver = reinterpret_cast<QObject*>(data[0]);
         qDebug() << event << "->" << receiver;
     }
+    else if (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonRelease) {
+        QObject *receiver = reinterpret_cast<QObject*>(data[0]);
+        qDebug() << event << "->" << receiver;
+    }
     return false;
 }
 
