@@ -69,6 +69,7 @@
 #include "widgets/avfoundationproducerwidget.h"
 #include "dialogs/textviewerdialog.h"
 #include "widgets/gdigrabwidget.h"
+#include "models/audiolevelstask.h"
 
 #include <QtWidgets>
 #include <QDebug>
@@ -1644,6 +1645,8 @@ void MainWindow::closeEvent(QCloseEvent* event)
     if (continueJobsRunning() && continueModified()) {
         if (!m_htmlEditor || m_htmlEditor->close()) {
             writeSettings();
+            QThreadPool::globalInstance()->clear();
+            AudioLevelsTask::closeAll();
             event->accept();
             emit aboutToShutDown();
             QApplication::exit(m_exitCode);

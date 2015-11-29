@@ -26,6 +26,10 @@
 #include <QCryptographicHash>
 #include <QRgb>
 #include <QThreadPool>
+#include <QMutex>
+
+static QList<AudioLevelsTask*> tasksList;
+static QMutex tasksListMutex;
 
 static void deleteQVariantList(QVariantList* list)
 {
@@ -34,32 +38,76 @@ static void deleteQVariantList(QVariantList* list)
 
 AudioLevelsTask::AudioLevelsTask(Mlt::Producer& producer, MultitrackModel* model, const QModelIndex& index)
     : QRunnable()
-    , m_producer(producer)
     , m_model(model)
-    , m_index(index)
     , m_tempProducer(0)
+    , m_isCanceled(false)
 {
+    m_producers << ProducerAndIndex(new Mlt::Producer(producer), index);
 }
 
 AudioLevelsTask::~AudioLevelsTask()
 {
     delete m_tempProducer;
+    foreach (ProducerAndIndex p, m_producers)
+        delete p.first;
 }
 
 void AudioLevelsTask::start(Mlt::Producer& producer, MultitrackModel* model, const QModelIndex& index)
 {
-    QThreadPool::globalInstance()->start(new AudioLevelsTask(producer, model, index));
+    if (producer.is_valid() && index.isValid()) {
+        AudioLevelsTask* task = new AudioLevelsTask(producer, model, index);
+        tasksListMutex.lock();
+        // See if there is already a task for this MLT service and resource.
+        foreach (AudioLevelsTask* t, tasksList) {
+            if (*t == *task) {
+                // If so, then just add ourselves to be notified upon completion.
+                delete task;
+                task = 0;
+                t->m_producers << ProducerAndIndex(new Mlt::Producer(producer), index);
+                break;
+            }
+        }
+        if (task) {
+            // Otherwise, start a new audio levels generation thread.
+            tasksList << task;
+            QThreadPool::globalInstance()->start(task);
+        }
+        tasksListMutex.unlock();
+    }
+}
+
+void AudioLevelsTask::closeAll()
+{
+    // Tell all of the audio levels tasks to stop.
+    tasksListMutex.lock();
+    while (!tasksList.isEmpty()) {
+        AudioLevelsTask* task = tasksList.first();
+        task->m_isCanceled = true;
+        tasksList.removeFirst();
+    }
+    tasksListMutex.unlock();
+}
+
+bool AudioLevelsTask::operator==(AudioLevelsTask &b)
+{
+    if (!m_producers.isEmpty() && !b.m_producers.isEmpty()) {
+        Mlt::Producer* a_producer = m_producers.first().first;
+        Mlt::Producer* b_producer = b.m_producers.first().first;
+        return !qstrcmp(a_producer->get("resource"), b_producer->get("resource"));
+    }
+    return false;
 }
 
 Mlt::Producer* AudioLevelsTask::tempProducer()
 {
     if (!m_tempProducer) {
-        QString service = m_producer.get("mlt_service");
+        QString service = m_producers.first().first->get("mlt_service");
         if (service == "avformat-novalidate")
             service = "avformat";
         else if (service.startsWith("xml"))
             service = "xml-nogl";
-        m_tempProducer = new Mlt::Producer(MLT.profile(), service.toUtf8().constData(), m_producer.get("resource"));
+        m_tempProducer = new Mlt::Producer(MLT.profile(), service.toUtf8().constData(),
+            m_producers.first().first->get("resource"));
         if (m_tempProducer->is_valid()) {
             Mlt::Filter channels(MLT.profile(), "audiochannels");
             Mlt::Filter converter(MLT.profile(), "audioconvert");
@@ -74,7 +122,7 @@ Mlt::Producer* AudioLevelsTask::tempProducer()
 
 QString AudioLevelsTask::cacheKey()
 {
-    QString key = QString("%1 audiolevels").arg(m_producer.get("resource"));
+    QString key = QString("%1 audiolevels").arg(m_producers.first().first->get("resource"));
     QCryptographicHash hash(QCryptographicHash::Sha1);
     hash.addData(key.toUtf8());
     return hash.result().toHex();
@@ -92,12 +140,12 @@ void AudioLevelsTask::run()
         int channels = 2;
 
         // for each frame
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n && !m_isCanceled; i++) {
             Mlt::Frame* frame = m_tempProducer->get_frame();
             if (frame && frame->is_valid() && !frame->get_int("test_audio")) {
                 mlt_audio_format format = mlt_audio_s16;
                 int frequency = 48000;
-                int samples = mlt_sample_calculator(m_producer.get_fps(), frequency, i);
+                int samples = mlt_sample_calculator(m_producers.first().first->get_fps(), frequency, i);
                 frame->get_audio(format, frequency, channels, samples);
                 // for each channel
                 for (int channel = 0; channel < channels; channel++)
@@ -110,7 +158,7 @@ void AudioLevelsTask::run()
             }
             delete frame;
         }
-        if (levels->size() > 0) {
+        if (levels->size() > 0 && !m_isCanceled) {
             // Put into an image for caching.
             int count = levels->size();
             QImage image((count + 3) / 4, channels, QImage::Format_ARGB32);
@@ -131,7 +179,7 @@ void AudioLevelsTask::run()
             }
             DB.putThumbnail(cacheKey(), image);
         }
-    } else {
+    } else if (!m_isCanceled) {
         // convert cached image
         int channels = 2;
         int n = image.width() * image.height();
@@ -143,9 +191,21 @@ void AudioLevelsTask::run()
             *levels << qAlpha(p);
         }
     }
-    if (levels->size() > 0) {
-        m_producer.set(kAudioLevelsProperty, levels, 0, (mlt_destructor) deleteQVariantList);
-        if (m_index.isValid())
-            m_model->audioLevelsReady(m_index);
+
+    // Remove ourself from the global list of audio tasks.
+    tasksListMutex.lock();
+    for (int i = 0; i < tasksList.size(); ++i) {
+        if (*tasksList[i] == *this) {
+            tasksList.removeAt(i);
+            break;
+        }
+    }
+    tasksListMutex.unlock();
+
+    if (levels->size() > 0 && !m_isCanceled) {
+        foreach (ProducerAndIndex p, m_producers) {
+            p.first->set(kAudioLevelsProperty, levels, 0, (mlt_destructor) deleteQVariantList);
+            m_model->audioLevelsReady(p.second);
+        }
     }
 }

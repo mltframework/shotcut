@@ -22,6 +22,7 @@
 #include "multitrackmodel.h"
 #include <QRunnable>
 #include <QPersistentModelIndex>
+#include <QList>
 #include <MltProducer.h>
 
 class AudioLevelsTask : public QRunnable
@@ -30,6 +31,8 @@ public:
     AudioLevelsTask(Mlt::Producer& producer, MultitrackModel* model, const QModelIndex& index);
     virtual ~AudioLevelsTask();
     static void start(Mlt::Producer& producer, MultitrackModel* model, const QModelIndex& index);
+    static void closeAll();
+    bool operator==(AudioLevelsTask& b);
 
 protected:
     void run();
@@ -38,10 +41,11 @@ private:
     Mlt::Producer* tempProducer();
     QString cacheKey();
 
-    Mlt::Producer m_producer;
     MultitrackModel* m_model;
-    QPersistentModelIndex m_index;
+    typedef QPair<Mlt::Producer*, QPersistentModelIndex> ProducerAndIndex;
+    QList<ProducerAndIndex> m_producers;
     Mlt::Producer* m_tempProducer;
+    bool m_isCanceled;
 };
 
 #endif // AUDIOLEVELSTASK_H
