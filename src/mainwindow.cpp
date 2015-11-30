@@ -640,6 +640,10 @@ void MainWindow::setupSettingsMenu()
     a->setCheckable(true);
     a->setData("pt_PT");
     ui->menuLanguage->addActions(m_languagesGroup->actions());
+    a = new QAction(QLocale::languageToString(QLocale::Slovak), m_languagesGroup);
+    a->setCheckable(true);
+    a->setData("sk");
+    ui->menuLanguage->addActions(m_languagesGroup->actions());
     a = new QAction(QLocale::languageToString(QLocale::Spanish), m_languagesGroup);
     a->setCheckable(true);
     a->setData("es");
