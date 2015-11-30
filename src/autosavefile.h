@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2014 Meltytech, LLC
+ * Copyright (c) 2011-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  * Loosely based on ideas from KAutoSaveFile by Jacob R Rideout <kde@jacobrideout.net>
  * and Kdenlive by Jean-Baptiste Mardelle.
@@ -36,6 +36,7 @@ public:
 
     virtual bool open(OpenMode openmode);
     static AutoSaveFile* getFile(const QString &filename);
+    static QString path();
 
 private:
     Q_DISABLE_COPY(AutoSaveFile)

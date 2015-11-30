@@ -959,8 +959,8 @@ void MainWindow::open(QString url, const Mlt::Properties* properties)
             mlt_properties_inherit(MLT.producer()->get_properties(), props->get_properties());
         m_player->setPauseAfterOpen(!MLT.isClip());
         open(MLT.producer());
-        if (m_autosaveFile) {
-            if (m_autosaveFile->managedFileName() != untitledFileName())
+        if (url.startsWith(AutoSaveFile::path())) {
+            if (m_autosaveFile && m_autosaveFile->managedFileName() != untitledFileName())
                 m_recentDock->add(m_autosaveFile->managedFileName());
         } else {
             m_recentDock->add(url);

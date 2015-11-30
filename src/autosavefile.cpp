@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2014 Meltytech, LLC
+ * Copyright (c) 2011-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  * Loosely based on ideas from KAutoSaveFile by Jacob R Rideout <kde@jacobrideout.net>
  * and Kdenlive by Jean-Baptiste Mardelle.
@@ -58,7 +58,7 @@ bool AutoSaveFile::open(OpenMode openmode)
     QString tempFile;
 
     if (m_managedFileNameChanged) {
-        QString staleFilesDir = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + subdir;
+        QString staleFilesDir = path();
         if (!QDir().mkpath(staleFilesDir)) {
             return false;
         }
@@ -75,8 +75,7 @@ bool AutoSaveFile::open(OpenMode openmode)
 AutoSaveFile* AutoSaveFile::getFile(const QString &filename)
 {
     AutoSaveFile* result = 0;
-    QString dir = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
-    QDir appDir(dir + subdir);
+    QDir appDir(path());
     QFileInfo info(appDir.absolutePath(), hashName(filename) + extension);
 
     if (info.exists()) {
@@ -86,4 +85,9 @@ AutoSaveFile* AutoSaveFile::getFile(const QString &filename)
     }
 
     return result;
+}
+
+QString AutoSaveFile::path()
+{
+    return QStandardPaths::writableLocation(QStandardPaths::DataLocation) + subdir;
 }
