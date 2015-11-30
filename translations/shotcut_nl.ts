@@ -287,12 +287,12 @@
     <message>
         <location filename="../src/widgets/avfoundationproducerwidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formulier</translation>
+        <translation>Formulier</translation>
     </message>
     <message>
         <location filename="../src/widgets/avfoundationproducerwidget.ui" line="26"/>
         <source>OS X A/V Device</source>
-        <translation type="unfinished"></translation>
+        <translation>OS X A/V Apparaat</translation>
     </message>
     <message>
         <location filename="../src/widgets/avfoundationproducerwidget.ui" line="46"/>
@@ -300,12 +300,12 @@
         <location filename="../src/widgets/avfoundationproducerwidget.cpp" line="55"/>
         <location filename="../src/widgets/avfoundationproducerwidget.cpp" line="56"/>
         <source>None</source>
-        <translation type="unfinished">Geen</translation>
+        <translation>Geen</translation>
     </message>
     <message>
         <location filename="../src/widgets/avfoundationproducerwidget.ui" line="73"/>
         <source>Video Input</source>
-        <translation type="unfinished">Video ingang</translation>
+        <translation>Video Ingang</translation>
     </message>
     <message>
         <location filename="../src/widgets/avfoundationproducerwidget.ui" line="99"/>
@@ -326,7 +326,7 @@ te sturen naar SDI/HDMI in deze modus.</translation>
     <message>
         <location filename="../src/widgets/avfoundationproducerwidget.ui" line="63"/>
         <source>Audio Input</source>
-        <translation type="unfinished">Audio ingang</translation>
+        <translation>Audio Ingang</translation>
     </message>
 </context>
 <context>
@@ -662,7 +662,7 @@ te sturen naar SDI/HDMI in deze modus.</translation>
     <message>
         <location filename="../src/docks/encodedock.ui" line="233"/>
         <source>Interpolation</source>
-        <translation type="unfinished">Interpolatie</translation>
+        <translation>Interpolatie</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="253"/>
@@ -692,47 +692,47 @@ te sturen naar SDI/HDMI in deze modus.</translation>
     <message>
         <location filename="../src/docks/encodedock.ui" line="522"/>
         <source>One Field (fast)</source>
-        <translation type="unfinished">Eén Veld (snel)</translation>
+        <translation>Eén Veld (snel)</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="527"/>
         <source>Linear Blend (fast)</source>
-        <translation type="unfinished">Lineaire Blend (snel)</translation>
+        <translation>Lineaire Blend (snel)</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="532"/>
         <source>YADIF - temporal only (good)</source>
-        <translation type="unfinished">YADIF - alleen tijdelijk (goed)</translation>
+        <translation>YADIF - alleen tijdelijk (goed)</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="537"/>
         <source>YADIF - temporal + spatial (best)</source>
-        <translation type="unfinished">Yadif - tijdelijke + ruimtelijk (best)</translation>
+        <translation>Yadif - tijdelijke + ruimtelijk (best)</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="560"/>
         <source>Deinterlacer</source>
-        <translation type="unfinished">Deinterlacer</translation>
+        <translation>Deinterlacer</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="576"/>
         <source>Nearest Neighbor (fast)</source>
-        <translation type="unfinished">Naaste buur (snel)</translation>
+        <translation>Naaste buur (snel)</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="581"/>
         <source>Bilinear (good)</source>
-        <translation type="unfinished">Bilineair (goed)</translation>
+        <translation>Bilineair (goed)</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="586"/>
         <source>Bicubic (better)</source>
-        <translation type="unfinished">Bicubisch (beter)</translation>
+        <translation>Bicubisch (beter)</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="591"/>
         <source>Hyper/Lanczos (best)</source>
-        <translation type="unfinished">Hyper/Lanczos (best)</translation>
+        <translation>Hyper/Lanczos (best)</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="614"/>
@@ -742,12 +742,17 @@ test if turning this off helps. For example, some
 interlaced AVCHD in conjunction with the YADIF
 deinterlacer has been reported as problematic
 with parallel processing enabled.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dit maakt meerdere beeldverwerking threads mogelijk.
+Soms kan dit een probleem zijn, je kunt testen of het
+uitschakelen hiervan helpt. Bijvoorbeeld sommige
+interlaced AVCHD beelden in combinatie met de yadif
+deinterlacer is als problematisch gemeld als parallelle
+verwerking ingeschakeld is.</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="622"/>
         <source>Parallel processing</source>
-        <translation type="unfinished"></translation>
+        <translation>Parallelle verwerking</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="636"/>
@@ -1034,8 +1039,12 @@ bij tijdelijke compressie</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1178"/>
+        <source>22050</source>
+        <translation type="unfinished">22050</translation>
+    </message>
+    <message>
         <source>22500</source>
-        <translation>22500</translation>
+        <translation type="vanished">22500</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1183"/>
@@ -1109,15 +1118,15 @@ bij tijdelijke compressie</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1498"/>
-        <location filename="../src/docks/encodedock.cpp" line="293"/>
+        <location filename="../src/docks/encodedock.cpp" line="300"/>
         <source>Encode File</source>
         <translation>Codeer Bestand</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1505"/>
-        <location filename="../src/docks/encodedock.cpp" line="858"/>
-        <location filename="../src/docks/encodedock.cpp" line="865"/>
-        <location filename="../src/docks/encodedock.cpp" line="970"/>
+        <location filename="../src/docks/encodedock.cpp" line="866"/>
+        <location filename="../src/docks/encodedock.cpp" line="873"/>
+        <location filename="../src/docks/encodedock.cpp" line="978"/>
         <source>Stream</source>
         <translation>Datastroom</translation>
     </message>
@@ -1137,73 +1146,73 @@ bij tijdelijke compressie</translation>
         <translation>Scherm opnemen stoppen</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="74"/>
+        <location filename="../src/docks/encodedock.cpp" line="76"/>
         <source>Automatic from extension</source>
         <translation>Automatisch van extensie</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="81"/>
-        <location filename="../src/docks/encodedock.cpp" line="88"/>
+        <location filename="../src/docks/encodedock.cpp" line="84"/>
+        <location filename="../src/docks/encodedock.cpp" line="91"/>
         <source>Default for format</source>
         <translation>Standaard voor dit formaat</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="295"/>
-        <location filename="../src/docks/encodedock.cpp" line="763"/>
-        <location filename="../src/docks/encodedock.cpp" line="969"/>
+        <location filename="../src/docks/encodedock.cpp" line="302"/>
+        <location filename="../src/docks/encodedock.cpp" line="771"/>
+        <location filename="../src/docks/encodedock.cpp" line="977"/>
         <source>Capture File</source>
         <translation>Opgenomen bestand</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="303"/>
-        <location filename="../src/docks/encodedock.cpp" line="710"/>
+        <location filename="../src/docks/encodedock.cpp" line="310"/>
+        <location filename="../src/docks/encodedock.cpp" line="718"/>
         <source>Custom</source>
         <translation>Aangepaste</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="315"/>
+        <location filename="../src/docks/encodedock.cpp" line="322"/>
         <source>Stock</source>
         <translation>Stock</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="761"/>
-        <location filename="../src/docks/encodedock.cpp" line="813"/>
+        <location filename="../src/docks/encodedock.cpp" line="769"/>
+        <location filename="../src/docks/encodedock.cpp" line="821"/>
         <source>Stop Capture</source>
         <translation>Stop het vastleggen</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="781"/>
+        <location filename="../src/docks/encodedock.cpp" line="789"/>
         <source>Encode to File</source>
         <translation>Codeer naar Bestand</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="781"/>
+        <location filename="../src/docks/encodedock.cpp" line="789"/>
         <source>Capture to File</source>
         <translation>Vastleggen naar Bestand</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="853"/>
-        <location filename="../src/docks/encodedock.cpp" line="874"/>
+        <location filename="../src/docks/encodedock.cpp" line="861"/>
+        <location filename="../src/docks/encodedock.cpp" line="882"/>
         <source>Stop Stream</source>
         <translation>Stop Stream</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="866"/>
+        <location filename="../src/docks/encodedock.cpp" line="874"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>Voer het netwerkprotocol , de regeling, het adres, de poort en de parameters in als een URL:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="905"/>
+        <location filename="../src/docks/encodedock.cpp" line="913"/>
         <source>Add Encode Preset</source>
         <translation>Codeervoorinstelling toevoegen</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="948"/>
+        <location filename="../src/docks/encodedock.cpp" line="956"/>
         <source>Delete Preset</source>
         <translation>Voorinstelling verwijderen</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="949"/>
+        <location filename="../src/docks/encodedock.cpp" line="957"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>Ben je zeker dat je %1 wil verwijderen?</translation>
     </message>
@@ -1281,88 +1290,88 @@ bij tijdelijke compressie</translation>
     <message>
         <location filename="../src/widgets/gdigrabwidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formulier</translation>
+        <translation>Formulier</translation>
     </message>
     <message>
         <location filename="../src/widgets/gdigrabwidget.ui" line="23"/>
         <source>Audio Input</source>
-        <translation type="unfinished">Audio ingang</translation>
+        <translation>Audio ingang</translation>
     </message>
     <message>
         <location filename="../src/widgets/gdigrabwidget.ui" line="33"/>
         <source>Resolution</source>
-        <translation type="unfinished">Resolutie</translation>
+        <translation>Resolutie</translation>
     </message>
     <message>
         <location filename="../src/widgets/gdigrabwidget.ui" line="43"/>
         <source>Width of the capture region</source>
-        <translation type="unfinished">Breedte van het opname gebied</translation>
+        <translation>Breedte van het opname gebied</translation>
     </message>
     <message>
         <location filename="../src/widgets/gdigrabwidget.ui" line="56"/>
         <source>The horizontal coordinate from the left edge when using a fixed capture region.</source>
-        <translation type="unfinished">De horizontale coördinaat van de linkerrand bij gebruik van een vast opname gebied.</translation>
+        <translation>De horizontale coördinaat van de linkerrand bij gebruik van een vast opname gebied.</translation>
     </message>
     <message>
         <location filename="../src/widgets/gdigrabwidget.ui" line="79"/>
         <source>Draw the mouse cursor</source>
-        <translation type="unfinished">Teken de muiscursor</translation>
+        <translation>Teken de muiscursor</translation>
     </message>
     <message>
         <location filename="../src/widgets/gdigrabwidget.ui" line="89"/>
         <source>Choose an audio input method to use during capture.</source>
-        <translation type="unfinished">Kies een audio-ingang methode om te gebruiken tijdens het opnemen.</translation>
+        <translation>Kies een audio-ingang methode om te gebruiken tijdens het opnemen.</translation>
     </message>
     <message>
         <location filename="../src/widgets/gdigrabwidget.ui" line="93"/>
         <source>None</source>
-        <translation type="unfinished">Geen</translation>
+        <translation>Geen</translation>
     </message>
     <message>
         <location filename="../src/widgets/gdigrabwidget.ui" line="107"/>
         <source>x</source>
-        <translation type="unfinished">x</translation>
+        <translation>x</translation>
     </message>
     <message>
         <location filename="../src/widgets/gdigrabwidget.ui" line="114"/>
         <source>Show the capture region</source>
-        <translation type="unfinished">Toon het opname gebied</translation>
+        <translation>Toon het opname gebied</translation>
     </message>
     <message>
         <location filename="../src/widgets/gdigrabwidget.ui" line="128"/>
         <source>X</source>
-        <translation type="unfinished">X</translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../src/widgets/gdigrabwidget.ui" line="138"/>
         <source>Apply</source>
-        <translation type="unfinished">Toepassen</translation>
+        <translation>Toepassen</translation>
     </message>
     <message>
         <location filename="../src/widgets/gdigrabwidget.ui" line="145"/>
         <location filename="../src/widgets/gdigrabwidget.ui" line="152"/>
         <source>pixels</source>
-        <translation type="unfinished">pixels</translation>
+        <translation>pixels</translation>
     </message>
     <message>
         <location filename="../src/widgets/gdigrabwidget.ui" line="159"/>
         <source>The vertical coordinate from the top edge when using a fixed capture region.</source>
-        <translation type="unfinished">De verticale coördinaat van de bovenrand bij het gebruik van een vast opname gebied.</translation>
+        <translation>De verticale coördinaat van de bovenrand bij het gebruik van een vast opname gebied.</translation>
     </message>
     <message>
         <location filename="../src/widgets/gdigrabwidget.ui" line="169"/>
         <source>Height of the capture region</source>
-        <translation type="unfinished">Hoogte van het op te nemen gebied</translation>
+        <translation>Hoogte van het op te nemen gebied</translation>
     </message>
     <message>
         <location filename="../src/widgets/gdigrabwidget.ui" line="182"/>
         <source>Y</source>
-        <translation type="unfinished">Y</translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../src/widgets/gdigrabwidget.ui" line="195"/>
         <source>Screen</source>
-        <translation type="unfinished">Scherm</translation>
+        <translation>Scherm</translation>
     </message>
 </context>
 <context>
@@ -2108,7 +2117,7 @@ de lijst. Dit stopt geen momenteel lopende handeling. Rechts-
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="84"/>
         <source>Barn Door Horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>Barn Door Horizontaal</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="214"/>
@@ -2508,7 +2517,7 @@ duur van de overgang.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="353"/>
-        <location filename="../src/mainwindow.cpp" line="2146"/>
+        <location filename="../src/mainwindow.cpp" line="2168"/>
         <source>Enter Full Screen</source>
         <translation>Open Volledig Scherm</translation>
     </message>
@@ -2529,7 +2538,7 @@ duur van de overgang.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="377"/>
-        <location filename="../src/mainwindow.cpp" line="206"/>
+        <location filename="../src/mainwindow.cpp" line="207"/>
         <source>Properties</source>
         <translation>Eigenschappen</translation>
     </message>
@@ -2545,7 +2554,7 @@ duur van de overgang.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="404"/>
-        <location filename="../src/mainwindow.cpp" line="287"/>
+        <location filename="../src/mainwindow.cpp" line="288"/>
         <source>History</source>
         <translation>Geschiedenis</translation>
     </message>
@@ -2720,32 +2729,32 @@ duur van de overgang.</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="705"/>
         <source>Application Log...</source>
-        <translation type="unfinished"></translation>
+        <translation>Toepassing Log...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="713"/>
         <source>Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Project</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="721"/>
         <source>Player</source>
-        <translation type="unfinished"></translation>
+        <translation>Player</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="729"/>
         <source>User Interface</source>
-        <translation type="unfinished"></translation>
+        <translation>Gebruikersinterface</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="737"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Sluit</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="740"/>
         <source>Ctrl+W</source>
-        <translation type="unfinished">Ctrl+W</translation>
+        <translation>Ctrl+W</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="617"/>
@@ -2753,77 +2762,77 @@ duur van de overgang.</translation>
         <translation>Toon Titelbalk</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="172"/>
+        <location filename="../src/mainwindow.cpp" line="173"/>
         <source>Ctrl+Z</source>
         <translation>Ctrl+Z</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="173"/>
+        <location filename="../src/mainwindow.cpp" line="174"/>
         <source>Ctrl+Shift+Z</source>
         <translation>Ctrl+Shift+Z</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="495"/>
+        <location filename="../src/mainwindow.cpp" line="496"/>
         <source>Non-Broadcast</source>
         <translation>Non-Broadcast</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="506"/>
+        <location filename="../src/mainwindow.cpp" line="507"/>
         <source>DVD Widescreen NTSC</source>
         <translation>DVD Breedbeeldscherm NTSC</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="507"/>
+        <location filename="../src/mainwindow.cpp" line="508"/>
         <source>DVD Widescreen PAL</source>
         <translation>DVD Breedbeeldscherm PAL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="512"/>
+        <location filename="../src/mainwindow.cpp" line="513"/>
         <source>Custom</source>
         <translation>Aangepaste</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="531"/>
+        <location filename="../src/mainwindow.cpp" line="532"/>
         <source>Screen %1</source>
         <translation>Scherm %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="562"/>
+        <location filename="../src/mainwindow.cpp" line="563"/>
         <source>Off</source>
         <translation>Uit</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="565"/>
+        <location filename="../src/mainwindow.cpp" line="566"/>
         <source>Internal</source>
         <translation>Intern</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="568"/>
+        <location filename="../src/mainwindow.cpp" line="569"/>
         <source>External</source>
         <translation>Extern</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="582"/>
+        <location filename="../src/mainwindow.cpp" line="583"/>
         <source>DeckLink Keyer</source>
         <translation>DeckLink Keyer</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="728"/>
-        <location filename="../src/mainwindow.cpp" line="730"/>
-        <location filename="../src/mainwindow.cpp" line="957"/>
-        <location filename="../src/mainwindow.cpp" line="2608"/>
+        <location filename="../src/mainwindow.cpp" line="733"/>
+        <location filename="../src/mainwindow.cpp" line="735"/>
+        <location filename="../src/mainwindow.cpp" line="974"/>
+        <location filename="../src/mainwindow.cpp" line="2630"/>
         <source>Failed to open </source>
         <translation>Openen Is Mislukt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="752"/>
+        <location filename="../src/mainwindow.cpp" line="757"/>
         <source>The file you opened uses GPU effects, but GPU processing is not enabled.
 Do you want to enable GPU processing and restart?</source>
         <translation>Het bestand dat u opende gebruikt GPU-effecten, maar GPU verwerking is niet ingeschakeld.
 Wilt u GPU verwerking mogelijk maken en opnieuw opstarten?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="776"/>
+        <location filename="../src/mainwindow.cpp" line="781"/>
         <source>Shotcut noticed some problems in your project.
 Do you want Shotcut to try to repair it?
 
@@ -2835,53 +2844,53 @@ Als u Ja kiest, zal Shotcut een kopie van uw project creëren
 met &quot;- Hersteld&quot; in de naam van het bestand en het openen.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="790"/>
+        <location filename="../src/mainwindow.cpp" line="795"/>
         <source>Repaired</source>
         <translation>Hersteld</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="813"/>
+        <location filename="../src/mainwindow.cpp" line="818"/>
         <source>Repairing the project failed.</source>
         <translation>Herstellen van het project is mislukt.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1182"/>
+        <location filename="../src/mainwindow.cpp" line="1202"/>
         <source>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2015 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
         <translation>&lt;h1&gt;Shotcut versie %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is een gratis, open source, cross-platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2015 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt; &lt;p&gt;Licentie onder &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Dit programma gebruikt trots de volgende projecten:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; applicatie en UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt;multimedia-formaat en codec bibliotheken&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 en VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt;video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt;audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icoon collectie van &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icoon collectie&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;De broncode die werd gebruikt om dit programma op te bouwen kan worden gedownload van &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;Dit programma wordt verspreid in de hoop dat het nuttig zal zijn, maar ZONDER ENIGE GARANTIE; zonder zelfs de impliciete garantie van verkoopbaarheid of geschiktheid voor een bepaald doel.&lt;/small&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2359"/>
+        <location filename="../src/mainwindow.cpp" line="2381"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>U moet Shotcut herstarten om over te schakelen naar de nieuwe taal.
 Wilt u nu opnieuw opstarten?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2408"/>
+        <location filename="../src/mainwindow.cpp" line="2430"/>
         <source>You must restart Shotcut to switch using GPU processing.
 Do you want to restart now?</source>
         <translation>U moet Shotcut herstarten om over te schakelen naar GPU processing.
 Wilt u nu opnieuw opstarten?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2646"/>
+        <location filename="../src/mainwindow.cpp" line="2668"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
         <translation>U moet Shotcut herstarten om van weergave methode te veranderen.
 Wilt u nu opnieuw opstarten?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2668"/>
+        <location filename="../src/mainwindow.cpp" line="2690"/>
         <source>Application Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Toepassing Log...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="827"/>
+        <location filename="../src/mainwindow.cpp" line="832"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation>Automatisch opgeslagen bestanden bestaan reeds. Wilt u deze nu herstellen?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="109"/>
+        <location filename="../src/mainwindow.cpp" line="110"/>
         <source>Error: This program requires the JACK 1 library.
 
 Please install it using your package manager. It may be named libjack0, jack-audio-connection-kit, jack, or similar.</source>
@@ -2890,7 +2899,7 @@ Please install it using your package manager. It may be named libjack0, jack-aud
 Installeer dit via uw pakketbeheerder. Het kan libjack0, jack-audio-connection-kit, jack, of iets dergelijks noemen.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="117"/>
+        <location filename="../src/mainwindow.cpp" line="118"/>
         <source>Error: This program requires the SDL 1.2 library.
 
 Please install it using your package manager. It may be named libsdl1.2debian, SDL, or similar.</source>
@@ -2899,70 +2908,70 @@ Please install it using your package manager. It may be named libsdl1.2debian, S
 Installeer dit via uw pakketbeheerder. Het kan libsdl1.2debian, SDL, of iets dergelijks noemen.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="968"/>
-        <location filename="../src/mainwindow.cpp" line="2589"/>
+        <location filename="../src/mainwindow.cpp" line="985"/>
+        <location filename="../src/mainwindow.cpp" line="2611"/>
         <source>Open File</source>
         <translation>Open Bestand</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1176"/>
+        <location filename="../src/mainwindow.cpp" line="1196"/>
         <source>%1[*] - %2</source>
         <translation>%1[*] - %2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1181"/>
+        <location filename="../src/mainwindow.cpp" line="1201"/>
         <source>About Shotcut</source>
         <translation>Over Shotcut</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1719"/>
-        <location filename="../src/mainwindow.cpp" line="1744"/>
+        <location filename="../src/mainwindow.cpp" line="1741"/>
+        <location filename="../src/mainwindow.cpp" line="1766"/>
         <source>Saved %1</source>
         <translation>Bewaard %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1731"/>
+        <location filename="../src/mainwindow.cpp" line="1753"/>
         <source>Save XML</source>
         <translation>Bewaar XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1731"/>
+        <location filename="../src/mainwindow.cpp" line="1753"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1756"/>
+        <location filename="../src/mainwindow.cpp" line="1778"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>Het project is gewijzigd.
 Wilt u uw wijzigingen opslaan?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1780"/>
+        <location filename="../src/mainwindow.cpp" line="1802"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
         <translation>Er zijn nog onvolledige jobs.
 Wilt u toch afsluiten?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2149"/>
+        <location filename="../src/mainwindow.cpp" line="2171"/>
         <source>Exit Full Screen</source>
         <translation>Verlaat Volledig Scherm</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2161"/>
+        <location filename="../src/mainwindow.cpp" line="2183"/>
         <source>GPU Processing is not supported</source>
         <translation>GPU Verwerking wordt niet ondersteund</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2399"/>
+        <location filename="../src/mainwindow.cpp" line="2421"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>Kan geen verbinding maken JACK.
 Controleer of JACK is geïnstalleerd en actief is.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2590"/>
+        <location filename="../src/mainwindow.cpp" line="2612"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;Alle Bestanden (*)</translation>
     </message>
@@ -2970,17 +2979,17 @@ Controleer of JACK is geïnstalleerd en actief is.</translation>
 <context>
     <name>MeltJob</name>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="35"/>
+        <location filename="../src/jobs/meltjob.cpp" line="36"/>
         <source>View XML</source>
         <translation>Bekijk XML</translation>
     </message>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="36"/>
+        <location filename="../src/jobs/meltjob.cpp" line="37"/>
         <source>View the MLT XML for this job</source>
         <translation>Bekijk de MLT XML voor deze handeling</translation>
     </message>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="83"/>
+        <location filename="../src/jobs/meltjob.cpp" line="89"/>
         <source>MLT XML</source>
         <translation>MLT XML</translation>
     </message>
@@ -3465,7 +3474,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/openotherdialog.cpp" line="59"/>
         <source>OS X A/V Device</source>
-        <translation type="unfinished"></translation>
+        <translation>OS X A/V Apparaat</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="64"/>
@@ -3634,8 +3643,8 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/player.cpp" line="284"/>
         <location filename="../src/player.cpp" line="379"/>
         <location filename="../src/player.cpp" line="402"/>
-        <location filename="../src/player.cpp" line="543"/>
-        <location filename="../src/player.cpp" line="656"/>
+        <location filename="../src/player.cpp" line="542"/>
+        <location filename="../src/player.cpp" line="655"/>
         <source>Play</source>
         <translation>Afspelen</translation>
     </message>
@@ -3643,24 +3652,24 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/player.cpp" line="286"/>
         <location filename="../src/player.cpp" line="380"/>
         <location filename="../src/player.cpp" line="403"/>
-        <location filename="../src/player.cpp" line="544"/>
-        <location filename="../src/player.cpp" line="657"/>
+        <location filename="../src/player.cpp" line="543"/>
+        <location filename="../src/player.cpp" line="656"/>
         <source>Start playback (L)</source>
         <translation>Start afspelen (L)</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="289"/>
         <location filename="../src/player.cpp" line="359"/>
-        <location filename="../src/player.cpp" line="538"/>
-        <location filename="../src/player.cpp" line="663"/>
+        <location filename="../src/player.cpp" line="537"/>
+        <location filename="../src/player.cpp" line="662"/>
         <source>Pause</source>
         <translation>Pauzeer</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="291"/>
         <location filename="../src/player.cpp" line="360"/>
-        <location filename="../src/player.cpp" line="539"/>
-        <location filename="../src/player.cpp" line="664"/>
+        <location filename="../src/player.cpp" line="538"/>
+        <location filename="../src/player.cpp" line="663"/>
         <source>Pause playback (K)</source>
         <translation>Stop afspelen (K)</translation>
     </message>
@@ -4456,7 +4465,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/dialogs/textviewerdialog.cpp" line="45"/>
         <source>Save Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Bewaar Tekst</translation>
     </message>
 </context>
 <context>
@@ -4482,10 +4491,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="149"/>
         <source>This track is locked</source>
-        <translation type="unfinished"></translation>
+        <translation>Dit spoor is op slot</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="667"/>
+        <location filename="../src/docks/timelinedock.cpp" line="671"/>
         <source>You cannot split a transition.</source>
         <translation>U kunt een overgang niet splitsen.</translation>
     </message>
@@ -4505,12 +4514,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/qml/timeline/TimelineToolbar.qml" line="98"/>
         <source>Ripple trim and drop</source>
-        <translation type="unfinished"></translation>
+        <translation>Ripple trim and drop</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/TimelineToolbar.qml" line="99"/>
         <source>Ripple</source>
-        <translation type="unfinished"></translation>
+        <translation>Ripple</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/TimelineToolbar.qml" line="129"/>
@@ -6062,7 +6071,7 @@ te sturen naar SDI/HDMI in deze modus.</translation>
     <message>
         <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="107"/>
         <source>Density</source>
-        <translation type="unfinished"></translation>
+        <translation>Dichtheid</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="124"/>
@@ -6073,12 +6082,12 @@ te sturen naar SDI/HDMI in deze modus.</translation>
     <message>
         <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="157"/>
         <source>X Axis Rotation</source>
-        <translation type="unfinished"></translation>
+        <translation>X As Rotatie</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="174"/>
         <source>Y Axis Rotation</source>
-        <translation type="unfinished"></translation>
+        <translation>Y As Rotatie</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="181"/>
