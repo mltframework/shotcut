@@ -24,10 +24,51 @@
 #include <QtDebug>
 #include <QtWidgets>
 
+bool ProducerIsTimewarp( Mlt::Producer* producer )
+{
+    return QString::fromUtf8(producer->get("mlt_service")) == "timewarp";
+}
+
+char* GetFilenameFromProducer( Mlt::Producer* producer )
+{
+    char* resource = NULL;
+    if (ProducerIsTimewarp(producer))
+    {
+        resource = producer->get("warp_resource");
+    }
+    else
+    {
+        resource = producer->get("resource");
+    }
+    return resource;
+}
+
+double GetSpeedFromProducer( Mlt::Producer* producer )
+{
+    double speed = 1.0;
+    if (ProducerIsTimewarp(producer) )
+    {
+        speed = fabs(producer->get_double("warp_speed"));
+    }
+    return speed;
+}
+
+bool GetDirectionFromProducer( Mlt::Producer* producer )
+{
+    bool reverse = 0;
+    if ( ProducerIsTimewarp(producer) )
+    {
+        reverse = producer->get_double("warp_speed") < 0.0;
+        printf("GetDirection: %f\t%d\n", producer->get_double("warp_speed"), producer->get_double("warp_speed") < 0.0);
+    }
+    return reverse;
+}
+
 AvformatProducerWidget::AvformatProducerWidget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::AvformatProducerWidget)
     , m_defaultDuration(-1)
+    , m_recalcDuration(true)
 {
     ui->setupUi(this);
     connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
@@ -40,7 +81,18 @@ AvformatProducerWidget::~AvformatProducerWidget()
 
 Mlt::Producer* AvformatProducerWidget::producer(Mlt::Profile& profile)
 {
-    Mlt::Producer* p = new Mlt::Producer(profile, m_producer->get("resource"));
+    Mlt::Producer* p = NULL;
+    if ( ui->speedSpinBox->value() == 1.0 && ui->directionComboBox->currentIndex() == 0 )
+    {
+        p = new Mlt::Producer(profile, GetFilenameFromProducer(m_producer));
+    }
+    else
+    {
+        double warpspeed = ui->speedSpinBox->value() * ( ui->directionComboBox->currentIndex() ? -1 : 1 );
+        QString s = QString("%1:%2:%3").arg("timewarp").arg(warpspeed).arg(GetFilenameFromProducer(m_producer));
+        p = new Mlt::Producer(profile, s.toUtf8().constData());
+        p->set("shotcut:producer", "avformat");
+    }
     if (p->is_valid())
         p->set("video_delay", double(ui->syncSlider->value()) / 1000);
     return p;
@@ -53,20 +105,28 @@ void AvformatProducerWidget::reopen(Mlt::Producer* p)
     int position = m_producer->position();
     double speed = m_producer->get_speed();
 
-    p->set("length", length);
-    if (out + 1 >= m_producer->get_length())
-        p->set("out", length - 1);
-    else if (out >= length)
-        p->set("out", length - 1);
+    if( m_recalcDuration )
+    {
+        position = 0;
+    }
     else
-        p->set("out", out);
-    if (position > p->get_out())
-        position = p->get_out();
-    p->set("in", m_producer->get_in());
+    {
+        p->set("length", length);
+        if (out + 1 >= m_producer->get_length())
+            p->set("out", length - 1);
+        else if (out >= length)
+            p->set("out", length - 1);
+        else
+            p->set("out", out);
+        if (position > p->get_out())
+            position = p->get_out();
+        p->set("in", m_producer->get_in());
+    }
     if (MLT.setProducer(p)) {
         setProducer(0);
         return;
     }
+    MLT.stop();
     connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
     emit producerReopened();
     emit producerChanged();
@@ -94,12 +154,15 @@ void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
     if (m_defaultDuration == -1)
         m_defaultDuration = m_producer->get_length();
 
-    QString s = QString::fromUtf8(m_producer->get("resource"));
+    QString s = QString::fromUtf8(GetFilenameFromProducer(m_producer));
     QString name = Util::baseName(s);
     ui->filenameLabel->setText(ui->filenameLabel->fontMetrics().elidedText(name, Qt::ElideLeft, width() - 30));
     ui->filenameLabel->setToolTip(s);
     ui->notesTextEdit->setPlainText(QString::fromUtf8(m_producer->get(kCommentProperty)));
     ui->durationSpinBox->setValue(m_producer->get_length());
+    m_recalcDuration = false;
+    ui->speedSpinBox->setValue(GetSpeedFromProducer(m_producer));
+    ui->directionComboBox->setCurrentIndex(GetDirectionFromProducer(m_producer));
 
     // populate the track combos
     int n = m_producer->get_int("meta.media.nb_streams");
@@ -245,6 +308,8 @@ void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
 
 void AvformatProducerWidget::on_resetButton_clicked()
 {
+    ui->speedSpinBox->setValue(1.0);
+    ui->directionComboBox->setCurrentIndex(0);
     Mlt::Producer* p = producer(MLT.profile());
     ui->durationSpinBox->setValue(m_defaultDuration);
     ui->syncSlider->setValue(0);
@@ -321,6 +386,22 @@ void AvformatProducerWidget::on_durationSpinBox_editingFinished()
     if (!m_producer)
         return;
     if (ui->durationSpinBox->value() == m_producer->get_length())
+        return;
+    recreateProducer();
+}
+
+
+void AvformatProducerWidget::on_speedSpinBox_editingFinished()
+{
+    if (!m_producer)
+        return;
+    m_recalcDuration = true;
+    recreateProducer();
+}
+
+void AvformatProducerWidget::on_directionComboBox_activated(int /*index*/)
+{
+    if (!m_producer)
         return;
     recreateProducer();
 }

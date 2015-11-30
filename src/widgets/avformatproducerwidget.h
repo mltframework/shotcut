@@ -61,6 +61,10 @@ private slots:
 
     void on_durationSpinBox_editingFinished();
 
+    void on_speedSpinBox_editingFinished();
+
+    void on_directionComboBox_activated(int index);
+
     void on_syncSlider_valueChanged(int value);
 
     void on_actionOpenFolder_triggered();
@@ -74,6 +78,7 @@ private slots:
 private:
     Ui::AvformatProducerWidget *ui;
     int m_defaultDuration;
+    bool m_recalcDuration;
 
     void reopen(Mlt::Producer* p);
     void recreateProducer();

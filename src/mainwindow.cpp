@@ -2083,6 +2083,7 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
 
     QString service(producer->get("mlt_service"));
     QString resource = QString::fromUtf8(producer->get("resource"));
+    QString shotcutProducer(producer->get("shotcut:producer"));
     QScrollArea* scrollArea = (QScrollArea*) m_propertiesDock->widget();
 
     delete scrollArea->widget();
@@ -2102,7 +2103,7 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
         w = new X11grabWidget(this);
     else if (resource.startsWith("gdigrab:"))
         w = new GDIgrabWidget(this);
-    else if (service.startsWith("avformat"))
+    else if (service.startsWith("avformat") || shotcutProducer == "avformat")
         w = new AvformatProducerWidget(this);
     else if (MLT.isImageProducer(producer)) {
         ImageProducerWidget* ipw = new ImageProducerWidget(this);
