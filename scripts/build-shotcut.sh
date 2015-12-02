@@ -2016,9 +2016,10 @@ export MLT_DATA="\$INSTALL_DIR/share/mlt"
 export MLT_PROFILES_PATH="\$INSTALL_DIR/share/mlt/profiles"
 export FREI0R_PATH="\$INSTALL_DIR/lib/frei0r-1"
 export MLT_MOVIT_PATH="\$INSTALL_DIR/share/movit"
-export QT_PLUGIN_PATH="\$INSTALL_DIR/lib/qt5"
-export QML2_IMPORT_PATH="\$INSTALL_DIR/lib/qml"
-"\$INSTALL_DIR/bin/shotcut" "\$@"
+cd "\$INSTALL_DIR"
+export QT_PLUGIN_PATH="lib/qt5"
+export QML2_IMPORT_PATH="lib/qml"
+bin/shotcut "\$@"
 End-of-shotcut-wrapper
   if test 0 != $? ; then
     die "Unable to create wrapper script"
