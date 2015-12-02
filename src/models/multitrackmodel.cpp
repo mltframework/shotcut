@@ -2559,8 +2559,10 @@ void MultitrackModel::load()
     consolidateBlanksAllTracks();
     adjustBackgroundDuration();
     getAudioLevels();
-    beginInsertRows(QModelIndex(), 0, m_trackList.count() - 1);
-    endInsertRows();
+    if (m_trackList.count() > 0) {
+        beginInsertRows(QModelIndex(), 0, m_trackList.count() - 1);
+        endInsertRows();
+    }
     emit loaded();
 }
 
@@ -2576,9 +2578,11 @@ void MultitrackModel::reload()
 void MultitrackModel::close()
 {
     if (!m_tractor) return;
-    beginRemoveRows(QModelIndex(), 0, m_trackList.count() - 1);
-    m_trackList.clear();
-    endRemoveRows();
+    if (m_trackList.count() > 0) {
+        beginRemoveRows(QModelIndex(), 0, m_trackList.count() - 1);
+        m_trackList.clear();
+        endRemoveRows();
+    }
     delete m_tractor;
     m_tractor = 0;
     emit closed();
