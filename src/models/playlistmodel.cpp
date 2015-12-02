@@ -431,8 +431,10 @@ void PlaylistModel::load()
         m_playlist = 0;
         return;
     }
-    beginInsertRows(QModelIndex(), 0, m_playlist->count() - 1);
-    endInsertRows();
+    if (m_playlist->count() > 0) {
+        beginInsertRows(QModelIndex(), 0, m_playlist->count() - 1);
+        endInsertRows();
+    }
     // do not let opening a clip change the profile!
     MLT.profile().set_explicit(true);
     emit loaded();
@@ -576,7 +578,7 @@ void PlaylistModel::setPlaylist(Mlt::Playlist& playlist)
             m_playlist = 0;
             return;
         }
-        if (m_playlist->count()) {
+        if (m_playlist->count() > 0) {
             beginInsertRows(QModelIndex(), 0, m_playlist->count() - 1);
             endInsertRows();
         }

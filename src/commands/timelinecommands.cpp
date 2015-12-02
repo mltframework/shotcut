@@ -675,7 +675,6 @@ RemoveTrackCommand::RemoveTrackCommand(MultitrackModel& model, int trackIndex, Q
     if (producer && producer->is_valid()) {
         m_xml = MLT.XML(producer.data());
         m_trackName = QString::fromUtf8(producer->get(kTrackNameProperty));
-        qDebug() << m_xml;
     }
 }
 
