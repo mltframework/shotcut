@@ -132,7 +132,7 @@ void AudioLevelsTask::run()
 {
     int n = tempProducer()->get_playtime();
     // 2 channels interleaved of uchar values
-    QVariantList* levels = new QVariantList;
+    QVariantList levels;
     QImage image = DB.getThumbnail(cacheKey());
     if (image.isNull()) {
         const char* key[2] = { "meta.media.audio_level.0", "meta.media.audio_level.1"};
@@ -151,27 +151,27 @@ void AudioLevelsTask::run()
                 for (int channel = 0; channel < channels; channel++)
                     // Convert real to uint for caching as image.
                     // Scale by 0.9 because values may exceed 1.0 to indicate clipping.
-                    *levels << 256 * qMin(frame->get_double(key[channel]) * 0.9, 1.0);
-            } else if (!levels->isEmpty()) {
+                    levels << 256 * qMin(frame->get_double(key[channel]) * 0.9, 1.0);
+            } else if (!levels.isEmpty()) {
                 for (int channel = 0; channel < channels; channel++)
-                    *levels << levels->last();
+                    levels << levels.last();
             }
             delete frame;
         }
-        if (levels->size() > 0 && !m_isCanceled) {
+        if (levels.size() > 0 && !m_isCanceled) {
             // Put into an image for caching.
-            int count = levels->size();
+            int count = levels.size();
             QImage image((count + 3) / 4, channels, QImage::Format_ARGB32);
             n = image.width() * image.height();
             for (int i = 0; i < n; i ++) {
                 QRgb p;
                 if ((4*i + 3) < count) {
-                    p = qRgba(levels->at(4*i).toInt(), levels->at(4*i+1).toInt(), levels->at(4*i+2).toInt(), levels->at(4*i+3).toInt());
+                    p = qRgba(levels.at(4*i).toInt(), levels.at(4*i+1).toInt(), levels.at(4*i+2).toInt(), levels.at(4*i+3).toInt());
                 } else {
-                    int last = levels->last().toInt();
-                    int r = (4*i+0) < count? levels->at(4*i+0).toInt() : last;
-                    int g = (4*i+1) < count? levels->at(4*i+1).toInt() : last;
-                    int b = (4*i+2) < count? levels->at(4*i+2).toInt() : last;
+                    int last = levels.last().toInt();
+                    int r = (4*i+0) < count? levels.at(4*i+0).toInt() : last;
+                    int g = (4*i+1) < count? levels.at(4*i+1).toInt() : last;
+                    int b = (4*i+2) < count? levels.at(4*i+2).toInt() : last;
                     int a = last;
                     p = qRgba(r, g, b, a);
                 }
@@ -185,10 +185,10 @@ void AudioLevelsTask::run()
         int n = image.width() * image.height();
         for (int i = 0; i < n; i++) {
             QRgb p = image.pixel(i / 2, i % channels);
-            *levels << qRed(p);
-            *levels << qGreen(p);
-            *levels << qBlue(p);
-            *levels << qAlpha(p);
+            levels << qRed(p);
+            levels << qGreen(p);
+            levels << qBlue(p);
+            levels << qAlpha(p);
         }
     }
 
@@ -202,9 +202,10 @@ void AudioLevelsTask::run()
     }
     tasksListMutex.unlock();
 
-    if (levels->size() > 0 && !m_isCanceled) {
+    if (levels.size() > 0 && !m_isCanceled) {
         foreach (ProducerAndIndex p, m_producers) {
-            p.first->set(kAudioLevelsProperty, levels, 0, (mlt_destructor) deleteQVariantList);
+            QVariantList* levelsCopy = new QVariantList(levels);
+            p.first->set(kAudioLevelsProperty, levelsCopy, 0, (mlt_destructor) deleteQVariantList);
             m_model->audioLevelsReady(p.second);
         }
     }
