@@ -699,7 +699,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="layoutWidget">
+  <widget class="QWidget" name="speedLayoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
