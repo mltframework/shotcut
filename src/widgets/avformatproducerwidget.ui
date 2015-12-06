@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>337</width>
-    <height>566</height>
+    <height>528</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -74,7 +74,7 @@
    <property name="geometry">
     <rect>
      <x>9</x>
-     <y>230</y>
+     <y>190</y>
      <width>319</width>
      <height>293</height>
     </rect>
@@ -657,7 +657,7 @@
    <property name="geometry">
     <rect>
      <x>9</x>
-     <y>530</y>
+     <y>490</y>
      <width>321</width>
      <height>29</height>
     </rect>
@@ -705,7 +705,7 @@
      <x>10</x>
      <y>120</y>
      <width>321</width>
-     <height>95</height>
+     <height>61</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout_3">
@@ -760,33 +760,6 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="0">
-     <widget class="QLabel" name="directionLabel">
-      <property name="text">
-       <string>Direction</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="1">
-     <widget class="QComboBox" name="directionComboBox">
-      <property name="focusPolicy">
-       <enum>Qt::StrongFocus</enum>
-      </property>
-      <item>
-       <property name="text">
-        <string>Forward</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Reverse</string>
-       </property>
-      </item>
-     </widget>
-    </item>
     <item row="0" column="1">
      <widget class="TimeSpinBox" name="durationSpinBox">
       <property name="focusPolicy">
@@ -832,19 +805,6 @@
       </property>
      </spacer>
     </item>
-    <item row="2" column="2">
-     <spacer name="horizontalSpacer_11">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
    </layout>
   </widget>
   <action name="actionOpenFolder">
@@ -869,7 +829,6 @@
   <tabstop>notesTextEdit</tabstop>
   <tabstop>durationSpinBox</tabstop>
   <tabstop>speedSpinBox</tabstop>
-  <tabstop>directionComboBox</tabstop>
   <tabstop>tabWidget</tabstop>
   <tabstop>videoTrackComboBox</tabstop>
   <tabstop>aspectNumSpinBox</tabstop>

@@ -21,7 +21,6 @@
 #include "util.h"
 #include "mltcontroller.h"
 #include "shotcut_mlt_properties.h"
-#include <QtDebug>
 #include <QtWidgets>
 
 bool ProducerIsTimewarp( Mlt::Producer* producer )
@@ -53,17 +52,6 @@ double GetSpeedFromProducer( Mlt::Producer* producer )
     return speed;
 }
 
-bool GetDirectionFromProducer( Mlt::Producer* producer )
-{
-    bool reverse = 0;
-    if ( ProducerIsTimewarp(producer) )
-    {
-        reverse = producer->get_double("warp_speed") < 0.0;
-        printf("GetDirection: %f\t%d\n", producer->get_double("warp_speed"), producer->get_double("warp_speed") < 0.0);
-    }
-    return reverse;
-}
-
 AvformatProducerWidget::AvformatProducerWidget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::AvformatProducerWidget)
@@ -82,14 +70,15 @@ AvformatProducerWidget::~AvformatProducerWidget()
 Mlt::Producer* AvformatProducerWidget::producer(Mlt::Profile& profile)
 {
     Mlt::Producer* p = NULL;
-    if ( ui->speedSpinBox->value() == 1.0 && ui->directionComboBox->currentIndex() == 0 )
+    if ( ui->speedSpinBox->value() == 1.0 )
     {
         p = new Mlt::Producer(profile, GetFilenameFromProducer(m_producer));
     }
     else
     {
-        double warpspeed = ui->speedSpinBox->value() * ( ui->directionComboBox->currentIndex() ? -1 : 1 );
-        QString s = QString("%1:%2:%3").arg("timewarp").arg(warpspeed).arg(GetFilenameFromProducer(m_producer));
+        double warpspeed = ui->speedSpinBox->value();
+        char* filename = GetFilenameFromProducer(m_producer);
+        QString s = QString("%1:%2:%3").arg("timewarp").arg(warpspeed).arg(filename);
         p = new Mlt::Producer(profile, s.toUtf8().constData());
         p->set("shotcut:producer", "avformat");
     }
@@ -162,7 +151,6 @@ void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
     ui->durationSpinBox->setValue(m_producer->get_length());
     m_recalcDuration = false;
     ui->speedSpinBox->setValue(GetSpeedFromProducer(m_producer));
-    ui->directionComboBox->setCurrentIndex(GetDirectionFromProducer(m_producer));
 
     // populate the track combos
     int n = m_producer->get_int("meta.media.nb_streams");
@@ -309,7 +297,6 @@ void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
 void AvformatProducerWidget::on_resetButton_clicked()
 {
     ui->speedSpinBox->setValue(1.0);
-    ui->directionComboBox->setCurrentIndex(0);
     Mlt::Producer* p = producer(MLT.profile());
     ui->durationSpinBox->setValue(m_defaultDuration);
     ui->syncSlider->setValue(0);
@@ -396,13 +383,6 @@ void AvformatProducerWidget::on_speedSpinBox_editingFinished()
     if (!m_producer)
         return;
     m_recalcDuration = true;
-    recreateProducer();
-}
-
-void AvformatProducerWidget::on_directionComboBox_activated(int /*index*/)
-{
-    if (!m_producer)
-        return;
     recreateProducer();
 }
 

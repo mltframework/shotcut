@@ -63,8 +63,6 @@ private slots:
 
     void on_speedSpinBox_editingFinished();
 
-    void on_directionComboBox_activated(int index);
-
     void on_syncSlider_valueChanged(int value);
 
     void on_actionOpenFolder_triggered();
