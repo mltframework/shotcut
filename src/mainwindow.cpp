@@ -945,9 +945,10 @@ void MainWindow::open(QString url, const Mlt::Properties* properties)
         if (!isXmlRepaired(checker, url))
             modified = checkAutoSave(url);
         // let the new project change the profile
-        if (url != untitledFileName() || modified)
+        if (modified || QFile::exists(url)) {
             MLT.profile().set_explicit(false);
-        setWindowModified(modified);
+            setWindowModified(modified);
+        }
     }
     if (!playlist() && !multitrack()) {
         if (!modified && !continueModified())
