@@ -926,6 +926,7 @@ void MainWindow::updateAutoSave()
 
 void MainWindow::open(QString url, const Mlt::Properties* properties)
 {
+    qDebug() << url;
     bool modified = false;
     MltXmlChecker checker;
     if (checker.check(url)) {
@@ -941,10 +942,11 @@ void MainWindow::open(QString url, const Mlt::Properties* properties)
             m_playlistDock->model()->close();
         if (multitrack())
             m_timelineDock->model()->close();
-        // let the new project change the profile
-        MLT.profile().set_explicit(false);
         if (!isXmlRepaired(checker, url))
             modified = checkAutoSave(url);
+        // let the new project change the profile
+        if (url != untitledFileName() || modified)
+            MLT.profile().set_explicit(false);
         setWindowModified(modified);
     }
     if (!playlist() && !multitrack()) {
