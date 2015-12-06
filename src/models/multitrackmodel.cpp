@@ -94,12 +94,12 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
             case ResourceRole:
             case Qt::DisplayRole: {
                 QString result = QString::fromUtf8(info->resource);
-                if (result == "<producer>" && info->producer
-                        && info->producer->is_valid() && info->producer->get("mlt_service"))
-                    result = QString::fromUtf8(info->producer->get("mlt_service"));
                 // Use basename for display
                 if (role == NameRole)
                     result = Util::baseName(result);
+                if (result == "<producer>" && info->producer
+                        && info->producer->is_valid() && info->producer->get("mlt_service"))
+                    result = QString::fromUtf8(info->producer->get("mlt_service"));
                 return result;
             }
             case ServiceRole:
