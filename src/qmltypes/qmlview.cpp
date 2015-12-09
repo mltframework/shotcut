@@ -19,14 +19,6 @@
 #include "qmlview.h"
 #include <QWindow>
 #include <QDebug>
-#include <QSGMaterial>
-#include <QSGSimpleTextureNode>
-
-#include <QTimer>
-
-#include <private/qquickitem_p.h>
-#include <private/qsgrenderer_p.h>
-#include <private/qquickcanvasitem_p.h>
 
 QmlView::QmlView(QWindow* qview)
     : QObject(qview)
@@ -37,74 +29,4 @@ QmlView::QmlView(QWindow* qview)
 QPoint QmlView::pos()
 {
     return m_qview->mapToGlobal(QPoint(0,0));
-}
-
-QTBUG47714WorkaroundRenderListener::QTBUG47714WorkaroundRenderListener(QQuickItem * item)
-    : item(item)
-    , oldTexture(0)
-{
-    startTimer(0);
-}
-
-void QTBUG47714WorkaroundRenderListener::timerEvent(QTimerEvent * event)
-{
-    if (item) {
-        QQuickWindow * window = item->window();
-        if (window) {
-            connect(window, SIGNAL(beforeSynchronizing()), SLOT(beforeSync()));
-            connect(window, SIGNAL(afterSynchronizing()), SLOT(afterSync()));
-        }
-    }
-    killTimer(event->timerId());
-}
-
-QSGSimpleTextureNode * QTBUG47714WorkaroundRenderListener::nodeFromItem()
-{
-    if (item.isNull() || !QQuickItemPrivate::get(item))
-    {
-        deleteLater();
-        return 0;
-    }
-    QQuickItemPrivate * priv = QQuickItemPrivate::get(item);
-    QSGTransformNode * tnode = priv->itemNode();
-    if (!tnode || !tnode->firstChild()) {
-        deleteLater();
-        return 0;
-    }
-    QSGGeometryNode * geom = 0;
-    if (tnode->firstChild()->type() == QSGNode::GeometryNodeType)
-        geom = static_cast<QSGGeometryNode*>(tnode->firstChild());
-    else if (tnode->firstChild()->type() == QSGNode::OpacityNodeType
-            && tnode->firstChild()->firstChild()
-            && tnode->firstChild()->firstChild()->type() == QSGNode::GeometryNodeType)
-        geom = static_cast<QSGGeometryNode*>(tnode->firstChild()->firstChild());
-
-    return dynamic_cast<QSGSimpleTextureNode*>(geom);
-}
-
-void QTBUG47714WorkaroundRenderListener::beforeSync()
-{
-    QSGSimpleTextureNode * texNode = nodeFromItem();
-    if (texNode)
-        texNode->setOwnsTexture(false);
-}
-
-void QTBUG47714WorkaroundRenderListener::afterSync()
-{
-    QSGSimpleTextureNode * texNode = nodeFromItem();
-    if (texNode) {
-        oldTexture = texNode->texture();
-    } else {
-        delete oldTexture;
-        oldTexture = 0;
-    }
-}
-
-void QmlView::applyQTBUG47714Workaround(QObject * item)
-{
-#if QT_VERSION > 0x050500
-    Q_UNUSED(item);
-#else
-    new QTBUG47714WorkaroundRenderListener(static_cast<QQuickItem*>(item));
-#endif
 }

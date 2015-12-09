@@ -18,6 +18,7 @@
 
 import QtQuick 2.2
 import QtQuick.Controls 1.0
+import Shotcut.Controls 1.0
 import QtGraphicalEffects 1.0
 import QtQml.Models 2.2
 
@@ -88,7 +89,7 @@ Rectangle {
         // Model as a property expression is not working in all cases.
         waveformRepeater.model = Math.ceil(waveform.innerWidth / waveform.maxWidth)
         for (var i = 0; i < waveformRepeater.count; i++)
-            waveformRepeater.itemAt(0).requestPaint()
+            waveformRepeater.itemAt(0).update()
     }
 
     onAudioLevelsChanged: generateWaveform()
@@ -115,30 +116,12 @@ Rectangle {
         source: (isAudio || isBlank || isTransition)? '' : 'image://thumbnail/' + mltService + '/' + clipResource + '#' + inPoint
     }
 
-    Canvas {
-        id: transitionCanvas
-        Component.onCompleted: view.applyQTBUG47714Workaround(transitionCanvas);
+    TimelineTransition {
         visible: isTransition
         anchors.fill: parent
-        onPaint: {
-            if (!visible) return // workaround QTBUG-47714
-            var cx = getContext('2d')
-            if (cx === null) return
-            cx.beginPath()
-            cx.moveTo(0, 0)
-            cx.lineTo(width, height)
-            cx.lineTo(width, 0)
-            cx.lineTo(0, height)
-            cx.closePath()
-            var grad = cx.createLinearGradient(0, 0, 0, height)
-            var color = isAudio? 'darkseagreen' : root.shotcutBlue
-            grad.addColorStop(0, clipRoot.selected ? Qt.darker(color) : Qt.lighter(color))
-            grad.addColorStop(1, color)
-            cx.fillStyle = grad
-            cx.fill()
-            cx.strokeStyle = 'black'
-            cx.stroke()
-        }
+        property var color: isAudio? 'darkseagreen' : root.shotcutBlue
+        colorA: color
+        colorB: clipRoot.selected ? Qt.darker(color) : Qt.lighter(color)
     }
 
     Row {
@@ -154,35 +137,14 @@ Rectangle {
 
         Repeater {
             id: waveformRepeater
-            Canvas {
-                Component.onCompleted: view.applyQTBUG47714Workaround(this)
+            TimelineWaveform {
                 width: Math.min(waveform.innerWidth, waveform.maxWidth)
-                clip: true
                 height: waveform.height
-                renderStrategy: Canvas.Threaded
-                onPaint: {
-                    if (typeof clipRoot.audioLevels == 'undefined') return;
-                    var cx = getContext('2d');
-                    if (cx === null) return
-                    // TODO use project channel count
-                    var channels = 2;
-                    var color = getColor();
-                    var offset = index * Math.round(waveform.maxWidth / timeScale) * channels;
-                    cx.clearRect(0, 0, width, height);
-                    cx.beginPath();
-                    cx.moveTo(-1, height);
-                    for (var i = 0; i < width; i++) {
-                        var j = Math.round(i / timeScale) * channels;
-                        var level = Math.max(audioLevels[offset + j], audioLevels[offset + j + 1]) / 256;
-                        cx.lineTo(i, height - level * height);
-                    }
-                    cx.lineTo(width, height);
-                    cx.closePath();
-                    cx.fillStyle = Qt.lighter(color);
-                    cx.fill();
-                    cx.strokeStyle = Qt.darker(color);
-                    cx.stroke();
-                }
+                fillColor: getColor()
+                property int channels: 2
+                inPoint: clipRoot.inPoint * channels + index * Math.round(waveform.maxWidth / timeScale) * channels
+                outPoint: inPoint + Math.round(width / timeScale) * channels
+                levels: audioLevels
             }
         }
     }
@@ -262,8 +224,6 @@ Rectangle {
         }
     ]
 
-    onStateChanged: if (isTransition) transitionCanvas.requestPaint()
-
     MouseArea {
         anchors.fill: parent
         enabled: isBlank
@@ -321,9 +281,8 @@ Rectangle {
         }
     }
 
-    Canvas {
-        id: fadeInCanvas
-        Component.onCompleted: view.applyQTBUG47714Workaround(fadeInCanvas);
+    TimelineTriangle {
+        id: fadeInTriangle
         visible: !isBlank && !isTransition
         width: parent.fadeIn * timeScale
         height: parent.height - parent.border.width * 2
@@ -331,26 +290,13 @@ Rectangle {
         anchors.top: parent.top
         anchors.margins: parent.border.width
         opacity: 0.5
-        onWidthChanged: requestPaint()
-        onPaint: {
-            if (!visible) return // workaround QTBUG-47714
-            var cx = getContext('2d')
-            if (cx === null) return
-            cx.beginPath()
-            cx.moveTo(0, 0)
-            cx.lineTo(width, 0)
-            cx.lineTo(0, height)
-            cx.closePath()
-            cx.fillStyle = 'black'
-            cx.fill()
-        }
     }
     Rectangle {
         id: fadeInControl
         enabled: !isBlank && !isTransition
-        anchors.left: fadeInCanvas.width > radius? undefined : fadeInCanvas.left
-        anchors.horizontalCenter: fadeInCanvas.width > radius? fadeInCanvas.right : undefined
-        anchors.top: fadeInCanvas.top
+        anchors.left: fadeInTriangle.width > radius? undefined : fadeInTriangle.left
+        anchors.horizontalCenter: fadeInTriangle.width > radius? fadeInTriangle.right : undefined
+        anchors.top: fadeInTriangle.top
         anchors.topMargin: -3
         width: 15
         height: 15
@@ -382,10 +328,10 @@ Rectangle {
             }
             onReleased: {
                 root.stopScrolling = false
-                if (fadeInCanvas.width > parent.radius)
-                    parent.anchors.horizontalCenter = fadeInCanvas.right
+                if (fadeInTriangle.width > parent.radius)
+                    parent.anchors.horizontalCenter = fadeInTriangle.right
                 else
-                    parent.anchors.left = fadeInCanvas.left
+                    parent.anchors.left = fadeInTriangle.left
                 bubbleHelp.hide()
             }
             onPositionChanged: {
@@ -418,9 +364,8 @@ Rectangle {
         }
     }
 
-    Canvas {
+    TimelineTriangle {
         id: fadeOutCanvas
-        Component.onCompleted: view.applyQTBUG47714Workaround(fadeOutCanvas);
         visible: !isBlank && !isTransition
         width: parent.fadeOut * timeScale
         height: parent.height - parent.border.width * 2
@@ -428,19 +373,7 @@ Rectangle {
         anchors.top: parent.top
         anchors.margins: parent.border.width
         opacity: 0.5
-        onWidthChanged: requestPaint()
-        onPaint: {
-            if (!visible) return // workaround QTBUG-47714
-            var cx = getContext('2d')
-            if (cx === null) return
-            cx.beginPath()
-            cx.moveTo(width, 0)
-            cx.lineTo(0, 0)
-            cx.lineTo(width, height)
-            cx.closePath()
-            cx.fillStyle = 'black'
-            cx.fill()
-        }
+        transform: Scale { xScale: -1; origin.x: fadeOutCanvas.width / 2}
     }
     Rectangle {
         id: fadeOutControl

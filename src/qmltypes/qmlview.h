@@ -21,13 +21,8 @@
 
 #include <QObject>
 #include <QPoint>
-#include <QPointer>
-#include <QQuickItem>
-#include <QSGTexture>
 
 class QWindow;
-class QTimerEvent;
-class QSGSimpleTextureNode;
 
 class QmlView : public QObject
 {
@@ -37,28 +32,9 @@ class QmlView : public QObject
 public:
     explicit QmlView(QWindow* qview);
     QPoint pos();
-    Q_INVOKABLE void applyQTBUG47714Workaround(QObject * item);
 
 private:
     QWindow* m_qview;
-};
-
-class QTBUG47714WorkaroundRenderListener : public QObject
-{
-    Q_OBJECT
-
-public:
-    QTBUG47714WorkaroundRenderListener(QQuickItem * item);
-    void timerEvent(QTimerEvent * event);
-    QSGSimpleTextureNode * nodeFromItem();
-
-private slots:
-    void beforeSync();
-    void afterSync();
-
-private:
-    QPointer<QQuickItem> item;
-    QSGTexture * oldTexture;
 };
 
 #endif // QMLVIEW_H

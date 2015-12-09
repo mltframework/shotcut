@@ -66,6 +66,7 @@ SOURCES += main.cpp\
     qmltypes/qmlfilter.cpp \
     qmltypes/qmlhtmleditor.cpp \
     qmltypes/qmlmetadata.cpp \
+    qmltypes/timelineitems.cpp \
     qmltypes/qmlprofile.cpp \
     htmleditor/htmleditor.cpp \
     htmleditor/highlighter.cpp \
@@ -164,6 +165,7 @@ HEADERS  += mainwindow.h \
     qmltypes/qmlfilter.h \
     qmltypes/qmlhtmleditor.h \
     qmltypes/qmlmetadata.h \
+    qmltypes/timelineitems.h \
     qmltypes/qmlprofile.h \
     htmleditor/htmleditor.h \
     htmleditor/highlighter.h \
