@@ -436,6 +436,7 @@ int Controller::consumerChanged()
 
 void Controller::setProfile(const QString& profile_name)
 {
+    qDebug() << "setting to profile" << (profile_name.isEmpty()? "Automatic" : profile_name);
     if (!profile_name.isEmpty()) {
         Mlt::Profile tmp(profile_name.toLatin1().constData());
         m_profile->set_colorspace(tmp.colorspace());
@@ -445,9 +446,15 @@ void Controller::setProfile(const QString& profile_name)
         m_profile->set_sample_aspect(tmp.sample_aspect_num(), tmp.sample_aspect_den());
         m_profile->set_display_aspect(tmp.display_aspect_num(), tmp.display_aspect_den());
         m_profile->set_width(alignWidth(tmp.width()));
-        m_profile->set_explicit(!profile_name.isEmpty());
-        restart();
+        m_profile->set_explicit(true);
+    } else {
+        m_profile->set_explicit(false);
+        if (m_producer) {
+            m_profile->from_producer(*m_producer);
+            m_profile->set_width(alignWidth(m_profile->width()));
+        }
     }
+    restart();
 }
 
 QString Controller::resource() const
@@ -610,19 +617,14 @@ void Controller::restart()
         // Update the real_time property if not paused.
         m_consumer->set("real_time", realTime());
     }
-    if (m_producer && m_producer->is_valid() && Settings.playerGPU()) {
-        const char* position = m_consumer->frames_to_time(m_consumer->position());
-        double speed = m_producer->get_speed();
-        QString xml = XML();
-        close();
-        if (!setProducer(new Mlt::Producer(profile(), "xml-string", xml.toUtf8().constData()))) {
+    const char* position = m_consumer->frames_to_time(m_consumer->position());
+    double speed = m_producer->get_speed();
+    QString xml = XML();
+    stop();
+    if (!setProducer(new Mlt::Producer(profile(), "xml-string", xml.toUtf8().constData()))) {
+        if (m_producer && m_producer->is_valid())
             m_producer->seek(position);
-            m_producer->set_speed(speed);
-            m_consumer->start();
-        }
-    } else {
-        m_consumer->stop();
-        m_consumer->start();
+        play(speed);
     }
 }
 
