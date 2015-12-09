@@ -25,6 +25,7 @@
 #include "qmltypes/qmlutilities.h"
 #include "qmltypes/qmlview.h"
 #include "shotcut_mlt_properties.h"
+#include "settings.h"
 
 #include <QtQml>
 #include <QtQuick>
@@ -784,7 +785,7 @@ bool TimelineDock::event(QEvent *event)
 
 void TimelineDock::onVisibilityChanged(bool visible)
 {
-    if (visible) {
+    if (visible && m_quickView.source().isEmpty()) {
         QDir sourcePath = QmlUtilities::qmlDir();
         sourcePath.cd("timeline");
         m_quickView.setSource(QUrl::fromLocalFile(sourcePath.filePath("timeline.qml")));
@@ -797,6 +798,8 @@ void TimelineDock::onVisibilityChanged(bool visible)
                 this, SLOT(emitClipSelectedFromSelection()));
         connect(m_quickView.rootObject(), SIGNAL(clipClicked()),
                 this, SIGNAL(clipClicked()));
+    } else if (Settings.timelineShowWaveforms()) {
+        m_model.reload();
     }
 }
 
