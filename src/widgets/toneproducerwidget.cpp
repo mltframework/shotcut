@@ -36,9 +36,12 @@ ToneProducerWidget::~ToneProducerWidget()
 
 Mlt::Producer* ToneProducerWidget::producer(Mlt::Profile& profile)
 {
-    Mlt::Producer* p = new Mlt::Producer(profile, "tone");
+    Mlt::Producer* p = new Mlt::Producer(profile, "tone:");
     p->set("frequency", ui->frequencySpinBox->value());
     p->set("level", ui->levelSpinBox->value());
+    p->set("shotcut:caption", ui->nameLabel->text().toUtf8().constData());
+    QString detail = QString(tr("Tone: %1Hz %2dB")).arg(ui->frequencySpinBox->value()).arg(ui->levelSpinBox->value());
+    p->set("shotcut:detail", detail.toUtf8().constData());
     return p;
 }
 

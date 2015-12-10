@@ -59,6 +59,8 @@ Mlt::Producer* ColorProducerWidget::producer(Mlt::Profile& profile)
 {
     Mlt::Producer* p = new Mlt::Producer(profile, "color:");
     p->set("resource", ui->colorLabel->text().toLatin1().constData());
+    p->set("shotcut:caption", ui->colorLabel->text().toLatin1().constData());
+    p->set("shotcut:detail", ui->colorLabel->text().toLatin1().constData());
     return p;
 }
 

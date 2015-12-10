@@ -85,6 +85,8 @@ Mlt::Producer* IsingWidget::producer(Mlt::Profile& profile)
     p->set(kParamTemperature, ui->tempSpinner->text().toLatin1().constData());
     p->set(kParamBorderGrowth, ui->borderGrowthSpinner->text().toLatin1().constData());
     p->set(kParamSpontaneous, ui->spontGrowthSpinner->text().toLatin1().constData());
+    p->set("shotcut:caption", ui->nameLabel->text().toUtf8().constData());
+    p->set("shotcut:detail", ui->nameLabel->text().toUtf8().constData());
     return p;
 }
 

@@ -33,5 +33,8 @@ NoiseWidget::~NoiseWidget()
 
 Mlt::Producer* NoiseWidget::producer(Mlt::Profile& profile)
 {
-    return new Mlt::Producer(profile, "noise:");
+    Mlt::Producer* p = new Mlt::Producer(profile, "noise:");
+    p->set("shotcut:caption", ui->nameLabel->text().toUtf8().constData());
+    p->set("shotcut:detail", ui->nameLabel->text().toUtf8().constData());
+    return p;
 }

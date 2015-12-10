@@ -143,14 +143,20 @@ void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
     if (m_defaultDuration == -1)
         m_defaultDuration = m_producer->get_length();
 
+    double warpSpeed = GetSpeedFromProducer(m_producer);
     QString s = QString::fromUtf8(GetFilenameFromProducer(m_producer));
     QString name = Util::baseName(s);
-    ui->filenameLabel->setText(ui->filenameLabel->fontMetrics().elidedText(name, Qt::ElideLeft, width() - 30));
+    QString caption = name;
+    if(warpSpeed != 1.0)
+        caption = QString("%1 (%2x)").arg(name).arg(warpSpeed);
+    m_producer->set("shotcut:caption", caption.toUtf8().constData());
+    m_producer->set("shotcut:detail", s.toUtf8().constData());
+    ui->filenameLabel->setText(ui->filenameLabel->fontMetrics().elidedText(caption, Qt::ElideLeft, width() - 30));
     ui->filenameLabel->setToolTip(s);
     ui->notesTextEdit->setPlainText(QString::fromUtf8(m_producer->get(kCommentProperty)));
     ui->durationSpinBox->setValue(m_producer->get_length());
     m_recalcDuration = false;
-    ui->speedSpinBox->setValue(GetSpeedFromProducer(m_producer));
+    ui->speedSpinBox->setValue(warpSpeed);
 
     // populate the track combos
     int n = m_producer->get_int("meta.media.nb_streams");

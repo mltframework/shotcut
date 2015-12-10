@@ -69,6 +69,8 @@ Mlt::Producer* LissajousWidget::producer(Mlt::Profile& profile)
     Mlt::Producer* p = new Mlt::Producer(profile, "frei0r.lissajous0r");
     p->set(kParamRatioX, ui->xratioSpinner->text().toLatin1().constData());
     p->set(kParamRatioY, ui->yratioSpinner->text().toLatin1().constData());
+    p->set("shotcut:caption", ui->nameLabel->text().toUtf8().constData());
+    p->set("shotcut:detail", ui->nameLabel->text().toUtf8().constData());
     return p;
 }
 

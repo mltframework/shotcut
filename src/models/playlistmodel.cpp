@@ -171,13 +171,26 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
         case COLUMN_INDEX:
             return QString::number(index.row() + 1);
         case COLUMN_RESOURCE: {
-            QString result = QString::fromUtf8(info->resource);
-            if (result == "<producer>" && info->producer
-                    && info->producer->is_valid() && info->producer->get("mlt_service"))
-                result = QString::fromUtf8(info->producer->get("mlt_service"));
-            // Use basename for display
-            if (role == Qt::DisplayRole)
-                result = Util::baseName(result);
+            QString result;
+            if (role == Qt::DisplayRole) {
+                // Prefer caption for display
+                if (info->producer && info->producer->is_valid())
+                    result = info->producer->get("shotcut:caption");
+                if (result.isNull())
+                    result = Util::baseName(QString::fromUtf8(info->resource));
+                if (result == "<producer>" && info->producer && info->producer->is_valid())
+                    result = QString::fromUtf8(info->producer->get("mlt_service"));
+            } else {
+                // Prefer detail or full path for tooltip
+                if (info->producer && info->producer->is_valid())
+                    result = info->producer->get("shotcut:detail");
+                if (result.isNull())
+                    result = QString::fromUtf8(info->resource);
+                if ((result.isNull() || Util::baseName(result) == "<producer>") && info->producer && info->producer->is_valid())
+                    result = info->producer->get("shotcut:caption");
+                if (result.isNull() && info->producer && info->producer->is_valid())
+                    result = QString::fromUtf8(info->producer->get("mlt_service"));
+            }
             return result;
         }
         case COLUMN_IN:
