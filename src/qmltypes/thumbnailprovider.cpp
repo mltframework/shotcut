@@ -48,7 +48,7 @@ QImage ThumbnailProvider::requestImage(const QString &id, QSize *size, const QSi
         resource = resource.left(resource.lastIndexOf('#'));
         properties.set("_profile", MLT.profile().get_profile(), 0);
 
-        QString key = cacheKey(properties, resource, frameNumber);
+        QString key = cacheKey(properties, service, resource, frameNumber);
         result = DB.getThumbnail(key);
         if (result.isNull()) {
             if (service == "avformat-novalidate")
@@ -67,13 +67,14 @@ QImage ThumbnailProvider::requestImage(const QString &id, QSize *size, const QSi
     return result;
 }
 
-QString ThumbnailProvider::cacheKey(Mlt::Properties& properties, const QString& resource, int frameNumber)
+QString ThumbnailProvider::cacheKey(Mlt::Properties& properties, const QString& service, const QString& resource, int frameNumber)
 {
     QString time = properties.frames_to_time(frameNumber, mlt_time_clock);
     // Reduce the precision to centiseconds to increase chance for cache hit
     // without much loss of accuracy.
     time = time.left(time.size() - 1);
-    QString key = QString("%1 %2")
+    QString key = QString("%1 %2 %3")
+            .arg(service)
             .arg(resource)
             .arg(time);
     QCryptographicHash hash(QCryptographicHash::Sha1);

@@ -88,7 +88,8 @@ public:
         // Reduce the precision to centiseconds to increase chance for cache hit
         // without much loss of accuracy.
         time = time.left(time.size() - 1);
-        QString key = QString("%1 %2")
+        QString key = QString("%1 %2 %3")
+                .arg(m_producer.get("mlt_service"))
                 .arg(m_producer.get("resource"))
                 .arg(time);
         QCryptographicHash hash(QCryptographicHash::Sha1);
