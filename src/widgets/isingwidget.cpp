@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "shotcut_mlt_properties.h"
 #include "isingwidget.h"
 #include "ui_isingwidget.h"
 
@@ -85,8 +86,8 @@ Mlt::Producer* IsingWidget::producer(Mlt::Profile& profile)
     p->set(kParamTemperature, ui->tempSpinner->text().toLatin1().constData());
     p->set(kParamBorderGrowth, ui->borderGrowthSpinner->text().toLatin1().constData());
     p->set(kParamSpontaneous, ui->spontGrowthSpinner->text().toLatin1().constData());
-    p->set("shotcut:caption", ui->nameLabel->text().toUtf8().constData());
-    p->set("shotcut:detail", ui->nameLabel->text().toUtf8().constData());
+    p->set(kShotcutCaptionProperty, ui->nameLabel->text().toUtf8().constData());
+    p->set(kShotcutDetailProperty, ui->nameLabel->text().toUtf8().constData());
     return p;
 }
 

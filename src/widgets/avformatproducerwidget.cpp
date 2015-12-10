@@ -80,7 +80,7 @@ Mlt::Producer* AvformatProducerWidget::producer(Mlt::Profile& profile)
         char* filename = GetFilenameFromProducer(m_producer);
         QString s = QString("%1:%2:%3").arg("timewarp").arg(warpspeed).arg(filename);
         p = new Mlt::Producer(profile, s.toUtf8().constData());
-        p->set("shotcut:producer", "avformat");
+        p->set(kShotcutProducerProperty, "avformat");
     }
     if (p->is_valid())
         p->set("video_delay", double(ui->syncSlider->value()) / 1000);
@@ -149,8 +149,8 @@ void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
     QString caption = name;
     if(warpSpeed != 1.0)
         caption = QString("%1 (%2x)").arg(name).arg(warpSpeed);
-    m_producer->set("shotcut:caption", caption.toUtf8().constData());
-    m_producer->set("shotcut:detail", s.toUtf8().constData());
+    m_producer->set(kShotcutCaptionProperty, caption.toUtf8().constData());
+    m_producer->set(kShotcutDetailProperty, s.toUtf8().constData());
     ui->filenameLabel->setText(ui->filenameLabel->fontMetrics().elidedText(caption, Qt::ElideLeft, width() - 30));
     ui->filenameLabel->setToolTip(s);
     ui->notesTextEdit->setPlainText(QString::fromUtf8(m_producer->get(kCommentProperty)));

@@ -93,7 +93,7 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
             case NameRole: {
                 QString result;
                 if (info->producer && info->producer->is_valid())
-                    result = info->producer->get("shotcut:caption");
+                    result = info->producer->get(kShotcutCaptionProperty);
                 if (result.isNull())
                     result = Util::baseName(QString::fromUtf8(info->resource));
                 if (result == "<producer>" && info->producer && info->producer->is_valid())

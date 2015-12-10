@@ -2086,7 +2086,7 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
 
     QString service(producer->get("mlt_service"));
     QString resource = QString::fromUtf8(producer->get("resource"));
-    QString shotcutProducer(producer->get("shotcut:producer"));
+    QString shotcutProducer(producer->get(kShotcutProducerProperty));
     QScrollArea* scrollArea = (QScrollArea*) m_propertiesDock->widget();
 
     delete scrollArea->widget();

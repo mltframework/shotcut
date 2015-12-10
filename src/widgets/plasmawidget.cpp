@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "shotcut_mlt_properties.h"
 #include "plasmawidget.h"
 #include "ui_plasmawidget.h"
 
@@ -133,8 +134,8 @@ Mlt::Producer* PlasmaWidget::producer(Mlt::Profile& profile)
     p->set(kParamSpeed4, ui->speed4Spinner->text().toLatin1().constData());
     p->set(kParamMove1, ui->move1Spinner->text().toLatin1().constData());
     p->set(kParamMove2, ui->move2Spinner->text().toLatin1().constData());
-    p->set("shotcut:caption", ui->nameLabel->text().toUtf8().constData());
-    p->set("shotcut:detail", ui->nameLabel->text().toUtf8().constData());
+    p->set(kShotcutCaptionProperty, ui->nameLabel->text().toUtf8().constData());
+    p->set(kShotcutDetailProperty, ui->nameLabel->text().toUtf8().constData());
     return p;
 }
 

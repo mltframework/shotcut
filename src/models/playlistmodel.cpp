@@ -176,7 +176,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
             if (role == Qt::DisplayRole) {
                 // Prefer caption for display
                 if (info->producer && info->producer->is_valid())
-                    result = info->producer->get("shotcut:caption");
+                    result = info->producer->get(kShotcutCaptionProperty);
                 if (result.isNull())
                     result = Util::baseName(QString::fromUtf8(info->resource));
                 if (result == "<producer>" && info->producer && info->producer->is_valid())
@@ -188,7 +188,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
                 if (result.isNull())
                     result = QString::fromUtf8(info->resource);
                 if ((result.isNull() || Util::baseName(result) == "<producer>") && info->producer && info->producer->is_valid())
-                    result = info->producer->get("shotcut:caption");
+                    result = info->producer->get(kShotcutCaptionProperty);
                 if (result.isNull() && info->producer && info->producer->is_valid())
                     result = QString::fromUtf8(info->producer->get("mlt_service"));
             }

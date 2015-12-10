@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "shotcut_mlt_properties.h"
 #include "toneproducerwidget.h"
 #include "ui_toneproducerwidget.h"
 #include <MltProfile.h>
@@ -39,9 +40,9 @@ Mlt::Producer* ToneProducerWidget::producer(Mlt::Profile& profile)
     Mlt::Producer* p = new Mlt::Producer(profile, "tone:");
     p->set("frequency", ui->frequencySpinBox->value());
     p->set("level", ui->levelSpinBox->value());
-    p->set("shotcut:caption", ui->nameLabel->text().toUtf8().constData());
+    p->set(kShotcutCaptionProperty, ui->nameLabel->text().toUtf8().constData());
     QString detail = QString(tr("Tone: %1Hz %2dB")).arg(ui->frequencySpinBox->value()).arg(ui->levelSpinBox->value());
-    p->set("shotcut:detail", detail.toUtf8().constData());
+    p->set(kShotcutDetailProperty, detail.toUtf8().constData());
     return p;
 }
 

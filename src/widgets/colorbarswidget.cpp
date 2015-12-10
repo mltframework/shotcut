@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "shotcut_mlt_properties.h"
 #include "colorbarswidget.h"
 #include "ui_colorbarswidget.h"
 #include <MltProfile.h>
@@ -64,8 +65,8 @@ Mlt::Producer* ColorBarsWidget::producer(Mlt::Profile& profile)
         p->set(kParamAspect, map_value_backward(ASPECT_NTSC_WIDE, 0, 6.9999));
     else if (profile.sample_aspect_num() == 4 && profile.sample_aspect_den() == 3)
         p->set(kParamAspect, map_value_backward(ASPECT_HDV, 0, 6.9999));
-    p->set("shotcut:caption", ui->comboBox->currentText().toUtf8().constData());
-    p->set("shotcut:detail", ui->comboBox->currentText().toUtf8().constData());
+    p->set(kShotcutCaptionProperty, ui->comboBox->currentText().toUtf8().constData());
+    p->set(kShotcutDetailProperty, ui->comboBox->currentText().toUtf8().constData());
     return p;
 }
 

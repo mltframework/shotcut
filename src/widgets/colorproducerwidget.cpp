@@ -19,6 +19,7 @@
 #include <QColorDialog>
 #include "colorproducerwidget.h"
 #include "ui_colorproducerwidget.h"
+#include "shotcut_mlt_properties.h"
 
 ColorProducerWidget::ColorProducerWidget(QWidget *parent) :
     QWidget(parent),
@@ -59,8 +60,8 @@ Mlt::Producer* ColorProducerWidget::producer(Mlt::Profile& profile)
 {
     Mlt::Producer* p = new Mlt::Producer(profile, "color:");
     p->set("resource", ui->colorLabel->text().toLatin1().constData());
-    p->set("shotcut:caption", ui->colorLabel->text().toLatin1().constData());
-    p->set("shotcut:detail", ui->colorLabel->text().toLatin1().constData());
+    p->set(kShotcutCaptionProperty, ui->colorLabel->text().toLatin1().constData());
+    p->set(kShotcutDetailProperty, ui->colorLabel->text().toLatin1().constData());
     return p;
 }
 

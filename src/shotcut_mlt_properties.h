@@ -34,12 +34,15 @@
 #define kShotcutFilterProperty "shotcut:filter"
 #define kShotcutPlaylistProperty "shotcut:playlist"
 #define kShotcutTransitionProperty "shotcut:transition"
+#define kShotcutProducerProperty "shotcut:producer"
 #define kShotcutVirtualClip "shotcut:virtual"
 #define kTimelineScaleProperty "shotcut:scaleFactor"
 #define kTrackHeightProperty "shotcut:trackHeight"
 #define kTrackNameProperty "shotcut:name"
 #define kTrackLockProperty "shotcut:lock"
 #define kVideoTrackProperty "shotcut:video"
+#define kShotcutCaptionProperty "shotcut:caption"
+#define kShotcutDetailProperty "shotcut:detail"
 
 /* Ideally all shotcut properties should begin with "shotcut:", but these
  * do not and kept for legacy reasons? */
