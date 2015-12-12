@@ -1950,7 +1950,7 @@ void MainWindow::onPlaylistClosed()
 void MainWindow::onPlaylistModified()
 {
     setWindowModified(true);
-    if ((void*) MLT.producer()->get_producer() == (void*) playlist()->get_playlist())
+    if (MLT.producer() && playlist() && (void*) MLT.producer()->get_producer() == (void*) playlist()->get_playlist())
         m_player->onProducerModified();
     updateMarkers();
     m_player->enableTab(Player::ProgramTabIndex, true);
