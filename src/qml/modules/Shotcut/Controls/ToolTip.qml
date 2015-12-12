@@ -73,7 +73,12 @@ Item {
                     toolTipWindow.x = cursorPoint.x
                     toolTipWindow.y = cursorPoint.y + 15
                 }
-                toolTipWindow.visible = !toolTipWindow.visible
+                if (toolTipWindow.visible) {
+                    toolTipWindow.close()
+                }
+                else {
+                    toolTipWindow.show()
+                }
             }
         }
 
