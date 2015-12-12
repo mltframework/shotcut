@@ -622,9 +622,18 @@ void Controller::restart()
     QString xml = XML();
     stop();
     if (!setProducer(new Mlt::Producer(profile(), "xml-string", xml.toUtf8().constData()))) {
+#ifdef Q_OS_WIN
+        play(speed);
+        if (m_producer && m_producer->is_valid())
+            m_producer->seek(position);
+        // Windows needs an extra kick here when not paused!
+        if (speed != 0.0)
+            play(speed);
+#else
         if (m_producer && m_producer->is_valid())
             m_producer->seek(position);
         play(speed);
+#endif
     }
 }
 
