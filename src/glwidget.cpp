@@ -113,11 +113,11 @@ GLWidget::~GLWidget()
 void GLWidget::initializeGL()
 {
     qDebug() << "begin";
-    if (m_isInitialized) return;
 
-    Q_ASSERT(!m_offscreenSurface.isValid());
-    m_offscreenSurface.setFormat(quickWindow()->openglContext()->format());
-    m_offscreenSurface.create();
+    if (!m_offscreenSurface.isValid()) {
+        m_offscreenSurface.setFormat(quickWindow()->openglContext()->format());
+        m_offscreenSurface.create();
+    }
     Q_ASSERT(m_offscreenSurface.isValid());
 
     initializeOpenGLFunctions();
