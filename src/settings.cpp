@@ -328,6 +328,7 @@ QString ShotcutSettings::playlistThumbnails() const
 void ShotcutSettings::setPlaylistThumbnails(const QString& s)
 {
     settings.setValue("playlist/thumbnails", s);
+    emit playlistThumbnailsChanged();
 }
 
 bool ShotcutSettings::timelineShowWaveforms() const

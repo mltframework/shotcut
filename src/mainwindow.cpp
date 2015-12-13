@@ -85,6 +85,10 @@ static bool eventDebugCallback(void **data)
         QObject *receiver = reinterpret_cast<QObject*>(data[0]);
         qDebug() << event << "->" << receiver;
     }
+    else if (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonRelease) {
+        QObject *receiver = reinterpret_cast<QObject*>(data[0]);
+        qDebug() << event << "->" << receiver;
+    }
     return false;
 }
 
@@ -122,9 +126,14 @@ MainWindow::MainWindow()
     }
 #endif
 
-    if (!qgetenv("OBSERVE_FOCUS").isEmpty())
+    if (!qgetenv("OBSERVE_FOCUS").isEmpty()) {
         connect(qApp, &QApplication::focusChanged,
                 this, &MainWindow::onFocusChanged);
+        connect(qApp, &QGuiApplication::focusObjectChanged,
+                this, &MainWindow::onFocusObjectChanged);
+        connect(qApp, &QGuiApplication::focusWindowChanged,
+                this, &MainWindow::onFocusWindowChanged);
+    }
 
     if (!qgetenv("EVENT_DEBUG").isEmpty())
         QInternal::registerCallback(QInternal::EventNotifyCallback, eventDebugCallback);
@@ -408,6 +417,22 @@ MainWindow::MainWindow()
     m_timelineDock->setFocusPolicy(Qt::StrongFocus);
 
     qDebug() << "end";
+}
+
+void MainWindow::onFocusWindowChanged(QWindow *) const
+{
+    qDebug() << "Focuswindow changed";
+    qDebug() << "Current focusWidget:" << QApplication::focusWidget();
+    qDebug() << "Current focusObject:" << QApplication::focusObject();
+    qDebug() << "Current focusWindow:" << QApplication::focusWindow();
+}
+
+void MainWindow::onFocusObjectChanged(QObject *) const
+{
+    qDebug() << "Focusobject changed";
+    qDebug() << "Current focusWidget:" << QApplication::focusWidget();
+    qDebug() << "Current focusObject:" << QApplication::focusObject();
+    qDebug() << "Current focusWindow:" << QApplication::focusWindow();
 }
 
 void MainWindow::moveNavigationPositionToCurrentSelection()
@@ -1567,6 +1592,8 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         break;
     case Qt::Key_F1:
         qDebug() << "Current focusWidget:" << QApplication::focusWidget();
+        qDebug() << "Current focusObject:" << QApplication::focusObject();
+        qDebug() << "Current focusWindow:" << QApplication::focusWindow();
         break;
     default:
         break;
@@ -1927,7 +1954,7 @@ void MainWindow::onPlaylistClosed()
 void MainWindow::onPlaylistModified()
 {
     setWindowModified(true);
-    if ((void*) MLT.producer()->get_producer() == (void*) playlist()->get_playlist())
+    if (MLT.producer() && playlist() && (void*) MLT.producer()->get_producer() == (void*) playlist()->get_playlist())
         m_player->onProducerModified();
     updateMarkers();
     m_player->enableTab(Player::ProgramTabIndex, true);
@@ -2653,9 +2680,12 @@ void MainWindow::on_actionGammaRec709_triggered(bool checked)
     MLT.refreshConsumer();
 }
 
-void MainWindow::onFocusChanged(QWidget *, QWidget * now) const
+void MainWindow::onFocusChanged(QWidget *, QWidget * ) const
 {
-    qDebug() << "Focuswidget changed to" << now;
+    qDebug() << "Focuswidget changed";
+    qDebug() << "Current focusWidget:" << QApplication::focusWidget();
+    qDebug() << "Current focusObject:" << QApplication::focusObject();
+    qDebug() << "Current focusWindow:" << QApplication::focusWindow();
 }
 
 void MainWindow::on_actionScrubAudio_triggered(bool checked)
