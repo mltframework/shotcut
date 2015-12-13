@@ -19,6 +19,7 @@
 import QtQuick 2.2
 import QtQml.Models 2.1
 import QtQuick.Controls 1.0
+import Shotcut.Controls 1.0
 import QtGraphicalEffects 1.0
 import 'Timeline.js' as Logic
 
@@ -279,32 +280,13 @@ Rectangle {
                 x: timeline.position * multitrack.scaleFactor - scrollView.flickableItem.contentX
                 y: 0
             }
-            Canvas {
+            TimelinePlayhead {
                 id: playhead
-                Component.onCompleted: view.applyQTBUG47714Workaround(playhead);
                 visible: timeline.position > -1
                 x: timeline.position * multitrack.scaleFactor - scrollView.flickableItem.contentX - 5
                 y: 0
                 width: 11
                 height: 5
-                property bool init: true
-                onPaint: {
-                    if (!visible) return;
-                    if (init) {
-                        init = false;
-                        var cx = getContext('2d');
-                        if (cx === null) return
-                        cx.fillStyle = activePalette.windowText;
-                        cx.beginPath();
-                        // Start from the root-left point.
-                        cx.lineTo(width, 0);
-                        cx.lineTo(width / 2.0, height);
-                        cx.lineTo(0, 0);
-                        cx.fill();
-                        cx.closePath();
-                    }
-                }
-                onVisibleChanged: requestPaint()
             }
         }
     }
