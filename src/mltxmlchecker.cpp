@@ -22,6 +22,14 @@
 #include <QDir>
 #include <QDebug>
 
+bool isMltClass(const QStringRef& name)
+{
+    return name == "profile" || name == "producer" ||
+           name == "filter" || name == "playlist" ||
+           name == "tractor" || name == "track" ||
+           name == "transition" || name == "consumer";
+}
+
 MltXmlChecker::MltXmlChecker()
     : m_needsGPU(false)
     , m_hasEffects(false)
@@ -81,7 +89,8 @@ void MltXmlChecker::readMlt()
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "mlt");
 
-    bool checkMltService = false;
+    QString mlt_class;
+
     while (!m_xml.atEnd()) {
         switch (m_xml.readNext()) {
         case QXmlStreamReader::Characters:
@@ -107,10 +116,10 @@ void MltXmlChecker::readMlt()
             break;
         case QXmlStreamReader::StartElement:
             m_newXml.writeStartElement(m_xml.namespaceUri().toString(), m_xml.name().toString());
-            if (m_xml.name() == "filter" || m_xml.name() == "transition") {
-                checkMltService = true;
+            if (isMltClass(m_xml.name())) {
+                mlt_class = m_xml.name().toString();
             } else if (m_xml.name() == "property") {
-                if (checkMltService && readMltService())
+                if ((mlt_class == "filter" || mlt_class == "transition") && readMltService())
                     continue;
                 if (checkNumericProperty())
                     continue;
@@ -118,9 +127,10 @@ void MltXmlChecker::readMlt()
             checkInAndOutPoints();
             break;
         case QXmlStreamReader::EndElement:
+            if (isMltClass(m_xml.name())) {
+                mlt_class.clear();
+            }
             m_newXml.writeEndElement();
-            if (m_xml.name() == "filter" || m_xml.name() == "transition")
-                checkMltService = false;
             break;
         default:
             break;
