@@ -49,6 +49,7 @@ private slots:
     void on_preset_saveClicked();
 
 private:
+    QString detail() const;
     Ui::ToneProducerWidget *ui;
 };
 

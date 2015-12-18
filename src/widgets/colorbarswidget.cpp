@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Meltytech, LLC
+ * Copyright (c) 2012-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -86,6 +86,8 @@ void ColorBarsWidget::on_comboBox_activated(int index)
 {
     if (m_producer) {
         m_producer->set(kParamType, index);
+        m_producer->set(kShotcutCaptionProperty, ui->comboBox->currentText().toUtf8().constData());
+        m_producer->set(kShotcutDetailProperty, ui->comboBox->currentText().toUtf8().constData());
         emit producerChanged();
     }
 }

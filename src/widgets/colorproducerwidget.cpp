@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Meltytech, LLC
+ * Copyright (c) 2012-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,6 +17,7 @@
  */
 
 #include <QColorDialog>
+#include <QFileInfo>
 #include "colorproducerwidget.h"
 #include "ui_colorproducerwidget.h"
 #include "shotcut_mlt_properties.h"
@@ -51,6 +52,8 @@ void ColorProducerWidget::on_colorButton_clicked()
                                       .arg(dialog.currentColor().name()));
         if (m_producer) {
             m_producer->set("resource", ui->colorLabel->text().toLatin1().constData());
+            m_producer->set(kShotcutCaptionProperty, ui->colorLabel->text().toLatin1().constData());
+            m_producer->set(kShotcutDetailProperty, ui->colorLabel->text().toLatin1().constData());
             emit producerChanged();
         }
     }
@@ -74,12 +77,14 @@ Mlt::Properties* ColorProducerWidget::getPreset() const
 
 void ColorProducerWidget::loadPreset(Mlt::Properties& p)
 {
-    QString color(p.get("resource"));
+    QString color(QFileInfo(p.get("resource")).baseName());
     ui->colorLabel->setText(color);
     color.replace(0, 3, "#");
     ui->colorLabel->setStyleSheet(QString("color: %1; background-color: %2")
         .arg((QColor(color).value() < 150)? "white":"black")
         .arg(color));
+    p.set(kShotcutCaptionProperty, ui->colorLabel->text().toLatin1().constData());
+    p.set(kShotcutDetailProperty, ui->colorLabel->text().toLatin1().constData());
 }
 
 void ColorProducerWidget::on_preset_selected(void* p)
