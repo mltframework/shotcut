@@ -469,7 +469,8 @@ void Player::onProducerOpened(bool play)
 
 void Player::postProducerOpened()
 {
-    seek(MLT.producer()->position());
+    if (MLT.producer())
+        seek(MLT.producer()->position());
 }
 
 void Player::onMeltedUnitOpened()
