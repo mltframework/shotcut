@@ -27,6 +27,7 @@
 #include "glwidget.h"
 #include "settings.h"
 #include "shotcut_mlt_properties.h"
+#include "mainwindow.h"
 
 namespace Mlt {
 
@@ -97,6 +98,9 @@ int Controller::open(const QString &url)
     int error = 0;
 
     close();
+
+    MAIN.showStatusMessage(QObject::tr("Now loading %1...").arg(url));
+
     if (Settings.playerGPU() && !profile().is_explicit())
         // Prevent loading normalizing filters, which might be Movit ones that
         // may not have a proper OpenGL context when requesting a sample frame.
@@ -131,6 +135,7 @@ int Controller::open(const QString &url)
         m_producer = 0;
         error = 1;
     }
+    MAIN.showStatusMessage(QString());
     return error;
 }
 
