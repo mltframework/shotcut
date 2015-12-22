@@ -372,6 +372,7 @@ void PlaylistDock::onPlaylistCleared()
 void PlaylistDock::onDropped(const QMimeData *data, int row)
 {
     if (data && data->hasUrls()) {
+        int insertNextAt = row;
         foreach (QUrl url, data->urls()) {
             QString path = MAIN.removeFileScheme(url);
             Mlt::Producer p(MLT.profile(), path.toUtf8().constData());
@@ -385,7 +386,7 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
                 if (row == -1)
                     MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.XML(&p)));
                 else
-                    MAIN.undoStack()->push(new Playlist::InsertCommand(m_model, MLT.XML(&p), row));
+                    MAIN.undoStack()->push(new Playlist::InsertCommand(m_model, MLT.XML(&p), insertNextAt++));
             }
         }
     }
