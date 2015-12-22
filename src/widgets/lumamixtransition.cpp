@@ -20,6 +20,7 @@
 #include "ui_lumamixtransition.h"
 #include "settings.h"
 #include "mltcontroller.h"
+#include "mainwindow.h"
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QDebug>
@@ -185,8 +186,10 @@ void LumaMixTransition::on_lumaCombo_activated(int index)
             QString filename = QFileDialog::getOpenFileName(this, tr("Open File"), path,
                 tr("Images (*.bmp *.jpeg *.jpg *.pgm *.png *.svg *.tga *.tif *.tiff);;All Files (*)"));
             activateWindow();
-            if (!filename.isEmpty())
+            if (!filename.isEmpty()) {
                 transition->set("resource", filename.toUtf8().constData());
+                MAIN.getHash(*transition);
+            }
         } else {
             ui->softnessLabel->setText(tr("Softness"));
             transition->set("resource", QString("%luma%1.pgm").arg(index - 1, 2, 10, QChar('0')).toLatin1().constData());

@@ -931,6 +931,45 @@ QString MainWindow::untitledFileName() const
     return dir.filePath("__untitled__.mlt");
 }
 
+QString MainWindow::getFileHash(const QString& path) const
+{
+    // This routine is intentionally copied from Kdenlive.
+    QFile file(path);
+    if (file.open(QIODevice::ReadOnly)) {
+        QByteArray fileData;
+         // 1 MB = 1 second per 450 files (or faster)
+         // 10 MB = 9 seconds per 450 files (or faster)
+        if (file.size() > 1000000*2) {
+            fileData = file.read(1000000);
+            if (file.seek(file.size() - 1000000))
+                fileData.append(file.readAll());
+        } else {
+            fileData = file.readAll();
+        }
+        file.close();
+        return QCryptographicHash::hash(fileData, QCryptographicHash::Md5).toHex();
+    }
+    return QString();
+}
+
+QString MainWindow::getHash(Mlt::Properties& properties) const
+{
+    QString hash = properties.get(kShotcutHashProperty);
+    if (hash.isEmpty()) {
+        QString service = properties.get("mlt_service");
+        QString resource = QString::fromUtf8(properties.get("resource"));
+
+        if (service == "timewarp")
+            resource = QString::fromUtf8(properties.get("warp_resource"));
+        else if (service == "vidstab")
+            resource = QString::fromUtf8(properties.get("filename"));
+        QString hash = getFileHash(resource);
+        if (!hash.isEmpty())
+            properties.set(kShotcutHashProperty, hash.toLatin1().constData());
+    }
+    return hash;
+}
+
 static void autosaveTask(MainWindow* p)
 {
     qDebug() << "running";
@@ -1746,8 +1785,11 @@ void MainWindow::onProducerOpened()
             m_player->switchToTab(Player::ProgramTabIndex);
         }
     }
-    if (MLT.isClip())
+    if (MLT.isClip()) {
         m_player->switchToTab(Player::SourceTabIndex);
+        if (!MLT.producer()->get(kShotcutHashProperty))
+            getHash(*MLT.producer());
+    }
     if (m_autosaveFile)
         setCurrentFile(m_autosaveFile->managedFileName());
     else if (!MLT.URL().isEmpty())
@@ -2378,6 +2420,7 @@ public:
                     p.set("mute_on_pause", 0);
                 }
                 MLT.setImageDurationFromDefault(&p);
+                MAIN.getHash(p);
                 MAIN.undoStack()->push(new Playlist::AppendCommand(*model, MLT.XML(&p)));
             }
         }

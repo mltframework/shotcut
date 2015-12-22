@@ -149,6 +149,8 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
             }
             case IsTransitionRole:
                 return isTransition(playlist, index.row());
+            case FileHashRole:
+                return MAIN.getHash(*info->producer);
             default:
                 break;
             }

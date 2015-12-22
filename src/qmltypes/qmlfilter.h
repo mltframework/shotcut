@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2014 Meltytech, LLC
+ * Copyright (c) 2013-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -61,6 +61,7 @@ public:
     Q_INVOKABLE void analyze(bool isAudio = false);
     Q_INVOKABLE static int framesFromTime(const QString& time);
     Q_INVOKABLE static QString timeFromFrames(int frames);
+    Q_INVOKABLE void getHash();
     int producerIn() const;
     int producerOut() const;
     double producerAspect() const;

@@ -88,6 +88,7 @@ Item {
                 filename += ".stab"
             }
             filter.set('filename', filename)
+            filter.getHash()
             setStatus(true)
             filter.analyze();
         }

@@ -70,6 +70,8 @@ public:
     void setFullScreen(bool isFullScreen);
     QString removeFileScheme(QUrl& url);
     QString untitledFileName() const;
+    QString getFileHash(const QString& path) const;
+    QString getHash(Mlt::Properties& properties) const;
 
     void keyPressEvent(QKeyEvent*);
     void keyReleaseEvent(QKeyEvent *);

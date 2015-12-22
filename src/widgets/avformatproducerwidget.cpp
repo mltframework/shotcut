@@ -130,7 +130,8 @@ void AvformatProducerWidget::recreateProducer()
     p->pass_list(*m_producer, "audio_index, video_index, force_aspect_ratio,"
                  "video_delay, force_progressive, force_tff,"
                  kAspectRatioNumerator ","
-                 kAspectRatioDenominator);
+                 kAspectRatioDenominator ","
+                 kShotcutHashProperty);
     reopen(p);
     connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
 }

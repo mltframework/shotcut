@@ -43,6 +43,7 @@
 #define kVideoTrackProperty "shotcut:video"
 #define kShotcutCaptionProperty "shotcut:caption"
 #define kShotcutDetailProperty "shotcut:detail"
+#define kShotcutHashProperty "shotcut:hash"
 
 /* Ideally all shotcut properties should begin with "shotcut:", but these
  * do not and kept for legacy reasons? */

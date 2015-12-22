@@ -256,6 +256,11 @@ QString QmlFilter::timeFromFrames(int frames)
     return QString();
 }
 
+void QmlFilter::getHash()
+{
+    MAIN.getHash(*m_filter);
+}
+
 int QmlFilter::producerIn() const
 {
     // Every attached filter has a service property that points to the service to
