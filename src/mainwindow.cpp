@@ -1818,8 +1818,6 @@ bool MainWindow::on_actionSave_triggered()
 
 bool MainWindow::on_actionSave_As_triggered()
 {
-    if (!MLT.producer())
-        return true;
     QString path = Settings.savePath();
     path.append("/.mlt");
     QString filename = QFileDialog::getSaveFileName(this, tr("Save XML"), path, tr("MLT XML (*.mlt)"));

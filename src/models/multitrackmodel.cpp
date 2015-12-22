@@ -2167,6 +2167,7 @@ int MultitrackModel::addAudioTrack()
         addBackgroundTrack();
         addAudioTrack();
         emit created();
+        emit modified();
         return 0;
     }
 
@@ -2204,6 +2205,7 @@ int MultitrackModel::addAudioTrack()
     beginInsertRows(QModelIndex(), m_trackList.count(), m_trackList.count());
     m_trackList.append(t);
     endInsertRows();
+    emit modified();
     return m_trackList.count() - 1;
 }
 
@@ -2261,6 +2263,7 @@ int MultitrackModel::addVideoTrack()
     beginInsertRows(QModelIndex(), 0, 0);
     m_trackList.prepend(t);
     endInsertRows();
+    emit modified();
     return 0;
 }
 
@@ -2315,6 +2318,7 @@ void MultitrackModel::removeTrack(int trackIndex)
         }
 //        foreach (Track t, m_trackList) qDebug() << (t.type == VideoTrackType?"Video":"Audio") << "track number" << t.number << "mlt_index" << t.mlt_index;
     }
+    emit modified();
 }
 
 void MultitrackModel::retainPlaylist()
