@@ -36,19 +36,20 @@ QImage ThumbnailProvider::requestImage(const QString &id, QSize *size, const QSi
 {
     QImage result;
 
-    // id is mlt_service/resource#frameNumber
+    // id is [hash]/mlt_service/resource#frameNumber
     int index = id.lastIndexOf('#');
 
     if (index != -1) {
-        QString service = id.section('/', 0, 0);
-        QString resource = id.section('/', 1);
+        QString hash = id.section('/', 0, 0);
+        QString service = id.section('/', 1, 1);
+        QString resource = id.section('/', 2);
         int frameNumber = id.mid(index + 1).toInt();
         Mlt::Properties properties;
 
         resource = resource.left(resource.lastIndexOf('#'));
         properties.set("_profile", MLT.profile().get_profile(), 0);
 
-        QString key = cacheKey(properties, service, resource, frameNumber);
+        QString key = cacheKey(properties, service, resource, hash, frameNumber);
         result = DB.getThumbnail(key);
         if (result.isNull()) {
             if (service == "avformat-novalidate")
@@ -67,19 +68,26 @@ QImage ThumbnailProvider::requestImage(const QString &id, QSize *size, const QSi
     return result;
 }
 
-QString ThumbnailProvider::cacheKey(Mlt::Properties& properties, const QString& service, const QString& resource, int frameNumber)
+QString ThumbnailProvider::cacheKey(Mlt::Properties& properties, const QString& service,
+                                    const QString& resource, const QString& hash, int frameNumber)
 {
     QString time = properties.frames_to_time(frameNumber, mlt_time_clock);
     // Reduce the precision to centiseconds to increase chance for cache hit
     // without much loss of accuracy.
     time = time.left(time.size() - 1);
-    QString key = QString("%1 %2 %3")
-            .arg(service)
-            .arg(resource)
-            .arg(time);
-    QCryptographicHash hash(QCryptographicHash::Sha1);
-    hash.addData(key.toUtf8());
-    return hash.result().toHex();
+    QString key;
+    if (hash.isEmpty()) {
+        key = QString("%1 %2 %3")
+                .arg(service)
+                .arg(resource)
+                .arg(time);
+        QCryptographicHash hash(QCryptographicHash::Sha1);
+        hash.addData(key.toUtf8());
+        key = hash.result().toHex();
+    } else {
+        key = QString("%1 %2").arg(hash).arg(time);
+    }
+    return key;
 }
 
 QImage ThumbnailProvider::makeThumbnail(Mlt::Producer &producer, int frameNumber, const QSize& requestedSize)

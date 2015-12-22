@@ -41,6 +41,7 @@ Rectangle {
     property int originalClipIndex: index
     property int originalX: x
     property bool selected: false
+    property string hash: ''
 
     signal clicked(var clip)
     signal moved(var clip)
@@ -92,28 +93,36 @@ Rectangle {
             waveformRepeater.itemAt(0).update()
     }
 
+    function imagePath(time) {
+        if (isAudio || isBlank || isTransition) {
+            return ''
+        } else {
+            return 'image://thumbnail/' + hash + '/' + mltService + '/' + clipResource + '#' + time
+        }
+    }
+
     onAudioLevelsChanged: generateWaveform()
 
     Image {
-        id: inThumbnail
+        id: outThumbnail
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.margins: parent.border.width
         anchors.bottom: parent.bottom
         anchors.bottomMargin: parent.height / 2
         fillMode: Image.PreserveAspectFit
-        source: (isAudio || isBlank || isTransition)? '' : 'image://thumbnail/' + mltService + '/' + clipResource + '#' + outPoint
+        source: imagePath(outPoint)
     }
 
     Image {
-        id: outThumbnail
+        id: inThumbnail
         anchors.left: parent.left
         anchors.top: parent.top
         anchors.margins: parent.border.width
         anchors.bottom: parent.bottom
         anchors.bottomMargin: parent.height / 2
         fillMode: Image.PreserveAspectFit
-        source: (isAudio || isBlank || isTransition)? '' : 'image://thumbnail/' + mltService + '/' + clipResource + '#' + inPoint
+        source: imagePath(inPoint)
     }
 
     TimelineTransition {

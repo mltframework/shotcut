@@ -244,6 +244,7 @@ QHash<int, QByteArray> MultitrackModel::roleNames() const
     roles[FadeInRole] = "fadeIn";
     roles[FadeOutRole] = "fadeOut";
     roles[IsTransitionRole] = "isTransition";
+    roles[FileHashRole] = "hash";
     return roles;
 }
 

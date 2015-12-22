@@ -67,7 +67,8 @@ public:
         IsLockedRole,    /// track only
         FadeInRole,      /// clip only
         FadeOutRole,     /// clip only
-        IsTransitionRole /// clip only
+        IsTransitionRole,/// clip only
+        FileHashRole     /// clip only
     };
 
     explicit MultitrackModel(QObject *parent = 0);

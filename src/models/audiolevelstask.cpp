@@ -122,10 +122,16 @@ Mlt::Producer* AudioLevelsTask::tempProducer()
 
 QString AudioLevelsTask::cacheKey()
 {
-    QString key = QString("%1 audiolevels").arg(m_producers.first().first->get("resource"));
-    QCryptographicHash hash(QCryptographicHash::Sha1);
-    hash.addData(key.toUtf8());
-    return hash.result().toHex();
+    QString key = QString("%1 audiolevels");
+    if (m_producers.first().first->get(kShotcutHashProperty)) {
+        key = key.arg(m_producers.first().first->get(kShotcutHashProperty));
+    } else {
+        key = key.arg(m_producers.first().first->get("resource"));
+        QCryptographicHash hash(QCryptographicHash::Sha1);
+        hash.addData(key.toUtf8());
+        key = hash.result().toHex();
+    }
+    return key;
 }
 
 void AudioLevelsTask::run()
