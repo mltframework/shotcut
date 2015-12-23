@@ -31,7 +31,7 @@ FREI0R_REVISION=
 ENABLE_MOVIT=1
 SUBDIRS=
 MOVIT_HEAD=0
-MOVIT_REVISION=d2050acb601e0d16bb33b1c1e7cf443dce2d3c93
+MOVIT_REVISION=origin/shotcut
 LIBEPOXY_REVISION=
 X264_HEAD=1
 X264_REVISION=
@@ -393,7 +393,7 @@ function set_globals {
 #  REPOLOCS[3]="git://git.videolan.org/x264.git"
   REPOLOCS[3]="git://repo.or.cz/x264.git"
   REPOLOCS[4]="http://chromium.googlesource.com/webm/libvpx.git"
-  REPOLOCS[5]="http://git.sesse.net/movit/"
+  REPOLOCS[5]="git://github.com/ddennedy/movit.git"
   REPOLOCS[6]="http://downloads.sourceforge.net/project/lame/lame/3.99/lame-3.99.5.tar.gz"
   REPOLOCS[7]="git://github.com/mltframework/shotcut.git"
   REPOLOCS[8]="http://ftp.us.debian.org/debian/pool/main/s/swh-plugins/swh-plugins_0.4.15+1.orig.tar.gz"
