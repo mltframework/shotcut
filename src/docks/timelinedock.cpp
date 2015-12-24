@@ -484,7 +484,7 @@ void TimelineDock::selectTrackHead(int trackIndex)
         int i = m_model.trackList().at(trackIndex).mlt_index;
         Mlt::Producer* producer = m_model.tractor()->track(i);
         if (producer && producer->is_valid())
-            emit trackSelected(producer);
+            emit selected(producer);
         delete producer;
     }
 }
@@ -501,10 +501,10 @@ void TimelineDock::openClip(int trackIndex, int clipIndex)
     }
 }
 
-void TimelineDock::emitClipSelectedFromSelection()
+void TimelineDock::emitSelectedFromSelection()
 {
     if (selection().isEmpty() || currentTrack() == -1) {
-        emit clipSelected(0);
+        emit selected(0);
         return;
     }
 
@@ -517,8 +517,7 @@ void TimelineDock::emitClipSelectedFromSelection()
         info->producer->set(kFilterOutProperty, info->frame_out);
         if (MLT.isImageProducer(info->producer))
             info->producer->set("out", info->cut->get_int("out"));
-        emit clipSelected(info->producer);
-        MAIN.loadProducerWidget(info->producer);
+        emit selected(info->producer);
         delete info;
     }
 }
@@ -796,7 +795,7 @@ void TimelineDock::onVisibilityChanged(bool visible)
             connect(m_quickView.rootObject(), SIGNAL(selectionChanged()),
                     this, SIGNAL(selectionChanged()));
             connect(m_quickView.rootObject(), SIGNAL(selectionChanged()),
-                    this, SLOT(emitClipSelectedFromSelection()));
+                    this, SLOT(emitSelectedFromSelection()));
             connect(m_quickView.rootObject(), SIGNAL(clipClicked()),
                     this, SIGNAL(clipClicked()));
         } else if (Settings.timelineShowWaveforms()) {

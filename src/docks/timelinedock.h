@@ -81,8 +81,7 @@ signals:
     void dropAccepted(const QString &xml);
     void fadeInChanged(int duration);
     void fadeOutChanged(int duration);
-    void trackSelected(Mlt::Producer* producer);
-    void clipSelected(Mlt::Producer* producer);
+    void selected(Mlt::Producer* producer);
     void clipClicked();
 
 public slots:
@@ -135,7 +134,7 @@ private:
 
 private slots:
     void onVisibilityChanged(bool visible);
-    void emitClipSelectedFromSelection();
+    void emitSelectedFromSelection();
 };
 
 #endif // TIMELINEDOCK_H

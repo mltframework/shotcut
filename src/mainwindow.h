@@ -65,7 +65,6 @@ public:
     HtmlEditor* htmlEditor() const { return m_htmlEditor; }
     Mlt::Playlist* playlist() const;
     Mlt::Producer* multitrack() const;
-    QWidget* loadProducerWidget(Mlt::Producer* producer);
     void doAutosave();
     void setFullScreen(bool isFullScreen);
     QString removeFileScheme(QUrl& url);
@@ -149,7 +148,7 @@ public slots:
     void showStatusMessage(QString);
     void seekPlaylist(int start);
     void seekTimeline(int position);
-    
+    QWidget* loadProducerWidget(Mlt::Producer* producer);
     void onProducerOpened();
     void onGpuNotSupported();
     void editHTML(const QString& fileName);
