@@ -48,7 +48,7 @@ Item {
             Label { text: qsTr('Display') }
             ComboBox {
                 id: displayCombo
-                implicitWidth: 180
+                implicitWidth: 200
                 model: ListModel {
                     id: displayModel
                     ListElement { text: qsTr('Gray Alpha'); value: 0.21 }
