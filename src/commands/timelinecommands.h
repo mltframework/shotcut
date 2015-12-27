@@ -23,6 +23,8 @@
 #include "undohelper.h"
 #include <QUndoCommand>
 #include <QString>
+#include <QObject>
+#include <MltTransition.h>
 
 namespace Timeline
 {
@@ -391,6 +393,22 @@ private:
     QString m_trackName;
 };
 
-} // namespace
+class ChangeBlendModeCommand : public QObject, public QUndoCommand
+{
+    Q_OBJECT
+public:
+    ChangeBlendModeCommand(Mlt::Transition& transition, const QString& propertyName, const QString& mode, QUndoCommand* parent = 0);
+    void redo();
+    void undo();
+signals:
+    void modeChanged(QString& mode);
+private:
+    Mlt::Transition m_transition;
+    QString m_propertyName;
+    QString m_newMode;
+    QString m_oldMode;
+};
+
+} // namespace Timeline
 
 #endif

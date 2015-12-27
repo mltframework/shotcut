@@ -105,7 +105,8 @@ SOURCES += main.cpp\
     models/audiolevelstask.cpp \
     mltxmlchecker.cpp \
     widgets/avfoundationproducerwidget.cpp \
-    widgets/gdigrabwidget.cpp
+    widgets/gdigrabwidget.cpp \
+    widgets/trackpropertieswidget.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -206,7 +207,8 @@ HEADERS  += mainwindow.h \
     shotcut_mlt_properties.h \
     mltxmlchecker.h \
     widgets/avfoundationproducerwidget.h \
-    widgets/gdigrabwidget.h
+    widgets/gdigrabwidget.h \
+    widgets/trackpropertieswidget.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
@@ -244,7 +246,8 @@ FORMS    += mainwindow.ui \
     widgets/lumamixtransition.ui \
     widgets/directshowvideowidget.ui \
     widgets/avfoundationproducerwidget.ui \
-    widgets/gdigrabwidget.ui
+    widgets/gdigrabwidget.ui \
+    widgets/trackpropertieswidget.ui
 
 RESOURCES += \
     ../icons/resources.qrc \

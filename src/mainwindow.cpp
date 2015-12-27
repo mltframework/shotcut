@@ -70,6 +70,7 @@
 #include "dialogs/textviewerdialog.h"
 #include "widgets/gdigrabwidget.h"
 #include "models/audiolevelstask.h"
+#include "widgets/trackpropertieswidget.h"
 
 #include <QtWidgets>
 #include <QDebug>
@@ -2200,6 +2201,10 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
         w = new ToneProducerWidget(this);
     else if (producer->parent().get(kShotcutTransitionProperty)) {
         w = new LumaMixTransition(producer->parent(), this);
+        scrollArea->setWidget(w);
+        return w;
+    } else if (playlist_type == producer->type()) {
+        w = new TrackPropertiesWidget(*producer, this);
         scrollArea->setWidget(w);
         return w;
     }

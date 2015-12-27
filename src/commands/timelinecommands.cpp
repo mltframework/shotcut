@@ -706,4 +706,34 @@ void RemoveTrackCommand::undo()
     }
 }
 
+ChangeBlendModeCommand::ChangeBlendModeCommand(Mlt::Transition& transition, const QString& propertyName, const QString& mode, QUndoCommand* parent)
+    : QUndoCommand(parent)
+    , m_transition(transition)
+    , m_propertyName(propertyName)
+    , m_newMode(mode)
+{
+    setText(QObject::tr("Change track blend mode"));
+    m_oldMode = m_transition.get(m_propertyName.toLatin1().constData());
+}
+
+void ChangeBlendModeCommand::redo()
+{
+    if (!m_newMode.isEmpty()) {
+        m_transition.set(m_propertyName.toLatin1().constData(), m_newMode.toUtf8().constData());
+        MLT.refreshConsumer();
+        emit modeChanged(m_newMode);
+    }
+}
+
+void ChangeBlendModeCommand::undo()
+{
+    if (!m_oldMode.isEmpty()) {
+        m_transition.set(m_propertyName.toLatin1().constData(), m_oldMode.toUtf8().constData());
+        MLT.refreshConsumer();
+        emit modeChanged(m_oldMode);
+    }
+}
+
 } // namespace
+
+#include "moc_timelinecommands.cpp"
