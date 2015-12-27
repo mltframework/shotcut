@@ -21,9 +21,8 @@ import org.shotcut.qml 1.0
 
 Metadata {
     type: Metadata.Filter
-    name: qsTr("Alpha Channel: View")
+    name: qsTr("Alpha Channel: Adjust")
     mlt_service: 'frei0r.alpha0ps'
-    objectName: 'alphaChannelView'
+    objectName: 'alphaChannelAdjust'
     qml: 'ui.qml'
-    
 }
