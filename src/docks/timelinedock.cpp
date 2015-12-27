@@ -489,6 +489,11 @@ void TimelineDock::selectTrackHead(int trackIndex)
     }
 }
 
+void TimelineDock::selectMultitrack()
+{
+    emit selected(m_model.tractor());
+}
+
 void TimelineDock::openClip(int trackIndex, int clipIndex)
 {
     Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);

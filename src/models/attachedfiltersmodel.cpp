@@ -83,10 +83,13 @@ void AttachedFiltersModel::setProducer(Mlt::Producer* producer)
 
 QString AttachedFiltersModel::trackTitle() const
 {
-    if (m_producer.isNull())
-        return QString();
-
-    return QString::fromUtf8(m_producer->get(kTrackNameProperty));
+    if (m_producer && m_producer->is_valid()) {
+        if (m_producer->get(kTrackNameProperty))
+            return tr("Track: %1").arg(QString::fromUtf8(m_producer->get(kTrackNameProperty)));
+        if (tractor_type == m_producer->type())
+            return tr("Timeline");
+    }
+    return QString();
 }
 
 bool AttachedFiltersModel::isProducerSelected() const

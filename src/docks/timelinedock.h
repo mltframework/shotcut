@@ -96,6 +96,7 @@ public slots:
     void liftSelection();
     void selectTrack(int by);
     void selectTrackHead(int trackIndex);
+    void selectMultitrack();
     void openClip(int trackIndex, int clipIndex);
     void setTrackName(int trackIndex, const QString& value);
     void toggleTrackMute(int trackIndex);

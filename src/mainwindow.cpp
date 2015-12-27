@@ -71,6 +71,7 @@
 #include "widgets/gdigrabwidget.h"
 #include "models/audiolevelstask.h"
 #include "widgets/trackpropertieswidget.h"
+#include "widgets/timelinepropertieswidget.h"
 
 #include <QtWidgets>
 #include <QDebug>
@@ -2205,6 +2206,10 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
         return w;
     } else if (playlist_type == producer->type()) {
         w = new TrackPropertiesWidget(*producer, this);
+        scrollArea->setWidget(w);
+        return w;
+    } else if (tractor_type == producer->type()) {
+        w = new TimelinePropertiesWidget(*producer, this);
         scrollArea->setWidget(w);
         return w;
     }

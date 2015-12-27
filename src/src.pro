@@ -106,7 +106,8 @@ SOURCES += main.cpp\
     mltxmlchecker.cpp \
     widgets/avfoundationproducerwidget.cpp \
     widgets/gdigrabwidget.cpp \
-    widgets/trackpropertieswidget.cpp
+    widgets/trackpropertieswidget.cpp \
+    widgets/timelinepropertieswidget.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -208,7 +209,8 @@ HEADERS  += mainwindow.h \
     mltxmlchecker.h \
     widgets/avfoundationproducerwidget.h \
     widgets/gdigrabwidget.h \
-    widgets/trackpropertieswidget.h
+    widgets/trackpropertieswidget.h \
+    widgets/timelinepropertieswidget.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
@@ -247,7 +249,8 @@ FORMS    += mainwindow.ui \
     widgets/directshowvideowidget.ui \
     widgets/avfoundationproducerwidget.ui \
     widgets/gdigrabwidget.ui \
-    widgets/trackpropertieswidget.ui
+    widgets/trackpropertieswidget.ui \
+    widgets/timelinepropertieswidget.ui
 
 RESOURCES += \
     ../icons/resources.qrc \

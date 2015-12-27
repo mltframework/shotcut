@@ -71,6 +71,7 @@ Rectangle {
 
     onSelectionChanged: {
         if (selection.length) {
+            cornerstone.selected = false
             for (var i = 0; i < trackHeaderRepeater.count; i++)
                 trackHeaderRepeater.itemAt(i).selected = false
         }
@@ -119,11 +120,24 @@ Rectangle {
             z: 1
 
             Rectangle {
+                id: cornerstone
+                property bool selected: false
                 // Padding between toolbar and track headers.
                 width: headerWidth
                 height: ruler.height
-                color: activePalette.window
+                color: selected? shotcutBlue : activePalette.window
                 z: 1
+                MouseArea {
+                    anchors.fill: parent
+                    acceptedButtons: Qt.LeftButton
+                    onClicked: {
+                        selection = []
+                        for (var i = 0; i < trackHeaderRepeater.count; i++)
+                            trackHeaderRepeater.itemAt(i).selected = false
+                        parent.selected = true
+                        timeline.selectMultitrack()
+                    }
+                }
             }
             Flickable {
                 // Non-slider scroll area for the track headers.
@@ -153,6 +167,7 @@ Rectangle {
                                 root.selection = []
                                 currentTrack = index
                                 timeline.selectTrackHead(currentTrack)
+                                cornerstone.selected = false
                                 for (var i = 0; i < trackHeaderRepeater.count; i++)
                                     trackHeaderRepeater.itemAt(i).selected = false
                                 selected = true

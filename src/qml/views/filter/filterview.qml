@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Meltytech, LLC
+ * Copyright (c) 2014-2015 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -68,9 +68,10 @@ Rectangle {
         columns: 3
         anchors.top: parent.top
         anchors.left: parent.left
+        anchors.margins: 4
 
         Label {
-            text: qsTr("Track: %1").arg(attachedfiltersmodel.trackTitle)
+            text: attachedfiltersmodel.trackTitle
             height: visible ? implicitHeight : 0
             visible: attachedfiltersmodel.trackTitle != ""
             wrapMode: Text.Wrap
