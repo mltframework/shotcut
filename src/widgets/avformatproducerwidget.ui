@@ -80,7 +80,7 @@
         <bool>false</bool>
        </property>
        <property name="suffix">
-        <string>x</string>
+        <string notr="true"> x</string>
        </property>
        <property name="minimum">
         <double>0.010000000000000</double>

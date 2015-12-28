@@ -72,7 +72,7 @@
         <item>
          <widget class="QLabel" name="resolutionLabel">
           <property name="text">
-           <string>1920 x 1080</string>
+           <string notr="true">1920 x 1080</string>
           </property>
          </widget>
         </item>
@@ -96,7 +96,7 @@
         <item>
          <widget class="QLabel" name="frameRateLabel">
           <property name="text">
-           <string>25 fps</string>
+           <string notr="true">25 fps</string>
           </property>
          </widget>
         </item>
@@ -120,7 +120,7 @@
         <item>
          <widget class="QLabel" name="aspectRatioLabel">
           <property name="text">
-           <string>16 : 9</string>
+           <string notr="true">16 : 9</string>
           </property>
          </widget>
         </item>
@@ -185,7 +185,7 @@
         <item>
          <widget class="QLabel" name="scanModeLabel">
           <property name="text">
-           <string>Progressive</string>
+           <string notr="true">Progressive</string>
           </property>
          </widget>
         </item>
@@ -219,7 +219,7 @@
         <item>
          <widget class="QLabel" name="colorspaceLabel">
           <property name="text">
-           <string>ITU-R BT.709</string>
+           <string notr="true">ITU-R BT.709</string>
           </property>
          </widget>
         </item>
