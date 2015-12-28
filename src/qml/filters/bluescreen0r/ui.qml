@@ -62,7 +62,7 @@ Item {
 
         // Row 1
         Label {
-            text: qsTr('Color')
+            text: qsTr('Key color')
             Layout.alignment: Qt.AlignRight
         }
         ColorPicker {
@@ -78,17 +78,15 @@ Item {
             text: qsTr('Distance')
             Layout.alignment: Qt.AlignRight
         }
-        RowLayout {
-            SliderSpinner {
-                id: distanceSlider
-                minimumValue: 0
-                maximumValue: 100
-                decimals: 1
-                suffix: ' %'
-                spinnerWidth: 80
-                value: filter.getDouble(distanceParam) * 100
-                onValueChanged: filter.set(distanceParam, value / 100)
-            }
+        SliderSpinner {
+            id: distanceSlider
+            minimumValue: 0
+            maximumValue: 100
+            decimals: 1
+            suffix: ' %'
+            spinnerWidth: 80
+            value: filter.getDouble(distanceParam) * 100
+            onValueChanged: filter.set(distanceParam, value / 100)
         }
         UndoButton {
             onClicked: distanceSlider.value = distanceDefault

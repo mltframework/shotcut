@@ -36,6 +36,9 @@ Item {
             blueRadioButton.checked = true
     }
     ColumnLayout {
+        anchors.fill: parent
+        anchors.margins: 8
+
         RowLayout {
             ExclusiveGroup { id: typeGroup }
             RadioButton {
@@ -51,6 +54,7 @@ Item {
                 onClicked: filter.set(typeParam, 1)
             }
         }
+
         Item { Layout.fillHeight: true }
     }
 }

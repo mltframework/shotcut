@@ -98,7 +98,7 @@ Item {
             onClicked: sliderAmount.value = 50
         }
 
-        Label { text: '' }
+        Label {}
         CheckBox {
             id: invertCheckbox
             text: qsTr('Invert')
