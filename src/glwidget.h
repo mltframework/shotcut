@@ -183,7 +183,8 @@ signals:
 
 private:
     QSemaphore m_semaphore;
-    SharedFrame m_frame;
+    SharedFrame m_renderFrame;
+    SharedFrame m_displayFrame;
     QOpenGLContext* m_context;
     QSurface* m_surface;
 public:

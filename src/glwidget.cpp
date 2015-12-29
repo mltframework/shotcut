@@ -763,7 +763,6 @@ void RenderThread::run()
 FrameRenderer::FrameRenderer(QOpenGLContext* shareContext, QSurface* surface)
      : QThread(0)
      , m_semaphore(3)
-     , m_frame()
      , m_context(0)
      , m_surface(surface)
      , m_gl32(0)
@@ -801,7 +800,7 @@ void FrameRenderer::showFrame(Mlt::Frame frame)
         int width = 0;
         int height = 0;
         frame.get_image(format, width, height);
-        m_frame = SharedFrame(frame);
+        m_displayFrame = SharedFrame(frame);
     }
 
     Q_ASSERT(m_surface->surfaceHandle());
@@ -840,14 +839,15 @@ void FrameRenderer::showFrame(Mlt::Frame frame)
             m_context->doneCurrent();
 
             // Save this frame for future use and to keep a reference to the GL Texture.
-            m_frame = SharedFrame(frame);
+            m_renderFrame = SharedFrame(frame);
+            qSwap(m_renderFrame, m_displayFrame);
         }
         else {
             // Using a threaded OpenGL to upload textures.
             m_context->makeCurrent(m_surface);
             QOpenGLFunctions* f = m_context->functions();
 
-            uploadTextures(m_context, m_frame, m_renderTexture);
+            uploadTextures(m_context, m_displayFrame, m_renderTexture);
             f->glBindTexture(GL_TEXTURE_2D, 0);
             check_error(f);
             f->glFinish();
@@ -861,14 +861,14 @@ void FrameRenderer::showFrame(Mlt::Frame frame)
 
     // The frame is now done being modified and can be shared with the rest
     // of the application.
-    emit frameDisplayed(m_frame);
+    emit frameDisplayed(m_displayFrame);
 
     m_semaphore.release();
 }
 
 SharedFrame FrameRenderer::getDisplayFrame()
 {
-    return m_frame;
+    return m_displayFrame;
 }
 
 void FrameRenderer::cleanup()
