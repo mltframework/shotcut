@@ -2543,6 +2543,7 @@ void MainWindow::onExternalTriggered(QAction *action)
         profile = "atsc_720p_50";
         Settings.setPlayerProfile(profile);
         MLT.setProfile(profile);
+        MLT.restart();
         emit profileChanged();
         foreach (QAction* a, m_profileGroup->actions()) {
             if (a->data() == profile) {
@@ -2582,6 +2583,7 @@ void MainWindow::onProfileTriggered(QAction *action)
 {
     Settings.setPlayerProfile(action->data().toString());
     MLT.setProfile(action->data().toString());
+    MLT.restart();
     emit profileChanged();
 }
 

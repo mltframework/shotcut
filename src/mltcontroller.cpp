@@ -459,7 +459,6 @@ void Controller::setProfile(const QString& profile_name)
             m_profile->set_width(alignWidth(m_profile->width()));
         }
     }
-    restart();
 }
 
 QString Controller::resource() const
