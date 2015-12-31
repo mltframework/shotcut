@@ -838,7 +838,7 @@ int MultitrackModel::overwriteClip(int trackIndex, Mlt::Producer& clip, int posi
     return result;
 }
 
-QString MultitrackModel::overwrite(int trackIndex, Mlt::Producer& clip, int position)
+QString MultitrackModel::overwrite(int trackIndex, Mlt::Producer& clip, int position, bool seek)
 {
     createIfNeeded();
     Mlt::Playlist result;
@@ -924,7 +924,8 @@ QString MultitrackModel::overwrite(int trackIndex, Mlt::Producer& clip, int posi
         QModelIndex index = createIndex(targetIndex, 0, trackIndex);
         AudioLevelsTask::start(clip.parent(), this, index);
         emit modified();
-        emit seeked(playlist.clip_start(targetIndex) + playlist.clip_length(targetIndex));
+        if (seek)
+            emit seeked(playlist.clip_start(targetIndex) + playlist.clip_length(targetIndex));
     }
     return MLT.XML(&result);
 }

@@ -39,7 +39,7 @@ public:
     Mlt::Producer* producer(Mlt::Profile&);
 
 signals:
-    void producerChanged();
+    void producerChanged(Mlt::Producer*);
     void producerReopened();
 
 private slots:

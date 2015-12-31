@@ -69,5 +69,6 @@
 #define kThumbnailOutProperty "_shotcut:thumbnail-out"
 #define kUndoIdProperty "_shotcut:undo_id"
 #define kUuidProperty "_shotcut:uuid"
+#define kMultitrackItemProperty "_shotcut:multitrack-item"
 
 #endif // SHOTCUT_MLT_PROPERTIES_H

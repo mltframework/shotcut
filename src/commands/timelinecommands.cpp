@@ -734,6 +734,39 @@ void ChangeBlendModeCommand::undo()
     }
 }
 
+UpdateCommand::UpdateCommand(TimelineDock& timeline, int trackIndex, int clipIndex,
+    int position, QUndoCommand* parent)
+    : QUndoCommand(parent)
+    , m_timeline(timeline)
+    , m_trackIndex(trackIndex)
+    , m_clipIndex(clipIndex)
+    , m_position(position)
+    , m_isFirstRedo(true)
+    , m_undoHelper(*timeline.model())
+{
+    setText(QObject::tr("Change clip properties"));
+    m_undoHelper.recordBeforeState();
+}
+
+void UpdateCommand::redo()
+{
+    if (!m_isFirstRedo)
+        m_undoHelper.recordBeforeState();
+    Mlt::Producer clip(MLT.profile(), "xml-string", m_xmlAfter.toUtf8().constData());
+    m_timeline.model()->liftClip(m_trackIndex, m_clipIndex);
+    m_timeline.model()->overwrite(m_trackIndex, clip, m_position, false);
+    m_undoHelper.recordAfterState();
+    if (!m_isFirstRedo)
+        m_timeline.emitSelectedFromSelection();
+}
+
+void UpdateCommand::undo()
+{
+    m_undoHelper.undoChanges();
+    m_timeline.emitSelectedFromSelection();
+    m_isFirstRedo = false;
+}
+
 } // namespace
 
 #include "moc_timelinecommands.cpp"

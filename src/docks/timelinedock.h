@@ -28,6 +28,9 @@
 namespace Ui {
 class TimelineDock;
 }
+namespace Timeline {
+class UpdateCommand;
+}
 
 class TimelineDock : public QDockWidget
 {
@@ -117,6 +120,8 @@ public slots:
     void clearSelectionIfInvalid();
     void insertTrack();
     void removeTrack();
+    void onProducerChanged(Mlt::Producer*);
+    void emitSelectedFromSelection();
 
 protected:
     void dragEnterEvent(QDragEnterEvent* event);
@@ -132,10 +137,10 @@ private:
     QQuickWidget m_quickView;
     MultitrackModel m_model;
     int m_position;
+    Timeline::UpdateCommand* m_updateCommand;
 
 private slots:
     void onVisibilityChanged(bool visible);
-    void emitSelectedFromSelection();
 };
 
 #endif // TIMELINEDOCK_H

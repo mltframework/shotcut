@@ -41,7 +41,7 @@ void LissajousWidget::on_xratioDial_valueChanged(int value)
 {
     if (m_producer) {
         m_producer->set(kParamRatioX, value/100.0);
-        emit producerChanged();
+        emit producerChanged(m_producer);
     }
     ui->xratioSpinner->setValue(value/100.0);
 }
@@ -55,7 +55,7 @@ void LissajousWidget::on_yratioDial_valueChanged(int value)
 {
     if (m_producer) {
         m_producer->set(kParamRatioY, value/100.0);
-        emit producerChanged();
+        emit producerChanged(m_producer);
     }
     ui->yratioSpinner->setValue(value/100.0);
 }

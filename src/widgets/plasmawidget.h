@@ -40,7 +40,7 @@ public:
     void loadPreset(Mlt::Properties&);
 
 signals:
-    void producerChanged();
+    void producerChanged(Mlt::Producer*);
 
 private slots:
     void on_speed1Dial_valueChanged(int value);

@@ -88,6 +88,6 @@ void ColorBarsWidget::on_comboBox_activated(int index)
         m_producer->set(kParamType, index);
         m_producer->set(kShotcutCaptionProperty, ui->comboBox->currentText().toUtf8().constData());
         m_producer->set(kShotcutDetailProperty, ui->comboBox->currentText().toUtf8().constData());
-        emit producerChanged();
+        emit producerChanged(m_producer);
     }
 }

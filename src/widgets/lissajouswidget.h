@@ -44,7 +44,7 @@ public:
     void loadPreset(Mlt::Properties&);
 
 signals:
-    void producerChanged();
+    void producerChanged(Mlt::Producer*);
 
 private slots:
     void on_xratioDial_valueChanged(int value);

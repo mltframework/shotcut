@@ -36,7 +36,8 @@ TimelineDock::TimelineDock(QWidget *parent) :
     QDockWidget(parent),
     ui(new Ui::TimelineDock),
     m_quickView(QmlUtilities::sharedEngine(), this),
-    m_position(-1)
+    m_position(-1),
+    m_updateCommand(0)
 {
     qDebug() << "begin";
     ui->setupUi(this);
@@ -71,6 +72,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
 
 TimelineDock::~TimelineDock()
 {
+    delete m_updateCommand;
     delete ui;
 }
 
@@ -360,6 +362,33 @@ void TimelineDock::removeTrack()
                 new Timeline::RemoveTrackCommand(m_model, currentTrack()));
 }
 
+void TimelineDock::onProducerChanged(Mlt::Producer* after)
+{
+    int trackIndex = currentTrack();
+    if (trackIndex < 0 || selection().isEmpty() || !m_updateCommand)
+        return;
+    if (isTrackLocked(trackIndex)) {
+        pulseLockButtonOnTrack(trackIndex);
+        return;
+    }
+    int i = m_model.trackList().at(trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
+    if (track) {
+        // Ensure the new XML has same in/out point as selected clip by making
+        // a copy of the changed producer and copying the in/out from timeline.
+        Mlt::Playlist playlist(*track);
+        int clipIndex = selection().first();
+        QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
+        if (info) {
+            after->set_in_and_out(info->frame_in, info->frame_out);
+            QString xmlAfter = MLT.XML(after);
+            m_updateCommand->setXmlAfter(xmlAfter);
+            MAIN.undoStack()->push(m_updateCommand);
+            m_updateCommand = 0;
+        }
+    }
+}
+
 void TimelineDock::addAudioTrack()
 {
     MAIN.undoStack()->push(
@@ -509,12 +538,19 @@ void TimelineDock::openClip(int trackIndex, int clipIndex)
 void TimelineDock::emitSelectedFromSelection()
 {
     if (selection().isEmpty() || currentTrack() == -1) {
-        emit selected(0);
+        if (m_model.tractor())
+            emit selected(m_model.tractor());
+        else
+            emit selected(0);
         return;
     }
 
-    Mlt::ClipInfo* info = getClipInfo(currentTrack(), selection().first());
+    int trackIndex = currentTrack();
+    int clipIndex = selection().first();
+    Mlt::ClipInfo* info = getClipInfo(trackIndex, clipIndex);
     if (info && info->producer && info->producer->is_valid()) {
+        delete m_updateCommand;
+        m_updateCommand = new Timeline::UpdateCommand(*this, trackIndex, clipIndex, info->start);
         // We need to set these special properties so time-based filters
         // can get information about the cut while still applying filters
         // to the cut parent.
@@ -522,6 +558,7 @@ void TimelineDock::emitSelectedFromSelection()
         info->producer->set(kFilterOutProperty, info->frame_out);
         if (MLT.isImageProducer(info->producer))
             info->producer->set("out", info->cut->get_int("out"));
+        info->producer->set(kMultitrackItemProperty, 1);
         emit selected(info->producer);
         delete info;
     }

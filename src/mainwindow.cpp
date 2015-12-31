@@ -1115,6 +1115,7 @@ void MainWindow::seekTimeline(int position)
         updateMarkers();
         m_player->setFocus();
         m_player->switchToTab(Player::ProgramTabIndex);
+        m_timelineDock->emitSelectedFromSelection();
     }
     m_player->seek(position);
 }
@@ -1760,7 +1761,7 @@ void MainWindow::onProducerOpened()
     m_meltedServerDock->disconnect(SIGNAL(positionUpdated(int,double,int,int,int,bool)));
 
     QWidget* w = loadProducerWidget(MLT.producer());
-    if (w) {
+    if (w && !MLT.producer()->get_int(kMultitrackItemProperty)) {
         if (-1 != w->metaObject()->indexOfSignal("producerReopened()"))
             connect(w, SIGNAL(producerReopened()), m_player, SLOT(onProducerOpened()));
     }
@@ -1785,6 +1786,7 @@ void MainWindow::onProducerOpened()
             m_timelineDock->raise();
             m_player->enableTab(Player::ProgramTabIndex);
             m_player->switchToTab(Player::ProgramTabIndex);
+            m_timelineDock->emitSelectedFromSelection();
         }
     }
     if (MLT.isClip()) {
@@ -2215,8 +2217,11 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
     }
     if (w) {
         dynamic_cast<AbstractProducerWidget*>(w)->setProducer(producer);
-        if (-1 != w->metaObject()->indexOfSignal("producerChanged()"))
-            connect(w, SIGNAL(producerChanged()), SLOT(onProducerChanged()));
+        if (-1 != w->metaObject()->indexOfSignal("producerChanged(Mlt::Producer*)")) {
+            connect(w, SIGNAL(producerChanged(Mlt::Producer*)), SLOT(onProducerChanged()));
+            if (producer->get_int(kMultitrackItemProperty))
+                connect(w, SIGNAL(producerChanged(Mlt::Producer*)), m_timelineDock, SLOT(onProducerChanged(Mlt::Producer*)));
+        }
         scrollArea->setWidget(w);
         onProducerChanged();
     }

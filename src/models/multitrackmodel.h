@@ -127,7 +127,7 @@ public slots:
     bool moveClipValid(int fromTrack, int toTrack, int clipIndex, int position);
     bool moveClip(int fromTrack, int toTrack, int clipIndex, int position);
     int overwriteClip(int trackIndex, Mlt::Producer& clip, int position);
-    QString overwrite(int trackIndex, Mlt::Producer& clip, int position);
+    QString overwrite(int trackIndex, Mlt::Producer& clip, int position, bool seek = true);
     int insertClip(int trackIndex, Mlt::Producer& clip, int position);
     int appendClip(int trackIndex, Mlt::Producer &clip);
     void removeClip(int trackIndex, int clipIndex);

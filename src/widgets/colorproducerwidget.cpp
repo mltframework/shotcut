@@ -54,7 +54,7 @@ void ColorProducerWidget::on_colorButton_clicked()
             m_producer->set("resource", ui->colorLabel->text().toLatin1().constData());
             m_producer->set(kShotcutCaptionProperty, ui->colorLabel->text().toLatin1().constData());
             m_producer->set(kShotcutDetailProperty, ui->colorLabel->text().toLatin1().constData());
-            emit producerChanged();
+            emit producerChanged(m_producer);
         }
     }
 }

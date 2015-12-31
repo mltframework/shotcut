@@ -39,7 +39,7 @@ public:
     void setProducer(Mlt::Producer* producer);
 
 signals:
-    void producerChanged();
+    void producerChanged(Mlt::Producer*);
 
 private slots:
     void on_videoCombo_activated(int index);

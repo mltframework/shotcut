@@ -45,7 +45,7 @@ void PlasmaWidget::on_speed1Dial_valueChanged(int value)
 {
     if (m_producer) {
         m_producer->set(kParamSpeed1, value/100.0);
-        emit producerChanged();
+        emit producerChanged(m_producer);
     }
     ui->speed1Spinner->setValue(value/100.0);
 }
@@ -59,7 +59,7 @@ void PlasmaWidget::on_speed2Dial_valueChanged(int value)
 {
     if (m_producer) {
         m_producer->set(kParamSpeed2, value/100.0);
-        emit producerChanged();
+        emit producerChanged(m_producer);
     }
     ui->speed2Spinner->setValue(value/100.0);
 }
@@ -73,7 +73,7 @@ void PlasmaWidget::on_speed3Dial_valueChanged(int value)
 {
     if (m_producer) {
         m_producer->set(kParamSpeed3, value/100.0);
-        emit producerChanged();
+        emit producerChanged(m_producer);
     }
     ui->speed3Spinner->setValue(value/100.0);
 }
@@ -87,7 +87,7 @@ void PlasmaWidget::on_speed4Dial_valueChanged(int value)
 {
     if (m_producer) {
         m_producer->set(kParamSpeed4, value/100.0);
-        emit producerChanged();
+        emit producerChanged(m_producer);
     }
     ui->speed4Spinner->setValue(value/100.0);
 }
@@ -101,7 +101,7 @@ void PlasmaWidget::on_move1Dial_valueChanged(int value)
 {
     if (m_producer) {
         m_producer->set(kParamMove1, value/100.0);
-        emit producerChanged();
+        emit producerChanged(m_producer);
     }
     ui->move1Spinner->setValue(value/100.0);
 }
@@ -115,7 +115,7 @@ void PlasmaWidget::on_move2Dial_valueChanged(int value)
 {
     if (m_producer) {
         m_producer->set(kParamMove2, value/100.0);
-        emit producerChanged();
+        emit producerChanged(m_producer);
     }
     ui->move2Spinner->setValue(value/100.0);
 }

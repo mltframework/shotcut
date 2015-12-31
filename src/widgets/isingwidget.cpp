@@ -42,7 +42,7 @@ void IsingWidget::on_tempDial_valueChanged(int value)
 {
     if (m_producer) {
         m_producer->set(kParamTemperature, value/100.0);
-        emit producerChanged();
+        emit producerChanged(m_producer);
     }
     ui->tempSpinner->setValue(value/100.0);
 }
@@ -56,7 +56,7 @@ void IsingWidget::on_borderGrowthDial_valueChanged(int value)
 {
     if (m_producer) {
         m_producer->set(kParamBorderGrowth, value/100.0);
-        emit producerChanged();
+        emit producerChanged(m_producer);
     }
     ui->borderGrowthSpinner->setValue(value/100.0);
 }
@@ -70,7 +70,7 @@ void IsingWidget::on_spontGrowthDial_valueChanged(int value)
 {
     if (m_producer) {
         m_producer->set(kParamSpontaneous, value/100.0);
-        emit producerChanged();
+        emit producerChanged(m_producer);
     }
     ui->spontGrowthSpinner->setValue(value/100.0);
 }

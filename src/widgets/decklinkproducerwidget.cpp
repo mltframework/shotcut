@@ -96,7 +96,7 @@ void DecklinkProducerWidget::on_deviceCombo_activated(int /*index*/)
         m_producer = 0;
         setProducer(producer(MLT.profile()));
         MLT.play();
-        emit producerChanged();
+        emit producerChanged(m_producer);
     }
 }
 

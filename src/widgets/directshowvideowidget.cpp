@@ -157,7 +157,7 @@ void DirectShowVideoWidget::on_videoCombo_activated(int index)
         m_producer = new Mlt::Producer(producer(MLT.profile()));
         MLT.setProducer(m_producer);
         MLT.play();
-        emit producerChanged();
+        emit producerChanged(m_producer);
     }
 }
 

@@ -118,7 +118,7 @@ void AvformatProducerWidget::reopen(Mlt::Producer* p)
     MLT.stop();
     connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
     emit producerReopened();
-    emit producerChanged();
+    emit producerChanged(p);
     MLT.seek(position);
     MLT.play(speed);
     setProducer(p);
@@ -132,8 +132,12 @@ void AvformatProducerWidget::recreateProducer()
                  kAspectRatioNumerator ","
                  kAspectRatioDenominator ","
                  kShotcutHashProperty);
-    reopen(p);
-    connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
+    if (m_producer->get_int(kMultitrackItemProperty)) {
+        emit producerChanged(p);
+        delete p;
+    } else {
+        reopen(p);
+    }
 }
 
 void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
@@ -307,8 +311,12 @@ void AvformatProducerWidget::on_resetButton_clicked()
     Mlt::Producer* p = producer(MLT.profile());
     ui->durationSpinBox->setValue(m_defaultDuration);
     ui->syncSlider->setValue(0);
-    reopen(p);
-    connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
+    if (m_producer->get_int(kMultitrackItemProperty)) {
+        emit producerChanged(p);
+        delete p;
+    } else {
+        reopen(p);
+    }
 }
 
 void AvformatProducerWidget::on_videoTrackComboBox_activated(int index)
@@ -336,7 +344,7 @@ void AvformatProducerWidget::on_scanComboBox_activated(int index)
             // We need to set these force_ properties as a string so they can be properly removed
             // by setting them NULL.
             m_producer->set("force_progressive", QString::number(index).toLatin1().constData());
-        emit producerChanged();
+        emit producerChanged(m_producer);
         connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
     }
 }
@@ -347,7 +355,7 @@ void AvformatProducerWidget::on_fieldOrderComboBox_activated(int index)
         int tff = m_producer->get_int("meta.media.top_field_first");
         if (m_producer->get("force_tff") || tff != index)
             m_producer->set("force_tff", QString::number(index).toLatin1().constData());
-        emit producerChanged();
+        emit producerChanged(m_producer);
         connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
     }
 }
@@ -365,7 +373,7 @@ void AvformatProducerWidget::on_aspectNumSpinBox_valueChanged(int)
             m_producer->set(kAspectRatioNumerator, ui->aspectNumSpinBox->text().toLatin1().constData());
             m_producer->set(kAspectRatioDenominator, ui->aspectDenSpinBox->text().toLatin1().constData());
         }
-        emit producerChanged();
+        emit producerChanged(m_producer);
         connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
     }
 }

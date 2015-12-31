@@ -65,7 +65,7 @@ void ToneProducerWidget::on_frequencySpinBox_valueChanged(int value)
     if (m_producer) {
         m_producer->set("frequency", value);
         m_producer->set(kShotcutDetailProperty, detail().toUtf8().constData());
-        emit producerChanged();
+        emit producerChanged(m_producer);
     }
 }
 
@@ -74,7 +74,7 @@ void ToneProducerWidget::on_levelSpinBox_valueChanged(int value)
     if (m_producer) {
         m_producer->set("level", value);
         m_producer->set(kShotcutDetailProperty, detail().toUtf8().constData());
-        emit producerChanged();
+        emit producerChanged(m_producer);
     }
 }
 

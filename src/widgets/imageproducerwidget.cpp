@@ -91,6 +91,7 @@ void ImageProducerWidget::reopen(Mlt::Producer* p)
 {
     int out = ui->durationSpinBox->value() - 1;
     int position = m_producer->position();
+    double speed = m_producer->get_speed();
 
     if (out + 1 > p->get_length())
         p->set("length", out + 1);
@@ -102,10 +103,12 @@ void ImageProducerWidget::reopen(Mlt::Producer* p)
         setProducer(0);
         return;
     }
-    emit producerReopened();
-    emit producerChanged();
-    MLT.seek(position);
+    MLT.stop();
     setProducer(p);
+    emit producerReopened();
+    emit producerChanged(p);
+    MLT.seek(position);
+    MLT.play(speed);
 }
 
 void ImageProducerWidget::on_resetButton_clicked()
@@ -128,7 +131,7 @@ void ImageProducerWidget::on_aspectNumSpinBox_valueChanged(int)
             m_producer->set(kAspectRatioNumerator, ui->aspectNumSpinBox->text().toLatin1().constData());
             m_producer->set(kAspectRatioDenominator, ui->aspectDenSpinBox->text().toLatin1().constData());
         }
-        emit producerChanged();
+        emit producerChanged(m_producer);
     }
 }
 
@@ -203,7 +206,7 @@ void ImageProducerWidget::on_sequenceCheckBox_clicked(bool checked)
 void ImageProducerWidget::on_repeatSpinBox_editingFinished()
 {
     m_producer->set("ttl", ui->repeatSpinBox->value());
-    emit producerChanged();
+    emit producerChanged(m_producer);
 }
 
 void ImageProducerWidget::on_defaultDurationButton_clicked()

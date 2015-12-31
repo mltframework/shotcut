@@ -20,6 +20,7 @@
 #define COMMANDS_H
 
 #include "models/multitrackmodel.h"
+#include "docks/timelinedock.h"
 #include "undohelper.h"
 #include <QUndoCommand>
 #include <QString>
@@ -37,7 +38,8 @@ enum {
     UndoIdTrimTransitionIn,
     UndoIdTrimTransitionOut,
     UndoIdAddTransitionByTrimIn,
-    UndoIdAddTransitionByTrimOut
+    UndoIdAddTransitionByTrimOut,
+    UndoIdUpdate
 };
 
 class AppendCommand : public QUndoCommand
@@ -407,6 +409,24 @@ private:
     QString m_propertyName;
     QString m_newMode;
     QString m_oldMode;
+};
+
+class UpdateCommand : public QUndoCommand
+{
+public:
+    UpdateCommand(TimelineDock& timeline, int trackIndex, int clipIndex, int position,
+        QUndoCommand * parent = 0);
+    void setXmlAfter(const QString& xml) { m_xmlAfter = xml; }
+    void redo();
+    void undo();
+private:
+    TimelineDock& m_timeline;
+    int m_trackIndex;
+    int m_clipIndex;
+    int m_position;
+    QString m_xmlAfter;
+    bool m_isFirstRedo;
+    UndoHelper m_undoHelper;
 };
 
 } // namespace Timeline

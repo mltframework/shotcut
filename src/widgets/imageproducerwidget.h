@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2014 Meltytech, LLC
+ * Copyright (c) 2012-2015 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -40,7 +40,7 @@ public:
     virtual void setProducer(Mlt::Producer*);
 
 signals:
-    void producerChanged();
+    void producerChanged(Mlt::Producer*);
     void producerReopened();
 
 public slots:
