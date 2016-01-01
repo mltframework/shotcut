@@ -332,6 +332,7 @@ MainWindow::MainWindow()
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_historyDock, SLOT(setDisabled(bool)));
     connect(m_player, SIGNAL(profileChanged()), m_encodeDock, SLOT(onProfileChanged()));
     connect(this, SIGNAL(profileChanged()), m_encodeDock, SLOT(onProfileChanged()));
+    connect(this, SIGNAL(profileChanged()), SLOT(onProfileChanged()));
     m_encodeDock->onProfileChanged();
 
     m_jobsDock = new JobsDock(this);
@@ -2590,6 +2591,14 @@ void MainWindow::onProfileTriggered(QAction *action)
     MLT.setProfile(action->data().toString());
     MLT.restart();
     emit profileChanged();
+}
+
+void MainWindow::onProfileChanged()
+{
+    if (multitrack() && MLT.isMultitrack() &&
+       (m_timelineDock->selection().isEmpty() || m_timelineDock->currentTrack() == -1)) {
+        emit m_timelineDock->selected(multitrack());
+    }
 }
 
 void MainWindow::on_actionAddCustomProfile_triggered()

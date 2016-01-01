@@ -209,6 +209,7 @@ private slots:
     void onExternalTriggered(QAction*);
     void onKeyerTriggered(QAction*);
     void onProfileTriggered(QAction*);
+    void onProfileChanged();
     void on_actionAddCustomProfile_triggered();
     void processMultipleFiles();
     void onLanguageTriggered(QAction*);
