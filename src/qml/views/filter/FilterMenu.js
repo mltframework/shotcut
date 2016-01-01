@@ -26,7 +26,7 @@ function maxMenuHeight(pad) {
         if (metadatamodel.isVisible(i))
             visibleItems++;
     }
-    return (Math.max(visibleItems, 5) * ITEM_HEIGHT) + pad
+    return (Math.min(Math.max(visibleItems, 5), 15) * ITEM_HEIGHT) + pad
 }
 
 function calcMenuRect(triggerItem, pad) {
