@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2015 Meltytech, LLC
+ * Copyright (c) 2012-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -78,7 +78,7 @@ Mlt::Producer* AvformatProducerWidget::producer(Mlt::Profile& profile)
     {
         double warpspeed = ui->speedSpinBox->value();
         char* filename = GetFilenameFromProducer(m_producer);
-        QString s = QString("%1:%2:%3").arg("timewarp").arg(warpspeed).arg(filename);
+        QString s = QString("%1:%L2:%3").arg("timewarp").arg(warpspeed).arg(filename);
         p = new Mlt::Producer(profile, s.toUtf8().constData());
         p->set(kShotcutProducerProperty, "avformat");
     }
