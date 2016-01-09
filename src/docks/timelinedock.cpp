@@ -150,7 +150,7 @@ void TimelineDock::pulseLockButtonOnTrack(int trackIndex)
 {
     QMetaObject::invokeMethod(m_quickView.rootObject(), "pulseLockButtonOnTrack",
             Qt::DirectConnection, Q_ARG(QVariant, trackIndex));
-    MAIN.showStatusMessage(tr("This track is locked"));
+    emit showStatusMessage(tr("This track is locked"));
 }
 
 void TimelineDock::chooseClipAtPosition(int position, int * trackIndex, int * clipIndex)
@@ -718,7 +718,7 @@ void TimelineDock::splitClip(int trackIndex, int clipIndex)
                         new Timeline::SplitCommand(m_model, trackIndex, clipIndex, m_position));
                 }
             } else {
-                MAIN.showStatusMessage(tr("You cannot split a transition."));
+                emit showStatusMessage(tr("You cannot split a transition."));
             }
         }
     }

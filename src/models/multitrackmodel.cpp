@@ -248,6 +248,12 @@ QHash<int, QByteArray> MultitrackModel::roleNames() const
     return roles;
 }
 
+void MultitrackModel::audioLevelsProgress(const QString& resource, double percent)
+{
+    emit showStatusMessage(tr("%1% done getting audio levels for %2")
+        .arg(qRound(percent * 100)).arg(resource));
+}
+
 void MultitrackModel::setTrackName(int row, const QString &value)
 {
     if (row < m_trackList.size()) {

@@ -151,6 +151,7 @@ void AudioLevelsTask::run()
 
         // for each frame
         int n = tempProducer()->get_playtime();
+        int progress = -1;
         for (int i = 0; i < n && !m_isCanceled; i++) {
             Mlt::Frame* frame = tempProducer()->get_frame();
             if (frame && frame->is_valid() && !frame->get_int("test_audio")) {
@@ -168,8 +169,15 @@ void AudioLevelsTask::run()
                     levels << levels.last();
             }
             delete frame;
+
+            int decile = 10 * i / (n-1);
+            if (decile > progress && !m_isCanceled) {
+                progress = decile;
+                QFileInfo fi(tempProducer()->get("resource"));
+                m_model->audioLevelsProgress(fi.fileName(), decile / 10.0);
+            }
         }
-        if (levels.size() > 0 && !m_isCanceled) {
+        if (!m_isCanceled) {
             // Put into an image for caching.
             int count = levels.size();
             QImage image((count + 3) / 4 / channels, channels, QImage::Format_ARGB32);

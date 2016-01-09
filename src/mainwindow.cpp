@@ -266,6 +266,8 @@ MainWindow::MainWindow()
     connect(m_player, SIGNAL(seeked(int)), m_timelineDock, SLOT(onSeeked(int)));
     connect(m_timelineDock, SIGNAL(seeked(int)), SLOT(seekTimeline(int)));
     connect(m_timelineDock, SIGNAL(clipClicked()), SLOT(moveNavigationPositionToCurrentSelection()));
+    connect(m_timelineDock, SIGNAL(showStatusMessage(QString)), this, SLOT(showStatusMessage(QString)));
+    connect(m_timelineDock->model(), SIGNAL(showStatusMessage(QString)), this, SLOT(showStatusMessage(QString)));
     connect(m_timelineDock->model(), SIGNAL(created()), SLOT(onMultitrackCreated()));
     connect(m_timelineDock->model(), SIGNAL(closed()), SLOT(onMultitrackClosed()));
     connect(m_timelineDock->model(), SIGNAL(modified()), SLOT(onMultitrackModified()));

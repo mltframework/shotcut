@@ -86,6 +86,7 @@ signals:
     void fadeOutChanged(int duration);
     void selected(Mlt::Producer* producer);
     void clipClicked();
+    void showStatusMessage(QString);
 
 public slots:
     void addAudioTrack();

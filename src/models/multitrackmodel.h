@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2015 Meltytech, LLC
+ * Copyright (c) 2013-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -84,6 +84,7 @@ public:
                       const QModelIndex &parent = QModelIndex()) const;
     QModelIndex parent(const QModelIndex &index) const;
     QHash<int, QByteArray> roleNames() const;
+    void audioLevelsProgress(const QString &resource, double percent);
     void audioLevelsReady(const QModelIndex &index);
     bool createIfNeeded();
     void addBackgroundTrack();
@@ -112,6 +113,7 @@ signals:
     void seeked(int position);
     void trackHeightChanged();
     void scaleFactorChanged();
+    void showStatusMessage(QString);
 
 public slots:
     void refreshTrackList();
