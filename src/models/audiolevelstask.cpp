@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2015 Meltytech, LLC
+ * Copyright (c) 2013-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,6 +27,8 @@
 #include <QRgb>
 #include <QThreadPool>
 #include <QMutex>
+#include <QFileInfo>
+#include <QDebug>
 
 static QList<AudioLevelsTask*> tasksList;
 static QMutex tasksListMutex;
@@ -41,6 +43,7 @@ AudioLevelsTask::AudioLevelsTask(Mlt::Producer& producer, MultitrackModel* model
     , m_model(model)
     , m_tempProducer(0)
     , m_isCanceled(false)
+    , m_isForce(false)
 {
     m_producers << ProducerAndIndex(new Mlt::Producer(producer), index);
 }
@@ -52,7 +55,7 @@ AudioLevelsTask::~AudioLevelsTask()
         delete p.first;
 }
 
-void AudioLevelsTask::start(Mlt::Producer& producer, MultitrackModel* model, const QModelIndex& index)
+void AudioLevelsTask::start(Mlt::Producer& producer, MultitrackModel* model, const QModelIndex& index, bool force)
 {
     if (producer.is_valid() && index.isValid()) {
         AudioLevelsTask* task = new AudioLevelsTask(producer, model, index);
@@ -69,6 +72,7 @@ void AudioLevelsTask::start(Mlt::Producer& producer, MultitrackModel* model, con
         }
         if (task) {
             // Otherwise, start a new audio levels generation thread.
+            task->m_isForce = force;
             tasksList << task;
             QThreadPool::globalInstance()->start(task);
         }
@@ -115,6 +119,7 @@ Mlt::Producer* AudioLevelsTask::tempProducer()
             m_tempProducer->attach(channels);
             m_tempProducer->attach(converter);
             m_tempProducer->attach(levels);
+            qDebug() << "generating audio levels for" << m_tempProducer->get("resource");
         }
     }
     return m_tempProducer;
@@ -136,18 +141,18 @@ QString AudioLevelsTask::cacheKey()
 
 void AudioLevelsTask::run()
 {
-    int n = tempProducer()->get_playtime();
     // 2 channels interleaved of uchar values
     QVariantList levels;
     QImage image = DB.getThumbnail(cacheKey());
-    if (image.isNull()) {
+    if (image.isNull() || m_isForce) {
         const char* key[2] = { "meta.media.audio_level.0", "meta.media.audio_level.1"};
         // TODO: use project channel count
         int channels = 2;
 
         // for each frame
+        int n = tempProducer()->get_playtime();
         for (int i = 0; i < n && !m_isCanceled; i++) {
-            Mlt::Frame* frame = m_tempProducer->get_frame();
+            Mlt::Frame* frame = tempProducer()->get_frame();
             if (frame && frame->is_valid() && !frame->get_int("test_audio")) {
                 mlt_audio_format format = mlt_audio_s16;
                 int frequency = 48000;
@@ -183,13 +188,21 @@ void AudioLevelsTask::run()
                 }
                 image.setPixel(i / 2, i % channels, p);
             }
-            DB.putThumbnail(cacheKey(), image);
+            if (!image.isNull()) {
+                DB.putThumbnail(cacheKey(), image);
+            } else {
+                // If the produducer does not produce audio, make a special 1x1 RGBA(0,0,0,0) image,
+                // which is used to prevent QImage::isNull() from being true and continually trying
+                // to regenerate audio levels for this file.
+                QImage image(1, 1, QImage::Format_ARGB32);
+                DB.putThumbnail(cacheKey(), image);
+            }
         }
     } else if (!m_isCanceled) {
         // convert cached image
         int channels = 2;
         int n = image.width() * image.height();
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; n > 1 && i < n; i++) {
             QRgb p = image.pixel(i / 2, i % channels);
             levels << qRed(p);
             levels << qGreen(p);

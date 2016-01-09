@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2015 Meltytech, LLC
+ * Copyright (c) 2013-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -30,7 +30,7 @@ class AudioLevelsTask : public QRunnable
 public:
     AudioLevelsTask(Mlt::Producer& producer, MultitrackModel* model, const QModelIndex& index);
     virtual ~AudioLevelsTask();
-    static void start(Mlt::Producer& producer, MultitrackModel* model, const QModelIndex& index);
+    static void start(Mlt::Producer& producer, MultitrackModel* model, const QModelIndex& index, bool force = false);
     static void closeAll();
     bool operator==(AudioLevelsTask& b);
 
@@ -46,6 +46,7 @@ private:
     QList<ProducerAndIndex> m_producers;
     Mlt::Producer* m_tempProducer;
     bool m_isCanceled;
+    bool m_isForce;
 };
 
 #endif // AUDIOLEVELSTASK_H

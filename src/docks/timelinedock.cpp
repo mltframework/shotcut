@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2015 Meltytech, LLC
+ * Copyright (c) 2013-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,6 +18,7 @@
 
 #include "timelinedock.h"
 #include "ui_timelinedock.h"
+#include "models/audiolevelstask.h"
 #include "models/multitrackmodel.h"
 #include "qmltypes/thumbnailprovider.h"
 #include "mainwindow.h"
@@ -562,6 +563,13 @@ void TimelineDock::emitSelectedFromSelection()
         emit selected(info->producer);
         delete info;
     }
+}
+
+void TimelineDock::remakeAudioLevels(int trackIndex, int clipIndex)
+{
+    QModelIndex modelIndex = m_model.index(clipIndex, 0, m_model.index(trackIndex));
+    QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
+    AudioLevelsTask::start(*info->producer, &m_model, modelIndex, /* force */ true);
 }
 
 void TimelineDock::setTrackName(int trackIndex, const QString &value)
