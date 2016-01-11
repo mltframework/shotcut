@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2015 Meltytech, LLC
+ * Copyright (c) 2013-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -571,6 +571,11 @@ Rectangle {
             visible: !isBlank && !isTransition
             text: qsTr('Split At Playhead (S)')
             onTriggered: timeline.splitClip(trackIndex, index)
+        }
+        MenuItem {
+            visible: !isBlank && !isTransition
+            text: qsTr('Rebuild Audio Waveform')
+            onTriggered: timeline.remakeAudioLevels(trackIndex, index)
         }
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2015 Meltytech, LLC
+ * Copyright (c) 2013-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,6 +18,7 @@
 
 #include "timelinedock.h"
 #include "ui_timelinedock.h"
+#include "models/audiolevelstask.h"
 #include "models/multitrackmodel.h"
 #include "qmltypes/thumbnailprovider.h"
 #include "mainwindow.h"
@@ -149,7 +150,7 @@ void TimelineDock::pulseLockButtonOnTrack(int trackIndex)
 {
     QMetaObject::invokeMethod(m_quickView.rootObject(), "pulseLockButtonOnTrack",
             Qt::DirectConnection, Q_ARG(QVariant, trackIndex));
-    MAIN.showStatusMessage(tr("This track is locked"));
+    emit showStatusMessage(tr("This track is locked"));
 }
 
 void TimelineDock::chooseClipAtPosition(int position, int * trackIndex, int * clipIndex)
@@ -571,6 +572,13 @@ void TimelineDock::emitSelectedFromSelection()
     }
 }
 
+void TimelineDock::remakeAudioLevels(int trackIndex, int clipIndex)
+{
+    QModelIndex modelIndex = m_model.index(clipIndex, 0, m_model.index(trackIndex));
+    QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
+    AudioLevelsTask::start(*info->producer, &m_model, modelIndex, /* force */ true);
+}
+
 void TimelineDock::setTrackName(int trackIndex, const QString &value)
 {
     MAIN.undoStack()->push(
@@ -717,7 +725,7 @@ void TimelineDock::splitClip(int trackIndex, int clipIndex)
                         new Timeline::SplitCommand(m_model, trackIndex, clipIndex, m_position));
                 }
             } else {
-                MAIN.showStatusMessage(tr("You cannot split a transition."));
+                emit showStatusMessage(tr("You cannot split a transition."));
             }
         }
     }

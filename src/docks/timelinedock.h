@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2015 Meltytech, LLC
+ * Copyright (c) 2013-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -86,6 +86,7 @@ signals:
     void fadeOutChanged(int duration);
     void selected(Mlt::Producer* producer);
     void clipClicked();
+    void showStatusMessage(QString);
 
 public slots:
     void addAudioTrack();
@@ -122,6 +123,7 @@ public slots:
     void removeTrack();
     void onProducerChanged(Mlt::Producer*);
     void emitSelectedFromSelection();
+    void remakeAudioLevels(int trackIndex, int clipIndex);
 
 protected:
     void dragEnterEvent(QDragEnterEvent* event);
