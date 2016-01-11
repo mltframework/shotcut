@@ -84,7 +84,6 @@ public:
                       const QModelIndex &parent = QModelIndex()) const;
     QModelIndex parent(const QModelIndex &index) const;
     QHash<int, QByteArray> roleNames() const;
-    void audioLevelsProgress(const QString &resource, double percent);
     void audioLevelsReady(const QModelIndex &index);
     bool createIfNeeded();
     void addBackgroundTrack();

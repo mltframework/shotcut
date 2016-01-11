@@ -96,13 +96,16 @@ public:
 
         QPainterPath path;
         path.moveTo(-1, height());
-        for (int i = 0; i < width(); ++i)
+        int i = 0;
+        for (; i < width(); ++i)
         {
-            int idx = qMin(m_inPoint + int(i * indicesPrPixel), data.length() - 2);
+            int idx = m_inPoint + int(i * indicesPrPixel);
+            if (idx + 1 >= data.length())
+                break;
             qreal level = qMax(data.at(idx).toReal(), data.at(idx + 1).toReal()) / 256;
             path.lineTo(i, height() - level * height());
         }
-        path.lineTo(width(), height());
+        path.lineTo(i, height());
         painter->fillPath(path, m_color.lighter());
 
         QPen pen(painter->pen());

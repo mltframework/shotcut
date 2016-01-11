@@ -27,7 +27,7 @@
 #include <QRgb>
 #include <QThreadPool>
 #include <QMutex>
-#include <QFileInfo>
+#include <QTime>
 #include <QDebug>
 
 static QList<AudioLevelsTask*> tasksList;
@@ -146,12 +146,12 @@ void AudioLevelsTask::run()
     QImage image = DB.getThumbnail(cacheKey());
     if (image.isNull() || m_isForce) {
         const char* key[2] = { "meta.media.audio_level.0", "meta.media.audio_level.1"};
+        QTime updateTime; updateTime.start();
         // TODO: use project channel count
         int channels = 2;
 
         // for each frame
         int n = tempProducer()->get_playtime();
-        int progress = -1;
         for (int i = 0; i < n && !m_isCanceled; i++) {
             Mlt::Frame* frame = tempProducer()->get_frame();
             if (frame && frame->is_valid() && !frame->get_int("test_audio")) {
@@ -170,11 +170,14 @@ void AudioLevelsTask::run()
             }
             delete frame;
 
-            int decile = 10 * i / (n-1);
-            if (decile > progress && !m_isCanceled) {
-                progress = decile;
-                QFileInfo fi(tempProducer()->get("resource"));
-                m_model->audioLevelsProgress(fi.fileName(), decile / 10.0);
+            // Incrementally update the audio levels every 5 seconds.
+            if (updateTime.elapsed() > 5*1000 && !m_isCanceled) {
+                updateTime.restart();
+                foreach (ProducerAndIndex p, m_producers) {
+                    QVariantList* levelsCopy = new QVariantList(levels);
+                    p.first->set(kAudioLevelsProperty, levelsCopy, 0, (mlt_destructor) deleteQVariantList);
+                    m_model->audioLevelsReady(p.second);
+                }
             }
         }
         if (!m_isCanceled) {
