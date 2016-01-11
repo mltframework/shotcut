@@ -380,7 +380,14 @@ void TimelineDock::onProducerChanged(Mlt::Producer* after)
         int clipIndex = selection().first();
         QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
         if (info) {
-            after->set_in_and_out(info->frame_in, info->frame_out);
+            double oldSpeed = qstrcmp("timewarp", info->producer->get("mlt_service")) ? 1.0 : info->producer->get_double("warp_speed");
+            double newSpeed = qstrcmp("timewarp", after->get("mlt_service")) ? 1.0 : after->get_double("warp_speed");
+            double speedRatio = oldSpeed / newSpeed;
+
+            int length = qRound(info->length * speedRatio);
+            after->set("length", length);
+            after->set_in_and_out(qMin(qRound(info->frame_in * speedRatio), length - 1),
+                                  qMin(qRound(info->frame_out * speedRatio), length - 1));
             QString xmlAfter = MLT.XML(after);
             m_updateCommand->setXmlAfter(xmlAfter);
             MAIN.undoStack()->push(m_updateCommand);

@@ -96,7 +96,16 @@ void AvformatProducerWidget::reopen(Mlt::Producer* p)
 
     if( m_recalcDuration )
     {
-        position = 0;
+        double oldSpeed = GetSpeedFromProducer(m_producer);
+        double newSpeed = ui->speedSpinBox->value();
+        double speedRatio = oldSpeed / newSpeed;
+        int in = m_producer->get_in();
+
+        length = qRound(length * speedRatio);
+        p->set("length", length);
+        p->set_in_and_out(qMin(qRound(in * speedRatio), length - 1),
+                          qMin(qRound(out * speedRatio), length - 1));
+        position = qRound(position * speedRatio);
     }
     else
     {
