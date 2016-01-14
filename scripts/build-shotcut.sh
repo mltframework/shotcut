@@ -1809,10 +1809,10 @@ function deploy_osx
   cmd ln -s /Applications staging
   cmd cp shotcut/COPYING staging
   sync
-  cmd hdiutil create -fs HFS+ -srcfolder staging -volname Shotcut -format UDBZ "$dmg_name"
-  while [ "$?" -ne 0 ]; do
-    cmd hdiutil create -fs HFS+ -srcfolder staging -volname Shotcut -format UDBZ "$dmg_name"
-  done
+  cmd hdiutil create -fs HFS+ -srcfolder staging -volname Shotcut -format UDBZ -size 300m "$dmg_name"
+  #while [ "$?" -ne 0 ]; do
+  #  cmd hdiutil create -fs HFS+ -srcfolder staging -volname Shotcut -format UDBZ "$dmg_name"
+  #done
   cmd rm -rf staging
 }
 
