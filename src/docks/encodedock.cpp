@@ -1009,7 +1009,7 @@ void EncodeDock::on_videoRateControlCombo_activated(int index)
         ui->videoBitrateCombo->show();
         ui->videoBufferSizeSpinner->show();
         ui->videoQualitySpinner->hide();
-        ui->dualPassCheckbox->hide();
+        ui->dualPassCheckbox->show();
         ui->videoBitrateLabel->show();
         ui->videoBitrateSuffixLabel->show();
         ui->videoBufferSizeLabel->show();
