@@ -835,14 +835,14 @@ bool TimelineDock::event(QEvent *event)
 {
     bool result = QDockWidget::event(event);
     if (event->type() == QEvent::PaletteChange || event->type() == QEvent::StyleChange)
-        onVisibilityChanged(true);
+        onVisibilityChanged(true, true);
     return result;
 }
 
-void TimelineDock::onVisibilityChanged(bool visible)
+void TimelineDock::onVisibilityChanged(bool visible, bool force)
 {
     if (visible) {
-        if (m_quickView.source().isEmpty()) {
+        if (m_quickView.source().isEmpty() || force) {
             QDir sourcePath = QmlUtilities::qmlDir();
             sourcePath.cd("timeline");
             m_quickView.setSource(QUrl::fromLocalFile(sourcePath.filePath("timeline.qml")));
@@ -855,6 +855,8 @@ void TimelineDock::onVisibilityChanged(bool visible)
                     this, SLOT(emitSelectedFromSelection()));
             connect(m_quickView.rootObject(), SIGNAL(clipClicked()),
                     this, SIGNAL(clipClicked()));
+            if (force && Settings.timelineShowWaveforms())
+                m_model.reload();
         } else if (Settings.timelineShowWaveforms()) {
             m_model.reload();
         }

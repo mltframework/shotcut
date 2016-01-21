@@ -142,7 +142,7 @@ private:
     Timeline::UpdateCommand* m_updateCommand;
 
 private slots:
-    void onVisibilityChanged(bool visible);
+    void onVisibilityChanged(bool visible, bool force = false);
 };
 
 #endif // TIMELINEDOCK_H
