@@ -86,6 +86,8 @@ private slots:
 
     void on_formatCombo_currentIndexChanged(int index);
 
+    void on_videoBufferDurationChanged();
+
 private:
     enum {
         RateControlAverage = 0,

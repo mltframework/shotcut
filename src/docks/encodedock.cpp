@@ -54,6 +54,9 @@ EncodeDock::EncodeDock(QWidget *parent) :
         ui->parallelCheckbox->setHidden(true);
     toggleViewAction()->setIcon(windowIcon());
 
+    connect(ui->videoBitrateCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(on_videoBufferDurationChanged()));
+    connect(ui->videoBufferSizeSpinner, SIGNAL(valueChanged(double)), this, SLOT(on_videoBufferDurationChanged()));
+
     m_presetsModel.setSourceModel(new QStandardItemModel(this));
     m_presetsModel.setFilterCaseSensitivity(Qt::CaseInsensitive);
     ui->presetsTree->setModel(&m_presetsModel);
@@ -686,6 +689,8 @@ void EncodeDock::resetOptions()
     ui->audioQualitySpinner->setValue(50);
     ui->disableAudioCheckbox->setChecked(false);
 
+    on_videoBufferDurationChanged();
+
     Mlt::Properties preset;
     preset.set("f", "mp4");
     preset.set("movflags", "+faststart");
@@ -1094,4 +1099,13 @@ void EncodeDock::on_formatCombo_currentIndexChanged(int index)
 {
     Q_UNUSED(index);
     m_extension.clear();
+}
+
+void EncodeDock::on_videoBufferDurationChanged()
+{
+    QString vb = ui->videoBitrateCombo->currentText();
+    vb.replace('k', "").replace('M', "000");
+    double duration = (double)ui->videoBufferSizeSpinner->value() * 8.0 / vb.toDouble();
+    QString label = QString(tr("KiB (%1s)")).arg(duration);
+    ui->videoBufferSizeSuffixLabel->setText(label);
 }
