@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2015 Meltytech, LLC
+ * Copyright (c) 2013-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -28,6 +28,7 @@ class ShotcutSettings : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(bool timelineShowWaveforms READ timelineShowWaveforms WRITE setTimelineShowWaveforms NOTIFY timelineShowWaveformsChanged)
+    Q_PROPERTY(bool timelineShowThumbnails READ timelineShowThumbnails WRITE setTimelineShowThumbnails NOTIFY timelineShowThumbnailsChanged)
     Q_PROPERTY(bool timelineRippleAllTracks READ timelineRippleAllTracks WRITE setTimelineRippleAllTracks NOTIFY timelineRippleAllTracksChanged)
     Q_PROPERTY(QString openPath READ openPath WRITE setOpenPath NOTIFY openPathChanged)
     Q_PROPERTY(QString savePath READ savePath WRITE setSavePath NOTIFY savePathChanged)
@@ -107,6 +108,8 @@ public:
 
     bool timelineShowWaveforms() const;
     void setTimelineShowWaveforms(bool);
+    bool timelineShowThumbnails() const;
+    void setTimelineShowThumbnails(bool);
     bool timelineRippleAllTracks() const;
     void setTimelineRippleAllTracks(bool);
 
@@ -134,6 +137,7 @@ signals:
     void openPathChanged();
     void savePathChanged();
     void timelineShowWaveformsChanged();
+    void timelineShowThumbnailsChanged();
     void timelineRippleAllTracksChanged();
     void playerGpuChanged();
     void audioInDurationChanged();

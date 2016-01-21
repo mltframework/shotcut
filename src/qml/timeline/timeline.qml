@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2015 Meltytech, LLC
+ * Copyright (c) 2013-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -398,6 +398,13 @@ Rectangle {
         }
         MenuSeparator {}
         MenuItem {
+            text: qsTr("Ripple All Tracks")
+            checkable: true
+            checked: settings.timelineRippleAllTracks
+            onTriggered: settings.timelineRippleAllTracks = checked
+        }
+        MenuSeparator {}
+        MenuItem {
             enabled: multitrack.trackHeight >= 50
             text: qsTr('Make Tracks Shorter')
             shortcut: 'Ctrl+-'
@@ -407,13 +414,6 @@ Rectangle {
             text: qsTr('Make Tracks Taller')
             shortcut: 'Ctrl+='
             onTriggered: makeTracksTaller()
-        }
-        MenuSeparator {}
-        MenuItem {
-            text: qsTr("Ripple All Tracks")
-            checkable: true
-            checked: settings.timelineRippleAllTracks
-            onTriggered: settings.timelineRippleAllTracks = checked
         }
         MenuItem {
             text: qsTr('Show Audio Waveforms')
@@ -426,6 +426,12 @@ Rectangle {
                         tracksRepeater.itemAt(i).redrawWaveforms()
                 }
             }
+        }
+        MenuItem {
+            text: qsTr('Show Video Thumbnails')
+            checkable: true
+            checked: settings.timelineShowThumbnails
+            onTriggered: settings.timelineShowThumbnails = checked
         }
         MenuItem {
             text: qsTr('Reload')

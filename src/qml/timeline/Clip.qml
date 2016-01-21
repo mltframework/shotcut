@@ -105,6 +105,7 @@ Rectangle {
 
     Image {
         id: outThumbnail
+        visible: settings.timelineShowThumbnails
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.margins: parent.border.width
@@ -116,6 +117,7 @@ Rectangle {
 
     Image {
         id: inThumbnail
+        visible: settings.timelineShowThumbnails
         anchors.left: parent.left
         anchors.top: parent.top
         anchors.margins: parent.border.width
@@ -179,7 +181,8 @@ Rectangle {
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.topMargin: parent.border.width
-        anchors.leftMargin: parent.border.width + (isAudio? 0 : inThumbnail.width)
+        anchors.leftMargin: parent.border.width +
+            ((isAudio || !settings.timelineShowThumbnails) ? 0 : inThumbnail.width)
         width: label.width + 2
         height: label.height
     }
@@ -193,7 +196,8 @@ Rectangle {
             top: parent.top
             left: parent.left
             topMargin: parent.border.width + 1
-            leftMargin: parent.border.width + (isAudio? 0 : inThumbnail.width) + 1
+            leftMargin: parent.border.width +
+                ((isAudio || !settings.timelineShowThumbnails) ? 0 : inThumbnail.width) + 1
         }
         color: 'black'
     }

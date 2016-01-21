@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2015 Meltytech, LLC
+ * Copyright (c) 2013-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -340,6 +340,17 @@ void ShotcutSettings::setTimelineShowWaveforms(bool b)
 {
     settings.setValue("timeline/waveforms", b);
     emit timelineShowWaveformsChanged();
+}
+
+bool ShotcutSettings::timelineShowThumbnails() const
+{
+    return settings.value("timeline/thumbnails", true).toBool();
+}
+
+void ShotcutSettings::setTimelineShowThumbnails(bool b)
+{
+    settings.setValue("timeline/thumbnails", b);
+    emit timelineShowThumbnailsChanged();
 }
 
 bool ShotcutSettings::timelineRippleAllTracks() const
