@@ -66,7 +66,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
 #ifdef Q_OS_WIN
     onVisibilityChanged(true);
 #else
-    connect(this, &QDockWidget::visibilityChanged, this, &TimelineDock::onVisibilityChanged);
+    connect(this, &QDockWidget::visibilityChanged, this, &TimelineDock::load);
 #endif
     qDebug() << "end";
 }
@@ -835,31 +835,34 @@ bool TimelineDock::event(QEvent *event)
 {
     bool result = QDockWidget::event(event);
     if (event->type() == QEvent::PaletteChange || event->type() == QEvent::StyleChange)
-        onVisibilityChanged(true, true);
+        load(true);
     return result;
 }
 
-void TimelineDock::onVisibilityChanged(bool visible, bool force)
+void TimelineDock::load(bool force)
 {
-    if (visible) {
-        if (m_quickView.source().isEmpty() || force) {
-            QDir sourcePath = QmlUtilities::qmlDir();
-            sourcePath.cd("timeline");
-            m_quickView.setSource(QUrl::fromLocalFile(sourcePath.filePath("timeline.qml")));
-            disconnect(this, SIGNAL(visibilityChanged(bool)), this, SLOT(onVisibilityChanged(bool)));
-            connect(m_quickView.rootObject(), SIGNAL(currentTrackChanged()),
-                    this, SIGNAL(currentTrackChanged()));
-            connect(m_quickView.rootObject(), SIGNAL(selectionChanged()),
-                    this, SIGNAL(selectionChanged()));
-            connect(m_quickView.rootObject(), SIGNAL(selectionChanged()),
-                    this, SLOT(emitSelectedFromSelection()));
-            connect(m_quickView.rootObject(), SIGNAL(clipClicked()),
-                    this, SIGNAL(clipClicked()));
-            if (force && Settings.timelineShowWaveforms())
-                m_model.reload();
-        } else if (Settings.timelineShowWaveforms()) {
+    if (m_quickView.source().isEmpty() || force) {
+        QDir sourcePath = QmlUtilities::qmlDir();
+        sourcePath.cd("timeline");
+        m_quickView.setSource(QUrl::fromLocalFile(sourcePath.filePath("timeline.qml")));
+        disconnect(this, SIGNAL(load(bool)), this, SLOT(load(bool)));
+        connect(m_quickView.rootObject(), SIGNAL(currentTrackChanged()),
+                this, SIGNAL(currentTrackChanged()));
+        connect(m_quickView.rootObject(), SIGNAL(selectionChanged()),
+                this, SIGNAL(selectionChanged()));
+        connect(m_quickView.rootObject(), SIGNAL(selectionChanged()),
+                this, SLOT(emitSelectedFromSelection()));
+        connect(m_quickView.rootObject(), SIGNAL(clipClicked()),
+                this, SIGNAL(clipClicked()));
+        if (force && Settings.timelineShowWaveforms())
             m_model.reload();
-        }
+    } else if (Settings.timelineShowWaveforms()) {
+        m_model.reload();
     }
 }
 
+void TimelineDock::onVisibilityChanged(bool visible)
+{
+    if (visible)
+        load();
+}

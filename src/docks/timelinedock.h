@@ -135,6 +135,8 @@ protected:
 private:
     bool isBlank(int trackIndex, int clipIndex);
     void pulseLockButtonOnTrack(int trackIndex);
+    void load(bool force = false);
+
     Ui::TimelineDock *ui;
     QQuickWidget m_quickView;
     MultitrackModel m_model;
@@ -142,7 +144,7 @@ private:
     Timeline::UpdateCommand* m_updateCommand;
 
 private slots:
-    void onVisibilityChanged(bool visible, bool force = false);
+    void onVisibilityChanged(bool visible);
 };
 
 #endif // TIMELINEDOCK_H
