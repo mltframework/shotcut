@@ -845,7 +845,7 @@ void TimelineDock::load(bool force)
         QDir sourcePath = QmlUtilities::qmlDir();
         sourcePath.cd("timeline");
         m_quickView.setSource(QUrl::fromLocalFile(sourcePath.filePath("timeline.qml")));
-        disconnect(this, SIGNAL(load(bool)), this, SLOT(load(bool)));
+        disconnect(this, SIGNAL(visibilityChanged(bool)), this, SLOT(onVisibilityChanged(bool)));
         connect(m_quickView.rootObject(), SIGNAL(currentTrackChanged()),
                 this, SIGNAL(currentTrackChanged()));
         connect(m_quickView.rootObject(), SIGNAL(selectionChanged()),
