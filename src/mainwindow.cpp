@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2015 Meltytech, LLC
+ * Copyright (c) 2011-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -703,8 +703,14 @@ void MainWindow::setupSettingsMenu()
     else
         ui->actionSystemTheme->setChecked(true);
 
-    // Setup the display method actions.
 #ifdef Q_OS_WIN
+    // On Windows, if there is no JACK or it is not running
+    // then Shotcut crashes inside MLT's call to jack_client_open().
+    // Therefore, the JACK option for Shotcut is banned on Windows.
+    delete ui->actionJack;
+    ui->actionJack = 0;
+
+    // Setup the display method actions.
     if (!Settings.playerGPU()) {
         group = new QActionGroup(this);
         ui->actionDrawingAutomatic->setData(0);
@@ -1092,7 +1098,7 @@ void MainWindow::seekPlaylist(int start)
     m_player->setIn(-1);
     m_player->setOut(-1);
     // since we do not emit producerOpened, these components need updating
-    on_actionJack_triggered(ui->actionJack->isChecked());
+    on_actionJack_triggered(ui->actionJack && ui->actionJack->isChecked());
     m_player->onProducerOpened(false);
     m_encodeDock->onProducerOpened();
     m_filterController->setProducer();
@@ -1111,7 +1117,7 @@ void MainWindow::seekTimeline(int position)
         m_player->setIn(-1);
         m_player->setOut(-1);
         // since we do not emit producerOpened, these components need updating
-        on_actionJack_triggered(ui->actionJack->isChecked());
+        on_actionJack_triggered(ui->actionJack && ui->actionJack->isChecked());
         m_player->onProducerOpened(false);
         m_encodeDock->onProducerOpened();
         m_filterController->setProducer();
@@ -1129,7 +1135,8 @@ void MainWindow::readPlayerSettings()
     ui->actionRealtime->setChecked(Settings.playerRealtime());
     ui->actionProgressive->setChecked(Settings.playerProgressive());
     ui->actionScrubAudio->setChecked(Settings.playerScrubAudio());
-    ui->actionJack->setChecked(Settings.playerJACK());
+    if (ui->actionJack)
+        ui->actionJack->setChecked(Settings.playerJACK());
     if (ui->actionGPU) {
         ui->actionGPU->setChecked(Settings.playerGPU());
         MLT.videoWidget()->setProperty("gpu", ui->actionGPU->isChecked());
@@ -1801,7 +1808,7 @@ void MainWindow::onProducerOpened()
         setCurrentFile(m_autosaveFile->managedFileName());
     else if (!MLT.URL().isEmpty())
         setCurrentFile(MLT.URL());
-    on_actionJack_triggered(ui->actionJack->isChecked());
+    on_actionJack_triggered(ui->actionJack && ui->actionJack->isChecked());
 }
 
 void MainWindow::onProducerChanged()
@@ -2505,7 +2512,8 @@ void MainWindow::on_actionJack_triggered(bool checked)
 {
     Settings.setPlayerJACK(checked);
     if (!MLT.enableJack(checked)) {
-        ui->actionJack->setChecked(false);
+        if (ui->actionJack)
+            ui->actionJack->setChecked(false);
         Settings.setPlayerJACK(false);
         QMessageBox::warning(this, qApp->applicationName(),
             tr("Failed to connect to JACK.\nPlease verify that JACK is installed and running."));
