@@ -151,6 +151,14 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                 return isTransition(playlist, index.row());
             case FileHashRole:
                 return MAIN.getHash(*info->producer);
+            case SpeedRole: {
+                double speed = 1.0;
+                if (info->producer && info->producer->is_valid()) {
+                    if (!qstrcmp("timewarp", info->producer->get("mlt_service")))
+                        speed = info->producer->get_double("warp_speed");
+                }
+                return speed;
+            }
             default:
                 break;
             }
@@ -245,6 +253,7 @@ QHash<int, QByteArray> MultitrackModel::roleNames() const
     roles[FadeOutRole] = "fadeOut";
     roles[IsTransitionRole] = "isTransition";
     roles[FileHashRole] = "hash";
+    roles[SpeedRole] = "speed";
     return roles;
 }
 

@@ -68,7 +68,8 @@ public:
         FadeInRole,      /// clip only
         FadeOutRole,     /// clip only
         IsTransitionRole,/// clip only
-        FileHashRole     /// clip only
+        FileHashRole,    /// clip only
+        SpeedRole        /// clip only
     };
 
     explicit MultitrackModel(QObject *parent = 0);

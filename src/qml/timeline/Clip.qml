@@ -42,6 +42,7 @@ Rectangle {
     property int originalX: x
     property bool selected: false
     property string hash: ''
+    property double speed: 1.0
 
     signal clicked(var clip)
     signal moved(var clip)
@@ -153,8 +154,8 @@ Rectangle {
                 height: waveform.height
                 fillColor: getColor()
                 property int channels: 2
-                inPoint: clipRoot.inPoint * channels + index * Math.round(waveform.maxWidth / timeScale) * channels
-                outPoint: inPoint + Math.round(width / timeScale) * channels
+                inPoint: Math.round((clipRoot.inPoint + index * waveform.maxWidth / timeScale) * speed) * channels
+                outPoint: inPoint + Math.round(width / timeScale * speed) * channels
                 levels: audioLevels
             }
         }

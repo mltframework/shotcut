@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2015 Meltytech, LLC
+ * Copyright (c) 2013-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -76,6 +76,7 @@ Rectangle {
             fadeIn: model.fadeIn
             fadeOut: model.fadeOut
             hash: model.hash
+            speed: model.speed
             selected: trackRoot.isCurrentTrack && trackRoot.selection.indexOf(index) !== -1
 
             onClicked: trackRoot.clipClicked(clip, trackRoot);
