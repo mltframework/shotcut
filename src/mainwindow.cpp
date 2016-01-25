@@ -2229,6 +2229,7 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
         dynamic_cast<AbstractProducerWidget*>(w)->setProducer(producer);
         if (-1 != w->metaObject()->indexOfSignal("producerChanged(Mlt::Producer*)")) {
             connect(w, SIGNAL(producerChanged(Mlt::Producer*)), SLOT(onProducerChanged()));
+            connect(w, SIGNAL(producerChanged(Mlt::Producer*)), m_filterController, SLOT(setProducer(Mlt::Producer*)));
             if (producer->get_int(kMultitrackItemProperty))
                 connect(w, SIGNAL(producerChanged(Mlt::Producer*)), m_timelineDock, SLOT(onProducerChanged(Mlt::Producer*)));
         }
