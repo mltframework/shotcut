@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2015 Meltytech, LLC
+ * Copyright (c) 2013-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,6 +20,7 @@
 #include "mltcontroller.h"
 #include "shotcut_mlt_properties.h"
 #include <QtDebug>
+#include <QMetaObject>
 
 namespace Timeline {
 
@@ -756,8 +757,7 @@ void UpdateCommand::redo()
     m_timeline.model()->liftClip(m_trackIndex, m_clipIndex);
     m_timeline.model()->overwrite(m_trackIndex, clip, m_position, false);
     m_undoHelper.recordAfterState();
-    if (!m_isFirstRedo)
-        m_timeline.emitSelectedFromSelection();
+    QMetaObject::invokeMethod(&m_timeline, "emitSelectedFromSelection", Qt::QueuedConnection);
 }
 
 void UpdateCommand::undo()
