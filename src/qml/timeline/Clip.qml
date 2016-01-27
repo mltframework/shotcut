@@ -250,7 +250,6 @@ Rectangle {
         anchors.fill: parent
         enabled: !isBlank
         acceptedButtons: Qt.LeftButton
-        propagateComposedEvents: true
         drag.target: parent
         drag.axis: Drag.XAxis
         property int startX
