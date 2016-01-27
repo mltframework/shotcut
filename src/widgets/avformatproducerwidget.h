@@ -42,6 +42,9 @@ signals:
     void producerChanged(Mlt::Producer*);
     void producerReopened();
 
+protected:
+    void keyPressEvent(QKeyEvent *event);
+
 private slots:
     void onFrameDisplayed(const SharedFrame&);
 

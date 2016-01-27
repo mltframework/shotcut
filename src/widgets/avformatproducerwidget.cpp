@@ -87,6 +87,16 @@ Mlt::Producer* AvformatProducerWidget::producer(Mlt::Profile& profile)
     return p;
 }
 
+void AvformatProducerWidget::keyPressEvent(QKeyEvent* event)
+{
+    if (ui->speedSpinBox->hasFocus() &&
+            (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return)) {
+        ui->speedSpinBox->clearFocus();
+    } else {
+        QWidget::keyPressEvent(event);
+    }
+}
+
 void AvformatProducerWidget::reopen(Mlt::Producer* p)
 {
     int length = ui->durationSpinBox->value();
