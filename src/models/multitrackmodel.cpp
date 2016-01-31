@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2015 Meltytech, LLC
+ * Copyright (c) 2013-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -2581,10 +2581,10 @@ void MultitrackModel::load()
     convertOldDoc();
     consolidateBlanksAllTracks();
     adjustBackgroundDuration();
-    getAudioLevels();
     if (m_trackList.count() > 0) {
         beginInsertRows(QModelIndex(), 0, m_trackList.count() - 1);
         endInsertRows();
+        getAudioLevels();
     }
     emit loaded();
 }
