@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2015 Meltytech, LLC
+ * Copyright (c) 2014-2016 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,6 +24,7 @@
 MetadataModel::MetadataModel(QObject *parent)
     : QAbstractListModel(parent)
     , m_filter(FavoritesFilter)
+    , m_isClipProducer(true)
 {
 }
 
@@ -142,5 +143,13 @@ bool MetadataModel::isVisible(int row) const
     if (m_filter == FavoritesFilter && !meta->isFavorite()) return false;
     if (m_filter == AudioFilter && !meta->isAudio()) return false;
     if (m_filter == VideoFilter && meta->isAudio()) return false;
+    if (meta->isClipOnly() && !m_isClipProducer) return false;
     return true;
+}
+
+void MetadataModel::setIsClipProducer(bool isClipProducer)
+{
+    beginResetModel();
+    m_isClipProducer = isClipProducer;
+    endResetModel();
 }

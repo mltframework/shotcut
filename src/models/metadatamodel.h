@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2015 Meltytech, LLC
+ * Copyright (c) 2014-2016 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -64,6 +64,7 @@ public:
     MetadataFilter filter() const { return m_filter; }
     void setFilter(MetadataFilter);
     Q_INVOKABLE bool isVisible(int row) const;
+    void setIsClipProducer(bool isClipProducer);
 
 signals:
     void filterChanged();
@@ -72,6 +73,7 @@ private:
     typedef QList<QmlMetadata*> MetadataList;
     MetadataList m_list;
     MetadataFilter m_filter;
+    bool m_isClipProducer;
 };
 
 #endif // METADATAMODEL_H

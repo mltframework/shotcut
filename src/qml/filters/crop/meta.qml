@@ -8,4 +8,5 @@ Metadata {
     qml: "ui.qml"
     gpuAlt: "crop"
     allowMultiple: false
+    isClipOnly: true
 }

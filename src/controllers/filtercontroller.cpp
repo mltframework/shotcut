@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2015 Meltytech, LLC
+ * Copyright (c) 2014-2016 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -111,6 +111,12 @@ AttachedFiltersModel* FilterController::attachedModel()
 void FilterController::setProducer(Mlt::Producer *producer)
 {
     m_attachedModel.setProducer(producer);
+    if (producer && producer->is_valid()) {
+        mlt_service_type service_type = producer->type();
+        m_metadataModel.setIsClipProducer(service_type != tractor_type
+            && service_type != playlist_type);
+        m_metadataModel.refresh();
+    }
 }
 
 void FilterController::setCurrentFilter(int attachedIndex)

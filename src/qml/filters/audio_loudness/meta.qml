@@ -7,4 +7,5 @@ Metadata {
     name: qsTr("Normalize")
     mlt_service: "loudness"
     qml: "ui.qml"
+    isClipOnly: true
 }

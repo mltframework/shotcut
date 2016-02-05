@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -30,6 +30,7 @@ QmlMetadata::QmlMetadata(QObject *parent)
     , m_isFavorite(false)
     , m_gpuAlt("")
     , m_allowMultiple(true)
+    , m_isClipOnly(false)
 {
 }
 
@@ -142,4 +143,9 @@ void QmlMetadata::setGpuAlt(const QString& gpuAlt)
 void QmlMetadata::setAllowMultiple(bool allowMultiple)
 {
     m_allowMultiple = allowMultiple;
+}
+
+void QmlMetadata::setIsClipOnly(bool isClipOnly)
+{
+    m_isClipOnly = isClipOnly;
 }
