@@ -115,7 +115,6 @@ void FilterController::setProducer(Mlt::Producer *producer)
         mlt_service_type service_type = producer->type();
         m_metadataModel.setIsClipProducer(service_type != tractor_type
             && service_type != playlist_type);
-        m_metadataModel.refresh();
     }
 }
 
