@@ -6,4 +6,5 @@ Metadata {
     name: qsTr("Stabilize")
     mlt_service: "vidstab"
     qml: "ui.qml"
+    isClipOnly: true
 }
