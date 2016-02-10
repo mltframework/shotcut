@@ -583,17 +583,15 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Service* service, const QString& target,
     }
 
     // get temp filename
-    QTemporaryFile tmp(QDir::tempPath().append("/shotcut-XXXXXX"));
+    QTemporaryFile tmp;
     tmp.open();
-    QString tmpName = tmp.fileName();
     tmp.close();
-    tmpName.append(".mlt");
-    MLT.saveXML(tmpName, service);
+    MLT.saveXML(tmp.fileName(), service);
 
     // parse xml
-    QFile f1(tmpName);
+    QFile f1(tmp.fileName());
     f1.open(QIODevice::ReadOnly);
-    QDomDocument dom(tmpName);
+    QDomDocument dom(tmp.fileName());
     dom.setContent(&f1);
     f1.close();
 
@@ -631,13 +629,8 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Service* service, const QString& target,
             (mytarget.endsWith(".mp4") || mytarget.endsWith(".mov")))
         consumerNode.setAttribute("strict", "experimental");
 
-    // save new xml
-    f1.open(QIODevice::WriteOnly);
-    QTextStream ts(&f1);
-    dom.save(ts, 2);
-    f1.close();
 
-    return new EncodeJob(target, tmpName);
+    return new EncodeJob(target, dom.toString(2));
 }
 
 void EncodeDock::runMelt(const QString& target, int realtime)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2015 Meltytech, LLC
+ * Copyright (c) 2012-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,7 +25,7 @@ class VideoQualityJob : public MeltJob
 {
     Q_OBJECT
 public:
-    VideoQualityJob(const QString& name, const QString& xmlPath,
+    VideoQualityJob(const QString& name, const QString& xml,
                     const QString& reportPath);
 
 private slots:

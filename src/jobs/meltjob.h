@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2015 Meltytech, LLC
+ * Copyright (c) 2012-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,6 +20,7 @@
 #define MELTJOB_H
 
 #include "abstractjob.h"
+#include <QTemporaryFile>
 
 class MeltJob : public AbstractJob
 {
@@ -28,17 +29,16 @@ public:
     MeltJob(const QString& name, const QString& xml);
     virtual ~MeltJob();
     void start();
-    QString xml() const;
-    QString xmlPath() const { return m_xml; }
+    QString xml();
+    QString xmlPath() const { return m_xml.fileName(); }
     void setIsStreaming(bool streaming);
 
 public slots:
     void onViewXmlTriggered();
 
 private:
-    QString m_xml;
+    QTemporaryFile m_xml;
     bool m_isStreaming;
-
 };
 
 #endif // MELTJOB_H

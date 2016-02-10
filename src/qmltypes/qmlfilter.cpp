@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2015 Meltytech, LLC
+ * Copyright (c) 2013-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -182,28 +182,24 @@ void QmlFilter::analyze(bool isAudio)
     Mlt::Service service(mlt_service(m_filter->get_data("service")));
 
     // get temp filename for input xml
-    QTemporaryFile tmp(QDir::tempPath().append("/shotcut-XXXXXX"));
+    QTemporaryFile tmp;
     tmp.open();
-    QString tmpName = tmp.fileName();
     tmp.close();
-    tmpName.append(".mlt");
     m_filter->set("results", NULL, 0);
     int disable = m_filter->get_int("disable");
     m_filter->set("disable", 0);
-    MLT.saveXML(tmpName, &service);
+    MLT.saveXML(tmp.fileName(), &service);
     m_filter->set("disable", disable);
 
     // get temp filename for output xml
-    QTemporaryFile tmpTarget(QDir::tempPath().append("/shotcut-XXXXXX"));
+    QTemporaryFile tmpTarget;
     tmpTarget.open();
-    QString target = tmpTarget.fileName();
     tmpTarget.close();
-    target.append(".mlt");
 
     // parse xml
-    QFile f1(tmpName);
+    QFile f1(tmp.fileName());
     f1.open(QIODevice::ReadOnly);
-    QDomDocument dom(tmpName);
+    QDomDocument dom(tmp.fileName());
     dom.setContent(&f1);
     f1.close();
 
@@ -221,15 +217,9 @@ void QmlFilter::analyze(bool isAudio)
     else
         consumerNode.setAttribute("audio_off", 1);
     consumerNode.setAttribute("no_meta", 1);
-    consumerNode.setAttribute("resource", target);
+    consumerNode.setAttribute("resource", tmpTarget.fileName());
 
-    // save new xml
-    f1.open(QIODevice::WriteOnly);
-    QTextStream ts(&f1);
-    dom.save(ts, 2);
-    f1.close();
-
-    AbstractJob* job = new MeltJob(target, tmpName);
+    AbstractJob* job = new MeltJob(tmpTarget.fileName(), dom.toString(2));
     if (job) {
         AnalyzeDelegate* delegate = new AnalyzeDelegate(m_filter);
         connect(job, &AbstractJob::finished, delegate, &AnalyzeDelegate::onAnalyzeFinished);

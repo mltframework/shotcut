@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2015 Meltytech, LLC
+ * Copyright (c) 2012-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -72,11 +72,9 @@ void EncodeJob::onVideoQualityTriggered()
             reportPath += ".txt";
 
         // Get temp filename for the new XML.
-        QTemporaryFile tmp(QDir::tempPath().append("/shotcut-XXXXXX"));
+        QTemporaryFile tmp;
         tmp.open();
-        QString tmpName = tmp.fileName();
         tmp.close();
-        tmpName.append(".mlt");
 
         // Generate the XML for the comparison.
         Mlt::Tractor tractor(MLT.profile());
@@ -88,12 +86,12 @@ void EncodeJob::onVideoQualityTriggered()
             tractor.set_track(encoded, 1);
             tractor.plant_transition(vqm);
             vqm.set("render", 0);
-            MLT.saveXML(tmpName, &tractor);
+            MLT.saveXML(tmp.fileName(), &tractor);
 
             // Add consumer element to XML.
-            QFile f1(tmpName);
+            QFile f1(tmp.fileName());
             f1.open(QIODevice::ReadOnly);
-            QDomDocument dom(tmpName);
+            QDomDocument dom(tmp.fileName());
             dom.setContent(&f1);
             f1.close();
 
@@ -107,14 +105,8 @@ void EncodeJob::onVideoQualityTriggered()
             consumerNode.setAttribute("real_time", -1);
             consumerNode.setAttribute("terminate_on_pause", 1);
 
-            // Save the new XML.
-            f1.open(QIODevice::WriteOnly);
-            QTextStream ts(&f1);
-            dom.save(ts, 2);
-            f1.close();
-
             // Create job and add it to the queue.
-            JOBS.add(new VideoQualityJob(objectName(), tmpName, reportPath));
+            JOBS.add(new VideoQualityJob(objectName(), dom.toString(2), reportPath));
         }
     }
 }

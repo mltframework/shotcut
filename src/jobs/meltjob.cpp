@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2015 Meltytech, LLC
+ * Copyright (c) 2012-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,25 +24,28 @@
 #include <QApplication>
 #include <QAction>
 #include <QDialog>
+#include <QDir>
 #include <QDebug>
 #include "mainwindow.h"
 #include "dialogs/textviewerdialog.h"
 
 MeltJob::MeltJob(const QString& name, const QString& xml)
     : AbstractJob(name)
-    , m_xml(xml)
+    , m_xml(QDir::tempPath().append("/shotcut-XXXXXX.mlt"))
     , m_isStreaming(false)
 {
     QAction* action = new QAction(tr("View XML"), this);
     action->setToolTip(tr("View the MLT XML for this job"));
     connect(action, SIGNAL(triggered()), this, SLOT(onViewXmlTriggered()));
     m_standardActions << action;
+    m_xml.open();
+    m_xml.write(xml.toUtf8());
+    m_xml.close();
 }
 
 MeltJob::~MeltJob()
 {
     qDebug();
-    QFile::remove(m_xml);
 }
 
 void MeltJob::start()
@@ -57,7 +60,7 @@ void MeltJob::start()
     QStringList args;
     args << "-progress2";
     args << "-abort";
-    args << m_xml;
+    args << xmlPath();
     qDebug() << meltPath.absoluteFilePath() << args;
 #ifdef Q_OS_WIN
     if (m_isStreaming) args << "-getc";
@@ -69,12 +72,11 @@ void MeltJob::start()
     AbstractJob::start();
 }
 
-QString MeltJob::xml() const
+QString MeltJob::xml()
 {
-    QFile f(m_xml);
-    f.open(QIODevice::ReadOnly);
-    QString s(f.readAll());
-    f.close();
+    m_xml.open();
+    QString s(m_xml.readAll());
+    m_xml.close();
     return s;
 }
 
