@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2015 Meltytech, LLC
+ * Copyright (c) 2012-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -303,6 +303,35 @@ void EncodeDock::onProducerOpened()
         ui->encodeButton->setText(tr("Encode File"));
     else
         ui->encodeButton->setText(tr("Capture File"));
+
+    ui->fromCombo->blockSignals(true);
+    ui->fromCombo->clear();
+    if (MAIN.multitrack())
+        ui->fromCombo->addItem(tr("Timeline"), "timeline");
+    if (MAIN.playlist() && MAIN.playlist()->count() > 0)
+        ui->fromCombo->addItem(tr("Playlist"), "playlist");
+    if (MAIN.playlist() && MAIN.playlist()->count() > 1)
+        ui->fromCombo->addItem(tr("Each Playlist Item"), "batch");
+    if (MLT.isClip() && MLT.producer() && MLT.producer()->is_valid()) {
+        if (MLT.producer()->get(kShotcutCaptionProperty)) {
+            ui->fromCombo->addItem(MLT.producer()->get(kShotcutCaptionProperty), "clip");
+        } else if (MLT.producer()->get("resource")) {
+            QFileInfo resource(MLT.producer()->get("resource"));
+            ui->fromCombo->addItem(resource.completeBaseName(), "clip");
+        } else {
+            ui->fromCombo->addItem(tr("Source"), "clip");
+        }
+    } else if (MLT.savedProducer() && MLT.savedProducer()->is_valid()) {
+        if (MLT.savedProducer()->get(kShotcutCaptionProperty)) {
+            ui->fromCombo->addItem(MLT.savedProducer()->get(kShotcutCaptionProperty), "clip");
+        } else if (MLT.savedProducer()->get("resource")) {
+            QFileInfo resource(MLT.savedProducer()->get("resource"));
+            ui->fromCombo->addItem(resource.completeBaseName(), "clip");
+        } else {
+            ui->fromCombo->addItem(tr("Source"), "clip");
+        }
+    }
+    ui->fromCombo->blockSignals(false);
 }
 
 void EncodeDock::loadPresets()
@@ -540,7 +569,7 @@ void EncodeDock::collectProperties(QDomElement& node, int realtime)
     delete p;
 }
 
-MeltJob* EncodeDock::createMeltJob(const QString& target, int realtime, int pass)
+MeltJob* EncodeDock::createMeltJob(Mlt::Service* service, const QString& target, int realtime, int pass)
 {
     // if image sequence, change filename to include number
     QString mytarget = target;
@@ -559,7 +588,7 @@ MeltJob* EncodeDock::createMeltJob(const QString& target, int realtime, int pass
     QString tmpName = tmp.fileName();
     tmp.close();
     tmpName.append(".mlt");
-    MAIN.saveXML(tmpName);
+    MLT.saveXML(tmpName, service);
 
     // parse xml
     QFile f1(tmpName);
@@ -613,7 +642,29 @@ MeltJob* EncodeDock::createMeltJob(const QString& target, int realtime, int pass
 
 void EncodeDock::runMelt(const QString& target, int realtime)
 {
-    m_immediateJob = createMeltJob(target, realtime);
+    Mlt::Service* service = fromProducer();
+    if (!service) {
+        // For each playlist item.
+        if (MAIN.playlist() && MAIN.playlist()->count() > 0) {
+            // Use the first playlist item.
+            QScopedPointer<Mlt::ClipInfo> info(MAIN.playlist()->clip_info(0));
+            if (!info) return;
+            QString xml = MLT.XML(info->producer);
+            QScopedPointer<Mlt::Producer> producer(
+                new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData()));
+            producer->set_in_and_out(info->frame_in, info->frame_out);
+            m_immediateJob = createMeltJob(producer.data(), target, realtime);
+            if (m_immediateJob) {
+                m_immediateJob->setIsStreaming(true);
+                connect(m_immediateJob, SIGNAL(finished(AbstractJob*,bool)), this, SLOT(onFinished(AbstractJob*,bool)));
+                m_immediateJob->start();
+            }
+            return;
+        } else {
+            service = MLT.producer();
+        }
+    }
+    m_immediateJob = createMeltJob(service, target, realtime);
     if (m_immediateJob) {
         m_immediateJob->setIsStreaming(true);
         connect(m_immediateJob, SIGNAL(finished(AbstractJob*,bool)), this, SLOT(onFinished(AbstractJob*,bool)));
@@ -623,14 +674,44 @@ void EncodeDock::runMelt(const QString& target, int realtime)
 
 void EncodeDock::enqueueMelt(const QString& target, int realtime)
 {
-    int pass = ui->dualPassCheckbox->isEnabled() && ui->dualPassCheckbox->isChecked()? 1 : 0;
-    MeltJob* job = createMeltJob(target, realtime, pass);
-    if (job) {
-        JOBS.add(job);
-        if (pass) {
-            job = createMeltJob(target, realtime, 2);
-            if (job)
-                JOBS.add(job);
+    Mlt::Service* service = fromProducer();
+    if (!service) {
+        // For each playlist item.
+        if (MAIN.playlist() && MAIN.playlist()->count() > 1) {
+            QFileInfo fi(target);
+            int n = MAIN.playlist()->count();
+            int digits = QString::number(n + 1).size();
+            for (int i = 0; i < n; i++) {
+                QScopedPointer<Mlt::ClipInfo> info(MAIN.playlist()->clip_info(i));
+                if (!info) continue;
+                QString xml = MLT.XML(info->producer);
+                QScopedPointer<Mlt::Producer> producer(
+                    new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData()));
+                producer->set_in_and_out(info->frame_in, info->frame_out);
+                QString filename = QString("%1/%2-%3.%4").arg(fi.path()).arg(fi.baseName())
+                                                         .arg(i + 1, digits, 10, QChar('0')).arg(fi.completeSuffix());
+                int pass = ui->dualPassCheckbox->isEnabled() && ui->dualPassCheckbox->isChecked()? 1 : 0;
+                MeltJob* job = createMeltJob(producer.data(), filename, realtime, pass);
+                if (job) {
+                    JOBS.add(job);
+                    if (pass) {
+                        job = createMeltJob(producer.data(), filename, realtime, 2);
+                        if (job)
+                            JOBS.add(job);
+                    }
+                }
+            }
+        }
+    } else {
+        int pass = ui->dualPassCheckbox->isEnabled() && ui->dualPassCheckbox->isChecked()? 1 : 0;
+        MeltJob* job = createMeltJob(service, target, realtime, pass);
+        if (job) {
+            JOBS.add(job);
+            if (pass) {
+                job = createMeltJob(service, target, realtime, 2);
+                if (job)
+                    JOBS.add(job);
+            }
         }
     }
 }
@@ -700,6 +781,19 @@ void EncodeDock::resetOptions()
     preset.set("acodec", "aac");
     preset.set("meta.preset.extension", "mp4");
     loadPresetFromProperties(preset);
+}
+
+Mlt::Service *EncodeDock::fromProducer() const
+{
+    QString from = ui->fromCombo->currentData().toString();
+    if (from == "clip")
+        return MLT.isClip()? MLT.producer() : MLT.savedProducer();
+    else if (from == "playlist")
+        return MAIN.playlist();
+    else if (from == "timeline")
+        return MAIN.multitrack();
+    else
+        return 0;
 }
 
 static double getBufferSize(Mlt::Properties& preset, const char* property)

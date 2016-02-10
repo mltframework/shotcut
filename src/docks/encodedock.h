@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2015 Meltytech, LLC
+ * Copyright (c) 2012-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -32,6 +32,9 @@ namespace Ui {
 }
 class AbstractJob;
 class MeltJob;
+namespace Mlt {
+    class Service;
+}
 
 class PresetsProxyModel : public QSortFilterProxyModel
 {
@@ -105,11 +108,12 @@ private:
     void loadPresets();
     Mlt::Properties* collectProperties(int realtime);
     void collectProperties(QDomElement& node, int realtime);
-    MeltJob* createMeltJob(const QString& target, int realtime, int pass = 0);
+    MeltJob* createMeltJob(Mlt::Service* service, const QString& target, int realtime, int pass = 0);
     void runMelt(const QString& target, int realtime = -1);
     void enqueueMelt(const QString& target, int realtime);
     void encode(const QString& target);
     void resetOptions();
+    Mlt::Service* fromProducer() const;
 };
 
 #endif // ENCODEDOCK_H
