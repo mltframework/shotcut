@@ -110,12 +110,12 @@ Mlt::Producer* AudioLevelsTask::tempProducer()
             service = "avformat";
         else if (service.startsWith("xml"))
             service = "xml-nogl";
-        m_tempProducer = new Mlt::Producer(MLT.profile(), service.toUtf8().constData(),
+        m_tempProducer = new Mlt::Producer(m_profile, service.toUtf8().constData(),
             m_producers.first().first->get("resource"));
         if (m_tempProducer->is_valid()) {
-            Mlt::Filter channels(MLT.profile(), "audiochannels");
-            Mlt::Filter converter(MLT.profile(), "audioconvert");
-            Mlt::Filter levels(MLT.profile(), "audiolevel");
+            Mlt::Filter channels(m_profile, "audiochannels");
+            Mlt::Filter converter(m_profile, "audioconvert");
+            Mlt::Filter levels(m_profile, "audiolevel");
             m_tempProducer->attach(channels);
             m_tempProducer->attach(converter);
             m_tempProducer->attach(levels);

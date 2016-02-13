@@ -16,6 +16,7 @@
  */
 
 #include "timelineitems.h"
+#include "mltcontroller.h"
 
 #include <QQuickPaintedItem>
 #include <QPainter>
@@ -109,14 +110,19 @@ public:
         if (data.isEmpty())
             return;
 
-        const qreal indicesPrPixel = qreal(m_outPoint - m_inPoint) / width();
+        // In and out points are # frames at current fps,
+        // but audio levels are created at 25 fps.
+        // Scale in and out point to 25 fps.
+        const int inPoint = qRound(m_inPoint / MLT.profile().fps() * 25.0);
+        const int outPoint = qRound(m_outPoint / MLT.profile().fps() * 25.0);
+        const qreal indicesPrPixel = qreal(outPoint - inPoint) / width();
 
         QPainterPath path;
         path.moveTo(-1, height());
         int i = 0;
         for (; i < width(); ++i)
         {
-            int idx = m_inPoint + int(i * indicesPrPixel);
+            int idx = inPoint + int(i * indicesPrPixel);
             if (idx + 1 >= data.length())
                 break;
             qreal level = qMax(data.at(idx).toReal(), data.at(idx + 1).toReal()) / 256;

@@ -24,6 +24,7 @@
 #include <QPersistentModelIndex>
 #include <QList>
 #include <MltProducer.h>
+#include <MltProfile.h>
 
 class AudioLevelsTask : public QRunnable
 {
@@ -47,6 +48,7 @@ private:
     Mlt::Producer* m_tempProducer;
     bool m_isCanceled;
     bool m_isForce;
+    Mlt::Profile m_profile;
 };
 
 #endif // AUDIOLEVELSTASK_H
