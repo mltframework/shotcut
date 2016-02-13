@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2015 Meltytech, LLC
+ * Copyright (c) 2011-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * GL shader based on BSD licensed code from Peter Bengtsson:
@@ -169,7 +169,6 @@ void GLWidget::initializeGL()
         connect(m_frameRenderer, SIGNAL(textureReady(GLuint,GLuint,GLuint)), SLOT(updateTexture(GLuint,GLuint,GLuint)), Qt::DirectConnection);
     else
         connect(m_frameRenderer, SIGNAL(frameDisplayed(const SharedFrame&)), SLOT(onFrameDisplayed(const SharedFrame&)), Qt::QueuedConnection);
-    connect(this, SIGNAL(textureUpdated()), quickWindow(), SLOT(update()), Qt::QueuedConnection);
 
     m_initSem.release();
     m_isInitialized = true;
@@ -677,7 +676,7 @@ void GLWidget::onFrameDisplayed(const SharedFrame &frame)
     m_mutex.lock();
     m_sharedFrame = frame;
     m_mutex.unlock();
-    emit textureUpdated();
+    quickWindow()->update();
 }
 
 void GLWidget::setZoom(float zoom)
@@ -716,7 +715,7 @@ void GLWidget::updateTexture(GLuint yName, GLuint uName, GLuint vName)
     m_texture[0] = yName;
     m_texture[1] = uName;
     m_texture[2] = vName;
-    emit textureUpdated();
+    quickWindow()->update();
 }
 
 // MLT consumer-frame-show event handler

@@ -94,7 +94,6 @@ public slots:
 
 signals:
     void frameDisplayed(const SharedFrame& frame);
-    void textureUpdated();
     void dragStarted();
     void seekTo(int x);
     void gpuNotSupported();
