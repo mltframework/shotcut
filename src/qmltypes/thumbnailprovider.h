@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2015 Meltytech, LLC
+ * Copyright (c) 2013-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,6 +21,7 @@
 
 #include <QQuickImageProvider>
 #include <MltProducer.h>
+#include <MltProfile.h>
 
 class ThumbnailProvider : public QQuickImageProvider
 {
@@ -32,6 +33,7 @@ private:
     QString cacheKey(Mlt::Properties& properties, const QString& service,
                      const QString& resource, const QString& hash, int frameNumber);
     QImage makeThumbnail(Mlt::Producer&, int frameNumber, const QSize& requestedSize);
+    Mlt::Profile m_profile;
 };
 
 #endif // THUMBNAILPROVIDER_H

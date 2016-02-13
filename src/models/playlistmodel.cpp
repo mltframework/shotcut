@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2015 Meltytech, LLC
+ * Copyright (c) 2012-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -43,6 +43,7 @@ class UpdateThumbnailTask : public QRunnable
 {
     PlaylistModel* m_model;
     Mlt::Producer m_producer;
+    Mlt::Profile m_profile;
     Mlt::Producer* m_tempProducer;
     int m_in;
     int m_out;
@@ -53,6 +54,7 @@ public:
         : QRunnable()
         , m_model(model)
         , m_producer(producer)
+        , m_profile("atsc_720p_60")
         , m_tempProducer(0)
         , m_in(in)
         , m_out(out)
@@ -72,11 +74,13 @@ public:
                 service = "avformat";
             else if (service.startsWith("xml"))
                 service = "xml-nogl";
-            m_tempProducer = new Mlt::Producer(MLT.profile(), service.toUtf8().constData(), m_producer.get("resource"));
+            m_tempProducer = new Mlt::Producer(m_profile, service.toUtf8().constData(), m_producer.get("resource"));
             if (m_tempProducer->is_valid()) {
-                Mlt::Filter scaler(MLT.profile(), "swscale");
-                Mlt::Filter converter(MLT.profile(), "avcolor_space");
+                Mlt::Filter scaler(m_profile, "swscale");
+                Mlt::Filter padder(m_profile, "resize");
+                Mlt::Filter converter(m_profile, "avcolor_space");
                 m_tempProducer->attach(scaler);
+                m_tempProducer->attach(padder);
                 m_tempProducer->attach(converter);
             }
         }
@@ -111,22 +115,26 @@ public:
         if (setting == "hidden")
             return;
 
-        QImage image = DB.getThumbnail(cacheKey(m_in));
+        // Scale the in and out point frame numbers to this member profile's fps.
+        int inPoint = qRound(m_in / MLT.profile().fps() * m_profile.fps());
+        int outPoint = qRound(m_out / MLT.profile().fps() * m_profile.fps());
+
+        QImage image = DB.getThumbnail(cacheKey(inPoint));
         if (image.isNull()) {
-            image = makeThumbnail(m_in);
+            image = makeThumbnail(inPoint);
             m_producer.set(kThumbnailInProperty, new QImage(image), 0, (mlt_destructor) deleteQImage, NULL);
-            DB.putThumbnail(cacheKey(m_in), image);
+            DB.putThumbnail(cacheKey(inPoint), image);
         } else {
             m_producer.set(kThumbnailInProperty, new QImage(image), 0, (mlt_destructor) deleteQImage, NULL);
         }
         m_model->showThumbnail(m_row);
 
         if (setting == "tall" || setting == "wide") {
-            image = DB.getThumbnail(cacheKey(m_out));
+            image = DB.getThumbnail(cacheKey(outPoint));
             if (image.isNull()) {
-                image = makeThumbnail(m_out);
+                image = makeThumbnail(outPoint);
                 m_producer.set(kThumbnailOutProperty, new QImage(image), 0, (mlt_destructor) deleteQImage, NULL);
-                DB.putThumbnail(cacheKey(m_out), image);
+                DB.putThumbnail(cacheKey(outPoint), image);
             } else {
                 m_producer.set(kThumbnailOutProperty, new QImage(image), 0, (mlt_destructor) deleteQImage, NULL);
             }
@@ -137,7 +145,7 @@ public:
     QImage makeThumbnail(int frameNumber)
     {
         int height = PlaylistModel::THUMBNAIL_HEIGHT * 2;
-        int width = height * MLT.profile().dar();
+        int width = PlaylistModel::THUMBNAIL_WIDTH * 2;
         return MLT.image(*tempProducer(), frameNumber, width, height);
     }
 
@@ -229,22 +237,22 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
         if (index.column() == COLUMN_THUMBNAIL) {
             QScopedPointer<Mlt::Producer> producer(m_playlist->get_clip(index.row()));
             Mlt::Producer parent(producer->get_parent());
-            int width = THUMBNAIL_HEIGHT * MLT.profile().dar();
+            int width = THUMBNAIL_WIDTH;
             QString setting = Settings.playlistThumbnails();
             QImage image;
 
             if (setting == "wide")
-                image = QImage(width * 2, THUMBNAIL_HEIGHT, QImage::Format_ARGB32_Premultiplied);
+                image = QImage(width * 2, THUMBNAIL_HEIGHT, QImage::Format_ARGB32);
             else if (setting == "tall")
-                image = QImage(width, THUMBNAIL_HEIGHT * 2, QImage::Format_ARGB32_Premultiplied);
+                image = QImage(width, THUMBNAIL_HEIGHT * 2, QImage::Format_ARGB32);
             else if (setting == "large")
-                image = QImage(width * 2, THUMBNAIL_HEIGHT * 2, QImage::Format_ARGB32_Premultiplied);
+                image = QImage(width * 2, THUMBNAIL_HEIGHT * 2, QImage::Format_ARGB32);
             else
-                image = QImage(width, THUMBNAIL_HEIGHT, QImage::Format_ARGB32_Premultiplied);
+                image = QImage(width, THUMBNAIL_HEIGHT, QImage::Format_ARGB32);
 
             if (parent.is_valid() && parent.get_data(kThumbnailInProperty)) {
                 QPainter painter(&image);
-                image.fill(QColor(Qt::black).rgb());
+                image.fill(QApplication::palette().base().color().rgb());
 
                 // draw the in thumbnail
                 QImage* thumb = (QImage*) parent.get_data(kThumbnailInProperty);

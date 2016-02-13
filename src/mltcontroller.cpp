@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2015 Meltytech, LLC
+ * Copyright (c) 2011-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -648,7 +648,7 @@ void Controller::resetURL()
 
 QImage Controller::image(Mlt::Frame* frame, int width, int height)
 {
-    QImage result(width, height, QImage::Format_ARGB32_Premultiplied);
+    QImage result(width, height, QImage::Format_ARGB32);
     if (frame && frame->is_valid()) {
         if (width > 0 && height > 0) {
             frame->set("rescale.interp", "bilinear");
@@ -658,7 +658,7 @@ QImage Controller::image(Mlt::Frame* frame, int width, int height)
         mlt_image_format format = mlt_image_rgb24a;
         const uchar *image = frame->get_image(format, width, height);
         if (image) {
-            QImage temp(width, height, QImage::Format_ARGB32_Premultiplied);
+            QImage temp(width, height, QImage::Format_ARGB32);
             memcpy(temp.scanLine(0), image, width * height * 4);
             result = temp.rgbSwapped();
         }

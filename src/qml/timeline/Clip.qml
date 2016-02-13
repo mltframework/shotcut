@@ -112,6 +112,7 @@ Rectangle {
         anchors.margins: parent.border.width
         anchors.bottom: parent.bottom
         anchors.bottomMargin: parent.height / 2
+        width: height * 16.0/9.0
         fillMode: Image.PreserveAspectFit
         source: imagePath(outPoint)
     }
@@ -124,6 +125,7 @@ Rectangle {
         anchors.margins: parent.border.width
         anchors.bottom: parent.bottom
         anchors.bottomMargin: parent.height / 2
+        width: height * 16.0/9.0
         fillMode: Image.PreserveAspectFit
         source: imagePath(inPoint)
     }

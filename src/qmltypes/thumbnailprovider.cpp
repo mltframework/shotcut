@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2015 Meltytech, LLC
+ * Copyright (c) 2013-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,10 +25,9 @@
 
 #include <QtDebug>
 
-ThumbnailProvider::ThumbnailProvider() :
-    QQuickImageProvider(QQmlImageProviderBase::Image
-    ,QQmlImageProviderBase::ForceAsynchronousImageLoading
-    )
+ThumbnailProvider::ThumbnailProvider()
+    : QQuickImageProvider(QQmlImageProviderBase::Image, QQmlImageProviderBase::ForceAsynchronousImageLoading)
+    , m_profile("atsc_720p_60")
 {
 }
 
@@ -46,8 +45,11 @@ QImage ThumbnailProvider::requestImage(const QString &id, QSize *size, const QSi
         int frameNumber = id.mid(index + 1).toInt();
         Mlt::Properties properties;
 
+        // Scale the frameNumber to ThumbnailProvider profile's fps.
+        frameNumber = qRound(frameNumber / MLT.profile().fps() * m_profile.fps());
+
         resource = resource.left(resource.lastIndexOf('#'));
-        properties.set("_profile", MLT.profile().get_profile(), 0);
+        properties.set("_profile", m_profile.get_profile(), 0);
 
         QString key = cacheKey(properties, service, resource, hash, frameNumber);
         result = DB.getThumbnail(key);
@@ -56,7 +58,7 @@ QImage ThumbnailProvider::requestImage(const QString &id, QSize *size, const QSi
                 service = "avformat";
             else if (service.startsWith("xml"))
                 service = "xml-nogl";
-            Mlt::Producer producer(MLT.profile(), service.toUtf8().constData(), resource.toUtf8().constData());
+            Mlt::Producer producer(m_profile, service.toUtf8().constData(), resource.toUtf8().constData());
             if (producer.is_valid()) {
                 result = makeThumbnail(producer, frameNumber, requestedSize);
                 DB.putThumbnail(key, result);
@@ -92,10 +94,11 @@ QString ThumbnailProvider::cacheKey(Mlt::Properties& properties, const QString& 
 
 QImage ThumbnailProvider::makeThumbnail(Mlt::Producer &producer, int frameNumber, const QSize& requestedSize)
 {
-    Mlt::Filter scaler(MLT.profile(), "swscale");
-    Mlt::Filter converter(MLT.profile(), "avcolor_space");
+    Mlt::Filter scaler(m_profile, "swscale");
+    Mlt::Filter padder(m_profile, "resize");
+    Mlt::Filter converter(m_profile, "avcolor_space");
     int height = PlaylistModel::THUMBNAIL_HEIGHT * 2;
-    int width = height * MLT.profile().dar();
+    int width = PlaylistModel::THUMBNAIL_WIDTH * 2;
 
     if (!requestedSize.isEmpty()) {
         width = requestedSize.width();
@@ -103,6 +106,7 @@ QImage ThumbnailProvider::makeThumbnail(Mlt::Producer &producer, int frameNumber
     }
 
     producer.attach(scaler);
+    producer.attach(padder);
     producer.attach(converter);
     return MLT.image(producer, frameNumber, width, height);
 }
