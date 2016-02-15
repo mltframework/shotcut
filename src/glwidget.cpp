@@ -165,7 +165,7 @@ void GLWidget::initializeGL()
     quickWindow()->openglContext()->makeCurrent(quickWindow());
 
     connect(m_frameRenderer, SIGNAL(frameDisplayed(const SharedFrame&)), this, SIGNAL(frameDisplayed(const SharedFrame&)), Qt::QueuedConnection);
-    if (quickWindow()->openglContext()->supportsThreadedOpenGL())
+    if (Settings.playerGPU() || quickWindow()->openglContext()->supportsThreadedOpenGL())
         connect(m_frameRenderer, SIGNAL(textureReady(GLuint,GLuint,GLuint)), SLOT(updateTexture(GLuint,GLuint,GLuint)), Qt::DirectConnection);
     else
         connect(m_frameRenderer, SIGNAL(frameDisplayed(const SharedFrame&)), SLOT(onFrameDisplayed(const SharedFrame&)), Qt::QueuedConnection);
@@ -347,7 +347,7 @@ void GLWidget::paintGL()
     glClear(GL_COLOR_BUFFER_BIT);
     check_error(f);
 
-    if (!quickWindow()->openglContext()->supportsThreadedOpenGL()) {
+    if (!(Settings.playerGPU() || quickWindow()->openglContext()->supportsThreadedOpenGL())) {
         m_mutex.lock();
         if (!m_sharedFrame.is_valid()) {
             m_mutex.unlock();
@@ -769,7 +769,7 @@ FrameRenderer::FrameRenderer(QOpenGLContext* shareContext, QSurface* surface)
     Q_ASSERT(shareContext);
     m_renderTexture[0] = m_renderTexture[1] = m_renderTexture[2] = 0;
     m_displayTexture[0] = m_displayTexture[1] = m_displayTexture[2] = 0;
-    if (shareContext->supportsThreadedOpenGL()) {
+    if (Settings.playerGPU() || shareContext->supportsThreadedOpenGL()) {
         m_context = new QOpenGLContext;
         m_context->setFormat(shareContext->format());
         m_context->setShareContext(shareContext);
