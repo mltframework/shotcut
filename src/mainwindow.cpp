@@ -332,7 +332,6 @@ MainWindow::MainWindow()
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), ui->actionExit, SLOT(setDisabled(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), this, SLOT(onCaptureStateChanged(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_historyDock, SLOT(setDisabled(bool)));
-    connect(m_player, SIGNAL(profileChanged()), m_encodeDock, SLOT(onProfileChanged()));
     connect(this, SIGNAL(profileChanged()), m_encodeDock, SLOT(onProfileChanged()));
     connect(this, SIGNAL(profileChanged()), SLOT(onProfileChanged()));
     connect(m_playlistDock->model(), SIGNAL(modified()), m_encodeDock, SLOT(onProducerOpened()));
@@ -777,8 +776,11 @@ void MainWindow::open(Mlt::Producer* producer)
         m_player->moveVideoToScreen(screen);
 
     // no else here because open() will delete the producer if open fails
-    if (!MLT.setProducer(producer))
+    if (!MLT.setProducer(producer)) {
         emit producerOpened();
+        if (!MLT.profile().is_explicit() || MLT.isMultitrack() || MLT.isPlaylist())
+            emit profileChanged();
+    }
     m_player->setFocus();
     m_playlistDock->setUpdateButtonEnabled(false);
 
@@ -980,6 +982,12 @@ QString MainWindow::getHash(Mlt::Properties& properties) const
             properties.set(kShotcutHashProperty, hash.toLatin1().constData());
     }
     return hash;
+}
+
+void MainWindow::setProfile(const QString &profile_name)
+{
+    MLT.setProfile(profile_name);
+    emit profileChanged();
 }
 
 static void autosaveTask(MainWindow* p)
@@ -1233,7 +1241,7 @@ void MainWindow::writeSettings()
 void MainWindow::configureVideoWidget()
 {
     qDebug() << "begin";
-    MLT.setProfile(m_profileGroup->checkedAction()->data().toString());
+    setProfile(m_profileGroup->checkedAction()->data().toString());
     MLT.videoWidget()->setProperty("realtime", ui->actionRealtime->isChecked());
     bool ok = false;
     m_externalGroup->checkedAction()->data().toInt(&ok);
@@ -1997,7 +2005,7 @@ void MainWindow::onPlaylistCleared()
 
 void MainWindow::onPlaylistClosed()
 {
-    m_player->resetProfile();
+    setProfile(Settings.playerProfile());
     setCurrentFile("");
     setWindowModified(false);
     m_undoStack->clear();
@@ -2022,7 +2030,7 @@ void MainWindow::onMultitrackCreated()
 
 void MainWindow::onMultitrackClosed()
 {
-    m_player->resetProfile();
+    setProfile(Settings.playerProfile());
     onPlaylistCleared();
     setCurrentFile("");
     setWindowModified(false);
@@ -2560,9 +2568,8 @@ void MainWindow::onExternalTriggered(QAction *action)
     if (isExternal && profile.isEmpty()) {
         profile = "atsc_720p_50";
         Settings.setPlayerProfile(profile);
-        MLT.setProfile(profile);
+        setProfile(profile);
         MLT.restart();
-        emit profileChanged();
         foreach (QAction* a, m_profileGroup->actions()) {
             if (a->data() == profile) {
                 a->setChecked(true);
@@ -2600,9 +2607,8 @@ void MainWindow::onKeyerTriggered(QAction *action)
 void MainWindow::onProfileTriggered(QAction *action)
 {
     Settings.setPlayerProfile(action->data().toString());
-    MLT.setProfile(action->data().toString());
+    setProfile(action->data().toString());
     MLT.restart();
-    emit profileChanged();
 }
 
 void MainWindow::onProfileChanged()

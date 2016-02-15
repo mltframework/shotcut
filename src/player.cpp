@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2015 Meltytech, LLC
+ * Copyright (c) 2012-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -444,7 +444,6 @@ void Player::onProducerOpened(bool play)
     actionRewind->setEnabled(m_isSeekable);
     actionFastForward->setEnabled(m_isSeekable);
 
-    emit profileChanged();
     connectTransport(MLT.transportControl());
 
     // Closing the previous producer might call pause() milliseconds before
@@ -798,12 +797,6 @@ void Player::onVolumeChanged(int volume)
 void Player::onCaptureStateChanged(bool active)
 {
     actionPlay->setDisabled(active);
-}
-
-void Player::resetProfile()
-{
-    MLT.setProfile(Settings.playerProfile());
-    emit profileChanged();
 }
 
 void Player::on_actionVolume_triggered()

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2015 Meltytech, LLC
+ * Copyright (c) 2012-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -75,7 +75,6 @@ signals:
     void previousSought();
     void nextSought(int currentPosition);
     void nextSought();
-    void profileChanged();
     void zoomChanged(float zoom);
     void scrolledHorizontally(int x);
     void scrolledVertically(int y);
@@ -94,7 +93,6 @@ public slots:
     void onFrameDisplayed(const SharedFrame& frame);
     void onVolumeChanged(int);
     void onCaptureStateChanged(bool);
-    void resetProfile();
     void rewind();
     void fastForward();
     void showPaused();

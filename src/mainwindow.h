@@ -71,6 +71,7 @@ public:
     QString untitledFileName() const;
     QString getFileHash(const QString& path) const;
     QString getHash(Mlt::Properties& properties) const;
+    void setProfile(const QString& profile_name);
 
     void keyPressEvent(QKeyEvent*);
     void keyReleaseEvent(QKeyEvent *);
