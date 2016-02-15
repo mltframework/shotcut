@@ -169,6 +169,16 @@ void ShotcutSettings::setEncodePath(const QString& s)
     settings.setValue("encode/path", s);
 }
 
+bool ShotcutSettings::meltedEnabled() const
+{
+    return settings.value("melted/enabled", false).toBool();
+}
+
+void ShotcutSettings::setMeltedEnabled(bool b)
+{
+    settings.setValue("melted/enabled", b);
+}
+
 QStringList ShotcutSettings::meltedServers() const
 {
     return settings.value("melted/servers").toStringList();

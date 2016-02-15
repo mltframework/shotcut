@@ -71,6 +71,8 @@ public:
     QString encodePath() const;
     void setEncodePath(const QString&);
 
+    bool meltedEnabled() const;
+    void setMeltedEnabled(bool);
     QStringList meltedServers() const;
     void setMeltedServers(const QStringList&);
 
