@@ -377,6 +377,8 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
             QString path = MAIN.removeFileScheme(url);
             Mlt::Producer p(MLT.profile(), path.toUtf8().constData());
             if (p.is_valid()) {
+                if (!MLT.producer())
+                    MAIN.open(path);
                 // Convert avformat to avformat-novalidate so that XML loads faster.
                 if (!qstrcmp(p.get("mlt_service"), "avformat")) {
                     p.set("mlt_service", "avformat-novalidate");
