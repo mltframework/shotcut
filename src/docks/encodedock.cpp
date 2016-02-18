@@ -609,7 +609,7 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Service* service, const QString& target,
         if (pass == 1 || pass == 2) {
             QString x265params = consumerNode.attribute("x265-params");
             x265params = QString("pass=%1:stats=%2:%3")
-                .arg(pass).arg(mytarget + "_2pass.log").arg(x265params);
+                .arg(pass).arg(mytarget.replace(":", "\\:") + "_2pass.log").arg(x265params);
             consumerNode.setAttribute("x265-params", x265params);
         }
     } else {
