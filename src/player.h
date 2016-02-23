@@ -44,7 +44,7 @@ class Player : public QWidget
 public:
     typedef enum {
         SourceTabIndex = 0,
-        ProgramTabIndex
+        ProjectTabIndex
     } TabIndex;
 
     explicit Player(QWidget *parent = 0);

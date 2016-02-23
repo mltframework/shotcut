@@ -53,8 +53,8 @@ Player::Player(QWidget *parent)
     m_tabs = new QTabBar;
     m_tabs->setShape(QTabBar::RoundedSouth);
     m_tabs->addTab(tr("Source"));
-    m_tabs->addTab(tr("Program"));
-    m_tabs->setTabEnabled(ProgramTabIndex, false);
+    m_tabs->addTab(tr("Project"));
+    m_tabs->setTabEnabled(ProjectTabIndex, false);
     QHBoxLayout* tabLayout = new QHBoxLayout;
     tabLayout->addWidget(m_tabs);
     tabLayout->addStretch();
@@ -683,7 +683,7 @@ void Player::onTabBarClicked(int index)
             MAIN.open(new Mlt::Producer(MLT.savedProducer()));
         }
         break;
-    case ProgramTabIndex:
+    case ProjectTabIndex:
         if (MAIN.multitrack()) {
             if (!MLT.isMultitrack() && MAIN.multitrack())
                 MAIN.seekTimeline(MAIN.multitrack()->position());
