@@ -310,10 +310,10 @@
      <normaloff>:/icons/oxygen/32x32/actions/media-record.png</normaloff>:/icons/oxygen/32x32/actions/media-record.png</iconset>
    </property>
    <property name="text">
-    <string>Encode</string>
+    <string>Export</string>
    </property>
    <property name="toolTip">
-    <string>Show the Encode and Jobs panels</string>
+    <string>Show the Export panel</string>
    </property>
   </action>
   <action name="actionUndo">

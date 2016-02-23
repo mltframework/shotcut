@@ -300,7 +300,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
 void EncodeDock::onProducerOpened()
 {
     if (MLT.isSeekable())
-        ui->encodeButton->setText(tr("Encode File"));
+        ui->encodeButton->setText(tr("Export File"));
     else
         ui->encodeButton->setText(tr("Capture File"));
 
@@ -878,7 +878,7 @@ void EncodeDock::on_encodeButton_clicked()
     }
 #endif
     m_outputFilename = QFileDialog::getSaveFileName(this,
-        seekable? tr("Encode to File") : tr("Capture to File"), directory);
+        seekable? tr("Export File") : tr("Capture File"), directory);
     if (!m_outputFilename.isEmpty()) {
         QFileInfo fi(m_outputFilename);
         MLT.pause();
@@ -1002,7 +1002,7 @@ void EncodeDock::on_addPresetButton_clicked()
             if (strlen(data->get_name(i)) > 0)
                 ls << QString("%1=%2").arg(data->get_name(i)).arg(data->get(i));
 
-    dialog.setWindowTitle(tr("Add Encode Preset"));
+    dialog.setWindowTitle(tr("Add Export Preset"));
     dialog.setProperties(ls.join("\n"));
     if (dialog.exec() == QDialog::Accepted) {
         QString preset = dialog.presetName();

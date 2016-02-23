@@ -24,7 +24,7 @@
    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
   </property>
   <property name="windowTitle">
-   <string>Encode</string>
+   <string>Export</string>
   </property>
   <widget class="QWidget" name="dockWidgetContents">
    <layout class="QHBoxLayout" name="horizontalLayout_21" stretch="3,4">
@@ -1527,7 +1527,7 @@ in temporal compression</string>
           <item>
            <widget class="QPushButton" name="encodeButton">
             <property name="text">
-             <string>Encode File</string>
+             <string>Export File</string>
             </property>
            </widget>
           </item>
