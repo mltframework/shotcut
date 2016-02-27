@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2015 Meltytech, LLC
+ * Copyright (c) 2012-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,6 +20,8 @@
 #include "mltcontroller.h"
 #include <QRegExpValidator>
 #include <QKeyEvent>
+#include <QFontDatabase>
+#include <QGuiApplication>
 
 TimeSpinBox::TimeSpinBox(QWidget *parent)
     : QSpinBox(parent)
@@ -30,6 +32,11 @@ TimeSpinBox::TimeSpinBox(QWidget *parent)
     setAlignment(Qt::AlignRight);
     m_validator = new QRegExpValidator(QRegExp("^\\s*(\\d*:){0,2}(\\d*[.;:])?\\d*\\s*$"), this);
     setValue(0);
+#ifdef Q_OS_MAC
+    QFont font = QFontDatabase::systemFont(QFontDatabase::FixedFont);
+    font.setPointSize(QGuiApplication::font().pointSize());
+    setFont(font);
+#endif
 }
 
 QValidator::State TimeSpinBox::validate(QString &input, int &pos) const
