@@ -1294,8 +1294,8 @@ void MainWindow::on_actionAbout_Shotcut_triggered()
 {
     QMessageBox::about(this, tr("About Shotcut"),
              tr("<h1>Shotcut version %1</h1>"
-                "<p><a href=\"http://www.shotcut.org/\">Shotcut</a> is a free, open source, cross platform video editor.</p>"
-                "<small><p>Copyright &copy; 2011-2015 <a href=\"http://www.meltytech.com/\">Meltytech</a>, LLC</p>"
+                "<p><a href=\"https://www.shotcut.org/\">Shotcut</a> is a free, open source, cross platform video editor.</p>"
+                "<small><p>Copyright &copy; 2011-2016 <a href=\"https://www.meltytech.com/\">Meltytech</a>, LLC</p>"
                 "<p>Licensed under the <a href=\"http://www.gnu.org/licenses/gpl.html\">GNU General Public License v3.0</a></p>"
                 "<p>This program proudly uses the following projects:<ul>"
                 "<li><a href=\"http://www.qt-project.org/\">Qt</a> application and UI framework</li>"
@@ -1310,7 +1310,7 @@ void MainWindow::on_actionAbout_Shotcut_triggered()
                 "<li><a href=\"http://www.oxygen-icons.org/\">Oxygen</a> icon collection</li>"
                 "</ul></p>"
                 "<p>The source code used to build this program can be downloaded from "
-                "<a href=\"http://www.shotcut.org/\">shotcut.org</a>.</p>"
+                "<a href=\"https://www.shotcut.org/\">shotcut.org</a>.</p>"
                 "This program is distributed in the hope that it will be useful, "
                 "but WITHOUT ANY WARRANTY; without even the implied warranty of "
                 "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</small>"
@@ -2101,12 +2101,12 @@ void MainWindow::on_actionRedo_triggered()
 
 void MainWindow::on_actionFAQ_triggered()
 {
-    QDesktopServices::openUrl(QUrl("http://www.shotcut.org/bin/view/Shotcut/FrequentlyAskedQuestions"));
+    QDesktopServices::openUrl(QUrl("https://www.shotcut.org/FAQ/"));
 }
 
 void MainWindow::on_actionForum_triggered()
 {
-    QDesktopServices::openUrl(QUrl("http://www.shotcut.org/bin/view/Shotcut/DiscussionForum"));
+    QDesktopServices::openUrl(QUrl("https://www.shotcut.org/discussionforum/"));
 }
 
 void MainWindow::saveXML(const QString &filename)
@@ -2666,7 +2666,7 @@ void MainWindow::on_actionFusionLight_triggered()
 
 void MainWindow::on_actionTutorials_triggered()
 {
-    QDesktopServices::openUrl(QUrl("http://www.shotcut.org/bin/view/Shotcut/Tutorials"));
+    QDesktopServices::openUrl(QUrl("https://www.shotcut.org/tutorials/"));
 }
 
 void MainWindow::on_actionRestoreLayout_triggered()
@@ -2723,7 +2723,7 @@ void MainWindow::on_menuExternal_aboutToShow()
 
 void MainWindow::on_actionUpgrade_triggered()
 {
-    QDesktopServices::openUrl(QUrl("http://www.shotcut.org/bin/view/Shotcut/Download"));
+    QDesktopServices::openUrl(QUrl("https://www.shotcut.org/download/"));
 }
 
 void MainWindow::on_actionOpenXML_triggered()
