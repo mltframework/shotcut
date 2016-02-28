@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Meltytech, LLC
+ * Copyright (c) 2015-2016 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -33,9 +33,6 @@ class ScopeController Q_DECL_FINAL : public QObject
 
 public:
     ScopeController(QMainWindow* mainWindow, QMenu* menu);
-
-public slots:
-    void onFrameDisplayed(const SharedFrame& frame);
 
 signals:
     void newFrame(const SharedFrame& frame);
