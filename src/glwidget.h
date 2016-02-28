@@ -186,6 +186,7 @@ private:
     SharedFrame m_displayFrame;
     QOpenGLContext* m_context;
     QSurface* m_surface;
+    qint64 m_previousMSecs;
 public:
     GLuint m_renderTexture[3];
     GLuint m_displayTexture[3];
