@@ -24,6 +24,8 @@ CLEANUP=1
 ARCHIVE=1
 SOURCES_CLEAN=1
 INSTALL_AS_ROOT=0
+DEBUG_BUILD=0
+ASAN_BUILD=0
 CREATE_STARTUP_SCRIPT=1
 ENABLE_FREI0R=1
 FREI0R_HEAD=1
@@ -384,6 +386,24 @@ function set_globals {
     fi
   fi
 
+  if [ "$DEBUG_BUILD" = "1" ]; then
+    CONFIGURE_DEBUG_FLAG="--enable-debug"
+    QMAKE_DEBUG_FLAG="CONFIG+=debug"
+  else
+    CONFIGURE_DEBUG_FLAG=
+    QMAKE_DEBUG_FLAG=
+  fi
+
+  if [ "$ASAN_BUILD" = "1" ]; then
+    ASAN_CFLAGS="-fsanitize=address -fno-omit-frame-pointer"
+    ASAN_LDFLAGS="-lasan -fsanitize=address"
+    QMAKE_ASAN_FLAGS="QMAKE_CXXFLAGS+=-fsanitize=address QMAKE_CXXFLAGS+=-fno-omit-frame-pointer QMAKE_LFLAGS+=-fsanitize=address"
+  else
+    ASAN_CFLAGS=
+    ASAN_LDFLAGS=
+    QMAKE_ASAN_FLAGS=
+  fi
+
   debug "SUBDIRS = $SUBDIRS"
 
   # REPOLOCS Array holds the repo urls
@@ -548,7 +568,7 @@ function set_globals {
 
   #####
   # ffmpeg
-  CONFIG[0]="./configure --prefix=$FINAL_INSTALL_DIR --disable-static --disable-doc --disable-ffserver --enable-gpl --enable-version3 --enable-shared --enable-pthreads --enable-runtime-cpudetect"
+  CONFIG[0]="./configure --prefix=$FINAL_INSTALL_DIR --disable-static --disable-doc --disable-ffserver --enable-gpl --enable-version3 --enable-shared --enable-pthreads --enable-runtime-cpudetect $CONFIGURE_DEBUG_FLAG"
   if test 1 = "$FFMPEG_SUPPORT_THEORA" ; then
     CONFIG[0]="${CONFIG[0]} --enable-libtheora --enable-libvorbis"
   fi
@@ -591,7 +611,7 @@ function set_globals {
 
   #####
   # mlt
-  CONFIG[1]="./configure --prefix=$FINAL_INSTALL_DIR --enable-gpl --enable-gpl3 --without-kde"
+  CONFIG[1]="./configure --prefix=$FINAL_INSTALL_DIR --enable-gpl --enable-gpl3 --without-kde $CONFIGURE_DEBUG_FLAG"
   # Remember, if adding more of these, to update the post-configure check.
   [ "$QT_INCLUDE_DIR" ] && CONFIG[1]="${CONFIG[1]} --qt-includedir=$QT_INCLUDE_DIR"
   [ "$QT_LIB_DIR" ] && CONFIG[1]="${CONFIG[1]} --qt-libdir=$QT_LIB_DIR"
@@ -603,24 +623,24 @@ function set_globals {
   elif test "$TARGET_OS" = "Win64" ; then
 	CONFIG[1]="${CONFIG[1]} --disable-dv --disable-kino --disable-vorbis --gtk2-prefix=\"$FINAL_INSTALL_DIR\" --target-os=MinGW --target-arch=x86_64 --rename-melt=melt.exe"
   fi
-  CFLAGS_[1]="-I$FINAL_INSTALL_DIR/include $CFLAGS"
+  CFLAGS_[1]="-I$FINAL_INSTALL_DIR/include $ASAN_CFLAGS $CFLAGS"
   [ "$TARGET_OS" = "Darwin" ] && CFLAGS_[1]="${CFLAGS_[1]} -I/opt/local/include -DRELOCATABLE -DMELT_NOSDL"
   [ "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ]  && CFLAGS_[1]="${CFLAGS_[1]} -DMELT_NOSDL"
-  LDFLAGS_[1]="-L$FINAL_INSTALL_DIR/lib $LDFLAGS"
+  LDFLAGS_[1]="-L$FINAL_INSTALL_DIR/lib $ASAN_LDFLAGS $LDFLAGS"
 
   ####
   # frei0r
   if test "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ; then
     CONFIG[2]="cmake -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DCMAKE_TOOLCHAIN_FILE=my.cmake -DWITHOUT_GAVL=1 -DWITHOUT_OPENCV=1"
   else
-    CONFIG[2]="./configure --prefix=$FINAL_INSTALL_DIR"
+    CONFIG[2]="./configure --prefix=$FINAL_INSTALL_DIR $CONFIGURE_DEBUG_FLAG"
   fi
   CFLAGS_[2]="$CFLAGS -O2"
   LDFLAGS_[2]=$LDFLAGS
 
   ####
   # x264
-  CONFIG[3]="./configure --prefix=$FINAL_INSTALL_DIR --disable-lavf --disable-ffms --disable-gpac --disable-swscale --enable-shared --disable-cli"
+  CONFIG[3]="./configure --prefix=$FINAL_INSTALL_DIR --disable-lavf --disable-ffms --disable-gpac --disable-swscale --enable-shared --disable-cli $CONFIGURE_DEBUG_FLAG"
   CFLAGS_[3]=$CFLAGS
   if test "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ; then
     CONFIG[3]="${CONFIG[3]} --enable-win32thread --host=$HOST --cross-prefix=$CROSS --extra-cflags=-fno-aggressive-loop-optimizations"
@@ -631,7 +651,7 @@ function set_globals {
 
   ####
   # libvpx
-  CONFIG[4]="./configure --prefix=$FINAL_INSTALL_DIR --enable-vp8 --enable-postproc --enable-multithread --enable-runtime-cpu-detect --disable-install-docs --disable-debug-libs --disable-examples --disable-unit-tests"
+  CONFIG[4]="./configure --prefix=$FINAL_INSTALL_DIR --enable-vp8 --enable-postproc --enable-multithread --enable-runtime-cpu-detect --disable-install-docs --disable-debug-libs --disable-examples --disable-unit-tests $CONFIGURE_DEBUG_FLAG"
   if test "$TARGET_OS" = "Linux" ; then
     CONFIG[4]="${CONFIG[4]} --enable-shared"
   elif test "$TARGET_OS" = "Win32" ; then
@@ -661,7 +681,7 @@ function set_globals {
 
   #####
   # lame
-  CONFIG[6]="./configure --prefix=$FINAL_INSTALL_DIR --disable-decoder --disable-frontend"
+  CONFIG[6]="./configure --prefix=$FINAL_INSTALL_DIR --disable-decoder --disable-frontend $CONFIGURE_DEBUG_FLAG"
   if test "$TARGET_OS" = "Win32" ; then
     CONFIG[6]="${CONFIG[6]} --libdir=$FINAL_INSTALL_DIR/lib --host=x86-w64-mingw32"
     CFLAGS_[6]="$CFLAGS -msse"
@@ -674,12 +694,12 @@ function set_globals {
   #####
   # shotcut
   if [ "$TARGET_OS" = "Darwin" ]; then
-    CONFIG[7]="$QTDIR/bin/qmake -r -spec macx-g++ MLT_PREFIX=$FINAL_INSTALL_DIR"
+    CONFIG[7]="$QTDIR/bin/qmake -r -spec macx-g++ MLT_PREFIX=$FINAL_INSTALL_DIR $QMAKE_DEBUG_FLAG $QMAKE_ASAN_FLAGS"
   elif [ "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ]; then
     # DEFINES+=QT_STATIC is for QWebSockets
-    CONFIG[7]="$QMAKE -r -spec mkspecs/mingw CONFIG+=link_pkgconfig PKGCONFIG+=mlt++ LIBS+=-L${QTDIR}/lib SHOTCUT_VERSION=$(date '+%y.%m.%d') DEFINES+=QT_STATIC"
+    CONFIG[7]="$QMAKE -r -spec mkspecs/mingw CONFIG+=link_pkgconfig PKGCONFIG+=mlt++ LIBS+=-L${QTDIR}/lib SHOTCUT_VERSION=$(date '+%y.%m.%d') DEFINES+=QT_STATIC $QMAKE_DEBUG_FLAG $QMAKE_ASAN_FLAGS"
   else
-    CONFIG[7]="$QTDIR/bin/qmake -r PREFIX=$FINAL_INSTALL_DIR"
+    CONFIG[7]="$QTDIR/bin/qmake -r PREFIX=$FINAL_INSTALL_DIR $QMAKE_DEBUG_FLAG $QMAKE_ASAN_FLAGS"
     LD_LIBRARY_PATH_[7]="/usr/local/lib"
   fi
   CFLAGS_[7]=$CFLAGS
@@ -687,7 +707,7 @@ function set_globals {
 
   #####
   # swh-plugins
-  CONFIG[8]="./configure --prefix=$FINAL_INSTALL_DIR --enable-darwin --enable-sse"
+  CONFIG[8]="./configure --prefix=$FINAL_INSTALL_DIR --enable-darwin --enable-sse $CONFIGURE_DEBUG_FLAG"
   CFLAGS_[8]="-march=nocona $CFLAGS"
   LDFLAGS_[8]=$LDFLAGS
 
@@ -700,7 +720,7 @@ function set_globals {
   else
     CONFIG[9]="$QTDIR/bin/qmake -r"
   fi
-  CONFIG[9]="${CONFIG[9]} PREFIX=$FINAL_INSTALL_DIR MLT_SOURCE=$SOURCE_DIR/mlt"
+  CONFIG[9]="${CONFIG[9]} PREFIX=$FINAL_INSTALL_DIR MLT_SOURCE=$SOURCE_DIR/mlt $QMAKE_DEBUG_FLAG $QMAKE_ASAN_FLAGS"
   CFLAGS_[9]=$CFLAGS
   LDFLAGS_[9]=$LDFLAGS
 
