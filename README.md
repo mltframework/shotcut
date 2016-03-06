@@ -54,7 +54,7 @@ make
 
 `make install` is partially working.
 
-Best way to tesst `shotcut` is to execute it from source folder:
+Best way to test `shotcut` is to execute it from source folder:
 
 ```
 ./src/shotcut
