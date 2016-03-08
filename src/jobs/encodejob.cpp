@@ -86,7 +86,7 @@ void EncodeJob::onVideoQualityTriggered()
             tractor.set_track(encoded, 1);
             tractor.plant_transition(vqm);
             vqm.set("render", 0);
-            MLT.saveXML(tmp.fileName(), &tractor);
+            MLT.saveXML(tmp.fileName(), &tractor, false /* without relative paths */);
 
             // Add consumer element to XML.
             QFile f1(tmp.fileName());

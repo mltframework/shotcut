@@ -379,7 +379,7 @@ void Controller::refreshConsumer(bool scrubAudio)
     }
 }
 
-void Controller::saveXML(const QString& filename, Service* service)
+void Controller::saveXML(const QString& filename, Service* service, bool withRelativePaths)
 {
     Consumer c(profile(), "xml", filename.toUtf8().constData());
     Service s(service? service->get_service() : m_producer->get_service());
@@ -390,8 +390,10 @@ void Controller::saveXML(const QString& filename, Service* service)
         c.set("time_format", "clock");
         c.set("no_meta", 1);
         c.set("store", "shotcut");
-        c.set("no_root", 1);
-        c.set("root", QFileInfo(filename).absolutePath().toUtf8().constData());
+        if (withRelativePaths) {
+            c.set("root", QFileInfo(filename).absolutePath().toUtf8().constData());
+            c.set("no_root", 1);
+        }
         c.set("title", QString("Shotcut version ").append(SHOTCUT_VERSION).toUtf8().constData());
         c.connect(s);
         c.start();
