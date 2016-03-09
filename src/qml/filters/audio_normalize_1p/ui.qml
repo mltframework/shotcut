@@ -25,8 +25,8 @@ import QtQml 2.2
 import Shotcut.Controls 1.0
 
 Item {
-    width: 350
-    height: 50
+    width: 480
+    height: 325
     Component.onCompleted: {
         if (filter.isNew) {
             // Set default parameter values
