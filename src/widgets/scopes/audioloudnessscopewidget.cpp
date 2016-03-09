@@ -88,10 +88,12 @@ void AudioLoudnessScopeWidget::refreshScope(const QSize& /*size*/, bool /*full*/
             int channels = sFrame.get_audio_channels();
             int frequency = sFrame.get_audio_frequency();
             int samples = sFrame.get_audio_samples();
-            Mlt::Frame mFrame = sFrame.clone(true, false, false);
-            m_loudnessFilter->process(mFrame);
-            mFrame.get_audio(format, frequency, channels, samples);
-            m_msElapsed += (samples * 1000) / frequency;
+            if (channels && frequency && samples) {
+                Mlt::Frame mFrame = sFrame.clone(true, false, false);
+                m_loudnessFilter->process(mFrame);
+                mFrame.get_audio(format, frequency, channels, samples);
+                m_msElapsed += (samples * 1000) / frequency;
+            }
         }
     }
 
