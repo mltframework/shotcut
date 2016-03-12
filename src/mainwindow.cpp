@@ -403,7 +403,7 @@ MainWindow::MainWindow()
     connect(videoWidget, SIGNAL(dragStarted()), m_playlistDock, SLOT(onPlayerDragStarted()));
     connect(videoWidget, SIGNAL(seekTo(int)), m_player, SLOT(seek(int)));
     connect(videoWidget, SIGNAL(gpuNotSupported()), this, SLOT(onGpuNotSupported()));
-    connect(videoWidget, SIGNAL(frameDisplayed(const SharedFrame&)), m_scopeController, SLOT(onFrameDisplayed(const SharedFrame&)));
+    connect(videoWidget, SIGNAL(frameDisplayed(const SharedFrame&)), m_scopeController, SIGNAL(newFrame(const SharedFrame&)));
     connect(m_filterController, SIGNAL(currentFilterChanged(QmlFilter*, QmlMetadata*, int)), videoWidget, SLOT(setCurrentFilter(QmlFilter*, QmlMetadata*)), Qt::QueuedConnection);
     connect(m_filterController, SIGNAL(currentFilterAboutToChange()), videoWidget, SLOT(setBlankScene()));
 
@@ -1119,7 +1119,7 @@ void MainWindow::seekPlaylist(int start)
     updateMarkers();
     MLT.seek(start);
     m_player->setFocus();
-    m_player->switchToTab(Player::ProgramTabIndex);
+    m_player->switchToTab(Player::ProjectTabIndex);
 }
 
 void MainWindow::seekTimeline(int position)
@@ -1137,7 +1137,7 @@ void MainWindow::seekTimeline(int position)
         m_filterController->setProducer();
         updateMarkers();
         m_player->setFocus();
-        m_player->switchToTab(Player::ProgramTabIndex);
+        m_player->switchToTab(Player::ProjectTabIndex);
         m_timelineDock->emitSelectedFromSelection();
     }
     m_player->seek(position);
@@ -1294,8 +1294,8 @@ void MainWindow::on_actionAbout_Shotcut_triggered()
 {
     QMessageBox::about(this, tr("About Shotcut"),
              tr("<h1>Shotcut version %1</h1>"
-                "<p><a href=\"http://www.shotcut.org/\">Shotcut</a> is a free, open source, cross platform video editor.</p>"
-                "<small><p>Copyright &copy; 2011-2015 <a href=\"http://www.meltytech.com/\">Meltytech</a>, LLC</p>"
+                "<p><a href=\"https://www.shotcut.org/\">Shotcut</a> is a free, open source, cross platform video editor.</p>"
+                "<small><p>Copyright &copy; 2011-2016 <a href=\"https://www.meltytech.com/\">Meltytech</a>, LLC</p>"
                 "<p>Licensed under the <a href=\"http://www.gnu.org/licenses/gpl.html\">GNU General Public License v3.0</a></p>"
                 "<p>This program proudly uses the following projects:<ul>"
                 "<li><a href=\"http://www.qt-project.org/\">Qt</a> application and UI framework</li>"
@@ -1310,7 +1310,7 @@ void MainWindow::on_actionAbout_Shotcut_triggered()
                 "<li><a href=\"http://www.oxygen-icons.org/\">Oxygen</a> icon collection</li>"
                 "</ul></p>"
                 "<p>The source code used to build this program can be downloaded from "
-                "<a href=\"http://www.shotcut.org/\">shotcut.org</a>.</p>"
+                "<a href=\"https://www.shotcut.org/\">shotcut.org</a>.</p>"
                 "This program is distributed in the hope that it will be useful, "
                 "but WITHOUT ANY WARRANTY; without even the implied warranty of "
                 "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</small>"
@@ -1487,7 +1487,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
     case Qt::Key_Escape: // Avid Toggle Active Monitor
         if (MLT.isPlaylist()) {
             if (multitrack())
-                m_player->onTabBarClicked(Player::ProgramTabIndex);
+                m_player->onTabBarClicked(Player::ProjectTabIndex);
             else if (MLT.savedProducer())
                 m_player->onTabBarClicked(Player::SourceTabIndex);
             else
@@ -1498,7 +1498,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             // TODO else open clip under playhead of current track if available
         } else {
             if (multitrack() || (playlist() && playlist()->count() > 0))
-                m_player->onTabBarClicked(Player::ProgramTabIndex);
+                m_player->onTabBarClicked(Player::ProjectTabIndex);
         }
         break;
     case Qt::Key_Up:
@@ -1798,8 +1798,8 @@ void MainWindow::onProducerOpened()
             m_player->setOut(-1);
             m_playlistDock->setVisible(true);
             m_playlistDock->raise();
-            m_player->enableTab(Player::ProgramTabIndex);
-            m_player->switchToTab(Player::ProgramTabIndex);
+            m_player->enableTab(Player::ProjectTabIndex);
+            m_player->switchToTab(Player::ProjectTabIndex);
         }
     }
     else if (MLT.isMultitrack()) {
@@ -1809,8 +1809,8 @@ void MainWindow::onProducerOpened()
             m_player->setOut(-1);
             m_timelineDock->setVisible(true);
             m_timelineDock->raise();
-            m_player->enableTab(Player::ProgramTabIndex);
-            m_player->switchToTab(Player::ProgramTabIndex);
+            m_player->enableTab(Player::ProjectTabIndex);
+            m_player->switchToTab(Player::ProjectTabIndex);
             m_timelineDock->emitSelectedFromSelection();
         }
     }
@@ -1992,13 +1992,13 @@ void MainWindow::onFiltersDockTriggered(bool checked)
 void MainWindow::onPlaylistCreated()
 {
     if (!playlist() || playlist()->count() == 0) return;
-    m_player->enableTab(Player::ProgramTabIndex, true);
+    m_player->enableTab(Player::ProjectTabIndex, true);
 }
 
 void MainWindow::onPlaylistLoaded()
 {
     updateMarkers();
-    m_player->enableTab(Player::ProgramTabIndex, true);
+    m_player->enableTab(Player::ProjectTabIndex, true);
 }
 
 void MainWindow::onPlaylistCleared()
@@ -2017,7 +2017,7 @@ void MainWindow::onPlaylistClosed()
     m_undoStack->clear();
     MLT.resetURL();
     if (!multitrack())
-        m_player->enableTab(Player::ProgramTabIndex, false);
+        m_player->enableTab(Player::ProjectTabIndex, false);
 }
 
 void MainWindow::onPlaylistModified()
@@ -2026,12 +2026,12 @@ void MainWindow::onPlaylistModified()
     if (MLT.producer() && playlist() && (void*) MLT.producer()->get_producer() == (void*) playlist()->get_playlist())
         m_player->onProducerModified();
     updateMarkers();
-    m_player->enableTab(Player::ProgramTabIndex, true);
+    m_player->enableTab(Player::ProjectTabIndex, true);
 }
 
 void MainWindow::onMultitrackCreated()
 {
-    m_player->enableTab(Player::ProgramTabIndex, true);
+    m_player->enableTab(Player::ProjectTabIndex, true);
 }
 
 void MainWindow::onMultitrackClosed()
@@ -2043,7 +2043,7 @@ void MainWindow::onMultitrackClosed()
     m_undoStack->clear();
     MLT.resetURL();
     if (!playlist() || playlist()->count() == 0)
-        m_player->enableTab(Player::ProgramTabIndex, false);
+        m_player->enableTab(Player::ProjectTabIndex, false);
 }
 
 void MainWindow::onMultitrackModified()
@@ -2101,12 +2101,12 @@ void MainWindow::on_actionRedo_triggered()
 
 void MainWindow::on_actionFAQ_triggered()
 {
-    QDesktopServices::openUrl(QUrl("http://www.shotcut.org/bin/view/Shotcut/FrequentlyAskedQuestions"));
+    QDesktopServices::openUrl(QUrl("https://www.shotcut.org/FAQ/"));
 }
 
 void MainWindow::on_actionForum_triggered()
 {
-    QDesktopServices::openUrl(QUrl("http://www.shotcut.org/bin/view/Shotcut/DiscussionForum"));
+    QDesktopServices::openUrl(QUrl("https://www.shotcut.org/discussionforum/"));
 }
 
 void MainWindow::saveXML(const QString &filename)
@@ -2349,7 +2349,7 @@ void MainWindow::stepRightOneSecond()
 
 void MainWindow::setInToCurrent(bool ripple)
 {
-    if (m_player->tabIndex() == Player::ProgramTabIndex && multitrack()) {
+    if (m_player->tabIndex() == Player::ProjectTabIndex && multitrack()) {
         m_timelineDock->trimClipAtPlayhead(TimelineDock::TrimInPoint, ripple);
     } else if (MLT.isSeekable() && MLT.isClip()) {
         m_player->setIn(m_player->position());
@@ -2358,7 +2358,7 @@ void MainWindow::setInToCurrent(bool ripple)
 
 void MainWindow::setOutToCurrent(bool ripple)
 {
-    if (m_player->tabIndex() == Player::ProgramTabIndex && multitrack()) {
+    if (m_player->tabIndex() == Player::ProjectTabIndex && multitrack()) {
         m_timelineDock->trimClipAtPlayhead(TimelineDock::TrimOutPoint, ripple);
     } else if (MLT.isSeekable() && MLT.isClip()) {
         m_player->setOut(m_player->position());
@@ -2666,7 +2666,7 @@ void MainWindow::on_actionFusionLight_triggered()
 
 void MainWindow::on_actionTutorials_triggered()
 {
-    QDesktopServices::openUrl(QUrl("http://www.shotcut.org/bin/view/Shotcut/Tutorials"));
+    QDesktopServices::openUrl(QUrl("https://www.shotcut.org/tutorials/"));
 }
 
 void MainWindow::on_actionRestoreLayout_triggered()
@@ -2723,7 +2723,7 @@ void MainWindow::on_menuExternal_aboutToShow()
 
 void MainWindow::on_actionUpgrade_triggered()
 {
-    QDesktopServices::openUrl(QUrl("http://www.shotcut.org/bin/view/Shotcut/Download"));
+    QDesktopServices::openUrl(QUrl("https://www.shotcut.org/download/"));
 }
 
 void MainWindow::on_actionOpenXML_triggered()

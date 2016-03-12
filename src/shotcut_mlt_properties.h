@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2015 Meltytech, LLC
+ * Copyright (c) 2013-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,7 +20,7 @@
 #define SHOTCUT_MLT_PROPERTIES_H
 
 /* This file contains all of the Shotcut-specific MLT properties.
- * See also http://www.shotcut.org/bin/view/Shotcut/MLTXMLAnnotations
+ * See also https://www.shotcut.org/notes/mltxml-annotations/
  *
  * A property should be prefaced with an underscore if it will not be saved
  * in the XML even if it never has a chance of getting into there. This makes

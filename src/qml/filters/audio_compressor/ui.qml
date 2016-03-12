@@ -17,8 +17,10 @@
  */
 
 import QtQuick 2.1
-import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.0
+import QtQuick.Controls 1.4
+import QtQuick.Controls.Styles 1.4
+import QtQuick.Extras 1.4
 import Shotcut.Controls 1.0
 
 Item {
@@ -37,6 +39,7 @@ Item {
             filter.savePreset(preset.parameters)
         }
         setControls()
+        timer.start()
     }
 
     function setControls() {
@@ -47,6 +50,16 @@ Item {
         sliderRatio.value = filter.getDouble('4')
         sliderRadius.value = filter.getDouble('5')
         sliderGain.value = filter.getDouble('6')
+    }
+
+    Timer {
+        id: timer
+        interval: 100
+        running: false
+        repeat: true
+        onTriggered: {
+            grGauge.value = filter.get('8[0]')
+        }
     }
 
     GridLayout {
@@ -206,6 +219,79 @@ Item {
         }
         UndoButton {
             onClicked: sliderGain.value = 0
+        }
+        
+        Rectangle {
+            Layout.columnSpan: 3
+            Layout.fillWidth: true
+            Layout.minimumHeight: 12
+            color: 'transparent'
+            Rectangle {
+                anchors.verticalCenter: parent.verticalCenter
+                width: parent.width
+                height: 2
+                radius: 2
+                color: activePalette.text
+            }
+        }
+        
+        Component {
+            id: gaugeStyle
+            GaugeStyle {
+                valueBar: Rectangle {
+                    implicitWidth: 16
+                    color: 'transparent'
+                    Rectangle {
+                        anchors.right: parent.right
+                        width: parent.width
+                        height: 5
+                        radius: 3
+                        color: activePalette.highlight
+                    }
+                }
+                tickmark: Item {
+                    implicitWidth: 9
+                    implicitHeight: 1
+                    Rectangle {
+                        color: activePalette.windowText
+                        anchors.fill: parent
+                        anchors.leftMargin: 2
+                        anchors.rightMargin: 2
+                    }
+                }
+                minorTickmark: Item {
+                    implicitWidth: 6
+                    implicitHeight: 1
+                    Rectangle {
+                        color: activePalette.windowText
+                        anchors.fill: parent
+                        anchors.leftMargin: 2
+                        anchors.rightMargin: 2
+                    }
+                }
+                tickmarkLabel: Text {
+                    font.pixelSize: 12
+                    text: Math.round(parseFloat(styleData.value))
+                    color: activePalette.windowText
+                    antialiasing: true
+                 }
+            }
+        }
+        
+        Label {
+            text: qsTr('Gain Reduction')
+            Layout.alignment: Qt.AlignRight | Qt.AlignTop
+            ToolTip {text: qsTr('Status indicator showing the gain reduction applied by the compressor.')}
+        }
+        Gauge {
+            Layout.columnSpan: 2
+            Layout.fillWidth: true
+            id: grGauge
+            minimumValue: -24
+            value: 0
+            maximumValue: 0
+            orientation: Qt.Horizontal
+            style: gaugeStyle
         }
 
         Label {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2015 Meltytech, LLC
+ * Copyright (c) 2011-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -77,7 +77,7 @@ public:
     void onWindowResize();
     virtual void seek(int position);
     void refreshConsumer(bool scrubAudio = false);
-    void saveXML(const QString& filename, Service* service = 0);
+    void saveXML(const QString& filename, Service* service = 0, bool withRelativePaths = true);
     QString XML(Service* service = 0);
     int consumerChanged();
     void setProfile(const QString& profile_name);

@@ -94,6 +94,7 @@ SOURCES += main.cpp\
     docks/scopedock.cpp \
     controllers/scopecontroller.cpp \
     widgets/scopes/scopewidget.cpp \
+    widgets/scopes/audioloudnessscopewidget.cpp \
     widgets/scopes/audiopeakmeterscopewidget.cpp \
     widgets/scopes/audiospectrumscopewidget.cpp \
     widgets/scopes/audiowaveformscopewidget.cpp \
@@ -195,6 +196,7 @@ HEADERS  += mainwindow.h \
     docks/scopedock.h \
     controllers/scopecontroller.h \
     widgets/scopes/scopewidget.h \
+    widgets/scopes/audioloudnessscopewidget.h \
     widgets/scopes/audiopeakmeterscopewidget.h \
     widgets/scopes/audiospectrumscopewidget.h \
     widgets/scopes/audiowaveformscopewidget.h \

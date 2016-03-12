@@ -33,6 +33,12 @@
 
 #define USE_GL_SYNC // Use glFinish() if not defined.
 
+#ifdef Q_OS_MAC
+static const int FRAMEDISPLAYED_MIN_MS = 80; // max 12.5 fps
+#else
+static const int FRAMEDISPLAYED_MIN_MS = 10; // max 100 fps
+#endif
+
 #ifdef QT_NO_DEBUG
 #define check_error(fn) {}
 #else
@@ -764,6 +770,7 @@ FrameRenderer::FrameRenderer(QOpenGLContext* shareContext, QSurface* surface)
      , m_semaphore(3)
      , m_context(0)
      , m_surface(surface)
+     , m_previousMSecs(QDateTime::currentMSecsSinceEpoch())
      , m_gl32(0)
 {
     Q_ASSERT(shareContext);
@@ -856,11 +863,20 @@ void FrameRenderer::showFrame(Mlt::Frame frame)
             emit textureReady(m_displayTexture[0], m_displayTexture[1], m_displayTexture[2]);
             m_context->doneCurrent();
         }
-    }
 
-    // The frame is now done being modified and can be shared with the rest
-    // of the application.
-    emit frameDisplayed(m_displayFrame);
+        // Throttle the frequency of frameDisplayed signals to prevent them from
+        // interfering with timely and smooth video updates.
+        int elapsedMSecs = QDateTime::currentMSecsSinceEpoch() - m_previousMSecs;
+        if (elapsedMSecs >= FRAMEDISPLAYED_MIN_MS) {
+            m_previousMSecs = QDateTime::currentMSecsSinceEpoch();
+            // The frame is now done being modified and can be shared with the rest
+            // of the application.
+            emit frameDisplayed(m_displayFrame);
+        }
+    } else {
+        // Non-threaded rendering
+        emit frameDisplayed(m_displayFrame);
+    }
 
     m_semaphore.release();
 }

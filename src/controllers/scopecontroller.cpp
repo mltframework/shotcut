@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Meltytech, LLC
+ * Copyright (c) 2015-2016 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "scopecontroller.h"
+#include "widgets/scopes/audioloudnessscopewidget.h"
 #include "widgets/scopes/audiopeakmeterscopewidget.h"
 #include "widgets/scopes/audiospectrumscopewidget.h"
 #include "widgets/scopes/audiowaveformscopewidget.h"
@@ -31,6 +32,7 @@ ScopeController::ScopeController(QMainWindow* mainWindow, QMenu* menu)
 {
     qDebug() << "begin";
     QMenu* scopeMenu = menu->addMenu(tr("Scopes"));
+    createScopeDock<AudioLoudnessScopeWidget>(mainWindow, scopeMenu);
     createScopeDock<AudioPeakMeterScopeWidget>(mainWindow, scopeMenu);
     createScopeDock<AudioSpectrumScopeWidget>(mainWindow, scopeMenu);
     createScopeDock<AudioWaveformScopeWidget>(mainWindow, scopeMenu);
@@ -38,11 +40,6 @@ ScopeController::ScopeController(QMainWindow* mainWindow, QMenu* menu)
 //        createScopeDock<VideoWaveformScopeWidget>(mainWindow, scopeMenu);
 //    }
     qDebug() << "end";
-}
-
-void ScopeController::onFrameDisplayed(const SharedFrame& frame)
-{
-    emit newFrame(frame);
 }
 
 template<typename ScopeTYPE> void ScopeController::createScopeDock(QMainWindow* mainWindow, QMenu* menu)
