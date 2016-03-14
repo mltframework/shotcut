@@ -228,6 +228,8 @@ void UndoHelper::undoChanges()
             if (m_clipsAdded.removeOne(uid)) {
                 UNDOLOG << "Removing clip at" << i;
                 m_model.beginRemoveRows(m_model.index(trackIndex), i, i);
+                if (clip->parent().get_data("mlt_mix"))
+                    clip->parent().set("mlt_mix", NULL, 0);
                 playlist.remove(i);
                 m_model.endRemoveRows();
             }
