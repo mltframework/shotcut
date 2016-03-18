@@ -1738,7 +1738,7 @@ function deploy_osx
   cmd cd "$BUILD_DIR/MacOS" || die "Unable to change directory to MacOS"
 
   log Copying supplementary executables
-  cmd cp -a "$FINAL_INSTALL_DIR"/bin/{melt,ffmpeg,qmelt} .
+  cmd cp -a "$FINAL_INSTALL_DIR"/bin/{melt,qmelt,ffmpeg,ffplay,ffprobe} .
   mkdir lib 2>/dev/null
   for exe in $(find . -type f -perm +u+x -maxdepth 1); do
     log fixing library paths of executable "$exe"
@@ -1850,6 +1850,8 @@ function deploy_win32
     cmd mv bin/*.exe .
   else
     cmd mv bin/ffmpeg.exe .
+    cmd mv bin/ffplay.exe .
+    cmd mv bin/ffprobe.exe .
     cmd mv bin/qmelt.exe .
     cmd rm -rf bin include etc man manifest src *.txt
     cmd rm lib/*
@@ -2000,11 +2002,12 @@ End-of-environment-setup-template
   chmod 755 $TMPFILE || die "Unable to make environment script executable"
   $SUDO cp $TMPFILE "$FINAL_INSTALL_DIR/source-me" || die "Unable to create environment script - cp failed"
 
-  log Creating wrapper script in $TMPFILE
-  cat > $TMPFILE <<End-of-melt-wrapper
+  log Creating wrapper scripts in $TMPFILE
+  for exe in melt qmelt ffmpeg ffplay ffprobe; do
+    cat > $TMPFILE <<End-of-exe-wrapper
 #!/bin/sh
 # Set up environment
-# Run this instead of trying to run bin/melt. It runs melt with the correct environment.
+# Run this instead of trying to run bin/$exe. It runs $exe with the correct environment.
 CURRENT_DIR=\$(readlink -f "\$0")
 INSTALL_DIR=\$(dirname "\$CURRENT_DIR")
 export LD_LIBRARY_PATH="\$INSTALL_DIR/lib":\$LD_LIBRARY_PATH
@@ -2015,13 +2018,14 @@ export FREI0R_PATH="\$INSTALL_DIR/lib/frei0r-1"
 export MLT_MOVIT_PATH="\$INSTALL_DIR/share/movit"
 export QT_PLUGIN_PATH="\$INSTALL_DIR/lib/qt5"
 export QML2_IMPORT_PATH="\$INSTALL_DIR/lib/qml"
-"\$INSTALL_DIR/bin/melt" "\$@"
-End-of-melt-wrapper
-  if test 0 != $? ; then
-    die "Unable to create wrapper script"
-  fi
-  chmod 755 $TMPFILE || die "Unable to make wrapper script executable"
-  $SUDO cp $TMPFILE "$FINAL_INSTALL_DIR/melt" || die "Unable to create wrapper script - cp failed"
+"\$INSTALL_DIR/bin/$exe" "\$@"
+End-of-exe-wrapper
+    if test 0 != $? ; then
+      die "Unable to create wrapper script"
+    fi
+    chmod 755 $TMPFILE || die "Unable to make wrapper script executable"
+    $SUDO cp $TMPFILE "$FINAL_INSTALL_DIR/$exe" || die "Unable to create wrapper script - cp failed"
+  done
 
   log Creating wrapper script in $TMPFILE
   cat > $TMPFILE <<End-of-shotcut-wrapper
