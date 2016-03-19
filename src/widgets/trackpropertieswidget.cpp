@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Meltytech, LLC
+ * Copyright (c) 2015-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,6 +21,7 @@
 #include "shotcut_mlt_properties.h"
 #include "commands/timelinecommands.h"
 #include "mainwindow.h"
+#include "util.h"
 #include <Mlt.h>
 #include <QScopedPointer>
 
@@ -32,6 +33,7 @@ TrackPropertiesWidget::TrackPropertiesWidget(Mlt::Producer& track, QWidget *pare
     m_track(track)
 {
     ui->setupUi(this);
+    Util::setColorsToHighlight(ui->nameLabel);
     ui->nameLabel->setText(tr("Track: %1").arg(track.get(kTrackNameProperty)));
     ui->blendModeLabel->hide();
     ui->blendModeCombo->hide();

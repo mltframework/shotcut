@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Meltytech, LLC
+ * Copyright (c) 2012-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,12 +18,14 @@
 
 #include "jackproducerwidget.h"
 #include "ui_jackproducerwidget.h"
+#include "util.h"
 
 JackProducerWidget::JackProducerWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::JackProducerWidget)
 {
     ui->setupUi(this);
+    Util::setColorsToHighlight(ui->label_2);
 }
 
 JackProducerWidget::~JackProducerWidget()

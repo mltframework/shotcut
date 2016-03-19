@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Meltytech, LLC
+ * Copyright (c) 2014-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,6 +18,8 @@
 
 #include "util.h"
 #include <QFileInfo>
+#include <QWidget>
+#include <QPalette>
 
 QString Util::baseName(const QString &filePath)
 {
@@ -26,4 +28,13 @@ QString Util::baseName(const QString &filePath)
     if (s.startsWith('/') || s.midRef(1, 2) == ":/" || s.midRef(1, 2) == ":\\")
         s = QFileInfo(s).fileName();
     return s;
+}
+
+void Util::setColorsToHighlight(QWidget* widget)
+{
+    QPalette palette = widget->palette();
+    palette.setColor(QPalette::Window, palette.color(palette.Highlight));
+    palette.setColor(QPalette::Text, palette.color(palette.HighlightedText));
+    widget->setPalette(palette);
+    widget->setAutoFillBackground(true);
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2015 Meltytech, LLC
+ * Copyright (c) 2012-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,6 +19,7 @@
 #include "shotcut_mlt_properties.h"
 #include "colorbarswidget.h"
 #include "ui_colorbarswidget.h"
+#include "util.h"
 #include <MltProfile.h>
 
 static const char* kParamType = "0";
@@ -39,6 +40,7 @@ ColorBarsWidget::ColorBarsWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->comboBox->setCurrentIndex(4);
+    Util::setColorsToHighlight(ui->label_2);
 }
 
 ColorBarsWidget::~ColorBarsWidget()

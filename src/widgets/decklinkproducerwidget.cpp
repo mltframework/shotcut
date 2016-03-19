@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Meltytech, LLC
+ * Copyright (c) 2012-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,12 +19,14 @@
 #include "decklinkproducerwidget.h"
 #include "ui_decklinkproducerwidget.h"
 #include "mltcontroller.h"
+#include "util.h"
 
 DecklinkProducerWidget::DecklinkProducerWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::DecklinkProducerWidget)
 {
     ui->setupUi(this);
+    Util::setColorsToHighlight(ui->label);
     ui->profileCombo->addItem(tr("Detect Automatically"), "auto");
     ui->profileCombo->addItem("HD 720p 50 fps", "atsc_720p_50");
     ui->profileCombo->addItem("HD 720p 59.94 fps", "atsc_720p_5994");

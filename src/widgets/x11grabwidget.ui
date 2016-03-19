@@ -14,6 +14,26 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="5" column="0">
+    <widget class="QLabel" name="label_7">
+     <property name="text">
+      <string>Resolution</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_5">
+     <property name="text">
+      <string>Display</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="0" colspan="6">
     <widget class="QLabel" name="label_9">
      <property name="font">
@@ -30,54 +50,50 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="0" colspan="6">
+   <item row="11" column="0">
+    <widget class="QPushButton" name="applyButton">
+     <property name="text">
+      <string>Apply</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QSpinBox" name="xSpinBox">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="toolTip">
+      <string>The horizontal coordinate from the left edge when using a fixed capture region.</string>
+     </property>
+     <property name="maximum">
+      <number>4096</number>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="6">
     <widget class="ServicePresetWidget" name="preset" native="true"/>
    </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="label_5">
-     <property name="text">
-      <string>Display</string>
+   <item row="4" column="3">
+    <widget class="QSpinBox" name="ySpinBox">
+     <property name="enabled">
+      <bool>false</bool>
      </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="1" colspan="3">
-    <widget class="QLineEdit" name="lineEdit">
      <property name="toolTip">
-      <string>An X11 display name of the form hostname:displaynumber.screennumber
-Most users do not need to change this.</string>
+      <string>The vertical coordinate from the top edge when using a fixed capture region.</string>
      </property>
-     <property name="text">
-      <string>:0.0</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="5">
-    <spacer name="horizontalSpacer_13">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>134</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="4" column="0">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Position</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     <property name="maximum">
+      <number>4096</number>
      </property>
     </widget>
    </item>
-   <item row="4" column="1" colspan="4">
+   <item row="4" column="4">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>pixels</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1" colspan="4">
     <widget class="QComboBox" name="positionComboBox">
      <property name="currentIndex">
       <number>1</number>
@@ -99,7 +115,18 @@ Most users do not need to change this.</string>
      </item>
     </widget>
    </item>
-   <item row="5" column="0">
+   <item row="2" column="1" colspan="3">
+    <widget class="QLineEdit" name="lineEdit">
+     <property name="toolTip">
+      <string>An X11 display name of the form hostname:displaynumber.screennumber
+Most users do not need to change this.</string>
+     </property>
+     <property name="text">
+      <string>:0.0</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
     <widget class="QLabel" name="label_6">
      <property name="text">
       <string>X</string>
@@ -109,120 +136,14 @@ Most users do not need to change this.</string>
      </property>
     </widget>
    </item>
-   <item row="5" column="1">
-    <widget class="QSpinBox" name="xSpinBox">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="toolTip">
-      <string>The horizontal coordinate from the left edge when using a fixed capture region.</string>
-     </property>
-     <property name="maximum">
-      <number>4096</number>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="2">
-    <widget class="QLabel" name="label_3">
-     <property name="text">
-      <string>Y</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="3">
-    <widget class="QSpinBox" name="ySpinBox">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="toolTip">
-      <string>The vertical coordinate from the top edge when using a fixed capture region.</string>
-     </property>
-     <property name="maximum">
-      <number>4096</number>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="4">
-    <widget class="QLabel" name="label_4">
-     <property name="text">
-      <string>pixels</string>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="0">
-    <widget class="QLabel" name="label_7">
-     <property name="text">
-      <string>Resolution</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="1">
-    <widget class="QSpinBox" name="widthSpinBox">
-     <property name="toolTip">
-      <string>Width of the capture region</string>
-     </property>
-     <property name="maximum">
-      <number>4096</number>
-     </property>
-     <property name="value">
-      <number>1280</number>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="2">
-    <widget class="QLabel" name="label_8">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string>x</string>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="3">
-    <widget class="QSpinBox" name="heightSpinBox">
-     <property name="toolTip">
-      <string>Height of the capture region</string>
-     </property>
-     <property name="maximum">
-      <number>4096</number>
-     </property>
-     <property name="value">
-      <number>720</number>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="4">
-    <widget class="QLabel" name="label_11">
-     <property name="text">
-      <string>pixels</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="0" colspan="5">
+   <item row="6" column="0" colspan="5">
     <widget class="QCheckBox" name="showRegionCheckBox">
      <property name="text">
       <string>Show the capture region</string>
      </property>
     </widget>
    </item>
-   <item row="8" column="0" colspan="5">
-    <widget class="QCheckBox" name="drawMouseCheckBox">
-     <property name="text">
-      <string>Draw the mouse cursor</string>
-     </property>
-     <property name="checked">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="10" column="0">
+   <item row="9" column="0">
     <widget class="QLabel" name="label_2">
      <property name="text">
       <string>Audio Input</string>
@@ -232,7 +153,33 @@ Most users do not need to change this.</string>
      </property>
     </widget>
    </item>
-   <item row="10" column="1" colspan="3">
+   <item row="8" column="0" colspan="5">
+    <widget class="QCheckBox" name="backgroundCheckBox">
+     <property name="toolTip">
+      <string>Use this when you are going to capture Shotcut itself.
+It makes the capture run in the background, but
+you will not be able to simultaneously send
+the screen capture to SDI/HDMI in this mode.</string>
+     </property>
+     <property name="text">
+      <string>Capture Shotcut</string>
+     </property>
+    </widget>
+   </item>
+   <item row="12" column="0">
+    <spacer name="verticalSpacer_7">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>68</width>
+       <height>104</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="9" column="1" colspan="3">
     <widget class="QComboBox" name="audioComboBox">
      <property name="toolTip">
       <string>Choose an audio input method to use during capture.</string>
@@ -259,46 +206,92 @@ Most users do not need to change this.</string>
      </item>
     </widget>
    </item>
-   <item row="13" column="0">
-    <spacer name="verticalSpacer_7">
+   <item row="5" column="4">
+    <widget class="QLabel" name="label_11">
+     <property name="text">
+      <string>pixels</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0" colspan="5">
+    <widget class="QCheckBox" name="drawMouseCheckBox">
+     <property name="text">
+      <string>Draw the mouse cursor</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="2">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Y</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="5">
+    <spacer name="horizontalSpacer_13">
      <property name="orientation">
-      <enum>Qt::Vertical</enum>
+      <enum>Qt::Horizontal</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>68</width>
-       <height>104</height>
+       <width>134</width>
+       <height>20</height>
       </size>
      </property>
     </spacer>
    </item>
-   <item row="1" column="0" colspan="6">
-    <widget class="Line" name="line">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="11" column="0" colspan="6">
+   <item row="10" column="0" colspan="6">
     <layout class="QVBoxLayout" name="audioLayout"/>
    </item>
-   <item row="12" column="0">
-    <widget class="QPushButton" name="applyButton">
+   <item row="5" column="2">
+    <widget class="QLabel" name="label_8">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="text">
-      <string>Apply</string>
+      <string>x</string>
      </property>
     </widget>
    </item>
-   <item row="9" column="0" colspan="5">
-    <widget class="QCheckBox" name="backgroundCheckBox">
+   <item row="5" column="1">
+    <widget class="QSpinBox" name="widthSpinBox">
      <property name="toolTip">
-      <string>Use this when you are going to capture Shotcut itself.
-It makes the capture run in the background, but
-you will not be able to simultaneously send
-the screen capture to SDI/HDMI in this mode.</string>
+      <string>Width of the capture region</string>
      </property>
+     <property name="maximum">
+      <number>4096</number>
+     </property>
+     <property name="value">
+      <number>1280</number>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="3">
+    <widget class="QSpinBox" name="heightSpinBox">
+     <property name="toolTip">
+      <string>Height of the capture region</string>
+     </property>
+     <property name="maximum">
+      <number>4096</number>
+     </property>
+     <property name="value">
+      <number>720</number>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label">
      <property name="text">
-      <string>Capture Shotcut</string>
+      <string>Position</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
    </item>

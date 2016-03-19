@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Meltytech, LLC
+ * Copyright (c) 2015-2016 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,6 +19,7 @@
 #include "shotcut_mlt_properties.h"
 #include "toneproducerwidget.h"
 #include "ui_toneproducerwidget.h"
+#include "util.h"
 #include <MltProfile.h>
 
 ToneProducerWidget::ToneProducerWidget(QWidget *parent) :
@@ -26,6 +27,7 @@ ToneProducerWidget::ToneProducerWidget(QWidget *parent) :
     ui(new Ui::ToneProducerWidget)
 {
     ui->setupUi(this);
+    Util::setColorsToHighlight(ui->nameLabel);
     ui->preset->saveDefaultPreset(*getPreset());
     ui->preset->loadPresets();
 }

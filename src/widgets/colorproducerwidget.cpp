@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2015 Meltytech, LLC
+ * Copyright (c) 2012-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,12 +21,14 @@
 #include "colorproducerwidget.h"
 #include "ui_colorproducerwidget.h"
 #include "shotcut_mlt_properties.h"
+#include "util.h"
 
 ColorProducerWidget::ColorProducerWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ColorProducerWidget)
 {
     ui->setupUi(this);
+    Util::setColorsToHighlight(ui->label_2);
     ui->preset->saveDefaultPreset(*getPreset());
     ui->preset->loadPresets();
 }

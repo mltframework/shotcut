@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Meltytech, LLC
+ * Copyright (c) 2012-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,6 +22,7 @@
 #include "jackproducerwidget.h"
 #include "alsawidget.h"
 #include "mltcontroller.h"
+#include "util.h"
 #include <QtWidgets>
 
 Video4LinuxWidget::Video4LinuxWidget(QWidget *parent) :
@@ -30,6 +31,7 @@ Video4LinuxWidget::Video4LinuxWidget(QWidget *parent) :
     m_audioWidget(0)
 {
     ui->setupUi(this);
+    Util::setColorsToHighlight(ui->label_3);
     ui->applyButton->hide();
     ui->preset->saveDefaultPreset(*getPreset());
     ui->preset->loadPresets();

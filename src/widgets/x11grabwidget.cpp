@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2015 Meltytech, LLC
+ * Copyright (c) 2012-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,6 +23,7 @@
 #include "alsawidget.h"
 #include "mltcontroller.h"
 #include "shotcut_mlt_properties.h"
+#include "util.h"
 #include <QtWidgets>
 
 X11grabWidget::X11grabWidget(QWidget *parent) :
@@ -32,6 +33,7 @@ X11grabWidget::X11grabWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->applyButton->hide();
+    Util::setColorsToHighlight(ui->label_9);
     ui->preset->saveDefaultPreset(*getPreset());
     ui->preset->loadPresets();
 }

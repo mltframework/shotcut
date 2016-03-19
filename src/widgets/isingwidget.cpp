@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Meltytech, LLC
+ * Copyright (c) 2012-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,6 +19,7 @@
 #include "shotcut_mlt_properties.h"
 #include "isingwidget.h"
 #include "ui_isingwidget.h"
+#include "util.h"
 
 static const char* kParamTemperature = "0";
 static const char* kParamBorderGrowth = "1";
@@ -29,6 +30,7 @@ IsingWidget::IsingWidget(QWidget *parent) :
     ui(new Ui::IsingWidget)
 {
     ui->setupUi(this);
+    Util::setColorsToHighlight(ui->nameLabel);
     ui->preset->saveDefaultPreset(*getPreset());
     ui->preset->loadPresets();
 }

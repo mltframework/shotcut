@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2015 Meltytech, LLC
+ * Copyright (c) 2012-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,6 +21,7 @@
 #include "settings.h"
 #include "mainwindow.h"
 #include "shotcut_mlt_properties.h"
+#include "util.h"
 #include <QFileInfo>
 
 ImageProducerWidget::ImageProducerWidget(QWidget *parent) :
@@ -29,6 +30,7 @@ ImageProducerWidget::ImageProducerWidget(QWidget *parent) :
     m_defaultDuration(-1)
 {
     ui->setupUi(this);
+    Util::setColorsToHighlight(ui->filenameLabel);
 }
 
 ImageProducerWidget::~ImageProducerWidget()

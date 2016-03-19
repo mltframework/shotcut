@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Meltytech, LLC
+ * Copyright (c) 2015-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,6 +19,7 @@
 #include "timelinepropertieswidget.h"
 #include "ui_timelinepropertieswidget.h"
 #include "mltcontroller.h"
+#include "util.h"
 
 TimelinePropertiesWidget::TimelinePropertiesWidget(Mlt::Service &service, QWidget *parent) :
     QWidget(parent),
@@ -26,6 +27,7 @@ TimelinePropertiesWidget::TimelinePropertiesWidget(Mlt::Service &service, QWidge
     m_service(service)
 {
     ui->setupUi(this);
+    Util::setColorsToHighlight(ui->nameLabel);
     if (m_service.is_valid()) {
         Mlt::Profile& profile = MLT.profile();
         ui->resolutionLabel->setText(QString("%1 x %2").arg(profile.width()).arg(profile.height()));

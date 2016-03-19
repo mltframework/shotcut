@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Meltytech, LLC
+ * Copyright (c) 2014-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,6 +19,7 @@
 #include "directshowvideowidget.h"
 #include "ui_directshowvideowidget.h"
 #include "mltcontroller.h"
+#include "util.h"
 #include <QCamera>
 #include <QString>
 #include <QAudioDeviceInfo>
@@ -28,6 +29,7 @@ DirectShowVideoWidget::DirectShowVideoWidget(QWidget *parent) :
     ui(new Ui::DirectShowVideoWidget)
 {
     ui->setupUi(this);
+    Util::setColorsToHighlight(ui->label);
 #ifdef Q_OS_WIN
     foreach (const QByteArray &deviceName, QCamera::availableDevices())
         ui->videoCombo->addItem(QCamera::deviceDescription(deviceName));

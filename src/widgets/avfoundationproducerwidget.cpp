@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Meltytech, LLC
+ * Copyright (c) 2015-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,6 +19,7 @@
 #include "avfoundationproducerwidget.h"
 #include "ui_avfoundationproducerwidget.h"
 #include "mltcontroller.h"
+#include "util.h"
 #include <QCamera>
 #include <QString>
 #include <QAudioDeviceInfo>
@@ -30,6 +31,8 @@ AvfoundationProducerWidget::AvfoundationProducerWidget(QWidget *parent) :
     ui(new Ui::AvfoundationProducerWidget)
 {
     ui->setupUi(this);
+    Util::setColorsToHighlight(ui->label);
+
 #ifdef Q_OS_MAC
     foreach (const QByteArray &deviceName, QCamera::availableDevices())
         ui->videoCombo->addItem(QCamera::deviceDescription(deviceName));
@@ -51,7 +54,7 @@ AvfoundationProducerWidget::~AvfoundationProducerWidget()
 
 Mlt::Producer *AvfoundationProducerWidget::producer(Mlt::Profile& profile)
 {
-    QString resource = QString("avfoundation:%1:%2?pixel_format=yuyv422")
+    QString resource = QString("avfoundation:%1:%2?pixel_format=yuyv422&framerate=30&video_size=1280x720")
             .arg(ui->videoCombo->currentText().replace(tr("None"), "none"))
             .arg(ui->audioCombo->currentText().replace(tr("None"), "none"));
     qDebug() << resource;

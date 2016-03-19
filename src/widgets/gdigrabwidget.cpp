@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Meltytech, LLC
+ * Copyright (c) 2015-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,6 +20,7 @@
 #include "ui_gdigrabwidget.h"
 #include "mltcontroller.h"
 #include "shotcut_mlt_properties.h"
+#include "util.h"
 #include <QtWidgets>
 #include <QAudioDeviceInfo>
 
@@ -28,6 +29,7 @@ GDIgrabWidget::GDIgrabWidget(QWidget *parent) :
     ui(new Ui::GDIgrabWidget)
 {
     ui->setupUi(this);
+    Util::setColorsToHighlight(ui->label_9);
     ui->applyButton->hide();
     const QRect& r = QApplication::desktop()->screenGeometry();
     ui->widthSpinBox->setValue(r.size().width());

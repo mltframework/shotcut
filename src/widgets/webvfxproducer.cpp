@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2014 Meltytech, LLC
+ * Copyright (c) 2013-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,6 +19,7 @@
 #include "webvfxproducer.h"
 #include "ui_webvfxproducer.h"
 #include "mltcontroller.h"
+#include "util.h"
 
 static const char* kParamTransparent = "transparent";
 
@@ -28,6 +29,7 @@ WebvfxProducer::WebvfxProducer(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->reloadButton->hide();
+    Util::setColorsToHighlight(ui->urlLabel);
 }
 
 WebvfxProducer::~WebvfxProducer()

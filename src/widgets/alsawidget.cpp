@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Meltytech, LLC
+ * Copyright (c) 2012-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,12 +19,14 @@
 #include "alsawidget.h"
 #include "ui_alsawidget.h"
 #include "mltcontroller.h"
+#include "util.h"
 
 AlsaWidget::AlsaWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::AlsaWidget)
 {
     ui->setupUi(this);
+    Util::setColorsToHighlight(ui->label_2);
     ui->applyButton->hide();
     ui->preset->saveDefaultPreset(*getPreset());
     ui->preset->loadPresets();

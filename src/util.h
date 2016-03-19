@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Meltytech, LLC
+ * Copyright (c) 2014-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,12 +21,15 @@
 
 #include <QString>
 
+class QWidget;
+
 class Util
 {
 private:
     Util() {}
 public:
     static QString baseName(const QString &filePath);
+    static void setColorsToHighlight(QWidget* widget);
 };
 
 #endif // UTIL_H

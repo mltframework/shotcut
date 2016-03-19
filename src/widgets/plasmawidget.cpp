@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Meltytech, LLC
+ * Copyright (c) 2012-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,6 +19,7 @@
 #include "shotcut_mlt_properties.h"
 #include "plasmawidget.h"
 #include "ui_plasmawidget.h"
+#include "util.h"
 
 static const char* kParamSpeed1 = "0";
 static const char* kParamSpeed2 = "1";
@@ -32,6 +33,7 @@ PlasmaWidget::PlasmaWidget(QWidget *parent) :
     ui(new Ui::PlasmaWidget)
 {
     ui->setupUi(this);
+    Util::setColorsToHighlight(ui->nameLabel);
     ui->preset->saveDefaultPreset(*getPreset());
     ui->preset->loadPresets();
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Meltytech, LLC
+ * Copyright (c) 2012-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,6 +19,7 @@
 #include "shotcut_mlt_properties.h"
 #include "lissajouswidget.h"
 #include "ui_lissajouswidget.h"
+#include "util.h"
 
 static const char* kParamRatioX = "0";
 static const char* kParamRatioY = "1";
@@ -28,6 +29,7 @@ LissajousWidget::LissajousWidget(QWidget *parent) :
     ui(new Ui::LissajousWidget)
 {
     ui->setupUi(this);
+    Util::setColorsToHighlight(ui->nameLabel);
     ui->preset->saveDefaultPreset(*getPreset());
     ui->preset->loadPresets();
 }

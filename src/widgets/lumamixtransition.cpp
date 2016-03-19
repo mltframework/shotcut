@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2015 Meltytech, LLC
+ * Copyright (c) 2014-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,6 +21,7 @@
 #include "settings.h"
 #include "mltcontroller.h"
 #include "mainwindow.h"
+#include "util.h"
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QDebug>
@@ -35,6 +36,7 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
     , m_producer(producer)
 {
     ui->setupUi(this);
+    Util::setColorsToHighlight(ui->label_2);
 
     QScopedPointer<Mlt::Transition> transition(getTransition("luma"));
     if (transition && transition->is_valid()) {

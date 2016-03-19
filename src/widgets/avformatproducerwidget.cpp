@@ -59,6 +59,7 @@ AvformatProducerWidget::AvformatProducerWidget(QWidget *parent)
     , m_recalcDuration(true)
 {
     ui->setupUi(this);
+    Util::setColorsToHighlight(ui->filenameLabel);
     connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
 }
 

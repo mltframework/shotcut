@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Meltytech, LLC
+ * Copyright (c) 2012-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,12 +19,14 @@
 #include "shotcut_mlt_properties.h"
 #include "noisewidget.h"
 #include "ui_noisewidget.h"
+#include "util.h"
 
 NoiseWidget::NoiseWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::NoiseWidget)
 {
     ui->setupUi(this);
+    Util::setColorsToHighlight(ui->nameLabel);
 }
 
 NoiseWidget::~NoiseWidget()
