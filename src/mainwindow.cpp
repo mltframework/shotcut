@@ -1811,7 +1811,10 @@ void MainWindow::onProducerOpened()
             m_timelineDock->raise();
             m_player->enableTab(Player::ProjectTabIndex);
             m_player->switchToTab(Player::ProjectTabIndex);
-            m_timelineDock->emitSelectedFromSelection();
+            if (m_timelineDock->model()->trackList().count() > 0)
+                m_timelineDock->setSelection(QList<int>() << 0);
+            else
+                m_timelineDock->selectMultitrack();
         }
     }
     if (MLT.isClip()) {

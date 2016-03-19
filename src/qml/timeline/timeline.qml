@@ -60,6 +60,12 @@ Rectangle {
         trackHeaderRepeater.itemAt(index).pulseLockButton()
     }
 
+    function selectMultitrack() {
+        for (var i = 0; i < trackHeaderRepeater.count; i++)
+            trackHeaderRepeater.itemAt(i).selected = false
+        cornerstone.selected = true
+    }
+
     property int headerWidth: 140
     property int currentTrack: 0
     property color selectedTrackColor: Qt.rgba(0.8, 0.8, 0, 0.3);

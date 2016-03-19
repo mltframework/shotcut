@@ -437,6 +437,7 @@ void TimelineDock::append(int trackIndex)
         MAIN.undoStack()->push(
             new Timeline::AppendCommand(m_model, trackIndex,
                 MLT.XML(MLT.isClip()? 0 : MLT.savedProducer())));
+        selectClipUnderPlayhead();
     }
 }
 
@@ -528,6 +529,7 @@ void TimelineDock::selectTrackHead(int trackIndex)
 
 void TimelineDock::selectMultitrack()
 {
+    QMetaObject::invokeMethod(m_quickView.rootObject(), "selectMultitrack");
     emit selected(m_model.tractor());
 }
 
@@ -545,16 +547,16 @@ void TimelineDock::openClip(int trackIndex, int clipIndex)
 
 void TimelineDock::emitSelectedFromSelection()
 {
-    if (selection().isEmpty() || currentTrack() == -1) {
+    if (!m_model.trackList().count()) {
         if (m_model.tractor())
-            emit selected(m_model.tractor());
+            selectMultitrack();
         else
             emit selected(0);
         return;
     }
 
     int trackIndex = currentTrack();
-    int clipIndex = selection().first();
+    int clipIndex = selection().isEmpty()? 0 : selection().first();
     Mlt::ClipInfo* info = getClipInfo(trackIndex, clipIndex);
     if (info && info->producer && info->producer->is_valid()) {
         delete m_updateCommand;
@@ -675,6 +677,7 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml)
             position = m_position;
         MAIN.undoStack()->push(
             new Timeline::InsertCommand(m_model, trackIndex, position, xmlToUse));
+        selectClipUnderPlayhead();
     }
 }
 
@@ -693,6 +696,7 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml)
             position = m_position;
         MAIN.undoStack()->push(
             new Timeline::OverwriteCommand(m_model, trackIndex, position, xmlToUse));
+        selectClipUnderPlayhead();
     }
 }
 
@@ -704,6 +708,7 @@ void TimelineDock::appendFromPlaylist(Mlt::Playlist *playlist)
         return;
     }
     m_model.appendFromPlaylist(playlist, trackIndex);
+    selectClipUnderPlayhead();
 }
 
 void TimelineDock::splitClip(int trackIndex, int clipIndex)
