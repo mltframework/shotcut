@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2015 Meltytech, LLC
+ * Copyright (c) 2013-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,6 +22,7 @@
 #include "controllers/filtercontroller.h"
 #include "qmltypes/qmlmetadata.h"
 #include "shotcut_mlt_properties.h"
+#include "util.h"
 #include <QTimer>
 #include <QDebug>
 
@@ -81,13 +82,17 @@ void AttachedFiltersModel::setProducer(Mlt::Producer* producer)
     }
 }
 
-QString AttachedFiltersModel::trackTitle() const
+QString AttachedFiltersModel::producerTitle() const
 {
     if (m_producer && m_producer->is_valid()) {
         if (m_producer->get(kTrackNameProperty))
             return tr("Track: %1").arg(QString::fromUtf8(m_producer->get(kTrackNameProperty)));
         if (tractor_type == m_producer->type())
             return tr("Timeline");
+        if (m_producer->get(kShotcutCaptionProperty))
+            return QString::fromUtf8(m_producer->get(kShotcutCaptionProperty));
+        if (m_producer->get("resource"))
+            return Util::baseName(QString::fromUtf8(m_producer->get("resource")));
     }
     return QString();
 }

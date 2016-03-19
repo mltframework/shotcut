@@ -132,6 +132,8 @@ Rectangle {
                 width: headerWidth
                 height: ruler.height
                 color: selected? shotcutBlue : activePalette.window
+                border.color: selected? 'red' : 'transparent'
+                border.width: selected? 1 : 0
                 z: 1
                 MouseArea {
                     anchors.fill: parent

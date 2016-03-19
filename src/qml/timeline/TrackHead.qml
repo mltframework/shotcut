@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -40,6 +40,8 @@ Rectangle {
 
     SystemPalette { id: activePalette }
     color: selected ? selectedTrackColor : (index % 2)? activePalette.alternateBase : activePalette.base
+    border.color: selected? 'red' : 'transparent'
+    border.width: selected? 1 : 0
     clip: true
     state: 'normal'
     states: [

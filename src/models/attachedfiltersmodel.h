@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -30,7 +30,7 @@ class AttachedFiltersModel : public QAbstractListModel
 {
     Q_OBJECT
     Q_PROPERTY(bool ready READ isReady NOTIFY readyChanged)
-    Q_PROPERTY(QString trackTitle READ trackTitle NOTIFY trackTitleChanged)
+    Q_PROPERTY(QString producerTitle READ producerTitle NOTIFY trackTitleChanged)
     Q_PROPERTY(bool isProducerSelected READ isProducerSelected NOTIFY isProducerSelectedChanged)
 public:
     enum ModelRoles {
@@ -43,7 +43,7 @@ public:
     Mlt::Filter* getFilter(int row) const;
     QmlMetadata* getMetadata(int row) const;
     void setProducer(Mlt::Producer* producer = 0);
-    QString trackTitle() const;
+    QString producerTitle() const;
     bool isProducerSelected() const;
 
     // QAbstractListModel Implementation

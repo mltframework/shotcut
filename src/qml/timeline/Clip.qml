@@ -68,7 +68,7 @@ Rectangle {
         }
     }
 
-    border.color: 'black'
+    border.color: selected? 'red' : 'black'
     border.width: isBlank? 0 : 1
     clip: true
     Drag.active: mouseArea.drag.active
@@ -109,7 +109,8 @@ Rectangle {
         visible: settings.timelineShowThumbnails
         anchors.right: parent.right
         anchors.top: parent.top
-        anchors.margins: parent.border.width
+        anchors.topMargin: parent.border.width
+        anchors.rightMargin: parent.border.width + 1
         anchors.bottom: parent.bottom
         anchors.bottomMargin: parent.height / 2
         width: height * 16.0/9.0
@@ -122,7 +123,7 @@ Rectangle {
         visible: settings.timelineShowThumbnails
         anchors.left: parent.left
         anchors.top: parent.top
-        anchors.margins: parent.border.width
+        anchors.topMargin: parent.border.width
         anchors.bottom: parent.bottom
         anchors.bottomMargin: parent.height / 2
         width: height * 16.0/9.0

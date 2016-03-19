@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2015 Meltytech, LLC
+ * Copyright (c) 2014-2016 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -42,7 +42,7 @@ Rectangle {
 
     color: activePalette.window
     width: 400
-    
+
     onWidthChanged: _setLayout()
     onHeightChanged: _setLayout()
     
@@ -63,23 +63,51 @@ Rectangle {
         }
     }
 
+    Rectangle {
+        id: titleBackground
+        anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
+            bottom: titleLabel.bottom
+            topMargin: 10
+            leftMargin: 10
+            rightMargin: 10
+        }
+        color: activePalette.highlight
+        visible: attachedfiltersmodel.producerTitle != ""
+    }
+
+    Label {
+        id: titleLabel
+        anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
+            topMargin: 10
+            leftMargin: 10
+            rightMargin: 10
+        }
+        text: attachedfiltersmodel.producerTitle
+        elide: Text.ElideLeft
+        color: activePalette.highlightedText
+        font.bold: true
+        horizontalAlignment: Text.AlignHCenter
+    }
+
+
     GridLayout {
         id: attachedContainer
         columns: 3
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.margins: 4
-
-        Label {
-            text: attachedfiltersmodel.trackTitle
-            height: visible ? implicitHeight : 0
-            visible: attachedfiltersmodel.trackTitle != ""
-            wrapMode: Text.Wrap
-            color: activePalette.text
-            Layout.columnSpan: 3
-            Layout.fillWidth: true
+        anchors {
+            top: titleBackground.bottom
+            left: parent.left
+            leftMargin: 10
+            rightMargin: 10
+            topMargin: 6
+            bottomMargin: 4
         }
-        
+
         AttachedFilters {
             id: attachedFilters
             Layout.columnSpan: 3
@@ -149,10 +177,12 @@ Rectangle {
             name: "landscape"
             AnchorChanges {
                 target: filterConfigScrollView
-                anchors.top: root.top
-                anchors.bottom: root.bottom
-                anchors.left: attachedContainer.right
-                anchors.right: root.right
+                anchors {
+                    top: titleBackground.bottom
+                    bottom: root.bottom
+                    left: attachedContainer.right
+                    right: root.right
+                }
             }
             PropertyChanges { target: attachedContainer; width: 200; height: root.height }
         },
@@ -160,12 +190,14 @@ Rectangle {
             name: "portrait"
             AnchorChanges {
                 target: filterConfigScrollView
-                anchors.top: attachedContainer.bottom
-                anchors.bottom: root.bottom
-                anchors.left: root.left
-                anchors.right: root.right
+                anchors {
+                    top: attachedContainer.bottom
+                    bottom: root.bottom
+                    left: root.left
+                    right: root.right
+                }
             }
-            PropertyChanges { target: attachedContainer; width: root.width; height: 165 }
+            PropertyChanges { target: attachedContainer; width: titleBackground.width; height: 165 }
         }
     ]
 }
