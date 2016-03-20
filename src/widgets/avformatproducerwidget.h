@@ -78,6 +78,8 @@ private slots:
 
     void on_actionFFmpegInfo_triggered();
 
+    void on_actionFFmpegIntegrityCheck_triggered();
+
 private:
     Ui::AvformatProducerWidget *ui;
     int m_defaultDuration;

@@ -787,6 +787,11 @@
     <string>FFmpeg Info...</string>
    </property>
   </action>
+  <action name="actionFFmpegIntegrityCheck">
+   <property name="text">
+    <string>FFmpeg Integrity Check...</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>

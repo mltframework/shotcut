@@ -109,7 +109,8 @@ SOURCES += main.cpp\
     widgets/gdigrabwidget.cpp \
     widgets/trackpropertieswidget.cpp \
     widgets/timelinepropertieswidget.cpp \
-    jobs/ffprobejob.cpp
+    jobs/ffprobejob.cpp \
+    jobs/ffmpegjob.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -214,7 +215,8 @@ HEADERS  += mainwindow.h \
     widgets/gdigrabwidget.h \
     widgets/trackpropertieswidget.h \
     widgets/timelinepropertieswidget.h \
-    jobs/ffprobejob.h
+    jobs/ffprobejob.h \
+    jobs/ffmpegjob.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \

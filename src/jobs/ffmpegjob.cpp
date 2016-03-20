@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ffprobejob.h"
+#include "ffmpegjob.h"
 #include "mainwindow.h"
 #include "dialogs/textviewerdialog.h"
 #include "util.h"
@@ -27,35 +27,35 @@
 #include <QDir>
 #include <QDebug>
 
-FfprobeJob::FfprobeJob(const QString& name, const QStringList& args)
+FfmpegJob::FfmpegJob(const QString& name, const QStringList& args)
     : AbstractJob(name)
 {
+    QAction* action = new QAction(tr("Open"), this);
+    connect(action, SIGNAL(triggered()), this, SLOT(onOpenTriggered()));
+    m_successActions << action;
     m_args.append(args);
+    setLabel(tr("Check %1").arg(Util::baseName(name)));
 }
 
-FfprobeJob::~FfprobeJob()
+FfmpegJob::~FfmpegJob()
 {
 
 }
 
-void FfprobeJob::start()
+void FfmpegJob::start()
 {
     QString shotcutPath = qApp->applicationDirPath();
-    QFileInfo ffprobePath(shotcutPath, "ffprobe");
-    setReadChannel(QProcess::StandardOutput);
-    qDebug() << ffprobePath.absoluteFilePath() << m_args;
-    QProcess::start(ffprobePath.absoluteFilePath(), m_args);
+    QFileInfo ffmpegPath(shotcutPath, "ffmpeg");
+    setReadChannel(QProcess::StandardError);
+    qDebug() << ffmpegPath.absoluteFilePath() << m_args;
+    QProcess::start(ffmpegPath.absoluteFilePath(), m_args);
     AbstractJob::start();
 }
 
-void FfprobeJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
+void FfmpegJob::onOpenTriggered()
 {
-    AbstractJob::onFinished(exitCode, exitStatus);
-    if (exitStatus == QProcess::NormalExit && exitCode == 0) {
-        TextViewerDialog dialog(&MAIN);
-        dialog.setWindowTitle(tr("FFmpeg Info"));
-        dialog.setText(log().replace("\\:", ":"));
-        dialog.exec();
-    }
-    deleteLater();
+    TextViewerDialog dialog(&MAIN);
+    dialog.setWindowTitle(tr("FFmpeg Log"));
+    dialog.setText(log());
+    dialog.exec();
 }

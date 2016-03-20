@@ -23,6 +23,7 @@
 #include "shotcut_mlt_properties.h"
 #include "jobqueue.h"
 #include "jobs/ffprobejob.h"
+#include "jobs/ffmpegjob.h"
 #include <QtWidgets>
 
 bool ProducerIsTimewarp( Mlt::Producer* producer )
@@ -442,6 +443,7 @@ void AvformatProducerWidget::on_menuButton_clicked()
         menu.addAction(ui->actionOpenFolder);
     menu.addAction(ui->actionCopyFullFilePath);
     menu.addAction(ui->actionFFmpegInfo);
+    menu.addAction(ui->actionFFmpegIntegrityCheck);
     menu.exec(ui->menuButton->mapToGlobal(QPoint(0, 0)));
 }
 
@@ -465,4 +467,14 @@ void AvformatProducerWidget::on_actionFFmpegInfo_triggered()
     args << GetFilenameFromProducer(MLT.producer());
     AbstractJob* job = new FfprobeJob(args.last(), args);
     job->start();
+}
+
+void AvformatProducerWidget::on_actionFFmpegIntegrityCheck_triggered()
+{
+    QString resource = GetFilenameFromProducer(MLT.producer());
+    QStringList args;
+    args << "-v" << "verbose";
+    args << "-i" << resource;
+    args << "-f" << "null" << "pipe:";
+    JOBS.add(new FfmpegJob(resource, args));
 }
