@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2015 Meltytech, LLC
+ * Copyright (c) 2012-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -55,8 +55,8 @@ protected:
     QList<QAction*> m_successActions;
 
 protected slots:
-    void onFinished(int exitCode, QProcess::ExitStatus exitStatus);
-    void onReadyRead();
+    virtual void onFinished(int exitCode, QProcess::ExitStatus exitStatus);
+    virtual void onReadyRead();
 
 private:
     QModelIndex m_index;

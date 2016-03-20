@@ -108,7 +108,8 @@ SOURCES += main.cpp\
     widgets/avfoundationproducerwidget.cpp \
     widgets/gdigrabwidget.cpp \
     widgets/trackpropertieswidget.cpp \
-    widgets/timelinepropertieswidget.cpp
+    widgets/timelinepropertieswidget.cpp \
+    jobs/ffprobejob.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -212,7 +213,8 @@ HEADERS  += mainwindow.h \
     widgets/avfoundationproducerwidget.h \
     widgets/gdigrabwidget.h \
     widgets/trackpropertieswidget.h \
-    widgets/timelinepropertieswidget.h
+    widgets/timelinepropertieswidget.h \
+    jobs/ffprobejob.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \

@@ -21,6 +21,8 @@
 #include "util.h"
 #include "mltcontroller.h"
 #include "shotcut_mlt_properties.h"
+#include "jobqueue.h"
+#include "jobs/ffprobejob.h"
 #include <QtWidgets>
 
 bool ProducerIsTimewarp( Mlt::Producer* producer )
@@ -429,7 +431,7 @@ void AvformatProducerWidget::on_syncSlider_valueChanged(int value)
 
 void AvformatProducerWidget::on_actionOpenFolder_triggered()
 {
-    QFileInfo fi(MLT.producer()->get("resource"));
+    QFileInfo fi(GetFilenameFromProducer(MLT.producer()));
     QDesktopServices::openUrl(QUrl::fromLocalFile(fi.path()));
 }
 
@@ -439,15 +441,28 @@ void AvformatProducerWidget::on_menuButton_clicked()
     if (!MLT.resource().contains("://")) // not a network stream
         menu.addAction(ui->actionOpenFolder);
     menu.addAction(ui->actionCopyFullFilePath);
+    menu.addAction(ui->actionFFmpegInfo);
     menu.exec(ui->menuButton->mapToGlobal(QPoint(0, 0)));
 }
 
 void AvformatProducerWidget::on_actionCopyFullFilePath_triggered()
 {
-    qApp->clipboard()->setText(MLT.producer()->get("resource"));
+    qApp->clipboard()->setText(GetFilenameFromProducer(MLT.producer()));
 }
 
 void AvformatProducerWidget::on_notesTextEdit_textChanged()
 {
     m_producer->set(kCommentProperty, ui->notesTextEdit->toPlainText().toUtf8().constData());
+}
+
+void AvformatProducerWidget::on_actionFFmpegInfo_triggered()
+{
+    QStringList args;
+    args << "-v" << "quiet";
+    args << "-print_format" << "ini";
+    args << "-pretty";
+    args << "-show_format" << "-show_programs" << "-show_streams";
+    args << GetFilenameFromProducer(MLT.producer());
+    AbstractJob* job = new FfprobeJob(args.last(), args);
+    job->start();
 }

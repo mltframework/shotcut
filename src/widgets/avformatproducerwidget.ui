@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>339</width>
-    <height>533</height>
+    <width>366</width>
+    <height>534</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -780,6 +780,11 @@
   <action name="actionCopyFullFilePath">
    <property name="text">
     <string>Copy Full File Path</string>
+   </property>
+  </action>
+  <action name="actionFFmpegInfo">
+   <property name="text">
+    <string>FFmpeg Info...</string>
    </property>
   </action>
  </widget>
