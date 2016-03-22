@@ -784,12 +784,12 @@
   </action>
   <action name="actionFFmpegInfo">
    <property name="text">
-    <string>FFmpeg Info...</string>
+    <string>More Information...</string>
    </property>
   </action>
   <action name="actionFFmpegIntegrityCheck">
    <property name="text">
-    <string>FFmpeg Integrity Check...</string>
+    <string>Start Integrity Check Job</string>
    </property>
   </action>
  </widget>
