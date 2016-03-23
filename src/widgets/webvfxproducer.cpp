@@ -66,6 +66,8 @@ void WebvfxProducer::setProducer(Mlt::Producer* producer)
 
 void WebvfxProducer::on_reloadButton_clicked()
 {
-    MLT.setProducer(producer(MLT.profile()));
+    Mlt::Producer* p = producer(MLT.profile());
+    Mlt::Controller::copyFilters(*m_producer, *p);
+    MLT.setProducer(p);
     MLT.play();
 }

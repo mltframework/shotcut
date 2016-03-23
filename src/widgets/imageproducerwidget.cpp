@@ -119,6 +119,7 @@ void ImageProducerWidget::on_resetButton_clicked()
     if (!s)
         s = m_producer->get(kShotcutResourceProperty);
     Mlt::Producer* p = new Mlt::Producer(MLT.profile(), s);
+    Mlt::Controller::copyFilters(*m_producer, *p);
     reopen(p);
 }
 
