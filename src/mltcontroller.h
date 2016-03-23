@@ -105,6 +105,7 @@ public:
     QUuid uuid(Mlt::Properties &properties) const;
     void setUuid(Mlt::Properties &properties, QUuid uid) const;
     QUuid ensureHasUuid(Mlt::Properties& properties) const;
+    static void copyFilters(Mlt::Producer& fromProducer, Mlt::Producer& toProducer);
 
     Mlt::Repository* repository() const {
         return m_repo;

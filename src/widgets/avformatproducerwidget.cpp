@@ -155,6 +155,7 @@ void AvformatProducerWidget::recreateProducer()
                  kAspectRatioNumerator ","
                  kAspectRatioDenominator ","
                  kShotcutHashProperty);
+    Mlt::Controller::copyFilters(*m_producer, *p);
     if (m_producer->get_int(kMultitrackItemProperty)) {
         emit producerChanged(p);
         delete p;

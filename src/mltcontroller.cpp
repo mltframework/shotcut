@@ -762,6 +762,17 @@ QUuid Controller::ensureHasUuid(Mlt::Properties& properties) const
     }
 }
 
+void Controller::copyFilters(Producer& fromProducer, Producer& toProducer)
+{
+    int count = fromProducer.filter_count();
+    for (int i = 0; i < count; i++) {
+        QScopedPointer<Mlt::Filter> filter(fromProducer.filter(i));
+        if (filter && filter->is_valid() && !filter->get_int("_loader")) {
+            toProducer.attach(*filter);
+        }
+    }
+}
+
 void TransportControl::play(double speed)
 {
     MLT.play(speed);
