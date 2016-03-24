@@ -629,6 +629,10 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Service* service, const QString& target,
             (mytarget.endsWith(".mp4") || mytarget.endsWith(".mov")))
         consumerNode.setAttribute("strict", "experimental");
 
+    // Add autoclose to playlists.
+    QDomNodeList playlists = dom.elementsByTagName("playlist");
+    for (int i = 0; i < playlists.length();++i)
+        playlists.item(i).toElement().setAttribute("autoclose", 1);
 
     return new EncodeJob(target, dom.toString(2));
 }
