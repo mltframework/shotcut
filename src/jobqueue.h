@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2014 Meltytech, LLC
+ * Copyright (c) 2012-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -49,7 +49,7 @@ signals:
     void jobAdded();
 
 public slots:
-    void onMessageAvailable(AbstractJob* job);
+    void onProgressUpdated(QModelIndex index, uint percent);
     void onFinished(AbstractJob* job, bool isSuccess);
 
 private:

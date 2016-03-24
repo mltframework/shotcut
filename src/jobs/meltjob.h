@@ -37,6 +37,7 @@ public slots:
     void onViewXmlTriggered();
 
 private:
+    void onReadyRead();
     QTemporaryFile m_xml;
     bool m_isStreaming;
 };

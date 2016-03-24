@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2014 Meltytech, LLC
+ * Copyright (c) 2012-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -51,7 +51,7 @@ AbstractJob* JobQueue::add(AbstractJob* job)
     appendRow(items);
     job->setParent(this);
     job->setModelIndex(index(row, COLUMN_STATUS));
-    connect(job, SIGNAL(messageAvailable(AbstractJob*)), this, SLOT(onMessageAvailable(AbstractJob*)));
+    connect(job, SIGNAL(progressUpdated(QModelIndex,uint)), this, SLOT(onProgressUpdated(QModelIndex,uint)));
     connect(job, SIGNAL(finished(AbstractJob*, bool)), this, SLOT(onFinished(AbstractJob*, bool)));
     m_mutex.lock();
     m_jobs.append(job);
@@ -62,20 +62,11 @@ AbstractJob* JobQueue::add(AbstractJob* job)
     return job;
 }
 
-void JobQueue::onMessageAvailable(AbstractJob* job)
+void JobQueue::onProgressUpdated(QModelIndex index, uint percent)
 {
-    QString msg = job->readLine();
-//    qDebug() << msg;
-    if (msg.contains("percentage:")) {
-        QStandardItem* item = itemFromIndex(job->modelIndex());
-        if (item) {
-            uint percent = msg.mid(msg.indexOf("percentage:") + 11).toUInt();
-            item->setText(QString("%1%").arg(percent));
-        }
-    }
-    else {
-        job->appendToLog(msg);
-    }
+    QStandardItem* item = itemFromIndex(index);
+    if (item)
+        item->setText(QString("%1%").arg(percent));
 }
 
 void JobQueue::onFinished(AbstractJob* job, bool isSuccess)

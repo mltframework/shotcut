@@ -92,3 +92,15 @@ void MeltJob::onViewXmlTriggered()
     dialog.setText(xml());
     dialog.exec();
 }
+
+void MeltJob::onReadyRead()
+{
+    QString msg = readLine();
+    if (msg.contains("percentage:")) {
+        uint percent = msg.mid(msg.indexOf("percentage:") + 11).toUInt();
+        emit progressUpdated(m_index, percent);
+    }
+    else {
+        appendToLog(msg);
+    }
+}

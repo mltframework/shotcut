@@ -94,5 +94,6 @@ void AbstractJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
 
 void AbstractJob::onReadyRead()
 {
-    emit messageAvailable(this);
+    QString msg = readLine();
+    appendToLog(msg);
 }

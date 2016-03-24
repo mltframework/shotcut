@@ -47,19 +47,19 @@ public slots:
     virtual void stop();
 
 signals:
-    void messageAvailable(AbstractJob* job);
+    void progressUpdated(QModelIndex index, uint percent);
     void finished(AbstractJob* job, bool isSuccess);
 
 protected:
     QList<QAction*> m_standardActions;
     QList<QAction*> m_successActions;
+    QModelIndex m_index;
 
 protected slots:
     virtual void onFinished(int exitCode, QProcess::ExitStatus exitStatus);
     virtual void onReadyRead();
 
 private:
-    QModelIndex m_index;
     bool m_ran;
     bool m_killed;
     QString m_log;
