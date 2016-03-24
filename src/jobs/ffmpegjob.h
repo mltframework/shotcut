@@ -34,7 +34,10 @@ private slots:
     void onOpenTriggered();
 
 private:
+    void onReadyRead();
     QStringList m_args;
+    QString m_duration;
+    int m_totalFrames;
 };
 
 #endif // FFMPEGJOB_H

@@ -53,7 +53,7 @@ void FfprobeJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
     AbstractJob::onFinished(exitCode, exitStatus);
     if (exitStatus == QProcess::NormalExit && exitCode == 0) {
         TextViewerDialog dialog(&MAIN);
-        dialog.setWindowTitle(tr("FFmpeg Info"));
+        dialog.setWindowTitle(tr("More Information"));
         dialog.setText(log().replace("\\:", ":"));
         dialog.exec();
     }
