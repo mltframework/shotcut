@@ -39,6 +39,7 @@ Page components
 Page instfiles
 
 LicenseData Shotcut\COPYING.txt
+ComponentText "" "" 'If Shotcut crashes at launch "Remove Shotcut Settings From Registry" might fix it.'
 
 UninstPage uninstConfirm
 UninstPage instfiles
@@ -95,6 +96,14 @@ Section "Create Start Menu Shortcuts"
   SetShellVarContext all
   CreateShortCut "$SMPROGRAMS\Shotcut.lnk" "$INSTDIR\shotcut.exe" "" "$INSTDIR\shotcut.exe" 0
   
+
+SectionEnd
+
+; Opt-in section (can be enabled by the user)
+Section /o "Remove Shotcut Settings From Registry"
+
+  DeleteRegKey HKCU "Software\Meltytech\Shotcut"
+
 SectionEnd
 
 ;--------------------------------
