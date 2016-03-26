@@ -476,7 +476,7 @@ void AvformatProducerWidget::on_actionFFmpegIntegrityCheck_triggered()
     QStringList args;
     args << "-xerror";
     args << "-err_detect" << "+explode";
-    args << "-v" << "warning";
+    args << "-v" << "info";
     args << "-i" << resource;
     args << "-f" << "null" << "pipe:";
     JOBS.add(new FfmpegJob(resource, args));
