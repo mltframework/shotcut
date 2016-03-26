@@ -474,7 +474,9 @@ void AvformatProducerWidget::on_actionFFmpegIntegrityCheck_triggered()
 {
     QString resource = GetFilenameFromProducer(MLT.producer());
     QStringList args;
-    args << "-v" << "verbose";
+    args << "-xerror";
+    args << "-err_detect" << "+explode";
+    args << "-v" << "warning";
     args << "-i" << resource;
     args << "-f" << "null" << "pipe:";
     JOBS.add(new FfmpegJob(resource, args));
