@@ -171,17 +171,23 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
         }
         else if (name == "aspect") {
             double dar = preset.get_double("aspect");
-            if (int(dar * 100) == 133) {
+            switch (int(dar * 100)) {
+            case 133:
                 ui->aspectNumSpinner->setValue(4);
                 ui->aspectDenSpinner->setValue(3);
-            }
-            else if (int(dar * 100) == 177) {
+                break;
+            case 177:
                 ui->aspectNumSpinner->setValue(16);
                 ui->aspectDenSpinner->setValue(9);
-            }
-            else {
+                break;
+            case 56:
+                ui->aspectNumSpinner->setValue(9);
+                ui->aspectDenSpinner->setValue(16);
+                break;
+            default:
                 ui->aspectNumSpinner->setValue(dar * 1000);
                 ui->aspectDenSpinner->setValue(1000);
+                break;
             }
             ui->aspectNumSpinner->setEnabled(false);
             ui->aspectDenSpinner->setEnabled(false);
@@ -931,13 +937,19 @@ void EncodeDock::onProfileChanged()
     int dar_denominator = height;
 
     if (height > 0) {
-        if (int(sar * width / height * 100) == 133) {
+        switch (int(sar * width / height * 100)) {
+        case 133:
             dar_numerator = 4;
             dar_denominator = 3;
-        }
-        else if (int(sar * width / height * 100) == 177) {
+            break;
+        case 177:
             dar_numerator = 16;
             dar_denominator = 9;
+            break;
+        case 56:
+            dar_numerator = 9;
+            dar_denominator = 16;
+            break;
         }
     }
     ui->widthSpinner->setValue(width);

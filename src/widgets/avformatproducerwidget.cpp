@@ -277,13 +277,18 @@ void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
     int dar_numerator = width * sar;
     int dar_denominator = height;
     if (height > 0) {
-        if (int(sar * width / height * 100) == 133) {
+        switch (int(sar * width / height * 100)) {
+        case 133:
             dar_numerator = 4;
             dar_denominator = 3;
-        }
-        else if (int(sar * width / height * 100) == 177) {
+            break;
+        case 177:
             dar_numerator = 16;
             dar_denominator = 9;
+            break;
+        case 56:
+            dar_numerator = 9;
+            dar_denominator = 16;
         }
     }
     if (m_producer->get(kAspectRatioNumerator))
