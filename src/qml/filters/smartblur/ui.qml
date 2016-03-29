@@ -26,27 +26,27 @@ Item {
     property double strengthDefault: 0.5
     property double thresholdDefault: 3.0
 
-    property var defaultParameters: ["avf.luma_radius", "avf.chroma_radius", "avf.luma_strength", "avf.chroma_strength", "avf.luma_threshold", "avf.chroma_threshold"]
+    property var defaultParameters: ["av.luma_radius", "av.chroma_radius", "av.luma_strength", "av.chroma_strength", "av.luma_threshold", "av.chroma_threshold"]
 
     width: 200
     height: 300
     Component.onCompleted: {
         if (filter.isNew) {
-            filter.set("avf.luma_radius", radiusDefault)
-            filter.set("avf.chroma_radius", radiusDefault)
-            filter.set("avf.luma_strength", strengthDefault)
-            filter.set("avf.chroma_strength", strengthDefault)
-            filter.set("avf.luma_threshold", thresholdDefault)
-            filter.set("avf.chroma_threshold", thresholdDefault)
+            filter.set("av.luma_radius", radiusDefault)
+            filter.set("av.chroma_radius", radiusDefault)
+            filter.set("av.luma_strength", strengthDefault)
+            filter.set("av.chroma_strength", strengthDefault)
+            filter.set("av.luma_threshold", thresholdDefault)
+            filter.set("av.chroma_threshold", thresholdDefault)
             filter.savePreset(defaultParameters)
         }
         setControls()
     }
 
     function setControls() {
-        radiusSlider.value = filter.getDouble("avf.luma_radius")
-        strengthSlider.value = filter.getDouble("avf.luma_strength")
-        thresholdSlider.value = filter.getDouble("avf.luma_threshold")
+        radiusSlider.value = filter.getDouble("av.luma_radius")
+        strengthSlider.value = filter.getDouble("av.luma_strength")
+        thresholdSlider.value = filter.getDouble("av.luma_threshold")
     }
 
     GridLayout {
@@ -76,8 +76,8 @@ Item {
             decimals: 1
             spinnerWidth: 80
             onValueChanged: {
-                filter.set("avf.luma_radius", value)
-                filter.set("avf.chroma_radius", value)
+                filter.set("av.luma_radius", value)
+                filter.set("av.chroma_radius", value)
             }
         }
         UndoButton {
@@ -96,8 +96,8 @@ Item {
             decimals: 1
             spinnerWidth: 80
             onValueChanged: {
-                filter.set("avf.luma_strength", value)
-                filter.set("avf.chroma_strength", value)
+                filter.set("av.luma_strength", value)
+                filter.set("av.chroma_strength", value)
             }
         }
         UndoButton {
@@ -116,8 +116,8 @@ Item {
             decimals: 0
             spinnerWidth: 80
             onValueChanged: {
-                filter.set("avf.luma_threshold", value)
-                filter.set("avf.chroma_threshold", value)
+                filter.set("av.luma_threshold", value)
+                filter.set("av.chroma_threshold", value)
             }
         }
         UndoButton {
