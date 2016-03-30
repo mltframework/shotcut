@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2015 Meltytech, LLC
+ * Copyright (c) 2014-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,6 +20,7 @@
 #include "mltcontroller.h"
 #include <QLocale>
 #include <QDir>
+#include <QCoreApplication>
 #include <QDebug>
 
 bool isMltClass(const QStringRef& name)
@@ -38,7 +39,7 @@ MltXmlChecker::MltXmlChecker()
     , m_tempFile(QDir::tempPath().append("/shotcut-XXXXXX.mlt"))
     , m_hasComma(false)
     , m_hasPeriod(false)
-    , m_valueChanged(false)
+    , m_numericValueChanged(false)
 {
     qDebug() << "decimal point" << m_decimalPoint;
 }
@@ -64,7 +65,7 @@ bool MltXmlChecker::check(const QString& fileName)
                 readMlt();
                 m_newXml.writeEndElement();
                 m_newXml.writeEndDocument();
-                m_isCorrected = m_isCorrected || (m_hasPeriod && m_hasComma && m_valueChanged);
+                m_isCorrected = m_isCorrected || (m_hasPeriod && m_hasComma && m_numericValueChanged);
             } else {
                 m_xml.raiseError(QObject::tr("The file is not a MLT XML file."));
             }
@@ -119,9 +120,12 @@ void MltXmlChecker::readMlt()
             if (isMltClass(m_xml.name())) {
                 mlt_class = m_xml.name().toString();
             } else if (m_xml.name() == "property") {
-                if ((mlt_class == "filter" || mlt_class == "transition") && readMltService())
+                if (readMltService())
                     continue;
                 if (checkNumericProperty())
+                    continue;
+                if ((mlt_class == "filter" || mlt_class == "transition" || mlt_class == "producer")
+                        && m_service == "webvfx" && fixWebVfxPath())
                     continue;
             }
             checkInAndOutPoints();
@@ -129,6 +133,7 @@ void MltXmlChecker::readMlt()
         case QXmlStreamReader::EndElement:
             if (isMltClass(m_xml.name())) {
                 mlt_class.clear();
+                m_service.clear();
             }
             m_newXml.writeEndElement();
             break;
@@ -145,12 +150,12 @@ bool MltXmlChecker::readMltService()
     if (m_xml.attributes().value("name") == "mlt_service") {
         m_newXml.writeAttributes(m_xml.attributes());
 
-        const QString& value = m_xml.readElementText();
-        if (!MLT.isAudioFilter(value))
+        m_service = m_xml.readElementText();
+        if (!MLT.isAudioFilter(m_service))
             m_hasEffects = true;
-        if (value.startsWith("movit.") || value.startsWith("glsl."))
+        if (m_service.startsWith("movit.") || m_service.startsWith("glsl."))
             m_needsGPU = true;
-        m_newXml.writeCharacters(value);
+        m_newXml.writeCharacters(m_service);
 
         m_newXml.writeEndElement();
         return true;
@@ -184,7 +189,7 @@ bool MltXmlChecker::checkNumericString(QString& value)
             (value.contains('.') || value.contains(','))) {
         value.replace(',', m_decimalPoint);
         value.replace('.', m_decimalPoint);
-        m_valueChanged = true;
+        m_numericValueChanged = true;
         return true;
     }
     return false;
@@ -201,6 +206,39 @@ bool MltXmlChecker::checkNumericProperty()
         QString value = m_xml.readElementText();
         checkNumericString(value);
         m_newXml.writeCharacters(value);
+
+        m_newXml.writeEndElement();
+        return true;
+    }
+    return false;
+}
+
+bool MltXmlChecker::fixWebVfxPath()
+{
+    Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "property");
+
+    if (m_xml.attributes().value("name") == "resource") {
+        m_newXml.writeAttributes(m_xml.attributes());
+
+        QString resource = m_xml.readElementText();
+
+        // The path, if absolute, should start with the Shotcut executable path.
+        QFileInfo fi(resource);
+        if (fi.isAbsolute()) {
+            QDir appPath(QCoreApplication::applicationDirPath());
+
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+            // Leave the bin directory on Linux.
+            appPath.cdUp();
+#endif
+            if (!resource.startsWith(appPath.path())) {
+                // Locate "share/shotcut" and replace the front of it with appPath.
+                int i = resource.indexOf("/share/shotcut/");
+                resource.replace(0, i, appPath.path());
+                m_isCorrected = true;
+            }
+        }
+        m_newXml.writeCharacters(resource);
 
         m_newXml.writeEndElement();
         return true;

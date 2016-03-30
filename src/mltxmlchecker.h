@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2015 Meltytech, LLC
+ * Copyright (c) 2014-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -43,6 +43,7 @@ private:
     void checkInAndOutPoints();
     bool checkNumericString(QString& value);
     bool checkNumericProperty();
+    bool fixWebVfxPath();
 
     QXmlStreamReader m_xml;
     QXmlStreamWriter m_newXml;
@@ -53,7 +54,8 @@ private:
     QTemporaryFile m_tempFile;
     bool m_hasComma;
     bool m_hasPeriod;
-    bool m_valueChanged;
+    bool m_numericValueChanged;
+    QString m_service;
 };
 
 #endif // MLTXMLCHECKER_H
