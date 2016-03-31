@@ -234,8 +234,10 @@ bool MltXmlChecker::fixWebVfxPath()
             if (!resource.startsWith(appPath.path())) {
                 // Locate "share/shotcut" and replace the front of it with appPath.
                 int i = resource.indexOf("/share/shotcut/");
-                resource.replace(0, i, appPath.path());
-                m_isCorrected = true;
+                if (i >= 0) {
+                    resource.replace(0, i, appPath.path());
+                    m_isCorrected = true;
+                }
             }
         }
         m_newXml.writeCharacters(resource);
