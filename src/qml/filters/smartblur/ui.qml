@@ -29,7 +29,7 @@ Item {
     property var defaultParameters: ["av.luma_radius", "av.chroma_radius", "av.luma_strength", "av.chroma_strength", "av.luma_threshold", "av.chroma_threshold"]
 
     width: 200
-    height: 300
+    height: 125
     Component.onCompleted: {
         if (filter.isNew) {
             filter.set("av.luma_radius", radiusDefault)
