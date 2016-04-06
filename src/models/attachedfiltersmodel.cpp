@@ -85,6 +85,8 @@ void AttachedFiltersModel::setProducer(Mlt::Producer* producer)
 QString AttachedFiltersModel::producerTitle() const
 {
     if (m_producer && m_producer->is_valid()) {
+        if (m_producer->get(kShotcutTransitionProperty))
+            return tr("Transition");
         if (m_producer->get(kTrackNameProperty))
             return tr("Track: %1").arg(QString::fromUtf8(m_producer->get(kTrackNameProperty)));
         if (tractor_type == m_producer->type())
