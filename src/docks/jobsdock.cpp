@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2015 Meltytech, LLC
+ * Copyright (c) 2012-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,14 +20,14 @@
 #include "ui_jobsdock.h"
 #include "jobqueue.h"
 #include <QtWidgets>
-#include <QDebug>
+#include <Logger.h>
 #include "dialogs/textviewerdialog.h"
 
 JobsDock::JobsDock(QWidget *parent) :
     QDockWidget(parent),
     ui(new Ui::JobsDock)
 {
-    qDebug() << "begin";
+    LOG_DEBUG() << "begin";
     ui->setupUi(this);
     toggleViewAction()->setIcon(windowIcon());
     ui->treeView->setModel(&JOBS);
@@ -36,7 +36,7 @@ JobsDock::JobsDock(QWidget *parent) :
     header->setSectionResizeMode(0, QHeaderView::Stretch);
     header->setSectionResizeMode(1, QHeaderView::ResizeToContents);
     ui->cleanButton->hide();
-    qDebug() << "end";
+    LOG_DEBUG() << "end";
 }
 
 JobsDock::~JobsDock()

@@ -27,7 +27,7 @@
 #include "jobs/encodejob.h"
 #include "shotcut_mlt_properties.h"
 
-#include <QtDebug>
+#include <Logger.h>
 #include <QtWidgets>
 #include <QtXml>
 #include <QtMath>
@@ -46,7 +46,7 @@ EncodeDock::EncodeDock(QWidget *parent) :
     m_immediateJob(0),
     m_profiles(Mlt::Profile::list())
 {
-    qDebug() << "begin";
+    LOG_DEBUG() << "begin";
     ui->setupUi(this);
     ui->stopCaptureButton->hide();
     ui->videoCodecThreadsSpinner->setMaximum(QThread::idealThreadCount());
@@ -95,7 +95,7 @@ EncodeDock::EncodeDock(QWidget *parent) :
 
     on_resetButton_clicked();
 
-    qDebug() << "end";
+    LOG_DEBUG() << "end";
 }
 
 EncodeDock::~EncodeDock()

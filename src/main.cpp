@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2015 Meltytech, LLC
+ * Copyright (c) 2011-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -205,7 +205,7 @@ public:
     ~Application()
     {
         delete mainWindow;
-        qDebug() << "exiting";
+        LOG_DEBUG() << "exiting";
     }
 
 protected:
@@ -245,7 +245,7 @@ int main(int argc, char **argv)
     int result = a.exec();
 
     if (EXIT_RESTART == result) {
-        qDebug() << "restarting app";
+        LOG_DEBUG() << "restarting app";
         QProcess* restart = new QProcess;
         restart->start(a.applicationFilePath(), QStringList());
         restart->waitForReadyRead();

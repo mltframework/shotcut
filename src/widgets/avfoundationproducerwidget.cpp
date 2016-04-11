@@ -25,6 +25,7 @@
 #include <QAudioDeviceInfo>
 #include <QDesktopWidget>
 #include "shotcut_mlt_properties.h"
+#include <Logger.h>
 
 AvfoundationProducerWidget::AvfoundationProducerWidget(QWidget *parent) :
     QWidget(parent),
@@ -57,7 +58,7 @@ Mlt::Producer *AvfoundationProducerWidget::producer(Mlt::Profile& profile)
     QString resource = QString("avfoundation:%1:%2?pixel_format=yuyv422&framerate=30&video_size=1280x720")
             .arg(ui->videoCombo->currentText().replace(tr("None"), "none"))
             .arg(ui->audioCombo->currentText().replace(tr("None"), "none"));
-    qDebug() << resource;
+    LOG_DEBUG() << resource;
     Mlt::Producer* p = new Mlt::Producer(profile, resource.toLatin1().constData());
     if (!p || !p->is_valid()) {
         delete p;

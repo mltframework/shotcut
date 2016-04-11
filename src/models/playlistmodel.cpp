@@ -24,7 +24,7 @@
 #include <QColor>
 #include <QPainter>
 #include <QThreadPool>
-#include <QtDebug>
+#include <Logger.h>
 #include <QApplication>
 #include <QPalette>
 #include <QCryptographicHash>

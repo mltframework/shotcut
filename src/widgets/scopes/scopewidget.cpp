@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Meltytech, LLC
+ * Copyright (c) 2015-2016 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +17,7 @@
  */
 
 #include "scopewidget.h"
-#include <QDebug>
+#include <Logger.h>
 #include <QtConcurrent/QtConcurrent>
 
 ScopeWidget::ScopeWidget(const QString& name)
@@ -29,9 +29,9 @@ ScopeWidget::ScopeWidget(const QString& name)
   , m_forceRefresh(false)
   , m_size(0, 0)
 {
-    qDebug() << "begin" << m_future.isFinished();
+    LOG_DEBUG() << "begin" << m_future.isFinished();
     setObjectName(name);
-    qDebug() << "end";
+    LOG_DEBUG() << "end";
 }
 
 ScopeWidget::~ScopeWidget()

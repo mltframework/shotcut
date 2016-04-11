@@ -27,7 +27,7 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QRegularExpression>
-#include <QDebug>
+#include <Logger.h>
 
 FfmpegJob::FfmpegJob(const QString& name, const QStringList& args)
     : AbstractJob(name)
@@ -50,7 +50,7 @@ void FfmpegJob::start()
     QString shotcutPath = qApp->applicationDirPath();
     QFileInfo ffmpegPath(shotcutPath, "ffmpeg");
     setReadChannel(QProcess::StandardError);
-    qDebug() << ffmpegPath.absoluteFilePath() << m_args;
+    LOG_DEBUG() << ffmpegPath.absoluteFilePath() << m_args;
 #ifdef Q_OS_WIN
     QProcess::start(ffmpegPath.absoluteFilePath(), m_args);
 #else

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +17,7 @@
  */
 
 #include "gltestwidget.h"
-#include <QDebug>
+#include <Logger.h>
 #include <QMessageBox>
 #include <QCoreApplication>
 #include <Logger.h>
@@ -43,9 +43,9 @@ void GLTestWidget::initializeGL()
         supported = supported && hasOpenGLFeature(QOpenGLFunctions::Framebuffers);
 
         if (!supported) {
-            qWarning() << "OpenGL has NPOTTextures" << hasOpenGLFeature(QOpenGLFunctions::NPOTTextures);
-            qWarning() << "OpenGL has Shaders" << hasOpenGLFeature(QOpenGLFunctions::Shaders);
-            qWarning() << "OpenGL has Framebuffers" << hasOpenGLFeature(QOpenGLFunctions::Framebuffers);
+            LOG_WARNING() << "OpenGL has NPOTTextures" << hasOpenGLFeature(QOpenGLFunctions::NPOTTextures);
+            LOG_WARNING() << "OpenGL has Shaders" << hasOpenGLFeature(QOpenGLFunctions::Shaders);
+            LOG_WARNING() << "OpenGL has Framebuffers" << hasOpenGLFeature(QOpenGLFunctions::Framebuffers);
             QMessageBox::critical(this, qApp->applicationName(),
                               tr("Error:\nThis program requires OpenGL version 2.0\nwith the framebuffer object extension."));
             ::exit(EXIT_FAILURE);

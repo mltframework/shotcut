@@ -19,7 +19,7 @@
 #include "abstractjob.h"
 #include <QApplication>
 #include <QTimer>
-#include <QDebug>
+#include <Logger.h>
 
 AbstractJob::AbstractJob(const QString& name)
     : QProcess(0)
@@ -83,10 +83,10 @@ void AbstractJob::stop()
 void AbstractJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
 {
     if (exitStatus == QProcess::NormalExit && exitCode == 0) {
-        qDebug() << "job succeeeded";
+        LOG_DEBUG() << "job succeeeded";
         emit finished(this, true);
     } else {
-        qDebug() << "job failed with" << exitCode;
+        LOG_DEBUG() << "job failed with" << exitCode;
         emit finished(this, false);
     }
     m_log.append(readAll());

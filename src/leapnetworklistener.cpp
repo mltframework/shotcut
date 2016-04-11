@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2015 Meltytech, LLC
+ * Copyright (c) 2013-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,6 +17,7 @@
  */
 
 #include "leapnetworklistener.h"
+#include <Logger.h>
 #include <QtCore>
 
 static const float BIG_CIRCLE_THRESHOLD = 70.0f;
@@ -29,7 +30,7 @@ LeapNetworkListener::LeapNetworkListener(QObject *parent) :
 
 void LeapNetworkListener::start()
 {
-    qDebug();
+    LOG_DEBUG() << "begin";
     QUrl url("ws://localhost:6437/v2.json");
     connect(&m_socket, SIGNAL(connected()), SLOT(onConnected()));
     connect(&m_socket, SIGNAL(disconnected()), SLOT(onDisconnected()));
@@ -41,13 +42,13 @@ void LeapNetworkListener::start()
 
 void LeapNetworkListener::onConnected()
 {
-    qDebug() << "Connected to Leap Motion";
+    LOG_DEBUG() << "Connected to Leap Motion";
     m_socket.sendTextMessage("{\"enableGestures\": true}");
 }
 
 void LeapNetworkListener::onDisconnected()
 {
-    qDebug() << "Disconnected from Leap Motion";
+    LOG_DEBUG() << "Disconnected from Leap Motion";
     m_timer.stop();
 }
 
@@ -108,5 +109,5 @@ void LeapNetworkListener::onMessage(const QString &s)
 void LeapNetworkListener::onError(QAbstractSocket::SocketError error)
 {
     Q_UNUSED(error)
-    qDebug() << "Leap Motion WebSocket error:" << m_socket.errorString();
+    LOG_DEBUG() << "Leap Motion WebSocket error:" << m_socket.errorString();
 }

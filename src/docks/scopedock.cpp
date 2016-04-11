@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Meltytech, LLC
+ * Copyright (c) 2015-2016 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,7 +18,7 @@
 
 #include "scopedock.h"
 #include "controllers/scopecontroller.h"
-#include <QDebug>
+#include <Logger.h>
 #include <QtWidgets/QScrollArea>
 #include <QAction>
 
@@ -27,7 +27,7 @@ ScopeDock::ScopeDock(ScopeController* scopeController, ScopeWidget* scopeWidget)
   , m_scopeController(scopeController)
   , m_scopeWidget(scopeWidget)
 {
-    qDebug() << "begin";
+    LOG_DEBUG() << "begin";
     setObjectName(m_scopeWidget->objectName() + "Dock");
     QScrollArea *scrollArea = new QScrollArea();
     scrollArea->setFrameShape(QFrame::NoFrame);
@@ -37,7 +37,7 @@ ScopeDock::ScopeDock(ScopeController* scopeController, ScopeWidget* scopeWidget)
     QDockWidget::setWindowTitle(m_scopeWidget->getTitle());
 
     connect(toggleViewAction(), SIGNAL(toggled(bool)), this, SLOT(onActionToggled(bool)));
-    qDebug() << "end";
+    LOG_DEBUG() << "end";
 }
 
 void ScopeDock::resizeEvent(QResizeEvent* e)

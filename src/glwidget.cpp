@@ -25,6 +25,7 @@
 #include <QOffscreenSurface>
 #include <QtQml>
 #include <Mlt.h>
+#include <Logger.h>
 #include "glwidget.h"
 #include "settings.h"
 #include "qmltypes/qmlutilities.h"
@@ -42,7 +43,7 @@ static const int FRAMEDISPLAYED_MIN_MS = 10; // max 100 fps
 #ifdef QT_NO_DEBUG
 #define check_error(fn) {}
 #else
-#define check_error(fn) { int err = fn->glGetError(); if (err != GL_NO_ERROR) { qCritical() << "GL error"  << hex << err << dec << "at" << __FILE__ << ":" << __LINE__; } }
+#define check_error(fn) { int err = fn->glGetError(); if (err != GL_NO_ERROR) { LOG_ERROR() << "GL error"  << hex << err << dec << "at" << __FILE__ << ":" << __LINE__; } }
 #endif
 
 #ifndef GL_TIMEOUT_IGNORED
@@ -72,7 +73,7 @@ GLWidget::GLWidget(QObject *parent)
     , m_offset(QPoint(0, 0))
     , m_shareContext(0)
 {
-    qDebug() << "begin";
+    LOG_DEBUG() << "begin";
     m_texture[0] = m_texture[1] = m_texture[2] = 0;
     quickWindow()->setPersistentOpenGLContext(true);
     quickWindow()->setPersistentSceneGraph(true);
@@ -94,12 +95,12 @@ GLWidget::GLWidget(QObject *parent)
     connect(quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(initializeGL()), Qt::DirectConnection);
     connect(quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(setBlankScene()), Qt::QueuedConnection);
     connect(quickWindow(), SIGNAL(beforeRendering()), SLOT(paintGL()), Qt::DirectConnection);
-    qDebug() << "end";
+    LOG_DEBUG() << "end";
 }
 
 GLWidget::~GLWidget()
 {
-    qDebug();
+    LOG_DEBUG() << "begin";
     stop();
     delete m_glslManager;
     delete m_threadStartEvent;
@@ -118,7 +119,7 @@ GLWidget::~GLWidget()
 
 void GLWidget::initializeGL()
 {
-    qDebug() << "begin";
+    LOG_DEBUG() << "begin";
 
     if (!m_offscreenSurface.isValid()) {
         m_offscreenSurface.setFormat(quickWindow()->openglContext()->format());
@@ -127,10 +128,10 @@ void GLWidget::initializeGL()
     Q_ASSERT(m_offscreenSurface.isValid());
 
     initializeOpenGLFunctions();
-    qDebug() << "OpenGL vendor" << QString::fromUtf8((const char*) glGetString(GL_VENDOR));
-    qDebug() << "OpenGL renderer" << QString::fromUtf8((const char*) glGetString(GL_RENDERER));
-    qDebug() << "OpenGL threaded?" << quickWindow()->openglContext()->supportsThreadedOpenGL();
-    qDebug() << "OpenGL ES?" << quickWindow()->openglContext()->isOpenGLES();
+    LOG_DEBUG() << "OpenGL vendor" << QString::fromUtf8((const char*) glGetString(GL_VENDOR));
+    LOG_DEBUG() << "OpenGL renderer" << QString::fromUtf8((const char*) glGetString(GL_RENDERER));
+    LOG_DEBUG() << "OpenGL threaded?" << quickWindow()->openglContext()->supportsThreadedOpenGL();
+    LOG_DEBUG() << "OpenGL ES?" << quickWindow()->openglContext()->isOpenGLES();
 
     if (m_glslManager && quickWindow()->openglContext()->isOpenGLES()) {
         delete m_glslManager;
@@ -178,7 +179,7 @@ void GLWidget::initializeGL()
 
     m_initSem.release();
     m_isInitialized = true;
-    qDebug() << "end";
+    LOG_DEBUG() << "end";
 }
 
 void GLWidget::setBlankScene()
@@ -790,7 +791,7 @@ FrameRenderer::FrameRenderer(QOpenGLContext* shareContext, QSurface* surface)
 
 FrameRenderer::~FrameRenderer()
 {
-    qDebug();
+    LOG_DEBUG() << "begin";
     delete m_context;
     delete m_gl32;
 }
@@ -888,7 +889,7 @@ SharedFrame FrameRenderer::getDisplayFrame()
 
 void FrameRenderer::cleanup()
 {
-    qDebug();
+    LOG_DEBUG() << "begin";
     if (m_renderTexture[0] && m_renderTexture[1] && m_renderTexture[2]) {
         m_context->makeCurrent(m_surface);
         m_context->functions()->glDeleteTextures(3, m_renderTexture);

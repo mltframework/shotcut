@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2015 Meltytech, LLC
+ * Copyright (c) 2012-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,7 +19,7 @@
 #include "meltedunitsmodel.h"
 #include <QTimer>
 #include <mvcp_util.h>
-#include <QDebug>
+#include <Logger.h>
 
 MeltedUnitsModel::MeltedUnitsModel(QObject *parent)
     : QAbstractTableModel(parent)

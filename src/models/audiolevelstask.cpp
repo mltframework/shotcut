@@ -28,7 +28,7 @@
 #include <QThreadPool>
 #include <QMutex>
 #include <QTime>
-#include <QDebug>
+#include <Logger.h>
 
 static QList<AudioLevelsTask*> tasksList;
 static QMutex tasksListMutex;
@@ -119,7 +119,7 @@ Mlt::Producer* AudioLevelsTask::tempProducer()
             m_tempProducer->attach(channels);
             m_tempProducer->attach(converter);
             m_tempProducer->attach(levels);
-            qDebug() << "generating audio levels for" << m_tempProducer->get("resource");
+            LOG_DEBUG() << "generating audio levels for" << m_tempProducer->get("resource");
         }
     }
     return m_tempProducer;

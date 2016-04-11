@@ -25,7 +25,7 @@
 #include <QApplication>
 #include <QFileInfo>
 #include <QDir>
-#include <QDebug>
+#include <Logger.h>
 
 FfprobeJob::FfprobeJob(const QString& name, const QStringList& args)
     : AbstractJob(name)
@@ -43,7 +43,7 @@ void FfprobeJob::start()
     QString shotcutPath = qApp->applicationDirPath();
     QFileInfo ffprobePath(shotcutPath, "ffprobe");
     setReadChannel(QProcess::StandardOutput);
-    qDebug() << ffprobePath.absoluteFilePath() << m_args;
+    LOG_DEBUG() << ffprobePath.absoluteFilePath() << m_args;
     QProcess::start(ffprobePath.absoluteFilePath(), m_args);
     AbstractJob::start();
 }

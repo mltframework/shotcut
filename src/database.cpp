@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2015 Meltytech, LLC
+ * Copyright (c) 2013-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@
 #include <QtSql>
 #include <QStandardPaths>
 #include <QDir>
-#include <QtDebug>
+#include <Logger.h>
 
 struct DatabaseJob {
     enum Type {
@@ -64,9 +64,9 @@ bool Database::upgradeVersion1()
     if (query.exec("CREATE TABLE thumbnails (hash TEXT PRIMARY KEY NOT NULL, accessed DATETIME NOT NULL, image BLOB);")) {
         success = query.exec("UPDATE version SET version = 1;");
         if (!success)
-            qCritical() << __FUNCTION__ << query.lastError();
+            LOG_ERROR() << query.lastError();
     } else {
-        qCritical() << __PRETTY_FUNCTION__ << "Failed to create thumbnails table.";
+        LOG_ERROR() << "Failed to create thumbnails table.";
     }
     return success;
 }
@@ -92,7 +92,7 @@ void Database::doJob(DatabaseJob * job)
         query.bindValue(":image", ba);
         job->result = query.exec();
         if (!job->result)
-            qCritical() << __FUNCTION__ << query.lastError();
+            LOG_ERROR() << query.lastError();
     } else if (job->type == DatabaseJob::GetThumbnail) {
         QImage result;
         QSqlQuery query;
@@ -104,7 +104,7 @@ void Database::doJob(DatabaseJob * job)
             update.prepare("UPDATE thumbnails SET accessed = datetime('now') WHERE hash = :hash ;");
             update.bindValue(":hash", job->hash);
             if (!update.exec())
-                qCritical() << __FUNCTION__ << update.lastError();
+                LOG_ERROR() << update.lastError();
         }
         job->image = result;
     }
@@ -166,7 +166,7 @@ void Database::deleteOldThumbnails()
     QSqlQuery query;
     // OFFSET is the numner of thumbnails to cache.
     if (!query.exec("DELETE FROM thumbnails WHERE hash IN (SELECT hash FROM thumbnails ORDER BY accessed DESC LIMIT -1 OFFSET 10000);"))
-        qCritical() << __FUNCTION__ << query.lastError();
+        LOG_ERROR() << query.lastError();
 }
 
 void Database::run()
@@ -193,16 +193,16 @@ void Database::run()
     QSqlQuery query;
     if (query.exec("CREATE TABLE version (version INTEGER);")) {
         if (!query.exec("INSERT INTO version VALUES (0);"))
-            qCritical() << __PRETTY_FUNCTION__ << "Failed to create version table.";
+            LOG_ERROR() << "Failed to create version table.";
     } else if (query.exec("SELECT version FROM version")) {
         query.next();
         version = query.value(0).toInt();
     } else {
-        qCritical() << __PRETTY_FUNCTION__ << "Failed to get version.";
+        LOG_ERROR() << "Failed to get version.";
     }
     if (version < 1 && upgradeVersion1())
         version = 1;
-    qDebug() << "Database version is" << version;
+    LOG_DEBUG() << "Database version is" << version;
 
     while (true) {
         DatabaseJob * newJob = 0;

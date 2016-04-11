@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Meltytech, LLC
+ * Copyright (c) 2015-2016 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +17,7 @@
  */
 
 #include "audiowaveformscopewidget.h"
-#include <QDebug>
+#include <Logger.h>
 #include <QPainter>
 #include <QResizeEvent>
 
@@ -57,11 +57,11 @@ AudioWaveformScopeWidget::AudioWaveformScopeWidget()
   , m_displayWave()
   , m_displayGrid()
 {
-    qDebug() << "begin";
+    LOG_DEBUG() << "begin";
     setAutoFillBackground(true);
     setMinimumSize(100, 100);
     m_refreshTime.start();
-    qDebug() << "end";
+    LOG_DEBUG() << "end";
 }
 
 AudioWaveformScopeWidget::~AudioWaveformScopeWidget()

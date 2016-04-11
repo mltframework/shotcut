@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2015 Meltytech, LLC
+ * Copyright (c) 2013-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  * Author: Brian Matherly <code@brianmatherly.com>
  *
@@ -27,6 +27,7 @@
 #include <QQmlContext>
 #include <QAction>
 #include <QIcon>
+#include <Logger.h>
 #include "qmltypes/qmlfilter.h"
 #include "qmltypes/qmlutilities.h"
 #include "qmltypes/qmlview.h"
@@ -37,7 +38,7 @@ FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* att
     QDockWidget(tr("Filters"), parent),
     m_qview(QmlUtilities::sharedEngine(), this)
 {
-    qDebug() << "begin";
+    LOG_DEBUG() << "begin";
     setObjectName("FiltersDock");
     QIcon filterIcon = QIcon::fromTheme("view-filter", QIcon(":/icons/oxygen/32x32/actions/view-filter.png"));
     setWindowIcon(filterIcon);
@@ -53,7 +54,7 @@ FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* att
     setCurrentFilter(0, 0, -1);
     connect(m_qview.quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(resetQview()));
 
-    qDebug() << "end";
+    LOG_DEBUG() << "end";
 }
 
 void FiltersDock::clearCurrentFilter()
@@ -99,7 +100,7 @@ bool FiltersDock::event(QEvent *event)
 
 void FiltersDock::resetQview()
 {
-    qDebug();
+    LOG_DEBUG() << "begin";
     if (m_qview.status() != QQuickWidget::Null) {
         QObject* root = m_qview.rootObject();
         QObject::disconnect(root, SIGNAL(currentFilterRequested(int)),

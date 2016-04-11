@@ -19,20 +19,20 @@
 #include "settings.h"
 #include <QLocale>
 #include <QStandardPaths>
-#include <QDebug>
+#include <Logger.h>
 
 ShotcutSettings &ShotcutSettings::singleton()
 {
     static ShotcutSettings* instance = 0;
     if (!instance) {
         instance = new ShotcutSettings;
-        qDebug() << "language" << instance->language();
-        qDebug() << "deinterlacer" << instance->playerDeinterlacer();
-        qDebug() << "external monitor" << instance->playerExternal();
-        qDebug() << "GPU processing" << instance->playerGPU();
-        qDebug() << "interpolation" << instance->playerInterpolation();
-        qDebug() << "video mode" << instance->playerProfile();
-        qDebug() << "realtime" << instance->playerRealtime();
+        LOG_DEBUG() << "language" << instance->language();
+        LOG_DEBUG() << "deinterlacer" << instance->playerDeinterlacer();
+        LOG_DEBUG() << "external monitor" << instance->playerExternal();
+        LOG_DEBUG() << "GPU processing" << instance->playerGPU();
+        LOG_DEBUG() << "interpolation" << instance->playerInterpolation();
+        LOG_DEBUG() << "video mode" << instance->playerProfile();
+        LOG_DEBUG() << "realtime" << instance->playerRealtime();
     }
     return *instance;
 }

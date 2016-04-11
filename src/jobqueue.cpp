@@ -18,7 +18,7 @@
 
 #include "jobqueue.h"
 #include <QtWidgets>
-#include <QDebug>
+#include <Logger.h>
 #include "mainwindow.h"
 #include "settings.h"
 

@@ -23,7 +23,7 @@
 #include "models/playlistmodel.h"
 #include "database.h"
 
-#include <QtDebug>
+#include <Logger.h>
 
 ThumbnailProvider::ThumbnailProvider()
     : QQuickImageProvider(QQmlImageProviderBase::Image, QQmlImageProviderBase::ForceAsynchronousImageLoading)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Meltytech, LLC
+ * Copyright (c) 2015-2016 Meltytech, LLC
  * Author: Harald Hvaal <harald.hvaal@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,14 +20,14 @@
 #include "mltcontroller.h"
 #include "models/audiolevelstask.h"
 #include "shotcut_mlt_properties.h"
-#include <QtDebug>
+#include <Logger.h>
 #include <QScopedPointer>
 #include <QUuid>
 
 #ifdef UNDOHELPER_DEBUG
-#define UNDOLOG qDebug()
+#define UNDOLOG LOG_DEBUG()
 #else
-#define UNDOLOG if (false) qDebug()
+#define UNDOLOG if (false) LOG_DEBUG()
 #endif
 
 UndoHelper::UndoHelper(MultitrackModel& model)
@@ -186,7 +186,7 @@ void UndoHelper::undoChanges()
                 UNDOLOG << "inserting isBlank at " << currentIndex;
             } else {
                 UNDOLOG << "inserting clip at " << currentIndex;
-                qDebug() << m_hints;
+                LOG_DEBUG() << m_hints;
                 Q_ASSERT(!(m_hints & SkipXML) && "Cannot restore clip without stored XML");
                 Q_ASSERT(!info.xml.isEmpty());
                 Mlt::Producer restoredClip(MLT.profile(), "xml-string", info.xml.toUtf8().constData());
@@ -263,7 +263,7 @@ void UndoHelper::debugPrintState()
             playlist.clip_info(j, &info);
             trackStr += QString(" [ %5 %1 -> %2 (%3 frames) %4]").arg(info.frame_in).arg(info.frame_out).arg(info.frame_count).arg(clip->is_blank() ? "blank " : "").arg(MLT.uuid(*clip).toString());
         }
-        qDebug() << qPrintable(trackStr);
+        LOG_DEBUG() << qPrintable(trackStr);
     }
     qDebug("}");
 }

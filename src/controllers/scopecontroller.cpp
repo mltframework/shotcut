@@ -23,14 +23,14 @@
 #include "widgets/scopes/videowaveformscopewidget.h"
 #include "docks/scopedock.h"
 #include "settings.h"
-#include <QDebug>
+#include <Logger.h>
 #include <QMainWindow>
 #include <QMenu>
 
 ScopeController::ScopeController(QMainWindow* mainWindow, QMenu* menu)
   : QObject(mainWindow)
 {
-    qDebug() << "begin";
+    LOG_DEBUG() << "begin";
     QMenu* scopeMenu = menu->addMenu(tr("Scopes"));
     createScopeDock<AudioLoudnessScopeWidget>(mainWindow, scopeMenu);
     createScopeDock<AudioPeakMeterScopeWidget>(mainWindow, scopeMenu);
@@ -39,7 +39,7 @@ ScopeController::ScopeController(QMainWindow* mainWindow, QMenu* menu)
 //    if (!Settings.playerGPU()) {
 //        createScopeDock<VideoWaveformScopeWidget>(mainWindow, scopeMenu);
 //    }
-    qDebug() << "end";
+    LOG_DEBUG() << "end";
 }
 
 template<typename ScopeTYPE> void ScopeController::createScopeDock(QMainWindow* mainWindow, QMenu* menu)

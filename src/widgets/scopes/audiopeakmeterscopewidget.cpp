@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Meltytech, LLC
+ * Copyright (c) 2015-2016 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +17,7 @@
  */
 
 #include "audiopeakmeterscopewidget.h"
-#include <QDebug>
+#include <Logger.h>
 #include <QVBoxLayout>
 #include <MltProfile.h>
 #include "widgets/audiometerwidget.h"
@@ -30,7 +30,7 @@ AudioPeakMeterScopeWidget::AudioPeakMeterScopeWidget()
   , m_audioMeter(0)
   , m_orientation((Qt::Orientation)-1)
 {
-    qDebug() << "begin";
+    LOG_DEBUG() << "begin";
     m_filter = new Mlt::Filter(MLT.profile(), "audiolevel");
     m_filter->set("iec_scale", 0);
     qRegisterMetaType< QVector<double> >("QVector<double>");
@@ -44,7 +44,7 @@ AudioPeakMeterScopeWidget::AudioPeakMeterScopeWidget()
     dbscale << -50 << -40 << -35 << -30 << -25 << -20 << -15 << -10 << -5 << 0 << 3;
     m_audioMeter->setDbLabels(dbscale);
     vlayout->addWidget(m_audioMeter);
-    qDebug() << "end";
+    LOG_DEBUG() << "end";
 }
 
 AudioPeakMeterScopeWidget::~AudioPeakMeterScopeWidget()

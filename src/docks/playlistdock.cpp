@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2015 Meltytech, LLC
+ * Copyright (c) 2012-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,13 +24,13 @@
 #include "shotcut_mlt_properties.h"
 #include <commands/playlistcommands.h>
 #include <QMenu>
-#include <QDebug>
+#include <Logger.h>
 
 PlaylistDock::PlaylistDock(QWidget *parent) :
     QDockWidget(parent),
     ui(new Ui::PlaylistDock)
 {
-    qDebug() << "begin";
+    LOG_DEBUG() << "begin";
     ui->setupUi(this);
     toggleViewAction()->setIcon(windowIcon());
     ui->tableView->setModel(&m_model);
@@ -71,7 +71,7 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
         ui->actionThumbnailsHidden->setChecked(true);
         on_actionThumbnailsHidden_triggered(true);
     }
-    qDebug() << "end";
+    LOG_DEBUG() << "end";
 }
 
 PlaylistDock::~PlaylistDock()

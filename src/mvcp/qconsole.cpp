@@ -20,7 +20,7 @@
 #include "qconsole.h"
 #include <QFile>
 #include <QTextStream>
-#include <QDebug>
+#include <Logger.h>
 #include <QVBoxLayout>
 #include <QApplication>
 #include <QScrollBar>
@@ -86,13 +86,13 @@ PopupCompleter::PopupCompleter(const QStringList& sl, QWidget *parent)
 
 		listWidget_ = new PopupListWidget();
 		listWidget_->setMaximumHeight(200);
-		qDebug() << "sizeHint(): " << listWidget_->sizeHint();
+		LOG_DEBUG() << "sizeHint(): " << listWidget_->sizeHint();
 		Q_FOREACH(QString str, sl) {
 				QListWidgetItem *item = new QListWidgetItem;
 				item->setText(str);
 				listWidget_->addItem(item);
 		}
-		qDebug() << "sizeHint(): " << listWidget_->sizeHint();
+		LOG_DEBUG() << "sizeHint(): " << listWidget_->sizeHint();
 		listWidget_->setFixedSize(listWidget_->sizeHint());
 
 

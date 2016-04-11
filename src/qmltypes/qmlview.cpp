@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Meltytech, LLC
+ * Copyright (c) 2014-2016 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,7 +18,7 @@
 
 #include "qmlview.h"
 #include <QWindow>
-#include <QDebug>
+#include <Logger.h>
 
 QmlView::QmlView(QWindow* qview)
     : QObject(qview)

@@ -17,7 +17,7 @@
  */
 
 #include "audioloudnessscopewidget.h"
-#include <QDebug>
+#include <Logger.h>
 #include <QVBoxLayout>
 #include <QQmlEngine>
 #include <QDir>
@@ -37,7 +37,7 @@ AudioLoudnessScopeWidget::AudioLoudnessScopeWidget()
   , m_qview(new QQuickWidget(QmlUtilities::sharedEngine(), this))
   , m_timeLabel(new QLabel(this))
 {
-    qDebug() << "begin";
+    LOG_DEBUG() << "begin";
     m_loudnessFilter = new Mlt::Filter(MLT.profile(), "loudness_meter");
     setAutoFillBackground(true);
 
@@ -70,7 +70,7 @@ AudioLoudnessScopeWidget::AudioLoudnessScopeWidget()
 
     resetQview();
 
-    qDebug() << "end";
+    LOG_DEBUG() << "end";
 }
 
 AudioLoudnessScopeWidget::~AudioLoudnessScopeWidget()
@@ -149,7 +149,7 @@ bool AudioLoudnessScopeWidget::event(QEvent *event)
 
 void AudioLoudnessScopeWidget::resetQview()
 {
-    qDebug();
+    LOG_DEBUG() << "begin";
     if (m_qview->status() != QQuickWidget::Null) {
         m_qview->setSource(QUrl(""));
     }

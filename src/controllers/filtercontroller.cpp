@@ -20,7 +20,7 @@
 #include "filtercontroller.h"
 #include <QQmlEngine>
 #include <QDir>
-#include <QDebug>
+#include <Logger.h>
 #include <QQmlComponent>
 #include <QTimerEvent>
 #include "mltcontroller.h"
@@ -51,20 +51,20 @@ void FilterController::loadFilterMetadata() {
         subdir.setFilter(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
         subdir.setNameFilters(QStringList("meta*.qml"));
         foreach (QString fileName, subdir.entryList()) {
-            qDebug() << "reading filter metadata" << dirName << fileName;
+            LOG_DEBUG() << "reading filter metadata" << dirName << fileName;
             QQmlComponent component(QmlUtilities::sharedEngine(), subdir.absoluteFilePath(fileName));
             QmlMetadata *meta = qobject_cast<QmlMetadata*>(component.create());
             if (meta) {
                 // Check if mlt_service is available.
                 if (MLT.repository()->filters()->get_data(meta->mlt_service().toLatin1().constData())) {
-                    qDebug() << "added filter" << meta->name();
+                    LOG_DEBUG() << "added filter" << meta->name();
                     meta->loadSettings();
                     meta->setPath(subdir);
                     meta->setParent(0);
                     addMetadata(meta);
                 }
             } else if (!meta) {
-                qWarning() << component.errorString();
+                LOG_WARNING() << component.errorString();
             }
         }
     };

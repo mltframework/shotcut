@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Meltytech, LLC
+ * Copyright (c) 2015-2016 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,7 +18,7 @@
 
 #include "audiospectrumscopewidget.h"
 #include "widgets/audiometerwidget.h"
-#include <QDebug>
+#include <Logger.h>
 #include <QPainter>
 #include <QtAlgorithms>
 #include <QVBoxLayout>
@@ -93,7 +93,7 @@ AudioSpectrumScopeWidget::AudioSpectrumScopeWidget()
   : ScopeWidget("AudioSpectrum")
   , m_audioMeter(0)
 {
-    qDebug() << "begin";
+    LOG_DEBUG() << "begin";
 
     // Setup this widget
     qRegisterMetaType< QVector<double> >("QVector<double>");
@@ -126,7 +126,7 @@ AudioSpectrumScopeWidget::AudioSpectrumScopeWidget()
     setMinimumSize(204, 84);
     setMaximumSize(604, 604);
 
-    qDebug() << "end";
+    LOG_DEBUG() << "end";
 }
 
 AudioSpectrumScopeWidget::~AudioSpectrumScopeWidget()

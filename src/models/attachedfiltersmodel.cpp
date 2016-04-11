@@ -24,7 +24,7 @@
 #include "shotcut_mlt_properties.h"
 #include "util.h"
 #include <QTimer>
-#include <QDebug>
+#include <Logger.h>
 
 static bool sortIsLess (const QmlMetadata* lhs, const QmlMetadata* rhs) {
     // Sort order is: GPU, Video, Audio
@@ -314,14 +314,14 @@ void AttachedFiltersModel::add(QmlMetadata* meta)
         endInsertRows();
         emit changed();
     }
-    else qWarning() << "Failed to load filter" << meta->mlt_service();
+    else LOG_WARNING() << "Failed to load filter" << meta->mlt_service();
     delete filter;
 }
 
 void AttachedFiltersModel::remove(int row)
 {
     if (row >= m_metaList.count()) {
-        qWarning() << "Invalid index:" << row;
+        LOG_WARNING() << "Invalid index:" << row;
         return;
     }
 

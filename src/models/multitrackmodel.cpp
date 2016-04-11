@@ -29,7 +29,7 @@
 #include <qmath.h>
 #include <QTimer>
 
-#include <QtDebug>
+#include <Logger.h>
 
 static const quintptr NO_PARENT_ID = quintptr(-1);
 static const char* kShotcutDefaultTransition = "lumaMix";
@@ -61,7 +61,7 @@ int MultitrackModel::rowCount(const QModelIndex &parent) const
         if (track) {
             Mlt::Playlist playlist(*track);
             int n = playlist.count();
-//            qDebug() << __FUNCTION__ << parent << i << n;
+//            LOG_DEBUG() << __FUNCTION__ << parent << i << n;
             return n;
         } else {
             return 0;
@@ -86,7 +86,7 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
         QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
         if (track) {
             Mlt::Playlist playlist(*track);
-//            qDebug() << __FUNCTION__ << index.row();
+//            LOG_DEBUG() << __FUNCTION__ << index.row();
             QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(index.row()));
             if (info)
             switch (role) {
@@ -206,7 +206,7 @@ QModelIndex MultitrackModel::index(int row, int column, const QModelIndex &paren
 {
     if (column > 0)
         return QModelIndex();
-//    qDebug() << __FUNCTION__ << row << column << parent;
+//    LOG_DEBUG() << __FUNCTION__ << row << column << parent;
     QModelIndex result;
     if (parent.isValid()) {
         int i = m_trackList.at(parent.row()).mlt_index;
@@ -224,7 +224,7 @@ QModelIndex MultitrackModel::index(int row, int column, const QModelIndex &paren
 
 QModelIndex MultitrackModel::parent(const QModelIndex &index) const
 {
-//    qDebug() << __FUNCTION__ << index;
+//    LOG_DEBUG() << __FUNCTION__ << index;
     if (!index.isValid() || index.internalId() == NO_PARENT_ID)
         return QModelIndex();
     else
@@ -440,13 +440,13 @@ int MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta, bool r
             if (clipIndex > 0 && playlist.is_blank(clipIndex - 1)) {
                 int out = playlist.clip_length(clipIndex - 1) + delta - 1;
                 if (out < 0) {
-    //                qDebug() << "remove blank at left";
+    //                LOG_DEBUG() << "remove blank at left";
                     beginRemoveRows(index(i), clipIndex - 1, clipIndex - 1);
                     playlist.remove(clipIndex - 1);
                     endRemoveRows();
                     --result;
                 } else {
-    //                qDebug() << "adjust blank on left to" << out;
+    //                LOG_DEBUG() << "adjust blank on left to" << out;
                     playlist.resize_clip(clipIndex - 1, 0, out);
         
                     QModelIndex index = createIndex(clipIndex - 1, 0, i);
@@ -455,7 +455,7 @@ int MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta, bool r
                     emit dataChanged(index, index, roles);
                 }
             } else if (delta > 0) {
-    //            qDebug() << "add blank on left duration" << delta - 1;
+    //            LOG_DEBUG() << "add blank on left duration" << delta - 1;
                 beginInsertRows(index(i), clipIndex, clipIndex);
                 playlist.insert_blank(clipIndex, delta - 1);
                 endInsertRows();
@@ -568,12 +568,12 @@ int MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta, bool 
             if (clipIndex >= 0 && (clipIndex + 1) < playlist.count() && playlist.is_blank(clipIndex + 1)) {
                 int out = playlist.clip_length(clipIndex + 1) + delta - 1;
                 if (out < 0) {
-    //                qDebug() << "remove blank at right";
+    //                LOG_DEBUG() << "remove blank at right";
                     beginRemoveRows(index(i), clipIndex + 1, clipIndex + 1);
                     playlist.remove(clipIndex + 1);
                     endRemoveRows();
                 } else {
-    //                qDebug() << "adjust blank on right to" << out;
+    //                LOG_DEBUG() << "adjust blank on right to" << out;
                     playlist.resize_clip(clipIndex + 1, 0, out);
         
                     QModelIndex index = createIndex(clipIndex + 1, 0, i);
@@ -583,7 +583,7 @@ int MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta, bool 
                 }
             } else if (delta > 0 && (clipIndex + 1) < playlist.count())  {
                 // Add blank to right.
-    //            qDebug() << "add blank on right duration" << (delta - 1);
+    //            LOG_DEBUG() << "add blank on right duration" << (delta - 1);
                 int newIndex = clipIndex + 1;
                 beginInsertRows(index(i), newIndex, newIndex);
                 playlist.insert_blank(newIndex, delta - 1);
@@ -693,7 +693,7 @@ bool MultitrackModel::moveClipValid(int fromTrack, int toTrack, int clipIndex, i
 
 bool MultitrackModel::moveClip(int fromTrack, int toTrack, int clipIndex, int position)
 {
-//    qDebug() << __FUNCTION__ << clipIndex << "fromTrack" << fromTrack << "toTrack" << toTrack;
+//    LOG_DEBUG() << __FUNCTION__ << clipIndex << "fromTrack" << fromTrack << "toTrack" << toTrack;
     bool result = false;
     int i = m_trackList.at(toTrack).mlt_index;
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
@@ -761,7 +761,7 @@ int MultitrackModel::overwriteClip(int trackIndex, Mlt::Producer& clip, int posi
     if (track) {
         Mlt::Playlist playlist(*track);
         if (position >= playlist.get_playtime() - 1) {
-//            qDebug() << __FUNCTION__ << "appending";
+//            LOG_DEBUG() << __FUNCTION__ << "appending";
             removeBlankPlaceholder(playlist, trackIndex);
             int n = playlist.count();
             int length = position - playlist.clip_start(n - 1) - playlist.clip_length(n - 1);
@@ -786,7 +786,7 @@ int MultitrackModel::overwriteClip(int trackIndex, Mlt::Producer& clip, int posi
         } else if (position + clip.get_playtime() > playlist.get_playtime()
             // Handle straddling - new clip larger than another with blanks on both sides.
             || playlist.get_clip_index_at(position) == playlist.get_clip_index_at(position + clip.get_playtime() - 1)) {
-//            qDebug() << __FUNCTION__ << "overwriting blank space" << clip.get_playtime();
+//            LOG_DEBUG() << __FUNCTION__ << "overwriting blank space" << clip.get_playtime();
             int targetIndex = playlist.get_clip_index_at(position);
 
             if (position > playlist.clip_start(targetIndex)) {
@@ -812,7 +812,7 @@ int MultitrackModel::overwriteClip(int trackIndex, Mlt::Producer& clip, int posi
             // Adjust clip on right.
             int duration = playlist.clip_length(targetIndex) - clip.get_playtime();
             if (duration > 0) {
-//                qDebug() << "adjust item on right" << (targetIndex) << " to" << duration;
+//                LOG_DEBUG() << "adjust item on right" << (targetIndex) << " to" << duration;
                 playlist.resize_clip(targetIndex, 0, duration - 1);
                 QModelIndex modelIndex = createIndex(targetIndex, 0, trackIndex);
                 // Notify clip on right was adjusted.
@@ -821,7 +821,7 @@ int MultitrackModel::overwriteClip(int trackIndex, Mlt::Producer& clip, int posi
                 emit dataChanged(modelIndex, modelIndex, roles);
                 AudioLevelsTask::start(clip.parent(), this, modelIndex);
             } else {
-//                qDebug() << "remove item on right";
+//                LOG_DEBUG() << "remove item on right";
                 beginRemoveRows(index(trackIndex), targetIndex, targetIndex);
                 playlist.remove(targetIndex);
                 endRemoveRows();
@@ -856,7 +856,7 @@ QString MultitrackModel::overwrite(int trackIndex, Mlt::Producer& clip, int posi
         removeBlankPlaceholder(playlist, trackIndex);
         int targetIndex = playlist.get_clip_index_at(position);
         if (position >= playlist.get_playtime() - 1) {
-//            qDebug() << __FUNCTION__ << "appending";
+//            LOG_DEBUG() << __FUNCTION__ << "appending";
             int n = playlist.count();
             int length = position - playlist.clip_start(n - 1) - playlist.clip_length(n - 1);
     
@@ -878,7 +878,7 @@ QString MultitrackModel::overwrite(int trackIndex, Mlt::Producer& clip, int posi
             targetIndex = playlist.count() - 1;
         } else {
             int lastIndex = playlist.get_clip_index_at(position + clip.get_playtime());
-//            qDebug() << __FUNCTION__ << "overwriting with duration" << clip.get_playtime()
+//            LOG_DEBUG() << __FUNCTION__ << "overwriting with duration" << clip.get_playtime()
 //                << "from" << targetIndex << "to" << lastIndex;
 
             // Add affected clips to result playlist.
@@ -893,7 +893,7 @@ QString MultitrackModel::overwrite(int trackIndex, Mlt::Producer& clip, int posi
             }
 
             if (position > playlist.clip_start(targetIndex)) {
-//                qDebug() << "split starting item" <<  targetIndex;
+//                LOG_DEBUG() << "split starting item" <<  targetIndex;
                 splitClip(trackIndex, targetIndex, position);
                 ++targetIndex;
             } else if (position < 0) {
@@ -909,12 +909,12 @@ QString MultitrackModel::overwrite(int trackIndex, Mlt::Producer& clip, int posi
             int length = clip.get_playtime();
             while (length > 0 && targetIndex < playlist.count()) {
                 if (playlist.clip_length(targetIndex) > length) {
-//                    qDebug() << "split last item" << targetIndex;
+//                    LOG_DEBUG() << "split last item" << targetIndex;
                     splitClip(trackIndex, targetIndex, position + length);
                 }
-//                qDebug() << "length" << length << "item length" << playlist.clip_length(targetIndex);
+//                LOG_DEBUG() << "length" << length << "item length" << playlist.clip_length(targetIndex);
                 length -= playlist.clip_length(targetIndex);
-//                qDebug() << "delete item" << targetIndex;
+//                LOG_DEBUG() << "delete item" << targetIndex;
                 beginRemoveRows(index(trackIndex), targetIndex, targetIndex);
                 playlist.remove(targetIndex);
                 endRemoveRows();
@@ -947,7 +947,7 @@ int MultitrackModel::insertClip(int trackIndex, Mlt::Producer &clip, int positio
     if (track) {
         Mlt::Playlist playlist(*track);
         if (position < 0 || position >= playlist.get_playtime() - 1) {
-//            qDebug() << __FUNCTION__ << "appending";
+//            LOG_DEBUG() << __FUNCTION__ << "appending";
             removeBlankPlaceholder(playlist, trackIndex);
             int n = playlist.count();
             int length = position - playlist.clip_start(n - 1) - playlist.clip_length(n - 1);
@@ -969,7 +969,7 @@ int MultitrackModel::insertClip(int trackIndex, Mlt::Producer &clip, int positio
             endInsertRows();
             result = playlist.count() - 1;
         } else {
-//            qDebug() << __FUNCTION__ << "inserting" << position << MLT.XML(&clip);
+//            LOG_DEBUG() << __FUNCTION__ << "inserting" << position << MLT.XML(&clip);
             int targetIndex = playlist.get_clip_index_at(position);
         
             if (position > playlist.clip_start(targetIndex)) {
@@ -1900,7 +1900,7 @@ void MultitrackModel::moveClipToEnd(Mlt::Playlist& playlist, int trackIndex, int
     if (clipIndex > 0 && playlist.is_blank(clipIndex - 1)) {
         // If there was a blank on the left adjust it.
         int duration = playlist.clip_length(clipIndex - 1) + playlist.clip_length(clipIndex);
-//        qDebug() << "adjust blank on left to" << duration;
+//        LOG_DEBUG() << "adjust blank on left to" << duration;
         playlist.resize_clip(clipIndex - 1, 0, duration - 1);
 
         QModelIndex index = createIndex(clipIndex - 1, 0, trackIndex);
@@ -1910,7 +1910,7 @@ void MultitrackModel::moveClipToEnd(Mlt::Playlist& playlist, int trackIndex, int
     } else if ((clipIndex + 1) < n && playlist.is_blank(clipIndex + 1)) {
         // If there was a blank on the right adjust it.
         int duration = playlist.clip_length(clipIndex + 1) + playlist.clip_length(clipIndex);
-//        qDebug() << "adjust blank on right to" << duration;
+//        LOG_DEBUG() << "adjust blank on right to" << duration;
         playlist.resize_clip(clipIndex + 1, 0, duration - 1);
 
         QModelIndex index = createIndex(clipIndex + 1, 0, trackIndex);
@@ -1944,7 +1944,7 @@ void MultitrackModel::relocateClip(Mlt::Playlist& playlist, int trackIndex, int 
     int targetIndex = playlist.get_clip_index_at(position);
 
     if (position > playlist.clip_start(targetIndex)) {
-//        qDebug() << "splitting clip at position" << position;
+//        LOG_DEBUG() << "splitting clip at position" << position;
         // Split target blank clip.
         beginInsertRows(index(trackIndex), targetIndex, targetIndex);
         playlist.split_at(position);
@@ -1963,7 +1963,7 @@ void MultitrackModel::relocateClip(Mlt::Playlist& playlist, int trackIndex, int 
     // Adjust blank on right.
     int duration = playlist.clip_length(targetIndex) - playlist.clip_length(clipIndex);
     if (duration > 0) {
-//        qDebug() << "adjust blank on right" << targetIndex << " to" << duration;
+//        LOG_DEBUG() << "adjust blank on right" << targetIndex << " to" << duration;
         playlist.resize_clip(targetIndex, 0, duration - 1);
         // Notify blank on right was adjusted.
         QModelIndex modelIndex = createIndex(targetIndex, 0, trackIndex);
@@ -1971,7 +1971,7 @@ void MultitrackModel::relocateClip(Mlt::Playlist& playlist, int trackIndex, int 
         roles << DurationRole;
         emit dataChanged(modelIndex, modelIndex, roles);
     } else {
-//        qDebug() << "remove blank on right";
+//        LOG_DEBUG() << "remove blank on right";
         beginRemoveRows(index(trackIndex), targetIndex, targetIndex);
         playlist.remove(targetIndex);
         endRemoveRows();
@@ -2007,7 +2007,7 @@ void MultitrackModel::moveClipInBlank(Mlt::Playlist& playlist, int trackIndex, i
         // Adjust blank on left.
         int duration = playlist.clip_length(clipIndex - 1) + delta;
         if (duration > 0) {
-//            qDebug() << "adjust blank on left" << (clipIndex - 1) << "to" << duration;
+//            LOG_DEBUG() << "adjust blank on left" << (clipIndex - 1) << "to" << duration;
             playlist.resize_clip(clipIndex - 1, 0, duration - 1);
 
             QModelIndex index = createIndex(clipIndex - 1, 0, trackIndex);
@@ -2015,7 +2015,7 @@ void MultitrackModel::moveClipInBlank(Mlt::Playlist& playlist, int trackIndex, i
             roles << DurationRole;
             emit dataChanged(index, index, roles);
         } else {
-//            qDebug() << "remove blank on left";
+//            LOG_DEBUG() << "remove blank on left";
             int i = clipIndex - 1;
             beginRemoveRows(index(trackIndex), i, i);
             playlist.remove(i);
@@ -2024,7 +2024,7 @@ void MultitrackModel::moveClipInBlank(Mlt::Playlist& playlist, int trackIndex, i
             --clipIndex;
         }
     } else if (delta > 0) {
-//        qDebug() << "add blank on left with duration" << delta;
+//        LOG_DEBUG() << "add blank on left with duration" << delta;
         // Add blank to left.
         int i = qMax(clipIndex, 0);
         beginInsertRows(index(trackIndex), i, i);
@@ -2037,7 +2037,7 @@ void MultitrackModel::moveClipInBlank(Mlt::Playlist& playlist, int trackIndex, i
         // Adjust blank to right.
         int duration = playlist.clip_length(clipIndex + 1) - delta;
         if (duration > 0) {
-//            qDebug() << "adjust blank on right" << (clipIndex + 1) << "to" << duration;
+//            LOG_DEBUG() << "adjust blank on right" << (clipIndex + 1) << "to" << duration;
             playlist.resize_clip(clipIndex + 1, 0, duration - 1);
 
             QModelIndex index = createIndex(clipIndex + 1, 0, trackIndex);
@@ -2045,7 +2045,7 @@ void MultitrackModel::moveClipInBlank(Mlt::Playlist& playlist, int trackIndex, i
             roles << DurationRole;
             emit dataChanged(index, index, roles);
         } else {
-//            qDebug() << "remove blank on right";
+//            LOG_DEBUG() << "remove blank on right";
             int i = clipIndex + 1;
             beginRemoveRows(index(trackIndex), i, i);
             playlist.remove(i);
@@ -2054,7 +2054,7 @@ void MultitrackModel::moveClipInBlank(Mlt::Playlist& playlist, int trackIndex, i
         }
     } else if (delta < 0 && (clipIndex + 1) < playlist.count()) {
         // Add blank to right.
-//        qDebug() << "add blank on right with duration" << -delta;
+//        LOG_DEBUG() << "add blank on right with duration" << -delta;
         beginInsertRows(index(trackIndex), clipIndex + 1, clipIndex + 1);
         playlist.insert_blank(clipIndex + 1, (-delta - 1));
         endInsertRows();
@@ -2292,8 +2292,8 @@ void MultitrackModel::removeTrack(int trackIndex)
         if (transition)
             m_tractor->field()->disconnect_service(*transition);
 
-//        foreach (Track t, m_trackList) qDebug() << (t.type == VideoTrackType?"Video":"Audio") << "track number" << t.number << "mlt_index" << t.mlt_index;
-//        qDebug() << trackIndex << "mlt_index" << track.mlt_index;
+//        foreach (Track t, m_trackList) LOG_DEBUG() << (t.type == VideoTrackType?"Video":"Audio") << "track number" << t.number << "mlt_index" << t.mlt_index;
+//        LOG_DEBUG() << trackIndex << "mlt_index" << track.mlt_index;
 
         // Remove track.
         beginRemoveRows(QModelIndex(), trackIndex, trackIndex);
@@ -2301,7 +2301,7 @@ void MultitrackModel::removeTrack(int trackIndex)
         m_trackList.removeAt(trackIndex);
         endRemoveRows();
 
-//        foreach (Track t, m_trackList) qDebug() << (t.type == VideoTrackType?"Video":"Audio") << "track number" << t.number << "mlt_index" << t.mlt_index;
+//        foreach (Track t, m_trackList) LOG_DEBUG() << (t.type == VideoTrackType?"Video":"Audio") << "track number" << t.number << "mlt_index" << t.mlt_index;
 
         // Renumber other tracks.
         int row = 0;
@@ -2326,7 +2326,7 @@ void MultitrackModel::removeTrack(int trackIndex)
             }
             ++row;
         }
-//        foreach (Track t, m_trackList) qDebug() << (t.type == VideoTrackType?"Video":"Audio") << "track number" << t.number << "mlt_index" << t.mlt_index;
+//        foreach (Track t, m_trackList) LOG_DEBUG() << (t.type == VideoTrackType?"Video":"Audio") << "track number" << t.number << "mlt_index" << t.mlt_index;
     }
     emit modified();
 }
@@ -2440,8 +2440,8 @@ void MultitrackModel::insertTrack(int trackIndex, TrackType type)
         }
     }
 
-//    foreach (Track t, m_trackList) qDebug() << (t.type == VideoTrackType?"Video":"Audio") << "track number" << t.number << "mlt_index" << t.mlt_index;
-//    qDebug() << "trackIndex" << trackIndex << "mlt_index" << i;
+//    foreach (Track t, m_trackList) LOG_DEBUG() << (t.type == VideoTrackType?"Video":"Audio") << "track number" << t.number << "mlt_index" << t.mlt_index;
+//    LOG_DEBUG() << "trackIndex" << trackIndex << "mlt_index" << i;
 
     // Get the new, logical video-only index.
     int videoTrackCount = 0;
@@ -2475,7 +2475,7 @@ void MultitrackModel::insertTrack(int trackIndex, TrackType type)
         ++row;
     }
 
-//    foreach (Track t, m_trackList) qDebug() << (t.type == VideoTrackType?"Video":"Audio") << "track number" << t.number << "mlt_index" << t.mlt_index;
+//    foreach (Track t, m_trackList) LOG_DEBUG() << (t.type == VideoTrackType?"Video":"Audio") << "track number" << t.number << "mlt_index" << t.mlt_index;
 
     // Create the MLT track.
     Mlt::Playlist playlist(MLT.profile());
@@ -2519,7 +2519,7 @@ void MultitrackModel::insertTrack(int trackIndex, TrackType type)
     m_trackList.insert(trackIndex, t);
     endInsertRows();
     emit modified();
-//    foreach (Track t, m_trackList) qDebug() << (t.type == VideoTrackType?"Video":"Audio") << "track number" << t.number << "mlt_index" << t.mlt_index;
+//    foreach (Track t, m_trackList) LOG_DEBUG() << (t.type == VideoTrackType?"Video":"Audio") << "track number" << t.number << "mlt_index" << t.mlt_index;
 }
 
 void MultitrackModel::insertOrAdjustBlankAt(QList<int> tracks, int position, int length)
@@ -2680,7 +2680,7 @@ void MultitrackModel::refreshTrackList()
                     trackName = QString("A%1").arg(a);
                 track->set(kTrackNameProperty, trackName.toUtf8().constData());
                 m_trackList.append(t);
-//                qDebug() << __FUNCTION__ << QString(track->get("id")) << i;
+//                LOG_DEBUG() << __FUNCTION__ << QString(track->get("id")) << i;
             }
         }
     }

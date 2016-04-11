@@ -25,7 +25,7 @@
 #include <QAction>
 #include <QDialog>
 #include <QDir>
-#include <QDebug>
+#include <Logger.h>
 #include "mainwindow.h"
 #include "dialogs/textviewerdialog.h"
 
@@ -45,7 +45,7 @@ MeltJob::MeltJob(const QString& name, const QString& xml)
 
 MeltJob::~MeltJob()
 {
-    qDebug();
+    LOG_DEBUG() << "begin";
 }
 
 void MeltJob::start()
@@ -61,7 +61,7 @@ void MeltJob::start()
     args << "-progress2";
     args << "-abort";
     args << xmlPath();
-    qDebug() << meltPath.absoluteFilePath() << args;
+    LOG_DEBUG() << meltPath.absoluteFilePath() << args;
 #ifdef Q_OS_WIN
     if (m_isStreaming) args << "-getc";
     QProcess::start(meltPath.absoluteFilePath(), args);

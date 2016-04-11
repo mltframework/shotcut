@@ -21,7 +21,7 @@
 #include <QLocale>
 #include <QDir>
 #include <QCoreApplication>
-#include <QDebug>
+#include <Logger.h>
 
 bool isMltClass(const QStringRef& name)
 {
@@ -41,12 +41,12 @@ MltXmlChecker::MltXmlChecker()
     , m_hasPeriod(false)
     , m_numericValueChanged(false)
 {
-    qDebug() << "decimal point" << m_decimalPoint;
+    LOG_DEBUG() << "decimal point" << m_decimalPoint;
 }
 
 bool MltXmlChecker::check(const QString& fileName)
 {
-    qDebug() << "begin";
+    LOG_DEBUG() << "begin";
 
     QFile file(fileName);
     if (file.open(QIODevice::ReadOnly | QIODevice::Text) &&
@@ -74,10 +74,10 @@ bool MltXmlChecker::check(const QString& fileName)
     if (m_tempFile.isOpen()) {
         m_tempFile.close();
 //        m_tempFile.open();
-//        qDebug() << m_tempFile.readAll().constData();
+//        LOG_DEBUG() << m_tempFile.readAll().constData();
 //        m_tempFile.close();
     }
-    qDebug() << "end";
+    LOG_DEBUG() << "end";
     return m_xml.error() == QXmlStreamReader::NoError;
 }
 

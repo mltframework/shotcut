@@ -22,7 +22,7 @@
 #include <QMetaType>
 #include <QFileInfo>
 #include <QUuid>
-#include <QDebug>
+#include <Logger.h>
 #include <Mlt.h>
 #include "glwidget.h"
 #include "settings.h"
@@ -46,11 +46,11 @@ Controller::Controller()
     , m_volume(1.0)
     , m_savedProducer(0)
 {
-    qDebug() << "begin";
+    LOG_DEBUG() << "begin";
     m_repo = Mlt::Factory::init();
     m_profile = new Mlt::Profile("atsc_1080p_25");
     updateAvformatCaching(0);
-    qDebug() << "end";
+    LOG_DEBUG() << "end";
 }
 
 Controller& Controller::singleton(QObject *parent)
@@ -443,7 +443,7 @@ int Controller::consumerChanged()
 
 void Controller::setProfile(const QString& profile_name)
 {
-    qDebug() << "setting to profile" << (profile_name.isEmpty()? "Automatic" : profile_name);
+    LOG_DEBUG() << "setting to profile" << (profile_name.isEmpty()? "Automatic" : profile_name);
     if (!profile_name.isEmpty()) {
         Mlt::Profile tmp(profile_name.toLatin1().constData());
         m_profile->set_colorspace(tmp.colorspace());

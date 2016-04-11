@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Meltytech, LLC
+ * Copyright (c) 2015-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,7 +20,7 @@
 #include "iecscale.h"
 #include <QFont>
 #include <QPainter>
-#include <QDebug>
+#include <Logger.h>
 
 AudioScale::AudioScale(QWidget *parent) :
     QWidget(parent)

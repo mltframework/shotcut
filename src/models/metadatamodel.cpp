@@ -19,7 +19,7 @@
 #include "metadatamodel.h"
 #include "qmltypes/qmlmetadata.h"
 #include "settings.h"
-#include <QDebug>
+#include <Logger.h>
 
 MetadataModel::MetadataModel(QObject *parent)
     : QAbstractListModel(parent)

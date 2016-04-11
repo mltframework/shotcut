@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Meltytech, LLC
+ * Copyright (c) 2012-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@
 #include "util.h"
 
 #include <QDir>
-#include <QDebug>
+#include <Logger.h>
 
 static const int MaxItems = 100;
 
@@ -30,7 +30,7 @@ RecentDock::RecentDock(QWidget *parent) :
     QDockWidget(parent),
     ui(new Ui::RecentDock)
 {
-    qDebug() << "begin";
+    LOG_DEBUG() << "begin";
     ui->setupUi(this);
     toggleViewAction()->setIcon(windowIcon());
     m_recent = Settings.recent();
@@ -44,7 +44,7 @@ RecentDock::RecentDock(QWidget *parent) :
     m_proxyModel.setSourceModel(&m_model);
     m_proxyModel.setFilterCaseSensitivity(Qt::CaseInsensitive);
     ui->listWidget->setModel(&m_proxyModel);
-    qDebug() << "end";
+    LOG_DEBUG() << "end";
 }
 
 RecentDock::~RecentDock()

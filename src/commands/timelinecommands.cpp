@@ -19,7 +19,7 @@
 #include "timelinecommands.h"
 #include "mltcontroller.h"
 #include "shotcut_mlt_properties.h"
-#include <QtDebug>
+#include <Logger.h>
 #include <QMetaObject>
 
 namespace Timeline {
@@ -460,7 +460,7 @@ void AddTransitionCommand::undo()
             }
         }
     } else {
-        qWarning() << "Failed to undo the transition!";
+        LOG_WARNING() << "Failed to undo the transition!";
     }
 }
 

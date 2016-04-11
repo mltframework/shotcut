@@ -74,7 +74,7 @@
 #include "widgets/timelinepropertieswidget.h"
 
 #include <QtWidgets>
-#include <QDebug>
+#include <Logger.h>
 #include <QThreadPool>
 #include <QtConcurrent/QtConcurrentRun>
 #include <QMutexLocker>
@@ -85,11 +85,11 @@ static bool eventDebugCallback(void **data)
     QEvent *event = reinterpret_cast<QEvent*>(data[1]);
     if (event->type() == QEvent::KeyPress || event->type() == QEvent::KeyRelease) {
         QObject *receiver = reinterpret_cast<QObject*>(data[0]);
-        qDebug() << event << "->" << receiver;
+        LOG_DEBUG() << event << "->" << receiver;
     }
     else if (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonRelease) {
         QObject *receiver = reinterpret_cast<QObject*>(data[0]);
-        qDebug() << event << "->" << receiver;
+        LOG_DEBUG() << event << "->" << receiver;
     }
     return false;
 }
@@ -142,7 +142,7 @@ MainWindow::MainWindow()
     if (!qgetenv("EVENT_DEBUG").isEmpty())
         QInternal::registerCallback(QInternal::EventNotifyCallback, eventDebugCallback);
 
-    qDebug() << "begin";
+    LOG_DEBUG() << "begin";
 #ifndef Q_OS_WIN
     new GLTestWidget(this);
 #endif
@@ -426,23 +426,23 @@ MainWindow::MainWindow()
 
     m_timelineDock->setFocusPolicy(Qt::StrongFocus);
 
-    qDebug() << "end";
+    LOG_DEBUG() << "end";
 }
 
 void MainWindow::onFocusWindowChanged(QWindow *) const
 {
-    qDebug() << "Focuswindow changed";
-    qDebug() << "Current focusWidget:" << QApplication::focusWidget();
-    qDebug() << "Current focusObject:" << QApplication::focusObject();
-    qDebug() << "Current focusWindow:" << QApplication::focusWindow();
+    LOG_DEBUG() << "Focuswindow changed";
+    LOG_DEBUG() << "Current focusWidget:" << QApplication::focusWidget();
+    LOG_DEBUG() << "Current focusObject:" << QApplication::focusObject();
+    LOG_DEBUG() << "Current focusWindow:" << QApplication::focusWindow();
 }
 
 void MainWindow::onFocusObjectChanged(QObject *) const
 {
-    qDebug() << "Focusobject changed";
-    qDebug() << "Current focusWidget:" << QApplication::focusWidget();
-    qDebug() << "Current focusObject:" << QApplication::focusObject();
-    qDebug() << "Current focusWindow:" << QApplication::focusWindow();
+    LOG_DEBUG() << "Focusobject changed";
+    LOG_DEBUG() << "Current focusWidget:" << QApplication::focusWidget();
+    LOG_DEBUG() << "Current focusObject:" << QApplication::focusObject();
+    LOG_DEBUG() << "Current focusWindow:" << QApplication::focusWindow();
 }
 
 void MainWindow::moveNavigationPositionToCurrentSelection()
@@ -487,7 +487,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::setupSettingsMenu()
 {
-    qDebug() << "begin";
+    LOG_DEBUG() << "begin";
     QActionGroup* group = new QActionGroup(this);
     group->addAction(ui->actionOneField);
     group->addAction(ui->actionLinearBlend);
@@ -762,7 +762,7 @@ void MainWindow::setupSettingsMenu()
     delete ui->menuDrawingMethod;
     ui->menuDrawingMethod = 0;
 #endif
-    qDebug() << "end";
+    LOG_DEBUG() << "end";
 }
 
 QAction* MainWindow::addProfile(QActionGroup* actionGroup, const QString& desc, const QString& name)
@@ -844,7 +844,7 @@ bool MainWindow::isXmlRepaired(MltXmlChecker& checker, QString& fileName)
             QFile repaired(QString("%1/%2 - %3.%4").arg(fi.path())
                 .arg(fi.completeBaseName()).arg(tr("Repaired")).arg(fi.suffix()));
             repaired.open(QIODevice::WriteOnly);
-            qDebug() << "repaired MLT XML file name" << repaired.fileName();
+            LOG_DEBUG() << "repaired MLT XML file name" << repaired.fileName();
             QFile temp(checker.tempFileName());
             if (temp.exists() && repaired.exists()) {
                 temp.open(QIODevice::ReadOnly);
@@ -887,7 +887,7 @@ bool MainWindow::checkAutoSave(QString &url)
         int r = dialog.exec();
         if (r == QMessageBox::Yes) {
             if (!stale->open(QIODevice::ReadWrite)) {
-                qWarning() << "failed to recover autosave file" << url;
+                LOG_WARNING() << "failed to recover autosave file" << url;
                 delete stale;
             } else {
                 delete m_autosaveFile;
@@ -920,7 +920,7 @@ void MainWindow::doAutosave()
         if (m_autosaveFile->isOpen() || m_autosaveFile->open(QIODevice::ReadWrite)) {
             saveXML(m_autosaveFile->fileName());
         } else {
-            qWarning() << "failed to open autosave file for writing" << m_autosaveFile->fileName();
+            LOG_WARNING() << "failed to open autosave file for writing" << m_autosaveFile->fileName();
         }
     }
     m_autosaveMutex.unlock();
@@ -1003,7 +1003,7 @@ void MainWindow::setProfile(const QString &profile_name)
 
 static void autosaveTask(MainWindow* p)
 {
-    qDebug() << "running";
+    LOG_DEBUG() << "running";
     p->doAutosave();
 }
 
@@ -1021,7 +1021,7 @@ void MainWindow::updateAutoSave()
 
 void MainWindow::open(QString url, const Mlt::Properties* properties)
 {
-    qDebug() << url;
+    LOG_DEBUG() << url;
     bool modified = false;
     MltXmlChecker checker;
     if (checker.check(url)) {
@@ -1151,7 +1151,7 @@ void MainWindow::seekTimeline(int position)
 
 void MainWindow::readPlayerSettings()
 {
-    qDebug() << "begin";
+    LOG_DEBUG() << "begin";
     ui->actionRealtime->setChecked(Settings.playerRealtime());
     ui->actionProgressive->setChecked(Settings.playerProgressive());
     ui->actionScrubAudio->setChecked(Settings.playerScrubAudio());
@@ -1224,18 +1224,18 @@ void MainWindow::readPlayerSettings()
     else
         ui->actionGammaSRGB->setChecked(true);
 
-    qDebug() << "end";
+    LOG_DEBUG() << "end";
 }
 
 void MainWindow::readWindowSettings()
 {
-    qDebug() << "begin";
+    LOG_DEBUG() << "begin";
     Settings.setWindowGeometryDefault(saveGeometry());
     Settings.setWindowStateDefault(saveState());
     Settings.sync();
     restoreGeometry(Settings.windowGeometry());
     restoreState(Settings.windowState());
-    qDebug() << "end";
+    LOG_DEBUG() << "end";
 }
 
 void MainWindow::writeSettings()
@@ -1251,7 +1251,7 @@ void MainWindow::writeSettings()
 
 void MainWindow::configureVideoWidget()
 {
-    qDebug() << "begin";
+    LOG_DEBUG() << "begin";
     setProfile(m_profileGroup->checkedAction()->data().toString());
     MLT.videoWidget()->setProperty("realtime", ui->actionRealtime->isChecked());
     bool ok = false;
@@ -1281,7 +1281,7 @@ void MainWindow::configureVideoWidget()
         MLT.videoWidget()->setProperty("rescale", "hyper");
     if (m_keyerGroup)
         MLT.videoWidget()->setProperty("keyer", m_keyerGroup->checkedAction()->data());
-    qDebug() << "end";
+    LOG_DEBUG() << "end";
 }
 
 void MainWindow::setCurrentFile(const QString &filename)
@@ -1663,9 +1663,9 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         m_timelineDock->model()->reload();
         break;
     case Qt::Key_F1:
-        qDebug() << "Current focusWidget:" << QApplication::focusWidget();
-        qDebug() << "Current focusObject:" << QApplication::focusObject();
-        qDebug() << "Current focusWindow:" << QApplication::focusWindow();
+        LOG_DEBUG() << "Current focusWidget:" << QApplication::focusWidget();
+        LOG_DEBUG() << "Current focusObject:" << QApplication::focusObject();
+        LOG_DEBUG() << "Current focusWindow:" << QApplication::focusWindow();
         break;
     default:
         break;
@@ -2135,7 +2135,7 @@ void MainWindow::saveXML(const QString &filename)
 
 void MainWindow::changeTheme(const QString &theme)
 {
-    qDebug() << "begin";
+    LOG_DEBUG() << "begin";
     if (theme == "dark") {
         QApplication::setStyle("Fusion");
         QPalette palette;
@@ -2169,7 +2169,7 @@ void MainWindow::changeTheme(const QString &theme)
 #endif
     }
     emit QmlApplication::singleton().paletteChanged();
-    qDebug() << "end";
+    LOG_DEBUG() << "end";
 }
 
 Mlt::Playlist* MainWindow::playlist() const
@@ -2784,10 +2784,10 @@ void MainWindow::on_actionGammaRec709_triggered(bool checked)
 
 void MainWindow::onFocusChanged(QWidget *, QWidget * ) const
 {
-    qDebug() << "Focuswidget changed";
-    qDebug() << "Current focusWidget:" << QApplication::focusWidget();
-    qDebug() << "Current focusObject:" << QApplication::focusObject();
-    qDebug() << "Current focusWindow:" << QApplication::focusWindow();
+    LOG_DEBUG() << "Focuswidget changed";
+    LOG_DEBUG() << "Current focusWidget:" << QApplication::focusWidget();
+    LOG_DEBUG() << "Current focusObject:" << QApplication::focusObject();
+    LOG_DEBUG() << "Current focusWindow:" << QApplication::focusWindow();
 }
 
 void MainWindow::on_actionScrubAudio_triggered(bool checked)

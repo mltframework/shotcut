@@ -24,7 +24,7 @@
 #include "util.h"
 #include <QFileDialog>
 #include <QFileInfo>
-#include <QDebug>
+#include <Logger.h>
 
 static const int kLumaComboDissolveIndex = 0;
 static const int kLumaComboCutIndex = 1;

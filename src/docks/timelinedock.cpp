@@ -30,7 +30,7 @@
 
 #include <QtQml>
 #include <QtQuick>
-#include <QDebug>
+#include <Logger.h>
 
 
 TimelineDock::TimelineDock(QWidget *parent) :
@@ -40,7 +40,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     m_position(-1),
     m_updateCommand(0)
 {
-    qDebug() << "begin";
+    LOG_DEBUG() << "begin";
     ui->setupUi(this);
     toggleViewAction()->setIcon(windowIcon());
 
@@ -68,7 +68,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
 #else
     connect(this, &QDockWidget::visibilityChanged, this, &TimelineDock::load);
 #endif
-    qDebug() << "end";
+    LOG_DEBUG() << "end";
 }
 
 TimelineDock::~TimelineDock()
@@ -244,7 +244,7 @@ void TimelineDock::setSelection(QList<int> newSelection)
 {
     if (newSelection == selection())
         return;
-    qDebug() << "Changing selection to" << newSelection;
+    LOG_DEBUG() << "Changing selection to" << newSelection;
 
     QVariantList list;
     foreach (int idx, newSelection)
