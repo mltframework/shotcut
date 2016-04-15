@@ -135,12 +135,6 @@ p, li { white-space: pre-wrap; }
          <iconset theme="list-add" resource="../../icons/resources.qrc">
           <normaloff>:/icons/oxygen/16x16/actions/list-add.png</normaloff>:/icons/oxygen/16x16/actions/list-add.png</iconset>
         </property>
-        <property name="iconSize">
-         <size>
-          <width>16</width>
-          <height>16</height>
-         </size>
-        </property>
        </widget>
       </item>
       <item>
