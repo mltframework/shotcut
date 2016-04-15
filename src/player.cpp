@@ -183,12 +183,15 @@ Player::Player(QWidget *parent)
     m_zoomFitAction = zoomMenu->addAction(
         QIcon::fromTheme("zoom-fit-best", QIcon(":/icons/oxygen/32x32/actions/zoom-fit-best")),
         tr("Zoom Fit"), this, SLOT(zoomFit()));
+    m_zoomOutAction25 = zoomMenu->addAction(
+        QIcon::fromTheme("zoom-out", QIcon(":/icons/oxygen/32x32/actions/zoom-out")),
+        tr("Zoom 25%"), this, SLOT(zoomOut25()));
+    m_zoomOutAction50 = zoomMenu->addAction(
+        QIcon::fromTheme("zoom-out", QIcon(":/icons/oxygen/32x32/actions/zoom-out")),
+        tr("Zoom 50%"), this, SLOT(zoomOut50()));
     m_zoomOriginalAction = zoomMenu->addAction(
         QIcon::fromTheme("zoom-original", QIcon(":/icons/oxygen/32x32/actions/zoom-original")),
         tr("Zoom 100%"), this, SLOT(zoomOriginal()));
-    m_zoomOutAction = zoomMenu->addAction(
-        QIcon::fromTheme("zoom-out", QIcon(":/icons/oxygen/32x32/actions/zoom-out")),
-        tr("Zoom 50%"), this, SLOT(zoomOut()));
     m_zoomInAction = zoomMenu->addAction(
         QIcon::fromTheme("zoom-in", QIcon(":/icons/oxygen/32x32/actions/zoom-in")),
         tr("Zoom 200%"), this, SLOT(zoomIn()));
@@ -849,9 +852,14 @@ void Player::zoomOriginal()
     setZoom(1.0f, m_zoomOriginalAction->icon());
 }
 
-void Player::zoomOut()
+void Player::zoomOut50()
 {
-    setZoom(0.5f, m_zoomOutAction->icon());
+    setZoom(0.5f, m_zoomOutAction50->icon());
+}
+
+void Player::zoomOut25()
+{
+    setZoom(0.25f, m_zoomOutAction25->icon());
 }
 
 void Player::zoomIn()
@@ -866,7 +874,9 @@ void Player::toggleZoom(bool checked)
     else if (m_zoomToggleFactor == 1.0f)
         zoomOriginal();
     else if (m_zoomToggleFactor == 0.5f)
-        zoomOut();
+        zoomOut50();
+    else if (m_zoomToggleFactor == 0.25f)
+        zoomOut25();
     else if (m_zoomToggleFactor == 2.0f)
         zoomIn();
 }

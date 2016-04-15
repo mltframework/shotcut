@@ -141,7 +141,8 @@ private:
     QToolButton* m_zoomButton;
     QAction* m_zoomFitAction;
     QAction* m_zoomOriginalAction;
-    QAction* m_zoomOutAction;
+    QAction* m_zoomOutAction50;
+    QAction* m_zoomOutAction25;
     QAction* m_zoomInAction;
     float m_zoomToggleFactor;
     QTabBar* m_tabs;
@@ -163,7 +164,8 @@ private slots:
     void setZoom(float factor, const QIcon &icon);
     void zoomFit();
     void zoomOriginal();
-    void zoomOut();
+    void zoomOut50();
+    void zoomOut25();
     void zoomIn();
     void toggleZoom(bool checked);
 };
