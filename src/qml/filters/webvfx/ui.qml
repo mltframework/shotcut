@@ -121,9 +121,11 @@ Item {
             filter.set('resource', resource)
             filter.set("disable", 0)
 
-            editor.edit(htmlFile.url.toString())
-            editButton.enabled = false
-            reloadButton.enabled = false
+            if (!selectExisting) {
+                editor.edit(htmlFile.url.toString())
+                editButton.enabled = false
+                reloadButton.enabled = false
+            }
         }
         onRejected: {
             openButton.visible = true
