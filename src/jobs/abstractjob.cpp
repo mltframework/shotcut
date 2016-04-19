@@ -82,6 +82,7 @@ void AbstractJob::stop()
 
 void AbstractJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
 {
+    m_log.append(readAll());
     if (exitStatus == QProcess::NormalExit && exitCode == 0) {
         LOG_DEBUG() << "job succeeeded";
         emit finished(this, true);
@@ -89,7 +90,6 @@ void AbstractJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
         LOG_DEBUG() << "job failed with" << exitCode;
         emit finished(this, false);
     }
-    m_log.append(readAll());
 }
 
 void AbstractJob::onReadyRead()
