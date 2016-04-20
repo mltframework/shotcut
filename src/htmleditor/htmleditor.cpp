@@ -558,9 +558,9 @@ void HtmlEditor::changeTab(int index)
     disconnect(ui->actionEditPaste, SIGNAL(triggered()), 0, 0);
     if (index == 1) {
         html = ui->webView->page()->mainFrame()->toHtml();
-        ui->webView->blockSignals(true);
+        ui->plainTextEdit->blockSignals(true);
         ui->plainTextEdit->setPlainText(html);
-        ui->webView->blockSignals(false);
+        ui->plainTextEdit->blockSignals(false);
         enabled = false;
         ui->actionEditUndo->setEnabled(enabled);
         ui->actionEditRedo->setEnabled(enabled);
@@ -700,14 +700,18 @@ bool HtmlEditor::load(const QString &f)
     if (!file.open(QFile::ReadOnly))
         return false;
 
-    QByteArray data = file.readAll();
-    ui->webView->setContent(data, "text/html");
+    const QString html = QString::fromUtf8(file.readAll());
+    ui->webView->blockSignals(true);
+    ui->webView->setHtml(html);
+    ui->webView->blockSignals(false);
     ui->webView->page()->setContentEditable(true);
     ui->webView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
     connect(ui->webView, SIGNAL(linkClicked(QUrl)), SLOT(openLink(QUrl)));
 
-    const QString html(data);
     bool enabled = html.contains("qrc:/scripts/htmleditor.js");
+    ui->plainTextEdit->blockSignals(true);
+    ui->plainTextEdit->setPlainText(html);
+    ui->plainTextEdit->blockSignals(false);
     ui->actionFormatFontSize->setEnabled(enabled);
     ui->actionTextOutline->setEnabled(enabled);
     ui->actionTextShadow->setEnabled(enabled);
