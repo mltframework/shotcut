@@ -152,7 +152,7 @@ Item {
             }
             RadioButton {
                 id: hciRadioButton
-                text: qsTr('Hue-Chroma-Intesity')
+                text: qsTr('Hue-Chroma-Intensity')
                 exclusiveGroup: colorspaceGroup
                 onCheckedChanged: if (checked) filter.set(colorspaceParam, 1.0)
             }

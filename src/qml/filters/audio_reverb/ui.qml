@@ -114,7 +114,7 @@ Item {
         Label {
             text: qsTr('Room size')
             Layout.alignment: Qt.AlignRight
-            ToolTip {text: qsTr('The size of the room, in meters. Excessivly large, and excessivly small values will make it sound a bit unrealistic.Values of around 30 sound good.')}
+            ToolTip {text: qsTr('The size of the room, in meters. Excessivly large, and excessively small values will make it sound a bit unrealistic.Values of around 30 sound good.')}
         }
         SliderSpinner {
             id: sliderRoom
