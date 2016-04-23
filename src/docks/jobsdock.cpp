@@ -66,6 +66,8 @@ void JobsDock::on_treeView_customContextMenuRequested(const QPoint &pos)
             menu.addAction(ui->actionRun);
         if (job->state() == QProcess::Running)
             menu.addAction(ui->actionStopJob);
+        else
+            menu.addAction(ui->actionRemove);
         if (job->ran())
             menu.addAction(ui->actionViewLog);
         menu.addActions(job->standardActions());
@@ -126,4 +128,11 @@ void JobsDock::on_treeView_doubleClicked(const QModelIndex &index)
             }
         }
     }
+}
+
+void JobsDock::on_actionRemove_triggered()
+{
+    QModelIndex index = ui->treeView->currentIndex();
+    if (!index.isValid()) return;
+    JOBS.remove(index);
 }

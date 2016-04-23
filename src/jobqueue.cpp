@@ -130,3 +130,21 @@ bool JobQueue::hasIncomplete() const
     }
     return false;
 }
+
+void JobQueue::remove(const QModelIndex& index)
+{
+    int row = index.row();
+    removeRow(index.row());
+    m_mutex.lock();
+
+    AbstractJob* job = m_jobs.at(row);
+    m_jobs.removeOne(job);
+    delete job;
+
+    // Reindex the subsequent jobs.
+    for (int i = row; i < m_jobs.size(); ++i) {
+        QModelIndex modelIndex = this->index(i, COLUMN_STATUS);
+        m_jobs.at(i)->setModelIndex(modelIndex);
+    }
+    m_mutex.unlock();
+}

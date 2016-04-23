@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2015 Meltytech, LLC
+ * Copyright (c) 2012-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -47,6 +47,7 @@ private slots:
     void on_actionRun_triggered();
     void on_menuButton_clicked();
     void on_treeView_doubleClicked(const QModelIndex &index);
+    void on_actionRemove_triggered();
 };
 
 #endif // JOBSDOCK_H

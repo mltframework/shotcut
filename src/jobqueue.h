@@ -44,6 +44,7 @@ public:
     void resume();
     bool isPaused() const;
     bool hasIncomplete() const;
+    void remove(const QModelIndex& index);
 
 signals:
     void jobAdded();

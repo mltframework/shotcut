@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>232</width>
+    <width>283</width>
     <height>279</height>
    </rect>
   </property>
@@ -47,8 +47,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>232</width>
-         <height>225</height>
+         <width>283</width>
+         <height>211</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -173,6 +173,11 @@ the list. This does not stop a currently running job. Right-
    </property>
    <property name="toolTip">
     <string>Restart a stopped job</string>
+   </property>
+  </action>
+  <action name="actionRemove">
+   <property name="text">
+    <string>Remove</string>
    </property>
   </action>
  </widget>
