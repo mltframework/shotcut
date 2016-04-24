@@ -114,6 +114,7 @@ signals:
     void trackHeightChanged();
     void scaleFactorChanged();
     void showStatusMessage(QString);
+    void durationChanged();
 
 public slots:
     void refreshTrackList();

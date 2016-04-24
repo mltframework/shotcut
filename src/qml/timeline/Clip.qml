@@ -482,11 +482,11 @@ Rectangle {
             cursorShape: Qt.SizeHorCursor
             drag.target: parent
             drag.axis: Drag.XAxis
-            property int startX
+            property double startX
 
             onPressed: {
                 root.stopScrolling = true
-                startX = parent.x
+                startX = mapToItem(null, x, y).x
                 originalX = 0 // reusing originalX to accumulate delta for bubble help
                 parent.anchors.left = undefined
             }
@@ -498,11 +498,13 @@ Rectangle {
             }
             onPositionChanged: {
                 if (mouse.buttons === Qt.LeftButton) {
-                    var delta = Math.round((parent.x - startX) / timeScale)
+                    var newX = mapToItem(null, x, y).x
+                    var delta = Math.round((newX - startX) / timeScale)
                     if (Math.abs(delta) > 0) {
                         if (clipDuration + originalX + delta > 0)
                             originalX += delta
                         clipRoot.trimmingIn(clipRoot, delta, mouse)
+                        startX = newX
                     }
                 }
             }

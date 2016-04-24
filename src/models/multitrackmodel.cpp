@@ -1789,8 +1789,7 @@ void MultitrackModel::addTransitionByTrimIn(int trackIndex, int clipIndex, int d
         } else if (m_isMakingTransition) {
             // Adjust a transition addition already in progress.
             // m_isMakingTransition will be set false when mouse button released via notifyClipOut().
-            delta = playlist.clip_start(clipIndex - 1) - (playlist.clip_start(clipIndex) + delta);
-            trimTransitionIn(trackIndex, clipIndex - 2, delta);
+            trimTransitionIn(trackIndex, clipIndex - 2, -delta);
         }
     }
 }
@@ -2156,11 +2155,14 @@ void MultitrackModel::adjustBackgroundDuration()
         Mlt::Playlist playlist(*track);
         Mlt::Producer* clip = playlist.get_clip(0);
         if (clip) {
-            clip->parent().set("length", n);
-            clip->parent().set_in_and_out(0, n - 1);
-            clip->set("length", n);
-            clip->set_in_and_out(0, n - 1);
-            playlist.resize_clip(0, 0, n - 1);
+            if (n != clip->parent().get_length()) {
+                clip->parent().set("length", n);
+                clip->parent().set_in_and_out(0, n - 1);
+                clip->set("length", n);
+                clip->set_in_and_out(0, n - 1);
+                playlist.resize_clip(0, 0, n - 1);
+                emit durationChanged();
+            }
             delete clip;
         }
         delete track;

@@ -506,7 +506,7 @@ void Player::onMeltedUnitOpened()
     setFocus();
 }
 
-void Player::onProducerModified()
+void Player::onDurationChanged()
 {
     m_duration = MLT.producer()->get_length();
     m_isSeekable = MLT.isSeekable();

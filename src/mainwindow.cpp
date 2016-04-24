@@ -274,6 +274,7 @@ MainWindow::MainWindow()
     connect(m_timelineDock->model(), SIGNAL(closed()), SLOT(onMultitrackClosed()));
     connect(m_timelineDock->model(), SIGNAL(modified()), SLOT(onMultitrackModified()));
     connect(m_timelineDock->model(), SIGNAL(modified()), SLOT(updateAutoSave()));
+    connect(m_timelineDock->model(), SIGNAL(durationChanged()), SLOT(onMultitrackDurationChanged()));
     connect(m_timelineDock, SIGNAL(clipOpened(void*)), SLOT(openCut(void*)));
     connect(m_timelineDock->model(), SIGNAL(seeked(int)), SLOT(seekTimeline(int)));
     connect(m_playlistDock, SIGNAL(addAllTimeline(Mlt::Playlist*)), SLOT(onTimelineDockTriggered()));
@@ -2033,7 +2034,7 @@ void MainWindow::onPlaylistModified()
 {
     setWindowModified(true);
     if (MLT.producer() && playlist() && (void*) MLT.producer()->get_producer() == (void*) playlist()->get_playlist())
-        m_player->onProducerModified();
+        m_player->onDurationChanged();
     updateMarkers();
     m_player->enableTab(Player::ProjectTabIndex, true);
 }
@@ -2058,9 +2059,12 @@ void MainWindow::onMultitrackClosed()
 void MainWindow::onMultitrackModified()
 {
     setWindowModified(true);
+}
+
+void MainWindow::onMultitrackDurationChanged()
+{
     if (MLT.producer() && (void*) MLT.producer()->get_producer() == (void*) multitrack()->get_producer())
-        m_player->onProducerModified();
-    updateMarkers();
+        m_player->onDurationChanged();
 }
 
 void MainWindow::onCutModified()
