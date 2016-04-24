@@ -184,7 +184,10 @@ Rectangle {
                     right: root.right
                 }
             }
-            PropertyChanges { target: attachedContainer; width: 200; height: root.height }
+            PropertyChanges {
+                target: attachedContainer; width: 200
+                height: root.height - addButton.height * 2
+            }
         },
         State {
             name: "portrait"
@@ -197,7 +200,11 @@ Rectangle {
                     right: root.right
                 }
             }
-            PropertyChanges { target: attachedContainer; width: titleBackground.width; height: 165 }
+            PropertyChanges {
+                target: attachedContainer
+                width: titleBackground.width
+                height: 165
+            }
         }
     ]
 }
