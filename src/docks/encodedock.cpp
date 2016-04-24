@@ -238,6 +238,18 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
             ui->videoRateControlCombo->setCurrentIndex(RateControlConstant);
             ui->videoBufferSizeSpinner->setValue(getBufferSize(preset, "vbufsize"));
         }
+        else if (name == "x265-params") {
+            QStringList x265params = QString::fromUtf8(preset.get("x265-params")).split(':');
+            foreach (QString param, x265params) {
+                QStringList nameValue = param.split('=');
+                if ("vbv-bufsize" == nameValue[0] && nameValue.size() > 1) {
+                    ui->videoRateControlCombo->setCurrentIndex(RateControlConstant);
+                    // convert from Kb to KB
+                    ui->videoBufferSizeSpinner->setValue(nameValue[1].toDouble() / 8);
+                    break;
+                }
+            }
+        }
         else if (name == "threads") {
             // TODO: should we save the thread count and restore it if preset is not 1?
             if (preset.get_int("threads") == 1)
@@ -397,6 +409,8 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
 {
     Mlt::Properties* p = new Mlt::Properties;
     if (p && p->is_valid()) {
+        foreach (QString line, ui->advancedTextEdit->toPlainText().split("\n"))
+            p->parse(line.toUtf8().constData());
         if (realtime)
             p->set("real_time", realtime);
         if (ui->formatCombo->currentIndex() != 0)
@@ -558,8 +572,6 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
             if (ui->dualPassCheckbox->isEnabled() && ui->dualPassCheckbox->isChecked())
                 p->set("pass", 1);
         }
-        foreach (QString line, ui->advancedTextEdit->toPlainText().split("\n"))
-            p->parse(line.toUtf8().constData());
     }
     return p;
 }
