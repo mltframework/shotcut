@@ -752,7 +752,7 @@ bool MultitrackModel::moveClip(int fromTrack, int toTrack, int clipIndex, int po
     return result;
 }
 
-int MultitrackModel::overwriteClip(int trackIndex, Mlt::Producer& clip, int position)
+int MultitrackModel::overwriteClip(int trackIndex, Mlt::Producer& clip, int position, bool seek)
 {
     createIfNeeded();
     int result = -1;
@@ -839,7 +839,8 @@ int MultitrackModel::overwriteClip(int trackIndex, Mlt::Producer& clip, int posi
             QModelIndex index = createIndex(result, 0, trackIndex);
             AudioLevelsTask::start(clip.parent(), this, index);
             emit modified();
-            emit seeked(playlist.clip_start(result) + playlist.clip_length(result));
+            if (seek)
+                emit seeked(playlist.clip_start(result) + playlist.clip_length(result));
         }
     }
     return result;
@@ -1872,7 +1873,7 @@ bool MultitrackModel::moveClipToTrack(int fromTrack, int toTrack, int clipIndex,
     playlistFrom.replace_with_blank(clipIndex);
     endInsertRows();
 
-    result = overwriteClip(toTrack, *clip, position) >= 0;
+    result = overwriteClip(toTrack, *clip, position, false) >= 0;
 
     // If there was an error, rollback the cross-track changes.
     if (!result) {
