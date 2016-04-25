@@ -22,7 +22,7 @@ ACTION_GET_ONLY=0
 ACTION_COMPILE_INSTALL=1
 CLEANUP=1
 ARCHIVE=1
-SOURCES_CLEAN=1
+SOURCES_CLEAN=0
 INSTALL_AS_ROOT=0
 DEBUG_BUILD=0
 ASAN_BUILD=0
@@ -1261,7 +1261,7 @@ function get_all_sources {
     get_subproject $DIR
   done
   feedback_status Done getting all sources
-  if test "$TARGET_OS" = "Darwin" ; then
+  if test "$TARGET_OS" = "Darwin" -a "$ARCHIVE" = "1" ; then
     feedback_status Making source archive
     cmd cd "$SOURCE_DIR"/..
     cat >src/README <<END_OF_SRC_README
@@ -1819,21 +1819,22 @@ function deploy_osx
 
   popd
 
-  # build DMG
-  log Making disk image
-  dmg_name="$INSTALL_DIR/shotcut.dmg"
-  cmd rm "$dmg_name" 2>/dev/null
-  cmd rm -rf staging 2>/dev/null
-  cmd mkdir staging
-  cmd mv shotcut/src/Shotcut.app staging
-  cmd ln -s /Applications staging
-  cmd cp shotcut/COPYING staging
-  sync
-  cmd hdiutil create -fs HFS+ -srcfolder staging -volname Shotcut -format UDBZ -size 300m "$dmg_name"
-  #while [ "$?" -ne 0 ]; do
-  #  cmd hdiutil create -fs HFS+ -srcfolder staging -volname Shotcut -format UDBZ "$dmg_name"
-  #done
-  cmd rm -rf staging
+  if [ "$ARCHIVE" = "1" ]; then
+    # build DMG
+    log Making disk image
+    dmg_name="$INSTALL_DIR/shotcut.dmg"
+    cmd rm "$dmg_name" 2>/dev/null
+    cmd rm -rf staging 2>/dev/null
+    cmd mkdir staging
+    cmd mv shotcut/src/Shotcut.app staging
+    cmd ln -s /Applications staging
+    cmd cp shotcut/COPYING staging
+    sync
+    cmd hdiutil create -fs HFS+ -srcfolder staging -volname Shotcut -format UDBZ -size 300m "$dmg_name"
+  fi
+  if [ "$CLEANUP" = "1" ]; then
+    cmd rm -rf staging
+  fi
 }
 
 function deploy_win32
@@ -1932,28 +1933,29 @@ function deploy_win32
   fi
   printf "[Paths]\nPlugins=lib/qt5\nQml2Imports=lib/qml\n" > qt.conf
 
-  if [ "$SDK" = "1" ]; then
-    # Prepare src for archiving
-    pushd .
-    clean_dirs
-    popd
-    log Copying src
-    cmd rm -rf src 2> /dev/null
-    cmd cp -a $SOURCE_DIR .
+  if [ "$ARCHIVE" = "1" ]; then
+    if [ "$SDK" = "1" ]; then
+      # Prepare src for archiving
+      pushd .
+      clean_dirs
+      popd
+      log Copying src
+      cmd rm -rf src 2> /dev/null
+      cmd cp -a $SOURCE_DIR .
 
-    log Creating archive
-    cmd cd ..
-    cmd zip -gr shotcut-sdk.zip Shotcut
-  else
-    log Making installer
-	cmd osslsigncode sign -pkcs12 "$HOME/CodeSignCertificates.p12" -readpass "$HOME/CodeSignCertificates.pass" -n Shotcut -i http://www.meltytech.com -t http://timestamp.digicert.com -in shotcut.exe -out shotcut-signed.exe
-	cmd mv shotcut-signed.exe shotcut.exe
-    cmd cd ..
-    cmd makensis shotcut.nsi
-	cmd osslsigncode sign -pkcs12 "$HOME/CodeSignCertificates.p12" -readpass "$HOME/CodeSignCertificates.pass" -n "Shotcut Installer" -i http://www.meltytech.com -t http://timestamp.digicert.com -in shotcut-setup.exe -out shotcut-setup-signed.exe
-	cmd mv shotcut-setup-signed.exe shotcut-setup.exe
+      log Creating archive
+      cmd cd ..
+      cmd zip -gr shotcut-sdk.zip Shotcut
+    else
+      log Making installer
+      cmd osslsigncode sign -pkcs12 "$HOME/CodeSignCertificates.p12" -readpass "$HOME/CodeSignCertificates.pass" -n Shotcut -i http://www.meltytech.com -t http://timestamp.digicert.com -in shotcut.exe -out shotcut-signed.exe
+      cmd mv shotcut-signed.exe shotcut.exe
+      cmd cd ..
+      cmd makensis shotcut.nsi
+      cmd osslsigncode sign -pkcs12 "$HOME/CodeSignCertificates.p12" -readpass "$HOME/CodeSignCertificates.pass" -n "Shotcut Installer" -i http://www.meltytech.com -t http://timestamp.digicert.com -in shotcut-setup.exe -out shotcut-setup-signed.exe
+      cmd mv shotcut-setup-signed.exe shotcut-setup.exe
+    fi
   fi
-
   popd
 }
 
