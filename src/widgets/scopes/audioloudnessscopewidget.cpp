@@ -68,7 +68,7 @@ AudioLoudnessScopeWidget::AudioLoudnessScopeWidget()
 
     hlayout->addStretch();
 
-    resetQview();
+    connect(m_qview->quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(resetQview()));
 
     LOG_DEBUG() << "end";
 }
