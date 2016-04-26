@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2015 Meltytech, LLC
+ * Copyright (c) 2013-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,6 +19,7 @@
 #include "playlistcommands.h"
 #include "mltcontroller.h"
 #include "mainwindow.h"
+#include <Logger.h>
 
 namespace Playlist
 {
@@ -33,12 +34,14 @@ AppendCommand::AppendCommand(PlaylistModel& model, const QString& xml, QUndoComm
 
 void AppendCommand::redo()
 {
+    LOG_DEBUG() << "";
     Mlt::Producer producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
     m_model.append(producer);
 }
 
 void AppendCommand::undo()
 {
+    LOG_DEBUG() << "";
     m_model.remove(m_model.rowCount() - 1);
 }
 
@@ -53,12 +56,14 @@ InsertCommand::InsertCommand(PlaylistModel& model, const QString& xml, int row, 
 
 void InsertCommand::redo()
 {
+    LOG_DEBUG() << "row" << m_row;
     Mlt::Producer producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
     m_model.insert(producer, m_row);
 }
 
 void InsertCommand::undo()
 {
+    LOG_DEBUG() << "row" << m_row;
     m_model.remove(m_row);
 }
 
@@ -74,12 +79,14 @@ UpdateCommand::UpdateCommand(PlaylistModel& model, const QString& xml, int row, 
 
 void UpdateCommand::redo()
 {
+    LOG_DEBUG() << "row" << m_row;
     Mlt::Producer producer(MLT.profile(), "xml-string", m_newXml.toUtf8().constData());
     m_model.update(m_row, producer);
 }
 
 void UpdateCommand::undo()
 {
+    LOG_DEBUG() << "row" << m_row;
     Mlt::Producer producer(MLT.profile(), "xml-string", m_oldXml.toUtf8().constData());
     m_model.update(m_row, producer);
 }
@@ -95,11 +102,13 @@ RemoveCommand::RemoveCommand(PlaylistModel& model, int row, QUndoCommand *parent
 
 void RemoveCommand::redo()
 {
+    LOG_DEBUG() << "row" << m_row;
     m_model.remove(m_row);
 }
 
 void RemoveCommand::undo()
 {
+    LOG_DEBUG() << "row" << m_row;
     Mlt::Producer producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
     m_model.insert(producer, m_row);
 }
@@ -114,11 +123,13 @@ ClearCommand::ClearCommand(PlaylistModel& model, QUndoCommand *parent)
 
 void ClearCommand::redo()
 {
+    LOG_DEBUG() << "";
     m_model.clear();
 }
 
 void ClearCommand::undo()
 {
+    LOG_DEBUG() << "";
     m_model.close();
     Mlt::Producer* producer = new Mlt::Producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
     if (producer->is_valid()) {
@@ -140,11 +151,13 @@ MoveCommand::MoveCommand(PlaylistModel &model, int from, int to, QUndoCommand *p
 
 void MoveCommand::redo()
 {
+    LOG_DEBUG() << "from" << m_from << "to" << m_to;
     m_model.move(m_from, m_to);
 }
 
 void MoveCommand::undo()
 {
+    LOG_DEBUG() << "from" << m_from << "to" << m_to;
     m_model.move(m_to, m_from);
 }
 

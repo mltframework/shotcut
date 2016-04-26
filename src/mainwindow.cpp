@@ -803,6 +803,7 @@ void MainWindow::open(Mlt::Producer* producer)
 bool MainWindow::isCompatibleWithGpuMode(MltXmlChecker& checker)
 {
     if (checker.needsGPU() && !Settings.playerGPU()) {
+        LOG_INFO() << "file uses GPU but GPU not enabled";
         QMessageBox dialog(QMessageBox::Question,
            qApp->applicationName(),
            tr("The file you opened uses GPU effects, but GPU processing is not enabled.\n"
@@ -827,6 +828,7 @@ bool MainWindow::isCompatibleWithGpuMode(MltXmlChecker& checker)
 bool MainWindow::isXmlRepaired(MltXmlChecker& checker, QString& fileName)
 {
     if (checker.isCorrected()) {
+        LOG_WARNING() << fileName;
         QMessageBox dialog(QMessageBox::Question,
            qApp->applicationName(),
            tr("Shotcut noticed some problems in your project.\n"
@@ -845,7 +847,7 @@ bool MainWindow::isXmlRepaired(MltXmlChecker& checker, QString& fileName)
             QFile repaired(QString("%1/%2 - %3.%4").arg(fi.path())
                 .arg(fi.completeBaseName()).arg(tr("Repaired")).arg(fi.suffix()));
             repaired.open(QIODevice::WriteOnly);
-            LOG_DEBUG() << "repaired MLT XML file name" << repaired.fileName();
+            LOG_INFO() << "repaired MLT XML file name" << repaired.fileName();
             QFile temp(checker.tempFileName());
             if (temp.exists() && repaired.exists()) {
                 temp.open(QIODevice::ReadOnly);
@@ -867,6 +869,7 @@ bool MainWindow::isXmlRepaired(MltXmlChecker& checker, QString& fileName)
                 }
             }
             QMessageBox::warning(this, qApp->applicationName(), tr("Repairing the project failed."));
+            LOG_WARNING() << "repairing failed";
         }
     }
     return false;
@@ -921,7 +924,7 @@ void MainWindow::doAutosave()
         if (m_autosaveFile->isOpen() || m_autosaveFile->open(QIODevice::ReadWrite)) {
             saveXML(m_autosaveFile->fileName());
         } else {
-            LOG_WARNING() << "failed to open autosave file for writing" << m_autosaveFile->fileName();
+            LOG_ERROR() << "failed to open autosave file for writing" << m_autosaveFile->fileName();
         }
     }
     m_autosaveMutex.unlock();
@@ -998,6 +1001,7 @@ QString MainWindow::getHash(Mlt::Properties& properties) const
 
 void MainWindow::setProfile(const QString &profile_name)
 {
+    LOG_DEBUG() << profile_name;
     MLT.setProfile(profile_name);
     emit profileChanged();
 }
@@ -1063,13 +1067,17 @@ void MainWindow::open(QString url, const Mlt::Properties* properties)
         m_player->setPauseAfterOpen(!MLT.isClip());
         open(MLT.producer());
         if (url.startsWith(AutoSaveFile::path())) {
-            if (m_autosaveFile && m_autosaveFile->managedFileName() != untitledFileName())
+            if (m_autosaveFile && m_autosaveFile->managedFileName() != untitledFileName()) {
                 m_recentDock->add(m_autosaveFile->managedFileName());
+                LOG_INFO() << m_autosaveFile->managedFileName();
+            }
         } else {
             m_recentDock->add(url);
+            LOG_INFO() << url;
         }
     }
     else if (url != untitledFileName()) {
+        LOG_INFO() << "failed to open" << url;
         ui->statusBar->showMessage(tr("Failed to open ") + url, STATUS_TIMEOUT_MS);
         emit openFailed(url);
     }
@@ -1850,6 +1858,7 @@ bool MainWindow::on_actionSave_triggered()
         setCurrentFile(m_currentFile);
         setWindowModified(false);
         showStatusMessage(tr("Saved %1").arg(m_currentFile));
+        LOG_INFO() << m_currentFile;
         m_undoStack->setClean();
         return true;
     }
@@ -1873,6 +1882,7 @@ bool MainWindow::on_actionSave_As_triggered()
         setCurrentFile(filename);
         setWindowModified(false);
         showStatusMessage(tr("Saved %1").arg(m_currentFile));
+        LOG_INFO() << m_currentFile;
         m_undoStack->setClean();
         m_recentDock->add(filename);
     }
@@ -2306,6 +2316,7 @@ void MainWindow::onGpuNotSupported()
         ui->actionGPU->setChecked(false);
         ui->actionGPU->setDisabled(true);
     }
+    LOG_WARNING() << "";
     QMessageBox::critical(this, qApp->applicationName(),
         tr("GPU Processing is not supported"));
 }
@@ -2571,6 +2582,7 @@ void MainWindow::on_actionGPU_triggered(bool checked)
 
 void MainWindow::onExternalTriggered(QAction *action)
 {
+    LOG_DEBUG() << action->data().toString();
     bool isExternal = !action->data().toString().isEmpty();
     Settings.setPlayerExternal(action->data().toString());
 
@@ -2620,6 +2632,7 @@ void MainWindow::onExternalTriggered(QAction *action)
 
 void MainWindow::onKeyerTriggered(QAction *action)
 {
+    LOG_DEBUG() << action->data().toString();
     MLT.videoWidget()->setProperty("keyer", action->data());
     MLT.consumerChanged();
     Settings.setPlayerKeyerMode(action->data().toInt());
@@ -2762,8 +2775,10 @@ void MainWindow::on_actionOpenXML_triggered()
         if (!MLT.openXML(url)) {
             open(MLT.producer());
             m_recentDock->add(url);
+            LOG_INFO() << url;
         }
         else {
+            LOG_INFO() << "failed to open" << url;
             ui->statusBar->showMessage(tr("Failed to open ") + url, STATUS_TIMEOUT_MS);
             emit openFailed(url);
         }
@@ -2834,6 +2849,7 @@ void MainWindow::on_actionApplicationLog_triggered()
 void MainWindow::on_actionClose_triggered()
 {
     if (MAIN.continueModified()) {
+        LOG_DEBUG() << "";
         if (multitrack())
             m_timelineDock->model()->close();
         if (playlist())

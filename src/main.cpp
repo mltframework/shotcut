@@ -126,7 +126,7 @@ public:
         const QString logFileName = dir.filePath("shotcut-log.txt");
         QFile::remove(logFileName);
         FileAppender* fileAppender = new FileAppender(logFileName);
-        fileAppender->setFormat("[%-7l] <%C> %m\n");
+        fileAppender->setFormat("[%-7l] <%c> %m\n");
         Logger::registerAppender(fileAppender);
 #ifndef NDEBUG
         // Only log to console in dev debug builds.

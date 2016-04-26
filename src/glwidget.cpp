@@ -128,10 +128,10 @@ void GLWidget::initializeGL()
     Q_ASSERT(m_offscreenSurface.isValid());
 
     initializeOpenGLFunctions();
-    LOG_DEBUG() << "OpenGL vendor" << QString::fromUtf8((const char*) glGetString(GL_VENDOR));
-    LOG_DEBUG() << "OpenGL renderer" << QString::fromUtf8((const char*) glGetString(GL_RENDERER));
-    LOG_DEBUG() << "OpenGL threaded?" << quickWindow()->openglContext()->supportsThreadedOpenGL();
-    LOG_DEBUG() << "OpenGL ES?" << quickWindow()->openglContext()->isOpenGLES();
+    LOG_INFO() << "OpenGL vendor" << QString::fromUtf8((const char*) glGetString(GL_VENDOR));
+    LOG_INFO() << "OpenGL renderer" << QString::fromUtf8((const char*) glGetString(GL_RENDERER));
+    LOG_INFO() << "OpenGL threaded?" << quickWindow()->openglContext()->supportsThreadedOpenGL();
+    LOG_INFO() << "OpenGL ES?" << quickWindow()->openglContext()->isOpenGLES();
 
     if (m_glslManager && quickWindow()->openglContext()->isOpenGLES()) {
         delete m_glslManager;
