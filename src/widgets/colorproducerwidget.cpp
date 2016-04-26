@@ -79,14 +79,22 @@ Mlt::Properties* ColorProducerWidget::getPreset() const
 
 void ColorProducerWidget::loadPreset(Mlt::Properties& p)
 {
-    QString color(QFileInfo(p.get("resource")).baseName());
-    ui->colorLabel->setText(color);
-    color.replace(0, 3, "#");
+    QColor color(QFileInfo(p.get("resource")).baseName());
+    ui->colorLabel->setText(QString().sprintf("#%02X%02X%02X%02X",
+                                              qAlpha(color.rgba()),
+                                              qRed(color.rgba()),
+                                              qGreen(color.rgba()),
+                                              qBlue(color.rgba())
+                                              ));
     ui->colorLabel->setStyleSheet(QString("color: %1; background-color: %2")
-        .arg((QColor(color).value() < 150)? "white":"black")
-        .arg(color));
-    p.set(kShotcutCaptionProperty, ui->colorLabel->text().toLatin1().constData());
-    p.set(kShotcutDetailProperty, ui->colorLabel->text().toLatin1().constData());
+        .arg((color.value() < 150)? "white":"black")
+        .arg(color.name()));
+    if (m_producer) {
+        m_producer->set("resource", ui->colorLabel->text().toLatin1().constData());
+        m_producer->set(kShotcutCaptionProperty, ui->colorLabel->text().toLatin1().constData());
+        m_producer->set(kShotcutDetailProperty, ui->colorLabel->text().toLatin1().constData());
+        emit producerChanged(m_producer);
+    }
 }
 
 void ColorProducerWidget::on_preset_selected(void* p)
