@@ -166,6 +166,10 @@ void AvformatProducerWidget::recreateProducer()
 
 void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
 {
+    // This forces avformat-novalidate or unloaded avformat to load and get
+    // media information.
+    delete m_producer->get_frame();
+
     ui->tabWidget->setTabEnabled(0, false);
     ui->tabWidget->setTabEnabled(1, false);
     ui->tabWidget->setTabEnabled(2, false);
