@@ -22,6 +22,7 @@
 #include <QWidget>
 #include <QIcon>
 #include <QSize>
+#include <QTimer>
 #include "sharedframe.h"
 
 class ScrubBar;
@@ -37,6 +38,8 @@ class QTabBar;
 class QHBoxLayout;
 class QPushButton;
 class TransportControllable;
+class QLabel;
+class QPropertyAnimation;
 
 class Player : public QWidget
 {
@@ -100,6 +103,7 @@ public slots:
     void switchToTab(TabIndex index);
     void enableTab(TabIndex index, bool enabled = true);
     void onTabBarClicked(int index);
+    void setStatusLabel(const QString& text);
 
 protected:
     void resizeEvent(QResizeEvent* event);
@@ -152,6 +156,10 @@ private:
     QHBoxLayout* m_videoLayout;
     QWidget* m_videoScrollWidget;
     const TransportControllable* m_currentTransport;
+    QLabel* m_statusLabel;
+    QPropertyAnimation* m_statusFadeIn;
+    QPropertyAnimation* m_statusFadeOut;
+    QTimer m_statusTimer;
 
 private slots:
     void updateSelection();
@@ -168,6 +176,7 @@ private slots:
     void zoomOut25();
     void zoomIn();
     void toggleZoom(bool checked);
+    void fadeOutStatus();
 };
 
 #endif // PLAYER_H

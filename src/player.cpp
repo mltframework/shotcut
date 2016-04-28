@@ -22,11 +22,15 @@
 #include "widgets/timespinbox.h"
 #include "widgets/audioscale.h"
 #include "settings.h"
+#include "util.h"
 #include <QtWidgets>
 
 #define VOLUME_KNEE (88)
 #define SEEK_INACTIVE (-1)
 #define VOLUME_SLIDER_HEIGHT (300)
+
+static const int STATUS_TIMEOUT_MS = 5000;
+static const int STATUS_ANIMATION_MS = 350;
 
 Player::Player(QWidget *parent)
     : QWidget(parent)
@@ -56,9 +60,31 @@ Player::Player(QWidget *parent)
     m_tabs->addTab(tr("Project"));
     m_tabs->setTabEnabled(ProjectTabIndex, false);
     QHBoxLayout* tabLayout = new QHBoxLayout;
+    tabLayout->setSpacing(8);
     tabLayout->addWidget(m_tabs);
-    tabLayout->addStretch();
     connect(m_tabs, SIGNAL(tabBarClicked(int)), SLOT(onTabBarClicked(int)));
+
+    // Add status bar.
+    m_statusLabel = new QLabel;
+    m_statusLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    Util::setColorsToHighlight(m_statusLabel);
+    tabLayout->addWidget(m_statusLabel);
+    tabLayout->addStretch(10);
+    QGraphicsOpacityEffect *effect = new QGraphicsOpacityEffect(this);
+    m_statusLabel->setGraphicsEffect(effect);
+    m_statusFadeIn = new QPropertyAnimation(effect, "opacity", this);
+    m_statusFadeIn->setDuration(STATUS_ANIMATION_MS);
+    m_statusFadeIn->setStartValue(0);
+    m_statusFadeIn->setEndValue(1);
+    m_statusFadeIn->setEasingCurve(QEasingCurve::InBack);
+    m_statusFadeOut = new QPropertyAnimation(effect, "opacity", this);
+    m_statusFadeOut->setDuration(STATUS_ANIMATION_MS);
+    m_statusFadeOut->setStartValue(0);
+    m_statusFadeOut->setEndValue(0);
+    m_statusFadeOut->setEasingCurve(QEasingCurve::OutBack);
+    m_statusTimer.setSingleShot(true);
+    connect(&m_statusTimer, SIGNAL(timeout()), m_statusFadeOut, SLOT(start()));
+    m_statusFadeOut->start();
 
     // Add the layouts for managing video view, scroll bars, and audio controls.
     m_videoLayout = new QHBoxLayout;
@@ -602,7 +628,6 @@ void Player::onOutChanged(int out)
 
 void Player::on_actionSkipNext_triggered()
 {
-    emit showStatusMessage(actionSkipNext->toolTip());
     if (m_scrubber->markers().size() > 0) {
         foreach (int x, m_scrubber->markers()) {
             if (x > m_position) {
@@ -620,7 +645,6 @@ void Player::on_actionSkipNext_triggered()
 
 void Player::on_actionSkipPrevious_triggered()
 {
-    emit showStatusMessage(actionSkipPrevious->toolTip());
     if (m_scrubber->markers().size() > 0) {
         QList<int> markers = m_scrubber->markers();
         int n = markers.count();
@@ -696,6 +720,40 @@ void Player::onTabBarClicked(int index)
         }
         break;
     }
+}
+
+void Player::setStatusLabel(const QString &text)
+{
+    QString s = QString("  %1  ").arg(
+                m_statusLabel->fontMetrics().elidedText(text, Qt::ElideRight,
+                    m_scrubber->width() - m_tabs->width() - 30));
+    m_statusLabel->setText(s);
+    m_statusLabel->setToolTip(text);
+
+    // Cancel the fade out.
+    if (m_statusFadeOut->state() == QAbstractAnimation::Running) {
+        m_statusFadeOut->stop();
+    }
+    if (text.isEmpty()) {
+        // Make it transparent.
+        m_statusTimer.stop();
+        m_statusFadeOut->setStartValue(0);
+        m_statusFadeOut->start();
+    } else {
+        // Reset the fade out animation.
+        m_statusFadeOut->setStartValue(1);
+
+        // Fade in.
+        if (m_statusFadeIn->state() != QAbstractAnimation::Running && !m_statusTimer.isActive()) {
+            m_statusFadeIn->start();
+            m_statusTimer.start(STATUS_TIMEOUT_MS);
+        }
+    }
+}
+
+void Player::fadeOutStatus()
+{
+    m_statusFadeOut->start();
 }
 
 void Player::adjustScrollBars(float horizontal, float vertical)
@@ -791,7 +849,7 @@ static inline float IEC_dB ( float fScale )
 void Player::onVolumeChanged(int volume)
 {
     const double gain = setVolume(volume);
-    emit showStatusMessage(QString("%L1 dB").arg(IEC_dB(gain)));
+    setStatusLabel(QString("%L1 dB").arg(IEC_dB(gain)));
     Settings.setPlayerVolume(volume);
     Settings.setPlayerMuted(false);
     m_muteButton->setChecked(false);

@@ -94,7 +94,6 @@ static bool eventDebugCallback(void **data)
     return false;
 }
 
-static const int STATUS_TIMEOUT_MS = 5000;
 static const int AUTOSAVE_TIMEOUT_MS = 10000;
 
 MainWindow::MainWindow()
@@ -166,6 +165,7 @@ MainWindow::MainWindow()
     ui->actionEnter_Full_Screen->setShortcut(QKeySequence((Qt::CTRL + Qt::META + Qt::Key_F)));
 #endif
     setDockNestingEnabled(true);
+    ui->statusBar->hide();
 
     // Connect UI signals.
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openVideo()));
@@ -778,9 +778,9 @@ QAction* MainWindow::addProfile(QActionGroup* actionGroup, const QString& desc, 
 void MainWindow::open(Mlt::Producer* producer)
 {
     if (!producer->is_valid())
-        ui->statusBar->showMessage(tr("Failed to open "), STATUS_TIMEOUT_MS);
+        showStatusMessage(tr("Failed to open "));
     else if (producer->get_int("error"))
-        ui->statusBar->showMessage(tr("Failed to open ") + producer->get("resource"), STATUS_TIMEOUT_MS);
+        showStatusMessage(tr("Failed to open ") + producer->get("resource"));
 
     bool ok = false;
     int screen = Settings.playerExternal().toInt(&ok);
@@ -1077,8 +1077,7 @@ void MainWindow::open(QString url, const Mlt::Properties* properties)
         }
     }
     else if (url != untitledFileName()) {
-        LOG_INFO() << "failed to open" << url;
-        ui->statusBar->showMessage(tr("Failed to open ") + url, STATUS_TIMEOUT_MS);
+        showStatusMessage(tr("Failed to open ") + url);
         emit openFailed(url);
     }
 }
@@ -1115,7 +1114,8 @@ void MainWindow::openCut(void* producer)
 
 void MainWindow::showStatusMessage(QString message)
 {
-    ui->statusBar->showMessage(message, STATUS_TIMEOUT_MS);
+    LOG_INFO() << message;
+    m_player->setStatusLabel(message);
 }
 
 void MainWindow::seekPlaylist(int start)
@@ -1858,7 +1858,6 @@ bool MainWindow::on_actionSave_triggered()
         setCurrentFile(m_currentFile);
         setWindowModified(false);
         showStatusMessage(tr("Saved %1").arg(m_currentFile));
-        LOG_INFO() << m_currentFile;
         m_undoStack->setClean();
         return true;
     }
@@ -1882,7 +1881,6 @@ bool MainWindow::on_actionSave_As_triggered()
         setCurrentFile(filename);
         setWindowModified(false);
         showStatusMessage(tr("Saved %1").arg(m_currentFile));
-        LOG_INFO() << m_currentFile;
         m_undoStack->setClean();
         m_recentDock->add(filename);
     }
@@ -2778,8 +2776,7 @@ void MainWindow::on_actionOpenXML_triggered()
             LOG_INFO() << url;
         }
         else {
-            LOG_INFO() << "failed to open" << url;
-            ui->statusBar->showMessage(tr("Failed to open ") + url, STATUS_TIMEOUT_MS);
+            showStatusMessage(tr("Failed to open ") + url);
             emit openFailed(url);
         }
     }
