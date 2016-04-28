@@ -44,7 +44,8 @@ EncodeDock::EncodeDock(QWidget *parent) :
     ui(new Ui::EncodeDock),
     m_presets(Mlt::Repository::presets()),
     m_immediateJob(0),
-    m_profiles(Mlt::Profile::list())
+    m_profiles(Mlt::Profile::list()),
+    m_isDefaultSettings(true)
 {
     LOG_DEBUG() << "begin";
     ui->setupUi(this);
@@ -774,14 +775,16 @@ void EncodeDock::resetOptions()
 
     ui->videoBitrateCombo->lineEdit()->setText("2M");
     ui->videoBufferSizeSpinner->setValue(224);
-    ui->gopSpinner->setValue(200);
-    ui->bFramesSpinner->setValue(3);
+    ui->gopSpinner->blockSignals(true);
+    ui->gopSpinner->setValue(13);
+    ui->gopSpinner->blockSignals(false);
+    ui->bFramesSpinner->setValue(2);
     ui->videoCodecThreadsSpinner->setValue(0);
     ui->dualPassCheckbox->setChecked(false);
     ui->disableVideoCheckbox->setChecked(false);
 
     ui->sampleRateCombo->lineEdit()->setText("48000");
-    ui->audioBitrateCombo->lineEdit()->setText("256k");
+    ui->audioBitrateCombo->lineEdit()->setText("384k");
     ui->audioQualitySpinner->setValue(50);
     ui->disableAudioCheckbox->setChecked(false);
 
@@ -970,6 +973,11 @@ void EncodeDock::onProfileChanged()
     ui->aspectDenSpinner->setValue(dar_denominator);
     ui->scanModeCombo->setCurrentIndex(MLT.profile().progressive());
     ui->fpsSpinner->setValue(MLT.profile().fps());
+    if (m_isDefaultSettings) {
+        ui->gopSpinner->blockSignals(true);
+        ui->gopSpinner->setValue(qRound(MLT.profile().fps() / 2));
+        ui->gopSpinner->blockSignals(false);
+    }
 }
 
 void EncodeDock::on_streamButton_clicked()
@@ -1201,6 +1209,7 @@ bool PresetsProxyModel::filterAcceptsRow(int source_row, const QModelIndex &sour
 
 void EncodeDock::on_resetButton_clicked()
 {
+    m_isDefaultSettings = true;
     resetOptions();
     onProfileChanged();
 }
@@ -1223,4 +1232,10 @@ void EncodeDock::on_videoBufferDurationChanged()
     double duration = (double)ui->videoBufferSizeSpinner->value() * 8.0 / vb.toDouble();
     QString label = QString(tr("KiB (%1s)")).arg(duration);
     ui->videoBufferSizeSuffixLabel->setText(label);
+}
+
+void EncodeDock::on_gopSpinner_valueChanged(int value)
+{
+    Q_UNUSED(value);
+    m_isDefaultSettings = false;
 }

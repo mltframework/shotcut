@@ -91,6 +91,8 @@ private slots:
 
     void on_videoBufferDurationChanged();
 
+    void on_gopSpinner_valueChanged(int value);
+
 private:
     enum {
         RateControlAverage = 0,
@@ -104,6 +106,7 @@ private:
     Mlt::Properties *m_profiles;
     PresetsProxyModel m_presetsModel;
     QString m_outputFilename;
+    bool m_isDefaultSettings;
 
     void loadPresets();
     Mlt::Properties* collectProperties(int realtime);
