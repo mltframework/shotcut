@@ -58,7 +58,7 @@ public:
     bool continueModified();
     bool continueJobsRunning();
     QUndoStack* undoStack() const;
-    void saveXML(const QString& filename);
+    void saveXML(const QString& filename, bool withRelativePaths = true);
     static void changeTheme(const QString& theme);
     PlaylistDock* playlistDock() const { return m_playlistDock; }
     FilterController* filterController() const { return m_filterController; }

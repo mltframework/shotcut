@@ -922,7 +922,7 @@ void MainWindow::doAutosave()
     m_autosaveMutex.lock();
     if (m_autosaveFile) {
         if (m_autosaveFile->isOpen() || m_autosaveFile->open(QIODevice::ReadWrite)) {
-            saveXML(m_autosaveFile->fileName());
+            saveXML(m_autosaveFile->fileName(), false /* without relative paths */);
         } else {
             LOG_ERROR() << "failed to open autosave file for writing" << m_autosaveFile->fileName();
         }
@@ -2130,18 +2130,18 @@ void MainWindow::on_actionForum_triggered()
     QDesktopServices::openUrl(QUrl("https://www.shotcut.org/discussionforum/"));
 }
 
-void MainWindow::saveXML(const QString &filename)
+void MainWindow::saveXML(const QString &filename, bool withRelativePaths)
 {
     if (multitrack()) {
-        MLT.saveXML(filename, multitrack());
+        MLT.saveXML(filename, multitrack(), withRelativePaths);
     } else if (playlist()) {
         int in = MLT.producer()->get_in();
         int out = MLT.producer()->get_out();
         MLT.producer()->set_in_and_out(0, MLT.producer()->get_length() - 1);
-        MLT.saveXML(filename, playlist());
+        MLT.saveXML(filename, playlist(), withRelativePaths);
         MLT.producer()->set_in_and_out(in, out);
     } else {
-        MLT.saveXML(filename);
+        MLT.saveXML(filename, 0, withRelativePaths);
     }
 }
 
