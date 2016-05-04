@@ -478,6 +478,7 @@ void MultitrackModel::notifyClipIn(int trackIndex, int clipIndex)
         QVector<int> roles;
         roles << AudioLevelsRole;
         emit dataChanged(index, index, roles);
+        MLT.refreshConsumer();
     }
     m_isMakingTransition = false;
 }
@@ -628,6 +629,7 @@ void MultitrackModel::notifyClipOut(int trackIndex, int clipIndex)
         QVector<int> roles;
         roles << AudioLevelsRole;
         emit dataChanged(index, index, roles);
+        MLT.refreshConsumer();
     }
     m_isMakingTransition = false;
 }
@@ -747,8 +749,10 @@ bool MultitrackModel::moveClip(int fromTrack, int toTrack, int clipIndex, int po
             }
         }
     }
-    if (result)
+    if (result) {
         emit modified();
+        MLT.refreshConsumer();
+    }
     return result;
 }
 
