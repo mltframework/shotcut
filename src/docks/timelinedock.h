@@ -142,6 +142,7 @@ private:
     MultitrackModel m_model;
     int m_position;
     Timeline::UpdateCommand* m_updateCommand;
+    bool m_ignoreNextPositionChange;
 
 private slots:
     void onVisibilityChanged(bool visible);

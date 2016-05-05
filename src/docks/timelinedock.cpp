@@ -38,7 +38,8 @@ TimelineDock::TimelineDock(QWidget *parent) :
     ui(new Ui::TimelineDock),
     m_quickView(QmlUtilities::sharedEngine(), this),
     m_position(-1),
-    m_updateCommand(0)
+    m_updateCommand(0),
+    m_ignoreNextPositionChange(false)
 {
     LOG_DEBUG() << "begin";
     ui->setupUi(this);
@@ -411,7 +412,9 @@ void TimelineDock::addVideoTrack()
 
 void TimelineDock::onShowFrame(const SharedFrame& frame)
 {
-    if (MLT.isMultitrack()) {
+    if (m_ignoreNextPositionChange) {
+        m_ignoreNextPositionChange = false;
+    } else if (MLT.isMultitrack()) {
         m_position = frame.get_position();
         emit positionChanged();
     }
@@ -569,6 +572,7 @@ void TimelineDock::emitSelectedFromSelection()
         if (MLT.isImageProducer(info->producer))
             info->producer->set("out", info->cut->get_int("out"));
         info->producer->set(kMultitrackItemProperty, 1);
+        m_ignoreNextPositionChange = true;
         emit selected(info->producer);
         delete info;
     }
