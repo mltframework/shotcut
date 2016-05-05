@@ -284,7 +284,8 @@ Rectangle {
                 parent.dropped(clipRoot)
             }
         }
-        onDoubleClicked: timeline.openClip(trackIndex, index)
+        onDoubleClicked: timeline.position = clipRoot.x / multitrack.scaleFactor
+
         MouseArea {
             anchors.fill: parent
             acceptedButtons: Qt.RightButton
@@ -573,7 +574,7 @@ Rectangle {
         }
         MenuItem {
             visible: !isBlank && !isTransition
-            text: qsTr('Open As Clip')
+            text: qsTr('Copy to Source')
             onTriggered: timeline.openClip(trackIndex, index)
         }
         MenuItem {
