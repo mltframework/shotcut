@@ -102,6 +102,7 @@ private:
     void changeInterpolation(bool checked, const char* method);
     bool checkAutoSave(QString &url);
     void stepLeftBySeconds(int sec);
+    bool saveRepairedXmlFile(MltXmlChecker& checker, QString& fileName);
 
     Ui::MainWindow* ui;
     Player* m_player;

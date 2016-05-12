@@ -110,7 +110,8 @@ SOURCES += main.cpp\
     widgets/trackpropertieswidget.cpp \
     widgets/timelinepropertieswidget.cpp \
     jobs/ffprobejob.cpp \
-    jobs/ffmpegjob.cpp
+    jobs/ffmpegjob.cpp \
+    dialogs/unlinkedfilesdialog.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -216,7 +217,8 @@ HEADERS  += mainwindow.h \
     widgets/trackpropertieswidget.h \
     widgets/timelinepropertieswidget.h \
     jobs/ffprobejob.h \
-    jobs/ffmpegjob.h
+    jobs/ffmpegjob.h \
+    dialogs/unlinkedfilesdialog.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
@@ -256,7 +258,8 @@ FORMS    += mainwindow.ui \
     widgets/avfoundationproducerwidget.ui \
     widgets/gdigrabwidget.ui \
     widgets/trackpropertieswidget.ui \
-    widgets/timelinepropertieswidget.ui
+    widgets/timelinepropertieswidget.ui \
+    dialogs/unlinkedfilesdialog.ui
 
 RESOURCES += \
     ../icons/resources.qrc \

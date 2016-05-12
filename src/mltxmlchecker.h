@@ -23,12 +23,25 @@
 #include <QXmlStreamWriter>
 #include <QTemporaryFile>
 #include <QString>
+#include <QFileInfo>
+#include <QStandardItemModel>
 
 class QUIDevice;
 
 class MltXmlChecker
 {
 public:
+
+    enum {
+        ShotcutHashRole = Qt::UserRole + 1
+    };
+
+    enum {
+        MissingColumn = 0,
+        ReplacementColumn,
+        ColumnCount
+    };
+
     MltXmlChecker();
     bool check(const QString& fileName);
     QString errorString() const;
@@ -36,6 +49,7 @@ public:
     bool hasEffects() const { return m_hasEffects; }
     bool isCorrected() const { return m_isCorrected; }
     QString tempFileName() const { return m_tempFile.fileName(); }
+    QStandardItemModel& unlinkedFilesModel() { return m_unlinkedFilesModel; }
 
 private:
     void readMlt();
@@ -44,6 +58,14 @@ private:
     bool checkNumericString(QString& value);
     bool checkNumericProperty();
     bool fixWebVfxPath();
+    bool readResourceProperty();
+    bool readShotcutHashProperty();
+    bool fixUnlinkedFile();
+    bool fixShotcutHashProperty();
+    bool fixShotcutDetailProperty();
+    bool fixShotcutCaptionProperty();
+    bool fixAudioIndexProperty();
+    bool fixVideoIndexProperty();
 
     QXmlStreamReader m_xml;
     QXmlStreamWriter m_newXml;
@@ -55,7 +77,24 @@ private:
     bool m_hasComma;
     bool m_hasPeriod;
     bool m_numericValueChanged;
-    QString m_service;
+    QString m_basePath;
+    QStandardItemModel m_unlinkedFilesModel;
+
+    struct {
+        QString name;
+        QFileInfo resource;
+        QString hash;
+        QString newHash;
+        QString newDetail;
+
+        void clear() {
+            name.clear();
+            resource.setFile(QString());
+            hash.clear();
+            newHash.clear();
+            newDetail.clear();
+        }
+    } m_service;
 };
 
 #endif // MLTXMLCHECKER_H

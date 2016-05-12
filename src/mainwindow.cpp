@@ -72,6 +72,7 @@
 #include "models/audiolevelstask.h"
 #include "widgets/trackpropertieswidget.h"
 #include "widgets/timelinepropertieswidget.h"
+#include "dialogs/unlinkedfilesdialog.h"
 
 #include <QtWidgets>
 #include <Logger.h>
@@ -825,8 +826,41 @@ bool MainWindow::isCompatibleWithGpuMode(MltXmlChecker& checker)
     return true;
 }
 
+bool MainWindow::saveRepairedXmlFile(MltXmlChecker& checker, QString& fileName)
+{
+    QFileInfo fi(fileName);
+    QFile repaired(QString("%1/%2 - %3.%4").arg(fi.path())
+        .arg(fi.completeBaseName()).arg(tr("Repaired")).arg(fi.suffix()));
+    repaired.open(QIODevice::WriteOnly);
+    LOG_INFO() << "repaired MLT XML file name" << repaired.fileName();
+    QFile temp(checker.tempFileName());
+    if (temp.exists() && repaired.exists()) {
+        temp.open(QIODevice::ReadOnly);
+        QByteArray xml = temp.readAll();
+        temp.close();
+
+        qint64 n = repaired.write(xml);
+        while (n > 0 && n < xml.size()) {
+            qint64 x = repaired.write(xml.right(xml.size() - n));
+            if (x > 0)
+                n += x;
+            else
+                n = x;
+        }
+        repaired.close();
+        if (n == xml.size()) {
+            fileName = repaired.fileName();
+            return true;
+        }
+    }
+    QMessageBox::warning(this, qApp->applicationName(), tr("Repairing the project failed."));
+    LOG_WARNING() << "repairing failed";
+    return false;
+}
+
 bool MainWindow::isXmlRepaired(MltXmlChecker& checker, QString& fileName)
 {
+    bool result = true;
     if (checker.isCorrected()) {
         LOG_WARNING() << fileName;
         QMessageBox dialog(QMessageBox::Question,
@@ -842,37 +876,21 @@ bool MainWindow::isXmlRepaired(MltXmlChecker& checker, QString& fileName)
         dialog.setDefaultButton(QMessageBox::Yes);
         dialog.setEscapeButton(QMessageBox::No);
         int r = dialog.exec();
-        if (r == QMessageBox::Yes) {
-            QFileInfo fi(fileName);
-            QFile repaired(QString("%1/%2 - %3.%4").arg(fi.path())
-                .arg(fi.completeBaseName()).arg(tr("Repaired")).arg(fi.suffix()));
-            repaired.open(QIODevice::WriteOnly);
-            LOG_INFO() << "repaired MLT XML file name" << repaired.fileName();
-            QFile temp(checker.tempFileName());
-            if (temp.exists() && repaired.exists()) {
-                temp.open(QIODevice::ReadOnly);
-                QByteArray xml = temp.readAll();
-                temp.close();
-
-                qint64 n = repaired.write(xml);
-                while (n > 0 && n < xml.size()) {
-                    qint64 x = repaired.write(xml.right(xml.size() - n));
-                    if (x > 0)
-                        n += x;
-                    else
-                        n = x;
-                }
-                repaired.close();
-                if (n == xml.size()) {
-                    fileName = repaired.fileName();
-                    return true;
-                }
-            }
-            QMessageBox::warning(this, qApp->applicationName(), tr("Repairing the project failed."));
-            LOG_WARNING() << "repairing failed";
+        if (r == QMessageBox::Yes)
+            result = saveRepairedXmlFile(checker, fileName);
+    }
+    else if (checker.unlinkedFilesModel().rowCount() > 0) {
+        UnlinkedFilesDialog dialog(this);
+        dialog.setModel(checker.unlinkedFilesModel());
+        dialog.setWindowModality(QmlApplication::dialogModality());
+        if (dialog.exec() == QDialog::Accepted) {
+            if (checker.check(fileName) && checker.isCorrected())
+                result = saveRepairedXmlFile(checker, fileName);
+        } else {
+            result = false;
         }
     }
-    return false;
+    return result;
 }
 
 bool MainWindow::checkAutoSave(QString &url)
@@ -1043,7 +1061,8 @@ void MainWindow::open(QString url, const Mlt::Properties* properties)
         if (multitrack())
             m_timelineDock->model()->close();
         if (!isXmlRepaired(checker, url))
-            modified = checkAutoSave(url);
+            return;
+        modified = checkAutoSave(url);
         // let the new project change the profile
         if (modified || QFile::exists(url)) {
             MLT.profile().set_explicit(false);
@@ -1834,8 +1853,7 @@ void MainWindow::onProducerOpened()
     }
     if (MLT.isClip()) {
         m_player->switchToTab(Player::SourceTabIndex);
-        if (!MLT.producer()->get(kShotcutHashProperty))
-            getHash(*MLT.producer());
+        getHash(*MLT.producer());
     }
     if (m_autosaveFile)
         setCurrentFile(m_autosaveFile->managedFileName());

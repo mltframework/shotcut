@@ -18,6 +18,8 @@
 
 #include "mltxmlchecker.h"
 #include "mltcontroller.h"
+#include "shotcut_mlt_properties.h"
+#include "util.h"
 #include <QLocale>
 #include <QDir>
 #include <QCoreApplication>
@@ -42,6 +44,7 @@ MltXmlChecker::MltXmlChecker()
     , m_numericValueChanged(false)
 {
     LOG_DEBUG() << "decimal point" << m_decimalPoint;
+    m_unlinkedFilesModel.setColumnCount(ColumnCount);
 }
 
 bool MltXmlChecker::check(const QString& fileName)
@@ -51,6 +54,8 @@ bool MltXmlChecker::check(const QString& fileName)
     QFile file(fileName);
     if (file.open(QIODevice::ReadOnly | QIODevice::Text) &&
             m_tempFile.open()) {
+        m_tempFile.resize(0);
+        m_basePath = QFileInfo(fileName).canonicalPath();
         m_xml.setDevice(&file);
         m_newXml.setDevice(&m_tempFile);
         if (m_xml.readNextStartElement()) {
@@ -115,23 +120,47 @@ void MltXmlChecker::readMlt()
         case QXmlStreamReader::EndDocument:
             m_newXml.writeEndDocument();
             break;
-        case QXmlStreamReader::StartElement:
-            m_newXml.writeStartElement(m_xml.namespaceUri().toString(), m_xml.name().toString());
+        case QXmlStreamReader::StartElement: {
+            const QString element = m_xml.name().toString();
+            m_newXml.writeStartElement(m_xml.namespaceUri().toString(), element);
             if (isMltClass(m_xml.name())) {
-                mlt_class = m_xml.name().toString();
-            } else if (m_xml.name() == "property") {
-                if (readMltService())
-                    continue;
-                if (checkNumericProperty())
-                    continue;
-                if ((mlt_class == "filter" || mlt_class == "transition" || mlt_class == "producer")
-                        && m_service == "webvfx" && fixWebVfxPath())
-                    continue;
+                mlt_class = element;
+            } else if (element == "property") {
+                if (readMltService()) continue;
+                if (checkNumericProperty()) continue;
+                if ((mlt_class == "filter" || mlt_class == "transition" || mlt_class == "producer")) {
+                    // Store a file reference for later checking.
+
+                    //XXX This depends on mlt_service property appearing before resource.
+                    if (m_service.name == "webvfx" && fixWebVfxPath()) continue;
+
+                    if (readResourceProperty()) continue;
+                    if (fixShotcutHashProperty()) continue;
+                    if (readShotcutHashProperty()) continue;
+                    if (fixShotcutDetailProperty()) continue;
+                    if (fixShotcutCaptionProperty()) continue;
+                    if (fixAudioIndexProperty()) continue;
+                    if (fixVideoIndexProperty()) continue;
+                }
             }
-            checkInAndOutPoints();
+            checkInAndOutPoints(); // This also copies the attributes.
             break;
+        }
         case QXmlStreamReader::EndElement:
             if (isMltClass(m_xml.name())) {
+
+                if (!m_service.name.isEmpty() && !m_service.resource.filePath().isEmpty() && !m_service.resource.exists())
+                if (!(m_service.name == "color" || m_service.name == "colour"))
+                if (m_unlinkedFilesModel.findItems(m_service.resource.filePath(),
+                        Qt::MatchFixedString | Qt::MatchCaseSensitive).isEmpty()) {
+                    LOG_ERROR() << "file not found: " << m_service.resource.filePath();
+                    QIcon icon(":/icons/oxygen/32x32/status/task-reject.png");
+                    QStandardItem* item = new QStandardItem(icon, m_service.resource.filePath());
+                    item->setToolTip(item->text());
+                    item->setData(m_service.hash, ShotcutHashRole);
+                    m_unlinkedFilesModel.appendRow(item);
+                }
+
                 mlt_class.clear();
                 m_service.clear();
             }
@@ -150,12 +179,12 @@ bool MltXmlChecker::readMltService()
     if (m_xml.attributes().value("name") == "mlt_service") {
         m_newXml.writeAttributes(m_xml.attributes());
 
-        m_service = m_xml.readElementText();
-        if (!MLT.isAudioFilter(m_service))
+        m_service.name = m_xml.readElementText();
+        if (!MLT.isAudioFilter(m_service.name))
             m_hasEffects = true;
-        if (m_service.startsWith("movit.") || m_service.startsWith("glsl."))
+        if (m_service.name.startsWith("movit.") || m_service.name.startsWith("glsl."))
             m_needsGPU = true;
-        m_newXml.writeCharacters(m_service);
+        m_newXml.writeCharacters(m_service.name);
 
         m_newXml.writeEndElement();
         return true;
@@ -243,6 +272,122 @@ bool MltXmlChecker::fixWebVfxPath()
         m_newXml.writeCharacters(resource);
 
         m_newXml.writeEndElement();
+        return true;
+    }
+    return false;
+}
+
+bool MltXmlChecker::readResourceProperty()
+{
+    const QStringRef name = m_xml.attributes().value("name");
+    if (name == "resource" || name == "src" || name == "filename"
+            || name == "luma" || name == "luma.resource" || name == "composite.luma"
+            || name == "producer.resource") {
+
+        m_newXml.writeAttributes(m_xml.attributes());
+        QString text = m_xml.readElementText();
+
+        // Save the resource name for later check for unlinked files.
+        m_service.resource.setFile(text);
+        if (m_service.resource.isRelative())
+            m_service.resource.setFile(m_basePath, m_service.resource.filePath());
+
+        // Replace unlinked files if model is populated with replacements.
+        if (!fixUnlinkedFile())
+            m_newXml.writeCharacters(text);
+
+        m_newXml.writeEndElement();
+        return true;
+    }
+    return false;
+}
+
+bool MltXmlChecker::readShotcutHashProperty()
+{
+    if (m_xml.attributes().value("name") == kShotcutHashProperty) {
+        m_newXml.writeAttributes(m_xml.attributes());
+        m_service.hash = m_xml.readElementText();
+        m_newXml.writeCharacters(m_service.hash);
+        m_newXml.writeEndElement();
+        return true;
+    }
+    return false;
+}
+
+bool MltXmlChecker::fixUnlinkedFile()
+{
+    for (int row = 0; row < m_unlinkedFilesModel.rowCount(); ++row) {
+        const QStandardItem* replacement = m_unlinkedFilesModel.item(row, ReplacementColumn);
+        if (replacement && !replacement->text().isEmpty() &&
+                m_unlinkedFilesModel.item(row, MissingColumn)->text() == m_service.resource.filePath()) {
+            m_service.resource.setFile(replacement->text());
+            m_service.newDetail = replacement->text();
+            m_service.newHash = replacement->data(ShotcutHashRole).toString();
+            m_newXml.writeCharacters(replacement->text());
+            m_isCorrected = true;
+            return true;
+        }
+    }
+    return false;
+}
+
+bool MltXmlChecker::fixShotcutHashProperty()
+{
+    if (m_xml.attributes().value("name") == kShotcutHashProperty && !m_service.newHash.isEmpty()) {
+        m_newXml.writeAttributes(m_xml.attributes());
+        m_service.hash = m_xml.readElementText();
+        m_newXml.writeCharacters(m_service.newHash);
+        m_newXml.writeEndElement();
+        return true;
+    }
+    return false;
+}
+
+bool MltXmlChecker::fixShotcutDetailProperty()
+{
+    if (m_xml.attributes().value("name") == kShotcutCaptionProperty && !m_service.newDetail.isEmpty()) {
+        m_newXml.writeAttributes(m_xml.attributes());
+        m_newXml.writeCharacters(Util::baseName(m_service.newDetail));
+        m_newXml.writeEndElement();
+        m_xml.readElementText();
+        return true;
+    }
+    return false;
+}
+
+bool MltXmlChecker::fixShotcutCaptionProperty()
+{
+    if (m_xml.attributes().value("name") == kShotcutDetailProperty && !m_service.newDetail.isEmpty()) {
+        m_newXml.writeAttributes(m_xml.attributes());
+        m_newXml.writeCharacters(m_service.newDetail);
+        m_newXml.writeEndElement();
+        m_xml.readElementText();
+        return true;
+    }
+    return false;
+}
+
+bool MltXmlChecker::fixAudioIndexProperty()
+{
+    if (m_xml.attributes().value("name") == "audio_index"
+            && !m_service.hash.isEmpty() && !m_service.newHash.isEmpty()
+            && m_service.hash != m_service.newHash) {
+        m_newXml.writeAttributes(m_xml.attributes());
+        m_newXml.writeEndElement();
+        m_xml.readElementText();
+        return true;
+    }
+    return false;
+}
+
+bool MltXmlChecker::fixVideoIndexProperty()
+{
+    if (m_xml.attributes().value("name") == "video_index"
+            && !m_service.hash.isEmpty() && !m_service.newHash.isEmpty()
+            && m_service.hash != m_service.newHash) {
+        m_newXml.writeAttributes(m_xml.attributes());
+        m_newXml.writeEndElement();
+        m_xml.readElementText();
         return true;
     }
     return false;

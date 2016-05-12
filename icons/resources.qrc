@@ -199,5 +199,8 @@
         <file>light/16x16/dialog-ok.png</file>
         <file>oxygen/32x32/actions/dialog-ok.png</file>
         <file>light/16x16/track-locked.png</file>
+        <file>oxygen/32x32/status/task-attempt.png</file>
+        <file>oxygen/32x32/status/task-complete.png</file>
+        <file>oxygen/32x32/status/task-reject.png</file>
     </qresource>
 </RCC>
