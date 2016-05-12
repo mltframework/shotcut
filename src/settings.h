@@ -130,6 +130,9 @@ public:
     double videoOutDuration() const;
     void setVideoOutDuration(double);
 
+    bool loudnessScopeShowMeter(const QString& meter) const;
+    void setLoudnessScopeShowMeter(const QString& meter, bool b);
+
     int drawMethod() const;
     void setDrawMethod(int);
 

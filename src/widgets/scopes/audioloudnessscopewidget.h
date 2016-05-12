@@ -27,6 +27,7 @@
 
 class QQuickWidget;
 class QLabel;
+class QTimer;
 
 class AudioLoudnessScopeWidget Q_DECL_FINAL : public ScopeWidget
 {
@@ -44,6 +45,13 @@ protected:
 private slots:
     void resetQview();
     void onResetButtonClicked();
+    void onIntegratedToggled(bool checked);
+    void onShorttermToggled(bool checked);
+    void onMomentaryToggled(bool checked);
+    void onRangeToggled(bool checked);
+    void onPeakToggled(bool checked);
+    void onTruePeakToggled(bool checked);
+    void updateMeters(void);
 
 private:
     // Functions run in scope thread.
@@ -51,12 +59,15 @@ private:
 
     // Members accessed by scope thread.
     Mlt::Filter* m_loudnessFilter;
-    unsigned int m_msElapsed;
+    double m_peak;
+    double m_true_peak;
+    bool m_newData;
 
     // Members accessed by GUI thread.
     Qt::Orientation m_orientation;
     QQuickWidget* m_qview;
     QLabel* m_timeLabel;
+    QTimer* m_timer;
 };
 
 #endif // AUDIOLOUDNESSSCOPEWIDGET_H

@@ -428,6 +428,16 @@ void ShotcutSettings::setVideoOutDuration(double d)
     emit videoOutDurationChanged();
 }
 
+bool ShotcutSettings::loudnessScopeShowMeter(const QString& meter) const
+{
+    return settings.value("scope/loudness/" + meter, true).toBool();
+}
+
+void ShotcutSettings::setLoudnessScopeShowMeter(const QString& meter, bool b)
+{
+    settings.setValue("scope/loudness/" + meter, b);
+}
+
 int ShotcutSettings::drawMethod() const
 {
     return settings.value("opengl", 0).toInt();

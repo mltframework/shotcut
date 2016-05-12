@@ -27,18 +27,21 @@ import Shotcut.Controls 1.0
 Rectangle {
     id: root
     
-    property double _integrated: -100
-    property double _shortterm: -100
-    property double _momentary: -100
-    property double _range: -1
+    property bool enableIntegrated: false
+    property bool enableShortterm: false
+    property bool enableMomentary: false
+    property bool enableRange: false
+    property bool enablePeak: false
+    property bool enableTruePeak: false
+    property double integrated: -100
+    property double shortterm: -100
+    property double momentary: -100
+    property double range: -1
+    property double peak: -100
+    property double maxPeak: -100
+    property double truePeak: -100
+    property double maxTruePeak: -100
     
-    function setValues(program, shortterm, momentary, range) {
-        _integrated = Math.round(program * 10) / 10
-        _shortterm = Math.round(shortterm * 10) / 10
-        _momentary = Math.round(momentary * 10) / 10
-        _range = Math.round(range * 10) / 10
-    }
-
     color: activePalette.window
     
     onWidthChanged: _setLayout()
@@ -110,124 +113,208 @@ Rectangle {
         Label {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
             id: momentaryTitle
-            text: "M"
+            text: 'M'
             color: activePalette.text
             ToolTip {text: qsTr('Momentary Loudness.')}
+            visible: enableMomentary
         }
         Label {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
             Layout.minimumWidth: textMetrics.width + 5
             Layout.preferredWidth: Layout.minimumWidth
             id: momentaryLabel
-            text: _momentary < -99 ? '--' : _momentary.toFixed(1)
+            text: momentary < -99 ? '--' : momentary.toFixed(1)
             color: activePalette.text
             horizontalAlignment: Qt.AlignHCenter
+            visible: enableMomentary
         }
         Label {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
             id: momentaryUnits
             text: 'LUFS'
             color: activePalette.text
+            visible: enableMomentary
         }
         Gauge {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             id: momentaryGauge
             minimumValue: -50
-            value: _momentary
+            value: momentary
             maximumValue: 0
             style: gaugeStyle
+            visible: enableMomentary
         }
 
         Label {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
-            text: "S"
+            text: 'S'
             color: activePalette.text
             ToolTip {text: qsTr('Short-term Loudness.')}
+            visible: enableShortterm
         }
         Label {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
             Layout.minimumWidth: textMetrics.width + 5
             Layout.preferredWidth: Layout.minimumWidth
             id: shorttermLabel
-            text: _shortterm < -99 ? '--' : _shortterm.toFixed(1)
+            text: shortterm < -99 ? '--' : shortterm.toFixed(1)
             color: activePalette.text
             horizontalAlignment: Qt.AlignHCenter
+            visible: enableShortterm
         }
         Label {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
             id: shorttermUnits
             text: 'LUFS'
             color: activePalette.text
+            visible: enableShortterm
         }
         Gauge {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             id: shorttermGauge
             minimumValue: -50
-            value: _shortterm
+            value: shortterm
             maximumValue: 0
             style: gaugeStyle
+            visible: enableShortterm
         }
 
         Label {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
-            text: "I"
+            text: 'I'
             color: activePalette.text
             ToolTip {text: qsTr('Integrated Loudness.')}
+            visible: enableIntegrated
         }
         Label {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
             Layout.minimumWidth: textMetrics.width + 5
             Layout.preferredWidth: Layout.minimumWidth
             id: integratedLabel
-            text: _integrated < -99 ? '--' : _integrated.toFixed(1)
+            text: integrated < -99 ? '--' : integrated.toFixed(1)
             color: activePalette.text
             horizontalAlignment: Qt.AlignHCenter
+            visible: enableIntegrated
         }
         Label {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
             id: integratedUnits
             text: 'LUFS'
             color: activePalette.text
+            visible: enableIntegrated
         }
         Gauge {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             id: integratedGauge
             minimumValue: -50
-            value: _integrated
+            value: integrated
             maximumValue: 0
             style: gaugeStyle
+            visible: enableIntegrated
         }
         
         Label {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
-            text: "LRA"
+            text: 'LRA'
             color: activePalette.text
             ToolTip {text: qsTr('Loudness Range.')}
+            visible: enableRange
         }
         Label {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
             Layout.minimumWidth: textMetrics.width + 5
             Layout.preferredWidth: Layout.minimumWidth
             id: rangeLabel
-            text: _range < 0 ? '--' : _range.toFixed(1)
+            text: range < 0 ? '--' : range.toFixed(1)
             color: activePalette.text
             horizontalAlignment: Qt.AlignHCenter
+            visible: enableRange
         }
         Label {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
             id: rangeUnits
             text: 'LU'
             color: activePalette.text
+            visible: enableRange
         }
         Gauge {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             id: rangeGauge
             minimumValue: 0
-            value: _range
+            value: range
             maximumValue: 30
             style: gaugeStyle
+            visible: enableRange
         }
         
+        Label {
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+            text: 'P'
+            color: activePalette.text
+            ToolTip {text: qsTr('Peak.')}
+            visible: enablePeak
+        }
+        Label {
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+            Layout.minimumWidth: textMetrics.width + 5
+            Layout.preferredWidth: Layout.minimumWidth
+            id: peakLabel
+            text: peak < -99 ? '--' : peak.toFixed(1)
+            color: activePalette.text
+            horizontalAlignment: Qt.AlignHCenter
+            visible: enablePeak
+        }
+        Label {
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+            id: peakUnits
+            text: 'dBFS'
+            color: activePalette.text
+            visible: enablePeak
+        }
+        Gauge {
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            id: peakGauge
+            minimumValue: -50
+            value: peak
+            maximumValue: 3
+            style: gaugeStyle
+            visible: enablePeak
+        }
+
+        Label {
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+            text: 'TP'
+            color: activePalette.text
+            ToolTip {text: qsTr('True Peak.')}
+            visible: enableTruePeak
+        }
+        Label {
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+            Layout.minimumWidth: textMetrics.width + 5
+            Layout.preferredWidth: Layout.minimumWidth
+            id: truePeakLabel
+            text: truePeak < -99 ? '--' : truePeak.toFixed(1)
+            color: activePalette.text
+            horizontalAlignment: Qt.AlignHCenter
+            visible: enableTruePeak
+        }
+        Label {
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+            id: truePeakUnits
+            text: 'dBTP'
+            color: activePalette.text
+            visible: enableTruePeak
+        }
+        Gauge {
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            id: truePeakGauge
+            minimumValue: -50
+            value: truePeak
+            maximumValue: 3
+            style: gaugeStyle
+            visible: enableTruePeak
+        }
+
         Item {
             id: filler
         }
@@ -237,25 +324,23 @@ Rectangle {
         State {
             name: "landscape"
             PropertyChanges { target: grid; flow: GridLayout.LeftToRight; columns: 4 }
-            PropertyChanges { target: momentaryTitle; Layout.leftMargin: 0 }
-            PropertyChanges { target: momentaryLabel; Layout.leftMargin: 0 }
-            PropertyChanges { target: momentaryUnits; Layout.leftMargin: 0 }
             PropertyChanges { target: momentaryGauge; orientation: Qt.Horizontal; Layout.fillWidth: true; Layout.fillHeight: false; Layout.leftMargin: 4; Layout.rightMargin: 4 }
             PropertyChanges { target: shorttermGauge; orientation: Qt.Horizontal; Layout.fillWidth: true; Layout.fillHeight: false; Layout.leftMargin: 4; Layout.rightMargin: 4 }
             PropertyChanges { target: integratedGauge; orientation: Qt.Horizontal; Layout.fillWidth: true; Layout.fillHeight: false; Layout.leftMargin: 4; Layout.rightMargin: 4 }
             PropertyChanges { target: rangeGauge; orientation: Qt.Horizontal; Layout.fillWidth: true; Layout.fillHeight: false; Layout.leftMargin: 0; Layout.rightMargin: 0 }
+            PropertyChanges { target: peakGauge; orientation: Qt.Horizontal; Layout.fillWidth: true; Layout.fillHeight: false; Layout.leftMargin: 4; Layout.rightMargin: 4 }
+            PropertyChanges { target: truePeakGauge; orientation: Qt.Horizontal; Layout.fillWidth: true; Layout.fillHeight: false; Layout.leftMargin: 4; Layout.rightMargin: 4 }
             PropertyChanges { target: filler; Layout.fillHeight: true; Layout.fillWidth: false; Layout.maximumWidth: 0; Layout.maximumHeight: -1 }
         },
         State {
             name: "portrait"
             PropertyChanges { target: grid; flow: GridLayout.TopToBottom; rows: 4 }
-            PropertyChanges { target: momentaryTitle; Layout.leftMargin: 10 }
-            PropertyChanges { target: momentaryLabel; Layout.leftMargin: 10 }
-            PropertyChanges { target: momentaryUnits; Layout.leftMargin: 10 }
-            PropertyChanges { target: momentaryGauge; orientation: Qt.Vertical; Layout.fillWidth: false; Layout.fillHeight: true; Layout.leftMargin: 10; Layout.rightMargin: 14 }
-            PropertyChanges { target: shorttermGauge; orientation: Qt.Vertical; Layout.fillWidth: false; Layout.fillHeight: true; Layout.leftMargin: 0; Layout.rightMargin: 14 }
-            PropertyChanges { target: integratedGauge; orientation: Qt.Vertical; Layout.fillWidth: false; Layout.fillHeight: true; Layout.leftMargin: 0; Layout.rightMargin: 14 }
-            PropertyChanges { target: rangeGauge; orientation: Qt.Vertical; Layout.fillWidth: false; Layout.fillHeight: true; Layout.leftMargin: -10; Layout.rightMargin: 14 }
+            PropertyChanges { target: momentaryGauge; orientation: Qt.Vertical; Layout.fillWidth: false; Layout.fillHeight: true; Layout.leftMargin: 10; Layout.rightMargin: 1 }
+            PropertyChanges { target: shorttermGauge; orientation: Qt.Vertical; Layout.fillWidth: false; Layout.fillHeight: true; Layout.leftMargin: 10; Layout.rightMargin: 1 }
+            PropertyChanges { target: integratedGauge; orientation: Qt.Vertical; Layout.fillWidth: false; Layout.fillHeight: true; Layout.leftMargin: 10; Layout.rightMargin: 1 }
+            PropertyChanges { target: rangeGauge; orientation: Qt.Vertical; Layout.fillWidth: false; Layout.fillHeight: true; Layout.leftMargin: 0; Layout.rightMargin: 1 }
+            PropertyChanges { target: peakGauge; orientation: Qt.Vertical; Layout.fillWidth: false; Layout.fillHeight: true; Layout.leftMargin: 10; Layout.rightMargin: 1 }
+            PropertyChanges { target: truePeakGauge; orientation: Qt.Vertical; Layout.fillWidth: false; Layout.fillHeight: true; Layout.leftMargin: 10; Layout.rightMargin: 1 }
             PropertyChanges { target: filler; Layout.fillHeight: false; Layout.fillWidth: true; Layout.maximumWidth: -1; Layout.maximumHeight: 0 }
         }
     ]
