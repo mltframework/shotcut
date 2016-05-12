@@ -67,6 +67,8 @@ public:
     void makeTracksTaller();
     void setSelection(QList<int> selection);
     QList<int> selection() const;
+    void saveAndClearSelection();
+    void restoreSelection();
     void selectClipUnderPlayhead();
     int centerOfClip(int trackIndex, int clipIndex);
     bool isTrackLocked(int trackIndex) const;
@@ -143,6 +145,7 @@ private:
     int m_position;
     Timeline::UpdateCommand* m_updateCommand;
     bool m_ignoreNextPositionChange;
+    QList<int> m_savedSelection;
 
 private slots:
     void onVisibilityChanged(bool visible);

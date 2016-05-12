@@ -264,6 +264,17 @@ QList<int> TimelineDock::selection() const
     return ret;
 }
 
+void TimelineDock::saveAndClearSelection()
+{
+    m_savedSelection = selection();
+    m_quickView.rootObject()->setProperty("selection", QVariantList());
+}
+
+void TimelineDock::restoreSelection()
+{
+    setSelection(m_savedSelection);
+}
+
 void TimelineDock::selectClipUnderPlayhead()
 {
     int track = -1, clip = -1;

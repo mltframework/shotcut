@@ -58,6 +58,7 @@ Player::Player(QWidget *parent)
     m_tabs->setShape(QTabBar::RoundedSouth);
     m_tabs->addTab(tr("Source"));
     m_tabs->addTab(tr("Project"));
+    m_tabs->setTabEnabled(SourceTabIndex, false);
     m_tabs->setTabEnabled(ProjectTabIndex, false);
     QHBoxLayout* tabLayout = new QHBoxLayout;
     tabLayout->setSpacing(8);
@@ -693,6 +694,7 @@ void Player::showPlaying()
 void Player::switchToTab(TabIndex index)
 {
     m_tabs->setCurrentIndex(index);
+    emit tabIndexChanged(index);
 }
 
 void Player::enableTab(TabIndex index, bool enabled)

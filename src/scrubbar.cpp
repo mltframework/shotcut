@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2015 Meltytech, LLC
+ * Copyright (c) 2011-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -250,6 +250,7 @@ void ScrubBar::updatePixmap()
     QPainter p(&m_pixmap);
     p.setFont(font());
     const int markerHeight = fontMetrics().ascent() + 2 * ratio;
+    QPen pen;
 
     if (!isEnabled()) {
         p.fillRect(0, 0, l_width, l_height, palette().background().color());
@@ -266,10 +267,14 @@ void ScrubBar::updatePixmap()
         const int in = m_in * m_scale * ratio;
         const int out = m_out * m_scale * ratio;
         p.fillRect(l_margin + in, 0, out - in, l_selectionSize, palette().highlight().color());
+        pen.setColor(Qt::red);
+        pen.setWidth(1);
+        p.setPen(pen);
+        p.drawRect(l_margin + in + 1, 0, out - in - 3, l_selectionSize - 1);
     }
 
     // draw time ticks
-    QPen pen = QPen(palette().text().color());
+    pen.setColor(palette().text().color());
     pen.setWidth(ratio);
     p.setPen(pen);
     if (l_interval > 2) {

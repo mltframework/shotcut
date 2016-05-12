@@ -203,6 +203,7 @@ MainWindow::MainWindow()
     connect(m_player, SIGNAL(showStatusMessage(QString)), this, SLOT(showStatusMessage(QString)));
     connect(m_player, SIGNAL(inChanged(int)), this, SLOT(onCutModified()));
     connect(m_player, SIGNAL(outChanged(int)), this, SLOT(onCutModified()));
+    connect(m_player, SIGNAL(tabIndexChanged(int)), SLOT(onPlayerTabIndexChanged(int)));
     connect(MLT.videoWidget(), SIGNAL(started()), SLOT(processMultipleFiles()));
     connect(MLT.videoWidget(), SIGNAL(paused()), m_player, SLOT(showPaused()));
     connect(MLT.videoWidget(), SIGNAL(playing()), m_player, SLOT(showPlaying()));
@@ -1852,6 +1853,7 @@ void MainWindow::onProducerOpened()
         }
     }
     if (MLT.isClip()) {
+        m_player->enableTab(Player::SourceTabIndex);
         m_player->switchToTab(Player::SourceTabIndex);
         getHash(*MLT.producer());
     }
@@ -2872,4 +2874,12 @@ void MainWindow::on_actionClose_triggered()
         else
             onMultitrackClosed();
     }
+}
+
+void MainWindow::onPlayerTabIndexChanged(int index)
+{
+    if (Player::SourceTabIndex == index)
+        m_timelineDock->saveAndClearSelection();
+    else
+        m_timelineDock->restoreSelection();
 }

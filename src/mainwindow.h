@@ -241,6 +241,7 @@ private slots:
 #endif
     void on_actionApplicationLog_triggered();
     void on_actionClose_triggered();
+    void onPlayerTabIndexChanged(int index);
 };
 
 #define MAIN MainWindow::singleton()

@@ -81,6 +81,7 @@ signals:
     void zoomChanged(float zoom);
     void scrolledHorizontally(int x);
     void scrolledVertically(int y);
+    void tabIndexChanged(int index);
 
 public slots:
     void play(double speed = 1.0);

@@ -76,11 +76,9 @@ Rectangle {
     property alias ripple: toolbar.ripple
 
     onSelectionChanged: {
-        if (selection.length) {
-            cornerstone.selected = false
-            for (var i = 0; i < trackHeaderRepeater.count; i++)
-                trackHeaderRepeater.itemAt(i).selected = false
-        }
+        cornerstone.selected = false
+        for (var i = 0; i < trackHeaderRepeater.count; i++)
+            trackHeaderRepeater.itemAt(i).selected = false
     }
     onCurrentTrackChanged: selection = [];
 
