@@ -266,11 +266,10 @@ void ScrubBar::updatePixmap()
     if (m_in > -1 && m_out > m_in) {
         const int in = m_in * m_scale * ratio;
         const int out = m_out * m_scale * ratio;
-        p.fillRect(l_margin + in, 0, out - in, l_selectionSize, palette().highlight().color());
-        pen.setColor(Qt::red);
-        pen.setWidth(1);
-        p.setPen(pen);
-        p.drawRect(l_margin + in + 1, 0, out - in - 3, l_selectionSize - 1);
+        p.fillRect(l_margin + in, 0, out - in, l_selectionSize, Qt::red);
+        p.fillRect(l_margin + in + (2 + ratio), ratio, // 2 for the in point line
+                   out - in - 1 - 2 * (2 + ratio), l_selectionSize - ratio * 2,
+                   palette().highlight().color());
     }
 
     // draw time ticks
