@@ -84,7 +84,7 @@ public:
 
 public slots:
     //! Provides a new frame to the scope. Should be called by the application.
-    void onNewFrame(const SharedFrame& frame) Q_DECL_FINAL;
+    virtual void onNewFrame(const SharedFrame& frame) Q_DECL_FINAL;
 
 protected:
     /*!
@@ -92,7 +92,7 @@ protected:
       Typically requestRefresh would be called from the GUI thread
       (e.g. in resizeEvent()). onNewFrame() also calls requestRefresh().
     */
-    void requestRefresh() Q_DECL_FINAL;
+    virtual void requestRefresh() Q_DECL_FINAL;
 
     /*!
       Performs the main, CPU intensive, scope drawing in a new thread.
@@ -115,8 +115,8 @@ protected:
     void changeEvent(QEvent*) Q_DECL_OVERRIDE;
 
 private:
-    Q_INVOKABLE void onRefreshThreadComplete() Q_DECL_FINAL;
-    void refreshInThread() Q_DECL_FINAL;
+    Q_INVOKABLE virtual void onRefreshThreadComplete() Q_DECL_FINAL;
+    virtual void refreshInThread() Q_DECL_FINAL;
     QFuture<void> m_future;
     bool m_refreshPending;
 
