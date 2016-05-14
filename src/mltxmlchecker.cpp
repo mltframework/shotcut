@@ -23,15 +23,28 @@
 #include <QLocale>
 #include <QDir>
 #include <QCoreApplication>
+#include <QUrl>
+#include <QRegExp>
 #include <Logger.h>
 
-bool isMltClass(const QStringRef& name)
+static bool isMltClass(const QStringRef& name)
 {
     return name == "profile" || name == "producer" ||
            name == "filter" || name == "playlist" ||
            name == "tractor" || name == "track" ||
            name == "transition" || name == "consumer";
 }
+
+static bool isNetworkResource(const QString& string)
+{
+    // Check if it looks like a qualified URL. Try parsing it and see.
+    QRegExp schemaTest(QLatin1String("^[a-zA-Z]{2,}\\:.*"));
+    if (schemaTest.exactMatch(string) && QUrl(string).isValid())
+        // Not actually checking network URL due to latency and transience.
+        return true;
+    return false;
+}
+
 
 MltXmlChecker::MltXmlChecker()
     : m_needsGPU(false)
@@ -148,9 +161,13 @@ void MltXmlChecker::readMlt()
         }
         case QXmlStreamReader::EndElement:
             if (isMltClass(m_xml.name())) {
-
-                if (!m_service.name.isEmpty() && !m_service.resource.filePath().isEmpty() && !m_service.resource.exists())
-                if (!(m_service.name == "color" || m_service.name == "colour"))
+                // not the color producer
+                if (!m_service.name.isEmpty() && !(m_service.name == "color" || m_service.name == "colour"))
+                // not a URL
+                if (!m_service.resource.filePath().isEmpty() && !isNetworkResource(m_service.resource.filePath()))
+                // file does not exist
+                if (!m_service.resource.exists())
+                // not already in the model
                 if (m_unlinkedFilesModel.findItems(m_service.resource.filePath(),
                         Qt::MatchFixedString | Qt::MatchCaseSensitive).isEmpty()) {
                     LOG_ERROR() << "file not found: " << m_service.resource.filePath();
@@ -289,7 +306,7 @@ bool MltXmlChecker::readResourceProperty()
 
         // Save the resource name for later check for unlinked files.
         m_service.resource.setFile(text);
-        if (m_service.resource.isRelative())
+        if (!isNetworkResource(text) && m_service.resource.isRelative())
             m_service.resource.setFile(m_basePath, m_service.resource.filePath());
 
         // Replace unlinked files if model is populated with replacements.
