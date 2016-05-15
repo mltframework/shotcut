@@ -21,6 +21,7 @@ import QtQml.Models 2.1
 import QtQuick.Controls 1.0
 import Shotcut.Controls 1.0
 import QtGraphicalEffects 1.0
+import QtQuick.Window 2.2
 import 'Timeline.js' as Logic
 
 Rectangle {
@@ -383,7 +384,6 @@ Rectangle {
 
     Menu {
         id: menu
-
         MenuItem {
             text: qsTr('Add Audio Track')
             shortcut: 'Ctrl+U'
@@ -443,6 +443,13 @@ Rectangle {
             text: qsTr('Reload')
             onTriggered: {
                 multitrack.reload()
+            }
+        }
+        onPopupVisibleChanged: {
+            if (visible && application.OS === 'Windows' && __popupGeometry.height > 0) {
+                // Try to fix menu running off screen. This only works intermittently.
+                menu.__yOffset = Math.min(0, Screen.height - (__popupGeometry.y + __popupGeometry.height + 40))
+                menu.__xOffset = Math.min(0, Screen.width - (__popupGeometry.x + __popupGeometry.width))
             }
         }
     }

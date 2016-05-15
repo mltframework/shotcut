@@ -21,6 +21,7 @@ import QtQuick.Controls 1.0
 import Shotcut.Controls 1.0
 import QtGraphicalEffects 1.0
 import QtQml.Models 2.2
+import QtQuick.Window 2.2
 
 Rectangle {
     id: clipRoot
@@ -586,6 +587,13 @@ Rectangle {
             visible: !isBlank && !isTransition
             text: qsTr('Rebuild Audio Waveform')
             onTriggered: timeline.remakeAudioLevels(trackIndex, index)
+        }
+        onPopupVisibleChanged: {
+            if (visible && application.OS !== 'OS X' && __popupGeometry.height > 0) {
+                // Try to fix menu running off screen. This only works intermittently.
+                menu.__yOffset = Math.min(0, Screen.height - (__popupGeometry.y + __popupGeometry.height + 40))
+                menu.__xOffset = Math.min(0, Screen.width - (__popupGeometry.x + __popupGeometry.width))
+            }
         }
     }
 }
