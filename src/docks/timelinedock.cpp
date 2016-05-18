@@ -42,6 +42,9 @@ TimelineDock::TimelineDock(QWidget *parent) :
     m_ignoreNextPositionChange(false)
 {
     LOG_DEBUG() << "begin";
+    m_selection.selectedTrack = -1;
+    m_selection.isMultitrackSelected = false;
+
     ui->setupUi(this);
     toggleViewAction()->setIcon(windowIcon());
 
@@ -241,38 +244,37 @@ void TimelineDock::makeTracksTaller()
     QMetaObject::invokeMethod(m_quickView.rootObject(), "makeTracksTaller");
 }
 
-void TimelineDock::setSelection(QList<int> newSelection)
+void TimelineDock::setSelection(QList<int> newSelection, int trackIndex, bool isMultitrack)
 {
-    if (newSelection == selection())
+    if (newSelection == selection()
+            && trackIndex == m_selection.selectedTrack
+            && isMultitrack == m_selection.isMultitrackSelected) {
         return;
+    }
     LOG_DEBUG() << "Changing selection to" << newSelection;
-
-    QVariantList list;
-    foreach (int idx, newSelection)
-        list << QVariant::fromValue(idx);
-    m_quickView.rootObject()->setProperty("selection", list);
+    m_selection.selectedClips = newSelection;
+    m_selection.selectedTrack = trackIndex;
+    m_selection.isMultitrackSelected = isMultitrack;
+    emit selectionChanged();
 }
 
 QList<int> TimelineDock::selection() const
 {
     if (!m_quickView.rootObject())
         return QList<int>();
-
-    QList<int> ret;
-    foreach (QVariant v, m_quickView.rootObject()->property("selection").toList())
-        ret << v.toInt();
-    return ret;
+    return m_selection.selectedClips;
 }
 
 void TimelineDock::saveAndClearSelection()
 {
-    m_savedSelection = selection();
-    m_quickView.rootObject()->setProperty("selection", QVariantList());
+    m_savedSelection = m_selection;
+    setSelection();
 }
 
 void TimelineDock::restoreSelection()
 {
-    setSelection(m_savedSelection);
+    m_selection = m_savedSelection;
+    emit selectionChanged();
 }
 
 void TimelineDock::selectClipUnderPlayhead()
@@ -286,7 +288,7 @@ void TimelineDock::selectClipUnderPlayhead()
         }
         int idx = clipIndexAtPlayhead(-1);
         if (idx == -1)
-            setSelection(QList<int>());
+            setSelection();
         else
             setSelection(QList<int>() << idx);
         return;
@@ -533,6 +535,7 @@ void TimelineDock::selectTrack(int by)
 void TimelineDock::selectTrackHead(int trackIndex)
 {
     if (trackIndex >= 0) {
+        setSelection(QList<int>(), trackIndex);
         int i = m_model.trackList().at(trackIndex).mlt_index;
         Mlt::Producer* producer = m_model.tractor()->track(i);
         if (producer && producer->is_valid())
@@ -543,6 +546,7 @@ void TimelineDock::selectTrackHead(int trackIndex)
 
 void TimelineDock::selectMultitrack()
 {
+    setSelection(QList<int>(), -1, true);
     QMetaObject::invokeMethod(m_quickView.rootObject(), "selectMultitrack");
     emit selected(m_model.tractor());
 }

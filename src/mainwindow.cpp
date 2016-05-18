@@ -1432,7 +1432,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         break;
     case Qt::Key_D:
         if (event->modifiers() & Qt::ControlModifier)
-            m_timelineDock->setSelection(QList<int>());
+            m_timelineDock->setSelection();
         else
             handled = false;
         break;

@@ -73,15 +73,9 @@ Rectangle {
     property alias trackCount: tracksRepeater.count
     property bool stopScrolling: false
     property color shotcutBlue: Qt.rgba(23/255, 92/255, 118/255, 1.0)
-    property var selection: []
     property alias ripple: toolbar.ripple
 
-    onSelectionChanged: {
-        cornerstone.selected = false
-        for (var i = 0; i < trackHeaderRepeater.count; i++)
-            trackHeaderRepeater.itemAt(i).selected = false
-    }
-    onCurrentTrackChanged: selection = [];
+    onCurrentTrackChanged: timeline.selection = [];
 
     MouseArea {
         anchors.fill: parent
@@ -137,13 +131,7 @@ Rectangle {
                 MouseArea {
                     anchors.fill: parent
                     acceptedButtons: Qt.LeftButton
-                    onClicked: {
-                        selection = []
-                        for (var i = 0; i < trackHeaderRepeater.count; i++)
-                            trackHeaderRepeater.itemAt(i).selected = false
-                        parent.selected = true
-                        timeline.selectMultitrack()
-                    }
+                    onClicked: timeline.selectMultitrack()
                 }
             }
             Flickable {
@@ -171,13 +159,8 @@ Rectangle {
                             current: index === currentTrack
                             onIsLockedChanged: tracksRepeater.itemAt(index).isLocked = isLocked
                             onClicked: {
-                                root.selection = []
                                 currentTrack = index
                                 timeline.selectTrackHead(currentTrack)
-                                cornerstone.selected = false
-                                for (var i = 0; i < trackHeaderRepeater.count; i++)
-                                    trackHeaderRepeater.itemAt(i).selected = false
-                                selected = true
                             }
                         }
                     }
@@ -279,15 +262,15 @@ Rectangle {
 
             CornerSelectionShadow {
                 y: tracksRepeater.count ? tracksRepeater.itemAt(currentTrack).y + ruler.height - scrollView.flickableItem.contentY : 0
-                clip: root.selection.length ?
-                        tracksRepeater.itemAt(currentTrack).clipAt(root.selection[0]) : null
+                clip: timline.selection.length ?
+                        tracksRepeater.itemAt(currentTrack).clipAt(timeline.selection[0]) : null
                 opacity: clip && clip.x + clip.width < scrollView.flickableItem.contentX ? 1 : 0
             }
 
             CornerSelectionShadow {
                 y: tracksRepeater.count ? tracksRepeater.itemAt(currentTrack).y + ruler.height - scrollView.flickableItem.contentY : 0
-                clip: root.selection.length ?
-                        tracksRepeater.itemAt(currentTrack).clipAt(root.selection[root.selection.length - 1]) : null
+                clip: timeline.selection.length ?
+                        tracksRepeater.itemAt(currentTrack).clipAt(timeline.selection[timeline.selection.length - 1]) : null
                 opacity: clip && clip.x > scrollView.flickableItem.contentX + scrollView.width ? 1 : 0
                 anchors.right: parent.right
                 mirrorGradient: true
@@ -464,10 +447,10 @@ Rectangle {
             isAudio: audio
             isCurrentTrack: currentTrack === index
             timeScale: multitrack.scaleFactor
-            selection: root.selection
+            selection: timeline.selection
             onClipClicked: {
                 currentTrack = track.DelegateModel.itemsIndex
-                root.selection = [ clip.DelegateModel.itemsIndex ];
+                timeline.selection = [ clip.DelegateModel.itemsIndex ];
                 root.clipClicked()
             }
             onClipDragged: {
@@ -536,6 +519,12 @@ Rectangle {
         onDragging: Logic.dragging(pos, duration)
         onDropped: Logic.dropped()
         onDropAccepted: Logic.acceptDrop(xml)
+        onSelectionChanged: {
+            cornerstone.selected = timeline.isMultitrackSelected()
+            var selectedTrack = timeline.selectedTrack()
+            for (var i = 0; i < trackHeaderRepeater.count; i++)
+                trackHeaderRepeater.itemAt(i).selected = (i === selectedTrack)
+        }
     }
 
     Connections {

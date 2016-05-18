@@ -65,7 +65,7 @@ public:
     void resetZoom();
     void makeTracksShorter();
     void makeTracksTaller();
-    void setSelection(QList<int> selection);
+    void setSelection(QList<int> selection = QList<int>(), int trackIndex = -1, bool isMultitrack = false);
     QList<int> selection() const;
     void saveAndClearSelection();
     void restoreSelection();
@@ -74,6 +74,8 @@ public:
     bool isTrackLocked(int trackIndex) const;
     void trimClipAtPlayhead(TrimLocation location, bool ripple);
     bool isRipple() const;
+    Q_INVOKABLE bool isMultitrackSelected() const { return m_selection.isMultitrackSelected; }
+    Q_INVOKABLE int selectedTrack() const { return m_selection.selectedTrack; }
 
 signals:
     void currentTrackChanged();
@@ -145,7 +147,13 @@ private:
     int m_position;
     Timeline::UpdateCommand* m_updateCommand;
     bool m_ignoreNextPositionChange;
-    QList<int> m_savedSelection;
+    struct Selection {
+        QList<int> selectedClips;
+        int selectedTrack;
+        bool isMultitrackSelected;
+    };
+    Selection m_selection;
+    Selection m_savedSelection;
 
 private slots:
     void onVisibilityChanged(bool visible);
