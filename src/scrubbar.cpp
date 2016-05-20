@@ -268,7 +268,8 @@ void ScrubBar::updatePixmap()
         const int out = m_out * m_scale * ratio;
         p.fillRect(l_margin + in, 0, out - in, l_selectionSize, Qt::red);
         p.fillRect(l_margin + in + (2 + ratio), ratio, // 2 for the in point line
-                   out - in - 1 - 2 * (2 + ratio), l_selectionSize - ratio * 2,
+                   out - in - 2 * (2 + ratio) - qFloor(0.5 * ratio),
+                   l_selectionSize - ratio * 2,
                    palette().highlight().color());
     }
 
