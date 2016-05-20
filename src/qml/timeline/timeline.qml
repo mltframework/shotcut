@@ -262,7 +262,7 @@ Rectangle {
 
             CornerSelectionShadow {
                 y: tracksRepeater.count ? tracksRepeater.itemAt(currentTrack).y + ruler.height - scrollView.flickableItem.contentY : 0
-                clip: timline.selection.length ?
+                clip: timeline.selection.length ?
                         tracksRepeater.itemAt(currentTrack).clipAt(timeline.selection[0]) : null
                 opacity: clip && clip.x + clip.width < scrollView.flickableItem.contentX ? 1 : 0
             }

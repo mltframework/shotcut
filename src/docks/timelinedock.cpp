@@ -256,6 +256,7 @@ void TimelineDock::setSelection(QList<int> newSelection, int trackIndex, bool is
     m_selection.selectedTrack = trackIndex;
     m_selection.isMultitrackSelected = isMultitrack;
     emit selectionChanged();
+    emitSelectedFromSelection();
 }
 
 QList<int> TimelineDock::selection() const
@@ -275,6 +276,7 @@ void TimelineDock::restoreSelection()
 {
     m_selection = m_savedSelection;
     emit selectionChanged();
+    emitSelectedFromSelection();
 }
 
 void TimelineDock::selectClipUnderPlayhead()
@@ -872,10 +874,6 @@ void TimelineDock::load(bool force)
         disconnect(this, SIGNAL(visibilityChanged(bool)), this, SLOT(onVisibilityChanged(bool)));
         connect(m_quickView.rootObject(), SIGNAL(currentTrackChanged()),
                 this, SIGNAL(currentTrackChanged()));
-        connect(m_quickView.rootObject(), SIGNAL(selectionChanged()),
-                this, SIGNAL(selectionChanged()));
-        connect(m_quickView.rootObject(), SIGNAL(selectionChanged()),
-                this, SLOT(emitSelectedFromSelection()));
         connect(m_quickView.rootObject(), SIGNAL(clipClicked()),
                 this, SIGNAL(clipClicked()));
         if (force && Settings.timelineShowWaveforms())
