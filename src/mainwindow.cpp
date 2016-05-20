@@ -80,6 +80,8 @@
 #include <QtConcurrent/QtConcurrentRun>
 #include <QMutexLocker>
 #include <QQuickItem>
+#include <QtNetwork>
+#include <QJsonDocument>
 
 static bool eventDebugCallback(void **data)
 {
@@ -426,6 +428,8 @@ MainWindow::MainWindow()
     connect(leap, SIGNAL(jogRightSecond()), SLOT(stepRightOneSecond()));
     connect(leap, SIGNAL(jogLeftFrame()), SLOT(stepLeftOneFrame()));
     connect(leap, SIGNAL(jogLeftSecond()), SLOT(stepLeftOneSecond()));
+
+    connect(&m_network, SIGNAL(finished(QNetworkReply*)), SLOT(onUpgradeCheckFinished(QNetworkReply*)));
 
     m_timelineDock->setFocusPolicy(Qt::StrongFocus);
 
@@ -1813,7 +1817,7 @@ void MainWindow::showEvent(QShowEvent* event)
 
     windowHandle()->installEventFilter(this);
 
-    QAction* action = new QAction(tr("Click here to check for a new version of Shotcut."), this);
+    QAction* action = new QAction(tr("Click here to check for a new version of Shotcut."), 0);
     connect(action, SIGNAL(triggered(bool)), SLOT(on_actionUpgrade_triggered()));
     showStatusMessage(action, 10 /* seconds */);
 }
@@ -2781,7 +2785,8 @@ void MainWindow::on_menuExternal_aboutToShow()
 
 void MainWindow::on_actionUpgrade_triggered()
 {
-    QDesktopServices::openUrl(QUrl("https://www.shotcut.org/download/"));
+    showStatusMessage("Checking for upgrade...");
+    m_network.get(QNetworkRequest(QUrl("https://shotcut.org/version.json")));
 }
 
 void MainWindow::on_actionOpenXML_triggered()
@@ -2896,4 +2901,38 @@ void MainWindow::onPlayerTabIndexChanged(int index)
         m_timelineDock->saveAndClearSelection();
     else
         m_timelineDock->restoreSelection();
+}
+
+void MainWindow::onUpgradeCheckFinished(QNetworkReply* reply)
+{
+    if (!reply->error()) {
+        QByteArray response = reply->readAll();
+        LOG_DEBUG() << "response: " << response;
+        QJsonDocument json = QJsonDocument::fromJson(response);
+        if (!json.isNull() && json.object().value("version_string").type() == QJsonValue::String) {
+            QString version = json.object().value("version_string").toString();
+            if (version == qApp->applicationVersion()) {
+                QAction* action = new QAction(tr("Shotcut version %1 is available! Click here to get it.").arg(version), 0);
+                connect(action, SIGNAL(triggered(bool)), SLOT(onUpgradeTriggered()));
+                showStatusMessage(action, 10 /* seconds */);
+            } else {
+                showStatusMessage(tr("You are running the latest version of Shotcut."));
+            }
+            reply->deleteLater();
+            return;
+        } else {
+            LOG_WARNING() << "failed to parse version.json";
+        }
+    } else {
+        LOG_WARNING() << reply->errorString();
+    }
+    QAction* action = new QAction(tr("Failed to read version.json when checking. Click here to go to the Web site."), 0);
+    connect(action, SIGNAL(triggered(bool)), SLOT(onUpgradeTriggered()));
+    showStatusMessage(action);
+    reply->deleteLater();
+}
+
+void MainWindow::onUpgradeTriggered()
+{
+    QDesktopServices::openUrl(QUrl("https://www.shotcut.org/download/"));
 }

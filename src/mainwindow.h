@@ -23,6 +23,7 @@
 #include <QMutex>
 #include <QTimer>
 #include <QUrl>
+#include <QNetworkAccessManager>
 #include "mltcontroller.h"
 #include "mltxmlchecker.h"
 
@@ -46,6 +47,7 @@ class FiltersDock;
 class HtmlEditor;
 class TimelineDock;
 class AutoSaveFile;
+class QNetworkReply;
 
 class MainWindow : public QMainWindow
 {
@@ -136,6 +138,7 @@ private:
     int m_exitCode;
     int m_navigationPosition;
     QScopedPointer<QAction> m_statusBarAction;
+    QNetworkAccessManager m_network;
 
 #ifdef WITH_LIBLEAP
     LeapListener m_leapListener;
@@ -244,6 +247,8 @@ private slots:
     void on_actionApplicationLog_triggered();
     void on_actionClose_triggered();
     void onPlayerTabIndexChanged(int index);
+    void onUpgradeCheckFinished(QNetworkReply* reply);
+    void onUpgradeTriggered();
 };
 
 #define MAIN MainWindow::singleton()
