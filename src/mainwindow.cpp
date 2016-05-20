@@ -1132,10 +1132,20 @@ void MainWindow::openCut(void* producer)
     MLT.seek(p->get_in());
 }
 
-void MainWindow::showStatusMessage(QString message)
+void MainWindow::showStatusMessage(QAction* action, int timeoutSeconds)
+{
+    // This object takes ownership of the passed action.
+    // This version does not currently log its message.
+    m_statusBarAction.reset(action);
+    action->setParent(0);
+    m_player->setStatusLabel(action->text(), timeoutSeconds, action);
+}
+
+void MainWindow::showStatusMessage(const QString& message, int timeoutSeconds)
 {
     LOG_INFO() << message;
-    m_player->setStatusLabel(message);
+    m_player->setStatusLabel(message, timeoutSeconds, 0 /* QAction */);
+    m_statusBarAction.reset();
 }
 
 void MainWindow::seekPlaylist(int start)
@@ -1802,6 +1812,10 @@ void MainWindow::showEvent(QShowEvent* event)
     on_actionShowToolbar_triggered(Settings.showToolBar());
 
     windowHandle()->installEventFilter(this);
+
+    QAction* action = new QAction(tr("Click here to check for a new version of Shotcut."), this);
+    connect(action, SIGNAL(triggered(bool)), SLOT(on_actionUpgrade_triggered()));
+    showStatusMessage(action, 10 /* seconds */);
 }
 
 void MainWindow::on_actionOpenOther_triggered()

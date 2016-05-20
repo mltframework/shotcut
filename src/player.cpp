@@ -29,7 +29,6 @@
 #define SEEK_INACTIVE (-1)
 #define VOLUME_SLIDER_HEIGHT (300)
 
-static const int STATUS_TIMEOUT_MS = 5000;
 static const int STATUS_ANIMATION_MS = 350;
 
 Player::Player(QWidget *parent)
@@ -66,9 +65,10 @@ Player::Player(QWidget *parent)
     connect(m_tabs, SIGNAL(tabBarClicked(int)), SLOT(onTabBarClicked(int)));
 
     // Add status bar.
-    m_statusLabel = new QLabel;
+    m_statusLabel = new QPushButton;
+    m_statusLabel->setFlat(true);
     m_statusLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-    Util::setColorsToHighlight(m_statusLabel);
+    Util::setColorsToHighlight(m_statusLabel, QPalette::Button);
     tabLayout->addWidget(m_statusLabel);
     tabLayout->addStretch(10);
     QGraphicsOpacityEffect *effect = new QGraphicsOpacityEffect(this);
@@ -85,6 +85,7 @@ Player::Player(QWidget *parent)
     m_statusFadeOut->setEasingCurve(QEasingCurve::OutBack);
     m_statusTimer.setSingleShot(true);
     connect(&m_statusTimer, SIGNAL(timeout()), m_statusFadeOut, SLOT(start()));
+    connect(m_statusFadeOut, SIGNAL(finished()), SLOT(onFadeOutFinished()));
     m_statusFadeOut->start();
 
     // Add the layouts for managing video view, scroll bars, and audio controls.
@@ -724,13 +725,17 @@ void Player::onTabBarClicked(int index)
     }
 }
 
-void Player::setStatusLabel(const QString &text)
+void Player::setStatusLabel(const QString &text, int timeoutSeconds, QAction* action)
 {
     QString s = QString("  %1  ").arg(
                 m_statusLabel->fontMetrics().elidedText(text, Qt::ElideRight,
                     m_scrubber->width() - m_tabs->width() - 30));
     m_statusLabel->setText(s);
     m_statusLabel->setToolTip(text);
+    if (action)
+        connect(m_statusLabel, SIGNAL(clicked(bool)), action, SIGNAL(triggered(bool)));
+    else
+        disconnect(m_statusLabel, SIGNAL(clicked(bool)));
 
     // Cancel the fade out.
     if (m_statusFadeOut->state() == QAbstractAnimation::Running) {
@@ -748,14 +753,15 @@ void Player::setStatusLabel(const QString &text)
         // Fade in.
         if (m_statusFadeIn->state() != QAbstractAnimation::Running && !m_statusTimer.isActive()) {
             m_statusFadeIn->start();
-            m_statusTimer.start(STATUS_TIMEOUT_MS);
+            m_statusTimer.start(timeoutSeconds * 1000);
         }
     }
 }
 
-void Player::fadeOutStatus()
+void Player::onFadeOutFinished()
 {
-    m_statusFadeOut->start();
+    m_statusLabel->disconnect(SIGNAL(clicked(bool)));
+    m_statusLabel->setToolTip(QString());
 }
 
 void Player::adjustScrollBars(float horizontal, float vertical)
@@ -851,7 +857,7 @@ static inline float IEC_dB ( float fScale )
 void Player::onVolumeChanged(int volume)
 {
     const double gain = setVolume(volume);
-    setStatusLabel(QString("%L1 dB").arg(IEC_dB(gain)));
+    emit showStatusMessage(QString("%L1 dB").arg(IEC_dB(gain)));
     Settings.setPlayerVolume(volume);
     Settings.setPlayerMuted(false);
     m_muteButton->setChecked(false);

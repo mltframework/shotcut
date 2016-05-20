@@ -135,6 +135,7 @@ private:
     QTimer m_autosaveTimer;
     int m_exitCode;
     int m_navigationPosition;
+    QScopedPointer<QAction> m_statusBarAction;
 
 #ifdef WITH_LIBLEAP
     LeapListener m_leapListener;
@@ -147,7 +148,8 @@ public slots:
     void open(QString url, const Mlt::Properties* = 0);
     void openVideo();
     void openCut(void*);
-    void showStatusMessage(QString);
+    void showStatusMessage(QAction* action, int timeoutSeconds = 5);
+    void showStatusMessage(const QString& message, int timeoutSeconds = 5);
     void seekPlaylist(int start);
     void seekTimeline(int position);
     QWidget* loadProducerWidget(Mlt::Producer* producer);

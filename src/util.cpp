@@ -19,7 +19,6 @@
 #include "util.h"
 #include <QFileInfo>
 #include <QWidget>
-#include <QPalette>
 
 QString Util::baseName(const QString &filePath)
 {
@@ -30,10 +29,10 @@ QString Util::baseName(const QString &filePath)
     return s;
 }
 
-void Util::setColorsToHighlight(QWidget* widget)
+void Util::setColorsToHighlight(QWidget* widget, QPalette::ColorRole role)
 {
     QPalette palette = widget->palette();
-    palette.setColor(QPalette::Window, palette.color(palette.Highlight));
+    palette.setColor(role, palette.color(palette.Highlight));
     palette.setColor(QPalette::Text, palette.color(palette.HighlightedText));
     widget->setPalette(palette);
     widget->setAutoFillBackground(true);

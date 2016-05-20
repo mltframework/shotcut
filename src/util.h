@@ -20,6 +20,7 @@
 #define UTIL_H
 
 #include <QString>
+#include <QPalette>
 
 class QWidget;
 
@@ -29,7 +30,7 @@ private:
     Util() {}
 public:
     static QString baseName(const QString &filePath);
-    static void setColorsToHighlight(QWidget* widget);
+    static void setColorsToHighlight(QWidget* widget, QPalette::ColorRole role = QPalette::Window);
 };
 
 #endif // UTIL_H
