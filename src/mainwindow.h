@@ -150,7 +150,7 @@ public slots:
     void updateAutoSave();
     void open(QString url, const Mlt::Properties* = 0);
     void openVideo();
-    void openCut(void*);
+    void openCut(Mlt::Producer* producer);
     void showStatusMessage(QAction* action, int timeoutSeconds = 5);
     void showStatusMessage(const QString& message, int timeoutSeconds = 5);
     void seekPlaylist(int start);

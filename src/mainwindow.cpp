@@ -250,7 +250,7 @@ MainWindow::MainWindow()
     ui->menuView->addAction(m_playlistDock->toggleViewAction());
     connect(m_playlistDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onPlaylistDockTriggered(bool)));
     connect(ui->actionPlaylist, SIGNAL(triggered()), this, SLOT(onPlaylistDockTriggered()));
-    connect(m_playlistDock, SIGNAL(clipOpened(void*)), this, SLOT(openCut(void*)));
+    connect(m_playlistDock, SIGNAL(clipOpened(Mlt::Producer*)), this, SLOT(openCut(Mlt::Producer*)));
     connect(m_playlistDock, SIGNAL(itemActivated(int)), this, SLOT(seekPlaylist(int)));
     connect(m_playlistDock, SIGNAL(showStatusMessage(QString)), this, SLOT(showStatusMessage(QString)));
     connect(m_playlistDock->model(), SIGNAL(created()), this, SLOT(onPlaylistCreated()));
@@ -279,7 +279,7 @@ MainWindow::MainWindow()
     connect(m_timelineDock->model(), SIGNAL(modified()), SLOT(onMultitrackModified()));
     connect(m_timelineDock->model(), SIGNAL(modified()), SLOT(updateAutoSave()));
     connect(m_timelineDock->model(), SIGNAL(durationChanged()), SLOT(onMultitrackDurationChanged()));
-    connect(m_timelineDock, SIGNAL(clipOpened(void*)), SLOT(openCut(void*)));
+    connect(m_timelineDock, SIGNAL(clipOpened(Mlt::Producer*)), SLOT(openCut(Mlt::Producer*)));
     connect(m_timelineDock->model(), SIGNAL(seeked(int)), SLOT(seekTimeline(int)));
     connect(m_playlistDock, SIGNAL(addAllTimeline(Mlt::Playlist*)), SLOT(onTimelineDockTriggered()));
     connect(m_playlistDock, SIGNAL(addAllTimeline(Mlt::Playlist*)), SLOT(onAddAllToTimeline(Mlt::Playlist*)));
@@ -1128,12 +1128,11 @@ void MainWindow::openVideo()
     }
 }
 
-void MainWindow::openCut(void* producer)
+void MainWindow::openCut(Mlt::Producer* producer)
 {
     m_player->setPauseAfterOpen(true);
-    Mlt::Producer* p = (Mlt::Producer*) producer;
-    open(p);
-    MLT.seek(p->get_in());
+    open(producer);
+    MLT.seek(producer->get_in());
 }
 
 void MainWindow::showStatusMessage(QAction* action, int timeoutSeconds)

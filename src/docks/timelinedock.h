@@ -82,7 +82,7 @@ signals:
     void selectionChanged();
     void seeked(int position);
     void positionChanged();
-    void clipOpened(void* producer);
+    void clipOpened(Mlt::Producer* producer);
     void dragging(const QPointF& pos, int duration);
     void dropped();
     void dropAccepted(const QString &xml);
