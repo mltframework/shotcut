@@ -39,7 +39,7 @@
      <x>0</x>
      <y>0</y>
      <width>832</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -70,6 +70,9 @@
     <property name="title">
      <string>&amp;Edit</string>
     </property>
+    <addaction name="actionCut"/>
+    <addaction name="actionCopy"/>
+    <addaction name="actionPaste"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -731,7 +734,9 @@
   </action>
   <action name="actionClose">
    <property name="icon">
-    <iconset theme="window-close"/>
+    <iconset theme="window-close">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Close</string>
@@ -741,6 +746,51 @@
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionCut">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="edit-cut" resource="../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/edit-cut.png</normaloff>:/icons/oxygen/32x32/actions/edit-cut.png</iconset>
+   </property>
+   <property name="text">
+    <string>Cu&amp;t</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
+   </property>
+  </action>
+  <action name="actionCopy">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="edit-copy" resource="../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/edit-copy.png</normaloff>:/icons/oxygen/32x32/actions/edit-copy.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Copy</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="actionPaste">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="edit-paste" resource="../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/edit-paste.png</normaloff>:/icons/oxygen/32x32/actions/edit-paste.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Paste</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+V</string>
    </property>
   </action>
  </widget>

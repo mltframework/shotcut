@@ -40,22 +40,27 @@ ToolBar {
             implicitHeight: 24
         }
         ToolButton {
-            action: appendAction
-            implicitWidth: 28
-            implicitHeight: 24
-        }
-        ToolButton {
             action: deleteAction
             implicitWidth: 28
             implicitHeight: 24
         }
         ToolButton {
-            action: liftAction
+            action: copyAction
             implicitWidth: 28
             implicitHeight: 24
         }
         ToolButton {
             action: insertAction
+            implicitWidth: 28
+            implicitHeight: 24
+        }
+        ToolButton {
+            action: appendAction
+            implicitWidth: 28
+            implicitHeight: 24
+        }
+        ToolButton {
+            action: liftAction
             implicitWidth: 28
             implicitHeight: 24
         }
@@ -133,19 +138,37 @@ ToolBar {
     }
 
     Action {
-        id: appendAction
-        tooltip: qsTr('Append to the current track (C)')
-        iconName: 'list-add'
-        iconSource: 'qrc:///icons/oxygen/16x16/actions/list-add.png'
-        onTriggered: timeline.append(currentTrack)
+        id: deleteAction
+        tooltip: qsTr('Cut / Ripple Delete - Remove current clip\nshifting following clips to the left (X)')
+        iconName: 'edit-cut'
+        iconSource: 'qrc:///icons/oxygen/32x32/actions/edit-cut.png'
+        enabled: timeline.selection.length
+        onTriggered: timeline.removeSelection()
     }
 
     Action {
-        id: deleteAction
-        tooltip: qsTr('Ripple Delete - Remove current clip\nshifting following clips to the left (X)')
-        iconName: 'list-remove'
-        iconSource: 'qrc:///icons/oxygen/16x16/actions/list-remove.png'
-        onTriggered: timeline.remove(currentTrack, selection[0])
+        id: copyAction
+        tooltip: qsTr('Copy - Copy the current clip to the Source player (C)')
+        iconName: 'edit-copy'
+        iconSource: 'qrc:///icons/oxygen/32x32/actions/edit-copy.png'
+        enabled: timeline.selection.length
+        onTriggered: timeline.openClip(currentTrack, timeline.selection[0])
+    }
+
+    Action {
+        id: insertAction
+        tooltip: qsTr('Paste - Insert clip into the current track\nshifting following clips to the right (V)')
+        iconName: 'edit-paste'
+        iconSource: 'qrc:///icons/oxygen/32x32/actions/edit-paste.png'
+        onTriggered: timeline.insert(currentTrack)
+    }
+
+    Action {
+        id: appendAction
+        tooltip: qsTr('Append to the current track (A)')
+        iconName: 'list-add'
+        iconSource: 'qrc:///icons/oxygen/16x16/actions/list-add.png'
+        onTriggered: timeline.append(currentTrack)
     }
 
     Action {
@@ -153,15 +176,7 @@ ToolBar {
         tooltip: qsTr('Lift - Remove current clip without\naffecting position of other clips (Z)')
         iconName: 'lift'
         iconSource: 'qrc:///icons/oxygen/16x16/actions/lift.png'
-        onTriggered: timeline.lift(currentTrack, selection[0])
-    }
-
-    Action {
-        id: insertAction
-        tooltip: qsTr('Insert clip into the current track\nshifting following clips to the right (V)')
-        iconName: 'insert'
-        iconSource: 'qrc:///icons/oxygen/16x16/actions/insert.png'
-        onTriggered: timeline.insert(currentTrack)
+        onTriggered: timeline.lift(currentTrack, timeline.selection[0])
     }
 
     Action {

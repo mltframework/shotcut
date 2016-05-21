@@ -238,7 +238,7 @@ private slots:
     void onFocusChanged(QWidget *old, QWidget * now) const;
     void onFocusObjectChanged(QObject *obj) const;
     void onFocusWindowChanged(QWindow *window) const;
-    void moveNavigationPositionToCurrentSelection();
+    void onTimelineClipSelected();
     void onAddAllToTimeline(Mlt::Playlist* playlist);
     void on_actionScrubAudio_triggered(bool checked);
 #ifdef Q_OS_WIN
@@ -249,6 +249,10 @@ private slots:
     void onPlayerTabIndexChanged(int index);
     void onUpgradeCheckFinished(QNetworkReply* reply);
     void onUpgradeTriggered();
+    void onTimelineSelectionChanged();
+    void on_actionCut_triggered();
+    void on_actionCopy_triggered();
+    void on_actionPaste_triggered();
 };
 
 #define MAIN MainWindow::singleton()

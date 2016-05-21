@@ -504,10 +504,18 @@ void TimelineDock::removeSelection()
     }
     if (selection().isEmpty())
         selectClipUnderPlayhead();
-    if (selection().isEmpty())
+    if (selection().isEmpty() || currentTrack() < 0)
         return;
-    foreach (int index, selection())
-        remove(currentTrack(), index);
+
+    QScopedPointer<Mlt::ClipInfo> info(getClipInfo(currentTrack(), selection().first()));
+    if (info) {
+        QString xml = MLT.XML(info->producer);
+        Mlt::Producer* p = new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
+        p->set_in_and_out(info->frame_in, info->frame_out);
+        foreach (int index, selection())
+            remove(currentTrack(), index);
+        emit clipOpened(p);
+    }
 }
 
 void TimelineDock::liftSelection()

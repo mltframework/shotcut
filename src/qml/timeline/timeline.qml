@@ -75,7 +75,7 @@ Rectangle {
     property color shotcutBlue: Qt.rgba(23/255, 92/255, 118/255, 1.0)
     property alias ripple: toolbar.ripple
 
-    onCurrentTrackChanged: timeline.selection = [];
+    onCurrentTrackChanged: timeline.selection = []
 
     MouseArea {
         anchors.fill: parent

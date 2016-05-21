@@ -188,8 +188,9 @@ MainWindow::MainWindow()
     redoAction->setIcon(QIcon::fromTheme("edit-redo", QIcon(":/icons/oxygen/32x32/actions/edit-redo.png")));
     undoAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+Z", 0));
     redoAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+Z", 0));
-    ui->menuEdit->addAction(undoAction);
-    ui->menuEdit->addAction(redoAction);
+    ui->menuEdit->insertAction(ui->actionCut, undoAction);
+    ui->menuEdit->insertAction(ui->actionCut, redoAction);
+    ui->menuEdit->insertSeparator(ui->actionCut);
     ui->actionUndo->setIcon(undoAction->icon());
     ui->actionRedo->setIcon(redoAction->icon());
     ui->actionUndo->setToolTip(undoAction->toolTip());
@@ -271,7 +272,7 @@ MainWindow::MainWindow()
     connect(ui->actionTimeline, SIGNAL(triggered()), SLOT(onTimelineDockTriggered()));
     connect(m_player, SIGNAL(seeked(int)), m_timelineDock, SLOT(onSeeked(int)));
     connect(m_timelineDock, SIGNAL(seeked(int)), SLOT(seekTimeline(int)));
-    connect(m_timelineDock, SIGNAL(clipClicked()), SLOT(moveNavigationPositionToCurrentSelection()));
+    connect(m_timelineDock, SIGNAL(clipClicked()), SLOT(onTimelineClipSelected()));
     connect(m_timelineDock, SIGNAL(showStatusMessage(QString)), this, SLOT(showStatusMessage(QString)));
     connect(m_timelineDock->model(), SIGNAL(showStatusMessage(QString)), this, SLOT(showStatusMessage(QString)));
     connect(m_timelineDock->model(), SIGNAL(created()), SLOT(onMultitrackCreated()));
@@ -304,6 +305,7 @@ MainWindow::MainWindow()
     connect(m_timelineDock, SIGNAL(fadeOutChanged(int)), m_filtersDock, SLOT(setFadeOutDuration(int)));
     connect(m_timelineDock, SIGNAL(selected(Mlt::Producer*)), m_filterController, SLOT(setProducer(Mlt::Producer*)));
     connect(m_timelineDock, SIGNAL(selected(Mlt::Producer*)), SLOT(loadProducerWidget(Mlt::Producer*)));
+    connect(m_timelineDock, SIGNAL(selectionChanged()), SLOT(onTimelineSelectionChanged()));
 
     m_historyDock = new QDockWidget(tr("History"), this);
     m_historyDock->hide();
@@ -452,14 +454,21 @@ void MainWindow::onFocusObjectChanged(QObject *) const
     LOG_DEBUG() << "Current focusWindow:" << QApplication::focusWindow();
 }
 
-void MainWindow::moveNavigationPositionToCurrentSelection()
+void MainWindow::onTimelineClipSelected()
 {
+    // Synchronize navigation position with timeline selection.
     TimelineDock * t = m_timelineDock;
 
     if (t->selection().isEmpty())
         return;
 
     m_navigationPosition = t->centerOfClip(t->currentTrack(), t->selection().first());
+
+    // Switch to Project player.
+    if (m_player->tabIndex() != Player::ProjectTabIndex) {
+        t->saveAndClearSelection();
+        m_player->onTabBarClicked(Player::ProjectTabIndex);
+    }
 }
 
 void MainWindow::onAddAllToTimeline(Mlt::Playlist* playlist)
@@ -1432,7 +1441,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         else
             handled = false;
         break;
-    case Qt::Key_C:
+    case Qt::Key_A:
         if (event->modifiers() == Qt::ShiftModifier) {
             m_playlistDock->show();
             m_playlistDock->raise();
@@ -1441,6 +1450,19 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_timelineDock->show();
             m_timelineDock->raise();
             m_timelineDock->append(-1);
+        }
+        break;
+    case Qt::Key_C:
+        if (event->modifiers() == Qt::ShiftModifier) {
+            m_playlistDock->show();
+            m_playlistDock->raise();
+            if (m_playlistDock->position() >= 0)
+                m_playlistDock->on_actionOpen_triggered();
+        } else {
+            m_timelineDock->show();
+            m_timelineDock->raise();
+            if (!m_timelineDock->selection().isEmpty())
+                m_timelineDock->openClip(m_timelineDock->currentTrack(), m_timelineDock->selection().first());
         }
         break;
     case Qt::Key_D:
@@ -1691,10 +1713,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         break;
     case Qt::Key_Enter: // Seek to current playlist item
     case Qt::Key_Return:
-        if (!m_timelineDock->selection().isEmpty()) {
-            m_timelineDock->openClip(m_timelineDock->currentTrack(), m_timelineDock->selection().first());
-        }
-        else if (m_playlistDock->position() >= 0) {
+        if (m_playlistDock->position() >= 0) {
             if (event->modifiers() == Qt::ShiftModifier)
                 seekPlaylist(m_playlistDock->position());
             else
@@ -1873,6 +1892,7 @@ void MainWindow::onProducerOpened()
         m_player->enableTab(Player::SourceTabIndex);
         m_player->switchToTab(Player::SourceTabIndex);
         getHash(*MLT.producer());
+        ui->actionPaste->setEnabled(true);
     }
     if (m_autosaveFile)
         setCurrentFile(m_autosaveFile->managedFileName());
@@ -2934,4 +2954,33 @@ void MainWindow::onUpgradeCheckFinished(QNetworkReply* reply)
 void MainWindow::onUpgradeTriggered()
 {
     QDesktopServices::openUrl(QUrl("https://www.shotcut.org/download/"));
+}
+
+void MainWindow::onTimelineSelectionChanged()
+{
+    bool enable = (m_timelineDock->selection().size() > 0);
+    ui->actionCut->setEnabled(enable);
+    ui->actionCopy->setEnabled(enable);
+}
+
+void MainWindow::on_actionCut_triggered()
+{
+    m_timelineDock->show();
+    m_timelineDock->raise();
+    m_timelineDock->removeSelection();
+}
+
+void MainWindow::on_actionCopy_triggered()
+{
+    m_timelineDock->show();
+    m_timelineDock->raise();
+    if (!m_timelineDock->selection().isEmpty())
+        m_timelineDock->openClip(m_timelineDock->currentTrack(), m_timelineDock->selection().first());
+}
+
+void MainWindow::on_actionPaste_triggered()
+{
+    m_timelineDock->show();
+    m_timelineDock->raise();
+    m_timelineDock->insert(-1);
 }

@@ -565,18 +565,19 @@ Rectangle {
     Menu {
         id: menu
         MenuItem {
-            text: qsTr('Remove')
+            visible: !isBlank && !isTransition
+            text: qsTr('Cut')
             onTriggered: timeline.remove(trackIndex, index)
+        }
+        MenuItem {
+            visible: !isBlank && !isTransition
+            text: qsTr('Copy')
+            onTriggered: timeline.openClip(trackIndex, index)
         }
         MenuItem {
             visible: !isBlank
             text: qsTr('Lift')
             onTriggered: timeline.lift(trackIndex, index)
-        }
-        MenuItem {
-            visible: !isBlank && !isTransition
-            text: qsTr('Copy to Source')
-            onTriggered: timeline.openClip(trackIndex, index)
         }
         MenuItem {
             visible: !isBlank && !isTransition
