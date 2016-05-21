@@ -2911,7 +2911,7 @@ void MainWindow::onUpgradeCheckFinished(QNetworkReply* reply)
         QJsonDocument json = QJsonDocument::fromJson(response);
         if (!json.isNull() && json.object().value("version_string").type() == QJsonValue::String) {
             QString version = json.object().value("version_string").toString();
-            if (version == qApp->applicationVersion()) {
+            if (version != qApp->applicationVersion()) {
                 QAction* action = new QAction(tr("Shotcut version %1 is available! Click here to get it.").arg(version), 0);
                 connect(action, SIGNAL(triggered(bool)), SLOT(onUpgradeTriggered()));
                 showStatusMessage(action, 10 /* seconds */);
