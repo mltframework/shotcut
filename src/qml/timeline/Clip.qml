@@ -581,10 +581,20 @@ Rectangle {
             text: qsTr('Copy')
             onTriggered: timeline.copyClip(trackIndex, index)
         }
+        MenuSeparator {
+            visible: !isBlank && !isTransition
+        }
+        MenuItem {
+            text: qsTr('Remove')
+            onTriggered: timeline.remove(trackIndex, index)
+        }
         MenuItem {
             visible: !isBlank
             text: qsTr('Lift')
             onTriggered: timeline.lift(trackIndex, index)
+        }
+        MenuSeparator {
+            visible: !isBlank && !isTransition
         }
         MenuItem {
             visible: !isBlank && !isTransition

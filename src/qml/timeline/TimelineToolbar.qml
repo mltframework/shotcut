@@ -39,6 +39,11 @@ ToolBar {
             implicitWidth: 28
             implicitHeight: 24
         }
+        Button { // separator
+            enabled: false
+            implicitWidth: 1
+            implicitHeight: 20
+        }
         ToolButton {
             action: cutAction
             implicitWidth: 28
@@ -54,8 +59,18 @@ ToolBar {
             implicitWidth: 28
             implicitHeight: 24
         }
+        Button { // separator
+            enabled: false
+            implicitWidth: 1
+            implicitHeight: 20
+        }
         ToolButton {
             action: appendAction
+            implicitWidth: 28
+            implicitHeight: 24
+        }
+        ToolButton {
+            action: deleteAction
             implicitWidth: 28
             implicitHeight: 24
         }
@@ -73,6 +88,11 @@ ToolBar {
             action: splitAction
             implicitWidth: 28
             implicitHeight: 24
+        }
+        Button { // separator
+            enabled: false
+            implicitWidth: 1
+            implicitHeight: 20
         }
         ToolButton {
             id: snapButton
@@ -170,6 +190,14 @@ ToolBar {
         iconSource: 'qrc:///icons/oxygen/16x16/actions/list-add.png'
         onTriggered: timeline.append(currentTrack)
     }
+
+    Action {
+        id: deleteAction
+        tooltip: qsTr('Ripple Delete - Remove current clip\nshifting following clips to the left (X)')
+        iconName: 'list-remove'
+        iconSource: 'qrc:///icons/oxygen/16x16/actions/list-remove.png'
+        onTriggered: timeline.remove(currentTrack, timeline.selection[0])
+   }
 
     Action {
         id: liftAction
