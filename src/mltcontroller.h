@@ -22,6 +22,7 @@
 #include <QImage>
 #include <QString>
 #include <QUuid>
+#include <QScopedPointer>
 #include <Mlt.h>
 #include "transportcontrol.h"
 
@@ -126,8 +127,9 @@ public:
         return &m_transportControl;
     }
     Mlt::Producer* savedProducer() const {
-        return m_savedProducer;
+        return m_savedProducer.data();
     }
+    void setSavedProducer(Mlt::Producer* producer);
 
 protected:
     Mlt::Repository* m_repo;
@@ -140,7 +142,7 @@ private:
     QString m_url;
     double m_volume;
     TransportControl m_transportControl;
-    Mlt::Producer* m_savedProducer;
+    QScopedPointer<Mlt::Producer> m_savedProducer;
 
     static void on_jack_started(mlt_properties owner, void* object, mlt_position *position);
     void onJackStarted(int position);

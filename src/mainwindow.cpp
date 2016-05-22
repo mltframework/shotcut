@@ -282,6 +282,9 @@ MainWindow::MainWindow()
     connect(m_timelineDock->model(), SIGNAL(durationChanged()), SLOT(onMultitrackDurationChanged()));
     connect(m_timelineDock, SIGNAL(clipOpened(Mlt::Producer*)), SLOT(openCut(Mlt::Producer*)));
     connect(m_timelineDock->model(), SIGNAL(seeked(int)), SLOT(seekTimeline(int)));
+    connect(m_timelineDock, SIGNAL(selected(Mlt::Producer*)), SLOT(loadProducerWidget(Mlt::Producer*)));
+    connect(m_timelineDock, SIGNAL(selectionChanged()), SLOT(onTimelineSelectionChanged()));
+    connect(m_timelineDock, SIGNAL(clipCopied()), SLOT(onClipCopied()));
     connect(m_playlistDock, SIGNAL(addAllTimeline(Mlt::Playlist*)), SLOT(onTimelineDockTriggered()));
     connect(m_playlistDock, SIGNAL(addAllTimeline(Mlt::Playlist*)), SLOT(onAddAllToTimeline(Mlt::Playlist*)));
     connect(m_player, SIGNAL(previousSought()), m_timelineDock, SLOT(seekPreviousEdit()));
@@ -304,8 +307,6 @@ MainWindow::MainWindow()
     connect(m_timelineDock, SIGNAL(fadeInChanged(int)), m_filtersDock, SLOT(setFadeInDuration(int)));
     connect(m_timelineDock, SIGNAL(fadeOutChanged(int)), m_filtersDock, SLOT(setFadeOutDuration(int)));
     connect(m_timelineDock, SIGNAL(selected(Mlt::Producer*)), m_filterController, SLOT(setProducer(Mlt::Producer*)));
-    connect(m_timelineDock, SIGNAL(selected(Mlt::Producer*)), SLOT(loadProducerWidget(Mlt::Producer*)));
-    connect(m_timelineDock, SIGNAL(selectionChanged()), SLOT(onTimelineSelectionChanged()));
 
     m_historyDock = new QDockWidget(tr("History"), this);
     m_historyDock->hide();
@@ -1462,7 +1463,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_timelineDock->show();
             m_timelineDock->raise();
             if (!m_timelineDock->selection().isEmpty())
-                m_timelineDock->openClip(m_timelineDock->currentTrack(), m_timelineDock->selection().first());
+                m_timelineDock->copyClip(m_timelineDock->currentTrack(), m_timelineDock->selection().first());
         }
         break;
     case Qt::Key_D:
@@ -2970,7 +2971,7 @@ void MainWindow::on_actionCut_triggered()
 {
     m_timelineDock->show();
     m_timelineDock->raise();
-    m_timelineDock->removeSelection();
+    m_timelineDock->removeSelection(true);
 }
 
 void MainWindow::on_actionCopy_triggered()
@@ -2978,7 +2979,7 @@ void MainWindow::on_actionCopy_triggered()
     m_timelineDock->show();
     m_timelineDock->raise();
     if (!m_timelineDock->selection().isEmpty())
-        m_timelineDock->openClip(m_timelineDock->currentTrack(), m_timelineDock->selection().first());
+        m_timelineDock->copyClip(m_timelineDock->currentTrack(), m_timelineDock->selection().first());
 }
 
 void MainWindow::on_actionPaste_triggered()
@@ -2986,4 +2987,9 @@ void MainWindow::on_actionPaste_triggered()
     m_timelineDock->show();
     m_timelineDock->raise();
     m_timelineDock->insert(-1);
+}
+
+void MainWindow::onClipCopied()
+{
+    m_player->enableTab(Player::SourceTabIndex);
 }

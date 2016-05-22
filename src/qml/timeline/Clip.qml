@@ -567,12 +567,19 @@ Rectangle {
         MenuItem {
             visible: !isBlank && !isTransition
             text: qsTr('Cut')
-            onTriggered: timeline.remove(trackIndex, index)
+            onTriggered: {
+                if (!trackRoot.isLocked) {
+                    timeline.copyClip(trackIndex, index)
+                    timeline.remove(trackIndex, index)
+                } else {
+                    root.pulseLockButtonOnTrack(currentTrack)
+                }
+            }
         }
         MenuItem {
             visible: !isBlank && !isTransition
             text: qsTr('Copy')
-            onTriggered: timeline.openClip(trackIndex, index)
+            onTriggered: timeline.copyClip(trackIndex, index)
         }
         MenuItem {
             visible: !isBlank

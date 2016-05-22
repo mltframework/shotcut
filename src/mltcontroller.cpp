@@ -44,7 +44,6 @@ Controller::Controller()
     , m_consumer(0)
     , m_jackFilter(0)
     , m_volume(1.0)
-    , m_savedProducer(0)
 {
     LOG_DEBUG() << "begin";
     m_repo = Mlt::Factory::init();
@@ -67,7 +66,6 @@ Controller::~Controller()
 {
     close();
     closeConsumer();
-    delete m_savedProducer;
     delete m_profile;
 }
 
@@ -169,8 +167,7 @@ void Controller::close()
         m_consumer->stop();
     }
     if (isSeekableClip()) {
-        delete m_savedProducer;
-        m_savedProducer = new Mlt::Producer(m_producer);
+        setSavedProducer(m_producer);
     }
     delete m_producer;
     m_producer = 0;
@@ -768,6 +765,11 @@ void Controller::copyFilters(Producer& fromProducer, Producer& toProducer)
             toProducer.attach(*filter);
         }
     }
+}
+
+void Controller::setSavedProducer(Mlt::Producer* producer)
+{
+    m_savedProducer.reset(new Mlt::Producer(producer));
 }
 
 void TransportControl::play(double speed)

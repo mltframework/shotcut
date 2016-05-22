@@ -91,6 +91,7 @@ signals:
     void selected(Mlt::Producer* producer);
     void clipClicked();
     void showStatusMessage(QString);
+    void clipCopied();
 
 public slots:
     void addAudioTrack();
@@ -100,12 +101,12 @@ public slots:
     void append(int trackIndex);
     void remove(int trackIndex, int clipIndex);
     void lift(int trackIndex, int clipIndex);
-    void removeSelection();
+    void removeSelection(bool withCopy = false);
     void liftSelection();
     void selectTrack(int by);
     void selectTrackHead(int trackIndex);
     void selectMultitrack();
-    void openClip(int trackIndex, int clipIndex);
+    void copyClip(int trackIndex, int clipIndex);
     void setTrackName(int trackIndex, const QString& value);
     void toggleTrackMute(int trackIndex);
     void toggleTrackHidden(int trackIndex);

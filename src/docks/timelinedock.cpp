@@ -499,7 +499,7 @@ void TimelineDock::lift(int trackIndex, int clipIndex)
     }
 }
 
-void TimelineDock::removeSelection()
+void TimelineDock::removeSelection(bool withCopy)
 {
     if (isTrackLocked(currentTrack())) {
         pulseLockButtonOnTrack(currentTrack());
@@ -510,15 +510,10 @@ void TimelineDock::removeSelection()
     if (selection().isEmpty() || currentTrack() < 0)
         return;
 
-    QScopedPointer<Mlt::ClipInfo> info(getClipInfo(currentTrack(), selection().first()));
-    if (info) {
-        QString xml = MLT.XML(info->producer);
-        Mlt::Producer* p = new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
-        p->set_in_and_out(info->frame_in, info->frame_out);
-        foreach (int index, selection())
-            remove(currentTrack(), index);
-        emit clipOpened(p);
-    }
+    if (withCopy)
+        copyClip(currentTrack(), selection().first());
+    foreach (int index, selection())
+        remove(currentTrack(), index);
 }
 
 void TimelineDock::liftSelection()
@@ -564,15 +559,18 @@ void TimelineDock::selectMultitrack()
     emit selected(m_model.tractor());
 }
 
-void TimelineDock::openClip(int trackIndex, int clipIndex)
+void TimelineDock::copyClip(int trackIndex, int clipIndex)
 {
     Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
     QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
     if (info) {
         QString xml = MLT.XML(info->producer);
-        Mlt::Producer* p = new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
-        p->set_in_and_out(info->frame_in, info->frame_out);
-        emit clipOpened(p);
+        Mlt::Producer p(MLT.profile(), "xml-string", xml.toUtf8().constData());
+        p.set_speed(0);
+        p.seek(info->frame_in);
+        p.set_in_and_out(info->frame_in, info->frame_out);
+        MLT.setSavedProducer(&p);
+        emit clipCopied();
     }
 }
 

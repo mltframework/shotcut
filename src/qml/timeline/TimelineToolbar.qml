@@ -40,7 +40,7 @@ ToolBar {
             implicitHeight: 24
         }
         ToolButton {
-            action: deleteAction
+            action: cutAction
             implicitWidth: 28
             implicitHeight: 24
         }
@@ -138,12 +138,12 @@ ToolBar {
     }
 
     Action {
-        id: deleteAction
-        tooltip: qsTr('Cut / Ripple Delete - Remove current clip\nshifting following clips to the left (X)')
+        id: cutAction
+        tooltip: qsTr('Cut - Copy the current clip to the Source\nplayer and ripple delete it')
         iconName: 'edit-cut'
         iconSource: 'qrc:///icons/oxygen/32x32/actions/edit-cut.png'
         enabled: timeline.selection.length
-        onTriggered: timeline.removeSelection()
+        onTriggered: timeline.removeSelection(true)
     }
 
     Action {
@@ -152,7 +152,7 @@ ToolBar {
         iconName: 'edit-copy'
         iconSource: 'qrc:///icons/oxygen/32x32/actions/edit-copy.png'
         enabled: timeline.selection.length
-        onTriggered: timeline.openClip(currentTrack, timeline.selection[0])
+        onTriggered: timeline.copyClip(currentTrack, timeline.selection[0])
     }
 
     Action {
