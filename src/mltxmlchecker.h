@@ -25,6 +25,8 @@
 #include <QString>
 #include <QFileInfo>
 #include <QStandardItemModel>
+#include <QVector>
+#include <QPair>
 
 class QUIDevice;
 
@@ -53,19 +55,15 @@ public:
 
 private:
     void readMlt();
-    bool readMltService();
+    void processProperties();
     void checkInAndOutPoints();
     bool checkNumericString(QString& value);
-    bool checkNumericProperty();
-    bool fixWebVfxPath();
-    bool readResourceProperty();
-    bool readShotcutHashProperty();
-    bool fixUnlinkedFile();
-    bool fixShotcutHashProperty();
-    bool fixShotcutDetailProperty();
-    bool fixShotcutCaptionProperty();
-    bool fixAudioIndexProperty();
-    bool fixVideoIndexProperty();
+    bool fixWebVfxPath(QString& resource);
+    bool readResourceProperty(const QString& name, QString& value);
+    void checkGpuEffects(const QString& mlt_service);
+    void checkUnlinkedFile(const QString& mlt_service);
+    bool fixUnlinkedFile(QString& value);
+    void fixStreamIndex(QString& value);
 
     QXmlStreamReader m_xml;
     QXmlStreamWriter m_newXml;
@@ -79,22 +77,25 @@ private:
     bool m_numericValueChanged;
     QString m_basePath;
     QStandardItemModel m_unlinkedFilesModel;
-
-    struct {
-        QString name;
-        QFileInfo resource;
+    typedef QPair<QString, QString> MltProperty;
+    QString mlt_class;
+    QVector<MltProperty> m_properties;
+    struct MltXmlResource {
+        QFileInfo info;
         QString hash;
         QString newHash;
         QString newDetail;
+        bool isPlain;
 
+        MltXmlResource() : isPlain(false) {}
         void clear() {
-            name.clear();
-            resource.setFile(QString());
+            info.setFile(QString());
             hash.clear();
             newHash.clear();
             newDetail.clear();
+            isPlain = false;
         }
-    } m_service;
+    } m_resource;
 };
 
 #endif // MLTXMLCHECKER_H

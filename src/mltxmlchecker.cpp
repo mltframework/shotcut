@@ -39,12 +39,14 @@ static bool isNetworkResource(const QString& string)
 {
     // Check if it looks like a qualified URL. Try parsing it and see.
     QRegExp schemaTest(QLatin1String("^[a-zA-Z]{2,}\\:.*"));
-    if (schemaTest.exactMatch(string) && QUrl(string).isValid())
-        // Not actually checking network URL due to latency and transience.
-        return true;
-    return false;
+    // Not actually checking network URL due to latency and transience.
+    return (schemaTest.exactMatch(string) && QUrl(string).isValid() && !string.startsWith("plain:"));
 }
 
+static bool isNumericProperty(const QString& name)
+{
+    return name == "length" || name == "geometry" || name == "rect";
+}
 
 MltXmlChecker::MltXmlChecker()
     : m_needsGPU(false)
@@ -71,6 +73,8 @@ bool MltXmlChecker::check(const QString& fileName)
         m_basePath = QFileInfo(fileName).canonicalPath();
         m_xml.setDevice(&file);
         m_newXml.setDevice(&m_tempFile);
+        m_newXml.setAutoFormatting(true);
+        m_newXml.setAutoFormattingIndent(2);
         if (m_xml.readNextStartElement()) {
             if (m_xml.name() == "mlt") {
                 m_newXml.writeStartDocument();
@@ -107,13 +111,13 @@ QString MltXmlChecker::errorString() const
 void MltXmlChecker::readMlt()
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "mlt");
-
-    QString mlt_class;
+    bool isPropertyElement = false;
 
     while (!m_xml.atEnd()) {
         switch (m_xml.readNext()) {
         case QXmlStreamReader::Characters:
-            m_newXml.writeCharacters(m_xml.text().toString());
+            if (!isPropertyElement)
+                m_newXml.writeCharacters(m_xml.text().toString());
             break;
         case QXmlStreamReader::Comment:
             m_newXml.writeComment(m_xml.text().toString());
@@ -135,53 +139,28 @@ void MltXmlChecker::readMlt()
             break;
         case QXmlStreamReader::StartElement: {
             const QString element = m_xml.name().toString();
-            m_newXml.writeStartElement(m_xml.namespaceUri().toString(), element);
-            if (isMltClass(m_xml.name())) {
-                mlt_class = element;
-            } else if (element == "property") {
-                if (readMltService()) continue;
-                if (checkNumericProperty()) continue;
-                if ((mlt_class == "filter" || mlt_class == "transition" || mlt_class == "producer")) {
-                    // Store a file reference for later checking.
-
-                    //XXX This depends on mlt_service property appearing before resource.
-                    if (m_service.name == "webvfx" && fixWebVfxPath()) continue;
-
-                    if (readResourceProperty()) continue;
-                    if (fixShotcutHashProperty()) continue;
-                    if (readShotcutHashProperty()) continue;
-                    if (fixShotcutDetailProperty()) continue;
-                    if (fixShotcutCaptionProperty()) continue;
-                    if (fixAudioIndexProperty()) continue;
-                    if (fixVideoIndexProperty()) continue;
-                }
+            if (element == "property") {
+                const QString name = m_xml.attributes().value("name").toString();
+                m_properties << MltProperty(name, m_xml.readElementText());
+                isPropertyElement = true;
+            } else {
+                isPropertyElement = false;
+                processProperties();
+                m_newXml.writeStartElement(m_xml.namespaceUri().toString(), element);
+                if (isMltClass(m_xml.name()))
+                    mlt_class = element;
             }
             checkInAndOutPoints(); // This also copies the attributes.
             break;
         }
         case QXmlStreamReader::EndElement:
-            if (isMltClass(m_xml.name())) {
-                // not the color producer
-                if (!m_service.name.isEmpty() && !(m_service.name == "color" || m_service.name == "colour"))
-                // not a URL
-                if (!m_service.resource.filePath().isEmpty() && !isNetworkResource(m_service.resource.filePath()))
-                // file does not exist
-                if (!m_service.resource.exists())
-                // not already in the model
-                if (m_unlinkedFilesModel.findItems(m_service.resource.filePath(),
-                        Qt::MatchFixedString | Qt::MatchCaseSensitive).isEmpty()) {
-                    LOG_ERROR() << "file not found: " << m_service.resource.filePath();
-                    QIcon icon(":/icons/oxygen/32x32/status/task-reject.png");
-                    QStandardItem* item = new QStandardItem(icon, m_service.resource.filePath());
-                    item->setToolTip(item->text());
-                    item->setData(m_service.hash, ShotcutHashRole);
-                    m_unlinkedFilesModel.appendRow(item);
+            if (m_xml.name() != "property") {
+                processProperties();
+                m_newXml.writeEndElement();
+                if (isMltClass(m_xml.name())) {
+                    mlt_class.clear();
                 }
-
-                mlt_class.clear();
-                m_service.clear();
             }
-            m_newXml.writeEndElement();
             break;
         default:
             break;
@@ -189,30 +168,72 @@ void MltXmlChecker::readMlt()
     }
 }
 
-bool MltXmlChecker::readMltService()
+void MltXmlChecker::processProperties()
 {
-    Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "property");
+    QString mlt_service;
+    QVector<MltProperty> newProperties;
+    m_resource.clear();
 
-    if (m_xml.attributes().value("name") == "mlt_service") {
-        m_newXml.writeAttributes(m_xml.attributes());
-
-        m_service.name = m_xml.readElementText();
-        if (!MLT.isAudioFilter(m_service.name))
-            m_hasEffects = true;
-        if (m_service.name.startsWith("movit.") || m_service.name.startsWith("glsl."))
-            m_needsGPU = true;
-        m_newXml.writeCharacters(m_service.name);
-
-        m_newXml.writeEndElement();
-        return true;
+    // First pass: collect information about mlt_service and resource.
+    foreach (MltProperty p, m_properties) {
+        // Get the name of the MLT service.
+        if (p.first == "mlt_service") {
+            mlt_service = p.second;
+        } else if (p.first == kShotcutHashProperty) {
+            m_resource.hash = p.second;
+        } else if (isNumericProperty(p.first)) {
+            checkNumericString(p.second);
+        } else if (readResourceProperty(p.first, p.second)) {
+            fixUnlinkedFile(p.second);
+        }
+        newProperties << MltProperty(p.first, p.second);
     }
-    return false;
+
+    if (mlt_class == "filter" || mlt_class == "transition" || mlt_class == "producer") {
+        checkGpuEffects(mlt_service);
+        checkUnlinkedFile(mlt_service);
+
+        // Second pass: amend property values.
+        m_properties = newProperties;
+        newProperties.clear();
+        foreach (MltProperty p, m_properties) {
+            if (p.first == "resource" && mlt_service == "webvfx") {
+                fixWebVfxPath(p.second);
+
+            // Fix some properties if re-linked file.
+            } else if (p.first == kShotcutHashProperty) {
+                if (!m_resource.newHash.isEmpty())
+                    p.second = m_resource.newHash;
+            } else if (p.first == kShotcutCaptionProperty) {
+                if (!m_resource.newDetail.isEmpty())
+                    p.second = Util::baseName(m_resource.newDetail);
+            } else if (p.first == kShotcutDetailProperty) {
+                if (!m_resource.newDetail.isEmpty())
+                    p.second = m_resource.newDetail;
+            } else if (p.first == "audio_index" || p.first == "video_index") {
+                fixStreamIndex(p.second);
+            }
+
+            if (!p.second.isEmpty())
+                newProperties << MltProperty(p.first, p.second);
+        }
+    }
+
+    // Write all of the properties.
+    foreach (MltProperty p, newProperties) {
+        m_newXml.writeStartElement("property");
+        m_newXml.writeAttribute("name", p.first);
+        m_newXml.writeCharacters(p.second);
+        m_newXml.writeEndElement();
+    }
+    m_properties.clear();
 }
 
 void MltXmlChecker::checkInAndOutPoints()
 {
     Q_ASSERT(m_xml.isStartElement());
 
+    // Fix numeric values of in and out point attributes.
     foreach (QXmlStreamAttribute a, m_xml.attributes()) {
         if (a.name() == "in" || a.name() == "out") {
             QString value = a.value().toString();
@@ -227,10 +248,13 @@ void MltXmlChecker::checkInAndOutPoints()
 
 bool MltXmlChecker::checkNumericString(QString& value)
 {
+    // See which delimiters are being used.
     if (!m_hasComma)
         m_hasComma = value.contains(',');
     if (!m_hasPeriod)
         m_hasPeriod = value.contains('.');
+
+    // Determine if there is a decimal point inconsistent with locale.
     if (!value.contains(m_decimalPoint) &&
             (value.contains('.') || value.contains(','))) {
         value.replace(',', m_decimalPoint);
@@ -241,106 +265,96 @@ bool MltXmlChecker::checkNumericString(QString& value)
     return false;
 }
 
-bool MltXmlChecker::checkNumericProperty()
+bool MltXmlChecker::fixWebVfxPath(QString& resource)
 {
-    Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "property");
-
-    QStringRef name = m_xml.attributes().value("name");
-    if (name == "length" || name == "geometry") {
-        m_newXml.writeAttributes(m_xml.attributes());
-
-        QString value = m_xml.readElementText();
-        checkNumericString(value);
-        m_newXml.writeCharacters(value);
-
-        m_newXml.writeEndElement();
-        return true;
-    }
-    return false;
-}
-
-bool MltXmlChecker::fixWebVfxPath()
-{
-    Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "property");
-
-    if (m_xml.attributes().value("name") == "resource") {
-        m_newXml.writeAttributes(m_xml.attributes());
-
-        QString resource = m_xml.readElementText();
-
-        // The path, if absolute, should start with the Shotcut executable path.
-        QFileInfo fi(resource);
-        if (fi.isAbsolute()) {
-            QDir appPath(QCoreApplication::applicationDirPath());
+    // The path, if absolute, should start with the Shotcut executable path.
+    QFileInfo fi(resource);
+    if (fi.isAbsolute()) {
+        QDir appPath(QCoreApplication::applicationDirPath());
 
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-            // Leave the bin directory on Linux.
-            appPath.cdUp();
+        // Leave the bin directory on Linux.
+        appPath.cdUp();
 #endif
-            if (!resource.startsWith(appPath.path())) {
-                // Locate "share/shotcut" and replace the front of it with appPath.
-                int i = resource.indexOf("/share/shotcut/");
-                if (i >= 0) {
-                    resource.replace(0, i, appPath.path());
-                    m_isCorrected = true;
-                }
+        if (!resource.startsWith(appPath.path())) {
+            // Locate "share/shotcut" and replace the front of it with appPath.
+            int i = resource.indexOf("/share/shotcut/");
+            if (i >= 0) {
+                resource.replace(0, i, appPath.path());
+                m_isCorrected = true;
+                return true;
             }
         }
-        m_newXml.writeCharacters(resource);
-
-        m_newXml.writeEndElement();
-        return true;
     }
     return false;
 }
 
-bool MltXmlChecker::readResourceProperty()
+bool MltXmlChecker::readResourceProperty(const QString& name, QString& value)
 {
-    const QStringRef name = m_xml.attributes().value("name");
+    if (mlt_class == "filter" || mlt_class == "transition" || mlt_class == "producer")
     if (name == "resource" || name == "src" || name == "filename"
             || name == "luma" || name == "luma.resource" || name == "composite.luma"
             || name == "producer.resource") {
 
-        m_newXml.writeAttributes(m_xml.attributes());
-        QString text = m_xml.readElementText();
-
+        // Handle WebFvx "plain:" path.
+        m_resource.isPlain = value.startsWith("plain:");
         // Save the resource name for later check for unlinked files.
-        m_service.resource.setFile(text);
-        if (!isNetworkResource(text) && m_service.resource.isRelative())
-            m_service.resource.setFile(m_basePath, m_service.resource.filePath());
-
-        // Replace unlinked files if model is populated with replacements.
-        if (!fixUnlinkedFile())
-            m_newXml.writeCharacters(text);
-
-        m_newXml.writeEndElement();
+        if (m_resource.isPlain)
+            m_resource.info.setFile(value.mid(6));
+        else
+            m_resource.info.setFile(value);
+        if (!isNetworkResource(value) && m_resource.info.isRelative())
+            m_resource.info.setFile(m_basePath, m_resource.info.filePath());
         return true;
     }
     return false;
 }
 
-bool MltXmlChecker::readShotcutHashProperty()
+void MltXmlChecker::checkGpuEffects(const QString& mlt_service)
 {
-    if (m_xml.attributes().value("name") == kShotcutHashProperty) {
-        m_newXml.writeAttributes(m_xml.attributes());
-        m_service.hash = m_xml.readElementText();
-        m_newXml.writeCharacters(m_service.hash);
-        m_newXml.writeEndElement();
-        return true;
-    }
-    return false;
+    // Check for GPU effects.
+    if (!MLT.isAudioFilter(mlt_service))
+        m_hasEffects = true;
+    if (mlt_service.startsWith("movit.") || mlt_service.startsWith("glsl."))
+        m_needsGPU = true;
 }
 
-bool MltXmlChecker::fixUnlinkedFile()
+void MltXmlChecker::checkUnlinkedFile(const QString& mlt_service)
 {
+    // Check for an unlinked file.
+    // not the color producer
+    if (!mlt_service.isEmpty() && mlt_service != "color" && mlt_service != "colour")
+    // not a URL
+    if (!m_resource.info.filePath().isEmpty() && !isNetworkResource(m_resource.info.filePath()))
+    // file does not exist
+    if (!m_resource.info.exists())
+    // not already in the model
+    if (m_unlinkedFilesModel.findItems(m_resource.info.filePath(),
+            Qt::MatchFixedString | Qt::MatchCaseSensitive).isEmpty()) {
+        LOG_ERROR() << "file not found: " << m_resource.info.filePath();
+        QIcon icon(":/icons/oxygen/32x32/status/task-reject.png");
+        QStandardItem* item = new QStandardItem(icon, m_resource.info.filePath());
+        item->setToolTip(item->text());
+        item->setData(m_resource.hash, ShotcutHashRole);
+        m_unlinkedFilesModel.appendRow(item);
+    }
+}
+
+bool MltXmlChecker::fixUnlinkedFile(QString& value)
+{
+    // Replace unlinked files if model is populated with replacements.
     for (int row = 0; row < m_unlinkedFilesModel.rowCount(); ++row) {
         const QStandardItem* replacement = m_unlinkedFilesModel.item(row, ReplacementColumn);
         if (replacement && !replacement->text().isEmpty() &&
-                m_unlinkedFilesModel.item(row, MissingColumn)->text() == m_service.resource.filePath()) {
-            m_service.resource.setFile(replacement->text());
-            m_service.newDetail = replacement->text();
-            m_service.newHash = replacement->data(ShotcutHashRole).toString();
-            m_newXml.writeCharacters(replacement->text());
+                m_unlinkedFilesModel.item(row, MissingColumn)->text() == m_resource.info.filePath()) {
+            m_resource.info.setFile(replacement->text());
+            m_resource.newDetail = replacement->text();
+            m_resource.newHash = replacement->data(ShotcutHashRole).toString();
+            if (m_resource.isPlain)
+                // Restore WebFvx "plain:" path.
+                value = replacement->text().prepend("plain:");
+            else
+                value = replacement->text();
             m_isCorrected = true;
             return true;
         }
@@ -348,64 +362,11 @@ bool MltXmlChecker::fixUnlinkedFile()
     return false;
 }
 
-bool MltXmlChecker::fixShotcutHashProperty()
+void MltXmlChecker::fixStreamIndex(QString& value)
 {
-    if (m_xml.attributes().value("name") == kShotcutHashProperty && !m_service.newHash.isEmpty()) {
-        m_newXml.writeAttributes(m_xml.attributes());
-        m_service.hash = m_xml.readElementText();
-        m_newXml.writeCharacters(m_service.newHash);
-        m_newXml.writeEndElement();
-        return true;
+    // Remove a stream index property if re-linked file is different.
+    if (!m_resource.hash.isEmpty() && !m_resource.newHash.isEmpty()
+        && m_resource.hash != m_resource.newHash) {
+        value.clear();
     }
-    return false;
-}
-
-bool MltXmlChecker::fixShotcutDetailProperty()
-{
-    if (m_xml.attributes().value("name") == kShotcutCaptionProperty && !m_service.newDetail.isEmpty()) {
-        m_newXml.writeAttributes(m_xml.attributes());
-        m_newXml.writeCharacters(Util::baseName(m_service.newDetail));
-        m_newXml.writeEndElement();
-        m_xml.readElementText();
-        return true;
-    }
-    return false;
-}
-
-bool MltXmlChecker::fixShotcutCaptionProperty()
-{
-    if (m_xml.attributes().value("name") == kShotcutDetailProperty && !m_service.newDetail.isEmpty()) {
-        m_newXml.writeAttributes(m_xml.attributes());
-        m_newXml.writeCharacters(m_service.newDetail);
-        m_newXml.writeEndElement();
-        m_xml.readElementText();
-        return true;
-    }
-    return false;
-}
-
-bool MltXmlChecker::fixAudioIndexProperty()
-{
-    if (m_xml.attributes().value("name") == "audio_index"
-            && !m_service.hash.isEmpty() && !m_service.newHash.isEmpty()
-            && m_service.hash != m_service.newHash) {
-        m_newXml.writeAttributes(m_xml.attributes());
-        m_newXml.writeEndElement();
-        m_xml.readElementText();
-        return true;
-    }
-    return false;
-}
-
-bool MltXmlChecker::fixVideoIndexProperty()
-{
-    if (m_xml.attributes().value("name") == "video_index"
-            && !m_service.hash.isEmpty() && !m_service.newHash.isEmpty()
-            && m_service.hash != m_service.newHash) {
-        m_newXml.writeAttributes(m_xml.attributes());
-        m_newXml.writeEndElement();
-        m_xml.readElementText();
-        return true;
-    }
-    return false;
 }
