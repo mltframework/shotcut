@@ -1713,7 +1713,10 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         break;
     case Qt::Key_Enter: // Seek to current playlist item
     case Qt::Key_Return:
-        if (m_playlistDock->position() >= 0) {
+        if (multitrack()) {
+            if (m_timelineDock->selection().size())
+                m_timelineDock->seekInPoint(m_timelineDock->selection().first());
+        } else if (m_playlistDock->position() >= 0) {
             if (event->modifiers() == Qt::ShiftModifier)
                 seekPlaylist(m_playlistDock->position());
             else

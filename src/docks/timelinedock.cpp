@@ -838,6 +838,21 @@ void TimelineDock::seekNextEdit()
         setPosition(newPosition);
 }
 
+void TimelineDock::seekInPoint(int clipIndex)
+{
+    if (!MLT.isMultitrack()) return;
+    if (!m_model.tractor()) return;
+    if (clipIndex < 0) return;
+
+    int mltTrackIndex = m_model.trackList().at(currentTrack()).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(mltTrackIndex));
+    if (track) {
+        Mlt::Playlist playlist(*track);
+        if (m_position != playlist.clip_start(clipIndex))
+            setPosition(playlist.clip_start(clipIndex));
+    }
+}
+
 void TimelineDock::dragEnterEvent(QDragEnterEvent *event)
 {
     if (event->mimeData()->hasFormat(Mlt::XmlMimeType)) {

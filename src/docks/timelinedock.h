@@ -122,6 +122,7 @@ public slots:
     void fadeOut(int trackIndex, int clipIndex = -1, int duration = -1);
     void seekPreviousEdit();
     void seekNextEdit();
+    void seekInPoint(int clipIndex);
     void clearSelectionIfInvalid();
     void insertTrack();
     void removeTrack();
