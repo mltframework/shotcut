@@ -340,7 +340,9 @@ static void uploadTextures(QOpenGLContext* context, SharedFrame& frame, GLuint t
 
 void GLWidget::paintGL()
 {
+#ifndef QT_NO_DEBUG
     QOpenGLFunctions* f = quickWindow()->openglContext()->functions();
+#endif
     int width = this->width() * devicePixelRatio();
     int height = this->height() * devicePixelRatio();
 
