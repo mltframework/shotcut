@@ -269,7 +269,10 @@ QList<int> TimelineDock::selection() const
 void TimelineDock::saveAndClearSelection()
 {
     m_savedSelection = m_selection;
-    setSelection();
+    m_selection.selectedClips = QList<int>();
+    m_selection.selectedTrack = -1;
+    m_selection.isMultitrackSelected = false;
+    emit selectionChanged();
 }
 
 void TimelineDock::restoreSelection()
