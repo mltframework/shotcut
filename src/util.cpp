@@ -33,7 +33,8 @@ void Util::setColorsToHighlight(QWidget* widget, QPalette::ColorRole role)
 {
     QPalette palette = widget->palette();
     palette.setColor(role, palette.color(palette.Highlight));
-    palette.setColor(QPalette::Text, palette.color(palette.HighlightedText));
+    palette.setColor(role == QPalette::Button ? QPalette::ButtonText : QPalette::WindowText,
+        palette.color(palette.HighlightedText));
     widget->setPalette(palette);
     widget->setAutoFillBackground(true);
 }
