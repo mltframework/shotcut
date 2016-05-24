@@ -2259,6 +2259,8 @@ Mlt::Producer *MainWindow::multitrack() const
 QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
 {
     QWidget* w = 0;
+    QScrollArea* scrollArea = (QScrollArea*) m_propertiesDock->widget();
+    delete scrollArea->widget();
 
     if (!producer || !producer->is_valid())
         return  w;
@@ -2266,9 +2268,7 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
     QString service(producer->get("mlt_service"));
     QString resource = QString::fromUtf8(producer->get("resource"));
     QString shotcutProducer(producer->get(kShotcutProducerProperty));
-    QScrollArea* scrollArea = (QScrollArea*) m_propertiesDock->widget();
 
-    delete scrollArea->widget();
     if (resource.startsWith("video4linux2:"))
         w = new Video4LinuxWidget(this);
     else if (resource.startsWith("pulse:"))

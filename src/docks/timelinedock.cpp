@@ -246,17 +246,19 @@ void TimelineDock::makeTracksTaller()
 
 void TimelineDock::setSelection(QList<int> newSelection, int trackIndex, bool isMultitrack)
 {
-    if (newSelection == selection()
-            && trackIndex == m_selection.selectedTrack
-            && isMultitrack == m_selection.isMultitrackSelected) {
-        return;
+    if (newSelection != selection()
+            || trackIndex != m_selection.selectedTrack
+            || isMultitrack != m_selection.isMultitrackSelected) {
+        LOG_DEBUG() << "Changing selection to" << newSelection << " trackIndex" << trackIndex << "isMultitrack" << isMultitrack;
+        m_selection.selectedClips = newSelection;
+        m_selection.selectedTrack = trackIndex;
+        m_selection.isMultitrackSelected = isMultitrack;
+        emit selectionChanged();
     }
-    LOG_DEBUG() << "Changing selection to" << newSelection;
-    m_selection.selectedClips = newSelection;
-    m_selection.selectedTrack = trackIndex;
-    m_selection.isMultitrackSelected = isMultitrack;
-    emit selectionChanged();
-    emitSelectedFromSelection();
+    if (!m_selection.selectedClips.isEmpty())
+        emitSelectedFromSelection();
+    else
+        emit selected(0);
 }
 
 QList<int> TimelineDock::selection() const
@@ -367,6 +369,7 @@ void TimelineDock::clearSelectionIfInvalid()
         newSelection << index;
     }
     setSelection(newSelection);
+    emit selectionChanged();
 }
 
 void TimelineDock::insertTrack()
@@ -410,8 +413,9 @@ void TimelineDock::onProducerChanged(Mlt::Producer* after)
                                   qMin(qRound(info->frame_out * speedRatio), length - 1));
             QString xmlAfter = MLT.XML(after);
             m_updateCommand->setXmlAfter(xmlAfter);
-            MAIN.undoStack()->push(m_updateCommand);
+            Timeline::UpdateCommand* command = m_updateCommand;
             m_updateCommand = 0;
+            MAIN.undoStack()->push(command);
         }
     }
 }

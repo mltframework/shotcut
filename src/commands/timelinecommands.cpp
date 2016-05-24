@@ -804,7 +804,6 @@ void UpdateCommand::redo()
     m_timeline.model()->liftClip(m_trackIndex, m_clipIndex);
     m_timeline.model()->overwrite(m_trackIndex, clip, m_position, false);
     m_undoHelper.recordAfterState();
-    QMetaObject::invokeMethod(&m_timeline, "emitSelectedFromSelection", Qt::QueuedConnection);
 }
 
 void UpdateCommand::undo()
