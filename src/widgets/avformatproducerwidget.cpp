@@ -442,7 +442,7 @@ void AvformatProducerWidget::on_syncSlider_valueChanged(int value)
 
 void AvformatProducerWidget::on_actionOpenFolder_triggered()
 {
-    QFileInfo fi(GetFilenameFromProducer(MLT.producer()));
+    QFileInfo fi(GetFilenameFromProducer(m_producer));
     QDesktopServices::openUrl(QUrl::fromLocalFile(fi.path()));
 }
 
@@ -459,7 +459,7 @@ void AvformatProducerWidget::on_menuButton_clicked()
 
 void AvformatProducerWidget::on_actionCopyFullFilePath_triggered()
 {
-    qApp->clipboard()->setText(GetFilenameFromProducer(MLT.producer()));
+    qApp->clipboard()->setText(GetFilenameFromProducer(m_producer));
 }
 
 void AvformatProducerWidget::on_notesTextEdit_textChanged()
@@ -474,14 +474,14 @@ void AvformatProducerWidget::on_actionFFmpegInfo_triggered()
     args << "-print_format" << "ini";
     args << "-pretty";
     args << "-show_format" << "-show_programs" << "-show_streams";
-    args << GetFilenameFromProducer(MLT.producer());
+    args << GetFilenameFromProducer(m_producer);
     AbstractJob* job = new FfprobeJob(args.last(), args);
     job->start();
 }
 
 void AvformatProducerWidget::on_actionFFmpegIntegrityCheck_triggered()
 {
-    QString resource = GetFilenameFromProducer(MLT.producer());
+    QString resource = GetFilenameFromProducer(m_producer);
     QStringList args;
     args << "-xerror";
     args << "-err_detect" << "+explode";
