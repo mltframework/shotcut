@@ -336,6 +336,7 @@ void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
             }
         }
     }
+    ui->syncSlider->setValue(qRound(m_producer->get_double("video_delay") * 1000.0));
 }
 
 void AvformatProducerWidget::on_resetButton_clicked()
