@@ -85,15 +85,14 @@ private:
         QString hash;
         QString newHash;
         QString newDetail;
-        bool isPlain;
+        QString prefix;
 
-        MltXmlResource() : isPlain(false) {}
         void clear() {
             info.setFile(QString());
             hash.clear();
             newHash.clear();
             newDetail.clear();
-            isPlain = false;
+            prefix.clear();
         }
     } m_resource;
 };

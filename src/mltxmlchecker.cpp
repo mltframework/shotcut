@@ -289,6 +289,28 @@ bool MltXmlChecker::fixWebVfxPath(QString& resource)
     return false;
 }
 
+static QString getPrefix(const QString& name, const QString& value)
+{
+    int length = 0;
+
+    // Webvfx and timewarp are only using "resource".
+    if (name == "resource") {
+        const QString plain("plain:");
+        // webvfx "plain:"
+        if (value.startsWith(plain)) {
+            return plain;
+        } else {
+            // timewarp speed parameter
+            length = value.indexOf(':');
+            if (length > 0 && (value[length - 1].isDigit() ||
+                               value[length - 1] == '.' ||
+                               value[length - 1] == ','))
+                return value.left(length + 1); // include the colon
+        }
+    }
+    return QString();
+}
+
 bool MltXmlChecker::readResourceProperty(const QString& name, QString& value)
 {
     if (mlt_class == "filter" || mlt_class == "transition" || mlt_class == "producer")
@@ -296,13 +318,10 @@ bool MltXmlChecker::readResourceProperty(const QString& name, QString& value)
             || name == "luma" || name == "luma.resource" || name == "composite.luma"
             || name == "producer.resource") {
 
-        // Handle WebFvx "plain:" path.
-        m_resource.isPlain = value.startsWith("plain:");
-        // Save the resource name for later check for unlinked files.
-        if (m_resource.isPlain)
-            m_resource.info.setFile(value.mid(6));
-        else
-            m_resource.info.setFile(value);
+        // Handle special prefix such as "plain:" or speed.
+        m_resource.prefix = getPrefix(name, value);
+        // Save the resource name (minus prefix) for later check for unlinked files.
+        m_resource.info.setFile(value.mid(m_resource.prefix.size()));
         if (!isNetworkResource(value) && m_resource.info.isRelative())
             m_resource.info.setFile(m_basePath, m_resource.info.filePath());
         return true;
@@ -350,11 +369,8 @@ bool MltXmlChecker::fixUnlinkedFile(QString& value)
             m_resource.info.setFile(replacement->text());
             m_resource.newDetail = replacement->text();
             m_resource.newHash = replacement->data(ShotcutHashRole).toString();
-            if (m_resource.isPlain)
-                // Restore WebFvx "plain:" path.
-                value = replacement->text().prepend("plain:");
-            else
-                value = replacement->text();
+            // Restore special prefix such as "plain:" or speed value.
+            value = replacement->text().prepend(m_resource.prefix);
             m_isCorrected = true;
             return true;
         }
