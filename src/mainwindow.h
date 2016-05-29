@@ -254,6 +254,7 @@ private slots:
     void on_actionCopy_triggered();
     void on_actionPaste_triggered();
     void onClipCopied();
+    void on_actionExportEDL_triggered();
 };
 
 #define MAIN MainWindow::singleton()

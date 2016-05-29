@@ -1,0 +1,17 @@
+{
+  "name": "mlt2edl",
+  "description": "A Javascript to convert MLT XML to EDL.",
+  "homepage": "https://www.mltframework.org/",
+  "main": "mlt2edl.js",
+  "version": "0.0.1",
+  "author": {
+    "name": "Dan Dennedy",
+    "email": "dan@dennedy.org",
+    "url": "http://www.dennedy.org/"
+  },
+  "license": "GPL-3.0",
+  "dependencies": {
+    "timecode": "0.0.3",
+    "xmldoc": "^0.5.1"
+  }
+}

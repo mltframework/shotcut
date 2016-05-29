@@ -82,6 +82,7 @@
 #include <QQuickItem>
 #include <QtNetwork>
 #include <QJsonDocument>
+#include <QJSEngine>
 
 static bool eventDebugCallback(void **data)
 {
@@ -2993,4 +2994,54 @@ void MainWindow::on_actionPaste_triggered()
 void MainWindow::onClipCopied()
 {
     m_player->enableTab(Player::SourceTabIndex);
+}
+
+void MainWindow::on_actionExportEDL_triggered()
+{
+    // Dialog to get export file name.
+    QString path = Settings.savePath();
+    path.append("/.edl");
+    QString saveFileName = QFileDialog::getSaveFileName(this, tr("Export EDL"), path, tr("EDL (*.edl)"));
+    if (!saveFileName.isEmpty()) {
+        QFileInfo fi(saveFileName);
+        if (fi.suffix() != "edl")
+            saveFileName += ".edl";
+
+        // Locate the JavaScript file in the filesystem.
+        QDir qmlDir = QmlUtilities::qmlDir();
+        qmlDir.cd("export-edl");
+        QString jsFileName = qmlDir.absoluteFilePath("export-edl.js");
+        QFile scriptFile(jsFileName);
+        if (scriptFile.open(QIODevice::ReadOnly)) {
+            // Read JavaScript into a string.
+            QTextStream stream(&scriptFile);
+            QString contents = stream.readAll();
+            scriptFile.close();
+
+            // Evaluate JavaScript.
+            QJSEngine jsEngine;
+            QJSValue result = jsEngine.evaluate(contents, jsFileName);
+            if (!result.isError()) {
+                // Call the JavaScript main function.
+                QJSValueList args;
+                args << MLT.XML();
+                result = result.call(args);
+                if (!result.isError()) {
+                    // Save the result with the export file name.
+                    QFile f(saveFileName);
+                    f.open(QIODevice::WriteOnly | QIODevice::Text);
+                    f.write(result.toString().toLatin1());
+                    f.close();
+                }
+            }
+            if (result.isError()) {
+                LOG_ERROR() << "Uncaught exception at line"
+                            << result.property("lineNumber").toInt()
+                            << ":" << result.toString();
+                showStatusMessage(tr("A JavaScript error occurred during export."));
+            }
+        } else {
+            showStatusMessage(tr("Failed to open export-edl.js"));
+        }
+    }
 }
