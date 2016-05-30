@@ -3023,8 +3023,12 @@ void MainWindow::on_actionExportEDL_triggered()
             QJSValue result = jsEngine.evaluate(contents, jsFileName);
             if (!result.isError()) {
                 // Call the JavaScript main function.
+                QJSValue options = jsEngine.newObject();
+                options.setProperty("useBaseNameForReelName", true);
+                options.setProperty("useBaseNameForClipComment", true);
+                options.setProperty("channelsAV", "AA/V");
                 QJSValueList args;
-                args << MLT.XML();
+                args << MLT.XML() << options;
                 result = result.call(args);
                 if (!result.isError()) {
                     // Save the result with the export file name.

@@ -1,4 +1,7 @@
-// Use this to test with node.js during development.
+// Use this to test with node.js during development:
+// npm install
+// node test-test.js /path/to/some.mlt
+
 var mlt2edl = require('./mlt2edl.js');
 
 var fs = require('fs');

@@ -35,11 +35,21 @@ if (typeof module !== 'undefined' && module.exports) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-function MltXmlParser(xmlString) {
-    this.xmldoc = new xmldoc.XmlDocument(xmlString);
-    this.projectMeta = this.xmldoc.childNamed('profile');
-    this.framerate = parseFloat(this.projectMeta.attr.frame_rate_num) / parseFloat(this.projectMeta.attr.frame_rate_den);
+function MltXmlParser(xmlString, options) {
+    var self = Object.create(this);
+    self.useBaseNameForReelName = self.get(options, 'useBaseNameForReelName', true);
+    self.useBaseNameForClipComment = self.get(options, 'useBaseNameForClipComment', true);
+    self.channelsAV = self.get(options, 'channelsAV', 'AA/V');
+    self.xmldoc = new xmldoc.XmlDocument(xmlString);
+    self.projectMeta = self.xmldoc.childNamed('profile');
+    self.framerate = parseFloat(self.projectMeta.attr.frame_rate_num) / parseFloat(self.projectMeta.attr.frame_rate_den);
+    return self;
 }
+
+MltXmlParser.prototype.get = function(dict, name, defaultValue) {
+    return (typeof dict === 'object' && name in dict)? dict[name] : defaultValue;
+};
+
 
 MltXmlParser.prototype.prepadString = function (str, len, chr) {
     var padding = Array(len - String(str).length + 1).join(chr);
@@ -72,14 +82,14 @@ MltXmlParser.prototype.getPlaylists = function() {
     playlists.forEach(function(p) {
         var eventList = [];
         var plDict = {};
-        plDict.pid = p.attr.id;
+        plDict.id = p.attr.id;
         plDict.format = 'V';
         p.childrenNamed('property').forEach(function (fe) {
             if (fe.attr.name === 'shotcut:audio')
                 plDict.format = 'A'
             else if (fe.attr.name === 'shotcut:video')
                 // AA/V for Sony Vegas/Lightworks.
-                plDict.format = 'AA/V';
+                plDict.format = self.channelsAV;
         });
         p.children.forEach(function (event) {
             if ('length' in event.attr) {
@@ -103,7 +113,7 @@ MltXmlParser.prototype.getPlaylists = function() {
                                     eventList.push({
                                         'producer': track.attr.producer,
                                         'inTime': track.attr.in,
-                                        'outTime': track.attr.out,
+                                        'outTime': track.attr.in,
                                         'transition': 'C'
                                     });
                                 } else {
@@ -143,7 +153,7 @@ MltXmlParser.prototype.getProducers = function() {
     var producers = this.xmldoc.childrenNamed('producer');
     producers.forEach(function(p) {
         var pDict = {};
-        pDict.pid = p.attr.id;
+        pDict.id = p.attr.id;
         pDict.inTime = p.attr.in;
         pDict.outTime = p.attr.out;
         p.childrenNamed('property').forEach(function(property){
@@ -156,8 +166,15 @@ MltXmlParser.prototype.getProducers = function() {
 
 MltXmlParser.prototype.linkReferences = function() {
     var sourceLinks = {};
-    this.getProducers().forEach(function(p){
-        sourceLinks[p.pid] = p.resource;
+    var self = this;
+    this.getProducers().forEach(function(p) {
+        sourceLinks[p.id] = p;
+        if (!self.useBaseNameForReelName && 'shotcut:hash' in p) {
+            sourceLinks[p.id].reel_name = p['shotcut:hash']
+        } else if ('resource' in p) {
+            var reelName = self.baseName(p.resource);
+            sourceLinks[p.id].reel_name = reelName.replace(/\W/g, '_');
+        }
     });
     return sourceLinks;
 };
@@ -167,31 +184,29 @@ MltXmlParser.prototype.createEdl = function() {
     var EDLfile = '';
     var self = this;
     self.getPlaylists().forEach(function (playlist) {
-        if (playlist.pid === 'main bin' || playlist.pid === 'background')
+        if (playlist.id === 'main bin' || playlist.id === 'background')
             return;
         var EdlEventCount = 1;
         var progIn = self.Timecode(0); //showtime tally
         var progOut = self.Timecode(0);
         var srcChannel = 'C'; // default channel/track assignment
-        EDLfile += "\n === " + playlist.pid + " === \n\n";
+        EDLfile += "\n === " + playlist.id + " === \n\n";
         playlist.events.forEach(function(event) {
             var srcIn = self.Timecode(event.inTime);
             var srcOut = self.Timecode(event.outTime);
             var srcLen = self.Timecode(event.outTime); srcLen.subtract(srcIn);
             // increment program tally
             progOut.add(srcLen);
-            var sourcePath = sourceLinks[event.producer];
-            var sourceRef = sourcePath.split('/').pop();
-            if (sourceRef !== 'black') {
-                EDLfile += '* FROM CLIP NAME: ' + sourceRef + "\n";
-                sourceRef = (sourceRef + '         ').substring(0, 8);
+            var reelName = sourceLinks[event.producer].reel_name;
+            if (reelName !== 'black') {
+                reelName = (reelName + '         ').substring(0, 8);
                 if (event.transition[0] === 'D') {
                     EdlEventCount -= 1;
                 }
                 EDLfile += self.prepadString(EdlEventCount, 3, '0') + '  '; // edit counter
-                EDLfile += sourceRef + ' '; // "reel number"
+                EDLfile += reelName + ' '; // "reel name"
                 EDLfile += self.prepadString(playlist.format, 4, ' ') + ' '; // channels
-                EDLfile += self.prepadString(event.transition, 4, ' ') + ' '; // type of edit/transition
+                EDLfile += (event.transition + '    ').substring(0, 4) + ' '; // type of edit/transition
                 if ('transitionLength' in event) {
                     EDLfile += self.prepadString(event.transitionLength, 3, '0') + ' ';
                 } else {
@@ -199,6 +214,12 @@ MltXmlParser.prototype.createEdl = function() {
                 }
                 EDLfile += srcIn.toString() + ' ' + srcOut.toString() + ' ';
                 EDLfile += progIn.toString() + ' ' + progOut.toString() + "\n";
+                if ('resource' in sourceLinks[event.producer]) {
+                    var fileName = sourceLinks[event.producer].resource;
+                    if (self.useBaseNameForClipComment)
+                        fileName = self.baseName(fileName);
+                    EDLfile += '* FROM CLIP NAME: ' + fileName + "\n";
+                }
 
                 EdlEventCount += 1;
             }
@@ -207,6 +228,15 @@ MltXmlParser.prototype.createEdl = function() {
     });
     return EDLfile;
 };
+
+MltXmlParser.prototype.baseName = function(fileName) {
+    if (fileName.indexOf('/') !== -1)
+        return fileName.split('/').pop();
+    else if (fileName.indexOf('\\') !== -1)
+        return fileName.split('\\').pop();
+    else
+        return fileName;
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 // Are we being used in a Node-like environment?

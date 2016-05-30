@@ -1,205 +1,3 @@
-/*
- * MltXmlParser class Copyright (c) 2016 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-function MltXmlParser(xmlString) {
-    var xml = modules.xmldoc;
-    this.xmldoc = new xml.XmlDocument(xmlString);
-    this.Timecode = modules.timecode.Timecode;
-    this.projectMeta = this.xmldoc.childNamed('profile');
-    this.framerate = parseFloat(this.projectMeta.attr.frame_rate_num) / parseFloat(this.projectMeta.attr.frame_rate_den);
-}
-
-MltXmlParser.prototype.prepadString = function (str, len, chr) {
-    var padding = Array(len - String(str).length + 1).join(chr);
-    return padding + str;
-};
-
-MltXmlParser.prototype.timecode = function(value) {
-    if (typeof value === 'string') {
-        // Determine if this is a MLT "clock" time string.
-        if (value.length === 12 && value[8] === '.') {
-            // Convert the milliseconds portion to frame units.
-            var ms = parseFloat(value.substring(9, 12));
-            var fr = Math.round(ms / 1000 * this.framerate).toString();
-            value = value.substring(0, 8) + ':' + this.prepadString(fr, 2, '0');
-        } else if (value.indexOf(':') === -1) {
-            value = parseInt(value);
-        }
-    }
-    // Return a timecode object.
-    return this.Timecode.init({
-       'framerate': this.framerate,
-       'timecode': value
-    });
-};
-
-MltXmlParser.prototype.getPlaylists = function() {
-    var playlistList = [];
-    var playlists = this.xmldoc.childrenNamed('playlist');
-    var self = this;
-    playlists.forEach(function(p) {
-        var eventList = [];
-        var plDict = {};
-        plDict.pid = p.attr.id;
-        plDict.format = 'V';
-        p.childrenNamed('property').forEach(function (fe) {
-            if (fe.attr.name === 'shotcut:audio')
-                plDict.format = 'A'
-            else if (fe.attr.name === 'shotcut:video')
-                // AA/V for Sony Vegas/Lightworks.
-                plDict.format = 'AA/V';
-        });
-        p.children.forEach(function (event) {
-            if ('length' in event.attr) {
-                var out = self.timecode(event.attr['length']);
-                // MLTblacks are 1 frame longer than "out".
-                out.subtract(self.timecode(1));
-                eventList.push({
-                    'producer': 'black',
-                    'inTime': self.timecode(0).toString(),
-                    'outTime': out.toString()
-                });
-            }
-            if ('producer' in event.attr) {
-                if (event.attr.producer.substring(0, 7) === 'tractor') {
-                    // dissolve or wipe transition
-                    self.xmldoc.childrenNamed('tractor').forEach(function (tractor) {
-                        if (tractor.attr.id === event.attr.producer) {
-                            var count = 0;
-                            tractor.childrenNamed('track').forEach(function (track) {
-                                if (!count) {
-                                    eventList.push({
-                                        'producer': track.attr.producer,
-                                        'inTime': track.attr.in,
-                                        'outTime': track.attr.out,
-                                        'transition': 'C'
-                                    });
-                                } else {
-                                    var length = self.timecode(track.attr.out);
-                                    length.subtract(self.timecode(track.attr.in));
-                                    length.add(self.timecode(1));
-                                    eventList.push({
-                                        'producer': track.attr.producer,
-                                        'inTime': track.attr.in,
-                                        'outTime': track.attr.out,
-                                        'transition': 'D',
-                                        'transitionLength': length.frame_count
-                                    });
-                                };
-                                count += 1;
-                            });
-                        }
-                    });
-                } else if (event.attr.producer !== 'black') {
-                    eventList.push({
-                       'producer': event.attr.producer.replace(' ', '_'),
-                       'inTime': event.attr.in,
-                       'outTime': event.attr.out,
-                       'transition': 'C'
-                    });
-                }
-            }
-        });
-        plDict.events = eventList;
-        playlistList.push(plDict);
-    });
-    return playlistList;
-};
-
-MltXmlParser.prototype.getProducers = function() {
-    var producerList = [];
-    var producers = this.xmldoc.childrenNamed('producer');
-    producers.forEach(function(p) {
-        var pDict = {};
-        pDict.pid = p.attr.id;
-        pDict.inTime = p.attr.in;
-        pDict.outTime = p.attr.out;
-        p.childrenNamed('property').forEach(function(property){
-            pDict[property.attr.name] = property.val;
-        });
-        producerList.push(pDict);
-    });
-    return producerList;
-};
-
-MltXmlParser.prototype.linkReferences = function() {
-    var sourceLinks = {};
-    this.getProducers().forEach(function(p){
-        sourceLinks[p.pid] = p.resource;
-    });
-    return sourceLinks;
-};
-
-MltXmlParser.prototype.createEdl = function() {
-    var sourceLinks = this.linkReferences();
-    var EDLfile = '';
-    var self = this;
-    self.getPlaylists().forEach(function (playlist) {
-        if (playlist.pid === 'main bin' || playlist.pid === 'background')
-            return;
-        var EdlEventCount = 1;
-        var progIn = self.timecode(0); //showtime tally
-        var progOut = self.timecode(0);
-        var srcChannel = 'C'; // default channel/track assignment
-        EDLfile += "\n === " + playlist.pid + " === \n\n";
-        playlist.events.forEach(function(event) {
-            var srcIn = self.timecode(event.inTime);
-            var srcOut = self.timecode(event.outTime);
-            var srcLen = self.timecode(event.outTime); srcLen.subtract(srcIn);
-            // increment program tally
-            progOut.add(srcLen);
-            var sourcePath = sourceLinks[event.producer];
-            var sourceRef = sourcePath.split('/').pop();
-            if (sourceRef !== 'black') {
-                EDLfile += '* FROM CLIP NAME: ' + sourceRef + "\n";
-                sourceRef = (sourceRef + '         ').substring(0, 8);
-                if (event.transition[0] === 'D') {
-                    EdlEventCount -= 1;
-                }
-                EDLfile += self.prepadString(EdlEventCount, 3, '0') + '  '; // edit counter
-                EDLfile += sourceRef + ' '; // "reel number"
-                EDLfile += self.prepadString(playlist.format, 4, ' ') + ' '; // channels
-                EDLfile += self.prepadString(event.transition, 4, ' ') + ' '; // type of edit/transition
-                if ('transitionLength' in event) {
-                    EDLfile += self.prepadString(event.transitionLength, 3, '0') + ' ';
-                } else {
-                    EDLfile += '    ';
-                }
-                EDLfile += srcIn.toString() + ' ' + srcOut.toString() + ' ';
-                EDLfile += progIn.toString() + ' ' + progOut.toString() + "\n";
-
-                EdlEventCount += 1;
-            }
-            progIn.add(srcLen);
-        });
-    });
-    return EDLfile;
-};
-
-////////////////////////////////////////////////////////////////////////////////
-// The big chunk of code below was created using qml-browserify:
-// https://github.com/bhdouglass/qml-browserify
-// against the timecode and xmldoc npm modules:
-// qml-browserify --globals false -o bundle.js
-//
-// Skip to the bottom of this file to see the simple, main, entry-point
-// function of this script file.
-
 //QML Browserify - original prelude from browser-pack
 var modules = (function outer (modules, cache, entry) {
     var previousRequire = typeof require == "function" && require;
@@ -244,195 +42,195 @@ if (typeof Object.create !== 'function') {
 }
 
 var Timecode = {
-    get: function(dict, name, default_value) {
-        if (dict.hasOwnProperty(name)) {
-            return dict[name];
-        }
-        else {
-            return default_value;
-        }
-    },
-    init: function(args) {
-        var obj = Object.create(this);
-        obj.framerate = obj.get(args, "framerate", "29.97");
-        obj.int_framerate = obj.getIntFramerate();
-        obj.drop_frame = obj.get(args, "drop_frame", false);
-        obj.hours = false;
-        obj.minutes = false;
-        obj.seconds = false;
-        obj.frames = false;
-        obj.frame_count = false;
-        obj.set(obj.get(args, "timecode", 0));
-        return obj;
-    },
-    getIntFramerate: function() {
-        if (this.framerate === "ms") {
-            return 1000;
-        }
-        else {
-            return Math.round(this.framerate * 1);
-        }
-    },
-    set: function(timecode) {
-        if (typeof timecode === "string") {
-            this.partsFromString(timecode);
-            this.timecodeToFrameNumber();
-            this.frameNumberToTimecode();
-        }
-        else if (typeof timecode === "number") {
-            this.frame_count = timecode;
-            this.frameNumberToTimecode();
-        }
-        else {
-            // throw an error
-        }
-    },
-    partsFromString: function(timecode) {
-        // Parses timecode strings non-drop 'hh:mm:ss:ff', drop 'hh:mm:ss;ff', or milliseconds 'hh:mm:ss:fff'
-        if (timecode.length === 11) {
-            this.frames = timecode.slice(9, 11) * 1;
-        }
-        else if ((timecode.length === 12) && (this.framerate === "ms")) {
-            this.frames = timecode.slice(9, 12) * 1;
-        }
-        else {
-            throw new Error("Timecode string parsing error. " + timecode);
-        }
-        this.hours = timecode.slice(0, 2) * 1;
-        this.minutes = timecode.slice(3, 5) * 1;
-        this.seconds = timecode.slice(6, 8) * 1;
-    },
-    frameNumberToTimecode: function() {
-        // Converts frame_count to timecode
-        var frame_count = this.frame_count;
-        if (this.drop_frame) {
-            var parts = this.frameNumberToDropFrameTimecode(frame_count);
-            this.hours = parts[0];
-            this.minutes = parts[1];
-            this.seconds = parts[2];
-            this.frames = parts[3];
-        }
-        else {
-            this.hours = frame_count / (3600 * this.int_framerate);
-            if (this.hours > 23) {
-                this.hours = this.hours % 24;
-                frame_count = frame_count - (23 * 3600 * this.int_framerate);
-            }
-            this.minutes = (frame_count % (3600 * this.int_framerate)) / (60 * this.int_framerate);
-            this.seconds = ((frame_count % (3600 * this.int_framerate)) % (60 * this.int_framerate)) / this.int_framerate;
-            this.frames = ((frame_count % (3600 * this.int_framerate)) % (60 * this.int_framerate)) % this.int_framerate;
-            this.hours = Math.floor(this.hours);
-            this.minutes = Math.floor(this.minutes);
-            this.seconds = Math.floor(this.seconds);
-            this.frames = Math.floor(this.frames);
-        }
-    },
-    timecodeToFrameNumber: function() {
-        // converts the current timecode to frame_count.
-        if (this.drop_frame) {
-            this.frame_count = this.dropFrameTimecodeToFrameNumber([this.hours, this.minutes, this.seconds, this.frames]);
-        }
-        else {
-            this.frame_count = (((this.hours * 3600) + (this.minutes * 60) + this.seconds) * this.int_framerate) + this.frames;
-        }
-    },
-    _calculate: function(sign, timecodes) {
-        // all timecodes are calculated in place
-        var timecode, i, frame_count;
-        for (i = 0; i < timecodes.length; i += 1) {
-            timecode = timecodes[i];
-            // if a string or number is given, convert it to a timecode
-            if ((typeof timecode === "string") || (typeof timecode === "number")) {
-                timecode = Timecode.init({
-                    framerate: this.framerate,
-                    timecode: timecode,
-                    drop_frame: this.drop_frame
-                });
-            }
-            // make sure this is a valid timecode
-            if (timecode.frame_count) {
-                if (timecode.framerate != this.framerate) {
-                    throw new Error("Timecode framerates must match to do calculations.");
-                }
-                if (sign === "-") {
-                    frame_count = timecode.frame_count * -1;
-                }
-                else if (sign === "+") {
-                    frame_count = timecode.frame_count;
-                }
-                else {
-                    throw new Error("Expected sign to be + or -.");
-                }
-                this.frame_count = this.frame_count + frame_count;
-                this.frameNumberToTimecode();
-            }
-        }
+	get: function(dict, name, default_value) {
+		if (dict.hasOwnProperty(name)) {
+			return dict[name];
+		}
+		else {
+			return default_value;
+		}
+	},
+	init: function(args) {
+		var obj = Object.create(this);
+		obj.framerate = obj.get(args, "framerate", "29.97");
+		obj.int_framerate = obj.getIntFramerate();
+		obj.drop_frame = obj.get(args, "drop_frame", false);
+		obj.hours = false;
+		obj.minutes = false;
+		obj.seconds = false;
+		obj.frames = false;
+		obj.frame_count = false;
+		obj.set(obj.get(args, "timecode", 0));
+		return obj;
+	},
+	getIntFramerate: function() {
+		if (this.framerate === "ms") {
+			return 1000;
+		}
+		else {
+			return Math.round(this.framerate * 1);
+		}
+	},
+	set: function(timecode) {
+		if (typeof timecode === "string") {
+			this.partsFromString(timecode);
+			this.timecodeToFrameNumber();
+			this.frameNumberToTimecode();
+		}
+		else if (typeof timecode === "number") {
+			this.frame_count = timecode;
+			this.frameNumberToTimecode();
+		}
+		else {
+			// throw an error
+		}
+	},
+	partsFromString: function(timecode) {
+		// Parses timecode strings non-drop 'hh:mm:ss:ff', drop 'hh:mm:ss;ff', or milliseconds 'hh:mm:ss:fff'
+		if (timecode.length === 11) {
+			this.frames = timecode.slice(9, 11) * 1;
+		}
+		else if ((timecode.length === 12) && (this.framerate === "ms")) {
+			this.frames = timecode.slice(9, 12) * 1;
+		}
+		else {
+			throw new Error("Timecode string parsing error. " + timecode);
+		}
+		this.hours = timecode.slice(0, 2) * 1;
+		this.minutes = timecode.slice(3, 5) * 1;
+		this.seconds = timecode.slice(6, 8) * 1;
+	},
+	frameNumberToTimecode: function() {
+		// Converts frame_count to timecode
+		var frame_count = this.frame_count;
+		if (this.drop_frame) {
+			var parts = this.frameNumberToDropFrameTimecode(frame_count);
+			this.hours = parts[0];
+			this.minutes = parts[1];
+			this.seconds = parts[2];
+			this.frames = parts[3];
+		}
+		else {
+			this.hours = frame_count / (3600 * this.int_framerate);
+			if (this.hours > 23) {
+				this.hours = this.hours % 24;
+				frame_count = frame_count - (23 * 3600 * this.int_framerate);
+			}
+			this.minutes = (frame_count % (3600 * this.int_framerate)) / (60 * this.int_framerate);
+			this.seconds = ((frame_count % (3600 * this.int_framerate)) % (60 * this.int_framerate)) / this.int_framerate;
+			this.frames = ((frame_count % (3600 * this.int_framerate)) % (60 * this.int_framerate)) % this.int_framerate;
+			this.hours = Math.floor(this.hours);
+			this.minutes = Math.floor(this.minutes);
+			this.seconds = Math.floor(this.seconds);
+			this.frames = Math.floor(this.frames);
+		}
+	},
+	timecodeToFrameNumber: function() {
+		// converts the current timecode to frame_count.
+		if (this.drop_frame) {
+			this.frame_count = this.dropFrameTimecodeToFrameNumber([this.hours, this.minutes, this.seconds, this.frames]);
+		}
+		else {
+			this.frame_count = (((this.hours * 3600) + (this.minutes * 60) + this.seconds) * this.int_framerate) + this.frames;
+		}
+	},
+	_calculate: function(sign, timecodes) {
+		// all timecodes are calculated in place
+		var timecode, i, frame_count;
+		for (i = 0; i < timecodes.length; i += 1) {
+			timecode = timecodes[i];
+			// if a string or number is given, convert it to a timecode
+			if ((typeof timecode === "string") || (typeof timecode === "number")) {
+				timecode = Timecode.init({
+					framerate: this.framerate,
+					timecode: timecode,
+					drop_frame: this.drop_frame
+				});
+			}
+			// make sure this is a valid timecode
+			if (timecode.frame_count) {
+				if (timecode.framerate != this.framerate) {
+					throw new Error("Timecode framerates must match to do calculations.");
+				}
+				if (sign === "-") {
+					frame_count = timecode.frame_count * -1;
+				}
+				else if (sign === "+") {
+					frame_count = timecode.frame_count;
+				}
+				else {
+					throw new Error("Expected sign to be + or -.");
+				}
+				this.frame_count = this.frame_count + frame_count;
+				this.frameNumberToTimecode();
+			}
+		}
 
-    },
-    add: function() {
-        /*
-        // This takes one or more Timecode objects as arguments
-        // If this has been initialized, add to this, otherwise just add timecodes given.
-        var timecodes = [];
-        if (this.frame_count) {
-            timecodes.push(this);
-        }
-        */
-        this._calculate("+", arguments);
-    },
-    subtract: function() {
-        this._calculate("-", arguments);
-    },
-    toString: function() {
-        var zeroPad, delim;
-        zeroPad = function(number) {
-            var pad = (number < 10) ? "0" : "";
-            return pad + Math.floor(number);
-        };
-        delim = (this.drop_frame) ? ";" : ":";
-        return zeroPad(this.hours) + ":" + zeroPad(this.minutes) + ":" + zeroPad(this.seconds) + delim + zeroPad(this.frames);
-    },
-    frameNumberToDropFrameTimecode: function(frame_number) {
-        var d, m,
-            framerate = this.framerate * 1,
-            drop_frames = Math.round(framerate * 0.066666),
-            frames_per_hour = Math.round(framerate * 60 * 60),
-            frames_per_24_hours = frames_per_hour * 24,
-            frames_per_10_minutes = Math.round(framerate * 60 * 10),
-            frames_per_minute = Math.round(framerate * 60);
-        // Roll over clock if greater than 24 hours
-        frame_number = frame_number % frames_per_24_hours;
-        // If time is negative, count back from 24 hours
-        if (frame_number < 0) {
-            frame_number = frames_per_24_hours + frame_number;
-        }
-        d = Math.floor(frame_number / frames_per_10_minutes);
-        m = frame_number % frames_per_10_minutes;
-        if (m > drop_frames) {
-            frame_number = frame_number + (drop_frames * 9 * d) + drop_frames * Math.floor((m - drop_frames) / frames_per_minute);
-        }
-        else {
-            frame_number = frame_number + drop_frames * 9 * d;
-        }
-        return [
-            Math.floor(Math.floor(Math.floor(frame_number / this.int_framerate) / 60) / 60),
-            Math.floor(Math.floor(frame_number / this.int_framerate) / 60) % 60,
-            Math.floor(frame_number / this.int_framerate) % 60,
-            frame_number % this.int_framerate,
-        ]
-    },
-    dropFrameTimecodeToFrameNumber: function(timecode_as_list) {
-        var hours = timecode_as_list[0],
-            minutes = timecode_as_list[1],
-            seconds = timecode_as_list[2],
-            frames = timecode_as_list[3],
-            drop_frames = Math.round(this.framerate * 0.066666),
-            hour_frames = this.int_framerate * 60 * 60,
-            minute_frames = this.int_framerate * 60,
-            total_minutes = (hours * 60) + minutes,
-            frame_number = ((hour_frames * hours) + (minute_frames * minutes) + (this.int_framerate * seconds) + frames) - (drop_frames * (total_minutes - Math.floor(total_minutes / 10)));
-        return frame_number;
-    }
+	},
+	add: function() {
+		/*
+		// This takes one or more Timecode objects as arguments
+		// If this has been initialized, add to this, otherwise just add timecodes given.
+		var timecodes = [];
+		if (this.frame_count) {
+			timecodes.push(this);
+		}
+		*/
+		this._calculate("+", arguments);
+	},
+	subtract: function() {
+		this._calculate("-", arguments);
+	},
+	toString: function() {
+		var zeroPad, delim;
+		zeroPad = function(number) {
+			var pad = (number < 10) ? "0" : "";
+			return pad + Math.floor(number);
+		};
+		delim = (this.drop_frame) ? ";" : ":";
+		return zeroPad(this.hours) + ":" + zeroPad(this.minutes) + ":" + zeroPad(this.seconds) + delim + zeroPad(this.frames);
+	},
+	frameNumberToDropFrameTimecode: function(frame_number) {
+		var d, m,
+			framerate = this.framerate * 1,
+			drop_frames = Math.round(framerate * 0.066666),
+			frames_per_hour = Math.round(framerate * 60 * 60),
+			frames_per_24_hours = frames_per_hour * 24,
+			frames_per_10_minutes = Math.round(framerate * 60 * 10),
+			frames_per_minute = Math.round(framerate * 60);
+		// Roll over clock if greater than 24 hours
+		frame_number = frame_number % frames_per_24_hours;
+		// If time is negative, count back from 24 hours
+		if (frame_number < 0) {
+			frame_number = frames_per_24_hours + frame_number;
+		}
+		d = Math.floor(frame_number / frames_per_10_minutes);
+		m = frame_number % frames_per_10_minutes;
+		if (m > drop_frames) {
+			frame_number = frame_number + (drop_frames * 9 * d) + drop_frames * Math.floor((m - drop_frames) / frames_per_minute);
+		}
+		else {
+			frame_number = frame_number + drop_frames * 9 * d;
+		}
+		return [
+			Math.floor(Math.floor(Math.floor(frame_number / this.int_framerate) / 60) / 60),
+			Math.floor(Math.floor(frame_number / this.int_framerate) / 60) % 60,
+			Math.floor(frame_number / this.int_framerate) % 60,
+			frame_number % this.int_framerate,
+		]
+	},
+	dropFrameTimecodeToFrameNumber: function(timecode_as_list) {
+		var hours = timecode_as_list[0],
+			minutes = timecode_as_list[1],
+			seconds = timecode_as_list[2],
+			frames = timecode_as_list[3],
+			drop_frames = Math.round(this.framerate * 0.066666),
+			hour_frames = this.int_framerate * 60 * 60,
+			minute_frames = this.int_framerate * 60,
+			total_minutes = (hours * 60) + minutes,
+			frame_number = ((hour_frames * hours) + (minute_frames * minutes) + (this.int_framerate * seconds) + frames) - (drop_frames * (total_minutes - Math.floor(total_minutes / 10)));
+		return frame_number;
+	}
 };
 
 var exports = exports || window;
@@ -493,7 +291,7 @@ function XmlElement(tag) {
 XmlElement.prototype._opentag = function(tag) {
 
   var child = new XmlElement(tag);
-
+  
   // add to our children array
   this.children.push(child);
 
@@ -607,25 +405,25 @@ XmlElement.prototype.toStringWithIndent = function(indent, options) {
   }
   if (options && options.trimmed && finalVal.length > 25)
     finalVal = finalVal.substring(0,25).trim() + "…";
-
+  
   if (this.children.length) {
     s += ">" + linebreak;
 
     var childIndent = indent + (options && options.compressed ? "" : "  ");
-
+    
     if (finalVal.length)
       s += childIndent + finalVal + linebreak;
 
     for (var i=0, l=this.children.length; i<l; i++)
       s += this.children[i].toStringWithIndent(childIndent, options) + linebreak;
-
+    
     s += indent + "</" + this.name + ">";
   }
   else if (finalVal.length) {
     s += ">" + finalVal + "</" + this.name +">";
   }
   else s += "/>";
-
+  
   return s;
 };
 
@@ -3857,126 +3655,126 @@ function blitBuffer (src, dst, offset, length) {
 var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 
 ;(function (exports) {
-    'use strict';
+	'use strict';
 
   var Arr = (typeof Uint8Array !== 'undefined')
     ? Uint8Array
     : Array
 
-    var PLUS   = '+'.charCodeAt(0)
-    var SLASH  = '/'.charCodeAt(0)
-    var NUMBER = '0'.charCodeAt(0)
-    var LOWER  = 'a'.charCodeAt(0)
-    var UPPER  = 'A'.charCodeAt(0)
-    var PLUS_URL_SAFE = '-'.charCodeAt(0)
-    var SLASH_URL_SAFE = '_'.charCodeAt(0)
+	var PLUS   = '+'.charCodeAt(0)
+	var SLASH  = '/'.charCodeAt(0)
+	var NUMBER = '0'.charCodeAt(0)
+	var LOWER  = 'a'.charCodeAt(0)
+	var UPPER  = 'A'.charCodeAt(0)
+	var PLUS_URL_SAFE = '-'.charCodeAt(0)
+	var SLASH_URL_SAFE = '_'.charCodeAt(0)
 
-    function decode (elt) {
-        var code = elt.charCodeAt(0)
-        if (code === PLUS ||
-            code === PLUS_URL_SAFE)
-            return 62 // '+'
-        if (code === SLASH ||
-            code === SLASH_URL_SAFE)
-            return 63 // '/'
-        if (code < NUMBER)
-            return -1 //no match
-        if (code < NUMBER + 10)
-            return code - NUMBER + 26 + 26
-        if (code < UPPER + 26)
-            return code - UPPER
-        if (code < LOWER + 26)
-            return code - LOWER + 26
-    }
+	function decode (elt) {
+		var code = elt.charCodeAt(0)
+		if (code === PLUS ||
+		    code === PLUS_URL_SAFE)
+			return 62 // '+'
+		if (code === SLASH ||
+		    code === SLASH_URL_SAFE)
+			return 63 // '/'
+		if (code < NUMBER)
+			return -1 //no match
+		if (code < NUMBER + 10)
+			return code - NUMBER + 26 + 26
+		if (code < UPPER + 26)
+			return code - UPPER
+		if (code < LOWER + 26)
+			return code - LOWER + 26
+	}
 
-    function b64ToByteArray (b64) {
-        var i, j, l, tmp, placeHolders, arr
+	function b64ToByteArray (b64) {
+		var i, j, l, tmp, placeHolders, arr
 
-        if (b64.length % 4 > 0) {
-            throw new Error('Invalid string. Length must be a multiple of 4')
-        }
+		if (b64.length % 4 > 0) {
+			throw new Error('Invalid string. Length must be a multiple of 4')
+		}
 
-        // the number of equal signs (place holders)
-        // if there are two placeholders, than the two characters before it
-        // represent one byte
-        // if there is only one, then the three characters before it represent 2 bytes
-        // this is just a cheap hack to not do indexOf twice
-        var len = b64.length
-        placeHolders = '=' === b64.charAt(len - 2) ? 2 : '=' === b64.charAt(len - 1) ? 1 : 0
+		// the number of equal signs (place holders)
+		// if there are two placeholders, than the two characters before it
+		// represent one byte
+		// if there is only one, then the three characters before it represent 2 bytes
+		// this is just a cheap hack to not do indexOf twice
+		var len = b64.length
+		placeHolders = '=' === b64.charAt(len - 2) ? 2 : '=' === b64.charAt(len - 1) ? 1 : 0
 
-        // base64 is 4/3 + up to two characters of the original data
-        arr = new Arr(b64.length * 3 / 4 - placeHolders)
+		// base64 is 4/3 + up to two characters of the original data
+		arr = new Arr(b64.length * 3 / 4 - placeHolders)
 
-        // if there are placeholders, only get up to the last complete 4 chars
-        l = placeHolders > 0 ? b64.length - 4 : b64.length
+		// if there are placeholders, only get up to the last complete 4 chars
+		l = placeHolders > 0 ? b64.length - 4 : b64.length
 
-        var L = 0
+		var L = 0
 
-        function push (v) {
-            arr[L++] = v
-        }
+		function push (v) {
+			arr[L++] = v
+		}
 
-        for (i = 0, j = 0; i < l; i += 4, j += 3) {
-            tmp = (decode(b64.charAt(i)) << 18) | (decode(b64.charAt(i + 1)) << 12) | (decode(b64.charAt(i + 2)) << 6) | decode(b64.charAt(i + 3))
-            push((tmp & 0xFF0000) >> 16)
-            push((tmp & 0xFF00) >> 8)
-            push(tmp & 0xFF)
-        }
+		for (i = 0, j = 0; i < l; i += 4, j += 3) {
+			tmp = (decode(b64.charAt(i)) << 18) | (decode(b64.charAt(i + 1)) << 12) | (decode(b64.charAt(i + 2)) << 6) | decode(b64.charAt(i + 3))
+			push((tmp & 0xFF0000) >> 16)
+			push((tmp & 0xFF00) >> 8)
+			push(tmp & 0xFF)
+		}
 
-        if (placeHolders === 2) {
-            tmp = (decode(b64.charAt(i)) << 2) | (decode(b64.charAt(i + 1)) >> 4)
-            push(tmp & 0xFF)
-        } else if (placeHolders === 1) {
-            tmp = (decode(b64.charAt(i)) << 10) | (decode(b64.charAt(i + 1)) << 4) | (decode(b64.charAt(i + 2)) >> 2)
-            push((tmp >> 8) & 0xFF)
-            push(tmp & 0xFF)
-        }
+		if (placeHolders === 2) {
+			tmp = (decode(b64.charAt(i)) << 2) | (decode(b64.charAt(i + 1)) >> 4)
+			push(tmp & 0xFF)
+		} else if (placeHolders === 1) {
+			tmp = (decode(b64.charAt(i)) << 10) | (decode(b64.charAt(i + 1)) << 4) | (decode(b64.charAt(i + 2)) >> 2)
+			push((tmp >> 8) & 0xFF)
+			push(tmp & 0xFF)
+		}
 
-        return arr
-    }
+		return arr
+	}
 
-    function uint8ToBase64 (uint8) {
-        var i,
-            extraBytes = uint8.length % 3, // if we have 1 byte left, pad 2 bytes
-            output = "",
-            temp, length
+	function uint8ToBase64 (uint8) {
+		var i,
+			extraBytes = uint8.length % 3, // if we have 1 byte left, pad 2 bytes
+			output = "",
+			temp, length
 
-        function encode (num) {
-            return lookup.charAt(num)
-        }
+		function encode (num) {
+			return lookup.charAt(num)
+		}
 
-        function tripletToBase64 (num) {
-            return encode(num >> 18 & 0x3F) + encode(num >> 12 & 0x3F) + encode(num >> 6 & 0x3F) + encode(num & 0x3F)
-        }
+		function tripletToBase64 (num) {
+			return encode(num >> 18 & 0x3F) + encode(num >> 12 & 0x3F) + encode(num >> 6 & 0x3F) + encode(num & 0x3F)
+		}
 
-        // go through the array every three bytes, we'll deal with trailing stuff later
-        for (i = 0, length = uint8.length - extraBytes; i < length; i += 3) {
-            temp = (uint8[i] << 16) + (uint8[i + 1] << 8) + (uint8[i + 2])
-            output += tripletToBase64(temp)
-        }
+		// go through the array every three bytes, we'll deal with trailing stuff later
+		for (i = 0, length = uint8.length - extraBytes; i < length; i += 3) {
+			temp = (uint8[i] << 16) + (uint8[i + 1] << 8) + (uint8[i + 2])
+			output += tripletToBase64(temp)
+		}
 
-        // pad the end with zeros, but make sure to not forget the extra bytes
-        switch (extraBytes) {
-            case 1:
-                temp = uint8[uint8.length - 1]
-                output += encode(temp >> 2)
-                output += encode((temp << 4) & 0x3F)
-                output += '=='
-                break
-            case 2:
-                temp = (uint8[uint8.length - 2] << 8) + (uint8[uint8.length - 1])
-                output += encode(temp >> 10)
-                output += encode((temp >> 4) & 0x3F)
-                output += encode((temp << 2) & 0x3F)
-                output += '='
-                break
-        }
+		// pad the end with zeros, but make sure to not forget the extra bytes
+		switch (extraBytes) {
+			case 1:
+				temp = uint8[uint8.length - 1]
+				output += encode(temp >> 2)
+				output += encode((temp << 4) & 0x3F)
+				output += '=='
+				break
+			case 2:
+				temp = (uint8[uint8.length - 2] << 8) + (uint8[uint8.length - 1])
+				output += encode(temp >> 10)
+				output += encode((temp >> 4) & 0x3F)
+				output += encode((temp << 2) & 0x3F)
+				output += '='
+				break
+		}
 
-        return output
-    }
+		return output
+	}
 
-    exports.toByteArray = b64ToByteArray
-    exports.fromByteArray = uint8ToBase64
+	exports.toByteArray = b64ToByteArray
+	exports.fromByteArray = uint8ToBase64
 }(typeof exports === 'undefined' ? (this.base64js = {}) : exports))
 
 },{}],9:[function(require,module,exports){
@@ -6949,13 +6747,262 @@ function base64DetectIncompleteChar(buffer) {
 }
 
 },{"buffer":7}]},{},[1]);
+/*
+ * MltXmlParser class Copyright (c) 2016 Meltytech, LLC
+ * Author: Dan Dennedy <dan@dennedy.org>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
-//
-// END QML Browersify
+var xmldoc;
+var timecode;
+
+if (typeof module !== 'undefined' && module.exports) {
+    // We're being used in a Node-like environment
+    xmldoc = require('xmldoc');
+    timecode = require('timecode').Timecode;
+} else {
+    // assume it's attached through qml-browserify
+    xmldoc = modules.xmldoc;
+    if (!xmldoc)
+        throw new Error("Expected xmldoc to be defined. Make sure you're including xmldoc.js before this file.");
+    timecode = modules.timecode.Timecode
+    if (!timecode)
+        throw new Error("Expected timecode to be defined. Make sure you're including timecode.js before this file.");
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 
+function MltXmlParser(xmlString, options) {
+    var self = Object.create(this);
+    self.useBaseNameForReelName = self.get(options, 'useBaseNameForReelName', true);
+    self.useBaseNameForClipComment = self.get(options, 'useBaseNameForClipComment', true);
+    self.channelsAV = self.get(options, 'channelsAV', 'AA/V');
+    self.xmldoc = new xmldoc.XmlDocument(xmlString);
+    self.projectMeta = self.xmldoc.childNamed('profile');
+    self.framerate = parseFloat(self.projectMeta.attr.frame_rate_num) / parseFloat(self.projectMeta.attr.frame_rate_den);
+    return self;
+}
 
-(function main(xmlString) {
-    var mltxml = new MltXmlParser(xmlString);
+MltXmlParser.prototype.get = function(dict, name, defaultValue) {
+    return (typeof dict === 'object' && name in dict)? dict[name] : defaultValue;
+};
+
+
+MltXmlParser.prototype.prepadString = function (str, len, chr) {
+    var padding = Array(len - String(str).length + 1).join(chr);
+    return padding + str;
+};
+
+MltXmlParser.prototype.Timecode = function(value) {
+    if (typeof value === 'string') {
+        // Determine if this is a MLT "clock" time string.
+        if (value.length === 12 && value[8] === '.') {
+            // Convert the milliseconds portion to frame units.
+            var ms = parseFloat(value.substring(9, 12));
+            var fr = Math.round(ms / 1000 * this.framerate).toString();
+            value = value.substring(0, 8) + ':' + this.prepadString(fr, 2, '0');
+        } else if (value.indexOf(':') === -1) {
+            value = parseInt(value);
+        }
+    }
+    // Return a Timecode object.
+    return timecode.init({
+       'framerate': this.framerate,
+       'timecode': value
+    });
+};
+
+MltXmlParser.prototype.getPlaylists = function() {
+    var playlistList = [];
+    var playlists = this.xmldoc.childrenNamed('playlist');
+    var self = this;
+    playlists.forEach(function(p) {
+        var eventList = [];
+        var plDict = {};
+        plDict.id = p.attr.id;
+        plDict.format = 'V';
+        p.childrenNamed('property').forEach(function (fe) {
+            if (fe.attr.name === 'shotcut:audio')
+                plDict.format = 'A'
+            else if (fe.attr.name === 'shotcut:video')
+                // AA/V for Sony Vegas/Lightworks.
+                plDict.format = self.channelsAV;
+        });
+        p.children.forEach(function (event) {
+            if ('length' in event.attr) {
+                var out = self.Timecode(event.attr['length']);
+                // MLTblacks are 1 frame longer than "out".
+                out.subtract(self.Timecode(1));
+                eventList.push({
+                    'producer': 'black',
+                    'inTime': self.Timecode(0).toString(),
+                    'outTime': out.toString()
+                });
+            }
+            if ('producer' in event.attr) {
+                if (event.attr.producer.substring(0, 7) === 'tractor') {
+                    // dissolve or wipe transition
+                    self.xmldoc.childrenNamed('tractor').forEach(function (tractor) {
+                        if (tractor.attr.id === event.attr.producer) {
+                            var count = 0;
+                            tractor.childrenNamed('track').forEach(function (track) {
+                                if (!count) {
+                                    eventList.push({
+                                        'producer': track.attr.producer,
+                                        'inTime': track.attr.in,
+                                        'outTime': track.attr.in,
+                                        'transition': 'C'
+                                    });
+                                } else {
+                                    var length = self.Timecode(track.attr.out);
+                                    length.subtract(self.Timecode(track.attr.in));
+                                    length.add(self.Timecode(1));
+                                    eventList.push({
+                                        'producer': track.attr.producer,
+                                        'inTime': track.attr.in,
+                                        'outTime': track.attr.out,
+                                        'transition': 'D',
+                                        'transitionLength': length.frame_count
+                                    });
+                                };
+                                count += 1;
+                            });
+                        }
+                    });
+                } else if (event.attr.producer !== 'black') {
+                    eventList.push({
+                       'producer': event.attr.producer.replace(' ', '_'),
+                       'inTime': event.attr.in,
+                       'outTime': event.attr.out,
+                       'transition': 'C' 
+                    });
+                }
+            }
+        });
+        plDict.events = eventList;
+        playlistList.push(plDict);
+    });
+    return playlistList;
+};
+
+MltXmlParser.prototype.getProducers = function() {
+    var producerList = [];
+    var producers = this.xmldoc.childrenNamed('producer');
+    producers.forEach(function(p) {
+        var pDict = {};
+        pDict.id = p.attr.id;
+        pDict.inTime = p.attr.in;
+        pDict.outTime = p.attr.out;
+        p.childrenNamed('property').forEach(function(property){
+            pDict[property.attr.name] = property.val;
+        });
+        producerList.push(pDict);
+    });
+    return producerList;
+};
+
+MltXmlParser.prototype.linkReferences = function() {
+    var sourceLinks = {};
+    var self = this;
+    this.getProducers().forEach(function(p) {
+        sourceLinks[p.id] = p;
+        if (!self.useBaseNameForReelName && 'shotcut:hash' in p) {
+            sourceLinks[p.id].reel_name = p['shotcut:hash']
+        } else if ('resource' in p) {
+            var reelName = self.baseName(p.resource);
+            sourceLinks[p.id].reel_name = reelName.replace(/\W/g, '_');
+        }
+    });
+    return sourceLinks;
+};
+
+MltXmlParser.prototype.createEdl = function() {
+    var sourceLinks = this.linkReferences();
+    var EDLfile = '';
+    var self = this;
+    self.getPlaylists().forEach(function (playlist) {
+        if (playlist.id === 'main bin' || playlist.id === 'background')
+            return;
+        var EdlEventCount = 1;
+        var progIn = self.Timecode(0); //showtime tally
+        var progOut = self.Timecode(0);
+        var srcChannel = 'C'; // default channel/track assignment
+        EDLfile += "\n === " + playlist.id + " === \n\n";
+        playlist.events.forEach(function(event) {
+            var srcIn = self.Timecode(event.inTime);
+            var srcOut = self.Timecode(event.outTime);
+            var srcLen = self.Timecode(event.outTime); srcLen.subtract(srcIn);
+            // increment program tally
+            progOut.add(srcLen);
+            var reelName = sourceLinks[event.producer].reel_name;
+            if (reelName !== 'black') {
+                reelName = (reelName + '         ').substring(0, 8);
+                if (event.transition[0] === 'D') {
+                    EdlEventCount -= 1;
+                }
+                EDLfile += self.prepadString(EdlEventCount, 3, '0') + '  '; // edit counter
+                EDLfile += reelName + ' '; // "reel name"
+                EDLfile += self.prepadString(playlist.format, 4, ' ') + ' '; // channels
+                EDLfile += (event.transition + '    ').substring(0, 4) + ' '; // type of edit/transition
+                if ('transitionLength' in event) {
+                    EDLfile += self.prepadString(event.transitionLength, 3, '0') + ' ';
+                } else {
+                    EDLfile += '    ';
+                }
+                EDLfile += srcIn.toString() + ' ' + srcOut.toString() + ' ';
+                EDLfile += progIn.toString() + ' ' + progOut.toString() + "\n";
+                if ('resource' in sourceLinks[event.producer]) {
+                    var fileName = sourceLinks[event.producer].resource;
+                    if (self.useBaseNameForClipComment)
+                        fileName = self.baseName(fileName);
+                    EDLfile += '* FROM CLIP NAME: ' + fileName + "\n";
+                }
+
+                EdlEventCount += 1;
+            }
+            progIn.add(srcLen);
+        });
+    });
+    return EDLfile;
+};
+
+MltXmlParser.prototype.baseName = function(fileName) {
+    if (fileName.indexOf('/') !== -1)
+        return fileName.split('/').pop();
+    else if (fileName.indexOf('\\') !== -1)
+        return fileName.split('\\').pop();
+    else
+        return fileName;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Are we being used in a Node-like environment?
+if (typeof module !== 'undefined' && module.exports)
+    module.exports.MltXmlParser = MltXmlParser;
+// This is not meant to be used directly. It returns a function object
+// to the QJSEngine environment.
+//
+// To build export-edl.js:
+// npm install
+// qml-browserify --globals false -o export-edl.js
+// cat mlt2edl.js >> export-edl.js
+// cat main.js >> export-edl.js
+// Then, open in Qt Creator, make a change and save it. This is fixing something
+// in the qml-browserify output that is throwing a syntax error.
+
+(function main(xmlString, options) {
+    var mltxml = new MltXmlParser(xmlString, options);
     return mltxml.createEdl();
 })
