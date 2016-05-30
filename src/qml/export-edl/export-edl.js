@@ -6824,6 +6824,16 @@ MltXmlParser.prototype.Timecode = function(value) {
     });
 };
 
+MltXmlParser.prototype.getTrackByProducerId = function(id) {
+    var result = false;
+    this.xmldoc.childrenNamed('tractor').forEach(function(tractor) {
+        var node = tractor.childWithAttribute('producer', id);
+        if (typeof node === 'object' && node.name === 'track')
+            result = node;
+    });
+    return result;
+}
+
 MltXmlParser.prototype.getPlaylists = function() {
     var playlistList = [];
     var playlists = this.xmldoc.childrenNamed('playlist');
@@ -6837,9 +6847,25 @@ MltXmlParser.prototype.getPlaylists = function() {
             if (fe.attr.name === 'shotcut:audio')
                 plDict.format = 'A'
             else if (fe.attr.name === 'shotcut:video')
-                // AA/V for Sony Vegas/Lightworks.
                 plDict.format = self.channelsAV;
         });
+        var track = self.getTrackByProducerId(p.attr.id);
+        if (track && 'hide' in track.attr) {
+            if (track.attr.hide === 'audio') {
+                if (plDict.format === 'A')
+                    return; // skip muted audio tracks
+                else
+                    plDict.format = 'V'; // muted video track
+            } else if (track.attr.hide === 'video') {
+                if (plDict.format === 'V')
+                    return; // skip muted and hidden tracks
+                else if (plDict.format.indexOf('V') !== -1)
+                    plDict.format = 'A'; // hidden audio/video track
+            } else if (track.attr.hide === 'both') {
+                return; // skip muted and hidden tracks
+            }
+        }
+
         p.children.forEach(function (event) {
             if ('length' in event.attr) {
                 var out = self.Timecode(event.attr['length']);
@@ -6954,7 +6980,7 @@ MltXmlParser.prototype.createEdl = function() {
                 }
                 EDLfile += self.prepadString(EdlEventCount, 3, '0') + '  '; // edit counter
                 EDLfile += reelName + ' '; // "reel name"
-                EDLfile += self.prepadString(playlist.format, 4, ' ') + ' '; // channels
+                EDLfile += (playlist.format + '    ').substring(0, 4) + '  '; // channels
                 EDLfile += (event.transition + '    ').substring(0, 4) + ' '; // type of edit/transition
                 if ('transitionLength' in event) {
                     EDLfile += self.prepadString(event.transitionLength, 3, '0') + ' ';
