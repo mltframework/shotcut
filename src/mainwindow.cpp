@@ -1936,14 +1936,18 @@ bool MainWindow::on_actionSave_As_triggered()
         Settings.setSavePath(fi.path());
         if (fi.suffix() != "mlt")
             filename += ".mlt";
-        saveXML(filename);
+        if (MLT.producer())
+            saveXML(filename);
+        else
+            showStatusMessage(tr("Unable to save empty file, but saved its name for future."));
         if (m_autosaveFile)
             m_autosaveFile->changeManagedFile(filename);
         else
             m_autosaveFile = new AutoSaveFile(filename);
         setCurrentFile(filename);
         setWindowModified(false);
-        showStatusMessage(tr("Saved %1").arg(m_currentFile));
+        if (MLT.producer())
+            showStatusMessage(tr("Saved %1").arg(m_currentFile));
         m_undoStack->setClean();
         m_recentDock->add(filename);
     }
