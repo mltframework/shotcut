@@ -30,7 +30,9 @@ class TimelineDock;
 }
 namespace Timeline {
 class UpdateCommand;
+class TrimCommand;
 }
+class UndoHelper;
 
 class TimelineDock : public QDockWidget
 {
@@ -130,6 +132,7 @@ public slots:
     void onProducerChanged(Mlt::Producer*);
     void emitSelectedFromSelection();
     void remakeAudioLevels(int trackIndex, int clipIndex);
+    void commitTrimCommand();
 
 protected:
     void dragEnterEvent(QDragEnterEvent* event);
@@ -156,6 +159,9 @@ private:
     };
     Selection m_selection;
     Selection m_savedSelection;
+    QScopedPointer<Timeline::TrimCommand> m_trimCommand;
+    QScopedPointer<UndoHelper> m_undoHelper;
+    int m_trimDelta;
 
 private slots:
     void onVisibilityChanged(bool visible);

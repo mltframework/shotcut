@@ -192,10 +192,20 @@ private:
     UndoHelper m_undoHelper;
 };
 
-class TrimClipInCommand : public QUndoCommand
+class TrimCommand : public QUndoCommand
 {
 public:
-    TrimClipInCommand(MultitrackModel& model, int trackIndex, int clipIndex, int delta, bool ripple, QUndoCommand * parent = 0);
+    explicit TrimCommand(QUndoCommand *parent = 0) : QUndoCommand(parent) {}
+    void setUndoHelper(UndoHelper* helper) { m_undoHelper.reset(helper); }
+
+protected:
+    QScopedPointer<UndoHelper> m_undoHelper;
+};
+
+class TrimClipInCommand : public TrimCommand
+{
+public:
+    TrimClipInCommand(MultitrackModel& model, int trackIndex, int clipIndex, int delta, bool ripple, bool redo = true, QUndoCommand * parent = 0);
     void redo();
     void undo();
 protected:
@@ -207,13 +217,13 @@ private:
     int m_clipIndex;
     int m_delta;
     bool m_ripple;
-    UndoHelper m_undoHelper;
+    bool m_redo;
 };
 
-class TrimClipOutCommand : public QUndoCommand
+class TrimClipOutCommand : public TrimCommand
 {
 public:
-    TrimClipOutCommand(MultitrackModel& model, int trackIndex, int clipIndex, int delta, bool ripple, QUndoCommand * parent = 0);
+    TrimClipOutCommand(MultitrackModel& model, int trackIndex, int clipIndex, int delta, bool ripple, bool redo = true, QUndoCommand * parent = 0);
     void redo();
     void undo();
 protected:
@@ -225,7 +235,7 @@ private:
     int m_clipIndex;
     int m_delta;
     bool m_ripple;
-    UndoHelper m_undoHelper;
+    bool m_redo;
 };
 
 class SplitCommand : public QUndoCommand
@@ -289,10 +299,10 @@ private:
     int m_transitionIndex;
 };
 
-class TrimTransitionInCommand : public QUndoCommand
+class TrimTransitionInCommand : public TrimCommand
 {
 public:
-    TrimTransitionInCommand(MultitrackModel& model, int trackIndex, int clipIndex, int delta, QUndoCommand * parent = 0);
+    TrimTransitionInCommand(MultitrackModel& model, int trackIndex, int clipIndex, int delta, bool redo = true, QUndoCommand * parent = 0);
     void redo();
     void undo();
 protected:
@@ -304,12 +314,13 @@ private:
     int m_clipIndex;
     int m_delta;
     bool m_notify;
+    bool m_redo;
 };
 
-class TrimTransitionOutCommand : public QUndoCommand
+class TrimTransitionOutCommand : public TrimCommand
 {
 public:
-    TrimTransitionOutCommand(MultitrackModel& model, int trackIndex, int clipIndex, int delta, QUndoCommand * parent = 0);
+    TrimTransitionOutCommand(MultitrackModel& model, int trackIndex, int clipIndex, int delta, bool redo = true, QUndoCommand * parent = 0);
     void redo();
     void undo();
 protected:
@@ -321,12 +332,13 @@ private:
     int m_clipIndex;
     int m_delta;
     bool m_notify;
+    bool m_redo;
 };
 
-class AddTransitionByTrimInCommand : public QUndoCommand
+class AddTransitionByTrimInCommand : public TrimCommand
 {
 public:
-    AddTransitionByTrimInCommand(MultitrackModel& model, int trackIndex, int clipIndex, int delta, QUndoCommand * parent = 0);
+    AddTransitionByTrimInCommand(MultitrackModel& model, int trackIndex, int clipIndex, int delta, bool redo = true, QUndoCommand * parent = 0);
     void redo();
     void undo();
 protected:
@@ -338,12 +350,41 @@ private:
     int m_clipIndex;
     int m_delta;
     bool m_notify;
+    bool m_redo;
 };
 
-class AddTransitionByTrimOutCommand : public QUndoCommand
+class RemoveTransitionByTrimInCommand : public TrimCommand
 {
 public:
-    AddTransitionByTrimOutCommand(MultitrackModel& model, int trackIndex, int clipIndex, int delta, QUndoCommand * parent = 0);
+    RemoveTransitionByTrimInCommand(MultitrackModel& model, int trackIndex, int clipIndex, int delta, bool redo = true, QUndoCommand * parent = 0);
+    void redo();
+    void undo();
+private:
+    MultitrackModel& m_model;
+    int m_trackIndex;
+    int m_clipIndex;
+    int m_delta;
+    bool m_redo;
+};
+
+class RemoveTransitionByTrimOutCommand : public TrimCommand
+{
+public:
+    RemoveTransitionByTrimOutCommand(MultitrackModel& model, int trackIndex, int clipIndex, int delta, bool redo = true, QUndoCommand * parent = 0);
+    void redo();
+    void undo();
+private:
+    MultitrackModel& m_model;
+    int m_trackIndex;
+    int m_clipIndex;
+    int m_delta;
+    bool m_redo;
+};
+
+class AddTransitionByTrimOutCommand : public TrimCommand
+{
+public:
+    AddTransitionByTrimOutCommand(MultitrackModel& model, int trackIndex, int clipIndex, int delta, bool redo = true, QUndoCommand * parent = 0);
     void redo();
     void undo();
 protected:
@@ -355,6 +396,7 @@ private:
     int m_clipIndex;
     int m_delta;
     bool m_notify;
+    bool m_redo;
 };
 
 class AddTrackCommand: public QUndoCommand

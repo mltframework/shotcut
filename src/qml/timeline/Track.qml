@@ -138,6 +138,7 @@ Rectangle {
                 if (clip.DelegateModel.itemsIndex > 1 && repeater.itemAt(clip.DelegateModel.itemsIndex - 1).isTransition)
                     multitrack.notifyClipOut(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex - 2)
                 bubbleHelp.hide()
+                timeline.commitTrimCommand()
             }
             onTrimmingOut: {
                 var originalDelta = delta
@@ -163,6 +164,7 @@ Rectangle {
                 if (clip.DelegateModel.itemsIndex + 2 < repeater.count && repeater.itemAt(clip.DelegateModel.itemsIndex + 1).isTransition)
                     multitrack.notifyClipIn(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex + 2)
                 bubbleHelp.hide()
+                timeline.commitTrimCommand()
             }
             onDraggedToTrack: {
                 if (!placeHolderAdded) {

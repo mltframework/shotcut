@@ -222,6 +222,11 @@ QModelIndex MultitrackModel::index(int row, int column, const QModelIndex &paren
     return result;
 }
 
+QModelIndex MultitrackModel::makeIndex(int trackIndex, int clipIndex) const
+{
+    return index(clipIndex, 0, index(trackIndex));
+}
+
 QModelIndex MultitrackModel::parent(const QModelIndex &index) const
 {
 //    LOG_DEBUG() << __FUNCTION__ << index;
@@ -1794,11 +1799,14 @@ bool MultitrackModel::addTransitionByTrimInValid(int trackIndex, int clipIndex, 
         if (clipIndex > 0) {
             // Check if preceeding clip is not blank, not already a transition,
             // and there is enough frames before in point of current clip.
-            if (delta < 0 && !playlist.is_blank(clipIndex - 1) && !isTransition(playlist, clipIndex - 1)) {
+            if (!m_isMakingTransition && delta < 0 && !playlist.is_blank(clipIndex - 1) && !isTransition(playlist, clipIndex - 1)) {
                 Mlt::ClipInfo info;
                 playlist.clip_info(clipIndex, &info);
                 if (info.frame_in >= -delta)
                     result = true;
+            } else if (m_isMakingTransition && isTransition(playlist, clipIndex - 1)) {
+                // Invalid if transition length will be 0 or less.
+                result = playlist.clip_length(clipIndex - 1) - delta > 0;
             } else {
                 result = m_isMakingTransition;
             }
@@ -1855,11 +1863,16 @@ bool MultitrackModel::addTransitionByTrimOutValid(int trackIndex, int clipIndex,
         if (clipIndex + 1 < playlist.count()) {
             // Check if following clip is not blank, not already a transition,
             // and there is enough frames after out point of current clip.
-            if (delta < 0 && !playlist.is_blank(clipIndex + 1) && !isTransition(playlist, clipIndex +  1)) {
+            if (!m_isMakingTransition && delta < 0 && !playlist.is_blank(clipIndex + 1) && !isTransition(playlist, clipIndex +  1)) {
                 Mlt::ClipInfo info;
                 playlist.clip_info(clipIndex, &info);
+//                LOG_DEBUG() << "(info.length" << info.length << " - info.frame_out" << info.frame_out << ") =" << (info.length - info.frame_out) << " >= -delta" << -delta;
                 if ((info.length - info.frame_out) >= -delta)
                     result = true;
+            } else if (m_isMakingTransition && isTransition(playlist, clipIndex + 1)) {
+                // Invalid if transition length will be 0 or less.
+//                LOG_DEBUG() << "playlist.clip_length(clipIndex + 1)" << playlist.clip_length(clipIndex + 1) << "- delta" << delta << "=" << (playlist.clip_length(clipIndex + 1) - delta);
+                result = playlist.clip_length(clipIndex + 1) - delta > 0;
             } else {
                 result = m_isMakingTransition;
             }
@@ -1904,6 +1917,43 @@ void MultitrackModel::addTransitionByTrimOut(int trackIndex, int clipIndex, int 
             trimTransitionOut(trackIndex, clipIndex + 2, delta);
         }
     }
+}
+
+bool MultitrackModel::removeTransitionByTrimInValid(int trackIndex, int clipIndex, int delta)
+{
+    bool result = false;
+    int i = m_trackList.at(trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    if (track) {
+        Mlt::Playlist playlist(*track);
+        if (clipIndex > 1) {
+            // Check if there is a transition and its new length is 0 or less.
+            if (isTransition(playlist, clipIndex - 1) && playlist.clip_length(clipIndex - 1) - qAbs(delta) <= 0) {
+                result = true;
+                m_isMakingTransition = false;
+            }
+        }
+    }
+    return result;
+}
+
+bool MultitrackModel::removeTransitionByTrimOutValid(int trackIndex, int clipIndex, int delta)
+{
+    bool result = false;
+    int i = m_trackList.at(trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    if (track) {
+        Mlt::Playlist playlist(*track);
+        if (clipIndex + 2 < playlist.count()) {
+            // Check if there is a transition and its new length is 0 or less.
+//            LOG_DEBUG() << "transition length" << playlist.clip_length(clipIndex + 1) << "delta" << delta << playlist.clip_length(clipIndex + 1) - qAbs(delta);
+            if (isTransition(playlist, clipIndex + 1) && playlist.clip_length(clipIndex + 1) - qAbs(delta) <= 0) {
+                result = true;
+                m_isMakingTransition = false;
+            }
+        }
+    }
+    return result;
 }
 
 bool MultitrackModel::moveClipToTrack(int fromTrack, int toTrack, int clipIndex, int position)

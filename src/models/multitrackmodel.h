@@ -83,6 +83,7 @@ public:
     QVariant data(const QModelIndex &index, int role) const;
     QModelIndex index(int row, int column = 0,
                       const QModelIndex &parent = QModelIndex()) const;
+    QModelIndex makeIndex(int trackIndex, int clipIndex) const;
     QModelIndex parent(const QModelIndex &index) const;
     QHash<int, QByteArray> roleNames() const;
     void audioLevelsReady(const QModelIndex &index);
@@ -154,6 +155,8 @@ public slots:
     void addTransitionByTrimIn(int trackIndex, int clipIndex, int delta);
     bool addTransitionByTrimOutValid(int trackIndex, int clipIndex, int delta);
     void addTransitionByTrimOut(int trackIndex, int clipIndex, int delta);
+    bool removeTransitionByTrimInValid(int trackIndex, int clipIndex, int delta);
+    bool removeTransitionByTrimOutValid(int trackIndex, int clipIndex, int delta);
 
 private:
     Mlt::Tractor* m_tractor;
