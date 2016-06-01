@@ -409,8 +409,7 @@ function set_globals {
   # REPOLOCS Array holds the repo urls
   REPOLOCS[0]="git://github.com/FFmpeg/FFmpeg.git"
   REPOLOCS[1]="git://github.com/mltframework/mlt.git"
-  REPOLOCS[2]="git://github.com/ddennedy/frei0r.git"
-#  REPOLOCS[3]="git://git.videolan.org/x264.git"
+  REPOLOCS[2]="git://github.com/dyne/frei0r.git"
   REPOLOCS[3]="git://repo.or.cz/x264.git"
   REPOLOCS[4]="http://chromium.googlesource.com/webm/libvpx.git"
   REPOLOCS[5]="git://github.com/ddennedy/movit.git"
@@ -422,7 +421,7 @@ function set_globals {
   REPOLOCS[11]="git://github.com/anholt/libepoxy.git"
   REPOLOCS[12]="http://git.opus-codec.org/opus.git"
   REPOLOCS[13]="https://github.com/videolan/x265"
-  REPOLOCS[14]="http://bitbucket.org/eigen/eigen/get/3.2.4.tar.gz"
+  REPOLOCS[14]="http://bitbucket.org/eigen/eigen/get/3.2.8.tar.gz"
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
   REPOTYPES[0]="git"
@@ -493,7 +492,7 @@ function set_globals {
   if test 0 = "$X265_HEAD" -a "$X265_REVISION" ; then
     REVISIONS[13]="$X265_REVISION"
   fi
-  REVISIONS[14]="eigen-eigen-10219c95fe65"
+  REVISIONS[14]="eigen-eigen-07105f7124f9"
 
   # Figure out the number of cores in the system. Used both by make and startup script
   if test "$TARGET_OS" = "Darwin"; then
