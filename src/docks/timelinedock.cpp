@@ -61,7 +61,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     m_quickView.setResizeMode(QQuickWidget::SizeRootObjectToView);
     m_quickView.setClearColor(palette().window().color());
 
-    connect(&m_model, &MultitrackModel::modified, this, &TimelineDock::clearSelectionIfInvalid);
+    connect(&m_model, SIGNAL(modified()), this, SLOT(clearSelectionIfInvalid()));
 
     m_quickView.setFocusPolicy(Qt::StrongFocus);
     setWidget(&m_quickView);
