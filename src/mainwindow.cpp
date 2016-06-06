@@ -2265,10 +2265,12 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
 {
     QWidget* w = 0;
     QScrollArea* scrollArea = (QScrollArea*) m_propertiesDock->widget();
-    delete scrollArea->widget();
 
-    if (!producer || !producer->is_valid())
+    if (!producer || !producer->is_valid()) {
+        if (scrollArea->widget())
+            scrollArea->widget()->deleteLater();
         return  w;
+    }
 
     QString service(producer->get("mlt_service"));
     QString resource = QString::fromUtf8(producer->get("resource"));
@@ -2338,6 +2340,8 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
         }
         scrollArea->setWidget(w);
         onProducerChanged();
+    } else if (scrollArea->widget()) {
+        scrollArea->widget()->deleteLater();
     }
     return w;
 }

@@ -413,6 +413,7 @@ void TimelineDock::onProducerChanged(Mlt::Producer* after)
                                   qMin(qRound(info->frame_out * speedRatio), length - 1));
             QString xmlAfter = MLT.XML(after);
             m_updateCommand->setXmlAfter(xmlAfter);
+            setSelection(); // clearing selection prevents a crash
             Timeline::UpdateCommand* command = m_updateCommand;
             m_updateCommand = 0;
             MAIN.undoStack()->push(command);
