@@ -1072,9 +1072,10 @@ void MultitrackModel::removeClip(int trackIndex, int clipIndex)
         if (clipIndex < playlist.count()) {
             // Shotcut does not like the behavior of remove() on a
             // transition (MLT mix clip). So, we null mlt_mix to prevent it.
+            clearMixReferences(trackIndex, clipIndex);
+
             QScopedPointer<Mlt::Producer> producer(playlist.get_clip(clipIndex));
             if (producer) {
-                producer->parent().set("mlt_mix", NULL, 0);
                 clipPlaytime = producer->get_playtime();
                 clipStart = playlist.clip_start(clipIndex);
             }
@@ -1140,9 +1141,7 @@ void MultitrackModel::liftClip(int trackIndex, int clipIndex)
         if (clipIndex < playlist.count()) {
             // Shotcut does not like the behavior of replace_with_blank() on a
             // transition (MLT mix clip). So, we null mlt_mix to prevent it.
-            QScopedPointer<Mlt::Producer> producer(playlist.get_clip(clipIndex));
-            if (producer)
-                producer->parent().set("mlt_mix", NULL, 0);
+            clearMixReferences(trackIndex, clipIndex);
 
             playlist.replace_with_blank(clipIndex);
 
@@ -1561,13 +1560,34 @@ int MultitrackModel::addTransition(int trackIndex, int clipIndex, int position)
     return -1;
 }
 
+void MultitrackModel::clearMixReferences(int trackIndex, int clipIndex)
+{
+    int i = m_trackList.at(trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    if (track) {
+        Mlt::Playlist playlist(*track);
+        QScopedPointer<Mlt::Producer> producer(playlist.get_clip(clipIndex - 1));
+
+        // Clear these since they are no longer valid.
+        producer->set("mix_in", NULL, 0);
+        producer->set("mix_out", NULL, 0);
+        producer.reset(playlist.get_clip(clipIndex));
+        producer->parent().set("mlt_mix", NULL, 0);
+        producer->set("mix_in", NULL, 0);
+        producer->set("mix_out", NULL, 0);
+        producer.reset(playlist.get_clip(clipIndex + 1));
+        producer->set("mix_in", NULL, 0);
+        producer->set("mix_out", NULL, 0);
+    }
+}
+
 void MultitrackModel::removeTransition(int trackIndex, int clipIndex)
 {
     int i = m_trackList.at(trackIndex).mlt_index;
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     if (track) {
         Mlt::Playlist playlist(*track);
-
+        clearMixReferences(trackIndex, clipIndex);
         beginRemoveRows(index(trackIndex), clipIndex, clipIndex);
         playlist.remove(clipIndex);
         endRemoveRows();
@@ -1584,6 +1604,26 @@ void MultitrackModel::removeTransition(int trackIndex, int clipIndex)
         emit dataChanged(modelIndex, modelIndex, roles);
         emit modified();
     }
+}
+
+void MultitrackModel::removeTransitionByTrimIn(int trackIndex, int clipIndex, int delta)
+{
+    QModelIndex modelIndex = index(clipIndex, 0, index(trackIndex));
+    clearMixReferences(trackIndex, clipIndex);
+    delta = -data(modelIndex, MultitrackModel::DurationRole).toInt();
+    liftClip(trackIndex, clipIndex);
+    trimClipOut(trackIndex, clipIndex - 1, delta, false);
+    notifyClipOut(trackIndex, clipIndex - 1);
+}
+
+void MultitrackModel::removeTransitionByTrimOut(int trackIndex, int clipIndex, int delta)
+{
+    QModelIndex modelIndex = index(clipIndex + 1, 0, index(trackIndex));
+    clearMixReferences(trackIndex, clipIndex);
+    delta = -data(modelIndex, MultitrackModel::DurationRole).toInt();
+    liftClip(trackIndex, clipIndex + 1);
+    trimClipIn(trackIndex, clipIndex + 2, delta, false);
+    notifyClipIn(trackIndex, clipIndex + 1);
 }
 
 bool MultitrackModel::trimTransitionInValid(int trackIndex, int clipIndex, int delta)

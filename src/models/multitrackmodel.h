@@ -144,6 +144,8 @@ public slots:
     bool addTransitionValid(int fromTrack, int toTrack, int clipIndex, int position);
     int addTransition(int trackIndex, int clipIndex, int position);
     void removeTransition(int trackIndex, int clipIndex);
+    void removeTransitionByTrimIn(int trackIndex, int clipIndex, int delta);
+    void removeTransitionByTrimOut(int trackIndex, int clipIndex, int delta);
     bool trimTransitionInValid(int trackIndex, int clipIndex, int delta);
     void trimTransitionIn(int trackIndex, int clipIndex, int delta);
     bool trimTransitionOutValid(int trackIndex, int clipIndex, int delta);
@@ -174,6 +176,7 @@ private:
     void retainPlaylist();
     void loadPlaylist();
     void removeRegion(int trackIndex, int position, int length);
+    void clearMixReferences(int trackIndex, int clipIndex);
 
     friend class UndoHelper;
 

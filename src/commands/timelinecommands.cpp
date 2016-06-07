@@ -592,11 +592,7 @@ void AddTransitionByTrimInCommand::undo()
 {
     if (m_clipIndex > 0) {
         LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta" << m_delta;
-        QModelIndex modelIndex = m_model.index(m_clipIndex, 0, m_model.index(m_trackIndex));
-        m_delta = -m_model.data(modelIndex, MultitrackModel::DurationRole).toInt();
-        m_model.liftClip(m_trackIndex, m_clipIndex);
-        m_model.trimClipOut(m_trackIndex, m_clipIndex - 1, m_delta, false);
-        m_model.notifyClipOut(m_trackIndex, m_clipIndex - 1);
+        m_model.removeTransitionByTrimIn(m_trackIndex, m_clipIndex, m_delta);
         m_notify = true;
     }
     else LOG_WARNING() << "invalid clip index" << m_clipIndex;
@@ -633,11 +629,7 @@ void AddTransitionByTrimOutCommand::undo()
 {
     if (m_clipIndex + 2 < m_model.rowCount(m_model.index(m_trackIndex))) {
         LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta" << m_delta;
-        QModelIndex modelIndex = m_model.index(m_clipIndex + 1, 0, m_model.index(m_trackIndex));
-        m_delta = -m_model.data(modelIndex, MultitrackModel::DurationRole).toInt();
-        m_model.liftClip(m_trackIndex, m_clipIndex + 1);
-        m_model.trimClipIn(m_trackIndex, m_clipIndex + 2, m_delta, false);
-        m_model.notifyClipIn(m_trackIndex, m_clipIndex + 1);
+        m_model.removeTransitionByTrimOut(m_trackIndex, m_clipIndex, m_delta);
         m_notify = true;
     }
     else LOG_WARNING() << "invalid clip index" << m_clipIndex;
