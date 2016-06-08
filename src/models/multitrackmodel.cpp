@@ -1567,17 +1567,22 @@ void MultitrackModel::clearMixReferences(int trackIndex, int clipIndex)
     if (track) {
         Mlt::Playlist playlist(*track);
         QScopedPointer<Mlt::Producer> producer(playlist.get_clip(clipIndex - 1));
-
-        // Clear these since they are no longer valid.
-        producer->set("mix_in", NULL, 0);
-        producer->set("mix_out", NULL, 0);
-        producer.reset(playlist.get_clip(clipIndex));
-        producer->parent().set("mlt_mix", NULL, 0);
-        producer->set("mix_in", NULL, 0);
-        producer->set("mix_out", NULL, 0);
-        producer.reset(playlist.get_clip(clipIndex + 1));
-        producer->set("mix_in", NULL, 0);
-        producer->set("mix_out", NULL, 0);
+        if (producer && producer->is_valid()) {
+            // Clear these since they are no longer valid.
+            producer->set("mix_in", NULL, 0);
+            producer->set("mix_out", NULL, 0);
+            producer.reset(playlist.get_clip(clipIndex));
+            if (producer && producer->is_valid()) {
+                producer->parent().set("mlt_mix", NULL, 0);
+                producer->set("mix_in", NULL, 0);
+                producer->set("mix_out", NULL, 0);
+            }
+            producer.reset(playlist.get_clip(clipIndex + 1));
+            if (producer && producer->is_valid()) {
+                producer->set("mix_in", NULL, 0);
+                producer->set("mix_out", NULL, 0);
+            }
+        }
     }
 }
 
