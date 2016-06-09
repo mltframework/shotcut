@@ -677,6 +677,8 @@ function set_globals {
   else
     CFLAGS_[5]="$CFLAGS"
   fi
+  # include eigen and /usr/include for fftw3.h
+  CFLAGS_[5]="${CFLAGS_[5]} -I../eigen"
   LDFLAGS_[5]=$LDFLAGS
 
   #####
@@ -779,8 +781,8 @@ function set_globals {
   LDFLAGS_[13]=$LDFLAGS
 
   #######
-  # eigen
-  CONFIG[14]="cmake -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR .."
+  # eigen - no build required
+  CONFIG[14]=""
 }
 
 ######################################################################
@@ -1473,14 +1475,11 @@ function configure_compile_install_subproject {
     cd source
   fi
 
-  # Special hack for eigen
-  if test "eigen" = "$1"; then
-    cmd mkdir build 2> /dev/null
-    cmd cd build
+  MYCONFIG=`lookup CONFIG $1`
+  if test "$MYCONFIG" != ""; then
+    cmd $MYCONFIG || die "Unable to configure $1"
+    feedback_progress Done configuring $1
   fi
-
-  cmd `lookup CONFIG $1` || die "Unable to configure $1"
-  feedback_progress Done configuring $1
 
   # Special hack for mlt, post-configure
   if test "mlt" = "$1" ; then
@@ -1495,7 +1494,7 @@ function configure_compile_install_subproject {
     cmd make -j$MAKEJ -C webvfx || die "Unable to build $1/webvfx"
     cmd make -j$MAKEJ -C mlt || die "Unable to build $1/mlt"
     cmd make -j$MAKEJ -C mlt/qmelt || die "Unable to build $1/mlt/qmelt"
-  else
+  elif test "$MYCONFIG" != ""; then
     cmd make -j$MAKEJ || die "Unable to build $1"
   fi
   feedback_progress Done building $1
@@ -1586,7 +1585,7 @@ function configure_compile_install_subproject {
       # libopengl32.dll is added to prebuilts to make libtool build a dll for
       # libepoxy, but it is not an import lib for other projects.
       cmd rm "$FINAL_INSTALL_DIR"/lib/libopengl32.dll
-    else
+    elif test "$MYCONFIG" != "" ; then
       cmd make install || die "Unable to install $1"
     fi
     if test "x265" = "$1" -a "Darwin" = "$TARGET_OS" ; then
