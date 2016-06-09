@@ -988,7 +988,11 @@ function get_win32_build {
       debug "Fix cmake modules for $1"
       [ "x265" = "$1" ] && cd source
       cmd mkdir cmake 2>/dev/null
-      cmd cp -r /usr/share/cmake-2.8/Modules cmake
+      if [ -d "/usr/share/cmake-3.0" ] ; then
+        cmd cp -r /usr/share/cmake-3.0/Modules cmake
+      elif [ -d "/usr/share/cmake-2.8" ] ; then
+        cmd cp -r /usr/share/cmake-2.8/Modules cmake
+      fi
       sed 's/-rdynamic//' cmake/Modules/Platform/Linux-GNU.cmake >/tmp/Linux-GNU.cmake
       cmd mv /tmp/Linux-GNU.cmake cmake/Modules/Platform
 
