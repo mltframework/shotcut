@@ -109,7 +109,6 @@ MainWindow::MainWindow()
     , m_keyerGroup(0)
     , m_keyerMenu(0)
     , m_isPlaylistLoaded(false)
-    , m_htmlEditor(0)
     , m_exitCode(EXIT_SUCCESS)
     , m_navigationPosition(0)
 {
@@ -493,7 +492,6 @@ MainWindow& MainWindow::singleton()
 
 MainWindow::~MainWindow()
 {
-    delete m_htmlEditor;
     delete ui;
     Mlt::Controller::destroy();
 }
@@ -2382,8 +2380,8 @@ void MainWindow::onGpuNotSupported()
 void MainWindow::editHTML(const QString &fileName)
 {
     bool isNew = !m_htmlEditor;
-    if (!m_htmlEditor) {
-        m_htmlEditor = new HtmlEditor;
+    if (isNew) {
+        m_htmlEditor.reset(new HtmlEditor);
         m_htmlEditor->setWindowIcon(windowIcon());
     }
     m_htmlEditor->load(fileName);
