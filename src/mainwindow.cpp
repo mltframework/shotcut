@@ -2806,7 +2806,7 @@ void MainWindow::on_menuExternal_aboutToShow()
 void MainWindow::on_actionUpgrade_triggered()
 {
     showStatusMessage("Checking for upgrade...");
-    m_network.get(QNetworkRequest(QUrl("https://shotcut.org/version.json")));
+    m_network.get(QNetworkRequest(QUrl("http://cdn.shotcut.org/version.json")));
 }
 
 void MainWindow::on_actionOpenXML_triggered()
