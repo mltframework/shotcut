@@ -1342,7 +1342,7 @@ void MainWindow::setCurrentFile(const QString &filename)
 {
     QString shownName = "Untitled";
     if (filename == untitledFileName())
-        m_currentFile = "";
+        m_currentFile.clear();
     else
         m_currentFile = filename;
     if (!m_currentFile.isEmpty())
@@ -2101,6 +2101,8 @@ void MainWindow::onPlaylistClosed()
     setWindowModified(false);
     m_undoStack->clear();
     MLT.resetURL();
+    delete m_autosaveFile;
+    m_autosaveFile = new AutoSaveFile(untitledFileName());
     if (!multitrack())
         m_player->enableTab(Player::ProjectTabIndex, false);
 }
@@ -2127,6 +2129,8 @@ void MainWindow::onMultitrackClosed()
     setWindowModified(false);
     m_undoStack->clear();
     MLT.resetURL();
+    delete m_autosaveFile;
+    m_autosaveFile = new AutoSaveFile(untitledFileName());
     if (!playlist() || playlist()->count() == 0)
         m_player->enableTab(Player::ProjectTabIndex, false);
 }
