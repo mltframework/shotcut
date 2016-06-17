@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2015 Meltytech, LLC
+ * Copyright (c) 2011-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,6 +24,8 @@
 #include <QTimer>
 #include <QUrl>
 #include <QNetworkAccessManager>
+#include <QScopedPointer>
+#include <QSharedPointer>
 #include "mltcontroller.h"
 #include "mltxmlchecker.h"
 
@@ -132,7 +134,7 @@ private:
     bool m_isPlaylistLoaded;
     QActionGroup* m_languagesGroup;
     HtmlEditor* m_htmlEditor;
-    AutoSaveFile* m_autosaveFile;
+    QSharedPointer<AutoSaveFile> m_autosaveFile;
     QMutex m_autosaveMutex;
     QTimer m_autosaveTimer;
     int m_exitCode;

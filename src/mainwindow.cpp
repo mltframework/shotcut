@@ -110,7 +110,6 @@ MainWindow::MainWindow()
     , m_keyerMenu(0)
     , m_isPlaylistLoaded(false)
     , m_htmlEditor(0)
-    , m_autosaveFile(0)
     , m_exitCode(EXIT_SUCCESS)
     , m_navigationPosition(0)
 {
@@ -494,11 +493,6 @@ MainWindow& MainWindow::singleton()
 
 MainWindow::~MainWindow()
 {
-    m_autosaveMutex.lock();
-    delete m_autosaveFile;
-    m_autosaveFile = 0;
-    m_autosaveMutex.unlock();
-
     delete m_htmlEditor;
     delete ui;
     Mlt::Controller::destroy();
@@ -915,7 +909,7 @@ bool MainWindow::checkAutoSave(QString &url)
     QMutexLocker locker(&m_autosaveMutex);
 
     // check whether autosave files exist:
-    AutoSaveFile* stale = AutoSaveFile::getFile(url);
+    QSharedPointer<AutoSaveFile> stale(AutoSaveFile::getFile(url));
     if (stale) {
         QMessageBox dialog(QMessageBox::Question, qApp->applicationName(),
            tr("Auto-saved files exist. Do you want to recover them now?"),
@@ -927,22 +921,16 @@ bool MainWindow::checkAutoSave(QString &url)
         if (r == QMessageBox::Yes) {
             if (!stale->open(QIODevice::ReadWrite)) {
                 LOG_WARNING() << "failed to recover autosave file" << url;
-                delete stale;
             } else {
-                delete m_autosaveFile;
                 m_autosaveFile = stale;
                 url = stale->fileName();
                 return true;
             }
-        } else {
-            // remove the stale file
-            delete stale;
         }
     }
 
     // create new autosave object
-    delete m_autosaveFile;
-    m_autosaveFile = new AutoSaveFile(url);
+    m_autosaveFile.reset(new AutoSaveFile(url));
 
     return false;
 }
@@ -954,7 +942,7 @@ void MainWindow::stepLeftBySeconds(int sec)
 
 void MainWindow::doAutosave()
 {
-    m_autosaveMutex.lock();
+    QMutexLocker locker(&m_autosaveMutex);
     if (m_autosaveFile) {
         if (m_autosaveFile->isOpen() || m_autosaveFile->open(QIODevice::ReadWrite)) {
             saveXML(m_autosaveFile->fileName(), false /* without relative paths */);
@@ -962,7 +950,6 @@ void MainWindow::doAutosave()
             LOG_ERROR() << "failed to open autosave file for writing" << m_autosaveFile->fileName();
         }
     }
-    m_autosaveMutex.unlock();
 }
 
 void MainWindow::setFullScreen(bool isFullScreen)
@@ -1943,7 +1930,7 @@ bool MainWindow::on_actionSave_As_triggered()
         if (m_autosaveFile)
             m_autosaveFile->changeManagedFile(filename);
         else
-            m_autosaveFile = new AutoSaveFile(filename);
+            m_autosaveFile.reset(new AutoSaveFile(filename));
         setCurrentFile(filename);
         setWindowModified(false);
         if (MLT.producer())
@@ -2101,8 +2088,7 @@ void MainWindow::onPlaylistClosed()
     setWindowModified(false);
     m_undoStack->clear();
     MLT.resetURL();
-    delete m_autosaveFile;
-    m_autosaveFile = new AutoSaveFile(untitledFileName());
+    m_autosaveFile.reset(new AutoSaveFile(untitledFileName()));
     if (!multitrack())
         m_player->enableTab(Player::ProjectTabIndex, false);
 }
@@ -2129,8 +2115,7 @@ void MainWindow::onMultitrackClosed()
     setWindowModified(false);
     m_undoStack->clear();
     MLT.resetURL();
-    delete m_autosaveFile;
-    m_autosaveFile = new AutoSaveFile(untitledFileName());
+    m_autosaveFile.reset(new AutoSaveFile(untitledFileName()));
     if (!playlist() || playlist()->count() == 0)
         m_player->enableTab(Player::ProjectTabIndex, false);
 }
