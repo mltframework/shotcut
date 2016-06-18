@@ -185,16 +185,22 @@ public:
         QCommandLineParser parser;
         parser.addHelpOption();
         parser.addVersionOption();
+#ifndef Q_OS_WIN
         QCommandLineOption fullscreenOption("fullscreen",
             QCoreApplication::translate("main", "Fill the screen with the Shotcut window."));
         parser.addOption(fullscreenOption);
+#endif
         QCommandLineOption gpuOption("gpu",
             QCoreApplication::translate("main", "Use GPU processing."));
         parser.addOption(gpuOption);
         parser.addPositionalArgument("resource",
             QCoreApplication::translate("main", "A file to open."));
         parser.process(arguments());
+#ifdef Q_OS_WIN
+        isFullScreen = false;
+#else
         isFullScreen = parser.isSet(fullscreenOption);
+#endif
         if (parser.isSet(gpuOption))
             Settings.setPlayerGPU(true);
         if (!parser.positionalArguments().isEmpty())

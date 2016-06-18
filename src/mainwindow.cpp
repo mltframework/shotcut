@@ -166,6 +166,13 @@ MainWindow::MainWindow()
     // OS X has a standard Full Screen shortcut we should use.
     ui->actionEnter_Full_Screen->setShortcut(QKeySequence((Qt::CTRL + Qt::META + Qt::Key_F)));
 #endif
+#ifdef Q_OS_WIN
+    // Fullscreen on Windows is not allowing popups and other app windows to appear.
+    delete ui->actionFullscreen;
+    ui->actionFullscreen = 0;
+    delete ui->actionEnter_Full_Screen;
+    ui->actionEnter_Full_Screen = 0;
+#endif
     setDockNestingEnabled(true);
     ui->statusBar->hide();
 
@@ -173,7 +180,8 @@ MainWindow::MainWindow()
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openVideo()));
     connect(ui->actionAbout_Qt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
     connect(this, SIGNAL(producerOpened()), this, SLOT(onProducerOpened()));
-    connect(ui->actionFullscreen, SIGNAL(triggered()), this, SLOT(on_actionEnter_Full_Screen_triggered()));
+    if (ui->actionFullscreen)
+        connect(ui->actionFullscreen, SIGNAL(triggered()), this, SLOT(on_actionEnter_Full_Screen_triggered()));
     connect(ui->mainToolBar, SIGNAL(visibilityChanged(bool)), SLOT(onToolbarVisibilityChanged(bool)));
 
     // Accept drag-n-drop of files.
@@ -953,9 +961,11 @@ void MainWindow::doAutosave()
 void MainWindow::setFullScreen(bool isFullScreen)
 {
     if (isFullScreen) {
+#ifndef Q_OS_WIN
         showFullScreen();
         ui->actionEnter_Full_Screen->setVisible(false);
         ui->actionFullscreen->setVisible(false);
+#endif
     }
 }
 
