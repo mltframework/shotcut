@@ -67,10 +67,10 @@ Player::Player(QWidget *parent)
     // Add status bar.
     m_statusLabel = new QPushButton;
     m_statusLabel->setFlat(true);
-    m_statusLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    m_statusLabel->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
     Util::setColorsToHighlight(m_statusLabel, QPalette::Button);
     tabLayout->addWidget(m_statusLabel);
-    tabLayout->addStretch(10);
+    tabLayout->addStretch(1);
     QGraphicsOpacityEffect *effect = new QGraphicsOpacityEffect(this);
     m_statusLabel->setGraphicsEffect(effect);
     m_statusFadeIn = new QPropertyAnimation(effect, "opacity", this);
