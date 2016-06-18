@@ -388,37 +388,40 @@ void TimelineDock::removeTrack()
 void TimelineDock::onProducerChanged(Mlt::Producer* after)
 {
     int trackIndex = currentTrack();
-    if (trackIndex < 0 || selection().isEmpty() || !m_updateCommand)
+    if (trackIndex < 0 || selection().isEmpty() || !m_updateCommand || !after || !after->is_valid())
         return;
     if (isTrackLocked(trackIndex)) {
         pulseLockButtonOnTrack(trackIndex);
         return;
     }
-    int i = m_model.trackList().at(trackIndex).mlt_index;
-    QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
-    if (track) {
-        // Ensure the new XML has same in/out point as selected clip by making
-        // a copy of the changed producer and copying the in/out from timeline.
-        Mlt::Playlist playlist(*track);
-        int clipIndex = selection().first();
-        QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
-        if (info) {
-            double oldSpeed = qstrcmp("timewarp", info->producer->get("mlt_service")) ? 1.0 : info->producer->get_double("warp_speed");
-            double newSpeed = qstrcmp("timewarp", after->get("mlt_service")) ? 1.0 : after->get_double("warp_speed");
-            double speedRatio = oldSpeed / newSpeed;
+    QString service = after->get("mlt_service");
+    if (service == "avformat" || service == "avformat-novalidate" || service == "timewarp") {
+        int i = m_model.trackList().at(trackIndex).mlt_index;
+        QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
+        if (track) {
+            // Ensure the new XML has same in/out point as selected clip by making
+            // a copy of the changed producer and copying the in/out from timeline.
+            Mlt::Playlist playlist(*track);
+            int clipIndex = selection().first();
+            QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
+            if (info) {
+                double oldSpeed = qstrcmp("timewarp", info->producer->get("mlt_service")) ? 1.0 : info->producer->get_double("warp_speed");
+                double newSpeed = qstrcmp("timewarp", after->get("mlt_service")) ? 1.0 : after->get_double("warp_speed");
+                double speedRatio = oldSpeed / newSpeed;
 
-            int length = qRound(info->length * speedRatio);
-            after->set("length", length);
-            after->set_in_and_out(qMin(qRound(info->frame_in * speedRatio), length - 1),
-                                  qMin(qRound(info->frame_out * speedRatio), length - 1));
-            QString xmlAfter = MLT.XML(after);
-            m_updateCommand->setXmlAfter(xmlAfter);
-            setSelection(); // clearing selection prevents a crash
-            Timeline::UpdateCommand* command = m_updateCommand;
-            m_updateCommand = 0;
-            MAIN.undoStack()->push(command);
+                int length = qRound(info->length * speedRatio);
+                after->set("length", length);
+                after->set_in_and_out(qMin(qRound(info->frame_in * speedRatio), length - 1),
+                                      qMin(qRound(info->frame_out * speedRatio), length - 1));
+            }
         }
     }
+    QString xmlAfter = MLT.XML(after);
+    m_updateCommand->setXmlAfter(xmlAfter);
+    setSelection(); // clearing selection prevents a crash
+    Timeline::UpdateCommand* command = m_updateCommand;
+    m_updateCommand = 0;
+    MAIN.undoStack()->push(command);
 }
 
 void TimelineDock::addAudioTrack()
