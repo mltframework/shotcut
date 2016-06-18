@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Meltytech, LLC
+ * Copyright (c) 2014-2016 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@
 #include <QObject>
 #include <QPoint>
 
-class QWindow;
+class QWidget;
 
 class QmlView : public QObject
 {
@@ -30,11 +30,11 @@ class QmlView : public QObject
     Q_PROPERTY(QPoint pos READ pos);
 
 public:
-    explicit QmlView(QWindow* qview);
+    explicit QmlView(QWidget* qview);
     QPoint pos();
 
 private:
-    QWindow* m_qview;
+    QWidget* m_qview;
 };
 
 #endif // QMLVIEW_H

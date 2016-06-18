@@ -48,7 +48,7 @@ function calcMenuRect(triggerItem, pad) {
     }
     
     // Calculate the x position
-    result.x = triggerPos.x
+    result.x = Math.max(triggerPos.x, mainWinRect.x)
     
     return result
 }

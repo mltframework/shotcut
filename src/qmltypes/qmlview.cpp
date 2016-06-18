@@ -17,10 +17,10 @@
  */
 
 #include "qmlview.h"
-#include <QWindow>
+#include <QWidget>
 #include <Logger.h>
 
-QmlView::QmlView(QWindow* qview)
+QmlView::QmlView(QWidget* qview)
     : QObject(qview)
     , m_qview(qview)
 {
@@ -28,5 +28,5 @@ QmlView::QmlView(QWindow* qview)
 
 QPoint QmlView::pos()
 {
-    return m_qview->mapToGlobal(QPoint(0,0));
+    return m_qview->mapToGlobal(QPoint(0, 0));
 }

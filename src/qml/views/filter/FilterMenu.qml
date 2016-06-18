@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2015 Meltytech, LLC
+ * Copyright (c) 2014-2016 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +17,7 @@
  */
  
 import QtQuick 2.2
-import QtQuick.Window 2.1
+import QtQuick.Window 2.2
 import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.1
 import 'FilterMenu.js' as Logic
@@ -33,8 +33,8 @@ Window {
 
     function popup(triggerItem) {
         var menuRect = Logic.calcMenuRect(triggerItem, toolBar.height + 2)
-        filterWindow.x = menuRect.x
-        filterWindow.y = menuRect.y
+        filterWindow.x = Math.min(Math.max(menuRect.x, 0), Screen.width - menuRect.width)
+        filterWindow.y = Math.min(Math.max(menuRect.y, 0), Screen.height - menuRect.height)
         filterWindow.height = menuRect.height
         filterWindow.show()
         filterWindow.requestActivate()
