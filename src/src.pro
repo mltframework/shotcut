@@ -307,6 +307,13 @@ debug_and_release {
 }
 LIBS += -lLogger -lmvcp -lpthread
 
+isEmpty(SHOTCUT_VERSION) {
+    !win32:SHOTCUT_VERSION = $$system(date "+%y.%m.%d")
+     win32:SHOTCUT_VERSION = adhoc
+}
+DEFINES += SHOTCUT_VERSION=\\\"$$SHOTCUT_VERSION\\\"
+VERSION = $$SHOTCUT_VERSION
+
 mac {
     TARGET = Shotcut
     ICON = ../icons/shotcut.icns
@@ -338,12 +345,6 @@ unix:!mac {
     PKGCONFIG += mlt++
     LIBS += -lX11
 }
-
-isEmpty(SHOTCUT_VERSION) {
-    !win32:SHOTCUT_VERSION = $$system(date "+%y.%m.%d")
-     win32:SHOTCUT_VERSION = adhoc
-}
-DEFINES += SHOTCUT_VERSION=\\\"$$SHOTCUT_VERSION\\\"
 
 unix:!mac:isEmpty(PREFIX) {
     message("Install PREFIX not set; using /usr/local. You can change this with 'qmake PREFIX=...'")
