@@ -39,7 +39,7 @@
      <x>0</x>
      <y>0</y>
      <width>832</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -53,6 +53,8 @@
     <addaction name="actionSave"/>
     <addaction name="actionSave_As"/>
     <addaction name="actionExportEDL"/>
+    <addaction name="actionExportFrame"/>
+    <addaction name="separator"/>
     <addaction name="actionClose"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
@@ -797,6 +799,11 @@
   <action name="actionExportEDL">
    <property name="text">
     <string>Export EDL...</string>
+   </property>
+  </action>
+  <action name="actionExportFrame">
+   <property name="text">
+    <string>Export Frame...</string>
    </property>
   </action>
  </widget>

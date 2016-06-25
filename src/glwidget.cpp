@@ -20,6 +20,7 @@
  */
 
 #include <QtWidgets>
+#include <QOpenGLFunctions_1_1>
 #include <QOpenGLFunctions_3_2_Core>
 #include <QUrl>
 #include <QOffscreenSurface>
@@ -176,6 +177,7 @@ void GLWidget::initializeGL()
         connect(m_frameRenderer, SIGNAL(textureReady(GLuint,GLuint,GLuint)), SLOT(updateTexture(GLuint,GLuint,GLuint)), Qt::DirectConnection);
     else
         connect(m_frameRenderer, SIGNAL(frameDisplayed(const SharedFrame&)), SLOT(onFrameDisplayed(const SharedFrame&)), Qt::QueuedConnection);
+    connect(m_frameRenderer, SIGNAL(imageReady()), SIGNAL(imageReady()));
 
     m_initSem.release();
     m_isInitialized = true;
@@ -680,6 +682,35 @@ QPoint GLWidget::offset() const
                   m_offset.y() - (MLT.profile().height() * m_zoom - height()) / 2);
 }
 
+QImage GLWidget::image() const
+{
+    if (Settings.playerGPU()) {
+        return m_frameRenderer->image();
+    }
+    SharedFrame frame = m_frameRenderer->getDisplayFrame();
+    if (frame.is_valid()) {
+        int width = frame.get_image_width();
+        int height = frame.get_image_height();
+        QImage result(width, height, QImage::Format_ARGB32);
+        Mlt::Frame displayFrame(frame.clone(false, true));
+        mlt_image_format format = mlt_image_rgb24a;
+        const uchar *image = displayFrame.get_image(format, width, height);
+        if (image) {
+            QImage temp(width, height, QImage::Format_ARGB32);
+            memcpy(temp.scanLine(0), image, width * height * 4);
+            result = temp.rgbSwapped();
+        }
+        return result;
+    } else {
+        return QImage();
+    }
+}
+
+void GLWidget::requestImage() const
+{
+    m_frameRenderer->requestImage();
+}
+
 void GLWidget::onFrameDisplayed(const SharedFrame &frame)
 {
     m_mutex.lock();
@@ -774,6 +805,7 @@ FrameRenderer::FrameRenderer(QOpenGLContext* shareContext, QSurface* surface)
      , m_context(0)
      , m_surface(surface)
      , m_previousMSecs(QDateTime::currentMSecsSinceEpoch())
+     , m_imageRequested(false)
      , m_gl32(0)
 {
     Q_ASSERT(shareContext);
@@ -844,6 +876,25 @@ void FrameRenderer::showFrame(Mlt::Frame frame)
 #else
             m_context->functions()->glFinish();
 #endif // USE_GL_FENCE
+
+            if (m_imageRequested) {
+                m_imageRequested = false;
+                int imageSizeBytes = width * height * 4;
+                uchar* image = (uchar*) mlt_pool_alloc(imageSizeBytes);
+                QOpenGLFunctions_1_1* f = m_context->versionFunctions<QOpenGLFunctions_1_1>();
+
+                f->glBindTexture(GL_TEXTURE_2D, *textureId);
+                check_error(f);
+                f->glGetTexImage(GL_TEXTURE_2D, 0, GL_BGRA, GL_UNSIGNED_BYTE, image);
+                check_error(f);
+                f->glBindTexture(GL_TEXTURE_2D, 0);
+
+                m_image = QImage(width, height, QImage::Format_ARGB32);
+                memcpy(m_image.scanLine(0), image, imageSizeBytes);
+                mlt_pool_release(image);
+                emit imageReady();
+            }
+
             emit textureReady(*textureId);
             m_context->doneCurrent();
 
@@ -882,6 +933,11 @@ void FrameRenderer::showFrame(Mlt::Frame frame)
     }
 
     m_semaphore.release();
+}
+
+void FrameRenderer::requestImage()
+{
+    m_imageRequested = true;
 }
 
 SharedFrame FrameRenderer::getDisplayFrame()
