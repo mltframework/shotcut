@@ -1964,8 +1964,11 @@ bool MainWindow::continueModified()
         dialog.setDefaultButton(QMessageBox::Yes);
         dialog.setEscapeButton(QMessageBox::Cancel);
         int r = dialog.exec();
-        if (r == QMessageBox::Yes) {
-            return on_actionSave_triggered();
+        if (r == QMessageBox::Yes || r == QMessageBox::No) {
+            QMutexLocker locker(&m_autosaveMutex);
+            m_autosaveFile.reset();
+            if (r == QMessageBox::Yes)
+                return on_actionSave_triggered();
         } else if (r == QMessageBox::Cancel) {
             return false;
         }
