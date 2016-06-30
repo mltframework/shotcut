@@ -2647,7 +2647,7 @@ duration of the transition.</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="359"/>
-        <location filename="../src/mainwindow.cpp" line="2371"/>
+        <location filename="../src/mainwindow.cpp" line="2374"/>
         <source>Enter Full Screen</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2990,7 +2990,7 @@ duration of the transition.</source>
         <location filename="../src/mainwindow.cpp" line="799"/>
         <location filename="../src/mainwindow.cpp" line="801"/>
         <location filename="../src/mainwindow.cpp" line="1111"/>
-        <location filename="../src/mainwindow.cpp" line="2848"/>
+        <location filename="../src/mainwindow.cpp" line="2851"/>
         <source>Failed to open </source>
         <translation type="unfinished"></translation>
     </message>
@@ -3020,25 +3020,25 @@ with &quot;- Repaired&quot; in the file name and open it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2586"/>
+        <location filename="../src/mainwindow.cpp" line="2589"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2636"/>
+        <location filename="../src/mainwindow.cpp" line="2639"/>
         <source>You must restart Shotcut to switch using GPU processing.
 Do you want to restart now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2889"/>
+        <location filename="../src/mainwindow.cpp" line="2892"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2911"/>
+        <location filename="../src/mainwindow.cpp" line="2914"/>
         <source>Application Log</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3063,7 +3063,7 @@ Please install it using your package manager. It may be named libsdl1.2debian, S
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1122"/>
-        <location filename="../src/mainwindow.cpp" line="2828"/>
+        <location filename="../src/mainwindow.cpp" line="2831"/>
         <source>Open File</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3115,74 +3115,74 @@ Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1981"/>
+        <location filename="../src/mainwindow.cpp" line="1984"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2374"/>
+        <location filename="../src/mainwindow.cpp" line="2377"/>
         <source>Exit Full Screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2387"/>
+        <location filename="../src/mainwindow.cpp" line="2390"/>
         <source>GPU Processing is not supported</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2627"/>
+        <location filename="../src/mainwindow.cpp" line="2630"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2829"/>
+        <location filename="../src/mainwindow.cpp" line="2832"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2945"/>
+        <location filename="../src/mainwindow.cpp" line="2948"/>
         <source>Shotcut version %1 is available! Click here to get it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2949"/>
+        <location filename="../src/mainwindow.cpp" line="2952"/>
         <source>You are running the latest version of Shotcut.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2959"/>
+        <location filename="../src/mainwindow.cpp" line="2962"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3009"/>
+        <location filename="../src/mainwindow.cpp" line="3012"/>
         <source>Export EDL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3009"/>
+        <location filename="../src/mainwindow.cpp" line="3012"/>
         <source>EDL (*.edl)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3050"/>
+        <location filename="../src/mainwindow.cpp" line="3053"/>
         <source>A JavaScript error occurred during export.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3053"/>
+        <location filename="../src/mainwindow.cpp" line="3056"/>
         <source>Failed to open export-edl.js</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3079"/>
+        <location filename="../src/mainwindow.cpp" line="3082"/>
         <source>Export Frame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3089"/>
+        <location filename="../src/mainwindow.cpp" line="3092"/>
         <source>Unable to export frame.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4371,79 +4371,85 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="344"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="354"/>
         <source>Trim clip out point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="380"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="399"/>
         <source>Split clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="404"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="423"/>
         <source>Adjust fade in</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="436"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="455"/>
         <source>Adjust fade out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="467"/>
-        <location filename="../src/commands/timelinecommands.cpp" line="581"/>
-        <location filename="../src/commands/timelinecommands.cpp" line="618"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="486"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="612"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="725"/>
         <source>Add transition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="505"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="525"/>
         <source>Trim transition in point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="543"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="568"/>
         <source>Trim transition out point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="652"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="654"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="689"/>
+        <source>Remove transition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/commands/timelinecommands.cpp" line="763"/>
         <source>Add video track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="654"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="765"/>
         <source>Add audio track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="679"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="790"/>
         <source>Insert audio track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="681"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="792"/>
         <source>Insert video track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="703"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="814"/>
         <source>Remove audio track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="705"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="816"/>
         <source>Remove video track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="752"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="863"/>
         <source>Change track blend mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="786"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="897"/>
         <source>Change clip properties</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4688,12 +4694,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="157"/>
+        <location filename="../src/docks/timelinedock.cpp" line="158"/>
         <source>This track is locked</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="771"/>
+        <location filename="../src/docks/timelinedock.cpp" line="816"/>
         <source>You cannot split a transition.</source>
         <translation type="unfinished"></translation>
     </message>
