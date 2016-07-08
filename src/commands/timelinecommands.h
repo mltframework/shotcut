@@ -297,6 +297,7 @@ private:
     int m_clipIndex;
     int m_position;
     int m_transitionIndex;
+    UndoHelper m_undoHelper;
 };
 
 class TrimTransitionInCommand : public TrimCommand

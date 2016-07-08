@@ -482,6 +482,7 @@ AddTransitionCommand::AddTransitionCommand(MultitrackModel &model, int trackInde
     , m_clipIndex(clipIndex)
     , m_position(position)
     , m_transitionIndex(-1)
+    , m_undoHelper(model)
 {
     setText(QObject::tr("Add transition"));
 }
@@ -489,27 +490,16 @@ AddTransitionCommand::AddTransitionCommand(MultitrackModel &model, int trackInde
 void AddTransitionCommand::redo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position" << m_position;
+    m_undoHelper.recordBeforeState();
     m_transitionIndex = m_model.addTransition(m_trackIndex, m_clipIndex, m_position);
+    m_undoHelper.recordAfterState();
 }
 
 void AddTransitionCommand::undo()
 {
     if (m_transitionIndex >= 0) {
         LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position" << m_position;
-        m_model.removeTransition(m_trackIndex, m_transitionIndex);
-        // Delete the blank that was inserted.
-        int i = m_model.trackList().at(m_trackIndex).mlt_index;
-        QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
-        if (track) {
-            Mlt::Playlist playlist(*track);
-            if (playlist.is_blank(m_clipIndex + 1) && m_transitionIndex == m_clipIndex) { // dragged left
-                m_model.removeClip(m_trackIndex, m_clipIndex + 1);
-            } else if (playlist.is_blank(m_clipIndex)) {
-                m_model.removeClip(m_trackIndex, m_clipIndex);
-            }
-        }
-    } else {
-        LOG_WARNING() << "Failed to undo the transition!";
+        m_undoHelper.undoChanges();
     }
 }
 
