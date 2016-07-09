@@ -102,43 +102,69 @@ Item {
         anchors.fill: parent
         anchors.margins: 8
 
-        Label {
-            text: qsTr('<b>Analyze Options</b>')
+        GroupBox {
+            title: qsTr('Analyze Options')
+            anchors.left: parent.left
+            anchors.right: parent.right
             Layout.columnSpan: 3
-        }
 
-        Label {
-            text: qsTr('Shakiness')
-            Layout.alignment: Qt.AlignRight
-        }
-        SliderSpinner {
-            id: shakinessSlider
-            minimumValue: 1
-            maximumValue: 10
-            tickmarksEnabled: true
-            stepSize: 1
-            value: filter.getDouble('shakiness')
-            onValueChanged: filter.set('shakiness', value)
-        }
-        UndoButton {
-            onClicked: shakinessSlider.value = 4
-        }
+            GridLayout {
+                columns: 3
+                anchors.fill: parent
+                anchors.margins: 8
 
-        Label {
-            text: qsTr('Accuracy')
-            Layout.alignment: Qt.AlignRight
-        }
-        SliderSpinner {
-            id: accuracySlider
-            minimumValue: 1
-            maximumValue: 15
-            tickmarksEnabled: true
-            stepSize: 1
-            value: filter.getDouble('accuracy')
-            onValueChanged: filter.set('accuracy', value)
-        }
-        UndoButton {
-            onClicked: accuracySlider.value = 4
+                Label {
+                    text: qsTr('Shakiness')
+                    Layout.alignment: Qt.AlignRight
+                }
+                SliderSpinner {
+                    id: shakinessSlider
+                    minimumValue: 1
+                    maximumValue: 10
+                    tickmarksEnabled: true
+                    stepSize: 1
+                    value: filter.getDouble('shakiness')
+                    onValueChanged: filter.set('shakiness', value)
+                }
+                UndoButton {
+                    onClicked: shakinessSlider.value = 4
+                }
+
+                Label {
+                    text: qsTr('Accuracy')
+                    Layout.alignment: Qt.AlignRight
+                }
+                SliderSpinner {
+                    id: accuracySlider
+                    minimumValue: 1
+                    maximumValue: 15
+                    tickmarksEnabled: true
+                    stepSize: 1
+                    value: filter.getDouble('accuracy')
+                    onValueChanged: filter.set('accuracy', value)
+                }
+                UndoButton {
+                    onClicked: accuracySlider.value = 4
+                }
+
+                Button {
+                    id: button
+                    text: qsTr('Analyze')
+                    Layout.alignment: Qt.AlignRight
+                    onClicked: {
+                        button.enabled = false
+                        fileDialog.folder = settings.savePath
+                        fileDialog.open()
+                    }
+                }
+                Label {
+                    id: status
+                    Layout.columnSpan: 2
+                    Component.onCompleted: {
+                        setStatus(false)
+                    }
+                }
+            }
         }
 
         Label {
@@ -164,24 +190,6 @@ Item {
         }
         UndoButton {
             onClicked: zoomSlider.value = 0
-        }
-
-        Button {
-            id: button
-            text: qsTr('Analyze')
-            Layout.alignment: Qt.AlignRight
-            onClicked: {
-                button.enabled = false
-                fileDialog.folder = settings.savePath
-                fileDialog.open()
-            }
-        }
-        Label {
-            id: status
-            Layout.columnSpan: 2
-            Component.onCompleted: {
-                setStatus(false)
-            }
         }
 
         Item {

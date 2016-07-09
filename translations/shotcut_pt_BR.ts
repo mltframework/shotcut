@@ -6281,8 +6281,8 @@ a captura de tela para SDI/HDMI neste modo.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="106"/>
-        <source>&lt;b&gt;Analyze Options&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Opções da Análise&lt;/b&gt;</translation>
+        <source>Analyze Options</source>
+        <translation>Opções da Análise</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="111"/>

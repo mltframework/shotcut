@@ -6275,8 +6275,8 @@ ecrã para SDI/HDMI, se usar este modo.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="106"/>
-        <source>&lt;b&gt;Analyze Options&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Opções de Análise&lt;/b&gt;</translation>
+        <source>Analyze Options</source>
+        <translation>Opções de Análise</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="111"/>

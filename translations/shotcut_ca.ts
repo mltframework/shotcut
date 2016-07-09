@@ -6270,8 +6270,8 @@ simultàniament en aquest mode.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="106"/>
-        <source>&lt;b&gt;Analyze Options&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Opcions d&apos;anàlisi&lt;/b&gt;</translation>
+        <source>Analyze Options</source>
+        <translation>Opcions d&apos;anàlisi</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="111"/>

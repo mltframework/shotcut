@@ -6282,8 +6282,8 @@ the screen capture to SDI/HDMI in this mode.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="106"/>
-        <source>&lt;b&gt;Analyze Options&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Επιλογές Ανάλυσης&lt;/b&gt;</translation>
+        <source>Analyze Options</source>
+        <translation>Επιλογές Ανάλυσης</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="111"/>
