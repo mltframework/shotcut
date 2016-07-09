@@ -6281,8 +6281,8 @@ schermate catturate su SD/HDMI.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="106"/>
-        <source>&lt;b&gt;Analyze Options&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Opzioni analisi&lt;/b&gt;</translation>
+        <source>Analyze Options</source>
+        <translation>Opzioni analisi</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="111"/>

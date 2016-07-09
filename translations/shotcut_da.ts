@@ -6275,8 +6275,8 @@ optagelsen til SDI / HDMI i denne tilstand.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="106"/>
-        <source>&lt;b&gt;Analyze Options&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Analyse indstillinger&lt;/b&gt;</translation>
+        <source>Analyze Options</source>
+        <translation>Analyse indstillinger</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="111"/>

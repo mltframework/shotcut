@@ -6282,8 +6282,8 @@ obrazovky do SDI/HDMI.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="106"/>
-        <source>&lt;b&gt;Analyze Options&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Voľby pre analýzu&lt;/b&gt;</translation>
+        <source>Analyze Options</source>
+        <translation>Voľby pre analýzu</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="111"/>

@@ -6271,8 +6271,8 @@ La capture se fait en arrière-plan, mais vous ne pourrez pas envoyer simultané
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="106"/>
-        <source>&lt;b&gt;Analyze Options&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Options d&apos;analyse&lt;/b&gt;</translation>
+        <source>Analyze Options</source>
+        <translation>Options d&apos;analyse</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="111"/>

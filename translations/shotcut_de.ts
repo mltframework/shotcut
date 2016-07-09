@@ -6262,8 +6262,8 @@ Die Aufzeichnung läuft dann im Hintergrund, aber man kann in diesem Modus die B
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="106"/>
-        <source>&lt;b&gt;Analyze Options&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Analyseoptionen&lt;/b&gt;</translation>
+        <source>Analyze Options</source>
+        <translation>Analyseoptionen</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="111"/>

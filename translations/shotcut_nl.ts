@@ -6275,8 +6275,8 @@ te sturen naar SDI/HDMI in deze modus.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="106"/>
-        <source>&lt;b&gt;Analyze Options&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Analyseer Opties&lt;/b&gt;</translation>
+        <source>Analyze Options</source>
+        <translation>Analyseer Opties</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="111"/>
