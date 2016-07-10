@@ -141,6 +141,24 @@ Item {
             onClicked: accuracySlider.value = 4
         }
 
+        Button {
+            id: button
+            text: qsTr('Analyze')
+            Layout.alignment: Qt.AlignRight
+            onClicked: {
+                button.enabled = false
+                fileDialog.folder = settings.savePath
+                fileDialog.open()
+            }
+        }
+        Label {
+            id: status
+            Layout.columnSpan: 2
+            Component.onCompleted: {
+                setStatus(false)
+            }
+        }
+
         Label {
             text: qsTr('<b>Filter Options</b>')
             Layout.columnSpan: 3
@@ -183,24 +201,6 @@ Item {
         }
         UndoButton {
             onClicked: smoothingSlider.value = 15
-        }
-
-        Button {
-            id: button
-            text: qsTr('Analyze')
-            Layout.alignment: Qt.AlignRight
-            onClicked: {
-                button.enabled = false
-                fileDialog.folder = settings.savePath
-                fileDialog.open()
-            }
-        }
-        Label {
-            id: status
-            Layout.columnSpan: 2
-            Component.onCompleted: {
-                setStatus(false)
-            }
         }
 
         Item {
