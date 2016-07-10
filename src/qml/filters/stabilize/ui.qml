@@ -166,6 +166,25 @@ Item {
             onClicked: zoomSlider.value = 0
         }
 
+        Label {
+            text: qsTr('Smoothing')
+            Layout.alignment: Qt.AlignRight
+        }
+        SliderSpinner {
+            id: smoothingSlider
+            minimumValue: 0
+            maximumValue: 100
+            tickmarksEnabled: true
+            stepSize: 1
+            value: filter.get('smoothing')
+            onValueChanged: {
+                filter.set('smoothing', value)
+            }
+        }
+        UndoButton {
+            onClicked: smoothingSlider.value = 15
+        }
+
         Button {
             id: button
             text: qsTr('Analyze')
