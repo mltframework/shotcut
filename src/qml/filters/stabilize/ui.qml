@@ -27,19 +27,36 @@ Item {
     width: 350
     height: 150
     property string settingsSavePath: settings.savePath
+    property string _analysisRequiredMessage: qsTr('Click Analyze to use this filter.')
+
+    Component.onCompleted: {
+        shakinessSlider.value = filter.getDouble('shakiness')
+        accuracySlider.value = filter.getDouble('accuracy')
+        button.enabled = !hasAnalysisCompleted()
+        setStatus(false)
+    }
+
+    function hasAnalysisCompleted() {
+        return (filter.get("results").length > 0 &&
+                filter.get("filename").indexOf(filter.get("results")) !== -1)
+    }
 
     function setStatus( inProgress ) {
         if (inProgress) {
             status.text = qsTr('Analyzing...')
         }
-        else if (filter.get("results").length > 0 && 
-                 filter.get("filename").indexOf(filter.get("results")) !== -1) {
+        else if (hasAnalysisCompleted()) {
             status.text = qsTr('Analysis complete.')
         }
         else
         {
-            status.text = qsTr('Click Analyze to use this filter.')
+            status.text = _analysisRequiredMessage
         }
+    }
+
+    function analyzeValueChanged() {
+        button.enabled = true
+        status.text = _analysisRequiredMessage
     }
 
     // This signal is used to workaround context properties not available in
@@ -57,7 +74,6 @@ Item {
         onAnalyzeFinished: {
             filter.set("reload", 1);
             setStatus(false)
-            button.enabled = true
         }
     }
     
@@ -117,8 +133,10 @@ Item {
             maximumValue: 10
             tickmarksEnabled: true
             stepSize: 1
-            value: filter.getDouble('shakiness')
-            onValueChanged: filter.set('shakiness', value)
+            onValueChanged: {
+                filter.set('shakiness', value)
+                analyzeValueChanged()
+            }
         }
         UndoButton {
             onClicked: shakinessSlider.value = 4
@@ -134,11 +152,28 @@ Item {
             maximumValue: 15
             tickmarksEnabled: true
             stepSize: 1
-            value: filter.getDouble('accuracy')
-            onValueChanged: filter.set('accuracy', value)
+            onValueChanged: {
+                filter.set('accuracy', value)
+                analyzeValueChanged()
+            }
         }
         UndoButton {
             onClicked: accuracySlider.value = 4
+        }
+
+        Button {
+            id: button
+            text: qsTr('Analyze')
+            Layout.alignment: Qt.AlignRight
+            onClicked: {
+                button.enabled = false
+                fileDialog.folder = settings.savePath
+                fileDialog.open()
+            }
+        }
+        Label {
+            id: status
+            Layout.columnSpan: 2
         }
 
         Label {
@@ -183,24 +218,6 @@ Item {
         }
         UndoButton {
             onClicked: smoothingSlider.value = 15
-        }
-
-        Button {
-            id: button
-            text: qsTr('Analyze')
-            Layout.alignment: Qt.AlignRight
-            onClicked: {
-                button.enabled = false
-                fileDialog.folder = settings.savePath
-                fileDialog.open()
-            }
-        }
-        Label {
-            id: status
-            Layout.columnSpan: 2
-            Component.onCompleted: {
-                setStatus(false)
-            }
         }
 
         Item {
