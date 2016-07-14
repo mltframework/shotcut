@@ -28,18 +28,28 @@ Item {
     height: 150
     property string settingsSavePath: settings.savePath
 
+    function hasFilterCompleted() {
+        return (filter.get("results").length > 0 &&
+                filter.get("filename").indexOf(filter.get("results")) !== -1)
+    }
+
     function setStatus( inProgress ) {
         if (inProgress) {
             status.text = qsTr('Analyzing...')
         }
-        else if (filter.get("results").length > 0 && 
-                 filter.get("filename").indexOf(filter.get("results")) !== -1) {
+        else if (hasFilterCompleted()) {
             status.text = qsTr('Analysis complete.')
         }
         else
         {
             status.text = qsTr('Click Analyze to use this filter.')
         }
+    }
+
+    function analyzeValueChanged() {
+        button.enabled = true
+        status.text = qsTr('Analysis required')
+        filter.set("results", '')
     }
 
     // This signal is used to workaround context properties not available in
@@ -57,7 +67,6 @@ Item {
         onAnalyzeFinished: {
             filter.set("reload", 1);
             setStatus(false)
-            button.enabled = true
         }
     }
     
@@ -118,7 +127,10 @@ Item {
             tickmarksEnabled: true
             stepSize: 1
             value: filter.getDouble('shakiness')
-            onValueChanged: filter.set('shakiness', value)
+            onValueChanged: {
+                filter.set('shakiness', value)
+                analyzeValueChanged()
+            }
         }
         UndoButton {
             onClicked: shakinessSlider.value = 4
@@ -135,7 +147,10 @@ Item {
             tickmarksEnabled: true
             stepSize: 1
             value: filter.getDouble('accuracy')
-            onValueChanged: filter.set('accuracy', value)
+            onValueChanged: {
+                filter.set('accuracy', value)
+                analyzeValueChanged()
+            }
         }
         UndoButton {
             onClicked: accuracySlider.value = 4
@@ -145,6 +160,7 @@ Item {
             id: button
             text: qsTr('Analyze')
             Layout.alignment: Qt.AlignRight
+            enabled: !hasFilterCompleted()
             onClicked: {
                 button.enabled = false
                 fileDialog.folder = settings.savePath
