@@ -27,8 +27,16 @@ Item {
     width: 350
     height: 150
     property string settingsSavePath: settings.savePath
+    property string _analysisRequiredMessage: qsTr('Click Analyze to use this filter.')
 
-    function hasFilterCompleted() {
+    Component.onCompleted: {
+        shakinessSlider.value = filter.getDouble('shakiness')
+        accuracySlider.value = filter.getDouble('accuracy')
+        button.enabled = !hasAnalysisCompleted()
+        setStatus(false)
+    }
+
+    function hasAnalysisCompleted() {
         return (filter.get("results").length > 0 &&
                 filter.get("filename").indexOf(filter.get("results")) !== -1)
     }
@@ -37,19 +45,18 @@ Item {
         if (inProgress) {
             status.text = qsTr('Analyzing...')
         }
-        else if (hasFilterCompleted()) {
+        else if (hasAnalysisCompleted()) {
             status.text = qsTr('Analysis complete.')
         }
         else
         {
-            status.text = qsTr('Click Analyze to use this filter.')
+            status.text = _analysisRequiredMessage
         }
     }
 
     function analyzeValueChanged() {
         button.enabled = true
-        status.text = qsTr('Analysis required')
-        filter.set("results", '')
+        status.text = _analysisRequiredMessage
     }
 
     // This signal is used to workaround context properties not available in
@@ -126,7 +133,6 @@ Item {
             maximumValue: 10
             tickmarksEnabled: true
             stepSize: 1
-            value: filter.getDouble('shakiness')
             onValueChanged: {
                 filter.set('shakiness', value)
                 analyzeValueChanged()
@@ -146,7 +152,6 @@ Item {
             maximumValue: 15
             tickmarksEnabled: true
             stepSize: 1
-            value: filter.getDouble('accuracy')
             onValueChanged: {
                 filter.set('accuracy', value)
                 analyzeValueChanged()
@@ -160,7 +165,6 @@ Item {
             id: button
             text: qsTr('Analyze')
             Layout.alignment: Qt.AlignRight
-            enabled: !hasFilterCompleted()
             onClicked: {
                 button.enabled = false
                 fileDialog.folder = settings.savePath
@@ -170,9 +174,6 @@ Item {
         Label {
             id: status
             Layout.columnSpan: 2
-            Component.onCompleted: {
-                setStatus(false)
-            }
         }
 
         Label {
