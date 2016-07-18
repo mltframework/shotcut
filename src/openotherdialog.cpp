@@ -90,6 +90,10 @@ OpenOtherDialog::OpenOtherDialog(QWidget *parent) :
         QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("Audio Tone")));
         item->setData(0, Qt::UserRole, ui->toneTab->objectName());
     }
+    if (MLT.repository()->producers()->get_data("count")) {
+        QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("Count")));
+        item->setData(0, Qt::UserRole, ui->countTab->objectName());
+    }
     ui->treeWidget->expandAll();
 }
 
@@ -144,6 +148,8 @@ void OpenOtherDialog::load(Mlt::Producer* producer)
             selectTreeWidget(tr("Color Bars"));
         else if (service == "tone")
             selectTreeWidget(tr("Audio Tone"));
+        else if (service == "count")
+            selectTreeWidget(tr("Count"));
         dynamic_cast<AbstractProducerWidget*>(m_current)->loadPreset(*producer);
     }
 }
@@ -202,6 +208,8 @@ void OpenOtherDialog::on_treeWidget_currentItemChanged(QTreeWidgetItem *current,
                     m_current = ui->dshowVideoWidget;
                 else if (w == ui->toneTab)
                     m_current = ui->toneWidget;
+                else if (w == ui->countTab)
+                    m_current = ui->countWidget;
                 else if (w == ui->avfoundationTab)
                     m_current = ui->avfoundationWidget;
                 break;

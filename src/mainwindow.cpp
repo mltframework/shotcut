@@ -25,6 +25,7 @@
 #include "widgets/alsawidget.h"
 #include "widgets/colorbarswidget.h"
 #include "widgets/colorproducerwidget.h"
+#include "widgets/countproducerwidget.h"
 #include "widgets/decklinkproducerwidget.h"
 #include "widgets/directshowvideowidget.h"
 #include "widgets/isingwidget.h"
@@ -2317,6 +2318,8 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
         w = new WebvfxProducer(this);
     else if (service == "tone")
         w = new ToneProducerWidget(this);
+    else if (service == "count")
+        w = new CountProducerWidget(this);
     else if (producer->parent().get(kShotcutTransitionProperty)) {
         w = new LumaMixTransition(producer->parent(), this);
         scrollArea->setWidget(w);

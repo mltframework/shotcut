@@ -173,6 +173,13 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="countTab">
+       <layout class="QVBoxLayout" name="verticalLayout_6">
+        <item>
+         <widget class="CountProducerWidget" name="countWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </widget>
    </item>
@@ -289,6 +296,12 @@
    <class>ToneProducerWidget</class>
    <extends>QWidget</extends>
    <header>widgets/toneproducerwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>CountProducerWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/countproducerwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
