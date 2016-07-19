@@ -31,22 +31,35 @@ Rectangle {
 
     signal clipClicked()
 
-    function zoomIn() {
-        scaleSlider.value += 0.0625
+    function setZoom(value) {
+        scaleSlider.value = value
         for (var i = 0; i < tracksRepeater.count; i++)
             tracksRepeater.itemAt(i).redrawWaveforms()
+    }
+
+    function adjustZoom(by) {
+        setZoom(scaleSlider.value + by)
+    }
+
+    function zoomIn() {
+        adjustZoom(0.0625)
     }
 
     function zoomOut() {
-        scaleSlider.value -= 0.0625
-        for (var i = 0; i < tracksRepeater.count; i++)
-            tracksRepeater.itemAt(i).redrawWaveforms()
+        adjustZoom(-0.0625)
     }
 
     function resetZoom() {
-        scaleSlider.value = 1.0
-        for (var i = 0; i < tracksRepeater.count; i++)
-            tracksRepeater.itemAt(i).redrawWaveforms()
+        setZoom(1.0)
+    }
+
+    function zoomByWheel(wheel) {
+        if (wheel.modifiers & Qt.ControlModifier) {
+            adjustZoom(wheel.angleDelta.y / 720)
+        }
+        if (wheel.modifiers & Qt.ShiftModifier) {
+            multitrack.trackHeight = Math.max(30, multitrack.trackHeight + wheel.angleDelta.y / 5)
+        }
     }
 
     function makeTracksTaller() {
@@ -81,6 +94,7 @@ Rectangle {
         anchors.fill: parent
         acceptedButtons: Qt.RightButton
         onClicked: menu.popup()
+        onWheel: zoomByWheel(wheel)
     }
 
     DropArea {

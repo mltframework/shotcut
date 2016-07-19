@@ -286,6 +286,7 @@ Rectangle {
             }
         }
         onDoubleClicked: timeline.position = clipRoot.x / multitrack.scaleFactor
+        onWheel: zoomByWheel(wheel)
 
         MouseArea {
             anchors.fill: parent
