@@ -28,7 +28,7 @@ Item {
     height: 50
     
     function setControls() {
-        contrastSlider.value = filter.getDouble("gamma_r") / gammaFactor * 100.0
+        contrastSlider.value = filter.getDouble("gain_r") / gainFactor * 100.0
     }
     
     Component.onCompleted: {
