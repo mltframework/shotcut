@@ -114,6 +114,16 @@ p, li { white-space: pre-wrap; }
           </attribute>
          </widget>
         </item>
+        <item>
+         <widget class="QListView" name="listView">
+          <property name="contextMenuPolicy">
+           <enum>Qt::CustomContextMenu</enum>
+          </property>
+          <property name="movement">
+           <enum>QListView::Static</enum>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
      </widget>
@@ -313,6 +323,30 @@ p, li { white-space: pre-wrap; }
   <action name="actionAddToTimeline">
    <property name="text">
     <string>Add All to Timeline</string>
+   </property>
+  </action>
+  <action name="actionDetailed">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Detailed</string>
+   </property>
+  </action>
+  <action name="actionTiled">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Tiled</string>
+   </property>
+  </action>
+  <action name="actionIcons">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Icons</string>
    </property>
   </action>
  </widget>

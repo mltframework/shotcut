@@ -159,6 +159,17 @@ void ShotcutSettings::setWindowStateDefault(const QByteArray& a)
     settings.setValue("windowStateDefault", a);
 }
 
+QString ShotcutSettings::viewMode() const
+{
+    return settings.value("playlist/viewMode").toString();
+}
+
+void ShotcutSettings::setViewMode(const QString& viewMode)
+{
+    settings.setValue("playlist/viewMode", viewMode);
+    emit viewModeChanged();
+}
+
 QString ShotcutSettings::encodePath() const
 {
     return settings.value("encode/path", QStandardPaths::standardLocations(QStandardPaths::MoviesLocation)).toString();

@@ -103,6 +103,7 @@ SOURCES += main.cpp\
     sharedframe.cpp \
     widgets/audioscale.cpp \
     widgets/playlisttable.cpp \
+    widgets/playlisticonview.cpp \
     commands/undohelper.cpp \
     models/audiolevelstask.cpp \
     mltxmlchecker.cpp \
@@ -210,6 +211,7 @@ HEADERS  += mainwindow.h \
     sharedframe.h \
     widgets/audioscale.h \
     widgets/playlisttable.h \
+    widgets/playlisticonview.h \
     commands/undohelper.h \
     models/audiolevelstask.h \
     shotcut_mlt_properties.h \
