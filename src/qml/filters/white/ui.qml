@@ -151,7 +151,7 @@ Item {
                 maximumValue: 15000.0
                 decimals: 0
                 stepSize: 10
-                suffix: ' deg'
+                suffix: qsTr(' deg', 'degrees')
                 onValueChanged: tempslider.value = value
             }
         }

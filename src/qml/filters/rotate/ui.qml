@@ -66,7 +66,7 @@ Item {
             maximumValue: 360
             decimals: 1
             spinnerWidth: 110
-            suffix: qsTr(' degree')
+            suffix: qsTr(' deg', 'degrees')
             onValueChanged: filter.set('transition.fix_rotate_x', value)
         }
         UndoButton {

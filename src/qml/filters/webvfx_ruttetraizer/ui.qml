@@ -161,8 +161,7 @@ Item {
             id: xRotationSlider
             minimumValue: 0
             maximumValue: 360
-            spinnerWidth: 110
-            suffix: ' degree'
+            suffix: qsTr(' deg', 'degrees')
             value: filter.getDouble('rotation_x') * maximumValue
             onValueChanged: filter.set('rotation_x', value / maximumValue)
         }
@@ -178,8 +177,7 @@ Item {
             id: yRotationSlider
             minimumValue: 0
             maximumValue: 360
-            spinnerWidth: 110
-            suffix: ' degree'
+            suffix: qsTr(' deg', 'degrees')
             value: filter.getDouble('rotation_y') * maximumValue
             onValueChanged: filter.set('rotation_y', value / maximumValue)
         }
