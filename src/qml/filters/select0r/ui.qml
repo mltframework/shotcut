@@ -171,7 +171,6 @@ Item {
             maximumValue: 100
             decimals: 1
             suffix: ' %'
-            spinnerWidth: 80
             value: filter.getDouble(deltaRDefault) * 100
             onValueChanged: filter.set(deltaRParam, value / 100)
         }
@@ -189,7 +188,6 @@ Item {
             maximumValue: 100
             decimals: 1
             suffix: ' %'
-            spinnerWidth: 80
             value: filter.getDouble(deltaGDefault) * 100
             onValueChanged: filter.set(deltaGParam, value / 100)
         }
@@ -207,7 +205,6 @@ Item {
             maximumValue: 100
             decimals: 1
             suffix: ' %'
-            spinnerWidth: 80
             value: filter.getDouble(deltaBDefault) * 100
             onValueChanged: filter.set(deltaBParam, value / 100)
         }
@@ -265,7 +262,6 @@ Item {
             maximumValue: 100
             decimals: 1
             suffix: ' %'
-            spinnerWidth: 80
             value: filter.getDouble(slopeParam) * 100
             onValueChanged: filter.set(slopeParam, value / 100)
         }

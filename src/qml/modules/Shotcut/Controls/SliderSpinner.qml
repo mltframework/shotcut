@@ -97,7 +97,7 @@ RowLayout {
     SpinBox {
         id: spinner
 
-        Layout.minimumWidth: 70
+        Layout.minimumWidth: 90
         minimumValue: slider.minimumValue / ratio
         maximumValue: slider.maximumValue / ratio
         stepSize: 1 / Math.pow(10, decimals)

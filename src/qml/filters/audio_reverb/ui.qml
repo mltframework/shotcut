@@ -121,7 +121,6 @@ Item {
             minimumValue: 1
             maximumValue: 300
             suffix: ' m'
-            spinnerWidth: 80
             value: filter.getDouble('0')
             onValueChanged: {
                 filter.set('0', value)
@@ -141,7 +140,6 @@ Item {
             maximumValue: 30
             decimals: 1
             suffix: ' s'
-            spinnerWidth: 80
             value: filter.getDouble('1')
             onValueChanged: {
                 filter.set('1', value)
@@ -161,7 +159,6 @@ Item {
             minimumValue: 0
             maximumValue: 100
             decimals: 1
-            spinnerWidth: 80
             suffix: ' %'
             value: filter.getDouble('2') * maximumValue
             onValueChanged: {
@@ -182,7 +179,6 @@ Item {
             minimumValue: 0
             maximumValue: 100
             decimals: 1
-            spinnerWidth: 80
             suffix: ' %'
             value: filter.getDouble('3') * maximumValue
             onValueChanged: {
@@ -204,7 +200,6 @@ Item {
             maximumValue: 0
             suffix: ' dB'
             decimals: 1
-            spinnerWidth: 80
             value: filter.getDouble('4')
             onValueChanged: {
                 filter.set('4', value)
@@ -224,7 +219,6 @@ Item {
             minimumValue: -70
             maximumValue: 0
             suffix: ' dB'
-            spinnerWidth: 80
             value: filter.getDouble('5')
             onValueChanged: {
                 filter.set('5', value)
@@ -245,7 +239,6 @@ Item {
             maximumValue: 0
             decimals: 1
             suffix: ' dB'
-            spinnerWidth: 80
             value: filter.getDouble('6')
             onValueChanged: {
                 filter.set('6', value)

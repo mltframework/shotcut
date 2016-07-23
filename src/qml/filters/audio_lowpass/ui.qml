@@ -69,7 +69,6 @@ Item {
             minimumValue: 5
             maximumValue: 21600
             suffix: ' Hz'
-            spinnerWidth: 80
             value: filter.getDouble('0')
             onValueChanged: {
                 filter.set('0', value)
@@ -87,7 +86,6 @@ Item {
             id: sliderStages
             minimumValue: 1
             maximumValue: 10
-            spinnerWidth: 80
             value: filter.get('1')
             onValueChanged: {
                 filter.set('1', value)
@@ -106,7 +104,6 @@ Item {
             minimumValue: 0
             maximumValue: 100
             decimals: 1
-            spinnerWidth: 80
             label: qsTr('Wet')
             suffix: ' %'
             value: filter.getDouble('wetness') * maximumValue

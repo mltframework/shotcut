@@ -71,7 +71,6 @@ Item {
             minimumValue: 0
             maximumValue: 100
             decimals: 1
-            spinnerWidth: 80
             suffix: ' %'
             onValueChanged: {
                 var v = value / 100.0

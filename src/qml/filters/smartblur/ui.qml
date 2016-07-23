@@ -74,7 +74,6 @@ Item {
             minimumValue: 0.1
             maximumValue: 5.0
             decimals: 1
-            spinnerWidth: 80
             onValueChanged: {
                 filter.set("av.luma_radius", value)
                 filter.set("av.chroma_radius", value)
@@ -94,7 +93,6 @@ Item {
             minimumValue: 0.0
             maximumValue: 1.0
             decimals: 1
-            spinnerWidth: 80
             onValueChanged: {
                 filter.set("av.luma_strength", value)
                 filter.set("av.chroma_strength", value)
@@ -114,7 +112,6 @@ Item {
             minimumValue: 0.0
             maximumValue: 30
             decimals: 0
-            spinnerWidth: 80
             onValueChanged: {
                 filter.set("av.luma_threshold", value)
                 filter.set("av.chroma_threshold", value)

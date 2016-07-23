@@ -53,7 +53,6 @@ Item {
                 maximumValue: 24
                 suffix: ' dB'
                 decimals: 1
-                spinnerWidth: 80
                 value: toDb(filter.getDouble(gainParameter))
                 onValueChanged: filter.set(gainParameter, fromDb(value))
             }

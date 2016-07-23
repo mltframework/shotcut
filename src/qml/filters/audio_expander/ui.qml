@@ -75,7 +75,6 @@ Item {
             minimumValue: 0
             maximumValue: 100
             decimals: 1
-            spinnerWidth: 80
             label: qsTr('Peak')
             suffix: ' %'
             value: filter.getDouble('0') * maximumValue
@@ -96,7 +95,6 @@ Item {
             minimumValue: 2
             maximumValue: 400
             suffix: ' ms'
-            spinnerWidth: 80
             value: filter.getDouble('1')
             onValueChanged: {
                 filter.set('1', value)
@@ -114,7 +112,6 @@ Item {
             id: sliderRelease
             minimumValue: 2
             maximumValue: 800
-            spinnerWidth: 80
             suffix: ' ms'
             value: filter.getDouble('2')
             onValueChanged: {
@@ -135,7 +132,6 @@ Item {
             minimumValue: -30
             maximumValue: 0
             decimals: 1
-            spinnerWidth: 80
             suffix: ' dB'
             value: filter.getDouble('3')
             onValueChanged: {
@@ -156,7 +152,6 @@ Item {
             minimumValue: 1
             maximumValue: 20
             prefix: ' 1:'
-            spinnerWidth: 80
             value: filter.getDouble('4')
             onValueChanged: {
                 filter.set('4', value)
@@ -177,7 +172,6 @@ Item {
             maximumValue: 10
             decimals: 1
             suffix: ' dB'
-            spinnerWidth: 80
             value: filter.getDouble('5')
             onValueChanged: {
                 filter.set('5', value)
@@ -198,7 +192,6 @@ Item {
             maximumValue: 0
             decimals: 1
             suffix: ' dB'
-            spinnerWidth: 80
             value: filter.getDouble('6')
             onValueChanged: {
                 filter.set('6', value)

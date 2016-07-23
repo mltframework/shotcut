@@ -87,7 +87,6 @@ Item {
             maximumValue: 100
             decimals: 1
             suffix: ' %'
-            spinnerWidth: 80
             value: filter.getDouble(paramAmount) * 100
             onValueChanged: {
                 filter.set(paramAmount, value / 100)

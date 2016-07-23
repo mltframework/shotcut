@@ -173,7 +173,6 @@ Item {
             maximumValue: 100
             decimals: 1
             suffix: ' %'
-            spinnerWidth: 80
             value: filter.getDouble(toleranceParam) * 100
             onValueChanged: filter.set(toleranceParam, value / 100)
         }
@@ -191,7 +190,6 @@ Item {
             maximumValue: 100
             decimals: 1
             suffix: ' %'
-            spinnerWidth: 80
             value: filter.getDouble(slopeParam) * 100
             onValueChanged: filter.set(slopeParam, value / 100)
         }
@@ -209,7 +207,6 @@ Item {
             maximumValue: 100
             decimals: 1
             suffix: ' %'
-            spinnerWidth: 80
             value: filter.getDouble(hueGateParam) * 100
             onValueChanged: filter.set(hueGateParam, value / 100)
         }
@@ -227,7 +224,6 @@ Item {
             maximumValue: 100
             decimals: 1
             suffix: ' %'
-            spinnerWidth: 80
             value: filter.getDouble(saturationParam) * 100
             onValueChanged: filter.set(saturationParam, value / 100)
         }
@@ -259,7 +255,6 @@ Item {
             maximumValue: 100
             decimals: 1
             suffix: ' %'
-            spinnerWidth: 80
             value: filter.getDouble(amount1Param) * 100
             onValueChanged: filter.set(amount1Param, value / 100)
         }
@@ -291,7 +286,6 @@ Item {
             maximumValue: 100
             decimals: 1
             suffix: ' %'
-            spinnerWidth: 80
             value: filter.getDouble(amount2Param) * 100
             onValueChanged: filter.set(amount2Param, value / 100)
         }

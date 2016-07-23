@@ -81,7 +81,6 @@ Item {
             maximumValue: 20
             suffix: ' dB'
             decimals: 1
-            spinnerWidth: 80
             value: filter.getDouble('0')
             onValueChanged: {
                 filter.set('0', value)
@@ -102,7 +101,6 @@ Item {
             maximumValue: 0
             suffix: ' dB'
             decimals: 1
-            spinnerWidth: 80
             value: filter.getDouble('1')
             onValueChanged: {
                 filter.set('1', value)
@@ -123,7 +121,6 @@ Item {
             maximumValue: 2
             suffix: ' s'
             decimals: 2
-            spinnerWidth: 80
             value: filter.get('2')
             onValueChanged: {
                 filter.set('2', value)

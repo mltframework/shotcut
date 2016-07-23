@@ -84,7 +84,6 @@ Item {
             maximumValue: 100
             decimals: 1
             suffix: ' %'
-            spinnerWidth: 80
             value: filter.getDouble(distanceParam) * 100
             onValueChanged: filter.set(distanceParam, value / 100)
         }

@@ -46,7 +46,6 @@ Item {
             minimumValue: 0.0
             maximumValue: 200.0
             decimals: 1
-            spinnerWidth: 80
             suffix: ' %'
             onValueChanged: filter.set("level", value / 100.0)
         }
