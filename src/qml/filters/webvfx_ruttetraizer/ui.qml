@@ -111,8 +111,7 @@ Item {
             id: densitySlider
             minimumValue: 1
             maximumValue: 100
-            spinnerWidth: 110
-            suffix: ' pixels'
+            suffix: ' px'
             value: filter.getDouble('density')
             onValueChanged: filter.set('density', value)
         }
@@ -128,8 +127,7 @@ Item {
             id: depthSlider
             minimumValue: 1
             maximumValue: 500
-            spinnerWidth: 110
-            suffix: ' pixels'
+            suffix: ' px'
             value: filter.getDouble('depth')
             onValueChanged: filter.set('depth', value)
         }
