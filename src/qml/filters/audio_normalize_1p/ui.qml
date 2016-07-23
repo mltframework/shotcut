@@ -43,7 +43,7 @@ Item {
 
     function setControls() {
         programSlider.value = filter.getDouble('target_loudness')
-        windowSlider.value = filter.get('window')
+        windowSlider.value = filter.getDouble('window')
         maxgainSlider.value = filter.getDouble('max_gain')
         mingainSlider.value = filter.getDouble('min_gain')
         maxrateSlider.value = filter.getDouble('max_rate')
@@ -59,8 +59,8 @@ Item {
         property int _prevResetVal: 0
         property int _resetCountDown: 0
         onTriggered: {
-            loudnessGauge.value = filter.get('in_loudness')
-            gainGauge.value = filter.get('out_gain')
+            loudnessGauge.value = filter.getDouble('in_loudness')
+            gainGauge.value = filter.getDouble('out_gain')
             if( filter.get('reset_count') != _prevResetVal ) {
                 _prevResetVal = filter.get('reset_count')
                 _resetCountDown = 1000 / timer.interval
