@@ -69,6 +69,7 @@ public:
     HtmlEditor* htmlEditor() const { return m_htmlEditor.data(); }
     Mlt::Playlist* playlist() const;
     Mlt::Producer* multitrack() const;
+    bool isMultitrackValid() const;
     void doAutosave();
     void setFullScreen(bool isFullScreen);
     QString removeFileScheme(QUrl& url);

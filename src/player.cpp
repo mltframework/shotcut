@@ -714,8 +714,8 @@ void Player::onTabBarClicked(int index)
         }
         break;
     case ProjectTabIndex:
-        if (MAIN.multitrack()) {
-            if (!MLT.isMultitrack() && MAIN.multitrack())
+        if (MAIN.isMultitrackValid()) {
+            if (!MLT.isMultitrack())
                 MAIN.seekTimeline(MAIN.multitrack()->position());
         } else {
             if (!MLT.isPlaylist() && MAIN.playlist())

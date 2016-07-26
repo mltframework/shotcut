@@ -325,7 +325,7 @@ void EncodeDock::onProducerOpened()
 
     ui->fromCombo->blockSignals(true);
     ui->fromCombo->clear();
-    if (MAIN.multitrack())
+    if (MAIN.isMultitrackValid())
         ui->fromCombo->addItem(tr("Timeline"), "timeline");
     if (MAIN.playlist() && MAIN.playlist()->count() > 0)
         ui->fromCombo->addItem(tr("Playlist"), "playlist");

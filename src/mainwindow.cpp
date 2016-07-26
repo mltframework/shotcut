@@ -1473,9 +1473,9 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
     case Qt::Key_H:
 #ifdef Q_OS_MAC
         // OS X uses Cmd+H to hide an app.
-        if (event->modifiers() & Qt::MetaModifier && multitrack())
+        if (event->modifiers() & Qt::MetaModifier && isMultitrackValid())
 #else
-        if (event->modifiers() & Qt::ControlModifier && multitrack())
+        if (event->modifiers() & Qt::ControlModifier && isMultitrackValid())
 #endif
             m_timelineDock->toggleTrackHidden(m_timelineDock->currentTrack());
         break;
@@ -1495,9 +1495,9 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         // it to be the apple keyboard control key aka meta. Therefore, to be
         // consistent with all track header toggles, we make the lock toggle also use
         // meta.
-        if (event->modifiers() & Qt::MetaModifier && multitrack())
+        if (event->modifiers() & Qt::MetaModifier && isMultitrackValid())
 #else
-        if (event->modifiers() & Qt::ControlModifier && multitrack())
+        if (event->modifiers() & Qt::ControlModifier && isMultitrackValid())
 #endif
             m_timelineDock->setTrackLock(m_timelineDock->currentTrack(), !m_timelineDock->isTrackLocked(m_timelineDock->currentTrack()));
         else if (m_isKKeyPressed)
@@ -1508,9 +1508,9 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
     case Qt::Key_M:
 #ifdef Q_OS_MAC
         // OS X uses Cmd+M to minimize an app.
-        if (event->modifiers() & Qt::MetaModifier && multitrack())
+        if (event->modifiers() & Qt::MetaModifier && isMultitrackValid())
 #else
-        if (event->modifiers() & Qt::ControlModifier && multitrack())
+        if (event->modifiers() & Qt::ControlModifier && isMultitrackValid())
 #endif
             m_timelineDock->toggleTrackMute(m_timelineDock->currentTrack());
         break;
@@ -1521,7 +1521,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         setOutToCurrent(event->modifiers() & Qt::ShiftModifier);
         break;
     case Qt::Key_S:
-        if (multitrack())
+        if (isMultitrackValid())
             m_timelineDock->splitClip();
         break;
     case Qt::Key_U:
@@ -1555,7 +1555,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         break;
     case Qt::Key_Escape: // Avid Toggle Active Monitor
         if (MLT.isPlaylist()) {
-            if (multitrack())
+            if (isMultitrackValid())
                 m_player->onTabBarClicked(Player::ProjectTabIndex);
             else if (MLT.savedProducer())
                 m_player->onTabBarClicked(Player::SourceTabIndex);
@@ -1566,7 +1566,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
                 m_player->onTabBarClicked(Player::SourceTabIndex);
             // TODO else open clip under playhead of current track if available
         } else {
-            if (multitrack() || (playlist() && playlist()->count() > 0))
+            if (isMultitrackValid() || (playlist() && playlist()->count() > 0))
                 m_player->onTabBarClicked(Player::ProjectTabIndex);
         }
         break;
@@ -1575,7 +1575,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_playlistDock->raise();
             m_playlistDock->decrementIndex();
             m_playlistDock->on_actionOpen_triggered();
-        } else if (multitrack()) {
+        } else if (isMultitrackValid()) {
             int newClipIndex = -1;
             if ((event->modifiers() & Qt::ControlModifier) &&
                     !m_timelineDock->selection().isEmpty() &&
@@ -1603,7 +1603,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_playlistDock->raise();
             m_playlistDock->incrementIndex();
             m_playlistDock->on_actionOpen_triggered();
-        } else if (multitrack()) {
+        } else if (isMultitrackValid()) {
             int newClipIndex = -1;
             if ((event->modifiers() & Qt::ControlModifier) &&
                     !m_timelineDock->selection().isEmpty() &&
@@ -1662,7 +1662,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         break;
     case Qt::Key_Backspace:
     case Qt::Key_Delete:
-        if (multitrack()) {
+        if (isMultitrackValid()) {
             m_timelineDock->show();
             m_timelineDock->raise();
             if (event->modifiers() == Qt::ShiftModifier)
@@ -1687,7 +1687,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_playlistDock->show();
             m_playlistDock->raise();
             m_playlistDock->on_removeButton_clicked();
-        } else if (multitrack() && event->modifiers() == Qt::NoModifier) {
+        } else if (isMultitrackValid() && event->modifiers() == Qt::NoModifier) {
             m_timelineDock->show();
             m_timelineDock->raise();
             m_timelineDock->liftSelection();
@@ -1712,7 +1712,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         break;
     case Qt::Key_Enter: // Seek to current playlist item
     case Qt::Key_Return:
-        if (multitrack()) {
+        if (isMultitrackValid()) {
             if (m_timelineDock->selection().size())
                 m_timelineDock->seekInPoint(m_timelineDock->selection().first());
         } else if (m_playlistDock->position() >= 0) {
@@ -1877,17 +1877,14 @@ void MainWindow::onProducerOpened()
     }
     else if (MLT.isMultitrack()) {
         m_timelineDock->model()->load();
-        if (multitrack()) {
+        if (isMultitrackValid()) {
             m_player->setIn(-1);
             m_player->setOut(-1);
             m_timelineDock->setVisible(true);
             m_timelineDock->raise();
             m_player->enableTab(Player::ProjectTabIndex);
             m_player->switchToTab(Player::ProjectTabIndex);
-            if (m_timelineDock->model()->trackList().count() > 0)
-                m_timelineDock->setSelection(QList<int>() << 0);
-            else
-                m_timelineDock->selectMultitrack();
+            m_timelineDock->setSelection(QList<int>() << 0);
         }
     }
     if (MLT.isClip()) {
@@ -2101,7 +2098,7 @@ void MainWindow::onPlaylistClosed()
     m_undoStack->clear();
     MLT.resetURL();
     m_autosaveFile.reset(new AutoSaveFile(untitledFileName()));
-    if (!multitrack())
+    if (!isMultitrackValid())
         m_player->enableTab(Player::ProjectTabIndex, false);
 }
 
@@ -2260,6 +2257,12 @@ Mlt::Playlist* MainWindow::playlist() const
 Mlt::Producer *MainWindow::multitrack() const
 {
     return m_timelineDock->model()->tractor();
+}
+
+bool MainWindow::isMultitrackValid() const
+{
+    return m_timelineDock->model()->tractor()
+       && !m_timelineDock->model()->trackList().empty();
 }
 
 QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
@@ -2445,7 +2448,7 @@ void MainWindow::stepRightOneSecond()
 
 void MainWindow::setInToCurrent(bool ripple)
 {
-    if (m_player->tabIndex() == Player::ProjectTabIndex && multitrack()) {
+    if (m_player->tabIndex() == Player::ProjectTabIndex && isMultitrackValid()) {
         m_timelineDock->trimClipAtPlayhead(TimelineDock::TrimInPoint, ripple);
     } else if (MLT.isSeekable() && MLT.isClip()) {
         m_player->setIn(m_player->position());
@@ -2454,7 +2457,7 @@ void MainWindow::setInToCurrent(bool ripple)
 
 void MainWindow::setOutToCurrent(bool ripple)
 {
-    if (m_player->tabIndex() == Player::ProjectTabIndex && multitrack()) {
+    if (m_player->tabIndex() == Player::ProjectTabIndex && isMultitrackValid()) {
         m_timelineDock->trimClipAtPlayhead(TimelineDock::TrimOutPoint, ripple);
     } else if (MLT.isSeekable() && MLT.isClip()) {
         m_player->setOut(m_player->position());
