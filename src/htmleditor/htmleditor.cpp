@@ -58,6 +58,9 @@ HtmlEditor::HtmlEditor(QWidget *parent)
     QPalette pal = ui->webView->page()->palette();
     pal.setColor(QPalette::Base, Qt::gray);
     ui->webView->page()->setPalette(pal);
+    QStyle* systemStyle = QStyleFactory::create(qApp->property("system-style").toString());
+    ui->plainTextEdit->setPalette(systemStyle->standardPalette());
+    delete systemStyle;
 
     ui->tabWidget->setTabText(0, tr("WYSIWYG Editor"));
     ui->tabWidget->setTabText(1, tr("View Source"));
