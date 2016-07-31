@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Meltytech, LLC
+ * Copyright (c) 2014-2016 Meltytech, LLC
  * Author: Brian Matherly <pez4brian@yahoo.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,14 +25,14 @@
 class QmlFile : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QUrl url READ getUrl WRITE setUrl NOTIFY urlChanged)
+    Q_PROPERTY(QString url READ getUrl WRITE setUrl NOTIFY urlChanged)
     Q_PROPERTY(QString fileName READ getFileName)
     Q_PROPERTY(QString path READ getPath)
 
 public:
     explicit QmlFile(QObject *parent = 0);
-    QUrl getUrl();
-    void setUrl(const QUrl& text);
+    QString getUrl();
+    void setUrl(const QString& text);
     QString getFileName();
     QString getPath();
     Q_INVOKABLE void copyFromFile(QString source);

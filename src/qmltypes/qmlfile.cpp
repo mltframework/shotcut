@@ -27,13 +27,15 @@ QmlFile::QmlFile(QObject* parent)
 {
 }
 
-QUrl QmlFile::getUrl()
+QString QmlFile::getUrl()
 {
-    return m_url;
+    return m_url.toString();
 }
 
-void QmlFile::setUrl(const QUrl& url)
+void QmlFile::setUrl(const QString& text)
 {
+    QString textWithSlashes = text;
+    QUrl url = textWithSlashes.replace('\\', "/");
     QUrl::FormattingOptions options =
             QUrl::RemoveScheme |
             QUrl::RemovePassword |

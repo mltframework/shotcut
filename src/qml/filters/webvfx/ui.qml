@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2015 Meltytech, LLC
+ * Copyright (c) 2014-2016 Meltytech, LLC
  * Author: Brian Matherly <pez4brian@yahoo.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -37,7 +37,7 @@ Item {
         url: {
             if (!htmlFile.url || !htmlFile.exists())
                 return "";
-            var uiFile = htmlFile.url.toString();
+            var uiFile = htmlFile.url;
             return uiFile.substr(0, uiFile.lastIndexOf(".")) + "_ui.qml";
         }
         onUrlChanged: {
@@ -69,7 +69,7 @@ Item {
 
         if (htmlFile.exists()) {
             fileLabel.text = htmlFile.fileName
-            fileLabelTip.text = htmlFile.url.toString()
+            fileLabelTip.text = htmlFile.url
             openButton.visible = false
             newButton.visible = false
             editButton.visible = true
@@ -107,14 +107,14 @@ Item {
 
             fileLabel.text = htmlFile.fileName
             fileLabel.color = activePalette.text
-            fileLabelTip.text = htmlFile.url.toString()
+            fileLabelTip.text = htmlFile.url
             openButton.visible = false
             newButton.visible = false
             webvfxCheckBox.enabled = false
             editButton.visible = true
             reloadButton.visible = true
 
-            var resource = htmlFile.url.toString()
+            var resource = htmlFile.url
             if (!webvfxCheckBox.checked) {
                 resource = "plain:" + resource
             }
@@ -122,7 +122,7 @@ Item {
             filter.set("disable", 0)
 
             if (!selectExisting) {
-                editor.edit(htmlFile.url.toString())
+                editor.edit(htmlFile.url)
                 editButton.enabled = false
                 reloadButton.enabled = false
             }
@@ -214,7 +214,7 @@ Item {
             text: qsTr('Edit...')
             visible: false
             onClicked: {
-                editor.edit(htmlFile.url.toString())
+                editor.edit(htmlFile.url)
                 editButton.enabled = false
                 reloadButton.enabled = false
             }
