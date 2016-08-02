@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>730</width>
+    <width>668</width>
     <height>478</height>
    </rect>
   </property>
@@ -25,7 +25,19 @@
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
+     <property name="handleWidth">
+      <number>0</number>
+     </property>
+     <property name="childrenCollapsible">
+      <bool>false</bool>
+     </property>
      <widget class="QTreeWidget" name="treeWidget">
+      <property name="minimumSize">
+       <size>
+        <width>120</width>
+        <height>0</height>
+       </size>
+      </property>
       <property name="rootIsDecorated">
        <bool>false</bool>
       </property>
@@ -45,8 +57,11 @@
       </column>
      </widget>
      <widget class="QStackedWidget" name="methodTabWidget">
-      <property name="currentIndex">
-       <number>2</number>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
       </property>
       <widget class="QWidget" name="networkTab">
        <layout class="QVBoxLayout" name="verticalLayout_3">
