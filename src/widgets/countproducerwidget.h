@@ -55,10 +55,10 @@ private slots:
 
 private:
     QString detail() const;
-    const char* currentDirection() const;
-    const char* currentStyle() const;
-    const char* currentSound() const;
-    const char* currentBackground() const;
+    QString currentDirection() const;
+    QString currentStyle() const;
+    QString currentSound() const;
+    QString currentBackground() const;
     Ui::CountProducerWidget *ui;
 };
 

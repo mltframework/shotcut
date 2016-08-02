@@ -70,33 +70,33 @@ CountProducerWidget::~CountProducerWidget()
     delete ui;
 }
 
-const char* CountProducerWidget::currentDirection() const
+QString CountProducerWidget::currentDirection() const
 {
-    return ui->directionCombo->itemData(ui->directionCombo->currentIndex()).toString().toLatin1().constData();
+    return ui->directionCombo->itemData(ui->directionCombo->currentIndex()).toString();
 }
 
-const char* CountProducerWidget::currentStyle() const
+QString CountProducerWidget::currentStyle() const
 {
-    return ui->styleCombo->itemData(ui->styleCombo->currentIndex()).toString().toLatin1().constData();
+    return ui->styleCombo->itemData(ui->styleCombo->currentIndex()).toString();
 }
 
-const char* CountProducerWidget::currentSound() const
+QString CountProducerWidget::currentSound() const
 {
-    return ui->soundCombo->itemData(ui->soundCombo->currentIndex()).toString().toLatin1().constData();
+    return ui->soundCombo->itemData(ui->soundCombo->currentIndex()).toString();
 }
 
-const char* CountProducerWidget::currentBackground() const
+QString CountProducerWidget::currentBackground() const
 {
-    return ui->backgroundCombo->itemData(ui->backgroundCombo->currentIndex()).toString().toLatin1().constData();
+    return ui->backgroundCombo->itemData(ui->backgroundCombo->currentIndex()).toString();
 }
 
 Mlt::Producer* CountProducerWidget::producer(Mlt::Profile& profile)
 {
     Mlt::Producer* p = new Mlt::Producer(profile, "count:");
-    p->set("direction", currentDirection());
-    p->set("style", currentStyle());
-    p->set("sound", currentSound());
-    p->set("background", currentBackground());
+    p->set("direction", currentDirection().toLatin1().constData());
+    p->set("style", currentStyle().toLatin1().constData());
+    p->set("sound", currentSound().toLatin1().constData());
+    p->set("background", currentBackground().toLatin1().constData());
     p->set("drop", ui->dropCheckBox->isChecked());
     setLength(p, ui->durationSpinBox->value());
     p->set(kShotcutCaptionProperty, ui->nameLabel->text().toUtf8().constData());
@@ -107,10 +107,10 @@ Mlt::Producer* CountProducerWidget::producer(Mlt::Profile& profile)
 Mlt::Properties* CountProducerWidget::getPreset() const
 {
     Mlt::Properties* p = new Mlt::Properties;
-    p->set("direction", currentDirection());
-    p->set("style", currentStyle());
-    p->set("sound", currentSound());
-    p->set("background", currentBackground());
+    p->set("direction", currentDirection().toLatin1().constData());
+    p->set("style", currentStyle().toLatin1().constData());
+    p->set("sound", currentSound().toLatin1().constData());
+    p->set("background", currentBackground().toLatin1().constData());
     p->set("drop", ui->dropCheckBox->isChecked());
     setLength(p, ui->durationSpinBox->value());
     return p;
@@ -152,7 +152,7 @@ void CountProducerWidget::loadPreset(Mlt::Properties& p)
 void CountProducerWidget::on_directionCombo_activated(int /*index*/)
 {
     if (m_producer) {
-        m_producer->set("direction", currentDirection());
+        m_producer->set("direction", currentDirection().toLatin1().constData());
         m_producer->set(kShotcutDetailProperty, detail().toUtf8().constData());
         emit producerChanged(m_producer);
     }
@@ -161,7 +161,7 @@ void CountProducerWidget::on_directionCombo_activated(int /*index*/)
 void CountProducerWidget::on_styleCombo_activated(int /*index*/)
 {
     if (m_producer) {
-        m_producer->set("style", currentStyle());
+        m_producer->set("style", currentStyle().toLatin1().constData());
         m_producer->set(kShotcutDetailProperty, detail().toUtf8().constData());
         emit producerChanged(m_producer);
     }
@@ -170,7 +170,7 @@ void CountProducerWidget::on_styleCombo_activated(int /*index*/)
 void CountProducerWidget::on_soundCombo_activated(int /*index*/)
 {
     if (m_producer) {
-        m_producer->set("sound", currentSound());
+        m_producer->set("sound", currentSound().toLatin1().constData());
         emit producerChanged(m_producer);
     }
 }
@@ -178,7 +178,7 @@ void CountProducerWidget::on_soundCombo_activated(int /*index*/)
 void CountProducerWidget::on_backgroundCombo_activated(int /*index*/)
 {
     if (m_producer) {
-        m_producer->set("background", currentBackground());
+        m_producer->set("background", currentBackground().toLatin1().constData());
         emit producerChanged(m_producer);
     }
 }

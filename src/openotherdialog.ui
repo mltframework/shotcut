@@ -174,7 +174,7 @@
        </layout>
       </widget>
       <widget class="QWidget" name="countTab">
-       <layout class="QVBoxLayout" name="verticalLayout_6">
+       <layout class="QVBoxLayout" name="verticalLayout_18">
         <item>
          <widget class="CountProducerWidget" name="countWidget" native="true"/>
         </item>
