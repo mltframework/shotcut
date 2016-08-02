@@ -34,7 +34,7 @@
      <widget class="QTreeWidget" name="treeWidget">
       <property name="minimumSize">
        <size>
-        <width>120</width>
+        <width>140</width>
         <height>0</height>
        </size>
       </property>
