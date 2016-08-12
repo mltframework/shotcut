@@ -570,7 +570,8 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                 p->set("threads", QThread::idealThreadCount() - 1);
             else
                 p->set("threads", ui->videoCodecThreadsSpinner->value());
-            if (ui->dualPassCheckbox->isEnabled() && ui->dualPassCheckbox->isChecked())
+            if (ui->videoRateControlCombo->currentIndex() != RateControlQuality &&
+                ui->dualPassCheckbox->isEnabled() && ui->dualPassCheckbox->isChecked())
                 p->set("pass", 1);
         }
     }
@@ -691,6 +692,8 @@ void EncodeDock::runMelt(const QString& target, int realtime)
 void EncodeDock::enqueueMelt(const QString& target, int realtime)
 {
     Mlt::Service* service = fromProducer();
+    int pass = (ui->videoRateControlCombo->currentIndex() != RateControlQuality
+             && ui->dualPassCheckbox->isEnabled() && ui->dualPassCheckbox->isChecked())? 1 : 0;
     if (!service) {
         // For each playlist item.
         if (MAIN.playlist() && MAIN.playlist()->count() > 1) {
@@ -706,7 +709,6 @@ void EncodeDock::enqueueMelt(const QString& target, int realtime)
                 producer->set_in_and_out(info->frame_in, info->frame_out);
                 QString filename = QString("%1/%2-%3.%4").arg(fi.path()).arg(fi.baseName())
                                                          .arg(i + 1, digits, 10, QChar('0')).arg(fi.completeSuffix());
-                int pass = ui->dualPassCheckbox->isEnabled() && ui->dualPassCheckbox->isChecked()? 1 : 0;
                 MeltJob* job = createMeltJob(producer.data(), filename, realtime, pass);
                 if (job) {
                     JOBS.add(job);
@@ -719,7 +721,6 @@ void EncodeDock::enqueueMelt(const QString& target, int realtime)
             }
         }
     } else {
-        int pass = ui->dualPassCheckbox->isEnabled() && ui->dualPassCheckbox->isChecked()? 1 : 0;
         MeltJob* job = createMeltJob(service, target, realtime, pass);
         if (job) {
             JOBS.add(job);
