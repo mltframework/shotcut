@@ -43,6 +43,7 @@ FilterController::FilterController(QObject* parent) : QObject(parent),
 }
 
 void FilterController::loadFilterMetadata() {
+    QScopedPointer<Mlt::Properties> mltFilters(MLT.repository()->filters());
     QDir dir = QmlUtilities::qmlDir();
     dir.cd("filters");
     foreach (QString dirName, dir.entryList(QDir::AllDirs | QDir::NoDotAndDotDot | QDir::Executable)) {
@@ -56,7 +57,7 @@ void FilterController::loadFilterMetadata() {
             QmlMetadata *meta = qobject_cast<QmlMetadata*>(component.create());
             if (meta) {
                 // Check if mlt_service is available.
-                if (MLT.repository()->filters()->get_data(meta->mlt_service().toLatin1().constData())) {
+                if (mltFilters->get_data(meta->mlt_service().toLatin1().constData())) {
                     LOG_DEBUG() << "added filter" << meta->name();
                     meta->loadSettings();
                     meta->setPath(subdir);
