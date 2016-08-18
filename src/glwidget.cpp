@@ -767,6 +767,8 @@ void GLWidget::on_frame_show(mlt_consumer, void* self, mlt_frame frame_ptr)
         int timeout = (widget->consumer()->get_int("real_time") > 0)? 0: 1000;
         if (widget->m_frameRenderer && widget->m_frameRenderer->semaphore()->tryAcquire(1, timeout)) {
             QMetaObject::invokeMethod(widget->m_frameRenderer, "showFrame", Qt::QueuedConnection, Q_ARG(Mlt::Frame, frame));
+        } else if (!Settings.playerRealtime()) {
+            LOG_WARNING() << "GLWidget dropped frame" << frame.get_position();
         }
     }
 }
