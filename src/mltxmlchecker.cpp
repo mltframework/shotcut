@@ -149,8 +149,8 @@ void MltXmlChecker::readMlt()
                 m_newXml.writeStartElement(m_xml.namespaceUri().toString(), element);
                 if (isMltClass(m_xml.name()))
                     mlt_class = element;
+                checkInAndOutPoints(); // This also copies the attributes.
             }
-            checkInAndOutPoints(); // This also copies the attributes.
             break;
         }
         case QXmlStreamReader::EndElement:
