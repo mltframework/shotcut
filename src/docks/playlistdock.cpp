@@ -22,9 +22,106 @@
 #include "mainwindow.h"
 #include "settings.h"
 #include "shotcut_mlt_properties.h"
+#include "widgets/playlisticonview.h"
 #include <commands/playlistcommands.h>
-#include <QMenu>
 #include <Logger.h>
+
+#include <QMenu>
+#include <QStyledItemDelegate>
+#include <QPainter>
+#include <QDebug>
+#include <QHeaderView>
+
+class TiledItemDelegate : public QStyledItemDelegate
+{
+    Q_OBJECT
+public:
+    TiledItemDelegate(QAbstractItemView * view, QWidget *parent = 0)
+         : QStyledItemDelegate(parent),
+         m_view(view)
+    {
+        connect(&Settings, SIGNAL(playlistThumbnailsChanged()),
+                SLOT(emitSizeHintChanged()));
+    }
+
+    void paint(QPainter *painter,
+               const QStyleOptionViewItem &option, const QModelIndex &index) const
+    {
+        const QImage thumb = index.data(Qt::DecorationRole).value<QImage>();
+        const QString setting = Settings.playlistThumbnails();
+        const int lineHeight = painter->fontMetrics().height();
+        const bool roomEnoughForAllDetails = lineHeight * 4 < thumb.height();
+        const QFont oldFont = painter->font();
+        QFont boldFont(oldFont);
+        boldFont.setBold(true);
+
+        if (option.state & QStyle::State_Selected) {
+            painter->fillRect(option.rect, option.palette.highlight().color());
+        } else {
+            if (option.features & QStyleOptionViewItem::Alternate)
+                painter->fillRect(option.rect, option.palette.alternateBase());
+        }
+
+        QRect thumbRect(QPoint(), thumb.size());
+        thumbRect.moveCenter(option.rect.center());
+        thumbRect.moveLeft(0);
+        painter->drawImage(thumbRect, thumb);
+
+        const QPoint indexPos = option.rect.topLeft() + QPoint(5, 20);
+        const QString indexStr = "#" + index.data(PlaylistModel::FIELD_INDEX).toString();
+        painter->setFont(boldFont);
+        painter->setPen(option.palette.color(QPalette::Dark).darker());
+        painter->drawText(indexPos, indexStr);
+        painter->setPen(option.palette.color(QPalette::WindowText));
+        painter->drawText(indexPos - QPoint(1, 1), indexStr);
+        painter->setFont(oldFont);
+
+        QRect centeredTextRect = option.rect;
+        centeredTextRect.setHeight(lineHeight * (roomEnoughForAllDetails ? 4 : 2));
+        centeredTextRect.moveCenter(option.rect.center());
+
+        QRect textRect = centeredTextRect;
+        textRect.setLeft(thumb.width() + 10);
+
+        QPoint textPoint = textRect.topLeft();
+        textPoint.setY(textPoint.y() + lineHeight);
+        painter->setFont(boldFont);
+        painter->drawText(textPoint,
+                painter->fontMetrics().elidedText(index.data(Qt::DisplayRole).toString(), Qt::ElideMiddle, textRect.width()));
+        painter->setFont(oldFont);
+
+        textPoint.setY(textPoint.y() + lineHeight);
+        painter->drawText(textPoint, tr("Duration: %1").arg(index.data(PlaylistModel::FIELD_DURATION).toString()));
+        if (roomEnoughForAllDetails) {
+            textPoint.setY(textPoint.y() + lineHeight);
+            painter->drawText(textPoint, tr("In: %1").arg(index.data(PlaylistModel::FIELD_IN).toString()));
+            textPoint.setY(textPoint.y() + lineHeight);
+            painter->drawText(textPoint, tr("Start: %1").arg(index.data(PlaylistModel::FIELD_START).toString()));
+        }
+    }
+
+    QSize sizeHint(const QStyleOptionViewItem &option,
+                   const QModelIndex &index) const
+    {
+        Q_UNUSED(option);
+        Q_UNUSED(index);
+        const bool doubleHeight = Settings.playlistThumbnails() == "tall"
+            || Settings.playlistThumbnails() == "large";
+        const int spacing = 10;
+        return QSize(m_view->viewport()->width(),
+                PlaylistModel::THUMBNAIL_HEIGHT * (doubleHeight ? 2 : 1) + spacing);
+    }
+
+private slots:
+    void emitSizeHintChanged()
+    {
+        emit sizeHintChanged(QModelIndex());
+    }
+
+private:
+    QAbstractItemView * m_view;
+
+};
 
 PlaylistDock::PlaylistDock(QWidget *parent) :
     QDockWidget(parent),
@@ -33,13 +130,29 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     LOG_DEBUG() << "begin";
     ui->setupUi(this);
     toggleViewAction()->setIcon(windowIcon());
-    ui->tableView->setModel(&m_model);
-    ui->tableView->setDragDropMode(QAbstractItemView::DragDrop);
-    ui->tableView->setDropIndicatorShown(true);
-    ui->tableView->setDragDropOverwriteMode(false);
-    ui->tableView->setAcceptDrops(true);
-    ui->tableView->setDefaultDropAction(Qt::MoveAction);
-    ui->tableView->resizeColumnToContents(0);
+
+    m_iconsView = new PlaylistIconView(this);
+    ui->listView->parentWidget()->layout()->addWidget(m_iconsView);
+    m_iconsView->setSelectionMode(QAbstractItemView::SingleSelection);
+
+    QList<QAbstractItemView*> views;
+    views << ui->tableView;
+    views << ui->listView;
+    views << m_iconsView;
+    foreach (QAbstractItemView* view, views) {
+        view->setDragDropMode(QAbstractItemView::DragDrop);
+        view->setDropIndicatorShown(true);
+        view->setDragDropOverwriteMode(false);
+        view->setAcceptDrops(true);
+        view->setDefaultDropAction(Qt::MoveAction);
+        view->setAlternatingRowColors(true);
+        connect(view, SIGNAL(customContextMenuRequested(QPoint)), SLOT(viewCustomContextMenuRequested(QPoint)));
+        connect(view, SIGNAL(doubleClicked(QModelIndex)), SLOT(viewDoubleClicked(QModelIndex)));
+    }
+
+    connect(ui->actionDetailed, SIGNAL(triggered(bool)), SLOT(updateViewModeFromActions()));
+    connect(ui->actionIcons, SIGNAL(triggered(bool)), SLOT(updateViewModeFromActions()));
+    connect(ui->actionTiled, SIGNAL(triggered(bool)), SLOT(updateViewModeFromActions()));
 
     connect(ui->actionRemove, SIGNAL(triggered()), this, SLOT(on_removeButton_clicked()));
     connect(&m_model, SIGNAL(cleared()), this, SLOT(onPlaylistCleared()));
@@ -71,6 +184,16 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
         ui->actionThumbnailsHidden->setChecked(true);
         on_actionThumbnailsHidden_triggered(true);
     }
+
+    if (Settings.viewMode() == kTiledMode)
+        ui->actionTiled->setChecked(true);
+    else if (Settings.viewMode() == kIconsMode)
+        ui->actionIcons->setChecked(true);
+    else
+        ui->actionDetailed->setChecked(true);
+
+    updateViewModeFromActions();
+
     LOG_DEBUG() << "end";
 }
 
@@ -82,7 +205,7 @@ PlaylistDock::~PlaylistDock()
 int PlaylistDock::position()
 {
     int result = -1;
-    QModelIndex index = ui->tableView->currentIndex();
+    QModelIndex index = m_view->currentIndex();
     if (index.isValid() && m_model.playlist()) {
         Mlt::ClipInfo* i = m_model.playlist()->clip_info(index.row());
         if (i) result = i->start;
@@ -93,43 +216,43 @@ int PlaylistDock::position()
 
 void PlaylistDock::incrementIndex()
 {
-    QModelIndex index = ui->tableView->currentIndex();
+    QModelIndex index = m_view->currentIndex();
     if (!index.isValid())
         index = m_model.createIndex(0, 0);
     else
         index = m_model.incrementIndex(index);
     if (index.isValid())
-        ui->tableView->setCurrentIndex(index);
+        m_view->setCurrentIndex(index);
 }
 
 void PlaylistDock::decrementIndex()
 {
-    QModelIndex index = ui->tableView->currentIndex();
+    QModelIndex index = m_view->currentIndex();
     if (!index.isValid())
         index = m_model.createIndex(0, 0);
     else
         index = m_model.decrementIndex(index);
     if (index.isValid())
-        ui->tableView->setCurrentIndex(index);
+        m_view->setCurrentIndex(index);
 }
 
 void PlaylistDock::setIndex(int row)
 {
     QModelIndex index = m_model.createIndex(row, 0);
     if (index.isValid())
-        ui->tableView->setCurrentIndex(index);
+        m_view->setCurrentIndex(index);
 }
 
 void PlaylistDock::moveClipUp()
 {
-    int row = ui->tableView->currentIndex().row();
+    int row = m_view->currentIndex().row();
     if (row > 0)
         MAIN.undoStack()->push(new Playlist::MoveCommand(m_model, row, row - 1));
 }
 
 void PlaylistDock::moveClipDown()
 {
-    int row = ui->tableView->currentIndex().row();
+    int row = m_view->currentIndex().row();
     if (row + 1 < m_model.rowCount())
         MAIN.undoStack()->push(new Playlist::MoveCommand(m_model, row, row + 1));
 }
@@ -138,7 +261,7 @@ void PlaylistDock::on_menuButton_clicked()
 {
     QPoint pos = ui->menuButton->mapToParent(QPoint(0, 0));
     QMenu menu(this);
-    QModelIndex index = ui->tableView->currentIndex();
+    QModelIndex index = m_view->currentIndex();
     if (index.isValid() && m_model.playlist()) {
         menu.addAction(ui->actionGoto);
         if (MLT.isClip())
@@ -150,6 +273,15 @@ void PlaylistDock::on_menuButton_clicked()
     }
     menu.addAction(ui->actionRemoveAll);
     menu.addAction(ui->actionAddToTimeline);
+    menu.addSeparator();
+
+    QMenu* viewModeMenu = menu.addMenu(tr("View mode"));
+    QActionGroup modeGroup(this);
+    modeGroup.addAction(ui->actionDetailed);
+    modeGroup.addAction(ui->actionTiled);
+    modeGroup.addAction(ui->actionIcons);
+    viewModeMenu->addActions(modeGroup.actions());
+
     menu.addSeparator();
     QMenu* subMenu = menu.addMenu(tr("Thumbnails"));
     QActionGroup group(this);
@@ -168,7 +300,7 @@ void PlaylistDock::on_actionInsertCut_triggered()
         QMimeData mimeData;
         mimeData.setData(Mlt::XmlMimeType, MLT.XML(
             MLT.isClip()? 0 : MLT.savedProducer()).toUtf8());
-        onDropped(&mimeData, ui->tableView->currentIndex().row());
+        onDropped(&mimeData, m_view->currentIndex().row());
     }
 }
 
@@ -202,7 +334,7 @@ void PlaylistDock::on_actionInsertBlank_triggered()
     DurationDialog dialog(this);
     dialog.setDuration(MLT.profile().fps() * 5);
     if (dialog.exec() == QDialog::Accepted) {
-        QModelIndex index = ui->tableView->currentIndex();
+        QModelIndex index = m_view->currentIndex();
         if (index.isValid())
             m_model.insertBlank(dialog.duration(), index.row());
         else
@@ -220,7 +352,7 @@ void PlaylistDock::on_actionAppendBlank_triggered()
 
 void PlaylistDock::on_actionUpdate_triggered()
 {
-    QModelIndex index = ui->tableView->currentIndex();
+    QModelIndex index = m_view->currentIndex();
     if (!index.isValid() || !m_model.playlist()) return;
     Mlt::ClipInfo* info = m_model.playlist()->clip_info(index.row());
     if (!info) return;
@@ -251,7 +383,7 @@ void PlaylistDock::on_actionUpdate_triggered()
 
 void PlaylistDock::on_removeButton_clicked()
 {
-    QModelIndex index = ui->tableView->currentIndex();
+    QModelIndex index = m_view->currentIndex();
     if (!index.isValid() || !m_model.playlist()) return;
     MAIN.undoStack()->push(new Playlist::RemoveCommand(m_model, index.row()));
     int count = m_model.playlist()->count();
@@ -278,7 +410,7 @@ void PlaylistDock::setUpdateButtonEnabled(bool modified)
 
 void PlaylistDock::on_actionOpen_triggered()
 {
-    QModelIndex index = ui->tableView->currentIndex();
+    QModelIndex index = m_view->currentIndex();
     if (!index.isValid() || !m_model.playlist()) return;
     Mlt::ClipInfo* i = m_model.playlist()->clip_info(index.row());
     if (i) {
@@ -291,9 +423,9 @@ void PlaylistDock::on_actionOpen_triggered()
     }
 }
 
-void PlaylistDock::on_tableView_customContextMenuRequested(const QPoint &pos)
+void PlaylistDock::viewCustomContextMenuRequested(const QPoint &pos)
 {
-    QModelIndex index = ui->tableView->currentIndex();
+    QModelIndex index = m_view->currentIndex();
     if (index.isValid() && m_model.playlist()) {
         QMenu menu(this);
         menu.addAction(ui->actionGoto);
@@ -312,7 +444,8 @@ void PlaylistDock::on_tableView_customContextMenuRequested(const QPoint &pos)
     }
 }
 
-void PlaylistDock::on_tableView_doubleClicked(const QModelIndex &index)
+
+void PlaylistDock::viewDoubleClicked(const QModelIndex &index)
 {
     if (!m_model.playlist()) return;
     Mlt::ClipInfo* i = m_model.playlist()->clip_info(index.row());
@@ -334,7 +467,7 @@ void PlaylistDock::on_tableView_doubleClicked(const QModelIndex &index)
 
 void PlaylistDock::on_actionGoto_triggered()
 {
-    QModelIndex index = ui->tableView->currentIndex();
+    QModelIndex index = m_view->currentIndex();
     Mlt::ClipInfo* i = m_model.playlist()->clip_info(index.row());
     if (i) {
         emit itemActivated(i->start);
@@ -511,3 +644,68 @@ void PlaylistDock::on_updateButton_clicked()
         setUpdateButtonEnabled(false);
     }
 }
+
+void PlaylistDock::updateViewModeFromActions()
+{
+    PlaylistModel::ViewMode mode;
+
+    if (ui->actionDetailed->isChecked())
+    {
+        Settings.setViewMode(kDetailedMode);
+        mode = PlaylistModel::Detailed;
+    }
+    else if (ui->actionIcons->isChecked())
+    {
+        Settings.setViewMode(kIconsMode);
+        mode = PlaylistModel::Icons;
+    }
+    else
+    {
+        Settings.setViewMode(kTiledMode);
+        mode = PlaylistModel::Tiled;
+    }
+
+    setViewMode(mode);
+}
+
+void PlaylistDock::setViewMode(PlaylistModel::ViewMode mode)
+{
+    if (m_model.viewMode() == mode)
+        return;
+
+    ui->listView->setModel(0);
+    ui->tableView->setModel(0);
+    m_iconsView->setModel(0);
+    ui->listView->hide();
+    ui->tableView->hide();
+    m_iconsView->hide();
+
+    if (ui->listView->itemDelegate()) {
+        QAbstractItemDelegate * delegate = ui->listView->itemDelegate();
+        ui->listView->setItemDelegate(0);
+        delete delegate;
+    }
+
+    m_model.setViewMode(mode);
+
+    if (mode == PlaylistModel::Detailed) {
+        m_view = ui->tableView;
+        ui->tableView->setModel(&m_model);
+        ui->tableView->resizeColumnsToContents();
+        ui->tableView->show();
+
+    } else if (mode == PlaylistModel::Tiled) {
+        m_view = ui->listView;
+        ui->listView->setDragEnabled(true);
+        ui->listView->setItemDelegate(new TiledItemDelegate(ui->listView));
+        ui->listView->setModel(&m_model);
+        ui->listView->show();
+    } else if (mode == PlaylistModel::Icons) {
+        m_view = m_iconsView;
+        m_iconsView->setModel(&m_model);
+        m_iconsView->show();
+    }
+    m_model.refreshThumbnails();
+}
+
+#include "playlistdock.moc"

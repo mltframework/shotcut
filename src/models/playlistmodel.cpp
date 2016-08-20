@@ -157,6 +157,7 @@ PlaylistModel::PlaylistModel(QObject *parent)
     : QAbstractTableModel(parent)
     , m_playlist(0)
     , m_dropRow(-1)
+    , m_mode(Invalid)
 {
     qRegisterMetaType<QVector<int> >("QVector<int>");
 }
@@ -174,71 +175,97 @@ int PlaylistModel::rowCount(const QModelIndex& /*parent*/) const
 
 int PlaylistModel::columnCount(const QModelIndex& /*parent*/) const
 {
-    return COLUMN_COUNT;
+    switch (m_mode) {
+        case Detailed:
+            return COLUMN_COUNT;
+        case Tiled:
+        case Icons:
+        case Invalid:
+            return 1;
+    }
+    return 0;
 }
 
 QVariant PlaylistModel::data(const QModelIndex &index, int role) const
 {
-    if (!m_playlist) return QVariant();
-    switch (role) {
-    case Qt::DisplayRole:
-    case Qt::ToolTipRole: {
-        QScopedPointer<Mlt::ClipInfo> info(m_playlist->clip_info(index.row()));
-        switch (index.column()) {
-        case COLUMN_INDEX:
-            return QString::number(index.row() + 1);
-        case COLUMN_RESOURCE: {
-            QString result;
-            if (role == Qt::DisplayRole) {
-                // Prefer caption for display
-                if (info->producer && info->producer->is_valid())
-                    result = info->producer->get(kShotcutCaptionProperty);
-                if (result.isNull())
-                    result = Util::baseName(QString::fromUtf8(info->resource));
-                if (result == "<producer>" && info->producer && info->producer->is_valid())
-                    result = QString::fromUtf8(info->producer->get("mlt_service"));
-            } else {
-                // Prefer detail or full path for tooltip
-                if (info->producer && info->producer->is_valid())
-                    result = info->producer->get("shotcut:detail");
-                if (result.isNull())
-                    result = QString::fromUtf8(info->resource);
-                if ((result.isNull() || Util::baseName(result) == "<producer>") && info->producer && info->producer->is_valid())
-                    result = info->producer->get(kShotcutCaptionProperty);
-                if (result.isNull() && info->producer && info->producer->is_valid())
-                    result = QString::fromUtf8(info->producer->get("mlt_service"));
-            }
-            if (!info->producer->get(kShotcutHashProperty))
-                MAIN.getHash(*info->producer);
-            return result;
-        }
-        case COLUMN_IN:
-            if (info->producer && info->producer->is_valid()) {
-                return info->producer->frames_to_time(info->frame_in);
-            } else
-                return "";
-        case COLUMN_DURATION:
-            if (info->producer && info->producer->is_valid()) {
-                return info->producer->frames_to_time(info->frame_count);
-            } else
-                return "";
-        case COLUMN_START:
-            if (info->producer && info->producer->is_valid()) {
-                return info->producer->frames_to_time(info->start);
-            }
+    if (!m_playlist)
+        return QVariant();
+
+    int field = role;
+
+    if (role < Qt::UserRole) {
+        if (role == Qt::DisplayRole) {
+            if (m_mode == Detailed)
+                field = FIELD_INDEX + index.column();
             else
-                return "";
-        default:
-            break;
+                field = FIELD_RESOURCE;
+        } else if (role == Qt::ToolTipRole) {
+            field = FIELD_RESOURCE;
         }
-        break;
+        else if (role == Qt::DecorationRole) {
+            if (m_mode == Detailed && index.column() != COLUMN_THUMBNAIL)
+                return QVariant();
+            field = FIELD_THUMBNAIL;
+        }
+        else
+            return QVariant();
     }
-    case Qt::DecorationRole:
-        if (index.column() == COLUMN_THUMBNAIL) {
+
+    QScopedPointer<Mlt::ClipInfo> info(m_playlist->clip_info(index.row()));
+    switch (field) {
+    case FIELD_INDEX:
+        return QString::number(index.row() + 1);
+    case FIELD_RESOURCE:
+        {
+        QString result;
+        if (role == Qt::DisplayRole) {
+            // Prefer caption for display
+            if (info->producer && info->producer->is_valid())
+                result = info->producer->get(kShotcutCaptionProperty);
+            if (result.isNull())
+                result = Util::baseName(QString::fromUtf8(info->resource));
+            if (result == "<producer>" && info->producer && info->producer->is_valid())
+                result = QString::fromUtf8(info->producer->get("mlt_service"));
+        } else {
+            // Prefer detail or full path for tooltip
+            if (info->producer && info->producer->is_valid())
+                result = info->producer->get("shotcut:detail");
+            if (result.isNull())
+                result = QString::fromUtf8(info->resource);
+            if ((result.isNull() || Util::baseName(result) == "<producer>") && info->producer && info->producer->is_valid())
+                result = info->producer->get(kShotcutCaptionProperty);
+            if (result.isNull() && info->producer && info->producer->is_valid())
+                result = QString::fromUtf8(info->producer->get("mlt_service"));
+        }
+        if (!info->producer->get(kShotcutHashProperty))
+            MAIN.getHash(*info->producer);
+        return result;
+    }
+    case FIELD_IN:
+        if (info->producer && info->producer->is_valid()) {
+            return info->producer->frames_to_time(info->frame_in);
+        } else
+            return "";
+    case FIELD_DURATION:
+        if (info->producer && info->producer->is_valid()) {
+            return info->producer->frames_to_time(info->frame_count);
+        } else
+            return "";
+    case FIELD_START:
+        if (info->producer && info->producer->is_valid()) {
+            return info->producer->frames_to_time(info->start);
+        }
+        else
+            return "";
+    case FIELD_THUMBNAIL:
+        {
+            QString setting = Settings.playlistThumbnails();
+            if (setting == "hidden")
+                return QImage();
+
             QScopedPointer<Mlt::Producer> producer(m_playlist->get_clip(index.row()));
             Mlt::Producer parent(producer->get_parent());
             int width = THUMBNAIL_WIDTH;
-            QString setting = Settings.playlistThumbnails();
             QImage image;
 
             if (setting == "wide")
@@ -284,10 +311,23 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
             return image;
         }
         break;
-    default:
-        break;
     }
     return QVariant();
+}
+
+PlaylistModel::ViewMode PlaylistModel::viewMode() const
+{
+    return m_mode;
+}
+
+void PlaylistModel::setViewMode(ViewMode mode)
+{
+    if (mode == m_mode)
+        return;
+
+    beginResetModel();
+    m_mode = mode;
+    endResetModel();
 }
 
 QVariant PlaylistModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -339,6 +379,13 @@ bool PlaylistModel::removeRows(int row, int count, const QModelIndex& parent)
     else
         emit moveClip(row, m_dropRow);
     m_dropRow = -1;
+    return true;
+}
+
+bool PlaylistModel::moveRows(const QModelIndex &, int sourceRow, int count, const QModelIndex &, int destinationChild)
+{
+    Q_ASSERT(count == 1);
+    move(sourceRow, destinationChild);
     return true;
 }
 
@@ -523,7 +570,7 @@ void PlaylistModel::update(int row, Mlt::Producer& producer)
         new UpdateThumbnailTask(this, producer, in, out, row));
     m_playlist->remove(row);
     m_playlist->insert(producer, row, in, out);
-    emit dataChanged(createIndex(row, 0), createIndex(row, COLUMN_COUNT - 1));
+    emit dataChanged(createIndex(row, 0), createIndex(row, columnCount()));
     emit modified();
 }
 
@@ -559,8 +606,8 @@ void PlaylistModel::move(int from, int to)
 {
     if (!m_playlist) return;
     m_playlist->move(from, to);
-    emit dataChanged(createIndex(from, 0), createIndex(from, COLUMN_COUNT - 1));
-    emit dataChanged(createIndex(to, 0), createIndex(to, COLUMN_COUNT - 1));
+    emit dataChanged(createIndex(from, 0), createIndex(from, columnCount()));
+    emit dataChanged(createIndex(to, 0), createIndex(to, columnCount()));
     emit modified();
 }
 
@@ -576,7 +623,7 @@ void PlaylistModel::createIfNeeded()
 
 void PlaylistModel::showThumbnail(int row)
 {
-    emit dataChanged(createIndex(row, COLUMN_THUMBNAIL), createIndex(row, COLUMN_THUMBNAIL));
+    emit dataChanged(createIndex(row, 0), createIndex(row, columnCount()));
 }
 
 void PlaylistModel::refreshThumbnails()

@@ -25,10 +25,21 @@
 #include "mltcontroller.h"
 #include "MltPlaylist.h"
 
+#define kDetailedMode "detailed"
+#define kIconsMode "icons"
+#define kTiledMode "tiled"
+
 class PlaylistModel : public QAbstractTableModel
 {
     Q_OBJECT
 public:
+    enum ViewMode {
+        Invalid,
+        Detailed,
+        Tiled,
+        Icons,
+    };
+
     enum Columns {
         COLUMN_INDEX = 0,
         COLUMN_THUMBNAIL,
@@ -37,6 +48,15 @@ public:
         COLUMN_DURATION,
         COLUMN_START,
         COLUMN_COUNT
+    };
+
+    enum Fields {
+        FIELD_INDEX = Qt::UserRole,
+        FIELD_THUMBNAIL,
+        FIELD_RESOURCE,
+        FIELD_IN,
+        FIELD_DURATION,
+        FIELD_START
     };
 
     static const int THUMBNAIL_WIDTH = 80;
@@ -51,6 +71,7 @@ public:
     Qt::DropActions supportedDropActions() const;
     bool insertRows(int row, int count, const QModelIndex & parent = QModelIndex());
     bool removeRows(int row, int count, const QModelIndex & parent = QModelIndex());
+    bool moveRows(const QModelIndex &sourceParent, int sourceRow, int count, const QModelIndex &destinationParent, int destinationChild);
     Qt::ItemFlags flags(const QModelIndex &index) const;
     QStringList mimeTypes() const;
     QMimeData *mimeData(const QModelIndexList &indexes) const;
@@ -63,6 +84,9 @@ public:
     void refreshThumbnails();
     Mlt::Playlist* playlist() { return m_playlist; }
     void setPlaylist(Mlt::Playlist& playlist);
+
+    ViewMode viewMode() const;
+    void setViewMode(ViewMode mode);
 
 signals:
     void created();
@@ -88,6 +112,7 @@ public slots:
 private:
     Mlt::Playlist* m_playlist;
     int m_dropRow;
+    ViewMode m_mode;
 };
 
 #endif // PLAYLISTMODEL_H

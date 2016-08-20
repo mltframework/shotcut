@@ -27,6 +27,8 @@ namespace Ui {
     class PlaylistDock;
 }
 
+class QAbstractItemView;
+
 class PlaylistDock : public QDockWidget
 {
     Q_OBJECT
@@ -65,9 +67,9 @@ private slots:
 
     void on_actionAppendBlank_triggered();
 
-    void on_tableView_customContextMenuRequested(const QPoint &pos);
+    void viewCustomContextMenuRequested(const QPoint &pos);
 
-    void on_tableView_doubleClicked(const QModelIndex &index);
+    void viewDoubleClicked(const QModelIndex &index);
 
     void on_actionGoto_triggered();
 
@@ -101,8 +103,14 @@ private slots:
 
     void on_updateButton_clicked();
 
+    void updateViewModeFromActions();
+
 private:
+    void setViewMode(PlaylistModel::ViewMode mode);
+
     Ui::PlaylistDock *ui;
+    QAbstractItemView *m_view;
+    QAbstractItemView *m_iconsView;
     PlaylistModel m_model;
     int m_defaultRowHeight;
 };
