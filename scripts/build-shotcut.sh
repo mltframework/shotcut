@@ -527,13 +527,13 @@ function set_globals {
     if test "$TARGET_OS" = "Win32" ; then
       export HOST=i686-w64-mingw32
       export QTDIR="$HOME/qt-5.5.0-x86-mingw510r0-dw2"
-      export QMAKE="$HOME/Qt/5.5/gcc/bin/qmake"
-      export LRELEASE="$HOME/Qt/5.5/gcc/bin/lrelease"
+      export QMAKE="$HOME/Qt/5.6.1/gcc/bin/qmake"
+      export LRELEASE="$HOME/Qt/5.6.1/gcc/bin/lrelease"
     else
       export HOST=x86_64-w64-mingw32
-      export QTDIR="$HOME/qt-5.5.0-x64-mingw510r0-seh"
-      export QMAKE="$HOME/Qt/5.5/gcc_64/bin/qmake"
-      export LRELEASE="$HOME/Qt/5.5/gcc_64/bin/lrelease"
+      export QTDIR="$HOME/qt-5.6.1-x64-mingw510r0-seh"
+      export QMAKE="$HOME/Qt/5.6.1/gcc_64/bin/qmake"
+      export LRELEASE="$HOME/Qt/5.6.1/gcc_64/bin/lrelease"
     fi
     export CROSS=${HOST}.static-
     export CC=${CROSS}gcc
@@ -546,14 +546,14 @@ function set_globals {
     export CMAKE_ROOT="${SOURCE_DIR}/vid.stab/cmake"
     export PKG_CONFIG=pkg-config
   elif test "$TARGET_OS" = "Darwin"; then
-    export QTDIR="$HOME/Qt/5.5/clang_64"
+    export QTDIR="$HOME/Qt/5.6.1/clang_64"
     export RANLIB=ranlib
   else
     if test -z "$QTDIR" ; then
       if [ "$(uname -m)" = "x86_64" ]; then
-        export QTDIR="$HOME/Qt/5.5/gcc_64"
+        export QTDIR="$HOME/Qt/5.6.1/gcc_64"
       else
-        export QTDIR="$HOME/Qt/5.5/gcc"
+        export QTDIR="$HOME/Qt/5.6.1/gcc"
       fi
     fi
     export RANLIB=ranlib
@@ -696,7 +696,7 @@ function set_globals {
   #####
   # shotcut
   if [ "$TARGET_OS" = "Darwin" ]; then
-    CONFIG[7]="$QTDIR/bin/qmake -r -spec macx-g++ MLT_PREFIX=$FINAL_INSTALL_DIR $QMAKE_DEBUG_FLAG $QMAKE_ASAN_FLAGS"
+    CONFIG[7]="$QTDIR/bin/qmake -r MLT_PREFIX=$FINAL_INSTALL_DIR $QMAKE_DEBUG_FLAG $QMAKE_ASAN_FLAGS"
   elif [ "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ]; then
     # DEFINES+=QT_STATIC is for QWebSockets
     CONFIG[7]="$QMAKE -r -spec mkspecs/mingw CONFIG+=link_pkgconfig PKGCONFIG+=mlt++ LIBS+=-L${QTDIR}/lib SHOTCUT_VERSION=$(date '+%y.%m.%d') DEFINES+=QT_STATIC $QMAKE_DEBUG_FLAG $QMAKE_ASAN_FLAGS"
@@ -716,7 +716,7 @@ function set_globals {
   #####
   # WebVfx
   if [ "$TARGET_OS" = "Darwin" ]; then
-    CONFIG[9]="$QTDIR/bin/qmake -r -spec macx-g++ MLT_PREFIX=$FINAL_INSTALL_DIR"
+    CONFIG[9]="$QTDIR/bin/qmake -r MLT_PREFIX=$FINAL_INSTALL_DIR"
   elif [ "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ]; then
     CONFIG[9]="$QMAKE -r -spec mkspecs/mingw LIBS+=-L${QTDIR}/lib INCLUDEPATH+=$FINAL_INSTALL_DIR/include"
   else
@@ -1833,7 +1833,7 @@ function deploy_osx
     cmd ln -s /Applications staging
     cmd cp shotcut/COPYING staging
     sync
-    cmd hdiutil create -fs HFS+ -srcfolder staging -volname Shotcut -format UDBZ -size 300m "$dmg_name"
+    cmd hdiutil create -fs HFS+ -srcfolder staging -volname Shotcut -format UDBZ -size 400m "$dmg_name"
   fi
   if [ "$CLEANUP" = "1" ]; then
     cmd rm -rf staging
