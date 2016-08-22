@@ -323,7 +323,6 @@ mac {
     TARGET = Shotcut
     ICON = ../icons/shotcut.icns
     QMAKE_INFO_PLIST = ../Info.plist
-    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.6
 
     # QMake from Qt 5.1.0 on OSX is messing with the environment in which it runs
     # pkg-config such that the PKG_CONFIG_PATH env var is not set.
