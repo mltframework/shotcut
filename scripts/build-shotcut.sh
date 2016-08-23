@@ -1865,9 +1865,9 @@ function deploy_win32
   cmd mv COPYING COPYING.txt
   cmd cp -p "$QTDIR"/bin/Qt5{Concurrent,Core,Declarative,Gui,Multimedia,MultimediaQuick_p,MultimediaWidgets,Network,OpenGL,Positioning,PrintSupport,Qml,QuickParticles,Quick,QuickWidgets,Script,Sensors,Sql,Svg,WebChannel,WebKit,WebKitWidgets,WebSockets,Widgets,Xml,XmlPatterns}.dll .
   if [ "$TARGET_OS" = "Win32" ]; then
-    cmd cp -p "$QTDIR"/bin/{icudt55,icuin55,icuuc55,libgcc_s_dw2-1,libstdc++-6,libwinpthread-1,libEGL,libGLESv2,opengl32sw,d3dcompiler_47}.dll .
+    cmd cp -p "$QTDIR"/bin/{icudt57,icuin57,icuuc57,libgcc_s_dw2-1,libstdc++-6,libwinpthread-1,libEGL,libGLESv2,opengl32sw,d3dcompiler_47}.dll .
   else
-    cmd cp -p "$QTDIR"/bin/{icudt55,icuin55,icuuc55,libgcc_s_seh-1,libstdc++-6,libwinpthread-1,libEGL,libGLESv2,opengl32sw,d3dcompiler_47}.dll .
+    cmd cp -p "$QTDIR"/bin/{icudt57,icuin57,icuuc57,libgcc_s_seh-1,libstdc++-6,libwinpthread-1,libEGL,libGLESv2,opengl32sw,d3dcompiler_47}.dll .
   fi
   cmd mkdir -p lib/qt5/sqldrivers
   cmd cp -pr "$QTDIR"/plugins/{audio,iconengines,imageformats,mediaservice,platforms,generic,platforminputcontexts,platformthemes} lib/qt5
