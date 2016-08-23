@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2014 Meltytech, LLC
+ * Copyright (c) 2013-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  * Author: Brian Matherly <pez4brian@yahoo.com>
  * Some ideas came from Qt-Plus: https://github.com/liuyanghejerry/Qt-Plus
@@ -20,6 +20,7 @@
  */
 
 #include "colorwheelitem.h"
+#include "mainwindow.h"
 #include <QPainter>
 #include <QCursor>
 #include <qmath.h>
@@ -40,7 +41,6 @@ ColorWheelItem::ColorWheelItem(QQuickItem *parent)
 {
     setAcceptedMouseButtons(Qt::LeftButton);
     setAcceptHoverEvents(true);
-    setRenderTarget(QQuickPaintedItem::FramebufferObject);
 }
 
 QColor ColorWheelItem::color()
@@ -248,7 +248,7 @@ void ColorWheelItem::drawWheelDot(QPainter& painter)
 void ColorWheelItem::drawSliderBar(QPainter &painter)
 {
     qreal value = 1.0 - m_color.valueF();
-    int ws = wheelSize();
+    int ws = wheelSize() * MAIN.devicePixelRatio();
     int w = (qreal)ws / WHEEL_SLIDER_RATIO;
     int h = ws - m_margin * 2;
     QPen pen(Qt::white);
