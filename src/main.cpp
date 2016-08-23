@@ -107,7 +107,6 @@ public:
         setApplicationName("Shotcut");
         setApplicationVersion(SHOTCUT_VERSION);
         setAttribute(Qt::AA_UseHighDpiPixmaps);
-        setAttribute(Qt::AA_EnableHighDpiScaling);
         setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
 #if defined(Q_OS_MAC)
         setAttribute(Qt::AA_DontShowIconsInMenus);
@@ -231,6 +230,7 @@ int main(int argc, char **argv)
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     QCoreApplication::setAttribute(Qt::AA_X11InitThreads);
 #endif
+    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     Application a(argc, argv);
     QSplashScreen splash(QPixmap(":/icons/shotcut-logo-640.png"));
     splash.showMessage(QCoreApplication::translate("main", "Loading plugins..."), Qt::AlignHCenter | Qt::AlignBottom);
