@@ -107,6 +107,7 @@ public:
         setApplicationName("Shotcut");
         setApplicationVersion(SHOTCUT_VERSION);
         setAttribute(Qt::AA_UseHighDpiPixmaps);
+        setAttribute(Qt::AA_EnableHighDpiScaling);
         setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
 #if defined(Q_OS_MAC)
         setAttribute(Qt::AA_DontShowIconsInMenus);
@@ -144,6 +145,7 @@ public:
         LOG_INFO() << "number of logical cores =" << QThread::idealThreadCount();
         LOG_INFO() << "locale =" << QLocale();
         LOG_INFO() << "install dir =" <<  applicationDirPath();
+        LOG_INFO() << "device pixel ratio =" << devicePixelRatio();
 
 #if defined(Q_OS_WIN)
         if (Settings.playerGPU()) {
