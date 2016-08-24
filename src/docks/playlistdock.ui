@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>378</width>
+    <width>460</width>
     <height>278</height>
    </rect>
   </property>
@@ -182,6 +182,48 @@ p, li { white-space: pre-wrap; }
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="tilesButton">
+        <property name="toolTip">
+         <string>View as tiles</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset theme="view-list-details" resource="../../icons/resources.qrc">
+          <normaloff>:/icons/oxygen/32x32/actions/view-list-details.png</normaloff>:/icons/oxygen/32x32/actions/view-list-details.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="iconsButton">
+        <property name="toolTip">
+         <string>View as icons</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset theme="view-list-icons" resource="../../icons/resources.qrc">
+          <normaloff>:/icons/oxygen/32x32/actions/view-list-icons.png</normaloff>:/icons/oxygen/32x32/actions/view-list-icons.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="detailsButton">
+        <property name="toolTip">
+         <string>View as details</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset theme="view-list-text" resource="../../icons/resources.qrc">
+          <normaloff>:/icons/oxygen/32x32/actions/view-list-text.png</normaloff>:/icons/oxygen/32x32/actions/view-list-text.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="menuButton">
         <property name="enabled">
          <bool>false</bool>
@@ -223,8 +265,7 @@ p, li { white-space: pre-wrap; }
   <action name="actionAppendCut">
    <property name="icon">
     <iconset theme="list-add">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Append Cut</string>
@@ -330,7 +371,10 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Detailed</string>
+    <string>Details</string>
+   </property>
+   <property name="toolTip">
+    <string>View as details</string>
    </property>
   </action>
   <action name="actionTiled">
@@ -338,7 +382,10 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Tiled</string>
+    <string>Tiles</string>
+   </property>
+   <property name="toolTip">
+    <string>View as tiles</string>
    </property>
   </action>
   <action name="actionIcons">
@@ -347,6 +394,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Icons</string>
+   </property>
+   <property name="toolTip">
+    <string>View as icons</string>
    </property>
   </action>
  </widget>

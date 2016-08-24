@@ -709,3 +709,27 @@ void PlaylistDock::setViewMode(PlaylistModel::ViewMode mode)
 }
 
 #include "playlistdock.moc"
+
+void PlaylistDock::on_tilesButton_clicked()
+{
+    ui->actionTiled->setChecked(true);
+    ui->actionIcons->setChecked(false);
+    ui->actionDetailed->setChecked(false);
+    updateViewModeFromActions();
+}
+
+void PlaylistDock::on_iconsButton_clicked()
+{
+    ui->actionIcons->setChecked(true);
+    ui->actionTiled->setChecked(false);
+    ui->actionDetailed->setChecked(false);
+    updateViewModeFromActions();
+}
+
+void PlaylistDock::on_detailsButton_clicked()
+{
+    ui->actionDetailed->setChecked(true);
+    ui->actionTiled->setChecked(false);
+    ui->actionIcons->setChecked(false);
+    updateViewModeFromActions();
+}

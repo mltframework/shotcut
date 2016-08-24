@@ -201,5 +201,14 @@
         <file>oxygen/32x32/status/task-attempt.png</file>
         <file>oxygen/32x32/status/task-complete.png</file>
         <file>oxygen/32x32/status/task-reject.png</file>
+        <file>oxygen/32x32/actions/view-list-details.png</file>
+        <file>oxygen/32x32/actions/view-list-icons.png</file>
+        <file>oxygen/32x32/actions/view-list-text.png</file>
+        <file>dark/32x32/view-list-details.png</file>
+        <file>dark/32x32/view-list-icons.png</file>
+        <file>dark/32x32/view-list-text.png</file>
+        <file>light/32x32/view-list-details.png</file>
+        <file>light/32x32/view-list-icons.png</file>
+        <file>light/32x32/view-list-text.png</file>
     </qresource>
 </RCC>

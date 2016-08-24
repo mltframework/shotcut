@@ -105,6 +105,12 @@ private slots:
 
     void updateViewModeFromActions();
 
+    void on_tilesButton_clicked();
+
+    void on_iconsButton_clicked();
+
+    void on_detailsButton_clicked();
+
 private:
     void setViewMode(PlaylistModel::ViewMode mode);
 
