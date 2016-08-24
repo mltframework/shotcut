@@ -325,7 +325,7 @@
   <action name="actionUndo">
    <property name="icon">
     <iconset theme="edit-undo" resource="../icons/resources.qrc">
-     <normaloff>:/icons/oxygen/16x16/actions/edit-undo.png</normaloff>:/icons/oxygen/16x16/actions/edit-undo.png</iconset>
+     <normaloff>:/icons/oxygen/32x32/actions/edit-undo.png</normaloff>:/icons/oxygen/32x32/actions/edit-undo.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Undo</string>
@@ -365,7 +365,7 @@
   <action name="actionAudioMeter">
    <property name="icon">
     <iconset theme="audio-meter" resource="../icons/resources.qrc">
-     <normaloff>:/icons/light/16x16/audio-meter.png</normaloff>:/icons/light/16x16/audio-meter.png</iconset>
+     <normaloff>:/icons/light/32x32/audio-meter.png</normaloff>:/icons/light/32x32/audio-meter.png</iconset>
    </property>
    <property name="text">
     <string>Peak Meter</string>

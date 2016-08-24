@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,7 +20,7 @@ import QtQuick.Controls 1.0
 
 Button {
     iconName: 'edit-undo'
-    iconSource: 'qrc:///icons/oxygen/16x16/actions/edit-undo.png'
+    iconSource: 'qrc:///icons/oxygen/32x32/actions/edit-undo.png'
     tooltip: qsTr('Reset to default')
     implicitWidth: 20
     implicitHeight: 20

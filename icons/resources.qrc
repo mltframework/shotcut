@@ -1,11 +1,11 @@
 <RCC>
     <qresource prefix="/icons">
-        <file>dark/16x16/audio-meter.png</file>
-        <file>dark/16x16/edit-undo.png</file>
-        <file>dark/16x16/format-justify-fill.png</file>
-        <file>dark/16x16/list-add.png</file>
-        <file>dark/16x16/list-remove.png</file>
-        <file>dark/16x16/player-volume.png</file>
+        <file>dark/32x32/audio-meter.png</file>
+        <file>dark/32x32/edit-undo.png</file>
+        <file>dark/32x32/format-justify-fill.png</file>
+        <file>dark/32x32/list-add.png</file>
+        <file>dark/32x32/list-remove.png</file>
+        <file>dark/32x32/player-volume.png</file>
         <file>dark/32x32/color-picker.png</file>
         <file>dark/32x32/cpu.png</file>
         <file>dark/32x32/dialog-information.png</file>
@@ -31,12 +31,12 @@
         <file>dark/32x32/view-media-playlist.png</file>
         <file>dark/32x32/window-close.png</file>
         <file>dark/index.theme</file>
-        <file>light/16x16/audio-meter.png</file>
-        <file>light/16x16/edit-undo.png</file>
-        <file>light/16x16/format-justify-fill.png</file>
-        <file>light/16x16/list-add.png</file>
-        <file>light/16x16/list-remove.png</file>
-        <file>light/16x16/player-volume.png</file>
+        <file>light/32x32/audio-meter.png</file>
+        <file>light/32x32/edit-undo.png</file>
+        <file>light/32x32/format-justify-fill.png</file>
+        <file>light/32x32/list-add.png</file>
+        <file>light/32x32/list-remove.png</file>
+        <file>light/32x32/player-volume.png</file>
         <file>light/32x32/color-picker.png</file>
         <file>light/32x32/cpu.png</file>
         <file>light/32x32/dialog-information.png</file>
@@ -62,11 +62,11 @@
         <file>light/32x32/view-media-playlist.png</file>
         <file>light/32x32/window-close.png</file>
         <file>light/index.theme</file>
-        <file>oxygen/16x16/actions/edit-undo.png</file>
-        <file>oxygen/16x16/actions/format-justify-fill.png</file>
-        <file>oxygen/16x16/actions/list-add.png</file>
-        <file>oxygen/16x16/actions/list-remove.png</file>
-        <file>oxygen/16x16/actions/player-volume.png</file>
+        <file>oxygen/32x32/actions/edit-undo.png</file>
+        <file>oxygen/32x32/actions/format-justify-fill.png</file>
+        <file>oxygen/32x32/actions/list-add.png</file>
+        <file>oxygen/32x32/actions/list-remove.png</file>
+        <file>oxygen/32x32/actions/player-volume.png</file>
         <file>oxygen/32x32/actions/document-open-recent.png</file>
         <file>oxygen/32x32/actions/document-open.png</file>
         <file>oxygen/32x32/actions/document-save.png</file>
@@ -94,9 +94,9 @@
         <file>shotcut-logo-64.png</file>
         <file>shotcut-logo-640.png</file>
         <file>oxygen/32x32/actions/run-build.png</file>
-        <file>oxygen/16x16/actions/dialog-cancel.png</file>
-        <file>dark/16x16/dialog-cancel.png</file>
-        <file>light/16x16/dialog-cancel.png</file>
+        <file>oxygen/32x32/actions/dialog-cancel.png</file>
+        <file>dark/32x32/dialog-cancel.png</file>
+        <file>light/32x32/dialog-cancel.png</file>
         <file>oxygen/32x32/actions/color-picker.png</file>
         <file>oxygen/32x32/actions/edit-copy.png</file>
         <file>oxygen/32x32/actions/edit-cut.png</file>
@@ -170,33 +170,32 @@
         <file>dark/32x32/view-time-schedule.png</file>
         <file>light/32x32/view-time-schedule.png</file>
         <file>oxygen/32x32/actions/view-time-schedule.png</file>
-        <file>dark/16x16/delete.png</file>
-        <file>dark/16x16/insert.png</file>
-        <file>dark/16x16/lift.png</file>
-        <file>dark/16x16/overwrite.png</file>
-        <file>dark/16x16/snap.png</file>
-        <file>dark/16x16/split.png</file>
-        <file>light/16x16/insert.png</file>
-        <file>light/16x16/lift.png</file>
-        <file>light/16x16/overwrite.png</file>
-        <file>light/16x16/snap.png</file>
-        <file>light/16x16/split.png</file>
-        <file>oxygen/16x16/actions/split.png</file>
-        <file>oxygen/16x16/actions/snap.png</file>
-        <file>oxygen/16x16/actions/overwrite.png</file>
-        <file>oxygen/16x16/actions/insert.png</file>
-        <file>oxygen/16x16/actions/lift.png</file>
-        <file>dark/16x16/scrub_drag.png</file>
-        <file>dark/16x16/target.png</file>
-        <file>light/16x16/target.png</file>
-        <file>light/16x16/scrub_drag.png</file>
-        <file>oxygen/16x16/actions/target.png</file>
-        <file>oxygen/16x16/actions/scrub_drag.png</file>
+        <file>dark/32x32/insert.png</file>
+        <file>dark/32x32/lift.png</file>
+        <file>dark/32x32/overwrite.png</file>
+        <file>dark/32x32/snap.png</file>
+        <file>dark/32x32/split.png</file>
+        <file>light/32x32/insert.png</file>
+        <file>light/32x32/lift.png</file>
+        <file>light/32x32/overwrite.png</file>
+        <file>light/32x32/snap.png</file>
+        <file>light/32x32/split.png</file>
+        <file>oxygen/32x32/actions/split.png</file>
+        <file>oxygen/32x32/actions/snap.png</file>
+        <file>oxygen/32x32/actions/overwrite.png</file>
+        <file>oxygen/32x32/actions/insert.png</file>
+        <file>oxygen/32x32/actions/lift.png</file>
+        <file>dark/32x32/scrub_drag.png</file>
+        <file>dark/32x32/target.png</file>
+        <file>light/32x32/target.png</file>
+        <file>light/32x32/scrub_drag.png</file>
+        <file>oxygen/32x32/actions/target.png</file>
+        <file>oxygen/32x32/actions/scrub_drag.png</file>
         <file>light/32x32/bookmarks.png</file>
         <file>dark/32x32/bookmarks.png</file>
         <file>oxygen/32x32/places/bookmarks.png</file>
-        <file>dark/16x16/dialog-ok.png</file>
-        <file>light/16x16/dialog-ok.png</file>
+        <file>dark/32x32/dialog-ok.png</file>
+        <file>light/32x32/dialog-ok.png</file>
         <file>oxygen/32x32/actions/dialog-ok.png</file>
         <file>light/16x16/track-locked.png</file>
         <file>oxygen/32x32/status/task-attempt.png</file>

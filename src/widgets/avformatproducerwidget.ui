@@ -739,7 +739,7 @@
        </property>
        <property name="icon">
         <iconset theme="format-justify-fill" resource="../../icons/resources.qrc">
-         <normaloff>:/icons/oxygen/16x16/actions/format-justify-fill.png</normaloff>:/icons/oxygen/16x16/actions/format-justify-fill.png</iconset>
+         <normaloff>:/icons/oxygen/32x32/actions/format-justify-fill.png</normaloff>:/icons/oxygen/32x32/actions/format-justify-fill.png</iconset>
        </property>
       </widget>
      </item>

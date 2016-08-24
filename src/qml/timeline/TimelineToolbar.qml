@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2014 Meltytech, LLC
+ * Copyright (c) 2013-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -101,7 +101,7 @@ ToolBar {
             checkable: true
             checked: true
             iconName: 'snap'
-            iconSource: 'qrc:///icons/oxygen/16x16/actions/snap.png'
+            iconSource: 'qrc:///icons/oxygen/32x32/actions/snap.png'
             tooltip: qsTr('Toggle snapping')
         }
         ToolButton {
@@ -110,7 +110,7 @@ ToolBar {
             implicitHeight: 24
             checkable: true
             iconName: 'scrub_drag'
-            iconSource: 'qrc:///icons/oxygen/16x16/actions/scrub_drag.png'
+            iconSource: 'qrc:///icons/oxygen/32x32/actions/scrub_drag.png'
             tooltip: qsTr('Scrub while dragging')
         }
         ToolButton {
@@ -119,7 +119,7 @@ ToolBar {
             implicitHeight: 24
             checkable: true
             iconName: 'target'
-            iconSource: 'qrc:///icons/oxygen/16x16/actions/target.png'
+            iconSource: 'qrc:///icons/oxygen/32x32/actions/target.png'
             tooltip: qsTr('Ripple trim and drop')
             text: qsTr('Ripple')
         }
@@ -153,7 +153,7 @@ ToolBar {
         id: menuAction
         tooltip: qsTr('Display a menu of additional actions')
         iconName: 'format-justify-fill'
-        iconSource: 'qrc:///icons/oxygen/16x16/actions/format-justify-fill.png'
+        iconSource: 'qrc:///icons/oxygen/32x32/actions/format-justify-fill.png'
         onTriggered: menu.popup()
     }
 
@@ -187,7 +187,7 @@ ToolBar {
         id: appendAction
         tooltip: qsTr('Append to the current track (A)')
         iconName: 'list-add'
-        iconSource: 'qrc:///icons/oxygen/16x16/actions/list-add.png'
+        iconSource: 'qrc:///icons/oxygen/32x32/actions/list-add.png'
         onTriggered: timeline.append(currentTrack)
     }
 
@@ -195,7 +195,7 @@ ToolBar {
         id: deleteAction
         tooltip: qsTr('Ripple Delete - Remove current clip\nshifting following clips to the left (X)')
         iconName: 'list-remove'
-        iconSource: 'qrc:///icons/oxygen/16x16/actions/list-remove.png'
+        iconSource: 'qrc:///icons/oxygen/32x32/actions/list-remove.png'
         onTriggered: timeline.remove(currentTrack, timeline.selection[0])
    }
 
@@ -203,7 +203,7 @@ ToolBar {
         id: liftAction
         tooltip: qsTr('Lift - Remove current clip without\naffecting position of other clips (Z)')
         iconName: 'lift'
-        iconSource: 'qrc:///icons/oxygen/16x16/actions/lift.png'
+        iconSource: 'qrc:///icons/oxygen/32x32/actions/lift.png'
         onTriggered: timeline.lift(currentTrack, timeline.selection[0])
     }
 
@@ -211,7 +211,7 @@ ToolBar {
         id: overwriteAction
         tooltip: qsTr('Overwrite clip onto the current track (B)')
         iconName: 'overwrite'
-        iconSource: 'qrc:///icons/oxygen/16x16/actions/overwrite.png'
+        iconSource: 'qrc:///icons/oxygen/32x32/actions/overwrite.png'
         onTriggered: timeline.overwrite(currentTrack)
     }
 
@@ -219,7 +219,7 @@ ToolBar {
         id: splitAction
         tooltip: qsTr('Split At Playhead (S)')
         iconName: 'split'
-        iconSource: 'qrc:///icons/oxygen/16x16/actions/split.png'
+        iconSource: 'qrc:///icons/oxygen/32x32/actions/split.png'
         onTriggered: timeline.splitClip(currentTrack)
     }
 }

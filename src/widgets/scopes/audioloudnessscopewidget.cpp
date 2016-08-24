@@ -102,7 +102,7 @@ AudioLoudnessScopeWidget::AudioLoudnessScopeWidget()
     // Add config button
     QToolButton* configButton = new QToolButton(this);
     configButton->setToolTip(tr("Configure Graphs"));
-    configButton->setIcon(QIcon(":/icons/oxygen/16x16/actions/format-justify-fill.png"));
+    configButton->setIcon(QIcon(":/icons/oxygen/32x32/actions/format-justify-fill.png"));
     configButton->setPopupMode(QToolButton::InstantPopup);
     configButton->setMenu(configMenu);
     hlayout->addWidget(configButton);

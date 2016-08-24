@@ -130,7 +130,7 @@ the list. This does not stop a currently running job. Right-
         </property>
         <property name="icon">
          <iconset theme="format-justify-fill" resource="../../icons/resources.qrc">
-          <normaloff>:/icons/light/16x16/format-justify-fill.png</normaloff>:/icons/light/16x16/format-justify-fill.png</iconset>
+          <normaloff>:/icons/light/32x32/format-justify-fill.png</normaloff>:/icons/light/32x32/format-justify-fill.png</iconset>
         </property>
        </widget>
       </item>

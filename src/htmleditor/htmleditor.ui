@@ -274,7 +274,7 @@
   <action name="actionEditUndo">
    <property name="icon">
     <iconset theme="edit-undo" resource="../../icons/resources.qrc">
-     <normaloff>:/icons/oxygen/16x16/actions/edit-undo.png</normaloff>:/icons/oxygen/16x16/actions/edit-undo.png</iconset>
+     <normaloff>:/icons/oxygen/32x32/actions/edit-undo.png</normaloff>:/icons/oxygen/32x32/actions/edit-undo.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Undo</string>
@@ -430,7 +430,7 @@
   <action name="actionFormatAlignJustify">
    <property name="icon">
     <iconset theme="format-justify-fill" resource="../../icons/resources.qrc">
-     <normaloff>:/icons/oxygen/16x16/actions/format-justify-fill.png</normaloff>:/icons/oxygen/16x16/actions/format-justify-fill.png</iconset>
+     <normaloff>:/icons/oxygen/32x32/actions/format-justify-fill.png</normaloff>:/icons/oxygen/32x32/actions/format-justify-fill.png</iconset>
    </property>
    <property name="text">
     <string>Align &amp;Justify</string>

@@ -154,7 +154,7 @@ Player::Player(QWidget *parent)
     m_muteButton = new QPushButton(this);
     m_muteButton->setFocusPolicy(Qt::NoFocus);
     m_muteButton->setObjectName(QString::fromUtf8("muteButton"));
-    m_muteButton->setIcon(QIcon::fromTheme("dialog-cancel", QIcon(":/icons/oxygen/16x16/actions/dialog-cancel.png")));
+    m_muteButton->setIcon(QIcon::fromTheme("dialog-cancel", QIcon(":/icons/oxygen/32x32/actions/dialog-cancel.png")));
     m_muteButton->setToolTip(tr("Silence the audio"));
     m_muteButton->setCheckable(true);
     m_muteButton->setChecked(Settings.playerMuted());
@@ -304,7 +304,7 @@ void Player::setupActions(QWidget* widget)
     actionFastForward->setDisabled(true);
     actionVolume = new QAction(widget);
     actionVolume->setObjectName(QString::fromUtf8("actionVolume"));
-    actionVolume->setIcon(QIcon::fromTheme("player-volume", QIcon(":/icons/oxygen/16x16/actions/player-volume.png")));
+    actionVolume->setIcon(QIcon::fromTheme("player-volume", QIcon(":/icons/oxygen/32x32/actions/player-volume.png")));
     retranslateUi(widget);
     QMetaObject::connectSlotsByName(widget);
 }

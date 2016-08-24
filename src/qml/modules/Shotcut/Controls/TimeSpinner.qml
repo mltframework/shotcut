@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Meltytech, LLC
+ * Copyright (c) 2014-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -43,7 +43,7 @@ RowLayout {
     Button {
         id: decrementButton
         iconName: 'list-remove'
-        iconSource: 'qrc:///icons/oxygen/16x16/actions/list-remove.png'
+        iconSource: 'qrc:///icons/oxygen/32x32/actions/list-remove.png'
         tooltip: qsTr('Decrement')
         implicitWidth: 20
         implicitHeight: 20
@@ -64,7 +64,7 @@ RowLayout {
     Button {
         id: incrementButton
         iconName: 'list-add'
-        iconSource: 'qrc:///icons/oxygen/16x16/actions/list-add.png'
+        iconSource: 'qrc:///icons/oxygen/32x32/actions/list-add.png'
         tooltip: qsTr('Increment')
         implicitWidth: 20
         implicitHeight: 20
