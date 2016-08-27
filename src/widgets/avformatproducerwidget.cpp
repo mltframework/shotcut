@@ -345,6 +345,7 @@ void AvformatProducerWidget::on_resetButton_clicked()
     Mlt::Producer* p = producer(MLT.profile());
     ui->durationSpinBox->setValue(m_defaultDuration);
     ui->syncSlider->setValue(0);
+    Mlt::Controller::copyFilters(*m_producer, *p);
     if (m_producer->get_int(kMultitrackItemProperty)) {
         emit producerChanged(p);
         delete p;
