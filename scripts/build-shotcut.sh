@@ -87,8 +87,13 @@ export LANG=C
 
 # User CFLAGS and LDFLAGS sometimes prevent more recent local headers.
 # Also, you can adjust some flags here.
-export CFLAGS=-DNDEBUG
-export CXXFLAGS=-DNDEBUG
+if [ "$DEBUG_BUILD" = "1" ]; then
+    export CFLAGS=-DNDEBUG
+    export CXXFLAGS=-DNDEBUG
+else
+    export CFLAGS=
+    export CXXFLAGS=
+fi
 export LDFLAGS=
 
 ################################################################################
@@ -1868,6 +1873,9 @@ function deploy_win32
     cmd cp -p "$QTDIR"/bin/{icudt57,icuin57,icuuc57,libgcc_s_dw2-1,libstdc++-6,libwinpthread-1,libEGL,libGLESv2,opengl32sw,d3dcompiler_47}.dll .
   else
     cmd cp -p "$QTDIR"/bin/{icudt57,icuin57,icuuc57,libgcc_s_seh-1,libstdc++-6,libwinpthread-1,libEGL,libGLESv2,opengl32sw,d3dcompiler_47}.dll .
+    if [ "$DEBUG_BUILD" = "1" -o "$SDK" = "1" ]; then
+        cmd cp -p "$SOURCE_DIR"/shotcut/drmingw/x64/bin/*.{dll,yes} .
+    fi
   fi
   cmd mkdir -p lib/qt5/sqldrivers
   cmd cp -pr "$QTDIR"/plugins/{audio,iconengines,imageformats,mediaservice,platforms,generic,platforminputcontexts,platformthemes} lib/qt5

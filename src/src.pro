@@ -341,6 +341,10 @@ win32 {
     }
     INCLUDEPATH += $$MLT_PATH\\include\\mlt++ $$MLT_PATH\\include\\mlt
     LIBS += -L$$MLT_PATH\\lib -lmlt++ -lmlt -lopengl32
+    CONFIG(debug, debug|release) {
+        INCLUDEPATH += $$PWD\\..\\drmingw\\include
+        LIBS += -L$$PWD\\..\\drmingw\\x64\\lib -lexchndl
+    }
     RC_FILE = shotcut.rc
 }
 unix:!mac {

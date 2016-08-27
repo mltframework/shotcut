@@ -27,6 +27,9 @@
 #include <QProcess>
 #include <QCommandLineParser>
 #include <framework/mlt_log.h>
+#if !defined(NDEBUG)
+#   include <exchndl.h>
+#endif
 
 #ifdef Q_OS_WIN
 extern "C"
@@ -227,6 +230,9 @@ protected:
 
 int main(int argc, char **argv)
 {
+#if !defined(NDEBUG)
+    ExcHndlInit();
+#endif
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     QCoreApplication::setAttribute(Qt::AA_X11InitThreads);
 #endif
