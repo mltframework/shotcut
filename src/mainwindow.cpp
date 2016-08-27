@@ -112,6 +112,7 @@ MainWindow::MainWindow()
     , m_isPlaylistLoaded(false)
     , m_exitCode(EXIT_SUCCESS)
     , m_navigationPosition(0)
+    , m_upgradeUrl("https://www.shotcut.org/download/")
 {
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     QLibrary libJack("libjack.so.0");
@@ -2953,6 +2954,8 @@ void MainWindow::onUpgradeCheckFinished(QNetworkReply* reply)
             if (version != qApp->applicationVersion()) {
                 QAction* action = new QAction(tr("Shotcut version %1 is available! Click here to get it.").arg(version), 0);
                 connect(action, SIGNAL(triggered(bool)), SLOT(onUpgradeTriggered()));
+                if (!json.object().value("url").isUndefined())
+                    m_upgradeUrl = json.object().value("url").toString();
                 showStatusMessage(action, 10 /* seconds */);
             } else {
                 showStatusMessage(tr("You are running the latest version of Shotcut."));
@@ -2973,7 +2976,7 @@ void MainWindow::onUpgradeCheckFinished(QNetworkReply* reply)
 
 void MainWindow::onUpgradeTriggered()
 {
-    QDesktopServices::openUrl(QUrl("https://www.shotcut.org/download/"));
+    QDesktopServices::openUrl(QUrl(m_upgradeUrl));
 }
 
 void MainWindow::onTimelineSelectionChanged()

@@ -142,6 +142,7 @@ private:
     int m_navigationPosition;
     QScopedPointer<QAction> m_statusBarAction;
     QNetworkAccessManager m_network;
+    QString m_upgradeUrl;
 
 #ifdef WITH_LIBLEAP
     LeapListener m_leapListener;
