@@ -66,6 +66,7 @@ private:
     int m_defaultDuration;
 
     void reopen(Mlt::Producer* p);
+    void recreateProducer();
 };
 
 #endif // IMAGEPRODUCERWIDGET_H

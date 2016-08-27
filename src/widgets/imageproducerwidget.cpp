@@ -41,6 +41,11 @@ ImageProducerWidget::~ImageProducerWidget()
 Mlt::Producer* ImageProducerWidget::producer(Mlt::Profile& profile)
 {
     Mlt::Producer* p = new Mlt::Producer(profile, m_producer->get("resource"));
+    if (p->is_valid()) {
+        if (ui->durationSpinBox->value() > p->get_length())
+            p->set("length", ui->durationSpinBox->value());
+        p->set("out", ui->durationSpinBox->value() - 1);
+    }
     return p;
 }
 
@@ -91,13 +96,8 @@ void ImageProducerWidget::setOutPoint(int duration)
 
 void ImageProducerWidget::reopen(Mlt::Producer* p)
 {
-    int out = ui->durationSpinBox->value() - 1;
-    int position = m_producer->position();
     double speed = m_producer->get_speed();
-
-    if (out + 1 > p->get_length())
-        p->set("length", out + 1);
-    p->set("out", out);
+    int position = m_producer->position();
     if (position > p->get_out())
         position = p->get_out();
     p->set("in", m_producer->get_in());
@@ -113,6 +113,20 @@ void ImageProducerWidget::reopen(Mlt::Producer* p)
     MLT.play(speed);
 }
 
+void ImageProducerWidget::recreateProducer()
+{
+    Mlt::Producer* p = producer(MLT.profile());
+    p->pass_list(*m_producer, "force_aspect_ratio," kAspectRatioNumerator ", resource, " kAspectRatioDenominator
+        ", ttl," kShotcutResourceProperty ", length," kShotcutSequenceProperty);
+    Mlt::Controller::copyFilters(*m_producer, *p);
+    if (m_producer->get_int(kMultitrackItemProperty)) {
+        emit producerChanged(p);
+        delete p;
+    } else {
+        reopen(p);
+    }
+}
+
 void ImageProducerWidget::on_resetButton_clicked()
 {
     const char *s = m_producer->get(kShotcutResourceProperty);
@@ -120,7 +134,12 @@ void ImageProducerWidget::on_resetButton_clicked()
         s = m_producer->get(kShotcutResourceProperty);
     Mlt::Producer* p = new Mlt::Producer(MLT.profile(), s);
     Mlt::Controller::copyFilters(*m_producer, *p);
-    reopen(p);
+    if (m_producer->get_int(kMultitrackItemProperty)) {
+        emit producerChanged(p);
+        delete p;
+    } else {
+        reopen(p);
+    }
 }
 
 void ImageProducerWidget::on_aspectNumSpinBox_valueChanged(int)
@@ -149,10 +168,7 @@ void ImageProducerWidget::on_durationSpinBox_editingFinished()
         return;
     if (ui->durationSpinBox->value() == m_producer->get_out() + 1)
         return;
-    Mlt::Producer* p = producer(MLT.profile());
-    p->pass_list(*m_producer, "force_aspect_ratio, shotcut_aspect_num, shotcut_aspect_den,"
-        kShotcutResourceProperty ", resource, ttl," kShotcutSequenceProperty);
-    reopen(p);
+    recreateProducer();
 }
 
 void ImageProducerWidget::on_sequenceCheckBox_clicked(bool checked)
@@ -199,11 +215,7 @@ void ImageProducerWidget::on_sequenceCheckBox_clicked(bool checked)
         m_producer->set("length", qRound(MLT.profile().fps() * 600));
         ui->durationSpinBox->setValue(qRound(MLT.profile().fps() * Settings.imageDuration()));
     }
-    Mlt::Producer* p = producer(MLT.profile());
-    p->pass_list(*m_producer, "force_aspect_ratio,"
-        kAspectRatioNumerator "," kAspectRatioDenominator ","
-        kShotcutResourceProperty ", resource, ttl, length," kShotcutSequenceProperty);
-    reopen(p);
+    recreateProducer();
 }
 
 void ImageProducerWidget::on_repeatSpinBox_editingFinished()
