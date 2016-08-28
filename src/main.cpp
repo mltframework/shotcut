@@ -230,7 +230,7 @@ protected:
 
 int main(int argc, char **argv)
 {
-#if !defined(NDEBUG)
+#if defined(Q_OS_WIN) && defined(QT_DEBUG)
     ExcHndlInit();
 #endif
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
