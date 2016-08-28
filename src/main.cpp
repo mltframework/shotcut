@@ -27,11 +27,11 @@
 #include <QProcess>
 #include <QCommandLineParser>
 #include <framework/mlt_log.h>
-#if !defined(NDEBUG)
-#   include <exchndl.h>
-#endif
 
 #ifdef Q_OS_WIN
+#ifdef QT_DEBUG
+#   include <exchndl.h>
+#endif
 extern "C"
 {
     // Inform the driver we could make use of the discrete gpu
