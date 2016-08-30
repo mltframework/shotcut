@@ -3032,6 +3032,8 @@ void MainWindow::on_actionExportEDL_triggered()
         if (scriptFile.open(QIODevice::ReadOnly)) {
             // Read JavaScript into a string.
             QTextStream stream(&scriptFile);
+            stream.setCodec("UTF-8");
+            stream.setAutoDetectUnicode(true);
             QString contents = stream.readAll();
             scriptFile.close();
 
