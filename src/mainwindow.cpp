@@ -2753,18 +2753,23 @@ void MainWindow::on_actionSystemTheme_triggered()
     changeTheme("system");
     QApplication::setPalette(QApplication::style()->standardPalette());
     Settings.setTheme("system");
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    ui->mainToolBar->setToolButtonStyle(Qt::ToolButtonFollowStyle);
+#endif
 }
 
 void MainWindow::on_actionFusionDark_triggered()
 {
     changeTheme("dark");
     Settings.setTheme("dark");
+    ui->mainToolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 }
 
 void MainWindow::on_actionFusionLight_triggered()
 {
     changeTheme("light");
     Settings.setTheme("light");
+    ui->mainToolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 }
 
 void MainWindow::on_actionTutorials_triggered()
