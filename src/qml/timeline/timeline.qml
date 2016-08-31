@@ -32,13 +32,13 @@ Rectangle {
     signal clipClicked()
 
     function setZoom(value) {
-        scaleSlider.value = value
+        toolbar.scaleSlider.value = value
         for (var i = 0; i < tracksRepeater.count; i++)
             tracksRepeater.itemAt(i).redrawWaveforms()
     }
 
     function adjustZoom(by) {
-        setZoom(scaleSlider.value + by)
+        setZoom(toolbar.scaleSlider.value + by)
     }
 
     function zoomIn() {
@@ -187,14 +187,6 @@ Rectangle {
                     anchors.top: parent.top
                     anchors.bottom: parent.bottom
                 }
-            }
-
-            ZoomSlider {
-                id: scaleSlider
-                width: headerWidth
-                height: root.height - trackHeaders.height - ruler.height - toolbar.height + 4
-                z: 2
-                onValueChanged: Logic.scrollIfNeeded()
             }
         }
         MouseArea {
@@ -543,7 +535,7 @@ Rectangle {
 
     Connections {
         target: multitrack
-        onLoaded: scaleSlider.value = Math.pow(multitrack.scaleFactor - 0.01, 1.0 / 3.0)
+        onLoaded: toolbar.scaleSlider.value = Math.pow(multitrack.scaleFactor - 0.01, 1.0 / 3.0)
     }
 
     // This provides continuous scrolling at the left/right edges.

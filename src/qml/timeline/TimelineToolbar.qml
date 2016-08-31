@@ -20,12 +20,14 @@ import QtQuick 2.2
 import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.0
 import QtGraphicalEffects 1.0
+import 'Timeline.js' as Logic
 
 ToolBar {
     property alias ripple: rippleButton.checked
     property alias scrub: scrubButton.checked
     property alias snap: snapButton.checked
     property color checkedColor: Qt.rgba(activePalette.highlight.r, activePalette.highlight.g, activePalette.highlight.b, 0.3)
+    property alias scaleSlider: scaleSlider
 
     SystemPalette { id: activePalette }
 
@@ -147,6 +149,20 @@ ToolBar {
             color: checkedColor
             cached: true
         }
+        ToolButton {
+            action: zoomOutAction
+            implicitWidth: 28
+            implicitHeight: 24
+        }
+        ZoomSlider {
+            id: scaleSlider
+            onValueChanged: Logic.scrollIfNeeded()
+        }
+        ToolButton {
+            action: zoomInAction
+            implicitWidth: 28
+            implicitHeight: 24
+        }
     }
 
     Action {
@@ -221,5 +237,21 @@ ToolBar {
         iconName: 'split'
         iconSource: 'qrc:///icons/oxygen/32x32/actions/split.png'
         onTriggered: timeline.splitClip(currentTrack)
+    }
+
+    Action {
+        id: zoomOutAction
+        tooltip: qsTr("Zoom timeline out (-)")
+        iconName: 'zoom-out'
+        iconSource: 'qrc:///icons/oxygen/32x32/actions/zoom-out.png'
+        onTriggered: root.zoomOut()
+    }
+
+    Action {
+        id: zoomInAction
+        tooltip: qsTr("Zoom timeline in (+)")
+        iconName: 'zoom-in'
+        iconSource: 'qrc:///icons/oxygen/32x32/actions/zoom-in.png'
+        onTriggered: root.zoomIn()
     }
 }
