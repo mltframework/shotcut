@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2014 Meltytech, LLC
+ * Copyright (c) 2013-2016 Meltytech, LLC
  * Author: Brian Matherly <pez4brian@yahoo.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,10 +19,10 @@
 #include "qmlapplication.h"
 #include "mainwindow.h"
 #include <QApplication>
-#include <QCoreApplication>
 #include <QSysInfo>
 #include <QCursor>
 #include <QPalette>
+#include <QStyle>
 #ifdef Q_OS_WIN
 #include <QLocale>
 #else
@@ -56,12 +56,20 @@ QPoint QmlApplication::mousePos()
 
 QColor QmlApplication::toolTipBaseColor()
 {
-    return qApp->palette().toolTipBase().color();
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    if ("gtk+" == QApplication::style()->objectName())
+        return QApplication::palette().highlight().color();
+#endif
+    return QApplication::palette().toolTipBase().color();
 }
 
 QColor QmlApplication::toolTipTextColor()
 {
-    return qApp->palette().toolTipText().color();
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    if ("gtk+" == QApplication::style()->objectName())
+        return QApplication::palette().highlightedText().color();
+#endif
+    return QApplication::palette().toolTipText().color();
 }
 
 QString QmlApplication::OS()
