@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Meltytech, LLC
+ * Copyright (c) 2014-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  * Author: Brian Matherly <pez4brian@yahoo.com>
  *
@@ -36,6 +36,7 @@ class QmlApplication : public QObject
     Q_PROPERTY(QString OS READ OS CONSTANT)
     Q_PROPERTY(QString numericLocale READ numericLocale CONSTANT)
     Q_PROPERTY(QRect mainWinRect READ mainWinRect);
+    Q_PROPERTY(bool hasFiltersOnClipboard READ hasFiltersOnClipboard NOTIFY filtersCopied)
 
 
 public:
@@ -47,9 +48,13 @@ public:
     static QString OS();
     static QString numericLocale();
     static QRect mainWinRect();
+    static bool hasFiltersOnClipboard();
+    Q_INVOKABLE static void copyFilters();
+    Q_INVOKABLE static void pasteFilters();
 
 signals:
     void paletteChanged();
+    void filtersCopied();
 
 private:
     explicit QmlApplication();

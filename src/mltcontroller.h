@@ -107,6 +107,11 @@ public:
     void setUuid(Mlt::Properties &properties, QUuid uid) const;
     QUuid ensureHasUuid(Mlt::Properties& properties) const;
     static void copyFilters(Mlt::Producer& fromProducer, Mlt::Producer& toProducer);
+    void copyFilters(Mlt::Producer* producer = nullptr);
+    void pasteFilters(Mlt::Producer* producer = nullptr);
+    bool hasFiltersOnClipboard() const {
+        return m_filtersClipboard->is_valid() && m_filtersClipboard->filter_count() > 0;
+    }
 
     Mlt::Repository* repository() const {
         return m_repo;
@@ -143,6 +148,7 @@ private:
     double m_volume;
     TransportControl m_transportControl;
     QScopedPointer<Mlt::Producer> m_savedProducer;
+    QScopedPointer<Mlt::Producer> m_filtersClipboard;
 
     static void on_jack_started(mlt_properties owner, void* object, mlt_position *position);
     void onJackStarted(int position);

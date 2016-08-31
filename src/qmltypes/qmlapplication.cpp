@@ -18,6 +18,7 @@
 
 #include "qmlapplication.h"
 #include "mainwindow.h"
+#include "mltcontroller.h"
 #include <QApplication>
 #include <QSysInfo>
 #include <QCursor>
@@ -100,3 +101,21 @@ QRect QmlApplication::mainWinRect()
 {
     return MAIN.geometry();
 }
+
+bool QmlApplication::hasFiltersOnClipboard()
+{
+    return MLT.hasFiltersOnClipboard();
+}
+
+void QmlApplication::copyFilters()
+{
+    MLT.copyFilters();
+    emit QmlApplication::singleton().filtersCopied();
+}
+
+void QmlApplication::pasteFilters()
+{
+    MLT.pasteFilters();
+    MLT.refreshConsumer();
+}
+

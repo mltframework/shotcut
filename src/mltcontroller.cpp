@@ -48,6 +48,7 @@ Controller::Controller()
     LOG_DEBUG() << "begin";
     m_repo = Mlt::Factory::init();
     m_profile = new Mlt::Profile("atsc_1080p_25");
+    m_filtersClipboard.reset(new Mlt::Producer(profile(), "color", "black"));
     updateAvformatCaching(0);
     LOG_DEBUG() << "end";
 }
@@ -765,6 +766,22 @@ void Controller::copyFilters(Producer& fromProducer, Producer& toProducer)
             toProducer.attach(*filter);
         }
     }
+}
+
+void Controller::copyFilters(Mlt::Producer* producer)
+{
+    if (producer && producer->is_valid())
+        copyFilters(*producer, *m_filtersClipboard);
+    else if (m_producer && m_producer->is_valid())
+        copyFilters(*m_producer, *m_filtersClipboard);
+}
+
+void Controller::pasteFilters(Mlt::Producer* producer)
+{
+    if (producer && producer->is_valid())
+        copyFilters(*m_filtersClipboard, *producer);
+    else if (m_producer &&  m_producer->is_valid())
+        copyFilters(*m_filtersClipboard, *m_producer);
 }
 
 void Controller::setSavedProducer(Mlt::Producer* producer)

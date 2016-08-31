@@ -23,7 +23,7 @@ import Shotcut.Controls 1.0
 
 Rectangle {
     id: root
-    
+    property int selectedIndex: -1
     signal currentFilterRequested(int attachedIndex)
     
     function clearCurrentFilter() {
@@ -36,7 +36,7 @@ Rectangle {
     
     function setCurrentFilter(index) {
         attachedFilters.setCurrentFilter(index)
-        removeButton.selectedIndex = index
+        selectedIndex = index
         filterConfig.source = metadata ? metadata.qmlFilePath : ""
     }
 
@@ -98,7 +98,7 @@ Rectangle {
 
     GridLayout {
         id: attachedContainer
-        columns: 3
+        columns: 6
         anchors {
             top: titleBackground.bottom
             left: parent.left
@@ -110,7 +110,7 @@ Rectangle {
 
         AttachedFilters {
             id: attachedFilters
-            Layout.columnSpan: 3
+            Layout.columnSpan: 6
             Layout.fillWidth: true
             Layout.fillHeight: true
             onFilterClicked: {
@@ -134,18 +134,40 @@ Rectangle {
             onClicked: filterMenu.popup(addButton)
         }
         Button {
-            id: removeButton
-            
-            property int selectedIndex: -1
-            
+            id: removeButton            
             Layout.minimumWidth: height
             iconName: 'list-remove'
-            enabled: selectedIndex > -1 ? true : false
+            enabled: selectedIndex > -1
             opacity: enabled ? 1.0 : 0.5
             tooltip: qsTr('Remove selected filter')
             onClicked: {
                 attachedfiltersmodel.remove(selectedIndex)
             }
+        }
+        Button { // separator
+            enabled: false
+            implicitWidth: 1
+            implicitHeight: 20
+        }
+        Button {
+            id: copyButton
+            Layout.minimumWidth: height
+            iconName: 'edit-copy'
+            enabled: selectedIndex > -1
+            opacity: enabled ? 1.0 : 0.5
+            iconSource: 'qrc:///icons/oxygen/32x32/actions/edit-copy.png'
+            tooltip: qsTr('Copy the filters')
+            onClicked: application.copyFilters()
+        }
+        Button {
+            id: pasteButton
+            Layout.minimumWidth: height
+            enabled: application.hasFiltersOnClipboard
+            opacity: enabled ? 1.0 : 0.5
+            iconName: 'edit-paste'
+            iconSource: 'qrc:///icons/oxygen/32x32/actions/edit-paste.png'
+            tooltip: qsTr('Paste filters')
+            onClicked: application.pasteFilters()
         }
         Item {
             Layout.fillWidth: true
