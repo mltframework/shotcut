@@ -159,9 +159,10 @@ MainWindow::MainWindow()
 
     // Create the UI.
     ui->setupUi(this);
-#if defined(Q_OS_MAC) || defined(Q_OS_WIN)
-    ui->mainToolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    if (Settings.theme() == "light" || Settings.theme() == "dark" )
 #endif
+    ui->mainToolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 #ifdef Q_OS_MAC
     // Qt 5 on OS X supports the standard Full Screen window widget.
     ui->mainToolBar->removeAction(ui->actionFullscreen);
