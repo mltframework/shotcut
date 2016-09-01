@@ -2194,7 +2194,7 @@ void MainWindow::on_actionFAQ_triggered()
 
 void MainWindow::on_actionForum_triggered()
 {
-    QDesktopServices::openUrl(QUrl("https://www.shotcut.org/discussionforum/"));
+    QDesktopServices::openUrl(QUrl("https://forum.shotcut.org/"));
 }
 
 void MainWindow::saveXML(const QString &filename, bool withRelativePaths)
