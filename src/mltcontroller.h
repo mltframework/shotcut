@@ -107,8 +107,8 @@ public:
     void setUuid(Mlt::Properties &properties, QUuid uid) const;
     QUuid ensureHasUuid(Mlt::Properties& properties) const;
     static void copyFilters(Mlt::Producer& fromProducer, Mlt::Producer& toProducer);
-    void copyFilters(Mlt::Producer* producer = nullptr);
-    void pasteFilters(Mlt::Producer* producer = nullptr);
+    void copyFilters(Mlt::Producer* producer = 0);
+    void pasteFilters(Mlt::Producer* producer = 0);
     bool hasFiltersOnClipboard() const {
         return m_filtersClipboard->is_valid() && m_filtersClipboard->filter_count() > 0;
     }
