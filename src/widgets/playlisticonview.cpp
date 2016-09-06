@@ -1,6 +1,5 @@
 #include "playlisticonview.h"
 
-#include "mainwindow.h"
 #include "models/playlistmodel.h"
 #include "settings.h"
 
@@ -139,7 +138,7 @@ void PlaylistIconView::paintEvent(QPaintEvent*)
             imageBoundingRect.setHeight(0.7 * imageBoundingRect.height());
             imageBoundingRect.adjust(0, 10, 0, 0);
 
-            QRect imageRect(QPoint(), thumb.size().scaled(imageBoundingRect.size(), Qt::KeepAspectRatio));
+            QRect imageRect(QPoint(), thumb.size());
             imageRect.moveCenter(imageBoundingRect.center());
 
             QRect textRect = itemRect;
@@ -254,14 +253,20 @@ void PlaylistIconView::updateSizes()
         return;
     }
 
-    const bool doubleHeight = Settings.playlistThumbnails() == "tall"
-        || Settings.playlistThumbnails() == "large";
+    QSize size;
+    if (Settings.playlistThumbnails() == "tall")
+        size = QSize(PlaylistModel::THUMBNAIL_WIDTH, PlaylistModel::THUMBNAIL_HEIGHT * 2);
+    else if (Settings.playlistThumbnails() == "large")
+        size = QSize(PlaylistModel::THUMBNAIL_WIDTH * 2, PlaylistModel::THUMBNAIL_HEIGHT * 2);
+    else if (Settings.playlistThumbnails() == "wide")
+        size = QSize(PlaylistModel::THUMBNAIL_WIDTH * 2, PlaylistModel::THUMBNAIL_HEIGHT);
+    else
+        size = QSize(PlaylistModel::THUMBNAIL_WIDTH, PlaylistModel::THUMBNAIL_HEIGHT);
 
-    const int thumbHeight = PlaylistModel::THUMBNAIL_HEIGHT * (doubleHeight ? 2 : 1);
-    const int thumbWidth = thumbHeight * MLT.profile().dar();
+    size.setWidth(size.width() + 10);
 
-    m_itemsPerRow = qMax(1, viewport()->width() / thumbWidth);
-    m_gridSize = QSize(viewport()->width() / m_itemsPerRow, thumbHeight + 20);
+    m_itemsPerRow = qMax(1, viewport()->width() / size.width());
+    m_gridSize = QSize(viewport()->width() / m_itemsPerRow, size.height() + 40);
 
     if (!verticalScrollBar())
         return;
