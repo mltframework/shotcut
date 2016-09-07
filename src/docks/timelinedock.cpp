@@ -255,11 +255,12 @@ void TimelineDock::setSelection(QList<int> newSelection, int trackIndex, bool is
         m_selection.selectedTrack = trackIndex;
         m_selection.isMultitrackSelected = isMultitrack;
         emit selectionChanged();
+
+        if (!m_selection.selectedClips.isEmpty())
+            emitSelectedFromSelection();
+        else
+            emit selected(0);
     }
-    if (!m_selection.selectedClips.isEmpty())
-        emitSelectedFromSelection();
-    else
-        emit selected(0);
 }
 
 QList<int> TimelineDock::selection() const
