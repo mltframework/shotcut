@@ -1855,6 +1855,7 @@ function deploy_win32
   cmd cd $FINAL_INSTALL_DIR || die "Unable to change to directory $FINAL_INSTALL_DIR"
 
   cmd mv bin/*.dll .
+  cmd mv lib/mlt/mltwebvfx lib/mlt/libmltwebvfx.dll
   if [ "$SDK" = "1" ]; then
     cmd mv bin/*.exe .
   else
