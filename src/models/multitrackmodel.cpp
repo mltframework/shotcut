@@ -2297,7 +2297,6 @@ int MultitrackModel::addAudioTrack()
     // Add the mix transition.
     Mlt::Transition mix(MLT.profile(), "mix");
     mix.set("always_active", 1);
-    mix.set("combine", 1);
     m_tractor->plant_transition(mix, 0, i);
 
     // Get the new, logical audio-only index.
@@ -2341,7 +2340,6 @@ int MultitrackModel::addVideoTrack()
     // Add the mix transition.
     Mlt::Transition mix(MLT.profile(), "mix");
     mix.set("always_active", 1);
-    mix.set("combine", 1);
     m_tractor->plant_transition(mix, 0, i);
 
     // Add the composite transition.
@@ -2594,7 +2592,6 @@ void MultitrackModel::insertTrack(int trackIndex, TrackType type)
     // Add the mix transition.
     Mlt::Transition mix(MLT.profile(), "mix");
     mix.set("always_active", 1);
-    mix.set("combine", 1);
     m_tractor->plant_transition(mix, 0, i);
 
     if (type == VideoTrackType) {
