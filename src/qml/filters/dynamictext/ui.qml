@@ -36,7 +36,7 @@ Item {
             if (application.OS === 'Windows')
                 filter.set('family', 'Verdana')
             filter.set('fgcolour', '#ffffffff')
-            filter.set('bgcolour', '#20000000')
+            filter.set('bgcolour', '#00000000')
             filter.set('olcolour', '#ff000000')
             filter.set('weight', 500)
 
