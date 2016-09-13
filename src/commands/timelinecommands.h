@@ -126,6 +126,19 @@ private:
     QString m_oldName;
 };
 
+class MergeCommand : public QUndoCommand
+{
+public:
+    MergeCommand(MultitrackModel& model, int trackIndex, int clipIndex, QUndoCommand * parent = 0);
+    void redo();
+    void undo();
+private:
+    MultitrackModel& m_model;
+    int m_trackIndex;
+    int m_clipIndex;
+    UndoHelper m_undoHelper;
+};
+
 class MuteTrackCommand : public QUndoCommand
 {
 public:

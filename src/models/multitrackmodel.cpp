@@ -2648,6 +2648,43 @@ void MultitrackModel::insertOrAdjustBlankAt(QList<int> tracks, int position, int
     }
 }
 
+bool MultitrackModel::mergeClipWithNext(int trackIndex, int clipIndex, bool dryrun)
+{
+    int i = m_trackList.at(trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    if (!track)
+        return false;
+    Mlt::Playlist playlist(*track);
+    if (clipIndex >= playlist.count() + 1)
+        return false;
+    Mlt::ClipInfo clip1;
+    Mlt::ClipInfo clip2;
+    playlist.clip_info(clipIndex, &clip1);
+    playlist.clip_info(clipIndex + 1, &clip2);
+
+    if (QString::fromUtf8(clip1.resource) != QString::fromUtf8(clip2.resource))
+        return false;
+
+    if (clip1.frame_out + 1 != clip2.frame_in)
+        return false;
+
+    if (dryrun)
+        return true;
+
+    playlist.resize_clip(clipIndex, clip1.frame_in, clip1.frame_out + clip2.frame_count);
+    QModelIndex modelIndex = createIndex(clipIndex, trackIndex);
+    QVector<int> roles;
+    roles << DurationRole;
+    roles << InPointRole;
+    emit dataChanged(modelIndex, modelIndex, roles);
+
+    beginRemoveRows(index(trackIndex), clipIndex + 1, clipIndex + 1);
+    playlist.remove(clipIndex + 1);
+    endRemoveRows();
+    emit modified();
+    return true;
+}
+
 void MultitrackModel::load()
 {
     if (m_tractor) {
