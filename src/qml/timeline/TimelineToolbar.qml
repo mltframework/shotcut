@@ -125,6 +125,26 @@ ToolBar {
             tooltip: qsTr('Ripple trim and drop')
             text: qsTr('Ripple')
         }
+        Button { // separator
+            enabled: false
+            implicitWidth: 1
+            implicitHeight: 20
+        }
+        ToolButton {
+            action: zoomOutAction
+            implicitWidth: 28
+            implicitHeight: 24
+        }
+        ZoomSlider {
+            id: scaleSlider
+            onValueChanged: Logic.scrollIfNeeded()
+        }
+        ToolButton {
+            action: zoomInAction
+            implicitWidth: 28
+            implicitHeight: 24
+        }
+
         ColorOverlay {
             id: snapColorEffect
             visible: snapButton.checked
@@ -148,20 +168,6 @@ ToolBar {
             source: rippleButton
             color: checkedColor
             cached: true
-        }
-        ToolButton {
-            action: zoomOutAction
-            implicitWidth: 28
-            implicitHeight: 24
-        }
-        ZoomSlider {
-            id: scaleSlider
-            onValueChanged: Logic.scrollIfNeeded()
-        }
-        ToolButton {
-            action: zoomInAction
-            implicitWidth: 28
-            implicitHeight: 24
         }
     }
 
