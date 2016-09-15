@@ -19,6 +19,8 @@
 #include "qmlapplication.h"
 #include "mainwindow.h"
 #include "mltcontroller.h"
+#include "controllers/filtercontroller.h"
+#include "models/attachedfiltersmodel.h"
 #include <QApplication>
 #include <QSysInfo>
 #include <QCursor>
@@ -115,7 +117,7 @@ void QmlApplication::copyFilters()
 
 void QmlApplication::pasteFilters()
 {
-    MLT.pasteFilters();
+    MLT.pasteFilters(MAIN.filterController()->attachedModel()->producer());
     MLT.refreshConsumer();
 }
 

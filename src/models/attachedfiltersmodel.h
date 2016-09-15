@@ -45,6 +45,7 @@ public:
     void setProducer(Mlt::Producer* producer = 0);
     QString producerTitle() const;
     bool isProducerSelected() const;
+    Mlt::Producer* producer() const { return m_producer.data(); }
 
     // QAbstractListModel Implementation
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
