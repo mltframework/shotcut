@@ -102,6 +102,7 @@ public slots:
     void onSeeked(int position);
     void append(int trackIndex);
     void remove(int trackIndex, int clipIndex);
+    bool mergeClipWithNext(int trackIndex, int clipIndex, bool dryrun);
     void lift(int trackIndex, int clipIndex);
     void removeSelection(bool withCopy = false);
     void liftSelection();

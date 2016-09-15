@@ -180,6 +180,31 @@ void NameTrackCommand::undo()
     m_model.setTrackName(m_trackIndex, m_oldName);
 }
 
+MergeCommand::MergeCommand(MultitrackModel& model, int trackIndex, int clipIndex, QUndoCommand * parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_trackIndex(trackIndex)
+    , m_clipIndex(clipIndex)
+    , m_undoHelper(m_model)
+{
+    setText(QObject::tr("Merge adjacent clips"));
+}
+
+void MergeCommand::redo()
+{
+    LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipindex" << m_clipIndex;
+    m_undoHelper.recordBeforeState();
+    m_model.mergeClipWithNext(m_trackIndex, m_clipIndex, false);
+    m_undoHelper.recordAfterState();
+}
+
+void MergeCommand::undo()
+{
+    LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipindex" << m_clipIndex;
+    m_undoHelper.undoChanges();
+}
+
+
 MuteTrackCommand::MuteTrackCommand(MultitrackModel &model, int trackIndex, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)

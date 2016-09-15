@@ -246,7 +246,7 @@ Rectangle {
         anchors.fill: parent
         enabled: isBlank
         acceptedButtons: Qt.RightButton
-        onClicked: menu.popup()
+        onClicked: menu.show()
     }
 
     MouseArea {
@@ -296,7 +296,7 @@ Rectangle {
                 (fadeInMouseArea.drag.active || fadeOutMouseArea.drag.active)? Qt.PointingHandCursor :
                 drag.active? Qt.ClosedHandCursor :
                 isBlank? Qt.ArrowCursor : Qt.OpenHandCursor
-            onClicked: menu.popup()
+            onClicked: menu.show()
         }
     }
 
@@ -565,6 +565,10 @@ Rectangle {
     }
     Menu {
         id: menu
+        function show() {
+            mergeItem.visible = timeline.mergeClipWithNext(trackIndex, index, true)
+            popup()
+        }
         MenuItem {
             visible: !isBlank && !isTransition
             text: qsTr('Cut')
@@ -601,6 +605,11 @@ Rectangle {
             visible: !isBlank && !isTransition
             text: qsTr('Split At Playhead (S)')
             onTriggered: timeline.splitClip(trackIndex, index)
+        }
+        MenuItem {
+            id: mergeItem
+            text: qsTr('Merge with next clip')
+            onTriggered: timeline.mergeClipWithNext(trackIndex, index, false)
         }
         MenuItem {
             visible: !isBlank && !isTransition

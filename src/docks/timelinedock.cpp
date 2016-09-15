@@ -387,6 +387,15 @@ void TimelineDock::removeTrack()
                 new Timeline::RemoveTrackCommand(m_model, currentTrack()));
 }
 
+bool TimelineDock::mergeClipWithNext(int trackIndex, int clipIndex, bool dryrun)
+{
+    if (dryrun)
+        return m_model.mergeClipWithNext(trackIndex, clipIndex, true);
+
+    MAIN.undoStack()->push(
+        new Timeline::MergeCommand(m_model, trackIndex, clipIndex));
+}
+
 void TimelineDock::onProducerChanged(Mlt::Producer* after)
 {
     int trackIndex = currentTrack();

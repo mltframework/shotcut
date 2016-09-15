@@ -105,6 +105,7 @@ public:
     bool isTransition(Mlt::Playlist& playlist, int clipIndex) const;
     void insertTrack(int trackIndex, TrackType type = VideoTrackType);
     void insertOrAdjustBlankAt(QList<int> tracks, int position, int length);
+    bool mergeClipWithNext(int trackIndex, int clipIndex, bool dryrun);
 
 signals:
     void created();
