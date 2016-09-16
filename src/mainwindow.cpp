@@ -2670,6 +2670,7 @@ void MainWindow::onExternalTriggered(QAction *action)
         isExternal = false;
         MLT.videoWidget()->setProperty("mlt_service", QVariant());
     } else {
+        m_player->moveVideoToScreen(-2);
         MLT.videoWidget()->setProperty("mlt_service", action->data());
     }
 
