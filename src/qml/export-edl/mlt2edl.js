@@ -120,7 +120,7 @@ MltXmlParser.prototype.getPlaylists = function() {
         p.children.forEach(function (event) {
             if ('length' in event.attr) {
                 var out = self.Timecode(event.attr['length']);
-                // MLTblacks are 1 frame longer than "out".
+                // MLT blacks are 1 frame longer than "out".
                 out.subtract(self.Timecode(1));
                 eventList.push({
                     'producer': 'black',
@@ -220,7 +220,10 @@ MltXmlParser.prototype.createEdl = function() {
         playlist.events.forEach(function(event) {
             var srcIn = self.Timecode(event.inTime);
             var srcOut = self.Timecode(event.outTime);
-            var srcLen = self.Timecode(event.outTime); srcLen.subtract(srcIn);
+            srcOut.add(self.Timecode(1));
+            var srcLen = self.Timecode(event.outTime);
+            srcLen.add(self.Timecode(1));
+            srcLen.subtract(srcIn);
             // increment program tally
             progOut.add(srcLen);
             var reelName = sourceLinks[event.producer].reel_name;

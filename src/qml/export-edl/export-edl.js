@@ -1,34 +1,34 @@
 //QML Browserify - original prelude from browser-pack
 var modules = (function outer (modules, cache, entry) {
-    var previousRequire = typeof require == "function" && require;
-    function newRequire(name, jumped){
-        if(!cache[name]) {
-            if(!modules[name]) {
-                var currentRequire = typeof require == "function" && require;
+    var previousRequire = typeof require == "function" && require;
+    function newRequire(name, jumped){
+        if(!cache[name]) {
+            if(!modules[name]) {
+                var currentRequire = typeof require == "function" && require;
 
-                if (!jumped && currentRequire) return currentRequire(name, true);
+                if (!jumped && currentRequire) return currentRequire(name, true);
 
-                if (previousRequire) return previousRequire(name, true);
+                if (previousRequire) return previousRequire(name, true);
 
-                var err = new Error('Cannot find module \'' + name + '\'');
-                err.code = 'MODULE_NOT_FOUND';
-                throw err;
+                var err = new Error('Cannot find module \'' + name + '\'');
+                err.code = 'MODULE_NOT_FOUND';
+                throw err;
 
-            }
+            }
 
-            var m = cache[name] = {exports:{}};
-            modules[name][0].call(m.exports, function(x){
-                var id = modules[name][1][x];
-                return newRequire(id ? id : x);
-            },m,m.exports,outer,modules,cache,entry);
-        }
+            var m = cache[name] = {exports:{}};
+            modules[name][0].call(m.exports, function(x){
+                var id = modules[name][1][x];
+                return newRequire(id ? id : x);
+            },m,m.exports,outer,modules,cache,entry);
+        }
 
-        return cache[name].exports;
-    }
+        return cache[name].exports;
+    }
 
-    for(var i=0;i<entry.length;i++) newRequire(entry[i]);
+    for(var i=0;i<entry.length;i++) newRequire(entry[i]);
 
-    return newRequire(entry[0]);
+    return newRequire(entry[0]);
 })
 ({1:[function(require,module,exports){
 module.exports = {"timecode": require("timecode"),"xmldoc": require("xmldoc"),}
@@ -6869,7 +6869,7 @@ MltXmlParser.prototype.getPlaylists = function() {
         p.children.forEach(function (event) {
             if ('length' in event.attr) {
                 var out = self.Timecode(event.attr['length']);
-                // MLTblacks are 1 frame longer than "out".
+                // MLT blacks are 1 frame longer than "out".
                 out.subtract(self.Timecode(1));
                 eventList.push({
                     'producer': 'black',
@@ -6969,7 +6969,10 @@ MltXmlParser.prototype.createEdl = function() {
         playlist.events.forEach(function(event) {
             var srcIn = self.Timecode(event.inTime);
             var srcOut = self.Timecode(event.outTime);
-            var srcLen = self.Timecode(event.outTime); srcLen.subtract(srcIn);
+            srcOut.add(self.Timecode(1));
+            var srcLen = self.Timecode(event.outTime);
+            srcLen.add(self.Timecode(1));
+            srcLen.subtract(srcIn);
             // increment program tally
             progOut.add(srcLen);
             var reelName = sourceLinks[event.producer].reel_name;
@@ -7025,8 +7028,7 @@ if (typeof module !== 'undefined' && module.exports)
 // qml-browserify --globals false -o export-edl.js
 // cat mlt2edl.js >> export-edl.js
 // cat main.js >> export-edl.js
-// Then, open in Qt Creator, make a change and save it. This is fixing something
-// in the qml-browserify output that is throwing a syntax error.
+// See also rebuild.sh
 
 (function main(xmlString, options) {
     var mltxml = new MltXmlParser(xmlString, options);

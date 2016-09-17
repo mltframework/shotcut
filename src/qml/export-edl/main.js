@@ -6,8 +6,7 @@
 // qml-browserify --globals false -o export-edl.js
 // cat mlt2edl.js >> export-edl.js
 // cat main.js >> export-edl.js
-// Then, open in Qt Creator, make a change and save it. This is fixing something
-// in the qml-browserify output that is throwing a syntax error.
+// See also rebuild.sh
 
 (function main(xmlString, options) {
     var mltxml = new MltXmlParser(xmlString, options);
