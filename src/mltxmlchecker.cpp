@@ -345,6 +345,8 @@ void MltXmlChecker::checkUnlinkedFile(const QString& mlt_service)
     if (!mlt_service.isEmpty() && mlt_service != "color" && mlt_service != "colour")
     // not a builtin luma wipe file
     if (mlt_service != "luma" || !m_resource.info.baseName().startsWith('%'))
+    // not the generic <producer> resource
+    if (m_resource.info.baseName() != "<producer>")
     // not a URL
     if (!m_resource.info.filePath().isEmpty() && !isNetworkResource(m_resource.info.filePath()))
     // file does not exist
