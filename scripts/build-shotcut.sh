@@ -531,9 +531,9 @@ function set_globals {
     FFMPEG_SUPPORT_THEORA=0
     if test "$TARGET_OS" = "Win32" ; then
       export HOST=i686-w64-mingw32
-      export QTDIR="$HOME/qt-5.5.0-x86-mingw510r0-dw2"
-      export QMAKE="$HOME/Qt/5.6.1/gcc/bin/qmake"
-      export LRELEASE="$HOME/Qt/5.6.1/gcc/bin/lrelease"
+      export QTDIR="$HOME/qt-5.6.1-x86-mingw493-posix-dwarf"
+      export QMAKE="$HOME/Qt/5.6.1/gcc_64/bin/qmake"
+      export LRELEASE="$HOME/Qt/5.6.1/gcc_64/bin/lrelease"
     else
       export HOST=x86_64-w64-mingw32
       export QTDIR="$HOME/qt-5.6.1-x64-mingw510r0-seh"
