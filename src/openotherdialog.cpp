@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2015 Meltytech, LLC
+ * Copyright (c) 2012-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,6 +21,8 @@
 #include "mltcontroller.h"
 #include <Mlt.h>
 #include <QtWidgets>
+
+#define ENABLE_SCREEN_CAPTURE (0)
 
 OpenOtherDialog::OpenOtherDialog(QWidget *parent) :
     QDialog(parent),
@@ -49,13 +51,17 @@ OpenOtherDialog::OpenOtherDialog(QWidget *parent) :
     item->setData(0, Qt::UserRole, ui->jackTab->objectName());
     item = new QTreeWidgetItem(group, QStringList(tr("ALSA Audio")));
     item->setData(0, Qt::UserRole, ui->alsaTab->objectName());
+#if ENABLE_SCREEN_CAPTURE
     item = new QTreeWidgetItem(group, QStringList(tr("Screen")));
     item->setData(0, Qt::UserRole, ui->x11grabTab->objectName());
+#endif
 #elif defined(Q_OS_WIN)
     QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("DirectShow")));
     item->setData(0, Qt::UserRole, ui->dshowVideoTab->objectName());
+#if ENABLE_SCREEN_CAPTURE
     item = new QTreeWidgetItem(group, QStringList(tr("Screen")));
     item->setData(0, Qt::UserRole, ui->gdigrabTab->objectName());
+#endif
 #elif defined(Q_OS_MAC)
     QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("OS X A/V Device")));
     item->setData(0, Qt::UserRole, ui->avfoundationTab->objectName());

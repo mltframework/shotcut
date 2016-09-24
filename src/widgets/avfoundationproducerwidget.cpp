@@ -27,6 +27,8 @@
 #include "shotcut_mlt_properties.h"
 #include <Logger.h>
 
+#define ENABLE_SCREEN_CAPTURE (0)
+
 AvfoundationProducerWidget::AvfoundationProducerWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::AvfoundationProducerWidget)
@@ -37,8 +39,12 @@ AvfoundationProducerWidget::AvfoundationProducerWidget(QWidget *parent) :
 #ifdef Q_OS_MAC
     foreach (const QByteArray &deviceName, QCamera::availableDevices())
         ui->videoCombo->addItem(QCamera::deviceDescription(deviceName));
+#if ENABLE_SCREEN_CAPTURE
     for (int i = 0; i < QApplication::desktop()->screenCount(); i++)
         ui->videoCombo->addItem(QString("Capture screen %1").arg(i));
+#else
+    ui->backgroundCheckBox->hide();
+#endif
     foreach (const QAudioDeviceInfo &deviceInfo, QAudioDeviceInfo::availableDevices(QAudio::AudioInput))
         ui->audioCombo->addItem(deviceInfo.deviceName());
     if (ui->videoCombo->count() > 1)
