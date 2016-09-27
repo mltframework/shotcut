@@ -531,23 +531,27 @@ function set_globals {
     FFMPEG_SUPPORT_THEORA=0
     if test "$TARGET_OS" = "Win32" ; then
       export HOST=i686-w64-mingw32
-      export QTDIR="$HOME/qt-5.6.1-x86-mingw493-posix-dwarf"
+      export QTDIR="$HOME/qt-5.6.1-x86-mingw482-posix-sjlj"
       export QMAKE="$HOME/Qt/5.6.1/gcc_64/bin/qmake"
       export LRELEASE="$HOME/Qt/5.6.1/gcc_64/bin/lrelease"
+      export CFLAGS="-I/usr/$HOST/include $CFLAGS"
+      export CXXFLAGS="-I/usr/$HOST/include $CXXFLAGS"
+      export LDFLAGS="-L/usr/$HOST/lib $LDFLAGS"
+      export CROSS=${HOST}-
     else
       export HOST=x86_64-w64-mingw32
       export QTDIR="$HOME/qt-5.6.1-x64-mingw510r0-seh"
       export QMAKE="$HOME/Qt/5.6.1/gcc_64/bin/qmake"
       export LRELEASE="$HOME/Qt/5.6.1/gcc_64/bin/lrelease"
+      export CROSS=${HOST}.static-
     fi
-    export CROSS=${HOST}.static-
     export CC=${CROSS}gcc
     export CXX=${CROSS}g++
     export AR=${CROSS}ar
     export RANLIB=${CROSS}ranlib
-    export CFLAGS="-DHAVE_STRUCT_TIMESPEC -I$FINAL_INSTALL_DIR/include"
-    export CXXFLAGS="$CFLAGS"
-    export LDFLAGS="-L$FINAL_INSTALL_DIR/bin -L$FINAL_INSTALL_DIR/lib"
+    export CFLAGS="-DHAVE_STRUCT_TIMESPEC -I$FINAL_INSTALL_DIR/include $CFLAGS"
+    export CXXFLAGS="-DHAVE_STRUCT_TIMESPEC -I$FINAL_INSTALL_DIR/include $CXXFLAGS"
+    export LDFLAGS="-L$FINAL_INSTALL_DIR/bin -L$FINAL_INSTALL_DIR/lib $LDFLAGS"
     export CMAKE_ROOT="${SOURCE_DIR}/vid.stab/cmake"
     export PKG_CONFIG=pkg-config
   elif test "$TARGET_OS" = "Darwin"; then
@@ -1871,7 +1875,7 @@ function deploy_win32
   cmd mv COPYING COPYING.txt
   cmd cp -p "$QTDIR"/bin/Qt5{Concurrent,Core,Declarative,Gui,Multimedia,MultimediaQuick_p,MultimediaWidgets,Network,OpenGL,Positioning,PrintSupport,Qml,QuickParticles,Quick,QuickWidgets,Script,Sensors,Sql,Svg,WebChannel,WebKit,WebKitWidgets,WebSockets,Widgets,Xml,XmlPatterns}.dll .
   if [ "$TARGET_OS" = "Win32" ]; then
-    cmd cp -p "$QTDIR"/bin/{icudt57,icuin57,icuuc57,libgcc_s_dw2-1,libstdc++-6,libwinpthread-1,libEGL,libGLESv2,opengl32sw,d3dcompiler_47}.dll .
+    cmd cp -p "$QTDIR"/bin/{icudt57,icuin57,icuuc57,libgcc_s_sjlj-1,libstdc++-6,libwinpthread-1,libEGL,libGLESv2,opengl32sw,d3dcompiler_47,libgomp-1}.dll .
   else
     cmd cp -p "$QTDIR"/bin/{icudt57,icuin57,icuuc57,libgcc_s_seh-1,libstdc++-6,libwinpthread-1,libEGL,libGLESv2,opengl32sw,d3dcompiler_47}.dll .
     if [ "$DEBUG_BUILD" = "1" -o "$SDK" = "1" ]; then
@@ -1958,14 +1962,6 @@ function deploy_win32
       log Creating archive
       cmd cd ..
       cmd zip -gr shotcut-sdk.zip Shotcut
-    else
-      log Making installer
-      cmd osslsigncode sign -pkcs12 "$HOME/CodeSignCertificates.p12" -readpass "$HOME/CodeSignCertificates.pass" -n Shotcut -i http://www.meltytech.com -t http://timestamp.digicert.com -in shotcut.exe -out shotcut-signed.exe
-      cmd mv shotcut-signed.exe shotcut.exe
-      cmd cd ..
-      cmd makensis shotcut.nsi
-      cmd osslsigncode sign -pkcs12 "$HOME/CodeSignCertificates.p12" -readpass "$HOME/CodeSignCertificates.pass" -n "Shotcut Installer" -i http://www.meltytech.com -t http://timestamp.digicert.com -in shotcut-setup.exe -out shotcut-setup-signed.exe
-      cmd mv shotcut-setup-signed.exe shotcut-setup.exe
     fi
   fi
   popd
