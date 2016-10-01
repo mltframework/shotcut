@@ -15,5 +15,4 @@ src/shotcut
 *.log
 .directory
 *.orig
-.tx
 src/qml/export-edl/node_modules
