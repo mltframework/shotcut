@@ -39,7 +39,7 @@
      <x>0</x>
      <y>0</y>
      <width>832</width>
-     <height>22</height>
+     <height>31</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -52,8 +52,9 @@
     <addaction name="separator"/>
     <addaction name="actionSave"/>
     <addaction name="actionSave_As"/>
-    <addaction name="actionExportEDL"/>
+    <addaction name="actionExportVideo"/>
     <addaction name="actionExportFrame"/>
+    <addaction name="actionExportEDL"/>
     <addaction name="separator"/>
     <addaction name="actionClose"/>
     <addaction name="separator"/>
@@ -738,8 +739,7 @@
   <action name="actionClose">
    <property name="icon">
     <iconset theme="window-close">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Close</string>
@@ -804,6 +804,11 @@
   <action name="actionExportFrame">
    <property name="text">
     <string>Export Frame...</string>
+   </property>
+  </action>
+  <action name="actionExportVideo">
+   <property name="text">
+    <string>Export Video...</string>
    </property>
   </action>
  </widget>
