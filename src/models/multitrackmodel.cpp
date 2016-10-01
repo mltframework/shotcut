@@ -1278,12 +1278,11 @@ void MultitrackModel::appendFromPlaylist(Mlt::Playlist *from, int trackIndex)
         for (int j = 0; j < from->count(); j++) {
             QScopedPointer<Mlt::Producer> clip(from->get_clip(j));
             if (!clip->is_blank()) {
-                int in = clip->get_in();
-                int out = clip->get_out();
-                clip->set_in_and_out(0, clip->get_length() - 1);
-                playlist.append(clip->parent(), in, out);
+                QString xml = MLT.XML(clip.data());
+                Mlt::Producer producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
+                playlist.append(producer.parent(), clip->get_in(), clip->get_out());
                 QModelIndex modelIndex = createIndex(j, 0, trackIndex);
-                AudioLevelsTask::start(clip->parent(), this, modelIndex);
+                AudioLevelsTask::start(producer.parent(), this, modelIndex);
             } else {
                 playlist.blank(clip->get_out());
             }
