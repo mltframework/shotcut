@@ -1497,6 +1497,9 @@ function configure_compile_install_subproject {
   # Special hack for mlt, post-configure
   if test "mlt" = "$1" ; then
     mlt_check_configure
+	if [ "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ]; then
+	  echo "USE_PKG_CONFIG=0" > src/modules/sdl/config.mak
+	fi
   fi
 
   # Compile
