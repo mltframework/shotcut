@@ -99,7 +99,7 @@ QVariant MeltedClipsModel::data(const QModelIndex &index, int role) const
         return tr("%1 B").arg(size);
     } else {
         int n = o->children().size();
-        return QString("%2 %3").arg(n).arg((n == 1) ? tr("item") : tr("items"));
+        return tr("%n item(s)", "", n);
     }
 }
 
