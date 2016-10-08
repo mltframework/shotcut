@@ -289,6 +289,7 @@ TRANSLATIONS += \
     ../translations/shotcut_en.ts \
     ../translations/shotcut_es.ts \
     ../translations/shotcut_fr.ts \
+    ../translations/shotcut_gd.ts \
     ../translations/shotcut_it.ts \
     ../translations/shotcut_nl.ts \
     ../translations/shotcut_pl.ts \
