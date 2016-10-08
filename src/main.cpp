@@ -18,8 +18,13 @@
 
 #include <QtWidgets>
 #include <QtGlobal>
+#include "autosavefile.h"
+#include "database.h"
+#include "dialogs/customprofiledialog.h"
 #include "mainwindow.h"
+#include "qmltypes/qmlfilter.h"
 #include "settings.h"
+#include "widgets/servicepresetwidget.h"
 #include <Logger.h>
 #include <FileAppender.h>
 #include <ConsoleAppender.h>
@@ -116,8 +121,7 @@ public:
 #endif
 
         // Startup logging.
-        dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation).first();
-        if (!dir.exists()) dir.mkpath(dir.path());
+        dir = applicationDirPath();
         const QString logFileName = dir.filePath("shotcut-log.txt");
         QFile::remove(logFileName);
         FileAppender* fileAppender = new FileAppender(logFileName);
@@ -197,6 +201,9 @@ public:
         QCommandLineOption gpuOption("gpu",
             QCoreApplication::translate("main", "Use GPU processing."));
         parser.addOption(gpuOption);
+        QCommandLineOption dirOption("dir",
+            QCoreApplication::translate("main", "Override saving dir."));
+        parser.addOption(dirOption);
         parser.addPositionalArgument("resource",
             QCoreApplication::translate("main", "A file to open."));
         parser.process(arguments());
@@ -207,6 +214,16 @@ public:
 #endif
         if (parser.isSet(gpuOption))
             Settings.setPlayerGPU(true);
+        if (parser.isSet(dirOption)) {
+            QDir dir(parser.value(dirOption));
+            AutoSaveFile.overrideAutoSaveFilePath(parser.value(dirOption));
+            CustomProfileDialog.overrideCustomProfileDialogDir(dir);
+            Database.overrideDatabaseDir(dir);
+            EncodeDock.overrideEncodeDockDir(dir);
+            MainWindow.overrideMainWindowDir(dir);
+            QmlFilter.overrideQmlFilterDir(dir);
+            ServicePresetWidget.overrideServicePresetWidgetDir(dir);
+        }
         if (!parser.positionalArguments().isEmpty())
             resourceArg = parser.positionalArguments().first();
     }

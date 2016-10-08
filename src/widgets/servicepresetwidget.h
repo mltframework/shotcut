@@ -37,6 +37,7 @@ public:
     void loadPresets();
     void saveDefaultPreset(Mlt::Properties&);
     void savePreset(Mlt::Properties*);
+    void overrideServicePresetWidgetDir(QDir dir);
 
 signals:
     void selected(void* properties);

@@ -22,6 +22,8 @@
 #include <QDir>
 #include <QDesktopServices>
 
+static QDir g_CustomProfileDialogDir = 0;
+
 CustomProfileDialog::CustomProfileDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CustomProfileDialog)
@@ -52,6 +54,8 @@ void CustomProfileDialog::on_buttonBox_accepted()
     if (ui->nameEdit->text().isEmpty())
         return;
     QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
+    if (g_CustomProfileDialogDir != 0)
+        dir = g_CustomProfileDialogDir;
     QString subdir("profiles");
     if (!dir.exists())
         dir.mkpath(dir.path());
@@ -99,4 +103,8 @@ void CustomProfileDialog::on_buttonBox_accepted()
     p.set("frame_rate_num", MLT.profile().frame_rate_num());
     p.set("frame_rate_den", MLT.profile().frame_rate_den());
     p.save(dir.filePath(ui->nameEdit->text()).toUtf8().constData());
+}
+void CustomProfileDialog::overrideCustomProfileDialogDir(QDir dir)
+{
+   g_CustomProfileDialogDir = dir;
 }

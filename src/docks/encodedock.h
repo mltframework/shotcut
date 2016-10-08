@@ -51,6 +51,7 @@ public:
     ~EncodeDock();
 
     void loadPresetFromProperties(Mlt::Properties&);
+    void overrideEncodeDockDir(QDir dir);
 
 signals:
     void captureStateChanged(bool);

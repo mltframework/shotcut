@@ -100,6 +100,7 @@ static bool eventDebugCallback(void **data)
 }
 
 static const int AUTOSAVE_TIMEOUT_MS = 10000;
+static QDir MainWindowDir = 0;
 
 MainWindow::MainWindow()
     : QMainWindow(0)
@@ -572,6 +573,8 @@ void MainWindow::setupSettingsMenu()
     m_customProfileMenu->addAction(ui->actionAddCustomProfile);
     // Load custom profiles
     QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
+    if (MainWindowDir != 0)
+        dir = MainWindowDir;
     if (dir.cd("profiles")) {
         QStringList profiles = dir.entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
         if (profiles.length() > 0)
@@ -989,7 +992,9 @@ QString MainWindow::removeFileScheme(QUrl &url)
 
 QString MainWindow::untitledFileName() const
 {
-    QDir dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation).first();
+    QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
+    if (MainWindowDir != 0)
+        dir = MainWindowDir;
     if (!dir.exists()) dir.mkpath(dir.path());
     return dir.filePath("__untitled__.mlt");
 }
@@ -1038,6 +1043,11 @@ void MainWindow::setProfile(const QString &profile_name)
     LOG_DEBUG() << profile_name;
     MLT.setProfile(profile_name);
     emit profileChanged();
+}
+
+void MainWindow::overrideMainWindowDir(QDir dir)
+{
+    MainWindowDir = dir;
 }
 
 static void autosaveTask(MainWindow* p)
@@ -2738,7 +2748,9 @@ void MainWindow::on_actionAddCustomProfile_triggered()
     dialog.setWindowModality(QmlApplication::dialogModality());
     if (dialog.exec() == QDialog::Accepted) {
         QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
-        if (dir.cd("profiles")) {
+        if (MainWindowDir != 0)
+            dir = MainWindowDir;
+		if (dir.cd("profiles")) {
             QString name = dialog.profileName();
             QStringList profiles = dir.entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
             if (profiles.length() == 1)
@@ -2921,7 +2933,9 @@ void MainWindow::onDrawingMethodTriggered(QAction *action)
 void MainWindow::on_actionApplicationLog_triggered()
 {
     TextViewerDialog dialog(this);
-    QDir dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation).first();
+    QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
+    if (MainWindowDir != 0)
+        dir = MainWindowDir;
     QFile logFile(dir.filePath("shotcut-log.txt"));
     logFile.open(QIODevice::ReadOnly | QIODevice::Text);
     dialog.setText(logFile.readAll());

@@ -33,6 +33,7 @@ public:
     explicit CustomProfileDialog(QWidget *parent = 0);
     ~CustomProfileDialog();
     QString profileName() const;
+    void overrideCustomProfileDialogDir(QDir dir);
     
 private slots:
     void on_buttonBox_accepted();

@@ -37,6 +37,7 @@ public:
     bool upgradeVersion1();
     bool putThumbnail(const QString& hash, const QImage& image);
     QImage getThumbnail(const QString& hash);
+    void overrideDatabaseDir(QDir dir);
 
 private slots:
     void commitTransaction();

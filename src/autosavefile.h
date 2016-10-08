@@ -36,6 +36,7 @@ public:
 
     virtual bool open(OpenMode openmode);
     static AutoSaveFile* getFile(const QString &filename);
+    void overrideAutoSaveFilePath(QString path);
     static QString path();
 
 private:
