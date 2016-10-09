@@ -394,6 +394,8 @@ bool TimelineDock::mergeClipWithNext(int trackIndex, int clipIndex, bool dryrun)
 
     MAIN.undoStack()->push(
         new Timeline::MergeCommand(m_model, trackIndex, clipIndex));
+
+    return true;
 }
 
 void TimelineDock::onProducerChanged(Mlt::Producer* after)
