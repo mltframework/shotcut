@@ -105,6 +105,12 @@ QRegion PlaylistIconView::visualRegionForSelection(const QItemSelection &selecti
     return QRegion();
 }
 
+void PlaylistIconView::currentChanged(const QModelIndex &current, const QModelIndex &previous)
+{
+    viewport()->update();
+    QAbstractItemView::currentChanged(current, previous);
+}
+
 void PlaylistIconView::paintEvent(QPaintEvent*)
 {
     QPainter painter(viewport());

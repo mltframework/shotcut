@@ -18,6 +18,7 @@ public:
     bool isIndexHidden(const QModelIndex &index) const Q_DECL_OVERRIDE;
     void setSelection(const QRect &rect, QItemSelectionModel::SelectionFlags command) Q_DECL_OVERRIDE;
     QRegion visualRegionForSelection(const QItemSelection &selection) const Q_DECL_OVERRIDE;
+    void currentChanged(const QModelIndex &current, const QModelIndex &previous) Q_DECL_OVERRIDE;
 
     void paintEvent(QPaintEvent*) Q_DECL_OVERRIDE;
     void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
