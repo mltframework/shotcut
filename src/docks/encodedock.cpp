@@ -38,6 +38,7 @@
 #define TO_RELATIVE(min, max, abs) qRound(100.0f * float((abs) - (min)) / float((max) - (min) + 1))
 
 static double getBufferSize(Mlt::Properties& preset, const char* property);
+static QDir g_EncodeDockDir = 0;
 
 EncodeDock::EncodeDock(QWidget *parent) :
     QDockWidget(parent),
@@ -361,6 +362,8 @@ void EncodeDock::loadPresets()
     QStandardItem* parentItem = new QStandardItem(tr("Custom"));
     sourceModel->invisibleRootItem()->appendRow(parentItem);
     QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
+    if (g_EncodeDockDir != 0)
+        dir = g_EncodeDockDir;
     if (dir.cd("presets") && dir.cd("encode")) {
         QStringList entries = dir.entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
         foreach (QString name, entries) {
@@ -837,6 +840,8 @@ void EncodeDock::on_presetsTree_clicked(const QModelIndex &index)
             ui->removePresetButton->setEnabled(true);
             preset = new Mlt::Properties();
             QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
+            if (g_EncodeDockDir != 0)
+                dir = g_EncodeDockDir;
             if (dir.cd("presets") && dir.cd("encode"))
                 preset->load(dir.absoluteFilePath(name).toLatin1().constData());
         }
@@ -1044,6 +1049,8 @@ void EncodeDock::on_addPresetButton_clicked()
     if (dialog.exec() == QDialog::Accepted) {
         QString preset = dialog.presetName();
         QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
+        if (g_EncodeDockDir != 0)
+            dir = g_EncodeDockDir;
         QString subdir("encode");
 
         if (!preset.isEmpty()) {
@@ -1092,6 +1099,8 @@ void EncodeDock::on_removePresetButton_clicked()
     int result = dialog.exec();
     if (result == QMessageBox::Yes) {
         QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
+        if (g_EncodeDockDir != 0)
+            dir = g_EncodeDockDir;
         if (dir.cd("presets") && dir.cd("encode")) {
             dir.remove(preset);
             m_presetsModel.removeRow(index.row(), index.parent());
@@ -1239,4 +1248,8 @@ void EncodeDock::on_gopSpinner_valueChanged(int value)
 {
     Q_UNUSED(value);
     m_isDefaultSettings = false;
+}
+void EncodeDock::overrideEncodeDockDir(QDir dir)
+{
+    g_EncodeDockDir = dir;
 }

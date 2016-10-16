@@ -36,6 +36,8 @@ static const char* kHeightProperty = "meta.media.height";
 static const char* kAspectNumProperty = "meta.media.sample_aspect_num";
 static const char* kAspectDenProperty = "meta.media.sample_aspect_den";
 
+static QDir g_QmlFilterDir = 0;
+
 QmlFilter::QmlFilter(Mlt::Filter* mltFilter, const QmlMetadata* metadata, QObject* parent)
     : QObject(parent)
     , m_metadata(metadata)
@@ -128,10 +130,17 @@ void QmlFilter::set(QString name, double x, double y, double width, double heigh
     }
 }
 
+void QmlFilter::overrideQmlFilterDir(QDir dir)
+{
+    g_QmlFilterDir = dir;
+}
+
 void QmlFilter::loadPresets()
 {
     m_presets.clear();
     QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
+    if (g_QmlFilterDir != 0)
+        dir = g_QmlFilterDir;
     if (dir.cd("presets")) {
         QStringList entries = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::Executable);
         foreach (QString s, entries) {
@@ -149,6 +158,8 @@ int QmlFilter::savePreset(const QStringList &propertyNames, const QString &name)
 {
     Mlt::Properties properties;
     QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
+    if (g_QmlFilterDir != 0)
+        dir = g_QmlFilterDir;
 
     properties.pass_list(*((Mlt::Properties*)m_filter), propertyNames.join('\t').toLatin1().constData());
 
@@ -171,6 +182,8 @@ int QmlFilter::savePreset(const QStringList &propertyNames, const QString &name)
 void QmlFilter::deletePreset(const QString &name)
 {
     QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
+    if (g_QmlFilterDir != 0)
+        dir = g_QmlFilterDir;
     if (dir.cd("presets") && dir.cd(objectNameOrService()))
         QFile(dir.filePath(name)).remove();
     m_presets.removeOne(name);
@@ -298,6 +311,8 @@ double QmlFilter::producerAspect() const
 void QmlFilter::preset(const QString &name)
 {
     QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
+    if (g_QmlFilterDir != 0)
+        dir = g_QmlFilterDir;
 
     if (!dir.cd("presets") || !dir.cd(objectNameOrService()))
         return;

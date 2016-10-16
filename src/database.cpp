@@ -41,6 +41,7 @@ struct DatabaseJob {
 };
 
 static Database* instance = 0;
+static QDir g_DatabaseDir = 0;
 
 Database::Database(QObject *parent) :
     QThread(parent)
@@ -169,12 +170,20 @@ void Database::deleteOldThumbnails()
         LOG_ERROR() << query.lastError();
 }
 
+void Database::overrideDatabaseDir(QDir dir)
+{
+    g_DatabaseDir = dir;
+}
+
 void Database::run()
 {
     connect(&MAIN, SIGNAL(aboutToShutDown()),
             this, SLOT(shutdown()), Qt::DirectConnection);
 
     QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
+    if (g_DatabaseDir != 0)
+        dir = g_DatabaseDir;
+
     if (!dir.exists())
         dir.mkpath(dir.path());
 

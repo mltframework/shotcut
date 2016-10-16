@@ -53,6 +53,7 @@ public:
     Q_INVOKABLE void set(QString name, int value);
     Q_INVOKABLE void set(QString name, double x, double y, double width, double height, double opacity = 1.0);
     QString path() const { return m_path; }
+    Q_INVOKABLE void overrideQmlFilterDir(QDir dir);
     Q_INVOKABLE void loadPresets();
     QStringList presets() const { return m_presets; }
     /// returns the index of the new preset

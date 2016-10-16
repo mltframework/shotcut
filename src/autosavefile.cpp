@@ -27,6 +27,8 @@
 static const QLatin1String subdir("/autosave");
 static const QLatin1String extension(".mlt");
 
+static QString g_AutoSavePath = "";
+
 static QString hashName(const QString &name)
 {
     return QString::fromLatin1(QCryptographicHash::hash(name.toUtf8(), QCryptographicHash::Md5).toHex());
@@ -75,8 +77,13 @@ bool AutoSaveFile::open(OpenMode openmode)
 AutoSaveFile* AutoSaveFile::getFile(const QString &filename)
 {
     AutoSaveFile* result = 0;
+    QFileInfo info;
     QDir appDir(path());
-    QFileInfo info(appDir.absolutePath(), hashName(filename) + extension);
+    if (!g_AutoSavePath.isEmpty()) {
+        info(appDir.absolutePath(), hashName(filename) + extension);
+    } else {
+        info(appDir.absolutePath(), hashName(filename) + extension);
+    }
 
     if (info.exists()) {
         result = new AutoSaveFile(filename);
@@ -87,7 +94,16 @@ AutoSaveFile* AutoSaveFile::getFile(const QString &filename)
     return result;
 }
 
+void AutoSaveFile::overrideAutoSaveFilePath(QString path)
+{
+    g_AutoSavePath = path;
+}
+
 QString AutoSaveFile::path()
 {
-    return QStandardPaths::writableLocation(QStandardPaths::DataLocation) + subdir;
+    if (!g_AutoSavePath.isEmpty()) {
+        return g_AutoSavePath + subdir;
+    } else {
+        return QStandardPaths::writableLocation(QStandardPaths::DataLocation) + subdir;
+    }
 }
