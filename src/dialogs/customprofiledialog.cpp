@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,6 +19,7 @@
 #include "customprofiledialog.h"
 #include "ui_customprofiledialog.h"
 #include "mltcontroller.h"
+#include "settings.h"
 #include <QDir>
 #include <QDesktopServices>
 
@@ -51,7 +52,7 @@ void CustomProfileDialog::on_buttonBox_accepted()
     // Save it to a file
     if (ui->nameEdit->text().isEmpty())
         return;
-    QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
+    QDir dir(Settings.appDataLocation());
     QString subdir("profiles");
     if (!dir.exists())
         dir.mkpath(dir.path());

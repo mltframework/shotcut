@@ -43,6 +43,8 @@ class ShotcutSettings : public QObject
 
 public:
     static ShotcutSettings& singleton();
+    explicit ShotcutSettings() : QObject() {}
+    explicit ShotcutSettings(const QString& appDataLocation);
 
     QString language() const;
     void setLanguage(const QString&);
@@ -140,6 +142,9 @@ public:
     void setDrawMethod(int);
 
     void sync();
+    QString appDataLocation() const;
+    void setAppDataForSession(const QString& location);
+    void setAppDataLocally(const QString& location);
 
 signals:
     void openPathChanged();
@@ -157,6 +162,7 @@ signals:
 
 private:
     QSettings settings;
+    QString m_appDataLocation;
 };
 
 #define Settings ShotcutSettings::singleton()

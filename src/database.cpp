@@ -19,8 +19,8 @@
 #include "database.h"
 #include "models/playlistmodel.h"
 #include "mainwindow.h"
+#include "settings.h"
 #include <QtSql>
-#include <QStandardPaths>
 #include <QDir>
 #include <Logger.h>
 
@@ -174,7 +174,7 @@ void Database::run()
     connect(&MAIN, SIGNAL(aboutToShutDown()),
             this, SLOT(shutdown()), Qt::DirectConnection);
 
-    QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
+    QDir dir(Settings.appDataLocation());
     if (!dir.exists())
         dir.mkpath(dir.path());
 

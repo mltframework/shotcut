@@ -84,6 +84,7 @@
 #include <QtNetwork>
 #include <QJsonDocument>
 #include <QJSEngine>
+#include <QDirIterator>
 
 static bool eventDebugCallback(void **data)
 {
@@ -571,7 +572,7 @@ void MainWindow::setupSettingsMenu()
     m_customProfileMenu = ui->menuProfile->addMenu(tr("Custom"));
     m_customProfileMenu->addAction(ui->actionAddCustomProfile);
     // Load custom profiles
-    QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
+    QDir dir(Settings.appDataLocation());
     if (dir.cd("profiles")) {
         QStringList profiles = dir.entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
         if (profiles.length() > 0)
@@ -976,7 +977,7 @@ QString MainWindow::removeFileScheme(QUrl &url)
 
 QString MainWindow::untitledFileName() const
 {
-    QDir dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation).first();
+    QDir dir = Settings.appDataLocation();
     if (!dir.exists()) dir.mkpath(dir.path());
     return dir.filePath("__untitled__.mlt");
 }
@@ -1734,6 +1735,11 @@ void MainWindow::keyReleaseEvent(QKeyEvent* event)
         m_isKKeyPressed = false;
     else
         QMainWindow::keyReleaseEvent(event);
+}
+
+void MainWindow::hideSetDataDirectory()
+{
+    delete ui->actionAppDataSet;
 }
 
 // Drag-n-drop events
@@ -2724,7 +2730,7 @@ void MainWindow::on_actionAddCustomProfile_triggered()
     CustomProfileDialog dialog(this);
     dialog.setWindowModality(QmlApplication::dialogModality());
     if (dialog.exec() == QDialog::Accepted) {
-        QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
+        QDir dir(Settings.appDataLocation());
         if (dir.cd("profiles")) {
             QString name = dialog.profileName();
             QStringList profiles = dir.entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
@@ -2908,7 +2914,7 @@ void MainWindow::onDrawingMethodTriggered(QAction *action)
 void MainWindow::on_actionApplicationLog_triggered()
 {
     TextViewerDialog dialog(this);
-    QDir dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation).first();
+    QDir dir = Settings.appDataLocation();
     QFile logFile(dir.filePath("shotcut-log.txt"));
     logFile.open(QIODevice::ReadOnly | QIODevice::Text);
     dialog.setText(logFile.readAll());
@@ -3097,4 +3103,48 @@ void MainWindow::onGLWidgetImageReady()
     } else {
         showStatusMessage(tr("Unable to export frame."));
     }
+}
+
+void MainWindow::on_actionAppDataSet_triggered()
+{
+    QMessageBox dialog(QMessageBox::Information,
+                       qApp->applicationName(),
+                       tr("You must restart Shotcut to change the data directory.\n"
+                          "Do you want to continue?"),
+                       QMessageBox::No | QMessageBox::Yes,
+                       this);
+    dialog.setDefaultButton(QMessageBox::Yes);
+    dialog.setEscapeButton(QMessageBox::No);
+    dialog.setWindowModality(QmlApplication::dialogModality());
+    if (dialog.exec() != QMessageBox::Yes) return;
+
+    QString dirName = QFileDialog::getExistingDirectory(this, tr("Data Directory"), Settings.appDataLocation());
+    if (!dirName.isEmpty()) {
+        // Move the data files.
+        QDirIterator it(Settings.appDataLocation());
+        while (it.hasNext()) {
+            if (!it.filePath().isEmpty() && it.fileName() != "." && it.fileName() != "..") {
+                if (!QFile::exists(dirName + "/" + it.fileName())) {
+                    if (it.fileInfo().isDir()) {
+                        if (!QFile::rename(it.filePath(), dirName + "/" + it.fileName()))
+                            LOG_WARNING() << "Failed to move" << it.filePath() << "to" << dirName + "/" + it.fileName();
+                    } else {
+                        if (!QFile::copy(it.filePath(), dirName + "/" + it.fileName()))
+                            LOG_WARNING() << "Failed to copy" << it.filePath() << "to" << dirName + "/" + it.fileName();
+                    }
+                }
+            }
+            it.next();
+        }
+        writeSettings();
+        Settings.setAppDataLocally(dirName);
+
+        m_exitCode = EXIT_RESTART;
+        QApplication::closeAllWindows();
+    }
+}
+
+void MainWindow::on_actionAppDataShow_triggered()
+{
+    QDesktopServices::openUrl(QUrl::fromLocalFile(Settings.appDataLocation()));
 }

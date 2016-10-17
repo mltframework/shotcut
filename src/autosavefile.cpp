@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2015 Meltytech, LLC
+ * Copyright (c) 2011-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  * Loosely based on ideas from KAutoSaveFile by Jacob R Rideout <kde@jacobrideout.net>
  * and Kdenlive by Jean-Baptiste Mardelle.
@@ -19,9 +19,9 @@
  */
 
 #include "autosavefile.h"
+#include "settings.h"
 
 #include <QtCore/QDir>
-#include <QtCore/QStandardPaths>
 #include <QtCore/QCryptographicHash>
 
 static const QLatin1String subdir("/autosave");
@@ -89,5 +89,5 @@ AutoSaveFile* AutoSaveFile::getFile(const QString &filename)
 
 QString AutoSaveFile::path()
 {
-    return QStandardPaths::writableLocation(QStandardPaths::DataLocation) + subdir;
+    return Settings.appDataLocation() + subdir;
 }

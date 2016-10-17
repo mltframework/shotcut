@@ -97,6 +97,7 @@ public:
     QTranslator shotcutTranslator;
     QString resourceArg;
     bool isFullScreen;
+    QString appDirArg;
 
     Application(int &argc, char **argv)
         : QApplication(argc, argv)
@@ -115,8 +116,41 @@ public:
         setAttribute(Qt::AA_DontShowIconsInMenus);
 #endif
 
+        // Process command line options.
+        QCommandLineParser parser;
+        parser.addHelpOption();
+        parser.addVersionOption();
+#ifndef Q_OS_WIN
+        QCommandLineOption fullscreenOption("fullscreen",
+            QCoreApplication::translate("main", "Fill the screen with the Shotcut window."));
+        parser.addOption(fullscreenOption);
+#endif
+        QCommandLineOption gpuOption("gpu",
+            QCoreApplication::translate("main", "Use GPU processing."));
+        parser.addOption(gpuOption);
+        QCommandLineOption appDataOption("appdata",
+            QCoreApplication::translate("main", "The directory for app configuration and data."),
+            QCoreApplication::translate("main", "directory"));
+        parser.addOption(appDataOption);
+        parser.addPositionalArgument("resource",
+            QCoreApplication::translate("main", "A file to open."));
+        parser.process(arguments());
+#ifdef Q_OS_WIN
+        isFullScreen = false;
+#else
+        isFullScreen = parser.isSet(fullscreenOption);
+#endif
+        if (!parser.value(appDataOption).isEmpty()) {
+            appDirArg = parser.value(appDataOption);
+            Settings.setAppDataForSession(appDirArg);
+        }
+        if (parser.isSet(gpuOption))
+            Settings.setPlayerGPU(true);
+        if (!parser.positionalArguments().isEmpty())
+            resourceArg = parser.positionalArguments().first();
+
         // Startup logging.
-        dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation).first();
+        dir = Settings.appDataLocation();
         if (!dir.exists()) dir.mkpath(dir.path());
         const QString logFileName = dir.filePath("shotcut-log.txt");
         QFile::remove(logFileName);
@@ -185,30 +219,6 @@ public:
             installTranslator(&qtBaseTranslator);
         if (shotcutTranslator.load("shotcut_" + Settings.language(), dir.absolutePath()))
             installTranslator(&shotcutTranslator);
-
-        QCommandLineParser parser;
-        parser.addHelpOption();
-        parser.addVersionOption();
-#ifndef Q_OS_WIN
-        QCommandLineOption fullscreenOption("fullscreen",
-            QCoreApplication::translate("main", "Fill the screen with the Shotcut window."));
-        parser.addOption(fullscreenOption);
-#endif
-        QCommandLineOption gpuOption("gpu",
-            QCoreApplication::translate("main", "Use GPU processing."));
-        parser.addOption(gpuOption);
-        parser.addPositionalArgument("resource",
-            QCoreApplication::translate("main", "A file to open."));
-        parser.process(arguments());
-#ifdef Q_OS_WIN
-        isFullScreen = false;
-#else
-        isFullScreen = parser.isSet(fullscreenOption);
-#endif
-        if (parser.isSet(gpuOption))
-            Settings.setPlayerGPU(true);
-        if (!parser.positionalArguments().isEmpty())
-            resourceArg = parser.positionalArguments().first();
     }
 
     ~Application()
@@ -246,6 +256,8 @@ int main(int argc, char **argv)
     MainWindow::changeTheme(Settings.theme());
 
     a.mainWindow = &MAIN;
+    if (!a.appDirArg.isEmpty())
+        a.mainWindow->hideSetDataDirectory();
     a.mainWindow->show();
     a.mainWindow->setFullScreen(a.isFullScreen);
     splash.finish(a.mainWindow);

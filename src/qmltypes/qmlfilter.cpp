@@ -23,7 +23,7 @@
 #include "jobqueue.h"
 #include "jobs/meltjob.h"
 #include "shotcut_mlt_properties.h"
-#include <QStandardPaths>
+#include "settings.h"
 #include <QDir>
 #include <QIODevice>
 #include <QTemporaryFile>
@@ -131,7 +131,7 @@ void QmlFilter::set(QString name, double x, double y, double width, double heigh
 void QmlFilter::loadPresets()
 {
     m_presets.clear();
-    QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
+    QDir dir(Settings.appDataLocation());
     if (dir.cd("presets")) {
         QStringList entries = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::Executable);
         foreach (QString s, entries) {
@@ -148,7 +148,7 @@ void QmlFilter::loadPresets()
 int QmlFilter::savePreset(const QStringList &propertyNames, const QString &name)
 {
     Mlt::Properties properties;
-    QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
+    QDir dir(Settings.appDataLocation());
 
     properties.pass_list(*((Mlt::Properties*)m_filter), propertyNames.join('\t').toLatin1().constData());
 
@@ -170,7 +170,7 @@ int QmlFilter::savePreset(const QStringList &propertyNames, const QString &name)
 
 void QmlFilter::deletePreset(const QString &name)
 {
-    QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
+    QDir dir(Settings.appDataLocation());
     if (dir.cd("presets") && dir.cd(objectNameOrService()))
         QFile(dir.filePath(name)).remove();
     m_presets.removeOne(name);
@@ -297,7 +297,7 @@ double QmlFilter::producerAspect() const
 
 void QmlFilter::preset(const QString &name)
 {
-    QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
+    QDir dir(Settings.appDataLocation());
 
     if (!dir.cd("presets") || !dir.cd(objectNameOrService()))
         return;

@@ -153,6 +153,13 @@
      <addaction name="actionDrawingDirectX"/>
      <addaction name="actionDrawingSoftware"/>
     </widget>
+    <widget class="QMenu" name="menuData_Directory">
+     <property name="title">
+      <string>Data Directory</string>
+     </property>
+     <addaction name="actionAppDataSet"/>
+     <addaction name="actionAppDataShow"/>
+    </widget>
     <addaction name="actionProject"/>
     <addaction name="actionGPU"/>
     <addaction name="menuProfile"/>
@@ -171,6 +178,7 @@
     <addaction name="menuLanguage"/>
     <addaction name="menuTheme"/>
     <addaction name="menuDrawingMethod"/>
+    <addaction name="menuData_Directory"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -809,6 +817,19 @@
   <action name="actionExportVideo">
    <property name="text">
     <string>Export Video...</string>
+   </property>
+  </action>
+  <action name="actionAppDataSet">
+   <property name="text">
+    <string>Set...</string>
+   </property>
+  </action>
+  <action name="actionAppDataShow">
+   <property name="text">
+    <string>Show...</string>
+   </property>
+   <property name="toolTip">
+    <string>Show</string>
    </property>
   </action>
  </widget>

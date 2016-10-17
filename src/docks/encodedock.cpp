@@ -360,7 +360,7 @@ void EncodeDock::loadPresets()
 
     QStandardItem* parentItem = new QStandardItem(tr("Custom"));
     sourceModel->invisibleRootItem()->appendRow(parentItem);
-    QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
+    QDir dir(Settings.appDataLocation());
     if (dir.cd("presets") && dir.cd("encode")) {
         QStringList entries = dir.entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
         foreach (QString name, entries) {
@@ -836,7 +836,7 @@ void EncodeDock::on_presetsTree_clicked(const QModelIndex &index)
         if (m_presetsModel.data(index.parent()).toString() == tr("Custom")) {
             ui->removePresetButton->setEnabled(true);
             preset = new Mlt::Properties();
-            QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
+            QDir dir(Settings.appDataLocation());
             if (dir.cd("presets") && dir.cd("encode"))
                 preset->load(dir.absoluteFilePath(name).toLatin1().constData());
         }
@@ -1043,7 +1043,7 @@ void EncodeDock::on_addPresetButton_clicked()
     dialog.setProperties(ls.join("\n"));
     if (dialog.exec() == QDialog::Accepted) {
         QString preset = dialog.presetName();
-        QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
+        QDir dir(Settings.appDataLocation());
         QString subdir("encode");
 
         if (!preset.isEmpty()) {
@@ -1091,7 +1091,7 @@ void EncodeDock::on_removePresetButton_clicked()
     dialog.setWindowModality(QmlApplication::dialogModality());
     int result = dialog.exec();
     if (result == QMessageBox::Yes) {
-        QDir dir(QStandardPaths::standardLocations(QStandardPaths::DataLocation).first());
+        QDir dir(Settings.appDataLocation());
         if (dir.cd("presets") && dir.cd("encode")) {
             dir.remove(preset);
             m_presetsModel.removeRow(index.row(), index.parent());

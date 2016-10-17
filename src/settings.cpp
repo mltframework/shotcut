@@ -19,13 +19,20 @@
 #include "settings.h"
 #include <QLocale>
 #include <QStandardPaths>
+#include <QFile>
 #include <Logger.h>
+
+static const QString APP_DATA_DIR_KEY("appdatadir");
+static const QString SHOTCUT_INI_FILENAME("/shotcut.ini");
+static QScopedPointer<ShotcutSettings> instance;
 
 ShotcutSettings &ShotcutSettings::singleton()
 {
-    static ShotcutSettings* instance = 0;
     if (!instance) {
-        instance = new ShotcutSettings;
+        instance.reset(new ShotcutSettings);
+        if (instance->settings.value(APP_DATA_DIR_KEY).isValid()
+            && QFile::exists(instance->settings.value(APP_DATA_DIR_KEY).toString() + SHOTCUT_INI_FILENAME) )
+            instance.reset(new ShotcutSettings(instance->settings.value(APP_DATA_DIR_KEY).toString()));
         LOG_DEBUG() << "language" << instance->language();
         LOG_DEBUG() << "deinterlacer" << instance->playerDeinterlacer();
         LOG_DEBUG() << "external monitor" << instance->playerExternal();
@@ -35,6 +42,13 @@ ShotcutSettings &ShotcutSettings::singleton()
         LOG_DEBUG() << "realtime" << instance->playerRealtime();
     }
     return *instance;
+}
+
+ShotcutSettings::ShotcutSettings(const QString& appDataLocation)
+    : QObject()
+    , settings(appDataLocation + SHOTCUT_INI_FILENAME, QSettings::IniFormat)
+    , m_appDataLocation(appDataLocation)
+{
 }
 
 QString ShotcutSettings::language() const
@@ -462,4 +476,38 @@ void ShotcutSettings::setDrawMethod(int i)
 void ShotcutSettings::sync()
 {
     settings.sync();
+}
+
+QString ShotcutSettings::appDataLocation() const
+{
+    if (!m_appDataLocation.isEmpty())
+        return m_appDataLocation;
+    else
+        return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
+}
+
+void ShotcutSettings::setAppDataForSession(const QString& location)
+{
+    // This is intended to be called when using a command line option
+    // to set the AppData location.
+    instance.reset(new ShotcutSettings(location));
+}
+
+void ShotcutSettings::setAppDataLocally(const QString& location)
+{
+    // This is intended to be called when using a GUI action to set the
+    // the new AppData location.
+
+    // Copy the existing settings if they exist.
+    if (!QFile::exists(location + SHOTCUT_INI_FILENAME)) {
+        QSettings newSettings(location + SHOTCUT_INI_FILENAME, QSettings::IniFormat);
+        foreach (const QString& key, settings.allKeys())
+            newSettings.setValue(key, settings.value(key));
+        newSettings.sync();
+    }
+
+    // Set the new location.
+    QSettings localSettings;
+    localSettings.setValue(APP_DATA_DIR_KEY, location);
+    localSettings.sync();
 }

@@ -80,6 +80,7 @@ public:
 
     void keyPressEvent(QKeyEvent*);
     void keyReleaseEvent(QKeyEvent *);
+    void hideSetDataDirectory();
 
 signals:
     void producerOpened();
@@ -261,6 +262,8 @@ private slots:
     void on_actionExportEDL_triggered();
     void on_actionExportFrame_triggered();
     void onGLWidgetImageReady();
+    void on_actionAppDataSet_triggered();
+    void on_actionAppDataShow_triggered();
 };
 
 #define MAIN MainWindow::singleton()
