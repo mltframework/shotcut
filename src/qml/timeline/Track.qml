@@ -180,7 +180,9 @@ Rectangle {
                         'audio': false,
                         'isTransition': false,
                         'fadeIn': 0,
-                        'fadeOut': 0
+                        'fadeOut': 0,
+                        'hash': '',
+                        'speed': 1.0
                     })
                 }
             }
