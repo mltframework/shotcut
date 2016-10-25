@@ -155,7 +155,7 @@
     </widget>
     <widget class="QMenu" name="menuData_Directory">
      <property name="title">
-      <string>Data Directory</string>
+      <string>App Data Directory</string>
      </property>
      <addaction name="actionAppDataSet"/>
      <addaction name="actionAppDataShow"/>
