@@ -24,4 +24,5 @@ Metadata {
     name: qsTr("Chroma Key: Simple")
     mlt_service: 'frei0r.bluescreen0r'
     qml: 'ui.qml'
+    allowMultiple: false
 }
