@@ -213,7 +213,9 @@ Rectangle {
                 id: scrubTimer
                 interval: 25
                 repeat: true
-                running: parent.scim && parent.containsMouse && (parent.mouseX < 50 || parent.mouseX > parent.width - 50)
+                running: parent.scim && parent.containsMouse
+                         && (parent.mouseX < 50 || parent.mouseX > parent.width - 50)
+                         && (timeline.position * multitrack.scaleFactor >= 50)
                 onTriggered: {
                     if (parent.mouseX < 50)
                         timeline.position -= 10

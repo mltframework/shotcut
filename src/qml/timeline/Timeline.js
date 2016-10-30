@@ -55,12 +55,14 @@ function dragging(pos, duration) {
 
         // Scroll tracks if at edges.
         if (pos.x > headerWidth + scrollView.width - 50) {
+            // Right edge
             scrollTimer.backwards = false
             scrollTimer.start()
         } else if (pos.x >= headerWidth && pos.x < headerWidth + 50) {
+            // Left edge
             if (scrollView.flickableItem.contentX < 50) {
-                scrollView.flickableItem.contentX = 0;
                 scrollTimer.stop()
+                scrollView.flickableItem.contentX = 0;
             } else {
                 scrollTimer.backwards = true
                 scrollTimer.start()
