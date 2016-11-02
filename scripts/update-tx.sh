@@ -1,4 +1,4 @@
-#1/bin/sh
+#!/bin/sh
 tx pull -a
 pushd translations
 
@@ -13,6 +13,6 @@ mv shotcut_tr_TR.ts shotcut_tr.ts
 mv shotcut_zh_CN.ts shotcut_zh.ts
 popd
 
-lupdate src/src.pro
-git checkout -- shotcut_en.ts
+$QTDIR/bin/lupdate src/src.pro
+git checkout -- translations/shotcut_en.ts
 
