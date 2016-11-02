@@ -94,6 +94,7 @@ signals:
     void clipClicked();
     void showStatusMessage(QString);
     void clipCopied();
+    void clipMoved(int fromTrack, int toTrack, int clipIndex, int position);
 
 public slots:
     void addAudioTrack();
@@ -116,6 +117,7 @@ public slots:
     void setTrackComposite(int trackIndex, Qt::CheckState composite);
     void setTrackLock(int trackIndex, bool lock);
     bool moveClip(int fromTrack, int toTrack, int clipIndex, int position);
+    void onClipMoved(int fromTrack, int toTrack, int clipIndex, int position);
     bool trimClipIn(int trackIndex, int clipIndex, int delta, bool ripple);
     bool trimClipOut(int trackIndex, int clipIndex, int delta, bool ripple);
     void insert(int trackIndex, int position = -1, const QString &xml = QString());

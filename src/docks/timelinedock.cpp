@@ -67,6 +67,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     m_quickView.setFocusPolicy(Qt::StrongFocus);
     setWidget(&m_quickView);
 
+    connect(this, SIGNAL(clipMoved(int,int,int,int)), SLOT(onClipMoved(int,int,int,int)), Qt::QueuedConnection);
     connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onShowFrame(const SharedFrame&)));
 #ifdef Q_OS_WIN
     onVisibilityChanged(true);
@@ -674,8 +675,12 @@ void TimelineDock::setTrackLock(int trackIndex, bool lock)
 bool TimelineDock::moveClip(int fromTrack, int toTrack, int clipIndex, int position)
 {
     if (m_model.moveClipValid(fromTrack, toTrack, clipIndex, position)) {
-        MAIN.undoStack()->push(
-            new Timeline::MoveClipCommand(m_model, fromTrack, toTrack, clipIndex, position));
+        if (fromTrack != toTrack)
+            // Workaround bug #326 moving clips between tracks stops allowing drag-n-drop
+            // into Timeline, which appeared with Qt 5.6 upgrade.
+            emit clipMoved(fromTrack, toTrack, clipIndex, position);
+        else
+            onClipMoved(fromTrack, toTrack, clipIndex, position);
         return true;
     } else if (m_model.addTransitionValid(fromTrack, toTrack, clipIndex, position)) {
         MAIN.undoStack()->push(
@@ -684,6 +689,12 @@ bool TimelineDock::moveClip(int fromTrack, int toTrack, int clipIndex, int posit
     } else {
         return false;
     }
+}
+
+void TimelineDock::onClipMoved(int fromTrack, int toTrack, int clipIndex, int position)
+{
+    MAIN.undoStack()->push(
+        new Timeline::MoveClipCommand(m_model, fromTrack, toTrack, clipIndex, position));
 }
 
 bool TimelineDock::trimClipIn(int trackIndex, int clipIndex, int delta, bool ripple)
@@ -918,6 +929,7 @@ void TimelineDock::seekInPoint(int clipIndex)
 
 void TimelineDock::dragEnterEvent(QDragEnterEvent *event)
 {
+    LOG_DEBUG() << event->mimeData()->hasFormat(Mlt::XmlMimeType);
     if (event->mimeData()->hasFormat(Mlt::XmlMimeType)) {
         event->acceptProposedAction();
     }
