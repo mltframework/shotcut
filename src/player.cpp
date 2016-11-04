@@ -697,6 +697,10 @@ void Player::enableTab(TabIndex index, bool enabled)
 
 void Player::onTabBarClicked(int index)
 {
+    // Do nothing if requested tab is already selected.
+    if (m_tabs->currentIndex() == index)
+        return;
+
     switch (index) {
     case SourceTabIndex:
         if (MLT.savedProducer() && MLT.savedProducer()->is_valid() && MLT.producer()
