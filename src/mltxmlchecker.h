@@ -72,8 +72,6 @@ private:
     bool m_isCorrected;
     QChar m_decimalPoint;
     QTemporaryFile m_tempFile;
-    bool m_hasComma;
-    bool m_hasPeriod;
     bool m_numericValueChanged;
     QString m_basePath;
     QStandardItemModel m_unlinkedFilesModel;
