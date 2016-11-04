@@ -62,6 +62,7 @@ RowLayout {
         showAlphaChannel: alpha
         color: value
         onAccepted: value = currentColor
+        modality: Qt.ApplicationModal
     }
     
     Button {
