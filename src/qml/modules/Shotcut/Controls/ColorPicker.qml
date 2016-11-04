@@ -61,7 +61,7 @@ RowLayout {
         title: qsTr("Please choose a color")
         showAlphaChannel: alpha
         color: value
-        onAccepted: value = color
+        onAccepted: value = currentColor
     }
     
     Button {
