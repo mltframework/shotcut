@@ -149,6 +149,10 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
         }
         else if (name == "g")
             ui->gopSpinner->setValue(preset.get_int("g"));
+        else if (name == "sc_threshold" && !preset.get_int("sc_threshold"))
+            ui->strictGopCheckBox->setChecked(true);
+        else if (name == "keyint_min" && preset.get_int("keyint_min") == preset.get_int("g"))
+            ui->strictGopCheckBox->setChecked(true);
         else if (name == "bf")
             ui->bFramesSpinner->setValue(preset.get_int("bf"));
         else if (name == "deinterlace") {
@@ -491,13 +495,19 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                     b.replace('k', "").replace('M', "000");
                     x265params = QString("crf=%1:vbv-bufsize=%2:vbv-maxrate=%3:%4")
                         .arg(TO_ABSOLUTE(51, 0, vq)).arg(int(ui->videoBufferSizeSpinner->value() * 8)).arg(b).arg(x265params);
-                    // Also set crf property so that custom presets can be interpreted properly.
+                    // Also set properties so that custom presets can be interpreted properly.
                     p->set("crf", TO_ABSOLUTE(51, 0, vq));
                     break;
                     }
                 }
                 x265params = QString("keyint=%1:bframes=%2:%3").arg(ui->gopSpinner->value())
                             .arg(ui->bFramesSpinner->value()).arg(x265params);
+                if (ui->strictGopCheckBox->isEnabled())
+                    x265params = QString("scenecut=0:%1").arg(x265params);
+                // Also set properties so that custom presets can be interpreted properly.
+                p->set("g", ui->gopSpinner->value());
+                p->set("bf", ui->bFramesSpinner->value());
+                p->set("sc_threshold", 0);
                 p->set("x265-params", x265params.toUtf8().constData());
             } else {
                 switch (ui->videoRateControlCombo->currentIndex()) {
@@ -541,6 +551,12 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                 }
                 p->set("g", ui->gopSpinner->value());
                 p->set("bf", ui->bFramesSpinner->value());
+                if (ui->strictGopCheckBox->isChecked()) {
+                    if (vcodec.startsWith("libvpx"))
+                        p->set("keyint_min", ui->gopSpinner->value());
+                    else
+                        p->set("sc_threshold", 0);
+                }
             }
             p->set("width", ui->widthSpinner->value());
             p->set("height", ui->heightSpinner->value());
@@ -810,6 +826,7 @@ void EncodeDock::resetOptions()
     ui->gopSpinner->blockSignals(true);
     ui->gopSpinner->setValue(13);
     ui->gopSpinner->blockSignals(false);
+    ui->strictGopCheckBox->setChecked(false);
     ui->bFramesSpinner->setValue(2);
     ui->videoCodecThreadsSpinner->setValue(0);
     ui->dualPassCheckbox->setChecked(false);

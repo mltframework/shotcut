@@ -734,6 +734,30 @@ with parallel processing enabled.</string>
                </widget>
               </item>
               <item>
+               <spacer name="horizontalSpacer_24">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="strictGopCheckBox">
+                <property name="toolTip">
+                 <string>A strict GOP means that keyframes will
+not be inserted at detected scene changes.</string>
+                </property>
+                <property name="text">
+                 <string>Strict</string>
+                </property>
+               </widget>
+              </item>
+              <item>
                <spacer name="horizontalSpacer_12">
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
