@@ -58,6 +58,7 @@ void MeltJob::start()
 #endif
     setReadChannel(QProcess::StandardError);
     QStringList args;
+    args << "-verbose";
     args << "-progress2";
     args << "-abort";
     args << xmlPath();

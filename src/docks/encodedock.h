@@ -97,7 +97,8 @@ private:
     enum {
         RateControlAverage = 0,
         RateControlConstant,
-        RateControlQuality
+        RateControlQuality,
+        RateControlConstrained
     };
     Ui::EncodeDock *ui;
     Mlt::Properties *m_presets;

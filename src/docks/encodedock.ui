@@ -13,7 +13,7 @@
   <property name="minimumSize">
    <size>
     <width>400</width>
-    <height>155</height>
+    <height>202</height>
    </size>
   </property>
   <property name="windowIcon">
@@ -134,8 +134,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>329</width>
-         <height>462</height>
+         <width>428</width>
+         <height>497</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -1054,6 +1054,11 @@ in temporal compression</string>
                 <item>
                  <property name="text">
                   <string>Quality-based VBR</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Constrained VBR</string>
                  </property>
                 </item>
                </widget>

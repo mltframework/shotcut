@@ -144,7 +144,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
         else if (name == "ab")
             ui->audioBitrateCombo->lineEdit()->setText(preset.get("ab"));
         else if (name == "vb") {
-            ui->videoRateControlCombo->setCurrentIndex(RateControlAverage);
+            ui->videoRateControlCombo->setCurrentIndex((preset.get_int("vb") > 0)? RateControlAverage : RateControlQuality);
             ui->videoBitrateCombo->lineEdit()->setText(preset.get("vb"));
         }
         else if (name == "g")
@@ -219,24 +219,30 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
                 ui->audioRateControlCombo->setCurrentIndex(RateControlQuality);
         }
         else if (name == "vq") {
-            ui->videoRateControlCombo->setCurrentIndex(RateControlQuality);
+            ui->videoRateControlCombo->setCurrentIndex(preset.get("vbufsize")? RateControlConstrained : RateControlQuality);
             videoQuality = preset.get_int("vq");
         }
         else if (name == "qscale") {
-            ui->videoRateControlCombo->setCurrentIndex(RateControlQuality);
+            ui->videoRateControlCombo->setCurrentIndex(preset.get("vbufsize")? RateControlConstrained : RateControlQuality);
             videoQuality = preset.get_int("qscale");
         }
         else if (name == "crf") {
-            ui->videoRateControlCombo->setCurrentIndex(RateControlQuality);
+            ui->videoRateControlCombo->setCurrentIndex(preset.get("vbufsize")? RateControlConstrained : RateControlQuality);
             videoQuality = preset.get_int("crf");
         }
         else if (name == "bufsize") {
             // traditionally this means video only
-            ui->videoRateControlCombo->setCurrentIndex(RateControlConstant);
+            if (preset.get("vq") || preset.get("qscale") || preset.get("crf"))
+                ui->videoRateControlCombo->setCurrentIndex(RateControlConstrained);
+            else
+                ui->videoRateControlCombo->setCurrentIndex(RateControlConstant);
             ui->videoBufferSizeSpinner->setValue(getBufferSize(preset, "bufsize"));
         }
         else if (name == "vbufsize") {
-            ui->videoRateControlCombo->setCurrentIndex(RateControlConstant);
+            if (preset.get("vq") || preset.get("qscale") || preset.get("crf"))
+                ui->videoRateControlCombo->setCurrentIndex(RateControlConstrained);
+            else
+                ui->videoRateControlCombo->setCurrentIndex(RateControlConstant);
             ui->videoBufferSizeSpinner->setValue(getBufferSize(preset, "vbufsize"));
         }
         else if (name == "x265-params") {
@@ -244,7 +250,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
             foreach (QString param, x265params) {
                 QStringList nameValue = param.split('=');
                 if ("vbv-bufsize" == nameValue[0] && nameValue.size() > 1) {
-                    ui->videoRateControlCombo->setCurrentIndex(RateControlConstant);
+                    ui->videoRateControlCombo->setCurrentIndex(preset.get("crf")? RateControlConstrained : RateControlConstant);
                     // convert from Kb to KB
                     ui->videoBufferSizeSpinner->setValue(nameValue[1].toDouble() / 8);
                     break;
@@ -478,6 +484,17 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                     p->set("crf", TO_ABSOLUTE(51, 0, vq));
                     break;
                     }
+                case RateControlConstrained: {
+                    QString b = ui->videoBitrateCombo->currentText();
+                    int vq = ui->videoQualitySpinner->value();
+                    // x265 does not expect bitrate suffixes and requires Kb/s
+                    b.replace('k', "").replace('M', "000");
+                    x265params = QString("crf=%1:vbv-bufsize=%2:vbv-maxrate=%3:%4")
+                        .arg(TO_ABSOLUTE(51, 0, vq)).arg(int(ui->videoBufferSizeSpinner->value() * 8)).arg(b).arg(x265params);
+                    // Also set crf property so that custom presets can be interpreted properly.
+                    p->set("crf", TO_ABSOLUTE(51, 0, vq));
+                    break;
+                    }
                 }
                 x265params = QString("keyint=%1:bframes=%2:%3").arg(ui->gopSpinner->value())
                             .arg(ui->bFramesSpinner->value()).arg(x265params);
@@ -505,6 +522,20 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                     } else {
                         p->set("qscale", TO_ABSOLUTE(31, 1, vq));
                     }
+                    break;
+                    }
+                case RateControlConstrained: {
+                    const QString& b = ui->videoBitrateCombo->currentText();
+                    int vq = ui->videoQualitySpinner->value();
+                    if (vcodec == "libx264") {
+                        p->set("crf", TO_ABSOLUTE(51, 0, vq));
+                    } else if (vcodec.startsWith("libvpx")) {
+                        p->set("crf", TO_ABSOLUTE(63, 0, vq));
+                    } else {
+                        p->set("qscale", TO_ABSOLUTE(31, 1, vq));
+                    }
+                    p->set("vmaxrate", b.toLatin1().constData());
+                    p->set("vbufsize", int(ui->videoBufferSizeSpinner->value() * 8 * 1024));
                     break;
                     }
                 }
@@ -1154,6 +1185,17 @@ void EncodeDock::on_videoRateControlCombo_activated(int index)
         ui->videoBitrateSuffixLabel->hide();
         ui->videoBufferSizeLabel->hide();
         ui->videoBufferSizeSuffixLabel->hide();
+        ui->videoQualityLabel->show();
+        break;
+    case RateControlConstrained:
+        ui->videoBitrateCombo->show();
+        ui->videoBufferSizeSpinner->show();
+        ui->videoQualitySpinner->show();
+        ui->dualPassCheckbox->hide();
+        ui->videoBitrateLabel->show();
+        ui->videoBitrateSuffixLabel->show();
+        ui->videoBufferSizeLabel->show();
+        ui->videoBufferSizeSuffixLabel->show();
         ui->videoQualityLabel->show();
         break;
     }
