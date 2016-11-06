@@ -153,22 +153,18 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
             ui->bFramesSpinner->setValue(preset.get_int("bf"));
         else if (name == "deinterlace") {
             ui->scanModeCombo->setCurrentIndex(preset.get_int("deinterlace"));
-            ui->scanModeCombo->setEnabled(false);
         }
         else if (name == "progressive") {
             ui->scanModeCombo->setCurrentIndex(preset.get_int("progressive"));
-            ui->scanModeCombo->setEnabled(false);
         }
         else if (name == "top_field_first") {
             ui->fieldOrderCombo->setCurrentIndex(preset.get_int("top_field_first"));
         }
         else if (name == "width") {
             ui->widthSpinner->setValue(preset.get_int("width"));
-            ui->widthSpinner->setEnabled(false);
         }
         else if (name == "height") {
             ui->heightSpinner->setValue(preset.get_int("height"));
-            ui->heightSpinner->setEnabled(false);
         }
         else if (name == "aspect") {
             double dar = preset.get_double("aspect");
@@ -190,12 +186,9 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
                 ui->aspectDenSpinner->setValue(1000);
                 break;
             }
-            ui->aspectNumSpinner->setEnabled(false);
-            ui->aspectDenSpinner->setEnabled(false);
         }
         else if (name == "r") {
             ui->fpsSpinner->setValue(preset.get_double("r"));
-            ui->fpsSpinner->setEnabled(false);
         }
         else if (name == "pix_fmt") {
             QString pix_fmt(preset.get("pix_fmt"));
@@ -269,7 +262,6 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
                 ui->deinterlacerCombo->setCurrentIndex(2);
             else if (name == "yadif")
                 ui->deinterlacerCombo->setCurrentIndex(3);
-            ui->deinterlacerCombo->setDisabled(true);
         }
         else if (name == "rescale") {
             name = preset.get("rescale");
@@ -281,7 +273,6 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
                 ui->interpolationCombo->setCurrentIndex(2);
             else if (name == "hyper" || name == "lanczos")
                 ui->interpolationCombo->setCurrentIndex(3);
-            ui->interpolationCombo->setDisabled(true);
         }
         else if (name != "an" && name != "vn" && name != "threads"
                  && !name.startsWith('_') && !name.startsWith("meta.preset.")) {
@@ -763,15 +754,7 @@ void EncodeDock::resetOptions()
     // Reset all controls to default values.
     ui->formatCombo->setCurrentIndex(0);
 
-    ui->widthSpinner->setEnabled(true);
-    ui->heightSpinner->setEnabled(true);
-    ui->aspectNumSpinner->setEnabled(true);
-    ui->aspectDenSpinner->setEnabled(true);
-    ui->scanModeCombo->setEnabled(true);
-    ui->fpsSpinner->setEnabled(true);
-    ui->deinterlacerCombo->setEnabled(true);
     ui->deinterlacerCombo->setCurrentIndex(3);
-    ui->interpolationCombo->setEnabled(true);
     ui->interpolationCombo->setCurrentIndex(1);
 
     ui->videoBitrateCombo->lineEdit()->setText("2M");
@@ -860,13 +843,6 @@ void EncodeDock::on_presetsTree_clicked(const QModelIndex &index)
                     ui->aspectDenSpinner->setValue(p.display_aspect_den());
                     ui->scanModeCombo->setCurrentIndex(p.progressive());
                     ui->fpsSpinner->setValue(p.fps());
-
-                    ui->widthSpinner->setEnabled(false);
-                    ui->heightSpinner->setEnabled(false);
-                    ui->aspectNumSpinner->setEnabled(false);
-                    ui->aspectDenSpinner->setEnabled(false);
-                    ui->scanModeCombo->setEnabled(false);
-                    ui->fpsSpinner->setEnabled(false);
                 }
             }
             loadPresetFromProperties(*preset);
