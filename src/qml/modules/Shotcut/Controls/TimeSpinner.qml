@@ -32,10 +32,10 @@ RowLayout {
 
     TextField {
         id: timeField
-        text: filter.timeFromFrames(value)
+        text: filter.timeFromFrames(clamp(value, minimumValue, maximumValue))
         horizontalAlignment: TextInput.AlignRight
         validator: RegExpValidator {regExp: /^\s*(\d*:){0,2}(\d*[.;:])?\d*\s*$/}
-        onEditingFinished: value = clamp(filter.framesFromTime(text), minimumValue, maximumValue)
+        onEditingFinished: value = filter.framesFromTime(text)
         Keys.onDownPressed: decrementAction.trigger()
         Keys.onUpPressed: incrementAction.trigger()
         onFocusChanged: if (focus) selectAll()
@@ -90,7 +90,7 @@ RowLayout {
     }
     Action {
         id: decrementAction
-        onTriggered: value = value = Math.max(value - 1, minimumValue)
+        onTriggered: value = Math.max(value - 1, minimumValue)
     }
     Action {
         id: incrementAction

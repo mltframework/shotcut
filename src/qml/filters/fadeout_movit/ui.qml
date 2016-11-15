@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2015 Meltytech, LLC
+ * Copyright (c) 2014-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -48,7 +48,7 @@ Item {
             Label { text: qsTr('Duration') }
             TimeSpinner {
                 id: timeSpinner
-                minimumValue: 1
+                minimumValue: 2
                 maximumValue: 5000
                 value: filter.getDouble('out') - filter.getDouble('in') + 1
                 onValueChanged: filter.set('in', filter.getDouble('out') - duration + 1)

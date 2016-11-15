@@ -441,7 +441,7 @@ FadeInCommand::FadeInCommand(MultitrackModel &model, int trackIndex, int clipInd
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_clipIndex(clipIndex)
-    , m_duration(duration)
+    , m_duration(qMax(duration, 2))
 {
     QModelIndex modelIndex = m_model.index(clipIndex, 0, m_model.index(trackIndex));
     m_previous = model.data(modelIndex, MultitrackModel::FadeInRole).toInt();
@@ -473,7 +473,7 @@ FadeOutCommand::FadeOutCommand(MultitrackModel &model, int trackIndex, int clipI
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_clipIndex(clipIndex)
-    , m_duration(duration)
+    , m_duration(qMax(duration, 2))
 {
     QModelIndex modelIndex = m_model.index(clipIndex, 0, m_model.index(trackIndex));
     m_previous = model.data(modelIndex, MultitrackModel::FadeOutRole).toInt();
