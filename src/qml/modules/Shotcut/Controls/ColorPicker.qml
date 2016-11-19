@@ -61,7 +61,19 @@ RowLayout {
         title: qsTr("Please choose a color")
         showAlphaChannel: alpha
         color: value
-        onAccepted: value = currentColor
+        onAccepted: {
+            // Make a copy of the current value.
+            var myColor = Qt.darker(value, 1.0)
+            // Ignore alpha when comparing.
+            myColor.a = currentColor.a
+            // If the user changed color but left alpha at 0,
+            // they probably want to reset alpha to opaque.
+            if (currentColor.a === 0 && !Qt.colorEqual(currentColor, myColor))
+                currentColor.a = 255
+            // Assign the new color value. Unlike docs say, using currentColor
+            // is actually more cross-platform compatible.
+            value = currentColor
+        }
         modality: Qt.ApplicationModal
     }
     
