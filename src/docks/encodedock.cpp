@@ -249,18 +249,6 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
                 ui->videoRateControlCombo->setCurrentIndex(RateControlConstant);
             ui->videoBufferSizeSpinner->setValue(getBufferSize(preset, "vbufsize"));
         }
-        else if (name == "x265-params") {
-            QStringList x265params = QString::fromUtf8(preset.get("x265-params")).split(':');
-            foreach (QString param, x265params) {
-                QStringList nameValue = param.split('=');
-                if ("vbv-bufsize" == nameValue[0] && nameValue.size() > 1) {
-                    ui->videoRateControlCombo->setCurrentIndex(preset.get("crf")? RateControlConstrained : RateControlConstant);
-                    // convert from Kb to KB
-                    ui->videoBufferSizeSpinner->setValue(nameValue[1].toDouble() / 8);
-                    break;
-                }
-            }
-        }
         else if (name == "threads") {
             // TODO: should we save the thread count and restore it if preset is not 1?
             if (preset.get_int("threads") == 1)
@@ -497,17 +485,19 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                         .arg(TO_ABSOLUTE(51, 0, vq)).arg(int(ui->videoBufferSizeSpinner->value() * 8)).arg(b).arg(x265params);
                     // Also set properties so that custom presets can be interpreted properly.
                     p->set("crf", TO_ABSOLUTE(51, 0, vq));
+                    p->set("vbufsize", int(ui->videoBufferSizeSpinner->value() * 8 * 1024));
                     break;
                     }
                 }
                 x265params = QString("keyint=%1:bframes=%2:%3").arg(ui->gopSpinner->value())
                             .arg(ui->bFramesSpinner->value()).arg(x265params);
-                if (ui->strictGopCheckBox->isEnabled())
+                if (ui->strictGopCheckBox->isChecked()) {
                     x265params = QString("scenecut=0:%1").arg(x265params);
-                // Also set properties so that custom presets can be interpreted properly.
+                    p->set("sc_threshold", 0);
+                }
+                // Also set some properties so that custom presets can be interpreted properly.
                 p->set("g", ui->gopSpinner->value());
                 p->set("bf", ui->bFramesSpinner->value());
-                p->set("sc_threshold", 0);
                 p->set("x265-params", x265params.toUtf8().constData());
             } else {
                 switch (ui->videoRateControlCombo->currentIndex()) {
@@ -1078,14 +1068,20 @@ void EncodeDock::on_streamButton_clicked()
 
 void EncodeDock::on_addPresetButton_clicked()
 {
-    Mlt::Properties* data = collectProperties(0);
+    QScopedPointer<Mlt::Properties> data(collectProperties(0));
     AddEncodePresetDialog dialog(this);
     QStringList ls;
 
-    if (data && data->is_valid())
+
+    if (data && data->is_valid()) {
+        // Revert collectProperties() overwriting user-specified advanced options (x265-params).
+        foreach (QString line, ui->advancedTextEdit->toPlainText().split("\n"))
+            data->parse(line.toUtf8().constData());
+
         for (int i = 0; i < data->count(); i++)
             if (strlen(data->get_name(i)) > 0)
                 ls << QString("%1=%2").arg(data->get_name(i)).arg(data->get(i));
+    }
 
     dialog.setWindowTitle(tr("Add Export Preset"));
     dialog.setProperties(ls.join("\n"));
@@ -1122,7 +1118,6 @@ void EncodeDock::on_addPresetButton_clicked()
             }
         }
     }
-    delete data;
 }
 
 void EncodeDock::on_removePresetButton_clicked()
