@@ -997,13 +997,13 @@ with parallel processing enabled.</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="752"/>
-        <source>A strict GOP means that keyframes will
+        <source>A fixed GOP means that keyframes will
 not be inserted at detected scene changes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="756"/>
-        <source>Strict</source>
+        <source>Fixed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1357,7 +1357,7 @@ in temporal compression</source>
         <location filename="../src/docks/encodedock.ui" line="1566"/>
         <location filename="../src/docks/encodedock.cpp" line="1043"/>
         <location filename="../src/docks/encodedock.cpp" line="1050"/>
-        <location filename="../src/docks/encodedock.cpp" line="1155"/>
+        <location filename="../src/docks/encodedock.cpp" line="1160"/>
         <source>Stream</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1391,7 +1391,7 @@ in temporal compression</source>
         <location filename="../src/docks/encodedock.cpp" line="334"/>
         <location filename="../src/docks/encodedock.cpp" line="937"/>
         <location filename="../src/docks/encodedock.cpp" line="955"/>
-        <location filename="../src/docks/encodedock.cpp" line="1154"/>
+        <location filename="../src/docks/encodedock.cpp" line="1159"/>
         <source>Capture File</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1434,7 +1434,7 @@ in temporal compression</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1090"/>
+        <location filename="../src/docks/encodedock.cpp" line="1096"/>
         <source>Add Export Preset</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1450,17 +1450,17 @@ in temporal compression</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1133"/>
+        <location filename="../src/docks/encodedock.cpp" line="1138"/>
         <source>Delete Preset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1134"/>
+        <location filename="../src/docks/encodedock.cpp" line="1139"/>
         <source>Are you sure you want to delete %1?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1293"/>
+        <location filename="../src/docks/encodedock.cpp" line="1298"/>
         <source>KiB (%1s)</source>
         <translation type="unfinished"></translation>
     </message>

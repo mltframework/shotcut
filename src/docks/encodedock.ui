@@ -749,11 +749,11 @@ with parallel processing enabled.</string>
               <item>
                <widget class="QCheckBox" name="strictGopCheckBox">
                 <property name="toolTip">
-                 <string>A strict GOP means that keyframes will
+                 <string>A fixed GOP means that keyframes will
 not be inserted at detected scene changes.</string>
                 </property>
                 <property name="text">
-                 <string>Strict</string>
+                 <string>Fixed</string>
                 </property>
                </widget>
               </item>
