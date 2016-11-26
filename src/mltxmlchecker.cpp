@@ -54,8 +54,6 @@ MltXmlChecker::MltXmlChecker()
     , m_isCorrected(false)
     , m_decimalPoint(QLocale::system().decimalPoint())
     , m_tempFile(QDir::tempPath().append("/shotcut-XXXXXX.mlt"))
-    , m_hasComma(false)
-    , m_hasPeriod(false)
     , m_numericValueChanged(false)
 {
     LOG_DEBUG() << "decimal point" << m_decimalPoint;
@@ -81,13 +79,18 @@ bool MltXmlChecker::check(const QString& fileName)
                 m_newXml.writeCharacters("\n");
                 m_newXml.writeStartElement("mlt");
                 foreach (QXmlStreamAttribute a, m_xml.attributes()) {
-                    if (a.name().toString().toUpper() != "LC_NUMERIC")
+                    if (a.name().toString().toUpper() != "LC_NUMERIC") {
                         m_newXml.writeAttribute(a);
+                    } else {
+                        // Upon correcting the document to conform to current system,
+                        // update the declared LC_NUMERIC.
+                        m_newXml.writeAttribute("LC_NUMERIC", QLocale::system().name());
+                    }
                 }
                 readMlt();
                 m_newXml.writeEndElement();
                 m_newXml.writeEndDocument();
-                m_isCorrected = m_isCorrected || (m_hasPeriod && m_hasComma && m_numericValueChanged);
+                m_isCorrected = m_isCorrected || m_numericValueChanged;
             } else {
                 m_xml.raiseError(QObject::tr("The file is not a MLT XML file."));
             }
@@ -248,12 +251,6 @@ void MltXmlChecker::checkInAndOutPoints()
 
 bool MltXmlChecker::checkNumericString(QString& value)
 {
-    // See which delimiters are being used.
-    if (!m_hasComma)
-        m_hasComma = value.contains(',');
-    if (!m_hasPeriod)
-        m_hasPeriod = value.contains('.');
-
     // Determine if there is a decimal point inconsistent with locale.
     if (!value.contains(m_decimalPoint) &&
             (value.contains('.') || value.contains(','))) {
