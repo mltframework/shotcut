@@ -774,10 +774,13 @@ void Controller::copyFilters(Producer& fromProducer, Producer& toProducer)
 
 void Controller::copyFilters(Mlt::Producer* producer)
 {
-    if (producer && producer->is_valid())
+    if (producer && producer->is_valid()) {
+        m_filtersClipboard.reset(new Mlt::Producer(profile(), "color", "black"));
         copyFilters(*producer, *m_filtersClipboard);
-    else if (m_producer && m_producer->is_valid())
+    } else if (m_producer && m_producer->is_valid()) {
+        m_filtersClipboard.reset(new Mlt::Producer(profile(), "color", "black"));
         copyFilters(*m_producer, *m_filtersClipboard);
+    }
 }
 
 void Controller::pasteFilters(Mlt::Producer* producer)
