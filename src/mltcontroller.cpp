@@ -761,9 +761,13 @@ void Controller::copyFilters(Producer& fromProducer, Producer& toProducer)
 {
     int count = fromProducer.filter_count();
     for (int i = 0; i < count; i++) {
-        QScopedPointer<Mlt::Filter> filter(fromProducer.filter(i));
-        if (filter && filter->is_valid() && !filter->get_int("_loader")) {
-            toProducer.attach(*filter);
+        QScopedPointer<Mlt::Filter> fromFilter(fromProducer.filter(i));
+        if (fromFilter && fromFilter->is_valid() && !fromFilter->get_int("_loader") && fromFilter->get("mlt_service")) {
+            Mlt::Filter toFilter(MLT.profile(), fromFilter->get("mlt_service"));
+            if (toFilter.is_valid()) {
+                toFilter.inherit(*fromFilter);
+                toProducer.attach(toFilter);
+            }
         }
     }
 }

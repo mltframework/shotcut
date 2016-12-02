@@ -111,13 +111,15 @@ bool QmlApplication::hasFiltersOnClipboard()
 
 void QmlApplication::copyFilters()
 {
-    MLT.copyFilters();
+    QScopedPointer<Mlt::Producer> producer(new Mlt::Producer(MAIN.filterController()->attachedModel()->producer()));
+    MLT.copyFilters(producer.data());
     emit QmlApplication::singleton().filtersCopied();
 }
 
 void QmlApplication::pasteFilters()
 {
-    MLT.pasteFilters(MAIN.filterController()->attachedModel()->producer());
+    QScopedPointer<Mlt::Producer> producer(new Mlt::Producer(MAIN.filterController()->attachedModel()->producer()));
+    MLT.pasteFilters(producer.data());
     MLT.refreshConsumer();
 }
 
