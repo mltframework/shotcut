@@ -1590,10 +1590,11 @@ function configure_compile_install_subproject {
         FFTWLIB=$(ldd "$FINAL_INSTALL_DIR"/lib/mlt/libmltopengl.so | awk '/libfftw/ {print $3}')
         log FFTWLIB=$FFTWLIB
         cmd install -c "$FFTWLIB" "$FINAL_INSTALL_DIR"/lib
-        XKBLIB=$(ldd "$FINAL_INSTALL_DIR"/lib/qt5/platforms/libqxcb.so | awk '/libxkbcommon.so/ {print $3}')
+        cmd ldd "$FINAL_INSTALL_DIR"/lib/libQt5XcbQpa.so.5
+        XKBLIB=$(ldd "$FINAL_INSTALL_DIR"/lib/libQt5XcbQpa.so.5 | awk '/libxkbcommon.so/ {print $3}')
         log XKBLIB=$XKBLIB
         cmd install -c "$XKBLIB" "$FINAL_INSTALL_DIR"/lib
-        XKBLIB=$(ldd "$FINAL_INSTALL_DIR"/lib/qt5/platforms/libqxcb.so | awk '/libxkbcommon-x11.so/ {print $3}')
+        XKBLIB=$(ldd "$FINAL_INSTALL_DIR"/lib/libQt5XcbQpa.so.5 | awk '/libxkbcommon-x11.so/ {print $3}')
         log XKBLIB=$XKBLIB
         cmd install -c "$XKBLIB" "$FINAL_INSTALL_DIR"/lib
         JACKLIB=$(ldd "$FINAL_INSTALL_DIR"/lib/mlt/libmltjackrack.so | awk '/libjack/ {print $3}')
