@@ -242,6 +242,9 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
                 ui->videoRateControlCombo->setCurrentIndex(RateControlConstant);
             ui->videoBufferSizeSpinner->setValue(getBufferSize(preset, "vbufsize"));
         }
+        else if (name == "vmaxrate") {
+            ui->videoBitrateCombo->lineEdit()->setText(preset.get("vmaxrate"));
+        }
         else if (name == "threads") {
             // TODO: should we save the thread count and restore it if preset is not 1?
             if (preset.get_int("threads") == 1)
@@ -459,6 +462,8 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                     x265params = QString("bitrate=%1:vbv-bufsize=%2:vbv-maxrate=%3:%4")
                         .arg(b).arg(int(ui->videoBufferSizeSpinner->value() * 8)).arg(b).arg(x265params);
                     break;
+                    p->set("vb", b.toLatin1().constData());
+                    p->set("vbufsize", int(ui->videoBufferSizeSpinner->value() * 8 * 1024));
                     }
                 case RateControlQuality: {
                     int vq = ui->videoQualitySpinner->value();
@@ -477,6 +482,7 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                     // Also set properties so that custom presets can be interpreted properly.
                     p->set("crf", TO_ABSOLUTE(51, 0, vq));
                     p->set("vbufsize", int(ui->videoBufferSizeSpinner->value() * 8 * 1024));
+                    p->set("vmaxrate", ui->videoBitrateCombo->currentText().toLatin1().constData());
                     break;
                     }
                 }
