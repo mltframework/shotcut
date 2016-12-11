@@ -1597,9 +1597,6 @@ function configure_compile_install_subproject {
         XKBLIB=$(ldd "$FINAL_INSTALL_DIR"/lib/libQt5XcbQpa.so.5 | awk '/libxkbcommon-x11.so/ {print $3}')
         log XKBLIB=$XKBLIB
         cmd install -c "$XKBLIB" "$FINAL_INSTALL_DIR"/lib
-        JACKLIB=$(ldd "$FINAL_INSTALL_DIR"/lib/mlt/libmltjackrack.so | awk '/libjack/ {print $3}')
-        log JACKLIB=$JACKLIB
-        cmd install -c "$JACKLIB" "$FINAL_INSTALL_DIR"/lib
       fi
     elif test "webvfx" = "$1" ; then
       cmd make -C webvfx install || die "Unable to install $1/webvfx"
