@@ -1,13 +1,13 @@
 # Shotcut - a free, open source, cross-platform **video editor**
 
-- Features: http://www.shotcut.org/bin/view/Shotcut/Features
-- Roadmap: http://www.shotcut.org/bin/view/Shotcut/Roadmap
+- Features: https://www.shotcut.org/features/
+- Roadmap: https://www.shotcut.org/roadmap/
 
 ## Install
 
 **Warning**: Shotcut is currently in very early stage and active development. So do not expect a final product for now.
 
-Binaries are regularly built and are available at http://www.shotcut.org, on the Download section.
+Binaries are regularly built and are available at https://www.shotcut.org, on the Download section.
 
 ## Contributors
 
