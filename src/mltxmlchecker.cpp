@@ -52,7 +52,7 @@ MltXmlChecker::MltXmlChecker()
     : m_needsGPU(false)
     , m_hasEffects(false)
     , m_isCorrected(false)
-    , m_decimalPoint(QLocale::system().decimalPoint())
+    , m_decimalPoint(QLocale(QLocale::system().name()).decimalPoint())
     , m_tempFile(QDir::tempPath().append("/shotcut-XXXXXX.mlt"))
     , m_numericValueChanged(false)
 {
