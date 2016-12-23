@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Meltytech, LLC
+ * Copyright (c) 2015-2016 Meltytech, LLC
  * Author: Lauren Dennedy
  *
  * This program is free software: you can redistribute it and/or modify
@@ -41,7 +41,7 @@ Item {
     function setControls() {
         sliderInput.value = filter.getDouble('0')
         sliderLimit.value = filter.getDouble('1')
-        sliderRelease.value = filter.get('2')
+        sliderRelease.value = filter.getDouble('2')
     }
 
     Timer {
@@ -121,7 +121,7 @@ Item {
             maximumValue: 2
             suffix: ' s'
             decimals: 2
-            value: filter.get('2')
+            value: filter.getDouble('2')
             onValueChanged: {
                 filter.set('2', value)
             }
