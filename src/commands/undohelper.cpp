@@ -230,6 +230,10 @@ void UndoHelper::undoChanges()
                 m_model.beginRemoveRows(m_model.index(trackIndex), i, i);
                 if (clip->parent().get_data("mlt_mix"))
                     clip->parent().set("mlt_mix", NULL, 0);
+                if (clip->get_data("mix_in"))
+                    clip->set("mix_in", NULL, 0);
+                if (clip->get_data("mix_out"))
+                    clip->set("mix_out", NULL, 0);
                 playlist.remove(i);
                 m_model.endRemoveRows();
             }
