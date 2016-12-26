@@ -1768,6 +1768,12 @@ bool MainWindow::eventFilter(QObject* target, QEvent* event)
 
 void MainWindow::dragEnterEvent(QDragEnterEvent *event)
 {
+    // Simulate the player firing a dragStarted even to make the playlist close
+    // its help text view. This lets one drop a clip directly into the playlist
+    // from a fresh start.
+    Mlt::GLWidget* videoWidget = (Mlt::GLWidget*) &Mlt::Controller::singleton();
+    emit videoWidget->dragStarted();
+
     event->acceptProposedAction();
 }
 
