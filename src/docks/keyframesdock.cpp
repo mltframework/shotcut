@@ -41,7 +41,7 @@ KeyframesDock::KeyframesDock(MetadataModel* metadataModel, AttachedFiltersModel*
 {
     LOG_DEBUG() << "begin";
     setObjectName("KeyframesDock");
-    QIcon icon = QIcon::fromTheme("view-keyframes", QIcon(":/icons/oxygen/32x32/actions/view-filter.png"));
+    QIcon icon = QIcon::fromTheme("chronometer", QIcon(":/icons/oxygen/32x32/actions/chronometer.png"));
     setWindowIcon(icon);
     toggleViewAction()->setIcon(windowIcon());
     setMinimumWidth(300);

@@ -210,5 +210,8 @@
         <file>light/32x32/view-list-details.png</file>
         <file>light/32x32/view-list-icons.png</file>
         <file>light/32x32/view-list-text.png</file>
+        <file>oxygen/32x32/actions/chronometer.png</file>
+        <file>light/32x32/chronometer.png</file>
+        <file>dark/32x32/chronometer.png</file>
     </qresource>
 </RCC>
