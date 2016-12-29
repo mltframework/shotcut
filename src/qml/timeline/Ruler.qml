@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2016 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -48,7 +48,7 @@ Rectangle {
             anchors.bottomMargin: 2
             color: activePalette.windowText
             x: index * stepSize * 4 + 2
-            text: timeline.timecode(index * stepSize * 4 / timeScale)
+            text: application.timecode(index * stepSize * 4 / timeScale)
             font.pointSize: 7.5
         }
     }

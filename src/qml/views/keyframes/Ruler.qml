@@ -48,7 +48,7 @@ Rectangle {
             anchors.bottomMargin: 2
             color: activePalette.windowText
             x: index * stepSize * 4 + 2
-            text: timeline.timecode(index * stepSize * 4 / timeScale)
+            text: application.timecode(index * stepSize * 4 / timeScale)
             font.pointSize: 7.5
         }
     }

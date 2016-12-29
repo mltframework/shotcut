@@ -94,11 +94,6 @@ void TimelineDock::setPosition(int position)
     }
 }
 
-QString TimelineDock::timecode(int frames)
-{
-    return MLT.producer()->frames_to_time(frames, mlt_time_smpte);
-}
-
 Mlt::ClipInfo *TimelineDock::getClipInfo(int trackIndex, int clipIndex)
 {
     Mlt::ClipInfo* result = 0;

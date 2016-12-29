@@ -480,7 +480,7 @@ Rectangle {
                 // Show distance moved as time in a "bubble" help.
                 var track = tracksRepeater.itemAt(clip.trackIndex)
                 var delta = Math.round((clip.x - clip.originalX) / multitrack.scaleFactor)
-                var s = timeline.timecode(Math.abs(delta))
+                var s = application.timecode(Math.abs(delta))
                 // remove leading zeroes
                 if (s.substring(0, 3) === '00:')
                     s = s.substring(3)
