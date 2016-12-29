@@ -24,6 +24,7 @@
 #include <QVariant>
 #include <QRectF>
 #include <MltFilter.h>
+#include <MltProducer.h>
 #include "qmlmetadata.h"
 
 class AbstractJob;
@@ -62,9 +63,10 @@ public:
     Q_INVOKABLE static int framesFromTime(const QString& time);
     Q_INVOKABLE static QString timeFromFrames(int frames);
     Q_INVOKABLE void getHash();
-    int producerIn() const;
-    int producerOut() const;
-    double producerAspect() const;
+    int producerIn();
+    int producerOut();
+    double producerAspect();
+    Mlt::Producer& producer() { return m_producer; }
 
 public slots:
     void preset(const QString& name);
@@ -77,6 +79,7 @@ signals:
 private:
     const QmlMetadata* m_metadata;
     Mlt::Filter* m_filter;
+    Mlt::Producer m_producer;
     QString m_path;
     bool m_isNew;
     QStringList m_presets;

@@ -40,6 +40,9 @@ QmlFilter::QmlFilter(Mlt::Filter* mltFilter, const QmlMetadata* metadata, QObjec
     : QObject(parent)
     , m_metadata(metadata)
     , m_filter(mltFilter)
+    // Every attached filter has a service property that points to the service to
+    // which it is attached.
+    , m_producer(mlt_producer(m_filter->get_data("service")))
     , m_path(m_metadata->path().absolutePath().append('/'))
     , m_isNew(false)
 {
@@ -251,46 +254,37 @@ void QmlFilter::getHash()
     MAIN.getHash(*m_filter);
 }
 
-int QmlFilter::producerIn() const
+int QmlFilter::producerIn()
 {
-    // Every attached filter has a service property that points to the service to
-    // which it is attached.
-    Mlt::Producer producer(mlt_producer(m_filter->get_data("service")));
-    if (producer.get(kFilterInProperty))
+    if (m_producer.get(kFilterInProperty))
         // Shots on the timeline will set the producer to the cut parent.
         // However, we want time-based filters such as fade in/out to use
         // the cut's in/out and not the parent's.
-        return producer.get_int(kFilterInProperty);
+        return m_producer.get_int(kFilterInProperty);
     else
-        return producer.get_in();
+        return m_producer.get_in();
 }
 
-int QmlFilter::producerOut() const
+int QmlFilter::producerOut()
 {
-    // Every attached filter has a service property that points to the service to
-    // which it is attached.
-    Mlt::Producer producer(mlt_producer(m_filter->get_data("service")));
-    if (producer.get(kFilterOutProperty))
+    if (m_producer.get(kFilterOutProperty))
         // Shots on the timeline will set the producer to the cut parent.
         // However, we want time-based filters such as fade in/out to use
         // the cut's in/out and not the parent's.
-        return producer.get_int(kFilterOutProperty);
+        return m_producer.get_int(kFilterOutProperty);
     else
-        return producer.get_out();
+        return m_producer.get_out();
 }
 
-double QmlFilter::producerAspect() const
+double QmlFilter::producerAspect()
 {
-    // Every attached filter has a service property that points to the service to
-    // which it is attached.
-    Mlt::Producer producer(mlt_producer(m_filter->get_data("service")));
-    if (producer.get(kHeightProperty)) {
+    if (m_producer.get(kHeightProperty)) {
         double sar = 1.0;
-        if (producer.get(kAspectDenProperty)) {
-            sar = producer.get_double(kAspectNumProperty) /
-                  producer.get_double(kAspectDenProperty);
+        if (m_producer.get(kAspectDenProperty)) {
+            sar = m_producer.get_double(kAspectNumProperty) /
+                  m_producer.get_double(kAspectDenProperty);
         }
-        return sar * producer.get_double(kWidthProperty) / producer.get_double(kHeightProperty);
+        return sar * m_producer.get_double(kWidthProperty) / m_producer.get_double(kHeightProperty);
     }
     return MLT.profile().dar();
 }
