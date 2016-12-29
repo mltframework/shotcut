@@ -113,7 +113,8 @@ SOURCES += main.cpp\
     widgets/timelinepropertieswidget.cpp \
     jobs/ffprobejob.cpp \
     jobs/ffmpegjob.cpp \
-    dialogs/unlinkedfilesdialog.cpp
+    dialogs/unlinkedfilesdialog.cpp \
+    docks/keyframesdock.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -222,7 +223,8 @@ HEADERS  += mainwindow.h \
     widgets/timelinepropertieswidget.h \
     jobs/ffprobejob.h \
     jobs/ffmpegjob.h \
-    dialogs/unlinkedfilesdialog.h
+    dialogs/unlinkedfilesdialog.h \
+    docks/keyframesdock.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \

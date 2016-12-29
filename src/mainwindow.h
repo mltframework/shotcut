@@ -50,6 +50,7 @@ class HtmlEditor;
 class TimelineDock;
 class AutoSaveFile;
 class QNetworkReply;
+class KeyframesDock;
 
 class MainWindow : public QMainWindow
 {
@@ -144,6 +145,7 @@ private:
     QScopedPointer<QAction> m_statusBarAction;
     QNetworkAccessManager m_network;
     QString m_upgradeUrl;
+    KeyframesDock* m_keyframesDock;
 
 #ifdef WITH_LIBLEAP
     LeapListener m_leapListener;
@@ -187,6 +189,7 @@ private slots:
     void onTimelineDockTriggered(bool checked = true);
     void onHistoryDockTriggered(bool checked = true);
     void onFiltersDockTriggered(bool checked = true);
+    void onKeyframesDockTriggered(bool checked = true);
     void onPlaylistCreated();
     void onPlaylistLoaded();
     void onPlaylistCleared();

@@ -74,6 +74,7 @@
 #include "widgets/trackpropertieswidget.h"
 #include "widgets/timelinepropertieswidget.h"
 #include "dialogs/unlinkedfilesdialog.h"
+#include "docks/keyframesdock.h"
 
 #include <QtWidgets>
 #include <Logger.h>
@@ -319,6 +320,13 @@ MainWindow::MainWindow()
     connect(m_timelineDock, SIGNAL(fadeOutChanged(int)), m_filtersDock, SLOT(setFadeOutDuration(int)));
     connect(m_timelineDock, SIGNAL(selected(Mlt::Producer*)), m_filterController, SLOT(setProducer(Mlt::Producer*)));
 
+    m_keyframesDock = new KeyframesDock(m_filterController->metadataModel(), m_filterController->attachedModel(), this);
+    m_keyframesDock->hide();
+    addDockWidget(Qt::BottomDockWidgetArea, m_keyframesDock);
+    ui->menuView->addAction(m_keyframesDock->toggleViewAction());
+    connect(m_keyframesDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onKeyframesDockTriggered(bool)));
+    connect(ui->actionKeyframes, SIGNAL(triggered()), this, SLOT(onKeyframesDockTriggered()));
+
     m_historyDock = new QDockWidget(tr("History"), this);
     m_historyDock->hide();
     m_historyDock->setObjectName("historyDock");
@@ -349,6 +357,7 @@ MainWindow::MainWindow()
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_propertiesDock, SLOT(setDisabled(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_recentDock, SLOT(setDisabled(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_filtersDock, SLOT(setDisabled(bool)));
+    connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_keyframesDock, SLOT(setDisabled(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), ui->actionOpen, SLOT(setDisabled(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), ui->actionOpenOther, SLOT(setDisabled(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), ui->actionExit, SLOT(setDisabled(bool)));
@@ -376,6 +385,7 @@ MainWindow::MainWindow()
     splitDockWidget(audioMeterDock, m_recentDock, Qt::Horizontal);
     tabifyDockWidget(m_recentDock, m_historyDock);
     tabifyDockWidget(m_historyDock, m_jobsDock);
+    tabifyDockWidget(m_keyframesDock, m_timelineDock);
     m_recentDock->raise();
 
     if (Settings.meltedEnabled()) {
@@ -2069,6 +2079,14 @@ void MainWindow::onFiltersDockTriggered(bool checked)
     if (checked) {
         m_filtersDock->show();
         m_filtersDock->raise();
+    }
+}
+
+void MainWindow::onKeyframesDockTriggered(bool checked)
+{
+    if (checked) {
+        m_keyframesDock->show();
+        m_keyframesDock->raise();
     }
 }
 

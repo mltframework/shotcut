@@ -39,7 +39,7 @@
      <x>0</x>
      <y>0</y>
      <width>832</width>
-     <height>31</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -226,6 +226,7 @@
    <addaction name="actionPlaylist"/>
    <addaction name="actionHistory"/>
    <addaction name="actionFilters"/>
+   <addaction name="actionKeyframes"/>
    <addaction name="actionTimeline"/>
    <addaction name="actionEncode"/>
    <addaction name="actionFullscreen"/>
@@ -830,6 +831,18 @@
    </property>
    <property name="toolTip">
     <string>Show</string>
+   </property>
+  </action>
+  <action name="actionKeyframes">
+   <property name="icon">
+    <iconset theme="view-filter" resource="../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/view-filter.png</normaloff>:/icons/oxygen/32x32/actions/view-filter.png</iconset>
+   </property>
+   <property name="text">
+    <string>Keyframes</string>
+   </property>
+   <property name="toolTip">
+    <string>Keyframes</string>
    </property>
   </action>
  </widget>
