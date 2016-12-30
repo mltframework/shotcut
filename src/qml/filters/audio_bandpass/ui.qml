@@ -78,8 +78,9 @@ Item {
             onClicked: sliderCenter.value = 322
         }
 
-        Label { text: qsTr('Bandwidth')
-        Layout.alignment: Qt.AlignRight
+        Label {
+            text: qsTr('Bandwidth')
+            Layout.alignment: Qt.AlignRight
         }
         SliderSpinner {
             id: sliderBandwidth
@@ -96,25 +97,27 @@ Item {
             onClicked: sliderBandwidth.value = 322
         }
 
-        Label { text: qsTr('Rolloff rate')
-        Layout.alignment: Qt.AlignRight
+        Label {
+            text: qsTr('Rolloff rate')
+            Layout.alignment: Qt.AlignRight
         }
         SliderSpinner {
             id: sliderStages
             minimumValue: 1
             maximumValue: 10
             spinnerWidth: 100
-            value: filter.get('1')
+            value: filter.get('2')
             onValueChanged: {
-                filter.set('1', value)
+                filter.set('2', value)
             }
         }
         UndoButton {
             onClicked: sliderStages.value = 1
         }
 
-        Label { text: qsTr('Dry')
-        Layout.alignment: Qt.AlignRight
+        Label {
+            text: qsTr('Dry')
+            Layout.alignment: Qt.AlignRight
         }
         SliderSpinner {
             id: sliderWetness
