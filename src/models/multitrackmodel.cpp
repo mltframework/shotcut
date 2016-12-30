@@ -2947,15 +2947,7 @@ Mlt::Filter *MultitrackModel::getFilter(const QString &name, int trackIndex) con
 
 Mlt::Filter *MultitrackModel::getFilter(const QString &name, Mlt::Service* service) const
 {
-    for (int i = 0; i < service->filter_count(); i++) {
-        Mlt::Filter* filter = service->filter(i);
-        if (filter) {
-            if (name == filter->get(kShotcutFilterProperty))
-                return filter;
-            delete filter;
-        }
-    }
-    return 0;
+    return MLT.getFilter(name, service);
 }
 
 void MultitrackModel::removeBlankPlaceholder(Mlt::Playlist& playlist, int trackIndex)

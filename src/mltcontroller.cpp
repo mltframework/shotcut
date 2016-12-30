@@ -796,6 +796,19 @@ void Controller::setSavedProducer(Mlt::Producer* producer)
     m_savedProducer.reset(new Mlt::Producer(producer));
 }
 
+Filter* Controller::getFilter(const QString& name, Service* service)
+{
+    for (int i = 0; i < service->filter_count(); i++) {
+        Mlt::Filter* filter = service->filter(i);
+        if (filter) {
+            if (name == filter->get(kShotcutFilterProperty))
+                return filter;
+            delete filter;
+        }
+    }
+    return 0;
+}
+
 void TransportControl::play(double speed)
 {
     MLT.play(speed);
