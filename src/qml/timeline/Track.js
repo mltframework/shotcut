@@ -30,11 +30,18 @@ function snapClip(clip, repeater) {
         for (var i = 0; i < repeater.count; i++) {
             var itemLeft = repeater.itemAt(i).x
             var itemRight = itemLeft + repeater.itemAt(i).width
+            // Snap to blank
             if (right > itemLeft - SNAP && right < itemLeft + SNAP) {
                 clip.x = itemLeft - clip.width
                 return
             } else if (clip.x > itemRight - SNAP && clip.x < itemRight + SNAP) {
                 clip.x = itemRight
+                return
+            } else if (right > itemRight - SNAP && right < itemRight + SNAP) {
+                clip.x = itemRight - clip.width
+                return
+            } else if (clip.x > itemLeft - SNAP && clip.x < itemLeft + SNAP) {
+                clip.x = itemLeft
                 return
             }
         }
