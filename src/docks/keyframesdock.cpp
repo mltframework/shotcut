@@ -32,6 +32,7 @@
 #include "qmltypes/qmlfilter.h"
 #include "qmltypes/qmlutilities.h"
 #include "qmltypes/qmlview.h"
+#include "qmltypes/qmlproducer.h"
 #include "models/metadatamodel.h"
 #include "models/attachedfiltersmodel.h"
 
@@ -70,8 +71,10 @@ void KeyframesDock::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta, int i
     m_qview.rootContext()->setContextProperty("filter", filter);
     m_qview.rootContext()->setContextProperty("metadata", meta);
     QMetaObject::invokeMethod(m_qview.rootObject(), "setCurrentFilter", Q_ARG(QVariant, QVariant(index)));
-    if (filter)
+    if (filter) {
         connect(filter, SIGNAL(changed()), SIGNAL(changed()));
+        m_qview.rootContext()->setContextProperty("producer", new QmlProducer(filter->producer(), filter));
+    }
 }
 
 void KeyframesDock::setFadeInDuration(int duration)

@@ -36,6 +36,7 @@ Rectangle {
 //    property alias trackCount: tracksRepeater.count
     property bool stopScrolling: false
     property color shotcutBlue: Qt.rgba(23/255, 92/255, 118/255, 1.0)
+    property double timeScale: 1.0
 
     function clearCurrentFilter() {
     }
@@ -91,6 +92,7 @@ Rectangle {
                     id: trackHeaders
 
                     ParameterHead {
+                        id: clipHead
                         trackName: attachedfiltersmodel.producerTitle
                         isLocked: false //model.locked
                         width: headerWidth
@@ -182,7 +184,7 @@ Rectangle {
                         id: ruler
                         width: tracksContainer.width
                         index: index
-                        timeScale: multitrack.scaleFactor
+//                        timeScale: multitrack.scaleFactor
                     }
                 }
                 ScrollView {
@@ -193,7 +195,7 @@ Rectangle {
                     Item {
                         width: tracksContainer.width + headerWidth
                         height: trackHeaders.height + 30 // 30 is padding
-                        Column {
+//                        Column {
                             // These make the striped background for the tracks.
                             // It is important that these are not part of the track visual hierarchy;
                             // otherwise, the clips will be obscured by the Track's background.
@@ -205,9 +207,35 @@ Rectangle {
 //                                    height: Logic.trackHeight(audio)
 //                                }
 //                            }
-                        }
+//                        }
                         Column {
                             id: tracksContainer
+                            Rectangle {
+                                id: trackRoot
+                                width: clipRow.width
+                                height: Logic.trackHeight(false)
+                                color: 'transparent'
+                                Row {
+                                    id: clipRow
+                                    Clip {
+                                        clipName: producer.name
+                                        clipResource: producer.resource
+                                        clipDuration: producer.duration
+                                        mltService: producer.mlt_service
+                                        inPoint: producer.in
+                                        outPoint: producer.out
+                                        audioLevels: producer.audioLevels
+                                        width: producer.duration * timeScale
+                                        height: trackRoot.height
+                                        fadeIn: producer.fadeIn
+                                        fadeOut: producer.fadeOut
+                                        hash: producer.hash
+                                        speed: producer.speed
+//                                        selected: trackRoot.isCurrentTrack && trackRoot.selection.indexOf(index) !== -1
+                                    }
+                                }
+                            }
+
 //                            Repeater { id: tracksRepeater; model: trackDelegateModel }
                         }
                     }
