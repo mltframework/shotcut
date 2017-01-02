@@ -1358,16 +1358,16 @@ dùmhlachadh ùine a tha sna frèamaichean B</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1559"/>
-        <location filename="../src/docks/encodedock.cpp" line="311"/>
-        <location filename="../src/docks/encodedock.cpp" line="921"/>
+        <location filename="../src/docks/encodedock.cpp" line="314"/>
+        <location filename="../src/docks/encodedock.cpp" line="927"/>
         <source>Export File</source>
         <translation>Às-phortaich am faidhle</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1566"/>
-        <location filename="../src/docks/encodedock.cpp" line="1009"/>
-        <location filename="../src/docks/encodedock.cpp" line="1016"/>
-        <location filename="../src/docks/encodedock.cpp" line="1126"/>
+        <location filename="../src/docks/encodedock.cpp" line="1015"/>
+        <location filename="../src/docks/encodedock.cpp" line="1022"/>
+        <location filename="../src/docks/encodedock.cpp" line="1132"/>
         <source>Stream</source>
         <translation>Sruthadh</translation>
     </message>
@@ -1398,79 +1398,79 @@ dùmhlachadh ùine a tha sna frèamaichean B</translation>
         <translation>A’ bhun-roghainn air an fhòrmat</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="313"/>
-        <location filename="../src/docks/encodedock.cpp" line="903"/>
-        <location filename="../src/docks/encodedock.cpp" line="921"/>
-        <location filename="../src/docks/encodedock.cpp" line="1125"/>
+        <location filename="../src/docks/encodedock.cpp" line="316"/>
+        <location filename="../src/docks/encodedock.cpp" line="909"/>
+        <location filename="../src/docks/encodedock.cpp" line="927"/>
+        <location filename="../src/docks/encodedock.cpp" line="1131"/>
         <source>Capture File</source>
         <translation>Faidhle glacaidh</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="318"/>
+        <location filename="../src/docks/encodedock.cpp" line="321"/>
         <source>Timeline</source>
         <translation>Loidhne-ama</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="320"/>
+        <location filename="../src/docks/encodedock.cpp" line="323"/>
         <source>Playlist</source>
         <translation>Liosta-chluich</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="322"/>
+        <location filename="../src/docks/encodedock.cpp" line="325"/>
         <source>Each Playlist Item</source>
         <translation>Gach nì na liosta-cluich</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="330"/>
-        <location filename="../src/docks/encodedock.cpp" line="339"/>
+        <location filename="../src/docks/encodedock.cpp" line="333"/>
+        <location filename="../src/docks/encodedock.cpp" line="342"/>
         <source>Source</source>
         <translation>Tùs</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="350"/>
-        <location filename="../src/docks/encodedock.cpp" line="857"/>
+        <location filename="../src/docks/encodedock.cpp" line="353"/>
+        <location filename="../src/docks/encodedock.cpp" line="863"/>
         <source>Custom</source>
         <translation>Gnàthaichte</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="362"/>
+        <location filename="../src/docks/encodedock.cpp" line="365"/>
         <source>Stock</source>
         <translation>Stoc</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="901"/>
-        <location filename="../src/docks/encodedock.cpp" line="953"/>
+        <location filename="../src/docks/encodedock.cpp" line="907"/>
+        <location filename="../src/docks/encodedock.cpp" line="959"/>
         <source>Stop Capture</source>
         <translation>Sguir dhen ghlacadh</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1062"/>
+        <location filename="../src/docks/encodedock.cpp" line="1068"/>
         <source>Add Export Preset</source>
         <translation>Cuir ris ro-shuidheachadh an às-chuir</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1004"/>
-        <location filename="../src/docks/encodedock.cpp" line="1025"/>
+        <location filename="../src/docks/encodedock.cpp" line="1010"/>
+        <location filename="../src/docks/encodedock.cpp" line="1031"/>
         <source>Stop Stream</source>
         <translation>Sguir dhen t-sruthadh</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1017"/>
+        <location filename="../src/docks/encodedock.cpp" line="1023"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>Cuir a-steach sgeama pròtacail, seòladh, port agus paramadairean lìonraidh ’na URL:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1104"/>
+        <location filename="../src/docks/encodedock.cpp" line="1110"/>
         <source>Delete Preset</source>
         <translation>Sguab às an ro-shuidheachadh</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1105"/>
+        <location filename="../src/docks/encodedock.cpp" line="1111"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>A bheil thu cinnteach gu bheil thu airson %1 a sguabadh às?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1264"/>
+        <location filename="../src/docks/encodedock.cpp" line="1270"/>
         <source>KiB (%1s)</source>
         <translation>KiB (%1s)</translation>
     </message>
@@ -2685,7 +2685,7 @@ tar-mhùthaidh.</translation>
         <translation>Modh an taisbeanaidh</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3121"/>
+        <location filename="../src/mainwindow.cpp" line="3130"/>
         <source>Data Directory</source>
         <translation>Pasgan dàta</translation>
     </message>
@@ -2816,7 +2816,7 @@ tar-mhùthaidh.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="368"/>
-        <location filename="../src/mainwindow.cpp" line="2376"/>
+        <location filename="../src/mainwindow.cpp" line="2385"/>
         <source>Enter Full Screen</source>
         <translation>Cuir air am modh làn-sgrìn</translation>
     </message>
@@ -3176,22 +3176,22 @@ tar-mhùthaidh.</translation>
         <translation>DeckLink Keyer</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="794"/>
-        <location filename="../src/mainwindow.cpp" line="796"/>
-        <location filename="../src/mainwindow.cpp" line="1106"/>
-        <location filename="../src/mainwindow.cpp" line="2859"/>
+        <location filename="../src/mainwindow.cpp" line="797"/>
+        <location filename="../src/mainwindow.cpp" line="799"/>
+        <location filename="../src/mainwindow.cpp" line="1109"/>
+        <location filename="../src/mainwindow.cpp" line="2868"/>
         <source>Failed to open </source>
         <translation>Dh’fhàillig leis an fhosgladh</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="822"/>
+        <location filename="../src/mainwindow.cpp" line="825"/>
         <source>The file you opened uses GPU effects, but GPU processing is not enabled.
 Do you want to enable GPU processing and restart?</source>
         <translation>Tha am faidhle a dh’fhosgail thu a’ cleachdadh èifeachdan GPU ach cha deach pròiseasadh GPU a chur an comas.
 A bheil thu airson pròiseasadh GPU a chur an comas agus ath-thòiseachadh?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="880"/>
+        <location filename="../src/mainwindow.cpp" line="883"/>
         <source>Shotcut noticed some problems in your project.
 Do you want Shotcut to try to repair it?
 
@@ -3204,43 +3204,43 @@ Ma thaghas tu “Tha,” cruthaichidh Shotcut lethbhreac dhen phròiseact agad
 le “- Repaired” ann an ainm an fhaidhle agus fosglaidh e e.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="845"/>
+        <location filename="../src/mainwindow.cpp" line="848"/>
         <source>Repaired</source>
         <translation>Chaidh a chàradh</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="868"/>
+        <location filename="../src/mainwindow.cpp" line="871"/>
         <source>Repairing the project failed.</source>
         <translation>Dh’fhàillig le càradh a’ phròiseict</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2591"/>
+        <location filename="../src/mainwindow.cpp" line="2600"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>Feumaidh tu Shotcut ath-thòiseachadh mus faic thu an cànan ùr.
 A bheil thu airson ath-thòiseachadh an-dràsta?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2641"/>
+        <location filename="../src/mainwindow.cpp" line="2650"/>
         <source>You must restart Shotcut to switch using GPU processing.
 Do you want to restart now?</source>
         <translation>Feumaidh tu Shotcut ath-thòiseachadh gus pròiseasadh GPU a chleachdadh a-nis.
 A bheil thu airson ath-thòiseachadh an-dràsta?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2900"/>
+        <location filename="../src/mainwindow.cpp" line="2909"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
         <translation>Feumaidh tu Shotcut ath-thòiseachadh gus am modh taisbeaniadh atharrachadh.
 A bheil thu airson ath-thòiseachadh an-dràsta?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2922"/>
+        <location filename="../src/mainwindow.cpp" line="2931"/>
         <source>Application Log</source>
         <translation>Loga na aplacaid</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="916"/>
+        <location filename="../src/mainwindow.cpp" line="919"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation>Chaidh faidhlichean fhèin-shàbhaladh. A bheil thu airson an aiseag an-dràsta?</translation>
     </message>
@@ -3263,135 +3263,135 @@ Please install it using your package manager. It may be named libsdl1.2debian, S
 Stàlaich e le manaidsear nam pacaidean agad. Bidh libsdl1.2debian, SDL no ainm coltach ris air.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1117"/>
-        <location filename="../src/mainwindow.cpp" line="2839"/>
+        <location filename="../src/mainwindow.cpp" line="1120"/>
+        <location filename="../src/mainwindow.cpp" line="2848"/>
         <source>Open File</source>
         <translation>Fosgail faidhle</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1340"/>
+        <location filename="../src/mainwindow.cpp" line="1343"/>
         <source>%1[*] - %2</source>
         <translation>%1[*] – %2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1345"/>
+        <location filename="../src/mainwindow.cpp" line="1348"/>
         <source>About Shotcut</source>
         <translation>Mu Shotcut</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1346"/>
+        <location filename="../src/mainwindow.cpp" line="1349"/>
         <source>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2016 &lt;a href=&quot;https://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;https://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
         <translation>&lt;h1&gt;Shotcut tionndadh %1&lt;/h1&gt;&lt;p&gt;’S e deasaiche video saor, open source is iomadh ùrlair a th’ ann an &lt;a href=&quot;https://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt;.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Còir-lethbhreac &amp;copy; 2011-2016 &lt;a href=&quot;https://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Fo cheadachas &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Tha am pròiseact seo a’ cleachdadh nam pròiseactan urramach:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; framework aplacaidean is eadar-aghaidhean&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; framework ùghdarrachadh ioma-mheadhanach&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; tasglannan fhòrmatan ioma-mheadhanach is codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; inneal-còdachaidh H.264&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; innealan-còdachaidh VP8 agus VP9&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; inneal-còdachaidh MP3&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; plugain video&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; plugain fuaime&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; cruinneachadh dhe dh’ìomhaigheagan le &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; cruinneachadh dhe dh’ìomhaigheagan&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;’S urrainn dhut am bun-tùs gus am prògram seo a thogail a luchdadh a-nuas air &lt;a href=&quot;https://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;Tha sinn a’ sgaoileadh am prògram seo an dòchas gum bi e feumail ach GUN BHARANTAS SAM BITH; cha doir sinn eadhon barantas GUN GABH A REIC no gu bheil e FREAGARRACH AIRSON AMAIS SHÒNRAICHTE.&lt;/small&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1836"/>
+        <location filename="../src/mainwindow.cpp" line="1845"/>
         <source>Click here to check for a new version of Shotcut.</source>
         <translation>Briog an-seo gus sùil a thoirt airson tionndadh ùr dhe Shotcut.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1912"/>
-        <location filename="../src/mainwindow.cpp" line="1939"/>
+        <location filename="../src/mainwindow.cpp" line="1921"/>
+        <location filename="../src/mainwindow.cpp" line="1948"/>
         <source>Saved %1</source>
         <translation>Chaidh %1 a shàbhaladh</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1922"/>
+        <location filename="../src/mainwindow.cpp" line="1931"/>
         <source>Save XML</source>
         <translation>Sàbhail XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1922"/>
+        <location filename="../src/mainwindow.cpp" line="1931"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1931"/>
+        <location filename="../src/mainwindow.cpp" line="1940"/>
         <source>Unable to save empty file, but saved its name for future.</source>
         <translation>Chan urrainn dhuinn faidhle falamh a shàbhaladh a chuir sinn ainm ’nar cuimhne airson na h-ama ri teachd.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1951"/>
+        <location filename="../src/mainwindow.cpp" line="1960"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>Chaidh am pròiseact atharrachadh.
 A bheil thu airson na dh’atharraich thu a shàbhaladh?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1978"/>
+        <location filename="../src/mainwindow.cpp" line="1987"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
         <translation>Tha obair ann nach eil deiseil.
 A bheil thu airson fàgail an-seo co-dhiù?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2379"/>
+        <location filename="../src/mainwindow.cpp" line="2388"/>
         <source>Exit Full Screen</source>
         <translation>Fàg am modh làn-sgrìn</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2392"/>
+        <location filename="../src/mainwindow.cpp" line="2401"/>
         <source>GPU Processing is not supported</source>
         <translation>Can eil taic ri pròiseasadh GPU</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2632"/>
+        <location filename="../src/mainwindow.cpp" line="2641"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>Cha deach leinn ceangal ri JACK.
 Dearbhaich gun deach JACK a stàladh agus gu bheil e ’ga ruith.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2840"/>
+        <location filename="../src/mainwindow.cpp" line="2849"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;A h-uile faidhle (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2956"/>
+        <location filename="../src/mainwindow.cpp" line="2965"/>
         <source>Shotcut version %1 is available! Click here to get it.</source>
         <translation>Tha Shotcut tionndadh %1 ri fhaighinn! Briog an-seo gus fhaighinn.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2962"/>
+        <location filename="../src/mainwindow.cpp" line="2971"/>
         <source>You are running the latest version of Shotcut.</source>
         <translation>Tha thu a’ ruith an tionndadh as ùire dhe Shotcut.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2972"/>
+        <location filename="../src/mainwindow.cpp" line="2981"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation>Cha deach leinn version.json a leughadh gus sùil a thoirt air. Briog an-seo gus tadhal air an làrach-lìn.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3022"/>
+        <location filename="../src/mainwindow.cpp" line="3031"/>
         <source>Export EDL</source>
         <translation>Às-phortaich EDL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3022"/>
+        <location filename="../src/mainwindow.cpp" line="3031"/>
         <source>EDL (*.edl)</source>
         <translation>EDL (*.edl)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3065"/>
+        <location filename="../src/mainwindow.cpp" line="3074"/>
         <source>A JavaScript error occurred during export.</source>
         <translation>Tachair mearachd JavaScript rè an às-phortaidh.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3068"/>
+        <location filename="../src/mainwindow.cpp" line="3077"/>
         <source>Failed to open export-edl.js</source>
         <translation>Cha deach leinn export-edl.js fhosgladh</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3094"/>
+        <location filename="../src/mainwindow.cpp" line="3103"/>
         <source>Export Frame</source>
         <translation>Às-phortaich an fhrèam</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3104"/>
+        <location filename="../src/mainwindow.cpp" line="3113"/>
         <source>Unable to export frame.</source>
         <translation>Cha deach leinn am frèam às-phortadh.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3112"/>
+        <location filename="../src/mainwindow.cpp" line="3121"/>
         <source>You must restart Shotcut to change the data directory.
 Do you want to continue?</source>
         <translation>Feumaidh tu Shotcut ath-thòiseachadh gus am pasgan dàta atharrachadh.
@@ -6689,34 +6689,34 @@ SDI/HDMI aig an aon àm sa mhodh seo.</translation>
         <translation>Tricead meadhanach</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="81"/>
-        <location filename="../src/qml/filters/audio_notch/ui.qml" line="80"/>
+        <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="82"/>
+        <location filename="../src/qml/filters/audio_notch/ui.qml" line="81"/>
         <source>Bandwidth</source>
         <translation>Leud-banna</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="99"/>
+        <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="101"/>
         <location filename="../src/qml/filters/audio_highpass/ui.qml" line="77"/>
         <location filename="../src/qml/filters/audio_lowpass/ui.qml" line="82"/>
-        <location filename="../src/qml/filters/audio_notch/ui.qml" line="97"/>
+        <location filename="../src/qml/filters/audio_notch/ui.qml" line="99"/>
         <source>Rolloff rate</source>
         <translation>Reat lagachaidh</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="116"/>
+        <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="119"/>
         <location filename="../src/qml/filters/audio_delay/ui.qml" line="100"/>
         <location filename="../src/qml/filters/audio_highpass/ui.qml" line="93"/>
         <location filename="../src/qml/filters/audio_lowpass/ui.qml" line="99"/>
-        <location filename="../src/qml/filters/audio_notch/ui.qml" line="113"/>
+        <location filename="../src/qml/filters/audio_notch/ui.qml" line="116"/>
         <source>Dry</source>
         <translation>Tioram</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="125"/>
+        <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="128"/>
         <location filename="../src/qml/filters/audio_delay/ui.qml" line="108"/>
         <location filename="../src/qml/filters/audio_highpass/ui.qml" line="101"/>
         <location filename="../src/qml/filters/audio_lowpass/ui.qml" line="107"/>
-        <location filename="../src/qml/filters/audio_notch/ui.qml" line="121"/>
+        <location filename="../src/qml/filters/audio_notch/ui.qml" line="124"/>
         <source>Wet</source>
         <translation>Fliuch</translation>
     </message>

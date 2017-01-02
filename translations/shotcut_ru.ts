@@ -1355,16 +1355,16 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1559"/>
-        <location filename="../src/docks/encodedock.cpp" line="311"/>
-        <location filename="../src/docks/encodedock.cpp" line="921"/>
+        <location filename="../src/docks/encodedock.cpp" line="314"/>
+        <location filename="../src/docks/encodedock.cpp" line="927"/>
         <source>Export File</source>
         <translation>Экспорт</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1566"/>
-        <location filename="../src/docks/encodedock.cpp" line="1009"/>
-        <location filename="../src/docks/encodedock.cpp" line="1016"/>
-        <location filename="../src/docks/encodedock.cpp" line="1126"/>
+        <location filename="../src/docks/encodedock.cpp" line="1015"/>
+        <location filename="../src/docks/encodedock.cpp" line="1022"/>
+        <location filename="../src/docks/encodedock.cpp" line="1132"/>
         <source>Stream</source>
         <translation>Поток</translation>
     </message>
@@ -1395,79 +1395,79 @@ in temporal compression</source>
         <translation>По умолчанию для формата</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="313"/>
-        <location filename="../src/docks/encodedock.cpp" line="903"/>
-        <location filename="../src/docks/encodedock.cpp" line="921"/>
-        <location filename="../src/docks/encodedock.cpp" line="1125"/>
+        <location filename="../src/docks/encodedock.cpp" line="316"/>
+        <location filename="../src/docks/encodedock.cpp" line="909"/>
+        <location filename="../src/docks/encodedock.cpp" line="927"/>
+        <location filename="../src/docks/encodedock.cpp" line="1131"/>
         <source>Capture File</source>
         <translation>Захват в файла</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="318"/>
+        <location filename="../src/docks/encodedock.cpp" line="321"/>
         <source>Timeline</source>
         <translation>Линия времени</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="320"/>
+        <location filename="../src/docks/encodedock.cpp" line="323"/>
         <source>Playlist</source>
         <translation>Список воспроизведения</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="322"/>
+        <location filename="../src/docks/encodedock.cpp" line="325"/>
         <source>Each Playlist Item</source>
         <translation>Каждый элемент списка</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="330"/>
-        <location filename="../src/docks/encodedock.cpp" line="339"/>
+        <location filename="../src/docks/encodedock.cpp" line="333"/>
+        <location filename="../src/docks/encodedock.cpp" line="342"/>
         <source>Source</source>
         <translation>Источник</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="350"/>
-        <location filename="../src/docks/encodedock.cpp" line="857"/>
+        <location filename="../src/docks/encodedock.cpp" line="353"/>
+        <location filename="../src/docks/encodedock.cpp" line="863"/>
         <source>Custom</source>
         <translation>Пользовательские настройки</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="362"/>
+        <location filename="../src/docks/encodedock.cpp" line="365"/>
         <source>Stock</source>
         <translation>Основные</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="901"/>
-        <location filename="../src/docks/encodedock.cpp" line="953"/>
+        <location filename="../src/docks/encodedock.cpp" line="907"/>
+        <location filename="../src/docks/encodedock.cpp" line="959"/>
         <source>Stop Capture</source>
         <translation>Остановить захват изображения</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1062"/>
+        <location filename="../src/docks/encodedock.cpp" line="1068"/>
         <source>Add Export Preset</source>
         <translation>Добавить преднастройку экспорта</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1004"/>
-        <location filename="../src/docks/encodedock.cpp" line="1025"/>
+        <location filename="../src/docks/encodedock.cpp" line="1010"/>
+        <location filename="../src/docks/encodedock.cpp" line="1031"/>
         <source>Stop Stream</source>
         <translation>Остановить Поток</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1017"/>
+        <location filename="../src/docks/encodedock.cpp" line="1023"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>Введите тип сетевого протокола, адрес, порт и такие параметры как адрес URL:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1104"/>
+        <location filename="../src/docks/encodedock.cpp" line="1110"/>
         <source>Delete Preset</source>
         <translation>Удалить преднастройку</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1105"/>
+        <location filename="../src/docks/encodedock.cpp" line="1111"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>Вы действительно хотите удалить %1?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1264"/>
+        <location filename="../src/docks/encodedock.cpp" line="1270"/>
         <source>KiB (%1s)</source>
         <translation>KiB</translation>
     </message>
@@ -2682,7 +2682,7 @@ duration of the transition.</source>
         <translation>Метод отображения</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3121"/>
+        <location filename="../src/mainwindow.cpp" line="3130"/>
         <source>Data Directory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2813,7 +2813,7 @@ duration of the transition.</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="368"/>
-        <location filename="../src/mainwindow.cpp" line="2376"/>
+        <location filename="../src/mainwindow.cpp" line="2385"/>
         <source>Enter Full Screen</source>
         <translation>Полноэкранный режим</translation>
     </message>
@@ -3173,22 +3173,22 @@ duration of the transition.</source>
         <translation>Плата DeckLink</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="794"/>
-        <location filename="../src/mainwindow.cpp" line="796"/>
-        <location filename="../src/mainwindow.cpp" line="1106"/>
-        <location filename="../src/mainwindow.cpp" line="2859"/>
+        <location filename="../src/mainwindow.cpp" line="797"/>
+        <location filename="../src/mainwindow.cpp" line="799"/>
+        <location filename="../src/mainwindow.cpp" line="1109"/>
+        <location filename="../src/mainwindow.cpp" line="2868"/>
         <source>Failed to open </source>
         <translation>Не удалось открыть</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="822"/>
+        <location filename="../src/mainwindow.cpp" line="825"/>
         <source>The file you opened uses GPU effects, but GPU processing is not enabled.
 Do you want to enable GPU processing and restart?</source>
         <translation>Открытый файл использует эффекты GPU, но GPU обработка не задействована.
 Включить GPU обработку и перезапустить приложение?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="880"/>
+        <location filename="../src/mainwindow.cpp" line="883"/>
         <source>Shotcut noticed some problems in your project.
 Do you want Shotcut to try to repair it?
 
@@ -3201,43 +3201,43 @@ with &quot;- Repaired&quot; in the file name and open it.</source>
 в имени файла и откроет его.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="845"/>
+        <location filename="../src/mainwindow.cpp" line="848"/>
         <source>Repaired</source>
         <translation>Восстановлено</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="868"/>
+        <location filename="../src/mainwindow.cpp" line="871"/>
         <source>Repairing the project failed.</source>
         <translation>Восстановление проекта не удалось</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2591"/>
+        <location filename="../src/mainwindow.cpp" line="2600"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>Необходимо перезапустить Shotcut для переключения языка.
 Перезапустить сейчас?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2641"/>
+        <location filename="../src/mainwindow.cpp" line="2650"/>
         <source>You must restart Shotcut to switch using GPU processing.
 Do you want to restart now?</source>
         <translation>Необходимо перезапустить Shotcut для переключения GPU обработки.
 Перезапустить сейчас?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2900"/>
+        <location filename="../src/mainwindow.cpp" line="2909"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
         <translation>Необходимо перезапустить Shotcut для переключения метода отображения.
 Перезапустить сейчас?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2922"/>
+        <location filename="../src/mainwindow.cpp" line="2931"/>
         <source>Application Log</source>
         <translation>Журнал приложения</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="916"/>
+        <location filename="../src/mainwindow.cpp" line="919"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation>Обнаружены автосохранённые файлы. Восстановить их?</translation>
     </message>
@@ -3260,135 +3260,135 @@ Please install it using your package manager. It may be named libsdl1.2debian, S
 Установите её с помощью пакетного менеджера. Она может называться libsdl1.2debian, SDL или похожим именем.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1117"/>
-        <location filename="../src/mainwindow.cpp" line="2839"/>
+        <location filename="../src/mainwindow.cpp" line="1120"/>
+        <location filename="../src/mainwindow.cpp" line="2848"/>
         <source>Open File</source>
         <translation>Открыть файл</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1340"/>
+        <location filename="../src/mainwindow.cpp" line="1343"/>
         <source>%1[*] - %2</source>
         <translation>%1[*] - %2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1345"/>
+        <location filename="../src/mainwindow.cpp" line="1348"/>
         <source>About Shotcut</source>
         <translation>О программе Shotcut</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1346"/>
+        <location filename="../src/mainwindow.cpp" line="1349"/>
         <source>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2016 &lt;a href=&quot;https://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;https://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1836"/>
+        <location filename="../src/mainwindow.cpp" line="1845"/>
         <source>Click here to check for a new version of Shotcut.</source>
         <translation>Кликните сюда для проверки наличия новой версии Shotcut.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1912"/>
-        <location filename="../src/mainwindow.cpp" line="1939"/>
+        <location filename="../src/mainwindow.cpp" line="1921"/>
+        <location filename="../src/mainwindow.cpp" line="1948"/>
         <source>Saved %1</source>
         <translation>Сохранен %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1922"/>
+        <location filename="../src/mainwindow.cpp" line="1931"/>
         <source>Save XML</source>
         <translation>Сохранить XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1922"/>
+        <location filename="../src/mainwindow.cpp" line="1931"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1931"/>
+        <location filename="../src/mainwindow.cpp" line="1940"/>
         <source>Unable to save empty file, but saved its name for future.</source>
         <translation>Невозможно сохранить пустой файл, но это имя сохраняется для будущего использования</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1951"/>
+        <location filename="../src/mainwindow.cpp" line="1960"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>Проект был изменён.
 Сохранить изменения?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1978"/>
+        <location filename="../src/mainwindow.cpp" line="1987"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
         <translation>Есть не завершённые задания.
 Вы действительно хотите выйти?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2379"/>
+        <location filename="../src/mainwindow.cpp" line="2388"/>
         <source>Exit Full Screen</source>
         <translation>Выйти из полноэкранного режима</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2392"/>
+        <location filename="../src/mainwindow.cpp" line="2401"/>
         <source>GPU Processing is not supported</source>
         <translation>GPU обработка не поддерживается</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2632"/>
+        <location filename="../src/mainwindow.cpp" line="2641"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>Не удалось подключиться к библиотеке JACK.
 Убедитесь что JACK установлена и запущена.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2840"/>
+        <location filename="../src/mainwindow.cpp" line="2849"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;Все файлы (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2956"/>
+        <location filename="../src/mainwindow.cpp" line="2965"/>
         <source>Shotcut version %1 is available! Click here to get it.</source>
         <translation>Shotcut версии %1 доступен! Кликните сюда чтобы получить его!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2962"/>
+        <location filename="../src/mainwindow.cpp" line="2971"/>
         <source>You are running the latest version of Shotcut.</source>
         <translation>Запущена последняя версия Shotcut.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2972"/>
+        <location filename="../src/mainwindow.cpp" line="2981"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation>Не удалось прочитать version.json при проверке. Кликните сюда для перехода на web-сайт.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3022"/>
+        <location filename="../src/mainwindow.cpp" line="3031"/>
         <source>Export EDL</source>
         <translation>Экспорт EDL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3022"/>
+        <location filename="../src/mainwindow.cpp" line="3031"/>
         <source>EDL (*.edl)</source>
         <translation>EDL (*.edl)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3065"/>
+        <location filename="../src/mainwindow.cpp" line="3074"/>
         <source>A JavaScript error occurred during export.</source>
         <translation>Во время процесса экспорта возникла ошибка JavaScript</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3068"/>
+        <location filename="../src/mainwindow.cpp" line="3077"/>
         <source>Failed to open export-edl.js</source>
         <translation>Не удалось открыть export-edl.js</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3094"/>
+        <location filename="../src/mainwindow.cpp" line="3103"/>
         <source>Export Frame</source>
         <translation>Экспорт фрейма</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3104"/>
+        <location filename="../src/mainwindow.cpp" line="3113"/>
         <source>Unable to export frame.</source>
         <translation>Невозможно экспортировать фрейм.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3112"/>
+        <location filename="../src/mainwindow.cpp" line="3121"/>
         <source>You must restart Shotcut to change the data directory.
 Do you want to continue?</source>
         <translation type="unfinished"></translation>
@@ -6683,34 +6683,34 @@ the screen capture to SDI/HDMI in this mode.</source>
         <translation>Центральная частота</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="81"/>
-        <location filename="../src/qml/filters/audio_notch/ui.qml" line="80"/>
+        <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="82"/>
+        <location filename="../src/qml/filters/audio_notch/ui.qml" line="81"/>
         <source>Bandwidth</source>
         <translation>Ширина полосы</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="99"/>
+        <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="101"/>
         <location filename="../src/qml/filters/audio_highpass/ui.qml" line="77"/>
         <location filename="../src/qml/filters/audio_lowpass/ui.qml" line="82"/>
-        <location filename="../src/qml/filters/audio_notch/ui.qml" line="97"/>
+        <location filename="../src/qml/filters/audio_notch/ui.qml" line="99"/>
         <source>Rolloff rate</source>
         <translation>Скорость спада</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="116"/>
+        <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="119"/>
         <location filename="../src/qml/filters/audio_delay/ui.qml" line="100"/>
         <location filename="../src/qml/filters/audio_highpass/ui.qml" line="93"/>
         <location filename="../src/qml/filters/audio_lowpass/ui.qml" line="99"/>
-        <location filename="../src/qml/filters/audio_notch/ui.qml" line="113"/>
+        <location filename="../src/qml/filters/audio_notch/ui.qml" line="116"/>
         <source>Dry</source>
         <translation>Сухие</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="125"/>
+        <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="128"/>
         <location filename="../src/qml/filters/audio_delay/ui.qml" line="108"/>
         <location filename="../src/qml/filters/audio_highpass/ui.qml" line="101"/>
         <location filename="../src/qml/filters/audio_lowpass/ui.qml" line="107"/>
-        <location filename="../src/qml/filters/audio_notch/ui.qml" line="121"/>
+        <location filename="../src/qml/filters/audio_notch/ui.qml" line="124"/>
         <source>Wet</source>
         <translation>Мокрые</translation>
     </message>
