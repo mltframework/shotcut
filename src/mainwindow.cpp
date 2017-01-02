@@ -652,9 +652,12 @@ void MainWindow::setupSettingsMenu()
     QAction* a = new QAction(QLocale::languageToString(QLocale::Catalan), m_languagesGroup);
     a->setCheckable(true);
     a->setData("ca");
-    a = new QAction(QLocale::languageToString(QLocale::Chinese), m_languagesGroup);
+    a = new QAction(QLocale::languageToString(QLocale::Chinese).append(" (China)"), m_languagesGroup);
     a->setCheckable(true);
-    a->setData("zh");
+    a->setData("zh_CN");
+    a = new QAction(QLocale::languageToString(QLocale::Chinese).append(" (Taiwan)"), m_languagesGroup);
+    a->setCheckable(true);
+    a->setData("zh_TW");
     a = new QAction(QLocale::languageToString(QLocale::Czech), m_languagesGroup);
     a->setCheckable(true);
     a->setData("cs");
