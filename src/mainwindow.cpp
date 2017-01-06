@@ -971,13 +971,7 @@ QString MainWindow::removeFileScheme(QUrl &url)
 {
     QString path = url.url();
     if (url.scheme() == "file")
-        path = url.path();
-    if (path.length() > 2 && path.startsWith("///"))
-#ifdef Q_OS_WIN
-        path.remove(0, 3);
-#else
-        path.remove(0, 2);
-#endif
+        path = url.url(QUrl::PreferLocalFile);
     return path;
 }
 
