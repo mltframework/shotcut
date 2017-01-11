@@ -38,14 +38,6 @@ Rectangle {
     property color shotcutBlue: Qt.rgba(23/255, 92/255, 118/255, 1.0)
     property double timeScale: 1.0
 
-    function clearCurrentFilter() {
-    }
-
-    function setCurrentFilter(index) {
-        attachedFilters.setCurrentFilter(index)
-        selectedIndex = index
-    }
-
     MouseArea {
         anchors.fill: parent
         acceptedButtons: Qt.RightButton

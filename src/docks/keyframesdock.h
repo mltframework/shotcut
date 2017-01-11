@@ -35,12 +35,10 @@ public:
     explicit KeyframesDock(MetadataModel* metadataModel, AttachedFiltersModel* attachedModel, QWidget *parent = 0);
 
 signals:
-    void currentFilterRequested(int attachedIndex);
     void changed(); /// Notifies when a filter parameter changes.
 
 public slots:
-    void clearCurrentFilter();
-    void setCurrentFilter(QmlFilter* filter, QmlMetadata* meta, int index);
+    void setCurrentFilter(QmlFilter* filter, QmlMetadata* meta);
     void setFadeInDuration(int duration);
     void setFadeOutDuration(int duration);
 

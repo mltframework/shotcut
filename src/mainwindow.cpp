@@ -326,6 +326,7 @@ MainWindow::MainWindow()
     ui->menuView->addAction(m_keyframesDock->toggleViewAction());
     connect(m_keyframesDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onKeyframesDockTriggered(bool)));
     connect(ui->actionKeyframes, SIGNAL(triggered()), this, SLOT(onKeyframesDockTriggered()));
+    connect(m_filterController, SIGNAL(currentFilterChanged(QmlFilter*, QmlMetadata*, int)), m_keyframesDock, SLOT(setCurrentFilter(QmlFilter*, QmlMetadata*)), Qt::QueuedConnection);
 
     m_historyDock = new QDockWidget(tr("History"), this);
     m_historyDock->hide();

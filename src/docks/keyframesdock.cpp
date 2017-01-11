@@ -53,27 +53,22 @@ KeyframesDock::KeyframesDock(MetadataModel* metadataModel, AttachedFiltersModel*
     m_qview.rootContext()->setContextProperty("view", new QmlView(&m_qview));
     m_qview.rootContext()->setContextProperty("metadatamodel", metadataModel);
     m_qview.rootContext()->setContextProperty("attachedfiltersmodel", attachedModel);
-    setCurrentFilter(0, 0, -1);
+    setCurrentFilter(0, 0);
     connect(m_qview.quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(resetQview()));
 
     LOG_DEBUG() << "end";
 }
 
-void KeyframesDock::clearCurrentFilter()
-{
-    m_qview.rootContext()->setContextProperty("metadata", 0);
-    QMetaObject::invokeMethod(m_qview.rootObject(), "clearCurrentFilter");
-    disconnect(this, SIGNAL(changed()));
-}
-
-void KeyframesDock::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta, int index)
+void KeyframesDock::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta)
 {
     m_qview.rootContext()->setContextProperty("filter", filter);
     m_qview.rootContext()->setContextProperty("metadata", meta);
-    QMetaObject::invokeMethod(m_qview.rootObject(), "setCurrentFilter", Q_ARG(QVariant, QVariant(index)));
     if (filter) {
         connect(filter, SIGNAL(changed()), SIGNAL(changed()));
         m_qview.rootContext()->setContextProperty("producer", new QmlProducer(filter->producer(), filter));
+        resetQview();
+    } else {
+        m_qview.rootContext()->setContextProperty("producer", 0);
     }
 }
 
@@ -105,13 +100,7 @@ bool KeyframesDock::event(QEvent *event)
 void KeyframesDock::resetQview()
 {
     LOG_DEBUG() << "begin";
-    if (m_qview.status() != QQuickWidget::Null) {
-        QObject* root = m_qview.rootObject();
-        QObject::disconnect(root, SIGNAL(currentFilterRequested(int)),
-                            this, SIGNAL(currentFilterRequested(int)));
-
-        m_qview.setSource(QUrl(""));
-    }
+    m_qview.setSource(QUrl(""));
 
     QDir viewPath = QmlUtilities::qmlDir();
     viewPath.cd("views");
@@ -126,8 +115,4 @@ void KeyframesDock::resetQview()
     m_qview.quickWindow()->setColor(palette().window().color());
     QUrl source = QUrl::fromLocalFile(viewPath.absoluteFilePath("keyframes.qml"));
     m_qview.setSource(source);
-
-    QObject::connect(m_qview.rootObject(), SIGNAL(currentFilterRequested(int)),
-        SIGNAL(currentFilterRequested(int)));
-    emit currentFilterRequested(-1);
 }
