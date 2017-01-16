@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2016 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -117,7 +117,7 @@ void ImageProducerWidget::recreateProducer()
 {
     Mlt::Producer* p = producer(MLT.profile());
     p->pass_list(*m_producer, "force_aspect_ratio," kAspectRatioNumerator ", resource, " kAspectRatioDenominator
-        ", ttl," kShotcutResourceProperty ", length," kShotcutSequenceProperty);
+        ", ttl," kShotcutResourceProperty ", length," kShotcutSequenceProperty ", " kPlaylistIndexProperty);
     Mlt::Controller::copyFilters(*m_producer, *p);
     if (m_producer->get_int(kMultitrackItemProperty)) {
         emit producerChanged(p);
@@ -200,14 +200,19 @@ void ImageProducerWidget::on_sequenceCheckBox_clicked(bool checked)
 
             // Count the number of consecutive files.
             MAIN.showStatusMessage(tr("Getting length of image sequence..."));
+            QCoreApplication::processEvents();
             name = info.fileName();
             name.replace(i, count, "%1");
             resource = info.path().append('/').append(name);
-            for (i = j; QFile::exists(resource.arg(i, count, 10, QChar('0'))); ++i);
+            for (i = j; QFile::exists(resource.arg(i, count, 10, QChar('0'))); ++i) {
+                if (i % 100 == 0)
+                    QCoreApplication::processEvents();
+            }
             i -= j;
             m_producer->set("length", i * m_producer->get_int("ttl"));
             ui->durationSpinBox->setValue(i);
             MAIN.showStatusMessage(tr("Reloading image sequence..."));
+            QCoreApplication::processEvents();
         }
     }
     else {
@@ -222,6 +227,8 @@ void ImageProducerWidget::on_repeatSpinBox_editingFinished()
 {
     m_producer->set("ttl", ui->repeatSpinBox->value());
     ui->durationSpinBox->setValue(m_producer->get_length());
+    MAIN.showStatusMessage(tr("Reloading image sequence..."));
+    QCoreApplication::processEvents();
     recreateProducer();
 }
 

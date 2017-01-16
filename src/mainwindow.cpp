@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2016 Meltytech, LLC
+ * Copyright (c) 2011-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -1902,6 +1902,8 @@ void MainWindow::onProducerOpened()
 void MainWindow::onProducerChanged()
 {
     MLT.refreshConsumer();
+    if (playlist() && MLT.producer()->get_int(kPlaylistIndexProperty))
+        m_playlistDock->setUpdateButtonEnabled(true);
 }
 
 bool MainWindow::on_actionSave_triggered()
