@@ -205,7 +205,7 @@ void ImageProducerWidget::on_sequenceCheckBox_clicked(bool checked)
             resource = info.path().append('/').append(name);
             for (i = j; QFile::exists(resource.arg(i, count, 10, QChar('0'))); ++i);
             i -= j;
-            m_producer->set("length", i);
+            m_producer->set("length", i * m_producer->get_int("ttl"));
             ui->durationSpinBox->setValue(i);
             MAIN.showStatusMessage(tr("Reloading image sequence..."));
         }
@@ -221,7 +221,8 @@ void ImageProducerWidget::on_sequenceCheckBox_clicked(bool checked)
 void ImageProducerWidget::on_repeatSpinBox_editingFinished()
 {
     m_producer->set("ttl", ui->repeatSpinBox->value());
-    emit producerChanged(m_producer);
+    ui->durationSpinBox->setValue(m_producer->get_length());
+    recreateProducer();
 }
 
 void ImageProducerWidget::on_defaultDurationButton_clicked()
