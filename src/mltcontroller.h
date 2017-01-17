@@ -83,7 +83,7 @@ public:
     int consumerChanged();
     void setProfile(const QString& profile_name);
     QString resource() const;
-    bool isSeekable() const;
+    bool isSeekable(Mlt::Producer* p = 0) const;
     bool isClip() const;
     bool isSeekableClip();
     bool isPlaylist() const;

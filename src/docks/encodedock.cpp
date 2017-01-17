@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2016 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -310,11 +310,6 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
 
 void EncodeDock::onProducerOpened()
 {
-    if (MLT.isSeekable())
-        ui->encodeButton->setText(tr("Export File"));
-    else
-        ui->encodeButton->setText(tr("Capture File"));
-
     ui->fromCombo->blockSignals(true);
     ui->fromCombo->clear();
     if (MAIN.isMultitrackValid())
@@ -343,6 +338,8 @@ void EncodeDock::onProducerOpened()
         }
     }
     ui->fromCombo->blockSignals(false);
+    if (!m_immediateJob)
+        on_fromCombo_currentIndexChanged(0);
 }
 
 void EncodeDock::loadPresets()
@@ -693,7 +690,7 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Service* service, const QString& target,
 
 void EncodeDock::runMelt(const QString& target, int realtime)
 {
-    Mlt::Service* service = fromProducer();
+    Mlt::Producer* service = fromProducer();
     if (!service) {
         // For each playlist item.
         if (MAIN.playlist() && MAIN.playlist()->count() > 0) {
@@ -704,10 +701,10 @@ void EncodeDock::runMelt(const QString& target, int realtime)
             QScopedPointer<Mlt::Producer> producer(
                 new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData()));
             producer->set_in_and_out(info->frame_in, info->frame_out);
-            m_immediateJob = createMeltJob(producer.data(), target, realtime);
+            m_immediateJob.reset(createMeltJob(producer.data(), target, realtime));
             if (m_immediateJob) {
                 m_immediateJob->setIsStreaming(true);
-                connect(m_immediateJob, SIGNAL(finished(AbstractJob*,bool)), this, SLOT(onFinished(AbstractJob*,bool)));
+                connect(m_immediateJob.data(), SIGNAL(finished(AbstractJob*,bool)), this, SLOT(onFinished(AbstractJob*,bool)));
                 m_immediateJob->start();
             }
             return;
@@ -715,17 +712,17 @@ void EncodeDock::runMelt(const QString& target, int realtime)
             service = MLT.producer();
         }
     }
-    m_immediateJob = createMeltJob(service, target, realtime);
+    m_immediateJob.reset(createMeltJob(service, target, realtime));
     if (m_immediateJob) {
         m_immediateJob->setIsStreaming(true);
-        connect(m_immediateJob, SIGNAL(finished(AbstractJob*,bool)), this, SLOT(onFinished(AbstractJob*,bool)));
+        connect(m_immediateJob.data(), SIGNAL(finished(AbstractJob*,bool)), this, SLOT(onFinished(AbstractJob*,bool)));
         m_immediateJob->start();
     }
 }
 
 void EncodeDock::enqueueMelt(const QString& target, int realtime)
 {
-    Mlt::Service* service = fromProducer();
+    Mlt::Producer* service = fromProducer();
     int pass = (ui->videoRateControlCombo->currentIndex() != RateControlQuality
              && ui->dualPassCheckbox->isEnabled() && ui->dualPassCheckbox->isChecked())? 1 : 0;
     if (!service) {
@@ -829,7 +826,7 @@ void EncodeDock::resetOptions()
     loadPresetFromProperties(preset);
 }
 
-Mlt::Service *EncodeDock::fromProducer() const
+Mlt::Producer *EncodeDock::fromProducer() const
 {
     QString from = ui->fromCombo->currentData().toString();
     if (from == "clip")
@@ -904,15 +901,20 @@ void EncodeDock::on_encodeButton_clicked()
 {
     if (!MLT.producer())
         return;
+    if (m_immediateJob) {
+        m_immediateJob->stop();
+        ui->fromCombo->setEnabled(true);
+        QTimer::singleShot(1000, this, SLOT(openCaptureFile()));
+        return;
+    }
     if (ui->encodeButton->text() == tr("Stop Capture")) {
         MLT.closeConsumer();
-        ui->encodeButton->setText(tr("Capture File"));
         emit captureStateChanged(false);
         ui->streamButton->setDisabled(false);
         QTimer::singleShot(1000, this, SLOT(openCaptureFile()));
         return;
     }
-    bool seekable = MLT.isSeekable();
+    bool seekable = MLT.isSeekable(fromProducer());
     QString directory = Settings.encodePath();
     if (!m_extension.isEmpty()) {
         directory += "/.";
@@ -947,7 +949,7 @@ void EncodeDock::on_encodeButton_clicked()
         else if (MLT.producer()->get_int(kBackgroundCaptureProperty)) {
             // Capture in background
             ui->dualPassCheckbox->setChecked(false);
-            m_immediateJob = createMeltJob(fromProducer(), m_outputFilename, -1);
+            m_immediateJob.reset(createMeltJob(fromProducer(), m_outputFilename, -1));
             if (m_immediateJob) {
                 // Close the producer to prevent resource contention.
                 MAIN.openCut(new Mlt::Producer(MLT.profile(), "color:"));
@@ -955,9 +957,14 @@ void EncodeDock::on_encodeButton_clicked()
 
                 m_immediateJob->setIsStreaming(true);
                 m_immediateJob->start();
-                connect(m_immediateJob, SIGNAL(finished(AbstractJob*,bool)), this, SLOT(onFinished(AbstractJob*,bool)));
+                connect(m_immediateJob.data(), SIGNAL(finished(AbstractJob*,bool)), this, SLOT(onFinished(AbstractJob*,bool)));
 
-                ui->stopCaptureButton->show();
+                if (MLT.resource().startsWith("gdigrab:") || MLT.resource().startsWith("x11grab:")) {
+                    ui->stopCaptureButton->show();
+                } else {
+                    ui->encodeButton->setText(tr("Stop Capture"));
+                    ui->fromCombo->setDisabled(true);
+                }
                 if (MLT.resource().startsWith("gdigrab:"))
                     MAIN.showMinimized();
             }
@@ -1136,12 +1143,12 @@ void EncodeDock::on_removePresetButton_clicked()
 
 void EncodeDock::onFinished(AbstractJob* job, bool isSuccess)
 {
+    Q_UNUSED(job)
     Q_UNUSED(isSuccess)
-    if (!MLT.isSeekable())
-        ui->encodeButton->setText(tr("Capture File"));
+
+    on_fromCombo_currentIndexChanged(0);
     ui->streamButton->setText(tr("Stream"));
-    m_immediateJob = 0;
-    delete job;
+    m_immediateJob.reset();
     emit captureStateChanged(false);
     ui->encodeButton->setDisabled(false);
 }
@@ -1285,4 +1292,13 @@ void EncodeDock::on_gopSpinner_valueChanged(int value)
 {
     Q_UNUSED(value);
     m_isDefaultSettings = false;
+}
+
+void EncodeDock::on_fromCombo_currentIndexChanged(int index)
+{
+    Q_UNUSED(index)
+    if (MLT.isSeekable(fromProducer()))
+        ui->encodeButton->setText(tr("Export File"));
+    else
+        ui->encodeButton->setText(tr("Capture File"));
 }

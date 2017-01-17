@@ -467,22 +467,23 @@ QString Controller::resource() const
     return resource;
 }
 
-bool Controller::isSeekable() const
+bool Controller::isSeekable(Producer* p) const
 {
     bool seekable = false;
-    if (m_producer && m_producer->is_valid()) {
-        if (m_producer->get("force_seekable")) {
-            seekable = m_producer->get_int("force_seekable");
+    Mlt::Producer* producer = p? p : m_producer;
+    if (producer && producer->is_valid()) {
+        if (producer->get("force_seekable")) {
+            seekable = producer->get_int("force_seekable");
         } else {
-            seekable = m_producer->get_int("seekable");
-            if (!seekable && m_producer->get("mlt_type")) {
+            seekable = producer->get_int("seekable");
+            if (!seekable && producer->get("mlt_type")) {
                 // XXX what was this for?
-                seekable = !strcmp(m_producer->get("mlt_type"), "mlt_producer");
+                seekable = !strcmp(producer->get("mlt_type"), "mlt_producer");
             }
             if (!seekable) {
                 // These generators can take an out point to define their length.
                 // TODO: Currently, these max out at 15000 frames, which is arbitrary.
-                QString service(m_producer->get("mlt_service"));
+                QString service(producer->get("mlt_service"));
                 seekable = (service == "color") || service.startsWith("frei0r.") || (service =="tone") || (service =="count");
             }
         }
