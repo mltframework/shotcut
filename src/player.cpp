@@ -880,8 +880,10 @@ void Player::onMuteButtonToggled(bool checked)
     if (checked) {
         m_savedVolume = MLT.volume();
         MLT.setVolume(0);
+        actionVolume->setIcon(QIcon::fromTheme("dialog-cancel", QIcon(":/icons/oxygen/32x32/actions/dialog-cancel.png")));
     } else {
         MLT.setVolume(m_savedVolume);
+        actionVolume->setIcon(QIcon::fromTheme("player-volume", QIcon(":/icons/oxygen/32x32/actions/player-volume.png")));
     }
     Settings.setPlayerMuted(checked);
     m_volumePopup->hide();
