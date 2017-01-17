@@ -2289,7 +2289,7 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
         w = new JackProducerWidget(this);
     else if (resource.startsWith("alsa:"))
         w = new AlsaWidget(this);
-    else if (resource.startsWith("dshow:"))
+    else if (resource.startsWith("dshow:") || QString::fromUtf8(producer->get("resource1")).startsWith("dshow:"))
         w = new DirectShowVideoWidget(this);
     else if (resource.startsWith("avfoundation:"))
         w = new AvfoundationProducerWidget(this);

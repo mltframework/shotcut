@@ -945,12 +945,22 @@ void EncodeDock::on_encodeButton_clicked()
             enqueueMelt(m_outputFilename, Settings.playerGPU()? -1 : -threadCount);
         }
         else if (MLT.producer()->get_int(kBackgroundCaptureProperty)) {
-            // Capture Shotcut screencast
-            MLT.stop();
-            runMelt(m_outputFilename, -1);
-            ui->stopCaptureButton->show();
-            if (MLT.resource().startsWith("gdigrab:"))
-                MAIN.showMinimized();
+            // Capture in background
+            ui->dualPassCheckbox->setChecked(false);
+            m_immediateJob = createMeltJob(fromProducer(), m_outputFilename, -1);
+            if (m_immediateJob) {
+                // Close the producer to prevent resource contention.
+                MAIN.openCut(new Mlt::Producer(MLT.profile(), "color:"));
+                QCoreApplication::processEvents();
+
+                m_immediateJob->setIsStreaming(true);
+                m_immediateJob->start();
+                connect(m_immediateJob, SIGNAL(finished(AbstractJob*,bool)), this, SLOT(onFinished(AbstractJob*,bool)));
+
+                ui->stopCaptureButton->show();
+                if (MLT.resource().startsWith("gdigrab:"))
+                    MAIN.showMinimized();
+            }
         }
         else {
             // Capture to file

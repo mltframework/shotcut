@@ -133,7 +133,7 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>0</y>
+         <y>-70</y>
          <width>428</width>
          <height>497</height>
         </rect>
@@ -1600,7 +1600,7 @@ in temporal compression</string>
           <item>
            <widget class="QPushButton" name="stopCaptureButton">
             <property name="text">
-             <string>Stop Screen Capture</string>
+             <string>Stop Capture</string>
             </property>
            </widget>
           </item>

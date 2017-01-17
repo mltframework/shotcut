@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Meltytech, LLC
+ * Copyright (c) 2014-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,6 +20,7 @@
 #include "ui_directshowvideowidget.h"
 #include "mltcontroller.h"
 #include "util.h"
+#include "shotcut_mlt_properties.h"
 #include <QCamera>
 #include <QString>
 #include <QAudioDeviceInfo>
@@ -45,30 +46,6 @@ DirectShowVideoWidget::~DirectShowVideoWidget()
 
 Mlt::Producer *DirectShowVideoWidget::producer(Mlt::Profile& profile)
 {
-#if 0
-    if (!profile.is_explicit()) {
-        Mlt::Profile ntscProfile("dv_ntsc");
-        Mlt::Profile palProfile("dv_pal");
-        if (ui->v4lWidthSpinBox->value() == ntscProfile.width() && ui->v4lHeightSpinBox->value() == ntscProfile.height()) {
-            profile.set_sample_aspect(ntscProfile.sample_aspect_num(), ntscProfile.sample_aspect_den());
-            profile.set_progressive(ntscProfile.progressive());
-            profile.set_colorspace(ntscProfile.colorspace());
-            profile.set_frame_rate(ntscProfile.frame_rate_num(), ntscProfile.frame_rate_den());
-        } else if (ui->v4lWidthSpinBox->value() == palProfile.width() && ui->v4lHeightSpinBox->value() == palProfile.height()) {
-            profile.set_sample_aspect(palProfile.sample_aspect_num(), palProfile.sample_aspect_den());
-            profile.set_progressive(palProfile.progressive());
-            profile.set_colorspace(palProfile.colorspace());
-            profile.set_frame_rate(palProfile.frame_rate_num(), palProfile.frame_rate_den());
-        } else {
-            profile.set_width(ui->v4lWidthSpinBox->value());
-            profile.set_height(ui->v4lHeightSpinBox->value());
-            profile.set_sample_aspect(1, 1);
-            profile.set_progressive(1);
-            profile.set_colorspace(601);
-            profile.set_frame_rate(ui->v4lFramerateSpinBox->value() * 10000, 10000);
-        }
-    }
-#endif
     Mlt::Producer* p = 0;
     if (ui->videoCombo->currentIndex() > 0) {
         p = new Mlt::Producer(profile, QString("dshow:video=%1")
@@ -82,7 +59,7 @@ Mlt::Producer *DirectShowVideoWidget::producer(Mlt::Profile& profile)
         if (p && p->is_valid() && audio->is_valid()) {
             Mlt::Tractor* tractor = new Mlt::Tractor;
             tractor->set("_profile", profile.get_profile(), 0);
-            tractor->set("resource", p->get("resource"));
+            tractor->set("resource1", p->get("resource"));
             tractor->set("resource2", audio->get("resource"));
             tractor->set_track(*p, 0);
             delete p;
@@ -112,12 +89,14 @@ Mlt::Producer *DirectShowVideoWidget::producer(Mlt::Profile& profile)
         p->set("error", 1);
     }
     p->set("force_seekable", 0);
+    p->set(kBackgroundCaptureProperty, 1);
+    p->set(kShotcutCaptionProperty, tr("DirectShow").toUtf8().constData());
     return p;
 }
 
 void DirectShowVideoWidget::setProducer(Mlt::Producer *producer)
 {
-    QString resource = QString(producer->get("resource"));
+    QString resource = producer->get("resource1") ? QString(producer->get("resource1")) : QString(producer->get("resource"));
     QString resource2 = QString(producer->get("resource2"));
     const char* videoDevice = "dshow:video=";
     const char* audioDevice = "dshow:audio=";
