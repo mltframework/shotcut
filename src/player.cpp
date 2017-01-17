@@ -151,7 +151,7 @@ Player::Player(QWidget *parent)
     m_muteButton->setFocusPolicy(Qt::NoFocus);
     m_muteButton->setObjectName(QString::fromUtf8("muteButton"));
     m_muteButton->setIcon(QIcon::fromTheme("dialog-cancel", QIcon(":/icons/oxygen/32x32/actions/dialog-cancel.png")));
-    m_muteButton->setToolTip(tr("Silence the audio"));
+    m_muteButton->setToolTip(tr("Mute/Unmute"));
     m_muteButton->setCheckable(true);
     m_muteButton->setChecked(Settings.playerMuted());
     onMuteButtonToggled(Settings.playerMuted());
@@ -868,7 +868,7 @@ void Player::on_actionVolume_triggered()
 {
     int x = (m_volumePopup->width() - m_volumeWidget->width()) / 2;
     x = mapToParent(m_volumeWidget->geometry().bottomLeft()).x() - x;
-    int y = 8 - m_volumePopup->height();
+    int y = 32 - m_volumePopup->height();
     m_volumePopup->move(mapToGlobal(m_scrubber->geometry().bottomLeft()) + QPoint(x, y));
     m_volumePopup->show();
     m_volumeWidget->hide();
@@ -881,9 +881,11 @@ void Player::onMuteButtonToggled(bool checked)
         m_savedVolume = MLT.volume();
         MLT.setVolume(0);
         actionVolume->setIcon(QIcon::fromTheme("dialog-cancel", QIcon(":/icons/oxygen/32x32/actions/dialog-cancel.png")));
+        m_muteButton->setIcon(QIcon::fromTheme("player-volume", QIcon(":/icons/oxygen/32x32/actions/player-volume.png")));
     } else {
         MLT.setVolume(m_savedVolume);
         actionVolume->setIcon(QIcon::fromTheme("player-volume", QIcon(":/icons/oxygen/32x32/actions/player-volume.png")));
+        m_muteButton->setIcon(QIcon::fromTheme("dialog-cancel", QIcon(":/icons/oxygen/32x32/actions/dialog-cancel.png")));
     }
     Settings.setPlayerMuted(checked);
     m_volumePopup->hide();
