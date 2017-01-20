@@ -956,7 +956,6 @@ void EncodeDock::on_encodeButton_clicked()
                 QCoreApplication::processEvents();
 
                 m_immediateJob->setIsStreaming(true);
-                m_immediateJob->start();
                 connect(m_immediateJob.data(), SIGNAL(finished(AbstractJob*,bool)), this, SLOT(onFinished(AbstractJob*,bool)));
 
                 if (MLT.resource().startsWith("gdigrab:") || MLT.resource().startsWith("x11grab:")) {
@@ -967,6 +966,9 @@ void EncodeDock::on_encodeButton_clicked()
                 }
                 if (MLT.resource().startsWith("gdigrab:"))
                     MAIN.showMinimized();
+
+                QCoreApplication::processEvents();
+                QTimer::singleShot(1000, m_immediateJob.data(), SLOT(start()));
             }
         }
         else {

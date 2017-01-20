@@ -2281,7 +2281,7 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
     QString resource = QString::fromUtf8(producer->get("resource"));
     QString shotcutProducer(producer->get(kShotcutProducerProperty));
 
-    if (resource.startsWith("video4linux2:"))
+    if (resource.startsWith("video4linux2:") || QString::fromUtf8(producer->get("resource1")).startsWith("video4linux2:"))
         w = new Video4LinuxWidget(this);
     else if (resource.startsWith("pulse:"))
         w = new PulseAudioWidget(this);

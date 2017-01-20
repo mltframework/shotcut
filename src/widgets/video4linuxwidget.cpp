@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2016 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,6 +23,7 @@
 #include "alsawidget.h"
 #include "mltcontroller.h"
 #include "util.h"
+#include "shotcut_mlt_properties.h"
 #include <QtWidgets>
 
 Video4LinuxWidget::Video4LinuxWidget(QWidget *parent) :
@@ -85,7 +86,7 @@ Mlt::Producer* Video4LinuxWidget::producer(Mlt::Profile& profile)
     if (!p->is_valid()) {
         delete p;
         p = new Mlt::Producer(profile, "color:");
-        p->set("resource", QString("video4linux2:%1")
+        p->set("resource1", QString("video4linux2:%1")
                .arg(ui->v4lLineEdit->text()).toLatin1().constData());
         p->set("error", 1);
     }
@@ -99,7 +100,7 @@ Mlt::Producer* Video4LinuxWidget::producer(Mlt::Profile& profile)
         delete audio;
         p = new Mlt::Producer(tractor->get_producer());
         delete tractor;
-        p->set("resource", QString("video4linux2:%1")
+        p->set("resource1", QString("video4linux2:%1")
                .arg(ui->v4lLineEdit->text()).toLatin1().constData());
     }
     p->set("device", ui->v4lLineEdit->text().toLatin1().constData());
@@ -111,6 +112,8 @@ Mlt::Producer* Video4LinuxWidget::producer(Mlt::Profile& profile)
     p->set("channel", ui->v4lChannelSpinBox->value());
     p->set("audio_ix", ui->v4lAudioComboBox->currentIndex());
     p->set("force_seekable", 0);
+    p->set(kBackgroundCaptureProperty, 1);
+    p->set(kShotcutCaptionProperty, tr("Video4Linux").toUtf8().constData());
     return p;
 }
 
