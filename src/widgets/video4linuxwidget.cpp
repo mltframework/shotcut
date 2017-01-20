@@ -113,7 +113,7 @@ Mlt::Producer* Video4LinuxWidget::producer(Mlt::Profile& profile)
     p->set("audio_ix", ui->v4lAudioComboBox->currentIndex());
     p->set("force_seekable", 0);
     p->set(kBackgroundCaptureProperty, 1);
-    p->set(kShotcutCaptionProperty, tr("Video4Linux").toUtf8().constData());
+    p->set(kShotcutCaptionProperty, "Video4Linux");
     return p;
 }
 

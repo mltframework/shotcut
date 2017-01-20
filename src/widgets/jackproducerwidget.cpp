@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2016 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,6 +19,7 @@
 #include "jackproducerwidget.h"
 #include "ui_jackproducerwidget.h"
 #include "util.h"
+#include "shotcut_mlt_properties.h"
 
 JackProducerWidget::JackProducerWidget(QWidget *parent) :
     QWidget(parent),
@@ -35,5 +36,8 @@ JackProducerWidget::~JackProducerWidget()
 
 Mlt::Producer* JackProducerWidget::producer(Mlt::Profile& profile)
 {
-    return new Mlt::Producer(profile, "jack:Shotcut");
+    Mlt::Producer* p = new Mlt::Producer(profile, "jack:Shotcut");
+    p->set(kBackgroundCaptureProperty, 1);
+    p->set(kShotcutCaptionProperty, "JACK");
+    return p;
 }

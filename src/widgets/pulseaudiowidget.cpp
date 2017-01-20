@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2016 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,6 +19,7 @@
 #include "pulseaudiowidget.h"
 #include "ui_pulseaudiowidget.h"
 #include "util.h"
+#include "shotcut_mlt_properties.h"
 
 PulseAudioWidget::PulseAudioWidget(QWidget *parent) :
     QWidget(parent),
@@ -35,5 +36,8 @@ PulseAudioWidget::~PulseAudioWidget()
 
 Mlt::Producer* PulseAudioWidget::producer(Mlt::Profile& profile)
 {
-    return new Mlt::Producer(profile, "pulse:default?name=Shotcut");
+    Mlt::Producer* p = new Mlt::Producer(profile, "pulse:default?name=Shotcut");
+    p->set(kBackgroundCaptureProperty, 1);
+    p->set(kShotcutCaptionProperty, "PulseAudio");
+    return p;
 }

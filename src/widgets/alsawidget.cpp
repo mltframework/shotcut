@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2016 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,6 +20,7 @@
 #include "ui_alsawidget.h"
 #include "mltcontroller.h"
 #include "util.h"
+#include "shotcut_mlt_properties.h"
 
 AlsaWidget::AlsaWidget(QWidget *parent) :
     QWidget(parent),
@@ -46,7 +47,10 @@ Mlt::Producer* AlsaWidget::producer(Mlt::Profile& profile)
         s = s.arg(ui->lineEdit->text());
     if (ui->alsaChannelsSpinBox->value() > 0)
         s += QString("?channels=%1").arg(ui->alsaChannelsSpinBox->value());
-    return new Mlt::Producer(profile, s.toUtf8().constData());
+    Mlt::Producer* p = new Mlt::Producer(profile, s.toUtf8().constData());
+    p->set(kBackgroundCaptureProperty, 1);
+    p->set(kShotcutCaptionProperty, "ALSA");
+    return p;
 }
 
 Mlt::Properties* AlsaWidget::getPreset() const
