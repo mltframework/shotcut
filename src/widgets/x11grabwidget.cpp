@@ -115,7 +115,7 @@ Mlt::Producer* X11grabWidget::newProducer(Mlt::Profile& profile)
     p->set("draw_mouse", ui->drawMouseCheckBox->isChecked()? 1: 0);
     p->set("follow_mouse", ui->positionComboBox->currentIndex() - 1);
     p->set("audio_ix", ui->audioComboBox->currentIndex());
-    p->set(kBackgroundCaptureProperty, ui->backgroundCheckBox->isChecked()? 1: 0);
+    p->set(kBackgroundCaptureProperty, 1);
     p->set("force_seekable", 0);
     return p;
 }
@@ -132,7 +132,7 @@ Mlt::Properties* X11grabWidget::getPreset() const
     p->set("draw_mouse", ui->drawMouseCheckBox->isChecked()? 1: 0);
     p->set("follow_mouse", ui->positionComboBox->currentIndex() - 1);
     p->set("audio_ix", ui->audioComboBox->currentIndex());
-    p->set(kBackgroundCaptureProperty, ui->backgroundCheckBox->isChecked()? 1: 0);
+    p->set(kBackgroundCaptureProperty, 1);
     return p;
 }
 
@@ -148,7 +148,6 @@ void X11grabWidget::loadPreset(Mlt::Properties& p)
     ui->positionComboBox->setCurrentIndex(p.get_int("follow_mouse") + 1);
     ui->audioComboBox->setCurrentIndex(p.get_int("audio_ix"));
     on_audioComboBox_activated(p.get_int("audio_ix"));
-    ui->backgroundCheckBox->setChecked(p.get_int(kBackgroundCaptureProperty));
 }
 
 void X11grabWidget::on_preset_selected(void* p)
