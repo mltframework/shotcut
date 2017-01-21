@@ -34,7 +34,7 @@ JackProducerWidget::~JackProducerWidget()
     delete ui;
 }
 
-Mlt::Producer* JackProducerWidget::producer(Mlt::Profile& profile)
+Mlt::Producer* JackProducerWidget::newProducer(Mlt::Profile& profile)
 {
     Mlt::Producer* p = new Mlt::Producer(profile, "jack:Shotcut");
     p->set(kBackgroundCaptureProperty, 1);

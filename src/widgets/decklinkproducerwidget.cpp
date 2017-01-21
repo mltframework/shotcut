@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2016 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -67,7 +67,7 @@ DecklinkProducerWidget::~DecklinkProducerWidget()
     delete ui;
 }
 
-Mlt::Producer* DecklinkProducerWidget::producer(Mlt::Profile& profile)
+Mlt::Producer* DecklinkProducerWidget::newProducer(Mlt::Profile& profile)
 {
     Mlt::Producer* p = new Mlt::Producer(profile,
         QString("consumer:decklink:%1").arg(ui->deviceCombo->currentIndex()).toLatin1().constData());
@@ -93,12 +93,16 @@ void DecklinkProducerWidget::loadPreset(Mlt::Properties& p)
 void DecklinkProducerWidget::on_deviceCombo_activated(int /*index*/)
 {
     if (m_producer) {
-        MLT.stop();
-        delete m_producer;
-        m_producer = 0;
-        setProducer(producer(MLT.profile()));
+        MLT.close();
+        AbstractProducerWidget::setProducer(0);
+        emit producerChanged(0);
+        QCoreApplication::processEvents();
+
+        Mlt::Producer* p = newProducer(MLT.profile());
+        AbstractProducerWidget::setProducer(p);
+        MLT.setProducer(p);
         MLT.play();
-        emit producerChanged(m_producer);
+        emit producerChanged(p);
     }
 }
 

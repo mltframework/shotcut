@@ -38,7 +38,7 @@ ImageProducerWidget::~ImageProducerWidget()
     delete ui;
 }
 
-Mlt::Producer* ImageProducerWidget::producer(Mlt::Profile& profile)
+Mlt::Producer* ImageProducerWidget::newProducer(Mlt::Profile& profile)
 {
     Mlt::Producer* p = new Mlt::Producer(profile, m_producer->get("resource"));
     if (p->is_valid()) {
@@ -115,7 +115,7 @@ void ImageProducerWidget::reopen(Mlt::Producer* p)
 
 void ImageProducerWidget::recreateProducer()
 {
-    Mlt::Producer* p = producer(MLT.profile());
+    Mlt::Producer* p = newProducer(MLT.profile());
     p->pass_list(*m_producer, "force_aspect_ratio," kAspectRatioNumerator ", resource, " kAspectRatioDenominator
         ", ttl," kShotcutResourceProperty ", length," kShotcutSequenceProperty ", " kPlaylistIndexProperty);
     Mlt::Controller::copyFilters(*m_producer, *p);
@@ -153,7 +153,7 @@ void ImageProducerWidget::on_aspectNumSpinBox_valueChanged(int)
             m_producer->set(kAspectRatioNumerator, ui->aspectNumSpinBox->text().toLatin1().constData());
             m_producer->set(kAspectRatioDenominator, ui->aspectDenSpinBox->text().toLatin1().constData());
         }
-        emit producerChanged(m_producer);
+        emit producerChanged(producer());
     }
 }
 

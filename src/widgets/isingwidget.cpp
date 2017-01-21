@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2016 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -44,7 +44,7 @@ void IsingWidget::on_tempDial_valueChanged(int value)
 {
     if (m_producer) {
         m_producer->set(kParamTemperature, value/100.0);
-        emit producerChanged(m_producer);
+        emit producerChanged(m_producer.data());
     }
     ui->tempSpinner->setValue(value/100.0);
 }
@@ -58,7 +58,7 @@ void IsingWidget::on_borderGrowthDial_valueChanged(int value)
 {
     if (m_producer) {
         m_producer->set(kParamBorderGrowth, value/100.0);
-        emit producerChanged(m_producer);
+        emit producerChanged(m_producer.data());
     }
     ui->borderGrowthSpinner->setValue(value/100.0);
 }
@@ -72,7 +72,7 @@ void IsingWidget::on_spontGrowthDial_valueChanged(int value)
 {
     if (m_producer) {
         m_producer->set(kParamSpontaneous, value/100.0);
-        emit producerChanged(m_producer);
+        emit producerChanged(producer());
     }
     ui->spontGrowthSpinner->setValue(value/100.0);
 }
@@ -82,7 +82,7 @@ void IsingWidget::on_spontGrowthSpinner_valueChanged(double value)
     ui->spontGrowthDial->setValue(value * 100);
 }
 
-Mlt::Producer* IsingWidget::producer(Mlt::Profile& profile)
+Mlt::Producer* IsingWidget::newProducer(Mlt::Profile& profile)
 {
     Mlt::Producer* p = new Mlt::Producer(profile, "frei0r.ising0r");
     p->set(kParamTemperature, ui->tempSpinner->text().toLatin1().constData());

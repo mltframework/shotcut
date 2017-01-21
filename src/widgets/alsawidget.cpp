@@ -38,7 +38,7 @@ AlsaWidget::~AlsaWidget()
     delete ui;
 }
 
-Mlt::Producer* AlsaWidget::producer(Mlt::Profile& profile)
+Mlt::Producer* AlsaWidget::newProducer(Mlt::Profile& profile)
 {
     QString s("alsa:%1");
     if (ui->lineEdit->text().isEmpty())
@@ -97,6 +97,6 @@ void AlsaWidget::setProducer(Mlt::Producer* producer)
 
 void AlsaWidget::on_applyButton_clicked()
 {
-    MLT.setProducer(producer(MLT.profile()));
+    MLT.setProducer(newProducer(MLT.profile()));
     MLT.play();
 }

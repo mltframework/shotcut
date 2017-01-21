@@ -57,7 +57,7 @@ AvfoundationProducerWidget::~AvfoundationProducerWidget()
     delete ui;
 }
 
-Mlt::Producer *AvfoundationProducerWidget::producer(Mlt::Profile& profile)
+Mlt::Producer *AvfoundationProducerWidget::newProducer(Mlt::Profile& profile)
 {
     QString resource = QString("avfoundation:%1:%2?pixel_format=yuyv422&framerate=30&video_size=1280x720")
             .arg(ui->videoCombo->currentText().replace(tr("None"), "none"))
@@ -108,7 +108,10 @@ void AvfoundationProducerWidget::on_videoCombo_activated(int index)
     if (m_producer) {
         MLT.close();
         AbstractProducerWidget::setProducer(0);
-        Mlt::Producer* p = producer(MLT.profile());
+        emit producerChanged(0);
+        QCoreApplication::processEvents();
+
+        Mlt::Producer* p = newProducer(MLT.profile());
         AbstractProducerWidget::setProducer(p);
         MLT.setProducer(p);
         MLT.play();

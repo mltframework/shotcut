@@ -34,7 +34,7 @@ PulseAudioWidget::~PulseAudioWidget()
     delete ui;
 }
 
-Mlt::Producer* PulseAudioWidget::producer(Mlt::Profile& profile)
+Mlt::Producer* PulseAudioWidget::newProducer(Mlt::Profile& profile)
 {
     Mlt::Producer* p = new Mlt::Producer(profile, "pulse:default?name=Shotcut");
     p->set(kBackgroundCaptureProperty, 1);

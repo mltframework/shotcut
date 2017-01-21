@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2013 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,21 +19,19 @@
 #include "abstractproducerwidget.h"
 
 AbstractProducerWidget::AbstractProducerWidget()
-    : m_producer(0)
 {
 }
 
 AbstractProducerWidget::~AbstractProducerWidget()
 {
-    delete m_producer;
 }
 
 void AbstractProducerWidget::setProducer(Mlt::Producer* producer)
 {
-    delete m_producer;
-    m_producer = 0;
     if (producer) {
         loadPreset(*producer);
-        m_producer = new Mlt::Producer(producer);
+        m_producer.reset(new Mlt::Producer(producer));
+    } else {
+        m_producer.reset();
     }
 }

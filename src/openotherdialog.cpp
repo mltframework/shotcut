@@ -111,7 +111,7 @@ OpenOtherDialog::~OpenOtherDialog()
 
 Mlt::Producer* OpenOtherDialog::producer(Mlt::Profile& profile, QObject* widget) const
 {
-    return dynamic_cast<AbstractProducerWidget*>(widget)->producer(profile);
+    return dynamic_cast<AbstractProducerWidget*>(widget)->newProducer(profile);
 }
 
 Mlt::Producer* OpenOtherDialog::producer(Mlt::Profile& profile) const

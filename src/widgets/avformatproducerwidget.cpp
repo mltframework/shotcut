@@ -71,17 +71,17 @@ AvformatProducerWidget::~AvformatProducerWidget()
     delete ui;
 }
 
-Mlt::Producer* AvformatProducerWidget::producer(Mlt::Profile& profile)
+Mlt::Producer* AvformatProducerWidget::newProducer(Mlt::Profile& profile)
 {
-    Mlt::Producer* p = NULL;
+    Mlt::Producer* p = 0;
     if ( ui->speedSpinBox->value() == 1.0 )
     {
-        p = new Mlt::Producer(profile, GetFilenameFromProducer(m_producer));
+        p = new Mlt::Producer(profile, GetFilenameFromProducer(producer()));
     }
     else
     {
         double warpspeed = ui->speedSpinBox->value();
-        char* filename = GetFilenameFromProducer(m_producer);
+        char* filename = GetFilenameFromProducer(producer());
 #ifdef Q_OS_MAC
         // On macOS MLT reads current locale as "C" regardless of what is in System Preferences.
         QString s = QString("%1:%2:%3").arg("timewarp").arg(warpspeed).arg(filename);
@@ -115,7 +115,7 @@ void AvformatProducerWidget::reopen(Mlt::Producer* p)
 
     if( m_recalcDuration )
     {
-        double oldSpeed = GetSpeedFromProducer(m_producer);
+        double oldSpeed = GetSpeedFromProducer(producer());
         double newSpeed = ui->speedSpinBox->value();
         double speedRatio = oldSpeed / newSpeed;
         int in = m_producer->get_in();
@@ -154,7 +154,7 @@ void AvformatProducerWidget::reopen(Mlt::Producer* p)
 
 void AvformatProducerWidget::recreateProducer()
 {
-    Mlt::Producer* p = producer(MLT.profile());
+    Mlt::Producer* p = newProducer(MLT.profile());
     p->pass_list(*m_producer, "audio_index, video_index, force_aspect_ratio,"
                  "video_delay, force_progressive, force_tff,"
                  kAspectRatioNumerator ","
@@ -182,8 +182,8 @@ void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
     if (m_defaultDuration == -1)
         m_defaultDuration = m_producer->get_length();
 
-    double warpSpeed = GetSpeedFromProducer(m_producer);
-    QString s = QString::fromUtf8(GetFilenameFromProducer(m_producer));
+    double warpSpeed = GetSpeedFromProducer(producer());
+    QString s = QString::fromUtf8(GetFilenameFromProducer(producer()));
     QString name = Util::baseName(s);
     QString caption = name;
     if(warpSpeed != 1.0)
@@ -348,7 +348,7 @@ void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
 void AvformatProducerWidget::on_resetButton_clicked()
 {
     ui->speedSpinBox->setValue(1.0);
-    Mlt::Producer* p = producer(MLT.profile());
+    Mlt::Producer* p = newProducer(MLT.profile());
     ui->durationSpinBox->setValue(m_defaultDuration);
     ui->syncSlider->setValue(0);
     Mlt::Controller::copyFilters(*m_producer, *p);
@@ -385,7 +385,7 @@ void AvformatProducerWidget::on_scanComboBox_activated(int index)
             // We need to set these force_ properties as a string so they can be properly removed
             // by setting them NULL.
             m_producer->set("force_progressive", QString::number(index).toLatin1().constData());
-        emit producerChanged(m_producer);
+        emit producerChanged(producer());
         connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
     }
 }
@@ -396,7 +396,7 @@ void AvformatProducerWidget::on_fieldOrderComboBox_activated(int index)
         int tff = m_producer->get_int("meta.media.top_field_first");
         if (m_producer->get("force_tff") || tff != index)
             m_producer->set("force_tff", QString::number(index).toLatin1().constData());
-        emit producerChanged(m_producer);
+        emit producerChanged(producer());
         connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
     }
 }
@@ -414,7 +414,7 @@ void AvformatProducerWidget::on_aspectNumSpinBox_valueChanged(int)
             m_producer->set(kAspectRatioNumerator, ui->aspectNumSpinBox->text().toLatin1().constData());
             m_producer->set(kAspectRatioDenominator, ui->aspectDenSpinBox->text().toLatin1().constData());
         }
-        emit producerChanged(m_producer);
+        emit producerChanged(producer());
         connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
     }
 }
@@ -450,7 +450,7 @@ void AvformatProducerWidget::on_syncSlider_valueChanged(int value)
 
 void AvformatProducerWidget::on_actionOpenFolder_triggered()
 {
-    QFileInfo fi(GetFilenameFromProducer(m_producer));
+    QFileInfo fi(GetFilenameFromProducer(producer()));
     QDesktopServices::openUrl(QUrl::fromLocalFile(fi.path()));
 }
 
@@ -467,7 +467,7 @@ void AvformatProducerWidget::on_menuButton_clicked()
 
 void AvformatProducerWidget::on_actionCopyFullFilePath_triggered()
 {
-    qApp->clipboard()->setText(GetFilenameFromProducer(m_producer));
+    qApp->clipboard()->setText(GetFilenameFromProducer(producer()));
 }
 
 void AvformatProducerWidget::on_notesTextEdit_textChanged()
@@ -482,14 +482,14 @@ void AvformatProducerWidget::on_actionFFmpegInfo_triggered()
     args << "-print_format" << "ini";
     args << "-pretty";
     args << "-show_format" << "-show_programs" << "-show_streams";
-    args << GetFilenameFromProducer(m_producer);
+    args << GetFilenameFromProducer(producer());
     AbstractJob* job = new FfprobeJob(args.last(), args);
     job->start();
 }
 
 void AvformatProducerWidget::on_actionFFmpegIntegrityCheck_triggered()
 {
-    QString resource = GetFilenameFromProducer(m_producer);
+    QString resource = GetFilenameFromProducer(producer());
     QStringList args;
     args << "-xerror";
     args << "-err_detect" << "+explode";

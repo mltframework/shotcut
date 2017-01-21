@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,20 +20,22 @@
 #define ABSTRACTPRODUCERWIDGET_H
 
 #include <MltProducer.h>
+#include <QScopedPointer>
 
 class AbstractProducerWidget
 {
 public:
     AbstractProducerWidget();
     virtual ~AbstractProducerWidget();
-    virtual Mlt::Producer* producer(Mlt::Profile&) = 0;
+    virtual Mlt::Producer* newProducer(Mlt::Profile&) = 0;
     virtual void setProducer(Mlt::Producer*);
     virtual Mlt::Properties* getPreset() const
         { return new Mlt::Properties; }
     virtual void loadPreset(Mlt::Properties&) {}
+    Mlt::Producer* producer() const { return m_producer.data(); }
 
 protected:
-    Mlt::Producer* m_producer;
+    QScopedPointer<Mlt::Producer> m_producer;
 };
 
 #endif // ABSTRACTPRODUCERWIDGET_H

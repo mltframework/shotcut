@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2016 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -36,7 +36,7 @@ public:
     ~AvformatProducerWidget();
 
     // AbstractProducerWidget overrides
-    Mlt::Producer* producer(Mlt::Profile&);
+    Mlt::Producer* newProducer(Mlt::Profile&);
 
 signals:
     void producerChanged(Mlt::Producer*);

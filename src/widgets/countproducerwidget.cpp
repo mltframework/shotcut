@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Meltytech, LLC
+ * Copyright (c) 2016-2017 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -90,7 +90,7 @@ QString CountProducerWidget::currentBackground() const
     return ui->backgroundCombo->itemData(ui->backgroundCombo->currentIndex()).toString();
 }
 
-Mlt::Producer* CountProducerWidget::producer(Mlt::Profile& profile)
+Mlt::Producer* CountProducerWidget::newProducer(Mlt::Profile& profile)
 {
     Mlt::Producer* p = new Mlt::Producer(profile, "count:");
     p->set("direction", currentDirection().toLatin1().constData());
@@ -143,9 +143,9 @@ void CountProducerWidget::loadPreset(Mlt::Properties& p)
         m_producer->set("sound", p.get("sound"));
         m_producer->set("background", p.get("background"));
         m_producer->set("drop", p.get("drop"));
-        setLength(m_producer, ui->durationSpinBox->value());
+        setLength(producer(), ui->durationSpinBox->value());
         m_producer->set(kShotcutDetailProperty, detail().toUtf8().constData());
-        emit producerChanged(m_producer);
+        emit producerChanged(producer());
     }
 }
 
@@ -154,7 +154,7 @@ void CountProducerWidget::on_directionCombo_activated(int /*index*/)
     if (m_producer) {
         m_producer->set("direction", currentDirection().toLatin1().constData());
         m_producer->set(kShotcutDetailProperty, detail().toUtf8().constData());
-        emit producerChanged(m_producer);
+        emit producerChanged(producer());
     }
 }
 
@@ -163,7 +163,7 @@ void CountProducerWidget::on_styleCombo_activated(int /*index*/)
     if (m_producer) {
         m_producer->set("style", currentStyle().toLatin1().constData());
         m_producer->set(kShotcutDetailProperty, detail().toUtf8().constData());
-        emit producerChanged(m_producer);
+        emit producerChanged(producer());
     }
 }
 
@@ -171,7 +171,7 @@ void CountProducerWidget::on_soundCombo_activated(int /*index*/)
 {
     if (m_producer) {
         m_producer->set("sound", currentSound().toLatin1().constData());
-        emit producerChanged(m_producer);
+        emit producerChanged(producer());
     }
 }
 
@@ -179,7 +179,7 @@ void CountProducerWidget::on_backgroundCombo_activated(int /*index*/)
 {
     if (m_producer) {
         m_producer->set("background", currentBackground().toLatin1().constData());
-        emit producerChanged(m_producer);
+        emit producerChanged(producer());
     }
 }
 
@@ -187,7 +187,7 @@ void CountProducerWidget::on_dropCheckBox_clicked(bool checked)
 {
     if (m_producer) {
         m_producer->set("drop", checked);
-        emit producerChanged(m_producer);
+        emit producerChanged(producer());
     }
 }
 
@@ -198,10 +198,10 @@ void CountProducerWidget::on_durationSpinBox_editingFinished()
     if (ui->durationSpinBox->value() == m_producer->get_length())
         return;
     if (m_producer) {
-        setLength(m_producer, ui->durationSpinBox->value());
+        setLength(producer(), ui->durationSpinBox->value());
         MLT.stop();
         emit producerReopened();
-        emit producerChanged(m_producer);
+        emit producerChanged(producer());
         MLT.seek(0);
     }
 }

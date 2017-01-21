@@ -44,7 +44,7 @@ DirectShowVideoWidget::~DirectShowVideoWidget()
     delete ui;
 }
 
-Mlt::Producer *DirectShowVideoWidget::producer(Mlt::Profile& profile)
+Mlt::Producer *DirectShowVideoWidget::newProducer(Mlt::Profile& profile)
 {
     Mlt::Producer* p = 0;
     if (ui->videoCombo->currentIndex() > 0) {
@@ -133,12 +133,16 @@ void DirectShowVideoWidget::on_videoCombo_activated(int index)
 {
     Q_UNUSED(index)
     if (m_producer) {
-        MLT.pause();
-        delete m_producer;
-        m_producer = new Mlt::Producer(producer(MLT.profile()));
-        MLT.setProducer(m_producer);
+        MLT.close();
+        AbstractProducerWidget::setProducer(0);
+        emit producerChanged(0);
+        QCoreApplication::processEvents();
+
+        Mlt::Producer* p = newProducer(MLT.profile());
+        AbstractProducerWidget::setProducer(p);
+        MLT.setProducer(p);
         MLT.play();
-        emit producerChanged(m_producer);
+        emit producerChanged(p);
     }
 }
 

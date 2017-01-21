@@ -58,7 +58,7 @@ QString Video4LinuxWidget::URL() const
     return s;
 }
 
-Mlt::Producer* Video4LinuxWidget::producer(Mlt::Profile& profile)
+Mlt::Producer* Video4LinuxWidget::newProducer(Mlt::Profile& profile)
 {
     if (!profile.is_explicit()) {
         Mlt::Profile ntscProfile("dv_ntsc");
@@ -91,7 +91,7 @@ Mlt::Producer* Video4LinuxWidget::producer(Mlt::Profile& profile)
         p->set("error", 1);
     }
     else if (m_audioWidget) {
-        Mlt::Producer* audio = dynamic_cast<AbstractProducerWidget*>(m_audioWidget)->producer(profile);
+        Mlt::Producer* audio = dynamic_cast<AbstractProducerWidget*>(m_audioWidget)->newProducer(profile);
         Mlt::Tractor* tractor = new Mlt::Tractor;
         tractor->set("_profile", profile.get_profile(), 0);
         tractor->set_track(*p, 0);
@@ -185,6 +185,6 @@ void Video4LinuxWidget::setProducer(Mlt::Producer* producer)
 void Video4LinuxWidget::on_applyButton_clicked()
 {
     MLT.close();
-    MLT.setProducer(producer(MLT.profile()));
+    MLT.setProducer(newProducer(MLT.profile()));
     MLT.play();
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2016 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -53,7 +53,7 @@ static double map_value_backward(double v, double min, double max)
     return (v-min)/(max-min);
 }
 
-Mlt::Producer* ColorBarsWidget::producer(Mlt::Profile& profile)
+Mlt::Producer* ColorBarsWidget::newProducer(Mlt::Profile& profile)
 {
     Mlt::Producer* p = new Mlt::Producer(profile, "frei0r.test_pat_B");
     p->set(kParamType, ui->comboBox->currentIndex());
@@ -90,6 +90,6 @@ void ColorBarsWidget::on_comboBox_activated(int index)
         m_producer->set(kParamType, index);
         m_producer->set(kShotcutCaptionProperty, ui->comboBox->currentText().toUtf8().constData());
         m_producer->set(kShotcutDetailProperty, ui->comboBox->currentText().toUtf8().constData());
-        emit producerChanged(m_producer);
+        emit producerChanged(producer());
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2016 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -87,7 +87,7 @@ QString X11grabWidget::URL(Mlt::Profile& profile) const
     return s;
 }
 
-Mlt::Producer* X11grabWidget::producer(Mlt::Profile& profile)
+Mlt::Producer* X11grabWidget::newProducer(Mlt::Profile& profile)
 {
     Mlt::Producer* p = new Mlt::Producer(profile, URL(profile).toLatin1().constData());
     if (!p->is_valid()) {
@@ -96,7 +96,7 @@ Mlt::Producer* X11grabWidget::producer(Mlt::Profile& profile)
         p->set("error", 1);
     }
     else if (m_audioWidget) {
-        Mlt::Producer* audio = dynamic_cast<AbstractProducerWidget*>(m_audioWidget)->producer(profile);
+        Mlt::Producer* audio = dynamic_cast<AbstractProducerWidget*>(m_audioWidget)->newProducer(profile);
         Mlt::Tractor* tractor = new Mlt::Tractor;
         tractor->set("_profile", profile.get_profile(), 0);
         tractor->set_track(*p, 0);
@@ -172,6 +172,6 @@ void X11grabWidget::setProducer(Mlt::Producer* producer)
 
 void X11grabWidget::on_applyButton_clicked()
 {
-    MLT.setProducer(producer(MLT.profile()));
+    MLT.setProducer(newProducer(MLT.profile()));
     MLT.play();
 }
