@@ -36,6 +36,7 @@
 // formulas to map absolute value ranges to percentages as int
 #define TO_ABSOLUTE(min, max, rel) qRound(float(min) + float((max) - (min) + 1) * float(rel) / 100.0f)
 #define TO_RELATIVE(min, max, abs) qRound(100.0f * float((abs) - (min)) / float((max) - (min) + 1))
+static const int kOpenCaptureFileDelayMs = 1500;
 
 static double getBufferSize(Mlt::Properties& preset, const char* property);
 
@@ -904,14 +905,14 @@ void EncodeDock::on_encodeButton_clicked()
     if (m_immediateJob) {
         m_immediateJob->stop();
         ui->fromCombo->setEnabled(true);
-        QTimer::singleShot(1000, this, SLOT(openCaptureFile()));
+        QTimer::singleShot(kOpenCaptureFileDelayMs, this, SLOT(openCaptureFile()));
         return;
     }
     if (ui->encodeButton->text() == tr("Stop Capture")) {
         MLT.closeConsumer();
         emit captureStateChanged(false);
         ui->streamButton->setDisabled(false);
-        QTimer::singleShot(1000, this, SLOT(openCaptureFile()));
+        QTimer::singleShot(kOpenCaptureFileDelayMs, this, SLOT(openCaptureFile()));
         return;
     }
     bool seekable = MLT.isSeekable(fromProducer());
@@ -1163,7 +1164,7 @@ void EncodeDock::on_stopCaptureButton_clicked()
     if (m_immediateJob)
         m_immediateJob->stop();
     if (!m_outputFilename.isEmpty())
-        QTimer::singleShot(1000, this, SLOT(openCaptureFile()));
+        QTimer::singleShot(kOpenCaptureFileDelayMs, this, SLOT(openCaptureFile()));
 }
 
 void EncodeDock::on_videoRateControlCombo_activated(int index)
