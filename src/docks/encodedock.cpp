@@ -954,6 +954,8 @@ void EncodeDock::on_encodeButton_clicked()
                 // Close the producer to prevent resource contention.
                 MAIN.openCut(new Mlt::Producer(MLT.profile(), "color:"));
                 QCoreApplication::processEvents();
+                MAIN.openCut(new Mlt::Producer(MLT.profile(), "color:"));
+                QCoreApplication::processEvents();
 
                 m_immediateJob->setIsStreaming(true);
                 connect(m_immediateJob.data(), SIGNAL(finished(AbstractJob*,bool)), this, SLOT(onFinished(AbstractJob*,bool)));
@@ -967,8 +969,8 @@ void EncodeDock::on_encodeButton_clicked()
                 if (MLT.resource().startsWith("gdigrab:"))
                     MAIN.showMinimized();
 
-                QCoreApplication::processEvents();
-                QTimer::singleShot(1000, m_immediateJob.data(), SLOT(start()));
+                int msec = MLT.producer()->get_int(kBackgroundCaptureProperty) * 1000;
+                QTimer::singleShot(msec, m_immediateJob.data(), SLOT(start()));
             }
         }
         else {
