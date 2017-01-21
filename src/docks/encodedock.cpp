@@ -311,6 +311,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
 
 void EncodeDock::onProducerOpened()
 {
+    int index = 0;
     ui->fromCombo->blockSignals(true);
     ui->fromCombo->clear();
     if (MAIN.isMultitrackValid())
@@ -328,6 +329,8 @@ void EncodeDock::onProducerOpened()
         } else {
             ui->fromCombo->addItem(tr("Source"), "clip");
         }
+        if (MLT.producer()->get_int(kBackgroundCaptureProperty))
+            index = ui->fromCombo->count() - 1;
     } else if (MLT.savedProducer() && MLT.savedProducer()->is_valid()) {
         if (MLT.savedProducer()->get(kShotcutCaptionProperty)) {
             ui->fromCombo->addItem(MLT.savedProducer()->get(kShotcutCaptionProperty), "clip");
@@ -340,7 +343,7 @@ void EncodeDock::onProducerOpened()
     }
     ui->fromCombo->blockSignals(false);
     if (!m_immediateJob)
-        on_fromCombo_currentIndexChanged(0);
+        ui->fromCombo->setCurrentIndex(index);
 }
 
 void EncodeDock::loadPresets()

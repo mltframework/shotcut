@@ -1902,7 +1902,8 @@ void MainWindow::onProducerOpened()
 void MainWindow::onProducerChanged()
 {
     MLT.refreshConsumer();
-    if (playlist() && MLT.producer()->get_int(kPlaylistIndexProperty))
+    if (playlist() && MLT.producer() && MLT.producer()->is_valid()
+        && MLT.producer()->get_int(kPlaylistIndexProperty))
         m_playlistDock->setUpdateButtonEnabled(true);
 }
 
