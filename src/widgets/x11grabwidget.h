@@ -40,6 +40,9 @@ public:
     void loadPreset(Mlt::Properties&);
     void setProducer(Mlt::Producer*);
 
+signals:
+    void producerChanged(Mlt::Producer*);
+
 private slots:
     void on_positionComboBox_activated(int index);
     void on_audioComboBox_activated(int index);

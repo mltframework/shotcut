@@ -172,6 +172,14 @@ void X11grabWidget::setProducer(Mlt::Producer* producer)
 
 void X11grabWidget::on_applyButton_clicked()
 {
-    MLT.setProducer(newProducer(MLT.profile()));
+    MLT.close();
+    AbstractProducerWidget::setProducer(0);
+    emit producerChanged(0);
+    QCoreApplication::processEvents();
+
+    Mlt::Producer* p = newProducer(MLT.profile());
+    AbstractProducerWidget::setProducer(p);
+    MLT.setProducer(p);
     MLT.play();
+    emit producerChanged(p);
 }
