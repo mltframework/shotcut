@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2016 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -46,7 +46,7 @@ QValidator::State TimeSpinBox::validate(QString &input, int &pos) const
 
 int TimeSpinBox::valueFromText(const QString &text) const
 {
-    if (MLT.producer()) {
+    if (MLT.producer() && MLT.producer()->is_valid()) {
         return MLT.producer()->time_to_frames(text.toLatin1().constData());
     } else {
         return Mlt::Producer(MLT.profile(), "colour").time_to_frames(text.toLatin1().constData());
@@ -56,7 +56,7 @@ int TimeSpinBox::valueFromText(const QString &text) const
 
 QString TimeSpinBox::textFromValue(int val) const
 {
-    if (MLT.producer()) {
+    if (MLT.producer() && MLT.producer()->is_valid()) {
         return MLT.producer()->frames_to_time(val);
     } else {
         return Mlt::Producer(MLT.profile(), "colour").frames_to_time(val);
