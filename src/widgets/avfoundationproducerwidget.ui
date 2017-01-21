@@ -23,7 +23,7 @@
       </font>
      </property>
      <property name="text">
-      <string>OS X A/V Device</string>
+      <string>macOS A/V Device</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -39,6 +39,16 @@
          <string>None</string>
         </property>
        </item>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Video Input</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
       </widget>
      </item>
      <item row="2" column="2">
@@ -60,16 +70,6 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>Video Input</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
      <item row="0" column="3" rowspan="3">
       <spacer name="horizontalSpacer">
        <property name="orientation">
@@ -82,22 +82,6 @@
         </size>
        </property>
       </spacer>
-     </item>
-     <item row="3" column="2" colspan="2">
-      <widget class="QCheckBox" name="backgroundCheckBox">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="toolTip">
-        <string>Use this when you are going to capture Shotcut itself.
-It makes the capture run in the background, but
-you will not be able to simultaneously send
-the screen capture to SDI/HDMI in this mode.</string>
-       </property>
-       <property name="text">
-        <string>Capture Shotcut</string>
-       </property>
-      </widget>
      </item>
     </layout>
    </item>

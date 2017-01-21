@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2016 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -63,7 +63,7 @@ OpenOtherDialog::OpenOtherDialog(QWidget *parent) :
     item->setData(0, Qt::UserRole, ui->gdigrabTab->objectName());
 #endif
 #elif defined(Q_OS_MAC)
-    QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("OS X A/V Device")));
+    QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("macOS A/V Device")));
     item->setData(0, Qt::UserRole, ui->avfoundationTab->objectName());
 #endif
 

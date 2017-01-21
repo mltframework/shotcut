@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2016 Meltytech, LLC
+ * Copyright (c) 2015-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -42,8 +42,6 @@ AvfoundationProducerWidget::AvfoundationProducerWidget(QWidget *parent) :
 #if ENABLE_SCREEN_CAPTURE
     for (int i = 0; i < QApplication::desktop()->screenCount(); i++)
         ui->videoCombo->addItem(QString("Capture screen %1").arg(i));
-#else
-    ui->backgroundCheckBox->hide();
 #endif
     foreach (const QAudioDeviceInfo &deviceInfo, QAudioDeviceInfo::availableDevices(QAudio::AudioInput))
         ui->audioCombo->addItem(deviceInfo.deviceName());
@@ -76,7 +74,8 @@ Mlt::Producer *AvfoundationProducerWidget::producer(Mlt::Profile& profile)
         p->set("error", 1);
     }
     p->set("force_seekable", 0);
-    p->set(kBackgroundCaptureProperty, ui->backgroundCheckBox->isChecked()? 1: 0);
+    p->set(kBackgroundCaptureProperty, 1);
+    p->set(kShotcutCaptionProperty, tr("macOS A/V Device").toUtf8().constData());
     return p;
 }
 
@@ -90,7 +89,6 @@ void AvfoundationProducerWidget::setProducer(Mlt::Producer *producer)
         for (int i = 1; i < ui->videoCombo->count(); i++) {
             if (ui->videoCombo->itemText(i) == resource[1]) {
                 ui->videoCombo->setCurrentIndex(i);
-                ui->backgroundCheckBox->setEnabled(resource[1].startsWith("Capture screen"));
                 break;
             }
         }
@@ -101,23 +99,20 @@ void AvfoundationProducerWidget::setProducer(Mlt::Producer *producer)
             }
         }
     }
-    ui->backgroundCheckBox->setChecked(producer->get_int(kBackgroundCaptureProperty));
     AbstractProducerWidget::setProducer(producer);
 }
 
 void AvfoundationProducerWidget::on_videoCombo_activated(int index)
 {
     Q_UNUSED(index)
-    ui->backgroundCheckBox->setEnabled(ui->videoCombo->currentText().startsWith("Capture screen"));
-    if (!ui->backgroundCheckBox->isEnabled())
-        ui->backgroundCheckBox->setChecked(false);
     if (m_producer) {
-        MLT.pause();
-        delete m_producer;
-        m_producer = new Mlt::Producer(producer(MLT.profile()));
-        MLT.setProducer(m_producer);
+        MLT.close();
+        AbstractProducerWidget::setProducer(0);
+        Mlt::Producer* p = producer(MLT.profile());
+        AbstractProducerWidget::setProducer(p);
+        MLT.setProducer(p);
         MLT.play();
-        emit producerChanged(m_producer);
+        emit producerChanged(p);
     }
 }
 
