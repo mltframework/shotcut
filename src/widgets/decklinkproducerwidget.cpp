@@ -87,7 +87,12 @@ Mlt::Properties* DecklinkProducerWidget::getPreset() const
 void DecklinkProducerWidget::loadPreset(Mlt::Properties& p)
 {
     ui->deviceCombo->setCurrentIndex(p.get_int("card"));
-    ui->deviceCombo->setCurrentIndex(p.get_int("profile"));
+    for (int i = 0; i < ui->profileCombo->count(); ++i) {
+        if (ui->profileCombo->itemData(i).toString() == p.get("profile")) {
+            ui->profileCombo->setCurrentIndex(i);
+            break;
+        }
+    }
 }
 
 void DecklinkProducerWidget::on_deviceCombo_activated(int /*index*/)
