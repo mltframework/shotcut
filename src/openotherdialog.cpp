@@ -109,14 +109,14 @@ OpenOtherDialog::~OpenOtherDialog()
     delete ui;
 }
 
-Mlt::Producer* OpenOtherDialog::producer(Mlt::Profile& profile, QObject* widget) const
+Mlt::Producer* OpenOtherDialog::newProducer(Mlt::Profile& profile, QObject* widget) const
 {
     return dynamic_cast<AbstractProducerWidget*>(widget)->newProducer(profile);
 }
 
-Mlt::Producer* OpenOtherDialog::producer(Mlt::Profile& profile) const
+Mlt::Producer* OpenOtherDialog::newProducer(Mlt::Profile& profile) const
 {
-    return producer(profile, m_current);
+    return newProducer(profile, m_current);
 }
 
 void OpenOtherDialog::load(Mlt::Producer* producer)

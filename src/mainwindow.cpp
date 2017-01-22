@@ -1849,7 +1849,7 @@ void MainWindow::on_actionOpenOther_triggered()
     if (MLT.producer())
         dialog.load(MLT.producer());
     if (dialog.exec() == QDialog::Accepted)
-        open(dialog.producer(MLT.profile()));
+        open(dialog.newProducer(MLT.profile()));
 }
 
 void MainWindow::onProducerOpened()

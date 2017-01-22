@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -39,7 +39,7 @@ public:
     explicit OpenOtherDialog(QWidget *parent = 0);
     ~OpenOtherDialog();
     
-    Mlt::Producer* producer(Mlt::Profile&) const;
+    Mlt::Producer* newProducer(Mlt::Profile&) const;
     void load(Mlt::Producer*);
 
 private slots:
@@ -49,7 +49,7 @@ private:
     Ui::OpenOtherDialog *ui;
     QObject* m_current;
 
-    Mlt::Producer* producer(Mlt::Profile&, QObject* widget) const;
+    Mlt::Producer* newProducer(Mlt::Profile&, QObject* widget) const;
     void selectTreeWidget(const QString& s);
 };
 
