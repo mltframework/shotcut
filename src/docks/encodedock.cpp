@@ -74,8 +74,10 @@ EncodeDock::EncodeDock(QWidget *parent) :
 
     Mlt::Properties* p = new Mlt::Properties(c.get_data("f"));
     ui->formatCombo->blockSignals(true);
-    for (int i = 0; i < p->count(); i++)
-        ui->formatCombo->addItem(p->get(i));
+    for (int i = 0; i < p->count(); i++) {
+        if (ui->formatCombo->findText(p->get(i)) == -1)
+            ui->formatCombo->addItem(p->get(i));
+    }
     delete p;
     ui->formatCombo->model()->sort(0);
     ui->formatCombo->insertItem(0, tr("Automatic from extension"));
