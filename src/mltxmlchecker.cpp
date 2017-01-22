@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Meltytech, LLC
+ * Copyright (c) 2014-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -52,7 +52,13 @@ MltXmlChecker::MltXmlChecker()
     : m_needsGPU(false)
     , m_hasEffects(false)
     , m_isCorrected(false)
+#ifdef Q_OS_MAC
+    // For some reason, on macOS, Shotcut does not honor the locale-defined
+    // decimal point, and MLT writes XML with LC_NUMERIC=C.
+    , m_decimalPoint(QLocale(QLocale::C).decimalPoint())
+#else
     , m_decimalPoint(QLocale(QLocale::system().name()).decimalPoint())
+#endif
     , m_tempFile(QDir::tempPath().append("/shotcut-XXXXXX.mlt"))
     , m_numericValueChanged(false)
 {
