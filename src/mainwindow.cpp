@@ -1991,6 +1991,19 @@ bool MainWindow::continueJobsRunning()
         dialog.setEscapeButton(QMessageBox::No);
         return (dialog.exec() == QMessageBox::Yes);
     }
+    if (m_encodeDock->isExportInProgress()) {
+        QMessageBox dialog(QMessageBox::Warning,
+                                     qApp->applicationName(),
+                                     tr("An export is in progress.\n"
+                                        "Do you want to still want to exit?"),
+                                     QMessageBox::No |
+                                     QMessageBox::Yes,
+                                     this);
+        dialog.setWindowModality(QmlApplication::dialogModality());
+        dialog.setDefaultButton(QMessageBox::Yes);
+        dialog.setEscapeButton(QMessageBox::No);
+        return (dialog.exec() == QMessageBox::Yes);
+    }
     return true;
 }
 

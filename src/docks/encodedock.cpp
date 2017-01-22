@@ -104,6 +104,8 @@ EncodeDock::EncodeDock(QWidget *parent) :
 
 EncodeDock::~EncodeDock()
 {
+    if (m_immediateJob)
+        m_immediateJob->stop();
     delete ui;
     delete m_presets;
     delete m_profiles;
@@ -311,6 +313,11 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
     on_videoRateControlCombo_activated(ui->videoRateControlCombo->currentIndex());
 }
 
+bool EncodeDock::isExportInProgress() const
+{
+    return !m_immediateJob.isNull();
+}
+
 void EncodeDock::onProducerOpened()
 {
     int index = 0;
@@ -344,8 +351,10 @@ void EncodeDock::onProducerOpened()
         }
     }
     ui->fromCombo->blockSignals(false);
-    if (!m_immediateJob)
+    if (!m_immediateJob) {
         ui->fromCombo->setCurrentIndex(index);
+        on_fromCombo_currentIndexChanged(index);
+    }
 }
 
 void EncodeDock::loadPresets()

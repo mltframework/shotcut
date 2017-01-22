@@ -52,6 +52,7 @@ public:
     ~EncodeDock();
 
     void loadPresetFromProperties(Mlt::Properties&);
+    bool isExportInProgress() const;
 
 signals:
     void captureStateChanged(bool);
