@@ -430,8 +430,27 @@ void Player::seek(int position)
     actionPlay->setToolTip(tr("Start playback (L)"));
 }
 
+void Player::reset()
+{
+    m_scrubber->setMarkers(QList<int>());
+    m_inPointLabel->setText("--:--:--:-- / ");
+    m_selectedLabel->setText("--:--:--:--");
+    m_durationLabel->setText(" / 00:00:00:00");
+    m_scrubber->setDisabled(true);
+    m_scrubber->setScale(1);
+    m_positionSpinner->setValue(0);
+    m_positionSpinner->setDisabled(true);
+    actionPlay->setDisabled(true);
+    actionSkipPrevious->setDisabled(true);
+    actionSkipNext->setDisabled(true);
+    actionRewind->setDisabled(true);
+    actionFastForward->setDisabled(true);
+    m_videoWidget->hide();
+}
+
 void Player::onProducerOpened(bool play)
 {
+    m_videoWidget->show();
     m_duration = MLT.producer()->get_length();
     m_isSeekable = MLT.isSeekable();
     MLT.producer()->set("ignore_points", 1);

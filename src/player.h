@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2016 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -90,6 +90,7 @@ public slots:
     void stop();
     void togglePlayPaused();
     void seek(int position);
+    void reset();
     void onProducerOpened(bool play = true);
     void postProducerOpened();
     void onMeltedUnitOpened();
