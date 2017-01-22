@@ -966,11 +966,8 @@ void EncodeDock::on_encodeButton_clicked()
             ui->dualPassCheckbox->setChecked(false);
             m_immediateJob.reset(createMeltJob(fromProducer(), m_outputFilename, -1));
             if (m_immediateJob) {
-                // Close the producer to prevent resource contention.
-                MAIN.openCut(new Mlt::Producer(MLT.profile(), "color:"));
-                QCoreApplication::processEvents();
-                MAIN.openCut(new Mlt::Producer(MLT.profile(), "color:"));
-                QCoreApplication::processEvents();
+                // Close the player's producer to prevent resource contention.
+                MAIN.hideProducer();
 
                 m_immediateJob->setIsStreaming(true);
                 connect(m_immediateJob.data(), SIGNAL(finished(AbstractJob*,bool)), this, SLOT(onFinished(AbstractJob*,bool)));

@@ -1134,6 +1134,31 @@ void MainWindow::openCut(Mlt::Producer* producer)
     MLT.seek(producer->get_in());
 }
 
+void MainWindow::hideProducer()
+{
+    // This is a hack to release references to the old producer, but it
+    // probably leaves a reference to the new color producer somewhere not
+    // yet identified (root cause).
+    openCut(new Mlt::Producer(MLT.profile(), "color:"));
+    QCoreApplication::processEvents();
+
+    QScrollArea* scrollArea = (QScrollArea*) m_propertiesDock->widget();
+    delete scrollArea->widget();
+    scrollArea->hide();
+    m_filterController->setProducer(0);
+    m_player->reset();
+
+    QCoreApplication::processEvents();
+}
+
+void MainWindow::closeProducer()
+{
+    hideProducer();
+    MLT.stop();
+    MLT.close();
+    MLT.setSavedProducer(0);
+}
+
 void MainWindow::showStatusMessage(QAction* action, int timeoutSeconds)
 {
     // This object takes ownership of the passed action.
@@ -1848,8 +1873,10 @@ void MainWindow::on_actionOpenOther_triggered()
 
     if (MLT.producer())
         dialog.load(MLT.producer());
-    if (dialog.exec() == QDialog::Accepted)
+    if (dialog.exec() == QDialog::Accepted) {
+        closeProducer();
         open(dialog.newProducer(MLT.profile()));
+    }
 }
 
 void MainWindow::onProducerOpened()
@@ -2099,9 +2126,7 @@ void MainWindow::onPlaylistLoaded()
 
 void MainWindow::onPlaylistCleared()
 {
-    m_player->setPauseAfterOpen(true);
-    open(new Mlt::Producer(MLT.profile(), "color:"));
-    m_player->seek(0);
+    m_player->onTabBarClicked(Player::SourceTabIndex);
     setWindowModified(true);
 }
 
@@ -2134,7 +2159,7 @@ void MainWindow::onMultitrackCreated()
 void MainWindow::onMultitrackClosed()
 {
     setProfile(Settings.playerProfile());
-    onPlaylistCleared();
+    closeProducer();
     setCurrentFile("");
     setWindowModified(false);
     m_undoStack->clear();
@@ -2289,6 +2314,8 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
         if (scrollArea->widget())
             scrollArea->widget()->deleteLater();
         return  w;
+    } else {
+        scrollArea->show();
     }
 
     QString service(producer->get("mlt_service"));
@@ -2369,11 +2396,7 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
 
 void MainWindow::onMeltedUnitOpened()
 {
-    Mlt::Producer* producer = new Mlt::Producer(MLT.profile(), "color:");
-    MLT.setProducer(producer);
-    MLT.play(0);
-    QScrollArea* scrollArea = (QScrollArea*) m_propertiesDock->widget();
-    delete scrollArea->widget();
+    closeProducer();
     if (m_meltedServerDock && m_meltedPlaylistDock) {
         m_player->connectTransport(m_meltedPlaylistDock->transportControl());
         connect(m_meltedServerDock, SIGNAL(positionUpdated(int,double,int,int,int,bool)),
