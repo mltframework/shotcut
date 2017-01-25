@@ -19,8 +19,11 @@
 #ifndef KEYFRAMESDOCK_H
 #define KEYFRAMESDOCK_H
 
+#include "qmltypes/qmlproducer.h"
+
 #include <QDockWidget>
 #include <QQuickWidget>
+#include <QScopedPointer>
 
 class QmlFilter;
 class QmlMetadata;
@@ -36,6 +39,7 @@ public:
 
 signals:
     void changed(); /// Notifies when a filter parameter changes.
+    void seeked(int);
 
 public slots:
     void setCurrentFilter(QmlFilter* filter, QmlMetadata* meta);
@@ -46,10 +50,12 @@ protected:
     bool event(QEvent *event);
 
 private slots:
+    void onSeeked(int position);
     void resetQview();
 
 private:
     QQuickWidget m_qview;
+    QScopedPointer<QmlProducer> m_producer;
 };
 
 #endif // KEYFRAMESDOCK_H

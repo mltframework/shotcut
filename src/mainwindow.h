@@ -162,6 +162,7 @@ public slots:
     void showStatusMessage(const QString& message, int timeoutSeconds = 5);
     void seekPlaylist(int start);
     void seekTimeline(int position);
+    void seekKeyframes(int position);
     QWidget* loadProducerWidget(Mlt::Producer* producer);
     void onProducerOpened();
     void onGpuNotSupported();

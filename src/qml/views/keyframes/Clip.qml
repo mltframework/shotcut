@@ -71,14 +71,14 @@ Rectangle {
     }
 
     border.color: selected? 'red' : 'black'
-    border.width: isBlank? 0 : 1
+    border.width: 1
     clip: true
     Drag.active: mouseArea.drag.active
     Drag.proposedAction: Qt.MoveAction
-    opacity: Drag.active? 0.5 : 1.0
+    opacity: isBlank? 0.5 : 1.0
 
     function getColor() {
-        return isBlank? 'transparent' : isTransition? 'mediumpurple' : isAudio? 'darkseagreen' : root.shotcutBlue
+        return isAudio? 'darkseagreen' : root.shotcutBlue
     }
 
     function reparent(track) {
@@ -286,7 +286,6 @@ Rectangle {
                 parent.dropped(clipRoot)
             }
         }
-        onDoubleClicked: timeline.position = clipRoot.x / multitrack.scaleFactor
         onWheel: zoomByWheel(wheel)
 
         MouseArea {

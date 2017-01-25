@@ -42,13 +42,13 @@ Rectangle {
         maximumValue: 1.75
         value: 1
         onValueChanged: {
-            if (typeof multitrack.scaleFactor != 'undefined')
-                multitrack.scaleFactor = Math.pow(value, 3) + 0.01
+            if (typeof timeScale != 'undefined')
+                timeScale = Math.pow(value, 3) + 0.01
         }
         onPressedChanged: {
             if (!pressed) {
-                for (var i = 0; i < tracksRepeater.count; i++)
-                    tracksRepeater.itemAt(i).redrawWaveforms()
+//                for (var i = 0; i < tracksRepeater.count; i++)
+//                    tracksRepeater.itemAt(i).redrawWaveforms()
             }
         }
     }

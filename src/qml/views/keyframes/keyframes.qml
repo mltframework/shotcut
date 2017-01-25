@@ -38,6 +38,37 @@ Rectangle {
     property color shotcutBlue: Qt.rgba(23/255, 92/255, 118/255, 1.0)
     property double timeScale: 1.0
 
+    function setZoom(value) {
+        keyframesToolbar.scaleSlider.value = value
+//        for (var i = 0; i < tracksRepeater.count; i++)
+//            tracksRepeater.itemAt(i).redrawWaveforms()
+    }
+
+    function adjustZoom(by) {
+        setZoom(keyframesToolbar.scaleSlider.value + by)
+    }
+
+    function zoomIn() {
+        adjustZoom(0.0625)
+    }
+
+    function zoomOut() {
+        adjustZoom(-0.0625)
+    }
+
+    function resetZoom() {
+        setZoom(1.0)
+    }
+
+    function zoomByWheel(wheel) {
+        if (wheel.modifiers & Qt.ControlModifier) {
+            adjustZoom(wheel.angleDelta.y / 720)
+        }
+        if (wheel.modifiers & Qt.ShiftModifier) {
+            multitrack.trackHeight = Math.max(30, multitrack.trackHeight + wheel.angleDelta.y / 5)
+        }
+    }
+
     MouseArea {
         anchors.fill: parent
         acceptedButtons: Qt.RightButton
@@ -45,7 +76,7 @@ Rectangle {
     }
 
     KeyframesToolbar {
-        id: toolbar
+        id: keyframesToolbar
         width: parent.width
         height: ruler.height + 6
         anchors.top: parent.top
@@ -53,7 +84,7 @@ Rectangle {
     }
 
     Row {
-        anchors.top: toolbar.bottom
+        anchors.top: keyframesToolbar.bottom
         Column {
             z: 1
 
@@ -137,13 +168,13 @@ Rectangle {
             // This provides continuous scrubbing and scimming at the left/right edges.
             focus: true
             hoverEnabled: true
-//            onClicked: timeline.position = (scrollView.flickableItem.contentX + mouse.x) / multitrack.scaleFactor
+            onClicked: producer.position = (scrollView.flickableItem.contentX + mouse.x) / timeScale
             property bool scim: false
             onReleased: scim = false
             onExited: scim = false
             onPositionChanged: {
                 if (mouse.modifiers === Qt.ShiftModifier || mouse.buttons === Qt.LeftButton) {
-//                    timeline.position = (scrollView.flickableItem.contentX + mouse.x) / multitrack.scaleFactor
+                    producer.position = (scrollView.flickableItem.contentX + mouse.x) / timeScale
                     scim = true
                 }
                 else
@@ -155,13 +186,13 @@ Rectangle {
                 repeat: true
                 running: parent.scim && parent.containsMouse
                          && (parent.mouseX < 50 || parent.mouseX > parent.width - 50)
-//                         && (timeline.position * multitrack.scaleFactor >= 50)
-//                onTriggered: {
-//                    if (parent.mouseX < 50)
-//                        timeline.position -= 10
-//                    else
-//                        timeline.position += 10
-//                }
+                         && (producer.position * timeScale >= 50)
+                onTriggered: {
+                    if (parent.mouseX < 50)
+                        producer.position -= 10
+                    else
+                        producer.position += 10
+                }
             }
 
             Column {
@@ -176,13 +207,12 @@ Rectangle {
                         id: ruler
                         width: tracksContainer.width
                         index: index
-//                        timeScale: multitrack.scaleFactor
                     }
                 }
                 ScrollView {
                     id: scrollView
                     width: root.width - headerWidth
-                    height: root.height - ruler.height - toolbar.height
+                    height: root.height - ruler.height - keyframesToolbar.height
 
                     Item {
                         width: tracksContainer.width + headerWidth
@@ -210,17 +240,50 @@ Rectangle {
                                 Row {
                                     id: clipRow
                                     Clip {
+                                        id: beforeClip
+                                        visible: filter.out > 0 && filter.in > 0
+                                        isBlank: visible
                                         clipName: producer.name
                                         clipResource: producer.resource
-                                        clipDuration: producer.duration
+                                        clipDuration: filter.in + 1
                                         mltService: producer.mlt_service
-                                        inPoint: producer.in
-                                        outPoint: producer.out
+                                        inPoint: 0
+                                        outPoint: filter.in
                                         audioLevels: producer.audioLevels
-                                        width: producer.duration * timeScale
+                                        width: clipDuration * timeScale
                                         height: trackRoot.height
-                                        fadeIn: producer.fadeIn
-                                        fadeOut: producer.fadeOut
+                                        hash: producer.hash
+                                        speed: producer.speed
+//                                        selected: trackRoot.isCurrentTrack && trackRoot.selection.indexOf(index) !== -1
+                                    }
+                                    Clip {
+                                        id: activeClip
+                                        clipName: producer.name
+                                        clipResource: producer.resource
+                                        clipDuration: (filter.out > 0)? (filter.out - filter.in + 1) : producer.duration
+                                        mltService: producer.mlt_service
+                                        inPoint: filter.in + 1
+                                        outPoint: (filter.out > 0)? filter.out : (producer.duration - 1)
+                                        audioLevels: producer.audioLevels
+                                        width: clipDuration * timeScale
+                                        height: trackRoot.height
+                                        hash: producer.hash
+                                        speed: producer.speed
+//                                        selected: trackRoot.isCurrentTrack && trackRoot.selection.indexOf(index) !== -1
+                                    }
+                                    Clip {
+                                        id: afterClip
+                                        visible: filter.out > 0
+                                        isBlank: visible
+                                        clipName: producer.name
+                                        clipResource: producer.resource
+                                        clipDuration: producer.duration - (filter.out + 1)
+                                        mltService: producer.mlt_service
+                                        inPoint: filter.out
+                                        outPoint: producer.duration
+                                        audioLevels: producer.audioLevels
+                                        width: clipDuration * timeScale
+                                        height: trackRoot.height
                                         hash: producer.hash
                                         speed: producer.speed
 //                                        selected: trackRoot.isCurrentTrack && trackRoot.selection.indexOf(index) !== -1
@@ -236,17 +299,17 @@ Rectangle {
 
             Rectangle {
                 id: cursor
-                visible: timeline.position > -1
+                visible: producer.position > -1
                 color: activePalette.text
                 width: 1
-                height: root.height - scrollView.__horizontalScrollBar.height - toolbar.height
-                x: -scrollView.flickableItem.contentX // timeline.position * multitrack.scaleFactor - scrollView.flickableItem.contentX
+                height: root.height - scrollView.__horizontalScrollBar.height - keyframesToolbar.height
+                x: producer.position * timeScale - scrollView.flickableItem.contentX
                 y: 0
             }
             TimelinePlayhead {
                 id: playhead
-                visible: timeline.position > -1
-                x: - scrollView.flickableItem.contentX - 5 //timeline.position * multitrack.scaleFactor - scrollView.flickableItem.contentX - 5
+                visible: producer.position > -1
+                x: producer.position * timeScale - scrollView.flickableItem.contentX - 5
                 y: 0
                 width: 11
                 height: 5
@@ -309,12 +372,32 @@ Rectangle {
 
     Menu {
         id: menu
+        MenuItem {
+            text: qsTr('Reload')
+            onTriggered: {
+                multitrack.reload()
+            }
+        }
         onPopupVisibleChanged: {
             if (visible && application.OS === 'Windows' && __popupGeometry.height > 0) {
                 // Try to fix menu running off screen. This only works intermittently.
                 menu.__yOffset = Math.min(0, Screen.height - (__popupGeometry.y + __popupGeometry.height + 40))
                 menu.__xOffset = Math.min(0, Screen.width - (__popupGeometry.x + __popupGeometry.width))
             }
+        }
+    }
+
+    Connections {
+        target: producer
+        onPositionChanged: if (!stopScrolling) {
+           var x = producer.position * timeScale;
+           if (!scrollView) return;
+           if (x > scrollView.flickableItem.contentX + scrollView.width - 50)
+               scrollView.flickableItem.contentX = x - scrollView.width + 50;
+           else if (x < 50)
+               scrollView.flickableItem.contentX = 0;
+           else if (x < scrollView.flickableItem.contentX + 50)
+               scrollView.flickableItem.contentX = x - 50;
         }
     }
 

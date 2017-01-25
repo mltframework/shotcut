@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 Meltytech, LLC
+ * Copyright (c) 2013-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -105,6 +105,10 @@ void QmlFilter::set(QString name, double value)
         m_filter->set(name.toUtf8().constData(), value);
         MLT.refreshConsumer();
         emit changed();
+        if (name == "in")
+            emit inChanged();
+        else if (name == "out")
+            emit outChanged();
     }
 }
 
@@ -116,6 +120,10 @@ void QmlFilter::set(QString name, int value)
         m_filter->set(name.toUtf8().constData(), value);
         MLT.refreshConsumer();
         emit changed();
+        if (name == "in")
+            emit inChanged();
+        else if (name == "out")
+            emit outChanged();
     }
 }
 

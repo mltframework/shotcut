@@ -32,7 +32,6 @@
 #include "qmltypes/qmlfilter.h"
 #include "qmltypes/qmlutilities.h"
 #include "qmltypes/qmlview.h"
-#include "qmltypes/qmlproducer.h"
 #include "models/metadatamodel.h"
 #include "models/attachedfiltersmodel.h"
 
@@ -63,13 +62,18 @@ void KeyframesDock::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta)
 {
     m_qview.rootContext()->setContextProperty("filter", filter);
     m_qview.rootContext()->setContextProperty("metadata", meta);
-    if (filter) {
+    if (filter && filter->producer().is_valid()) {
+        m_producer.reset(new QmlProducer(filter->producer(), filter));
         connect(filter, SIGNAL(changed()), SIGNAL(changed()));
-        m_qview.rootContext()->setContextProperty("producer", new QmlProducer(filter->producer(), filter));
-        resetQview();
+        connect(m_producer.data(), SIGNAL(seeked(int)), SIGNAL(seeked(int)));
+        m_qview.rootContext()->setContextProperty("producer", m_producer.data());
     } else {
+        if (m_producer)
+            disconnect(m_producer.data(), SIGNAL(seeked(int)));
         m_qview.rootContext()->setContextProperty("producer", 0);
+//        m_producer.reset();
     }
+    resetQview();
 }
 
 void KeyframesDock::setFadeInDuration(int duration)
@@ -95,6 +99,12 @@ bool KeyframesDock::event(QEvent *event)
         resetQview();
     }
     return result;
+}
+
+void KeyframesDock::onSeeked(int position)
+{
+    if (m_producer)
+        m_producer->seek(position);
 }
 
 void KeyframesDock::resetQview()

@@ -327,6 +327,8 @@ MainWindow::MainWindow()
     connect(m_keyframesDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onKeyframesDockTriggered(bool)));
     connect(ui->actionKeyframes, SIGNAL(triggered()), this, SLOT(onKeyframesDockTriggered()));
     connect(m_filterController, SIGNAL(currentFilterChanged(QmlFilter*, QmlMetadata*, int)), m_keyframesDock, SLOT(setCurrentFilter(QmlFilter*, QmlMetadata*)), Qt::QueuedConnection);
+    connect(m_player, SIGNAL(seeked(int)), m_keyframesDock, SLOT(onSeeked(int)));
+    connect(m_keyframesDock, SIGNAL(seeked(int)), SLOT(seekKeyframes(int)));
 
     m_historyDock = new QDockWidget(tr("History"), this);
     m_historyDock->hide();
@@ -1201,6 +1203,11 @@ void MainWindow::seekTimeline(int position)
         m_player->switchToTab(Player::ProjectTabIndex);
         m_timelineDock->emitSelectedFromSelection();
     }
+    m_player->seek(position);
+}
+
+void MainWindow::seekKeyframes(int position)
+{
     m_player->seek(position);
 }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2015 Meltytech, LLC
+ * Copyright (c) 2013-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -38,13 +38,15 @@ class QmlFilter : public QObject
     Q_PROPERTY(int producerIn READ producerIn)
     Q_PROPERTY(int producerOut READ producerOut)
     Q_PROPERTY(double producerAspect READ producerAspect)
+    Q_PROPERTY(int in READ in WRITE setIn NOTIFY inChanged)
+    Q_PROPERTY(int out READ out WRITE setOut NOTIFY outChanged)
 
 public:
     explicit QmlFilter(Mlt::Filter* mltFilter, const QmlMetadata* metadata, QObject *parent = 0);
     ~QmlFilter();
 
     bool isNew() const { return m_isNew; }
-    void setIsNew(bool isNew) { m_isNew = isNew; };
+    void setIsNew(bool isNew) { m_isNew = isNew; }
 
     Q_INVOKABLE QString get(QString name);
     Q_INVOKABLE double getDouble(QString name);
@@ -67,6 +69,10 @@ public:
     int producerOut();
     double producerAspect();
     Mlt::Producer& producer() { return m_producer; }
+    int in() { return m_filter->get_int("in"); }
+    void setIn(int value) { set("in", value); emit inChanged(); }
+    int out() { return m_filter->get_int("out"); }
+    void setOut(int value) { set("out", value); emit outChanged(); }
 
 public slots:
     void preset(const QString& name);
@@ -75,6 +81,8 @@ signals:
     void presetsChanged();
     void analyzeFinished(bool isSuccess);
     void changed(); /// Use to let UI and VUI QML signal updates to each other.
+    void inChanged();
+    void outChanged();
 
 private:
     const QmlMetadata* m_metadata;

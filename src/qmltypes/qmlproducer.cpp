@@ -126,3 +126,22 @@ double QmlProducer::speed()
     return result;
 }
 
+void QmlProducer::setPosition(int position)
+{
+    if (!m_producer.is_valid()) return;
+    int length = duration();
+    if (position < length) {
+        emit seeked(position);
+    } else {
+        m_position = length - 1;
+        emit positionChanged();
+    }
+}
+
+void QmlProducer::seek(int position)
+{
+    if (!m_producer.is_valid()) return;
+    m_position = position;
+    emit positionChanged();
+}
+

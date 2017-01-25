@@ -41,6 +41,7 @@ class QmlProducer : public QObject
     Q_PROPERTY(int fadeIn READ fadeIn)
     Q_PROPERTY(int fadeOut READ fadeOut)
     Q_PROPERTY(double speed READ speed)
+    Q_PROPERTY(int position READ position WRITE setPosition NOTIFY positionChanged)
 
 public:
     explicit QmlProducer(Mlt::Producer& producer, QObject *parent = 0);
@@ -57,13 +58,19 @@ public:
     int fadeIn();
     int fadeOut();
     double speed();
+    int position() const { return m_position; }
+    void setPosition(int position);
+    void seek(int position);
 
 signals:
+    void seeked(int position);
+    void positionChanged();
 
 public slots:
 
 private:
     Mlt::Producer m_producer;
+    int m_position;
 };
 
 #endif // QMLPRODUCER_H

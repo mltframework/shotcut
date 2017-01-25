@@ -22,7 +22,6 @@ import QtQuick.Controls 1.0
 Rectangle {
     property int stepSize: 34
     property int index: 0
-    property real timeScale: 1.0
 
     SystemPalette { id: activePalette }
 
