@@ -266,6 +266,7 @@ private slots:
     void onGLWidgetImageReady();
     void on_actionAppDataSet_triggered();
     void on_actionAppDataShow_triggered();
+    void on_actionNew_triggered();
 };
 
 #define MAIN MainWindow::singleton()

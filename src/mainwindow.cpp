@@ -3190,3 +3190,8 @@ void MainWindow::on_actionAppDataShow_triggered()
 {
     QDesktopServices::openUrl(QUrl::fromLocalFile(Settings.appDataLocation()));
 }
+
+void MainWindow::on_actionNew_triggered()
+{
+    on_actionClose_triggered();
+}

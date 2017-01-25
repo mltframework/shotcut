@@ -46,6 +46,7 @@
     <property name="title">
      <string>&amp;File</string>
     </property>
+    <addaction name="actionNew"/>
     <addaction name="actionOpen"/>
     <addaction name="actionOpenOther"/>
     <addaction name="actionOpenXML"/>
@@ -830,6 +831,14 @@
    </property>
    <property name="toolTip">
     <string>Show</string>
+   </property>
+  </action>
+  <action name="actionNew">
+   <property name="text">
+    <string>New</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
    </property>
   </action>
  </widget>
