@@ -1141,6 +1141,8 @@ void MainWindow::hideProducer()
     // yet identified (root cause).
     openCut(new Mlt::Producer(MLT.profile(), "color:"));
     QCoreApplication::processEvents();
+    openCut(new Mlt::Producer(MLT.profile(), "color:"));
+    QCoreApplication::processEvents();
 
     QScrollArea* scrollArea = (QScrollArea*) m_propertiesDock->widget();
     delete scrollArea->widget();
