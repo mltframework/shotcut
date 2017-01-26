@@ -1139,15 +1139,14 @@ void MainWindow::hideProducer()
     // This is a hack to release references to the old producer, but it
     // probably leaves a reference to the new color producer somewhere not
     // yet identified (root cause).
-    openCut(new Mlt::Producer(MLT.profile(), "color:"));
+    openCut(new Mlt::Producer(MLT.profile(), "color:_hide"));
     QCoreApplication::processEvents();
-    openCut(new Mlt::Producer(MLT.profile(), "color:"));
+    openCut(new Mlt::Producer(MLT.profile(), "color:_hide"));
     QCoreApplication::processEvents();
 
     QScrollArea* scrollArea = (QScrollArea*) m_propertiesDock->widget();
     delete scrollArea->widget();
-    scrollArea->hide();
-    m_filterController->setProducer(0);
+    scrollArea->setWidget(0);
     m_player->reset();
 
     QCoreApplication::processEvents();

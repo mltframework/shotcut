@@ -329,7 +329,8 @@ void EncodeDock::onProducerOpened()
         ui->fromCombo->addItem(tr("Playlist"), "playlist");
     if (MAIN.playlist() && MAIN.playlist()->count() > 1)
         ui->fromCombo->addItem(tr("Each Playlist Item"), "batch");
-    if (MLT.isClip() && MLT.producer() && MLT.producer()->is_valid()) {
+    if (MLT.isClip() && MLT.producer() && MLT.producer()->is_valid()
+            && qstrcmp("_hide", MLT.producer()->get("resource"))) {
         if (MLT.producer()->get(kShotcutCaptionProperty)) {
             ui->fromCombo->addItem(MLT.producer()->get(kShotcutCaptionProperty), "clip");
         } else if (MLT.producer()->get("resource")) {
@@ -340,7 +341,8 @@ void EncodeDock::onProducerOpened()
         }
         if (MLT.producer()->get_int(kBackgroundCaptureProperty))
             index = ui->fromCombo->count() - 1;
-    } else if (MLT.savedProducer() && MLT.savedProducer()->is_valid()) {
+    } else if (MLT.savedProducer() && MLT.savedProducer()->is_valid()
+               && qstrcmp("_hide", MLT.savedProducer()->get("resource"))) {
         if (MLT.savedProducer()->get(kShotcutCaptionProperty)) {
             ui->fromCombo->addItem(MLT.savedProducer()->get(kShotcutCaptionProperty), "clip");
         } else if (MLT.savedProducer()->get("resource")) {
