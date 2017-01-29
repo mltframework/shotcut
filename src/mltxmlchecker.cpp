@@ -57,7 +57,7 @@ MltXmlChecker::MltXmlChecker()
     // decimal point, and MLT writes XML with LC_NUMERIC=C.
     , m_decimalPoint(QLocale(QLocale::C).decimalPoint())
 #else
-    , m_decimalPoint(QLocale(QLocale::system().name()).decimalPoint())
+    , m_decimalPoint(QLocale::system().decimalPoint())
 #endif
     , m_tempFile(QDir::tempPath().append("/shotcut-XXXXXX.mlt"))
     , m_numericValueChanged(false)
