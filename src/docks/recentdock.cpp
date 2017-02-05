@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2016 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -34,6 +34,20 @@ RecentDock::RecentDock(QWidget *parent) :
     ui->setupUi(this);
     toggleViewAction()->setIcon(windowIcon());
     m_recent = Settings.recent();
+
+#ifdef Q_OS_WIN
+    // Remove bad entries on Windows due to bug in v17.01.
+    QStringList newList;
+    foreach (QString s, m_recent) {
+        if (s.size() >=3 && s[0] == '/' && s[2] == ':')
+            s.remove(0, 1);
+        newList << s;
+    }
+    m_recent = newList;
+    Settings.setRecent(m_recent);
+    Settings.sync();
+#endif
+
     ui->listWidget->setDragEnabled(true);
     ui->listWidget->setDragDropMode(QAbstractItemView::DragOnly);
     foreach (QString s, m_recent) {

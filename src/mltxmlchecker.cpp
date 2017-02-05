@@ -193,6 +193,9 @@ void MltXmlChecker::processProperties()
         } else if (isNumericProperty(p.first)) {
             checkNumericString(p.second);
         } else if (readResourceProperty(p.first, p.second)) {
+#ifdef Q_OS_WIN
+            fixVersion1701WindowsPathBug(p.second);
+#endif
             fixUnlinkedFile(p.second);
         }
         newProperties << MltProperty(p.first, p.second);
@@ -392,4 +395,14 @@ void MltXmlChecker::fixStreamIndex(QString& value)
         && m_resource.hash != m_resource.newHash) {
         value.clear();
     }
+}
+
+bool MltXmlChecker::fixVersion1701WindowsPathBug(QString& value)
+{
+    if (value.size() >= 3 && value[0] == '/' && value[2] == ':') {
+        value.remove(0, 1);
+        m_isCorrected = true;
+        return true;
+    }
+    return false;
 }
