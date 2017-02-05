@@ -38,14 +38,19 @@ RecentDock::RecentDock(QWidget *parent) :
 #ifdef Q_OS_WIN
     // Remove bad entries on Windows due to bug in v17.01.
     QStringList newList;
+    bool isRepaired = false;
     foreach (QString s, m_recent) {
-        if (s.size() >=3 && s[0] == '/' && s[2] == ':')
+        if (s.size() >=3 && s[0] == '/' && s[2] == ':') {
             s.remove(0, 1);
+            isRepaired = true;
+        }
         newList << s;
     }
-    m_recent = newList;
-    Settings.setRecent(m_recent);
-    Settings.sync();
+    if (isRepaired) {
+        m_recent = newList;
+        Settings.setRecent(m_recent);
+        Settings.sync();
+    }
 #endif
 
     ui->listWidget->setDragEnabled(true);
