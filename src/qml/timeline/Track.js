@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,7 +19,7 @@
 var SNAP = 10
 
 function snapClip(clip, repeater) {
-    // clip.x = left edge
+    var left = clip.x
     var right = clip.x + clip.width
     if (clip.x > -SNAP && clip.x < SNAP) {
         // Snap around origin.
@@ -28,19 +28,26 @@ function snapClip(clip, repeater) {
     } else {
         // Snap to other clips.
         for (var i = 0; i < repeater.count; i++) {
+            // Do not snap to self.
+            if (i === clip.DelegateModel.itemsIndex && clip.trackIndex === repeater.itemAt(i).trackIndex)
+                continue
             var itemLeft = repeater.itemAt(i).x
             var itemRight = itemLeft + repeater.itemAt(i).width
             // Snap to blank
             if (right > itemLeft - SNAP && right < itemLeft + SNAP) {
+                // Snap right edge to left edge.
                 clip.x = itemLeft - clip.width
                 return
-            } else if (clip.x > itemRight - SNAP && clip.x < itemRight + SNAP) {
+            } else if (left > itemRight - SNAP && left < itemRight + SNAP) {
+                // Snap left edge to right edge.
                 clip.x = itemRight
                 return
             } else if (right > itemRight - SNAP && right < itemRight + SNAP) {
+                // Snap right edge to right edge.
                 clip.x = itemRight - clip.width
                 return
-            } else if (clip.x > itemLeft - SNAP && clip.x < itemLeft + SNAP) {
+            } else if (left > itemLeft - SNAP && left < itemLeft + SNAP) {
+                // Snap left edge to left edge.
                 clip.x = itemLeft
                 return
             }
@@ -48,7 +55,7 @@ function snapClip(clip, repeater) {
     }
     if (!toolbar.scrub) {
         var cursorX = scrollView.flickableItem.contentX + cursor.x
-        if (clip.x > cursorX - SNAP && clip.x < cursorX + SNAP)
+        if (left > cursorX - SNAP && left < cursorX + SNAP)
             // Snap around cursor/playhead.
             clip.x = cursorX
         if (right > cursorX - SNAP && right < cursorX + SNAP)
