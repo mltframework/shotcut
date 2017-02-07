@@ -1,0 +1,25 @@
+name: shotcut
+version: '17.02'
+summary: Free, cross-platform, open source video editor
+description: |
+icon: ../icons/shotcut-logo-64.png
+
+grade: stable
+confinement: strict
+
+apps:
+  shotcut:
+    command: desktop-launch $SNAP/Shotcut.app/shotcut
+    plugs: [x11, pulseaudio, opengl, camera, home, network, removable-media, alsa]
+
+parts:
+  shotcut:
+    after: [desktop-qt5]
+    plugin: dump
+    source: ./shotcut-linux-x86_64-170205.tar.bz2
+    organize:
+      'Shotcut': './'
+    stage-packages:
+      - libsdl1.2debian
+      - swh-plugins
+
