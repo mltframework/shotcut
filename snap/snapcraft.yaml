@@ -6,7 +6,7 @@ description: >
   Mac and Linux. Major features include support for a wide range of formats;
   no import required meaning native timeline editing; Blackmagic Design
   support for input and preview monitoring; and resolution support to 4k.
-icon: ../icons/shotcut-logo-64.png
+icon: shotcut-logo-64.png
 
 grade: stable
 confinement: classic
