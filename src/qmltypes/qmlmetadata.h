@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 Meltytech, LLC
+ * Copyright (c) 2013-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -42,6 +42,7 @@ class QmlMetadata : public QObject
     Q_PROPERTY(QString gpuAlt READ gpuAlt WRITE setGpuAlt NOTIFY changed)
     Q_PROPERTY(bool allowMultiple READ allowMultiple WRITE setAllowMultiple)
     Q_PROPERTY(bool isClipOnly READ isClipOnly WRITE setIsClipOnly)
+    Q_PROPERTY(bool isGpuCompatible READ isGpuCompatible() WRITE setIsGpuCompatible)
 
 public:
     enum PluginType {
@@ -82,6 +83,8 @@ public:
     void setAllowMultiple(bool allowMultiple);
     bool isClipOnly() const { return m_isClipOnly; }
     void setIsClipOnly(bool isClipOnly);
+    bool isGpuCompatible() const { return m_isGpuCompatible; }
+    void setIsGpuCompatible(bool isCompatible) { m_isGpuCompatible = isCompatible; }
 
 signals:
     void changed();
@@ -100,6 +103,7 @@ private:
     QString m_gpuAlt;
     bool m_allowMultiple;
     bool m_isClipOnly;
+    bool m_isGpuCompatible;
 };
 
 #endif // QMLMETADATA_H

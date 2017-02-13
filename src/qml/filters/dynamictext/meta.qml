@@ -8,4 +8,5 @@ Metadata {
     mlt_service: 'dynamictext'
     qml: "ui.qml"
     vui: 'vui.qml'
+    isGpuCompatible: false
 }

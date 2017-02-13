@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Meltytech, LLC
+ * Copyright (c) 2014-2017 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -140,6 +140,7 @@ bool MetadataModel::isVisible(int row) const
     if (meta->isHidden()) return false;
     if (meta->needsGPU() && !Settings.playerGPU()) return false;
     if (!meta->needsGPU() && Settings.playerGPU() && !meta->gpuAlt().isEmpty()) return false;
+    if (!meta->isGpuCompatible() && Settings.playerGPU()) return false;
     if (m_filter == FavoritesFilter && !meta->isFavorite()) return false;
     if (m_filter == AudioFilter && !meta->isAudio()) return false;
     if (m_filter == VideoFilter && meta->isAudio()) return false;
