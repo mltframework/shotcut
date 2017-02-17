@@ -135,8 +135,11 @@ p, li { white-space: pre-wrap; }
       </property>
       <item>
        <widget class="QPushButton" name="addButton">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="toolTip">
-         <string>Add something to the playlist</string>
+         <string>Add the Source to the playlist</string>
         </property>
         <property name="text">
          <string/>

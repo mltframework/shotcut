@@ -272,6 +272,7 @@ MainWindow::MainWindow()
     connect(m_playlistDock->model(), SIGNAL(modified()), this, SLOT(onPlaylistModified()));
     connect(m_playlistDock->model(), SIGNAL(modified()), this, SLOT(updateAutoSave()));
     connect(m_playlistDock->model(), SIGNAL(loaded()), this, SLOT(onPlaylistLoaded()));
+    connect(this, SIGNAL(producerOpened()), m_playlistDock, SLOT(onProducerOpened()));
     if (!Settings.playerGPU())
         connect(m_playlistDock->model(), SIGNAL(loaded()), this, SLOT(updateThumbnails()));
 

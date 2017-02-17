@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2016 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -59,6 +59,7 @@ public slots:
     void on_actionUpdate_triggered();
     void on_removeButton_clicked();
     void setUpdateButtonEnabled(bool modified);
+    void onProducerOpened();
 
 private slots:
     void on_menuButton_clicked();
@@ -80,6 +81,8 @@ private slots:
     void onPlaylistLoaded();
 
     void onPlaylistCleared();
+
+    void onPlaylistClosed();
 
     void onDropped(const QMimeData *data, int row);
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2016 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -161,6 +161,7 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     connect(&m_model, SIGNAL(modified()), this, SLOT(onPlaylistLoaded()));
     connect(&m_model, SIGNAL(dropped(const QMimeData*,int)), this, SLOT(onDropped(const QMimeData*,int)));
     connect(&m_model, SIGNAL(moveClip(int,int)), SLOT(onMoveClip(int,int)));
+    connect(&m_model, SIGNAL(closed()), SLOT(onPlaylistClosed()));
 
     m_defaultRowHeight = ui->tableView->verticalHeader()->defaultSectionSize();
     QString thumbs = Settings.playlistThumbnails();
@@ -307,10 +308,11 @@ void PlaylistDock::on_actionInsertCut_triggered()
 void PlaylistDock::on_actionAppendCut_triggered()
 {
     if (MLT.producer() && MLT.producer()->is_valid()) {
-        if (!MLT.isClip()) {
-            emit showStatusMessage(tr("You cannot insert a playlist into a playlist!"));
-        } else if (MLT.isSeekable()) {
-            MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.XML()));
+        if (MLT.isSeekableClip()
+            || (MLT.savedProducer() && MLT.isSeekable(MLT.savedProducer()))) {
+            MAIN.undoStack()->push(
+                new Playlist::AppendCommand(m_model,
+                    MLT.XML(MLT.isClip()? 0 : MLT.savedProducer())));
             MLT.producer()->set(kPlaylistIndexProperty, m_model.playlist()->count());
             setUpdateButtonEnabled(true);
         } else {
@@ -323,9 +325,6 @@ void PlaylistDock::on_actionAppendCut_triggered()
                 MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.XML()));
             }
         }
-    }
-    else {
-        MAIN.openVideo();
     }
 }
 
@@ -406,6 +405,12 @@ void PlaylistDock::on_removeButton_clicked()
 void PlaylistDock::setUpdateButtonEnabled(bool modified)
 {
     ui->updateButton->setEnabled(modified);
+}
+
+void PlaylistDock::onProducerOpened()
+{
+    if (!MLT.isMultitrack())
+        ui->addButton->setEnabled(true);
 }
 
 void PlaylistDock::on_actionOpen_triggered()
@@ -500,6 +505,11 @@ void PlaylistDock::onPlaylistCleared()
     ui->updateButton->setEnabled(false);
     ui->menuButton->setEnabled(false);
     ui->stackedWidget->setCurrentIndex(0);
+}
+
+void PlaylistDock::onPlaylistClosed()
+{
+    ui->addButton->setDisabled(true);
 }
 
 void PlaylistDock::onDropped(const QMimeData *data, int row)
