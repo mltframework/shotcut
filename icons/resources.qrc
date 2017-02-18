@@ -210,5 +210,23 @@
         <file>light/32x32/view-list-details.png</file>
         <file>light/32x32/view-list-icons.png</file>
         <file>light/32x32/view-list-text.png</file>
+        <file>dark/32x32/layers.png</file>
+        <file>light/32x32/layers.png</file>
+        <file>oxygen/32x32/actions/layers.png</file>
+        <file>dark/32x32/track-visible.png</file>
+        <file>dark/32x32/track-hidden.png</file>
+        <file>dark/32x32/padlock-closed.png</file>
+        <file>dark/32x32/padlock-opened.png</file>
+        <file>light/32x32/padlock-closed.png</file>
+        <file>light/32x32/track-hidden.png</file>
+        <file>light/32x32/track-visible.png</file>
+        <file>oxygen/32x32/actions/track-hidden.png</file>
+        <file>oxygen/32x32/actions/track-visible.png</file>
+        <file>oxygen/32x32/actions/padlock-closed.png</file>
+        <file>light/32x32/layers-flat.png</file>
+        <file>dark/32x32/layers-flat.png</file>
+        <file>oxygen/32x32/actions/layers-flat.png</file>
+        <file>light/32x32/padlock-opened.png</file>
+        <file>oxygen/32x32/actions/padlock-opened.png</file>
     </qresource>
 </RCC>
