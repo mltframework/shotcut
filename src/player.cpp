@@ -900,7 +900,7 @@ void Player::onMuteButtonToggled(bool checked)
         m_savedVolume = MLT.volume();
         MLT.setVolume(0);
         actionVolume->setIcon(QIcon::fromTheme("audio-volume-muted", QIcon(":/icons/oxygen/32x32/status/audio-volume-muted.png")));
-        m_muteButton->setIcon(QIcon::fromTheme("player-volume", QIcon(":/icons/oxygen/32x32/actions/player-volume.png")));
+        m_muteButton->setIcon(QIcon::fromTheme("audio-volume-high", QIcon(":/icons/oxygen/32x32/status/audio-volume-high.png")));
         m_muteButton->setToolTip(tr("Unmute"));
     } else {
         MLT.setVolume(m_savedVolume);
