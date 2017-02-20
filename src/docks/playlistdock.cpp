@@ -264,7 +264,8 @@ void PlaylistDock::on_menuButton_clicked()
     QMenu menu(this);
     QModelIndex index = m_view->currentIndex();
     if (index.isValid() && m_model.playlist()) {
-        menu.addAction(ui->actionGoto);
+        if (!MAIN.isMultitrackValid())
+            menu.addAction(ui->actionGoto);
         if (MLT.isClip())
             menu.addAction(ui->actionInsertCut);
         menu.addAction(ui->actionOpen);
@@ -433,7 +434,8 @@ void PlaylistDock::viewCustomContextMenuRequested(const QPoint &pos)
     QModelIndex index = m_view->currentIndex();
     if (index.isValid() && m_model.playlist()) {
         QMenu menu(this);
-        menu.addAction(ui->actionGoto);
+        if (!MAIN.isMultitrackValid())
+            menu.addAction(ui->actionGoto);
         if (MLT.isClip())
             menu.addAction(ui->actionInsertCut);
         menu.addAction(ui->actionOpen);
