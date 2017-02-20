@@ -94,9 +94,6 @@
         <file>shotcut-logo-64.png</file>
         <file>shotcut-logo-640.png</file>
         <file>oxygen/32x32/actions/run-build.png</file>
-        <file>oxygen/32x32/actions/dialog-cancel.png</file>
-        <file>dark/32x32/dialog-cancel.png</file>
-        <file>light/32x32/dialog-cancel.png</file>
         <file>oxygen/32x32/actions/color-picker.png</file>
         <file>oxygen/32x32/actions/edit-copy.png</file>
         <file>oxygen/32x32/actions/edit-cut.png</file>
@@ -174,13 +171,13 @@
         <file>dark/32x32/lift.png</file>
         <file>dark/32x32/overwrite.png</file>
         <file>dark/32x32/snap.png</file>
-        <file>dark/32x32/split.png</file>
+        <file>dark/32x32/slice.png</file>
         <file>light/32x32/insert.png</file>
         <file>light/32x32/lift.png</file>
         <file>light/32x32/overwrite.png</file>
         <file>light/32x32/snap.png</file>
-        <file>light/32x32/split.png</file>
-        <file>oxygen/32x32/actions/split.png</file>
+        <file>light/32x32/slice.png</file>
+        <file>oxygen/32x32/actions/slice.png</file>
         <file>oxygen/32x32/actions/snap.png</file>
         <file>oxygen/32x32/actions/overwrite.png</file>
         <file>oxygen/32x32/actions/insert.png</file>
@@ -210,23 +207,29 @@
         <file>light/32x32/view-list-details.png</file>
         <file>light/32x32/view-list-icons.png</file>
         <file>light/32x32/view-list-text.png</file>
-        <file>dark/32x32/layers.png</file>
-        <file>light/32x32/layers.png</file>
-        <file>oxygen/32x32/actions/layers.png</file>
-        <file>dark/32x32/track-visible.png</file>
-        <file>dark/32x32/track-hidden.png</file>
-        <file>dark/32x32/padlock-closed.png</file>
-        <file>dark/32x32/padlock-opened.png</file>
-        <file>light/32x32/padlock-closed.png</file>
-        <file>light/32x32/track-hidden.png</file>
-        <file>light/32x32/track-visible.png</file>
-        <file>oxygen/32x32/actions/track-hidden.png</file>
-        <file>oxygen/32x32/actions/track-visible.png</file>
-        <file>oxygen/32x32/actions/padlock-closed.png</file>
-        <file>light/32x32/layers-flat.png</file>
-        <file>dark/32x32/layers-flat.png</file>
-        <file>oxygen/32x32/actions/layers-flat.png</file>
-        <file>light/32x32/padlock-opened.png</file>
-        <file>oxygen/32x32/actions/padlock-opened.png</file>
+        <file>dark/32x32/split.png</file>
+        <file>light/32x32/split.png</file>
+        <file>light/32x32/merge.png</file>
+        <file>dark/32x32/merge.png</file>
+        <file>dark/32x32/layer-visible-on.png</file>
+        <file>dark/32x32/layer-visible-off.png</file>
+        <file>dark/32x32/object-locked.png</file>
+        <file>dark/32x32/object-unlocked.png</file>
+        <file>light/32x32/object-locked.png</file>
+        <file>light/32x32/object-unlocked.png</file>
+        <file>light/32x32/layer-visible-off.png</file>
+        <file>light/32x32/layer-visible-on.png</file>
+        <file>oxygen/32x32/actions/split.png</file>
+        <file>oxygen/32x32/actions/merge.png</file>
+        <file>oxygen/32x32/actions/layer-visible-off.png</file>
+        <file>oxygen/32x32/actions/layer-visible-on.png</file>
+        <file>oxygen/32x32/status/object-locked.png</file>
+        <file>oxygen/32x32/status/object-unlocked.png</file>
+        <file>oxygen/32x32/status/audio-volume-muted.png</file>
+        <file>oxygen/32x32/status/audio-volume-high.png</file>
+        <file>dark/32x32/audio-volume-muted.png</file>
+        <file>light/32x32/audio-volume-muted.png</file>
+        <file>dark/32x32/audio-volume-high.png</file>
+        <file>light/32x32/audio-volume-high.png</file>
     </qresource>
 </RCC>

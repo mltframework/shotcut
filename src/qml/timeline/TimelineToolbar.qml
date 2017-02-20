@@ -240,8 +240,8 @@ ToolBar {
     Action {
         id: splitAction
         tooltip: qsTr('Split At Playhead (S)')
-        iconName: 'split'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/split.png'
+        iconName: 'slice'
+        iconSource: 'qrc:///icons/oxygen/32x32/actions/slice.png'
         onTriggered: timeline.splitClip(currentTrack)
     }
 

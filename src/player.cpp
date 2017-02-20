@@ -150,7 +150,7 @@ Player::Player(QWidget *parent)
     m_muteButton = new QPushButton(this);
     m_muteButton->setFocusPolicy(Qt::NoFocus);
     m_muteButton->setObjectName(QString::fromUtf8("muteButton"));
-    m_muteButton->setIcon(QIcon::fromTheme("dialog-cancel", QIcon(":/icons/oxygen/32x32/actions/dialog-cancel.png")));
+    m_muteButton->setIcon(QIcon::fromTheme("audio-volume-muted", QIcon(":/icons/oxygen/32x32/status/audio-volume-muted.png")));
     m_muteButton->setToolTip(tr("Silence the audio"));
     m_muteButton->setCheckable(true);
     m_muteButton->setChecked(Settings.playerMuted());
@@ -899,13 +899,13 @@ void Player::onMuteButtonToggled(bool checked)
     if (checked) {
         m_savedVolume = MLT.volume();
         MLT.setVolume(0);
-        actionVolume->setIcon(QIcon::fromTheme("dialog-cancel", QIcon(":/icons/oxygen/32x32/actions/dialog-cancel.png")));
+        actionVolume->setIcon(QIcon::fromTheme("audio-volume-muted", QIcon(":/icons/oxygen/32x32/status/audio-volume-muted.png")));
         m_muteButton->setIcon(QIcon::fromTheme("player-volume", QIcon(":/icons/oxygen/32x32/actions/player-volume.png")));
         m_muteButton->setToolTip(tr("Unmute"));
     } else {
         MLT.setVolume(m_savedVolume);
         actionVolume->setIcon(QIcon::fromTheme("player-volume", QIcon(":/icons/oxygen/32x32/actions/player-volume.png")));
-        m_muteButton->setIcon(QIcon::fromTheme("dialog-cancel", QIcon(":/icons/oxygen/32x32/actions/dialog-cancel.png")));
+        m_muteButton->setIcon(QIcon::fromTheme("audio-volume-muted", QIcon(":/icons/oxygen/32x32/status/audio-volume-muted.png")));
         m_muteButton->setToolTip(tr("Mute"));
     }
     Settings.setPlayerMuted(checked);

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 Meltytech, LLC
+ * Copyright (c) 2013-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,14 +20,13 @@ import QtQuick 2.0
 import QtQuick.Controls 1.0
 import QtQuick.Controls.Styles 1.0
 import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0 as Shotcut
 
 Rectangle {
     id: trackHeadRoot
     property string trackName: ''
     property bool isMute
     property bool isHidden
-    property int isComposite
+    property bool isComposite
     property bool isLocked
     property bool isVideo
     property bool selected: false
@@ -133,51 +132,47 @@ Rectangle {
             }
         }
         RowLayout {
-            spacing: 0
+            spacing: 8
             ToolButton {
                 id: muteButton
-                checked: isMute
-                implicitWidth: 16
-                implicitHeight: 16
-                iconName: isMute ? 'dialog-cancel' : 'player-volume'
-                iconSource: isMute ? 'qrc:///icons/oxygen/32x32/actions/dialog-cancel.png' : 'qrc:///icons/oxygen/32x32/actions/player-volume.png'
+                implicitWidth: 20
+                implicitHeight: 20
+                iconName: isMute ? 'audio-volume-muted' : 'audio-volume-high'
+                iconSource: isMute ? 'qrc:///icons/oxygen/32x32/status/audio-volume-muted.png' : 'qrc:///icons/oxygen/32x32/status/audio-volume-high.png'
                 onClicked: timeline.toggleTrackMute(index)
-                Shotcut.ToolTip { text: qsTr('Mute') }
+                tooltip: isMute? qsTr('Unmute') : qsTr('Mute')
             }
 
             ToolButton {
                 id: hideButton
-                checked: isHidden
                 visible: isVideo
-                implicitWidth: 16
-                implicitHeight: 16
-                iconName: isHidden ? 'track-hidden' : 'track-visible'
-                iconSource: isHidden? 'qrc:///icons/oxygen/32x32/actions/track-hidden.png' : 'qrc:///icons/oxygen/32x32/actions/track-visible.png'
+                implicitWidth: 20
+                implicitHeight: 20
+                iconName: isHidden ? 'layer-visible-off' : 'layer-visible-on'
+                iconSource: isHidden? 'qrc:///icons/oxygen/32x32/actions/layer-visible-off.png' : 'qrc:///icons/oxygen/32x32/actions/layer-visible-on.png'
                 onClicked: timeline.toggleTrackHidden(index)
-                Shotcut.ToolTip { text: qsTr('Hide') }
+                tooltip: isHidden? qsTr('Show') : qsTr('Hide')
             }
 
             ToolButton {
                 id: compositeButton
                 visible: isVideo
-                checked: isComposite
-                implicitWidth: 16
-                implicitHeight: 16
-                iconName: isComposite ? 'layers' : 'layers-flat'
-                iconSource: isComposite ? 'qrc:///icons/oxygen/32x32/actions/layers.png' : 'qrc:///icons/oxygen/32x32/actions/layers-flat.png'
-                onClicked: timeline.setTrackComposite(index, checkedState)
-                Shotcut.ToolTip { text: qsTr('Composite') }
+                implicitWidth: 20
+                implicitHeight: 20
+                iconName: isComposite ? 'merge' : 'split'
+                iconSource: isComposite ? 'qrc:///icons/oxygen/32x32/actions/merge.png' : 'qrc:///icons/oxygen/32x32/actions/split.png'
+                onClicked: timeline.setTrackComposite(index, !isComposite)
+                tooltip: isComposite? qsTr('Disable compositing') : qsTr('Composite')
             }
 
             ToolButton {
                 id: lockButton
-                checked: isLocked
-                implicitWidth: 16
-                implicitHeight: 16
-                iconName: isLocked ? 'padlock-closed' : 'padlock-opened'
-                iconSource: isLocked ? 'qrc:///icons/oxygen/32x32/actions/padlock-closed.png' : 'qrc:///icons/oxygen/32x32/actions/padlock-opened.png'
+                implicitWidth: 20
+                implicitHeight: 20
+                iconName: isLocked ? 'object-locked' : 'object-unlocked'
+                iconSource: isLocked ? 'qrc:///icons/oxygen/32x32/status/object-locked.png' : 'qrc:///icons/oxygen/32x32/status/object-unlocked.png'
                 onClicked: timeline.setTrackLock(index, !isLocked)
-                Shotcut.ToolTip { text: qsTr('Lock track') }
+                tooltip: isLocked? qsTr('Unlock track') : qsTr('Lock track')
             }
         }
     }
