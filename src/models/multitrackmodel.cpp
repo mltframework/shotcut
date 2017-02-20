@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 Meltytech, LLC
+ * Copyright (c) 2013-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -190,9 +190,9 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                     transition.reset(getTransition("movit.overlay", i));
                 if (transition && transition->is_valid()) {
                     if (!transition->get_int("disable"))
-                        return Qt::Checked;
+                        return true;
                 }
-                return Qt::Unchecked;
+                return false;
             }
             default:
                 break;
@@ -324,17 +324,17 @@ void MultitrackModel::setTrackHidden(int row, bool hidden)
     }
 }
 
-void MultitrackModel::setTrackComposite(int row, Qt::CheckState composite)
+void MultitrackModel::setTrackComposite(int row, bool composite)
 {
     if (row < m_trackList.size()) {
         int i = m_trackList.at(row).mlt_index;
         QScopedPointer<Mlt::Transition> transition(getTransition("frei0r.cairoblend", i));
         if (transition) {
-            transition->set("disable", (composite == Qt::Unchecked));
+            transition->set("disable", !composite);
         } else {
             transition.reset(getTransition("movit.overlay", i));
             if (transition)
-                transition->set("disable", (composite == Qt::Unchecked));
+                transition->set("disable", !composite);
         }
         MLT.refreshConsumer();
 

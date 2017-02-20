@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 Meltytech, LLC
+ * Copyright (c) 2013-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -660,7 +660,7 @@ void TimelineDock::toggleTrackHidden(int trackIndex)
         new Timeline::HideTrackCommand(m_model, trackIndex));
 }
 
-void TimelineDock::setTrackComposite(int trackIndex, Qt::CheckState composite)
+void TimelineDock::setTrackComposite(int trackIndex, bool composite)
 {
     MAIN.undoStack()->push(
         new Timeline::CompositeTrackCommand(m_model, trackIndex, composite));

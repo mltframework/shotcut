@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 Meltytech, LLC
+ * Copyright (c) 2013-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -114,7 +114,7 @@ public slots:
     void setTrackName(int trackIndex, const QString& value);
     void toggleTrackMute(int trackIndex);
     void toggleTrackHidden(int trackIndex);
-    void setTrackComposite(int trackIndex, Qt::CheckState composite);
+    void setTrackComposite(int trackIndex, bool composite);
     void setTrackLock(int trackIndex, bool lock);
     bool moveClip(int fromTrack, int toTrack, int clipIndex, int position);
     void onClipMoved(int fromTrack, int toTrack, int clipIndex, int position);
