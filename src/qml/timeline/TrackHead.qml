@@ -134,117 +134,48 @@ Rectangle {
         }
         RowLayout {
             spacing: 0
-            CheckBox {
+            ToolButton {
                 id: muteButton
                 checked: isMute
-                style: CheckBoxStyle {
-                    indicator: Rectangle {
-                        implicitWidth: 16
-                        implicitHeight: 16
-                        radius: 2
-                        color: isMute? activePalette.highlight : trackHeadRoot.color
-                        border.color: activePalette.shadow
-                        border.width: 1
-                        Text {
-                            id: muteText
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            anchors.verticalCenter: parent.verticalCenter
-                            text: qsTr('M', 'Mute')
-                            color: isMute? activePalette.highlightedText : activePalette.windowText
-                        }
-                    }
-                }
+                implicitWidth: 16
+                implicitHeight: 16
+                iconName: isMute ? 'dialog-cancel' : 'player-volume'
+                iconSource: isMute ? 'qrc:///icons/oxygen/32x32/actions/dialog-cancel.png' : 'qrc:///icons/oxygen/32x32/actions/player-volume.png'
                 onClicked: timeline.toggleTrackMute(index)
                 Shotcut.ToolTip { text: qsTr('Mute') }
             }
 
-            CheckBox {
+            ToolButton {
                 id: hideButton
                 checked: isHidden
                 visible: isVideo
-                style: CheckBoxStyle {
-                    indicator: Rectangle {
-                        implicitWidth: 16
-                        implicitHeight: 16
-                        radius: 2
-                        color: isHidden? activePalette.highlight : trackHeadRoot.color
-                        border.color: activePalette.shadow
-                        border.width: 1
-                        Text {
-                            id: hideText
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            anchors.verticalCenter: parent.verticalCenter
-                            text: qsTr('H', 'Hide')
-                            color: isHidden? activePalette.highlightedText : activePalette.windowText
-                        }
-                    }
-                }
+                implicitWidth: 16
+                implicitHeight: 16
+                iconName: isHidden ? 'track-hidden' : 'track-visible'
+                iconSource: isHidden? 'qrc:///icons/oxygen/32x32/actions/track-hidden.png' : 'qrc:///icons/oxygen/32x32/actions/track-visible.png'
                 onClicked: timeline.toggleTrackHidden(index)
                 Shotcut.ToolTip { text: qsTr('Hide') }
             }
 
-            CheckBox {
+            ToolButton {
                 id: compositeButton
                 visible: isVideo
                 checked: isComposite
-                style: CheckBoxStyle {
-                    indicator: Rectangle {
-                        implicitWidth: 16
-                        implicitHeight: 16
-                        radius: 2
-                        color: isComposite? activePalette.highlight : trackHeadRoot.color
-                        border.color: activePalette.shadow
-                        border.width: 1
-                        Text {
-                            id: compositeText
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            anchors.verticalCenter: parent.verticalCenter
-                            text: qsTr('C', 'Composite')
-                            color: isComposite? activePalette.highlightedText : activePalette.windowText
-                        }
-                    }
-                }
+                implicitWidth: 16
+                implicitHeight: 16
+                iconName: isComposite ? 'layers' : 'layers-flat'
+                iconSource: isComposite ? 'qrc:///icons/oxygen/32x32/actions/layers.png' : 'qrc:///icons/oxygen/32x32/actions/layers-flat.png'
                 onClicked: timeline.setTrackComposite(index, checkedState)
                 Shotcut.ToolTip { text: qsTr('Composite') }
             }
 
-            CheckBox {
+            ToolButton {
                 id: lockButton
                 checked: isLocked
-                style: CheckBoxStyle {
-                    indicator: Rectangle {
-                        implicitWidth: 16
-                        implicitHeight: 16
-                        radius: 2
-                        color: isLocked ? activePalette.highlight : trackHeadRoot.color
-                        border.color: activePalette.shadow
-                        border.width: 1
-                        Text {
-                            id: lockText
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            anchors.verticalCenter: parent.verticalCenter
-                            text: qsTr('L', 'Lock')
-                            color: isLocked ? activePalette.highlightedText : activePalette.windowText
-                        }
-                    }
-                }
-                SequentialAnimation {
-                    id: lockButtonAnim
-                    loops: 2
-                    NumberAnimation {
-                        target: lockButton
-                        property: "scale"
-                        to: 1.8
-                        duration: 200
-                    }
-                    NumberAnimation {
-                        target: lockButton
-                        property: "scale"
-                        to: 1
-                        duration: 200
-                    }
-                }
-
+                implicitWidth: 16
+                implicitHeight: 16
+                iconName: isLocked ? 'padlock-closed' : 'padlock-opened'
+                iconSource: isLocked ? 'qrc:///icons/oxygen/32x32/actions/padlock-closed.png' : 'qrc:///icons/oxygen/32x32/actions/padlock-opened.png'
                 onClicked: timeline.setTrackLock(index, !isLocked)
                 Shotcut.ToolTip { text: qsTr('Lock track') }
             }
