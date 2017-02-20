@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 Meltytech, LLC
+ * Copyright (c) 2013-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -123,7 +123,7 @@ public slots:
     void setTrackName(int row, const QString &value);
     void setTrackMute(int row, bool mute);
     void setTrackHidden(int row, bool hidden);
-    void setTrackComposite(int row, Qt::CheckState composite);
+    void setTrackComposite(int row, bool composite);
     void setTrackLock(int row, bool lock);
     int trimClipIn(int trackIndex, int clipIndex, int delta, bool ripple);
     void notifyClipIn(int trackIndex, int clipIndex);
