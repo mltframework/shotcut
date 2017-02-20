@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2016 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -30,6 +30,7 @@ class AbstractJob : public QProcess
     Q_OBJECT
 public:
     explicit AbstractJob(const QString& name);
+    virtual ~AbstractJob() {}
 
     void setModelIndex(const QModelIndex& index);
     QModelIndex modelIndex() const;
