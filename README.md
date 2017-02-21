@@ -12,7 +12,7 @@ Binaries are regularly built and are available at https://www.shotcut.org, on th
 ## Contributors
 
 - Dan Dennedy <<http://www.dennedy.org>> : main author
-- Brian Matherly <<pez4brian@yahoo.com>> : contributor
+- Brian Matherly <<code@brianmatherly.com>> : contributor
 
 ## Dependencies
 
