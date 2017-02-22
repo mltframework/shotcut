@@ -88,11 +88,11 @@ export LANG=C
 # User CFLAGS and LDFLAGS sometimes prevent more recent local headers.
 # Also, you can adjust some flags here.
 if [ "$DEBUG_BUILD" = "1" ]; then
-    export CFLAGS=-DNDEBUG
-    export CXXFLAGS=-DNDEBUG
-else
     export CFLAGS=
     export CXXFLAGS=
+else
+    export CFLAGS=-DNDEBUG
+    export CXXFLAGS=-DNDEBUG
 fi
 export LDFLAGS=
 
