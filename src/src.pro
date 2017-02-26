@@ -279,6 +279,8 @@ OTHER_FILES += \
     ../Info.plist \
     ../icons/dark/index.theme \
     ../icons/light/index.theme \
+    ../snap/snapcraft.yaml \
+    ../snap/setup/gui/shotcut.desktop
 
 TRANSLATIONS += \
     ../translations/shotcut_ca.ts \
