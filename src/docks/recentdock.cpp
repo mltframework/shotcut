@@ -22,6 +22,7 @@
 #include "util.h"
 
 #include <QDir>
+#include <QKeyEvent>
 #include <Logger.h>
 
 static const int MaxItems = 100;
@@ -100,6 +101,17 @@ QString RecentDock::remove(const QString &s)
     if (items.count() > 0)
         m_model.removeRow(items.first()->row());
     return name;
+}
+
+void RecentDock::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Backspace || event->key() == Qt::Key_Delete) {
+        m_recent.removeAt(ui->listWidget->currentIndex().row());
+        Settings.setRecent(m_recent);
+        m_model.removeRow(ui->listWidget->currentIndex().row());
+    } else {
+        QDockWidget::keyPressEvent(event);
+    }
 }
 
 void RecentDock::on_lineEdit_textChanged(const QString& search)
