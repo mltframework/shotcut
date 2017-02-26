@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Shotcut
+GenericName=Video Editor
+Comment=Free, cross-platform, open source video editor
+Exec=shotcut
+Icon=${SNAP}/meta/gui/shotcut-logo-64.png
+Terminal=false
+Categories=AudioVideo;Video;AudioVideoEditing;
