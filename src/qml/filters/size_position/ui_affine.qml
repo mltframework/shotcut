@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Meltytech, LLC
+ * Copyright (c) 2014-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,10 +16,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import QtQuick 2.0
 SizePositionUI {
     fillProperty: 'transition.fill'
     distortProperty: 'transition.distort'
     rectProperty: 'transition.geometry'
     valignProperty: 'transition.valign'
     halignProperty: 'transition.halign'
+    Component.onCompleted: {
+        if (filter.isNew) {
+            filter.set('transition.threads', 0)
+        }
+    }
 }
