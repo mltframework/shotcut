@@ -32,6 +32,7 @@
 #include <QtXml>
 #include <QtMath>
 #include <QTimer>
+#include <QFileInfo>
 
 // formulas to map absolute value ranges to percentages as int
 #define TO_ABSOLUTE(min, max, rel) qRound(float(min) + float((max) - (min) + 1) * float(rel) / 100.0f)
@@ -934,16 +935,25 @@ void EncodeDock::on_encodeButton_clicked()
     bool seekable = MLT.isSeekable(fromProducer());
     QString directory = Settings.encodePath();
     if (!m_extension.isEmpty()) {
-        directory += "/.";
-        directory += m_extension;
-    }
+        if (!MAIN.fileName().isEmpty()) {
+            directory += QString("/%1.%2").arg(QFileInfo(MAIN.fileName()).baseName())
+                                          .arg(m_extension);
+        } else {
+            directory += "/" + m_extension;
+        }
+    } else {
+        if (!MAIN.fileName().isEmpty()) {
+            directory += "/" + QFileInfo(MAIN.fileName()).baseName();
+        }
 #ifdef Q_OS_MAC
-    else {
-        directory.append("/.mp4");
-    }
+        else {
+            directory += "/.mp4";
+        }
 #endif
+    }
     m_outputFilename = QFileDialog::getSaveFileName(this,
-        seekable? tr("Export File") : tr("Capture File"), directory);
+        seekable? tr("Export File") : tr("Capture File"), directory,
+        QString(), 0, QFileDialog::HideNameFilterDetails);
     if (!m_outputFilename.isEmpty()) {
         QFileInfo fi(m_outputFilename);
         MLT.pause();
