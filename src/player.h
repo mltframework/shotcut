@@ -131,6 +131,7 @@ private:
     QLabel* m_inPointLabel;
     QLabel* m_selectedLabel;
     int m_position;
+    int m_playPosition;
     QIcon m_playIcon;
     QIcon m_pauseIcon;
     QFrame* m_volumePopup;

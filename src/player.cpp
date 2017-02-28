@@ -24,6 +24,7 @@
 #include "settings.h"
 #include "util.h"
 #include <QtWidgets>
+#include <limits>
 
 #define VOLUME_KNEE (88)
 #define SEEK_INACTIVE (-1)
@@ -34,6 +35,7 @@ static const int STATUS_ANIMATION_MS = 350;
 Player::Player(QWidget *parent)
     : QWidget(parent)
     , m_position(0)
+    , m_playPosition(std::numeric_limits<int>::max())
     , m_isMeltedPlaying(-1)
     , m_zoomToggleFactor(Settings.playerZoom() == 0.0f? 1.0f : Settings.playerZoom())
     , m_pauseAfterOpen(false)
@@ -391,6 +393,7 @@ void Player::play(double speed)
         actionPlay->setText(tr("Stop"));
         actionPlay->setToolTip(tr("Stop playback (K)"));
     }
+    m_playPosition = m_position;
 }
 
 void Player::pause()
@@ -602,6 +605,10 @@ void Player::onFrameDisplayed(const SharedFrame& frame)
         m_positionSpinner->setValue(position);
         m_positionSpinner->blockSignals(false);
         m_scrubber->onSeek(position);
+        if (m_playPosition < m_previousOut && m_position >= m_previousOut) {
+            seek(m_previousOut);
+            m_playPosition = std::numeric_limits<int>::max();
+        }
     }
     if (position >= m_duration)
         emit endOfStream();
@@ -683,10 +690,12 @@ void Player::rewind()
 
 void Player::fastForward()
 {
-    if (m_isSeekable)
+    if (m_isSeekable) {
         emit fastForwarded();
-    else
+        m_playPosition = m_position;
+    } else {
         play();
+    }
 }
 
 void Player::showPaused()
