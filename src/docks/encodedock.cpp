@@ -939,7 +939,7 @@ void EncodeDock::on_encodeButton_clicked()
             directory += QString("/%1.%2").arg(QFileInfo(MAIN.fileName()).baseName())
                                           .arg(m_extension);
         } else {
-            directory += "/" + m_extension;
+            directory += "/." + m_extension;
         }
     } else {
         if (!MAIN.fileName().isEmpty()) {
