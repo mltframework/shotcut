@@ -1955,6 +1955,8 @@ bool MainWindow::on_actionSave_triggered()
 
 bool MainWindow::on_actionSave_As_triggered()
 {
+    if (!MLT.producer())
+        return false;
     QString path = Settings.savePath();
     path.append("/.mlt");
     QString filename = QFileDialog::getSaveFileName(this, tr("Save XML"), path, tr("MLT XML (*.mlt)"));
@@ -1963,10 +1965,7 @@ bool MainWindow::on_actionSave_As_triggered()
         Settings.setSavePath(fi.path());
         if (fi.suffix() != "mlt")
             filename += ".mlt";
-        if (MLT.producer())
-            saveXML(filename);
-        else
-            showStatusMessage(tr("Unable to save empty file, but saved its name for future."));
+        saveXML(filename);
         if (m_autosaveFile)
             m_autosaveFile->changeManagedFile(filename);
         else
