@@ -686,6 +686,9 @@ void MainWindow::setupSettingsMenu()
     a = new QAction(QLocale::languageToString(QLocale::Italian), m_languagesGroup);
     a->setCheckable(true);
     a->setData("it");
+    a = new QAction(QLocale::languageToString(QLocale::Japanese), m_languagesGroup);
+    a->setCheckable(true);
+    a->setData("ja");
     a = new QAction(QLocale::languageToString(QLocale::Occitan), m_languagesGroup);
     a->setCheckable(true);
     a->setData("oc");
@@ -707,6 +710,9 @@ void MainWindow::setupSettingsMenu()
     a = new QAction(QLocale::languageToString(QLocale::Spanish), m_languagesGroup);
     a->setCheckable(true);
     a->setData("es");
+    a = new QAction(QLocale::languageToString(QLocale::Turkish), m_languagesGroup);
+    a->setCheckable(true);
+    a->setData("tr");
     a = new QAction(QLocale::languageToString(QLocale::Russian), m_languagesGroup);
     a->setCheckable(true);
     a->setData("ru");

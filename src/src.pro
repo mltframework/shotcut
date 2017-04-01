@@ -293,6 +293,7 @@ TRANSLATIONS += \
     ../translations/shotcut_fr.ts \
     ../translations/shotcut_gd.ts \
     ../translations/shotcut_it.ts \
+    ../translations/shotcut_ja.ts \
     ../translations/shotcut_nl.ts \
     ../translations/shotcut_oc.ts \
     ../translations/shotcut_pl.ts \
@@ -301,6 +302,7 @@ TRANSLATIONS += \
     ../translations/shotcut_ru.ts \
     ../translations/shotcut_sk.ts \
     ../translations/shotcut_sl.ts \
+    ../translations/shotcut_tr.ts \
     ../translations/shotcut_uk.ts \
     ../translations/shotcut_zh_CN.ts \
     ../translations/shotcut_zh_TW.ts
