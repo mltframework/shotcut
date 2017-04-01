@@ -2663,7 +2663,7 @@ med prehodom posnetkov.</translation>
         <translation>Način prikaza</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3168"/>
+        <location filename="../src/mainwindow.cpp" line="3167"/>
         <source>Data Directory</source>
         <translation>Mapa s podatki</translation>
     </message>
@@ -2794,7 +2794,7 @@ med prehodom posnetkov.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="369"/>
-        <location filename="../src/mainwindow.cpp" line="2423"/>
+        <location filename="../src/mainwindow.cpp" line="2422"/>
         <source>Enter Full Screen</source>
         <translation>Celozaslonski način</translation>
     </message>
@@ -3167,7 +3167,7 @@ med prehodom posnetkov.</translation>
         <location filename="../src/mainwindow.cpp" line="801"/>
         <location filename="../src/mainwindow.cpp" line="803"/>
         <location filename="../src/mainwindow.cpp" line="1107"/>
-        <location filename="../src/mainwindow.cpp" line="2906"/>
+        <location filename="../src/mainwindow.cpp" line="2905"/>
         <source>Failed to open </source>
         <translation>Odpiranje ni uspelo</translation>
     </message>
@@ -3200,28 +3200,28 @@ with &quot;- Repaired&quot; in the file name and open it.</source>
         <translation>Popravilo ni uspelo.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2638"/>
+        <location filename="../src/mainwindow.cpp" line="2637"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>Za menjavo jezika je treba Shotcut ponovno zagnati.
 Želite to narediti zdaj?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2688"/>
+        <location filename="../src/mainwindow.cpp" line="2687"/>
         <source>You must restart Shotcut to switch using GPU processing.
 Do you want to restart now?</source>
         <translation>Za uporabo obdelovanja z GPE morate Shotcut ponovno zagnati.
 Želite to storiti sedaj?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2947"/>
+        <location filename="../src/mainwindow.cpp" line="2946"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
         <translation>Za spremembo načina prikaza je Shotcut potrebno ponovno zagnati.
 Želite to storiti sedaj?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2969"/>
+        <location filename="../src/mainwindow.cpp" line="2968"/>
         <source>Application Log</source>
         <translation>Dnevnik programa</translation>
     </message>
@@ -3250,7 +3250,7 @@ Prosimo, namestite jo z vašim upravljalnikom paketov. Primeri imen so libsdl1.2
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1118"/>
-        <location filename="../src/mainwindow.cpp" line="2886"/>
+        <location filename="../src/mainwindow.cpp" line="2885"/>
         <source>Open File</source>
         <translation>Izberi datoteko</translation>
     </message>
@@ -3276,114 +3276,113 @@ Prosimo, namestite jo z vašim upravljalnikom paketov. Primeri imen so libsdl1.2
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1950"/>
-        <location filename="../src/mainwindow.cpp" line="1977"/>
+        <location filename="../src/mainwindow.cpp" line="1976"/>
         <source>Saved %1</source>
         <translation>%1 shranjeno</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1960"/>
+        <location filename="../src/mainwindow.cpp" line="1962"/>
         <source>Save XML</source>
         <translation>Shrani XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1960"/>
+        <location filename="../src/mainwindow.cpp" line="1962"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1969"/>
         <source>Unable to save empty file, but saved its name for future.</source>
-        <translation>Prazne datoteke ni mogoče shraniti, za prihodnjo uporabo je bilo pa shranjeno ime.</translation>
+        <translation type="vanished">Prazne datoteke ni mogoče shraniti, za prihodnjo uporabo je bilo pa shranjeno ime.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1989"/>
+        <location filename="../src/mainwindow.cpp" line="1988"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>Ta projekt je bil spremenjen.
 Želite spremembe shraniti?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2016"/>
+        <location filename="../src/mainwindow.cpp" line="2015"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
         <translation>Nekatera opravila niso dokončana.
 Želite vseeno zapreti program?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2029"/>
+        <location filename="../src/mainwindow.cpp" line="2028"/>
         <source>An export is in progress.
 Do you want to still want to exit?</source>
         <translation>Poteka izvoz. Želite vseeno zapreti program?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2426"/>
+        <location filename="../src/mainwindow.cpp" line="2425"/>
         <source>Exit Full Screen</source>
         <translation>Zapri celozaslonski pogled</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2439"/>
+        <location filename="../src/mainwindow.cpp" line="2438"/>
         <source>GPU Processing is not supported</source>
         <translation>Procesiranje GPE ni podprto</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2679"/>
+        <location filename="../src/mainwindow.cpp" line="2678"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>Povezovanje z JACK ni uspelo.
 Zagotovite, da je JACK nameščen in trenutno teče.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2887"/>
+        <location filename="../src/mainwindow.cpp" line="2886"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;Vse datoteke (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3003"/>
+        <location filename="../src/mainwindow.cpp" line="3002"/>
         <source>Shotcut version %1 is available! Click here to get it.</source>
         <translation>Na voljo je Shotcut različica %1! Kliknite tu, da jo prenesete.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3009"/>
+        <location filename="../src/mainwindow.cpp" line="3008"/>
         <source>You are running the latest version of Shotcut.</source>
         <translation>Uporabljate najnovejšo različico.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3019"/>
+        <location filename="../src/mainwindow.cpp" line="3018"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation>Med pregledom ni bilo mogoče prebrati version.json. Kliknite tu, da odprete spletno stran.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3069"/>
+        <location filename="../src/mainwindow.cpp" line="3068"/>
         <source>Export EDL</source>
         <translation>Izvozi EDL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3069"/>
+        <location filename="../src/mainwindow.cpp" line="3068"/>
         <source>EDL (*.edl)</source>
         <translation>EDL (*.edit)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3112"/>
+        <location filename="../src/mainwindow.cpp" line="3111"/>
         <source>A JavaScript error occurred during export.</source>
         <translation>Med izvozom se je pojavila napaka Javascript.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3115"/>
+        <location filename="../src/mainwindow.cpp" line="3114"/>
         <source>Failed to open export-edl.js</source>
         <translation>Export-edl.js ni bilo mogoče odpreti.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3141"/>
+        <location filename="../src/mainwindow.cpp" line="3140"/>
         <source>Export Frame</source>
         <translation>Izvozi sličico</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3151"/>
+        <location filename="../src/mainwindow.cpp" line="3150"/>
         <source>Unable to export frame.</source>
         <translation>Sličice ni bilo mogoče izvoziti.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3159"/>
+        <location filename="../src/mainwindow.cpp" line="3158"/>
         <source>You must restart Shotcut to change the data directory.
 Do you want to continue?</source>
         <translation>Za spremembo mape s podatki je treba Shotcut ponovno zagnati.

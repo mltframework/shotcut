@@ -2661,7 +2661,7 @@ duration of the transition.</source>
         <translation>顯示方式</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3168"/>
+        <location filename="../src/mainwindow.cpp" line="3167"/>
         <source>Data Directory</source>
         <translation>資料目錄</translation>
     </message>
@@ -2792,7 +2792,7 @@ duration of the transition.</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="369"/>
-        <location filename="../src/mainwindow.cpp" line="2423"/>
+        <location filename="../src/mainwindow.cpp" line="2422"/>
         <source>Enter Full Screen</source>
         <translation>進入全螢幕模式</translation>
     </message>
@@ -3165,7 +3165,7 @@ duration of the transition.</source>
         <location filename="../src/mainwindow.cpp" line="801"/>
         <location filename="../src/mainwindow.cpp" line="803"/>
         <location filename="../src/mainwindow.cpp" line="1107"/>
-        <location filename="../src/mainwindow.cpp" line="2906"/>
+        <location filename="../src/mainwindow.cpp" line="2905"/>
         <source>Failed to open </source>
         <translation>無法開啟</translation>
     </message>
@@ -3198,28 +3198,28 @@ with &quot;- Repaired&quot; in the file name and open it.</source>
         <translation>修復專案失敗。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2638"/>
+        <location filename="../src/mainwindow.cpp" line="2637"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>必須重新啟動 Shotcut 才能切換至新的語言。
 要立刻重新啟動嗎？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2688"/>
+        <location filename="../src/mainwindow.cpp" line="2687"/>
         <source>You must restart Shotcut to switch using GPU processing.
 Do you want to restart now?</source>
         <translation>必須重新啟動 Shotcut 才能切換使用 GPU 處理。
 要立刻重新啟動嗎？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2947"/>
+        <location filename="../src/mainwindow.cpp" line="2946"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
         <translation>必須重新啟動 Shotcut 才能變更顯示方式。
 要立刻重新啟動嗎？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2969"/>
+        <location filename="../src/mainwindow.cpp" line="2968"/>
         <source>Application Log</source>
         <translation>應用程式記錄檔</translation>
     </message>
@@ -3248,7 +3248,7 @@ Please install it using your package manager. It may be named libsdl1.2debian, S
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1118"/>
-        <location filename="../src/mainwindow.cpp" line="2886"/>
+        <location filename="../src/mainwindow.cpp" line="2885"/>
         <source>Open File</source>
         <translation>開啟檔案</translation>
     </message>
@@ -3274,112 +3274,111 @@ Please install it using your package manager. It may be named libsdl1.2debian, S
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1950"/>
-        <location filename="../src/mainwindow.cpp" line="1977"/>
+        <location filename="../src/mainwindow.cpp" line="1976"/>
         <source>Saved %1</source>
         <translation>已儲存 %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1960"/>
+        <location filename="../src/mainwindow.cpp" line="1962"/>
         <source>Save XML</source>
         <translation>儲存 XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1960"/>
+        <location filename="../src/mainwindow.cpp" line="1962"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1969"/>
         <source>Unable to save empty file, but saved its name for future.</source>
-        <translation>無法儲存空檔案，但儲存了檔名以待稍後使用。</translation>
+        <translation type="vanished">無法儲存空檔案，但儲存了檔名以待稍後使用。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1989"/>
+        <location filename="../src/mainwindow.cpp" line="1988"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>專案已修改。要儲存變更嗎？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2016"/>
+        <location filename="../src/mainwindow.cpp" line="2015"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
         <translation>有未完成的工作。確定要結束嗎？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2029"/>
+        <location filename="../src/mainwindow.cpp" line="2028"/>
         <source>An export is in progress.
 Do you want to still want to exit?</source>
         <translation>輸出正在進行中。確定要結束嗎？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2426"/>
+        <location filename="../src/mainwindow.cpp" line="2425"/>
         <source>Exit Full Screen</source>
         <translation>結束全螢幕模式</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2439"/>
+        <location filename="../src/mainwindow.cpp" line="2438"/>
         <source>GPU Processing is not supported</source>
         <translation>不支援 GPU 處理功能</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2679"/>
+        <location filename="../src/mainwindow.cpp" line="2678"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>連接 JACK 失敗。
 請確認 JACK 已經安裝並且正在執行。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2887"/>
+        <location filename="../src/mainwindow.cpp" line="2886"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;所有檔案 (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3003"/>
+        <location filename="../src/mainwindow.cpp" line="3002"/>
         <source>Shotcut version %1 is available! Click here to get it.</source>
         <translation>Shotcut 版本 %1 可用！按一下這裡取得新版本。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3009"/>
+        <location filename="../src/mainwindow.cpp" line="3008"/>
         <source>You are running the latest version of Shotcut.</source>
         <translation>正在執行最新版本的 Shotcut。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3019"/>
+        <location filename="../src/mainwindow.cpp" line="3018"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation>檢查更新時無法讀取 version.json。按一下這裡以移至官方網站。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3069"/>
+        <location filename="../src/mainwindow.cpp" line="3068"/>
         <source>Export EDL</source>
         <translation>匯出 EDL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3069"/>
+        <location filename="../src/mainwindow.cpp" line="3068"/>
         <source>EDL (*.edl)</source>
         <translation>EDL (*.edl)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3112"/>
+        <location filename="../src/mainwindow.cpp" line="3111"/>
         <source>A JavaScript error occurred during export.</source>
         <translation>匯出時發生了 JavaScript 錯誤。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3115"/>
+        <location filename="../src/mainwindow.cpp" line="3114"/>
         <source>Failed to open export-edl.js</source>
         <translation>無法開啟 export-edl.js</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3141"/>
+        <location filename="../src/mainwindow.cpp" line="3140"/>
         <source>Export Frame</source>
         <translation>匯出畫面</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3151"/>
+        <location filename="../src/mainwindow.cpp" line="3150"/>
         <source>Unable to export frame.</source>
         <translation>無法匯出畫面。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3159"/>
+        <location filename="../src/mainwindow.cpp" line="3158"/>
         <source>You must restart Shotcut to change the data directory.
 Do you want to continue?</source>
         <translation>必須重新啟動 Shotcut 才能變更資料目錄。

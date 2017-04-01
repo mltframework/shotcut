@@ -381,7 +381,7 @@
         <location filename="../src/widgets/avfoundationproducerwidget.ui" line="26"/>
         <location filename="../src/widgets/avfoundationproducerwidget.cpp" line="78"/>
         <source>macOS A/V Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Dispositivo macOS A/V</translation>
     </message>
     <message>
         <location filename="../src/widgets/avfoundationproducerwidget.ui" line="39"/>
@@ -994,12 +994,13 @@ con l&apos;elaborazione parallela abilitata.</translation>
         <location filename="../src/docks/encodedock.ui" line="752"/>
         <source>A fixed GOP means that keyframes will
 not be inserted at detected scene changes.</source>
-        <translation type="unfinished"></translation>
+        <translation>Un GOP fisso significa che fotogrammi chiave
+non saranno inseriti ai cambi di scena rilevati.</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="756"/>
         <source>Fixed</source>
-        <translation type="unfinished">Fisso</translation>
+        <translation>Fisso</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="780"/>
@@ -1217,7 +1218,7 @@ nella compressione temporale</translation>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1085"/>
         <source>Constrained VBR</source>
-        <translation type="unfinished"></translation>
+        <translation>VBR vincolato</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1108"/>
@@ -2668,14 +2669,14 @@ durata della transizione.</translation>
         <translation>Metodo di visualizzazione</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3168"/>
+        <location filename="../src/mainwindow.cpp" line="3167"/>
         <source>Data Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Cartella dei dati</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="159"/>
         <source>App Data Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Cartella dei dati dell&apos;applicazione</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="192"/>
@@ -2799,7 +2800,7 @@ durata della transizione.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="369"/>
-        <location filename="../src/mainwindow.cpp" line="2423"/>
+        <location filename="../src/mainwindow.cpp" line="2422"/>
         <source>Enter Full Screen</source>
         <translation>Vai a schermo pieno</translation>
     </message>
@@ -3086,27 +3087,27 @@ durata della transizione.</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="825"/>
         <source>Set...</source>
-        <translation type="unfinished"></translation>
+        <translation>Imposta...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="830"/>
         <source>Show...</source>
-        <translation>Visualizzare...</translation>
+        <translation>Visualizza...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="833"/>
         <source>Show</source>
-        <translation>Visualizzare</translation>
+        <translation>Visualizza</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="838"/>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuovo</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="841"/>
         <source>Ctrl+N</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+N</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="633"/>
@@ -3172,7 +3173,7 @@ durata della transizione.</translation>
         <location filename="../src/mainwindow.cpp" line="801"/>
         <location filename="../src/mainwindow.cpp" line="803"/>
         <location filename="../src/mainwindow.cpp" line="1107"/>
-        <location filename="../src/mainwindow.cpp" line="2906"/>
+        <location filename="../src/mainwindow.cpp" line="2905"/>
         <source>Failed to open </source>
         <translation>Impossibile aprire</translation>
     </message>
@@ -3207,28 +3208,28 @@ con &quot;- Riparato&quot; nel nome del file lo aprirà.</translation>
         <translation>La riparazione del progetto è fallita.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2638"/>
+        <location filename="../src/mainwindow.cpp" line="2637"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>Devi riavviare Shotcut per passare alla nuova lingua.
 Vuoi riavviare Shotcut ora?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2688"/>
+        <location filename="../src/mainwindow.cpp" line="2687"/>
         <source>You must restart Shotcut to switch using GPU processing.
 Do you want to restart now?</source>
         <translation>Devi riavviare Shotcut per passare all&apos;uso dell&apos;elaborazione GPU.
 Vuoi riavviare Shotcut ora?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2947"/>
+        <location filename="../src/mainwindow.cpp" line="2946"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
         <translation>Devi riavviare Shotcut per modificare il metodo di visualizzazione. 
 Vuoi riavviare Shotcut ora?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2969"/>
+        <location filename="../src/mainwindow.cpp" line="2968"/>
         <source>Application Log</source>
         <translation>Registro dell&apos;applicazione</translation>
     </message>
@@ -3257,7 +3258,7 @@ Per favore installala usando il tuo gestore di pacchetti. Potrebbe chiamarsi lib
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1118"/>
-        <location filename="../src/mainwindow.cpp" line="2886"/>
+        <location filename="../src/mainwindow.cpp" line="2885"/>
         <source>Open File</source>
         <translation>Apri file</translation>
     </message>
@@ -3283,117 +3284,118 @@ Per favore installala usando il tuo gestore di pacchetti. Potrebbe chiamarsi lib
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1950"/>
-        <location filename="../src/mainwindow.cpp" line="1977"/>
+        <location filename="../src/mainwindow.cpp" line="1976"/>
         <source>Saved %1</source>
         <translation>Salvato %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1960"/>
+        <location filename="../src/mainwindow.cpp" line="1962"/>
         <source>Save XML</source>
         <translation>Salva XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1960"/>
+        <location filename="../src/mainwindow.cpp" line="1962"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1969"/>
         <source>Unable to save empty file, but saved its name for future.</source>
-        <translation>Impossibile salvare un file vuoto, ma è stato salvato il suo nome per uso futuro.</translation>
+        <translation type="vanished">Impossibile salvare un file vuoto, ma è stato salvato il suo nome per uso futuro.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1989"/>
+        <location filename="../src/mainwindow.cpp" line="1988"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>Il progetto è stato modificato.
 Vuoi salvare le tue modifiche?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2016"/>
+        <location filename="../src/mainwindow.cpp" line="2015"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
         <translation>Ci sono attività incomplete.
 Vuoi veramente uscire dal programma?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2029"/>
+        <location filename="../src/mainwindow.cpp" line="2028"/>
         <source>An export is in progress.
 Do you want to still want to exit?</source>
-        <translation type="unfinished"></translation>
+        <translation>Un&apos;esportazione è in corso.
+Vuoi comunque uscire?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2426"/>
+        <location filename="../src/mainwindow.cpp" line="2425"/>
         <source>Exit Full Screen</source>
         <translation>Esci da schermo intero</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2439"/>
+        <location filename="../src/mainwindow.cpp" line="2438"/>
         <source>GPU Processing is not supported</source>
         <translation>Elaborazione GPU non supportata</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2679"/>
+        <location filename="../src/mainwindow.cpp" line="2678"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>Impossibile connettersi a JACK.
 Verifica per favore che JACK sia installato e in esecuzione.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2887"/>
+        <location filename="../src/mainwindow.cpp" line="2886"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>XML MLT (*.mlt);;Tutti i file (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3003"/>
+        <location filename="../src/mainwindow.cpp" line="3002"/>
         <source>Shotcut version %1 is available! Click here to get it.</source>
         <translation>È disponibile Shotcut versione %1! Fai clic qui scaricarlo.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3009"/>
+        <location filename="../src/mainwindow.cpp" line="3008"/>
         <source>You are running the latest version of Shotcut.</source>
         <translation>Stai usando l&apos;ultima versione di Shotcut.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3019"/>
+        <location filename="../src/mainwindow.cpp" line="3018"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation>Impossibile leggere version.json durante il controllo. Fai clic qui per visitare il sito web.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3069"/>
+        <location filename="../src/mainwindow.cpp" line="3068"/>
         <source>Export EDL</source>
         <translation>Esporta EDL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3069"/>
+        <location filename="../src/mainwindow.cpp" line="3068"/>
         <source>EDL (*.edl)</source>
         <translation>EDL (*.edl)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3112"/>
+        <location filename="../src/mainwindow.cpp" line="3111"/>
         <source>A JavaScript error occurred during export.</source>
         <translation>Si è verificato un errore JavaScript durante l&apos;esportazione.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3115"/>
+        <location filename="../src/mainwindow.cpp" line="3114"/>
         <source>Failed to open export-edl.js</source>
         <translation>Impossibile aprire export-edl.js</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3141"/>
+        <location filename="../src/mainwindow.cpp" line="3140"/>
         <source>Export Frame</source>
         <translation>Esporta un fotogramma</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3151"/>
+        <location filename="../src/mainwindow.cpp" line="3150"/>
         <source>Unable to export frame.</source>
         <translation>Impossibile esportare il fotogramma.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3159"/>
+        <location filename="../src/mainwindow.cpp" line="3158"/>
         <source>You must restart Shotcut to change the data directory.
 Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>È necessario riavviare Shotcut per modificare la cartella dei dati.
+Vuoi continuare?</translation>
     </message>
 </context>
 <context>
@@ -3893,7 +3895,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/openotherdialog.cpp" line="66"/>
         <source>macOS A/V Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Dispositivo macOS A/V</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="71"/>
@@ -4171,12 +4173,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/player.cpp" line="913"/>
         <source>Unmute</source>
-        <translation type="unfinished"></translation>
+        <translation>Attiva audio</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="918"/>
         <source>Mute</source>
-        <translation type="unfinished">Muto</translation>
+        <translation>Disattiva audio</translation>
     </message>
 </context>
 <context>
@@ -4248,7 +4250,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/docks/playlistdock.ui" line="142"/>
         <source>Add the Source to the playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Aggiungi la sorgente all&apos;elenco di riproduzione</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="190"/>
@@ -5206,32 +5208,32 @@ modificare la posizione delle altre clip (Z)</translation>
     <message>
         <location filename="../src/qml/timeline/TrackHead.qml" line="143"/>
         <source>Mute</source>
-        <translation>Muto</translation>
+        <translation>Disattiva audio traccia</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/TrackHead.qml" line="143"/>
         <source>Unmute</source>
-        <translation type="unfinished"></translation>
+        <translation>Attiva audio traccia</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/TrackHead.qml" line="154"/>
         <source>Show</source>
-        <translation type="unfinished">Visualizzare</translation>
+        <translation>Visualizza traccia</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/TrackHead.qml" line="165"/>
         <source>Disable compositing</source>
-        <translation type="unfinished"></translation>
+        <translation>Disabilita il compositing</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/TrackHead.qml" line="175"/>
         <source>Unlock track</source>
-        <translation type="unfinished"></translation>
+        <translation>Sblocca traccia</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/TrackHead.qml" line="154"/>
         <source>Hide</source>
-        <translation>Nascondi</translation>
+        <translation>Nascondi traccia</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/TrackHead.qml" line="175"/>
@@ -5241,7 +5243,7 @@ modificare la posizione delle altre clip (Z)</translation>
     <message>
         <location filename="../src/qml/timeline/TrackHead.qml" line="165"/>
         <source>Composite</source>
-        <translation>Composito</translation>
+        <translation>Abilita il compositing</translation>
     </message>
 </context>
 <context>
@@ -5802,7 +5804,7 @@ La maggior parte degli utenti non hanno bisogno di modificarlo.</translation>
     <message>
         <location filename="../src/main.cpp" line="132"/>
         <source>The directory for app configuration and data.</source>
-        <translation type="unfinished"></translation>
+        <translation>La cartella per la configurazione dell&apos;applicazione e i dati.</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="133"/>
@@ -6022,7 +6024,7 @@ La maggior parte degli utenti non hanno bisogno di modificarlo.</translation>
     <message>
         <location filename="../src/qml/filters/audio_mute/meta.qml" line="8"/>
         <source>Mute</source>
-        <translation>Muto</translation>
+        <translation>Disattiva audio</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/meta.qml" line="24"/>
