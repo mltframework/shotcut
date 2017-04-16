@@ -62,6 +62,12 @@ MltXmlChecker::MltXmlChecker()
     , m_tempFile(QDir::tempPath().append("/shotcut-XXXXXX.mlt"))
     , m_numericValueChanged(false)
 {
+    Mlt::Producer producer(MLT.profile(), "color", "black");
+    if (producer.is_valid()) {
+        const char* timeString = producer.get_length_time(mlt_time_clock);
+        if (qstrlen(timeString) >= 8) // HH:MM:SS.ms
+            m_decimalPoint = timeString[8];
+    }
     LOG_DEBUG() << "decimal point" << m_decimalPoint;
     m_unlinkedFilesModel.setColumnCount(ColumnCount);
 }
