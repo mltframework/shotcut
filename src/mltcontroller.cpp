@@ -397,7 +397,7 @@ void Controller::saveXML(const QString& filename, Service* service, bool withRel
     }
 }
 
-QString Controller::XML(Service* service)
+QString Controller::XML(Service* service, bool withProfile)
 {
     static const char* propertyName = "string";
     Consumer c(profile(), "xml", propertyName);
@@ -408,7 +408,7 @@ QString Controller::XML(Service* service)
     if (ignore)
         s.set("ignore_points", 0);
     c.set("no_meta", 1);
-    c.set("no_profile", 1);
+    c.set("no_profile", !withProfile);
     c.set("store", "shotcut");
     c.connect(s);
     c.start();

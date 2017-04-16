@@ -6808,7 +6808,7 @@ MltXmlParser.prototype.prepadString = function (str, len, chr) {
 MltXmlParser.prototype.Timecode = function(value) {
     if (typeof value === 'string') {
         // Determine if this is a MLT "clock" time string.
-        if (value.length === 12 && value[8] === '.') {
+        if (value.length === 12 && (value[8] === '.' || value[8] === ',')) {
             // Convert the milliseconds portion to frame units.
             var ms = parseFloat(value.substring(9, 12));
             var fr = Math.round(ms / 1000 * this.framerate).toString();

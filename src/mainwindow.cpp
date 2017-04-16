@@ -3100,7 +3100,7 @@ void MainWindow::on_actionExportEDL_triggered()
                 options.setProperty("useBaseNameForClipComment", true);
                 options.setProperty("channelsAV", "AA/V");
                 QJSValueList args;
-                args << MLT.XML() << options;
+                args << MLT.XML(0, true) << options;
                 result = result.call(args);
                 if (!result.isError()) {
                     // Save the result with the export file name.
