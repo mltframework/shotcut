@@ -6947,7 +6947,7 @@ MltXmlParser.prototype.linkReferences = function() {
         if (!self.useBaseNameForReelName && 'shotcut:hash' in p) {
             sourceLinks[p.id].reel_name = p['shotcut:hash']
         } else if ('resource' in p) {
-            var reelName = self.baseName(p.resource);
+            var reelName = self.baseName(p.resource, false);
             sourceLinks[p.id].reel_name = reelName.replace(/\W/g, '_');
         }
     });
@@ -7007,13 +7007,15 @@ MltXmlParser.prototype.createEdl = function() {
     return EDLfile;
 };
 
-MltXmlParser.prototype.baseName = function(fileName) {
+MltXmlParser.prototype.baseName = function(fileName, keepExtension) {
+    var name = fileName;
     if (fileName.indexOf('/') !== -1)
-        return fileName.split('/').pop();
+        name = fileName.split('/').pop();
     else if (fileName.indexOf('\\') !== -1)
-        return fileName.split('\\').pop();
-    else
-        return fileName;
+        name = fileName.split('\\').pop();
+    if (keepExtension === false && name.indexOf('.') !== -1)
+        name = name.substring(0, name.indexOf('.'));
+    return name;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
