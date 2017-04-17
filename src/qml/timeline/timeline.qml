@@ -417,10 +417,18 @@ Rectangle {
             checkable: true
             checked: settings.timelineShowWaveforms
             onTriggered: {
-                settings.timelineShowWaveforms = checked
                 if (checked) {
-                    for (var i = 0; i < tracksRepeater.count; i++)
-                        tracksRepeater.itemAt(i).redrawWaveforms()
+                    if (settings.timelineShowWaveforms) {
+                        settings.timelineShowWaveforms = checked
+                        for (var i = 0; i < tracksRepeater.count; i++)
+                            tracksRepeater.itemAt(i).redrawWaveforms()
+                    } else {
+                        settings.timelineShowWaveforms = checked
+                        for (var i = 0; i < tracksRepeater.count; i++)
+                            tracksRepeater.itemAt(i).remakeWaveforms(false)
+                    }
+                } else {
+                    settings.timelineShowWaveforms = checked
                 }
             }
         }

@@ -134,7 +134,7 @@ public slots:
     void removeTrack();
     void onProducerChanged(Mlt::Producer*);
     void emitSelectedFromSelection();
-    void remakeAudioLevels(int trackIndex, int clipIndex);
+    void remakeAudioLevels(int trackIndex, int clipIndex, bool force = true);
     void commitTrimCommand();
 
 protected:

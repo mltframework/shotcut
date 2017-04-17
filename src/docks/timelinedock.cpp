@@ -626,11 +626,11 @@ void TimelineDock::emitSelectedFromSelection()
     }
 }
 
-void TimelineDock::remakeAudioLevels(int trackIndex, int clipIndex)
+void TimelineDock::remakeAudioLevels(int trackIndex, int clipIndex, bool force)
 {
     QModelIndex modelIndex = m_model.index(clipIndex, 0, m_model.index(trackIndex));
     QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
-    AudioLevelsTask::start(*info->producer, &m_model, modelIndex, /* force */ true);
+    AudioLevelsTask::start(*info->producer, &m_model, modelIndex, force);
 }
 
 void TimelineDock::commitTrimCommand()
