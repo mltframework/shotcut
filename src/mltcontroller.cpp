@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2016 Meltytech, LLC
+ * Copyright (c) 2011-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -731,7 +731,7 @@ void Controller::setImageDurationFromDefault(Service* service) const
     if (service && service->is_valid()) {
         if (isImageProducer(service)) {
             service->set("ttl", 1);
-            service->set("length", qRound(m_profile->fps() * 600));
+            service->set("length", qRound(m_profile->fps() * kMaxImageDurationSecs));
             service->set("out", qRound(m_profile->fps() * Settings.imageDuration()) - 1);
         }
     }

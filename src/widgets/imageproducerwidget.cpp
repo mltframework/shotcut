@@ -217,7 +217,7 @@ void ImageProducerWidget::on_sequenceCheckBox_clicked(bool checked)
     }
     else {
         m_producer->set("resource", m_producer->get(kShotcutResourceProperty));
-        m_producer->set("length", qRound(MLT.profile().fps() * 600));
+        m_producer->set("length", qRound(MLT.profile().fps() * Mlt::kMaxImageDurationSecs));
         ui->durationSpinBox->setValue(qRound(MLT.profile().fps() * Settings.imageDuration()));
     }
     recreateProducer();

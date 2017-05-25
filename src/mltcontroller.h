@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2016 Meltytech, LLC
+ * Copyright (c) 2011-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -31,6 +31,7 @@ class QQuickView;
 
 namespace Mlt {
 
+const int kMaxImageDurationSecs = 3600 * 4;
 extern const QString XmlMimeType;
 
 class TransportControl : public TransportControllable
