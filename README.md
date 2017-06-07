@@ -25,6 +25,7 @@ Binaries are regularly built and are available at https://www.shotcut.org, on th
 - [Frei0r](http://www.dyne.org/software/frei0r/): video plugins
 - [LADSPA](http://www.ladspa.org/): audio plugins
 - [WebVfx](https://github.com/mltframework/webvfx): video effects using web technologies
+- [Movit](https://git.sesse.net/?p=movit)
 
 ## Licence
 
