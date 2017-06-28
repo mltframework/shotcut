@@ -643,6 +643,7 @@ void Player::onOutChanged(int out)
     if (out != m_previousOut)
         emit outChanged(out);
     m_previousOut = out;
+    m_playPosition = m_previousOut; // prevent O key from pausing
     updateSelection();
 }
 
