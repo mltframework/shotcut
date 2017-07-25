@@ -671,9 +671,6 @@ void MainWindow::setupSettingsMenu()
     a = new QAction(QLocale::languageToString(QLocale::English), m_languagesGroup);
     a->setCheckable(true);
     a->setData("en");
-    a = new QAction(QLocale::languageToString(QLocale::Greek), m_languagesGroup);
-    a->setCheckable(true);
-    a->setData("el");
     a = new QAction(QLocale::languageToString(QLocale::French), m_languagesGroup);
     a->setCheckable(true);
     a->setData("fr");
@@ -683,6 +680,9 @@ void MainWindow::setupSettingsMenu()
     a = new QAction(QLocale::languageToString(QLocale::German), m_languagesGroup);
     a->setCheckable(true);
     a->setData("de");
+    a = new QAction(QLocale::languageToString(QLocale::Greek), m_languagesGroup);
+    a->setCheckable(true);
+    a->setData("el");
     a = new QAction(QLocale::languageToString(QLocale::Hungarian), m_languagesGroup);
     a->setCheckable(true);
     a->setData("hu");
@@ -704,6 +704,9 @@ void MainWindow::setupSettingsMenu()
     a = new QAction(QLocale::languageToString(QLocale::Portuguese).append(" (Portugal)"), m_languagesGroup);
     a->setCheckable(true);
     a->setData("pt_PT");
+    a = new QAction(QLocale::languageToString(QLocale::Russian), m_languagesGroup);
+    a->setCheckable(true);
+    a->setData("ru");
     a = new QAction(QLocale::languageToString(QLocale::Slovak), m_languagesGroup);
     a->setCheckable(true);
     a->setData("sk");
@@ -716,9 +719,6 @@ void MainWindow::setupSettingsMenu()
     a = new QAction(QLocale::languageToString(QLocale::Turkish), m_languagesGroup);
     a->setCheckable(true);
     a->setData("tr");
-    a = new QAction(QLocale::languageToString(QLocale::Russian), m_languagesGroup);
-    a->setCheckable(true);
-    a->setData("ru");
     a = new QAction(QLocale::languageToString(QLocale::Ukrainian), m_languagesGroup);
     a->setCheckable(true);
     a->setData("uk");
