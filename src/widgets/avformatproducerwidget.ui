@@ -83,7 +83,10 @@
         <bool>false</bool>
        </property>
        <property name="suffix">
-        <string notr="true"> x</string>
+        <string notr="true" extracomment="The multiplication symbol that appears as the unit of measure for the speed field"> x</string>
+       </property>
+       <property name="decimals">
+        <number>3</number>
        </property>
        <property name="minimum">
         <double>0.010000000000000</double>
