@@ -651,6 +651,23 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Service* service, const QString& target,
         }
     }
 
+    // Fix in/out points of filters on clip-only project.
+    QScopedPointer<Mlt::Producer> tempProducer;
+    if (ui->fromCombo->currentData().toString() == "clip") {
+        QString xml = MLT.XML(service);
+        tempProducer.reset(new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData()));
+        service = tempProducer.data();
+        int producerIn = tempProducer->get_in();
+        if (producerIn > 0) {
+            int n = tempProducer->filter_count();
+            for (int i = 0; i < n; i++) {
+                QScopedPointer<Mlt::Filter> filter(tempProducer->filter(i));
+                if (filter->get_in() > 0)
+                    filter->set_in_and_out(filter->get_in() - producerIn, filter->get_out() - producerIn);
+            }
+        }
+    }
+
     // get temp filename
     QTemporaryFile tmp;
     tmp.open();
