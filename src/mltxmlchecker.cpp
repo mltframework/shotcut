@@ -353,14 +353,17 @@ void MltXmlChecker::checkGpuEffects(const QString& mlt_service)
 void MltXmlChecker::checkUnlinkedFile(const QString& mlt_service)
 {
     // Check for an unlinked file.
+    const QString baseName = m_resource.info.baseName();
     // not the color producer
     if (!mlt_service.isEmpty() && mlt_service != "color" && mlt_service != "colour")
     // not a builtin luma wipe file
-    if (mlt_service != "luma" || !m_resource.info.baseName().startsWith('%'))
+    if (mlt_service != "luma" || !baseName.startsWith('%'))
     // not the generic <producer> resource
-    if (m_resource.info.baseName() != "<producer>")
+    if (baseName != "<producer>")
     // not a URL
     if (!m_resource.info.filePath().isEmpty() && !isNetworkResource(m_resource.info.filePath()))
+    // not an image sequence
+    if ((mlt_service != "pixbuf" && mlt_service != "qimage") || baseName.indexOf('%') == -1)
     // file does not exist
     if (!m_resource.info.exists())
     // not already in the model
