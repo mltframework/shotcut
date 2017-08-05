@@ -117,7 +117,7 @@ void ImageProducerWidget::recreateProducer()
 {
     Mlt::Producer* p = newProducer(MLT.profile());
     p->pass_list(*m_producer, "force_aspect_ratio," kAspectRatioNumerator ", resource, " kAspectRatioDenominator
-        ", ttl," kShotcutResourceProperty ", length," kShotcutSequenceProperty ", " kPlaylistIndexProperty);
+        ", ttl," kShotcutResourceProperty ", autolength, length," kShotcutSequenceProperty ", " kPlaylistIndexProperty);
     Mlt::Controller::copyFilters(*m_producer, *p);
     if (m_producer->get_int(kMultitrackItemProperty)) {
         emit producerChanged(p);
@@ -178,6 +178,7 @@ void ImageProducerWidget::on_sequenceCheckBox_clicked(bool checked)
     if (checked && !m_producer->get(kShotcutResourceProperty))
         m_producer->set(kShotcutResourceProperty, resource.toUtf8().constData());
     m_producer->set(kShotcutSequenceProperty, checked);
+    m_producer->set("autolength", checked);
     m_producer->set("ttl", ui->repeatSpinBox->value());
     if (checked) {
         QFileInfo info(resource);
