@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2016 Meltytech, LLC
+ * Copyright (c) 2011-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * GL shader based on BSD licensed code from Peter Bengtsson:
@@ -173,10 +173,8 @@ void GLWidget::initializeGL()
     quickWindow()->openglContext()->makeCurrent(quickWindow());
 
     connect(m_frameRenderer, SIGNAL(frameDisplayed(const SharedFrame&)), this, SIGNAL(frameDisplayed(const SharedFrame&)), Qt::QueuedConnection);
-    if (Settings.playerGPU() || quickWindow()->openglContext()->supportsThreadedOpenGL())
-        connect(m_frameRenderer, SIGNAL(textureReady(GLuint,GLuint,GLuint)), SLOT(updateTexture(GLuint,GLuint,GLuint)), Qt::DirectConnection);
-    else
-        connect(m_frameRenderer, SIGNAL(frameDisplayed(const SharedFrame&)), SLOT(onFrameDisplayed(const SharedFrame&)), Qt::QueuedConnection);
+    connect(m_frameRenderer, SIGNAL(textureReady(GLuint,GLuint,GLuint)), SLOT(updateTexture(GLuint,GLuint,GLuint)), Qt::DirectConnection);
+    connect(m_frameRenderer, SIGNAL(frameDisplayed(const SharedFrame&)), SLOT(onFrameDisplayed(const SharedFrame&)), Qt::QueuedConnection);
     connect(m_frameRenderer, SIGNAL(imageReady()), SIGNAL(imageReady()));
 
     m_initSem.release();
@@ -366,9 +364,18 @@ void GLWidget::paintGL()
         }
         uploadTextures(quickWindow()->openglContext(), m_sharedFrame, m_texture);
         m_mutex.unlock();
+    } else if (m_glslManager) {
+        m_mutex.lock();
+        if (m_sharedFrame.is_valid()) {
+            m_texture[0] = *((GLuint*) m_sharedFrame.get_image());
+        }
     }
 
-    if (!m_texture[0]) return;
+    if (!m_texture[0]) {
+        if (m_glslManager)
+            m_mutex.unlock();
+        return;
+    }
 
     // Bind textures.
     for (int i = 0; i < 3; ++i) {
@@ -449,6 +456,11 @@ void GLWidget::paintGL()
     }
     glActiveTexture(GL_TEXTURE0);
     check_error(f);
+
+    if (m_glslManager) {
+        glFinish(); check_error(f);
+        m_mutex.unlock();
+    }
 }
 
 void GLWidget::mousePressEvent(QMouseEvent* event)
@@ -896,13 +908,12 @@ void FrameRenderer::showFrame(Mlt::Frame frame)
                 mlt_pool_release(image);
                 emit imageReady();
             }
-
-            emit textureReady(*textureId);
+            
             m_context->doneCurrent();
 
             // Save this frame for future use and to keep a reference to the GL Texture.
-            m_renderFrame = SharedFrame(frame);
-            qSwap(m_renderFrame, m_displayFrame);
+            m_displayFrame = SharedFrame(frame);
+            emit frameDisplayed(m_displayFrame);
         }
         else {
             // Using a threaded OpenGL to upload textures.

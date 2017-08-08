@@ -2065,7 +2065,6 @@ export MLT_DATA="\$INSTALL_DIR/share/mlt"
 export MLT_PROFILES_PATH="\$INSTALL_DIR/share/mlt/profiles"
 export FREI0R_PATH="\$INSTALL_DIR/lib/frei0r-1"
 export MLT_MOVIT_PATH="\$INSTALL_DIR/share/movit"
-export __GL_THREADED_OPTIMIZATIONS=0
 cd "\$INSTALL_DIR"
 export QT_PLUGIN_PATH="lib/qt5"
 export QML2_IMPORT_PATH="lib/qml"
