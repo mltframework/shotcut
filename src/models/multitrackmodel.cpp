@@ -2634,14 +2634,17 @@ void MultitrackModel::insertOrAdjustBlankAt(QList<int> tracks, int position, int
             int idx = trackPlaylist.get_clip_index_at(position);
 
             if (trackPlaylist.is_blank(idx)) {
-
-                trackPlaylist.resize_clip(idx, 0, trackPlaylist.clip_length(idx) + length);
+                trackPlaylist.resize_clip(idx, 0, trackPlaylist.clip_length(idx) + length - 1);
                 QModelIndex modelIndex = createIndex(idx, 0, trackIndex);
                 emit dataChanged(modelIndex, modelIndex, QVector<int>() << DurationRole);
             } else if (length > 0) {
-                splitClip(trackIndex, idx, position);
-                beginInsertRows(index(trackIndex), idx + 1, idx + 1);
-                trackPlaylist.insert_blank(idx + 1, length);
+                int insertBlankAtIdx = idx;
+                if (trackPlaylist.clip_start(idx) < position) {
+                    splitClip(trackIndex, idx, position);
+                    insertBlankAtIdx = idx + 1;
+                }
+                beginInsertRows(index(trackIndex), insertBlankAtIdx, insertBlankAtIdx);
+                trackPlaylist.insert_blank(insertBlankAtIdx, length - 1);
                 endInsertRows();
             } else {
                 Q_ASSERT(!"unsupported");
