@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 Meltytech, LLC
+ * Copyright (c) 2013-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -471,6 +471,16 @@ int ShotcutSettings::drawMethod() const
 void ShotcutSettings::setDrawMethod(int i)
 {
     settings.setValue("opengl", i);
+}
+
+bool ShotcutSettings::noUpgrade() const
+{
+    return settings.value("noupgrade", false).toBool();
+}
+
+void ShotcutSettings::setNoUpgrade(bool value)
+{
+    settings.setValue("noupgrade", value);
 }
 
 void ShotcutSettings::sync()

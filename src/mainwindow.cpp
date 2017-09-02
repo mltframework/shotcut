@@ -226,6 +226,8 @@ MainWindow::MainWindow()
     setupSettingsMenu();
     readPlayerSettings();
     configureVideoWidget();
+    if (Settings.noUpgrade() || qApp->property("noupgrade").toBool())
+        delete ui->actionUpgrade;
 
     // Add the docks.
     m_scopeController = new ScopeController(this, ui->menuView);
@@ -1879,9 +1881,11 @@ void MainWindow::showEvent(QShowEvent* event)
 
     windowHandle()->installEventFilter(this);
 
-    QAction* action = new QAction(tr("Click here to check for a new version of Shotcut."), 0);
-    connect(action, SIGNAL(triggered(bool)), SLOT(on_actionUpgrade_triggered()));
-    showStatusMessage(action, 10 /* seconds */);
+    if (!Settings.noUpgrade() && !qApp->property("noupgrade").toBool()) {
+        QAction* action = new QAction(tr("Click here to check for a new version of Shotcut."), 0);
+        connect(action, SIGNAL(triggered(bool)), SLOT(on_actionUpgrade_triggered()));
+        showStatusMessage(action, 10 /* seconds */);
+    }
 }
 
 void MainWindow::on_actionOpenOther_triggered()

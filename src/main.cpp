@@ -125,6 +125,9 @@ public:
             QCoreApplication::translate("main", "Fill the screen with the Shotcut window."));
         parser.addOption(fullscreenOption);
 #endif
+        QCommandLineOption noupgradeOption("noupgrade",
+            QCoreApplication::translate("main", "Hide upgrade prompt and menu item."));
+        parser.addOption(noupgradeOption);
         QCommandLineOption gpuOption("gpu",
             QCoreApplication::translate("main", "Use GPU processing."));
         parser.addOption(gpuOption);
@@ -140,6 +143,7 @@ public:
 #else
         isFullScreen = parser.isSet(fullscreenOption);
 #endif
+        setProperty("noupgrade", parser.isSet(noupgradeOption));
         if (!parser.value(appDataOption).isEmpty()) {
             appDirArg = parser.value(appDataOption);
             Settings.setAppDataForSession(appDirArg);
