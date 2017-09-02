@@ -450,8 +450,7 @@ void AvformatProducerWidget::on_syncSlider_valueChanged(int value)
 
 void AvformatProducerWidget::on_actionOpenFolder_triggered()
 {
-    QFileInfo fi(GetFilenameFromProducer(producer()));
-    QDesktopServices::openUrl(QUrl::fromLocalFile(fi.path()));
+    Util::showInFolder(GetFilenameFromProducer(producer()));
 }
 
 void AvformatProducerWidget::on_menuButton_clicked()

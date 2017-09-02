@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2016 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -30,6 +30,7 @@
 #include "settings.h"
 #include "jobqueue.h"
 #include "jobs/videoqualityjob.h"
+#include "util.h"
 
 EncodeJob::EncodeJob(const QString &name, const QString &xml)
     : MeltJob(name, xml)
@@ -56,8 +57,7 @@ void EncodeJob::onOpenTiggered()
 
 void EncodeJob::onShowFolderTriggered()
 {
-    QFileInfo fi(objectName());
-    QDesktopServices::openUrl(QUrl::fromLocalFile(fi.path()));
+    Util::showInFolder(objectName());
 }
 
 void EncodeJob::onVideoQualityTriggered()

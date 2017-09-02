@@ -74,6 +74,7 @@
 #include "widgets/trackpropertieswidget.h"
 #include "widgets/timelinepropertieswidget.h"
 #include "dialogs/unlinkedfilesdialog.h"
+#include "util.h"
 
 #include <QtWidgets>
 #include <Logger.h>
@@ -3204,7 +3205,7 @@ void MainWindow::on_actionAppDataSet_triggered()
 
 void MainWindow::on_actionAppDataShow_triggered()
 {
-    QDesktopServices::openUrl(QUrl::fromLocalFile(Settings.appDataLocation()));
+    Util::showInFolder(Settings.appDataLocation());
 }
 
 void MainWindow::on_actionNew_triggered()

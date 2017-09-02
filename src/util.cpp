@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Meltytech, LLC
+ * Copyright (c) 2014-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,6 +19,12 @@
 #include "util.h"
 #include <QFileInfo>
 #include <QWidget>
+#include <QStringList>
+#include <QFileInfo>
+#include <QDir>
+#include <QProcess>
+#include <QUrl>
+#include <QDesktopServices>
 
 QString Util::baseName(const QString &filePath)
 {
@@ -37,4 +43,30 @@ void Util::setColorsToHighlight(QWidget* widget, QPalette::ColorRole role)
         palette.color(palette.HighlightedText));
     widget->setPalette(palette);
     widget->setAutoFillBackground(true);
+}
+
+void Util::showInFolder(const QString& path)
+{
+    QFileInfo info(path);
+#if defined(Q_OS_WIN)
+    QStringList args;
+    if (!info.isDir())
+        args << "/select,";
+    args << QDir::toNativeSeparators(path);
+    if (QProcess::startDetached("explorer", args))
+        return;
+#elif defined(Q_OS_MAC)
+    QStringList args;
+    args << "-e";
+    args << "tell application \"Finder\"";
+    args << "-e";
+    args << "activate";
+    args << "-e";
+    args << "select POSIX file \"" + path + "\"";
+    args << "-e";
+    args << "end tell";
+    if (!QProcess::execute("/usr/bin/osascript", args))
+        return;
+#endif
+    QDesktopServices::openUrl(QUrl::fromLocalFile(info.isDir()? path : info.path()));
 }
