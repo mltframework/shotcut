@@ -787,10 +787,30 @@ void Controller::copyFilters(Mlt::Producer* producer)
 
 void Controller::pasteFilters(Mlt::Producer* producer)
 {
-    if (producer && producer->is_valid())
-        copyFilters(*m_filtersClipboard, *producer);
-    else if (m_producer &&  m_producer->is_valid())
-        copyFilters(*m_filtersClipboard, *m_producer);
+    Mlt::Producer* targetProducer = (producer && producer->is_valid())? producer
+                      :(m_producer && m_producer->is_valid())? m_producer
+                      : 0;
+    if (targetProducer) {
+        copyFilters(*m_filtersClipboard, *targetProducer);
+
+        // Adjust all filters that have an explicit duration.
+        int n = targetProducer->filter_count();
+        for (int j = 0; j < n; j++) {
+            Mlt::Filter* filter = targetProducer->filter(j);
+            if (filter && filter->is_valid() && filter->get_length() > 0) {
+                if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeIn")
+                        || QString(filter->get("mlt_service")) == "webvfx") {
+                    int in = targetProducer->get_int(kFilterInProperty);
+                    filter->set_in_and_out(in, in + filter->get_length() - 1);
+                }
+                else if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeOut")) {
+                    int out = targetProducer->get_int(kFilterOutProperty);
+                    filter->set_in_and_out(out - filter->get_length() + 1, out);
+                }
+            }
+            delete filter;
+        }
+    }
 }
 
 void Controller::setSavedProducer(Mlt::Producer* producer)
