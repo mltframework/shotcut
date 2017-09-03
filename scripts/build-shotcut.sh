@@ -46,7 +46,7 @@ LIBOPUS_HEAD=1
 LIBOPUS_REVISION=
 ENABLE_SWH_PLUGINS=1
 FFMPEG_HEAD=0
-FFMPEG_REVISION="origin/release/3.3"
+FFMPEG_REVISION="origin/release/3.2"
 FFMPEG_SUPPORT_H264=1
 FFMPEG_SUPPORT_H265=1
 FFMPEG_SUPPORT_LIBVPX=1
@@ -634,10 +634,10 @@ function set_globals {
   fi
   CFLAGS_[1]="-I$FINAL_INSTALL_DIR/include $ASAN_CFLAGS $CFLAGS"
   if [ "$TARGET_OS" = "Darwin" ]; then
-    CFLAGS_[1]="${CFLAGS_[1]} -I/opt/local/include -DRELOCATABLE -DMELT_NOSDL"
+    CFLAGS_[1]="${CFLAGS_[1]} -I/opt/local/include -DRELOCATABLE"
     LDFLAGS_[1]="${LDFLAGS_[1]} -L/opt/local/lib/libomp"
   fi
-  [ "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ]  && CFLAGS_[1]="${CFLAGS_[1]} -DMELT_NOSDL"
+  [ "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ]  && CFLAGS_[1]="${CFLAGS_[1]} -I$FINAL_INSTALL_DIR/include/SDL2"
   LDFLAGS_[1]="${LDFLAGS_[1]} -L$FINAL_INSTALL_DIR/lib $ASAN_LDFLAGS $LDFLAGS"
 
   ####
@@ -1500,9 +1500,6 @@ function configure_compile_install_subproject {
   # Special hack for mlt, post-configure
   if test "mlt" = "$1" ; then
     mlt_check_configure
-	if [ "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ]; then
-	  echo "USE_PKG_CONFIG=0" > src/modules/sdl/config.mak
-	fi
   fi
 
   # Compile
