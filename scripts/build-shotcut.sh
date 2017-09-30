@@ -604,9 +604,11 @@ function set_globals {
   CFLAGS_[0]="-I$FINAL_INSTALL_DIR/include $CFLAGS"
   if test "$TARGET_OS" = "Win32" ; then
     CONFIG[0]="${CONFIG[0]} --cross-prefix=$CROSS --arch=x86 --target-os=mingw32 --pkg-config=pkg-config"
+    CFLAGS_[0]="${CFLAGS_[0]} -I$FINAL_INSTALL_DIR/include/SDL2"
     LDFLAGS_[0]="$LDFLAGS"
   elif test "$TARGET_OS" = "Win64" ; then
     CONFIG[0]="${CONFIG[0]} --cross-prefix=$CROSS --arch=x86_64 --target-os=mingw32 --pkg-config=pkg-config"
+    CFLAGS_[0]="${CFLAGS_[0]} -I$FINAL_INSTALL_DIR/include/SDL2"
     LDFLAGS_[0]="$LDFLAGS"
   else
     LDFLAGS_[0]="-L$FINAL_INSTALL_DIR/lib $LDFLAGS"
