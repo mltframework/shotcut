@@ -546,6 +546,8 @@ void MainWindow::setupSettingsMenu()
     ui->menuProfile->addAction(addProfile(m_profileGroup, "HD 1080p 25 fps", "atsc_1080p_25"));
     ui->menuProfile->addAction(addProfile(m_profileGroup, "HD 1080p 29.97 fps", "atsc_1080p_2997"));
     ui->menuProfile->addAction(addProfile(m_profileGroup, "HD 1080p 30 fps", "atsc_1080p_30"));
+    ui->menuProfile->addAction(addProfile(m_profileGroup, "HD 1080p 59.94 fps", "atsc_1080p_5994"));
+    ui->menuProfile->addAction(addProfile(m_profileGroup, "HD 1080p 60 fps", "atsc_1080p_60"));
     ui->menuProfile->addAction(addProfile(m_profileGroup, "SD NTSC", "dv_ntsc"));
     ui->menuProfile->addAction(addProfile(m_profileGroup, "SD PAL", "dv_pal"));
     ui->menuProfile->addAction(addProfile(m_profileGroup, "UHD 2160p 23.98 fps", "uhd_2160p_2398"));
