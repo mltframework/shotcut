@@ -1339,16 +1339,16 @@ i temporal komprimering</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1559"/>
-        <location filename="../src/docks/encodedock.cpp" line="972"/>
-        <location filename="../src/docks/encodedock.cpp" line="1346"/>
+        <location filename="../src/docks/encodedock.cpp" line="1019"/>
+        <location filename="../src/docks/encodedock.cpp" line="1403"/>
         <source>Export File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1566"/>
-        <location filename="../src/docks/encodedock.cpp" line="1077"/>
-        <location filename="../src/docks/encodedock.cpp" line="1084"/>
-        <location filename="../src/docks/encodedock.cpp" line="1195"/>
+        <location filename="../src/docks/encodedock.cpp" line="1125"/>
+        <location filename="../src/docks/encodedock.cpp" line="1132"/>
+        <location filename="../src/docks/encodedock.cpp" line="1243"/>
         <source>Stream</source>
         <translation>Stream</translation>
     </message>
@@ -1369,84 +1369,90 @@ i temporal komprimering</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="92"/>
-        <location filename="../src/docks/encodedock.cpp" line="99"/>
+        <location filename="../src/docks/encodedock.cpp" line="101"/>
         <source>Default for format</source>
         <translation>Standard for format</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="972"/>
-        <location filename="../src/docks/encodedock.cpp" line="1348"/>
+        <location filename="../src/docks/encodedock.cpp" line="1019"/>
+        <location filename="../src/docks/encodedock.cpp" line="1405"/>
         <source>Capture File</source>
         <translation>Optagede file</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="328"/>
+        <location filename="../src/docks/encodedock.cpp" line="332"/>
         <source>Timeline</source>
         <translation type="unfinished">Tidslinje</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="330"/>
+        <location filename="../src/docks/encodedock.cpp" line="334"/>
         <source>Playlist</source>
         <translation type="unfinished">Afspilningsliste</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="332"/>
+        <location filename="../src/docks/encodedock.cpp" line="336"/>
         <source>Each Playlist Item</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="341"/>
-        <location filename="../src/docks/encodedock.cpp" line="353"/>
+        <location filename="../src/docks/encodedock.cpp" line="345"/>
+        <location filename="../src/docks/encodedock.cpp" line="357"/>
         <source>Source</source>
         <translation type="unfinished">Kilde</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="368"/>
-        <location filename="../src/docks/encodedock.cpp" line="895"/>
+        <location filename="../src/docks/encodedock.cpp" line="372"/>
+        <location filename="../src/docks/encodedock.cpp" line="942"/>
         <source>Custom</source>
         <translation>Tilpasset</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="380"/>
+        <location filename="../src/docks/encodedock.cpp" line="384"/>
         <source>Stock</source>
         <translation>Indbygget</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1603"/>
-        <location filename="../src/docks/encodedock.cpp" line="945"/>
-        <location filename="../src/docks/encodedock.cpp" line="1007"/>
-        <location filename="../src/docks/encodedock.cpp" line="1021"/>
+        <location filename="../src/docks/encodedock.cpp" line="992"/>
+        <location filename="../src/docks/encodedock.cpp" line="1054"/>
+        <location filename="../src/docks/encodedock.cpp" line="1068"/>
         <source>Stop Capture</source>
         <translation>Stop optagelse</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1130"/>
+        <location filename="../src/docks/encodedock.cpp" line="1178"/>
         <source>Add Export Preset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1072"/>
-        <location filename="../src/docks/encodedock.cpp" line="1093"/>
+        <location filename="../src/docks/encodedock.cpp" line="1120"/>
+        <location filename="../src/docks/encodedock.cpp" line="1141"/>
         <source>Stop Stream</source>
         <translation>Stop stream</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1085"/>
+        <location filename="../src/docks/encodedock.cpp" line="1133"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>Indtast netværksprotokol ordningen, adresse, port, og parametre som en URL:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1172"/>
+        <location filename="../src/docks/encodedock.cpp" line="1220"/>
         <source>Delete Preset</source>
         <translation>Slet forudindstilling</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1173"/>
+        <location filename="../src/docks/encodedock.cpp" line="1221"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>Er du sikker på at du vil slette %1?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1332"/>
+        <location filename="../src/docks/encodedock.cpp" line="1342"/>
+        <location filename="../src/docks/encodedock.cpp" line="1346"/>
+        <source>None</source>
+        <translation type="unfinished">Ingen</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.cpp" line="1389"/>
         <source>KiB (%1s)</source>
         <translation type="unfinished"></translation>
     </message>
