@@ -92,8 +92,10 @@ EncodeDock::EncodeDock(QWidget *parent) :
     ui->audioCodecCombo->insertItem(0, tr("Default for format"));
 
     p = new Mlt::Properties(c.get_data("vcodec"));
-    for (int i = 0; i < p->count(); i++)
-        ui->videoCodecCombo->addItem(p->get(i));
+    for (int i = 0; i < p->count(); i++) {
+        if (qstrcmp("nvenc", p->get(i)))
+            ui->videoCodecCombo->addItem(p->get(i));
+    }
     delete p;
     ui->videoCodecCombo->model()->sort(0);
     ui->videoCodecCombo->insertItem(0, tr("Default for format"));
@@ -207,6 +209,8 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
         }
         else if (name == "pass")
             ui->dualPassCheckbox->setChecked(true);
+        else if (name == "v2pass")
+            ui->dualPassCheckbox->setChecked(preset.get_int("v2pass"));
         else if (name == "aq") {
             ui->audioRateControlCombo->setCurrentIndex(RateControlQuality);
             audioQuality = preset.get_int("aq");
@@ -303,7 +307,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
     if (ui->videoRateControlCombo->currentIndex() == RateControlQuality && videoQuality > -1) {
         const QString& vcodec = ui->videoCodecCombo->currentText();
         //val = min + (max - min) * paramval;
-        if (vcodec == "libx264" || vcodec == "libx265") // 0 (best, 100%) - 51 (worst)
+        if (vcodec == "libx264" || vcodec == "libx265" || vcodec.contains("nvenc")) // 0 (best, 100%) - 51 (worst)
             ui->videoQualitySpinner->setValue(TO_RELATIVE(51, 0, videoQuality));
         else if (vcodec.startsWith("libvpx")) // 0 (best, 100%) - 63 (worst)
             ui->videoQualitySpinner->setValue(TO_RELATIVE(63, 0, videoQuality));
@@ -476,9 +480,9 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                     b.replace('k', "").replace('M', "000");
                     x265params = QString("bitrate=%1:vbv-bufsize=%2:vbv-maxrate=%3:%4")
                         .arg(b).arg(int(ui->videoBufferSizeSpinner->value() * 8)).arg(b).arg(x265params);
-                    break;
                     p->set("vb", b.toLatin1().constData());
                     p->set("vbufsize", int(ui->videoBufferSizeSpinner->value() * 8 * 1024));
+                    break;
                     }
                 case RateControlQuality: {
                     int vq = ui->videoQualitySpinner->value();
@@ -511,6 +515,47 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                 p->set("g", ui->gopSpinner->value());
                 p->set("bf", ui->bFramesSpinner->value());
                 p->set("x265-params", x265params.toUtf8().constData());
+            } else if (vcodec.contains("nvenc")) {
+                switch (ui->videoRateControlCombo->currentIndex()) {
+                case RateControlAverage:
+                    p->set("cbr", 1);
+                    p->set("vb", ui->videoBitrateCombo->currentText().toLatin1().constData());
+                    break;
+                case RateControlConstant: {
+                    const QString& b = ui->videoBitrateCombo->currentText();
+                    p->set("cbr", 1);
+                    p->set("vb", b.toLatin1().constData());
+                    p->set("vminrate", b.toLatin1().constData());
+                    p->set("vmaxrate", b.toLatin1().constData());
+                    p->set("vbufsize", int(ui->videoBufferSizeSpinner->value() * 8 * 1024));
+                    break;
+                    }
+                case RateControlQuality: {
+                    int vq = ui->videoQualitySpinner->value();
+                    p->set("rc", "constqp");
+                    p->set("global_quality", TO_ABSOLUTE(51, 0, vq));
+                    p->set("vq", TO_ABSOLUTE(51, 0, vq));
+                    break;
+                    }
+                case RateControlConstrained: {
+                    const QString& b = ui->videoBitrateCombo->currentText();
+                    int vq = ui->videoQualitySpinner->value();
+                    p->set("qmin", TO_ABSOLUTE(51, 0, vq));
+                    p->set("vb", qRound(0.8f * b.toFloat()));
+                    p->set("vmaxrate", b.toLatin1().constData());
+                    p->set("vbufsize", int(ui->videoBufferSizeSpinner->value() * 8 * 1024));
+                    break;
+                    }
+                }
+                if (ui->dualPassCheckbox->isChecked())
+                    p->set("v2pass", 1);
+                if (ui->strictGopCheckBox->isChecked()) {
+                    p->set("sc_threshold", 0);
+                    p->set("strict_gop", 1);
+                }
+                // Also set some properties so that custom presets can be interpreted properly.
+                p->set("g", ui->gopSpinner->value());
+                p->set("bf", ui->bFramesSpinner->value());
             } else {
                 switch (ui->videoRateControlCombo->currentIndex()) {
                 case RateControlAverage:
@@ -620,6 +665,7 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
             else
                 p->set("threads", ui->videoCodecThreadsSpinner->value());
             if (ui->videoRateControlCombo->currentIndex() != RateControlQuality &&
+                !vcodec.contains("nvenc") &&
                 ui->dualPassCheckbox->isEnabled() && ui->dualPassCheckbox->isChecked())
                 p->set("pass", 1);
         }
@@ -759,7 +805,8 @@ void EncodeDock::enqueueMelt(const QString& target, int realtime)
 {
     Mlt::Producer* service = fromProducer();
     int pass = (ui->videoRateControlCombo->currentIndex() != RateControlQuality
-             && ui->dualPassCheckbox->isEnabled() && ui->dualPassCheckbox->isChecked())? 1 : 0;
+            && !ui->videoCodecCombo->currentText().contains("nvenc")
+            &&  ui->dualPassCheckbox->isEnabled() && ui->dualPassCheckbox->isChecked())? 1 : 0;
     if (!service) {
         // For each playlist item.
         if (MAIN.playlist() && MAIN.playlist()->count() > 1) {
@@ -1055,6 +1102,7 @@ void EncodeDock::onProfileChanged()
     ui->aspectNumSpinner->setValue(dar_numerator);
     ui->aspectDenSpinner->setValue(dar_denominator);
     ui->scanModeCombo->setCurrentIndex(MLT.profile().progressive());
+    on_scanModeCombo_currentIndexChanged(ui->scanModeCombo->currentIndex());
     ui->fpsSpinner->setValue(MLT.profile().fps());
     if (m_isDefaultSettings) {
         ui->gopSpinner->blockSignals(true);
@@ -1247,7 +1295,7 @@ void EncodeDock::on_videoRateControlCombo_activated(int index)
         ui->videoBitrateCombo->show();
         ui->videoBufferSizeSpinner->show();
         ui->videoQualitySpinner->show();
-        ui->dualPassCheckbox->hide();
+        ui->dualPassCheckbox->show();
         ui->videoBitrateLabel->show();
         ui->videoBitrateSuffixLabel->show();
         ui->videoBufferSizeLabel->show();
@@ -1289,6 +1337,15 @@ void EncodeDock::on_audioRateControlCombo_activated(int index)
 
 void EncodeDock::on_scanModeCombo_currentIndexChanged(int index)
 {
+    if (index == 0) {
+        ui->fieldOrderCombo->removeItem(2);
+        ui->deinterlacerCombo->addItem(tr("None"));
+        ui->deinterlacerCombo->setCurrentIndex(4);
+    } else {
+        ui->deinterlacerCombo->removeItem(4);
+        ui->fieldOrderCombo->addItem(tr("None"));
+        ui->fieldOrderCombo->setCurrentIndex(2);
+    }
     ui->fieldOrderCombo->setDisabled(index);
     ui->deinterlacerCombo->setEnabled(index);
 }
@@ -1346,4 +1403,21 @@ void EncodeDock::on_fromCombo_currentIndexChanged(int index)
         ui->encodeButton->setText(tr("Export File"));
     else
         ui->encodeButton->setText(tr("Capture File"));
+}
+
+void EncodeDock::on_videoCodecCombo_currentIndexChanged(int index)
+{
+    Q_UNUSED(index)
+    if (ui->videoCodecCombo->currentText().contains("nvenc")) {
+        QString newValue;
+        foreach (QString line, ui->advancedTextEdit->toPlainText().split("\n")) {
+            if (!line.startsWith("preset=")) {
+                newValue += line;
+                newValue += "\n";
+            }
+        }
+        ui->advancedTextEdit->setPlainText(newValue);
+        if (ui->videoCodecCombo->currentText().contains("hevc"))
+            ui->bFramesSpinner->setValue(0);
+    }
 }

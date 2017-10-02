@@ -97,6 +97,8 @@ private slots:
 
     void on_fromCombo_currentIndexChanged(int index);
 
+    void on_videoCodecCombo_currentIndexChanged(int index);
+
 private:
     enum {
         RateControlAverage = 0,
