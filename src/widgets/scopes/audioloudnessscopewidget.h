@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Meltytech, LLC
+ * Copyright (c) 2016-2017 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -36,11 +36,11 @@ class AudioLoudnessScopeWidget Q_DECL_FINAL : public ScopeWidget
 public:
     explicit AudioLoudnessScopeWidget();
     ~AudioLoudnessScopeWidget();
-    QString getTitle();
+    QString getTitle() Q_DECL_OVERRIDE;
     void setOrientation(Qt::Orientation orientation) Q_DECL_OVERRIDE;
 
 protected:
-    bool event(QEvent *event);
+    bool event(QEvent *event) Q_DECL_OVERRIDE;
 
 private slots:
     void resetQview();

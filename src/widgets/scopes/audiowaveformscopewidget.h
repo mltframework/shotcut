@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Meltytech, LLC
+ * Copyright (c) 2015-2017 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -31,7 +31,7 @@ class AudioWaveformScopeWidget Q_DECL_FINAL : public ScopeWidget
 public:
     explicit AudioWaveformScopeWidget();
     ~AudioWaveformScopeWidget();
-    QString getTitle();
+    QString getTitle() Q_DECL_OVERRIDE;
 
 private:
     // Functions run in scope thread.
