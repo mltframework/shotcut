@@ -17,7 +17,14 @@
 // STL
 #include <iostream>
 
+/**
+ * \class FileAppender
+ *
+ * \brief Simple appender that writes the log records to the plain text file.
+ */
 
+
+//! Constructs the new file appender assigned to file with the given name.
 FileAppender::FileAppender(const QString& fileName)
 {
   setFileName(fileName);
@@ -30,6 +37,10 @@ FileAppender::~FileAppender()
 }
 
 
+//! Returns the name set by setFileName() or to the FileAppender constructor.
+/**
+ * \sa setFileName()
+ */
 QString FileAppender::fileName() const
 {
   QMutexLocker locker(&m_logFileMutex);
@@ -37,6 +48,10 @@ QString FileAppender::fileName() const
 }
 
 
+//! Sets the name of the file. The name can have no path, a relative path, or an absolute path.
+/**
+ * \sa fileName()
+ */
 void FileAppender::setFileName(const QString& s)
 {
   QMutexLocker locker(&m_logFileMutex);
@@ -49,34 +64,37 @@ void FileAppender::setFileName(const QString& s)
 
 bool FileAppender::openFile()
 {
-  bool isOpen = false;
-  if (!m_logFile.isOpen())
+  bool isOpen = m_logFile.isOpen();
+  if (!isOpen)
   {
-    if (m_logFile.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text))
-    {
+    isOpen = m_logFile.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text);
+    if (isOpen)
       m_logStream.setDevice(&m_logFile);
-      isOpen = true;
-    }
     else
-    {
       std::cerr << "<FileAppender::append> Cannot open the log file " << qPrintable(m_logFile.fileName()) << std::endl;
-    }
   }
   return isOpen;
 }
 
 
+//! Write the log record to the file.
+/**
+ * \sa fileName()
+ * \sa AbstractStringAppender::format()
+ */
 void FileAppender::append(const QDateTime& timeStamp, Logger::LogLevel logLevel, const char* file, int line,
-                          const char* function, const QString& message)
+                          const char* function, const QString& category, const QString& message)
 {
   QMutexLocker locker(&m_logFileMutex);
 
-  openFile();
-
-  m_logStream << formattedString(timeStamp, logLevel, file, line, function, message);
-  m_logStream.flush();
-  m_logFile.flush();
+  if (openFile())
+  {
+    m_logStream << formattedString(timeStamp, logLevel, file, line, function, category, message);
+    m_logStream.flush();
+    m_logFile.flush();
+  }
 }
+
 
 void FileAppender::closeFile()
 {

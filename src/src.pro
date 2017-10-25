@@ -321,7 +321,7 @@ debug_and_release {
 } else {
     LIBS += -L../CuteLogger -L../mvcp
 }
-LIBS += -lLogger -lmvcp -lpthread
+LIBS += -lCuteLogger -lmvcp -lpthread
 
 isEmpty(SHOTCUT_VERSION) {
     !win32:SHOTCUT_VERSION = $$system(date "+%y.%m.%d")
@@ -334,6 +334,7 @@ mac {
     TARGET = Shotcut
     ICON = ../icons/shotcut.icns
     QMAKE_INFO_PLIST = ../Info.plist
+    INCLUDEPATH += $$[QT_INSTALL_HEADERS]
 
     # QMake from Qt 5.1.0 on OSX is messing with the environment in which it runs
     # pkg-config such that the PKG_CONFIG_PATH env var is not set.
