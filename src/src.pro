@@ -280,7 +280,8 @@ OTHER_FILES += \
     ../icons/dark/index.theme \
     ../icons/light/index.theme \
     ../snap/snapcraft.yaml \
-    ../snap/setup/gui/shotcut.desktop
+    ../snap/setup/gui/shotcut.desktop \
+    ../shotcut.appdata.xml
 
 TRANSLATIONS += \
     ../translations/shotcut_ca.ts \
@@ -381,3 +382,9 @@ INSTALLS += target
 qmlfiles.files = $$PWD/qml
 qmlfiles.path = $$PREFIX/share/shotcut
 INSTALLS += qmlfiles
+
+unix:!mac {
+    metainfo.files = $$PWD/../shotcut.appdata.xml
+    metainfo.path = $$PREFIX/share/metainfo
+    INSTALLS += qmlfiles
+}
