@@ -86,6 +86,14 @@ void TimeSpinBoxLineEdit::focusInEvent(QFocusEvent *event)
     m_selectOnMousePress = true;
 }
 
+void TimeSpinBoxLineEdit::focusOutEvent(QFocusEvent* event)
+{
+    // QLineEdit::focusOutEvent() calls deselect() on OtherFocusReason,
+    // which prevents using the clipboard actions with the text.
+    if (event->reason() != Qt::OtherFocusReason)
+        QLineEdit::focusOutEvent(event);
+}
+
 void TimeSpinBoxLineEdit::mousePressEvent(QMouseEvent *event)
 {
     QLineEdit::mousePressEvent(event);
