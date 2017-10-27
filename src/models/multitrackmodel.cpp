@@ -1962,7 +1962,7 @@ bool MultitrackModel::removeTransitionByTrimOutValid(int trackIndex, int clipInd
 
 void MultitrackModel::filterAddedOrRemoved(Mlt::Producer* producer)
 {
-    if (!producer || !producer->is_valid())
+    if (!m_tractor || !producer || !producer->is_valid())
         return;
     mlt_service service = producer->get_service();
 
