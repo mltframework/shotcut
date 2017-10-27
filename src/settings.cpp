@@ -236,7 +236,7 @@ void ShotcutSettings::setPlayerExternal(const QString& s)
 
 QString ShotcutSettings::playerGamma() const
 {
-    return settings.value("player/gamma", "iec61966_2_1").toString();
+    return settings.value("player/gamma", "bt709").toString();
 }
 
 void ShotcutSettings::setPlayerGamma(const QString& s)
