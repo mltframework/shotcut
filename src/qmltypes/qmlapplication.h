@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Meltytech, LLC
+ * Copyright (c) 2014-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  * Author: Brian Matherly <pez4brian@yahoo.com>
  *
@@ -25,6 +25,10 @@
 #include <QPoint>
 #include <QColor>
 #include <QRect>
+
+namespace Mlt {
+    class Producer;
+}
 
 class QmlApplication : public QObject
 {
@@ -55,6 +59,7 @@ public:
 signals:
     void paletteChanged();
     void filtersCopied();
+    void filtersPasted(Mlt::Producer*);
 
 private:
     explicit QmlApplication();

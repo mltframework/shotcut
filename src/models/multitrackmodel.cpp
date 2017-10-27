@@ -159,6 +159,8 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                 }
                 return speed;
             }
+            case IsFilteredRole:
+                return isFiltered(info->producer);
             default:
                 break;
             }
@@ -194,6 +196,8 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                 }
                 return false;
             }
+            case IsFilteredRole:
+                return isFiltered(track.data());
             default:
                 break;
             }
@@ -259,6 +263,7 @@ QHash<int, QByteArray> MultitrackModel::roleNames() const
     roles[IsTransitionRole] = "isTransition";
     roles[FileHashRole] = "hash";
     roles[SpeedRole] = "speed";
+    roles[IsFilteredRole] = "filtered";
     return roles;
 }
 
@@ -1955,6 +1960,28 @@ bool MultitrackModel::removeTransitionByTrimOutValid(int trackIndex, int clipInd
     return result;
 }
 
+void MultitrackModel::filterAddedOrRemoved(Mlt::Producer* producer)
+{
+    if (!producer || !producer->is_valid())
+        return;
+    mlt_service service = producer->get_service();
+
+    // Check if it was on the multitrack tractor.
+    if (service == m_tractor->get_service())
+        emit filteredChanged();
+    else for (int i = 0; i < m_trackList.size(); i++) {
+        // Check if it was on one of the tracks.
+        QScopedPointer<Mlt::Producer> track(m_tractor->track(m_trackList[i].mlt_index));
+        if (service == track.data()->get_service()) {
+            QModelIndex modelIndex = index(i, 0);
+            QVector<int> roles;
+            roles << IsFilteredRole;
+            emit dataChanged(modelIndex, modelIndex, roles);
+            break;
+        }
+    }
+}
+
 bool MultitrackModel::moveClipToTrack(int fromTrack, int toTrack, int clipIndex, int position)
 {
     bool result;
@@ -2688,6 +2715,21 @@ bool MultitrackModel::mergeClipWithNext(int trackIndex, int clipIndex, bool dryr
     endRemoveRows();
     emit modified();
     return true;
+}
+
+bool MultitrackModel::isFiltered(Mlt::Producer* producer) const
+{
+    if (!producer)
+        producer = m_tractor;
+    if (producer && producer->is_valid()) {
+        int count = producer->filter_count();
+        for (int i = 0; i < count; i++) {
+            QScopedPointer<Mlt::Filter> filter(producer->filter(i));
+            if (filter && filter->is_valid() && !filter->get_int("_loader"))
+                return true;
+        }
+    }
+    return false;
 }
 
 void MultitrackModel::load()

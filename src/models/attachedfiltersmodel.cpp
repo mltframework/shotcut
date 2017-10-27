@@ -312,6 +312,7 @@ void AttachedFiltersModel::add(QmlMetadata* meta)
         m_mltIndexMap.insert(insertIndex, mltIndex);
         m_metaList.insert(insertIndex, meta);
         endInsertRows();
+        emit addedOrRemoved(m_producer.data());
         emit changed();
     }
     else LOG_WARNING() << "Failed to load filter" << meta->mlt_service();
@@ -340,6 +341,7 @@ void AttachedFiltersModel::remove(int row)
     }
     m_metaList.removeAt(row);
     endRemoveRows();
+    emit addedOrRemoved(m_producer.data());
     emit changed();
     delete filter;
 }

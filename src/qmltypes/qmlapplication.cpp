@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 Meltytech, LLC
+ * Copyright (c) 2013-2017 Meltytech, LLC
  * Author: Brian Matherly <pez4brian@yahoo.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -121,5 +121,6 @@ void QmlApplication::pasteFilters()
     QScopedPointer<Mlt::Producer> producer(new Mlt::Producer(MAIN.filterController()->attachedModel()->producer()));
     MLT.pasteFilters(producer.data());
     MLT.refreshConsumer();
+    emit QmlApplication::singleton().filtersPasted(MAIN.filterController()->attachedModel()->producer());
 }
 

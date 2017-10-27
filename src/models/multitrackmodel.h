@@ -46,6 +46,7 @@ class MultitrackModel : public QAbstractItemModel
     Q_OBJECT
     Q_PROPERTY(int trackHeight READ trackHeight WRITE setTrackHeight NOTIFY trackHeightChanged)
     Q_PROPERTY(double scaleFactor READ scaleFactor WRITE setScaleFactor NOTIFY scaleFactorChanged)
+    Q_PROPERTY(bool filtered READ isFiltered NOTIFY filteredChanged)
 
 public:
     /// Two level model: tracks and clips on track
@@ -69,7 +70,8 @@ public:
         FadeOutRole,     /// clip only
         IsTransitionRole,/// clip only
         FileHashRole,    /// clip only
-        SpeedRole        /// clip only
+        SpeedRole,       /// clip only
+        IsFilteredRole
     };
 
     explicit MultitrackModel(QObject *parent = 0);
@@ -117,6 +119,7 @@ signals:
     void scaleFactorChanged();
     void showStatusMessage(QString);
     void durationChanged();
+    void filteredChanged();
 
 public slots:
     void refreshTrackList();
@@ -158,6 +161,7 @@ public slots:
     void addTransitionByTrimOut(int trackIndex, int clipIndex, int delta);
     bool removeTransitionByTrimInValid(int trackIndex, int clipIndex, int delta);
     bool removeTransitionByTrimOutValid(int trackIndex, int clipIndex, int delta);
+    void filterAddedOrRemoved(Mlt::Producer *producer);
 
 private:
     Mlt::Tractor* m_tractor;
@@ -181,6 +185,7 @@ private:
     void loadPlaylist();
     void removeRegion(int trackIndex, int position, int length);
     void clearMixReferences(int trackIndex, int clipIndex);
+    bool isFiltered(Mlt::Producer* producer = 0) const;
 
     friend class UndoHelper;
 

@@ -142,6 +142,27 @@ Rectangle {
                 border.color: selected? 'red' : 'transparent'
                 border.width: selected? 1 : 0
                 z: 1
+                Label {
+                    text: qsTr('Master')
+                    visible: tracksRepeater.count
+                    color: activePalette.windowText
+                    elide: Qt.ElideRight
+                    x: 8
+                    y: 2
+                    width: parent.width - 8
+                }
+                ToolButton {
+                    visible: multitrack.filtered
+                    anchors.right: parent.right
+                    anchors.rightMargin: 4
+                    anchors.verticalCenter: parent.verticalCenter
+                    implicitWidth: 20
+                    implicitHeight: 20
+                    iconName: 'view-filter'
+                    iconSource: 'qrc:///icons/oxygen/32x32/status/view-filter.png'
+                    tooltip: qsTr('Filters')
+                    onClicked: timeline.filteredClicked()
+                }
                 MouseArea {
                     anchors.fill: parent
                     acceptedButtons: Qt.LeftButton
@@ -167,6 +188,7 @@ Rectangle {
                             isComposite: model.composite
                             isLocked: model.locked
                             isVideo: !model.audio
+                            isFiltered: model.filtered
                             width: headerWidth
                             height: Logic.trackHeight(model.audio)
                             selected: false

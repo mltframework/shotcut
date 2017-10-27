@@ -95,6 +95,7 @@ signals:
     void showStatusMessage(QString);
     void clipCopied();
     void clipMoved(int fromTrack, int toTrack, int clipIndex, int position);
+    void filteredClicked();
 
 public slots:
     void addAudioTrack();
