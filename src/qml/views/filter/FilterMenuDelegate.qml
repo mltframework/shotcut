@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2015 Meltytech, LLC
+ * Copyright (c) 2014-2017 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,32 +20,37 @@ import QtQuick 2.2
 import QtQuick.Controls 1.1
 import 'FilterMenu.js' as Logic
 
-Item {
+Rectangle {
     id: wrapper
     
     visible: isVisible
     height: visible ? Logic.ITEM_HEIGHT : 0
-
-    Behavior on height {
-        NumberAnimation { duration: 200 }
-    }
+    color: activePalette.base
 
     SystemPalette { id: activePalette }
 
     Row {
         height: Logic.ITEM_HEIGHT
-        
-        ToolButton {
-            id: favButton
-            implicitWidth: 20
-            implicitHeight: 18
-            anchors.verticalCenter: parent.verticalCenter
-            opacity: favorite ? 1.0 : 0.3
-            iconName: 'bookmarks'
-            iconSource: 'qrc:///icons/oxygen/32x32/places/bookmarks.png'
-            onClicked: favorite = !favorite
+
+        Rectangle {
+            color: activePalette.base
+            anchors.top: parent.top
+            width: parent.height
+            height: parent.height
+
+            ToolButton {
+                id: favButton
+                implicitWidth: 20
+                implicitHeight: 18
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+                opacity: favorite ? 1.0 : 0.3
+                iconName: 'bookmarks'
+                iconSource: 'qrc:///icons/oxygen/32x32/places/bookmarks.png'
+                onClicked: favorite = !favorite
+            }
         }
-        
+
         Rectangle {
             id: itemBackground
             color: activePalette.base
