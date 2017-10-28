@@ -62,7 +62,6 @@ Rectangle {
                 boundsBehavior: Flickable.StopAtBounds
                 currentIndex: -1
                 focus: true
-                onCountChanged: console.log('filter count = ' + count)
             }
         }
 
