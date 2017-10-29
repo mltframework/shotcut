@@ -184,7 +184,11 @@ Rectangle {
                 iconName: 'view-filter'
                 iconSource: 'qrc:///icons/oxygen/32x32/status/view-filter.png'
                 tooltip: qsTr('Filters')
-                onClicked: timeline.filteredClicked()
+                onClicked: {
+                    trackHeadRoot.clicked()
+                    nameEdit.visible = false
+                    timeline.filteredClicked()
+                }
             }
         }
     }

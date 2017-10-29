@@ -161,7 +161,10 @@ Rectangle {
                     iconName: 'view-filter'
                     iconSource: 'qrc:///icons/oxygen/32x32/status/view-filter.png'
                     tooltip: qsTr('Filters')
-                    onClicked: timeline.filteredClicked()
+                    onClicked: {
+                        timeline.selectMultitrack()
+                        timeline.filteredClicked()
+                    }
                 }
                 MouseArea {
                     anchors.fill: parent
