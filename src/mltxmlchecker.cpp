@@ -357,7 +357,7 @@ void MltXmlChecker::checkUnlinkedFile(const QString& mlt_service)
     // not the color producer
     if (!mlt_service.isEmpty() && mlt_service != "color" && mlt_service != "colour")
     // not a builtin luma wipe file
-    if (mlt_service != "luma" || !baseName.startsWith('%'))
+    if ((mlt_service != "luma" && mlt_service != "movit.luma_mix") || !baseName.startsWith('%'))
     // not the generic <producer> resource
     if (baseName != "<producer>")
     // not a URL
