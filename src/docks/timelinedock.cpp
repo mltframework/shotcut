@@ -685,6 +685,7 @@ bool TimelineDock::moveClip(int fromTrack, int toTrack, int clipIndex, int posit
     } else if (m_model.addTransitionValid(fromTrack, toTrack, clipIndex, position)) {
         MAIN.undoStack()->push(
             new Timeline::AddTransitionCommand(m_model, fromTrack, clipIndex, position));
+        setSelection(QList<int>() << (clipIndex + 1));
         return true;
     } else {
         return false;
