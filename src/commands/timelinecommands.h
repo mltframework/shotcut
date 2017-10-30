@@ -304,6 +304,7 @@ public:
     AddTransitionCommand(MultitrackModel& model, int trackIndex, int clipIndex, int position, QUndoCommand * parent = 0);
     void redo();
     void undo();
+    int getTransitionIndex() const { return m_transitionIndex; }
 private:
     MultitrackModel& m_model;
     int m_trackIndex;

@@ -683,9 +683,11 @@ bool TimelineDock::moveClip(int fromTrack, int toTrack, int clipIndex, int posit
             onClipMoved(fromTrack, toTrack, clipIndex, position);
         return true;
     } else if (m_model.addTransitionValid(fromTrack, toTrack, clipIndex, position)) {
-        MAIN.undoStack()->push(
-            new Timeline::AddTransitionCommand(m_model, fromTrack, clipIndex, position));
-        setSelection(QList<int>() << (clipIndex + 1));
+        setSelection(); // cleared
+        Timeline::AddTransitionCommand* command = new Timeline::AddTransitionCommand(m_model, fromTrack, clipIndex, position);
+        MAIN.undoStack()->push(command);
+        // Select the transition.
+        setSelection(QList<int>() << command->getTransitionIndex());
         return true;
     } else {
         return false;
