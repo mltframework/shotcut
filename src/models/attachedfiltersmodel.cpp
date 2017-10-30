@@ -90,7 +90,7 @@ QString AttachedFiltersModel::producerTitle() const
         if (m_producer->get(kTrackNameProperty))
             return tr("Track: %1").arg(QString::fromUtf8(m_producer->get(kTrackNameProperty)));
         if (tractor_type == m_producer->type())
-            return tr("Timeline");
+            return tr("Master");
         if (m_producer->get(kShotcutCaptionProperty))
             return QString::fromUtf8(m_producer->get(kShotcutCaptionProperty));
         if (m_producer->get("resource"))
