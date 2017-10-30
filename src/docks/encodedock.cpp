@@ -77,6 +77,7 @@ EncodeDock::EncodeDock(QWidget *parent) :
     ui->formatCombo->blockSignals(true);
     for (int i = 0; i < p->count(); i++) {
         if (ui->formatCombo->findText(p->get(i)) == -1)
+        if (qstrcmp("gif", p->get(i)))
             ui->formatCombo->addItem(p->get(i));
     }
     delete p;
@@ -94,6 +95,7 @@ EncodeDock::EncodeDock(QWidget *parent) :
     p = new Mlt::Properties(c.get_data("vcodec"));
     for (int i = 0; i < p->count(); i++) {
         if (qstrcmp("nvenc", p->get(i)))
+        if (qstrcmp("gif", p->get(i)))
             ui->videoCodecCombo->addItem(p->get(i));
     }
     delete p;
