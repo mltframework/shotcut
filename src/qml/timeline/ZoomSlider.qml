@@ -18,6 +18,7 @@
 
 import QtQuick 2.2
 import QtQuick.Controls 1.0
+import 'Timeline.js' as Logic
 
 Rectangle {
     property alias value: slider.value
@@ -41,12 +42,11 @@ Rectangle {
         minimumValue: 0
         maximumValue: 3.0
         value: 1
-        onValueChanged: {
-            if (typeof multitrack.scaleFactor != 'undefined')
-                multitrack.scaleFactor = Math.pow(value, 3) + 0.01
-        }
         onPressedChanged: {
             if (!pressed) {
+                if (typeof multitrack.scaleFactor != 'undefined')
+                    multitrack.scaleFactor = Math.pow(value, 3) + 0.01
+                Logic.scrollIfNeeded()
                 for (var i = 0; i < tracksRepeater.count; i++)
                     tracksRepeater.itemAt(i).redrawWaveforms()
             }
