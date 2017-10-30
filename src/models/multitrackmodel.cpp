@@ -2498,27 +2498,13 @@ void MultitrackModel::removeRegion(int trackIndex, int position, int length)
                 length -= (position + length - playtime);
 
             if (clipStart < position) {
-                beginInsertRows(index(trackIndex), clipIndex + 1, clipIndex + 1);
-                playlist.split_at(position);
-                endInsertRows();
-                QModelIndex modelIndex = createIndex(clipIndex, 0, trackIndex);
-                QVector<int> roles;
-                roles << DurationRole;
-                roles << OutPointRole;
-                emit dataChanged(modelIndex, modelIndex, roles);
+                splitClip(trackIndex, clipIndex, position);
                 ++clipIndex;
             }
 
             while (length > 0) {
                 if (playlist.clip_length(clipIndex) > length) {
-                    beginInsertRows(index(trackIndex), clipIndex + 1, clipIndex + 1);
-                    playlist.split_at(position + length);
-                    endInsertRows();
-                    QModelIndex modelIndex = createIndex(clipIndex, 0, trackIndex);
-                    QVector<int> roles;
-                    roles << DurationRole;
-                    roles << OutPointRole;
-                    emit dataChanged(modelIndex, modelIndex, roles);
+                    splitClip(trackIndex, clipIndex, position + length);
                 }
                 length -= playlist.clip_length(clipIndex);
                 if (clipIndex < playlist.count()) {
