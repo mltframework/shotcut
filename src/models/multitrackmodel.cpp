@@ -1283,7 +1283,7 @@ void MultitrackModel::appendFromPlaylist(Mlt::Playlist *from, int trackIndex)
         for (int j = 0; j < from->count(); j++) {
             QScopedPointer<Mlt::Producer> clip(from->get_clip(j));
             if (!clip->is_blank()) {
-                QString xml = MLT.XML(clip.data());
+                QString xml = MLT.XML(&clip.data()->parent());
                 Mlt::Producer producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
                 playlist.append(producer.parent(), clip->get_in(), clip->get_out());
                 QModelIndex modelIndex = createIndex(j, 0, trackIndex);
