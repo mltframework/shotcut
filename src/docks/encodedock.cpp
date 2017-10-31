@@ -34,6 +34,7 @@
 #include <QtMath>
 #include <QTimer>
 #include <QFileInfo>
+#include <QStorageInfo>
 
 // formulas to map absolute value ranges to percentages as int
 #define TO_ABSOLUTE(min, max, rel) qRound(float(min) + float((max) - (min) + 1) * float(rel) / 100.0f)
@@ -1043,6 +1044,24 @@ void EncodeDock::on_encodeButton_clicked()
         }
         if (Util::warnIfNotWritable(m_outputFilename, this, caption))
             return;
+
+        // Check if the drive this file will be on is getting low on space.
+        QStorageInfo si(fi.path());
+        LOG_DEBUG() << si.bytesAvailable();
+        if (si.isValid() && si.bytesAvailable() < 100LL * 1024 * 1024 * 1024 /* GiB */) {
+            QMessageBox dialog(QMessageBox::Question, caption,
+               tr("The drive you chose only has %1 MiB of free space.\n"
+                  "Do you still want to continue?")
+               .arg(si.bytesAvailable() / 1024 / 1024),
+               QMessageBox::No | QMessageBox::Yes, this);
+            dialog.setWindowModality(QmlApplication::dialogModality());
+            dialog.setDefaultButton(QMessageBox::Yes);
+            dialog.setEscapeButton(QMessageBox::No);
+            if (dialog.exec() == QMessageBox::No) {
+                MAIN.showStatusMessage(tr("Export canceled."));
+                return;
+            }
+        }
 
         if (seekable) {
             // Batch encode
