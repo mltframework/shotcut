@@ -730,6 +730,15 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Service* service, const QString& target,
     dom.setContent(&f1);
     f1.close();
 
+    // Check if the target file is a member of the project.
+    QString xml = dom.toString(0);
+    if (xml.contains(QDir::fromNativeSeparators(target))) {
+        QMessageBox::warning(this, tr("Export File"),
+                             tr("You cannot write to a file that is in your project.\n"
+                                "Try again with a different folder or file name."));
+        return 0;
+    }
+
     // add consumer element
     QDomElement consumerNode = dom.createElement("consumer");
     QDomNodeList profiles = dom.elementsByTagName("profile");
