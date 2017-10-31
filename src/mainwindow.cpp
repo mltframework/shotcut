@@ -1968,6 +1968,8 @@ bool MainWindow::on_actionSave_triggered()
     if (m_currentFile.isEmpty()) {
         return on_actionSave_As_triggered();
     } else {
+        if (Util::warnIfNotWritable(m_currentFile, this, tr("Save XML")))
+            return false;
         saveXML(m_currentFile);
         setCurrentFile(m_currentFile);
         setWindowModified(false);
@@ -1983,12 +1985,17 @@ bool MainWindow::on_actionSave_As_triggered()
         return false;
     QString path = Settings.savePath();
     path.append("/.mlt");
-    QString filename = QFileDialog::getSaveFileName(this, tr("Save XML"), path, tr("MLT XML (*.mlt)"));
+    QString caption = tr("Save XML");
+    QString filename = QFileDialog::getSaveFileName(this, caption, path, tr("MLT XML (*.mlt)"));
     if (!filename.isEmpty()) {
         QFileInfo fi(filename);
         Settings.setSavePath(fi.path());
         if (fi.suffix() != "mlt")
             filename += ".mlt";
+
+        if (Util::warnIfNotWritable(filename, this, caption))
+            return false;
+
         saveXML(filename);
         if (m_autosaveFile)
             m_autosaveFile->changeManagedFile(filename);
@@ -2001,7 +2008,7 @@ bool MainWindow::on_actionSave_As_triggered()
         m_undoStack->setClean();
         m_recentDock->add(filename);
     }
-    return filename.isEmpty();
+    return !filename.isEmpty();
 }
 
 bool MainWindow::continueModified()
@@ -3089,11 +3096,15 @@ void MainWindow::on_actionExportEDL_triggered()
     // Dialog to get export file name.
     QString path = Settings.savePath();
     path.append("/.edl");
-    QString saveFileName = QFileDialog::getSaveFileName(this, tr("Export EDL"), path, tr("EDL (*.edl)"));
+    QString caption = tr("Export EDL");
+    QString saveFileName = QFileDialog::getSaveFileName(this, caption, path, tr("EDL (*.edl)"));
     if (!saveFileName.isEmpty()) {
         QFileInfo fi(saveFileName);
         if (fi.suffix() != "edl")
             saveFileName += ".edl";
+
+        if (Util::warnIfNotWritable(saveFileName, this, caption))
+            return;
 
         // Locate the JavaScript file in the filesystem.
         QDir qmlDir = QmlUtilities::qmlDir();
@@ -3161,11 +3172,14 @@ void MainWindow::onGLWidgetImageReady()
     if (!image.isNull()) {
         QString path = Settings.savePath();
         path.append("/.png");
-        QString saveFileName = QFileDialog::getSaveFileName(this, tr("Export Frame"), path);
+        QString caption = tr("Export Frame");
+        QString saveFileName = QFileDialog::getSaveFileName(this, caption, path);
         if (!saveFileName.isEmpty()) {
             QFileInfo fi(saveFileName);
             if (fi.suffix().isEmpty())
                 saveFileName += ".png";
+            if (Util::warnIfNotWritable(saveFileName, this, caption))
+                return;
             image.save(saveFileName);
             Settings.setSavePath(fi.path());
             m_recentDock->add(saveFileName);

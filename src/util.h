@@ -32,6 +32,7 @@ public:
     static QString baseName(const QString &filePath);
     static void setColorsToHighlight(QWidget* widget, QPalette::ColorRole role = QPalette::Window);
     static void showInFolder(const QString &path);
+    static bool warnIfNotWritable(const QString& filePath, QWidget* parent, const QString& caption);
 };
 
 #endif // UTIL_H

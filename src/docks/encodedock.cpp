@@ -26,6 +26,7 @@
 #include "qmltypes/qmlapplication.h"
 #include "jobs/encodejob.h"
 #include "shotcut_mlt_properties.h"
+#include "util.h"
 
 #include <Logger.h>
 #include <QtWidgets>
@@ -1017,8 +1018,9 @@ void EncodeDock::on_encodeButton_clicked()
         }
 #endif
     }
+    QString caption = seekable? tr("Export File") : tr("Capture File");
     m_outputFilename = QFileDialog::getSaveFileName(this,
-        seekable? tr("Export File") : tr("Capture File"), directory,
+        caption, directory,
         QString(), 0, QFileDialog::HideNameFilterDetails);
     if (!m_outputFilename.isEmpty()) {
         QFileInfo fi(m_outputFilename);
@@ -1030,6 +1032,9 @@ void EncodeDock::on_encodeButton_clicked()
                 m_outputFilename += m_extension;
             }
         }
+        if (Util::warnIfNotWritable(m_outputFilename, this, caption))
+            return;
+
         if (seekable) {
             // Batch encode
             int threadCount = QThread::idealThreadCount();

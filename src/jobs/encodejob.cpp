@@ -65,11 +65,15 @@ void EncodeJob::onVideoQualityTriggered()
     // Get the location and file name for the report.
     QString directory = Settings.encodePath();
     directory += "/.txt";
-    QString reportPath= QFileDialog::getSaveFileName(&MAIN, tr("Video Quality Report"), directory);
+    QString caption = tr("Video Quality Report");
+    QString reportPath= QFileDialog::getSaveFileName(&MAIN, caption, directory);
     if (!reportPath.isEmpty()) {
         QFileInfo fi(reportPath);
         if (fi.suffix().isEmpty())
             reportPath += ".txt";
+
+        if (Util::warnIfNotWritable(reportPath, &MAIN, caption))
+            return;
 
         // Get temp filename for the new XML.
         QTemporaryFile tmp;
