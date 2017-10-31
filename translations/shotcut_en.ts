@@ -1338,16 +1338,17 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1559"/>
-        <location filename="../src/docks/encodedock.cpp" line="1021"/>
-        <location filename="../src/docks/encodedock.cpp" line="1405"/>
+        <location filename="../src/docks/encodedock.cpp" line="737"/>
+        <location filename="../src/docks/encodedock.cpp" line="1031"/>
+        <location filename="../src/docks/encodedock.cpp" line="1438"/>
         <source>Export File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1566"/>
-        <location filename="../src/docks/encodedock.cpp" line="1127"/>
-        <location filename="../src/docks/encodedock.cpp" line="1134"/>
-        <location filename="../src/docks/encodedock.cpp" line="1245"/>
+        <location filename="../src/docks/encodedock.cpp" line="1160"/>
+        <location filename="../src/docks/encodedock.cpp" line="1167"/>
+        <location filename="../src/docks/encodedock.cpp" line="1278"/>
         <source>Stream</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1362,96 +1363,113 @@ in temporal compression</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="85"/>
+        <location filename="../src/docks/encodedock.cpp" line="87"/>
         <source>Automatic from extension</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="93"/>
-        <location filename="../src/docks/encodedock.cpp" line="103"/>
+        <location filename="../src/docks/encodedock.cpp" line="95"/>
+        <location filename="../src/docks/encodedock.cpp" line="105"/>
         <source>Default for format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1021"/>
-        <location filename="../src/docks/encodedock.cpp" line="1407"/>
+        <location filename="../src/docks/encodedock.cpp" line="1031"/>
+        <location filename="../src/docks/encodedock.cpp" line="1440"/>
         <source>Capture File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="334"/>
+        <location filename="../src/docks/encodedock.cpp" line="336"/>
         <source>Timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="336"/>
+        <location filename="../src/docks/encodedock.cpp" line="338"/>
         <source>Playlist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="338"/>
+        <location filename="../src/docks/encodedock.cpp" line="340"/>
         <source>Each Playlist Item</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="347"/>
-        <location filename="../src/docks/encodedock.cpp" line="359"/>
+        <location filename="../src/docks/encodedock.cpp" line="349"/>
+        <location filename="../src/docks/encodedock.cpp" line="361"/>
         <source>Source</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="374"/>
-        <location filename="../src/docks/encodedock.cpp" line="944"/>
+        <location filename="../src/docks/encodedock.cpp" line="376"/>
+        <location filename="../src/docks/encodedock.cpp" line="955"/>
         <source>Custom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="386"/>
+        <location filename="../src/docks/encodedock.cpp" line="388"/>
         <source>Stock</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1603"/>
-        <location filename="../src/docks/encodedock.cpp" line="994"/>
-        <location filename="../src/docks/encodedock.cpp" line="1056"/>
-        <location filename="../src/docks/encodedock.cpp" line="1070"/>
+        <location filename="../src/docks/encodedock.cpp" line="1005"/>
+        <location filename="../src/docks/encodedock.cpp" line="1089"/>
+        <location filename="../src/docks/encodedock.cpp" line="1103"/>
         <source>Stop Capture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1180"/>
+        <location filename="../src/docks/encodedock.cpp" line="1213"/>
         <source>Add Export Preset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1122"/>
-        <location filename="../src/docks/encodedock.cpp" line="1143"/>
+        <location filename="../src/docks/encodedock.cpp" line="1155"/>
+        <location filename="../src/docks/encodedock.cpp" line="1176"/>
         <source>Stop Stream</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1135"/>
+        <location filename="../src/docks/encodedock.cpp" line="738"/>
+        <source>You cannot write to a file that is in your project.
+Try again with a different folder or file name.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.cpp" line="1053"/>
+        <source>The drive you chose only has %1 MiB of free space.
+Do you still want to continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.cpp" line="1061"/>
+        <source>Export canceled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.cpp" line="1168"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1222"/>
+        <location filename="../src/docks/encodedock.cpp" line="1255"/>
         <source>Delete Preset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1223"/>
+        <location filename="../src/docks/encodedock.cpp" line="1256"/>
         <source>Are you sure you want to delete %1?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1344"/>
-        <location filename="../src/docks/encodedock.cpp" line="1348"/>
+        <location filename="../src/docks/encodedock.cpp" line="1377"/>
+        <location filename="../src/docks/encodedock.cpp" line="1381"/>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1391"/>
+        <location filename="../src/docks/encodedock.cpp" line="1424"/>
         <source>KiB (%1s)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1653,8 +1671,8 @@ with the framebuffer object extension.</source>
     <name>HtmlEditor</name>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="14"/>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="161"/>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="742"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="162"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="746"/>
         <source>HTML Editor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1984,119 +2002,120 @@ with the framebuffer object extension.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="65"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="66"/>
         <source>WYSIWYG Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="66"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="67"/>
         <source>View Source</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="162"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="163"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="199"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="200"/>
         <source>Open File...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="200"/>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="233"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="201"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="237"/>
         <source>HTML-Files (*.htm *.html);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="232"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="211"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="236"/>
         <source>Save as...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="246"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="250"/>
         <source>Common Graphics (*.png *.jpg *.jpeg *.gif);;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="247"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="251"/>
         <source>Portable Network Graphics (PNG) (*.png);;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="248"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="252"/>
         <source>JPEG (*.jpg *.jpeg);;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="249"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="253"/>
         <source>Graphics Interchange Format (*.gif);;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="250"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="254"/>
         <source>All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="252"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="256"/>
         <source>Open image...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="299"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="303"/>
         <source>Create link</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="300"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="304"/>
         <source>Enter URL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="490"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="494"/>
         <source>Font</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="490"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="494"/>
         <source>Select font:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="500"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="504"/>
         <source>Font Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="500"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="504"/>
         <source>Size in points:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="636"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="640"/>
         <source>Open %1 ?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="637"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="641"/>
         <source>Open link</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="646"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="650"/>
         <source>Text Outline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="663"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="667"/>
         <source>Text Shadow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="742"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="746"/>
         <source>%1[*] - %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2658,7 +2677,7 @@ duration of the transition.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3190"/>
+        <location filename="../src/mainwindow.cpp" line="3205"/>
         <source>Data Directory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2789,7 +2808,7 @@ duration of the transition.</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="369"/>
-        <location filename="../src/mainwindow.cpp" line="2445"/>
+        <location filename="../src/mainwindow.cpp" line="2453"/>
         <source>Enter Full Screen</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2826,7 +2845,7 @@ duration of the transition.</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="420"/>
-        <location filename="../src/mainwindow.cpp" line="331"/>
+        <location filename="../src/mainwindow.cpp" line="332"/>
         <source>History</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3114,66 +3133,66 @@ duration of the transition.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="566"/>
+        <location filename="../src/mainwindow.cpp" line="567"/>
         <source>Non-Broadcast</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="577"/>
+        <location filename="../src/mainwindow.cpp" line="578"/>
         <source>DVD Widescreen NTSC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="578"/>
+        <location filename="../src/mainwindow.cpp" line="579"/>
         <source>DVD Widescreen PAL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="583"/>
+        <location filename="../src/mainwindow.cpp" line="584"/>
         <source>Custom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="602"/>
+        <location filename="../src/mainwindow.cpp" line="603"/>
         <source>Screen %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="633"/>
+        <location filename="../src/mainwindow.cpp" line="634"/>
         <source>Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="636"/>
+        <location filename="../src/mainwindow.cpp" line="637"/>
         <source>Internal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="639"/>
+        <location filename="../src/mainwindow.cpp" line="640"/>
         <source>External</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="653"/>
+        <location filename="../src/mainwindow.cpp" line="654"/>
         <source>DeckLink Keyer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="823"/>
-        <location filename="../src/mainwindow.cpp" line="825"/>
-        <location filename="../src/mainwindow.cpp" line="1129"/>
-        <location filename="../src/mainwindow.cpp" line="2928"/>
+        <location filename="../src/mainwindow.cpp" line="824"/>
+        <location filename="../src/mainwindow.cpp" line="826"/>
+        <location filename="../src/mainwindow.cpp" line="1130"/>
+        <location filename="../src/mainwindow.cpp" line="2936"/>
         <source>Failed to open </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="851"/>
+        <location filename="../src/mainwindow.cpp" line="852"/>
         <source>The file you opened uses GPU effects, but GPU processing is not enabled.
 Do you want to enable GPU processing and restart?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="909"/>
+        <location filename="../src/mainwindow.cpp" line="910"/>
         <source>Shotcut noticed some problems in your project.
 Do you want Shotcut to try to repair it?
 
@@ -3182,7 +3201,7 @@ with &quot;- Repaired&quot; in the file name and open it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="874"/>
+        <location filename="../src/mainwindow.cpp" line="875"/>
         <source>Repaired</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3194,35 +3213,35 @@ Please install it using your package manager. It may be named libsdl2-2.0-0, SDL
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="897"/>
+        <location filename="../src/mainwindow.cpp" line="898"/>
         <source>Repairing the project failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2660"/>
+        <location filename="../src/mainwindow.cpp" line="2668"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2710"/>
+        <location filename="../src/mainwindow.cpp" line="2718"/>
         <source>You must restart Shotcut to switch using GPU processing.
 Do you want to restart now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2969"/>
+        <location filename="../src/mainwindow.cpp" line="2977"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2991"/>
+        <location filename="../src/mainwindow.cpp" line="2999"/>
         <source>Application Log</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="945"/>
+        <location filename="../src/mainwindow.cpp" line="946"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3234,133 +3253,134 @@ Please install it using your package manager. It may be named libjack0, jack-aud
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1140"/>
-        <location filename="../src/mainwindow.cpp" line="2908"/>
+        <location filename="../src/mainwindow.cpp" line="1141"/>
+        <location filename="../src/mainwindow.cpp" line="2916"/>
         <source>Open File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1389"/>
+        <location filename="../src/mainwindow.cpp" line="1390"/>
         <source>%1[*] - %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1394"/>
+        <location filename="../src/mainwindow.cpp" line="1395"/>
         <source>About Shotcut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1395"/>
+        <location filename="../src/mainwindow.cpp" line="1396"/>
         <source>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2016 &lt;a href=&quot;https://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;https://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1891"/>
+        <location filename="../src/mainwindow.cpp" line="1892"/>
         <source>Click here to check for a new version of Shotcut.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1973"/>
-        <location filename="../src/mainwindow.cpp" line="1999"/>
+        <location filename="../src/mainwindow.cpp" line="1976"/>
+        <location filename="../src/mainwindow.cpp" line="2007"/>
         <source>Saved %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1985"/>
+        <location filename="../src/mainwindow.cpp" line="1971"/>
+        <location filename="../src/mainwindow.cpp" line="1988"/>
         <source>Save XML</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1985"/>
+        <location filename="../src/mainwindow.cpp" line="1989"/>
         <source>MLT XML (*.mlt)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2011"/>
+        <location filename="../src/mainwindow.cpp" line="2019"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2038"/>
+        <location filename="../src/mainwindow.cpp" line="2046"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2051"/>
+        <location filename="../src/mainwindow.cpp" line="2059"/>
         <source>An export is in progress.
 Do you want to still want to exit?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2448"/>
+        <location filename="../src/mainwindow.cpp" line="2456"/>
         <source>Exit Full Screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2461"/>
+        <location filename="../src/mainwindow.cpp" line="2469"/>
         <source>GPU Processing is not supported</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2701"/>
+        <location filename="../src/mainwindow.cpp" line="2709"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2909"/>
+        <location filename="../src/mainwindow.cpp" line="2917"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3025"/>
+        <location filename="../src/mainwindow.cpp" line="3033"/>
         <source>Shotcut version %1 is available! Click here to get it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3031"/>
+        <location filename="../src/mainwindow.cpp" line="3039"/>
         <source>You are running the latest version of Shotcut.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3041"/>
+        <location filename="../src/mainwindow.cpp" line="3049"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3091"/>
+        <location filename="../src/mainwindow.cpp" line="3099"/>
         <source>Export EDL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3091"/>
+        <location filename="../src/mainwindow.cpp" line="3100"/>
         <source>EDL (*.edl)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3134"/>
+        <location filename="../src/mainwindow.cpp" line="3146"/>
         <source>A JavaScript error occurred during export.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3137"/>
+        <location filename="../src/mainwindow.cpp" line="3149"/>
         <source>Failed to open export-edl.js</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3163"/>
+        <location filename="../src/mainwindow.cpp" line="3175"/>
         <source>Export Frame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3173"/>
+        <location filename="../src/mainwindow.cpp" line="3188"/>
         <source>Unable to export frame.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3181"/>
+        <location filename="../src/mainwindow.cpp" line="3196"/>
         <source>You must restart Shotcut to change the data directory.
 Do you want to continue?</source>
         <translation type="unfinished"></translation>
@@ -4693,6 +4713,13 @@ p, li { white-space: pre-wrap; }
         <source>The file is not a MLT XML file.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../src/util.cpp" line="85"/>
+        <source>Unable to write file %1
+Perhaps you do not have permission.
+Try again with a different folder.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QmlFilter</name>
@@ -4903,7 +4930,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/textviewerdialog.cpp" line="45"/>
+        <location filename="../src/dialogs/textviewerdialog.cpp" line="47"/>
         <source>Save Text</source>
         <translation type="unfinished"></translation>
     </message>
