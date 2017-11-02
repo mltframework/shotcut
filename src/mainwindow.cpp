@@ -1891,11 +1891,8 @@ void MainWindow::showEvent(QShowEvent* event)
 
     windowHandle()->installEventFilter(this);
 
-    if (!Settings.noUpgrade() && !qApp->property("noupgrade").toBool()) {
-        QAction* action = new QAction(tr("Click here to check for a new version of Shotcut."), 0);
-        connect(action, SIGNAL(triggered(bool)), SLOT(on_actionUpgrade_triggered()));
-        showStatusMessage(action, 10 /* seconds */);
-    }
+    if (!Settings.noUpgrade() && !qApp->property("noupgrade").toBool())
+        QTimer::singleShot(0, this, SLOT(showUpgradePrompt()));
 }
 
 void MainWindow::on_actionOpenOther_triggered()
@@ -2549,6 +2546,13 @@ void MainWindow::onShuttle(float x)
     } else {
         m_player->play(20.0 * x);
     }
+}
+
+void MainWindow::showUpgradePrompt()
+{
+    QAction* action = new QAction(tr("Click here to check for a new version of Shotcut."), 0);
+    connect(action, SIGNAL(triggered(bool)), SLOT(on_actionUpgrade_triggered()));
+    showStatusMessage(action, 10 /* seconds */);
 }
 
 void MainWindow::on_actionRealtime_triggered(bool checked)

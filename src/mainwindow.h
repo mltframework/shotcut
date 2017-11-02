@@ -176,6 +176,7 @@ public slots:
     void onShuttle(float x);
 
 private slots:
+    void showUpgradePrompt();
     void on_actionAbout_Shotcut_triggered();
     void on_actionOpenOther_triggered();
     void onProducerChanged();
