@@ -35,12 +35,6 @@
 
 #define USE_GL_SYNC // Use glFinish() if not defined.
 
-#ifdef Q_OS_MAC
-static const int FRAMEDISPLAYED_MIN_MS = 80; // max 12.5 fps
-#else
-static const int FRAMEDISPLAYED_MIN_MS = 10; // max 100 fps
-#endif
-
 #ifdef QT_NO_DEBUG
 #define check_error(fn) {}
 #else
@@ -767,7 +761,6 @@ void GLWidget::updateTexture(GLuint yName, GLuint uName, GLuint vName)
     m_texture[0] = yName;
     m_texture[1] = uName;
     m_texture[2] = vName;
-    quickWindow()->update();
 }
 
 // MLT consumer-frame-show event handler
@@ -913,7 +906,6 @@ void FrameRenderer::showFrame(Mlt::Frame frame)
 
             // Save this frame for future use and to keep a reference to the GL Texture.
             m_displayFrame = SharedFrame(frame);
-            emit frameDisplayed(m_displayFrame);
         }
         else {
             // Using a threaded OpenGL to upload textures.
@@ -930,20 +922,8 @@ void FrameRenderer::showFrame(Mlt::Frame frame)
             emit textureReady(m_displayTexture[0], m_displayTexture[1], m_displayTexture[2]);
             m_context->doneCurrent();
         }
-
-        // Throttle the frequency of frameDisplayed signals to prevent them from
-        // interfering with timely and smooth video updates.
-        int elapsedMSecs = QDateTime::currentMSecsSinceEpoch() - m_previousMSecs;
-        if (elapsedMSecs >= FRAMEDISPLAYED_MIN_MS) {
-            m_previousMSecs = QDateTime::currentMSecsSinceEpoch();
-            // The frame is now done being modified and can be shared with the rest
-            // of the application.
-            emit frameDisplayed(m_displayFrame);
-        }
-    } else {
-        // Non-threaded rendering
-        emit frameDisplayed(m_displayFrame);
     }
+    emit frameDisplayed(m_displayFrame);
 
     m_semaphore.release();
 }
