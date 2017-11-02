@@ -40,6 +40,7 @@
 #define TO_ABSOLUTE(min, max, rel) qRound(float(min) + float((max) - (min) + 1) * float(rel) / 100.0f)
 #define TO_RELATIVE(min, max, abs) qRound(100.0f * float((abs) - (min)) / float((max) - (min) + 1))
 static const int kOpenCaptureFileDelayMs = 1500;
+static const int kFreeSpaceThesholdGB = 50LL * 1024 * 1024 * 1024;
 
 static double getBufferSize(Mlt::Properties& preset, const char* property);
 
@@ -1048,7 +1049,7 @@ void EncodeDock::on_encodeButton_clicked()
         // Check if the drive this file will be on is getting low on space.
         QStorageInfo si(fi.path());
         LOG_DEBUG() << si.bytesAvailable();
-        if (si.isValid() && si.bytesAvailable() < 100LL * 1024 * 1024 * 1024 /* GiB */) {
+        if (si.isValid() && si.bytesAvailable() < kFreeSpaceThesholdGB) {
             QMessageBox dialog(QMessageBox::Question, caption,
                tr("The drive you chose only has %1 MiB of free space.\n"
                   "Do you still want to continue?")
