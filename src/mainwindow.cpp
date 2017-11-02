@@ -787,13 +787,9 @@ void MainWindow::setupSettingsMenu()
             ui->actionDrawingOpenGL->setChecked(true);
             break;
         case Qt::AA_UseOpenGLES:
-            delete ui->actionGPU;
-            ui->actionGPU = 0;
             ui->actionDrawingDirectX->setChecked(true);
             break;
         case Qt::AA_UseSoftwareOpenGL:
-            delete ui->actionGPU;
-            ui->actionGPU = 0;
             ui->actionDrawingSoftware->setChecked(true);
             break;
         default:
@@ -1341,6 +1337,7 @@ void MainWindow::writeSettings()
     if (isFullScreen())
         showNormal();
 #endif
+    Settings.setPlayerGPU(ui->actionGPU->isChecked());
     Settings.setWindowGeometry(saveGeometry());
     Settings.setWindowState(saveState());
     Settings.sync();
@@ -2719,7 +2716,7 @@ void MainWindow::on_actionJack_triggered(bool checked)
 
 void MainWindow::on_actionGPU_triggered(bool checked)
 {
-    Settings.setPlayerGPU(checked);
+    Q_UNUSED(checked)
     QMessageBox dialog(QMessageBox::Information,
                        qApp->applicationName(),
                        tr("You must restart Shotcut to switch using GPU processing.\n"
