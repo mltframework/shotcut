@@ -2549,7 +2549,7 @@ void MainWindow::showUpgradePrompt()
 {
     QAction* action = new QAction(tr("Click here to check for a new version of Shotcut."), 0);
     connect(action, SIGNAL(triggered(bool)), SLOT(on_actionUpgrade_triggered()));
-    showStatusMessage(action, 30 /* seconds */);
+    showStatusMessage(action, 15 /* seconds */);
 }
 
 void MainWindow::on_actionRealtime_triggered(bool checked)
