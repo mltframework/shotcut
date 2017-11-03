@@ -2754,6 +2754,7 @@ void MultitrackModel::load()
         getAudioLevels();
     }
     emit loaded();
+    emit filteredChanged();
 }
 
 void MultitrackModel::reload()
@@ -2762,6 +2763,7 @@ void MultitrackModel::reload()
         beginResetModel();
         endResetModel();
         getAudioLevels();
+        emit filteredChanged();
     }
 }
 
