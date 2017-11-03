@@ -173,6 +173,10 @@ Item {
         RowLayout {
             Layout.columnSpan: 4
             Button {
+                text: qsTr('# (Hash sign)')
+                onClicked: textArea.insert(textArea.cursorPosition, '\\#')
+            }
+            Button {
                 text: qsTr('Timecode')
                 onClicked: textArea.insert(textArea.cursorPosition, '#timecode#')
             }
