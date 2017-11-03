@@ -1,5 +1,5 @@
 name: shotcut
-version: '17.10'
+version: '17.11'
 summary: Free, cross-platform, open source video editor
 description: >
   Shotcut is a free, open source, cross-platform video editor for Windows,
@@ -18,10 +18,11 @@ parts:
   shotcut:
     after: [desktop-qt5]
     plugin: dump
-    source: 'https://github.com/mltframework/shotcut/releases/download/v17.10/shotcut-linux-x86_64-171002.tar.bz2'
+    source: 'https://github.com/mltframework/shotcut/releases/download/v17.11/shotcut-linux-x86_64-171102.tar.bz2'
     organize:
       'Shotcut': './'
     stage-packages:
       - libsdl2-2.0-0
+      - libjack0
       - swh-plugins
 
