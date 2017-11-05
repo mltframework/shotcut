@@ -239,4 +239,9 @@ Rectangle {
             }
         }
     ]
+
+    Connections {
+        target: attachedfiltersmodel
+        onIsProducerSelectedChanged: filterMenu.close()
+    }
 }
