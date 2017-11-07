@@ -733,13 +733,17 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Service* service, const QString& target,
     f1.close();
 
     // Check if the target file is a member of the project.
+    QString caption = tr("Export File");
     QString xml = dom.toString(0);
     if (xml.contains(QDir::fromNativeSeparators(target))) {
-        QMessageBox::warning(this, tr("Export File"),
+        QMessageBox::warning(this, caption,
                              tr("You cannot write to a file that is in your project.\n"
                                 "Try again with a different folder or file name."));
         return 0;
     }
+
+    if (Util::warnIfNotWritable(target, this, caption))
+        return 0;
 
     // add consumer element
     QDomElement consumerNode = dom.createElement("consumer");
@@ -1043,8 +1047,6 @@ void EncodeDock::on_encodeButton_clicked()
                 m_outputFilename += m_extension;
             }
         }
-        if (Util::warnIfNotWritable(m_outputFilename, this, caption))
-            return;
 
         // Check if the drive this file will be on is getting low on space.
         QStorageInfo si(fi.path());
