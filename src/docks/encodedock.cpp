@@ -40,7 +40,7 @@
 #define TO_ABSOLUTE(min, max, rel) qRound(float(min) + float((max) - (min) + 1) * float(rel) / 100.0f)
 #define TO_RELATIVE(min, max, abs) qRound(100.0f * float((abs) - (min)) / float((max) - (min) + 1))
 static const int kOpenCaptureFileDelayMs = 1500;
-static const int kFreeSpaceThesholdGB = 50LL * 1024 * 1024 * 1024;
+static const qint64 kFreeSpaceThesholdGB = 50LL * 1024 * 1024 * 1024;
 
 static double getBufferSize(Mlt::Properties& preset, const char* property);
 
