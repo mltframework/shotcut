@@ -317,7 +317,8 @@ void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
         fps /= m_producer->get_double("meta.media.frame_rate_den");
     if (m_producer->get("force_fps"))
         fps = m_producer->get_double("fps");
-    ui->videoTableWidget->setItem(2, 1, new QTableWidgetItem(QString("%L1").arg(fps)));
+    ui->videoTableWidget->setItem(2, 1, new QTableWidgetItem(QString("%L1 %2").arg(fps)
+                                  .arg(m_producer->get_int("meta.media.variable_frame_rate")? tr("(variable)") : "")));
 
     int progressive = m_producer->get_int("meta.media.progressive");
     if (m_producer->get("force_progressive"))
