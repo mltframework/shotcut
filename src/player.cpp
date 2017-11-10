@@ -57,6 +57,7 @@ Player::Player(QWidget *parent)
     // Add tab bar to indicate/select what is playing: clip, playlist, timeline.
     m_tabs = new QTabBar;
     m_tabs->setShape(QTabBar::RoundedSouth);
+    m_tabs->setUsesScrollButtons(false);
     m_tabs->addTab(tr("Source"));
     m_tabs->addTab(tr("Project"));
     m_tabs->setTabEnabled(SourceTabIndex, false);
