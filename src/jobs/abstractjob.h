@@ -22,8 +22,10 @@
 #include <QProcess>
 #include <QModelIndex>
 #include <QList>
+#include <QTime>
 
 class QAction;
+class QStandardItem;
 
 class AbstractJob : public QProcess
 {
@@ -32,8 +34,8 @@ public:
     explicit AbstractJob(const QString& name);
     virtual ~AbstractJob() {}
 
-    void setModelIndex(const QModelIndex& index);
-    QModelIndex modelIndex() const;
+    void setStandardItem(QStandardItem* item);
+    QStandardItem* standardItem();
     bool ran() const;
     bool stopped() const;
     void appendToLog(const QString&);
@@ -42,19 +44,21 @@ public:
     void setLabel(const QString& label);
     QList<QAction*> standardActions() const { return m_standardActions; }
     QList<QAction*> successActions() const { return m_successActions; }
+    QTime estimateRemaining(int percent);
+    QTime time() const { return m_time; }
 
 public slots:
     virtual void start();
     virtual void stop();
 
 signals:
-    void progressUpdated(QModelIndex index, uint percent);
+    void progressUpdated(QStandardItem* item, int percent);
     void finished(AbstractJob* job, bool isSuccess);
 
 protected:
     QList<QAction*> m_standardActions;
     QList<QAction*> m_successActions;
-    QModelIndex m_index;
+    QStandardItem*  m_item;
 
 protected slots:
     virtual void onFinished(int exitCode, QProcess::ExitStatus exitStatus);
@@ -65,6 +69,7 @@ private:
     bool m_killed;
     QString m_log;
     QString m_label;
+    QTime m_time;
 };
 
 #endif // ABSTRACTJOB_H

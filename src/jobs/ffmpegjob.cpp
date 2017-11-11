@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Meltytech, LLC
+ * Copyright (c) 2016-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -32,6 +32,7 @@
 FfmpegJob::FfmpegJob(const QString& name, const QStringList& args)
     : AbstractJob(name)
     , m_totalFrames(0)
+    , m_previousPercent(0)
 {
     QAction* action = new QAction(tr("Open"), this);
     connect(action, SIGNAL(triggered()), this, SLOT(onOpenTriggered()));
@@ -74,7 +75,7 @@ void FfmpegJob::onReadyRead()
     if (msg.contains("Duration:")) {
         m_duration = msg.mid(msg.indexOf("Duration:") + 9);
         m_duration = m_duration.left(m_duration.indexOf(','));
-        emit progressUpdated(m_index, 0);
+        emit progressUpdated(m_item, 0);
         appendToLog(msg);
     }
     else if (!m_totalFrames && msg.contains(" fps")) {
@@ -96,7 +97,11 @@ void FfmpegJob::onReadyRead()
         msg = msg.mid(msg.indexOf("frame=") + 6);
         msg = msg.left(msg.indexOf(" fps"));
         int frame = msg.toInt();
-        emit progressUpdated(m_index, qRound(frame * 100.0 / m_totalFrames));
+        int percent = qRound(frame * 100.0 / m_totalFrames);
+        if (percent != m_previousPercent) {
+            emit progressUpdated(m_item, percent);
+            m_previousPercent = percent;
+        }
     }
     else {
         if (!msg.trimmed().isEmpty())

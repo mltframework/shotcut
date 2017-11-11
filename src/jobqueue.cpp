@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2016 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -44,15 +44,25 @@ void JobQueue::cleanup()
 
 AbstractJob* JobQueue::add(AbstractJob* job)
 {
-    int row = rowCount();
     QList<QStandardItem*> items;
-    items << new QStandardItem(job->label());
-    items << new QStandardItem(tr("pending"));
+    QIcon icon = QIcon::fromTheme("run-build", QIcon(":/icons/oxygen/32x32/actions/run-build.png"));
+    items << new QStandardItem(icon, "");
+    QStandardItem* item = new QStandardItem(job->label());
+    item->setToolTip(job->label());
+    items << item;
+    item = new QStandardItem(tr("pending"));
+#ifdef Q_OS_MAC
+    QFont font = QFontDatabase::systemFont(QFontDatabase::FixedFont);
+    font.setPointSize(QGuiApplication::font().pointSize());
+    item->setFont(font);
+#endif
+    item->setToolTip(tr("Estimated Hours:Minutes:Seconds"));
+    items << item;
     appendRow(items);
     job->setParent(this);
-    job->setModelIndex(index(row, COLUMN_STATUS));
-    connect(job, SIGNAL(progressUpdated(QModelIndex,uint)), this, SLOT(onProgressUpdated(QModelIndex,uint)));
-    connect(job, SIGNAL(finished(AbstractJob*, bool)), this, SLOT(onFinished(AbstractJob*, bool)));
+    job->setStandardItem(item);
+    connect(job, SIGNAL(progressUpdated(QStandardItem*, int)), SLOT(onProgressUpdated(QStandardItem*, int)));
+    connect(job, SIGNAL(finished(AbstractJob*, bool)), SLOT(onFinished(AbstractJob*, bool)));
     m_mutex.lock();
     m_jobs.append(job);
     m_mutex.unlock();
@@ -62,23 +72,41 @@ AbstractJob* JobQueue::add(AbstractJob* job)
     return job;
 }
 
-void JobQueue::onProgressUpdated(QModelIndex index, uint percent)
+void JobQueue::onProgressUpdated(QStandardItem* standardItem, int percent)
 {
-    QStandardItem* item = itemFromIndex(index);
-    if (item)
-        item->setText(QString("%1%").arg(percent));
+    if (standardItem) {
+        AbstractJob* job = m_jobs.at(standardItem->row());
+        if (job) {
+            if (percent > 2) {
+                const QTime& remaining = job->estimateRemaining(percent);
+                standardItem->setText(remaining.toString());
+            } else {
+                standardItem->setText("--:--:--");
+            }
+        }
+    }
 }
 
 void JobQueue::onFinished(AbstractJob* job, bool isSuccess)
 {
-    QStandardItem* item = itemFromIndex(job->modelIndex());
+    QStandardItem* item = job->standardItem();
     if (item) {
-        if (isSuccess)
-            item->setText(tr("done"));
-        else if (job->stopped())
+        QIcon icon;
+        if (isSuccess) {
+            const QTime& time = QTime::fromMSecsSinceStartOfDay(job->time().elapsed());
+            item->setText(time.toString());
+            item->setToolTip(tr("Elapsed Hours:Minutes:Seconds"));
+            icon = QIcon(":/icons/oxygen/32x32/status/task-complete.png");
+        } else if (job->stopped()) {
             item->setText(tr("stopped"));
-        else
+            icon = QIcon(":/icons/oxygen/32x32/status/task-attempt.png");
+        } else {
             item->setText(tr("failed"));
+            icon = QIcon(":/icons/oxygen/32x32/status/task-reject.png");
+        }
+        item = JOBS.item(item->row(), JobQueue::COLUMN_ICON);
+        if (item)
+            item->setIcon(icon);
     }
     startNextJob();
 }
@@ -141,10 +169,5 @@ void JobQueue::remove(const QModelIndex& index)
     m_jobs.removeOne(job);
     delete job;
 
-    // Reindex the subsequent jobs.
-    for (int i = row; i < m_jobs.size(); ++i) {
-        QModelIndex modelIndex = this->index(i, COLUMN_STATUS);
-        m_jobs.at(i)->setModelIndex(modelIndex);
-    }
     m_mutex.unlock();
 }

@@ -374,8 +374,7 @@ MainWindow::MainWindow()
     m_jobsDock->hide();
     addDockWidget(Qt::RightDockWidgetArea, m_jobsDock);
     ui->menuView->addAction(m_jobsDock->toggleViewAction());
-    connect(&JOBS, SIGNAL(jobAdded()), m_jobsDock, SLOT(show()));
-    connect(&JOBS, SIGNAL(jobAdded()), m_jobsDock, SLOT(raise()));
+    connect(&JOBS, SIGNAL(jobAdded()), m_jobsDock, SLOT(onJobAdded()));
     connect(m_jobsDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onJobsDockTriggered(bool)));
 
     tabifyDockWidget(m_propertiesDock, m_playlistDock);

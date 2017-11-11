@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2016 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,15 +27,17 @@ class JobQueue : public QStandardItemModel
 {
     Q_OBJECT
 protected:
-    enum ColumnRole {
-        COLUMN_OUTPUT,
-        COLUMN_STATUS,
-        COLUMN_COUNT
-    };
     JobQueue(QObject *parent);
     void startNextJob();
 
 public:
+    enum ColumnRole {
+        COLUMN_ICON,
+        COLUMN_OUTPUT,
+        COLUMN_STATUS,
+        COLUMN_COUNT
+    };
+
     static JobQueue& singleton(QObject* parent = 0);
     void cleanup();
     AbstractJob* add(AbstractJob *job);
@@ -50,7 +52,7 @@ signals:
     void jobAdded();
 
 public slots:
-    void onProgressUpdated(QModelIndex index, uint percent);
+    void onProgressUpdated(QStandardItem* standardItem, int percent);
     void onFinished(AbstractJob* job, bool isSuccess);
 
 private:
