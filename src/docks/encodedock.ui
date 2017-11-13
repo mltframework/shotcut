@@ -300,7 +300,7 @@
                     <number>16</number>
                    </property>
                    <property name="maximum">
-                    <number>4096</number>
+                    <number>8192</number>
                    </property>
                    <property name="value">
                     <number>1280</number>
@@ -320,7 +320,7 @@
                     <number>1</number>
                    </property>
                    <property name="maximum">
-                    <number>4096</number>
+                    <number>8192</number>
                    </property>
                    <property name="value">
                     <number>720</number>
@@ -466,7 +466,7 @@
                     <number>1</number>
                    </property>
                    <property name="maximum">
-                    <number>4096</number>
+                    <number>8192</number>
                    </property>
                    <property name="value">
                     <number>16</number>
@@ -486,7 +486,7 @@
                     <number>1</number>
                    </property>
                    <property name="maximum">
-                    <number>4096</number>
+                    <number>8192</number>
                    </property>
                    <property name="value">
                     <number>9</number>
