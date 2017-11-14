@@ -31,6 +31,8 @@
 
 namespace Mlt {
 
+static const int kThumbnailOutSeekFactor = 5;
+
 static Controller* instance = 0;
 const QString XmlMimeType("application/mlt+xml");
 
@@ -647,7 +649,7 @@ void Controller::resetURL()
 
 QImage Controller::image(Mlt::Frame* frame, int width, int height)
 {
-    QImage result(width, height, QImage::Format_ARGB32);
+    QImage result;
     if (frame && frame->is_valid()) {
         if (width > 0 && height > 0) {
             frame->set("rescale.interp", "bilinear");
@@ -662,6 +664,7 @@ QImage Controller::image(Mlt::Frame* frame, int width, int height)
             result = temp.rgbSwapped();
         }
     } else {
+        result = QImage(width, height, QImage::Format_ARGB32);
         result.fill(QColor(Qt::red).rgb());
     }
     return result;
@@ -670,22 +673,18 @@ QImage Controller::image(Mlt::Frame* frame, int width, int height)
 QImage Controller::image(Producer& producer, int frameNumber, int width, int height)
 {
     QImage result;
-    if (frameNumber > producer.get_length() - 3) {
-        producer.seek(frameNumber - 2);
-        Mlt::Frame* frame = producer.get_frame();
-        result = image(frame, width, height);
-        delete frame;
-        frame = producer.get_frame();
-        result = image(frame, width, height);
-        delete frame;
-        frame = producer.get_frame();
-        result = image(frame, width, height);
-        delete frame;
+    if (frameNumber > producer.get_length() - kThumbnailOutSeekFactor) {
+        producer.seek(frameNumber - kThumbnailOutSeekFactor - 1);
+        for (int i = 0; i < kThumbnailOutSeekFactor; ++i) {
+            QScopedPointer<Mlt::Frame> frame(producer.get_frame());
+            QImage temp = image(frame.data(), width, height);
+            if (!temp.isNull())
+                result = temp;
+        }
     } else {
         producer.seek(frameNumber);
-        Mlt::Frame* frame = producer.get_frame();
-        result = image(frame, width, height);
-        delete frame;
+        QScopedPointer<Mlt::Frame> frame(producer.get_frame());
+        result = image(frame.data(), width, height);
     }
     return result;
 }
