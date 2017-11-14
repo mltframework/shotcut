@@ -41,6 +41,9 @@ public slots:
     void onJobAdded();
     void onProgressUpdated(QStandardItem* item, int percent);
 
+protected:
+    void resizeEvent(QResizeEvent *event);
+
 private:
     Ui::JobsDock *ui;
 

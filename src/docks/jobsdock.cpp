@@ -68,6 +68,7 @@ void JobsDock::onJobAdded()
     layout->setContentsMargins(0, 0, 0, 0);
     ui->treeView->setIndexWidget(index, progressBar);
     ui->treeView->resizeColumnToContents(JobQueue::COLUMN_STATUS);
+    label->setToolTip(JOBS.data(index).toString());
     label->setText(label->fontMetrics().elidedText(
         JOBS.data(index).toString(), Qt::ElideMiddle, ui->treeView->columnWidth(JobQueue::COLUMN_OUTPUT)));
     connect(JOBS.jobFromIndex(index), SIGNAL(progressUpdated(QStandardItem*, int)), SLOT(onProgressUpdated(QStandardItem*, int)));
@@ -83,6 +84,16 @@ void JobsDock::onProgressUpdated(QStandardItem* item, int percent)
         if (progressBar)
             progressBar->setValue(percent);
     }
+}
+
+void JobsDock::resizeEvent(QResizeEvent *event)
+{
+    QDockWidget::resizeEvent(event);
+    foreach (QLabel* label, ui->treeView->findChildren<QLabel*>()) {
+        label->setText(label->fontMetrics().elidedText(
+            label->toolTip(), Qt::ElideMiddle, ui->treeView->columnWidth(JobQueue::COLUMN_OUTPUT)));
+    }
+    
 }
 
 void JobsDock::on_treeView_customContextMenuRequested(const QPoint &pos)

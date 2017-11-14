@@ -48,7 +48,6 @@ AbstractJob* JobQueue::add(AbstractJob* job)
     QIcon icon = QIcon::fromTheme("run-build", QIcon(":/icons/oxygen/32x32/actions/run-build.png"));
     items << new QStandardItem(icon, "");
     QStandardItem* item = new QStandardItem(job->label());
-    item->setToolTip(job->label());
     items << item;
     item = new QStandardItem(tr("pending"));
 #ifdef Q_OS_MAC
