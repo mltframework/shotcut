@@ -22,6 +22,7 @@
 #include <QWidget>
 #include "abstractproducerwidget.h"
 #include "sharedframe.h"
+#include "dialogs/transcodedialog.h"
 
 namespace Ui {
     class AvformatProducerWidget;
@@ -80,13 +81,17 @@ private slots:
 
     void on_actionFFmpegIntegrityCheck_triggered();
 
+    void on_actionFFmpegConvert_triggered();
+
 private:
     Ui::AvformatProducerWidget *ui;
     int m_defaultDuration;
     bool m_recalcDuration;
+    bool m_askToConvert;
 
     void reopen(Mlt::Producer* p);
     void recreateProducer();
+    void convert(TranscodeDialog& dialog);
 };
 
 #endif // AVFORMATPRODUCERWIDGET_H

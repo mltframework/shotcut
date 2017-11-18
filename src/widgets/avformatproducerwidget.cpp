@@ -24,6 +24,9 @@
 #include "jobqueue.h"
 #include "jobs/ffprobejob.h"
 #include "jobs/ffmpegjob.h"
+#include "settings.h"
+#include "util.h"
+#include "Logger.h"
 #include <QtWidgets>
 
 bool ProducerIsTimewarp( Mlt::Producer* producer )
@@ -60,6 +63,7 @@ AvformatProducerWidget::AvformatProducerWidget(QWidget *parent)
     , ui(new Ui::AvformatProducerWidget)
     , m_defaultDuration(-1)
     , m_recalcDuration(true)
+    , m_askToConvert(true)
 {
     ui->setupUi(this);
     Util::setColorsToHighlight(ui->filenameLabel);
@@ -183,15 +187,15 @@ void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
         m_defaultDuration = m_producer->get_length();
 
     double warpSpeed = GetSpeedFromProducer(producer());
-    QString s = QString::fromUtf8(GetFilenameFromProducer(producer()));
-    QString name = Util::baseName(s);
+    QString resource = QString::fromUtf8(GetFilenameFromProducer(producer()));
+    QString name = Util::baseName(resource);
     QString caption = name;
     if(warpSpeed != 1.0)
         caption = QString("%1 (%2x)").arg(name).arg(warpSpeed);
     m_producer->set(kShotcutCaptionProperty, caption.toUtf8().constData());
-    m_producer->set(kShotcutDetailProperty, s.toUtf8().constData());
+    m_producer->set(kShotcutDetailProperty, resource.toUtf8().constData());
     ui->filenameLabel->setText(ui->filenameLabel->fontMetrics().elidedText(caption, Qt::ElideLeft, width() - 30));
-    ui->filenameLabel->setToolTip(s);
+    ui->filenameLabel->setToolTip(resource);
     ui->notesTextEdit->setPlainText(QString::fromUtf8(m_producer->get(kCommentProperty)));
     ui->durationSpinBox->setValue(m_producer->get_length());
     m_recalcDuration = false;
@@ -317,8 +321,9 @@ void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
         fps /= m_producer->get_double("meta.media.frame_rate_den");
     if (m_producer->get("force_fps"))
         fps = m_producer->get_double("fps");
+    bool isVariableFrameRate = m_producer->get_int("meta.media.variable_frame_rate");
     ui->videoTableWidget->setItem(2, 1, new QTableWidgetItem(QString("%L1 %2").arg(fps)
-                                  .arg(m_producer->get_int("meta.media.variable_frame_rate")? tr("(variable)") : "")));
+                                  .arg(isVariableFrameRate? tr("(variable)") : "")));
 
     int progressive = m_producer->get_int("meta.media.progressive");
     if (m_producer->get("force_progressive"))
@@ -344,6 +349,29 @@ void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
         }
     }
     ui->syncSlider->setValue(qRound(m_producer->get_double("video_delay") * 1000.0));
+
+    if (m_askToConvert && isVariableFrameRate) {
+        m_askToConvert = false;
+        MLT.pause();
+        LOG_INFO() << resource << "is variable frame rate";
+        TranscodeDialog dialog(tr("This file is variable frame rate, which is not reliable for editing. "
+                                  "Do you want to convert it to an edit-friendly format?\n\n"
+                                  "If yes, choose a format below and then click OK to choose a file name. "
+                                  "After choosing a file name, a job is created. "
+                                  "When it is done, double-click the job to open it.\n"), this);
+        convert(dialog);
+    }
+    if (m_askToConvert && QFile::exists(resource) && !MLT.isSeekable(m_producer.data())) {
+        m_askToConvert = false;
+        MLT.pause();
+        LOG_INFO() << resource << "is not seekable";
+        TranscodeDialog dialog(tr("This file does not support seeking and cannot be used for editing. "
+                                  "Do you want to convert it to an edit-friendly format?\n\n"
+                                  "If yes, choose a format below and then click OK to choose a file name. "
+                                  "After choosing a file name, a job is created. "
+                                  "When it is done, double-click the job to open it.\n"), this);
+        convert(dialog);
+    }
 }
 
 void AvformatProducerWidget::on_resetButton_clicked()
@@ -462,6 +490,7 @@ void AvformatProducerWidget::on_menuButton_clicked()
     menu.addAction(ui->actionCopyFullFilePath);
     menu.addAction(ui->actionFFmpegInfo);
     menu.addAction(ui->actionFFmpegIntegrityCheck);
+    menu.addAction(ui->actionFFmpegConvert);
     menu.exec(ui->menuButton->mapToGlobal(QPoint(0, 0)));
 }
 
@@ -497,4 +526,64 @@ void AvformatProducerWidget::on_actionFFmpegIntegrityCheck_triggered()
     args << "-i" << resource;
     args << "-f" << "null" << "pipe:";
     JOBS.add(new FfmpegJob(resource, args));
+}
+
+void AvformatProducerWidget::on_actionFFmpegConvert_triggered()
+{
+    TranscodeDialog dialog(tr("Choose an edit-friendly format below and then click OK to choose a file name. "
+                              "After choosing a file name, a job is created. "
+                              "When it is done, double-click the job to open it.\n"), this);
+    convert(dialog);
+}
+
+void AvformatProducerWidget::convert(TranscodeDialog& dialog)
+{
+    if (dialog.exec() == QDialog::Accepted) {
+        QString resource = QString::fromUtf8(GetFilenameFromProducer(producer()));
+        QString path = Settings.savePath();
+        QStringList args;
+
+        args << "-loglevel" << "verbose";
+        args << "-i" << resource;
+        // transcode all streams
+        args << "-map" << "0";
+        // except data, subtitles, and attachments
+        args << "-map" << "-0:d" << "-map" << "-0:s" << "-map" << "-0:t";
+
+        switch (dialog.format()) {
+        case 0:
+            path.append("/%1.mp4");
+            args << "-f" << "mp4" << "-codec:a" << "aac" << "-b:a" << "512k" << "-codec:v" << "libx264";
+            args << "-preset" << "medium" << "-g" << "1" << "-crf" << "11";
+            break;
+        case 1:
+            args << "-f" << "mov" << "-codec:a" << "alac" << "-codec:v" << "prores_ks" << "-profile:v" << "standard";
+            path.append("/%1.mov");
+            break;
+        case 2:
+            args << "-f" << "matroska" << "-codec:a" << "flac" << "-codec:v" << "ffv1" << "-coder" << "1";
+            args << "-context" << "1" << "-g" << "1" << "-threads" << QString::number(QThread::idealThreadCount());
+            path.append("/%1.mkv");
+            break;
+        }
+        QFileInfo fi(resource);
+        path = path.arg(fi.baseName());
+        QString filename = QFileDialog::getSaveFileName(this, dialog.windowTitle(), path);
+        if (!filename.isEmpty()) {
+            if (filename == QDir::toNativeSeparators(resource)) {
+                QMessageBox::warning(this, dialog.windowTitle(),
+                                     QObject::tr("Unable to write file %1\n"
+                                        "Perhaps you do not have permission.\n"
+                                        "Try again with a different folder.")
+                                     .arg(fi.fileName()));
+                return;
+            }
+            if (Util::warnIfNotWritable(filename, this, dialog.windowTitle()))
+                return;
+
+            Settings.setSavePath(QFileInfo(filename).path());
+            args << filename;
+            JOBS.add(new FfmpegJob(filename, args, false));
+        }
+    }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2017 Meltytech, LLC
+ * Copyright (c) 2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,30 +16,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef FFMPEGJOB_H
-#define FFMPEGJOB_H
+#ifndef TRANSCODEDIALOG_H
+#define TRANSCODEDIALOG_H
 
-#include "abstractjob.h"
-#include <QStringList>
+#include <QDialog>
 
-class FfmpegJob : public AbstractJob
+namespace Ui {
+class TranscodeDialog;
+}
+
+class TranscodeDialog : public QDialog
 {
     Q_OBJECT
+
 public:
-    FfmpegJob(const QString& name, const QStringList& args, bool isOpenLog = true);
-    virtual ~FfmpegJob();
-    void start();
+    explicit TranscodeDialog(const QString& message, QWidget *parent = 0);
+    ~TranscodeDialog();
+    int format() const { return m_format; }
 
 private slots:
-    void onOpenTriggered();
+    void on_horizontalSlider_valueChanged(int position);
 
 private:
-    void onReadyRead();
-    QStringList m_args;
-    QString m_duration;
-    int m_totalFrames;
-    int m_previousPercent;
-    bool m_isOpenLog;
+    Ui::TranscodeDialog *ui;
+    int m_format;
 };
 
-#endif // FFMPEGJOB_H
+#endif // TRANSCODEDIALOG_H

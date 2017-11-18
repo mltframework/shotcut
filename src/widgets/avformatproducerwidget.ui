@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>375</width>
+    <width>384</width>
     <height>534</height>
    </rect>
   </property>
@@ -793,6 +793,14 @@
   <action name="actionFFmpegIntegrityCheck">
    <property name="text">
     <string>Start Integrity Check Job</string>
+   </property>
+  </action>
+  <action name="actionFFmpegConvert">
+   <property name="text">
+    <string>Convert to Edit-friendly...</string>
+   </property>
+   <property name="toolTip">
+    <string>Convert to Edit-friendly...</string>
    </property>
   </action>
  </widget>
