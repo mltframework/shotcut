@@ -631,12 +631,6 @@ int GLWidget::reconfigure(bool isMulti)
         if (isMulti) {
             m_consumer->set("terminate_on_pause", 0);
             m_consumer->set("0", serviceName.toLatin1().constData());
-            if (serviceName == "sdl_audio")
-#ifdef Q_OS_WIN
-                m_consumer->set("0.audio_buffer", 2048);
-#else
-                m_consumer->set("0.audio_buffer", 512);
-#endif
             if (!profile().progressive())
                 m_consumer->set("0.progressive", property("progressive").toBool());
             m_consumer->set("0.rescale", property("rescale").toString().toLatin1().constData());
@@ -647,12 +641,6 @@ int GLWidget::reconfigure(bool isMulti)
                 m_consumer->set("0.keyer", property("keyer").toInt());
         }
         else {
-            if (serviceName == "sdl_audio")
-#ifdef Q_OS_WIN
-                m_consumer->set("audio_buffer", 2048);
-#else
-                m_consumer->set("audio_buffer", 512);
-#endif
             if (!profile().progressive())
                 m_consumer->set("progressive", property("progressive").toBool());
             m_consumer->set("rescale", property("rescale").toString().toLatin1().constData());
