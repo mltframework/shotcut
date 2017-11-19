@@ -548,7 +548,7 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
         // transcode all streams
         args << "-map" << "0";
         // except data, subtitles, and attachments
-        args << "-map" << "-0:d" << "-map" << "-0:s" << "-map" << "-0:t";
+        args << "-map" << "-0:d" << "-map" << "-0:s" << "-map" << "-0:t" << "-ignore_unknown";
 
         switch (dialog.format()) {
         case 0:
