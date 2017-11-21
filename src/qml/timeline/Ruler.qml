@@ -20,9 +20,9 @@ import QtQuick 2.0
 import QtQuick.Controls 1.0
 
 Rectangle {
-    property int stepSize: 34
     property int index: 0
     property real timeScale: 1.0
+    property int stepSize: Math.round(34 * Math.max(1.0, timeScale))
 
     SystemPalette { id: activePalette }
 
