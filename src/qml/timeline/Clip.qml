@@ -142,7 +142,7 @@ Rectangle {
 
     Row {
         id: waveform
-        visible: !isBlank && settings.timelineShowWaveforms
+        visible: !isBlank && settings.timelineShowWaveforms && !trackHeaderRepeater.itemAt(trackIndex).isMute
         height: isAudio? parent.height : parent.height / 2
         anchors.left: parent.left
         anchors.bottom: parent.bottom
