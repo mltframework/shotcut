@@ -612,7 +612,7 @@ Rectangle {
             onTriggered: timeline.mergeClipWithNext(trackIndex, index, false)
         }
         MenuItem {
-            visible: !isBlank && !isTransition
+            visible: !isBlank && !isTransition && settings.timelineShowWaveforms
             text: qsTr('Rebuild Audio Waveform')
             onTriggered: timeline.remakeAudioLevels(trackIndex, index)
         }
