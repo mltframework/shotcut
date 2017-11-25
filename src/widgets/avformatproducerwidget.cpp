@@ -63,7 +63,7 @@ AvformatProducerWidget::AvformatProducerWidget(QWidget *parent)
     , ui(new Ui::AvformatProducerWidget)
     , m_defaultDuration(-1)
     , m_recalcDuration(true)
-    , m_askToConvert(true)
+    , m_askToConvert(Settings.showConvertDialog())
 {
     ui->setupUi(this);
     Util::setColorsToHighlight(ui->filenameLabel);
@@ -359,6 +359,7 @@ void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
                                   "If yes, choose a format below and then click OK to choose a file name. "
                                   "After choosing a file name, a job is created. "
                                   "When it is done, double-click the job to open it.\n"), this);
+        dialog.showCheckBox();
         convert(dialog);
     }
     if (m_askToConvert && QFile::exists(resource) && !MLT.isSeekable(m_producer.data())) {
@@ -370,6 +371,7 @@ void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
                                   "If yes, choose a format below and then click OK to choose a file name. "
                                   "After choosing a file name, a job is created. "
                                   "When it is done, double-click the job to open it.\n"), this);
+        dialog.showCheckBox();
         convert(dialog);
     }
 }
@@ -538,7 +540,11 @@ void AvformatProducerWidget::on_actionFFmpegConvert_triggered()
 
 void AvformatProducerWidget::convert(TranscodeDialog& dialog)
 {
-    if (dialog.exec() == QDialog::Accepted) {
+    int result = dialog.exec();
+    if (dialog.isCheckBoxChecked()) {
+        Settings.setShowConvertDialog(false);
+    }
+    if (result == QDialog::Accepted) {
         QString resource = QString::fromUtf8(GetFilenameFromProducer(producer()));
         QString path = Settings.savePath();
         QStringList args;

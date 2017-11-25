@@ -26,12 +26,18 @@ TranscodeDialog::TranscodeDialog(const QString& message, QWidget *parent) :
     ui->setupUi(this);
     setWindowTitle(tr("Convert to Edit-friendly..."));
     ui->messageLabel->setText(message);
+    ui->checkBox->hide();
     on_horizontalSlider_valueChanged(1);
 }
 
 TranscodeDialog::~TranscodeDialog()
 {
     delete ui;
+}
+
+void TranscodeDialog::showCheckBox()
+{
+    ui->checkBox->show();
 }
 
 void TranscodeDialog::on_horizontalSlider_valueChanged(int position)
@@ -48,4 +54,9 @@ void TranscodeDialog::on_horizontalSlider_valueChanged(int position)
         break;
     }
     m_format = position;
+}
+
+void TranscodeDialog::on_checkBox_clicked(bool checked)
+{
+    m_isChecked = checked;
 }

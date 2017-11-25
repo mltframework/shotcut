@@ -24,6 +24,7 @@
 namespace Ui {
 class TranscodeDialog;
 }
+class QCheckBox;
 
 class TranscodeDialog : public QDialog
 {
@@ -33,13 +34,18 @@ public:
     explicit TranscodeDialog(const QString& message, QWidget *parent = 0);
     ~TranscodeDialog();
     int format() const { return m_format; }
+    void showCheckBox();
+    bool isCheckBoxChecked() const { return m_isChecked; }
 
 private slots:
     void on_horizontalSlider_valueChanged(int position);
 
+    void on_checkBox_clicked(bool checked);
+
 private:
     Ui::TranscodeDialog *ui;
     int m_format;
+    bool m_isChecked;
 };
 
 #endif // TRANSCODEDIALOG_H

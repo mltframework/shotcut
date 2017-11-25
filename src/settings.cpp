@@ -204,6 +204,16 @@ void ShotcutSettings::setEncodeFreeSpaceCheck(bool b)
     settings.setValue("encode/freeSpaceCheck", b);
 }
 
+bool ShotcutSettings::showConvertDialog() const
+{
+    return settings.value("showConvertDialog", true).toBool();
+}
+
+void ShotcutSettings::setShowConvertDialog(bool b)
+{
+    settings.setValue("showConvertDialog", b);
+}
+
 bool ShotcutSettings::meltedEnabled() const
 {
     return settings.value("melted/enabled", false).toBool();
