@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
+ * Copyright (c) 2013-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@ import QtQuick.Controls 1.0
 Rectangle {
     property int index: 0
     property real timeScale: 1.0
-    property int stepSize: Math.round(34 * Math.max(1.0, timeScale))
+    property int stepSize: Math.round(136 * Math.max(1.0, timeScale))
 
     SystemPalette { id: activePalette }
 
@@ -35,21 +35,20 @@ Rectangle {
         model: parent.width / stepSize
         Rectangle {
             anchors.bottom: rulerTop.bottom
-            height: (index % 4)? ((index % 2) ? 3 : 7) : 14
+            height: 18
             width: 1
             color: activePalette.windowText
             x: index * stepSize
-        }
-    }
-    Repeater {
-        model: parent.width / stepSize / 4
-        Label {
-            anchors.bottom: rulerTop.bottom
-            anchors.bottomMargin: 2
-            color: activePalette.windowText
-            x: index * stepSize * 4 + 2
-            text: timeline.timecode(index * stepSize * 4 / timeScale)
-            font.pointSize: 7.5
+            Label {
+                anchors.left: parent.right
+                anchors.leftMargin: 2
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 2
+                color: activePalette.windowText
+                x: index * stepSize + 2
+                text: timeline.timecode(index * stepSize / timeScale)
+                font.pointSize: 7.5
+            }
         }
     }
 }
