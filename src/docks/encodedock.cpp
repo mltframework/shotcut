@@ -1049,20 +1049,26 @@ void EncodeDock::on_encodeButton_clicked()
         }
 
         // Check if the drive this file will be on is getting low on space.
-        QStorageInfo si(fi.path());
-        LOG_DEBUG() << si.bytesAvailable();
-        if (si.isValid() && si.bytesAvailable() < kFreeSpaceThesholdGB) {
-            QMessageBox dialog(QMessageBox::Question, caption,
-               tr("The drive you chose only has %1 MiB of free space.\n"
-                  "Do you still want to continue?")
-               .arg(si.bytesAvailable() / 1024 / 1024),
-               QMessageBox::No | QMessageBox::Yes, this);
-            dialog.setWindowModality(QmlApplication::dialogModality());
-            dialog.setDefaultButton(QMessageBox::Yes);
-            dialog.setEscapeButton(QMessageBox::No);
-            if (dialog.exec() == QMessageBox::No) {
-                MAIN.showStatusMessage(tr("Export canceled."));
-                return;
+        if (Settings.encodeFreeSpaceCheck()) {
+            QStorageInfo si(fi.path());
+            LOG_DEBUG() << si.bytesAvailable() << "bytes available on" << si.displayName();
+            if (si.isValid() && si.bytesAvailable() < kFreeSpaceThesholdGB) {
+                QMessageBox dialog(QMessageBox::Question, caption,
+                   tr("The drive you chose only has %1 MiB of free space.\n"
+                      "Do you still want to continue?")
+                   .arg(si.bytesAvailable() / 1024 / 1024),
+                   QMessageBox::No | QMessageBox::Yes, this);
+                dialog.setWindowModality(QmlApplication::dialogModality());
+                dialog.setDefaultButton(QMessageBox::Yes);
+                dialog.setEscapeButton(QMessageBox::No);
+                dialog.setCheckBox(new QCheckBox(tr("Do not show this any more.", "Export free disk space warning dialog")));
+                if (dialog.checkBox()->isChecked()) {
+                    Settings.setEncodeFreeSpaceCheck(false);
+                }
+                if (dialog.exec() == QMessageBox::No) {
+                    MAIN.showStatusMessage(tr("Export canceled."));
+                    return;
+                }
             }
         }
 

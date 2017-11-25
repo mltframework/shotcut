@@ -194,6 +194,16 @@ void ShotcutSettings::setEncodePath(const QString& s)
     settings.setValue("encode/path", s);
 }
 
+bool ShotcutSettings::encodeFreeSpaceCheck() const
+{
+    return settings.value("encode/freeSpaceCheck", true).toBool();
+}
+
+void ShotcutSettings::setEncodeFreeSpaceCheck(bool b)
+{
+    settings.setValue("encode/freeSpaceCheck", b);
+}
+
 bool ShotcutSettings::meltedEnabled() const
 {
     return settings.value("melted/enabled", false).toBool();
