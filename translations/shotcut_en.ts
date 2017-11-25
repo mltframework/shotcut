@@ -389,7 +389,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="368"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="369"/>
         <source>This file does not support seeking and cannot be used for editing. Do you want to convert it to an edit-friendly format?
 
 If yes, choose a format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
@@ -397,7 +397,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="533"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="535"/>
         <source>Choose an edit-friendly format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
 </source>
         <translation type="unfinished"></translation>
@@ -1373,15 +1373,15 @@ in temporal compression</source>
         <location filename="../src/docks/encodedock.ui" line="1559"/>
         <location filename="../src/docks/encodedock.cpp" line="736"/>
         <location filename="../src/docks/encodedock.cpp" line="1036"/>
-        <location filename="../src/docks/encodedock.cpp" line="1441"/>
+        <location filename="../src/docks/encodedock.cpp" line="1447"/>
         <source>Export File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1566"/>
-        <location filename="../src/docks/encodedock.cpp" line="1163"/>
-        <location filename="../src/docks/encodedock.cpp" line="1170"/>
-        <location filename="../src/docks/encodedock.cpp" line="1281"/>
+        <location filename="../src/docks/encodedock.cpp" line="1169"/>
+        <location filename="../src/docks/encodedock.cpp" line="1176"/>
+        <location filename="../src/docks/encodedock.cpp" line="1287"/>
         <source>Stream</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1408,7 +1408,7 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="1036"/>
-        <location filename="../src/docks/encodedock.cpp" line="1443"/>
+        <location filename="../src/docks/encodedock.cpp" line="1449"/>
         <source>Capture File</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1447,19 +1447,19 @@ in temporal compression</source>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1603"/>
         <location filename="../src/docks/encodedock.cpp" line="1010"/>
-        <location filename="../src/docks/encodedock.cpp" line="1092"/>
-        <location filename="../src/docks/encodedock.cpp" line="1106"/>
+        <location filename="../src/docks/encodedock.cpp" line="1098"/>
+        <location filename="../src/docks/encodedock.cpp" line="1112"/>
         <source>Stop Capture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1216"/>
+        <location filename="../src/docks/encodedock.cpp" line="1222"/>
         <source>Add Export Preset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1158"/>
-        <location filename="../src/docks/encodedock.cpp" line="1179"/>
+        <location filename="../src/docks/encodedock.cpp" line="1164"/>
+        <location filename="../src/docks/encodedock.cpp" line="1185"/>
         <source>Stop Stream</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1470,39 +1470,45 @@ Try again with a different folder or file name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1056"/>
+        <location filename="../src/docks/encodedock.cpp" line="1057"/>
         <source>The drive you chose only has %1 MiB of free space.
 Do you still want to continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="1064"/>
+        <source>Do not show this any more.</source>
+        <comment>Export free disk space warning dialog</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.cpp" line="1069"/>
         <source>Export canceled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1171"/>
+        <location filename="../src/docks/encodedock.cpp" line="1177"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1258"/>
+        <location filename="../src/docks/encodedock.cpp" line="1264"/>
         <source>Delete Preset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1259"/>
+        <location filename="../src/docks/encodedock.cpp" line="1265"/>
         <source>Are you sure you want to delete %1?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1380"/>
-        <location filename="../src/docks/encodedock.cpp" line="1384"/>
+        <location filename="../src/docks/encodedock.cpp" line="1386"/>
+        <location filename="../src/docks/encodedock.cpp" line="1390"/>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1427"/>
+        <location filename="../src/docks/encodedock.cpp" line="1433"/>
         <source>KiB (%1s)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4753,7 +4759,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/util.cpp" line="85"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="575"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="581"/>
         <source>Unable to write file %1
 Perhaps you do not have permission.
 Try again with a different folder.</source>
@@ -5394,22 +5400,28 @@ affecting position of other clips (Z)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/dialogs/transcodedialog.ui" line="136"/>
+        <source>Do not show this anymore.</source>
+        <comment>Convert to edit-friendly format dialog</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/dialogs/transcodedialog.cpp" line="27"/>
         <source>Convert to Edit-friendly...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.cpp" line="41"/>
+        <location filename="../src/dialogs/transcodedialog.cpp" line="47"/>
         <source>Lossy: I-frame–only H.264/AAC MP4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.cpp" line="44"/>
+        <location filename="../src/dialogs/transcodedialog.cpp" line="50"/>
         <source>Intermediate: ProRes/ALAC MOV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.cpp" line="47"/>
+        <location filename="../src/dialogs/transcodedialog.cpp" line="53"/>
         <source>Lossless: FFV1/FLAC MKV</source>
         <translation type="unfinished"></translation>
     </message>
