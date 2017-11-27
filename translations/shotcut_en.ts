@@ -1445,6 +1445,12 @@ in temporal compression</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/docks/encodedock.cpp" line="1064"/>
+        <source>Do not show this anymore.</source>
+        <comment>Export free disk space warning dialog</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/docks/encodedock.ui" line="1603"/>
         <location filename="../src/docks/encodedock.cpp" line="1010"/>
         <location filename="../src/docks/encodedock.cpp" line="1098"/>
@@ -1473,12 +1479,6 @@ Try again with a different folder or file name.</source>
         <location filename="../src/docks/encodedock.cpp" line="1057"/>
         <source>The drive you chose only has %1 MiB of free space.
 Do you still want to continue?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.cpp" line="1064"/>
-        <source>Do not show this any more.</source>
-        <comment>Export free disk space warning dialog</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6172,11 +6172,6 @@ Most users do not need to change this.</source>
         <source>LUT (3D)</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../src/qml/filters/crop_mask/meta.qml" line="6"/>
-        <source>Mask: Simple</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>meta_affine</name>
@@ -6481,7 +6476,6 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="48"/>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="53"/>
         <location filename="../src/qml/filters/crop/ui.qml" line="175"/>
-        <location filename="../src/qml/filters/crop_mask/ui.qml" line="130"/>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="333"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
@@ -6491,7 +6485,6 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="48"/>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="60"/>
         <location filename="../src/qml/filters/crop/ui.qml" line="192"/>
-        <location filename="../src/qml/filters/crop_mask/ui.qml" line="148"/>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="345"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
@@ -6723,14 +6716,12 @@ Most users do not need to change this.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="141"/>
-        <location filename="../src/qml/filters/crop_mask/ui.qml" line="94"/>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="357"/>
         <source>Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="158"/>
-        <location filename="../src/qml/filters/crop_mask/ui.qml" line="112"/>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="369"/>
         <source>Bottom</source>
         <translation type="unfinished"></translation>
@@ -6751,7 +6742,6 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/color/ui.qml" line="70"/>
         <location filename="../src/qml/filters/contrast/ui.qml" line="54"/>
         <location filename="../src/qml/filters/crop/ui.qml" line="83"/>
-        <location filename="../src/qml/filters/crop_mask/ui.qml" line="60"/>
         <location filename="../src/qml/filters/dust/ui.qml" line="48"/>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="133"/>
         <location filename="../src/qml/filters/grain/ui.qml" line="49"/>
@@ -7872,11 +7862,6 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/lenscorrection/ui.qml" line="133"/>
         <source>Correction at Edges</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/crop_mask/ui.qml" line="76"/>
-        <source>Softness</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

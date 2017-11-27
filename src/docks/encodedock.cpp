@@ -1061,7 +1061,7 @@ void EncodeDock::on_encodeButton_clicked()
                 dialog.setWindowModality(QmlApplication::dialogModality());
                 dialog.setDefaultButton(QMessageBox::Yes);
                 dialog.setEscapeButton(QMessageBox::No);
-                dialog.setCheckBox(new QCheckBox(tr("Do not show this any more.", "Export free disk space warning dialog")));
+                dialog.setCheckBox(new QCheckBox(tr("Do not show this anymore.", "Export free disk space warning dialog")));
                 if (dialog.checkBox()->isChecked()) {
                     Settings.setEncodeFreeSpaceCheck(false);
                 }
