@@ -6748,7 +6748,7 @@ function base64DetectIncompleteChar(buffer) {
 
 },{"buffer":7}]},{},[1]);
 /*
- * MltXmlParser class Copyright (c) 2016 Meltytech, LLC
+ * MltXmlParser class Copyright (c) 2016-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -6975,8 +6975,8 @@ MltXmlParser.prototype.createEdl = function() {
             srcLen.subtract(srcIn);
             // increment program tally
             progOut.add(srcLen);
-            var reelName = sourceLinks[event.producer].reel_name;
-            if (reelName !== 'black') {
+            if (sourceLinks[event.producer] && sourceLinks[event.producer].reel_name !== 'black') {
+                var reelName = sourceLinks[event.producer].reel_name;
                 reelName = (reelName + '         ').substring(0, 8);
                 if (event.transition[0] === 'D') {
                     EdlEventCount -= 1;
