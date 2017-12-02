@@ -76,12 +76,10 @@ void JobQueue::onProgressUpdated(QStandardItem* standardItem, int percent)
     if (standardItem) {
         AbstractJob* job = m_jobs.at(standardItem->row());
         if (job) {
-            if (percent > 2) {
-                const QTime& remaining = job->estimateRemaining(percent);
-                standardItem->setText(remaining.toString());
-            } else {
-                standardItem->setText("--:--:--");
-            }
+            QString remaining = "--:--:--";
+            if (percent > 2)
+                remaining = job->estimateRemaining(percent).toString();
+            standardItem->setText(QString("%1% (%2)").arg(percent).arg(remaining));
         }
     }
 }
