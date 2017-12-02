@@ -857,7 +857,7 @@ bool MainWindow::isCompatibleWithGpuMode(MltXmlChecker& checker)
         dialog.setEscapeButton(QMessageBox::No);
         int r = dialog.exec();
         if (r == QMessageBox::Yes) {
-            Settings.setPlayerGPU(true);
+            ui->actionGPU->setChecked(true);
             m_exitCode = EXIT_RESTART;
             QApplication::closeAllWindows();
         }
