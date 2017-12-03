@@ -162,6 +162,7 @@ public slots:
     bool removeTransitionByTrimInValid(int trackIndex, int clipIndex, int delta);
     bool removeTransitionByTrimOutValid(int trackIndex, int clipIndex, int delta);
     void filterAddedOrRemoved(Mlt::Producer *producer);
+    void onFilterChanged(Mlt::Filter* filter);
 
 private:
     Mlt::Tractor* m_tractor;

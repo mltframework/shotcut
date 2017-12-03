@@ -2035,6 +2035,32 @@ void MultitrackModel::filterAddedOrRemoved(Mlt::Producer* producer)
     }
 }
 
+void MultitrackModel::onFilterChanged(Mlt::Filter* filter)
+{
+    if (filter && filter->is_valid()) {
+        Mlt::Service service(mlt_service(filter->get_data("service")));
+        if (service.is_valid() && service.get(kMultitrackItemProperty)) {
+            QString s = QString::fromLatin1(service.get(kMultitrackItemProperty));
+            QVector<QStringRef> parts = s.splitRef(':');
+            if (parts.length() == 2) {
+                QModelIndex modelIndex = createIndex(parts[0].toInt(), 0, parts[1].toInt());
+                QVector<int> roles;
+                const char* name = filter->get(kShotcutFilterProperty);
+                if (!qstrcmp("fadeInMovit", name) ||
+                    !qstrcmp("fadeInBrightness", name) ||
+                    !qstrcmp("fadeInVolume", name))
+                    roles << FadeInRole;
+                if (!qstrcmp("fadeOutMovit", name) ||
+                    !qstrcmp("fadeOutBrightness", name) ||
+                    !qstrcmp("fadOutVolume", name))
+                    roles << FadeOutRole;
+                if (roles.length())
+                    emit dataChanged(modelIndex, modelIndex, roles);
+            }
+        }
+    }
+}
+
 bool MultitrackModel::moveClipToTrack(int fromTrack, int toTrack, int clipIndex, int position)
 {
     bool result;

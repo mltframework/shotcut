@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Meltytech, LLC
+ * Copyright (c) 2014-2017 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -29,6 +29,7 @@
 
 class QTimerEvent;
 
+
 class FilterController : public QObject
 {
     Q_OBJECT
@@ -47,10 +48,11 @@ signals:
     void currentFilterAboutToChange();
     void currentFilterChanged(QmlFilter* filter, QmlMetadata* meta, int index);
     void statusChanged(QString);
+    void filterChanged(Mlt::Filter*);
 
 public slots:
     void setProducer(Mlt::Producer *producer = 0);
-    void setCurrentFilter(int attachedIndex);
+    void setCurrentFilter(int attachedIndex, bool isNew = false);
 
 private slots:
     void handleAttachedModelChange();
@@ -59,12 +61,14 @@ private slots:
     void handleAttachedRowsRemoved(const QModelIndex & parent, int first, int last);
     void handleAttachedRowsInserted(const QModelIndex & parent, int first, int last);
     void handleAttachDuplicateFailed(int index);
+    void onQmlFilterChanged();
 
 private:
     void loadFilterMetadata();
 
     QFuture<void> m_future;
     QScopedPointer<QmlFilter> m_currentFilter;
+    Mlt::Filter* m_mltFilter;
     MetadataModel m_metadataModel;
     AttachedFiltersModel m_attachedModel;
     int m_currentFilterIndex;
