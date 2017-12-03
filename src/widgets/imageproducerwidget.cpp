@@ -119,7 +119,7 @@ void ImageProducerWidget::recreateProducer()
     p->pass_list(*m_producer, "force_aspect_ratio," kAspectRatioNumerator ", resource, " kAspectRatioDenominator
         ", ttl," kShotcutResourceProperty ", autolength, length," kShotcutSequenceProperty ", " kPlaylistIndexProperty);
     Mlt::Controller::copyFilters(*m_producer, *p);
-    if (m_producer->get_int(kMultitrackItemProperty)) {
+    if (m_producer->get(kMultitrackItemProperty)) {
         emit producerChanged(p);
         delete p;
     } else {
@@ -134,7 +134,7 @@ void ImageProducerWidget::on_resetButton_clicked()
         s = m_producer->get(kShotcutResourceProperty);
     Mlt::Producer* p = new Mlt::Producer(MLT.profile(), s);
     Mlt::Controller::copyFilters(*m_producer, *p);
-    if (m_producer->get_int(kMultitrackItemProperty)) {
+    if (m_producer->get(kMultitrackItemProperty)) {
         emit producerChanged(p);
         delete p;
     } else {

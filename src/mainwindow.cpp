@@ -1910,7 +1910,7 @@ void MainWindow::onProducerOpened()
         m_meltedServerDock->disconnect(SIGNAL(positionUpdated(int,double,int,int,int,bool)));
 
     QWidget* w = loadProducerWidget(MLT.producer());
-    if (w && !MLT.producer()->get_int(kMultitrackItemProperty)) {
+    if (w && !MLT.producer()->get(kMultitrackItemProperty)) {
         if (-1 != w->metaObject()->indexOfSignal("producerReopened()"))
             connect(w, SIGNAL(producerReopened()), m_player, SLOT(onProducerOpened()));
     }
@@ -2414,7 +2414,7 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
         if (-1 != w->metaObject()->indexOfSignal("producerChanged(Mlt::Producer*)")) {
             connect(w, SIGNAL(producerChanged(Mlt::Producer*)), SLOT(onProducerChanged()));
             connect(w, SIGNAL(producerChanged(Mlt::Producer*)), m_filterController, SLOT(setProducer(Mlt::Producer*)));
-            if (producer->get_int(kMultitrackItemProperty))
+            if (producer->get(kMultitrackItemProperty))
                 connect(w, SIGNAL(producerChanged(Mlt::Producer*)), m_timelineDock, SLOT(onProducerChanged(Mlt::Producer*)));
         }
         scrollArea->setWidget(w);

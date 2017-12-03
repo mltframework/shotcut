@@ -2011,7 +2011,18 @@ void MultitrackModel::filterAddedOrRemoved(Mlt::Producer* producer)
     // Check if it was on the multitrack tractor.
     if (service == m_tractor->get_service())
         emit filteredChanged();
-    else for (int i = 0; i < m_trackList.size(); i++) {
+    else if (producer->get(kMultitrackItemProperty)) {
+        // Check if it was a clip.
+        QString s = QString::fromLatin1(producer->get(kMultitrackItemProperty));
+        QVector<QStringRef> parts = s.splitRef(':');
+        if (parts.length() == 2) {
+            QModelIndex modelIndex = createIndex(parts[0].toInt(), 0, parts[1].toInt());
+            QVector<int> roles;
+            roles << FadeInRole;
+            roles << FadeOutRole;
+            emit dataChanged(modelIndex, modelIndex, roles);
+        }
+    } else for (int i = 0; i < m_trackList.size(); i++) {
         // Check if it was on one of the tracks.
         QScopedPointer<Mlt::Producer> track(m_tractor->track(m_trackList[i].mlt_index));
         if (service == track.data()->get_service()) {

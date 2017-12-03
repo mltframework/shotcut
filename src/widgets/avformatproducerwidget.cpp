@@ -166,7 +166,7 @@ void AvformatProducerWidget::recreateProducer()
                  kShotcutHashProperty ","
                  kPlaylistIndexProperty);
     Mlt::Controller::copyFilters(*m_producer, *p);
-    if (m_producer->get_int(kMultitrackItemProperty)) {
+    if (m_producer->get(kMultitrackItemProperty)) {
         emit producerChanged(p);
         delete p;
     } else {
@@ -383,7 +383,7 @@ void AvformatProducerWidget::on_resetButton_clicked()
     ui->durationSpinBox->setValue(m_defaultDuration);
     ui->syncSlider->setValue(0);
     Mlt::Controller::copyFilters(*m_producer, *p);
-    if (m_producer->get_int(kMultitrackItemProperty)) {
+    if (m_producer->get(kMultitrackItemProperty)) {
         emit producerChanged(p);
         delete p;
     } else {
