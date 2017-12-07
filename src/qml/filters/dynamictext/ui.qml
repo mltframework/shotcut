@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2015 Meltytech, LLC
+ * Copyright (c) 2014-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -162,6 +162,7 @@ Item {
                     text = text.substring(0, maxLength)
                     cursorPosition = maxLength
                 }
+                filter.set('size', filterRect.height / text.split('\n').length)
                 filter.set('argument', text)
             }
         }
