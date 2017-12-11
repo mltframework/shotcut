@@ -21,7 +21,9 @@
 
 TranscodeDialog::TranscodeDialog(const QString& message, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::TranscodeDialog)
+    ui(new Ui::TranscodeDialog),
+    m_format(1),
+    m_isChecked(false)
 {
     ui->setupUi(this);
     setWindowTitle(tr("Convert to Edit-friendly..."));

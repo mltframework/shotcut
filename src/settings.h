@@ -77,8 +77,8 @@ public:
     void setEncodePath(const QString&);
     bool encodeFreeSpaceCheck() const;
     void setEncodeFreeSpaceCheck(bool);
-    bool showConvertDialog() const;
-    void setShowConvertDialog(bool);
+    bool showConvertClipDialog() const;
+    void setShowConvertClipDialog(bool);
 
     bool meltedEnabled() const;
     void setMeltedEnabled(bool);

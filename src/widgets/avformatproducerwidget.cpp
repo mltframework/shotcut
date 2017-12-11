@@ -63,7 +63,6 @@ AvformatProducerWidget::AvformatProducerWidget(QWidget *parent)
     , ui(new Ui::AvformatProducerWidget)
     , m_defaultDuration(-1)
     , m_recalcDuration(true)
-    , m_askToConvert(Settings.showConvertDialog())
 {
     ui->setupUi(this);
     Util::setColorsToHighlight(ui->filenameLabel);
@@ -164,7 +163,8 @@ void AvformatProducerWidget::recreateProducer()
                  kAspectRatioNumerator ","
                  kAspectRatioDenominator ","
                  kShotcutHashProperty ","
-                 kPlaylistIndexProperty);
+                 kPlaylistIndexProperty ","
+                 kShotcutSkipConvertProperty);
     Mlt::Controller::copyFilters(*m_producer, *p);
     if (m_producer->get(kMultitrackItemProperty)) {
         emit producerChanged(p);
@@ -350,29 +350,33 @@ void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
     }
     ui->syncSlider->setValue(qRound(m_producer->get_double("video_delay") * 1000.0));
 
-    if (m_askToConvert && isVariableFrameRate) {
-        m_askToConvert = false;
-        MLT.pause();
-        LOG_INFO() << resource << "is variable frame rate";
-        TranscodeDialog dialog(tr("This file is variable frame rate, which is not reliable for editing. "
-                                  "Do you want to convert it to an edit-friendly format?\n\n"
-                                  "If yes, choose a format below and then click OK to choose a file name. "
-                                  "After choosing a file name, a job is created. "
-                                  "When it is done, double-click the job to open it.\n"), this);
-        dialog.showCheckBox();
-        convert(dialog);
-    }
-    if (m_askToConvert && QFile::exists(resource) && !MLT.isSeekable(m_producer.data())) {
-        m_askToConvert = false;
-        MLT.pause();
-        LOG_INFO() << resource << "is not seekable";
-        TranscodeDialog dialog(tr("This file does not support seeking and cannot be used for editing. "
-                                  "Do you want to convert it to an edit-friendly format?\n\n"
-                                  "If yes, choose a format below and then click OK to choose a file name. "
-                                  "After choosing a file name, a job is created. "
-                                  "When it is done, double-click the job to open it.\n"), this);
-        dialog.showCheckBox();
-        convert(dialog);
+    if (Settings.showConvertClipDialog()
+            && !m_producer->get_int(kShotcutSkipConvertProperty)
+            && !m_producer->get_int(kPlaylistIndexProperty)
+            && !m_producer->get(kMultitrackItemProperty)) {
+        m_producer->set(kShotcutSkipConvertProperty, true);
+        if (isVariableFrameRate) {
+            MLT.pause();
+            LOG_INFO() << resource << "is variable frame rate";
+            TranscodeDialog dialog(tr("This file is variable frame rate, which is not reliable for editing. "
+                                      "Do you want to convert it to an edit-friendly format?\n\n"
+                                      "If yes, choose a format below and then click OK to choose a file name. "
+                                      "After choosing a file name, a job is created. "
+                                      "When it is done, double-click the job to open it.\n"), this);
+            dialog.showCheckBox();
+            convert(dialog);
+        }
+        if (QFile::exists(resource) && !MLT.isSeekable(m_producer.data())) {
+            MLT.pause();
+            LOG_INFO() << resource << "is not seekable";
+            TranscodeDialog dialog(tr("This file does not support seeking and cannot be used for editing. "
+                                      "Do you want to convert it to an edit-friendly format?\n\n"
+                                      "If yes, choose a format below and then click OK to choose a file name. "
+                                      "After choosing a file name, a job is created. "
+                                      "When it is done, double-click the job to open it.\n"), this);
+            dialog.showCheckBox();
+            convert(dialog);
+        }
     }
 }
 
@@ -542,7 +546,7 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
 {
     int result = dialog.exec();
     if (dialog.isCheckBoxChecked()) {
-        Settings.setShowConvertDialog(false);
+        Settings.setShowConvertClipDialog(false);
     }
     if (result == QDialog::Accepted) {
         QString resource = QString::fromUtf8(GetFilenameFromProducer(producer()));
