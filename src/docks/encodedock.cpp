@@ -1062,10 +1062,10 @@ void EncodeDock::on_encodeButton_clicked()
                 dialog.setDefaultButton(QMessageBox::Yes);
                 dialog.setEscapeButton(QMessageBox::No);
                 dialog.setCheckBox(new QCheckBox(tr("Do not show this anymore.", "Export free disk space warning dialog")));
-                if (dialog.checkBox()->isChecked()) {
+                int result = dialog.exec();
+                if (dialog.checkBox()->isChecked())
                     Settings.setEncodeFreeSpaceCheck(false);
-                }
-                if (dialog.exec() == QMessageBox::No) {
+                if (result == QMessageBox::No) {
                     MAIN.showStatusMessage(tr("Export canceled."));
                     return;
                 }
