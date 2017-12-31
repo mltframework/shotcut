@@ -1259,10 +1259,10 @@ function get_win32_prebuilt {
   cmd mkdir -p "$FINAL_INSTALL_DIR"
   cd "$FINAL_INSTALL_DIR" || die "Unable to change to directory $FINAL_INSTALL_DIR"
   if [ "$TARGET_OS" = "Win32" ]; then
-    cmd tar -xjf "$HOME/mlt-prebuilt-mingw32.tar.bz2"
+    cmd tar -xJf "$HOME/mlt-prebuilt-mingw32.tar.xz"
     cmd unzip "$HOME/gtk+-bundle_2.24.10-20120208_win32.zip"
   else
-    cmd tar -xjf "$HOME/mlt-prebuilt-mingw32-x64.tar.bz2"
+    cmd tar -xJf "$HOME/mlt-prebuilt-mingw32-x64.tar.xz"
     cmd unzip "$HOME/gtk+-bundle_2.22.1-20101229_win64.zip"
   fi
   cmd popd
@@ -1960,9 +1960,9 @@ function deploy_win32
     cmd rm lib/qml/Qt3D/Input/quick3dinputplugind.dll
   fi
   if [ "$TARGET_OS" = "Win32" ]; then
-    cmd tar -xjf "$HOME/ladspa_plugins-win-0.4.15.tar.bz2"
+    cmd tar -xJf "$HOME/swh-plugins-win32-0.4.15.tar.xz"
   else
-    cmd tar -xjf "$HOME/swh-plugins-win64-0.4.15.tar.bz2"
+    cmd tar -xJf "$HOME/swh-plugins-win64-0.4.15.tar.xz"
   fi
   printf "[Paths]\nPlugins=lib/qt5\nQml2Imports=lib/qml\n" > qt.conf
 
