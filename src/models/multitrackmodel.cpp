@@ -1153,7 +1153,7 @@ void MultitrackModel::liftClip(int trackIndex, int clipIndex)
             // transition (MLT mix clip). So, we null mlt_mix to prevent it.
             clearMixReferences(trackIndex, clipIndex);
 
-            playlist.replace_with_blank(clipIndex);
+            delete playlist.replace_with_blank(clipIndex);
 
             QModelIndex index = createIndex(clipIndex, 0, trackIndex);
             QVector<int> roles;
@@ -2074,7 +2074,7 @@ bool MultitrackModel::moveClipToTrack(int fromTrack, int toTrack, int clipIndex,
     beginRemoveRows(parentIndex, clipIndex, clipIndex);
     endRemoveRows();
     beginInsertRows(parentIndex, clipIndex, clipIndex);
-    playlistFrom.replace_with_blank(clipIndex);
+    delete playlistFrom.replace_with_blank(clipIndex);
     endInsertRows();
 
     result = overwriteClip(toTrack, *clip, position, false) >= 0;
@@ -2197,7 +2197,7 @@ void MultitrackModel::relocateClip(Mlt::Playlist& playlist, int trackIndex, int 
     beginRemoveRows(parentIndex, clipIndex, clipIndex);
     endRemoveRows();
     beginInsertRows(parentIndex, clipIndex, clipIndex);
-    playlist.replace_with_blank(clipIndex);
+    delete playlist.replace_with_blank(clipIndex);
     endInsertRows();
 
     consolidateBlanks(playlist, trackIndex);
