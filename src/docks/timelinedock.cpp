@@ -408,26 +408,23 @@ void TimelineDock::onProducerChanged(Mlt::Producer* after)
         pulseLockButtonOnTrack(trackIndex);
         return;
     }
-    QString service = after->get("mlt_service");
-    if (service == "avformat" || service == "avformat-novalidate" || service == "timewarp") {
-        int i = m_model.trackList().at(trackIndex).mlt_index;
-        QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
-        if (track) {
-            // Ensure the new XML has same in/out point as selected clip by making
-            // a copy of the changed producer and copying the in/out from timeline.
-            Mlt::Playlist playlist(*track);
-            int clipIndex = selection().first();
-            QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
-            if (info) {
-                double oldSpeed = qstrcmp("timewarp", info->producer->get("mlt_service")) ? 1.0 : info->producer->get_double("warp_speed");
-                double newSpeed = qstrcmp("timewarp", after->get("mlt_service")) ? 1.0 : after->get_double("warp_speed");
-                double speedRatio = oldSpeed / newSpeed;
+    int i = m_model.trackList().at(trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
+    if (track) {
+        // Ensure the new XML has same in/out point as selected clip by making
+        // a copy of the changed producer and copying the in/out from timeline.
+        Mlt::Playlist playlist(*track);
+        int clipIndex = selection().first();
+        QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
+        if (info) {
+            double oldSpeed = qstrcmp("timewarp", info->producer->get("mlt_service")) ? 1.0 : info->producer->get_double("warp_speed");
+            double newSpeed = qstrcmp("timewarp", after->get("mlt_service")) ? 1.0 : after->get_double("warp_speed");
+            double speedRatio = oldSpeed / newSpeed;
 
-                int length = qRound(info->length * speedRatio);
-                after->set("length", length);
-                after->set_in_and_out(qMin(qRound(info->frame_in * speedRatio), length - 1),
-                                      qMin(qRound(info->frame_out * speedRatio), length - 1));
-            }
+            int length = qRound(info->length * speedRatio);
+            after->set("length", length);
+            after->set_in_and_out(qMin(qRound(info->frame_in * speedRatio), length - 1),
+                                  qMin(qRound(info->frame_out * speedRatio), length - 1));
         }
     }
     QString xmlAfter = MLT.XML(after);
@@ -617,7 +614,8 @@ void TimelineDock::emitSelectedFromSelection()
         // to the cut parent.
         info->producer->set(kFilterInProperty, info->frame_in);
         info->producer->set(kFilterOutProperty, info->frame_out);
-        info->producer->set_in_and_out(info->cut->get_in(), info->cut->get_out());
+        if (MLT.isImageProducer(info->producer))
+            info->producer->set_in_and_out(info->cut->get_in(), info->cut->get_out());
         info->producer->set(kMultitrackItemProperty, QString("%1:%2").arg(clipIndex).arg(trackIndex).toLatin1().constData());
         m_ignoreNextPositionChange = true;
         emit selected(info->producer);
