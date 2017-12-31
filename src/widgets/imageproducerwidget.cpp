@@ -44,7 +44,7 @@ Mlt::Producer* ImageProducerWidget::newProducer(Mlt::Profile& profile)
     if (p->is_valid()) {
         if (ui->durationSpinBox->value() > p->get_length())
             p->set("length", ui->durationSpinBox->value());
-        p->set("out", ui->durationSpinBox->value() - 1);
+        p->set_in_and_out(0, ui->durationSpinBox->value() - 1);
     }
     return p;
 }
@@ -62,7 +62,7 @@ void ImageProducerWidget::setProducer(Mlt::Producer* p)
         p->set("ttl", 1);
     }
     ui->filenameLabel->setText(ui->filenameLabel->fontMetrics().elidedText(s, Qt::ElideLeft, width() - 40));
-    ui->durationSpinBox->setValue(m_producer->get_out() + 1);
+    ui->durationSpinBox->setValue(m_producer->get_playtime());
     ui->widthLineEdit->setText(p->get("meta.media.width"));
     ui->heightLineEdit->setText(p->get("meta.media.height"));
     ui->aspectNumSpinBox->blockSignals(true);
@@ -166,7 +166,7 @@ void ImageProducerWidget::on_durationSpinBox_editingFinished()
 {
     if (!m_producer)
         return;
-    if (ui->durationSpinBox->value() == m_producer->get_out() + 1)
+    if (ui->durationSpinBox->value() == m_producer->get_playtime())
         return;
     recreateProducer();
 }
