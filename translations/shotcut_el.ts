@@ -381,7 +381,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="357"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="361"/>
         <source>This file is variable frame rate, which is not reliable for editing. Do you want to convert it to an edit-friendly format?
 
 If yes, choose a format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
@@ -389,7 +389,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="369"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="372"/>
         <source>This file does not support seeking and cannot be used for editing. Do you want to convert it to an edit-friendly format?
 
 If yes, choose a format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
@@ -397,7 +397,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="535"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="539"/>
         <source>Choose an edit-friendly format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
 </source>
         <translation type="unfinished"></translation>
@@ -4818,7 +4818,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/util.cpp" line="85"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="581"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="585"/>
         <source>Unable to write file %1
 Perhaps you do not have permission.
 Try again with a different folder.</source>
@@ -5083,7 +5083,7 @@ Try again with a different folder.</source>
         <translation>Το κομμάτι αυτό είναι κλειδωμένο</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="847"/>
+        <location filename="../src/docks/timelinedock.cpp" line="844"/>
         <source>You cannot split a transition.</source>
         <translation>Δεν μπορείτε να χωρήσετε μία μετάβαση.</translation>
     </message>
@@ -5469,22 +5469,22 @@ affecting position of other clips (Z)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.cpp" line="27"/>
+        <location filename="../src/dialogs/transcodedialog.cpp" line="29"/>
         <source>Convert to Edit-friendly...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.cpp" line="47"/>
+        <location filename="../src/dialogs/transcodedialog.cpp" line="49"/>
         <source>Lossy: I-frame–only H.264/AAC MP4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.cpp" line="50"/>
+        <location filename="../src/dialogs/transcodedialog.cpp" line="52"/>
         <source>Intermediate: ProRes/ALAC MOV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.cpp" line="53"/>
+        <location filename="../src/dialogs/transcodedialog.cpp" line="55"/>
         <source>Lossless: FFV1/FLAC MKV</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6546,7 +6546,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="53"/>
         <location filename="../src/qml/filters/crop/ui.qml" line="175"/>
         <location filename="../src/qml/filters/crop_mask/ui.qml" line="130"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="333"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="380"/>
         <source>Left</source>
         <translation>Αριστερά</translation>
     </message>
@@ -6556,7 +6556,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="60"/>
         <location filename="../src/qml/filters/crop/ui.qml" line="192"/>
         <location filename="../src/qml/filters/crop_mask/ui.qml" line="148"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="345"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="392"/>
         <source>Right</source>
         <translation>Δεξιά</translation>
     </message>
@@ -6776,7 +6776,7 @@ Most users do not need to change this.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="102"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="339"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="386"/>
         <source>Center</source>
         <translation>Κέντρο</translation>
     </message>
@@ -6788,14 +6788,14 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="141"/>
         <location filename="../src/qml/filters/crop_mask/ui.qml" line="94"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="357"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="404"/>
         <source>Top</source>
         <translation>Πάνω</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="158"/>
         <location filename="../src/qml/filters/crop_mask/ui.qml" line="112"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="369"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="416"/>
         <source>Bottom</source>
         <translation>Κάτω</translation>
     </message>
@@ -6817,7 +6817,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/crop/ui.qml" line="83"/>
         <location filename="../src/qml/filters/crop_mask/ui.qml" line="60"/>
         <location filename="../src/qml/filters/dust/ui.qml" line="48"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="133"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="156"/>
         <location filename="../src/qml/filters/grain/ui.qml" line="49"/>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="99"/>
         <location filename="../src/qml/filters/lenscorrection/ui.qml" line="61"/>
@@ -7033,120 +7033,125 @@ Click &quot;Open&quot; to load a file.</source>
         <translation>Θερμοκρασία χρώματος</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="46"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="49"/>
         <source>Bottom Left</source>
         <translation>Αριστερά Κάτω</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="51"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="54"/>
         <source>Bottom Right</source>
         <translation>Δεξιά Κάτω</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="56"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="59"/>
         <source>Top Left</source>
         <translation>Αριστερά Πάνω</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="61"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="64"/>
         <source>Top Right</source>
         <translation>Δεξιά Πάνω</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="66"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="69"/>
         <source>Lower Third</source>
         <translation>Χαμηλότερο Τρίτο</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="145"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="111"/>
+        <source>Use font size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="168"/>
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="82"/>
         <source>Text</source>
         <translation>Κείμενο</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="170"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="195"/>
         <source>Insert field</source>
         <translation>Εισαγωγή πεδίου</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="176"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="201"/>
         <source># (Hash sign)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="180"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="205"/>
         <source>Timecode</source>
         <translation>Χρόνος</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="184"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="209"/>
         <source>Frame #</source>
         <comment>Frame number</comment>
         <translation>Καρέ #</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="188"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="213"/>
         <source>File date</source>
         <translation>Ημερομηνία αρχείου</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="192"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="217"/>
         <source>File name</source>
         <translation>Όνομα αρχείου</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="198"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="223"/>
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="95"/>
         <source>Font</source>
         <translation>Γραμματοσειρά</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="225"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="258"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="245"/>
         <source>Normal</source>
         <translation>Κανονικό</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="225"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="258"/>
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="115"/>
         <source>Bold</source>
         <translation>Έντονα</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="225"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="258"/>
         <source>Light</source>
         <comment>thin font stroke</comment>
         <translation>Ελαφρύ</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="239"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="286"/>
         <source>Outline</source>
         <translation>Περίγραμμα</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="249"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="296"/>
         <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="91"/>
         <source>Thickness</source>
         <translation>Πάχος</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="263"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="310"/>
         <source>Background</source>
         <translation>Φόντο</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="273"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="320"/>
         <source>Padding</source>
         <translation>Πλήρωση</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="287"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="334"/>
         <source>Position</source>
         <translation>Θέση</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dust/ui.qml" line="59"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="307"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="354"/>
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="148"/>
         <source>Size</source>
         <translation>Μέγεθος</translation>
@@ -7205,12 +7210,12 @@ Click &quot;Open&quot; to load a file.</source>
         <translation>Αντιστροφή</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="328"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="375"/>
         <source>Horizontal fit</source>
         <translation>Οριζόντιο ταίριασμα</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="352"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="399"/>
         <source>Vertical fit</source>
         <translation>Κατακόριφο ταίριασμα</translation>
     </message>
@@ -7221,7 +7226,7 @@ Click &quot;Open&quot; to load a file.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="223"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="363"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="410"/>
         <source>Middle</source>
         <translation>Μέση</translation>
     </message>
