@@ -24,6 +24,7 @@ Flickable {
     property string rectProperty: 'geometry'
     property string halignProperty: 'valign'
     property string valignProperty: 'halign'
+    property string useFontSizeProperty: 'shotcut:usePointSize'
     property var _locale: Qt.locale(application.numericLocale)
 
     width: 400
@@ -42,7 +43,8 @@ Flickable {
     }
 
     function setSizeFromRect() {
-        filter.set('size', filterRect.height / filter.get('argument').split('\n').length)
+        if (!parseInt(filter.get(useFontSizeProperty)))
+            filter.set('size', filterRect.height / filter.get('argument').split('\n').length)
     }
 
     Component.onCompleted: {
