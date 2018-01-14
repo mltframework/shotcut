@@ -180,6 +180,7 @@ void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
     // media information.
     delete m_producer->get_frame();
 
+    int tabIndex = ui->tabWidget->currentIndex();
     ui->tabWidget->setTabEnabled(0, false);
     ui->tabWidget->setTabEnabled(1, false);
     ui->tabWidget->setTabEnabled(2, false);
@@ -205,6 +206,7 @@ void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
     int n = m_producer->get_int("meta.media.nb_streams");
     int videoIndex = 1;
     int audioIndex = 1;
+    int totalAudioChannels = 0;
     bool populateTrackCombos = (ui->videoTrackComboBox->count() == 0 &&
                                 ui->audioTrackComboBox->count() == 0);
     for (int i = 0; i < n; i++) {
@@ -244,6 +246,7 @@ void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
             QString codec(m_producer->get(key.toLatin1().constData()));
             key = QString("meta.media.%1.codec.channels").arg(i);
             QString channels(m_producer->get(key.toLatin1().constData()));
+            totalAudioChannels += channels.toInt();
             key = QString("meta.media.%1.codec.sample_rate").arg(i);
             QString sampleRate(m_producer->get(key.toLatin1().constData()));
             QString name = QString("%1: %2 ch %3 KHz %4")
@@ -256,7 +259,7 @@ void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
                     ui->audioTrackComboBox->addItem(tr("None"), -1);
                 ui->audioTrackComboBox->addItem(name, i);
             }
-            if (i == m_producer->get_int("audio_index")) {
+            if ( QString::number(i) == m_producer->get("audio_index")) {
                 key = QString("meta.media.%1.codec.long_name").arg(i);
                 QString codec(m_producer->get(key.toLatin1().constData()));
                 ui->audioTableWidget->setItem(0, 1, new QTableWidgetItem(codec));
@@ -271,12 +274,43 @@ void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
             audioIndex++;
         }
     }
-    if (!ui->tabWidget->isTabEnabled(0))
+    if (populateTrackCombos && ui->audioTrackComboBox->count() > 2)
+        ui->audioTrackComboBox->addItem(tr("All"), "all");
+
+    if (m_producer->get("audio_index") == QString("-1")) {
+        ui->audioTrackComboBox->setCurrentIndex(0);
+        ui->audioTableWidget->setItem(0, 1, new QTableWidgetItem(""));
+        ui->audioTableWidget->setItem(1, 1, new QTableWidgetItem("0"));
+        ui->audioTableWidget->setItem(2, 1, new QTableWidgetItem(""));
+        ui->audioTableWidget->setItem(3, 1, new QTableWidgetItem(""));
+    }
+    else if (m_producer->get("audio_index") == QString("all")) {
+        ui->audioTrackComboBox->setCurrentIndex(ui->audioTrackComboBox->count()-1);
+        ui->audioTableWidget->setItem(0, 1, new QTableWidgetItem(""));
+        ui->audioTableWidget->setItem(1, 1, new QTableWidgetItem(QString::number(totalAudioChannels)));
+        ui->audioTableWidget->setItem(2, 1, new QTableWidgetItem(""));
+        ui->audioTableWidget->setItem(3, 1, new QTableWidgetItem(""));
+    }
+    if (m_producer->get("video_index") == QString("-1")) {
+        ui->videoTrackComboBox->setCurrentIndex(0);
+        ui->videoTableWidget->setItem(0, 1, new QTableWidgetItem(""));
+        ui->videoTableWidget->setItem(1, 1, new QTableWidgetItem(""));
+        ui->videoTableWidget->setItem(2, 1, new QTableWidgetItem(""));
+        ui->videoTableWidget->setItem(3, 1, new QTableWidgetItem(""));
+    }
+
+    // Restore the previous tab, or select the first enabled tab.
+    if (ui->tabWidget->isTabEnabled(tabIndex))
+        ui->tabWidget->setCurrentIndex(tabIndex);
+    else if (ui->tabWidget->isTabEnabled(0))
+        ui->tabWidget->setCurrentIndex(0);
+    else if (ui->tabWidget->isTabEnabled(1))
         ui->tabWidget->setCurrentIndex(1);
 
     int width = m_producer->get_int("meta.media.width");
     int height = m_producer->get_int("meta.media.height");
-    ui->videoTableWidget->setItem(1, 1, new QTableWidgetItem(QString("%1x%2").arg(width).arg(height)));
+    if (width || height)
+        ui->videoTableWidget->setItem(1, 1, new QTableWidgetItem(QString("%1x%2").arg(width).arg(height)));
 
     // We can stop listening to this signal if this is audio-only or if we have
     // received the video resolution.
@@ -322,8 +356,10 @@ void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
     if (m_producer->get("force_fps"))
         fps = m_producer->get_double("fps");
     bool isVariableFrameRate = m_producer->get_int("meta.media.variable_frame_rate");
-    ui->videoTableWidget->setItem(2, 1, new QTableWidgetItem(QString("%L1 %2").arg(fps)
-                                  .arg(isVariableFrameRate? tr("(variable)") : "")));
+    if (fps != 0.0 ) {
+        ui->videoTableWidget->setItem(2, 1, new QTableWidgetItem(QString("%L1 %2").arg(fps)
+                                      .arg(isVariableFrameRate? tr("(variable)") : "")));
+    }
 
     int progressive = m_producer->get_int("meta.media.progressive");
     if (m_producer->get("force_progressive"))
@@ -406,7 +442,7 @@ void AvformatProducerWidget::on_videoTrackComboBox_activated(int index)
 void AvformatProducerWidget::on_audioTrackComboBox_activated(int index)
 {
     if (m_producer) {
-        m_producer->set("audio_index", ui->audioTrackComboBox->itemData(index).toInt());
+        m_producer->set("audio_index", ui->audioTrackComboBox->itemData(index).toString().toUtf8().constData());
         recreateProducer();
     }
 }
