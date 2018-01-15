@@ -1293,30 +1293,30 @@ to make Shotcuts daily builds. It is the authoritative install reference:
   src/shotcut/scripts/build-shotcut.sh
 
 We cannot cover how to build all of Shotcut's dependencies from scratch here.
-On Linux, we rely upon Debian's packages to provide most of the
-more mundane dependencies. The rest like x264, libvpx, lame, libopus, FFmpeg,
-and frei0r are provided by the script.
+On Linux, we rely upon Ubuntu's packages to provide most of the
+more mundane dependencies. The rest like x264, x265, libvpx, lame, libopus,
+FFmpeg, and frei0r are provided by the script.
 
-For OS X, we rely upon macports to provide the dependencies:
+For macOS, we rely upon macports to provide the dependencies:
   port install ffmpeg libsamplerate libsdl sox glib2 jack
 
 For Windows, see this page on the MLT wiki about getting pre-built
 dependencies from various sources on the Internet:
-  http://www.mltframework.org/bin/view/MLT/WindowsBuild
+  https://www.mltframework.org/docs/windowsbuild/
 Except, now we build FFmpeg instead of using a pre-built copy.
 
 As for Shotcut itself, its really as simple as:
   mkdir build ; cd build ; qmake .. ; make
 There is no make install target at this time. Just copy the executable
-(Shotcut.app on OS X) where needed.
+(Shotcut.app on macOS) where needed.
 
 Then, there is the app bundling so that dependencies can be located and Qt
 plugins included. For that you really need to see the build script; it
-is fairly complicated especially on OS X. On Linux, we just use a
+is fairly complicated especially on macOS. On Linux, we just use a
 common install prefix and the build script generates shell scripts to
 establish a redirected environment. On Windows, everything is relative
 to the directory containing the .exe. DLLs are in the same directory as
-the .exe, and the lib and share folders are sub-directories. On OS X, all
+the .exe, and the lib and share folders are sub-directories. On macOS, all
 dependencies need to be put into the correct locations in Shotcut.app,
 and the build script modifies all dylibs to pull them in and make their
 inter-dependencies relative to the executable. If you are just building for
