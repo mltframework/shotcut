@@ -1375,8 +1375,8 @@ function mlt_check_configure {
         mlt_format_required xml "Please install libxml2-dev. "
         DODIE=1
       ;;
-      disable-sdl)
-        mlt_format_required sdl "Please install libsdl1.2-dev. "
+      disable-sdl2)
+        mlt_format_required sdl2 "Please install libsdl2-dev. "
         DODIE=1
       ;;
       disable-qt)
