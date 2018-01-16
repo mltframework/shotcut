@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2016 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -56,12 +56,12 @@ void ColorProducerWidget::on_colorButton_clicked()
             m_producer->set("resource", ui->colorLabel->text().toLatin1().constData());
             m_producer->set(kShotcutCaptionProperty, ui->colorLabel->text().toLatin1().constData());
             m_producer->set(kShotcutDetailProperty, ui->colorLabel->text().toLatin1().constData());
-            emit producerChanged(m_producer);
+            emit producerChanged(m_producer.data());
         }
     }
 }
 
-Mlt::Producer* ColorProducerWidget::producer(Mlt::Profile& profile)
+Mlt::Producer* ColorProducerWidget::newProducer(Mlt::Profile& profile)
 {
     Mlt::Producer* p = new Mlt::Producer(profile, "color:");
     p->set("resource", ui->colorLabel->text().toLatin1().constData());
@@ -93,7 +93,7 @@ void ColorProducerWidget::loadPreset(Mlt::Properties& p)
         m_producer->set("resource", ui->colorLabel->text().toLatin1().constData());
         m_producer->set(kShotcutCaptionProperty, ui->colorLabel->text().toLatin1().constData());
         m_producer->set(kShotcutDetailProperty, ui->colorLabel->text().toLatin1().constData());
-        emit producerChanged(m_producer);
+        emit producerChanged(m_producer.data());
     }
 }
 

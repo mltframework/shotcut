@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2016 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -87,7 +87,7 @@ QString X11grabWidget::URL(Mlt::Profile& profile) const
     return s;
 }
 
-Mlt::Producer* X11grabWidget::producer(Mlt::Profile& profile)
+Mlt::Producer* X11grabWidget::newProducer(Mlt::Profile& profile)
 {
     Mlt::Producer* p = new Mlt::Producer(profile, URL(profile).toLatin1().constData());
     if (!p->is_valid()) {
@@ -96,7 +96,7 @@ Mlt::Producer* X11grabWidget::producer(Mlt::Profile& profile)
         p->set("error", 1);
     }
     else if (m_audioWidget) {
-        Mlt::Producer* audio = dynamic_cast<AbstractProducerWidget*>(m_audioWidget)->producer(profile);
+        Mlt::Producer* audio = dynamic_cast<AbstractProducerWidget*>(m_audioWidget)->newProducer(profile);
         Mlt::Tractor* tractor = new Mlt::Tractor;
         tractor->set("_profile", profile.get_profile(), 0);
         tractor->set_track(*p, 0);
@@ -115,7 +115,7 @@ Mlt::Producer* X11grabWidget::producer(Mlt::Profile& profile)
     p->set("draw_mouse", ui->drawMouseCheckBox->isChecked()? 1: 0);
     p->set("follow_mouse", ui->positionComboBox->currentIndex() - 1);
     p->set("audio_ix", ui->audioComboBox->currentIndex());
-    p->set(kBackgroundCaptureProperty, ui->backgroundCheckBox->isChecked()? 1: 0);
+    p->set(kBackgroundCaptureProperty, 1);
     p->set("force_seekable", 0);
     return p;
 }
@@ -132,7 +132,7 @@ Mlt::Properties* X11grabWidget::getPreset() const
     p->set("draw_mouse", ui->drawMouseCheckBox->isChecked()? 1: 0);
     p->set("follow_mouse", ui->positionComboBox->currentIndex() - 1);
     p->set("audio_ix", ui->audioComboBox->currentIndex());
-    p->set(kBackgroundCaptureProperty, ui->backgroundCheckBox->isChecked()? 1: 0);
+    p->set(kBackgroundCaptureProperty, 1);
     return p;
 }
 
@@ -148,7 +148,6 @@ void X11grabWidget::loadPreset(Mlt::Properties& p)
     ui->positionComboBox->setCurrentIndex(p.get_int("follow_mouse") + 1);
     ui->audioComboBox->setCurrentIndex(p.get_int("audio_ix"));
     on_audioComboBox_activated(p.get_int("audio_ix"));
-    ui->backgroundCheckBox->setChecked(p.get_int(kBackgroundCaptureProperty));
 }
 
 void X11grabWidget::on_preset_selected(void* p)
@@ -172,6 +171,14 @@ void X11grabWidget::setProducer(Mlt::Producer* producer)
 
 void X11grabWidget::on_applyButton_clicked()
 {
-    MLT.setProducer(producer(MLT.profile()));
+    MLT.close();
+    AbstractProducerWidget::setProducer(0);
+    emit producerChanged(0);
+    QCoreApplication::processEvents();
+
+    Mlt::Producer* p = newProducer(MLT.profile());
+    AbstractProducerWidget::setProducer(p);
+    MLT.setProducer(p);
     MLT.play();
+    emit producerChanged(p);
 }

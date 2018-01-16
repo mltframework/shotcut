@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2016 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,6 +22,7 @@
 #include <QDockWidget>
 
 class AbstractJob;
+class QStandardItem;
 
 namespace Ui {
     class JobsDock;
@@ -35,6 +36,13 @@ public:
     explicit JobsDock(QWidget *parent = 0);
     ~JobsDock();
     AbstractJob* currentJob() const;
+
+public slots:
+    void onJobAdded();
+    void onProgressUpdated(QStandardItem* item, int percent);
+
+protected:
+    void resizeEvent(QResizeEvent *event);
 
 private:
     Ui::JobsDock *ui;

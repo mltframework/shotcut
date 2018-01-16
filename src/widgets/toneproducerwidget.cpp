@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2016 Meltytech, LLC
+ * Copyright (c) 2015-2017 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -37,7 +37,7 @@ ToneProducerWidget::~ToneProducerWidget()
     delete ui;
 }
 
-Mlt::Producer* ToneProducerWidget::producer(Mlt::Profile& profile)
+Mlt::Producer* ToneProducerWidget::newProducer(Mlt::Profile& profile)
 {
     Mlt::Producer* p = new Mlt::Producer(profile, "tone:");
     p->set("frequency", ui->frequencySpinBox->value());
@@ -67,7 +67,7 @@ void ToneProducerWidget::on_frequencySpinBox_valueChanged(int value)
     if (m_producer) {
         m_producer->set("frequency", value);
         m_producer->set(kShotcutDetailProperty, detail().toUtf8().constData());
-        emit producerChanged(m_producer);
+        emit producerChanged(producer());
     }
 }
 
@@ -76,7 +76,7 @@ void ToneProducerWidget::on_levelSpinBox_valueChanged(int value)
     if (m_producer) {
         m_producer->set("level", value);
         m_producer->set(kShotcutDetailProperty, detail().toUtf8().constData());
-        emit producerChanged(m_producer);
+        emit producerChanged(producer());
     }
 }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Meltytech, LLC
+ * Copyright (c) 2016-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -26,7 +26,7 @@ class FfmpegJob : public AbstractJob
 {
     Q_OBJECT
 public:
-    FfmpegJob(const QString& name, const QStringList& args);
+    FfmpegJob(const QString& name, const QStringList& args, bool isOpenLog = true);
     virtual ~FfmpegJob();
     void start();
 
@@ -38,6 +38,8 @@ private:
     QStringList m_args;
     QString m_duration;
     int m_totalFrames;
+    int m_previousPercent;
+    bool m_isOpenLog;
 };
 
 #endif // FFMPEGJOB_H

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2016 Meltytech, LLC
+ * Copyright (c) 2015-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -72,7 +72,7 @@ QString GDIgrabWidget::URL(Mlt::Profile& profile) const
     return s;
 }
 
-Mlt::Producer* GDIgrabWidget::producer(Mlt::Profile& profile)
+Mlt::Producer* GDIgrabWidget::newProducer(Mlt::Profile& profile)
 {
     Mlt::Producer* p = new Mlt::Producer(profile, URL(profile).toLatin1().constData());
     if (!p->is_valid()) {
@@ -151,6 +151,6 @@ void GDIgrabWidget::setProducer(Mlt::Producer* producer)
 
 void GDIgrabWidget::on_applyButton_clicked()
 {
-    MLT.setProducer(producer(MLT.profile()));
+    MLT.setProducer(newProducer(MLT.profile()));
     MLT.play();
 }

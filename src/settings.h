@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 Meltytech, LLC
+ * Copyright (c) 2013-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -75,6 +75,10 @@ public:
 
     QString encodePath() const;
     void setEncodePath(const QString&);
+    bool encodeFreeSpaceCheck() const;
+    void setEncodeFreeSpaceCheck(bool);
+    bool showConvertClipDialog() const;
+    void setShowConvertClipDialog(bool);
 
     bool meltedEnabled() const;
     void setMeltedEnabled(bool);
@@ -140,6 +144,9 @@ public:
 
     int drawMethod() const;
     void setDrawMethod(int);
+
+    bool noUpgrade() const;
+    void setNoUpgrade(bool value);
 
     void sync();
     QString appDataLocation() const;

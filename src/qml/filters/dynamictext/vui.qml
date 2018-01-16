@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Meltytech, LLC
+ * Copyright (c) 2014-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,6 +24,7 @@ Flickable {
     property string rectProperty: 'geometry'
     property string halignProperty: 'valign'
     property string valignProperty: 'halign'
+    property string useFontSizeProperty: 'shotcut:usePointSize'
     property var _locale: Qt.locale(application.numericLocale)
 
     width: 400
@@ -41,9 +42,14 @@ Flickable {
         return (filter.get(fillProperty) === '1')? filter.producerAspect : 0.0
     }
 
+    function setSizeFromRect() {
+        if (!parseInt(filter.get(useFontSizeProperty)))
+            filter.set('size', filterRect.height / filter.get('argument').split('\n').length)
+    }
+
     Component.onCompleted: {
         if (filter.isNew) {
-            filter.set('size', filterRect.height)
+            setSizeFromRect()
         }
         rectangle.setHandles(filter.getRect(rectProperty))
     }
@@ -109,7 +115,7 @@ Flickable {
                            .arg((filterRect.y / profile.height * 100).toLocaleString(_locale))
                            .arg((filterRect.width / profile.width * 100).toLocaleString(_locale))
                            .arg((filterRect.height / profile.height * 100).toLocaleString(_locale)))
-                filter.set('size', filterRect.height)
+                setSizeFromRect()
             }
         }
     }
@@ -121,7 +127,7 @@ Flickable {
             if (filterRect !== newRect) {
                 filterRect = newRect
                 rectangle.setHandles(filterRect)
-                filter.set('size', filterRect.height)
+                setSizeFromRect()
             }
             if (rectangle.aspectRatio !== getAspectRatio()) {
                 rectangle.aspectRatio = getAspectRatio()

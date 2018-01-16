@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2016 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -47,7 +47,7 @@ void PlasmaWidget::on_speed1Dial_valueChanged(int value)
 {
     if (m_producer) {
         m_producer->set(kParamSpeed1, value/100.0);
-        emit producerChanged(m_producer);
+        emit producerChanged(producer());
     }
     ui->speed1Spinner->setValue(value/100.0);
 }
@@ -61,7 +61,7 @@ void PlasmaWidget::on_speed2Dial_valueChanged(int value)
 {
     if (m_producer) {
         m_producer->set(kParamSpeed2, value/100.0);
-        emit producerChanged(m_producer);
+        emit producerChanged(producer());
     }
     ui->speed2Spinner->setValue(value/100.0);
 }
@@ -75,7 +75,7 @@ void PlasmaWidget::on_speed3Dial_valueChanged(int value)
 {
     if (m_producer) {
         m_producer->set(kParamSpeed3, value/100.0);
-        emit producerChanged(m_producer);
+        emit producerChanged(producer());
     }
     ui->speed3Spinner->setValue(value/100.0);
 }
@@ -89,7 +89,7 @@ void PlasmaWidget::on_speed4Dial_valueChanged(int value)
 {
     if (m_producer) {
         m_producer->set(kParamSpeed4, value/100.0);
-        emit producerChanged(m_producer);
+        emit producerChanged(producer());
     }
     ui->speed4Spinner->setValue(value/100.0);
 }
@@ -103,7 +103,7 @@ void PlasmaWidget::on_move1Dial_valueChanged(int value)
 {
     if (m_producer) {
         m_producer->set(kParamMove1, value/100.0);
-        emit producerChanged(m_producer);
+        emit producerChanged(producer());
     }
     ui->move1Spinner->setValue(value/100.0);
 }
@@ -117,7 +117,7 @@ void PlasmaWidget::on_move2Dial_valueChanged(int value)
 {
     if (m_producer) {
         m_producer->set(kParamMove2, value/100.0);
-        emit producerChanged(m_producer);
+        emit producerChanged(producer());
     }
     ui->move2Spinner->setValue(value/100.0);
 }
@@ -127,7 +127,7 @@ void PlasmaWidget::on_move2Spinner_valueChanged(double value)
     ui->move2Dial->setValue(value * 100);
 }
 
-Mlt::Producer* PlasmaWidget::producer(Mlt::Profile& profile)
+Mlt::Producer* PlasmaWidget::newProducer(Mlt::Profile& profile)
 {
     Mlt::Producer* p = new Mlt::Producer(profile, "frei0r.plasma");
     p->set(kParamSpeed1, ui->speed1Spinner->text().toLatin1().constData());

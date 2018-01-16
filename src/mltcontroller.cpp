@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2016 Meltytech, LLC
+ * Copyright (c) 2011-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -30,6 +30,8 @@
 #include "mainwindow.h"
 
 namespace Mlt {
+
+static const int kThumbnailOutSeekFactor = 5;
 
 static Controller* instance = 0;
 const QString XmlMimeType("application/mlt+xml");
@@ -397,7 +399,7 @@ void Controller::saveXML(const QString& filename, Service* service, bool withRel
     }
 }
 
-QString Controller::XML(Service* service)
+QString Controller::XML(Service* service, bool withProfile)
 {
     static const char* propertyName = "string";
     Consumer c(profile(), "xml", propertyName);
@@ -408,6 +410,7 @@ QString Controller::XML(Service* service)
     if (ignore)
         s.set("ignore_points", 0);
     c.set("no_meta", 1);
+    c.set("no_profile", !withProfile);
     c.set("store", "shotcut");
     c.connect(s);
     c.start();
@@ -467,22 +470,23 @@ QString Controller::resource() const
     return resource;
 }
 
-bool Controller::isSeekable() const
+bool Controller::isSeekable(Producer* p) const
 {
     bool seekable = false;
-    if (m_producer && m_producer->is_valid()) {
-        if (m_producer->get("force_seekable")) {
-            seekable = m_producer->get_int("force_seekable");
+    Mlt::Producer* producer = p? p : m_producer;
+    if (producer && producer->is_valid()) {
+        if (producer->get("force_seekable")) {
+            seekable = producer->get_int("force_seekable");
         } else {
-            seekable = m_producer->get_int("seekable");
-            if (!seekable && m_producer->get("mlt_type")) {
+            seekable = producer->get_int("seekable");
+            if (!seekable && producer->get("mlt_type")) {
                 // XXX what was this for?
-                seekable = !strcmp(m_producer->get("mlt_type"), "mlt_producer");
+                seekable = !strcmp(producer->get("mlt_type"), "mlt_producer");
             }
             if (!seekable) {
                 // These generators can take an out point to define their length.
                 // TODO: Currently, these max out at 15000 frames, which is arbitrary.
-                QString service(m_producer->get("mlt_service"));
+                QString service(producer->get("mlt_service"));
                 seekable = (service == "color") || service.startsWith("frei0r.") || (service =="tone") || (service =="count");
             }
         }
@@ -645,7 +649,7 @@ void Controller::resetURL()
 
 QImage Controller::image(Mlt::Frame* frame, int width, int height)
 {
-    QImage result(width, height, QImage::Format_ARGB32);
+    QImage result;
     if (frame && frame->is_valid()) {
         if (width > 0 && height > 0) {
             frame->set("rescale.interp", "bilinear");
@@ -660,6 +664,7 @@ QImage Controller::image(Mlt::Frame* frame, int width, int height)
             result = temp.rgbSwapped();
         }
     } else {
+        result = QImage(width, height, QImage::Format_ARGB32);
         result.fill(QColor(Qt::red).rgb());
     }
     return result;
@@ -668,22 +673,18 @@ QImage Controller::image(Mlt::Frame* frame, int width, int height)
 QImage Controller::image(Producer& producer, int frameNumber, int width, int height)
 {
     QImage result;
-    if (frameNumber > producer.get_length() - 3) {
-        producer.seek(frameNumber - 2);
-        Mlt::Frame* frame = producer.get_frame();
-        result = image(frame, width, height);
-        delete frame;
-        frame = producer.get_frame();
-        result = image(frame, width, height);
-        delete frame;
-        frame = producer.get_frame();
-        result = image(frame, width, height);
-        delete frame;
+    if (frameNumber > producer.get_length() - kThumbnailOutSeekFactor) {
+        producer.seek(frameNumber - kThumbnailOutSeekFactor - 1);
+        for (int i = 0; i < kThumbnailOutSeekFactor; ++i) {
+            QScopedPointer<Mlt::Frame> frame(producer.get_frame());
+            QImage temp = image(frame.data(), width, height);
+            if (!temp.isNull())
+                result = temp;
+        }
     } else {
         producer.seek(frameNumber);
-        Mlt::Frame* frame = producer.get_frame();
-        result = image(frame, width, height);
-        delete frame;
+        QScopedPointer<Mlt::Frame> frame(producer.get_frame());
+        result = image(frame.data(), width, height);
     }
     return result;
 }
@@ -729,7 +730,7 @@ void Controller::setImageDurationFromDefault(Service* service) const
     if (service && service->is_valid()) {
         if (isImageProducer(service)) {
             service->set("ttl", 1);
-            service->set("length", qRound(m_profile->fps() * 600));
+            service->set("length", qRound(m_profile->fps() * kMaxImageDurationSecs));
             service->set("out", qRound(m_profile->fps() * Settings.imageDuration()) - 1);
         }
     }
@@ -785,10 +786,30 @@ void Controller::copyFilters(Mlt::Producer* producer)
 
 void Controller::pasteFilters(Mlt::Producer* producer)
 {
-    if (producer && producer->is_valid())
-        copyFilters(*m_filtersClipboard, *producer);
-    else if (m_producer &&  m_producer->is_valid())
-        copyFilters(*m_filtersClipboard, *m_producer);
+    Mlt::Producer* targetProducer = (producer && producer->is_valid())? producer
+                      :(m_producer && m_producer->is_valid())? m_producer
+                      : 0;
+    if (targetProducer) {
+        copyFilters(*m_filtersClipboard, *targetProducer);
+
+        // Adjust all filters that have an explicit duration.
+        int n = targetProducer->filter_count();
+        for (int j = 0; j < n; j++) {
+            Mlt::Filter* filter = targetProducer->filter(j);
+            if (filter && filter->is_valid() && filter->get_length() > 0) {
+                if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeIn")
+                        || QString(filter->get("mlt_service")) == "webvfx") {
+                    int in = targetProducer->get_int(kFilterInProperty);
+                    filter->set_in_and_out(in, in + filter->get_length() - 1);
+                }
+                else if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeOut")) {
+                    int out = targetProducer->get_int(kFilterOutProperty);
+                    filter->set_in_and_out(out - filter->get_length() + 1, out);
+                }
+            }
+            delete filter;
+        }
+    }
 }
 
 void Controller::setSavedProducer(Mlt::Producer* producer)

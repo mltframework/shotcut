@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Meltytech, LLC
+ * Copyright (c) 2015-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -35,7 +35,7 @@ public:
     ~GDIgrabWidget();
 
     // AbstractProducerWidget overrides
-    Mlt::Producer* producer(Mlt::Profile&);
+    Mlt::Producer* newProducer(Mlt::Profile&);
     Mlt::Properties* getPreset() const;
     void loadPreset(Mlt::Properties&);
     void setProducer(Mlt::Producer*);

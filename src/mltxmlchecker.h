@@ -64,6 +64,7 @@ private:
     void checkUnlinkedFile(const QString& mlt_service);
     bool fixUnlinkedFile(QString& value);
     void fixStreamIndex(QString& value);
+    bool fixVersion1701WindowsPathBug(QString& value);
 
     QXmlStreamReader m_xml;
     QXmlStreamWriter m_newXml;

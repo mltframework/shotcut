@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2016 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,6 +24,7 @@
 #include "settings.h"
 #include "util.h"
 #include <QtWidgets>
+#include <limits>
 
 #define VOLUME_KNEE (88)
 #define SEEK_INACTIVE (-1)
@@ -34,6 +35,7 @@ static const int STATUS_ANIMATION_MS = 350;
 Player::Player(QWidget *parent)
     : QWidget(parent)
     , m_position(0)
+    , m_playPosition(std::numeric_limits<int>::max())
     , m_isMeltedPlaying(-1)
     , m_zoomToggleFactor(Settings.playerZoom() == 0.0f? 1.0f : Settings.playerZoom())
     , m_pauseAfterOpen(false)
@@ -55,6 +57,7 @@ Player::Player(QWidget *parent)
     // Add tab bar to indicate/select what is playing: clip, playlist, timeline.
     m_tabs = new QTabBar;
     m_tabs->setShape(QTabBar::RoundedSouth);
+    m_tabs->setUsesScrollButtons(false);
     m_tabs->addTab(tr("Source"));
     m_tabs->addTab(tr("Project"));
     m_tabs->setTabEnabled(SourceTabIndex, false);
@@ -71,22 +74,24 @@ Player::Player(QWidget *parent)
     Util::setColorsToHighlight(m_statusLabel, QPalette::Button);
     tabLayout->addWidget(m_statusLabel);
     tabLayout->addStretch(1);
-    QGraphicsOpacityEffect *effect = new QGraphicsOpacityEffect(this);
-    m_statusLabel->setGraphicsEffect(effect);
-    m_statusFadeIn = new QPropertyAnimation(effect, "opacity", this);
-    m_statusFadeIn->setDuration(STATUS_ANIMATION_MS);
-    m_statusFadeIn->setStartValue(0);
-    m_statusFadeIn->setEndValue(1);
-    m_statusFadeIn->setEasingCurve(QEasingCurve::InBack);
-    m_statusFadeOut = new QPropertyAnimation(effect, "opacity", this);
-    m_statusFadeOut->setDuration(STATUS_ANIMATION_MS);
-    m_statusFadeOut->setStartValue(0);
-    m_statusFadeOut->setEndValue(0);
-    m_statusFadeOut->setEasingCurve(QEasingCurve::OutBack);
-    m_statusTimer.setSingleShot(true);
-    connect(&m_statusTimer, SIGNAL(timeout()), m_statusFadeOut, SLOT(start()));
-    connect(m_statusFadeOut, SIGNAL(finished()), SLOT(onFadeOutFinished()));
-    m_statusFadeOut->start();
+    if (Settings.drawMethod() == Qt::AA_UseDesktopOpenGL) {
+        QGraphicsOpacityEffect *effect = new QGraphicsOpacityEffect(this);
+        m_statusLabel->setGraphicsEffect(effect);
+        m_statusFadeIn = new QPropertyAnimation(effect, "opacity", this);
+        m_statusFadeIn->setDuration(STATUS_ANIMATION_MS);
+        m_statusFadeIn->setStartValue(0);
+        m_statusFadeIn->setEndValue(1);
+        m_statusFadeIn->setEasingCurve(QEasingCurve::InBack);
+        m_statusFadeOut = new QPropertyAnimation(effect, "opacity", this);
+        m_statusFadeOut->setDuration(STATUS_ANIMATION_MS);
+        m_statusFadeOut->setStartValue(0);
+        m_statusFadeOut->setEndValue(0);
+        m_statusFadeOut->setEasingCurve(QEasingCurve::OutBack);
+        m_statusTimer.setSingleShot(true);
+        connect(&m_statusTimer, SIGNAL(timeout()), m_statusFadeOut, SLOT(start()));
+        connect(m_statusFadeOut, SIGNAL(finished()), SLOT(onFadeOutFinished()));
+        m_statusFadeOut->start();
+    }
 
     // Add the layouts for managing video view, scroll bars, and audio controls.
     m_videoLayout = new QHBoxLayout;
@@ -150,7 +155,7 @@ Player::Player(QWidget *parent)
     m_muteButton = new QPushButton(this);
     m_muteButton->setFocusPolicy(Qt::NoFocus);
     m_muteButton->setObjectName(QString::fromUtf8("muteButton"));
-    m_muteButton->setIcon(QIcon::fromTheme("dialog-cancel", QIcon(":/icons/oxygen/32x32/actions/dialog-cancel.png")));
+    m_muteButton->setIcon(QIcon::fromTheme("audio-volume-muted", QIcon(":/icons/oxygen/32x32/status/audio-volume-muted.png")));
     m_muteButton->setToolTip(tr("Silence the audio"));
     m_muteButton->setCheckable(true);
     m_muteButton->setChecked(Settings.playerMuted());
@@ -391,6 +396,7 @@ void Player::play(double speed)
         actionPlay->setText(tr("Stop"));
         actionPlay->setToolTip(tr("Stop playback (K)"));
     }
+    m_playPosition = m_position;
 }
 
 void Player::pause()
@@ -430,8 +436,27 @@ void Player::seek(int position)
     actionPlay->setToolTip(tr("Start playback (L)"));
 }
 
+void Player::reset()
+{
+    m_scrubber->setMarkers(QList<int>());
+    m_inPointLabel->setText("--:--:--:-- / ");
+    m_selectedLabel->setText("--:--:--:--");
+    m_durationLabel->setText(" / 00:00:00:00");
+    m_scrubber->setDisabled(true);
+    m_scrubber->setScale(1);
+    m_positionSpinner->setValue(0);
+    m_positionSpinner->setDisabled(true);
+    actionPlay->setDisabled(true);
+    actionSkipPrevious->setDisabled(true);
+    actionSkipNext->setDisabled(true);
+    actionRewind->setDisabled(true);
+    actionFastForward->setDisabled(true);
+    m_videoWidget->hide();
+}
+
 void Player::onProducerOpened(bool play)
 {
+    m_videoWidget->show();
     m_duration = MLT.producer()->get_length();
     m_isSeekable = MLT.isSeekable();
     MLT.producer()->set("ignore_points", 1);
@@ -583,6 +608,10 @@ void Player::onFrameDisplayed(const SharedFrame& frame)
         m_positionSpinner->setValue(position);
         m_positionSpinner->blockSignals(false);
         m_scrubber->onSeek(position);
+        if (m_playPosition < m_previousOut && m_position >= m_previousOut) {
+            seek(m_previousOut);
+            m_playPosition = std::numeric_limits<int>::max();
+        }
     }
     if (position >= m_duration)
         emit endOfStream();
@@ -617,6 +646,7 @@ void Player::onOutChanged(int out)
     if (out != m_previousOut)
         emit outChanged(out);
     m_previousOut = out;
+    m_playPosition = m_previousOut; // prevent O key from pausing
     updateSelection();
 }
 
@@ -664,10 +694,12 @@ void Player::rewind()
 
 void Player::fastForward()
 {
-    if (m_isSeekable)
+    if (m_isSeekable) {
         emit fastForwarded();
-    else
+        m_playPosition = m_position;
+    } else {
         play();
+    }
 }
 
 void Player::showPaused()
@@ -733,24 +765,29 @@ void Player::setStatusLabel(const QString &text, int timeoutSeconds, QAction* ac
     else
         disconnect(m_statusLabel, SIGNAL(clicked(bool)));
 
-    // Cancel the fade out.
-    if (m_statusFadeOut->state() == QAbstractAnimation::Running) {
-        m_statusFadeOut->stop();
-    }
-    if (text.isEmpty()) {
-        // Make it transparent.
-        m_statusTimer.stop();
-        m_statusFadeOut->setStartValue(0);
-        m_statusFadeOut->start();
-    } else {
-        // Reset the fade out animation.
-        m_statusFadeOut->setStartValue(1);
-
-        // Fade in.
-        if (m_statusFadeIn->state() != QAbstractAnimation::Running && !m_statusTimer.isActive()) {
-            m_statusFadeIn->start();
-            m_statusTimer.start(timeoutSeconds * 1000);
+    if (Settings.drawMethod() == Qt::AA_UseDesktopOpenGL) {
+        // Cancel the fade out.
+        if (m_statusFadeOut->state() == QAbstractAnimation::Running) {
+            m_statusFadeOut->stop();
         }
+        if (text.isEmpty()) {
+            // Make it transparent.
+            m_statusTimer.stop();
+            m_statusFadeOut->setStartValue(0);
+            m_statusFadeOut->start();
+        } else {
+            // Reset the fade out animation.
+            m_statusFadeOut->setStartValue(1);
+
+            // Fade in.
+            if (m_statusFadeIn->state() != QAbstractAnimation::Running && !m_statusTimer.isActive()) {
+                m_statusFadeIn->start();
+                m_statusTimer.start(timeoutSeconds * 1000);
+            }
+        }
+    } else { // DirectX or software GL
+        m_statusLabel->show();
+        QTimer::singleShot(timeoutSeconds * 1000, this, SLOT(onFadeOutFinished()));
     }
 }
 
@@ -758,6 +795,9 @@ void Player::onFadeOutFinished()
 {
     m_statusLabel->disconnect(SIGNAL(clicked(bool)));
     m_statusLabel->setToolTip(QString());
+    // DirectX or software GL
+    if (Settings.drawMethod() != Qt::AA_UseDesktopOpenGL)
+        m_statusLabel->hide();
 }
 
 void Player::adjustScrollBars(float horizontal, float vertical)
@@ -868,7 +908,7 @@ void Player::on_actionVolume_triggered()
 {
     int x = (m_volumePopup->width() - m_volumeWidget->width()) / 2;
     x = mapToParent(m_volumeWidget->geometry().bottomLeft()).x() - x;
-    int y = 8 - m_volumePopup->height();
+    int y = m_scrubber->geometry().height() - m_volumePopup->height();
     m_volumePopup->move(mapToGlobal(m_scrubber->geometry().bottomLeft()) + QPoint(x, y));
     m_volumePopup->show();
     m_volumeWidget->hide();
@@ -880,8 +920,14 @@ void Player::onMuteButtonToggled(bool checked)
     if (checked) {
         m_savedVolume = MLT.volume();
         MLT.setVolume(0);
+        actionVolume->setIcon(QIcon::fromTheme("audio-volume-muted", QIcon(":/icons/oxygen/32x32/status/audio-volume-muted.png")));
+        m_muteButton->setIcon(QIcon::fromTheme("audio-volume-high", QIcon(":/icons/oxygen/32x32/status/audio-volume-high.png")));
+        m_muteButton->setToolTip(tr("Unmute"));
     } else {
         MLT.setVolume(m_savedVolume);
+        actionVolume->setIcon(QIcon::fromTheme("player-volume", QIcon(":/icons/oxygen/32x32/actions/player-volume.png")));
+        m_muteButton->setIcon(QIcon::fromTheme("audio-volume-muted", QIcon(":/icons/oxygen/32x32/status/audio-volume-muted.png")));
+        m_muteButton->setToolTip(tr("Mute"));
     }
     Settings.setPlayerMuted(checked);
     m_volumePopup->hide();

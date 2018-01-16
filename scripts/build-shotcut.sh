@@ -35,10 +35,10 @@ SUBDIRS=
 MOVIT_HEAD=0
 MOVIT_REVISION=origin/shotcut
 LIBEPOXY_REVISION="v1.3.1"
-X264_HEAD=1
-X264_REVISION=
+X264_HEAD=0
+X264_REVISION="origin/stable"
 X265_HEAD=0
-X265_REVISION=origin/stable
+X265_REVISION="origin/stable"
 LIBVPX_HEAD=1
 LIBVPX_REVISION=0
 ENABLE_LAME=1
@@ -46,7 +46,7 @@ LIBOPUS_HEAD=1
 LIBOPUS_REVISION=
 ENABLE_SWH_PLUGINS=1
 FFMPEG_HEAD=0
-FFMPEG_REVISION="origin/release/3.0"
+FFMPEG_REVISION="origin/release/3.2"
 FFMPEG_SUPPORT_H264=1
 FFMPEG_SUPPORT_H265=1
 FFMPEG_SUPPORT_LIBVPX=1
@@ -88,11 +88,11 @@ export LANG=C
 # User CFLAGS and LDFLAGS sometimes prevent more recent local headers.
 # Also, you can adjust some flags here.
 if [ "$DEBUG_BUILD" = "1" ]; then
-    export CFLAGS=-DNDEBUG
-    export CXXFLAGS=-DNDEBUG
-else
     export CFLAGS=
     export CXXFLAGS=
+else
+    export CFLAGS=-DNDEBUG
+    export CXXFLAGS=-DNDEBUG
 fi
 export LDFLAGS=
 
@@ -419,7 +419,7 @@ function set_globals {
   REPOLOCS[3]="git://repo.or.cz/x264.git"
   REPOLOCS[4]="https://chromium.googlesource.com/webm/libvpx.git"
   REPOLOCS[5]="git://github.com/ddennedy/movit.git"
-  REPOLOCS[6]="https://github.com/rbrito/lame/archive/RELEASE__3_99_5.tar.gz"
+  REPOLOCS[6]="https://downloads.sourceforge.net/project/lame/lame/3.99/lame-3.99.5.tar.gz"
   REPOLOCS[7]="git://github.com/mltframework/shotcut.git"
   REPOLOCS[8]="http://ftp.us.debian.org/debian/pool/main/s/swh-plugins/swh-plugins_0.4.15+1.orig.tar.gz"
   REPOLOCS[9]="git://github.com/mltframework/webvfx.git"
@@ -472,7 +472,7 @@ function set_globals {
   if test 0 = "$MOVIT_HEAD" -a "$MOVIT_REVISION" ; then
     REVISIONS[5]="$MOVIT_REVISION"
   fi
-  REVISIONS[6]="lame-RELEASE__3_99_5"
+  REVISIONS[6]="lame-3.99.5"
   REVISIONS[7]=""
   if test 0 = "$SHOTCUT_HEAD" -a "$SHOTCUT_REVISION" ; then
     REVISIONS[7]="$SHOTCUT_REVISION"
@@ -604,9 +604,11 @@ function set_globals {
   CFLAGS_[0]="-I$FINAL_INSTALL_DIR/include $CFLAGS"
   if test "$TARGET_OS" = "Win32" ; then
     CONFIG[0]="${CONFIG[0]} --cross-prefix=$CROSS --arch=x86 --target-os=mingw32 --pkg-config=pkg-config"
+    CFLAGS_[0]="${CFLAGS_[0]} -I$FINAL_INSTALL_DIR/include/SDL2"
     LDFLAGS_[0]="$LDFLAGS"
   elif test "$TARGET_OS" = "Win64" ; then
     CONFIG[0]="${CONFIG[0]} --cross-prefix=$CROSS --arch=x86_64 --target-os=mingw32 --pkg-config=pkg-config"
+    CFLAGS_[0]="${CFLAGS_[0]} -I$FINAL_INSTALL_DIR/include/SDL2"
     LDFLAGS_[0]="$LDFLAGS"
   else
     LDFLAGS_[0]="-L$FINAL_INSTALL_DIR/lib $LDFLAGS"
@@ -633,9 +635,12 @@ function set_globals {
 	CONFIG[1]="${CONFIG[1]} --disable-dv --disable-kino --disable-vorbis --gtk2-prefix=\"$FINAL_INSTALL_DIR\" --target-os=MinGW --target-arch=x86_64 --rename-melt=melt.exe"
   fi
   CFLAGS_[1]="-I$FINAL_INSTALL_DIR/include $ASAN_CFLAGS $CFLAGS"
-  [ "$TARGET_OS" = "Darwin" ] && CFLAGS_[1]="${CFLAGS_[1]} -I/opt/local/include -DRELOCATABLE -DMELT_NOSDL"
-  [ "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ]  && CFLAGS_[1]="${CFLAGS_[1]} -DMELT_NOSDL"
-  LDFLAGS_[1]="-L$FINAL_INSTALL_DIR/lib $ASAN_LDFLAGS $LDFLAGS"
+  if [ "$TARGET_OS" = "Darwin" ]; then
+    CFLAGS_[1]="${CFLAGS_[1]} -I/opt/local/include -DRELOCATABLE"
+    LDFLAGS_[1]="${LDFLAGS_[1]} -L/opt/local/lib/libomp"
+  fi
+  [ "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ]  && CFLAGS_[1]="${CFLAGS_[1]} -I$FINAL_INSTALL_DIR/include/SDL2"
+  LDFLAGS_[1]="${LDFLAGS_[1]} -L$FINAL_INSTALL_DIR/lib $ASAN_LDFLAGS $LDFLAGS"
 
   ####
   # frei0r
@@ -1254,10 +1259,10 @@ function get_win32_prebuilt {
   cmd mkdir -p "$FINAL_INSTALL_DIR"
   cd "$FINAL_INSTALL_DIR" || die "Unable to change to directory $FINAL_INSTALL_DIR"
   if [ "$TARGET_OS" = "Win32" ]; then
-    cmd tar -xjf "$HOME/mlt-prebuilt-mingw32.tar.bz2"
+    cmd tar -xJf "$HOME/mlt-prebuilt-mingw32.tar.xz"
     cmd unzip "$HOME/gtk+-bundle_2.24.10-20120208_win32.zip"
   else
-    cmd tar -xjf "$HOME/mlt-prebuilt-mingw32-x64.tar.bz2"
+    cmd tar -xJf "$HOME/mlt-prebuilt-mingw32-x64.tar.xz"
     cmd unzip "$HOME/gtk+-bundle_2.22.1-20101229_win64.zip"
   fi
   cmd popd
@@ -1288,30 +1293,30 @@ to make Shotcuts daily builds. It is the authoritative install reference:
   src/shotcut/scripts/build-shotcut.sh
 
 We cannot cover how to build all of Shotcut's dependencies from scratch here.
-On Linux, we rely upon Debian's packages to provide most of the
-more mundane dependencies. The rest like x264, libvpx, lame, libopus, FFmpeg,
-and frei0r are provided by the script.
+On Linux, we rely upon Ubuntu's packages to provide most of the
+more mundane dependencies. The rest like x264, x265, libvpx, lame, libopus,
+FFmpeg, and frei0r are provided by the script.
 
-For OS X, we rely upon macports to provide the dependencies:
+For macOS, we rely upon macports to provide the dependencies:
   port install ffmpeg libsamplerate libsdl sox glib2 jack
 
 For Windows, see this page on the MLT wiki about getting pre-built
 dependencies from various sources on the Internet:
-  http://www.mltframework.org/bin/view/MLT/WindowsBuild
+  https://www.mltframework.org/docs/windowsbuild/
 Except, now we build FFmpeg instead of using a pre-built copy.
 
 As for Shotcut itself, its really as simple as:
   mkdir build ; cd build ; qmake .. ; make
 There is no make install target at this time. Just copy the executable
-(Shotcut.app on OS X) where needed.
+(Shotcut.app on macOS) where needed.
 
 Then, there is the app bundling so that dependencies can be located and Qt
 plugins included. For that you really need to see the build script; it
-is fairly complicated especially on OS X. On Linux, we just use a
+is fairly complicated especially on macOS. On Linux, we just use a
 common install prefix and the build script generates shell scripts to
 establish a redirected environment. On Windows, everything is relative
 to the directory containing the .exe. DLLs are in the same directory as
-the .exe, and the lib and share folders are sub-directories. On OS X, all
+the .exe, and the lib and share folders are sub-directories. On macOS, all
 dependencies need to be put into the correct locations in Shotcut.app,
 and the build script modifies all dylibs to pull them in and make their
 inter-dependencies relative to the executable. If you are just building for
@@ -1370,8 +1375,8 @@ function mlt_check_configure {
         mlt_format_required xml "Please install libxml2-dev. "
         DODIE=1
       ;;
-      disable-sdl)
-        mlt_format_required sdl "Please install libsdl1.2-dev. "
+      disable-sdl2)
+        mlt_format_required sdl2 "Please install libsdl2-dev. "
         DODIE=1
       ;;
       disable-qt)
@@ -1497,9 +1502,6 @@ function configure_compile_install_subproject {
   # Special hack for mlt, post-configure
   if test "mlt" = "$1" ; then
     mlt_check_configure
-	if [ "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ]; then
-	  echo "USE_PKG_CONFIG=0" > src/modules/sdl/config.mak
-	fi
   fi
 
   # Compile
@@ -1958,9 +1960,9 @@ function deploy_win32
     cmd rm lib/qml/Qt3D/Input/quick3dinputplugind.dll
   fi
   if [ "$TARGET_OS" = "Win32" ]; then
-    cmd tar -xjf "$HOME/ladspa_plugins-win-0.4.15.tar.bz2"
+    cmd tar -xJf "$HOME/swh-plugins-win32-0.4.15.tar.xz"
   else
-    cmd tar -xjf "$HOME/swh-plugins-win64-0.4.15.tar.bz2"
+    cmd tar -xJf "$HOME/swh-plugins-win64-0.4.15.tar.xz"
   fi
   printf "[Paths]\nPlugins=lib/qt5\nQml2Imports=lib/qml\n" > qt.conf
 

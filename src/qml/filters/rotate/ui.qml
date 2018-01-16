@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2015 Meltytech, LLC
+ * Copyright (c) 2013-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -31,6 +31,7 @@ Item {
             filter.set('transition.scale_x', 1)
             filter.set('transition.ox', 0)
             filter.set('transition.oy', 0)
+            filter.set('transition.threads', 0)
             filter.savePreset(preset.parameters)
         }
         setControls()

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Meltytech, LLC
+ * Copyright (c) 2014-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -52,10 +52,22 @@ MltXmlChecker::MltXmlChecker()
     : m_needsGPU(false)
     , m_hasEffects(false)
     , m_isCorrected(false)
-    , m_decimalPoint(QLocale(QLocale::system().name()).decimalPoint())
+#ifdef Q_OS_MAC
+    // For some reason, on macOS, Shotcut does not honor the locale-defined
+    // decimal point, and MLT writes XML with LC_NUMERIC=C.
+    , m_decimalPoint(QLocale(QLocale::C).decimalPoint())
+#else
+    , m_decimalPoint(QLocale::system().decimalPoint())
+#endif
     , m_tempFile(QDir::tempPath().append("/shotcut-XXXXXX.mlt"))
     , m_numericValueChanged(false)
 {
+    Mlt::Producer producer(MLT.profile(), "color", "black");
+    if (producer.is_valid()) {
+        const char* timeString = producer.get_length_time(mlt_time_clock);
+        if (qstrlen(timeString) >= 8) // HH:MM:SS.ms
+            m_decimalPoint = timeString[8];
+    }
     LOG_DEBUG() << "decimal point" << m_decimalPoint;
     m_unlinkedFilesModel.setColumnCount(ColumnCount);
 }
@@ -187,6 +199,9 @@ void MltXmlChecker::processProperties()
         } else if (isNumericProperty(p.first)) {
             checkNumericString(p.second);
         } else if (readResourceProperty(p.first, p.second)) {
+#ifdef Q_OS_WIN
+            fixVersion1701WindowsPathBug(p.second);
+#endif
             fixUnlinkedFile(p.second);
         }
         newProperties << MltProperty(p.first, p.second);
@@ -338,14 +353,17 @@ void MltXmlChecker::checkGpuEffects(const QString& mlt_service)
 void MltXmlChecker::checkUnlinkedFile(const QString& mlt_service)
 {
     // Check for an unlinked file.
+    const QString baseName = m_resource.info.baseName();
     // not the color producer
     if (!mlt_service.isEmpty() && mlt_service != "color" && mlt_service != "colour")
     // not a builtin luma wipe file
-    if (mlt_service != "luma" || !m_resource.info.baseName().startsWith('%'))
+    if ((mlt_service != "luma" && mlt_service != "movit.luma_mix") || !baseName.startsWith('%'))
     // not the generic <producer> resource
-    if (m_resource.info.baseName() != "<producer>")
+    if (baseName != "<producer>")
     // not a URL
     if (!m_resource.info.filePath().isEmpty() && !isNetworkResource(m_resource.info.filePath()))
+    // not an image sequence
+    if ((mlt_service != "pixbuf" && mlt_service != "qimage") || baseName.indexOf('%') == -1)
     // file does not exist
     if (!m_resource.info.exists())
     // not already in the model
@@ -386,4 +404,14 @@ void MltXmlChecker::fixStreamIndex(QString& value)
         && m_resource.hash != m_resource.newHash) {
         value.clear();
     }
+}
+
+bool MltXmlChecker::fixVersion1701WindowsPathBug(QString& value)
+{
+    if (value.size() >= 3 && value[0] == '/' && value[2] == ':') {
+        value.remove(0, 1);
+        m_isCorrected = true;
+        return true;
+    }
+    return false;
 }

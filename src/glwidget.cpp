@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2016 Meltytech, LLC
+ * Copyright (c) 2011-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * GL shader based on BSD licensed code from Peter Bengtsson:
@@ -34,12 +34,6 @@
 #include "mainwindow.h"
 
 #define USE_GL_SYNC // Use glFinish() if not defined.
-
-#ifdef Q_OS_MAC
-static const int FRAMEDISPLAYED_MIN_MS = 80; // max 12.5 fps
-#else
-static const int FRAMEDISPLAYED_MIN_MS = 10; // max 100 fps
-#endif
 
 #ifdef QT_NO_DEBUG
 #define check_error(fn) {}
@@ -173,10 +167,8 @@ void GLWidget::initializeGL()
     quickWindow()->openglContext()->makeCurrent(quickWindow());
 
     connect(m_frameRenderer, SIGNAL(frameDisplayed(const SharedFrame&)), this, SIGNAL(frameDisplayed(const SharedFrame&)), Qt::QueuedConnection);
-    if (Settings.playerGPU() || quickWindow()->openglContext()->supportsThreadedOpenGL())
-        connect(m_frameRenderer, SIGNAL(textureReady(GLuint,GLuint,GLuint)), SLOT(updateTexture(GLuint,GLuint,GLuint)), Qt::DirectConnection);
-    else
-        connect(m_frameRenderer, SIGNAL(frameDisplayed(const SharedFrame&)), SLOT(onFrameDisplayed(const SharedFrame&)), Qt::QueuedConnection);
+    connect(m_frameRenderer, SIGNAL(textureReady(GLuint,GLuint,GLuint)), SLOT(updateTexture(GLuint,GLuint,GLuint)), Qt::DirectConnection);
+    connect(m_frameRenderer, SIGNAL(frameDisplayed(const SharedFrame&)), SLOT(onFrameDisplayed(const SharedFrame&)), Qt::QueuedConnection);
     connect(m_frameRenderer, SIGNAL(imageReady()), SIGNAL(imageReady()));
 
     m_initSem.release();
@@ -366,9 +358,18 @@ void GLWidget::paintGL()
         }
         uploadTextures(quickWindow()->openglContext(), m_sharedFrame, m_texture);
         m_mutex.unlock();
+    } else if (m_glslManager) {
+        m_mutex.lock();
+        if (m_sharedFrame.is_valid()) {
+            m_texture[0] = *((GLuint*) m_sharedFrame.get_image());
+        }
     }
 
-    if (!m_texture[0]) return;
+    if (!m_texture[0]) {
+        if (m_glslManager)
+            m_mutex.unlock();
+        return;
+    }
 
     // Bind textures.
     for (int i = 0; i < 3; ++i) {
@@ -449,6 +450,11 @@ void GLWidget::paintGL()
     }
     glActiveTexture(GL_TEXTURE0);
     check_error(f);
+
+    if (m_glslManager) {
+        glFinish(); check_error(f);
+        m_mutex.unlock();
+    }
 }
 
 void GLWidget::mousePressEvent(QMouseEvent* event)
@@ -625,12 +631,6 @@ int GLWidget::reconfigure(bool isMulti)
         if (isMulti) {
             m_consumer->set("terminate_on_pause", 0);
             m_consumer->set("0", serviceName.toLatin1().constData());
-            if (serviceName == "sdl_audio")
-#ifdef Q_OS_WIN
-                m_consumer->set("0.audio_buffer", 2048);
-#else
-                m_consumer->set("0.audio_buffer", 512);
-#endif
             if (!profile().progressive())
                 m_consumer->set("0.progressive", property("progressive").toBool());
             m_consumer->set("0.rescale", property("rescale").toString().toLatin1().constData());
@@ -641,12 +641,6 @@ int GLWidget::reconfigure(bool isMulti)
                 m_consumer->set("0.keyer", property("keyer").toInt());
         }
         else {
-            if (serviceName == "sdl_audio")
-#ifdef Q_OS_WIN
-                m_consumer->set("audio_buffer", 2048);
-#else
-                m_consumer->set("audio_buffer", 512);
-#endif
             if (!profile().progressive())
                 m_consumer->set("progressive", property("progressive").toBool());
             m_consumer->set("rescale", property("rescale").toString().toLatin1().constData());
@@ -755,7 +749,6 @@ void GLWidget::updateTexture(GLuint yName, GLuint uName, GLuint vName)
     m_texture[0] = yName;
     m_texture[1] = uName;
     m_texture[2] = vName;
-    quickWindow()->update();
 }
 
 // MLT consumer-frame-show event handler
@@ -896,13 +889,11 @@ void FrameRenderer::showFrame(Mlt::Frame frame)
                 mlt_pool_release(image);
                 emit imageReady();
             }
-
-            emit textureReady(*textureId);
+            
             m_context->doneCurrent();
 
             // Save this frame for future use and to keep a reference to the GL Texture.
-            m_renderFrame = SharedFrame(frame);
-            qSwap(m_renderFrame, m_displayFrame);
+            m_displayFrame = SharedFrame(frame);
         }
         else {
             // Using a threaded OpenGL to upload textures.
@@ -919,20 +910,8 @@ void FrameRenderer::showFrame(Mlt::Frame frame)
             emit textureReady(m_displayTexture[0], m_displayTexture[1], m_displayTexture[2]);
             m_context->doneCurrent();
         }
-
-        // Throttle the frequency of frameDisplayed signals to prevent them from
-        // interfering with timely and smooth video updates.
-        int elapsedMSecs = QDateTime::currentMSecsSinceEpoch() - m_previousMSecs;
-        if (elapsedMSecs >= FRAMEDISPLAYED_MIN_MS) {
-            m_previousMSecs = QDateTime::currentMSecsSinceEpoch();
-            // The frame is now done being modified and can be shared with the rest
-            // of the application.
-            emit frameDisplayed(m_displayFrame);
-        }
-    } else {
-        // Non-threaded rendering
-        emit frameDisplayed(m_displayFrame);
     }
+    emit frameDisplayed(m_displayFrame);
 
     m_semaphore.release();
 }

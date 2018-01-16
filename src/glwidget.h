@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2015 Meltytech, LLC
+ * Copyright (c) 2011-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -188,7 +188,6 @@ signals:
 
 private:
     QSemaphore m_semaphore;
-    SharedFrame m_renderFrame;
     SharedFrame m_displayFrame;
     QOpenGLContext* m_context;
     QSurface* m_surface;

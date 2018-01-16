@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 Meltytech, LLC
+ * Copyright (c) 2013-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -194,6 +194,26 @@ void ShotcutSettings::setEncodePath(const QString& s)
     settings.setValue("encode/path", s);
 }
 
+bool ShotcutSettings::encodeFreeSpaceCheck() const
+{
+    return settings.value("encode/freeSpaceCheck", true).toBool();
+}
+
+void ShotcutSettings::setEncodeFreeSpaceCheck(bool b)
+{
+    settings.setValue("encode/freeSpaceCheck", b);
+}
+
+bool ShotcutSettings::showConvertClipDialog() const
+{
+    return settings.value("showConvertClipDialog", true).toBool();
+}
+
+void ShotcutSettings::setShowConvertClipDialog(bool b)
+{
+    settings.setValue("showConvertClipDialog", b);
+}
+
 bool ShotcutSettings::meltedEnabled() const
 {
     return settings.value("melted/enabled", false).toBool();
@@ -236,7 +256,7 @@ void ShotcutSettings::setPlayerExternal(const QString& s)
 
 QString ShotcutSettings::playerGamma() const
 {
-    return settings.value("player/gamma", "iec61966_2_1").toString();
+    return settings.value("player/gamma", "bt709").toString();
 }
 
 void ShotcutSettings::setPlayerGamma(const QString& s)
@@ -465,12 +485,22 @@ void ShotcutSettings::setLoudnessScopeShowMeter(const QString& meter, bool b)
 
 int ShotcutSettings::drawMethod() const
 {
-    return settings.value("opengl", 0).toInt();
+    return settings.value("opengl", Qt::AA_UseOpenGLES).toInt();
 }
 
 void ShotcutSettings::setDrawMethod(int i)
 {
     settings.setValue("opengl", i);
+}
+
+bool ShotcutSettings::noUpgrade() const
+{
+    return settings.value("noupgrade", false).toBool();
+}
+
+void ShotcutSettings::setNoUpgrade(bool value)
+{
+    settings.setValue("noupgrade", value);
 }
 
 void ShotcutSettings::sync()

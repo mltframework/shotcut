@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -35,10 +35,13 @@ public:
     ~X11grabWidget();
 
     // AbstractProducerWidget overrides
-    Mlt::Producer* producer(Mlt::Profile&);
+    Mlt::Producer* newProducer(Mlt::Profile&);
     Mlt::Properties* getPreset() const;
     void loadPreset(Mlt::Properties&);
     void setProducer(Mlt::Producer*);
+
+signals:
+    void producerChanged(Mlt::Producer*);
 
 private slots:
     void on_positionComboBox_activated(int index);

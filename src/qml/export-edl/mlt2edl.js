@@ -1,5 +1,5 @@
 /*
- * MltXmlParser class Copyright (c) 2016 Meltytech, LLC
+ * MltXmlParser class Copyright (c) 2016-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -59,7 +59,7 @@ MltXmlParser.prototype.prepadString = function (str, len, chr) {
 MltXmlParser.prototype.Timecode = function(value) {
     if (typeof value === 'string') {
         // Determine if this is a MLT "clock" time string.
-        if (value.length === 12 && value[8] === '.') {
+        if (value.length === 12 && (value[8] === '.' || value[8] === ',')) {
             // Convert the milliseconds portion to frame units.
             var ms = parseFloat(value.substring(9, 12));
             var fr = Math.round(ms / 1000 * this.framerate).toString();
@@ -198,7 +198,7 @@ MltXmlParser.prototype.linkReferences = function() {
         if (!self.useBaseNameForReelName && 'shotcut:hash' in p) {
             sourceLinks[p.id].reel_name = p['shotcut:hash']
         } else if ('resource' in p) {
-            var reelName = self.baseName(p.resource);
+            var reelName = self.baseName(p.resource, false);
             sourceLinks[p.id].reel_name = reelName.replace(/\W/g, '_');
         }
     });
@@ -226,8 +226,8 @@ MltXmlParser.prototype.createEdl = function() {
             srcLen.subtract(srcIn);
             // increment program tally
             progOut.add(srcLen);
-            var reelName = sourceLinks[event.producer].reel_name;
-            if (reelName !== 'black') {
+            if (sourceLinks[event.producer] && sourceLinks[event.producer].reel_name !== 'black') {
+                var reelName = sourceLinks[event.producer].reel_name;
                 reelName = (reelName + '         ').substring(0, 8);
                 if (event.transition[0] === 'D') {
                     EdlEventCount -= 1;
@@ -258,13 +258,15 @@ MltXmlParser.prototype.createEdl = function() {
     return EDLfile;
 };
 
-MltXmlParser.prototype.baseName = function(fileName) {
+MltXmlParser.prototype.baseName = function(fileName, keepExtension) {
+    var name = fileName;
     if (fileName.indexOf('/') !== -1)
-        return fileName.split('/').pop();
+        name = fileName.split('/').pop();
     else if (fileName.indexOf('\\') !== -1)
-        return fileName.split('\\').pop();
-    else
-        return fileName;
+        name = fileName.split('\\').pop();
+    if (keepExtension === false && name.indexOf('.') !== -1)
+        name = name.substring(0, name.indexOf('.'));
+    return name;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

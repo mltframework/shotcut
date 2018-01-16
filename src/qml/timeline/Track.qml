@@ -42,6 +42,11 @@ Rectangle {
             repeater.itemAt(i).generateWaveform()
     }
 
+    function remakeWaveforms(force) {
+        for (var i = 0; i < repeater.count; i++)
+            timeline.remakeAudioLevels(trackRoot.DelegateModel.itemsIndex, i, force)
+    }
+
     function snapClip(clip) {
         Logic.snapClip(clip, repeater)
     }

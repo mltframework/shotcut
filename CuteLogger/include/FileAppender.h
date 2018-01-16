@@ -23,34 +23,18 @@
 #include <QTextStream>
 
 
-//! File is the simple appender that writes the log records to the plain text file.
 class CUTELOGGERSHARED_EXPORT FileAppender : public AbstractStringAppender
 {
   public:
-    //! Constructs the new file appender assigned to file with the given name.
     FileAppender(const QString& fileName = QString());
     ~FileAppender();
 
-    //! Returns the name set by setFileName() or to the FileAppender constructor.
-    /**
-     * \sa setFileName()
-     */
     QString fileName() const;
-
-    //! Sets the name of the file. The name can have no path, a relative path, or an absolute path.
-    /**
-     * \sa fileName()
-     */
     void setFileName(const QString&);
 
   protected:
-    //! Write the log record to the file.
-    /**
-     * \sa fileName()
-     * \sa AbstractStringAppender::format()
-     */
     virtual void append(const QDateTime& timeStamp, Logger::LogLevel logLevel, const char* file, int line,
-                        const char* function, const QString& message);
+                        const char* function, const QString& category, const QString& message);
     bool openFile();
     void closeFile();
 

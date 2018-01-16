@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2016 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -33,8 +33,10 @@ JobsDock::JobsDock(QWidget *parent) :
     ui->treeView->setModel(&JOBS);
     QHeaderView* header = ui->treeView->header();
     header->setStretchLastSection(false);
-    header->setSectionResizeMode(0, QHeaderView::Stretch);
-    header->setSectionResizeMode(1, QHeaderView::ResizeToContents);
+    header->setSectionResizeMode(JobQueue::COLUMN_ICON, QHeaderView::Fixed);
+    ui->treeView->setColumnWidth(JobQueue::COLUMN_ICON, 24);
+    header->setSectionResizeMode(JobQueue::COLUMN_OUTPUT, QHeaderView::Stretch);
+    header->setSectionResizeMode(JobQueue::COLUMN_STATUS, QHeaderView::ResizeToContents);
     ui->cleanButton->hide();
     LOG_DEBUG() << "end";
 }
@@ -50,6 +52,48 @@ AbstractJob *JobsDock::currentJob() const
     QModelIndex index = ui->treeView->currentIndex();
     if (!index.isValid()) return 0;
     return JOBS.jobFromIndex(index);
+}
+
+void JobsDock::onJobAdded()
+{
+    QModelIndex index = JOBS.index(JOBS.rowCount() - 1, JobQueue::COLUMN_OUTPUT);
+    QProgressBar* progressBar = new QProgressBar;
+    progressBar->setMinimum(0);
+    progressBar->setMaximum(100);
+    progressBar->setAutoFillBackground(true);
+    progressBar->setTextVisible(false);
+    QHBoxLayout* layout = new QHBoxLayout(progressBar);
+    QLabel* label = new QLabel;
+    layout->addWidget(label);
+    layout->setContentsMargins(0, 0, 0, 0);
+    ui->treeView->setIndexWidget(index, progressBar);
+    ui->treeView->resizeColumnToContents(JobQueue::COLUMN_STATUS);
+    label->setToolTip(JOBS.data(index).toString());
+    label->setText(label->fontMetrics().elidedText(
+        JOBS.data(index).toString(), Qt::ElideMiddle, ui->treeView->columnWidth(JobQueue::COLUMN_OUTPUT)));
+    connect(JOBS.jobFromIndex(index), SIGNAL(progressUpdated(QStandardItem*, int)), SLOT(onProgressUpdated(QStandardItem*, int)));
+    show();
+    raise();
+}
+
+void JobsDock::onProgressUpdated(QStandardItem* item, int percent)
+{
+    if (item) {
+        QModelIndex index = JOBS.index(item->row(), JobQueue::COLUMN_OUTPUT);
+        QProgressBar* progressBar = qobject_cast<QProgressBar*>(ui->treeView->indexWidget(index));
+        if (progressBar)
+            progressBar->setValue(percent);
+    }
+}
+
+void JobsDock::resizeEvent(QResizeEvent *event)
+{
+    QDockWidget::resizeEvent(event);
+    foreach (QLabel* label, ui->treeView->findChildren<QLabel*>()) {
+        label->setText(label->fontMetrics().elidedText(
+            label->toolTip(), Qt::ElideMiddle, ui->treeView->columnWidth(JobQueue::COLUMN_OUTPUT)));
+    }
+    
 }
 
 void JobsDock::on_treeView_customContextMenuRequested(const QPoint &pos)

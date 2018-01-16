@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2016 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,6 +22,7 @@
 #include <QWidget>
 #include "abstractproducerwidget.h"
 #include "sharedframe.h"
+#include "dialogs/transcodedialog.h"
 
 namespace Ui {
     class AvformatProducerWidget;
@@ -36,7 +37,7 @@ public:
     ~AvformatProducerWidget();
 
     // AbstractProducerWidget overrides
-    Mlt::Producer* producer(Mlt::Profile&);
+    Mlt::Producer* newProducer(Mlt::Profile&);
 
 signals:
     void producerChanged(Mlt::Producer*);
@@ -80,13 +81,17 @@ private slots:
 
     void on_actionFFmpegIntegrityCheck_triggered();
 
+    void on_actionFFmpegConvert_triggered();
+
 private:
     Ui::AvformatProducerWidget *ui;
     int m_defaultDuration;
     bool m_recalcDuration;
+    bool m_askToConvert;
 
     void reopen(Mlt::Producer* p);
     void recreateProducer();
+    void convert(TranscodeDialog& dialog);
 };
 
 #endif // AVFORMATPRODUCERWIDGET_H

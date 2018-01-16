@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2016 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -38,13 +38,13 @@ ImageProducerWidget::~ImageProducerWidget()
     delete ui;
 }
 
-Mlt::Producer* ImageProducerWidget::producer(Mlt::Profile& profile)
+Mlt::Producer* ImageProducerWidget::newProducer(Mlt::Profile& profile)
 {
     Mlt::Producer* p = new Mlt::Producer(profile, m_producer->get("resource"));
     if (p->is_valid()) {
         if (ui->durationSpinBox->value() > p->get_length())
             p->set("length", ui->durationSpinBox->value());
-        p->set("out", ui->durationSpinBox->value() - 1);
+        p->set_in_and_out(0, ui->durationSpinBox->value() - 1);
     }
     return p;
 }
@@ -62,7 +62,7 @@ void ImageProducerWidget::setProducer(Mlt::Producer* p)
         p->set("ttl", 1);
     }
     ui->filenameLabel->setText(ui->filenameLabel->fontMetrics().elidedText(s, Qt::ElideLeft, width() - 40));
-    ui->durationSpinBox->setValue(m_producer->get_out() + 1);
+    ui->durationSpinBox->setValue(m_producer->get_playtime());
     ui->widthLineEdit->setText(p->get("meta.media.width"));
     ui->heightLineEdit->setText(p->get("meta.media.height"));
     ui->aspectNumSpinBox->blockSignals(true);
@@ -115,11 +115,11 @@ void ImageProducerWidget::reopen(Mlt::Producer* p)
 
 void ImageProducerWidget::recreateProducer()
 {
-    Mlt::Producer* p = producer(MLT.profile());
+    Mlt::Producer* p = newProducer(MLT.profile());
     p->pass_list(*m_producer, "force_aspect_ratio," kAspectRatioNumerator ", resource, " kAspectRatioDenominator
-        ", ttl," kShotcutResourceProperty ", length," kShotcutSequenceProperty);
+        ", ttl," kShotcutResourceProperty ", autolength, length," kShotcutSequenceProperty ", " kPlaylistIndexProperty);
     Mlt::Controller::copyFilters(*m_producer, *p);
-    if (m_producer->get_int(kMultitrackItemProperty)) {
+    if (m_producer->get(kMultitrackItemProperty)) {
         emit producerChanged(p);
         delete p;
     } else {
@@ -134,7 +134,7 @@ void ImageProducerWidget::on_resetButton_clicked()
         s = m_producer->get(kShotcutResourceProperty);
     Mlt::Producer* p = new Mlt::Producer(MLT.profile(), s);
     Mlt::Controller::copyFilters(*m_producer, *p);
-    if (m_producer->get_int(kMultitrackItemProperty)) {
+    if (m_producer->get(kMultitrackItemProperty)) {
         emit producerChanged(p);
         delete p;
     } else {
@@ -153,7 +153,7 @@ void ImageProducerWidget::on_aspectNumSpinBox_valueChanged(int)
             m_producer->set(kAspectRatioNumerator, ui->aspectNumSpinBox->text().toLatin1().constData());
             m_producer->set(kAspectRatioDenominator, ui->aspectDenSpinBox->text().toLatin1().constData());
         }
-        emit producerChanged(m_producer);
+        emit producerChanged(producer());
     }
 }
 
@@ -166,7 +166,7 @@ void ImageProducerWidget::on_durationSpinBox_editingFinished()
 {
     if (!m_producer)
         return;
-    if (ui->durationSpinBox->value() == m_producer->get_out() + 1)
+    if (ui->durationSpinBox->value() == m_producer->get_playtime())
         return;
     recreateProducer();
 }
@@ -178,6 +178,7 @@ void ImageProducerWidget::on_sequenceCheckBox_clicked(bool checked)
     if (checked && !m_producer->get(kShotcutResourceProperty))
         m_producer->set(kShotcutResourceProperty, resource.toUtf8().constData());
     m_producer->set(kShotcutSequenceProperty, checked);
+    m_producer->set("autolength", checked);
     m_producer->set("ttl", ui->repeatSpinBox->value());
     if (checked) {
         QFileInfo info(resource);
@@ -200,19 +201,24 @@ void ImageProducerWidget::on_sequenceCheckBox_clicked(bool checked)
 
             // Count the number of consecutive files.
             MAIN.showStatusMessage(tr("Getting length of image sequence..."));
+            QCoreApplication::processEvents();
             name = info.fileName();
             name.replace(i, count, "%1");
             resource = info.path().append('/').append(name);
-            for (i = j; QFile::exists(resource.arg(i, count, 10, QChar('0'))); ++i);
+            for (i = j; QFile::exists(resource.arg(i, count, 10, QChar('0'))); ++i) {
+                if (i % 100 == 0)
+                    QCoreApplication::processEvents();
+            }
             i -= j;
-            m_producer->set("length", i);
+            m_producer->set("length", i * m_producer->get_int("ttl"));
             ui->durationSpinBox->setValue(i);
             MAIN.showStatusMessage(tr("Reloading image sequence..."));
+            QCoreApplication::processEvents();
         }
     }
     else {
         m_producer->set("resource", m_producer->get(kShotcutResourceProperty));
-        m_producer->set("length", qRound(MLT.profile().fps() * 600));
+        m_producer->set("length", qRound(MLT.profile().fps() * Mlt::kMaxImageDurationSecs));
         ui->durationSpinBox->setValue(qRound(MLT.profile().fps() * Settings.imageDuration()));
     }
     recreateProducer();
@@ -221,7 +227,10 @@ void ImageProducerWidget::on_sequenceCheckBox_clicked(bool checked)
 void ImageProducerWidget::on_repeatSpinBox_editingFinished()
 {
     m_producer->set("ttl", ui->repeatSpinBox->value());
-    emit producerChanged(m_producer);
+    ui->durationSpinBox->setValue(m_producer->get_length());
+    MAIN.showStatusMessage(tr("Reloading image sequence..."));
+    QCoreApplication::processEvents();
+    recreateProducer();
 }
 
 void ImageProducerWidget::on_defaultDurationButton_clicked()

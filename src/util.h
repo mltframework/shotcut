@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Meltytech, LLC
+ * Copyright (c) 2014-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -31,6 +31,8 @@ private:
 public:
     static QString baseName(const QString &filePath);
     static void setColorsToHighlight(QWidget* widget, QPalette::ColorRole role = QPalette::Window);
+    static void showInFolder(const QString &path);
+    static bool warnIfNotWritable(const QString& filePath, QWidget* parent, const QString& caption);
 };
 
 #endif // UTIL_H

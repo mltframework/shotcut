@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2016 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -43,7 +43,7 @@ void LissajousWidget::on_xratioDial_valueChanged(int value)
 {
     if (m_producer) {
         m_producer->set(kParamRatioX, value/100.0);
-        emit producerChanged(m_producer);
+        emit producerChanged(m_producer.data());
     }
     ui->xratioSpinner->setValue(value/100.0);
 }
@@ -57,7 +57,7 @@ void LissajousWidget::on_yratioDial_valueChanged(int value)
 {
     if (m_producer) {
         m_producer->set(kParamRatioY, value/100.0);
-        emit producerChanged(m_producer);
+        emit producerChanged(m_producer.data());
     }
     ui->yratioSpinner->setValue(value/100.0);
 }
@@ -67,7 +67,7 @@ void LissajousWidget::on_yratioSpinner_valueChanged(double value)
     ui->yratioDial->setValue(value * 100);
 }
 
-Mlt::Producer* LissajousWidget::producer(Mlt::Profile& profile)
+Mlt::Producer* LissajousWidget::newProducer(Mlt::Profile& profile)
 {
     Mlt::Producer* p = new Mlt::Producer(profile, "frei0r.lissajous0r");
     p->set(kParamRatioX, ui->xratioSpinner->text().toLatin1().constData());

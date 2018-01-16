@@ -12,11 +12,11 @@ Binaries are regularly built and are available at https://www.shotcut.org, on th
 ## Contributors
 
 - Dan Dennedy <<http://www.dennedy.org>> : main author
-- Brian Matherly <<pez4brian@yahoo.com>> : contributor
+- Brian Matherly <<code@brianmatherly.com>> : contributor
 
 ## Dependencies
 
-- [MLT](http://www.mltframework.org/): multimedia authoring framework
+- [MLT](https://www.mltframework.org/): multimedia authoring framework
 - [Qt 5](http://qt-project.org/): application and UI framework
 - [FFmpeg](http://www.ffmpeg.org/): multimedia format and codec libraries
 - [x264](http://www.videolan.org/developers/x264.html): H.264 encoder
@@ -24,6 +24,8 @@ Binaries are regularly built and are available at https://www.shotcut.org, on th
 - [LAME](http://lame.sourceforge.net/): MP3 encoder
 - [Frei0r](http://www.dyne.org/software/frei0r/): video plugins
 - [LADSPA](http://www.ladspa.org/): audio plugins
+- [WebVfx](https://github.com/mltframework/webvfx): video effects using web technologies
+- [Movit](https://git.sesse.net/?p=movit)
 
 ## Licence
 

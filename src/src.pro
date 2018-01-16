@@ -114,6 +114,7 @@ SOURCES += main.cpp\
     jobs/ffprobejob.cpp \
     jobs/ffmpegjob.cpp \
     dialogs/unlinkedfilesdialog.cpp \
+    dialogs/transcodedialog.cpp \
     docks/keyframesdock.cpp \
     qmltypes/qmlproducer.cpp
 
@@ -225,6 +226,7 @@ HEADERS  += mainwindow.h \
     jobs/ffprobejob.h \
     jobs/ffmpegjob.h \
     dialogs/unlinkedfilesdialog.h \
+    dialogs/transcodedialog.h \
     docks/keyframesdock.h \
     qmltypes/qmlproducer.h
 
@@ -268,7 +270,8 @@ FORMS    += mainwindow.ui \
     widgets/gdigrabwidget.ui \
     widgets/trackpropertieswidget.ui \
     widgets/timelinepropertieswidget.ui \
-    dialogs/unlinkedfilesdialog.ui
+    dialogs/unlinkedfilesdialog.ui \
+    dialogs/transcodedialog.ui
 
 RESOURCES += \
     ../icons/resources.qrc \
@@ -283,6 +286,9 @@ OTHER_FILES += \
     ../Info.plist \
     ../icons/dark/index.theme \
     ../icons/light/index.theme \
+    ../snap/snapcraft.yaml \
+    ../snap/setup/gui/shotcut.desktop \
+    ../shotcut.appdata.xml
 
 TRANSLATIONS += \
     ../translations/shotcut_ca.ts \
@@ -294,7 +300,11 @@ TRANSLATIONS += \
     ../translations/shotcut_es.ts \
     ../translations/shotcut_fr.ts \
     ../translations/shotcut_gd.ts \
+    ../translations/shotcut_hu.ts \
     ../translations/shotcut_it.ts \
+    ../translations/shotcut_ja.ts \
+    ../translations/shotcut_nb.ts \
+    ../translations/shotcut_ne.ts \
     ../translations/shotcut_nl.ts \
     ../translations/shotcut_oc.ts \
     ../translations/shotcut_pl.ts \
@@ -302,8 +312,12 @@ TRANSLATIONS += \
     ../translations/shotcut_pt_PT.ts \
     ../translations/shotcut_ru.ts \
     ../translations/shotcut_sk.ts \
+    ../translations/shotcut_sl.ts \
+    ../translations/shotcut_tr.ts \
     ../translations/shotcut_uk.ts \
-    ../translations/shotcut_zh.ts
+    ../translations/shotcut_zh_CN.ts \
+    ../translations/shotcut_zh_TW.ts
+
 
 INCLUDEPATH = ../CuteLogger/include ../mvcp
 
@@ -316,7 +330,7 @@ debug_and_release {
 } else {
     LIBS += -L../CuteLogger -L../mvcp
 }
-LIBS += -lLogger -lmvcp -lpthread
+LIBS += -lCuteLogger -lmvcp -lpthread
 
 isEmpty(SHOTCUT_VERSION) {
     !win32:SHOTCUT_VERSION = $$system(date "+%y.%m.%d")
@@ -329,6 +343,7 @@ mac {
     TARGET = Shotcut
     ICON = ../icons/shotcut.icns
     QMAKE_INFO_PLIST = ../Info.plist
+    INCLUDEPATH += $$[QT_INSTALL_HEADERS]
 
     # QMake from Qt 5.1.0 on OSX is messing with the environment in which it runs
     # pkg-config such that the PKG_CONFIG_PATH env var is not set.
@@ -375,3 +390,9 @@ INSTALLS += target
 qmlfiles.files = $$PWD/qml
 qmlfiles.path = $$PREFIX/share/shotcut
 INSTALLS += qmlfiles
+
+unix:!mac {
+    metainfo.files = $$PWD/../shotcut.appdata.xml
+    metainfo.path = $$PREFIX/share/metainfo
+    INSTALLS += qmlfiles
+}

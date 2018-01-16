@@ -142,6 +142,30 @@ Rectangle {
                 border.color: selected? 'red' : 'transparent'
                 border.width: selected? 1 : 0
                 z: 1
+                Label {
+                    text: qsTr('Master')
+                    visible: tracksRepeater.count
+                    color: activePalette.windowText
+                    elide: Qt.ElideRight
+                    x: 8
+                    y: 2
+                    width: parent.width - 8
+                }
+                ToolButton {
+                    visible: multitrack.filtered
+                    anchors.right: parent.right
+                    anchors.rightMargin: 4
+                    anchors.verticalCenter: parent.verticalCenter
+                    implicitWidth: 20
+                    implicitHeight: 20
+                    iconName: 'view-filter'
+                    iconSource: 'qrc:///icons/oxygen/32x32/status/view-filter.png'
+                    tooltip: qsTr('Filters')
+                    onClicked: {
+                        timeline.selectMultitrack()
+                        timeline.filteredClicked()
+                    }
+                }
                 MouseArea {
                     anchors.fill: parent
                     acceptedButtons: Qt.LeftButton
@@ -167,6 +191,7 @@ Rectangle {
                             isComposite: model.composite
                             isLocked: model.locked
                             isVideo: !model.audio
+                            isFiltered: model.filtered
                             width: headerWidth
                             height: Logic.trackHeight(model.audio)
                             selected: false
@@ -417,10 +442,18 @@ Rectangle {
             checkable: true
             checked: settings.timelineShowWaveforms
             onTriggered: {
-                settings.timelineShowWaveforms = checked
                 if (checked) {
-                    for (var i = 0; i < tracksRepeater.count; i++)
-                        tracksRepeater.itemAt(i).redrawWaveforms()
+                    if (settings.timelineShowWaveforms) {
+                        settings.timelineShowWaveforms = checked
+                        for (var i = 0; i < tracksRepeater.count; i++)
+                            tracksRepeater.itemAt(i).redrawWaveforms()
+                    } else {
+                        settings.timelineShowWaveforms = checked
+                        for (var i = 0; i < tracksRepeater.count; i++)
+                            tracksRepeater.itemAt(i).remakeWaveforms(false)
+                    }
+                } else {
+                    settings.timelineShowWaveforms = checked
                 }
             }
         }
@@ -538,6 +571,7 @@ Rectangle {
     Connections {
         target: multitrack
         onLoaded: toolbar.scaleSlider.value = Math.pow(multitrack.scaleFactor - 0.01, 1.0 / 3.0)
+        onScaleFactorChanged: Logic.scrollIfNeeded()
     }
 
     // This provides continuous scrolling at the left/right edges.

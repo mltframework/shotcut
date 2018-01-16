@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 Meltytech, LLC
+ * Copyright (c) 2013-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -247,12 +247,12 @@ void HideTrackCommand::undo()
     m_model.setTrackHidden(m_trackIndex, m_oldValue);
 }
 
-CompositeTrackCommand::CompositeTrackCommand(MultitrackModel &model, int trackIndex, Qt::CheckState value, QUndoCommand *parent)
+CompositeTrackCommand::CompositeTrackCommand(MultitrackModel &model, int trackIndex, bool value, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_value(value)
-    , m_oldValue(Qt::CheckState(model.data(m_model.index(trackIndex), MultitrackModel::IsCompositeRole).toInt()))
+    , m_oldValue(model.data(m_model.index(trackIndex), MultitrackModel::IsCompositeRole).toBool())
 {
     setText(QObject::tr("Change track compositing"));
 }

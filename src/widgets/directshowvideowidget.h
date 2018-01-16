@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Meltytech, LLC
+ * Copyright (c) 2014-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -35,7 +35,7 @@ public:
     ~DirectShowVideoWidget();
 
     // AbstractProducerWidget overrides
-    Mlt::Producer* producer(Mlt::Profile& profile);
+    Mlt::Producer* newProducer(Mlt::Profile& profile);
     void setProducer(Mlt::Producer* producer);
 
 signals:

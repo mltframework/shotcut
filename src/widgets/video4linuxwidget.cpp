@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2016 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,6 +23,7 @@
 #include "alsawidget.h"
 #include "mltcontroller.h"
 #include "util.h"
+#include "shotcut_mlt_properties.h"
 #include <QtWidgets>
 
 Video4LinuxWidget::Video4LinuxWidget(QWidget *parent) :
@@ -57,7 +58,7 @@ QString Video4LinuxWidget::URL() const
     return s;
 }
 
-Mlt::Producer* Video4LinuxWidget::producer(Mlt::Profile& profile)
+Mlt::Producer* Video4LinuxWidget::newProducer(Mlt::Profile& profile)
 {
     if (!profile.is_explicit()) {
         Mlt::Profile ntscProfile("dv_ntsc");
@@ -85,12 +86,12 @@ Mlt::Producer* Video4LinuxWidget::producer(Mlt::Profile& profile)
     if (!p->is_valid()) {
         delete p;
         p = new Mlt::Producer(profile, "color:");
-        p->set("resource", QString("video4linux2:%1")
+        p->set("resource1", QString("video4linux2:%1")
                .arg(ui->v4lLineEdit->text()).toLatin1().constData());
         p->set("error", 1);
     }
     else if (m_audioWidget) {
-        Mlt::Producer* audio = dynamic_cast<AbstractProducerWidget*>(m_audioWidget)->producer(profile);
+        Mlt::Producer* audio = dynamic_cast<AbstractProducerWidget*>(m_audioWidget)->newProducer(profile);
         Mlt::Tractor* tractor = new Mlt::Tractor;
         tractor->set("_profile", profile.get_profile(), 0);
         tractor->set_track(*p, 0);
@@ -99,7 +100,7 @@ Mlt::Producer* Video4LinuxWidget::producer(Mlt::Profile& profile)
         delete audio;
         p = new Mlt::Producer(tractor->get_producer());
         delete tractor;
-        p->set("resource", QString("video4linux2:%1")
+        p->set("resource1", QString("video4linux2:%1")
                .arg(ui->v4lLineEdit->text()).toLatin1().constData());
     }
     p->set("device", ui->v4lLineEdit->text().toLatin1().constData());
@@ -111,6 +112,8 @@ Mlt::Producer* Video4LinuxWidget::producer(Mlt::Profile& profile)
     p->set("channel", ui->v4lChannelSpinBox->value());
     p->set("audio_ix", ui->v4lAudioComboBox->currentIndex());
     p->set("force_seekable", 0);
+    p->set(kBackgroundCaptureProperty, 1);
+    p->set(kShotcutCaptionProperty, "Video4Linux");
     return p;
 }
 
@@ -182,6 +185,13 @@ void Video4LinuxWidget::setProducer(Mlt::Producer* producer)
 void Video4LinuxWidget::on_applyButton_clicked()
 {
     MLT.close();
-    MLT.setProducer(producer(MLT.profile()));
+    AbstractProducerWidget::setProducer(0);
+    emit producerChanged(0);
+    QCoreApplication::processEvents();
+
+    Mlt::Producer* p = newProducer(MLT.profile());
+    AbstractProducerWidget::setProducer(p);
+    MLT.setProducer(p);
     MLT.play();
+    emit producerChanged(p);
 }

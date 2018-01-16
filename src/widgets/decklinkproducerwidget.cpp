@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2016 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,6 +20,7 @@
 #include "ui_decklinkproducerwidget.h"
 #include "mltcontroller.h"
 #include "util.h"
+#include "shotcut_mlt_properties.h"
 
 DecklinkProducerWidget::DecklinkProducerWidget(QWidget *parent) :
     QWidget(parent),
@@ -67,12 +68,15 @@ DecklinkProducerWidget::~DecklinkProducerWidget()
     delete ui;
 }
 
-Mlt::Producer* DecklinkProducerWidget::producer(Mlt::Profile& profile)
+Mlt::Producer* DecklinkProducerWidget::newProducer(Mlt::Profile& profile)
 {
     Mlt::Producer* p = new Mlt::Producer(profile,
         QString("consumer:decklink:%1").arg(ui->deviceCombo->currentIndex()).toLatin1().constData());
-    if (p->is_valid())
+    if (p->is_valid()) {
         p->set("profile", ui->profileCombo->itemData(ui->profileCombo->currentIndex()).toString().toLatin1().constData());
+        p->set(kBackgroundCaptureProperty, 2);
+        p->set(kShotcutCaptionProperty, tr("SDI/HDMI").toUtf8().constData());
+    }
     return p;
 }
 
@@ -87,18 +91,27 @@ Mlt::Properties* DecklinkProducerWidget::getPreset() const
 void DecklinkProducerWidget::loadPreset(Mlt::Properties& p)
 {
     ui->deviceCombo->setCurrentIndex(p.get_int("card"));
-    ui->deviceCombo->setCurrentIndex(p.get_int("profile"));
+    for (int i = 0; i < ui->profileCombo->count(); ++i) {
+        if (ui->profileCombo->itemData(i).toString() == p.get("profile")) {
+            ui->profileCombo->setCurrentIndex(i);
+            break;
+        }
+    }
 }
 
 void DecklinkProducerWidget::on_deviceCombo_activated(int /*index*/)
 {
     if (m_producer) {
-        MLT.stop();
-        delete m_producer;
-        m_producer = 0;
-        setProducer(producer(MLT.profile()));
+        MLT.close();
+        AbstractProducerWidget::setProducer(0);
+        emit producerChanged(0);
+        QCoreApplication::processEvents();
+
+        Mlt::Producer* p = newProducer(MLT.profile());
+        AbstractProducerWidget::setProducer(p);
+        MLT.setProducer(p);
         MLT.play();
-        emit producerChanged(m_producer);
+        emit producerChanged(p);
     }
 }
 

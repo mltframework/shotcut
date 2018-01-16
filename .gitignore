@@ -16,3 +16,5 @@ src/shotcut
 .directory
 *.orig
 src/qml/export-edl/node_modules
+*.qmlc
+*.jsc

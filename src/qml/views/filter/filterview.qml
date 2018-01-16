@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Meltytech, LLC
+ * Copyright (c) 2014-2017 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -56,13 +56,6 @@ Rectangle {
     
     SystemPalette { id: activePalette }
     
-    FilterMenu {
-        id: filterMenu
-        onFilterSelected: {
-            attachedfiltersmodel.add(metadatamodel.get(index))
-        }
-    }
-
     Rectangle {
         id: titleBackground
         anchors {
@@ -131,7 +124,7 @@ Rectangle {
             enabled: attachedfiltersmodel.ready
             opacity: enabled ? 1.0 : 0.5
             tooltip: qsTr('Add a filter')
-            onClicked: filterMenu.popup(addButton)
+            onClicked: filterMenu.open()
         }
         Button {
             id: removeButton            
@@ -194,6 +187,20 @@ Rectangle {
         }
     }
         
+    FilterMenu {
+        id: filterMenu
+        anchors {
+            top: titleBackground.bottom
+            left: parent.left
+            right: parent.right
+            bottom: parent.bottom
+            topMargin: attachedContainer.anchors.topMargin
+        }
+        onFilterSelected: {
+            attachedfiltersmodel.add(metadatamodel.get(index))
+        }
+    }
+
     states: [
         State {
             name: "landscape"
@@ -207,8 +214,11 @@ Rectangle {
                 }
             }
             PropertyChanges {
-                target: attachedContainer; width: 200
-                height: root.height - addButton.height * 2
+                target: attachedContainer
+                width: 200
+                height: root.height -
+                    titleBackground.height - titleBackground.anchors.topMargin - titleBackground.anchors.bottomMargin -
+                    attachedContainer.anchors.topMargin - attachedContainer.anchors.bottomMargin
             }
         },
         State {
@@ -229,4 +239,9 @@ Rectangle {
             }
         }
     ]
+
+    Connections {
+        target: attachedfiltersmodel
+        onIsProducerSelectedChanged: filterMenu.close()
+    }
 }

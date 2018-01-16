@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>366</width>
+    <width>384</width>
     <height>534</height>
    </rect>
   </property>
@@ -83,13 +83,16 @@
         <bool>false</bool>
        </property>
        <property name="suffix">
-        <string notr="true"> x</string>
+        <string notr="true" extracomment="The multiplication symbol that appears as the unit of measure for the speed field"> x</string>
+       </property>
+       <property name="decimals">
+        <number>3</number>
        </property>
        <property name="minimum">
         <double>0.010000000000000</double>
        </property>
        <property name="maximum">
-        <double>20.000000000000000</double>
+        <double>200.000000000000000</double>
        </property>
        <property name="singleStep">
         <double>0.100000000000000</double>
@@ -211,7 +214,7 @@
             <number>1</number>
            </property>
            <property name="maximum">
-            <number>4096</number>
+            <number>8192</number>
            </property>
            <property name="value">
             <number>16</number>
@@ -237,7 +240,7 @@
             <number>1</number>
            </property>
            <property name="maximum">
-            <number>4096</number>
+            <number>8192</number>
            </property>
            <property name="value">
             <number>9</number>
@@ -790,6 +793,14 @@
   <action name="actionFFmpegIntegrityCheck">
    <property name="text">
     <string>Start Integrity Check Job</string>
+   </property>
+  </action>
+  <action name="actionFFmpegConvert">
+   <property name="text">
+    <string>Convert to Edit-friendly...</string>
+   </property>
+   <property name="toolTip">
+    <string>Convert to Edit-friendly...</string>
    </property>
   </action>
  </widget>

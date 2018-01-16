@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -41,6 +41,9 @@ signals:
 public slots:
     void add(const QString&);
     QString remove(const QString& s);
+
+protected:
+    void keyPressEvent(QKeyEvent* event);
 
 private:
     Ui::RecentDock *ui;

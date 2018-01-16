@@ -31,6 +31,7 @@ QmlMetadata::QmlMetadata(QObject *parent)
     , m_gpuAlt("")
     , m_allowMultiple(true)
     , m_isClipOnly(false)
+    , m_isGpuCompatible(true)
 {
 }
 

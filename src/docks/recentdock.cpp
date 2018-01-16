@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2016 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,6 +22,7 @@
 #include "util.h"
 
 #include <QDir>
+#include <QKeyEvent>
 #include <Logger.h>
 
 static const int MaxItems = 100;
@@ -34,6 +35,25 @@ RecentDock::RecentDock(QWidget *parent) :
     ui->setupUi(this);
     toggleViewAction()->setIcon(windowIcon());
     m_recent = Settings.recent();
+
+#ifdef Q_OS_WIN
+    // Remove bad entries on Windows due to bug in v17.01.
+    QStringList newList;
+    bool isRepaired = false;
+    foreach (QString s, m_recent) {
+        if (s.size() >=3 && s[0] == '/' && s[2] == ':') {
+            s.remove(0, 1);
+            isRepaired = true;
+        }
+        newList << s;
+    }
+    if (isRepaired) {
+        m_recent = newList;
+        Settings.setRecent(m_recent);
+        Settings.sync();
+    }
+#endif
+
     ui->listWidget->setDragEnabled(true);
     ui->listWidget->setDragDropMode(QAbstractItemView::DragOnly);
     foreach (QString s, m_recent) {
@@ -81,6 +101,17 @@ QString RecentDock::remove(const QString &s)
     if (items.count() > 0)
         m_model.removeRow(items.first()->row());
     return name;
+}
+
+void RecentDock::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Backspace || event->key() == Qt::Key_Delete) {
+        m_recent.removeAt(ui->listWidget->currentIndex().row());
+        Settings.setRecent(m_recent);
+        m_model.removeRow(ui->listWidget->currentIndex().row());
+    } else {
+        QDockWidget::keyPressEvent(event);
+    }
 }
 
 void RecentDock::on_lineEdit_textChanged(const QString& search)

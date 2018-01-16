@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 Meltytech, LLC
+ * Copyright (c) 2013-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -37,7 +37,7 @@ WebvfxProducer::~WebvfxProducer()
     delete ui;
 }
 
-Mlt::Producer* WebvfxProducer::producer(Mlt::Profile &profile)
+Mlt::Producer* WebvfxProducer::newProducer(Mlt::Profile &profile)
 {
     QString s("webvfx:");
     if (!ui->webvfxCheckBox->isChecked())
@@ -66,7 +66,7 @@ void WebvfxProducer::setProducer(Mlt::Producer* producer)
 
 void WebvfxProducer::on_reloadButton_clicked()
 {
-    Mlt::Producer* p = producer(MLT.profile());
+    Mlt::Producer* p = newProducer(MLT.profile());
     Mlt::Controller::copyFilters(*m_producer, *p);
     MLT.setProducer(p);
     MLT.play();

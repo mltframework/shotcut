@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2016 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -37,7 +37,7 @@ NetworkProducerWidget::~NetworkProducerWidget()
     delete ui;
 }
 
-Mlt::Producer* NetworkProducerWidget::producer(Mlt::Profile& profile)
+Mlt::Producer* NetworkProducerWidget::newProducer(Mlt::Profile& profile)
 {
     Mlt::Producer* p = new Mlt::Producer(profile, ui->urlLineEdit->text().toUtf8().constData());
     return p;
@@ -76,6 +76,6 @@ void NetworkProducerWidget::setProducer(Mlt::Producer* producer)
 
 void NetworkProducerWidget::on_applyButton_clicked()
 {
-    MLT.setProducer(producer(MLT.profile()));
+    MLT.setProducer(newProducer(MLT.profile()));
     MLT.play();
 }

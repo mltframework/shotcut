@@ -1,5 +1,5 @@
 /*
-  Copyright (c) 2010 Boris Moiseev (cyberbobs at gmail dot com)
+  Copyright (c) 2012 Boris Moiseev (cyberbobs at gmail dot com)
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU Lesser General Public License version 2.1
@@ -13,172 +13,71 @@
 */
 #ifndef LOGGER_H
 #define LOGGER_H
-/**
- * \file Logger.h
- * \brief A file containing the description of Logger class and and additional useful macros for logging
- */
 
 // Qt
 #include <QString>
 #include <QDebug>
-class QDateTime;
+#include <QDateTime>
 
 // Local
 #include "CuteLogger_global.h"
 class AbstractAppender;
 
 
-//! Writes the trace log record
-/**
- * This macro is the convinient way to call Logger::write(). It uses the common preprocessor macros \c __FILE__,
- * \c __LINE__ and the standart Qt \c Q_FUNC_INFO macros to automatically determine the needed parameters to call
- * Logger::write().
- *
- * \note This and other (LOG_INFO() etc...) macros uses the variadic macro arguments to give convinient usage form for
- * the different versions of Logger::write() (using the QString or const char* argument or returning the QDebug class
- * instance). Not all compilers will support this. Please, consider reviewing your compiler documentation to ensure
- * it support __VA_ARGS__ macro.
- *
- * It is checked to work with GCC 4.4 or later.
- *
- * \sa Logger::LogLevel
- * \sa Logger::write()
- */
-#define LOG_TRACE(...)   Logger::write(Logger::Trace, __FILE__, __LINE__, Q_FUNC_INFO, ##__VA_ARGS__)
-
-//! Writes the debug log record
-/**
- * This macro records the info log record using the Logger::write() function. It works identically to the LOG_TRACE()
- * macro.
- *
- * \sa LOG_TRACE()
- * \sa Logger::LogLevel
- * \sa Logger::write()
- */
-#define LOG_DEBUG(...)   Logger::write(Logger::Debug, __FILE__, __LINE__, Q_FUNC_INFO, ##__VA_ARGS__)
-
-//! Write the info log record
-/**
- * This macro records the info log record using the Logger::write() function. It works identically to the LOG_TRACE()
- * macro.
- *
- * \sa LOG_TRACE()
- * \sa Logger::LogLevel
- * \sa Logger::write()
- */
-#define LOG_INFO(...)    Logger::write(Logger::Info, __FILE__, __LINE__, Q_FUNC_INFO, ##__VA_ARGS__)
-
-//! Write the warning log record
-/**
- * This macro records the warning log record using the Logger::write() function. It works identically to the LOG_TRACE()
- * macro.
- *
- * \sa LOG_TRACE()
- * \sa Logger::LogLevel
- * \sa Logger::write()
- */
-#define LOG_WARNING(...) Logger::write(Logger::Warning, __FILE__, __LINE__, Q_FUNC_INFO, ##__VA_ARGS__)
-
-//! Write the error log record
-/**
- * This macro records the error log record using the Logger::write() function. It works identically to the LOG_TRACE()
- * macro.
- *
- * \sa LOG_TRACE()
- * \sa Logger::LogLevel
- * \sa Logger::write()
- */
-#define LOG_ERROR(...)   Logger::write(Logger::Error, __FILE__, __LINE__, Q_FUNC_INFO, ##__VA_ARGS__)
-
-//! Write the fatal log record
-/**
- * This macro records the fatal log record using the Logger::write() function. It works identically to the LOG_TRACE()
- * macro.
- *
- * \note Recording of the log record using the Logger::Fatal log level will lead to calling the STL abort()
- *       function, which will interrupt the running of your software and begin the writing of the core dump.
- *
- * \sa LOG_TRACE()
- * \sa Logger::LogLevel
- * \sa Logger::write()
- */
-#define LOG_FATAL(...)   Logger::write(Logger::Fatal, __FILE__, __LINE__, Q_FUNC_INFO, ##__VA_ARGS__)
-
-//! Check the assertion
-/**
- * This macro is a convinient and recommended to use way to call Logger::writeAssert() function. It uses the
- * preprocessor macros (as the LOG_DEBUG() does) to fill the necessary arguments of the Logger::writeAssert() call. It
- * also uses undocumented but rather mature and stable \c qt_noop() function (which does nothing) when the assertion
- * is true.
- *
- * Example:
- * \code
- * bool b = checkSomething();
- * ...
- * LOG_ASSERT(b == true);
- * \endcode
- *
- * \sa Logger::writeAssert()
- */
-#define LOG_ASSERT(cond) ((!(cond)) ? Logger::writeAssert(__FILE__, __LINE__, Q_FUNC_INFO, #cond) : qt_noop())
+class Logger;
+CUTELOGGERSHARED_EXPORT Logger* cuteLoggerInstance();
+#define cuteLogger cuteLoggerInstance()
 
 
-/**
- * \mainpage
- *
- * Logger is a simple way to write the history of your application lifecycle to any target logging device (which is
- * called Appender and may write to any target you will implement with it: console, text file, XML or something - you
- * choose) and to map logging message to a class, function, source file and line of code which it is called from.
- *
- * Some simple appenders (which may be considered an examples) are provided with the logger itself: see ConsoleAppender
- * and FileAppender documentation.
- *
- * It supports using it in a multithreaded applications, so ALL of its functions are thread safe.
- *
- * Simple usage example:
- * \code
- * #include <QCoreApplication>
- *
- * #include <Logger.h>
- * #include <ConsoleAppender.h>
- *
- * int main(int argc, char* argv[])
- * {
- *   QCoreApplication app(argc, argv);
- *   ...
- *   ConsoleAppender* consoleAppender = new ConsoleAppender();
- *   consoleAppender->setFormat("[%-7l] <%C> %m\n");
- *   Logger::registerAppender(consoleAppender);
- *   ...
- *   LOG_INFO("Starting the application");
- *   int result = app.exec();
- *   ...
- *   if (result)
- *     LOG_WARNING() << "Something went wrong." << "Result code is" << result;
- *
- *   return result;
- * }
- * \endcode
- *
- * Logger internally uses the lazy-initialized singleton object and needs no definite initialization, but you may
- * consider registering a log appender before calling any log recording functions or macros.
- *
- * The library design of Logger allows you to simply mass-replace all occurrences of qDebug and similiar calls with
- * similiar Logger macros (e.g. LOG_DEBUG)
- *
- * \note Logger uses a singleton class which must live through all the application life cycle and cleans it on the
- *       destruction of the QCoreApplication (or QApplication) instance. It needs a QCoreApplication instance to be
- *       created before any of the Logger's functions are called.
- *
- * \sa AbstractAppender
- * \sa LOG_TRACE, LOG_DEBUG, LOG_INFO, LOG_WARNING, LOG_ERROR, LOG_FATAL
- * \sa LOG_ASSERT
- */
+#define LOG_TRACE            CuteMessageLogger(cuteLoggerInstance(), Logger::Trace,   __FILE__, __LINE__, Q_FUNC_INFO).write
+#define LOG_DEBUG            CuteMessageLogger(cuteLoggerInstance(), Logger::Debug,   __FILE__, __LINE__, Q_FUNC_INFO).write
+#define LOG_INFO             CuteMessageLogger(cuteLoggerInstance(), Logger::Info,    __FILE__, __LINE__, Q_FUNC_INFO).write
+#define LOG_WARNING          CuteMessageLogger(cuteLoggerInstance(), Logger::Warning, __FILE__, __LINE__, Q_FUNC_INFO).write
+#define LOG_ERROR            CuteMessageLogger(cuteLoggerInstance(), Logger::Error,   __FILE__, __LINE__, Q_FUNC_INFO).write
+#define LOG_FATAL            CuteMessageLogger(cuteLoggerInstance(), Logger::Fatal,   __FILE__, __LINE__, Q_FUNC_INFO).write
 
-//! Very simple but rather powerful component which may be used for logging your application activities.
+#define LOG_CTRACE(category)   CuteMessageLogger(cuteLoggerInstance(), Logger::Trace,   __FILE__, __LINE__, Q_FUNC_INFO, category).write()
+#define LOG_CDEBUG(category)   CuteMessageLogger(cuteLoggerInstance(), Logger::Debug,   __FILE__, __LINE__, Q_FUNC_INFO, category).write()
+#define LOG_CINFO(category)    CuteMessageLogger(cuteLoggerInstance(), Logger::Info,    __FILE__, __LINE__, Q_FUNC_INFO, category).write()
+#define LOG_CWARNING(category) CuteMessageLogger(cuteLoggerInstance(), Logger::Warning, __FILE__, __LINE__, Q_FUNC_INFO, category).write()
+#define LOG_CERROR(category)   CuteMessageLogger(cuteLoggerInstance(), Logger::Error,   __FILE__, __LINE__, Q_FUNC_INFO, category).write()
+#define LOG_CFATAL(category)   CuteMessageLogger(cuteLoggerInstance(), Logger::Fatal,   __FILE__, __LINE__, Q_FUNC_INFO, category).write()
+
+#define LOG_TRACE_TIME  LoggerTimingHelper loggerTimingHelper(cuteLoggerInstance(), Logger::Trace, __FILE__, __LINE__, Q_FUNC_INFO); loggerTimingHelper.start
+#define LOG_DEBUG_TIME  LoggerTimingHelper loggerTimingHelper(cuteLoggerInstance(), Logger::Debug, __FILE__, __LINE__, Q_FUNC_INFO); loggerTimingHelper.start
+#define LOG_INFO_TIME   LoggerTimingHelper loggerTimingHelper(cuteLoggerInstance(), Logger::Info,  __FILE__, __LINE__, Q_FUNC_INFO); loggerTimingHelper.start
+
+#define LOG_ASSERT(cond)        ((!(cond)) ? cuteLoggerInstance()->writeAssert(__FILE__, __LINE__, Q_FUNC_INFO, #cond) : qt_noop())
+#define LOG_ASSERT_X(cond, msg) ((!(cond)) ? cuteLoggerInstance()->writeAssert(__FILE__, __LINE__, Q_FUNC_INFO, msg) : qt_noop())
+
+#define LOG_CATEGORY(category) \
+  private:\
+    Logger* cuteLoggerInstance()\
+    {\
+      static Logger customCuteLoggerInstance(category);\
+      return &customCuteLoggerInstance;\
+    }\
+
+#define LOG_GLOBAL_CATEGORY(category) \
+  private:\
+    Logger* cuteLoggerInstance()\
+    {\
+      static Logger customCuteLoggerInstance(category);\
+      customCuteLoggerInstance.logToGlobalInstance(category, true);\
+      return &customCuteLoggerInstance;\
+    }\
+
+
+class LoggerPrivate;
 class CUTELOGGERSHARED_EXPORT Logger
 {
+  Q_DISABLE_COPY(Logger)
+
   public:
+    Logger();
+    Logger(const QString& defaultCategory);
+    ~Logger();
+
     //! Describes the possible severity levels of the log records
     enum LogLevel
     {
@@ -190,130 +89,130 @@ class CUTELOGGERSHARED_EXPORT Logger
       Fatal    //!< Fatal. Used for unrecoverable errors, crashes the application right after the log record is written.
     };
 
-    //! Converts the LogLevel enum value to its string representation
-    /**
-     * \param logLevel Log level to convert
-     *
-     * \sa LogLevel
-     * \sa levelFromString()
-     */
-    static QString levelToString(LogLevel logLevel);
+    //! Sets the timing display mode for the LOG_TRACE_TIME, LOG_DEBUG_TIME and LOG_INFO_TIME macros
+    enum TimingMode
+    {
+      TimingAuto, //!< Show time in seconds, if it exceeds 10s (default)
+      TimingMs    //!< Always use milliseconds to display
+    };
 
-    //! Converts the LogLevel string representation to enum value
-    /**
-     * Comparation of the strings is case independent. If the log level string provided cannot be understood
-     * Logger::Debug is returned.
-     *
-     * \param s String to be decoded
-     *
-     * \sa LogLevel
-     * \sa levelToString()
-     */
+    static QString levelToString(LogLevel logLevel);
     static LogLevel levelFromString(const QString& s);
 
-    //! Registers the appender to write the log records to
-    /**
-     * On the log writing call (using one of the macros or the write() function) Logger traverses through the list of
-     * the appenders and writes a log records to the each of them. Please, look through the AbstractAppender
-     * documentation to understand the concept of appenders.
-     *
-     * If no appenders was added to Logger, it falls back to logging into the \c std::cerr STL stream.
-     *
-     * \param appender Appender to register in the Logger
-     *
-     * \note Logger takes ownership on the appender and it will delete it on the application exit. According to this,
-     *       appenders must be created on heap to prevent double destruction of the appender.
-     *
-     * \sa AbstractAppender
-     */
-    static void registerAppender(AbstractAppender* appender);
+    static Logger* globalInstance();
 
-    //! Writes the log record
-    /**
-     * Writes the log records with the supplied arguments to all the registered appenders.
-     *
-     * \note It is not recommended to call this function directly. Instead of this you can just call one of the macros
-     *       (LOG_TRACE, LOG_DEBUG, LOG_INFO, LOG_WARNING, LOG_ERROR, LOG_FATAL) that will supply all the needed
-     *       information to this function.
-     *
-     * \param timeStamp - the time stamp of the record
-     * \param logLevel - the log level of the record
-     * \param file - the name of the source file that requested the log record
-     * \param line - the line of the code of source file that requested the log record
-     * \param function - name of the function that requested the log record
-     * \param message - log message
-     *
-     * \note Recording of the log record using the Logger::Fatal log level will lead to calling the STL abort()
-     *       function, which will interrupt the running of your software and begin the writing of the core dump.
-     *
-     * \sa LogLevel
-     * \sa LOG_TRACE, LOG_DEBUG, LOG_INFO, LOG_WARNING, LOG_ERROR, LOG_FATAL
-     * \sa AbstractAppender
-     */
-    static void write(const QDateTime& timeStamp, LogLevel logLevel, const char* file, int line, const char* function,
-                      const QString& message);
+    void registerAppender(AbstractAppender* appender);
+    void registerCategoryAppender(const QString& category, AbstractAppender* appender);
 
-    /**
-     * This is the overloaded function provided for the convinience. It behaves identically to the above function.
-     *
-     * This function uses the current timestamp obtained with \c QDateTime::currentDateTime().
-     *
-     * \sa write()
-     */
-    static void write(LogLevel logLevel, const char* file, int line, const char* function, const QString& message);
+    void removeAppender(AbstractAppender* appender);
 
-    /**
-     * This is the overloaded function provided for the convinience. It behaves identically to the above function.
-     *
-     * This function uses the current timestamp obtained with \c QDateTime::currentDateTime(). Also it supports writing
-     * <tt>const char*</tt> instead of \c QString and converts it internally using the \c QString::fromAscii(). If you
-     * want this function to support the non-ascii strings, you will need to setup the codec using the
-     * \c QTextCodec::setCodecForCStrings()
-     *
-     * \sa write()
-     */
-    static void write(LogLevel logLevel, const char* file, int line, const char* function, const char* message, ...);
+    void logToGlobalInstance(const QString& category, bool logToGlobal = false);
 
-    /**
-     * This is the overloaded function provided for the convinience. It behaves identically to the above function.
-     *
-     * This function doesn't accept any log message as argument. It returns the \c QDebug object that can be written
-     * using the stream functions. For example, you may like to write:
-     * \code
-     * LOG_DEBUG() << "This is the size" << size << "of the element" << elementName;
-     * \endcode
-     * instead of writing
-     * \code
-     * LOG_DEBUG(QString(QLatin1String("This is the size %1x%2 of the element %3"))
-     *           .arg(size.x()).arg(size.y()).arg(elementName));
-     * \endcode
-     *
-     * Please consider reading the Qt Reference Documentation for the description of the QDebug class usage syntax.
-     *
-     * \note This overload is definitely more pleasant to use than the first write() overload, but it behaves definitely
-     *       slower than all the above overloads.
-     *
-     * \sa write()
-     */
-    static QDebug write(LogLevel logLevel, const char* file, int line, const char* function);
+    void setDefaultCategory(const QString& category);
+    QString defaultCategory() const;
 
-    //! Writes the assertion
-    /**
-     * This function writes the assertion record using the write() function.
-     *
-     * The assertion record is always written using the Logger::Fatal log level which leads to the abortation of the
-     * program and generation of the core dump (if supported).
-     *
-     * The message written to the appenders will be identical to the \c condition argument prefixed with the
-     * <tt>ASSERT:</tt> notification.
-     *
-     * \note It is not recommended to call this function directly. Instead of this you can just call the LOG_ASSERT
-     *       macro that will supply all the needed information to this function.
-     *
-     * \sa LOG_ASSERT
-     * \sa write()
-     */
-    static void writeAssert(const char* file, int line, const char* function, const char* condition);
+    void write(const QDateTime& timeStamp, LogLevel logLevel, const char* file, int line, const char* function, const char* category,
+               const QString& message);
+    void write(LogLevel logLevel, const char* file, int line, const char* function, const char* category, const QString& message);
+    QDebug write(LogLevel logLevel, const char* file, int line, const char* function, const char* category);
+
+    void writeAssert(const char* file, int line, const char* function, const char* condition);
+
+  private:
+    void write(const QDateTime& timeStamp, LogLevel logLevel, const char* file, int line, const char* function, const char* category,
+               const QString& message, bool fromLocalInstance);
+    Q_DECLARE_PRIVATE(Logger)
+    LoggerPrivate* d_ptr;
 };
+
+
+class CUTELOGGERSHARED_EXPORT CuteMessageLogger
+{
+  Q_DISABLE_COPY(CuteMessageLogger)
+
+  public:
+    Q_DECL_CONSTEXPR CuteMessageLogger(Logger* l, Logger::LogLevel level, const char* file, int line, const char* function)
+        : m_l(l),
+          m_level(level),
+          m_file(file),
+          m_line(line),
+          m_function(function),
+          m_category(0)
+    {}
+
+    Q_DECL_CONSTEXPR CuteMessageLogger(Logger* l, Logger::LogLevel level, const char* file, int line, const char* function, const char* category)
+        : m_l(l),
+          m_level(level),
+          m_file(file),
+          m_line(line),
+          m_function(function),
+          m_category(category)
+    {}
+
+    void write(const char* msg, ...) const
+#if defined(Q_CC_GNU) && !defined(__INSURE__)
+#  if defined(Q_CC_MINGW) && !defined(Q_CC_CLANG)
+    __attribute__ ((format (gnu_printf, 2, 3)))
+#  else
+    __attribute__ ((format (printf, 2, 3)))
+#  endif
+#endif
+    ;
+
+    void write(const QString& msg) const;
+
+    QDebug write() const;
+
+  private:
+    Logger* m_l;
+    Logger::LogLevel m_level;
+    const char* m_file;
+    int m_line;
+    const char* m_function;
+    const char* m_category;
+};
+
+
+class CUTELOGGERSHARED_EXPORT LoggerTimingHelper
+{
+  Q_DISABLE_COPY(LoggerTimingHelper)
+
+  public:
+    inline explicit LoggerTimingHelper(Logger* l, Logger::LogLevel logLevel, const char* file, int line,
+                                       const char* function)
+      : m_logger(l),
+        m_logLevel(logLevel),
+        m_timingMode(Logger::TimingAuto),
+        m_file(file),
+        m_line(line),
+        m_function(function)
+    {}
+
+    void start(const char* msg, ...)
+#if defined(Q_CC_GNU) && !defined(__INSURE__)
+  #  if defined(Q_CC_MINGW) && !defined(Q_CC_CLANG)
+    __attribute__ ((format (gnu_printf, 2, 3)))
+  #  else
+    __attribute__ ((format (printf, 2, 3)))
+  #  endif
+#endif
+        ;
+
+    void start(const QString& msg = QString());
+    void start(Logger::TimingMode mode, const QString& msg);
+
+    ~LoggerTimingHelper();
+
+  private:
+    Logger* m_logger;
+    QTime m_time;
+    Logger::LogLevel m_logLevel;
+    Logger::TimingMode m_timingMode;
+    const char* m_file;
+    int m_line;
+    const char* m_function;
+    QString m_block;
+};
+
 
 #endif // LOGGER_H

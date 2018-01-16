@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 Meltytech, LLC
+ * Copyright (c) 2013-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -46,6 +46,7 @@ class MultitrackModel : public QAbstractItemModel
     Q_OBJECT
     Q_PROPERTY(int trackHeight READ trackHeight WRITE setTrackHeight NOTIFY trackHeightChanged)
     Q_PROPERTY(double scaleFactor READ scaleFactor WRITE setScaleFactor NOTIFY scaleFactorChanged)
+    Q_PROPERTY(bool filtered READ isFiltered NOTIFY filteredChanged)
 
 public:
     /// Two level model: tracks and clips on track
@@ -69,7 +70,8 @@ public:
         FadeOutRole,     /// clip only
         IsTransitionRole,/// clip only
         FileHashRole,    /// clip only
-        SpeedRole        /// clip only
+        SpeedRole,       /// clip only
+        IsFilteredRole
     };
 
     explicit MultitrackModel(QObject *parent = 0);
@@ -117,13 +119,14 @@ signals:
     void scaleFactorChanged();
     void showStatusMessage(QString);
     void durationChanged();
+    void filteredChanged();
 
 public slots:
     void refreshTrackList();
     void setTrackName(int row, const QString &value);
     void setTrackMute(int row, bool mute);
     void setTrackHidden(int row, bool hidden);
-    void setTrackComposite(int row, Qt::CheckState composite);
+    void setTrackComposite(int row, bool composite);
     void setTrackLock(int row, bool lock);
     int trimClipIn(int trackIndex, int clipIndex, int delta, bool ripple);
     void notifyClipIn(int trackIndex, int clipIndex);
@@ -158,6 +161,8 @@ public slots:
     void addTransitionByTrimOut(int trackIndex, int clipIndex, int delta);
     bool removeTransitionByTrimInValid(int trackIndex, int clipIndex, int delta);
     bool removeTransitionByTrimOutValid(int trackIndex, int clipIndex, int delta);
+    void filterAddedOrRemoved(Mlt::Producer *producer);
+    void onFilterChanged(Mlt::Filter* filter);
 
 private:
     Mlt::Tractor* m_tractor;
@@ -181,6 +186,7 @@ private:
     void loadPlaylist();
     void removeRegion(int trackIndex, int position, int length);
     void clearMixReferences(int trackIndex, int clipIndex);
+    bool isFiltered(Mlt::Producer* producer = 0) const;
 
     friend class UndoHelper;
 

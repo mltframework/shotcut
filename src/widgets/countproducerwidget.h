@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Meltytech, LLC
+ * Copyright (c) 2016-2017 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -35,7 +35,7 @@ public:
     ~CountProducerWidget();
 
     // AbstractProducerWidget overrides
-    Mlt::Producer* producer(Mlt::Profile&);
+    Mlt::Producer* newProducer(Mlt::Profile&);
     Mlt::Properties* getPreset() const;
     void loadPreset(Mlt::Properties&);
 

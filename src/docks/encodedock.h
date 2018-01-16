@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2016 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -34,6 +34,7 @@ class AbstractJob;
 class MeltJob;
 namespace Mlt {
     class Service;
+    class Producer;
 }
 
 class PresetsProxyModel : public QSortFilterProxyModel
@@ -51,6 +52,7 @@ public:
     ~EncodeDock();
 
     void loadPresetFromProperties(Mlt::Properties&);
+    bool isExportInProgress() const;
 
 signals:
     void captureStateChanged(bool);
@@ -93,6 +95,10 @@ private slots:
 
     void on_gopSpinner_valueChanged(int value);
 
+    void on_fromCombo_currentIndexChanged(int index);
+
+    void on_videoCodecCombo_currentIndexChanged(int index);
+
 private:
     enum {
         RateControlAverage = 0,
@@ -102,7 +108,7 @@ private:
     };
     Ui::EncodeDock *ui;
     Mlt::Properties *m_presets;
-    MeltJob* m_immediateJob;
+    QScopedPointer<MeltJob> m_immediateJob;
     QString m_extension;
     Mlt::Properties *m_profiles;
     PresetsProxyModel m_presetsModel;
@@ -117,7 +123,7 @@ private:
     void enqueueMelt(const QString& target, int realtime);
     void encode(const QString& target);
     void resetOptions();
-    Mlt::Service* fromProducer() const;
+    Mlt::Producer* fromProducer() const;
 };
 
 #endif // ENCODEDOCK_H

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2016 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -26,6 +26,7 @@
 #include <QDesktopServices>
 #include "mainwindow.h"
 #include "dialogs/textviewerdialog.h"
+#include "util.h"
 
 VideoQualityJob::VideoQualityJob(const QString& name, const QString& xml,
                                  const QString& reportPath)
@@ -95,6 +96,5 @@ void VideoQualityJob::onViewReportTriggered()
 
 void VideoQualityJob::onShowFolderTriggered()
 {
-    QFileInfo fi(m_reportPath);
-    QDesktopServices::openUrl(QUrl::fromLocalFile(fi.path()));
+    Util::showInFolder(m_reportPath);
 }
