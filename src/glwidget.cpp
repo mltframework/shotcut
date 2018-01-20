@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2017 Meltytech, LLC
+ * Copyright (c) 2011-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * GL shader based on BSD licensed code from Peter Bengtsson:
@@ -597,9 +597,9 @@ int GLWidget::reconfigure(bool isMulti)
     QString serviceName = property("mlt_service").toString();
     if (!m_consumer || !m_consumer->is_valid()) {
         if (serviceName.isEmpty()) {
-            m_consumer = new Mlt::FilteredConsumer(profile(), "sdl_audio");
+            m_consumer = new Mlt::FilteredConsumer(profile(), "sdl2_audio");
             if (m_consumer->is_valid())
-                serviceName = "sdl_audio";
+                serviceName = "sdl2_audio";
             else
                 serviceName = "rtaudio";
             delete m_consumer;
