@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2017 Meltytech, LLC
+ * Copyright (c) 2011-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -284,8 +284,12 @@ bool Controller::enableJack(bool enable)
 	if (!m_consumer)
 		return true;
 	if (enable && !m_jackFilter) {
-		m_jackFilter = new Mlt::Filter(profile(), "jackrack");
+		m_jackFilter = new Mlt::Filter(profile(), "jack", "Shotcut player");
 		if (m_jackFilter->is_valid()) {
+            m_jackFilter->set("in_1", "-");
+            m_jackFilter->set("in_2", "-");
+            m_jackFilter->set("out_1", "system:playback_1");
+            m_jackFilter->set("out_2", "system:playback_2");
 			m_consumer->attach(*m_jackFilter);
 			m_consumer->set("audio_off", 1);
 			if (isSeekable()) {
