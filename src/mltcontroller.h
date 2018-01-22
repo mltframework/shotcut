@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2017 Meltytech, LLC
+ * Copyright (c) 2011-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -150,11 +150,13 @@ private:
     TransportControl m_transportControl;
     QScopedPointer<Mlt::Producer> m_savedProducer;
     QScopedPointer<Mlt::Producer> m_filtersClipboard;
+    unsigned m_skipJackEvents;
 
     static void on_jack_started(mlt_properties owner, void* object, mlt_position *position);
     void onJackStarted(int position);
     static void on_jack_stopped(mlt_properties owner, void* object, mlt_position *position);
     void onJackStopped(int position);
+    void stopJack();
 };
 
 } // namespace
