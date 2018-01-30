@@ -639,6 +639,7 @@ int GLWidget::reconfigure(bool isMulti)
             m_consumer->set("0.prefill", 1);
             if (property("keyer").isValid())
                 m_consumer->set("0.keyer", property("keyer").toInt());
+            m_consumer->set("1.channels", property("audio_channels").toInt());
         }
         else {
             if (!profile().progressive())
@@ -649,6 +650,7 @@ int GLWidget::reconfigure(bool isMulti)
             m_consumer->set("prefill", 1);
             if (property("keyer").isValid())
                 m_consumer->set("keyer", property("keyer").toInt());
+            m_consumer->set("channels", property("audio_channels").toInt());
         }
         if (m_glslManager) {
             if (!m_threadStartEvent)
