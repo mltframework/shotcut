@@ -29,6 +29,7 @@ AudioPeakMeterScopeWidget::AudioPeakMeterScopeWidget()
   , m_filter(0)
   , m_audioMeter(0)
   , m_orientation((Qt::Orientation)-1)
+  , m_channels( 0 )
 {
     LOG_DEBUG() << "begin";
     m_filter = new Mlt::Filter(MLT.profile(), "audiolevel");
@@ -76,6 +77,10 @@ void AudioPeakMeterScopeWidget::refreshScope(const QSize& /*size*/, bool /*full*
                 }
             }
             QMetaObject::invokeMethod(m_audioMeter, "showAudio", Qt::QueuedConnection, Q_ARG(const QVector<double>&, levels));
+            if( m_channels != channels ) {
+                m_channels = channels;
+                QMetaObject::invokeMethod(this, "recalcSize", Qt::QueuedConnection);
+            }
         }
     }
 }
@@ -88,17 +93,23 @@ QString AudioPeakMeterScopeWidget::getTitle()
 void AudioPeakMeterScopeWidget::setOrientation(Qt::Orientation orientation)
 {
     if (orientation != m_orientation) {
-        if (orientation == Qt::Vertical) {
-            m_audioMeter->setMinimumSize(41, 250);
-            setMinimumSize(49, 258);
-            setMaximumSize(49, 508);
-        } else {
-            m_audioMeter->setMinimumSize(250, 41);
-            setMinimumSize(258, 49);
-            setMaximumSize(508, 49);
-        }
-        updateGeometry();
         m_orientation = orientation;
         m_audioMeter->setOrientation(orientation);
+        recalcSize();
     }
+}
+
+void AudioPeakMeterScopeWidget::recalcSize()
+{
+    int spaceNeeded = ( m_channels * 12 ) + 17;
+    if (m_orientation == Qt::Vertical) {
+        m_audioMeter->setMinimumSize(spaceNeeded, 250);
+        setMinimumSize(spaceNeeded + 8, 258);
+        setMaximumSize(spaceNeeded + 8, 508);
+    } else {
+        m_audioMeter->setMinimumSize(250, spaceNeeded);
+        setMinimumSize(258, spaceNeeded + 8);
+        setMaximumSize(508, spaceNeeded + 8);
+    }
+    updateGeometry();
 }
