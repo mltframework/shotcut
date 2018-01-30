@@ -200,12 +200,12 @@ void AudioMeterWidget::drawChanLabels(QPainter& p)
             stride++;
         }
 
-        int prevY = height();
+        int prevY = m_graphRect.top();
         for (int i = 0; i < chanLabelCount; i += stride) {
             const QString& label = m_chanLabels[i];
-            y = m_graphRect.bottom() - i * m_barSize.height() - m_barSize.height() / 2 + textHeight / 2;
+            y = m_graphRect.bottom() - (chanLabelCount - 1 - i) * m_barSize.height() - m_barSize.height() / 2 + textHeight / 2;
             x = m_graphRect.left() - fontMetrics().width(label) - TEXT_PAD;
-            if ( prevY - y >= TEXT_PAD) {
+            if ( y - prevY >= TEXT_PAD) {
                 p.drawText(x, y, label);
                 prevY = y - textHeight;
             }
@@ -247,7 +247,7 @@ void AudioMeterWidget::drawBars(QPainter& p)
             double level = IEC_ScaleMax(m_levels[i], m_maxDb);
             bar.setLeft(m_graphRect.left());
             bar.setRight(bar.left() + m_barSize.width() * level);
-            bar.setBottom(m_graphRect.bottom() - i * m_barSize.height() - 1);
+            bar.setBottom(m_graphRect.bottom() - (chanCount - 1 - i) * m_barSize.height() - 1);
             bar.setTop(bar.bottom() - m_barSize.height() + 1);
             p.drawRoundedRect(bar, 3, 3);
         }
@@ -277,8 +277,8 @@ void AudioMeterWidget::drawPeaks(QPainter& p)
             if (bar.left() < m_graphRect.left())
                 continue;
             bar.setRight(bar.left() + 3);
-            bar.setBottom(m_graphRect.bottom() - i * m_barSize.height() + 1);
-            bar.setTop(bar.bottom() - m_barSize.height() + 2);
+            bar.setBottom(m_graphRect.bottom() - (chanCount - 1 - i) * m_barSize.height() - 1);
+            bar.setTop(bar.bottom() - m_barSize.height() + 1);
             p.drawRoundedRect(bar, 3, 3);
         }
     } else {
@@ -307,6 +307,7 @@ void AudioMeterWidget::updateToolTip()
         if (m_orient == Qt::Horizontal) {
             if (mousePos.y() <= m_graphRect.bottom() && mousePos.y() >= m_graphRect.top()) {
                 chan = (int)(m_graphRect.bottom() - mousePos.y()) / (int)m_barSize.height();
+                chan = m_levels.size() - 1 - chan;
             }
         } else {
             if (mousePos.x() >= m_graphRect.left() && mousePos.x() <= m_graphRect.right()) {
@@ -319,7 +320,7 @@ void AudioMeterWidget::updateToolTip()
         if (m_levels[chan] < -90) {
             text = "-inf dB";
         } else {
-            text = QString("%1dB").arg(m_levels[chan], 0, 'f', 1);
+            text = QString("%1dBFS").arg(m_levels[chan], 0, 'f', 1);
         }
 
         if (m_chanLabels.size() > chan) {
