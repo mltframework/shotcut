@@ -47,6 +47,10 @@ private:
     // Members accessed by GUI thread.
     AudioMeterWidget* m_audioMeter;
     Qt::Orientation m_orientation;
+    int m_channels;
+
+private slots:
+    void reconfigureMeter();
 };
 
 #endif // AUDIOPEAKMETERSCOPEWIDGET_H
