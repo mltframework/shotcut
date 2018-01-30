@@ -58,6 +58,7 @@ signals:
     void captureStateChanged(bool);
 
 public slots:
+    void onAudioChannelsChanged();
     void onProducerOpened();
     void onProfileChanged();
 
@@ -99,12 +100,19 @@ private slots:
 
     void on_videoCodecCombo_currentIndexChanged(int index);
 
+    void setAudioChannels( int channels );
+
 private:
     enum {
         RateControlAverage = 0,
         RateControlConstant,
         RateControlQuality,
         RateControlConstrained
+    };
+    enum {
+        AudioChannels1 = 0,
+        AudioChannels2,
+        AudioChannels6,
     };
     Ui::EncodeDock *ui;
     Mlt::Properties *m_presets;

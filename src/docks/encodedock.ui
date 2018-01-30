@@ -1209,7 +1209,56 @@ in temporal compression</string>
             <property name="verticalSpacing">
              <number>3</number>
             </property>
+            <item row="1" column="0">
+             <widget class="QLabel" name="channelsLabel">
+              <property name="text">
+               <string>Channels</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
             <item row="1" column="1">
+             <layout class="QHBoxLayout" name="ChannelsHorizontalLayout">
+              <item>
+               <widget class="QComboBox" name="audioChannelsCombo">
+                <property name="toolTip">
+                 <string>The number of audio channels in the output.</string>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>1 (mono)</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>2 (stereo)</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>6 (5.1)</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item>
+               <spacer name="channelsHorizontalSpacer">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item row="2" column="1">
              <layout class="QHBoxLayout" name="horizontalLayout_4">
               <item>
                <widget class="QComboBox" name="sampleRateCombo">
@@ -1283,7 +1332,7 @@ in temporal compression</string>
               </item>
              </layout>
             </item>
-            <item row="1" column="0">
+            <item row="2" column="0">
              <widget class="QLabel" name="label_8">
               <property name="text">
                <string>Sample rate</string>
@@ -1293,7 +1342,7 @@ in temporal compression</string>
               </property>
              </widget>
             </item>
-            <item row="2" column="0">
+            <item row="3" column="0">
              <widget class="QLabel" name="label_3">
               <property name="text">
                <string>Codec</string>
@@ -1303,7 +1352,7 @@ in temporal compression</string>
               </property>
              </widget>
             </item>
-            <item row="2" column="1">
+            <item row="3" column="1">
              <layout class="QHBoxLayout" name="horizontalLayout_6">
               <item>
                <widget class="QComboBox" name="audioCodecCombo"/>
@@ -1323,7 +1372,7 @@ in temporal compression</string>
               </item>
              </layout>
             </item>
-            <item row="5" column="0">
+            <item row="6" column="0">
              <widget class="QLabel" name="audioBitrateLabel">
               <property name="text">
                <string>Bitrate</string>
@@ -1333,7 +1382,7 @@ in temporal compression</string>
               </property>
              </widget>
             </item>
-            <item row="5" column="1">
+            <item row="6" column="1">
              <layout class="QHBoxLayout" name="audioBitrateLayout">
               <item>
                <widget class="QComboBox" name="audioBitrateCombo">
@@ -1425,14 +1474,14 @@ in temporal compression</string>
               </item>
              </layout>
             </item>
-            <item row="7" column="1">
+            <item row="8" column="1">
              <widget class="QCheckBox" name="disableAudioCheckbox">
               <property name="text">
                <string>Disable audio</string>
               </property>
              </widget>
             </item>
-            <item row="8" column="0">
+            <item row="9" column="0">
              <spacer name="verticalSpacer_3">
               <property name="orientation">
                <enum>Qt::Vertical</enum>
@@ -1445,7 +1494,7 @@ in temporal compression</string>
               </property>
              </spacer>
             </item>
-            <item row="3" column="0">
+            <item row="4" column="0">
              <widget class="QLabel" name="label_7">
               <property name="text">
                <string>Rate control</string>
@@ -1455,7 +1504,7 @@ in temporal compression</string>
               </property>
              </widget>
             </item>
-            <item row="3" column="1">
+            <item row="4" column="1">
              <layout class="QHBoxLayout" name="horizontalLayout_5">
               <item>
                <widget class="QComboBox" name="audioRateControlCombo">
@@ -1491,7 +1540,7 @@ in temporal compression</string>
               </item>
              </layout>
             </item>
-            <item row="6" column="0">
+            <item row="7" column="0">
              <widget class="QLabel" name="audioQualityLabel">
               <property name="text">
                <string>Quality</string>
@@ -1501,7 +1550,7 @@ in temporal compression</string>
               </property>
              </widget>
             </item>
-            <item row="6" column="1">
+            <item row="7" column="1">
              <layout class="QHBoxLayout" name="audioQualityLayout">
               <item>
                <widget class="QSpinBox" name="audioQualitySpinner">

@@ -152,6 +152,8 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
                 if (ui->videoCodecCombo->itemText(i) == preset.get("vcodec"))
                     ui->videoCodecCombo->setCurrentIndex(i);
         }
+        else if (name == "channels")
+            setAudioChannels( preset.get_int("channels") );
         else if (name == "ar")
             ui->sampleRateCombo->lineEdit()->setText(preset.get("ar"));
         else if (name == "ab")
@@ -440,6 +442,12 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
             const QString& acodec = ui->audioCodecCombo->currentText();
             if (ui->audioCodecCombo->currentIndex() > 0)
                 p->set("acodec", ui->audioCodecCombo->currentText().toLatin1().constData());
+            if (ui->audioChannelsCombo->currentIndex() == AudioChannels1)
+                p->set("channels", 1);
+            else if (ui->audioChannelsCombo->currentIndex() == AudioChannels2)
+                p->set("channels", 2);
+            else
+                p->set("channels", 6);
             p->set("ar", ui->sampleRateCombo->currentText().toLatin1().constData());
             if (ui->audioRateControlCombo->currentIndex() == RateControlAverage
                     || ui->audioRateControlCombo->currentIndex() == RateControlConstant) {
@@ -908,6 +916,7 @@ void EncodeDock::resetOptions()
     ui->dualPassCheckbox->setChecked(false);
     ui->disableVideoCheckbox->setChecked(false);
 
+    setAudioChannels(MLT.audioChannels());
     ui->sampleRateCombo->lineEdit()->setText("48000");
     ui->audioBitrateCombo->lineEdit()->setText("384k");
     ui->audioQualitySpinner->setValue(50);
@@ -1115,6 +1124,11 @@ void EncodeDock::on_encodeButton_clicked()
             ui->streamButton->setDisabled(true);
         }
     }
+}
+
+void EncodeDock::onAudioChannelsChanged()
+{
+    setAudioChannels(MLT.audioChannels());
 }
 
 void EncodeDock::onProfileChanged()
@@ -1464,4 +1478,14 @@ void EncodeDock::on_videoCodecCombo_currentIndexChanged(int index)
         if (ui->videoCodecCombo->currentText().contains("hevc"))
             ui->bFramesSpinner->setValue(0);
     }
+}
+
+void EncodeDock::setAudioChannels( int channels )
+{
+    if (channels == 1)
+        ui->audioChannelsCombo->setCurrentIndex(AudioChannels1);
+    else if (channels == 2)
+        ui->audioChannelsCombo->setCurrentIndex(AudioChannels2);
+    else
+        ui->audioChannelsCombo->setCurrentIndex(AudioChannels6);
 }

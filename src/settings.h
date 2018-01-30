@@ -34,6 +34,7 @@ class ShotcutSettings : public QObject
     Q_PROPERTY(QString savePath READ savePath WRITE setSavePath NOTIFY savePathChanged)
     Q_PROPERTY(QString playlistThumbnails READ playlistThumbnails WRITE setPlaylistThumbnails NOTIFY playlistThumbnailsChanged)
     Q_PROPERTY(QString viewMode READ viewMode WRITE setViewMode NOTIFY viewModeChanged)
+    Q_PROPERTY(bool playerAudioChannels READ playerAudioChannels NOTIFY playerAudioChannelsChanged)
     Q_PROPERTY(bool playerGPU READ playerGPU NOTIFY playerGpuChanged)
     Q_PROPERTY(double audioInDuration READ audioInDuration WRITE setAudioInDuration NOTIFY audioInDurationChanged)
     Q_PROPERTY(double audioOutDuration READ audioOutDuration WRITE setAudioOutDuration NOTIFY audioOutDurationChanged)
@@ -85,6 +86,8 @@ public:
     QStringList meltedServers() const;
     void setMeltedServers(const QStringList&);
 
+    int playerAudioChannels() const;
+    void setPlayerAudioChannels(int);
     QString playerDeinterlacer() const;
     void setPlayerDeinterlacer(const QString&);
     QString playerExternal() const;
@@ -159,6 +162,7 @@ signals:
     void timelineShowWaveformsChanged();
     void timelineShowThumbnailsChanged();
     void timelineRippleAllTracksChanged();
+    void playerAudioChannelsChanged(int);
     void playerGpuChanged();
     void audioInDurationChanged();
     void audioOutDurationChanged();

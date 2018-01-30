@@ -368,6 +368,7 @@ MainWindow::MainWindow()
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_historyDock, SLOT(setDisabled(bool)));
     connect(this, SIGNAL(profileChanged()), m_encodeDock, SLOT(onProfileChanged()));
     connect(this, SIGNAL(profileChanged()), SLOT(onProfileChanged()));
+    connect(this, SIGNAL(audioChannelsChanged()), m_encodeDock, SLOT(onAudioChannelsChanged()));
     connect(m_playlistDock->model(), SIGNAL(modified()), m_encodeDock, SLOT(onProducerOpened()));
     connect(m_timelineDock, SIGNAL(clipCopied()), m_encodeDock, SLOT(onProducerOpened()));
     m_encodeDock->onProfileChanged();
@@ -522,6 +523,10 @@ void MainWindow::setupSettingsMenu()
 {
     LOG_DEBUG() << "begin";
     QActionGroup* group = new QActionGroup(this);
+    group->addAction(ui->actionChannels1);
+    group->addAction(ui->actionChannels2);
+    group->addAction(ui->actionChannels6);
+    group = new QActionGroup(this);
     group->addAction(ui->actionOneField);
     group->addAction(ui->actionLinearBlend);
     group->addAction(ui->actionYadifTemporal);
@@ -1056,6 +1061,20 @@ void MainWindow::setProfile(const QString &profile_name)
     emit profileChanged();
 }
 
+void MainWindow::setAudioChannels(int channels)
+{
+    LOG_DEBUG() << channels;
+    MLT.videoWidget()->setProperty("audio_channels", channels);
+    MLT.setAudioChannels(channels);
+    if (channels == 1)
+        ui->actionChannels1->setChecked(true);
+    else if (channels == 2)
+        ui->actionChannels2->setChecked(true);
+    else if (channels == 6)
+        ui->actionChannels6->setChecked(true);
+    emit audioChannelsChanged();
+}
+
 static void autosaveTask(MainWindow* p)
 {
     LOG_DEBUG() << "running";
@@ -1116,6 +1135,10 @@ void MainWindow::open(QString url, const Mlt::Properties* properties)
         if (props && props->is_valid())
             mlt_properties_inherit(MLT.producer()->get_properties(), props->get_properties());
         m_player->setPauseAfterOpen(!MLT.isClip());
+
+        if (MLT.producer() && MLT.producer()->is_valid())
+            setAudioChannels(MLT.audioChannels());
+
         open(MLT.producer());
         if (url.startsWith(AutoSaveFile::path())) {
             if (m_autosaveFile && m_autosaveFile->managedFileName() != untitledFileName()) {
@@ -1256,6 +1279,9 @@ void MainWindow::readPlayerSettings()
         ui->actionGPU->setChecked(Settings.playerGPU());
         MLT.videoWidget()->setProperty("gpu", ui->actionGPU->isChecked());
     }
+
+    setAudioChannels(Settings.playerAudioChannels());
+
     QString deinterlacer = Settings.playerDeinterlacer();
     QString interpolation = Settings.playerInterpolation();
 
@@ -1359,6 +1385,12 @@ void MainWindow::configureVideoWidget()
         MLT.videoWidget()->setProperty("progressive", MLT.profile().progressive());
         ui->actionProgressive->setEnabled(false);
     }
+    if (ui->actionChannels1->isChecked())
+        setAudioChannels(1);
+    else if (ui->actionChannels2->isChecked())
+        setAudioChannels(2);
+    else
+        setAudioChannels(6);
     if (ui->actionOneField->isChecked())
         MLT.videoWidget()->setProperty("deinterlace_method", "onefield");
     else if (ui->actionLinearBlend->isChecked())
@@ -2171,6 +2203,7 @@ void MainWindow::onPlaylistCleared()
 void MainWindow::onPlaylistClosed()
 {
     setProfile(Settings.playerProfile());
+    setAudioChannels(Settings.playerAudioChannels());
     setCurrentFile("");
     setWindowModified(false);
     m_undoStack->clear();
@@ -2197,6 +2230,7 @@ void MainWindow::onMultitrackCreated()
 void MainWindow::onMultitrackClosed()
 {
     setProfile(Settings.playerProfile());
+    setAudioChannels(Settings.playerAudioChannels());
     closeProducer();
     setCurrentFile("");
     setWindowModified(false);
@@ -2579,6 +2613,29 @@ void MainWindow::on_actionProgressive_triggered(bool checked)
         MLT.restart();
     }
     Settings.setPlayerProgressive(checked);
+}
+
+void MainWindow::changeAudioChannels(bool checked, int channels)
+{
+    if( checked ) {
+        Settings.setPlayerAudioChannels(channels);
+        setAudioChannels(Settings.playerAudioChannels());
+    }
+}
+
+void MainWindow::on_actionChannels1_triggered(bool checked)
+{
+    changeAudioChannels(checked, 1);
+}
+
+void MainWindow::on_actionChannels2_triggered(bool checked)
+{
+    changeAudioChannels(checked, 2);
+}
+
+void MainWindow::on_actionChannels6_triggered(bool checked)
+{
+    changeAudioChannels(checked, 6);
 }
 
 void MainWindow::changeDeinterlacer(bool checked, const char* method)
