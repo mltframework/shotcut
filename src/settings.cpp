@@ -234,6 +234,17 @@ void ShotcutSettings::setMeltedServers(const QStringList& ls)
     settings.setValue("melted/servers", ls);
 }
 
+int ShotcutSettings::playerAudioChannels() const
+{
+    return settings.value("player/audioChannels", 2).toInt();
+}
+
+void ShotcutSettings::setPlayerAudioChannels(int i)
+{
+    settings.setValue("player/audioChannels", i);
+    emit playerAudioChannelsChanged(i);
+}
+
 QString ShotcutSettings::playerDeinterlacer() const
 {
     return settings.value("player/deinterlacer", "onefield").toString();

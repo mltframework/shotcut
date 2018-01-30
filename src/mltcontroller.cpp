@@ -44,6 +44,7 @@ static int alignWidth(int width)
 Controller::Controller()
     : m_producer(0)
     , m_consumer(0)
+    , m_audioChannels(2)
     , m_jackFilter(0)
     , m_volume(1.0)
     , m_skipJackEvents(0)
@@ -112,6 +113,13 @@ int Controller::open(const QString &url)
         if (!profile().is_explicit()) {
             profile().from_producer(*m_producer);
             profile().set_width(alignWidth(profile().width()));
+        }
+        if ( url.endsWith(".mlt") ) {
+            // Load the number of audio channels being used when this project was created.
+            int channels = m_producer->get_int(kShotcutProjectAudioChannels);
+            if (!channels)
+                channels = 2;
+            m_audioChannels = channels;
         }
         if (profile().fps() != fps || (Settings.playerGPU() && !profile().is_explicit())) {
             // Reload with correct FPS or with Movit normalizing filters attached.
@@ -408,6 +416,7 @@ void Controller::saveXML(const QString& filename, Service* service, bool withRel
     Consumer c(profile(), "xml", filename.toUtf8().constData());
     Service s(service? service->get_service() : m_producer->get_service());
     if (s.is_valid()) {
+        s.set(kShotcutProjectAudioChannels, m_audioChannels);
         int ignore = s.get_int("ignore_points");
         if (ignore)
             s.set("ignore_points", 0);
@@ -485,6 +494,15 @@ void Controller::setProfile(const QString& profile_name)
             m_profile->from_producer(*m_producer);
             m_profile->set_width(alignWidth(m_profile->width()));
         }
+    }
+}
+
+void Controller::setAudioChannels(int audioChannels)
+{
+    LOG_DEBUG() << audioChannels;
+    if (audioChannels != m_audioChannels) {
+        m_audioChannels = audioChannels;
+        restart();
     }
 }
 

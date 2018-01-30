@@ -627,6 +627,7 @@ int GLWidget::reconfigure(bool isMulti)
         m_consumer->set("real_time", MLT.realTime());
         m_consumer->set("mlt_image_format", "yuv422");
         m_consumer->set("color_trc", Settings.playerGamma().toLatin1().constData());
+        m_consumer->set("channels", property("audio_channels").toInt());
 
         if (isMulti) {
             m_consumer->set("terminate_on_pause", 0);

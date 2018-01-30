@@ -46,6 +46,9 @@
 #define kShotcutHashProperty "shotcut:hash"
 #define kShotcutSkipConvertProperty "shotcut:skipConvert"
 
+/* Project specific properties */
+#define kShotcutProjectAudioChannels "shotcut:projectAudioChannels"
+
 /* Ideally all shotcut properties should begin with "shotcut:", but these
  * do not and kept for legacy reasons? */
 
