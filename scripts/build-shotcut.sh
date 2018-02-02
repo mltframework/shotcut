@@ -46,7 +46,7 @@ LIBOPUS_HEAD=1
 LIBOPUS_REVISION=
 ENABLE_SWH_PLUGINS=1
 FFMPEG_HEAD=0
-FFMPEG_REVISION="origin/release/3.2"
+FFMPEG_REVISION="origin/release/3.4"
 FFMPEG_SUPPORT_H264=1
 FFMPEG_SUPPORT_H265=1
 FFMPEG_SUPPORT_LIBVPX=1
@@ -577,7 +577,7 @@ function set_globals {
 
   #####
   # ffmpeg
-  CONFIG[0]="./configure --prefix=$FINAL_INSTALL_DIR --disable-static --disable-doc --disable-ffserver --enable-gpl --enable-version3 --enable-shared --enable-pthreads --enable-runtime-cpudetect $CONFIGURE_DEBUG_FLAG"
+  CONFIG[0]="./configure --prefix=$FINAL_INSTALL_DIR --disable-static --disable-doc --disable-ffserver --enable-gpl --enable-version3 --enable-shared --enable-runtime-cpudetect $CONFIGURE_DEBUG_FLAG"
   if test 1 = "$FFMPEG_SUPPORT_THEORA" ; then
     CONFIG[0]="${CONFIG[0]} --enable-libtheora --enable-libvorbis"
   fi
@@ -617,7 +617,7 @@ function set_globals {
     CFLAGS_[0]="${CFLAGS_[0]} -I/opt/local/include"
     LDFLAGS_[0]="${LDFLAGS_[0]} -L/opt/local/lib"
   elif test "$TARGET_OS" = "Linux" ; then
-    CONFIG[0]="${CONFIG[0]} --enable-x11grab --enable-libpulse"
+    CONFIG[0]="${CONFIG[0]} --enable-libxcb --enable-libpulse"
   fi
 
   #####
