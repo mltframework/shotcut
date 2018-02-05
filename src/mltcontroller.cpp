@@ -306,10 +306,35 @@ bool Controller::enableJack(bool enable)
 	if (enable && !m_jackFilter) {
 		m_jackFilter = new Mlt::Filter(profile(), "jack", "Shotcut player");
 		if (m_jackFilter->is_valid()) {
-            m_jackFilter->set("in_1", "-");
-            m_jackFilter->set("in_2", "-");
-            m_jackFilter->set("out_1", "system:playback_1");
-            m_jackFilter->set("out_2", "system:playback_2");
+            m_jackFilter->set("channels", Settings.playerAudioChannels());
+            switch (Settings.playerAudioChannels()) {
+            case 8:
+                m_jackFilter->set("in_8", "-");
+                m_jackFilter->set("out_8", "system:playback_8");
+            case 7:
+                m_jackFilter->set("in_7", "-");
+                m_jackFilter->set("out_7", "system:playback_7");
+            case 6:
+                m_jackFilter->set("in_6", "-");
+                m_jackFilter->set("out_6", "system:playback_6");
+            case 5:
+                m_jackFilter->set("in_5", "-");
+                m_jackFilter->set("out_5", "system:playback_5");
+            case 4:
+                m_jackFilter->set("in_4", "-");
+                m_jackFilter->set("out_4", "system:playback_4");
+            case 3:
+                m_jackFilter->set("in_3", "-");
+                m_jackFilter->set("out_3", "system:playback_3");
+            case 2:
+                m_jackFilter->set("in_2", "-");
+                m_jackFilter->set("out_2", "system:playback_2");
+            case 1:
+                m_jackFilter->set("in_1", "-");
+                m_jackFilter->set("out_1", "system:playback_1");
+            default:
+                break;
+            }
 			m_consumer->attach(*m_jackFilter);
 			m_consumer->set("audio_off", 1);
 			if (isSeekable()) {
