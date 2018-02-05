@@ -66,6 +66,10 @@ void Util::showInFolder(const QString& path)
     args << "select POSIX file \"" + path + "\"";
     args << "-e";
     args << "end tell";
+#if !defined(QT_DEBUG)
+    args << "-e";
+    args << "return";
+#endif
     if (!QProcess::execute("/usr/bin/osascript", args))
         return;
 #endif
