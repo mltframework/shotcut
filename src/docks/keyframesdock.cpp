@@ -63,15 +63,13 @@ void KeyframesDock::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta)
     m_qview.rootContext()->setContextProperty("filter", filter);
     m_qview.rootContext()->setContextProperty("metadata", meta);
     if (filter && filter->producer().is_valid()) {
-        m_producer.reset(new QmlProducer(filter->producer(), filter));
+        m_producer.reset(new QmlProducer(filter->producer()));
         connect(filter, SIGNAL(changed()), SIGNAL(changed()));
         connect(m_producer.data(), SIGNAL(seeked(int)), SIGNAL(seeked(int)));
         m_qview.rootContext()->setContextProperty("producer", m_producer.data());
     } else {
-        if (m_producer)
-            disconnect(m_producer.data(), SIGNAL(seeked(int)));
         m_qview.rootContext()->setContextProperty("producer", 0);
-//        m_producer.reset();
+        m_producer.reset();
     }
     resetQview();
 }
@@ -110,7 +108,6 @@ void KeyframesDock::onSeeked(int position)
 void KeyframesDock::resetQview()
 {
     LOG_DEBUG() << "begin";
-    m_qview.setSource(QUrl(""));
 
     QDir viewPath = QmlUtilities::qmlDir();
     viewPath.cd("views");
