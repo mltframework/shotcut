@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2017 Meltytech, LLC
+ * Copyright (c) 2013-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -144,6 +144,8 @@ protected:
     void dragLeaveEvent(QDragLeaveEvent* event);
     void dropEvent(QDropEvent* event);
     bool event(QEvent *event);
+    void keyPressEvent(QKeyEvent* event);
+    void keyReleaseEvent(QKeyEvent* event);
 
 private:
     bool isBlank(int trackIndex, int clipIndex);

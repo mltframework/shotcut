@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2017 Meltytech, LLC
+ * Copyright (c) 2011-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -457,8 +457,6 @@ MainWindow::MainWindow()
     connect(leap, SIGNAL(jogLeftSecond()), SLOT(stepLeftOneSecond()));
 
     connect(&m_network, SIGNAL(finished(QNetworkReply*)), SLOT(onUpgradeCheckFinished(QNetworkReply*)));
-
-    m_timelineDock->setFocusPolicy(Qt::StrongFocus);
 
     LOG_DEBUG() << "end";
 }

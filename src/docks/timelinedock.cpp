@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2017 Meltytech, LLC
+ * Copyright (c) 2013-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -64,7 +64,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
 
     connect(&m_model, SIGNAL(modified()), this, SLOT(clearSelectionIfInvalid()));
 
-    m_quickView.setFocusPolicy(Qt::StrongFocus);
+    m_quickView.setFocusPolicy(Qt::NoFocus);
     setWidget(&m_quickView);
 
     connect(this, SIGNAL(clipMoved(int,int,int,int)), SLOT(onClipMoved(int,int,int,int)), Qt::QueuedConnection);
@@ -969,6 +969,20 @@ bool TimelineDock::event(QEvent *event)
     if (event->type() == QEvent::PaletteChange || event->type() == QEvent::StyleChange)
         load(true);
     return result;
+}
+
+void TimelineDock::keyPressEvent(QKeyEvent* event)
+{
+    QDockWidget::keyPressEvent(event);
+    if (!event->isAccepted())
+        MAIN.keyPressEvent(event);
+}
+
+void TimelineDock::keyReleaseEvent(QKeyEvent* event)
+{
+    QDockWidget::keyReleaseEvent(event);
+    if (!event->isAccepted())
+        MAIN.keyReleaseEvent(event);
 }
 
 void TimelineDock::load(bool force)

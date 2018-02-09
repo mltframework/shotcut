@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2017 Meltytech, LLC
+ * Copyright (c) 2012-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -31,6 +31,7 @@
 #include <QPainter>
 #include <QDebug>
 #include <QHeaderView>
+#include <QKeyEvent>
 
 class TiledItemDelegate : public QStyledItemDelegate
 {
@@ -747,4 +748,18 @@ void PlaylistDock::on_detailsButton_clicked()
     ui->actionTiled->setChecked(false);
     ui->actionIcons->setChecked(false);
     updateViewModeFromActions();
+}
+
+void PlaylistDock::keyPressEvent(QKeyEvent* event)
+{
+    QDockWidget::keyPressEvent(event);
+    if (!event->isAccepted())
+        MAIN.keyPressEvent(event);
+}
+
+void PlaylistDock::keyReleaseEvent(QKeyEvent* event)
+{
+    QDockWidget::keyReleaseEvent(event);
+    if (!event->isAccepted())
+        MAIN.keyReleaseEvent(event);
 }
