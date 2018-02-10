@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2013-2014 Meltytech, LLC
+ * Copyright (c) 2013-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
- * Author: Brian Matherly <pez4brian@yahoo.com>
+ * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,6 +30,9 @@ class ColorWheelItem : public QQuickPaintedItem
     Q_PROPERTY(int red READ red WRITE setRed)
     Q_PROPERTY(int green READ green WRITE setGreen)
     Q_PROPERTY(int blue READ blue WRITE setBlue)
+    Q_PROPERTY(qreal redF READ redF WRITE setRedF)
+    Q_PROPERTY(qreal greenF READ greenF WRITE setGreenF)
+    Q_PROPERTY(qreal blueF READ blueF WRITE setBlueF)
 public:
     explicit ColorWheelItem(QQuickItem *parent = 0);
     QColor color();
@@ -40,6 +43,12 @@ public:
     void setGreen(int green);
     int blue();
     void setBlue(int blue);
+    qreal redF();
+    void setRedF(qreal red);
+    qreal greenF();
+    void setGreenF(qreal green);
+    qreal blueF();
+    void setBlueF(qreal blue);
 
 signals:
     void colorChanged(const QColor &color);

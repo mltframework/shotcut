@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2013-2016 Meltytech, LLC
+ * Copyright (c) 2013-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
- * Author: Brian Matherly <pez4brian@yahoo.com>
+ * Author: Brian Matherly <code@brianmatherly.com>
  * Some ideas came from Qt-Plus: https://github.com/liuyanghejerry/Qt-Plus
  * and Steinar Gunderson's Movit demo app.
  *
@@ -94,6 +94,48 @@ void ColorWheelItem::setBlue(int blue)
 {
     if(m_color.blue() != blue) {
         m_color.setBlue(blue);
+        update();
+        emit colorChanged(m_color);
+    }
+}
+
+qreal ColorWheelItem::redF()
+{
+    return m_color.redF();
+}
+
+void ColorWheelItem::setRedF(qreal red)
+{
+    if(m_color.redF() != red) {
+        m_color.setRedF(red);
+        update();
+        emit colorChanged(m_color);
+    }
+}
+
+qreal ColorWheelItem::greenF()
+{
+    return m_color.greenF();
+}
+
+void ColorWheelItem::setGreenF(qreal green)
+{
+    if(m_color.greenF() != green) {
+        m_color.setGreenF(green);
+        update();
+        emit colorChanged(m_color);
+    }
+}
+
+qreal ColorWheelItem::blueF()
+{
+    return m_color.blueF();
+}
+
+void ColorWheelItem::setBlueF(qreal blue)
+{
+    if(m_color.blueF() != blue) {
+        m_color.setBlueF(blue);
         update();
         emit colorChanged(m_color);
     }
