@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Meltytech, LLC
+ * Copyright (c) 2017-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -32,7 +32,7 @@ Item {
     property string paramOperation: '9'
     property var defaultParameters: [paramHorizontal, paramShape, paramWidth, paramVertical, paramRotation, paramSoftness, paramOperation]
     width: 350
-    height: 200
+    height: 250
 
     Component.onCompleted: {
         if (filter.isNew) {

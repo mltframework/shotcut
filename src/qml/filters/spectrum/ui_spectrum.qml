@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Meltytech, LLC
+ * Copyright (c) 2017-2018 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -28,7 +28,7 @@ Item {
     property var defaultParameters: [rectProperty, 'type', 'color.1', 'bgcolor', 'thickness', 'fill', 'mirror', 'reverse', 'tension', 'bands', 'frequency_low', 'frequency_high', 'threshold']
 
     width: 350
-    height: 180
+    height: 425
 
     Component.onCompleted: {
         if (filter.isNew) {
