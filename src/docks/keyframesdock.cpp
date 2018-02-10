@@ -29,15 +29,13 @@
 
 #include <Logger.h>
 
-#include "qmltypes/qmlfilter.h"
 #include "qmltypes/qmlutilities.h"
 #include "qmltypes/qmlview.h"
-#include "models/metadatamodel.h"
 #include "models/attachedfiltersmodel.h"
 
-KeyframesDock::KeyframesDock(MetadataModel* metadataModel, AttachedFiltersModel* attachedModel, QWidget *parent) :
-    QDockWidget(tr("Keyframes"), parent),
-    m_qview(QmlUtilities::sharedEngine(), this)
+KeyframesDock::KeyframesDock(MetadataModel* metadataModel, AttachedFiltersModel* attachedModel, QWidget *parent)
+    : QDockWidget(tr("Keyframes"), parent)
+    , m_qview(QmlUtilities::sharedEngine(), this)
 {
     LOG_DEBUG() << "begin";
     setObjectName("KeyframesDock");
@@ -52,6 +50,8 @@ KeyframesDock::KeyframesDock(MetadataModel* metadataModel, AttachedFiltersModel*
     m_qview.rootContext()->setContextProperty("view", new QmlView(&m_qview));
     m_qview.rootContext()->setContextProperty("metadatamodel", metadataModel);
     m_qview.rootContext()->setContextProperty("attachedfiltersmodel", attachedModel);
+    m_qview.rootContext()->setContextProperty("producer", &m_producer);
+    connect(&m_producer, SIGNAL(seeked(int)), SIGNAL(seeked(int)));
     setCurrentFilter(0, 0);
     connect(m_qview.quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(resetQview()));
 
@@ -60,18 +60,18 @@ KeyframesDock::KeyframesDock(MetadataModel* metadataModel, AttachedFiltersModel*
 
 void KeyframesDock::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta)
 {
-    m_qview.rootContext()->setContextProperty("filter", filter);
-    m_qview.rootContext()->setContextProperty("metadata", meta);
+    disconnect(this, SIGNAL(changed()));
     if (filter && filter->producer().is_valid()) {
-        m_producer.reset(new QmlProducer(filter->producer()));
-        connect(filter, SIGNAL(changed()), SIGNAL(changed()));
-        connect(m_producer.data(), SIGNAL(seeked(int)), SIGNAL(seeked(int)));
-        m_qview.rootContext()->setContextProperty("producer", m_producer.data());
+        m_producer.setProducer(filter->producer());
+        m_qview.rootContext()->setContextProperty("filter", filter);
+        m_qview.rootContext()->setContextProperty("metadata", meta);
     } else {
-        m_qview.rootContext()->setContextProperty("producer", 0);
-        m_producer.reset();
+        Mlt::Producer emptyProducer(mlt_producer(0));
+        m_producer.setProducer(emptyProducer);
+        m_qview.rootContext()->setContextProperty("filter", &m_emptyQmlFilter);
+        m_qview.rootContext()->setContextProperty("metadata", &m_emptyQmlMetadata);
     }
-    resetQview();
+    connect(filter, SIGNAL(changed()), SIGNAL(changed()));
 }
 
 void KeyframesDock::setFadeInDuration(int duration)
@@ -101,8 +101,8 @@ bool KeyframesDock::event(QEvent *event)
 
 void KeyframesDock::onSeeked(int position)
 {
-    if (m_producer)
-        m_producer->seek(position);
+    if (m_producer.producer().is_valid())
+        m_producer.seek(position);
 }
 
 void KeyframesDock::resetQview()

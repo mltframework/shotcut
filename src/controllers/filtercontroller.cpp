@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2017 Meltytech, LLC
+ * Copyright (c) 2014-2018 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -131,7 +131,7 @@ void FilterController::setCurrentFilter(int attachedIndex, bool isNew)
     QmlFilter* filter = 0;
     if (meta) {
         m_mltFilter = m_attachedModel.getFilter(m_currentFilterIndex);
-        filter = new QmlFilter(m_mltFilter, meta);
+        filter = new QmlFilter(*m_mltFilter, meta);
         filter->setIsNew(isNew);
         connect(filter, SIGNAL(changed()), SLOT(onQmlFilterChanged()));
     }

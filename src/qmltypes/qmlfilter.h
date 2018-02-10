@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2017 Meltytech, LLC
+ * Copyright (c) 2013-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -42,7 +42,8 @@ class QmlFilter : public QObject
     Q_PROPERTY(int out READ out WRITE setOut NOTIFY outChanged)
 
 public:
-    explicit QmlFilter(Mlt::Filter* mltFilter, const QmlMetadata* metadata, QObject *parent = 0);
+    explicit QmlFilter();
+    explicit QmlFilter(Mlt::Filter& mltFilter, const QmlMetadata* metadata, QObject *parent = 0);
     ~QmlFilter();
 
     bool isNew() const { return m_isNew; }
@@ -69,9 +70,9 @@ public:
     int producerOut();
     double producerAspect();
     Mlt::Producer& producer() { return m_producer; }
-    int in() { return m_filter->get_int("in"); }
+    int in() { return m_filter.is_valid() ? m_filter.get_int("in") : 0; }
     void setIn(int value) { set("in", value); emit inChanged(); }
-    int out() { return m_filter->get_int("out"); }
+    int out() { return m_filter.is_valid()? m_filter.get_int("out") : 0; }
     void setOut(int value) { set("out", value); emit outChanged(); }
 
 public slots:
@@ -86,7 +87,7 @@ signals:
 
 private:
     const QmlMetadata* m_metadata;
-    Mlt::Filter* m_filter;
+    Mlt::Filter m_filter;
     Mlt::Producer m_producer;
     QString m_path;
     bool m_isNew;
@@ -99,7 +100,7 @@ class AnalyzeDelegate : public QObject
 {
     Q_OBJECT
 public:
-    explicit AnalyzeDelegate(Mlt::Filter *filter);
+    explicit AnalyzeDelegate(Mlt::Filter& filter);
 
 public slots:
     void onAnalyzeFinished(AbstractJob *job, bool isSuccess);

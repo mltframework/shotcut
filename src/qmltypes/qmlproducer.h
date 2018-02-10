@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2017 Meltytech, LLC
+ * Copyright (c) 2016-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -29,30 +29,30 @@
 class QmlProducer : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(int in READ in())
-    Q_PROPERTY(int out READ out())
-    Q_PROPERTY(int aspectRatio READ aspectRatio())
-    Q_PROPERTY(int duration READ duration())
-    Q_PROPERTY(QString resource READ resource())
-    Q_PROPERTY(QString mlt_service READ mlt_service())
-    Q_PROPERTY(QString hash READ hash())
-    Q_PROPERTY(QString name READ name())
-    Q_PROPERTY(QVariant audioLevels READ audioLevels)
-    Q_PROPERTY(int fadeIn READ fadeIn)
-    Q_PROPERTY(int fadeOut READ fadeOut)
-    Q_PROPERTY(double speed READ speed)
+    Q_PROPERTY(int in READ in() NOTIFY producerChanged)
+    Q_PROPERTY(int out READ out() NOTIFY producerChanged)
+    Q_PROPERTY(int aspectRatio READ aspectRatio() NOTIFY producerChanged)
+    Q_PROPERTY(int duration READ duration() NOTIFY producerChanged)
+    Q_PROPERTY(QString resource READ resource() NOTIFY producerChanged)
+    Q_PROPERTY(QString mlt_service READ mlt_service() NOTIFY producerChanged)
+    Q_PROPERTY(QString hash READ hash() NOTIFY producerChanged)
+    Q_PROPERTY(QString name READ name() NOTIFY producerChanged)
+    Q_PROPERTY(QVariant audioLevels READ audioLevels NOTIFY producerChanged)
+    Q_PROPERTY(int fadeIn READ fadeIn NOTIFY producerChanged)
+    Q_PROPERTY(int fadeOut READ fadeOut NOTIFY producerChanged)
+    Q_PROPERTY(double speed READ speed NOTIFY producerChanged)
     Q_PROPERTY(int position READ position WRITE setPosition NOTIFY positionChanged)
 
 public:
-    explicit QmlProducer(Mlt::Producer& producer, QObject *parent = 0);
+    explicit QmlProducer(QObject *parent = 0);
 
     int in();
     int out();
     double aspectRatio();
-    int duration() {return out() - in() + 1;}
+    int duration() { return m_producer.is_valid()? out() - in() + 1 : 0; }
     QString resource();
-    QString mlt_service() {return m_producer.get("mlt_service");}
-    QString hash() {return m_producer.get(kShotcutHashProperty);}
+    QString mlt_service() { return m_producer.is_valid()? m_producer.get("mlt_service") : QString(); }
+    QString hash() { return m_producer.is_valid()? m_producer.get(kShotcutHashProperty) : QString(); }
     QString name();
     QVariant audioLevels();
     int fadeIn();
@@ -61,12 +61,15 @@ public:
     int position() const { return m_position; }
     void setPosition(int position);
     void seek(int position);
+    Mlt::Producer& producer() { return m_producer; }
 
 signals:
-    void seeked(int position);
+    void producerChanged();
     void positionChanged();
+    void seeked(int position);
 
 public slots:
+    void setProducer(Mlt::Producer& producer);
 
 private:
     Mlt::Producer m_producer;

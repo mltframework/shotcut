@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2017 Meltytech, LLC
+ * Copyright (c) 2016-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -26,15 +26,15 @@ static const char* kAspectNumProperty = "meta.media.sample_aspect_num";
 static const char* kAspectDenProperty = "meta.media.sample_aspect_den";
 
 
-QmlProducer::QmlProducer(Mlt::Producer& producer, QObject *parent)
+QmlProducer::QmlProducer(QObject *parent)
     : QObject(parent)
-    , m_producer(producer)
 {
 
 }
 
 int QmlProducer::in()
 {
+    if (!m_producer.is_valid()) return 0;
     if (m_producer.get(kFilterInProperty))
         // Shots on the timeline will set the producer to the cut parent.
         // However, we want time-based filters such as fade in/out to use
@@ -46,6 +46,7 @@ int QmlProducer::in()
 
 int QmlProducer::out()
 {
+    if (!m_producer.is_valid()) return 0;
     if (m_producer.get(kFilterOutProperty))
         // Shots on the timeline will set the producer to the cut parent.
         // However, we want time-based filters such as fade in/out to use
@@ -57,6 +58,7 @@ int QmlProducer::out()
 
 double QmlProducer::aspectRatio()
 {
+    if (!m_producer.is_valid()) return 1.0;
     if (m_producer.get(kHeightProperty)) {
         double sar = 1.0;
         if (m_producer.get(kAspectDenProperty)) {
@@ -70,6 +72,7 @@ double QmlProducer::aspectRatio()
 
 QString QmlProducer::resource()
 {
+    if (!m_producer.is_valid()) return QString();
     QString result = QString::fromUtf8(m_producer.get("resource"));
     if (result == "<producer>" && m_producer.get("mlt_service"))
         result = QString::fromUtf8(m_producer.get("mlt_service"));
@@ -79,6 +82,7 @@ QString QmlProducer::resource()
 QString QmlProducer::name()
 {
     QString result;
+    if (!m_producer.is_valid()) return result;
     if (m_producer.is_valid())
         result = m_producer.get(kShotcutCaptionProperty);
     if (result.isNull())
@@ -90,6 +94,7 @@ QString QmlProducer::name()
 
 QVariant QmlProducer::audioLevels()
 {
+    if (!m_producer.is_valid()) return QVariant();
     if (m_producer.get_data(kAudioLevelsProperty))
         return QVariant::fromValue(*((QVariantList*) m_producer.get_data(kAudioLevelsProperty)));
     else
@@ -98,6 +103,7 @@ QVariant QmlProducer::audioLevels()
 
 int QmlProducer::fadeIn()
 {
+    if (!m_producer.is_valid()) return 0;
     QScopedPointer<Mlt::Filter> filter(MLT.getFilter("fadeInVolume", &m_producer));
     if (!filter || !filter->is_valid())
         filter.reset(MLT.getFilter("fadeInBrightness", &m_producer));
@@ -108,6 +114,7 @@ int QmlProducer::fadeIn()
 
 int QmlProducer::fadeOut()
 {
+    if (!m_producer.is_valid()) return 0;
     QScopedPointer<Mlt::Filter> filter(MLT.getFilter("fadeOutVolume", &m_producer));
     if (!filter || !filter->is_valid())
         filter.reset(MLT.getFilter("fadeOutBrightness", &m_producer));
@@ -119,6 +126,7 @@ int QmlProducer::fadeOut()
 double QmlProducer::speed()
 {
     double result = 1.0;
+    if (!m_producer.is_valid()) return result;
     if (m_producer.is_valid()) {
         if (!qstrcmp("timewarp", m_producer.get("mlt_service")))
             result = m_producer.get_double("warp_speed");
@@ -143,5 +151,11 @@ void QmlProducer::seek(int position)
     if (!m_producer.is_valid()) return;
     m_position = position;
     emit positionChanged();
+}
+
+void QmlProducer::setProducer(Mlt::Producer& producer)
+{
+    m_producer = producer;
+    emit producerChanged();
 }
 

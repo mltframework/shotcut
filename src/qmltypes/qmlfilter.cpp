@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2017 Meltytech, LLC
+ * Copyright (c) 2013-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -36,13 +36,22 @@ static const char* kHeightProperty = "meta.media.height";
 static const char* kAspectNumProperty = "meta.media.sample_aspect_num";
 static const char* kAspectDenProperty = "meta.media.sample_aspect_den";
 
-QmlFilter::QmlFilter(Mlt::Filter* mltFilter, const QmlMetadata* metadata, QObject* parent)
+QmlFilter::QmlFilter()
+    : QObject(0)
+    , m_filter(mlt_filter(0))
+    , m_producer(mlt_producer(0))
+    , m_isNew(false)
+{
+
+}
+
+QmlFilter::QmlFilter(Mlt::Filter& mltFilter, const QmlMetadata* metadata, QObject* parent)
     : QObject(parent)
     , m_metadata(metadata)
     , m_filter(mltFilter)
     // Every attached filter has a service property that points to the service to
     // which it is attached.
-    , m_producer(mlt_producer(m_filter->get_data("service")))
+    , m_producer(mlt_producer(m_filter.is_valid()? m_filter.get_data("service") : 0))
     , m_path(m_metadata->path().absolutePath().append('/'))
     , m_isNew(false)
 {
@@ -50,30 +59,30 @@ QmlFilter::QmlFilter(Mlt::Filter* mltFilter, const QmlMetadata* metadata, QObjec
 
 QmlFilter::~QmlFilter()
 {
-    delete m_filter;
 }
 
 QString QmlFilter::get(QString name)
 {
-    if (m_filter)
-        return QString::fromUtf8(m_filter->get(name.toUtf8().constData()));
+    if (m_filter.is_valid())
+        return QString::fromUtf8(m_filter.get(name.toUtf8().constData()));
     else
         return QString();
 }
 
 double QmlFilter::getDouble(QString name)
 {
-    if (m_filter)
-        return m_filter->get_double(name.toUtf8().constData());
+    if (m_filter.is_valid())
+        return m_filter.get_double(name.toUtf8().constData());
     else
         return 0;
 }
 
 QRectF QmlFilter::getRect(QString name)
 {
-    const char* s = m_filter->get(name.toUtf8().constData());
+    if (!m_filter.is_valid()) return QRectF();
+    const char* s = m_filter.get(name.toUtf8().constData());
     if (s) {
-        mlt_rect rect = m_filter->get_rect(name.toUtf8().constData());
+        mlt_rect rect = m_filter.get_rect(name.toUtf8().constData());
         if (::strchr(s, '%')) {
             return QRectF(qRound(rect.x * MLT.profile().width()),
                           qRound(rect.y * MLT.profile().height()),
@@ -89,9 +98,9 @@ QRectF QmlFilter::getRect(QString name)
 
 void QmlFilter::set(QString name, QString value)
 {
-    if (!m_filter) return;
-    if (qstrcmp(m_filter->get(name.toUtf8().constData()), value.toUtf8().constData())) {
-        m_filter->set(name.toUtf8().constData(), value.toUtf8().constData());
+    if (!m_filter.is_valid()) return;
+    if (qstrcmp(m_filter.get(name.toUtf8().constData()), value.toUtf8().constData())) {
+        m_filter.set(name.toUtf8().constData(), value.toUtf8().constData());
         MLT.refreshConsumer();
         emit changed();
     }
@@ -99,10 +108,10 @@ void QmlFilter::set(QString name, QString value)
 
 void QmlFilter::set(QString name, double value)
 {
-    if (!m_filter) return;
-    if (!m_filter->get(name.toUtf8().constData())
-        || m_filter->get_double(name.toUtf8().constData()) != value) {
-        m_filter->set(name.toUtf8().constData(), value);
+    if (!m_filter.is_valid()) return;
+    if (!m_filter.get(name.toUtf8().constData())
+        || m_filter.get_double(name.toUtf8().constData()) != value) {
+        m_filter.set(name.toUtf8().constData(), value);
         MLT.refreshConsumer();
         emit changed();
         if (name == "in")
@@ -114,10 +123,10 @@ void QmlFilter::set(QString name, double value)
 
 void QmlFilter::set(QString name, int value)
 {
-    if (!m_filter) return;
-    if (!m_filter->get(name.toUtf8().constData())
-        || m_filter->get_int(name.toUtf8().constData()) != value) {
-        m_filter->set(name.toUtf8().constData(), value);
+    if (!m_filter.is_valid()) return;
+    if (!m_filter.get(name.toUtf8().constData())
+        || m_filter.get_int(name.toUtf8().constData()) != value) {
+        m_filter.set(name.toUtf8().constData(), value);
         MLT.refreshConsumer();
         emit changed();
         if (name == "in")
@@ -129,11 +138,11 @@ void QmlFilter::set(QString name, int value)
 
 void QmlFilter::set(QString name, double x, double y, double width, double height, double opacity)
 {
-    if (!m_filter) return;
-    mlt_rect rect = m_filter->get_rect(name.toUtf8().constData());
-    if (!m_filter->get(name.toUtf8().constData()) || x != rect.x || y != rect.y
+    if (!m_filter.is_valid()) return;
+    mlt_rect rect = m_filter.get_rect(name.toUtf8().constData());
+    if (!m_filter.get(name.toUtf8().constData()) || x != rect.x || y != rect.y
         || width != rect.w || height != rect.h || opacity != rect.o) {
-        m_filter->set(name.toUtf8().constData(), x, y, width, height, opacity);
+        m_filter.set(name.toUtf8().constData(), x, y, width, height, opacity);
         MLT.refreshConsumer();
         emit changed();
     }
@@ -161,7 +170,7 @@ int QmlFilter::savePreset(const QStringList &propertyNames, const QString &name)
     Mlt::Properties properties;
     QDir dir(Settings.appDataLocation());
 
-    properties.pass_list(*((Mlt::Properties*)m_filter), propertyNames.join('\t').toLatin1().constData());
+    properties.pass_list(m_filter, propertyNames.join('\t').toLatin1().constData());
 
     if (!dir.exists())
         dir.mkpath(dir.path());
@@ -190,17 +199,17 @@ void QmlFilter::deletePreset(const QString &name)
 
 void QmlFilter::analyze(bool isAudio)
 {
-    Mlt::Service service(mlt_service(m_filter->get_data("service")));
+    Mlt::Service service(mlt_service(m_filter.get_data("service")));
 
     // get temp filename for input xml
     QTemporaryFile tmp;
     tmp.open();
     tmp.close();
-    m_filter->set("results", NULL, 0);
-    int disable = m_filter->get_int("disable");
-    m_filter->set("disable", 0);
+    m_filter.set("results", NULL, 0);
+    int disable = m_filter.get_int("disable");
+    m_filter.set("disable", 0);
     MLT.saveXML(tmp.fileName(), &service);
-    m_filter->set("disable", disable);
+    m_filter.set("disable", disable);
 
     // get temp filename for output xml
     QTemporaryFile tmpTarget;
@@ -259,11 +268,13 @@ QString QmlFilter::timeFromFrames(int frames)
 
 void QmlFilter::getHash()
 {
-    MAIN.getHash(*m_filter);
+    if (m_filter.is_valid())
+        MAIN.getHash(m_filter);
 }
 
 int QmlFilter::producerIn()
 {
+    if (!m_producer.is_valid()) return 0;
     if (m_producer.get(kFilterInProperty))
         // Shots on the timeline will set the producer to the cut parent.
         // However, we want time-based filters such as fade in/out to use
@@ -275,6 +286,7 @@ int QmlFilter::producerIn()
 
 int QmlFilter::producerOut()
 {
+    if (!m_producer.is_valid()) return 0;
     if (m_producer.get(kFilterOutProperty))
         // Shots on the timeline will set the producer to the cut parent.
         // However, we want time-based filters such as fade in/out to use
@@ -286,6 +298,7 @@ int QmlFilter::producerOut()
 
 double QmlFilter::producerAspect()
 {
+    if (!m_producer.is_valid()) return 1.0;
     if (m_producer.get(kHeightProperty)) {
         double sar = 1.0;
         if (m_producer.get(kAspectDenProperty)) {
@@ -299,11 +312,12 @@ double QmlFilter::producerAspect()
 
 void QmlFilter::preset(const QString &name)
 {
+    if (!m_filter.is_valid()) return;
     QDir dir(Settings.appDataLocation());
 
     if (!dir.cd("presets") || !dir.cd(objectNameOrService()))
         return;
-    m_filter->load(dir.filePath(name).toUtf8().constData());
+    m_filter.load(dir.filePath(name).toUtf8().constData());
     MLT.refreshConsumer();
     emit changed();
 }
@@ -313,9 +327,9 @@ QString QmlFilter::objectNameOrService()
     return m_metadata->objectName().isEmpty()? m_metadata->mlt_service() : m_metadata->objectName();
 }
 
-AnalyzeDelegate::AnalyzeDelegate(Mlt::Filter* filter)
+AnalyzeDelegate::AnalyzeDelegate(Mlt::Filter& filter)
     : QObject(0)
-    , m_filter(*filter)
+    , m_filter(filter)
 {}
 
 void AnalyzeDelegate::onAnalyzeFinished(AbstractJob *job, bool isSuccess)

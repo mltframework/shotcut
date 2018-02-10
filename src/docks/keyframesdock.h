@@ -20,6 +20,8 @@
 #define KEYFRAMESDOCK_H
 
 #include "qmltypes/qmlproducer.h"
+#include "qmltypes/qmlfilter.h"
+#include "models/metadatamodel.h"
 
 #include <QDockWidget>
 #include <QQuickWidget>
@@ -55,7 +57,9 @@ private slots:
 
 private:
     QQuickWidget m_qview;
-    QScopedPointer<QmlProducer> m_producer;
+    QmlProducer m_producer;
+    QmlMetadata m_emptyQmlMetadata;
+    QmlFilter m_emptyQmlFilter;
 };
 
 #endif // KEYFRAMESDOCK_H
