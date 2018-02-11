@@ -32,6 +32,7 @@
 #include "qmltypes/qmlutilities.h"
 #include "qmltypes/qmlview.h"
 #include "models/attachedfiltersmodel.h"
+#include "mltcontroller.h"
 
 KeyframesDock::KeyframesDock(MetadataModel* metadataModel, AttachedFiltersModel* attachedModel, QWidget *parent)
     : QDockWidget(tr("Keyframes"), parent)
@@ -101,8 +102,16 @@ bool KeyframesDock::event(QEvent *event)
 
 void KeyframesDock::onSeeked(int position)
 {
-    if (m_producer.producer().is_valid())
-        m_producer.seek(position);
+    if (m_producer.producer().is_valid()) {
+        if (MLT.isMultitrack()) {
+            // Make the position relative to clip's position on a timeline track.
+            position -= m_producer.producer().get_int(kPlaylistStartProperty);
+        } else {
+            // Make the position relative to the clip's in point.
+            position -= m_producer.in();
+        }
+        m_producer.seek(qBound(0, position, m_producer.duration()));
+    }
 }
 
 void KeyframesDock::resetQview()

@@ -139,7 +139,10 @@ void QmlProducer::setPosition(int position)
     if (!m_producer.is_valid()) return;
     int length = duration();
     if (position < length) {
-        emit seeked(position);
+        if (MLT.isMultitrack())
+            emit seeked(m_producer.get_int(kPlaylistStartProperty) + qMax(0, position));
+        else
+            emit seeked(in() + qMax(0, position));
     } else {
         m_position = length - 1;
         emit positionChanged();

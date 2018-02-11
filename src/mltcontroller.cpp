@@ -584,10 +584,7 @@ void Controller::setIn(int in)
         for (int i = 0; i < n; i++) {
             Filter* filter = m_producer->filter(i);
             if (filter && filter->is_valid() && filter->get_length() > 0) {
-                if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeIn")
-                        || QString(filter->get("mlt_service")) == "webvfx") {
-                    filter->set_in_and_out(in, in + filter->get_length() - 1);
-                }
+                filter->set_in_and_out(in, in + filter->get_length() - 1);
             }
             delete filter;
         }
@@ -604,11 +601,8 @@ void Controller::setOut(int out)
         for (int i = 0; i < n; i++) {
             Filter* filter = m_producer->filter(i);
             if (filter && filter->is_valid() && filter->get_length() > 0) {
-                if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeOut")
-                        || QString(filter->get("mlt_service")) == "webvfx") {
-                    int in = out - filter->get_length() + 1;
-                    filter->set_in_and_out(in, out);
-                }
+                int in = out - filter->get_length() + 1;
+                filter->set_in_and_out(in, out);
             }
             delete filter;
         }
