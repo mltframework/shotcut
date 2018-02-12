@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2017 Meltytech, LLC
+ * Copyright (c) 2016-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -33,7 +33,6 @@ Rectangle {
     property int clipDuration: 0
     property bool isBlank: false
     property bool isAudio: false
-    property bool isTransition: false
     property var audioLevels
     property int fadeIn: 0
     property int fadeOut: 0
@@ -46,11 +45,6 @@ Rectangle {
     property string hash: ''
     property double speed: 1.0
 
-    signal clicked(var clip)
-    signal moved(var clip)
-    signal dragged(var clip, var mouse)
-    signal dropped(var clip)
-    signal draggedToTrack(var clip, int direction)
     signal trimmingIn(var clip, real delta, var mouse)
     signal trimmedIn(var clip)
     signal trimmingOut(var clip, real delta, var mouse)
@@ -73,19 +67,10 @@ Rectangle {
     border.color: selected? 'red' : 'black'
     border.width: 1
     clip: true
-    Drag.active: mouseArea.drag.active
-    Drag.proposedAction: Qt.MoveAction
     opacity: isBlank? 0.5 : 1.0
 
     function getColor() {
         return isAudio? 'darkseagreen' : root.shotcutBlue
-    }
-
-    function reparent(track) {
-        parent = track
-        isAudio = track.isAudio
-        height = track.height
-        generateWaveform()
     }
 
     function generateWaveform() {
@@ -97,7 +82,7 @@ Rectangle {
     }
 
     function imagePath(time) {
-        if (isAudio || isBlank || isTransition) {
+        if (isAudio || isBlank) {
             return ''
         } else {
             return 'image://thumbnail/' + hash + '/' + mltService + '/' + clipResource + '#' + time
@@ -133,14 +118,6 @@ Rectangle {
         source: imagePath(inPoint)
     }
 
-    TimelineTransition {
-        visible: isTransition
-        anchors.fill: parent
-        property var color: isAudio? 'darkseagreen' : root.shotcutBlue
-        colorA: color
-        colorB: clipRoot.selected ? Qt.darker(color) : Qt.lighter(color)
-    }
-
     Row {
         id: waveform
         visible: !isBlank && settings.timelineShowWaveforms
@@ -169,7 +146,7 @@ Rectangle {
     Rectangle {
         // audio peak line
         width: parent.width - parent.border.width * 2
-        visible: !isBlank && !isTransition
+        visible: !isBlank
         height: 1
         anchors.left: parent.left
         anchors.bottom: parent.bottom
@@ -182,7 +159,7 @@ Rectangle {
     Rectangle {
         // text background
         color: 'lightgray'
-        visible: !isBlank && !isTransition
+        visible: !isBlank
         opacity: 0.7
         anchors.top: parent.top
         anchors.left: parent.left
@@ -196,7 +173,7 @@ Rectangle {
     Text {
         id: label
         text: clipName
-        visible: !isBlank && !isTransition
+        visible: !isBlank
         font.pointSize: 8
         anchors {
             top: parent.top
@@ -245,64 +222,18 @@ Rectangle {
 
     MouseArea {
         anchors.fill: parent
-        enabled: isBlank
         acceptedButtons: Qt.RightButton
-        onClicked: menu.show()
-    }
-
-    MouseArea {
-        id: mouseArea
-        anchors.fill: parent
-        enabled: !isBlank
-        acceptedButtons: Qt.LeftButton
-        drag.target: parent
-        drag.axis: Drag.XAxis
-        property int startX
-        onPressed: {
-            root.stopScrolling = true
-            originalX = parent.x
-            originalTrackIndex = trackIndex
-            originalClipIndex = index
-            startX = parent.x
-            clipRoot.forceActiveFocus();
-            clipRoot.clicked(clipRoot)
-        }
-        onPositionChanged: {
-            if (mouse.y < 0 && trackIndex > 0)
-                parent.draggedToTrack(clipRoot, -1)
-            else if (mouse.y > height && (trackIndex + 1) < root.trackCount)
-                parent.draggedToTrack(clipRoot, 1)
-            parent.dragged(clipRoot, mouse)
-        }
-        onReleased: {
-            root.stopScrolling = false
-            parent.y = 0
-            var delta = parent.x - startX
-            if (Math.abs(delta) >= 1.0 || trackIndex !== originalTrackIndex) {
-                parent.moved(clipRoot)
-                originalX = parent.x
-                originalTrackIndex = trackIndex
-            } else {
-                parent.dropped(clipRoot)
-            }
-        }
+        propagateComposedEvents: true
+        cursorShape: (trimInMouseArea.drag.active || trimOutMouseArea.drag.active)? Qt.SizeHorCursor :
+            (fadeInMouseArea.drag.active || fadeOutMouseArea.drag.active)? Qt.PointingHandCursor :
+            Qt.ArrowCursor
+        onClicked: menu.popup()
         onWheel: zoomByWheel(wheel)
-
-        MouseArea {
-            anchors.fill: parent
-            acceptedButtons: Qt.RightButton
-            propagateComposedEvents: true
-            cursorShape: (trimInMouseArea.drag.active || trimOutMouseArea.drag.active)? Qt.SizeHorCursor :
-                (fadeInMouseArea.drag.active || fadeOutMouseArea.drag.active)? Qt.PointingHandCursor :
-                drag.active? Qt.ClosedHandCursor :
-                isBlank? Qt.ArrowCursor : Qt.OpenHandCursor
-            onClicked: menu.show()
-        }
     }
 
     TimelineTriangle {
         id: fadeInTriangle
-        visible: !isBlank && !isTransition
+        visible: !isBlank
         width: parent.fadeIn * timeScale
         height: parent.height - parent.border.width * 2
         anchors.left: parent.left
@@ -312,7 +243,7 @@ Rectangle {
     }
     Rectangle {
         id: fadeInControl
-        enabled: !isBlank && !isTransition
+        enabled: !isBlank
         anchors.left: fadeInTriangle.width > radius? undefined : fadeInTriangle.left
         anchors.horizontalCenter: fadeInTriangle.width > radius? fadeInTriangle.right : undefined
         anchors.top: fadeInTriangle.top
@@ -385,7 +316,7 @@ Rectangle {
 
     TimelineTriangle {
         id: fadeOutCanvas
-        visible: !isBlank && !isTransition
+        visible: !isBlank
         width: parent.fadeOut * timeScale
         height: parent.height - parent.border.width * 2
         anchors.right: parent.right
@@ -396,7 +327,7 @@ Rectangle {
     }
     Rectangle {
         id: fadeOutControl
-        enabled: !isBlank && !isTransition
+        enabled: !isBlank
         anchors.right: fadeOutCanvas.width > radius? undefined : fadeOutCanvas.right
         anchors.horizontalCenter: fadeOutCanvas.width > radius? fadeOutCanvas.left : undefined
         anchors.top: fadeOutCanvas.top
@@ -468,7 +399,7 @@ Rectangle {
 
     Rectangle {
         id: trimIn
-        enabled: !isBlank && !isTransition
+        enabled: !isBlank
         anchors.left: parent.left
         anchors.leftMargin: 0
         height: parent.height
@@ -517,7 +448,7 @@ Rectangle {
     }
     Rectangle {
         id: trimOut
-        enabled: !isBlank && !isTransition
+        enabled: !isBlank
         anchors.right: parent.right
         anchors.rightMargin: 0
         height: parent.height
@@ -565,54 +496,8 @@ Rectangle {
     }
     Menu {
         id: menu
-        function show() {
-            mergeItem.visible = timeline.mergeClipWithNext(trackIndex, index, true)
-            popup()
-        }
-        MenuItem {
-            visible: !isBlank && !isTransition
-            text: qsTr('Cut')
-            onTriggered: {
-                if (!trackRoot.isLocked) {
-                    timeline.copyClip(trackIndex, index)
-                    timeline.remove(trackIndex, index)
-                } else {
-                    root.pulseLockButtonOnTrack(currentTrack)
-                }
-            }
-        }
-        MenuItem {
-            visible: !isBlank && !isTransition
-            text: qsTr('Copy')
-            onTriggered: timeline.copyClip(trackIndex, index)
-        }
-        MenuSeparator {
-            visible: !isBlank && !isTransition
-        }
-        MenuItem {
-            text: qsTr('Remove')
-            onTriggered: timeline.remove(trackIndex, index)
-        }
         MenuItem {
             visible: !isBlank
-            text: qsTr('Lift')
-            onTriggered: timeline.lift(trackIndex, index)
-        }
-        MenuSeparator {
-            visible: !isBlank && !isTransition
-        }
-        MenuItem {
-            visible: !isBlank && !isTransition
-            text: qsTr('Split At Playhead (S)')
-            onTriggered: timeline.splitClip(trackIndex, index)
-        }
-        MenuItem {
-            id: mergeItem
-            text: qsTr('Merge with next clip')
-            onTriggered: timeline.mergeClipWithNext(trackIndex, index, false)
-        }
-        MenuItem {
-            visible: !isBlank && !isTransition
             text: qsTr('Rebuild Audio Waveform')
             onTriggered: timeline.remakeAudioLevels(trackIndex, index)
         }
