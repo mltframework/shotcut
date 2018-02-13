@@ -310,6 +310,30 @@ double QmlFilter::producerAspect()
     return MLT.profile().dar();
 }
 
+int QmlFilter::in()
+{
+    int result = 0;
+    if (m_filter.is_valid()) {
+        if (m_filter.get_int("in") == 0 && m_filter.get_int("out") == 0) // undefined/always-on
+            result = producerIn();
+        else
+            result = m_filter.get_int("in");
+    }
+    return result;
+}
+
+int QmlFilter::out()
+{
+    int result = 0;
+    if (m_filter.is_valid()) {
+        if (m_filter.get_int("in") == 0 && m_filter.get_int("out") == 0) // undefined/always-on
+            result = producerOut();
+        else
+            result = m_filter.get_int("out");
+    }
+    return result;
+}
+
 void QmlFilter::preset(const QString &name)
 {
     if (!m_filter.is_valid()) return;

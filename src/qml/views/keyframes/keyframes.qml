@@ -38,10 +38,17 @@ Rectangle {
     property color shotcutBlue: Qt.rgba(23/255, 92/255, 118/255, 1.0)
     property double timeScale: 1.0
 
+    onTimeScaleChanged: redrawWaveforms()
+
+    function redrawWaveforms() {
+        Logic.scrollIfNeeded()
+        beforeClip.generateWaveform()
+        activeClip.generateWaveform()
+        afterClip.generateWaveform()
+    }
+
     function setZoom(value) {
         keyframesToolbar.scaleSlider.value = value
-//        for (var i = 0; i < tracksRepeater.count; i++)
-//            tracksRepeater.itemAt(i).redrawWaveforms()
     }
 
     function adjustZoom(by) {
@@ -242,13 +249,12 @@ Rectangle {
                                     Clip {
                                         id: beforeClip
                                         visible: filter.out > 0 && filter.in > 0
-                                        isBlank: visible
+                                        isBlank: true
                                         clipName: producer.name
                                         clipResource: producer.resource
-                                        clipDuration: filter.in + 1
                                         mltService: producer.mlt_service
-                                        inPoint: 0
-                                        outPoint: filter.in
+                                        inPoint: producer.in
+                                        outPoint: filter.in - 1
                                         audioLevels: producer.audioLevels
                                         width: clipDuration * timeScale
                                         height: trackRoot.height
@@ -258,12 +264,12 @@ Rectangle {
                                     }
                                     Clip {
                                         id: activeClip
+                                        visible: filter.out > 0
                                         clipName: producer.name
                                         clipResource: producer.resource
-                                        clipDuration: (filter.out > 0)? (filter.out - filter.in + 1) : producer.duration
                                         mltService: producer.mlt_service
-                                        inPoint: filter.in + 1
-                                        outPoint: (filter.out > 0)? filter.out : (producer.duration - 1)
+                                        inPoint: filter.in
+                                        outPoint: filter.out
                                         audioLevels: producer.audioLevels
                                         width: clipDuration * timeScale
                                         height: trackRoot.height
@@ -274,13 +280,12 @@ Rectangle {
                                     Clip {
                                         id: afterClip
                                         visible: filter.out > 0
-                                        isBlank: visible
+                                        isBlank: true
                                         clipName: producer.name
                                         clipResource: producer.resource
-                                        clipDuration: producer.duration - (filter.out + 1)
                                         mltService: producer.mlt_service
-                                        inPoint: filter.out
-                                        outPoint: producer.duration
+                                        inPoint: filter.out + 1
+                                        outPoint: producer.out
                                         audioLevels: producer.audioLevels
                                         width: clipDuration * timeScale
                                         height: trackRoot.height

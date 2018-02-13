@@ -30,7 +30,7 @@ Rectangle {
     property string mltService: ''
     property int inPoint: 0
     property int outPoint: 0
-    property int clipDuration: 0
+    property int clipDuration: outPoint - inPoint + 1
     property bool isBlank: false
     property bool isAudio: false
     property var audioLevels
@@ -82,11 +82,7 @@ Rectangle {
     }
 
     function imagePath(time) {
-        if (isAudio || isBlank) {
-            return ''
-        } else {
-            return 'image://thumbnail/' + hash + '/' + mltService + '/' + clipResource + '#' + time
-        }
+        return 'image://thumbnail/' + hash + '/' + mltService + '/' + clipResource + '#' + time
     }
 
     onAudioLevelsChanged: generateWaveform()
@@ -120,7 +116,7 @@ Rectangle {
 
     Row {
         id: waveform
-        visible: !isBlank && settings.timelineShowWaveforms
+        visible: settings.timelineShowWaveforms
         height: isAudio? parent.height : parent.height / 2
         anchors.left: parent.left
         anchors.bottom: parent.bottom
@@ -146,7 +142,6 @@ Rectangle {
     Rectangle {
         // audio peak line
         width: parent.width - parent.border.width * 2
-        visible: !isBlank
         height: 1
         anchors.left: parent.left
         anchors.bottom: parent.bottom

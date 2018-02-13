@@ -65,13 +65,14 @@ void KeyframesDock::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta)
     if (filter && filter->producer().is_valid()) {
         m_producer.setProducer(filter->producer());
         m_qview.rootContext()->setContextProperty("filter", filter);
-        m_qview.rootContext()->setContextProperty("metadata", meta);
     } else {
         Mlt::Producer emptyProducer(mlt_producer(0));
         m_producer.setProducer(emptyProducer);
-        m_qview.rootContext()->setContextProperty("filter", &m_emptyQmlFilter);
-        m_qview.rootContext()->setContextProperty("metadata", &m_emptyQmlMetadata);
+        filter = &m_emptyQmlFilter;
+        meta = &m_emptyQmlMetadata;
     }
+    m_qview.rootContext()->setContextProperty("filter", filter);
+    m_qview.rootContext()->setContextProperty("metadata", meta);
     connect(filter, SIGNAL(changed()), SIGNAL(changed()));
 }
 

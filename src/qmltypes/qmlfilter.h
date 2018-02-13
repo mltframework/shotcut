@@ -70,9 +70,9 @@ public:
     int producerOut();
     double producerAspect();
     Mlt::Producer& producer() { return m_producer; }
-    int in() { return m_filter.is_valid() ? m_filter.get_int("in") : 0; }
+    int in();
     void setIn(int value) { set("in", value); emit inChanged(); }
-    int out() { return m_filter.is_valid()? m_filter.get_int("out") : 0; }
+    int out();
     void setOut(int value) { set("out", value); emit outChanged(); }
 
 public slots:
