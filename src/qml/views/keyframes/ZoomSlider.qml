@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2014 Meltytech, LLC
+ * Copyright (c) 2013-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -39,17 +39,18 @@ Rectangle {
             rightMargin: 4
         }
         minimumValue: 0
-        maximumValue: 1.75
+        maximumValue: 3.0
         value: 1
+        function setScaleFactor() {
+            timeScale = Math.pow(value, 3) + 0.01
+        }
         onValueChanged: {
-            if (typeof timeScale != 'undefined')
-                timeScale = Math.pow(value, 3) + 0.01
+            if (!pressed)
+                setScaleFactor()
         }
         onPressedChanged: {
-            if (!pressed) {
-//                for (var i = 0; i < tracksRepeater.count; i++)
-//                    tracksRepeater.itemAt(i).redrawWaveforms()
-            }
+            if (!pressed)
+                setScaleFactor()
         }
     }
 }

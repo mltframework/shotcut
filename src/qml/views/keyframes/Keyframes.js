@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2017 Meltytech, LLC
+ * Copyright (c) 2016-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,4 +18,15 @@
 
 function trackHeight(isAudio) {
     return isAudio? Math.max(40, multitrack.trackHeight) : multitrack.trackHeight * 2
+}
+
+function scrollIfNeeded() {
+    var x = producer.position * timeScale;
+    if (!scrollView) return;
+    if (x > scrollView.flickableItem.contentX + scrollView.width - 50)
+        scrollView.flickableItem.contentX = x - scrollView.width + 50;
+    else if (x < 50)
+        scrollView.flickableItem.contentX = 0;
+    else if (x < scrollView.flickableItem.contentX + 50)
+        scrollView.flickableItem.contentX = x - 50;
 }
