@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2017 Meltytech, LLC
+ * Copyright (c) 2016-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -34,10 +34,6 @@ Rectangle {
     property bool current: false
     property int index: 0
     signal clicked()
-
-    function pulseLockButton() {
-        lockButtonAnim.restart();
-    }
 
     SystemPalette { id: activePalette }
     color: selected ? selectedTrackColor : (index % 2)? activePalette.alternateBase : activePalette.base
@@ -83,7 +79,6 @@ Rectangle {
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         onClicked: {
             parent.clicked()
-            nameEdit.visible = false
             if (mouse.button == Qt.RightButton)
                 menu.popup()
         }
@@ -97,84 +92,13 @@ Rectangle {
             margins: (trackHeadRoot.height < 50)? 0 : 4
         }
 
-        Rectangle {
-            color: 'transparent'
-            width: trackHeadRoot.width - trackHeadColumn.anchors.margins * 2
-            radius: 2
-            border.color: trackNameMouseArea.containsMouse? activePalette.shadow : 'transparent'
-            height: nameEdit.height
-            MouseArea {
-                id: trackNameMouseArea
-                height: parent.height
-                width: nameEdit.width
-                hoverEnabled: true
-                onClicked: {
-                    nameEdit.visible = true
-                    nameEdit.selectAll()
-                }
-            }
-            Label {
-                text: trackName
-                color: activePalette.windowText
-                elide: Qt.ElideRight
-                x: 4
-                y: 3
-                width: parent.width - 8
-            }
-            TextField {
-                id: nameEdit
-                visible: false
-                width: trackHeadRoot.width - trackHeadColumn.anchors.margins * 2
-                text: trackName
-                onAccepted: {
-                    timeline.setTrackName(index, text)
-                    visible = false
-                }
-                onFocusChanged: visible = focus
-            }
-        }
-        RowLayout {
-            spacing: 0
-            CheckBox {
-                id: lockButton
-                checked: isLocked
-                style: CheckBoxStyle {
-                    indicator: Rectangle {
-                        implicitWidth: 16
-                        implicitHeight: 16
-                        radius: 2
-                        color: isLocked ? activePalette.highlight : trackHeadRoot.color
-                        border.color: activePalette.shadow
-                        border.width: 1
-                        Text {
-                            id: lockText
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            anchors.verticalCenter: parent.verticalCenter
-                            text: qsTr('L', 'Lock')
-                            color: isLocked ? activePalette.highlightedText : activePalette.windowText
-                        }
-                    }
-                }
-                SequentialAnimation {
-                    id: lockButtonAnim
-                    loops: 2
-                    NumberAnimation {
-                        target: lockButton
-                        property: "scale"
-                        to: 1.8
-                        duration: 200
-                    }
-                    NumberAnimation {
-                        target: lockButton
-                        property: "scale"
-                        to: 1
-                        duration: 200
-                    }
-                }
-
-                onClicked: timeline.setTrackLock(index, !isLocked)
-                Shotcut.ToolTip { text: qsTr('Lock track') }
-            }
+        Label {
+            text: trackName
+            color: activePalette.windowText
+            elide: Qt.ElideRight
+            x: 4
+            y: 3
+            width: trackHeadRoot.width - trackHeadColumn.anchors.margins * 2 - 8
         }
     }
 }
