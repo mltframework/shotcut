@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 Meltytech, LLC
+ * Copyright (c) 2013-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -53,15 +53,6 @@ Rectangle {
         setZoom(1.0)
     }
 
-    function zoomByWheel(wheel) {
-        if (wheel.modifiers & Qt.ControlModifier) {
-            adjustZoom(wheel.angleDelta.y / 720)
-        }
-        if (wheel.modifiers & Qt.ShiftModifier) {
-            multitrack.trackHeight = Math.max(30, multitrack.trackHeight + wheel.angleDelta.y / 5)
-        }
-    }
-
     function makeTracksTaller() {
         multitrack.trackHeight += 20
     }
@@ -94,7 +85,7 @@ Rectangle {
         anchors.fill: parent
         acceptedButtons: Qt.RightButton
         onClicked: menu.popup()
-        onWheel: zoomByWheel(wheel)
+        onWheel: Logic.onMouseWheel(wheel)
     }
 
     DropArea {
@@ -269,9 +260,12 @@ Rectangle {
                     width: root.width - headerWidth
                     height: root.height - ruler.height - toolbar.height
         
-                    Item {
+                    MouseArea {
                         width: tracksContainer.width + headerWidth
                         height: trackHeaders.height + 30 // 30 is padding
+                        acceptedButtons: Qt.NoButton
+                        onWheel: Logic.onMouseWheel(wheel)
+
                         Column {
                             // These make the striped background for the tracks.
                             // It is important that these are not part of the track visual hierarchy;
