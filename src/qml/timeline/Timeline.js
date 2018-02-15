@@ -114,16 +114,18 @@ function onMouseWheel(wheel) {
         }
     } else {
         // Scroll
-        var y = wheel.angleDelta.y / 5
-        var maxWidth = scrollView.flickableItem.contentWidth - scrollView.width + 14
-        var maxHeight = scrollView.flickableItem.contentHeight - scrollView.height + 14
-        if (wheel.angleDelta.x) {
+        var maxWidth = Math.max(scrollView.flickableItem.contentWidth - scrollView.width + 14, 0)
+        var maxHeight = Math.max(scrollView.flickableItem.contentHeight - scrollView.height + 14, 0)
+        if (wheel.pixelDelta.x || wheel.pixelDelta.y) {
             // Track pads provide both horizontal and vertical.
-            var x = wheel.angleDelta.x / 5
-            scrollView.flickableItem.contentX = clamp(scrollView.flickableItem.contentX - x, 0, maxWidth)
+            var x = wheel.pixelDelta.x
+            var y = wheel.pixelDelta.y
+            if (!y || Math.abs(x) > 2)
+                scrollView.flickableItem.contentX = clamp(scrollView.flickableItem.contentX - x, 0, maxWidth)
             scrollView.flickableItem.contentY = clamp(scrollView.flickableItem.contentY - y, 0, maxHeight)
         } else {
             // Vertical only mouse wheel requires modifier for vertical scroll.
+            var y = Math.round(wheel.angleDelta.y / 5)
             if ((wheel.modifiers & Qt.AltModifier) || (wheel.modifiers & Qt.MetaModifier))
                 scrollView.flickableItem.contentY = clamp(scrollView.flickableItem.contentY - y, 0, maxHeight)
             else
