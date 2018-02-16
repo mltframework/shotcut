@@ -256,7 +256,6 @@ Rectangle {
                                         inPoint: producer.in
                                         outPoint: filter.in - 1
                                         audioLevels: producer.audioLevels
-                                        width: clipDuration * timeScale
                                         height: trackRoot.height
                                         hash: producer.hash
                                         speed: producer.speed
@@ -271,7 +270,6 @@ Rectangle {
                                         inPoint: filter.in
                                         outPoint: filter.out
                                         audioLevels: producer.audioLevels
-                                        width: clipDuration * timeScale
                                         height: trackRoot.height
                                         hash: producer.hash
                                         speed: producer.speed
@@ -287,7 +285,6 @@ Rectangle {
                                         inPoint: filter.out + 1
                                         outPoint: producer.out
                                         audioLevels: producer.audioLevels
-                                        width: clipDuration * timeScale
                                         height: trackRoot.height
                                         hash: producer.hash
                                         speed: producer.speed
@@ -380,7 +377,7 @@ Rectangle {
         MenuItem {
             text: qsTr('Reload')
             onTriggered: {
-                multitrack.reload()
+//                multitrack.reload()
             }
         }
         onPopupVisibleChanged: {

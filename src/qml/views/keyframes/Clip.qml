@@ -64,6 +64,7 @@ Rectangle {
         }
     }
 
+    width: clipDuration * timeScale
     border.color: selected? 'red' : 'black'
     border.width: 1
     clip: true
