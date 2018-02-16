@@ -19,6 +19,8 @@
 #include "qmlproducer.h"
 #include "mltcontroller.h"
 #include "util.h"
+#include "settings.h"
+#include "models/audiolevelstask.h"
 
 static const char* kWidthProperty = "meta.media.width";
 static const char* kHeightProperty = "meta.media.height";
@@ -156,9 +158,23 @@ void QmlProducer::seek(int position)
     emit positionChanged();
 }
 
+void QmlProducer::audioLevelsReady(const QModelIndex& index)
+{
+    Q_UNUSED(index)
+    emit audioLevelsChanged();
+}
+
+void QmlProducer::remakeAudioLevels(bool force)
+{
+    if (Settings.timelineShowWaveforms())
+        AudioLevelsTask::start(m_producer, this, QModelIndex(), force);
+}
+
 void QmlProducer::setProducer(Mlt::Producer& producer)
 {
     m_producer = producer;
+    if (Settings.timelineShowWaveforms())
+        AudioLevelsTask::start(m_producer, this, QModelIndex());
     emit producerChanged();
     emit inChanged();
     emit outChanged();

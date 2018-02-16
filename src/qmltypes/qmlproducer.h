@@ -37,7 +37,7 @@ class QmlProducer : public QObject
     Q_PROPERTY(QString mlt_service READ mlt_service() NOTIFY producerChanged)
     Q_PROPERTY(QString hash READ hash() NOTIFY producerChanged)
     Q_PROPERTY(QString name READ name() NOTIFY producerChanged)
-    Q_PROPERTY(QVariant audioLevels READ audioLevels NOTIFY producerChanged)
+    Q_PROPERTY(QVariant audioLevels READ audioLevels NOTIFY audioLevelsChanged)
     Q_PROPERTY(int fadeIn READ fadeIn NOTIFY producerChanged)
     Q_PROPERTY(int fadeOut READ fadeOut NOTIFY producerChanged)
     Q_PROPERTY(double speed READ speed NOTIFY producerChanged)
@@ -62,6 +62,8 @@ public:
     void setPosition(int position);
     void seek(int position);
     Mlt::Producer& producer() { return m_producer; }
+    Q_INVOKABLE void audioLevelsReady(const QModelIndex &index);
+    Q_INVOKABLE void remakeAudioLevels(bool force = true);
 
 signals:
     void producerChanged();
@@ -69,6 +71,7 @@ signals:
     void seeked(int position);
     void inChanged();
     void outChanged();
+    void audioLevelsChanged();
 
 public slots:
     void setProducer(Mlt::Producer& producer);

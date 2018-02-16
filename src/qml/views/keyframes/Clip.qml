@@ -495,9 +495,9 @@ Rectangle {
     Menu {
         id: menu
         MenuItem {
-            visible: !isBlank
+            visible: !isBlank && settings.timelineShowWaveforms
             text: qsTr('Rebuild Audio Waveform')
-            onTriggered: timeline.remakeAudioLevels(trackIndex, index)
+            onTriggered: producer.remakeAudioLevels()
         }
         onPopupVisibleChanged: {
             if (visible && application.OS !== 'OS X' && __popupGeometry.height > 0) {
