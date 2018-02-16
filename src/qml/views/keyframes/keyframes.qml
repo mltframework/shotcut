@@ -400,6 +400,30 @@ Rectangle {
     Menu {
         id: menu
         MenuItem {
+            text: qsTr('Show Audio Waveforms')
+            checkable: true
+            checked: settings.timelineShowWaveforms
+            onTriggered: {
+                if (checked) {
+                    if (settings.timelineShowWaveforms) {
+                        settings.timelineShowWaveforms = checked
+                        redrawWaveforms()
+                    } else {
+                        settings.timelineShowWaveforms = checked
+                        producer.remakeAudioLevels()
+                    }
+                } else {
+                    settings.timelineShowWaveforms = checked
+                }
+            }
+        }
+        MenuItem {
+            text: qsTr('Show Video Thumbnails')
+            checkable: true
+            checked: settings.timelineShowThumbnails
+            onTriggered: settings.timelineShowThumbnails = checked
+        }
+        MenuItem {
             text: qsTr('Reload')
             onTriggered: {
                 keyframes.load()
