@@ -343,6 +343,12 @@ MainWindow::MainWindow()
     connect(m_keyframesDock, SIGNAL(seeked(int)), SLOT(seekKeyframes(int)));
     connect(m_timelineDock->model(), SIGNAL(filterInChanged(Mlt::Filter*)), m_keyframesDock, SLOT(onFilterInChanged(Mlt::Filter*)));
     connect(m_timelineDock->model(), SIGNAL(filterOutChanged(Mlt::Filter*)), m_keyframesDock, SLOT(onFilterOutChanged(Mlt::Filter*)));
+    connect(m_player, SIGNAL(inChanged(int)), m_keyframesDock, SIGNAL(producerInChanged()));
+    connect(m_player, SIGNAL(inChanged(int)), m_keyframesDock, SLOT(onFilterInChanged()));
+    connect(m_player, SIGNAL(inChanged(int)), m_keyframesDock, SLOT(onFilterOutChanged()));
+    connect(m_player, SIGNAL(outChanged(int)), m_keyframesDock, SIGNAL(producerOutChanged()));
+    connect(m_player, SIGNAL(outChanged(int)), m_keyframesDock, SLOT(onFilterInChanged()));
+    connect(m_player, SIGNAL(outChanged(int)), m_keyframesDock, SLOT(onFilterOutChanged()));
 
     m_historyDock = new QDockWidget(tr("History"), this);
     m_historyDock->hide();

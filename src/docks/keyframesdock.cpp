@@ -98,13 +98,15 @@ void KeyframesDock::setFadeOutDuration(int duration)
 
 void KeyframesDock::onFilterInChanged(Mlt::Filter* filter)
 {
-    if (m_currentFilter->filter().get_filter() == filter->get_filter())
+    // The Source player passes a null filter pointer when trimming.
+    if (!filter || m_currentFilter->filter().get_filter() == filter->get_filter())
         emit m_currentFilter->inChanged();
 }
 
 void KeyframesDock::onFilterOutChanged(Mlt::Filter* filter)
 {
-    if (m_currentFilter->filter().get_filter() == filter->get_filter())
+    // The Source player passes a null filter pointer when trimming.
+    if (!filter || m_currentFilter->filter().get_filter() == filter->get_filter())
         emit m_currentFilter->outChanged();
 }
 

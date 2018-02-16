@@ -49,8 +49,8 @@ public slots:
     void setCurrentFilter(QmlFilter* filter, QmlMetadata* meta);
     void setFadeInDuration(int duration);
     void setFadeOutDuration(int duration);
-    void onFilterInChanged(Mlt::Filter* filter);
-    void onFilterOutChanged(Mlt::Filter* filter);
+    void onFilterInChanged(Mlt::Filter* filter = 0);
+    void onFilterOutChanged(Mlt::Filter* filter = 0);
 
 protected:
     bool event(QEvent *event);

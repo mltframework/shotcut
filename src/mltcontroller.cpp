@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2017 Meltytech, LLC
+ * Copyright (c) 2011-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -577,35 +577,44 @@ void Controller::next(int currentPosition)
 void Controller::setIn(int in)
 {
     if (m_producer && m_producer->is_valid()) {
-        m_producer->set("in", in);
-
         // Adjust all filters that have an explicit duration.
         int n = m_producer->filter_count();
         for (int i = 0; i < n; i++) {
             Filter* filter = m_producer->filter(i);
-            if (filter && filter->is_valid() && filter->get_length() > 0) {
-                filter->set_in_and_out(in, in + filter->get_length() - 1);
+            if (filter && filter->is_valid()) {
+                if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeIn")) {
+                    filter->set_in_and_out(in, in + filter->get_length() - 1);
+                } else if (filter->get_in() <= m_producer->get_in()) {
+                    if (filter->get_out() == 0)
+                        filter->set_in_and_out(in, m_producer->get_out());
+                    else
+                        filter->set_in_and_out(in, filter->get_out());
+                }
             }
             delete filter;
         }
+        m_producer->set("in", in);
     }
 }
 
 void Controller::setOut(int out)
 {
     if (m_producer && m_producer->is_valid()) {
-        m_producer->set("out", out);
-
         // Adjust all filters that have an explicit duration.
         int n = m_producer->filter_count();
         for (int i = 0; i < n; i++) {
             Filter* filter = m_producer->filter(i);
-            if (filter && filter->is_valid() && filter->get_length() > 0) {
-                int in = out - filter->get_length() + 1;
-                filter->set_in_and_out(in, out);
+            if (filter && filter->is_valid()) {
+                if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeOut")) {
+                    int in = out - filter->get_length() + 1;
+                    filter->set_in_and_out(in, out);
+                } else if (filter->get_out() == 0 || filter->get_out() >= m_producer->get_out()) {
+                    filter->set_in_and_out(filter->get_in(), out);
+                }
             }
             delete filter;
         }
+        m_producer->set("out", out);
     }
 }
 
