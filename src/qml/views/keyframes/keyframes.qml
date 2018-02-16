@@ -402,7 +402,7 @@ Rectangle {
         MenuItem {
             text: qsTr('Reload')
             onTriggered: {
-//                multitrack.reload()
+                keyframes.load()
             }
         }
         onPopupVisibleChanged: {

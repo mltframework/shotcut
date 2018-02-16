@@ -33,6 +33,7 @@
 #include "qmltypes/qmlview.h"
 #include "models/attachedfiltersmodel.h"
 #include "mltcontroller.h"
+#include "settings.h"
 
 KeyframesDock::KeyframesDock(MetadataModel* metadataModel, AttachedFiltersModel* attachedModel, QWidget *parent)
     : QDockWidget(tr("Keyframes"), parent)
@@ -49,6 +50,7 @@ KeyframesDock::KeyframesDock(MetadataModel* metadataModel, AttachedFiltersModel*
     setWidget(&m_qview);
 
     QmlUtilities::setCommonProperties(m_qview.rootContext());
+    m_qview.rootContext()->setContextProperty("keyframes", this);
     m_qview.rootContext()->setContextProperty("view", new QmlView(&m_qview));
     m_qview.rootContext()->setContextProperty("metadatamodel", metadataModel);
     m_qview.rootContext()->setContextProperty("attachedfiltersmodel", attachedModel);
@@ -57,7 +59,7 @@ KeyframesDock::KeyframesDock(MetadataModel* metadataModel, AttachedFiltersModel*
     connect(this, SIGNAL(producerInChanged()), &m_producer, SIGNAL(inChanged()));
     connect(this, SIGNAL(producerOutChanged()), &m_producer, SIGNAL(outChanged()));
     setCurrentFilter(0, 0);
-    connect(m_qview.quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(resetQview()));
+    connect(m_qview.quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(load()));
 
     LOG_DEBUG() << "end";
 }
@@ -114,7 +116,7 @@ bool KeyframesDock::event(QEvent *event)
 {
     bool result = QDockWidget::event(event);
     if (event->type() == QEvent::PaletteChange || event->type() == QEvent::StyleChange) {
-        resetQview();
+        load(true);
     }
     return result;
 }
@@ -133,21 +135,33 @@ void KeyframesDock::onSeeked(int position)
     }
 }
 
-void KeyframesDock::resetQview()
+void KeyframesDock::onVisibilityChanged(bool visible)
+{
+    if (visible)
+        load();
+}
+
+void KeyframesDock::load(bool force)
 {
     LOG_DEBUG() << "begin";
 
-    QDir viewPath = QmlUtilities::qmlDir();
-    viewPath.cd("views");
-    viewPath.cd("keyframes");
-    m_qview.engine()->addImportPath(viewPath.path());
+    if (m_qview.source().isEmpty() || force) {
+        QDir viewPath = QmlUtilities::qmlDir();
+        viewPath.cd("views");
+        viewPath.cd("keyframes");
+        m_qview.engine()->addImportPath(viewPath.path());
 
-    QDir modulePath = QmlUtilities::qmlDir();
-    modulePath.cd("modules");
-    m_qview.engine()->addImportPath(modulePath.path());
+        QDir modulePath = QmlUtilities::qmlDir();
+        modulePath.cd("modules");
+        m_qview.engine()->addImportPath(modulePath.path());
 
-    m_qview.setResizeMode(QQuickWidget::SizeRootObjectToView);
-    m_qview.quickWindow()->setColor(palette().window().color());
-    QUrl source = QUrl::fromLocalFile(viewPath.absoluteFilePath("keyframes.qml"));
-    m_qview.setSource(source);
+        m_qview.setResizeMode(QQuickWidget::SizeRootObjectToView);
+        m_qview.quickWindow()->setColor(palette().window().color());
+        QUrl source = QUrl::fromLocalFile(viewPath.absoluteFilePath("keyframes.qml"));
+        m_qview.setSource(source);
+        if (force && Settings.timelineShowWaveforms())
+            m_producer.setProducer(m_producer.producer());
+    } else if (Settings.timelineShowWaveforms()) {
+        m_producer.setProducer(m_producer.producer());
+    }
 }

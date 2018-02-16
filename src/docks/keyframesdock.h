@@ -51,13 +51,14 @@ public slots:
     void setFadeOutDuration(int duration);
     void onFilterInChanged(Mlt::Filter* filter = 0);
     void onFilterOutChanged(Mlt::Filter* filter = 0);
+    void load(bool force = false);
 
 protected:
     bool event(QEvent *event);
 
 private slots:
     void onSeeked(int position);
-    void resetQview();
+    void onVisibilityChanged(bool visible);
 
 private:
     QQuickWidget m_qview;
