@@ -44,6 +44,8 @@ Rectangle {
     property bool selected: false
     property string hash: ''
     property double speed: 1.0
+    property bool inThumbnailVisible: true
+    property bool outThumbnailVisible: true
 
     signal trimmingIn(var clip, real delta, var mouse)
     signal trimmedIn(var clip)
@@ -90,7 +92,7 @@ Rectangle {
 
     Image {
         id: outThumbnail
-        visible: settings.timelineShowThumbnails
+        visible: settings.timelineShowThumbnails && outThumbnailVisible
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.topMargin: parent.border.width
@@ -104,7 +106,7 @@ Rectangle {
 
     Image {
         id: inThumbnail
-        visible: settings.timelineShowThumbnails
+        visible: settings.timelineShowThumbnails && inThumbnailVisible
         anchors.left: parent.left
         anchors.top: parent.top
         anchors.topMargin: parent.border.width

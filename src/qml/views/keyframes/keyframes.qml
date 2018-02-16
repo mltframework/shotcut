@@ -259,7 +259,7 @@ Rectangle {
                                         height: trackRoot.height
                                         hash: producer.hash
                                         speed: producer.speed
-//                                        selected: trackRoot.isCurrentTrack && trackRoot.selection.indexOf(index) !== -1
+                                        outThumbnailVisible: false
                                     }
                                     Clip {
                                         id: activeClip
@@ -273,7 +273,32 @@ Rectangle {
                                         height: trackRoot.height
                                         hash: producer.hash
                                         speed: producer.speed
-//                                        selected: trackRoot.isCurrentTrack && trackRoot.selection.indexOf(index) !== -1
+                                        onTrimmingIn: {
+                                            var n = filter.in + delta
+                                            if (delta != 0 && n >= producer.in && n <= filter.out) {
+                                                filter.in = n
+                                                // Show amount trimmed as a time in a "bubble" help.
+                                                var s = application.timecode(Math.abs(clip.originalX))
+                                                s = '%1%2 = %3'.arg((clip.originalX < 0)? '-' : (clip.originalX > 0)? '+' : '')
+                                                               .arg(s.substring(3))
+                                                               .arg(application.timecode(n))
+                                                bubbleHelp.show(clip.x, trackRoot.y + trackRoot.height, s)
+                                            }
+                                        }
+                                        onTrimmedIn: bubbleHelp.hide()
+                                        onTrimmingOut: {
+                                            var n = filter.out - delta
+                                            if (delta != 0 && n >= filter.in && n <= producer.out) {
+                                                filter.out = n
+                                                // Show amount trimmed as a time in a "bubble" help.
+                                                var s = application.timecode(Math.abs(clip.originalX))
+                                                s = '%1%2 = %3'.arg((clip.originalX < 0)? '+' : (clip.originalX > 0)? '-' : '')
+                                                               .arg(s.substring(3))
+                                                               .arg(application.timecode(n))
+                                                bubbleHelp.show(clip.x + clip.width, trackRoot.y + trackRoot.height, s)
+                                            }
+                                        }
+                                        onTrimmedOut: bubbleHelp.hide()
                                     }
                                     Clip {
                                         id: afterClip
@@ -288,7 +313,7 @@ Rectangle {
                                         height: trackRoot.height
                                         hash: producer.hash
                                         speed: producer.speed
-//                                        selected: trackRoot.isCurrentTrack && trackRoot.selection.indexOf(index) !== -1
+                                        inThumbnailVisible: false
                                     }
                                 }
                             }
