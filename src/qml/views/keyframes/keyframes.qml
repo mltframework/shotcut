@@ -123,7 +123,7 @@ Rectangle {
 
                     ParameterHead {
                         id: clipHead
-                        trackName: attachedfiltersmodel.producerTitle
+                        trackName: metadata.name
                         isLocked: false //model.locked
                         width: headerWidth
                         height: Logic.trackHeight(false)

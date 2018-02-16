@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2017 Meltytech, LLC
+ * Copyright (c) 2013-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -29,7 +29,7 @@ class QmlMetadata : public QObject
     Q_OBJECT
     Q_ENUMS(PluginType)
     Q_PROPERTY(PluginType type READ type WRITE setType)
-    Q_PROPERTY(QString name READ name WRITE setName)
+    Q_PROPERTY(QString name READ name WRITE setName NOTIFY changed)
     Q_PROPERTY(QString mlt_service READ mlt_service WRITE set_mlt_service)
     Q_PROPERTY(bool needsGPU READ needsGPU WRITE setNeedsGPU NOTIFY changed)
     Q_PROPERTY(QString qml READ qmlFileName WRITE setQmlFileName)

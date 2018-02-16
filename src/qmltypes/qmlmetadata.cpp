@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 Meltytech, LLC
+ * Copyright (c) 2013-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -54,6 +54,7 @@ void QmlMetadata::setType(QmlMetadata::PluginType type)
 void QmlMetadata::setName(const QString &name)
 {
     m_name = name;
+    emit changed();
 }
 
 void QmlMetadata::set_mlt_service(const QString &service)
