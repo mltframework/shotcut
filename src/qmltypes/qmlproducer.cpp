@@ -160,5 +160,7 @@ void QmlProducer::setProducer(Mlt::Producer& producer)
 {
     m_producer = producer;
     emit producerChanged();
+    emit inChanged();
+    emit outChanged();
 }
 

@@ -341,6 +341,8 @@ MainWindow::MainWindow()
     connect(m_filterController, SIGNAL(currentFilterChanged(QmlFilter*, QmlMetadata*, int)), m_keyframesDock, SLOT(setCurrentFilter(QmlFilter*, QmlMetadata*)), Qt::QueuedConnection);
     connect(m_player, SIGNAL(seeked(int)), m_keyframesDock, SLOT(onSeeked(int)));
     connect(m_keyframesDock, SIGNAL(seeked(int)), SLOT(seekKeyframes(int)));
+    connect(m_timelineDock->model(), SIGNAL(filterInChanged(Mlt::Filter*)), m_keyframesDock, SLOT(onFilterInChanged(Mlt::Filter*)));
+    connect(m_timelineDock->model(), SIGNAL(filterOutChanged(Mlt::Filter*)), m_keyframesDock, SLOT(onFilterOutChanged(Mlt::Filter*)));
 
     m_historyDock = new QDockWidget(tr("History"), this);
     m_historyDock->hide();
@@ -2231,6 +2233,23 @@ void MainWindow::onMultitrackClosed()
 void MainWindow::onMultitrackModified()
 {
     setWindowModified(true);
+
+    // Reflect this playlist info onto the producer for keyframes dock.
+    if (!m_timelineDock->selection().isEmpty()) {
+        int clipIndex = m_timelineDock->selection().first();
+        QScopedPointer<Mlt::ClipInfo> info(m_timelineDock->getClipInfo(m_timelineDock->currentTrack(), clipIndex));
+        if (info && info->producer && info->producer->is_valid()) {
+            info->producer->set(kPlaylistStartProperty, info->start);
+            if (info->frame_in != info->producer->get_int(kFilterInProperty)) {
+                info->producer->set(kFilterInProperty, info->frame_in);
+                emit m_keyframesDock->producerInChanged();
+            }
+            if (info->frame_out != info->producer->get_int(kFilterOutProperty)) {
+                info->producer->set(kFilterOutProperty, info->frame_out);
+                emit m_keyframesDock->producerOutChanged();
+            }
+        }
+    }
 }
 
 void MainWindow::onMultitrackDurationChanged()

@@ -42,11 +42,15 @@ public:
 signals:
     void changed(); /// Notifies when a filter parameter changes.
     void seeked(int);
+    void producerInChanged();
+    void producerOutChanged();
 
 public slots:
     void setCurrentFilter(QmlFilter* filter, QmlMetadata* meta);
     void setFadeInDuration(int duration);
     void setFadeOutDuration(int duration);
+    void onFilterInChanged(Mlt::Filter* filter);
+    void onFilterOutChanged(Mlt::Filter* filter);
 
 protected:
     bool event(QEvent *event);
@@ -60,6 +64,7 @@ private:
     QmlProducer m_producer;
     QmlMetadata m_emptyQmlMetadata;
     QmlFilter m_emptyQmlFilter;
+    QmlFilter* m_currentFilter;
 };
 
 #endif // KEYFRAMESDOCK_H

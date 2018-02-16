@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2017 Meltytech, LLC
+ * Copyright (c) 2013-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -120,6 +120,8 @@ signals:
     void showStatusMessage(QString);
     void durationChanged();
     void filteredChanged();
+    void filterInChanged(Mlt::Filter*);
+    void filterOutChanged(Mlt::Filter*);
 
 public slots:
     void refreshTrackList();

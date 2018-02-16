@@ -37,6 +37,7 @@
 KeyframesDock::KeyframesDock(MetadataModel* metadataModel, AttachedFiltersModel* attachedModel, QWidget *parent)
     : QDockWidget(tr("Keyframes"), parent)
     , m_qview(QmlUtilities::sharedEngine(), this)
+    , m_currentFilter(0)
 {
     LOG_DEBUG() << "begin";
     setObjectName("KeyframesDock");
@@ -53,6 +54,8 @@ KeyframesDock::KeyframesDock(MetadataModel* metadataModel, AttachedFiltersModel*
     m_qview.rootContext()->setContextProperty("attachedfiltersmodel", attachedModel);
     m_qview.rootContext()->setContextProperty("producer", &m_producer);
     connect(&m_producer, SIGNAL(seeked(int)), SIGNAL(seeked(int)));
+    connect(this, SIGNAL(producerInChanged()), &m_producer, SIGNAL(inChanged()));
+    connect(this, SIGNAL(producerOutChanged()), &m_producer, SIGNAL(outChanged()));
     setCurrentFilter(0, 0);
     connect(m_qview.quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(resetQview()));
 
@@ -71,6 +74,7 @@ void KeyframesDock::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta)
         filter = &m_emptyQmlFilter;
         meta = &m_emptyQmlMetadata;
     }
+    m_currentFilter = filter;
     m_qview.rootContext()->setContextProperty("filter", filter);
     m_qview.rootContext()->setContextProperty("metadata", meta);
     connect(filter, SIGNAL(changed()), SIGNAL(changed()));
@@ -90,6 +94,18 @@ void KeyframesDock::setFadeOutDuration(int duration)
     if (filterUi) {
         filterUi->setProperty("duration", duration);
     }
+}
+
+void KeyframesDock::onFilterInChanged(Mlt::Filter* filter)
+{
+    if (m_currentFilter->filter().get_filter() == filter->get_filter())
+        emit m_currentFilter->inChanged();
+}
+
+void KeyframesDock::onFilterOutChanged(Mlt::Filter* filter)
+{
+    if (m_currentFilter->filter().get_filter() == filter->get_filter())
+        emit m_currentFilter->outChanged();
 }
 
 bool KeyframesDock::event(QEvent *event)

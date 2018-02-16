@@ -74,6 +74,7 @@ public:
     void setIn(int value) { set("in", value); emit inChanged(); }
     int out();
     void setOut(int value) { set("out", value); emit outChanged(); }
+    Mlt::Filter& filter() { return m_filter; }
 
 public slots:
     void preset(const QString& name);

@@ -29,8 +29,8 @@
 class QmlProducer : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(int in READ in() NOTIFY producerChanged)
-    Q_PROPERTY(int out READ out() NOTIFY producerChanged)
+    Q_PROPERTY(int in READ in() NOTIFY inChanged)
+    Q_PROPERTY(int out READ out() NOTIFY outChanged)
     Q_PROPERTY(int aspectRatio READ aspectRatio() NOTIFY producerChanged)
     Q_PROPERTY(int duration READ duration() NOTIFY producerChanged)
     Q_PROPERTY(QString resource READ resource() NOTIFY producerChanged)
@@ -67,6 +67,8 @@ signals:
     void producerChanged();
     void positionChanged();
     void seeked(int position);
+    void inChanged();
+    void outChanged();
 
 public slots:
     void setProducer(Mlt::Producer& producer);

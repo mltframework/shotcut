@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2017 Meltytech, LLC
+ * Copyright (c) 2013-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -430,10 +430,14 @@ int MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta, bool r
         int n = info->producer->filter_count();
         for (int j = 0; j < n; j++) {
             Mlt::Filter* filter = info->producer->filter(j);
-            if (filter && filter->is_valid() && filter->get_length() > 0) {
-                if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeIn")
-                        || QString(filter->get("mlt_service")) == "webvfx") {
+            if (filter && filter->is_valid()) {
+                if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeIn")) {
                     filter->set_in_and_out(in, in + filter->get_length() - 1);
+                    emit filterInChanged(filter);
+                    emit filterOutChanged(filter);
+                } else if (filter->get_in() <= info->frame_in) {
+                    filter->set_in_and_out(in, filter->get_out());
+                    emit filterInChanged(filter);
                 }
             }
             delete filter;
@@ -609,10 +613,14 @@ int MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta, bool 
         int n = info->producer->filter_count();
         for (int j = 0; j < n; j++) {
             Mlt::Filter* filter = info->producer->filter(j);
-            if (filter && filter->is_valid() && filter->get_length() > 0) {
-                if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeOut")
-                        || QString(filter->get("mlt_service")) == "webvfx") {
+            if (filter && filter->is_valid()) {
+                if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeOut")) {
                     filter->set_in_and_out(out - filter->get_length() + 1, out);
+                    emit filterInChanged(filter);
+                    emit filterOutChanged(filter);
+                } else if (filter->get_out() >= info->frame_out) {
+                    filter->set_in_and_out(filter->get_in(), out);
+                    emit filterOutChanged(filter);
                 }
             }
             delete filter;
@@ -1433,6 +1441,7 @@ void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
                 }
                 // Adjust video filter.
                 filter->set_in_and_out(info->frame_in, info->frame_in + duration - 1);
+                emit filterOutChanged(filter.data());
             }
 
             // Get audio filter.
@@ -1449,6 +1458,7 @@ void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
             }
             // Adjust audio filter.
             filter->set_in_and_out(info->frame_in, info->frame_in + duration - 1);
+            emit filterOutChanged(filter.data());
 
              // Signal change.
             QModelIndex modelIndex = createIndex(clipIndex, 0, trackIndex);
@@ -1508,6 +1518,7 @@ void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
                 }
                 // Adjust video filter.
                 filter->set_in_and_out(info->frame_out - duration + 1, info->frame_out);
+                emit filterInChanged(filter.data());
             }
 
             // Get audio filter.
@@ -1524,6 +1535,7 @@ void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
             }
             // Adjust audio filter.
             filter->set_in_and_out(info->frame_out - duration + 1, info->frame_out);
+            emit filterInChanged(filter.data());
 
              // Signal change.
             QModelIndex modelIndex = createIndex(clipIndex, 0, trackIndex);
