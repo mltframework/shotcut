@@ -136,6 +136,8 @@ public slots:
     void emitSelectedFromSelection();
     void remakeAudioLevels(int trackIndex, int clipIndex, bool force = true);
     void commitTrimCommand();
+    void onRowsInserted(const QModelIndex& parent, int first, int last);
+    void onRowsRemoved(const QModelIndex& parent, int first, int last);
 
 protected:
     void dragEnterEvent(QDragEnterEvent* event);
