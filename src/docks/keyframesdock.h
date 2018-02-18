@@ -65,7 +65,6 @@ private:
     QmlProducer m_producer;
     QmlMetadata m_emptyQmlMetadata;
     QmlFilter m_emptyQmlFilter;
-    QmlFilter* m_currentFilter;
 };
 
 #endif // KEYFRAMESDOCK_H

@@ -40,6 +40,7 @@ public:
     AttachedFiltersModel* attachedModel();
 
     QmlMetadata* metadataForService(Mlt::Service *service);
+    QmlFilter* currentFilter() const { return m_currentFilter.data(); }
 
 protected:
     void timerEvent(QTimerEvent*);

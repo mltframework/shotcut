@@ -34,11 +34,12 @@
 #include "models/attachedfiltersmodel.h"
 #include "mltcontroller.h"
 #include "settings.h"
+#include "mainwindow.h"
+#include "controllers/filtercontroller.h"
 
 KeyframesDock::KeyframesDock(MetadataModel* metadataModel, AttachedFiltersModel* attachedModel, QWidget *parent)
     : QDockWidget(tr("Keyframes"), parent)
     , m_qview(QmlUtilities::sharedEngine(), this)
-    , m_currentFilter(0)
 {
     LOG_DEBUG() << "begin";
     setObjectName("KeyframesDock");
@@ -76,7 +77,6 @@ void KeyframesDock::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta)
         filter = &m_emptyQmlFilter;
         meta = &m_emptyQmlMetadata;
     }
-    m_currentFilter = filter;
     m_qview.rootContext()->setContextProperty("filter", filter);
     m_qview.rootContext()->setContextProperty("metadata", meta);
     connect(filter, SIGNAL(changed()), SIGNAL(changed()));
@@ -100,16 +100,18 @@ void KeyframesDock::setFadeOutDuration(int duration)
 
 void KeyframesDock::onFilterInChanged(Mlt::Filter* filter)
 {
+    QmlFilter* qmlFilter = MAIN.filterController()->currentFilter();
     // The Source player passes a null filter pointer when trimming.
-    if (!filter || m_currentFilter->filter().get_filter() == filter->get_filter())
-        emit m_currentFilter->inChanged();
+    if (qmlFilter && (!filter || qmlFilter->filter().get_filter() == filter->get_filter()))
+        emit qmlFilter->inChanged();
 }
 
 void KeyframesDock::onFilterOutChanged(Mlt::Filter* filter)
 {
+    QmlFilter* qmlFilter = MAIN.filterController()->currentFilter();
     // The Source player passes a null filter pointer when trimming.
-    if (!filter || m_currentFilter->filter().get_filter() == filter->get_filter())
-        emit m_currentFilter->outChanged();
+    if (qmlFilter && (!filter || qmlFilter->filter().get_filter() == filter->get_filter()))
+        emit qmlFilter->outChanged();
 }
 
 bool KeyframesDock::event(QEvent *event)
