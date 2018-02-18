@@ -648,8 +648,9 @@ void Controller::setOut(int out)
 
 void Controller::restart()
 {
-    if (!m_consumer) return;
-    if (m_producer && m_producer->is_valid() && m_producer->get_speed() != 0) {
+    if (!m_consumer || !m_consumer->is_valid() || !m_producer || !m_producer->is_valid())
+        return;
+    if (m_producer->get_speed() != 0) {
         // Update the real_time property if not paused.
         m_consumer->set("real_time", realTime());
     }
