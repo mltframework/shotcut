@@ -349,6 +349,7 @@ MainWindow::MainWindow()
     connect(m_player, SIGNAL(outChanged(int)), m_keyframesDock, SIGNAL(producerOutChanged()));
     connect(m_player, SIGNAL(outChanged(int)), m_keyframesDock, SLOT(onFilterInChanged()));
     connect(m_player, SIGNAL(outChanged(int)), m_keyframesDock, SLOT(onFilterOutChanged()));
+    connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), m_keyframesDock, SLOT(onShowFrame(const SharedFrame&)));
 
     m_historyDock = new QDockWidget(tr("History"), this);
     m_historyDock->hide();

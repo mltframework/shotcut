@@ -82,22 +82,6 @@ void KeyframesDock::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta)
     connect(filter, SIGNAL(changed()), SIGNAL(changed()));
 }
 
-void KeyframesDock::setFadeInDuration(int duration)
-{
-    QObject* filterUi = m_qview.rootObject()->findChild<QObject*>("fadeIn");
-    if (filterUi) {
-        filterUi->setProperty("duration", duration);
-    }
-}
-
-void KeyframesDock::setFadeOutDuration(int duration)
-{
-    QObject* filterUi = m_qview.rootObject()->findChild<QObject*>("fadeOut");
-    if (filterUi) {
-        filterUi->setProperty("duration", duration);
-    }
-}
-
 void KeyframesDock::onFilterInChanged(Mlt::Filter* filter)
 {
     QmlFilter* qmlFilter = MAIN.filterController()->currentFilter();
@@ -165,5 +149,21 @@ void KeyframesDock::load(bool force)
             m_producer.setProducer(m_producer.producer());
     } else if (Settings.timelineShowWaveforms()) {
         m_producer.setProducer(m_producer.producer());
+    }
+}
+
+void KeyframesDock::onShowFrame(const SharedFrame& frame)
+{
+    if (m_producer.producer().is_valid()) {
+        int position = frame.get_position();
+        if (MLT.isMultitrack()) {
+            // Make the position relative to clip's position on a timeline track.
+            position -= m_producer.producer().get_int(kPlaylistStartProperty);
+        } else {
+            // Make the position relative to the clip's in point.
+            position -= m_producer.in();
+        }
+        if (position >= 0 && position <= m_producer.duration())
+            m_producer.seek(position);
     }
 }

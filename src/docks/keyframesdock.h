@@ -22,6 +22,7 @@
 #include "qmltypes/qmlproducer.h"
 #include "qmltypes/qmlfilter.h"
 #include "models/metadatamodel.h"
+#include "sharedframe.h"
 
 #include <QDockWidget>
 #include <QQuickWidget>
@@ -47,11 +48,10 @@ signals:
 
 public slots:
     void setCurrentFilter(QmlFilter* filter, QmlMetadata* meta);
-    void setFadeInDuration(int duration);
-    void setFadeOutDuration(int duration);
     void onFilterInChanged(Mlt::Filter* filter = 0);
     void onFilterOutChanged(Mlt::Filter* filter = 0);
     void load(bool force = false);
+    void onShowFrame(const SharedFrame& frame);
 
 protected:
     bool event(QEvent *event);
