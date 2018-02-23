@@ -44,8 +44,6 @@ signals:
 public slots:
     void clearCurrentFilter();
     void setCurrentFilter(QmlFilter* filter, QmlMetadata* meta, int index);
-    void setFadeInDuration(int duration);
-    void setFadeOutDuration(int duration);
 
 protected:
     bool event(QEvent *event);

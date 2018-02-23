@@ -9,4 +9,8 @@ Metadata {
     isFavorite: true
     gpuAlt: "movit.opacity"
     allowMultiple: false
+    keyframes {
+        allowAnimateIn: true
+        allowAnimateOut: true
+    }
 }

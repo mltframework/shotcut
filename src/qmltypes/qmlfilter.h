@@ -25,7 +25,9 @@
 #include <QRectF>
 #include <MltFilter.h>
 #include <MltProducer.h>
+
 #include "qmlmetadata.h"
+#include "shotcut_mlt_properties.h"
 
 class AbstractJob;
 
@@ -40,6 +42,9 @@ class QmlFilter : public QObject
     Q_PROPERTY(double producerAspect READ producerAspect)
     Q_PROPERTY(int in READ in WRITE setIn NOTIFY inChanged)
     Q_PROPERTY(int out READ out WRITE setOut NOTIFY outChanged)
+    Q_PROPERTY(int animateIn READ animateIn WRITE setAnimateIn NOTIFY animateInChanged)
+    Q_PROPERTY(int animateOut READ animateOut WRITE setAnimateOut NOTIFY animateOutChanged)
+    Q_PROPERTY(int duration READ duration NOTIFY durationChanged)
 
 public:
     explicit QmlFilter();
@@ -71,10 +76,15 @@ public:
     double producerAspect();
     Mlt::Producer& producer() { return m_producer; }
     int in();
-    void setIn(int value) { set("in", value); emit inChanged(); }
+    void setIn(int value);
     int out();
-    void setOut(int value) { set("out", value); emit outChanged(); }
+    void setOut(int value);
     Mlt::Filter& filter() { return m_filter; }
+    int animateIn() { return m_filter.get_int(kShotcutAnimInProperty); }
+    void setAnimateIn(int value);
+    int animateOut() { return m_filter.get_int(kShotcutAnimOutProperty); }
+    void setAnimateOut(int value);
+    int duration();
 
 public slots:
     void preset(const QString& name);
@@ -85,6 +95,9 @@ signals:
     void changed(); /// Use to let UI and VUI QML signal updates to each other.
     void inChanged();
     void outChanged();
+    void animateInChanged();
+    void animateOutChanged();
+    void durationChanged();
 
 private:
     const QmlMetadata* m_metadata;

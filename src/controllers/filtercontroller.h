@@ -54,6 +54,8 @@ signals:
 public slots:
     void setProducer(Mlt::Producer *producer = 0);
     void setCurrentFilter(int attachedIndex, bool isNew = false);
+    void onFadeInChanged();
+    void onFadeOutChanged();
 
 private slots:
     void handleAttachedModelChange();

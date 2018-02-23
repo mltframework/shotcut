@@ -141,6 +141,22 @@ void FilterController::setCurrentFilter(int attachedIndex, bool isNew)
     m_currentFilter.reset(filter);
 }
 
+void FilterController::onFadeInChanged()
+{
+    if (m_currentFilter) {
+        emit m_currentFilter->changed();
+        emit m_currentFilter->animateInChanged();
+    }
+}
+
+void FilterController::onFadeOutChanged()
+{
+    if (m_currentFilter) {
+        emit m_currentFilter->changed();
+        emit m_currentFilter->animateOutChanged();
+    }
+}
+
 void FilterController::handleAttachedModelChange()
 {
     MLT.refreshConsumer();

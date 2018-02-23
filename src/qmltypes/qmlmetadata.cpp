@@ -151,3 +151,11 @@ void QmlMetadata::setIsClipOnly(bool isClipOnly)
 {
     m_isClipOnly = isClipOnly;
 }
+
+QmlKeyframesMetadata::QmlKeyframesMetadata(QObject* parent)
+    : QObject(parent)
+    , m_allowTrim(true)
+    , m_allowAnimateIn(false)
+    , m_allowAnimateOut(false)
+{
+}

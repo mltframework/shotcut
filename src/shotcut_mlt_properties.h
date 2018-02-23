@@ -45,6 +45,8 @@
 #define kShotcutDetailProperty "shotcut:detail"
 #define kShotcutHashProperty "shotcut:hash"
 #define kShotcutSkipConvertProperty "shotcut:skipConvert"
+#define kShotcutAnimInProperty "shotcut:animIn"
+#define kShotcutAnimOutProperty "shotcut:animOut"
 
 /* Ideally all shotcut properties should begin with "shotcut:", but these
  * do not and kept for legacy reasons? */

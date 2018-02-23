@@ -24,6 +24,30 @@
 #include <QDir>
 #include <QUrl>
 
+class QmlKeyframesMetadata : public QObject
+{
+    Q_OBJECT
+    Q_PROPERTY(bool allowTrim MEMBER m_allowTrim NOTIFY changed)
+    Q_PROPERTY(bool allowAnimateIn MEMBER m_allowAnimateIn NOTIFY changed)
+    Q_PROPERTY(bool allowAnimateOut MEMBER m_allowAnimateOut NOTIFY changed)
+
+public:
+    explicit QmlKeyframesMetadata(QObject *parent = 0);
+
+    bool allowTrim() const { return m_allowTrim; }
+    bool allowAnimateIn() const { return m_allowAnimateIn; }
+    bool allowAnimateOut() const { return m_allowAnimateOut; }
+
+signals:
+    void changed();
+
+private:
+    bool m_allowTrim;
+    bool m_allowAnimateIn;
+    bool m_allowAnimateOut;
+};
+
+
 class QmlMetadata : public QObject
 {
     Q_OBJECT
@@ -43,6 +67,7 @@ class QmlMetadata : public QObject
     Q_PROPERTY(bool allowMultiple READ allowMultiple WRITE setAllowMultiple)
     Q_PROPERTY(bool isClipOnly READ isClipOnly WRITE setIsClipOnly)
     Q_PROPERTY(bool isGpuCompatible READ isGpuCompatible() WRITE setIsGpuCompatible)
+    Q_PROPERTY(QmlKeyframesMetadata* keyframes READ keyframes NOTIFY changed)
 
 public:
     enum PluginType {
@@ -85,6 +110,7 @@ public:
     void setIsClipOnly(bool isClipOnly);
     bool isGpuCompatible() const { return m_isGpuCompatible; }
     void setIsGpuCompatible(bool isCompatible) { m_isGpuCompatible = isCompatible; }
+    QmlKeyframesMetadata* keyframes() { return &m_keyframes; }
 
 signals:
     void changed();
@@ -104,6 +130,7 @@ private:
     bool m_allowMultiple;
     bool m_isClipOnly;
     bool m_isGpuCompatible;
+    QmlKeyframesMetadata m_keyframes;
 };
 
 #endif // QMLMETADATA_H

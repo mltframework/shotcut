@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2015 Meltytech, LLC
+ * Copyright (c) 2014-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -29,15 +29,28 @@ Item {
 
     Component.onCompleted: {
         if (filter.isNew) {
-            duration = Math.ceil(settings.videoOutDuration * profile.fps)
-            var out = filter.producerOut
-            var inFrame = out - duration + 1
-            filter.set('level', '0=1; %1=0'.arg(duration - 1))
             filter.set('alpha', 1)
-            filter.set('in', inFrame)
-            filter.set('out', out)
+            duration = Math.ceil(settings.videoOutDuration * profile.fps)
+        } else if (filter.animateOut === 0) {
+            // Convert legacy filter.
+            duration = filter.duration
+            filter.in = filter.producerIn
+            filter.out = filter.producerOut
+        } else {
+            duration = filter.animateOut
         }
         alphaCheckbox.checked = filter.get('alpha') != 1
+    }
+
+    Connections {
+        target: filter
+        onAnimateOutChanged: duration = filter.animateOut
+    }
+
+    function updateFilter() {
+        var name = (filter.get('alpha') != 1)? 'alpha' : 'level'
+        var filterDuration = filter.producerOut - filter.producerIn + 1
+        filter.set(name, '%1=1; %2=0'.arg(filterDuration - duration).arg(filterDuration - 1))
     }
 
     ColumnLayout {
@@ -50,14 +63,9 @@ Item {
                 id: timeSpinner
                 minimumValue: 2
                 maximumValue: 5000
-                value: filter.getDouble('out') - filter.getDouble('in') + 1
                 onValueChanged: {
-                    var inFrame = filter.getDouble('out') - duration + 1
-                    filter.set('in', inFrame)
-                    if (filter.get('alpha') != 1)
-                        filter.set('alpha', '0=1; %1=0'.arg(duration - 1))
-                    else
-                        filter.set('level', '0=1; %1=0'.arg(duration - 1))
+                    filter.animateOut = duration
+                    updateFilter()
                 }
                 onSetDefaultClicked: {
                     duration = Math.ceil(settings.videoOutDuration * profile.fps)
@@ -72,12 +80,12 @@ Item {
             text: qsTr('Adjust opacity instead of fade with black')
             onClicked: {
                 if (checked) {
+                    filter.set('alpha', 0)
                     filter.set('level', 1)
-                    filter.set('alpha', '0=1; %1=0'.arg(duration - 1))
                 } else {
-                    filter.set('level', '0=1; %1=0'.arg(duration - 1))
                     filter.set('alpha', 1)
                 }
+                updateFilter()
             }
         }
         Item {

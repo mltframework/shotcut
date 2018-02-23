@@ -34,8 +34,8 @@ Rectangle {
     property bool isBlank: false
     property bool isAudio: false
     property var audioLevels
-    property int fadeIn: 0
-    property int fadeOut: 0
+    property int animateIn: 0
+    property int animateOut: 0
     property int trackIndex: 0
     property int index: 0
     property int originalTrackIndex: trackIndex
@@ -223,39 +223,49 @@ Rectangle {
         acceptedButtons: Qt.RightButton
         propagateComposedEvents: true
         cursorShape: (trimInMouseArea.drag.active || trimOutMouseArea.drag.active)? Qt.SizeHorCursor :
-            (fadeInMouseArea.drag.active || fadeOutMouseArea.drag.active)? Qt.PointingHandCursor :
+            (animateInMouseArea.drag.active || animateOutMouseArea.drag.active)? Qt.PointingHandCursor :
             Qt.ArrowCursor
         onClicked: menu.popup()
         onWheel: zoomByWheel(wheel)
     }
 
     TimelineTriangle {
-        id: fadeInTriangle
+        id: animateInTriangle
         visible: !isBlank
-        width: parent.fadeIn * timeScale
+        width: parent.animateIn * timeScale
         height: parent.height - parent.border.width * 2
         anchors.left: parent.left
         anchors.top: parent.top
         anchors.margins: parent.border.width
         opacity: 0.5
+        onWidthChanged: {
+            if (width === 0) {
+                animateInControl.anchors.horizontalCenter = undefined
+                animateInControl.anchors.left = animateInTriangle.left
+            } else if (animateInControl.anchors.left && !animateInMouseArea.pressed) {
+                animateInControl.anchors.left = undefined
+                animateInControl.anchors.horizontalCenter = animateInTriangle.right
+            }
+        }
     }
     Rectangle {
-        id: fadeInControl
+        id: animateInControl
+        visible: metadata.keyframes.allowAnimateIn
         enabled: !isBlank
-        anchors.left: fadeInTriangle.width > radius? undefined : fadeInTriangle.left
-        anchors.horizontalCenter: fadeInTriangle.width > radius? fadeInTriangle.right : undefined
-        anchors.top: fadeInTriangle.top
+        anchors.left: animateInTriangle.width > radius? undefined : animateInTriangle.left
+        anchors.horizontalCenter: animateInTriangle.width > radius? animateInTriangle.right : undefined
+        anchors.top: animateInTriangle.top
         anchors.topMargin: -3
-        width: 15
-        height: 15
-        radius: 7.5
+        width: 20
+        height: 20
+        radius: 10
         color: 'black'
         border.width: 2
         border.color: 'white'
         opacity: 0
-        Drag.active: fadeInMouseArea.drag.active
+        Drag.active: animateInMouseArea.drag.active
         MouseArea {
-            id: fadeInMouseArea
+            id: animateInMouseArea
             anchors.fill: parent
             hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
@@ -268,25 +278,24 @@ Rectangle {
             onPressed: {
                 root.stopScrolling = true
                 startX = parent.x
-                startFadeIn = fadeIn
+                startFadeIn = animateIn
                 parent.anchors.left = undefined
                 parent.anchors.horizontalCenter = undefined
                 parent.opacity = 1
-                // trackRoot.clipSelected(clipRoot, trackRoot) TODO
             }
             onReleased: {
                 root.stopScrolling = false
-                if (fadeInTriangle.width > parent.radius)
-                    parent.anchors.horizontalCenter = fadeInTriangle.right
+                if (animateInTriangle.width > parent.radius)
+                    parent.anchors.horizontalCenter = animateInTriangle.right
                 else
-                    parent.anchors.left = fadeInTriangle.left
+                    parent.anchors.left = animateInTriangle.left
                 bubbleHelp.hide()
             }
             onPositionChanged: {
                 if (mouse.buttons === Qt.LeftButton) {
                     var delta = Math.round((parent.x - startX) / timeScale)
                     var duration = startFadeIn + delta
-                    timeline.fadeIn(trackIndex, index, duration)
+                    filter.animateIn = duration
 
                     // Show fade duration as time in a "bubble" help.
                     var s = application.timecode(Math.max(duration, 0))
@@ -296,7 +305,7 @@ Rectangle {
         }
         SequentialAnimation on scale {
             loops: Animation.Infinite
-            running: fadeInMouseArea.containsMouse
+            running: animateInMouseArea.containsMouse
             NumberAnimation {
                 from: 1.0
                 to: 0.5
@@ -313,33 +322,43 @@ Rectangle {
     }
 
     TimelineTriangle {
-        id: fadeOutCanvas
+        id: animateOutTriangle
         visible: !isBlank
-        width: parent.fadeOut * timeScale
+        width: parent.animateOut * timeScale
         height: parent.height - parent.border.width * 2
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.margins: parent.border.width
         opacity: 0.5
-        transform: Scale { xScale: -1; origin.x: fadeOutCanvas.width / 2}
+        transform: Scale { xScale: -1; origin.x: animateOutTriangle.width / 2}
+        onWidthChanged: {
+            if (width === 0) {
+                animateOutControl.anchors.horizontalCenter = undefined
+                animateOutControl.anchors.right = animateOutTriangle.right
+            } else if (animateOutControl.anchors.right && !animateOutMouseArea.pressed) {
+                animateOutControl.anchors.right = undefined
+                animateOutControl.anchors.horizontalCenter = animateOutTriangle.left
+            }
+        }
     }
     Rectangle {
-        id: fadeOutControl
+        id: animateOutControl
+        visible: metadata.keyframes.allowAnimateOut
         enabled: !isBlank
-        anchors.right: fadeOutCanvas.width > radius? undefined : fadeOutCanvas.right
-        anchors.horizontalCenter: fadeOutCanvas.width > radius? fadeOutCanvas.left : undefined
-        anchors.top: fadeOutCanvas.top
+        anchors.right: animateOutTriangle.width > radius? undefined : animateOutTriangle.right
+        anchors.horizontalCenter: animateOutTriangle.width > radius? animateOutTriangle.left : undefined
+        anchors.top: animateOutTriangle.top
         anchors.topMargin: -3
-        width: 15
-        height: 15
-        radius: 7.5
+        width: 20
+        height: 20
+        radius: 10
         color: 'black'
         border.width: 2
         border.color: 'white'
         opacity: 0
-        Drag.active: fadeOutMouseArea.drag.active
+        Drag.active: animateOutMouseArea.drag.active
         MouseArea {
-            id: fadeOutMouseArea
+            id: animateOutMouseArea
             anchors.fill: parent
             hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
@@ -352,24 +371,24 @@ Rectangle {
             onPressed: {
                 root.stopScrolling = true
                 startX = parent.x
-                startFadeOut = fadeOut
+                startFadeOut = animateOut
                 parent.anchors.right = undefined
                 parent.anchors.horizontalCenter = undefined
                 parent.opacity = 1
             }
             onReleased: {
                 root.stopScrolling = false
-                if (fadeOutCanvas.width > parent.radius)
-                    parent.anchors.horizontalCenter = fadeOutCanvas.left
+                if (animateOutTriangle.width > parent.radius)
+                    parent.anchors.horizontalCenter = animateOutTriangle.left
                 else
-                    parent.anchors.right = fadeOutCanvas.right
+                    parent.anchors.right = animateOutTriangle.right
                 bubbleHelp.hide()
             }
             onPositionChanged: {
                 if (mouse.buttons === Qt.LeftButton) {
                     var delta = Math.round((startX - parent.x) / timeScale)
                     var duration = startFadeOut + delta
-                    timeline.fadeOut(trackIndex, index, duration)
+                    filter.animateOut = duration
 
                     // Show fade duration as time in a "bubble" help.
                     var s = application.timecode(Math.max(duration, 0))
@@ -379,7 +398,7 @@ Rectangle {
         }
         SequentialAnimation on scale {
             loops: Animation.Infinite
-            running: fadeOutMouseArea.containsMouse
+            running: animateOutMouseArea.containsMouse
             NumberAnimation {
                 from: 1.0
                 to: 0.5
@@ -397,6 +416,7 @@ Rectangle {
 
     Rectangle {
         id: trimIn
+        visible: metadata.keyframes.allowTrim
         enabled: !isBlank
         anchors.left: parent.left
         anchors.leftMargin: 0
@@ -446,6 +466,7 @@ Rectangle {
     }
     Rectangle {
         id: trimOut
+        visible: metadata.keyframes.allowTrim
         enabled: !isBlank
         anchors.right: parent.right
         anchors.rightMargin: 0

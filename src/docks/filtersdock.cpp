@@ -73,22 +73,6 @@ void FiltersDock::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta, int ind
         connect(filter, SIGNAL(changed()), SIGNAL(changed()));
 }
 
-void FiltersDock::setFadeInDuration(int duration)
-{
-    QObject* filterUi = m_qview.rootObject()->findChild<QObject*>("fadeIn");
-    if (filterUi) {
-        filterUi->setProperty("duration", duration);
-    }
-}
-
-void FiltersDock::setFadeOutDuration(int duration)
-{
-    QObject* filterUi = m_qview.rootObject()->findChild<QObject*>("fadeOut");
-    if (filterUi) {
-        filterUi->setProperty("duration", duration);
-    }
-}
-
 bool FiltersDock::event(QEvent *event)
 {
     bool result = QDockWidget::event(event);

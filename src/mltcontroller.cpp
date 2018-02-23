@@ -24,10 +24,13 @@
 #include <QUuid>
 #include <Logger.h>
 #include <Mlt.h>
+
 #include "glwidget.h"
 #include "settings.h"
 #include "shotcut_mlt_properties.h"
 #include "mainwindow.h"
+#include "controllers/filtercontroller.h"
+#include "qmltypes/qmlmetadata.h"
 
 namespace Mlt {
 
@@ -577,18 +580,19 @@ void Controller::next(int currentPosition)
 void Controller::setIn(int in)
 {
     if (m_producer && m_producer->is_valid()) {
-        // Adjust all filters that have an explicit duration.
+        // Adjust filters.
         int n = m_producer->filter_count();
         for (int i = 0; i < n; i++) {
             Filter* filter = m_producer->filter(i);
             if (filter && filter->is_valid()) {
-                if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeIn")) {
-                    filter->set_in_and_out(in, in + filter->get_length() - 1);
-                } else if (filter->get_in() <= m_producer->get_in()) {
-                    if (filter->get_out() == 0)
-                        filter->set_in_and_out(in, m_producer->get_out());
-                    else
-                        filter->set_in_and_out(in, filter->get_out());
+                QmlMetadata* meta = MAIN.filterController()->metadataForService(filter);
+                if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeIn") && !filter->get(kShotcutAnimInProperty)) {
+                    // Convert legacy fadeIn filters.
+                    filter->set(kShotcutAnimInProperty, filter->get_length());
+                    filter->set_in_and_out(m_producer->get_in(), m_producer->get_out());
+                } else if (filter->get_in() <= m_producer->get_in()
+                           || (meta && meta->keyframes()->allowAnimateIn() && !meta->keyframes()->allowTrim())) {
+                    filter->set_in_and_out(in, filter->get_out());
                 }
             }
             delete filter;
@@ -605,10 +609,13 @@ void Controller::setOut(int out)
         for (int i = 0; i < n; i++) {
             Filter* filter = m_producer->filter(i);
             if (filter && filter->is_valid()) {
-                if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeOut")) {
-                    int in = out - filter->get_length() + 1;
-                    filter->set_in_and_out(in, out);
-                } else if (filter->get_out() == 0 || filter->get_out() >= m_producer->get_out()) {
+                QmlMetadata* meta = MAIN.filterController()->metadataForService(filter);
+                if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeOut") && !filter->get(kShotcutAnimOutProperty)) {
+                    // Convert legacy fadeIn filters.
+                    filter->set(kShotcutAnimOutProperty, filter->get_length());
+                    filter->set_in_and_out(m_producer->get_in(), m_producer->get_out());
+                } else if (filter->get_out() >= m_producer->get_out()
+                           || (meta && meta->keyframes()->allowAnimateOut() && !meta->keyframes()->allowTrim())) {
                     filter->set_in_and_out(filter->get_in(), out);
                 }
             }
@@ -795,22 +802,22 @@ void Controller::pasteFilters(Mlt::Producer* producer)
     if (targetProducer) {
         copyFilters(*m_filtersClipboard, *targetProducer);
 
-        // Adjust all filters that have an explicit duration.
+        // Adjust filters.
         int n = targetProducer->filter_count();
         for (int j = 0; j < n; j++) {
             QScopedPointer<Mlt::Filter> filter(targetProducer->filter(j));
             if (filter && filter->is_valid()) {
-                int in = targetProducer->get_int(kFilterInProperty);
-                int out = targetProducer->get_int(kFilterOutProperty);
+                int in = targetProducer->get(kFilterInProperty)? targetProducer->get_int(kFilterInProperty) : targetProducer->get_in();
+                int out = targetProducer->get(kFilterOutProperty)? targetProducer->get_int(kFilterOutProperty): targetProducer->get_out();
                 if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeIn")) {
-                    filter->set_in_and_out(in, in + filter->get_length() - 1);
+                    // Convert legacy fadeIn filters.
+                    filter->set(kShotcutAnimInProperty, filter->get_length());
                 }
                 else if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeOut")) {
-                    filter->set_in_and_out(out - filter->get_length() + 1, out);
+                    // Convert legacy fadeIn filters.
+                    filter->set(kShotcutAnimOutProperty, filter->get_length());
                 }
-                else {
-                    filter->set_in_and_out(in, out);
-                }
+                filter->set_in_and_out(in, out);
             }
         }
     }

@@ -269,6 +269,8 @@ Rectangle {
                                         mltService: producer.mlt_service
                                         inPoint: filter.in
                                         outPoint: filter.out
+                                        animateIn: filter.animateIn
+                                        animateOut: filter.animateOut
                                         audioLevels: producer.audioLevels
                                         height: trackRoot.height
                                         hash: producer.hash
@@ -426,7 +428,8 @@ Rectangle {
         MenuItem {
             text: qsTr('Reload')
             onTriggered: {
-                keyframes.load()
+                var force = true
+                keyframes.load(force)
             }
         }
         onPopupVisibleChanged: {

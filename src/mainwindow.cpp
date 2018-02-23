@@ -328,8 +328,8 @@ MainWindow::MainWindow()
     connect(&QmlApplication::singleton(), SIGNAL(filtersPasted(Mlt::Producer*)),
             m_timelineDock->model(), SLOT(filterAddedOrRemoved(Mlt::Producer*)));
     connect(m_filterController, SIGNAL(statusChanged(QString)), this, SLOT(showStatusMessage(QString)));
-    connect(m_timelineDock, SIGNAL(fadeInChanged(int)), m_filtersDock, SLOT(setFadeInDuration(int)));
-    connect(m_timelineDock, SIGNAL(fadeOutChanged(int)), m_filtersDock, SLOT(setFadeOutDuration(int)));
+    connect(m_timelineDock, SIGNAL(fadeInChanged(int)), m_filterController, SLOT(onFadeInChanged()));
+    connect(m_timelineDock, SIGNAL(fadeOutChanged(int)), m_filterController, SLOT(onFadeOutChanged()));
     connect(m_timelineDock, SIGNAL(selected(Mlt::Producer*)), m_filterController, SLOT(setProducer(Mlt::Producer*)));
 
     m_keyframesDock = new KeyframesDock(m_filterController->metadataModel(), m_filterController->attachedModel(), this);
@@ -2277,6 +2277,7 @@ void MainWindow::onCutModified()
 
 void MainWindow::onFilterModelChanged()
 {
+    MLT.refreshConsumer();
     setWindowModified(true);
     updateAutoSave();
     if (playlist())

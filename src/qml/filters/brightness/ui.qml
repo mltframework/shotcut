@@ -32,6 +32,37 @@ Item {
         brightnessSlider.value = filter.getDouble("level") * 100.0
     }
 
+    Connections {
+        target: filter
+        onInChanged: updateFilter()
+        onOutChanged: updateFilter()
+        onAnimateInChanged: updateFilter()
+        onAnimateOutChanged: updateFilter()
+    }
+
+    function updateFilter() {
+        var value = brightnessSlider.value / 100.0
+        var filterDuration = filter.out - filter.in + 1
+        if (filter.animateIn > 0 && filter.animateOut > 1) {
+            filter.set('level', '0=0; %2=%1; %3=%1; %4=0'
+                       .arg(value)
+                       .arg(filter.animateIn - 1)
+                       .arg(filterDuration - filter.animateOut)
+                       .arg(filterDuration - 1))
+        } else if (filter.animateIn > 0) {
+            filter.set('level', '0=0; %2=%1'
+                       .arg(value)
+                       .arg(filter.animateIn - 1))
+        } else if (filter.animateOut > 0) {
+            filter.set('level', '%2=%1; %3=0'
+                       .arg(value)
+                       .arg(filterDuration - filter.animateOut)
+                       .arg(filterDuration - 1))
+        } else {
+            filter.set('level', value)
+        }
+    }
+
     GridLayout {
         columns: 3
         anchors.fill: parent
@@ -47,7 +78,7 @@ Item {
             maximumValue: 200.0
             decimals: 1
             suffix: ' %'
-            onValueChanged: filter.set("level", value / 100.0)
+            onValueChanged: updateFilter()
         }
         UndoButton {
             onClicked: brightnessSlider.value = 100

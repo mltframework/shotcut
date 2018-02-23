@@ -101,7 +101,6 @@ void QmlFilter::set(QString name, QString value)
     if (!m_filter.is_valid()) return;
     if (qstrcmp(m_filter.get(name.toUtf8().constData()), value.toUtf8().constData())) {
         m_filter.set(name.toUtf8().constData(), value.toUtf8().constData());
-        MLT.refreshConsumer();
         emit changed();
     }
 }
@@ -112,12 +111,14 @@ void QmlFilter::set(QString name, double value)
     if (!m_filter.get(name.toUtf8().constData())
         || m_filter.get_double(name.toUtf8().constData()) != value) {
         m_filter.set(name.toUtf8().constData(), value);
-        MLT.refreshConsumer();
         emit changed();
-        if (name == "in")
+        if (name == "in") {
             emit inChanged();
-        else if (name == "out")
+            emit durationChanged();
+        } else if (name == "out") {
             emit outChanged();
+            emit durationChanged();
+        }
     }
 }
 
@@ -127,12 +128,14 @@ void QmlFilter::set(QString name, int value)
     if (!m_filter.get(name.toUtf8().constData())
         || m_filter.get_int(name.toUtf8().constData()) != value) {
         m_filter.set(name.toUtf8().constData(), value);
-        MLT.refreshConsumer();
         emit changed();
-        if (name == "in")
+        if (name == "in") {
             emit inChanged();
-        else if (name == "out")
+            emit durationChanged();
+        } else if (name == "out") {
             emit outChanged();
+            emit durationChanged();
+        }
     }
 }
 
@@ -143,7 +146,6 @@ void QmlFilter::set(QString name, double x, double y, double width, double heigh
     if (!m_filter.get(name.toUtf8().constData()) || x != rect.x || y != rect.y
         || width != rect.w || height != rect.h || opacity != rect.o) {
         m_filter.set(name.toUtf8().constData(), x, y, width, height, opacity);
-        MLT.refreshConsumer();
         emit changed();
     }
 }
@@ -322,6 +324,11 @@ int QmlFilter::in()
     return result;
 }
 
+void QmlFilter::setIn(int value)
+{
+    set("in", value);
+}
+
 int QmlFilter::out()
 {
     int result = 0;
@@ -334,6 +341,28 @@ int QmlFilter::out()
     return result;
 }
 
+void QmlFilter::setOut(int value)
+{
+    set("out", value);
+}
+
+void QmlFilter::setAnimateIn(int value)
+{
+    m_filter.set(kShotcutAnimInProperty, value);
+    emit animateInChanged();
+}
+
+void QmlFilter::setAnimateOut(int value)
+{
+    m_filter.set(kShotcutAnimOutProperty, value);
+    emit animateOutChanged();
+}
+
+int QmlFilter::duration()
+{
+    return out() - in() + 1;
+}
+
 void QmlFilter::preset(const QString &name)
 {
     if (!m_filter.is_valid()) return;
@@ -342,7 +371,6 @@ void QmlFilter::preset(const QString &name)
     if (!dir.cd("presets") || !dir.cd(objectNameOrService()))
         return;
     m_filter.load(dir.filePath(name).toUtf8().constData());
-    MLT.refreshConsumer();
     emit changed();
 }
 
