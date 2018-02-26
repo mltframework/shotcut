@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Meltytech, LLC
+ * Copyright (c) 2014-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,7 +25,6 @@ Flickable {
     property string distortProperty
     property string halignProperty
     property string valignProperty
-    property var _locale: Qt.locale(application.numericLocale)
 
     width: 400
     height: 200
@@ -70,11 +69,11 @@ Flickable {
                 filterRect.y = Math.round(rect.y / rectangle.heightScale)
                 filterRect.width = Math.round(rect.width / rectangle.widthScale)
                 filterRect.height = Math.round(rect.height / rectangle.heightScale)
-                filter.set(rectProperty, '%1%/%2%:%3%x%4%'
-                           .arg((filterRect.x / profile.width * 100).toLocaleString(_locale))
-                           .arg((filterRect.y / profile.height * 100).toLocaleString(_locale))
-                           .arg((filterRect.width / profile.width * 100).toLocaleString(_locale))
-                           .arg((filterRect.height / profile.height * 100).toLocaleString(_locale)))
+                filter.set(rectProperty, '%L1%/%L2%:%L3%x%L4%'
+                           .arg(filterRect.x / profile.width * 100)
+                           .arg(filterRect.y / profile.height * 100)
+                           .arg(filterRect.width / profile.width * 100)
+                           .arg(filterRect.height / profile.height * 100))
             }
         }
     }
@@ -91,11 +90,11 @@ Flickable {
                 rectangle.aspectRatio = getAspectRatio()
                 rectangle.setHandles(filterRect)
                 var rect = rectangle.rectangle
-                filter.set(rectProperty, '%1%/%2%:%3%x%4%'
-                           .arg((Math.round(rect.x / rectangle.widthScale) / profile.width * 100).toLocaleString(_locale))
-                           .arg((Math.round(rect.y / rectangle.heightScale) / profile.height * 100).toLocaleString(_locale))
-                           .arg((Math.round(rect.width / rectangle.widthScale) / profile.width * 100).toLocaleString(_locale))
-                           .arg((Math.round(rect.height / rectangle.heightScale) / profile.height * 100).toLocaleString(_locale)))
+                filter.set(rectProperty, '%L1%/%L2%:%L3%x%L4%'
+                           .arg(Math.round(rect.x / rectangle.widthScale) / profile.width * 100)
+                           .arg(Math.round(rect.y / rectangle.heightScale) / profile.height * 100)
+                           .arg(Math.round(rect.width / rectangle.widthScale) / profile.width * 100)
+                           .arg(Math.round(rect.height / rectangle.heightScale) / profile.height * 100))
             }
         }
     }

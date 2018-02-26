@@ -23,7 +23,6 @@ import Shotcut.Controls 1.0
 
 Item {
     property string rectProperty: "rect"
-    property var _locale: Qt.locale(application.numericLocale)
     property rect filterRect: filter.getRect(rectProperty)
     property var defaultParameters: [rectProperty, 'type', 'color.1', 'bgcolor', 'thickness', 'fill', 'mirror', 'reverse', 'tension', 'bands', 'frequency_low', 'frequency_high', 'threshold']
 
@@ -63,11 +62,11 @@ Item {
             filterRect.y = y
             filterRect.width = w
             filterRect.height = h
-            filter.set(rectProperty, '%1%/%2%:%3%x%4%'
-                       .arg((x / profile.width * 100).toLocaleString(_locale))
-                       .arg((y / profile.height * 100).toLocaleString(_locale))
-                       .arg((w / profile.width * 100).toLocaleString(_locale))
-                       .arg((h / profile.height * 100).toLocaleString(_locale)))
+            filter.set(rectProperty, '%L1%/%L2%:%L3%x%L4%'
+                       .arg(x / profile.width * 100)
+                       .arg(y / profile.height * 100)
+                       .arg(w / profile.width * 100)
+                       .arg(h / profile.height * 100))
         }
     }
 

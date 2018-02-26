@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Meltytech, LLC
+ * Copyright (c) 2017-2018 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,6 @@ import Shotcut.Controls 1.0
 
 Flickable {
     property string rectProperty: "rect"
-    property var _locale: Qt.locale(application.numericLocale)
 
     width: 400
     height: 200
@@ -61,11 +60,11 @@ Flickable {
                 filterRect.y = Math.round(rect.y / rectangle.heightScale)
                 filterRect.width = Math.round(rect.width / rectangle.widthScale)
                 filterRect.height = Math.round(rect.height / rectangle.heightScale)
-                filter.set(rectProperty, '%1%/%2%:%3%x%4%'
-                           .arg((filterRect.x / profile.width * 100).toLocaleString(_locale))
-                           .arg((filterRect.y / profile.height * 100).toLocaleString(_locale))
-                           .arg((filterRect.width / profile.width * 100).toLocaleString(_locale))
-                           .arg((filterRect.height / profile.height * 100).toLocaleString(_locale)))
+                filter.set(rectProperty, '%L1%/%L2%:%L3%x%L4%'
+                           .arg(filterRect.x / profile.width * 100)
+                           .arg(filterRect.y / profile.height * 100)
+                           .arg(filterRect.width / profile.width * 100)
+                           .arg(filterRect.height / profile.height * 100))
             }
         }
     }
