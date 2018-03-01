@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2017 Meltytech, LLC
+ * Copyright (c) 2013-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -420,7 +420,12 @@ int MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta, bool r
         whereToRemoveRegion = info->start + delta;
 
         if (info->frame_in + delta < 0)
-            delta = -info->frame_in; // clamp
+             // clamp to clip start
+            delta = -info->frame_in;
+        if (playlist.is_blank(clipIndex - 1) && -delta > playlist.clip_length(clipIndex - 1))
+            // clamp to duration of blank space
+            delta = -playlist.clip_length(clipIndex - 1);
+//        LOG_DEBUG() << "delta" << delta;
 
         int in = info->frame_in + delta;
         int out = info->frame_out;
@@ -572,7 +577,11 @@ int MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta, bool 
         whereToRemoveRegion = info->start + info->frame_count - delta;
 
         if ((info->frame_out - delta) >= info->length)
-            delta = info->frame_out - info->length + 1; // clamp
+             // clamp to clip duration
+            delta = info->frame_out - info->length + 1;
+        if ((clipIndex + 1) < playlist.count() && playlist.is_blank(clipIndex + 1) && -delta > playlist.clip_length(clipIndex + 1))
+            delta = -playlist.clip_length(clipIndex + 1);
+//        LOG_DEBUG() << "delta" << delta;
 
         if (!ripple) {
             // Adjust right of the clip.
