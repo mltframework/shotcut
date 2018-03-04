@@ -1424,7 +1424,6 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
 {
     bool handled = true;
 
-
     switch (event->key()) {
     case Qt::Key_Home:
         m_player->seek(0);
@@ -1773,19 +1772,24 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         LOG_DEBUG() << "Current focusWindow:" << QApplication::focusWindow();
         break;
     default:
+        handled = false;
         break;
     }
 
-    if (!handled)
+    if (handled)
+        event->setAccepted(handled);
+    else
         QMainWindow::keyPressEvent(event);
 }
 
 void MainWindow::keyReleaseEvent(QKeyEvent* event)
 {
-    if (event->key() == Qt::Key_K)
+    if (event->key() == Qt::Key_K) {
         m_isKKeyPressed = false;
-    else
+        event->setAccepted(true);
+    } else {
         QMainWindow::keyReleaseEvent(event);
+    }
 }
 
 void MainWindow::hideSetDataDirectory()
