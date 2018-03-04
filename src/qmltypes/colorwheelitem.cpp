@@ -151,9 +151,9 @@ QColor ColorWheelItem::colorForPoint(const QPoint &point)
 {
     if (! m_image.valid(point)) return QColor();
     if (m_isInWheel) {
-        qreal w = wheelSize();
-        qreal xf = qreal(point.x()) / w;
-        qreal yf = 1.0 - qreal(point.y()) / w;
+        qreal w = wheelSize() - m_margin * 2;
+        qreal xf = qreal(point.x() - m_margin) / w;
+        qreal yf = 1.0 - qreal(point.y() - m_margin) / w;
         qreal xp = 2.0 * xf - 1.0;
         qreal yp = 2.0 * yf - 1.0;
         qreal rad = qMin(hypot(xp, yp), 1.0);
@@ -283,7 +283,7 @@ void ColorWheelItem::drawWheelDot(QPainter& painter)
     painter.translate(r, r);
     painter.rotate(360.0 - m_color.hue());
     painter.rotate(-105);
-    painter.drawEllipse(QPointF(m_color.saturationF() * r, 0.0), 4, 4);
+    painter.drawEllipse(QPointF(m_color.saturationF() * r - m_margin, 0.0), 4, 4);
     painter.resetTransform();
 }
 
