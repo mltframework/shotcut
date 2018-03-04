@@ -80,6 +80,8 @@ Item {
         UndoButton {
             Layout.alignment: Qt.AlignRight
             onClicked: {
+                // Force a color change to make sure the color wheel is updated.
+                liftRedSpinner.value = 1.0
                 liftRedSpinner.value = 0.0
                 liftGreenSpinner.value = 0.0
                 liftBlueSpinner.value = 0.0
@@ -89,6 +91,8 @@ Item {
         UndoButton {
             Layout.alignment: Qt.AlignRight
             onClicked: {
+                // Force a color change to make sure the color wheel is updated.
+                gammaRedSpinner.value = 1.0 / gammaFactor
                 gammaRedSpinner.value = 100.0 / gammaFactor
                 gammaGreenSpinner.value = 100.0 / gammaFactor
                 gammaBlueSpinner.value = 100.0 / gammaFactor
@@ -98,6 +102,8 @@ Item {
         UndoButton {
             Layout.alignment: Qt.AlignRight
             onClicked: {
+                // Force a color change to make sure the color wheel is updated.
+                gainRedSpinner.value = 1.0 / gainFactor
                 gainRedSpinner.value = 100.0 / gainFactor
                 gainGreenSpinner.value = 100.0 / gainFactor
                 gainBlueSpinner.value = 100.0 / gainFactor
