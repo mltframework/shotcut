@@ -2061,7 +2061,7 @@ void MultitrackModel::onFilterChanged(Mlt::Filter* filter)
                     roles << FadeInRole;
                 if (!qstrcmp("fadeOutMovit", name) ||
                     !qstrcmp("fadeOutBrightness", name) ||
-                    !qstrcmp("fadOutVolume", name))
+                    !qstrcmp("fadeOutVolume", name))
                     roles << FadeOutRole;
                 if (roles.length())
                     emit dataChanged(modelIndex, modelIndex, roles);
