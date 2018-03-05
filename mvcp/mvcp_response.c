@@ -154,7 +154,7 @@ int mvcp_response_printf( mvcp_response response, size_t size, const char *forma
 	return length;
 }
 
-/** Write text to the reponse.
+/** Write text to the response.
 */
 
 int mvcp_response_write( mvcp_response response, const char *text, int size )

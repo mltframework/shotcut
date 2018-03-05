@@ -513,7 +513,7 @@ void QConsole::keyPressEvent( QKeyEvent *e )
 			else 
 			{ //no selection
 				//when typing normal characters,
-				//make sure the cursor is positionned in the
+				//make sure the cursor is positioned in the
 				//edition zone
 				if ( !isInEditionZone() )
 				{
@@ -798,7 +798,7 @@ void QConsole::contextMenuEvent ( QContextMenuEvent * event)
 void QConsole::cut()
 {
 		//Cut only in the editing zone,
-		//perfom a copy otherwise
+		//perform a copy otherwise
 		if(isInEditionZone())
 		{
 				QTextEdit::cut();
