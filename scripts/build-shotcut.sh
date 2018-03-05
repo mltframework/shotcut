@@ -73,7 +73,7 @@ QT_LIB_DIR=${QTDIR:+${QTDIR}/lib}
 MLT_DISABLE_SOX=0
 
 ################################################################################
-# Location of config file - if not overriden on command line
+# Location of config file - if not overridden on command line
 CONFIGFILE=build-shotcut.conf
 
 # If defined to 1, outputs trace log lines
@@ -285,7 +285,7 @@ function die {
   else
     echo "ERROR: $@"
   fi
-  feedback_result FAILURE "Some kind of error occured: $@"
+  feedback_result FAILURE "Some kind of error occurred: $@"
   exit -1
 }
 
@@ -931,7 +931,7 @@ function prepare_feedback {
 #################################################################
 # check_abort
 # Function that checks if the user wanted to cancel what we are doing.
-# returns "stop" or "cont" as appropiate
+# returns "stop" or "cont" as appropriate
 function check_abort {
   # log "$ARG"
   echo
@@ -1209,7 +1209,7 @@ function get_subproject {
           REPOLOCURL=`svn --non-interactive info | grep URL | awk '{print $2}'`
           # Now, we have to be a bit clever here, because if the user originally checked it out using
           # https, we can not change to http. So, we check for https in the current URL
-          # Note, that beeing clever almost always fails at some point. But, at least we give it a try...
+          # Note, that being clever almost always fails at some point. But, at least we give it a try...
           if test "${REPOLOCURL:0:5}" = "https" ; then
               REPOLOC=${REPOLOC/http/https}
           fi

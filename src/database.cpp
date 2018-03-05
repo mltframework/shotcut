@@ -164,7 +164,7 @@ void Database::shutdown()
 void Database::deleteOldThumbnails()
 {
     QSqlQuery query;
-    // OFFSET is the numner of thumbnails to cache.
+    // OFFSET is the number of thumbnails to cache.
     if (!query.exec("DELETE FROM thumbnails WHERE hash IN (SELECT hash FROM thumbnails ORDER BY accessed DESC LIMIT -1 OFFSET 10000);"))
         LOG_ERROR() << query.lastError();
 }

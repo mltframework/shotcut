@@ -1852,7 +1852,7 @@ bool MultitrackModel::addTransitionByTrimInValid(int trackIndex, int clipIndex, 
     if (track) {
         Mlt::Playlist playlist(*track);
         if (clipIndex > 0) {
-            // Check if preceeding clip is not blank, not already a transition,
+            // Check if preceding clip is not blank, not already a transition,
             // and there is enough frames before in point of current clip.
             if (!m_isMakingTransition && delta < 0 && !playlist.is_blank(clipIndex - 1) && !isTransition(playlist, clipIndex - 1)) {
                 Mlt::ClipInfo info;
