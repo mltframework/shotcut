@@ -64,16 +64,12 @@ TimelineDock::TimelineDock(QWidget *parent) :
 
     connect(&m_model, SIGNAL(modified()), this, SLOT(clearSelectionIfInvalid()));
 
-    m_quickView.setFocusPolicy(Qt::NoFocus);
     setWidget(&m_quickView);
 
     connect(this, SIGNAL(clipMoved(int,int,int,int)), SLOT(onClipMoved(int,int,int,int)), Qt::QueuedConnection);
     connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onShowFrame(const SharedFrame&)));
-#ifdef Q_OS_WIN
-    onVisibilityChanged(true);
-#else
-    connect(this, &QDockWidget::visibilityChanged, this, &TimelineDock::load);
-#endif
+    connect(this, SIGNAL(visibilityChanged(bool)), this, SLOT(load(bool)));
+    connect(this, SIGNAL(topLevelChanged(bool)), this, SLOT(onTopLevelChanged(bool)));
     LOG_DEBUG() << "end";
 }
 
@@ -990,6 +986,7 @@ void TimelineDock::load(bool force)
     if (m_quickView.source().isEmpty() || force) {
         QDir sourcePath = QmlUtilities::qmlDir();
         sourcePath.cd("timeline");
+        m_quickView.setFocusPolicy(isFloating()? Qt::NoFocus : Qt::StrongFocus);
         m_quickView.setSource(QUrl::fromLocalFile(sourcePath.filePath("timeline.qml")));
         disconnect(this, SIGNAL(visibilityChanged(bool)), this, SLOT(onVisibilityChanged(bool)));
         connect(m_quickView.rootObject(), SIGNAL(currentTrackChanged()),
@@ -1003,8 +1000,7 @@ void TimelineDock::load(bool force)
     }
 }
 
-void TimelineDock::onVisibilityChanged(bool visible)
+void TimelineDock::onTopLevelChanged(bool floating)
 {
-    if (visible)
-        load();
+    m_quickView.setFocusPolicy(floating? Qt::NoFocus : Qt::StrongFocus);
 }

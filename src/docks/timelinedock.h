@@ -150,7 +150,6 @@ protected:
 private:
     bool isBlank(int trackIndex, int clipIndex);
     void pulseLockButtonOnTrack(int trackIndex);
-    void load(bool force = false);
 
     Ui::TimelineDock *ui;
     QQuickWidget m_quickView;
@@ -170,7 +169,8 @@ private:
     int m_trimDelta;
 
 private slots:
-    void onVisibilityChanged(bool visible);
+    void load(bool force = false);
+    void onTopLevelChanged(bool floating);
 };
 
 #endif // TIMELINEDOCK_H
