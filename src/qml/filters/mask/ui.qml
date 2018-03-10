@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Meltytech, LLC
+ * Copyright (c) 2017-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -32,7 +32,7 @@ Item {
     property string paramOperation: '9'
     property var defaultParameters: [paramHorizontal, paramShape, paramWidth, paramVertical, paramRotation, paramSoftness, paramOperation]
     width: 350
-    height: 200
+    height: 250
 
     Component.onCompleted: {
         if (filter.isNew) {
@@ -114,7 +114,6 @@ Item {
             maximumValue: 100
             decimals: 2
             suffix: ' %'
-            value: filter.get(paramHorizontal) * 100
             onValueChanged: filter.set(paramHorizontal, value / 100)
         }
         UndoButton {
@@ -131,7 +130,6 @@ Item {
             maximumValue: 100
             decimals: 2
             suffix: ' %'
-            value: filter.get(paramVertical) * 100
             onValueChanged: filter.set(paramVertical, value / 100)
         }
         UndoButton {
@@ -148,7 +146,6 @@ Item {
             maximumValue: 100
             decimals: 2
             suffix: ' %'
-            value: filter.get(paramWidth) * 100
             onValueChanged: filter.set(paramWidth, value / 100)
         }
         UndoButton {
@@ -165,7 +162,6 @@ Item {
             maximumValue: 100
             decimals: 2
             suffix: ' %'
-            value: filter.get(paramHeight) * 100
             onValueChanged: filter.set(paramHeight, value / 100)
         }
         UndoButton {
@@ -182,7 +178,6 @@ Item {
             maximumValue: 100
             decimals: 2
             suffix: ' %'
-            value: filter.getDouble(paramRotation) * 100
             onValueChanged: filter.set(paramRotation, value / 100)
         }
         UndoButton {
@@ -199,7 +194,6 @@ Item {
             maximumValue: 100
             decimals: 2
             suffix: ' %'
-            value: filter.getDouble(paramSoftness) * 100
             onValueChanged: filter.set(paramSoftness, value / 100)
         }
         UndoButton {

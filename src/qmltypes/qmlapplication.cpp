@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2017 Meltytech, LLC
+ * Copyright (c) 2013-2018 Meltytech, LLC
  * Author: Brian Matherly <pez4brian@yahoo.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -87,15 +87,6 @@ QString QmlApplication::OS()
     return "Windows";
 #else
     return "";
-#endif
-}
-
-QString QmlApplication::numericLocale()
-{
-#ifdef Q_OS_WIN
-    return QLocale::system().name();
-#else
-    return QString::fromLatin1(::setlocale(LC_NUMERIC, NULL));
 #endif
 }
 

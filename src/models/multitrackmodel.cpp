@@ -429,7 +429,12 @@ int MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta, bool r
         whereToRemoveRegion = info->start + delta;
 
         if (info->frame_in + delta < 0)
-            delta = -info->frame_in; // clamp
+             // clamp to clip start
+            delta = -info->frame_in;
+        if (playlist.is_blank(clipIndex - 1) && -delta > playlist.clip_length(clipIndex - 1))
+            // clamp to duration of blank space
+            delta = -playlist.clip_length(clipIndex - 1);
+//        LOG_DEBUG() << "delta" << delta;
 
         int in = info->frame_in + delta;
         int out = info->frame_out;
@@ -589,7 +594,11 @@ int MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta, bool 
         whereToRemoveRegion = info->start + info->frame_count - delta;
 
         if ((info->frame_out - delta) >= info->length)
-            delta = info->frame_out - info->length + 1; // clamp
+             // clamp to clip duration
+            delta = info->frame_out - info->length + 1;
+        if ((clipIndex + 1) < playlist.count() && playlist.is_blank(clipIndex + 1) && -delta > playlist.clip_length(clipIndex + 1))
+            delta = -playlist.clip_length(clipIndex + 1);
+//        LOG_DEBUG() << "delta" << delta;
 
         if (!ripple) {
             // Adjust right of the clip.
@@ -1900,7 +1909,7 @@ bool MultitrackModel::addTransitionByTrimInValid(int trackIndex, int clipIndex, 
     if (track) {
         Mlt::Playlist playlist(*track);
         if (clipIndex > 0) {
-            // Check if preceeding clip is not blank, not already a transition,
+            // Check if preceding clip is not blank, not already a transition,
             // and there is enough frames before in point of current clip.
             if (!m_isMakingTransition && delta < 0 && !playlist.is_blank(clipIndex - 1) && !isTransition(playlist, clipIndex - 1)) {
                 Mlt::ClipInfo info;
@@ -2109,7 +2118,7 @@ void MultitrackModel::onFilterChanged(Mlt::Filter* filter)
                     roles << FadeInRole;
                 if (!qstrcmp("fadeOutMovit", name) ||
                     !qstrcmp("fadeOutBrightness", name) ||
-                    !qstrcmp("fadOutVolume", name))
+                    !qstrcmp("fadeOutVolume", name))
                     roles << FadeOutRole;
                 if (roles.length())
                     emit dataChanged(modelIndex, modelIndex, roles);

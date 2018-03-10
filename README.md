@@ -61,3 +61,7 @@ Best way to test `shotcut` is to execute it from source folder:
 ```
 ./src/shotcut
 ```
+
+## Translation
+
+If you want to translate Shotcut to another language, please use [Transifex](https://www.transifex.com/ddennedy/shotcut/).

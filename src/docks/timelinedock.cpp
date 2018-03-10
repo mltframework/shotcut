@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2017 Meltytech, LLC
+ * Copyright (c) 2013-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -66,16 +66,12 @@ TimelineDock::TimelineDock(QWidget *parent) :
     connect(&m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), SLOT(onRowsInserted(QModelIndex,int,int)));
     connect(&m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), SLOT(onRowsRemoved(QModelIndex,int,int)));
 
-    m_quickView.setFocusPolicy(Qt::StrongFocus);
     setWidget(&m_quickView);
 
     connect(this, SIGNAL(clipMoved(int,int,int,int)), SLOT(onClipMoved(int,int,int,int)), Qt::QueuedConnection);
     connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onShowFrame(const SharedFrame&)));
-#ifdef Q_OS_WIN
-    onVisibilityChanged(true);
-#else
-    connect(this, &QDockWidget::visibilityChanged, this, &TimelineDock::load);
-#endif
+    connect(this, SIGNAL(visibilityChanged(bool)), this, SLOT(load(bool)));
+    connect(this, SIGNAL(topLevelChanged(bool)), this, SLOT(onTopLevelChanged(bool)));
     LOG_DEBUG() << "end";
 }
 
@@ -869,7 +865,7 @@ void TimelineDock::splitClip(int trackIndex, int clipIndex)
             Mlt::Playlist playlist(*track);
             if (!m_model.isTransition(playlist, clipIndex)) {
                 QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
-                if (info && m_position >= info->start && m_position < info->start + info->frame_count - 1) {
+                if (info && m_position > info->start && m_position < info->start + info->frame_count) {
                     MAIN.undoStack()->push(
                         new Timeline::SplitCommand(m_model, trackIndex, clipIndex, m_position));
                 }
@@ -1004,11 +1000,26 @@ bool TimelineDock::event(QEvent *event)
     return result;
 }
 
+void TimelineDock::keyPressEvent(QKeyEvent* event)
+{
+    QDockWidget::keyPressEvent(event);
+    if (!event->isAccepted())
+        MAIN.keyPressEvent(event);
+}
+
+void TimelineDock::keyReleaseEvent(QKeyEvent* event)
+{
+    QDockWidget::keyReleaseEvent(event);
+    if (!event->isAccepted())
+        MAIN.keyReleaseEvent(event);
+}
+
 void TimelineDock::load(bool force)
 {
     if (m_quickView.source().isEmpty() || force) {
         QDir sourcePath = QmlUtilities::qmlDir();
         sourcePath.cd("timeline");
+        m_quickView.setFocusPolicy(isFloating()? Qt::NoFocus : Qt::StrongFocus);
         m_quickView.setSource(QUrl::fromLocalFile(sourcePath.filePath("timeline.qml")));
         disconnect(this, SIGNAL(visibilityChanged(bool)), this, SLOT(onVisibilityChanged(bool)));
         connect(m_quickView.rootObject(), SIGNAL(currentTrackChanged()),
@@ -1022,8 +1033,7 @@ void TimelineDock::load(bool force)
     }
 }
 
-void TimelineDock::onVisibilityChanged(bool visible)
+void TimelineDock::onTopLevelChanged(bool floating)
 {
-    if (visible)
-        load();
+    m_quickView.setFocusPolicy(floating? Qt::NoFocus : Qt::StrongFocus);
 }

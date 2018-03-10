@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2015 Meltytech, LLC
+ * Copyright (c) 2014-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,7 +27,6 @@ Item {
     property string rectProperty
     property string valignProperty
     property string halignProperty
-    property var _locale: Qt.locale(application.numericLocale)
     property rect filterRect: filter.getRect(rectProperty)
 
     width: 350
@@ -78,11 +77,11 @@ Item {
             filterRect.y = y
             filterRect.width = w
             filterRect.height = h
-            filter.set(rectProperty, '%1%/%2%:%3%x%4%'
-                       .arg((x / profile.width * 100).toLocaleString(_locale))
-                       .arg((y / profile.height * 100).toLocaleString(_locale))
-                       .arg((w / profile.width * 100).toLocaleString(_locale))
-                       .arg((h / profile.height * 100).toLocaleString(_locale)))
+            filter.set(rectProperty, '%L1%/%L2%:%L3%x%L4%'
+                       .arg(x / profile.width * 100)
+                       .arg(y / profile.height * 100)
+                       .arg(w / profile.width * 100)
+                       .arg(h / profile.height * 100))
         }
     }
 

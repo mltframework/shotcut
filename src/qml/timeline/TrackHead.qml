@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2017 Meltytech, LLC
+ * Copyright (c) 2013-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -100,15 +100,15 @@ Rectangle {
             color: 'transparent'
             width: trackHeadRoot.width - trackHeadColumn.anchors.margins * 2
             radius: 2
-            border.color: trackNameMouseArea.containsMouse? activePalette.shadow : 'transparent'
+            border.color: (!timeline.floating && trackNameMouseArea.containsMouse)? activePalette.shadow : 'transparent'
             height: nameEdit.height
             MouseArea {
                 id: trackNameMouseArea
                 height: parent.height
                 width: nameEdit.width
                 hoverEnabled: true
-                onClicked: {
-                    nameEdit.visible = true
+                onClicked: if (!timeline.floating) {
+                    nameEdit.focus = true
                     nameEdit.selectAll()
                 }
             }
@@ -122,14 +122,13 @@ Rectangle {
             }
             TextField {
                 id: nameEdit
-                visible: false
+                visible: focus
                 width: trackHeadRoot.width - trackHeadColumn.anchors.margins * 2
                 text: trackName
                 onAccepted: {
                     timeline.setTrackName(index, text)
-                    visible = false
+                    focus = false
                 }
-                onFocusChanged: visible = focus
             }
         }
         RowLayout {
