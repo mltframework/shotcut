@@ -1484,13 +1484,15 @@ in temporal compression</source>
         <location filename="../src/docks/encodedock.cpp" line="740"/>
         <source>You cannot write to a file that is in your project.
 Try again with a different folder or file name.</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможна запись в файл проекта.
+Попробуйте еще раз, изменив имя файла или папки.</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="1057"/>
         <source>The drive you chose only has %1 MiB of free space.
 Do you still want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>На выбранном вами разделе всего лишь %1 МБ свободного места.
+Вы все еще хотите продолжить?</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="1069"/>
