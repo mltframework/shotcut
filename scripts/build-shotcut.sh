@@ -2084,11 +2084,12 @@ End-of-shotcut-wrapper
 [Desktop Entry]
 Type=Application
 Name=Shotcut
-Name[de]=Shotcut
 GenericName=Video Editor
 GenericName[de]=Video Bearbeitungsprogramm
+GenericName[ru]=Видеоредактор
 Comment=Video Editor
 Comment[de]=Programm zum Bearbeiten und Abspielen von Videodateien.
+Comment[ru]=Видеоредактор
 Terminal=false
 Exec=sh -c "\$(dirname "%k")/Shotcut.app/shotcut "%F""
 Icon=applications-multimedia
