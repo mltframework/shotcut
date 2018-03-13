@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2015 Meltytech, LLC
+ * Copyright (c) 2014-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -45,8 +45,8 @@ Item {
 
             setControls();
         }
-        filter.set('in', filter.producerIn)
-        filter.set('out', filter.producerOut)
+        filter.set('in', producer.in)
+        filter.set('out', producer.out)
     }
 
     function setControls() {

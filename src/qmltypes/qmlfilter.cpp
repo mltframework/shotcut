@@ -274,52 +274,24 @@ void QmlFilter::getHash()
         MAIN.getHash(m_filter);
 }
 
-int QmlFilter::producerIn()
-{
-    if (!m_producer.is_valid()) return 0;
-    if (m_producer.get(kFilterInProperty))
-        // Shots on the timeline will set the producer to the cut parent.
-        // However, we want time-based filters such as fade in/out to use
-        // the cut's in/out and not the parent's.
-        return m_producer.get_int(kFilterInProperty);
-    else
-        return m_producer.get_in();
-}
-
-int QmlFilter::producerOut()
-{
-    if (!m_producer.is_valid()) return 0;
-    if (m_producer.get(kFilterOutProperty))
-        // Shots on the timeline will set the producer to the cut parent.
-        // However, we want time-based filters such as fade in/out to use
-        // the cut's in/out and not the parent's.
-        return m_producer.get_int(kFilterOutProperty);
-    else
-        return m_producer.get_out();
-}
-
-double QmlFilter::producerAspect()
-{
-    if (!m_producer.is_valid()) return 1.0;
-    if (m_producer.get(kHeightProperty)) {
-        double sar = 1.0;
-        if (m_producer.get(kAspectDenProperty)) {
-            sar = m_producer.get_double(kAspectNumProperty) /
-                  m_producer.get_double(kAspectDenProperty);
-        }
-        return sar * m_producer.get_double(kWidthProperty) / m_producer.get_double(kHeightProperty);
-    }
-    return MLT.profile().dar();
-}
-
 int QmlFilter::in()
 {
     int result = 0;
     if (m_filter.is_valid()) {
-        if (m_filter.get_int("in") == 0 && m_filter.get_int("out") == 0) // undefined/always-on
-            result = producerIn();
-        else
+        if (m_filter.get_int("in") == 0 && m_filter.get_int("out") == 0) { // undefined/always-on
+            if (!m_producer.is_valid()) {
+                result = 0;
+            } else if (m_producer.get(kFilterInProperty)) {
+                // Shots on the timeline will set the producer to the cut parent.
+                // However, we want time-based filters such as fade in/out to use
+                // the cut's in/out and not the parent's.
+                result = m_producer.get_int(kFilterInProperty);
+            } else {
+                result = m_producer.get_in();
+            }
+        } else {
             result = m_filter.get_int("in");
+        }
     }
     return result;
 }
@@ -333,10 +305,20 @@ int QmlFilter::out()
 {
     int result = 0;
     if (m_filter.is_valid()) {
-        if (m_filter.get_int("in") == 0 && m_filter.get_int("out") == 0) // undefined/always-on
-            result = producerOut();
-        else
+        if (m_filter.get_int("in") == 0 && m_filter.get_int("out") == 0) { // undefined/always-on
+            if (!m_producer.is_valid()) {
+                result = 0;
+            } else if (m_producer.get(kFilterOutProperty)) {
+                // Shots on the timeline will set the producer to the cut parent.
+                // However, we want time-based filters such as fade in/out to use
+                // the cut's in/out and not the parent's.
+                result = m_producer.get_int(kFilterOutProperty);
+            } else {
+                result = m_producer.get_out();
+            }
+        } else {
             result = m_filter.get_int("out");
+        }
     }
     return result;
 }

@@ -331,25 +331,25 @@ MainWindow::MainWindow()
     connect(m_timelineDock, SIGNAL(fadeInChanged(int)), m_filterController, SLOT(onFadeInChanged()));
     connect(m_timelineDock, SIGNAL(fadeOutChanged(int)), m_filterController, SLOT(onFadeOutChanged()));
     connect(m_timelineDock, SIGNAL(selected(Mlt::Producer*)), m_filterController, SLOT(setProducer(Mlt::Producer*)));
+    connect(m_player, SIGNAL(seeked(int)), m_filtersDock, SLOT(onSeeked(int)));
+    connect(m_filtersDock, SIGNAL(seeked(int)), SLOT(seekKeyframes(int)));
+    connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), m_filtersDock, SLOT(onShowFrame(const SharedFrame&)));
+    connect(m_player, SIGNAL(inChanged(int)), m_filtersDock, SIGNAL(producerInChanged()));
+    connect(m_player, SIGNAL(outChanged(int)), m_filtersDock, SIGNAL(producerOutChanged()));
 
-    m_keyframesDock = new KeyframesDock(m_filterController->metadataModel(), m_filterController->attachedModel(), this);
+    m_keyframesDock = new KeyframesDock(m_filterController->metadataModel(), m_filterController->attachedModel(), m_filtersDock->qmlProducer(), this);
     m_keyframesDock->hide();
     addDockWidget(Qt::BottomDockWidgetArea, m_keyframesDock);
     ui->menuView->addAction(m_keyframesDock->toggleViewAction());
     connect(m_keyframesDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onKeyframesDockTriggered(bool)));
     connect(ui->actionKeyframes, SIGNAL(triggered()), this, SLOT(onKeyframesDockTriggered()));
     connect(m_filterController, SIGNAL(currentFilterChanged(QmlFilter*, QmlMetadata*, int)), m_keyframesDock, SLOT(setCurrentFilter(QmlFilter*, QmlMetadata*)), Qt::QueuedConnection);
-    connect(m_player, SIGNAL(seeked(int)), m_keyframesDock, SLOT(onSeeked(int)));
-    connect(m_keyframesDock, SIGNAL(seeked(int)), SLOT(seekKeyframes(int)));
     connect(m_timelineDock->model(), SIGNAL(filterInChanged(Mlt::Filter*)), m_keyframesDock, SLOT(onFilterInChanged(Mlt::Filter*)));
     connect(m_timelineDock->model(), SIGNAL(filterOutChanged(Mlt::Filter*)), m_keyframesDock, SLOT(onFilterOutChanged(Mlt::Filter*)));
-    connect(m_player, SIGNAL(inChanged(int)), m_keyframesDock, SIGNAL(producerInChanged()));
     connect(m_player, SIGNAL(inChanged(int)), m_keyframesDock, SLOT(onFilterInChanged()));
     connect(m_player, SIGNAL(inChanged(int)), m_keyframesDock, SLOT(onFilterOutChanged()));
-    connect(m_player, SIGNAL(outChanged(int)), m_keyframesDock, SIGNAL(producerOutChanged()));
     connect(m_player, SIGNAL(outChanged(int)), m_keyframesDock, SLOT(onFilterInChanged()));
     connect(m_player, SIGNAL(outChanged(int)), m_keyframesDock, SLOT(onFilterOutChanged()));
-    connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), m_keyframesDock, SLOT(onShowFrame(const SharedFrame&)));
 
     m_historyDock = new QDockWidget(tr("History"), this);
     m_historyDock->hide();
@@ -2254,11 +2254,11 @@ void MainWindow::onMultitrackModified()
             info->producer->set(kPlaylistStartProperty, info->start);
             if (info->frame_in != info->producer->get_int(kFilterInProperty)) {
                 info->producer->set(kFilterInProperty, info->frame_in);
-                emit m_keyframesDock->producerInChanged();
+                emit m_filtersDock->producerInChanged();
             }
             if (info->frame_out != info->producer->get_int(kFilterOutProperty)) {
                 info->producer->set(kFilterOutProperty, info->frame_out);
-                emit m_keyframesDock->producerOutChanged();
+                emit m_filtersDock->producerOutChanged();
             }
         }
     }

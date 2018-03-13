@@ -38,7 +38,7 @@ Flickable {
     contentY: video.offset.y
 
     function getAspectRatio() {
-        return (filter.get(fillProperty) === '1' && filter.get(distortProperty) === '0')? filter.producerAspect : 0.0
+        return (filter.get(fillProperty) === '1' && filter.get(distortProperty) === '0')? producer.sampleAspectRatio : 0.0
     }
 
     Component.onCompleted: {

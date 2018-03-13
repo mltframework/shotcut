@@ -170,6 +170,20 @@ void QmlProducer::remakeAudioLevels(bool force)
         AudioLevelsTask::start(m_producer, this, QModelIndex(), force);
 }
 
+double QmlProducer::sampleAspectRatio()
+{
+    if (!m_producer.is_valid()) return 1.0;
+    if (m_producer.get(kHeightProperty)) {
+        double sar = 1.0;
+        if (m_producer.get(kAspectDenProperty)) {
+            sar = m_producer.get_double(kAspectNumProperty) /
+                  m_producer.get_double(kAspectDenProperty);
+        }
+        return sar * m_producer.get_double(kWidthProperty) / m_producer.get_double(kHeightProperty);
+    }
+    return MLT.profile().dar();
+}
+
 void QmlProducer::setProducer(Mlt::Producer& producer)
 {
     m_producer = producer;

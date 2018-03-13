@@ -34,8 +34,8 @@ Item {
         } else if (filter.animateIn === 0) {
             // Convert legacy filter.
             duration = filter.duration
-            filter.in = filter.producerIn
-            filter.out = filter.producerOut
+            filter.in = producer.in
+            filter.out = producer.out
         } else {
             duration = filter.animateIn
         }

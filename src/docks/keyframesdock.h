@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2017 Meltytech, LLC
+ * Copyright (c) 2016-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,7 +19,6 @@
 #ifndef KEYFRAMESDOCK_H
 #define KEYFRAMESDOCK_H
 
-#include "qmltypes/qmlproducer.h"
 #include "qmltypes/qmlfilter.h"
 #include "models/metadatamodel.h"
 #include "sharedframe.h"
@@ -32,37 +31,32 @@ class QmlFilter;
 class QmlMetadata;
 class MetadataModel;
 class AttachedFiltersModel;
+class QmlProducer;
 
 class KeyframesDock : public QDockWidget
 {
     Q_OBJECT
     
 public:
-    explicit KeyframesDock(MetadataModel* metadataModel, AttachedFiltersModel* attachedModel, QWidget *parent = 0);
+    explicit KeyframesDock(MetadataModel* metadataModel, AttachedFiltersModel* attachedModel, QmlProducer* qmlProducer, QWidget *parent = 0);
 
 signals:
     void changed(); /// Notifies when a filter parameter changes.
-    void seeked(int);
-    void producerInChanged();
-    void producerOutChanged();
 
 public slots:
     void setCurrentFilter(QmlFilter* filter, QmlMetadata* meta);
     void onFilterInChanged(Mlt::Filter* filter = 0);
     void onFilterOutChanged(Mlt::Filter* filter = 0);
     void load(bool force = false);
-    void onShowFrame(const SharedFrame& frame);
 
 protected:
     bool event(QEvent *event);
 
 private slots:
-    void onSeeked(int position);
     void onVisibilityChanged(bool visible);
 
 private:
     QQuickWidget m_qview;
-    QmlProducer m_producer;
     QmlMetadata m_emptyQmlMetadata;
     QmlFilter m_emptyQmlFilter;
 };

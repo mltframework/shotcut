@@ -34,8 +34,8 @@ Item {
         } else if (filter.animateOut === 0) {
             // Convert legacy filter.
             duration = filter.duration
-            filter.in = filter.producerIn
-            filter.out = filter.producerOut
+            filter.in = producer.in
+            filter.out = producer.out
         } else {
             duration = filter.animateOut
         }
@@ -48,7 +48,7 @@ Item {
     }
 
     function updateFilter() {
-        var filterDuration = filter.producerOut - filter.producerIn + 1
+        var filterDuration = producer.duration
         filter.set('opacity', '%1~=1; %2=0'.arg(filterDuration - duration).arg(filterDuration - 1))
     }
 

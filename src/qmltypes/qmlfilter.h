@@ -37,9 +37,6 @@ class QmlFilter : public QObject
     Q_PROPERTY(bool isNew READ isNew)
     Q_PROPERTY(QString path READ path)
     Q_PROPERTY(QStringList presets READ presets NOTIFY presetsChanged)
-    Q_PROPERTY(int producerIn READ producerIn)
-    Q_PROPERTY(int producerOut READ producerOut)
-    Q_PROPERTY(double producerAspect READ producerAspect)
     Q_PROPERTY(int in READ in WRITE setIn NOTIFY inChanged)
     Q_PROPERTY(int out READ out WRITE setOut NOTIFY outChanged)
     Q_PROPERTY(int animateIn READ animateIn WRITE setAnimateIn NOTIFY animateInChanged)
@@ -71,9 +68,6 @@ public:
     Q_INVOKABLE static int framesFromTime(const QString& time);
     Q_INVOKABLE static QString timeFromFrames(int frames);
     Q_INVOKABLE void getHash();
-    int producerIn();
-    int producerOut();
-    double producerAspect();
     Mlt::Producer& producer() { return m_producer; }
     int in();
     void setIn(int value);

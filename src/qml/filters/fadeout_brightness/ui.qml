@@ -34,8 +34,8 @@ Item {
         } else if (filter.animateOut === 0) {
             // Convert legacy filter.
             duration = filter.duration
-            filter.in = filter.producerIn
-            filter.out = filter.producerOut
+            filter.in = producer.in
+            filter.out = producer.out
         } else {
             duration = filter.animateOut
         }
@@ -49,7 +49,7 @@ Item {
 
     function updateFilter() {
         var name = (filter.get('alpha') != 1)? 'alpha' : 'level'
-        var filterDuration = filter.producerOut - filter.producerIn + 1
+        var filterDuration = producer.duration
         filter.set(name, '%1=1; %2=0'.arg(filterDuration - duration).arg(filterDuration - 1))
     }
 

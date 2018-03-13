@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2014 Meltytech, LLC
+ * Copyright (c) 2013-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  * Author: Brian Matherly <code@brianmatherly.com>
  *
@@ -25,6 +25,9 @@
 #include <QQuickView>
 #include <QQuickWidget>
 
+#include "sharedframe.h"
+#include "qmltypes/qmlproducer.h"
+
 class QmlFilter;
 class QmlMetadata;
 class MetadataModel;
@@ -37,13 +40,20 @@ class FiltersDock : public QDockWidget
 public:
     explicit FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* attachedModel, QWidget *parent = 0);
 
+    QmlProducer* qmlProducer() { return &m_producer; }
+
 signals:
     void currentFilterRequested(int attachedIndex);
     void changed(); /// Notifies when a filter parameter changes.
+    void seeked(int);
+    void producerInChanged();
+    void producerOutChanged();
 
 public slots:
     void clearCurrentFilter();
     void setCurrentFilter(QmlFilter* filter, QmlMetadata* meta, int index);
+    void onSeeked(int position);
+    void onShowFrame(const SharedFrame& frame);
 
 protected:
     bool event(QEvent *event);
@@ -53,6 +63,7 @@ private slots:
 
 private:
     QQuickWidget m_qview;
+    QmlProducer m_producer;
 };
 
 #endif // FILTERSDOCK_H
