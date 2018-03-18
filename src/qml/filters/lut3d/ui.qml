@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Meltytech, LLC
+ * Copyright (c) 2016-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -28,7 +28,7 @@ Item {
     id: lut3dRoot
     width: 350
     height: 100
-    property string settingsOpenPath: settings.openPath
+    property url settingsOpenPath: 'file:///' + settings.openPath
 
     SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
     Shotcut.File { id: lutFile }

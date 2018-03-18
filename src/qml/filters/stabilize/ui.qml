@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2015 Meltytech, LLC
+ * Copyright (c) 2013-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -26,7 +26,7 @@ Item {
     id: stabilizeRoot
     width: 350
     height: 150
-    property string settingsSavePath: settings.savePath
+    property url settingsSavePath: 'file:///' + settings.savePath
     property string _analysisRequiredMessage: qsTr('Click Analyze to use this filter.')
 
     Component.onCompleted: {
@@ -167,7 +167,6 @@ Item {
             Layout.alignment: Qt.AlignRight
             onClicked: {
                 button.enabled = false
-                fileDialog.folder = settings.savePath
                 fileDialog.open()
             }
         }
