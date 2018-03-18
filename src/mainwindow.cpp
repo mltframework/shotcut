@@ -2863,6 +2863,8 @@ void MainWindow::on_actionRestoreLayout_triggered()
 {
     restoreGeometry(Settings.windowGeometryDefault());
     restoreState(Settings.windowStateDefault());
+    ui->actionShowTitleBars->setChecked(true);
+    on_actionShowTitleBars_triggered(true);
 }
 
 void MainWindow::on_actionShowTitleBars_triggered(bool checked)
