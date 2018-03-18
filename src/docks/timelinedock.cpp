@@ -988,7 +988,6 @@ void TimelineDock::load(bool force)
         sourcePath.cd("timeline");
         m_quickView.setFocusPolicy(isFloating()? Qt::NoFocus : Qt::StrongFocus);
         m_quickView.setSource(QUrl::fromLocalFile(sourcePath.filePath("timeline.qml")));
-        disconnect(this, SIGNAL(visibilityChanged(bool)), this, SLOT(onVisibilityChanged(bool)));
         connect(m_quickView.rootObject(), SIGNAL(currentTrackChanged()),
                 this, SIGNAL(currentTrackChanged()));
         connect(m_quickView.rootObject(), SIGNAL(clipClicked()),
