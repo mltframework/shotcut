@@ -51,13 +51,13 @@ public:
     bool isNew() const { return m_isNew; }
     void setIsNew(bool isNew) { m_isNew = isNew; }
 
-    Q_INVOKABLE QString get(QString name);
-    Q_INVOKABLE double getDouble(QString name);
-    Q_INVOKABLE QRectF getRect(QString name);
-    Q_INVOKABLE void set(QString name, QString value);
-    Q_INVOKABLE void set(QString name, double value);
-    Q_INVOKABLE void set(QString name, int value);
-    Q_INVOKABLE void set(QString name, double x, double y, double width, double height, double opacity = 1.0);
+    Q_INVOKABLE QString get(QString name, int position = -1);
+    Q_INVOKABLE double getDouble(QString name, int position = -1);
+    Q_INVOKABLE QRectF getRect(QString name, int position = -1);
+    Q_INVOKABLE void set(QString name, QString value, int position = -1);
+    Q_INVOKABLE void set(QString name, double value, int position = -1);
+    Q_INVOKABLE void set(QString name, int value, int position = -1);
+    Q_INVOKABLE void set(QString name, double x, double y, double width, double height, double opacity = 1.0, int position = -1);
     QString path() const { return m_path; }
     Q_INVOKABLE void loadPresets();
     QStringList presets() const { return m_presets; }
@@ -79,6 +79,7 @@ public:
     int animateOut() { return m_filter.get_int(kShotcutAnimOutProperty); }
     void setAnimateOut(int value);
     int duration();
+    Q_INVOKABLE void resetAnimation(QString name);
 
 public slots:
     void preset(const QString& name);

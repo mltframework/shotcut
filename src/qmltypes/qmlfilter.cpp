@@ -24,17 +24,14 @@
 #include "jobs/meltjob.h"
 #include "shotcut_mlt_properties.h"
 #include "settings.h"
+#include <Logger.h>
+
 #include <QDir>
 #include <QIODevice>
 #include <QTemporaryFile>
 #include <QFile>
 #include <QtXml>
 #include <MltProducer.h>
-
-static const char* kWidthProperty = "meta.media.width";
-static const char* kHeightProperty = "meta.media.height";
-static const char* kAspectNumProperty = "meta.media.sample_aspect_num";
-static const char* kAspectDenProperty = "meta.media.sample_aspect_den";
 
 QmlFilter::QmlFilter()
     : QObject(0)
@@ -61,28 +58,41 @@ QmlFilter::~QmlFilter()
 {
 }
 
-QString QmlFilter::get(QString name)
+QString QmlFilter::get(QString name, int position)
 {
-    if (m_filter.is_valid())
-        return QString::fromUtf8(m_filter.get(name.toUtf8().constData()));
-    else
+    if (m_filter.is_valid()) {
+        if (position < 0)
+            return QString::fromUtf8(m_filter.get(name.toUtf8().constData()));
+        else
+            return QString::fromUtf8(m_filter.anim_get(name.toUtf8().constData(), position, duration()));
+    } else {
         return QString();
+    }
 }
 
-double QmlFilter::getDouble(QString name)
+double QmlFilter::getDouble(QString name, int position)
 {
-    if (m_filter.is_valid())
-        return m_filter.get_double(name.toUtf8().constData());
-    else
-        return 0;
+    if (m_filter.is_valid()) {
+        if (position < 0)
+            return m_filter.get_double(name.toUtf8().constData());
+        else
+            return m_filter.anim_get_double(name.toUtf8().constData(), position, duration());
+    } else {
+        return 0.0;
+    }
 }
 
-QRectF QmlFilter::getRect(QString name)
+QRectF QmlFilter::getRect(QString name, int position)
 {
     if (!m_filter.is_valid()) return QRectF();
     const char* s = m_filter.get(name.toUtf8().constData());
     if (s) {
-        mlt_rect rect = m_filter.get_rect(name.toUtf8().constData());
+        mlt_rect rect;
+        if (position < 0) {
+            rect = m_filter.get_rect(name.toUtf8().constData());
+        } else {
+            rect = m_filter.anim_get_rect(name.toUtf8().constData(), position, duration());
+        }
         if (::strchr(s, '%')) {
             return QRectF(qRound(rect.x * MLT.profile().width()),
                           qRound(rect.y * MLT.profile().height()),
@@ -96,57 +106,103 @@ QRectF QmlFilter::getRect(QString name)
     }
 }
 
-void QmlFilter::set(QString name, QString value)
+void QmlFilter::set(QString name, QString value, int position)
 {
     if (!m_filter.is_valid()) return;
-    if (qstrcmp(m_filter.get(name.toUtf8().constData()), value.toUtf8().constData())) {
-        m_filter.set(name.toUtf8().constData(), value.toUtf8().constData());
-        emit changed();
-    }
-}
-
-void QmlFilter::set(QString name, double value)
-{
-    if (!m_filter.is_valid()) return;
-    if (!m_filter.get(name.toUtf8().constData())
-        || m_filter.get_double(name.toUtf8().constData()) != value) {
-        m_filter.set(name.toUtf8().constData(), value);
-        emit changed();
-        if (name == "in") {
-            emit inChanged();
-            emit durationChanged();
-        } else if (name == "out") {
-            emit outChanged();
-            emit durationChanged();
+    if (position < 0) {
+        if (qstrcmp(m_filter.get(name.toUtf8().constData()), value.toUtf8().constData())) {
+            m_filter.set(name.toUtf8().constData(), value.toUtf8().constData());
+            emit changed();
+        }
+    } else {
+        // Only set an animation keyframe if it does not already exist with the same value.
+        Mlt::Animation animation(m_filter.get_animation(name.toUtf8().constData()));
+        if (!animation.is_valid() || !animation.is_key(position)
+                || value != m_filter.anim_get(name.toUtf8().constData(), position, duration())) {
+            m_filter.anim_set(name.toUtf8().constData(), value.toUtf8().constData(), position, duration());
+            emit changed();
         }
     }
 }
 
-void QmlFilter::set(QString name, int value)
+void QmlFilter::set(QString name, double value, int position)
 {
     if (!m_filter.is_valid()) return;
-    if (!m_filter.get(name.toUtf8().constData())
-        || m_filter.get_int(name.toUtf8().constData()) != value) {
-        m_filter.set(name.toUtf8().constData(), value);
-        emit changed();
-        if (name == "in") {
-            emit inChanged();
-            emit durationChanged();
-        } else if (name == "out") {
-            emit outChanged();
-            emit durationChanged();
+    if (position < 0) {
+        if (!m_filter.get(name.toUtf8().constData())
+            || m_filter.get_double(name.toUtf8().constData()) != value) {
+            m_filter.set(name.toUtf8().constData(), value);
+            emit changed();
+            if (name == "in") {
+                emit inChanged();
+                emit durationChanged();
+            } else if (name == "out") {
+                emit outChanged();
+                emit durationChanged();
+            }
+        }
+    } else {
+        // Only set an animation keyframe if it does not already exist with the same value.
+        Mlt::Animation animation(m_filter.get_animation(name.toUtf8().constData()));
+        if (!animation.is_valid() || !animation.is_key(position)
+                || value != m_filter.anim_get_double(name.toUtf8().constData(), position, duration())) {
+            m_filter.anim_set(name.toUtf8().constData(), value, position, duration());
+            emit changed();
         }
     }
 }
 
-void QmlFilter::set(QString name, double x, double y, double width, double height, double opacity)
+void QmlFilter::set(QString name, int value, int position)
 {
     if (!m_filter.is_valid()) return;
-    mlt_rect rect = m_filter.get_rect(name.toUtf8().constData());
-    if (!m_filter.get(name.toUtf8().constData()) || x != rect.x || y != rect.y
-        || width != rect.w || height != rect.h || opacity != rect.o) {
-        m_filter.set(name.toUtf8().constData(), x, y, width, height, opacity);
-        emit changed();
+    if (position < 0) {
+        if (!m_filter.get(name.toUtf8().constData())
+            || m_filter.get_int(name.toUtf8().constData()) != value) {
+            m_filter.set(name.toUtf8().constData(), value);
+            emit changed();
+            if (name == "in") {
+                emit inChanged();
+                emit durationChanged();
+            } else if (name == "out") {
+                emit outChanged();
+                emit durationChanged();
+            }
+        }
+    } else {
+        // Only set an animation keyframe if it does not already exist with the same value.
+        Mlt::Animation animation(m_filter.get_animation(name.toUtf8().constData()));
+        if (!animation.is_valid() || !animation.is_key(position)
+                || value != m_filter.anim_get_int(name.toUtf8().constData(), position, duration())) {
+            m_filter.anim_set(name.toUtf8().constData(), value, position, duration());
+            emit changed();
+        }
+    }
+}
+
+void QmlFilter::set(QString name, double x, double y, double width, double height, double opacity, int position)
+{
+    if (!m_filter.is_valid()) return;
+    if (position < 0) {
+        mlt_rect rect = m_filter.get_rect(name.toUtf8().constData());
+        if (!m_filter.get(name.toUtf8().constData()) || x != rect.x || y != rect.y
+            || width != rect.w || height != rect.h || opacity != rect.o) {
+            m_filter.set(name.toUtf8().constData(), x, y, width, height, opacity);
+            emit changed();
+        }
+    } else {
+        mlt_rect rect = m_filter.anim_get_rect(name.toUtf8().constData(), position, duration());
+        // Only set an animation keyframe if it does not already exist with the same value.
+        Mlt::Animation animation(m_filter.get_animation(name.toUtf8().constData()));
+        if (!animation.is_valid() || !animation.is_key(position)
+                || x != rect.x || y != rect.y || width != rect.w || height != rect.h || opacity != rect.o) {
+            rect.x = x;
+            rect.y = y;
+            rect.w = width;
+            rect.h = height;
+            rect.o = opacity;
+            m_filter.anim_set(name.toUtf8().constData(), rect, position, duration());
+            emit changed();
+        }
     }
 }
 
@@ -343,6 +399,11 @@ void QmlFilter::setAnimateOut(int value)
 int QmlFilter::duration()
 {
     return out() - in() + 1;
+}
+
+void QmlFilter::resetAnimation(QString name)
+{
+    m_filter.set(name.toUtf8().constData(), NULL, 0);
 }
 
 void QmlFilter::preset(const QString &name)

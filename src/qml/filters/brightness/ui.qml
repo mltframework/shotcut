@@ -23,44 +23,80 @@ import Shotcut.Controls 1.0
 Item {
     width: 200
     height: 50
-    
+    property bool blockUpdate: true
+    property double startValue: filter.getDouble('level', 0)
+    property double middleValue: filter.getDouble('level', filter.animateIn)
+    property double endValue: filter.getDouble('level', filter.duration - 1)
+
     Component.onCompleted: {
         if (filter.isNew) {
+            startValue = 0.0
+            middleValue = 1.0
+            endValue = 0.0
             // Set default parameter values
-            filter.set("level", 1.0);
+            filter.set('level', 1.0)
         }
-        brightnessSlider.value = filter.getDouble("level") * 100.0
+        setControls()
     }
 
     Connections {
         target: filter
-        onInChanged: updateFilter()
-        onOutChanged: updateFilter()
-        onAnimateInChanged: updateFilter()
-        onAnimateOutChanged: updateFilter()
+        onInChanged: updateFilter(null)
+        onOutChanged: updateFilter(null)
+        onAnimateInChanged: updateFilter(null)
+        onAnimateOutChanged: updateFilter(null)
     }
 
-    function updateFilter() {
-        var value = brightnessSlider.value / 100.0
-        var filterDuration = filter.out - filter.in + 1
-        if (filter.animateIn > 0 && filter.animateOut > 1) {
-            filter.set('level', '0=0; %2=%1; %3=%1; %4=0'
-                       .arg(value)
-                       .arg(filter.animateIn - 1)
-                       .arg(filterDuration - filter.animateOut)
-                       .arg(filterDuration - 1))
-        } else if (filter.animateIn > 0) {
-            filter.set('level', '0=0; %2=%1'
-                       .arg(value)
-                       .arg(filter.animateIn - 1))
-        } else if (filter.animateOut > 0) {
-            filter.set('level', '%2=%1; %3=0'
-                       .arg(value)
-                       .arg(filterDuration - filter.animateOut)
-                       .arg(filterDuration - 1))
-        } else {
-            filter.set('level', value)
+    Connections {
+        target: producer
+        onPositionChanged: {
+            if (filter.animateIn > 0 || filter.animateOut > 0) {
+                setControls()
+            } else {
+                brightnessSlider.enabled = true
+            }
         }
+    }
+
+    function setControls() {
+        var position = producer.position - (filter.in - producer.in)
+        blockUpdate = true
+        brightnessSlider.value = filter.getDouble('level', position) * 100.0
+        blockUpdate = false
+        brightnessSlider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
+    }
+
+    function updateFilter(position) {
+        if (blockUpdate) return
+        var value = brightnessSlider.value / 100.0
+
+        if (position !== null) {
+            if (position <= 0)
+                startValue = value
+            else if (position >= filter.duration - 1)
+                endValue = value
+            else
+                middleValue = value
+        }
+
+        if (filter.animateIn > 0 && filter.animateOut > 1) {
+            filter.resetAnimation('level')
+            filter.set('level', startValue, 0)
+            filter.set('level', middleValue, filter.animateIn - 1)
+            filter.set('level', middleValue, filter.duration - filter.animateOut)
+            filter.set('level', endValue, filter.duration - 1)
+        } else if (filter.animateIn > 0) {
+            filter.resetAnimation('level')
+            filter.set('level', startValue, 0)
+            filter.set('level', middleValue, filter.animateIn - 1)
+        } else if (filter.animateOut > 0) {
+            filter.resetAnimation('level')
+            filter.set('level', middleValue, filter.duration - filter.animateOut)
+            filter.set('level', endValue, filter.duration - 1)
+        } else {
+            filter.set('level', middleValue)
+        }
+//        console.log('level: ' + filter.get('level'))
     }
 
     GridLayout {
@@ -78,7 +114,7 @@ Item {
             maximumValue: 200.0
             decimals: 1
             suffix: ' %'
-            onValueChanged: updateFilter()
+            onValueChanged: updateFilter(producer.position - (filter.in - producer.in))
         }
         UndoButton {
             onClicked: brightnessSlider.value = 100
