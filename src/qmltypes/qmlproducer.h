@@ -69,7 +69,7 @@ public:
 
 signals:
     void producerChanged();
-    void positionChanged();
+    void positionChanged(int position);
     void seeked(int position);
     void inChanged();
     void outChanged();

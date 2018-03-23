@@ -444,7 +444,7 @@ Rectangle {
     Connections {
         target: producer
         onPositionChanged: if (!stopScrolling) {
-           var x = producer.position * timeScale;
+           var x = position * timeScale;
            if (!scrollView) return;
            if (x > scrollView.flickableItem.contentX + scrollView.width - 50)
                scrollView.flickableItem.contentX = x - scrollView.width + 50;

@@ -145,17 +145,18 @@ void QmlProducer::setPosition(int position)
             emit seeked(m_producer.get_int(kPlaylistStartProperty) + qMax(0, position));
         else
             emit seeked(in() + qMax(0, position));
-    } else {
+    } else if (m_position != length - 1) {
         m_position = length - 1;
-        emit positionChanged();
+        emit positionChanged(m_position);
     }
 }
 
 void QmlProducer::seek(int position)
 {
-    if (!m_producer.is_valid()) return;
-    m_position = position;
-    emit positionChanged();
+    if (m_producer.is_valid() && m_position != position) {
+        m_position = position;
+        emit positionChanged(m_position);
+    }
 }
 
 void QmlProducer::audioLevelsReady(const QModelIndex& index)
