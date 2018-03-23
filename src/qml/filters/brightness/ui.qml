@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Meltytech, LLC
+ * Copyright (c) 2016-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,18 +24,22 @@ Item {
     width: 200
     height: 50
     property bool blockUpdate: true
-    property double startValue: filter.getDouble('level', 0)
-    property double middleValue: filter.getDouble('level', filter.animateIn)
-    property double endValue: filter.getDouble('level', filter.duration - 1)
+    property double startValue: 0.0
+    property double middleValue: 1.0
+    property double endValue: 0.0
 
     Component.onCompleted: {
         if (filter.isNew) {
-            startValue = 0.0
-            middleValue = 1.0
-            endValue = 0.0
             // Set default parameter values
             filter.set('level', 1.0)
+        } else {
+            middleValue = filter.getDouble('opacity', filter.animateIn)
+            if (filter.animateIn > 0)
+                startValue = filter.getDouble('opacity', 0)
+            if (filter.animateOut > 0)
+                endValue = filter.getDouble('opacity', filter.duration - 1)
         }
+
         setControls()
     }
 
@@ -79,18 +83,16 @@ Item {
                 middleValue = value
         }
 
+        filter.resetAnimation('level')
         if (filter.animateIn > 0 && filter.animateOut > 1) {
-            filter.resetAnimation('level')
             filter.set('level', startValue, 0)
             filter.set('level', middleValue, filter.animateIn - 1)
             filter.set('level', middleValue, filter.duration - filter.animateOut)
             filter.set('level', endValue, filter.duration - 1)
         } else if (filter.animateIn > 0) {
-            filter.resetAnimation('level')
             filter.set('level', startValue, 0)
             filter.set('level', middleValue, filter.animateIn - 1)
         } else if (filter.animateOut > 0) {
-            filter.resetAnimation('level')
             filter.set('level', middleValue, filter.duration - filter.animateOut)
             filter.set('level', endValue, filter.duration - 1)
         } else {

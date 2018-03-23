@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Meltytech, LLC
+ * Copyright (c) 2016-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,14 +23,83 @@ import Shotcut.Controls 1.0
 Item {
     width: 200
     height: 50
+    property bool blockUpdate: true
+    property double startValue: 0.0
+    property double middleValue: 1.0
+    property double endValue: 0.0
+
 
     Component.onCompleted: {
         if (filter.isNew) {
             // Set default parameter values
             filter.set('alpha', 1.0)
             filter.set('opacity', 1.0);
+        } else {
+            middleValue = filter.getDouble('opacity', filter.animateIn)
+            if (filter.animateIn > 0)
+                startValue = filter.getDouble('opacity', 0)
+            if (filter.animateOut > 0)
+                endValue = filter.getDouble('opacity', filter.duration - 1)
         }
-        brightnessSlider.value = filter.getDouble('opacity') * 100.0
+        setControls()
+    }
+
+    Connections {
+        target: filter
+        onInChanged: updateFilter(null)
+        onOutChanged: updateFilter(null)
+        onAnimateInChanged: updateFilter(null)
+        onAnimateOutChanged: updateFilter(null)
+    }
+
+    Connections {
+        target: producer
+        onPositionChanged: {
+            if (filter.animateIn > 0 || filter.animateOut > 0) {
+                setControls()
+            } else {
+                brightnessSlider.enabled = true
+            }
+        }
+    }
+
+    function setControls() {
+        var position = producer.position - (filter.in - producer.in)
+        blockUpdate = true
+        brightnessSlider.value = filter.getDouble('opacity', position) * 100.0
+        blockUpdate = false
+        brightnessSlider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
+    }
+
+    function updateFilter(position) {
+        if (blockUpdate) return
+        var value = brightnessSlider.value / 100.0
+
+        if (position !== null) {
+            if (position <= 0)
+                startValue = value
+            else if (position >= filter.duration - 1)
+                endValue = value
+            else
+                middleValue = value
+        }
+
+        filter.resetAnimation('opacity')
+        if (filter.animateIn > 0 && filter.animateOut > 1) {
+            filter.set('opacity', startValue, 0)
+            filter.set('opacity', middleValue, filter.animateIn - 1)
+            filter.set('opacity', middleValue, filter.duration - filter.animateOut)
+            filter.set('opacity', endValue, filter.duration - 1)
+        } else if (filter.animateIn > 0) {
+            filter.set('opacity', startValue, 0)
+            filter.set('opacity', middleValue, filter.animateIn - 1)
+        } else if (filter.animateOut > 0) {
+            filter.set('opacity', middleValue, filter.duration - filter.animateOut)
+            filter.set('opacity', endValue, filter.duration - 1)
+        } else {
+            filter.set('opacity', middleValue)
+        }
+//        console.log('opacity: ' + filter.get('opacity'))
     }
 
     GridLayout {
@@ -48,7 +117,7 @@ Item {
             maximumValue: 200.0
             decimals: 1
             suffix: ' %'
-            onValueChanged: filter.set("opacity", value / 100.0)
+            onValueChanged: updateFilter(producer.position - (filter.in - producer.in))
         }
         UndoButton {
             onClicked: brightnessSlider.value = 100
