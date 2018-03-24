@@ -159,3 +159,8 @@ QmlKeyframesMetadata::QmlKeyframesMetadata(QObject* parent)
     , m_allowAnimateOut(false)
 {
 }
+
+QmlKeyframesParameter::QmlKeyframesParameter(QObject* parent)
+    : QObject(parent)
+{
+}

@@ -23,6 +23,27 @@
 #include <QString>
 #include <QDir>
 #include <QUrl>
+#include <QQmlListProperty>
+
+class QmlKeyframesParameter : public QObject
+{
+    Q_OBJECT
+    Q_PROPERTY(QString name MEMBER m_name NOTIFY changed)
+    Q_PROPERTY(QString property MEMBER m_property NOTIFY changed)
+
+public:
+    explicit QmlKeyframesParameter(QObject* parent = 0);
+
+    QString name() const { return m_name; }
+    QString property() const { return m_property; }
+
+signals:
+    void changed();
+
+private:
+    QString m_name;
+    QString m_property;
+};
 
 class QmlKeyframesMetadata : public QObject
 {
@@ -30,6 +51,7 @@ class QmlKeyframesMetadata : public QObject
     Q_PROPERTY(bool allowTrim MEMBER m_allowTrim NOTIFY changed)
     Q_PROPERTY(bool allowAnimateIn MEMBER m_allowAnimateIn NOTIFY changed)
     Q_PROPERTY(bool allowAnimateOut MEMBER m_allowAnimateOut NOTIFY changed)
+    Q_PROPERTY(QQmlListProperty<QmlKeyframesParameter> parameters READ parameters)
 
 public:
     explicit QmlKeyframesMetadata(QObject *parent = 0);
@@ -38,6 +60,10 @@ public:
     bool allowAnimateIn() const { return m_allowAnimateIn; }
     bool allowAnimateOut() const { return m_allowAnimateOut; }
 
+    QQmlListProperty<QmlKeyframesParameter> parameters() { return QQmlListProperty<QmlKeyframesParameter>(this, m_parameters); }
+    int parameterCount() const { return m_parameters.count(); }
+    QmlKeyframesParameter *parameter(int index) const { return m_parameters[index]; }
+
 signals:
     void changed();
 
@@ -45,6 +71,7 @@ private:
     bool m_allowTrim;
     bool m_allowAnimateIn;
     bool m_allowAnimateOut;
+    QList<QmlKeyframesParameter *> m_parameters;
 };
 
 
