@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2017 Meltytech, LLC
+ * Copyright (c) 2017-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,6 +17,7 @@
  */
 
 import QtQuick 2.5
+import QtQml.Models 2.1
 import QtQuick.Controls 1.3
 import Shotcut.Controls 1.0
 import QtGraphicalEffects 1.0
@@ -33,7 +34,6 @@ Rectangle {
     property int headerWidth: 140
     property int currentTrack: 0
     property color selectedTrackColor: Qt.rgba(0.8, 0.8, 0, 0.3);
-//    property alias trackCount: tracksRepeater.count
     property bool stopScrolling: false
     property color shotcutBlue: Qt.rgba(23/255, 92/255, 118/255, 1.0)
     property double timeScale: 1.0
@@ -105,11 +105,6 @@ Rectangle {
                 border.color: selected? 'red' : 'transparent'
                 border.width: selected? 1 : 0
                 z: 1
-                MouseArea {
-                    anchors.fill: parent
-                    acceptedButtons: Qt.LeftButton
-//                    onClicked: timeline.selectMultitrack()
-                }
             }
             Flickable {
                 // Non-slider scroll area for the track headers.
@@ -124,38 +119,28 @@ Rectangle {
                     ParameterHead {
                         id: clipHead
                         trackName: metadata.name
-                        isLocked: false //model.locked
                         width: headerWidth
-                        height: Logic.trackHeight(false)
+                        height: Logic.trackHeight(true)
                         selected: false
-                        current: 0 === currentTrack
-//                        onIsLockedChanged: tracksRepeater.itemAt(index).isLocked = isLocked
-                        onClicked: {
-                            currentTrack = index
-//                            timeline.selectTrackHead(currentTrack)
+//                        onIsLockedChanged: parametersRepeater.itemAt(index).isLocked = isLocked
+                    }
+                    Repeater {
+                        id: trackHeaderRepeater
+                        model: parameters
+                        ParameterHead {
+                            trackName: model.parameter
+                            delegateIndex: index
+//                            isLocked: model.locked
+                            width: headerWidth
+                            height: Logic.trackHeight(model.curves)
+                            current: index === currentTrack
+//                            onIsLockedChanged: parametersRepeater.itemAt(index).isLocked = isLocked
+                            onClicked: {
+                                currentTrack = index
+//                                timeline.selectTrackHead(currentTrack)
+                            }
                         }
                     }
-//                    Repeater {
-//                        id: trackHeaderRepeater
-//                        model: multitrack
-//                        ParameterHead {
-//                            trackName: model.name
-//                            isMute: model.mute
-//                            isHidden: model.hidden
-//                            isComposite: model.composite
-//                            isLocked: model.locked
-//                            isVideo: !model.audio
-//                            width: headerWidth
-//                            height: Logic.trackHeight(model.audio)
-//                            selected: false
-//                            current: index === currentTrack
-//                            onIsLockedChanged: tracksRepeater.itemAt(index).isLocked = isLocked
-//                            onClicked: {
-//                                currentTrack = index
-//                                timeline.selectTrackHead(currentTrack)
-//                            }
-//                        }
-//                    }
                 }
                 Rectangle {
                     // thin dividing line between headers and tracks
@@ -224,25 +209,29 @@ Rectangle {
                     Item {
                         width: tracksContainer.width + headerWidth
                         height: trackHeaders.height + 30 // 30 is padding
-//                        Column {
+                        Column {
+                            Rectangle {
+                                width: 1
+                                height: clipHead.height
+                            }
                             // These make the striped background for the tracks.
                             // It is important that these are not part of the track visual hierarchy;
                             // otherwise, the clips will be obscured by the Track's background.
-//                            Repeater {
-//                                model: multitrack
-//                                delegate: Rectangle {
-//                                    width: tracksContainer.width
-//                                    color: (index === currentTrack)? selectedTrackColor : (index % 2)? activePalette.alternateBase : activePalette.base
-//                                    height: Logic.trackHeight(audio)
-//                                }
-//                            }
-//                        }
+                            Repeater {
+                                model: parameters
+                                delegate: Rectangle {
+                                    width: tracksContainer.width
+                                    color: (index === currentTrack)? selectedTrackColor : (index % 2)? activePalette.alternateBase : activePalette.base
+                                    height: Logic.trackHeight(model.curves)
+                                }
+                            }
+                        }
                         Column {
                             id: tracksContainer
                             Rectangle {
                                 id: trackRoot
                                 width: clipRow.width
-                                height: Logic.trackHeight(false)
+                                height: Logic.trackHeight(true)
                                 color: 'transparent'
                                 Row {
                                     id: clipRow
@@ -320,7 +309,7 @@ Rectangle {
                                 }
                             }
 
-//                            Repeater { id: tracksRepeater; model: trackDelegateModel }
+                            Repeater { id: parametersRepeater; model: parameterDelegateModel }
                         }
                     }
                 }
@@ -438,6 +427,13 @@ Rectangle {
                 menu.__yOffset = Math.min(0, Screen.height - (__popupGeometry.y + __popupGeometry.height + 40))
                 menu.__xOffset = Math.min(0, Screen.width - (__popupGeometry.x + __popupGeometry.width))
             }
+        }
+    }
+
+    DelegateModel {
+        id: parameterDelegateModel
+        model: parameters
+        Parameter {
         }
     }
 

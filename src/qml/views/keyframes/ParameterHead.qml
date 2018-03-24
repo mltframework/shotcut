@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2018 Meltytech, LLC
+ * Copyright (c) 2017-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,20 +23,16 @@ import QtQuick.Layouts 1.0
 import Shotcut.Controls 1.0 as Shotcut
 
 Rectangle {
-    id: trackHeadRoot
+    id: paramHeadRoot
     property string trackName: ''
-    property bool isMute
-    property bool isHidden
-    property int isComposite
-    property bool isLocked
-    property bool isVideo
+    property bool isLocked: false
     property bool selected: false
     property bool current: false
-    property int index: 0
+    property int delegateIndex: -1
     signal clicked()
 
     SystemPalette { id: activePalette }
-    color: selected ? selectedTrackColor : (index % 2)? activePalette.alternateBase : activePalette.base
+    color: selected ? selectedTrackColor : (delegateIndex % 2)? activePalette.alternateBase : activePalette.base
     border.color: selected? 'red' : 'transparent'
     border.width: selected? 1 : 0
     clip: true
@@ -44,33 +40,33 @@ Rectangle {
     states: [
         State {
             name: 'selected'
-            when: trackHeadRoot.selected
+            when: paramHeadRoot.selected
             PropertyChanges {
-                target: trackHeadRoot
-                color: isVideo? root.shotcutBlue : 'darkseagreen'
+                target: paramHeadRoot
+                color: root.shotcutBlue
             }
         },
         State {
             name: 'current'
-            when: trackHeadRoot.current
+            when: paramHeadRoot.current
             PropertyChanges {
-                target: trackHeadRoot
+                target: paramHeadRoot
                 color: selectedTrackColor
             }
         },
         State {
-            when: !trackHeadRoot.selected && !trackHeadRoot.current
             name: 'normal'
+            when: !paramHeadRoot.selected && !paramHeadRoot.current
             PropertyChanges {
-                target: trackHeadRoot
-                color: (index % 2)? activePalette.alternateBase : activePalette.base
+                target: paramHeadRoot
+                color: (delegateIndex % 2)? activePalette.alternateBase : activePalette.base
             }
         }
     ]
     transitions: [
         Transition {
             to: '*'
-            ColorAnimation { target: trackHeadRoot; duration: 100 }
+            ColorAnimation { target: paramHeadRoot; duration: 100 }
         }
     ]
 
@@ -85,11 +81,11 @@ Rectangle {
     }
     Column {
         id: trackHeadColumn
-        spacing: (trackHeadRoot.height < 50)? 0 : 6
+        spacing: (paramHeadRoot.height < 50)? 0 : 6
         anchors {
             top: parent.top
             left: parent.left
-            margins: (trackHeadRoot.height < 50)? 0 : 4
+            margins: (paramHeadRoot.height < 50)? 0 : 4
         }
 
         Label {
@@ -98,7 +94,7 @@ Rectangle {
             elide: Qt.ElideRight
             x: 4
             y: 3
-            width: trackHeadRoot.width - trackHeadColumn.anchors.margins * 2 - 8
+            width: paramHeadRoot.width - trackHeadColumn.anchors.margins * 2 - 8
         }
     }
 }

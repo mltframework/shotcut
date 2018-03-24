@@ -22,6 +22,7 @@
 #include "qmltypes/qmlfilter.h"
 #include "models/metadatamodel.h"
 #include "sharedframe.h"
+#include "models/keyframesmodel.h"
 
 #include <QDockWidget>
 #include <QQuickWidget>
@@ -59,6 +60,7 @@ private:
     QQuickWidget m_qview;
     QmlMetadata m_emptyQmlMetadata;
     QmlFilter m_emptyQmlFilter;
+    KeyframesModel m_model;
 };
 
 #endif // KEYFRAMESDOCK_H

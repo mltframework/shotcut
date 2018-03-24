@@ -57,6 +57,7 @@ KeyframesDock::KeyframesDock(MetadataModel* metadataModel, AttachedFiltersModel*
     m_qview.rootContext()->setContextProperty("metadatamodel", metadataModel);
     m_qview.rootContext()->setContextProperty("attachedfiltersmodel", attachedModel);
     m_qview.rootContext()->setContextProperty("producer", qmlProducer);
+    m_qview.rootContext()->setContextProperty("parameters", &m_model);
     setCurrentFilter(0, 0);
     connect(m_qview.quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(load()));
 
@@ -72,6 +73,7 @@ void KeyframesDock::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta)
         filter = &m_emptyQmlFilter;
         meta = &m_emptyQmlMetadata;
     }
+    m_model.load(filter, meta);
     m_qview.rootContext()->setContextProperty("filter", filter);
     m_qview.rootContext()->setContextProperty("metadata", meta);
     connect(filter, SIGNAL(changed()), SIGNAL(changed()));

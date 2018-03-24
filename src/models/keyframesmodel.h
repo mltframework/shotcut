@@ -1,0 +1,61 @@
+/*
+ * Copyright (c) 2018 Meltytech, LLC
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#ifndef KEYFRAMESMODEL_H
+#define KEYFRAMESMODEL_H
+
+#include <QAbstractItemModel>
+#include <QString>
+#include <MltProperties.h>
+#include <MltAnimation.h>
+
+class QmlMetadata;
+class QmlFilter;
+
+class KeyframesModel : public QAbstractItemModel
+{
+    Q_OBJECT
+
+public:
+    /// Two level model: parameters and keyframes on parameters
+    enum Roles {
+        ParameterNameRole = Qt::UserRole + 1, /// parameter only
+        PropertyNameRole, /// parameter only
+        IsCurvesRole,     /// parameter only
+        FrameNumberRole,  /// keyframe only
+        KeyframeTypeRole  /// keyframe only
+    };
+
+    explicit KeyframesModel(QObject* parent = 0);
+    virtual ~KeyframesModel();
+
+    int rowCount(const QModelIndex& parent) const;
+    int columnCount(const QModelIndex& parent) const;
+    QVariant data(const QModelIndex& index, int role) const;
+    QModelIndex index(int row, int column = 0,
+                      const QModelIndex& parent = QModelIndex()) const;
+    QModelIndex parent(const QModelIndex& index) const;
+    QHash<int, QByteArray> roleNames() const;
+    void load(QmlFilter*, QmlMetadata*);
+
+private:
+    QList<Mlt::Animation> m_animations;
+    QmlMetadata* m_metadata;
+    QmlFilter* m_filter;
+};
+
+#endif // KEYFRAMESMODEL_H

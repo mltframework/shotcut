@@ -12,5 +12,8 @@ Metadata {
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
+        parameters: [
+            Parameter { name: qsTr('Brightness'); property: 'level' }
+        ]
     }
 }

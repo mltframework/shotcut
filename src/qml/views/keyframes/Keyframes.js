@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2018 Meltytech, LLC
+ * Copyright (c) 2017-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,8 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-function trackHeight(isAudio) {
-    return isAudio? Math.max(40, multitrack.trackHeight) : multitrack.trackHeight * 2
+function trackHeight(isCurves) {
+    return isCurves? (multitrack.trackHeight * 2) : Math.max(40, multitrack.trackHeight)
 }
 
 function scrollIfNeeded() {

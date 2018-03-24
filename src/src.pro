@@ -116,7 +116,8 @@ SOURCES += main.cpp\
     dialogs/unlinkedfilesdialog.cpp \
     dialogs/transcodedialog.cpp \
     docks/keyframesdock.cpp \
-    qmltypes/qmlproducer.cpp
+    qmltypes/qmlproducer.cpp \
+    models/keyframesmodel.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -228,7 +229,8 @@ HEADERS  += mainwindow.h \
     dialogs/unlinkedfilesdialog.h \
     dialogs/transcodedialog.h \
     docks/keyframesdock.h \
-    qmltypes/qmlproducer.h
+    qmltypes/qmlproducer.h \
+    models/keyframesmodel.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
