@@ -1,0 +1,39 @@
+sudo: required
+language: generic
+dist: trusty
+addons:
+  apt:
+    packages:
+    - squashfs-tools
+    - desktop-file-utils
+
+services:
+  - docker
+
+before_install:
+- wget --no-check-certificate https://raw.githubusercontent.com/mltframework/mlt-scripts/master/docker/shotcut-build/Dockerfile
+- mkdir shotcut-build
+- mv Dockerfile shotcut-build/
+- docker build --rm -t ddennedy/shotcut-build shotcut-build
+- mkdir work; cd work
+- wget --no-check-certificate https://raw.githubusercontent.com/mltframework/shotcut/master/scripts/build-shotcut.sh
+- wget --no-check-certificate https://raw.githubusercontent.com/mltframework/shotcut/master/scripts/shotcut.nsi
+- wget --no-check-certificate https://raw.githubusercontent.com/AppImage/AppImages/master/pkg2appimage
+
+script:
+- docker run -it --rm -v $PWD:/root/shotcut ddennedy/shotcut-build
+- bash -ex pkg2appimage ../scripts/shotcut-recipe.yml
+- mv shotcut.tar.bz2 shotcut-${TRAVIS_TAG}.tar.bz2
+- mv out/Shotcut-.glibc2.14-x86_64.AppImage Shotcut-${TRAVIS_TAG}.glibc2.14-x86_64.AppImage
+
+deploy:
+  provider: releases
+  api_key: "$GITHUB_TOKEN"
+  file_glob: true
+  file:
+    - "*.AppImage"
+    - "*.tar.bz2"
+  skip_cleanup: true
+  on:
+    branch: master
+    tags: true
