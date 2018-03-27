@@ -32,11 +32,13 @@ Rectangle {
 
     property int selectedIndex: -1
     property int headerWidth: 140
-    property int currentTrack: 0
+    property int currentTrack: -1
     property color selectedTrackColor: Qt.rgba(0.8, 0.8, 0, 0.3);
     property bool stopScrolling: false
     property color shotcutBlue: Qt.rgba(23/255, 92/255, 118/255, 1.0)
     property double timeScale: 1.0
+
+    signal keyframeClicked()
 
     onTimeScaleChanged: redrawWaveforms()
 
@@ -95,16 +97,10 @@ Rectangle {
         Column {
             z: 1
 
-            Rectangle {
-                id: cornerstone
-                property bool selected: false
+            Item {
                 // Padding between toolbar and track headers.
                 width: headerWidth
                 height: ruler.height
-                color: selected? shotcutBlue : activePalette.window
-                border.color: selected? 'red' : 'transparent'
-                border.width: selected? 1 : 0
-                z: 1
             }
             Flickable {
                 // Non-slider scroll area for the track headers.
@@ -128,17 +124,17 @@ Rectangle {
                         id: trackHeaderRepeater
                         model: parameters
                         ParameterHead {
-                            trackName: model.parameter
+                            trackName: model.name
                             delegateIndex: index
 //                            isLocked: model.locked
                             width: headerWidth
                             height: Logic.trackHeight(model.curves)
                             current: index === currentTrack
 //                            onIsLockedChanged: parametersRepeater.itemAt(index).isLocked = isLocked
-                            onClicked: {
-                                currentTrack = index
+//                            onClicked: {
+//                                currentTrack = index
 //                                timeline.selectTrackHead(currentTrack)
-                            }
+//                            }
                         }
                     }
                 }
@@ -434,6 +430,21 @@ Rectangle {
         id: parameterDelegateModel
         model: parameters
         Parameter {
+            model: parameters
+            rootIndex: parameterDelegateModel.modelIndex(index)
+            width: tracksContainer.width
+            height: Logic.trackHeight(false)
+            onClicked: {
+//                currentTrack = parameter.DelegateModel.itemsIndex
+//                keyframes.selection = [keyframe.DelegateModel.itemsIndex]
+                console.log('clicked parameter.index ' + parameter.DelegateModel.itemsIndex + ' keyframe.index ' + keyframe.DelegateModel.itemsIndex)
+                root.keyframeClicked()
+                for (var i = 0; i < parametersRepeater.count; i++)
+                    if (i !== parameter.DelegateModel.itemsIndex) {
+                        parametersRepeater.itemAt(i).isCurrent = false
+                        parametersRepeater.itemAt(i).selection = []
+                    }
+            }
         }
     }
 

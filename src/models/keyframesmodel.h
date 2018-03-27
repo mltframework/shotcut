@@ -31,9 +31,16 @@ class KeyframesModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
+    enum InterpolationType {
+        DiscreteInterpolation,
+        LinearInterpolation,
+        SmoothInterpolation
+    };
+    Q_ENUM(InterpolationType)
+
     /// Two level model: parameters and keyframes on parameters
     enum Roles {
-        ParameterNameRole = Qt::UserRole + 1, /// parameter only
+        NameRole = Qt::UserRole + 1, /// parameter or keyframe
         PropertyNameRole, /// parameter only
         IsCurvesRole,     /// parameter only
         FrameNumberRole,  /// keyframe only
@@ -52,10 +59,15 @@ public:
     QHash<int, QByteArray> roleNames() const;
     void load(QmlFilter*, QmlMetadata*);
 
+signals:
+    void loaded();
+
 private:
     QList<Mlt::Animation> m_animations;
     QmlMetadata* m_metadata;
     QmlFilter* m_filter;
+
+    int keyframeCount(int index) const;
 };
 
 #endif // KEYFRAMESMODEL_H
