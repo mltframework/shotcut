@@ -20,6 +20,9 @@
 #include <QApplication>
 #include <QTimer>
 #include <Logger.h>
+#ifdef Q_OS_WIN
+#include <windows.h>
+#endif
 
 AbstractJob::AbstractJob(const QString& name)
     : QProcess(0)
@@ -31,6 +34,7 @@ AbstractJob::AbstractJob(const QString& name)
     setObjectName(name);
     connect(this, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(onFinished(int, QProcess::ExitStatus)));
     connect(this, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
+    connect(this, SIGNAL(started()), this, SLOT(onStarted()));
 }
 
 void AbstractJob::start()
@@ -117,4 +121,17 @@ void AbstractJob::onReadyRead()
 {
     QString msg = readLine();
     appendToLog(msg);
+}
+
+void AbstractJob::onStarted()
+{
+#ifdef Q_OS_WIN
+    qint64 processId = QProcess::processId();
+    HANDLE processHandle = OpenProcess(PROCESS_SET_INFORMATION, FALSE, processId);
+    if(processHandle)
+    {
+        SetPriorityClass(processHandle, IDLE_PRIORITY_CLASS);
+        CloseHandle(processHandle);
+    }
+#endif
 }
