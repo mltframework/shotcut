@@ -63,6 +63,7 @@ protected:
 protected slots:
     virtual void onFinished(int exitCode, QProcess::ExitStatus exitStatus);
     virtual void onReadyRead();
+    virtual void onStarted();
 
 private:
     bool m_ran;
