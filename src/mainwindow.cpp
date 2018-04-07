@@ -343,6 +343,7 @@ MainWindow::MainWindow()
     ui->menuView->addAction(m_keyframesDock->toggleViewAction());
     connect(m_keyframesDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onKeyframesDockTriggered(bool)));
     connect(ui->actionKeyframes, SIGNAL(triggered()), this, SLOT(onKeyframesDockTriggered()));
+    connect(m_filterController, SIGNAL(currentFilterAboutToChange()), m_keyframesDock, SLOT(clearCurrentFilter()));
     connect(m_filterController, SIGNAL(currentFilterChanged(QmlFilter*, QmlMetadata*, int)), m_keyframesDock, SLOT(setCurrentFilter(QmlFilter*, QmlMetadata*)), Qt::QueuedConnection);
     connect(m_timelineDock->model(), SIGNAL(filterInChanged(Mlt::Filter*)), m_keyframesDock, SLOT(onFilterInChanged(Mlt::Filter*)));
     connect(m_timelineDock->model(), SIGNAL(filterOutChanged(Mlt::Filter*)), m_keyframesDock, SLOT(onFilterOutChanged(Mlt::Filter*)));

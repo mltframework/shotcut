@@ -64,9 +64,16 @@ KeyframesDock::KeyframesDock(MetadataModel* metadataModel, AttachedFiltersModel*
     LOG_DEBUG() << "end";
 }
 
+void KeyframesDock::clearCurrentFilter()
+{
+    m_model.load(0, 0);
+    m_qview.rootContext()->setContextProperty("filter", &m_emptyQmlFilter);
+    m_qview.rootContext()->setContextProperty("metadata", &m_emptyQmlMetadata);
+    disconnect(this, SIGNAL(changed()));
+}
+
 void KeyframesDock::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta)
 {
-    disconnect(this, SIGNAL(changed()));
     if (!filter || !filter->producer().is_valid()) {
         filter = &m_emptyQmlFilter;
         meta = &m_emptyQmlMetadata;
