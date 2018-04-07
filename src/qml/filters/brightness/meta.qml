@@ -13,7 +13,7 @@ Metadata {
         allowAnimateIn: true
         allowAnimateOut: true
         parameters: [
-            Parameter { name: qsTr('Brightness'); property: 'level' }
+            Parameter { name: qsTr('Brightness'); property: 'level'; isSimple: true }
         ]
     }
 }

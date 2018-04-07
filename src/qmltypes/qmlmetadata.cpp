@@ -162,5 +162,6 @@ QmlKeyframesMetadata::QmlKeyframesMetadata(QObject* parent)
 
 QmlKeyframesParameter::QmlKeyframesParameter(QObject* parent)
     : QObject(parent)
+    , m_isSimple(false)
 {
 }

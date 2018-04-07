@@ -30,12 +30,15 @@ class QmlKeyframesParameter : public QObject
     Q_OBJECT
     Q_PROPERTY(QString name MEMBER m_name NOTIFY changed)
     Q_PROPERTY(QString property MEMBER m_property NOTIFY changed)
+    /// If isSimple this parameter cannot use full keyframes while simple is in use.
+    Q_PROPERTY(bool isSimple MEMBER m_isSimple NOTIFY changed)
 
 public:
     explicit QmlKeyframesParameter(QObject* parent = 0);
 
     QString name() const { return m_name; }
     QString property() const { return m_property; }
+    bool isSimple() const { return m_isSimple; }
 
 signals:
     void changed();
@@ -43,6 +46,7 @@ signals:
 private:
     QString m_name;
     QString m_property;
+    bool m_isSimple;
 };
 
 class QmlKeyframesMetadata : public QObject
