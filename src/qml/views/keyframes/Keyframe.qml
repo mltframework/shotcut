@@ -57,7 +57,10 @@ Rectangle {
         id: menu
         MenuItem {
             text: qsTr('Remove')
-            onTriggered: parameters.remove(parameterIndex, index)
+            onTriggered: {
+                parameters.remove(parameterIndex, index)
+                root.selection = []
+            }
         }
         onPopupVisibleChanged: {
             if (visible && application.OS !== 'OS X' && __popupGeometry.height > 0) {

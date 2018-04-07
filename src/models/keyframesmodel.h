@@ -59,6 +59,9 @@ public:
     QHash<int, QByteArray> roleNames() const;
     void load(QmlFilter*, QmlMetadata*);
     Q_INVOKABLE bool remove(int parameterIndex, int keyframeIndex);
+    int previousKeyframePosition(int parameterIndex, int currentPosition);
+    int nextKeyframePosition(int parameterIndex, int currentPosition);
+    int keyframeIndex(int parameterIndex, int currentPosition);
 
 signals:
     void loaded();

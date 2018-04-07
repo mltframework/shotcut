@@ -96,5 +96,61 @@ Rectangle {
             y: 3
             width: paramHeadRoot.width - trackHeadColumn.anchors.margins * 2 - 8
         }
+        RowLayout {
+            spacing: 8
+            ToolButton {
+                id: previousButton
+                visible: delegateIndex >= 0
+                implicitWidth: 20
+                implicitHeight: 20
+                iconName: 'media-skip-backward'
+                iconSource: 'qrc:///icons/oxygen/32x32/actions/media-skip-backward.png'
+                onClicked: {
+                    root.selection = [keyframes.seekPrevious()]
+                    root.currentTrack = delegateIndex
+                }
+                tooltip: qsTr('Seek to previous keyframe')
+            }
+
+            ToolButton {
+                id: deleteButton
+                visible: delegateIndex >= 0
+                enabled: root.selection.length > 0
+                implicitWidth: 20
+                implicitHeight: 20
+                iconName: 'edit-delete'
+                iconSource: 'qrc:///icons/oxygen/32x32/actions/edit-delete.png'
+                onClicked: {
+                    parameters.remove(root.currentTrack, root.selection[0])
+                    root.selection = []
+                }
+                tooltip: qsTr('Delete the selected keyframe')
+            }
+
+            ToolButton {
+                id: nextButton
+                visible: delegateIndex >= 0
+                implicitWidth: 20
+                implicitHeight: 20
+                iconName: 'media-skip-forward'
+                iconSource: 'qrc:///icons/oxygen/32x32/actions/media-skip-forward.png'
+                onClicked: {
+                    root.selection = [keyframes.seekNext()]
+                    root.currentTrack = delegateIndex
+                }
+                tooltip: qsTr('Seek to next keyframe')
+            }
+
+            ToolButton {
+                id: lockButton
+                visible: false && delegateIndex >= 0
+                implicitWidth: 20
+                implicitHeight: 20
+                iconName: isLocked ? 'object-locked' : 'object-unlocked'
+                iconSource: isLocked ? 'qrc:///icons/oxygen/32x32/status/object-locked.png' : 'qrc:///icons/oxygen/32x32/status/object-unlocked.png'
+//                onClicked: timeline.setTrackLock(index, !isLocked)
+                tooltip: isLocked? qsTr('Unlock track') : qsTr('Lock track')
+            }
+        }
     }
 }

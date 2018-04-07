@@ -41,6 +41,9 @@ class KeyframesDock : public QDockWidget
 public:
     explicit KeyframesDock(MetadataModel* metadataModel, AttachedFiltersModel* attachedModel, QmlProducer* qmlProducer, QWidget *parent = 0);
 
+    Q_INVOKABLE int seekPrevious();
+    Q_INVOKABLE int seekNext();
+
 signals:
     void changed(); /// Notifies when a filter parameter changes.
 
@@ -62,6 +65,9 @@ private:
     QmlMetadata m_emptyQmlMetadata;
     QmlFilter m_emptyQmlFilter;
     KeyframesModel m_model;
+    QmlProducer* m_qmlProducer;
+
+    int currentParameter() const;
 };
 
 #endif // KEYFRAMESDOCK_H

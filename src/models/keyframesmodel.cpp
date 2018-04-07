@@ -169,6 +169,55 @@ bool KeyframesModel::remove(int parameterIndex, int keyframeIndex)
     return error;
 }
 
+int KeyframesModel::previousKeyframePosition(int parameterIndex, int currentPosition)
+{
+    int result = -1;
+    if (m_filter && parameterIndex < m_propertyNames.count()) {
+        QString name = m_propertyNames[parameterIndex];
+        Mlt::Animation animation = m_filter->getAnimation(name);
+        if (animation.is_valid()) {
+            currentPosition -= m_filter->in();
+            result = animation.previous_key(animation.is_key(currentPosition)? currentPosition - 1: currentPosition);
+            result += m_filter->in();
+        }
+    }
+    return result;
+}
+
+int KeyframesModel::nextKeyframePosition(int parameterIndex, int currentPosition)
+{
+    int result = -1;
+    if (m_filter && parameterIndex < m_propertyNames.count()) {
+        QString name = m_propertyNames[parameterIndex];
+        Mlt::Animation animation = m_filter->getAnimation(name);
+        if (animation.is_valid()) {
+            currentPosition -= m_filter->in();
+            result = animation.next_key(animation.is_key(currentPosition)? currentPosition + 1: currentPosition);
+            result += m_filter->in();
+        }
+    }
+    return result;
+}
+
+KeyframesModel::keyframeIndex(int parameterIndex, int currentPosition)
+{
+    int result = -1;
+    if (m_filter && parameterIndex < m_propertyNames.count()) {
+        QString name = m_propertyNames[parameterIndex];
+        Mlt::Animation animation = m_filter->getAnimation(name);
+        if (animation.is_valid()) {
+            for (int i = 0; i < animation.key_count() && result == -1; i++) {
+                int frame = animation.key_get_frame(i);
+                if (frame == currentPosition)
+                    result = i;
+                else if (frame > currentPosition)
+                    break;
+            }
+        }
+    }
+    return result;
+}
+
 void KeyframesModel::reload()
 {
     beginResetModel();

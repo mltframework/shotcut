@@ -23,8 +23,6 @@ Item {
     property alias model: keyframeDelegateModel.model
     property alias rootIndex: keyframeDelegateModel.rootIndex
     property bool isLocked: false
-    property bool isCurrent: false
-    property var selection: []
 
     signal clicked(var keyframe, var parameter)
 
@@ -37,14 +35,9 @@ Item {
             interpolation: model.interpolation
             value: model.name
             anchors.verticalCenter: parameterRoot.verticalCenter
-            isSelected: isCurrent && selection.indexOf(index) !== -1
+            isSelected: root.currentTrack === parameterRoot.DelegateModel.itemsIndex && root.selection.indexOf(index) !== -1
             parameterIndex: parameterRoot.DelegateModel.itemsIndex
-
-            onClicked: {
-                parameterRoot.clicked(keyframe, parameterRoot)
-                isCurrent = true
-                selection = [keyframe.DelegateModel.itemsIndex]
-            }
+            onClicked: parameterRoot.clicked(keyframe, parameterRoot)
         }
     }
 }

@@ -41,6 +41,7 @@
 KeyframesDock::KeyframesDock(MetadataModel* metadataModel, AttachedFiltersModel* attachedModel, QmlProducer* qmlProducer, QWidget *parent)
     : QDockWidget(tr("Keyframes"), parent)
     , m_qview(QmlUtilities::sharedEngine(), this)
+    , m_qmlProducer(qmlProducer)
 {
     LOG_DEBUG() << "begin";
     setObjectName("KeyframesDock");
@@ -62,6 +63,27 @@ KeyframesDock::KeyframesDock(MetadataModel* metadataModel, AttachedFiltersModel*
     connect(m_qview.quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(load()));
 
     LOG_DEBUG() << "end";
+}
+
+int KeyframesDock::seekPrevious()
+{
+    if (m_qmlProducer) {
+        int position = m_model.previousKeyframePosition(currentParameter(), m_qmlProducer->position() + m_qmlProducer->in());
+        position -= m_qmlProducer->in();
+        m_qmlProducer->setPosition(position);
+    }
+    return m_model.keyframeIndex(currentParameter(), m_qmlProducer->position() + m_qmlProducer->in());
+}
+
+int KeyframesDock::seekNext()
+{
+    if (m_qmlProducer) {
+        int position = m_model.nextKeyframePosition(currentParameter(), m_qmlProducer->position() + m_qmlProducer->in());
+        position -= m_qmlProducer->in();
+        if (position > m_qmlProducer->position())
+            m_qmlProducer->setPosition(position);
+    }
+    return m_model.keyframeIndex(currentParameter(), m_qmlProducer->position() + m_qmlProducer->in());
 }
 
 void KeyframesDock::clearCurrentFilter()
@@ -116,6 +138,13 @@ void KeyframesDock::onVisibilityChanged(bool visible)
 {
     if (visible)
         load();
+}
+
+int KeyframesDock::currentParameter() const
+{
+    if (!m_qview.rootObject())
+        return 0;
+    return m_qview.rootObject()->property("currentTrack").toInt();
 }
 
 void KeyframesDock::load(bool force)

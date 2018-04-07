@@ -32,11 +32,12 @@ Rectangle {
 
     property int selectedIndex: -1
     property int headerWidth: 140
-    property int currentTrack: -1
+    property int currentTrack: 0
     property color selectedTrackColor: Qt.rgba(0.8, 0.8, 0, 0.3);
     property bool stopScrolling: false
     property color shotcutBlue: Qt.rgba(23/255, 92/255, 118/255, 1.0)
     property double timeScale: 1.0
+    property var selection: []
 
     signal keyframeClicked()
 
@@ -436,14 +437,8 @@ Rectangle {
             height: Logic.trackHeight(false)
             onClicked: {
                 currentTrack = parameter.DelegateModel.itemsIndex
-//                keyframes.selection = [keyframe.DelegateModel.itemsIndex]
-                console.log('clicked parameter.index ' + parameter.DelegateModel.itemsIndex + ' keyframe.index ' + keyframe.DelegateModel.itemsIndex)
+                root.selection = [keyframe.DelegateModel.itemsIndex]
                 root.keyframeClicked()
-                for (var i = 0; i < parametersRepeater.count; i++)
-                    if (i !== parameter.DelegateModel.itemsIndex) {
-                        parametersRepeater.itemAt(i).isCurrent = false
-                        parametersRepeater.itemAt(i).selection = []
-                    }
             }
         }
     }

@@ -234,5 +234,8 @@
         <file>light/32x32/audio-volume-muted.png</file>
         <file>dark/32x32/audio-volume-high.png</file>
         <file>light/32x32/audio-volume-high.png</file>
+        <file>dark/32x32/edit-delete.png</file>
+        <file>light/32x32/edit-delete.png</file>
+        <file>oxygen/32x32/actions/edit-delete.png</file>
     </qresource>
 </RCC>
