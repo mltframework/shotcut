@@ -82,6 +82,9 @@ void KeyframesDock::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta)
     m_qview.rootContext()->setContextProperty("metadata", meta);
     m_model.load(filter, meta);
     connect(filter, SIGNAL(changed()), SIGNAL(changed()));
+    connect(filter, SIGNAL(changed(QString)), &m_model, SLOT(onFilterChanged(QString)));
+    connect(filter, SIGNAL(animateInChanged()), &m_model, SLOT(reload()));
+    connect(filter, SIGNAL(animateOutChanged()), &m_model, SLOT(reload()));
 }
 
 void KeyframesDock::onFilterInChanged(Mlt::Filter* filter)

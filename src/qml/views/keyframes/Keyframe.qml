@@ -17,7 +17,9 @@
 
 import QtQuick 2.0
 import org.shotcut.qml 1.0
+import QtQuick.Controls 1.0
 import Shotcut.Controls 1.0
+import QtQuick.Window 2.2
 
 Rectangle {
     id: keyframeRoot
@@ -25,6 +27,7 @@ Rectangle {
     property int interpolation: KeyframesModel.DiscreteInterpolation // rectangle for discrete
     property bool isSelected: false
     property string value: ''
+    property int parameterIndex
 
     signal clicked(var keyframe)
 
@@ -41,7 +44,28 @@ Rectangle {
 
     MouseArea {
         anchors.fill: parent
-        onClicked: parent.clicked(keyframeRoot)
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
+        onClicked: {
+            if (mouse.button === Qt.LeftButton)
+                parent.clicked(keyframeRoot)
+            else
+                menu.popup()
+        }
     }
     ToolTip { text: value }
+
+    Menu {
+        id: menu
+        MenuItem {
+            text: qsTr('Remove')
+            onTriggered: parameters.remove(parameterIndex, index)
+        }
+        onPopupVisibleChanged: {
+            if (visible && application.OS !== 'OS X' && __popupGeometry.height > 0) {
+                // Try to fix menu running off screen. This only works intermittently.
+                menu.__yOffset = Math.min(0, Screen.height - (__popupGeometry.y + __popupGeometry.height + 40))
+                menu.__xOffset = Math.min(0, Screen.width - (__popupGeometry.x + __popupGeometry.width))
+            }
+        }
+    }
 }

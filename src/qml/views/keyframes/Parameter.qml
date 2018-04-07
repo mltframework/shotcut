@@ -38,6 +38,7 @@ Item {
             value: model.name
             anchors.verticalCenter: parameterRoot.verticalCenter
             isSelected: isCurrent && selection.indexOf(index) !== -1
+            parameterIndex: parameterRoot.DelegateModel.itemsIndex
 
             onClicked: {
                 parameterRoot.clicked(keyframe, parameterRoot)

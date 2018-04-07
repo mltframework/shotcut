@@ -58,14 +58,20 @@ public:
     QModelIndex parent(const QModelIndex& index) const;
     QHash<int, QByteArray> roleNames() const;
     void load(QmlFilter*, QmlMetadata*);
+    Q_INVOKABLE bool remove(int parameterIndex, int keyframeIndex);
 
 signals:
     void loaded();
 
+public slots:
+    void reload();
+    void onFilterChanged(const QString& property);
+
 private:
-    QList<Mlt::Animation> m_animations;
+    QList<QString> m_propertyNames;
     QmlMetadata* m_metadata;
     QmlFilter* m_filter;
+    QList<int> m_keyframeCounts;
 
     int keyframeCount(int index) const;
 };

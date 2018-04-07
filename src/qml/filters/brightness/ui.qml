@@ -39,7 +39,6 @@ Item {
             if (filter.animateOut > 0)
                 endValue = filter.getDouble('opacity', filter.duration - 1)
         }
-
         setControls()
     }
 
@@ -57,13 +56,20 @@ Item {
             if (filter.animateIn > 0 || filter.animateOut > 0) {
                 setControls()
             } else {
+                blockUpdate = true
+                brightnessSlider.value = filter.getDouble('level', getPosition()) * 100.0
+                blockUpdate = false
                 brightnessSlider.enabled = true
             }
         }
     }
 
+    function getPosition() {
+        return producer.position - (filter.in - producer.in)
+    }
+
     function setControls() {
-        var position = producer.position - (filter.in - producer.in)
+        var position = getPosition()
         blockUpdate = true
         brightnessSlider.value = filter.getDouble('level', position) * 100.0
         blockUpdate = false
@@ -83,26 +89,28 @@ Item {
                 middleValue = value
         }
 
-        filter.resetAnimation('level')
-        if (filter.animateIn > 0 && filter.animateOut > 1) {
-            filter.set('level', startValue, 0)
-            filter.set('level', middleValue, filter.animateIn - 1)
-            filter.set('level', middleValue, filter.duration - filter.animateOut)
-            filter.set('level', endValue, filter.duration - 1)
-        } else if (filter.animateIn > 0) {
-            filter.set('level', startValue, 0)
-            filter.set('level', middleValue, filter.animateIn - 1)
-        } else if (filter.animateOut > 0) {
-            filter.set('level', middleValue, filter.duration - filter.animateOut)
-            filter.set('level', endValue, filter.duration - 1)
-        } else {
+        if (filter.animateIn > 0 || filter.animateOut > 0) {
+            filter.resetAnimation('level')
+            brightnessKeyframesButton.checked = false
+            if (filter.animateIn > 0) {
+                filter.set('level', startValue, 0)
+                filter.set('level', middleValue, filter.animateIn - 1)
+            }
+            if (filter.animateOut > 0) {
+                filter.set('level', middleValue, filter.duration - filter.animateOut)
+                filter.set('level', endValue, filter.duration - 1)
+            }
+        } else if (!brightnessKeyframesButton.checked) {
+            filter.resetAnimation('level')
             filter.set('level', middleValue)
+        } else /* (brightnessKeyframesButton.checked) */ {
+            filter.set('level', value, getPosition())
         }
 //        console.log('level: ' + filter.get('level'))
     }
 
     GridLayout {
-        columns: 3
+        columns: 4
         anchors.fill: parent
         anchors.margins: 8
 
@@ -116,10 +124,26 @@ Item {
             maximumValue: 200.0
             decimals: 1
             suffix: ' %'
-            onValueChanged: updateFilter(producer.position - (filter.in - producer.in))
+            onValueChanged: updateFilter(getPosition())
         }
         UndoButton {
             onClicked: brightnessSlider.value = 100
+        }
+        KeyframesButton {
+            id: brightnessKeyframesButton
+            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('level') > 0
+            onClicked: {
+                var value = brightnessSlider.value / 100.0
+                if (checked) {
+                    blockUpdate = true
+                    filter.clearSimpleAnimation('level')
+                    blockUpdate = false
+                    filter.set('level', value, getPosition())
+                } else {
+                    filter.resetAnimation('level')
+                    filter.set('level', value)
+                }
+            }
         }
 
         Item {

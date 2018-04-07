@@ -131,10 +131,10 @@ Rectangle {
                             height: Logic.trackHeight(model.curves)
                             current: index === currentTrack
 //                            onIsLockedChanged: parametersRepeater.itemAt(index).isLocked = isLocked
-//                            onClicked: {
-//                                currentTrack = index
+                            onClicked: {
+                                currentTrack = index
 //                                timeline.selectTrackHead(currentTrack)
-//                            }
+                            }
                         }
                     }
                 }
@@ -193,7 +193,7 @@ Rectangle {
 
                     Ruler {
                         id: ruler
-                        width: tracksContainer.width
+                        width: producer.duration * timeScale
                         index: index
                     }
                 }
@@ -414,7 +414,7 @@ Rectangle {
             text: qsTr('Reload')
             onTriggered: {
                 var force = true
-                keyframes.load(force)
+                parameters.reload()
             }
         }
         onPopupVisibleChanged: {
@@ -432,10 +432,10 @@ Rectangle {
         Parameter {
             model: parameters
             rootIndex: parameterDelegateModel.modelIndex(index)
-            width: tracksContainer.width
+            width: producer.duration * timeScale
             height: Logic.trackHeight(false)
             onClicked: {
-//                currentTrack = parameter.DelegateModel.itemsIndex
+                currentTrack = parameter.DelegateModel.itemsIndex
 //                keyframes.selection = [keyframe.DelegateModel.itemsIndex]
                 console.log('clicked parameter.index ' + parameter.DelegateModel.itemsIndex + ' keyframe.index ' + keyframe.DelegateModel.itemsIndex)
                 root.keyframeClicked()

@@ -25,6 +25,7 @@
 #include <QRectF>
 #include <MltFilter.h>
 #include <MltProducer.h>
+#include <MltAnimation.h>
 
 #include "qmlmetadata.h"
 #include "shotcut_mlt_properties.h"
@@ -79,7 +80,10 @@ public:
     int animateOut() { return m_filter.get_int(kShotcutAnimOutProperty); }
     void setAnimateOut(int value);
     int duration();
-    Q_INVOKABLE void resetAnimation(QString name);
+    Q_INVOKABLE void resetAnimation(const QString& name);
+    Q_INVOKABLE void clearSimpleAnimation(const QString& name);
+    Mlt::Animation getAnimation(const QString& name);
+    Q_INVOKABLE int keyframeCount(const QString& name);
 
 public slots:
     void preset(const QString& name);
@@ -88,6 +92,7 @@ signals:
     void presetsChanged();
     void analyzeFinished(bool isSuccess);
     void changed(); /// Use to let UI and VUI QML signal updates to each other.
+    void changed(QString);
     void inChanged();
     void outChanged();
     void animateInChanged();

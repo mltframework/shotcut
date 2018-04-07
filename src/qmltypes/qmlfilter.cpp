@@ -52,6 +52,7 @@ QmlFilter::QmlFilter(Mlt::Filter& mltFilter, const QmlMetadata* metadata, QObjec
     , m_path(m_metadata->path().absolutePath().append('/'))
     , m_isNew(false)
 {
+    connect(this, SIGNAL(changed(QString)), SIGNAL(changed()));
 }
 
 QmlFilter::~QmlFilter()
@@ -61,10 +62,11 @@ QmlFilter::~QmlFilter()
 QString QmlFilter::get(QString name, int position)
 {
     if (m_filter.is_valid()) {
-        if (position < 0)
-            return QString::fromUtf8(m_filter.get(name.toUtf8().constData()));
+        const char* propertyName = name.toUtf8().constData();
+        if (position < 0 || !m_filter.get_animation(propertyName))
+            return QString::fromUtf8(m_filter.get(propertyName));
         else
-            return QString::fromUtf8(m_filter.anim_get(name.toUtf8().constData(), position, duration()));
+            return QString::fromUtf8(m_filter.anim_get(propertyName, position, duration()));
     } else {
         return QString();
     }
@@ -73,10 +75,11 @@ QString QmlFilter::get(QString name, int position)
 double QmlFilter::getDouble(QString name, int position)
 {
     if (m_filter.is_valid()) {
-        if (position < 0)
-            return m_filter.get_double(name.toUtf8().constData());
+        const char* propertyName = name.toUtf8().constData();
+        if (position < 0 || !m_filter.get_animation(propertyName))
+            return m_filter.get_double(propertyName);
         else
-            return m_filter.anim_get_double(name.toUtf8().constData(), position, duration());
+            return m_filter.anim_get_double(propertyName, position, duration());
     } else {
         return 0.0;
     }
@@ -87,11 +90,12 @@ QRectF QmlFilter::getRect(QString name, int position)
     if (!m_filter.is_valid()) return QRectF();
     const char* s = m_filter.get(name.toUtf8().constData());
     if (s) {
+        const char* propertyName = name.toUtf8().constData();
         mlt_rect rect;
-        if (position < 0) {
-            rect = m_filter.get_rect(name.toUtf8().constData());
+        if (position < 0 || !m_filter.get_animation(propertyName)) {
+            rect = m_filter.get_rect(propertyName);
         } else {
-            rect = m_filter.anim_get_rect(name.toUtf8().constData(), position, duration());
+            rect = m_filter.anim_get_rect(propertyName, position, duration());
         }
         if (::strchr(s, '%')) {
             return QRectF(qRound(rect.x * MLT.profile().width()),
@@ -112,7 +116,7 @@ void QmlFilter::set(QString name, QString value, int position)
     if (position < 0) {
         if (qstrcmp(m_filter.get(name.toUtf8().constData()), value.toUtf8().constData())) {
             m_filter.set(name.toUtf8().constData(), value.toUtf8().constData());
-            emit changed();
+            emit changed(name);
         }
     } else {
         // Only set an animation keyframe if it does not already exist with the same value.
@@ -120,7 +124,7 @@ void QmlFilter::set(QString name, QString value, int position)
         if (!animation.is_valid() || !animation.is_key(position)
                 || value != m_filter.anim_get(name.toUtf8().constData(), position, duration())) {
             m_filter.anim_set(name.toUtf8().constData(), value.toUtf8().constData(), position, duration());
-            emit changed();
+            emit changed(name);
         }
     }
 }
@@ -132,7 +136,7 @@ void QmlFilter::set(QString name, double value, int position)
         if (!m_filter.get(name.toUtf8().constData())
             || m_filter.get_double(name.toUtf8().constData()) != value) {
             m_filter.set(name.toUtf8().constData(), value);
-            emit changed();
+            emit changed(name);
             if (name == "in") {
                 emit inChanged();
                 emit durationChanged();
@@ -147,7 +151,7 @@ void QmlFilter::set(QString name, double value, int position)
         if (!animation.is_valid() || !animation.is_key(position)
                 || value != m_filter.anim_get_double(name.toUtf8().constData(), position, duration())) {
             m_filter.anim_set(name.toUtf8().constData(), value, position, duration());
-            emit changed();
+            emit changed(name);
         }
     }
 }
@@ -159,7 +163,7 @@ void QmlFilter::set(QString name, int value, int position)
         if (!m_filter.get(name.toUtf8().constData())
             || m_filter.get_int(name.toUtf8().constData()) != value) {
             m_filter.set(name.toUtf8().constData(), value);
-            emit changed();
+            emit changed(name);
             if (name == "in") {
                 emit inChanged();
                 emit durationChanged();
@@ -174,7 +178,7 @@ void QmlFilter::set(QString name, int value, int position)
         if (!animation.is_valid() || !animation.is_key(position)
                 || value != m_filter.anim_get_int(name.toUtf8().constData(), position, duration())) {
             m_filter.anim_set(name.toUtf8().constData(), value, position, duration());
-            emit changed();
+            emit changed(name);
         }
     }
 }
@@ -187,7 +191,7 @@ void QmlFilter::set(QString name, double x, double y, double width, double heigh
         if (!m_filter.get(name.toUtf8().constData()) || x != rect.x || y != rect.y
             || width != rect.w || height != rect.h || opacity != rect.o) {
             m_filter.set(name.toUtf8().constData(), x, y, width, height, opacity);
-            emit changed();
+            emit changed(name);
         }
     } else {
         mlt_rect rect = m_filter.anim_get_rect(name.toUtf8().constData(), position, duration());
@@ -201,7 +205,7 @@ void QmlFilter::set(QString name, double x, double y, double width, double heigh
             rect.h = height;
             rect.o = opacity;
             m_filter.anim_set(name.toUtf8().constData(), rect, position, duration());
-            emit changed();
+            emit changed(name);
         }
     }
 }
@@ -401,9 +405,36 @@ int QmlFilter::duration()
     return out() - in() + 1;
 }
 
-void QmlFilter::resetAnimation(QString name)
+Mlt::Animation QmlFilter::getAnimation(const QString& name)
+{
+    if (m_filter.is_valid()) {
+        const char* propertyName = name.toUtf8().constData();
+        if (!m_filter.get_animation(propertyName)) {
+            // Cause a string property to be interpreted as animated value.
+            m_filter.anim_get_double(propertyName, 0, duration());
+        }
+        return m_filter.get_animation(propertyName);
+    }
+    return Mlt::Animation();
+}
+
+int QmlFilter::keyframeCount(const QString& name)
+{
+    return getAnimation(name).key_count();
+}
+
+void QmlFilter::resetAnimation(const QString& name)
 {
     m_filter.set(name.toUtf8().constData(), NULL, 0);
+}
+
+void QmlFilter::clearSimpleAnimation(const QString& name)
+{
+    // Reset the animation if there are no keyframes yet.
+    if (animateIn() <= 0 && animateOut() <= 0 && keyframeCount(name) <= 0)
+        resetAnimation(name);
+    setAnimateIn(0);
+    setAnimateOut(0);
 }
 
 void QmlFilter::preset(const QString &name)
