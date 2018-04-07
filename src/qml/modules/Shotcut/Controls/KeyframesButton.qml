@@ -19,8 +19,12 @@ import QtQuick 2.2
 import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
 import Shotcut.Controls 1.0 as Shotcut
+import QtQuick.Dialogs 1.2
 
 CheckBox {
+    id: checkbox
+    signal toggled()
+
     style: CheckBoxStyle {
         background: Rectangle {
             implicitWidth: 20
@@ -40,4 +44,28 @@ CheckBox {
         }
     }
     Shotcut.ToolTip { text: qsTr('Use Keyframes for this parameter') }
+
+    onClicked: {
+        if (!checked) {
+           checked = true
+           confirmDialog.visible = true
+       } else {
+           toggled()
+       }
+    }
+
+    MessageDialog {
+        id: confirmDialog
+        visible: false
+        modality: Qt.WindowModal
+        icon: StandardIcon.Question
+        title: qsTr("Confirm Removing Keyframes")
+        text: qsTr('This will remove all keyframes for this parameter.') + "<p>" + qsTr('Do you still want to do this?')
+        standardButtons: StandardButton.Yes | StandardButton.No
+        onYes: {
+            checkbox.checked = false
+            checkbox.toggled()
+        }
+        onNo: checkbox.checked = true
+    }
 }

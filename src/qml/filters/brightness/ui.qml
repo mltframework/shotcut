@@ -132,7 +132,7 @@ Item {
         KeyframesButton {
             id: brightnessKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('level') > 0
-            onClicked: {
+            onToggled: {
                 var value = brightnessSlider.value / 100.0
                 if (checked) {
                     blockUpdate = true
