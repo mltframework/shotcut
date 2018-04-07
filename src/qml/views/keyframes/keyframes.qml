@@ -457,6 +457,19 @@ Rectangle {
         }
     }
 
+    Connections {
+        target: filter
+        onChanged: {
+            var parameterIndex = parameters.parameterIndex(name)
+            if (parameterIndex > -1) {
+                currentTrack = parameterIndex
+                var keyframeIndex = parameters.keyframeIndex(parameterIndex, producer.position + producer.in)
+                if (keyframeIndex > -1)
+                    selection = [keyframeIndex]
+            }
+        }
+    }
+
     // This provides continuous scrolling at the left/right edges.
     Timer {
         id: scrollTimer

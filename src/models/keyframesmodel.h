@@ -61,7 +61,8 @@ public:
     Q_INVOKABLE bool remove(int parameterIndex, int keyframeIndex);
     int previousKeyframePosition(int parameterIndex, int currentPosition);
     int nextKeyframePosition(int parameterIndex, int currentPosition);
-    int keyframeIndex(int parameterIndex, int currentPosition);
+    Q_INVOKABLE int keyframeIndex(int parameterIndex, int currentPosition);
+    Q_INVOKABLE int parameterIndex(const QString& propertyName) const;
 
 signals:
     void loaded();

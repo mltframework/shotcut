@@ -218,6 +218,11 @@ KeyframesModel::keyframeIndex(int parameterIndex, int currentPosition)
     return result;
 }
 
+int KeyframesModel::parameterIndex(const QString& propertyName) const
+{
+    return m_propertyNames.indexOf(propertyName);
+}
+
 void KeyframesModel::reload()
 {
     beginResetModel();
