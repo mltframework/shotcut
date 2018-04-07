@@ -46,9 +46,8 @@ Rectangle {
         anchors.fill: parent
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         onClicked: {
-            if (mouse.button === Qt.LeftButton)
-                parent.clicked(keyframeRoot)
-            else
+            parent.clicked(keyframeRoot)
+            if (mouse.button === Qt.RightButton)
                 menu.popup()
         }
     }
