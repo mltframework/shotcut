@@ -2582,6 +2582,7 @@ void MainWindow::setInToCurrent(bool ripple)
         m_timelineDock->trimClipAtPlayhead(TimelineDock::TrimInPoint, ripple);
     } else if (MLT.isSeekable() && MLT.isClip()) {
         m_player->setIn(m_player->position());
+        emit m_player->inChanged(m_player->position());
     }
 }
 
@@ -2591,6 +2592,7 @@ void MainWindow::setOutToCurrent(bool ripple)
         m_timelineDock->trimClipAtPlayhead(TimelineDock::TrimOutPoint, ripple);
     } else if (MLT.isSeekable() && MLT.isClip()) {
         m_player->setOut(m_player->position());
+        emit m_player->outChanged(m_player->position());
     }
 }
 
