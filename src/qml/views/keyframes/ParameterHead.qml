@@ -120,6 +120,7 @@ Rectangle {
                 implicitHeight: 20
                 iconName: 'edit-delete'
                 iconSource: 'qrc:///icons/oxygen/32x32/actions/edit-delete.png'
+                opacity: enabled? 1.0 : 0.5
                 onClicked: {
                     parameters.remove(root.currentTrack, root.selection[0])
                     root.selection = []

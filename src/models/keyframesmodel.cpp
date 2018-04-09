@@ -68,8 +68,20 @@ QVariant KeyframesModel::data(const QModelIndex& index, int role) const
                 if (position >= 0) {
                     switch (role) {
                     case Qt::DisplayRole:
-                    case NameRole:
-                        return m_filter->timeFromFrames(position);
+                    case NameRole: {
+                        QString type = tr("Discrete");
+                        switch (const_cast<Mlt::Animation&>(animation).key_get_type(index.row())) {
+                        case mlt_keyframe_linear:
+                            type = tr("Linear");
+                            break;
+                        case mlt_keyframe_smooth:
+                            type = tr("Smooth");
+                            break;
+                        default:
+                            break;
+                        }
+                        return QString("%1 - %2").arg(m_filter->timeFromFrames(position)).arg(type);
+                    }
                     case FrameNumberRole:
                         return position;
                     case KeyframeTypeRole:
@@ -234,7 +246,7 @@ bool KeyframesModel::setInterpolation(int parameterIndex, int position, Interpol
             if (!animation.key_set_type(i, mlt_keyframe_type(type))) {
 //                LOG_DEBUG() << "keyframe index" << i << "keyframe type" << type;
                 QModelIndex modelIndex = index(i, 0, index(parameterIndex));
-                emit dataChanged(modelIndex, modelIndex, QVector<int>() << KeyframeTypeRole);
+                emit dataChanged(modelIndex, modelIndex, QVector<int>() << KeyframeTypeRole << NameRole);
                 error = false;
             }
         }

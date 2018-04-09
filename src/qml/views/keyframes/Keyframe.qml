@@ -37,7 +37,7 @@ Rectangle {
     height: 8
     width: height
     color: isSelected? 'red' : activePalette.buttonText
-    border.color: isSelected? 'red' : activePalette.button
+    border.color: activePalette.button
     border.width: 1
     radius: (interpolation === KeyframesModel.SmoothInterpolation)? height/2 : 0 // circle for smooth
     rotation: (interpolation === KeyframesModel.LinearInterpolation)? 45 : 0    // diamond for linear
