@@ -129,7 +129,7 @@ void QmlFilter::set(QString name, QString value, int position)
     }
 }
 
-void QmlFilter::set(QString name, double value, int position)
+void QmlFilter::set(QString name, double value, int position, mlt_keyframe_type keyframeType)
 {
     if (!m_filter.is_valid()) return;
     if (position < 0) {
@@ -150,13 +150,14 @@ void QmlFilter::set(QString name, double value, int position)
         Mlt::Animation animation(m_filter.get_animation(name.toUtf8().constData()));
         if (!animation.is_valid() || !animation.is_key(position)
                 || value != m_filter.anim_get_double(name.toUtf8().constData(), position, duration())) {
-            m_filter.anim_set(name.toUtf8().constData(), value, position, duration());
+            mlt_keyframe_type type = getKeyframeType(animation, position, keyframeType);
+            m_filter.anim_set(name.toUtf8().constData(), value, position, duration(), type);
             emit changed(name);
         }
     }
 }
 
-void QmlFilter::set(QString name, int value, int position)
+void QmlFilter::set(QString name, int value, int position, mlt_keyframe_type keyframeType)
 {
     if (!m_filter.is_valid()) return;
     if (position < 0) {
@@ -177,13 +178,15 @@ void QmlFilter::set(QString name, int value, int position)
         Mlt::Animation animation(m_filter.get_animation(name.toUtf8().constData()));
         if (!animation.is_valid() || !animation.is_key(position)
                 || value != m_filter.anim_get_int(name.toUtf8().constData(), position, duration())) {
-            m_filter.anim_set(name.toUtf8().constData(), value, position, duration());
+            mlt_keyframe_type type = getKeyframeType(animation, position, keyframeType);
+            m_filter.anim_set(name.toUtf8().constData(), value, position, duration(), type);
             emit changed(name);
         }
     }
 }
 
-void QmlFilter::set(QString name, double x, double y, double width, double height, double opacity, int position)
+void QmlFilter::set(QString name, double x, double y, double width, double height, double opacity,
+                    int position, mlt_keyframe_type keyframeType)
 {
     if (!m_filter.is_valid()) return;
     if (position < 0) {
@@ -204,7 +207,8 @@ void QmlFilter::set(QString name, double x, double y, double width, double heigh
             rect.w = width;
             rect.h = height;
             rect.o = opacity;
-            m_filter.anim_set(name.toUtf8().constData(), rect, position, duration());
+            mlt_keyframe_type type = getKeyframeType(animation, position, keyframeType);
+            m_filter.anim_set(name.toUtf8().constData(), rect, position, duration(), type);
             emit changed(name);
         }
     }
@@ -451,6 +455,32 @@ void QmlFilter::preset(const QString &name)
 QString QmlFilter::objectNameOrService()
 {
     return m_metadata->objectName().isEmpty()? m_metadata->mlt_service() : m_metadata->objectName();
+}
+
+int QmlFilter::keyframeIndex(Mlt::Animation& animation, int position)
+{
+    int result = -1;
+    if (animation.is_valid()) {
+        for (int i = 0; i < animation.key_count() && result == -1; i++) {
+            int frame = animation.key_get_frame(i);
+            if (frame == position)
+                result = i;
+            else if (frame > position)
+                break;
+        }
+    }
+    return result;
+}
+
+mlt_keyframe_type QmlFilter::getKeyframeType(Mlt::Animation& animation, int position, mlt_keyframe_type defaultType)
+{
+    mlt_keyframe_type result = defaultType;
+    if (animation.is_valid() && animation.is_key(position)) {
+        mlt_keyframe_type existingType = animation.key_get_type(keyframeIndex(animation, position));
+        if (existingType >= 0)
+            result = existingType;
+    }
+    return result;
 }
 
 AnalyzeDelegate::AnalyzeDelegate(Mlt::Filter& filter)

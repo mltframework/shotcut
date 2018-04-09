@@ -55,6 +55,32 @@ Rectangle {
 
     Menu {
         id: menu
+        Menu {
+            id: keyframeTypeSubmenu
+            title: qsTr('Keyframe Type')
+            ExclusiveGroup { id: keyframeTypeGroup }
+            MenuItem {
+                text: qsTr('Discrete')
+                checkable: true
+                checked: interpolation === KeyframesModel.DiscreteInterpolation
+                exclusiveGroup: keyframeTypeGroup
+                onTriggered: parameters.setInterpolation(parameterIndex, position, KeyframesModel.DiscreteInterpolation)
+            }
+            MenuItem {
+                text: qsTr('Linear')
+                checkable: true
+                checked: interpolation === KeyframesModel.LinearInterpolation
+                exclusiveGroup: keyframeTypeGroup
+                onTriggered: parameters.setInterpolation(parameterIndex, position, KeyframesModel.LinearInterpolation)
+            }
+            MenuItem {
+                text: qsTr('Smooth')
+                checkable: true
+                checked: interpolation === KeyframesModel.SmoothInterpolation
+                exclusiveGroup: keyframeTypeGroup
+                onTriggered: parameters.setInterpolation(parameterIndex, position, KeyframesModel.SmoothInterpolation)
+            }
+        }
         MenuItem {
             text: qsTr('Remove')
             onTriggered: {
