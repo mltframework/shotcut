@@ -49,9 +49,11 @@ CheckBox {
         if (!checked) {
            checked = true
            confirmDialog.visible = true
-       } else {
-           toggled()
-       }
+        } else {
+            keyframes.show()
+            keyframes.raise()
+            toggled()
+        }
     }
 
     MessageDialog {
