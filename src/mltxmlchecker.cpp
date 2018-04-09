@@ -52,13 +52,7 @@ MltXmlChecker::MltXmlChecker()
     : m_needsGPU(false)
     , m_hasEffects(false)
     , m_isCorrected(false)
-#ifdef Q_OS_MAC
-    // For some reason, on macOS, Shotcut does not honor the locale-defined
-    // decimal point, and MLT writes XML with LC_NUMERIC=C.
-    , m_decimalPoint(QLocale(QLocale::C).decimalPoint())
-#else
     , m_decimalPoint(QLocale::system().decimalPoint())
-#endif
     , m_tempFile(QDir::tempPath().append("/shotcut-XXXXXX.mlt"))
     , m_numericValueChanged(false)
 {

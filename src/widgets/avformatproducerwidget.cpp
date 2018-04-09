@@ -85,12 +85,7 @@ Mlt::Producer* AvformatProducerWidget::newProducer(Mlt::Profile& profile)
     {
         double warpspeed = ui->speedSpinBox->value();
         char* filename = GetFilenameFromProducer(producer());
-#ifdef Q_OS_MAC
-        // On macOS MLT reads current locale as "C" regardless of what is in System Preferences.
-        QString s = QString("%1:%2:%3").arg("timewarp").arg(warpspeed).arg(filename);
-#else
         QString s = QString("%1:%L2:%3").arg("timewarp").arg(warpspeed).arg(filename);
-#endif
         p = new Mlt::Producer(profile, s.toUtf8().constData());
         p->set(kShotcutProducerProperty, "avformat");
     }

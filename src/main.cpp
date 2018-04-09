@@ -254,6 +254,13 @@ int main(int argc, char **argv)
 #if QT_VERSION >= 0x050600
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
+#ifdef Q_OS_MAC
+    // Launcher and Spotlight on macOS are not setting this environment
+    // variable needed by setlocale() as used by MLT.
+    if (QProcessEnvironment::systemEnvironment().value("LC_NUMERIC").isEmpty())
+        qputenv("LC_NUMERIC", QLocale().name().toUtf8());
+#endif
+
     Application a(argc, argv);
     QSplashScreen splash(QPixmap(":/icons/shotcut-logo-640.png"));
     splash.showMessage(QCoreApplication::translate("main", "Loading plugins..."), Qt::AlignHCenter | Qt::AlignBottom);
