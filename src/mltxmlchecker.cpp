@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2017 Meltytech, LLC
+ * Copyright (c) 2014-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,6 +27,8 @@
 #include <QRegExp>
 #include <Logger.h>
 
+static QString getPrefix(const QString& name, const QString& value);
+
 static bool isMltClass(const QStringRef& name)
 {
     return name == "profile" || name == "producer" ||
@@ -45,7 +47,8 @@ static bool isNetworkResource(const QString& string)
 
 static bool isNumericProperty(const QString& name)
 {
-    return name == "length" || name == "geometry" || name == "rect";
+    return  name == "length" || name == "geometry" ||
+            name == "rect" || name == "warp_speed";
 }
 
 MltXmlChecker::MltXmlChecker()
@@ -196,6 +199,12 @@ void MltXmlChecker::processProperties()
 #ifdef Q_OS_WIN
             fixVersion1701WindowsPathBug(p.second);
 #endif
+            // Check timewarp producer's resource property prefix.
+            QString prefix = getPrefix(p.first, p.second);
+            if (!prefix.isEmpty() && prefix != "plain:") {
+                if (checkNumericString(prefix))
+                    p.second = prefix + p.second.mid(p.second.indexOf(':') + 1);
+            }
             fixUnlinkedFile(p.second);
         }
         newProperties << MltProperty(p.first, p.second);
