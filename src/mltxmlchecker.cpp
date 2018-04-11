@@ -52,7 +52,7 @@ MltXmlChecker::MltXmlChecker()
     : m_needsGPU(false)
     , m_hasEffects(false)
     , m_isCorrected(false)
-    , m_decimalPoint(QLocale::system().decimalPoint())
+    , m_decimalPoint(QLocale().decimalPoint())
     , m_tempFile(QDir::tempPath().append("/shotcut-XXXXXX.mlt"))
     , m_numericValueChanged(false)
 {
@@ -90,7 +90,7 @@ bool MltXmlChecker::check(const QString& fileName)
                     } else {
                         // Upon correcting the document to conform to current system,
                         // update the declared LC_NUMERIC.
-                        m_newXml.writeAttribute("LC_NUMERIC", QLocale::system().name());
+                        m_newXml.writeAttribute("LC_NUMERIC", QLocale().name());
                     }
                 }
                 readMlt();

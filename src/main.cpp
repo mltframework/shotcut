@@ -257,8 +257,19 @@ int main(int argc, char **argv)
 #ifdef Q_OS_MAC
     // Launcher and Spotlight on macOS are not setting this environment
     // variable needed by setlocale() as used by MLT.
-    if (QProcessEnvironment::systemEnvironment().value("LC_NUMERIC").isEmpty())
+    if (QProcessEnvironment::systemEnvironment().value("LC_NUMERIC").isEmpty()) {
         qputenv("LC_NUMERIC", QLocale().name().toUtf8());
+
+        QLocale localeByName(QLocale(QLocale().language(), QLocale().script(), QLocale().country()));
+        if (QLocale().decimalPoint() != localeByName.decimalPoint()) {
+            // If region's numeric format does not match the language's, then we run
+            // into problems because we told MLT and libc to use a different numeric
+            // locale than actually in use by Qt because it is unable to give numeric
+            // locale as a set of ISO-639 codes.
+            QLocale::setDefault(localeByName);
+            qputenv("LANG", QLocale().name().toUtf8());
+        }
+    }
 #endif
 
     Application a(argc, argv);

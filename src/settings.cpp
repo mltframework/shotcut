@@ -53,7 +53,7 @@ ShotcutSettings::ShotcutSettings(const QString& appDataLocation)
 
 QString ShotcutSettings::language() const
 {
-    return settings.value("language", QLocale::system().name()).toString();
+    return settings.value("language", QLocale().name()).toString();
 }
 
 void ShotcutSettings::setLanguage(const QString& s)
