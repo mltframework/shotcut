@@ -522,6 +522,11 @@ void MainWindow::setupSettingsMenu()
 {
     LOG_DEBUG() << "begin";
     QActionGroup* group = new QActionGroup(this);
+    group->addAction(ui->actionChannels1);
+    group->addAction(ui->actionChannels2);
+    group->addAction(ui->actionChannels4);
+    group->addAction(ui->actionChannels6);
+    group = new QActionGroup(this);
     group->addAction(ui->actionOneField);
     group->addAction(ui->actionLinearBlend);
     group->addAction(ui->actionYadifTemporal);
@@ -1256,6 +1261,18 @@ void MainWindow::readPlayerSettings()
         ui->actionGPU->setChecked(Settings.playerGPU());
         MLT.videoWidget()->setProperty("gpu", ui->actionGPU->isChecked());
     }
+
+    int audioChannels = Settings.playerAudioChannels();
+    if (audioChannels == 1)
+        ui->actionChannels1->setChecked(true);
+    else if (audioChannels == 2)
+        ui->actionChannels2->setChecked(true);
+    else if (audioChannels == 4)
+        ui->actionChannels4->setChecked(true);
+    else if (audioChannels == 6)
+        ui->actionChannels6->setChecked(true);
+
+
     QString deinterlacer = Settings.playerDeinterlacer();
     QString interpolation = Settings.playerInterpolation();
 
@@ -1359,6 +1376,14 @@ void MainWindow::configureVideoWidget()
         MLT.videoWidget()->setProperty("progressive", MLT.profile().progressive());
         ui->actionProgressive->setEnabled(false);
     }
+    if (ui->actionChannels1->isChecked())
+        MLT.videoWidget()->setProperty("audio_channels", 1);
+    else if (ui->actionChannels2->isChecked())
+        MLT.videoWidget()->setProperty("audio_channels", 2);
+    else if (ui->actionChannels4->isChecked())
+        MLT.videoWidget()->setProperty("audio_channels", 4);
+    else
+        MLT.videoWidget()->setProperty("audio_channels", 6);
     if (ui->actionOneField->isChecked())
         MLT.videoWidget()->setProperty("deinterlace_method", "onefield");
     else if (ui->actionLinearBlend->isChecked())
@@ -2579,6 +2604,36 @@ void MainWindow::on_actionProgressive_triggered(bool checked)
         MLT.restart();
     }
     Settings.setPlayerProgressive(checked);
+}
+
+void MainWindow::changeAudioChannels(bool checked, int channels)
+{
+    if( checked ) {
+        MLT.videoWidget()->setProperty("audio_channels", channels);
+        if (MLT.consumer())
+            MLT.restart();
+        Settings.setPlayerAudioChannels(channels);
+    }
+}
+
+void MainWindow::on_actionChannels1_triggered(bool checked)
+{
+    changeAudioChannels(checked, 1);
+}
+
+void MainWindow::on_actionChannels2_triggered(bool checked)
+{
+    changeAudioChannels(checked, 2);
+}
+
+void MainWindow::on_actionChannels4_triggered(bool checked)
+{
+    changeAudioChannels(checked, 4);
+}
+
+void MainWindow::on_actionChannels6_triggered(bool checked)
+{
+    changeAudioChannels(checked, 6);
 }
 
 void MainWindow::changeDeinterlacer(bool checked, const char* method)

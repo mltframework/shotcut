@@ -95,6 +95,15 @@
     <property name="title">
      <string>Settings</string>
     </property>
+    <widget class="QMenu" name="menuAudioChannels">
+     <property name="title">
+      <string>Audio Channels</string>
+     </property>
+     <addaction name="actionChannels1"/>
+     <addaction name="actionChannels2"/>
+     <addaction name="actionChannels4"/>
+     <addaction name="actionChannels6"/>
+    </widget>
     <widget class="QMenu" name="menuDeinterlacer">
      <property name="title">
       <string>Deinterlacer</string>
@@ -170,6 +179,7 @@
     <addaction name="actionJack"/>
     <addaction name="actionRealtime"/>
     <addaction name="actionProgressive"/>
+    <addaction name="menuAudioChannels"/>
     <addaction name="menuDeinterlacer"/>
     <addaction name="menuInterpolation"/>
     <addaction name="menuExternal"/>
@@ -457,6 +467,38 @@
    </property>
    <property name="text">
     <string>GPU Processing (experimental)</string>
+   </property>
+  </action>
+  <action name="actionChannels1">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>1</string>
+   </property>
+  </action>
+  <action name="actionChannels2">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>2</string>
+   </property>
+  </action>
+  <action name="actionChannels4">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>4</string>
+   </property>
+  </action>
+  <action name="actionChannels6">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>6</string>
    </property>
   </action>
   <action name="actionOneField">
