@@ -240,8 +240,8 @@ void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
             key = QString("meta.media.%1.codec.name").arg(i);
             QString codec(m_producer->get(key.toLatin1().constData()));
             key = QString("meta.media.%1.codec.channels").arg(i);
-            QString channels(m_producer->get(key.toLatin1().constData()));
-            totalAudioChannels += channels.toInt();
+            int channels(m_producer->get_int(key.toLatin1().constData()));
+            totalAudioChannels += channels;
             key = QString("meta.media.%1.codec.sample_rate").arg(i);
             QString sampleRate(m_producer->get(key.toLatin1().constData()));
             QString name = QString("%1: %2 ch %3 KHz %4")
@@ -258,7 +258,9 @@ void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
                 key = QString("meta.media.%1.codec.long_name").arg(i);
                 QString codec(m_producer->get(key.toLatin1().constData()));
                 ui->audioTableWidget->setItem(0, 1, new QTableWidgetItem(codec));
-                ui->audioTableWidget->setItem(1, 1, new QTableWidgetItem(channels));
+                const char* layout = mlt_channel_layout_name(mlt_channel_layout_default(channels));
+                QString channelsStr = QString("%1 (%2)").arg(channels).arg(layout);
+                ui->audioTableWidget->setItem(1, 1, new QTableWidgetItem(channelsStr));
                 ui->audioTableWidget->setItem(2, 1, new QTableWidgetItem(sampleRate));
                 key = QString("meta.media.%1.codec.sample_fmt").arg(i);
                 ui->audioTableWidget->setItem(3, 1, new QTableWidgetItem(
