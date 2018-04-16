@@ -62,7 +62,7 @@ CheckBox {
         modality: Qt.WindowModal
         icon: StandardIcon.Question
         title: qsTr("Confirm Removing Keyframes")
-        text: qsTr('This will remove all keyframes for this parameter.') + "<p>" + qsTr('Do you still want to do this?')
+        text: qsTr('This will remove all keyframes for this parameter.<p>Do you still want to do this?')
         standardButtons: StandardButton.Yes | StandardButton.No
         onYes: {
             checkbox.checked = false
