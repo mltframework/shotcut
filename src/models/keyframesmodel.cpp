@@ -148,9 +148,10 @@ void KeyframesModel::load(QmlFilter* filter, QmlMetadata* meta)
 {
     beginResetModel();
     m_propertyNames.clear();
+    m_keyframeCounts.clear();
     m_filter = filter;
     m_metadata = meta;
-    if (m_filter)
+    if (m_filter && m_metadata)
     for (int i = 0; i < m_metadata->keyframes()->parameterCount(); i++) {
         if (!m_metadata->keyframes()->parameter(i)->isSimple() || (m_filter->animateIn() <= 0 && m_filter->animateOut() <= 0)) {
             if (m_filter->keyframeCount(m_metadata->keyframes()->parameter(i)->property()) > 0) {
@@ -174,6 +175,7 @@ bool KeyframesModel::remove(int parameterIndex, int keyframeIndex)
             error = animation.remove(animation.key_get_frame(keyframeIndex));
             if (!error) {
                 beginRemoveRows(index(parameterIndex), keyframeIndex, keyframeIndex);
+                m_keyframeCounts[parameterIndex] -= 1;
                 endRemoveRows();
             }
         }
