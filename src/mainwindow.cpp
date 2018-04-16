@@ -76,6 +76,7 @@
 #include "dialogs/unlinkedfilesdialog.h"
 #include "docks/keyframesdock.h"
 #include "util.h"
+#include "models/keyframesmodel.h"
 
 #include <QtWidgets>
 #include <Logger.h>
@@ -1793,6 +1794,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         break;
     case Qt::Key_F5:
         m_timelineDock->model()->reload();
+        m_keyframesDock->model().reload();
         break;
     case Qt::Key_F1:
         LOG_DEBUG() << "Current focusWidget:" << QApplication::focusWidget();

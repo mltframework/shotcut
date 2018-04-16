@@ -413,10 +413,7 @@ Rectangle {
         }
         MenuItem {
             text: qsTr('Reload')
-            onTriggered: {
-                var force = true
-                parameters.reload()
-            }
+            onTriggered: parameters.reload()
         }
         onPopupVisibleChanged: {
             if (visible && application.OS === 'Windows' && __popupGeometry.height > 0) {

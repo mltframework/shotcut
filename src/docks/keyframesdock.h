@@ -41,6 +41,7 @@ class KeyframesDock : public QDockWidget
 public:
     explicit KeyframesDock(MetadataModel* metadataModel, AttachedFiltersModel* attachedModel, QmlProducer* qmlProducer, QWidget *parent = 0);
 
+    KeyframesModel& model() { return m_model; }
     Q_INVOKABLE int seekPrevious();
     Q_INVOKABLE int seekNext();
 
