@@ -103,7 +103,7 @@ Item {
         } else if (!brightnessKeyframesButton.checked) {
             filter.resetAnimation('level')
             filter.set('level', middleValue)
-        } else /* (brightnessKeyframesButton.checked) */ {
+        } else if (position !== null) {
             filter.set('level', value, getPosition())
         }
 //        console.log('level: ' + filter.get('level'))
