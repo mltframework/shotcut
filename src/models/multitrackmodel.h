@@ -120,8 +120,8 @@ signals:
     void showStatusMessage(QString);
     void durationChanged();
     void filteredChanged();
-    void filterInChanged(Mlt::Filter*);
-    void filterOutChanged(Mlt::Filter*);
+    void filterInChanged(int delta, Mlt::Filter*);
+    void filterOutChanged(int delta, Mlt::Filter*);
 
 public slots:
     void refreshTrackList();

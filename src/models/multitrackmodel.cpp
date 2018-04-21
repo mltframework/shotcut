@@ -450,12 +450,11 @@ int MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta, bool r
                     // Convert legacy fadeIn filters.
                     filter->set(kShotcutAnimInProperty, filter->get_length());
                     filter->set_in_and_out(info->frame_in, info->frame_out);
-                    emit filterInChanged(filter);
-                    emit filterOutChanged(filter);
+                    emit filterInChanged(delta, filter);
                 } else if (filter->get_in() <= info->frame_in
                            || (meta && meta->keyframes()->allowAnimateIn() && !meta->keyframes()->allowTrim())) {
                     filter->set_in_and_out(in, filter->get_out());
-                    emit filterInChanged(filter);
+                    emit filterInChanged(delta, filter);
                 }
             }
             delete filter;
@@ -641,12 +640,11 @@ int MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta, bool 
                     // Convert legacy fadeOut filters.
                     filter->set(kShotcutAnimOutProperty, filter->get_length());
                     filter->set_in_and_out(info->frame_in, info->frame_out);
-                    emit filterInChanged(filter);
-                    emit filterOutChanged(filter);
+                    emit filterOutChanged(delta, filter);
                 } else if (filter->get_out() >= info->frame_out
                            || (meta && meta->keyframes()->allowAnimateOut() && !meta->keyframes()->allowTrim())) {
                     filter->set_in_and_out(filter->get_in(), out);
-                    emit filterOutChanged(filter);
+                    emit filterOutChanged(delta, filter);
                 }
             }
             delete filter;
@@ -1461,7 +1459,7 @@ void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
                         filter.reset(new Mlt::Filter(f));
                     }
                     filter->set_in_and_out(info->frame_in, info->frame_out);
-                    emit filterOutChanged(filter.data());
+                    emit filterOutChanged(info->frame_out, filter.data());
                 } else if (Settings.playerGPU()) {
                     // Special handling for animation keyframes on movit.opacity.
                     QString opacity = QString("0~=0; %1=1").arg(duration - 1);
@@ -1489,7 +1487,7 @@ void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
                     info->producer->attach(f);
                     filter.reset(new Mlt::Filter(f));
                     filter->set_in_and_out(info->frame_in, info->frame_out);
-                    emit filterOutChanged(filter.data());
+                    emit filterOutChanged(info->frame_out, filter.data());
                 }
 
                 // Adjust audio filter.
@@ -1552,7 +1550,7 @@ void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
                         filter.reset(new Mlt::Filter(f));
                     }
                     filter->set_in_and_out(info->frame_in, info->frame_out);
-                    emit filterOutChanged(filter.data());
+                    emit filterOutChanged(info->frame_out, filter.data());
                 } else if (Settings.playerGPU()) {
                     // Special handling for animation keyframes on movit.opacity.
                     QString opacity = QString("%1~=1; %2=1").arg(info->frame_count - duration).arg(duration - 1);
@@ -1580,7 +1578,7 @@ void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
                     info->producer->attach(f);
                     filter.reset(new Mlt::Filter(f));
                     filter->set_in_and_out(info->frame_in, info->frame_out);
-                    emit filterOutChanged(filter.data());
+                    emit filterOutChanged(info->frame_out, filter.data());
                 }
 
                 // Adjust audio filter.

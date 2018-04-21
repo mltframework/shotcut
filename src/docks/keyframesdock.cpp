@@ -55,9 +55,6 @@ KeyframesDock::KeyframesDock(MetadataModel* metadataModel, AttachedFiltersModel*
     QmlUtilities::setCommonProperties(m_qview.rootContext());
     m_qview.rootContext()->setContextProperty("keyframes", this);
     m_qview.rootContext()->setContextProperty("view", new QmlView(&m_qview));
-    m_qview.rootContext()->setContextProperty("metadatamodel", metadataModel);
-    m_qview.rootContext()->setContextProperty("attachedfiltersmodel", attachedModel);
-    m_qview.rootContext()->setContextProperty("producer", qmlProducer);
     m_qview.rootContext()->setContextProperty("parameters", &m_model);
     setCurrentFilter(0, 0);
     connect(m_qview.quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(load()));
@@ -89,8 +86,6 @@ int KeyframesDock::seekNext()
 void KeyframesDock::clearCurrentFilter()
 {
     m_model.load(0, 0);
-    m_qview.rootContext()->setContextProperty("filter", &m_emptyQmlFilter);
-    m_qview.rootContext()->setContextProperty("metadata", &m_emptyQmlMetadata);
     disconnect(this, SIGNAL(changed()));
 }
 
@@ -100,29 +95,13 @@ void KeyframesDock::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta)
         filter = &m_emptyQmlFilter;
         meta = &m_emptyQmlMetadata;
     }
-    m_qview.rootContext()->setContextProperty("filter", filter);
-    m_qview.rootContext()->setContextProperty("metadata", meta);
     m_model.load(filter, meta);
     connect(filter, SIGNAL(changed()), SIGNAL(changed()));
     connect(filter, SIGNAL(changed(QString)), &m_model, SLOT(onFilterChanged(QString)));
     connect(filter, SIGNAL(animateInChanged()), &m_model, SLOT(reload()));
     connect(filter, SIGNAL(animateOutChanged()), &m_model, SLOT(reload()));
-}
-
-void KeyframesDock::onFilterInChanged(Mlt::Filter* filter)
-{
-    QmlFilter* qmlFilter = MAIN.filterController()->currentFilter();
-    // The Source player passes a null filter pointer when trimming.
-    if (qmlFilter && (!filter || qmlFilter->filter().get_filter() == filter->get_filter()))
-        emit qmlFilter->inChanged();
-}
-
-void KeyframesDock::onFilterOutChanged(Mlt::Filter* filter)
-{
-    QmlFilter* qmlFilter = MAIN.filterController()->currentFilter();
-    // The Source player passes a null filter pointer when trimming.
-    if (qmlFilter && (!filter || qmlFilter->filter().get_filter() == filter->get_filter()))
-        emit qmlFilter->outChanged();
+    connect(filter, SIGNAL(inChanged(int)), &m_model, SLOT(onFilterInChanged(int)));
+    connect(filter, SIGNAL(outChanged(int)), &m_model, SLOT(onFilterOutChanged(int)));
 }
 
 bool KeyframesDock::event(QEvent *event)

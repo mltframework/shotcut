@@ -335,8 +335,12 @@ MainWindow::MainWindow()
     connect(m_player, SIGNAL(seeked(int)), m_filtersDock, SLOT(onSeeked(int)));
     connect(m_filtersDock, SIGNAL(seeked(int)), SLOT(seekKeyframes(int)));
     connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), m_filtersDock, SLOT(onShowFrame(const SharedFrame&)));
-    connect(m_player, SIGNAL(inChanged(int)), m_filtersDock, SIGNAL(producerInChanged()));
-    connect(m_player, SIGNAL(outChanged(int)), m_filtersDock, SIGNAL(producerOutChanged()));
+    connect(m_player, SIGNAL(inChanged(int)), m_filtersDock, SIGNAL(producerInChanged(int)));
+    connect(m_player, SIGNAL(outChanged(int)), m_filtersDock, SIGNAL(producerOutChanged(int)));
+    connect(m_player, SIGNAL(inChanged(int)), m_filterController, SLOT(onFilterInChanged(int)));
+    connect(m_player, SIGNAL(outChanged(int)), m_filterController, SLOT(onFilterOutChanged(int)));
+    connect(m_timelineDock->model(), SIGNAL(filterInChanged(int, Mlt::Filter*)), m_filterController, SLOT(onFilterInChanged(int, Mlt::Filter*)));
+    connect(m_timelineDock->model(), SIGNAL(filterOutChanged(int, Mlt::Filter*)), m_filterController, SLOT(onFilterOutChanged(int, Mlt::Filter*)));
 
     m_keyframesDock = new KeyframesDock(m_filterController->metadataModel(), m_filterController->attachedModel(), m_filtersDock->qmlProducer(), this);
     m_keyframesDock->hide();
@@ -346,12 +350,6 @@ MainWindow::MainWindow()
     connect(ui->actionKeyframes, SIGNAL(triggered()), this, SLOT(onKeyframesDockTriggered()));
     connect(m_filterController, SIGNAL(currentFilterAboutToChange()), m_keyframesDock, SLOT(clearCurrentFilter()));
     connect(m_filterController, SIGNAL(currentFilterChanged(QmlFilter*, QmlMetadata*, int)), m_keyframesDock, SLOT(setCurrentFilter(QmlFilter*, QmlMetadata*)), Qt::QueuedConnection);
-    connect(m_timelineDock->model(), SIGNAL(filterInChanged(Mlt::Filter*)), m_keyframesDock, SLOT(onFilterInChanged(Mlt::Filter*)));
-    connect(m_timelineDock->model(), SIGNAL(filterOutChanged(Mlt::Filter*)), m_keyframesDock, SLOT(onFilterOutChanged(Mlt::Filter*)));
-    connect(m_player, SIGNAL(inChanged(int)), m_keyframesDock, SLOT(onFilterInChanged()));
-    connect(m_player, SIGNAL(inChanged(int)), m_keyframesDock, SLOT(onFilterOutChanged()));
-    connect(m_player, SIGNAL(outChanged(int)), m_keyframesDock, SLOT(onFilterInChanged()));
-    connect(m_player, SIGNAL(outChanged(int)), m_keyframesDock, SLOT(onFilterOutChanged()));
 
     m_historyDock = new QDockWidget(tr("History"), this);
     m_historyDock->hide();
@@ -2257,11 +2255,13 @@ void MainWindow::onMultitrackModified()
             info->producer->set(kPlaylistStartProperty, info->start);
             if (info->frame_in != info->producer->get_int(kFilterInProperty)) {
                 info->producer->set(kFilterInProperty, info->frame_in);
-                emit m_filtersDock->producerInChanged();
+                int delta = info->frame_in - info->producer->get_int(kFilterInProperty);
+                emit m_filtersDock->producerInChanged(delta);
             }
             if (info->frame_out != info->producer->get_int(kFilterOutProperty)) {
                 info->producer->set(kFilterOutProperty, info->frame_out);
-                emit m_filtersDock->producerOutChanged();
+                int delta = info->frame_out - info->producer->get_int(kFilterOutProperty);
+                emit m_filtersDock->producerOutChanged(delta);
             }
         }
     }
@@ -2584,7 +2584,8 @@ void MainWindow::setInToCurrent(bool ripple)
         m_timelineDock->trimClipAtPlayhead(TimelineDock::TrimInPoint, ripple);
     } else if (MLT.isSeekable() && MLT.isClip()) {
         m_player->setIn(m_player->position());
-        emit m_player->inChanged(m_player->position());
+        int delta = m_player->position() - MLT.producer()->get_in();
+        emit m_player->inChanged(delta);
     }
 }
 
@@ -2594,7 +2595,8 @@ void MainWindow::setOutToCurrent(bool ripple)
         m_timelineDock->trimClipAtPlayhead(TimelineDock::TrimOutPoint, ripple);
     } else if (MLT.isSeekable() && MLT.isClip()) {
         m_player->setOut(m_player->position());
-        emit m_player->outChanged(m_player->position());
+        int delta = m_player->position() - MLT.producer()->get_out();
+        emit m_player->outChanged(delta);
     }
 }
 

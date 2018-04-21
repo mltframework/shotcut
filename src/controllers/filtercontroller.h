@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2017 Meltytech, LLC
+ * Copyright (c) 2014-2018 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -56,6 +56,8 @@ public slots:
     void setCurrentFilter(int attachedIndex, bool isNew = false);
     void onFadeInChanged();
     void onFadeOutChanged();
+    void onFilterInChanged(int delta, Mlt::Filter* filter = 0);
+    void onFilterOutChanged(int delta, Mlt::Filter* filter = 0);
 
 private slots:
     void handleAttachedModelChange();

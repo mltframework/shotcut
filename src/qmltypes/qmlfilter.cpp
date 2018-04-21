@@ -39,7 +39,8 @@ QmlFilter::QmlFilter()
     , m_producer(mlt_producer(0))
     , m_isNew(false)
 {
-
+    connect(this, SIGNAL(inChanged(int)), this, SIGNAL(durationChanged()));
+    connect(this, SIGNAL(outChanged(int)), this, SIGNAL(durationChanged()));
 }
 
 QmlFilter::QmlFilter(Mlt::Filter& mltFilter, const QmlMetadata* metadata, QObject* parent)
@@ -135,14 +136,13 @@ void QmlFilter::set(QString name, double value, int position, mlt_keyframe_type 
     if (position < 0) {
         if (!m_filter.get(name.toUtf8().constData())
             || m_filter.get_double(name.toUtf8().constData()) != value) {
+            double delta = value - m_filter.get_double(name.toUtf8().constData());
             m_filter.set(name.toUtf8().constData(), value);
             emit changed(name);
             if (name == "in") {
-                emit inChanged();
-                emit durationChanged();
+                emit inChanged(delta);
             } else if (name == "out") {
-                emit outChanged();
-                emit durationChanged();
+                emit outChanged(delta);
             }
         }
     } else {
@@ -163,14 +163,13 @@ void QmlFilter::set(QString name, int value, int position, mlt_keyframe_type key
     if (position < 0) {
         if (!m_filter.get(name.toUtf8().constData())
             || m_filter.get_int(name.toUtf8().constData()) != value) {
+            int delta = value - m_filter.get_double(name.toUtf8().constData());
             m_filter.set(name.toUtf8().constData(), value);
             emit changed(name);
             if (name == "in") {
-                emit inChanged();
-                emit durationChanged();
+                emit inChanged(delta);
             } else if (name == "out") {
-                emit outChanged();
-                emit durationChanged();
+                emit outChanged(delta);
             }
         }
     } else {

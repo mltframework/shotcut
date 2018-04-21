@@ -54,8 +54,8 @@ FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* att
     m_qview.rootContext()->setContextProperty("attachedfiltersmodel", attachedModel);
     m_qview.rootContext()->setContextProperty("producer", &m_producer);
     connect(&m_producer, SIGNAL(seeked(int)), SIGNAL(seeked(int)));
-    connect(this, SIGNAL(producerInChanged()), &m_producer, SIGNAL(inChanged()));
-    connect(this, SIGNAL(producerOutChanged()), &m_producer, SIGNAL(outChanged()));
+    connect(this, SIGNAL(producerInChanged(int)), &m_producer, SIGNAL(inChanged(int)));
+    connect(this, SIGNAL(producerOutChanged(int)), &m_producer, SIGNAL(outChanged(int)));
     setCurrentFilter(0, 0, -1);
     connect(m_qview.quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(resetQview()));
 

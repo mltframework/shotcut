@@ -157,6 +157,20 @@ void FilterController::onFadeOutChanged()
     }
 }
 
+void FilterController::onFilterInChanged(int delta, Mlt::Filter* filter)
+{
+    if (delta && m_currentFilter && (!filter || m_currentFilter->filter().get_filter() == filter->get_filter())) {
+        emit m_currentFilter->inChanged(delta);
+    }
+}
+
+void FilterController::onFilterOutChanged(int delta, Mlt::Filter* filter)
+{
+    if (delta && m_currentFilter && (!filter || m_currentFilter->filter().get_filter() == filter->get_filter())) {
+        emit m_currentFilter->outChanged(delta);
+    }
+}
+
 void FilterController::handleAttachedModelChange()
 {
     MLT.refreshConsumer();

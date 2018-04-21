@@ -96,8 +96,8 @@ signals:
     void analyzeFinished(bool isSuccess);
     void changed(); /// Use to let UI and VUI QML signal updates to each other.
     void changed(QString name);
-    void inChanged();
-    void outChanged();
+    void inChanged(int delta);
+    void outChanged(int delta);
     void animateInChanged();
     void animateOutChanged();
     void durationChanged();

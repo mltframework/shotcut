@@ -71,6 +71,8 @@ signals:
 public slots:
     void reload();
     void onFilterChanged(const QString& property);
+    void onFilterInChanged(int delta);
+    void onFilterOutChanged(int delta);
 
 private:
     QList<QString> m_propertyNames;

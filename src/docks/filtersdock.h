@@ -46,8 +46,8 @@ signals:
     void currentFilterRequested(int attachedIndex);
     void changed(); /// Notifies when a filter parameter changes.
     void seeked(int);
-    void producerInChanged();
-    void producerOutChanged();
+    void producerInChanged(int delta);
+    void producerOutChanged(int delta);
 
 public slots:
     void clearCurrentFilter();

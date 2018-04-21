@@ -51,8 +51,6 @@ signals:
 public slots:
     void clearCurrentFilter();
     void setCurrentFilter(QmlFilter* filter, QmlMetadata* meta);
-    void onFilterInChanged(Mlt::Filter* filter = 0);
-    void onFilterOutChanged(Mlt::Filter* filter = 0);
     void load(bool force = false);
 
 protected:

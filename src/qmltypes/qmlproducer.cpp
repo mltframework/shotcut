@@ -31,7 +31,8 @@ static const char* kAspectDenProperty = "meta.media.sample_aspect_den";
 QmlProducer::QmlProducer(QObject *parent)
     : QObject(parent)
 {
-
+    connect(this, SIGNAL(inChanged(int)), this, SIGNAL(durationChanged()));
+    connect(this, SIGNAL(outChanged(int)), this, SIGNAL(durationChanged()));
 }
 
 int QmlProducer::in()
@@ -191,7 +192,7 @@ void QmlProducer::setProducer(Mlt::Producer& producer)
     if (Settings.timelineShowWaveforms())
         AudioLevelsTask::start(m_producer, this, QModelIndex());
     emit producerChanged();
-    emit inChanged();
-    emit outChanged();
+    emit inChanged(0);
+    emit outChanged(0);
 }
 
