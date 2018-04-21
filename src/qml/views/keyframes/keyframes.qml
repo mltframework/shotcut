@@ -115,6 +115,7 @@ Rectangle {
 
                     ParameterHead {
                         id: clipHead
+                        visible: metadata != null
                         trackName: metadata.name
                         width: headerWidth
                         height: Logic.trackHeight(true)
@@ -141,6 +142,7 @@ Rectangle {
                 }
                 Rectangle {
                     // thin dividing line between headers and tracks
+                    visible: metadata != null
                     color: activePalette.windowText
                     width: 1
                     x: parent.x + parent.width
@@ -209,6 +211,7 @@ Rectangle {
                         Column {
                             Rectangle {
                                 width: 1
+                                visible: metadata != null
                                 height: clipHead.height
                             }
                             // These make the striped background for the tracks.
@@ -234,7 +237,7 @@ Rectangle {
                                     id: clipRow
                                     Clip {
                                         id: beforeClip
-                                        visible: filter.out > 0 && filter.in > 0
+                                        visible: metadata != null && filter.out > 0 && filter.in > 0
                                         isBlank: true
                                         clipName: producer.name
                                         clipResource: producer.resource
@@ -249,7 +252,7 @@ Rectangle {
                                     }
                                     Clip {
                                         id: activeClip
-                                        visible: filter.out > 0
+                                        visible: metadata != null && filter.out > 0
                                         clipName: producer.name
                                         clipResource: producer.resource
                                         mltService: producer.mlt_service
@@ -290,7 +293,7 @@ Rectangle {
                                     }
                                     Clip {
                                         id: afterClip
-                                        visible: filter.out > 0
+                                        visible: metadata != null && filter.out > 0
                                         isBlank: true
                                         clipName: producer.name
                                         clipResource: producer.resource
@@ -314,7 +317,7 @@ Rectangle {
 
             Rectangle {
                 id: cursor
-                visible: producer.position > -1
+                visible: producer.position > -1 && metadata != null
                 color: activePalette.text
                 width: 1
                 height: root.height - scrollView.__horizontalScrollBar.height - keyframesToolbar.height
@@ -323,7 +326,7 @@ Rectangle {
             }
             TimelinePlayhead {
                 id: playhead
-                visible: producer.position > -1
+                visible: producer.position > -1 && metadata != null
                 x: producer.position * timeScale - scrollView.flickableItem.contentX - 5
                 y: 0
                 width: 11
