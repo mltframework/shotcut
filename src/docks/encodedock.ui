@@ -20,9 +20,6 @@
    <iconset theme="media-record" resource="../../icons/resources.qrc">
     <normaloff>:/icons/oxygen/32x32/actions/media-record.png</normaloff>:/icons/oxygen/32x32/actions/media-record.png</iconset>
   </property>
-  <property name="allowedAreas">
-   <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
-  </property>
   <property name="windowTitle">
    <string>Export</string>
   </property>
