@@ -469,6 +469,7 @@ void TimelineDock::append(int trackIndex)
         pulseLockButtonOnTrack(trackIndex);
         return;
     }
+    if (MAIN.isSourceClipMyProject()) return;
     if (MLT.isSeekableClip() || MLT.savedProducer()) {
         MAIN.undoStack()->push(
             new Timeline::AppendCommand(m_model, trackIndex,
@@ -777,6 +778,7 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml)
         pulseLockButtonOnTrack(trackIndex);
         return;
     }
+    if (MAIN.isSourceClipMyProject()) return;
     if (MLT.isSeekableClip() || MLT.savedProducer() || !xml.isEmpty()) {
         QString xmlToUse = !xml.isEmpty()? xml
             : MLT.XML(MLT.isClip()? 0 : MLT.savedProducer());
@@ -796,6 +798,7 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml)
         pulseLockButtonOnTrack(trackIndex);
         return;
     }
+    if (MAIN.isSourceClipMyProject()) return;
     if (MLT.isSeekableClip() || MLT.savedProducer() || !xml.isEmpty()) {
         QString xmlToUse = !xml.isEmpty()? xml
             : MLT.XML(MLT.isClip()? 0 : MLT.savedProducer());

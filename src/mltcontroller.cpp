@@ -536,7 +536,7 @@ QString Controller::resource() const
     QString resource;
     if (!m_producer)
         return resource;
-    resource = QString(m_producer->get("resource"));
+    resource = QString::fromUtf8(m_producer->get("resource"));
     return resource;
 }
 

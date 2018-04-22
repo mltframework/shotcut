@@ -32,6 +32,7 @@
 #include <QDebug>
 #include <QHeaderView>
 #include <QKeyEvent>
+#include <QDir>
 
 class TiledItemDelegate : public QStyledItemDelegate
 {
@@ -309,7 +310,7 @@ void PlaylistDock::on_actionInsertCut_triggered()
 
 void PlaylistDock::on_actionAppendCut_triggered()
 {
-    if (MLT.producer() && MLT.producer()->is_valid()) {
+    if (MLT.producer() && MLT.producer()->is_valid() && !MAIN.isSourceClipMyProject()) {
         if (MLT.isSeekableClip()
             || (MLT.savedProducer() && MLT.isSeekable(MLT.savedProducer()))) {
             MAIN.undoStack()->push(
@@ -356,7 +357,7 @@ void PlaylistDock::on_actionUpdate_triggered()
     QModelIndex index = m_view->currentIndex();
     if (!index.isValid() || !m_model.playlist()) return;
     Mlt::ClipInfo* info = m_model.playlist()->clip_info(index.row());
-    if (!info) return;
+    if (!info || MAIN.isSourceClipMyProject()) return;
     if (MLT.producer()->type() != playlist_type) {
         if (MLT.isSeekable()) {
             MAIN.undoStack()->push(new Playlist::UpdateCommand(m_model, MLT.XML(), index.row()));
@@ -522,6 +523,7 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
         bool first = true;
         foreach (QUrl url, data->urls()) {
             QString path = MAIN.removeFileScheme(url);
+            if (MAIN.isSourceClipMyProject(path)) continue;
             Mlt::Producer p(MLT.profile(), path.toUtf8().constData());
             if (p.is_valid()) {
                 Mlt::Producer* producer = &p;
@@ -548,6 +550,8 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
         if (MLT.producer() && MLT.producer()->is_valid()) {
             if (MLT.producer()->type() == playlist_type) {
                 emit showStatusMessage(tr("You cannot insert a playlist into a playlist!"));
+            } else if (MAIN.isSourceClipMyProject()) {
+                return;
             } else if (MLT.isSeekable()) {
                 if (row == -1) {
                     MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, data->data(Mlt::XmlMimeType)));

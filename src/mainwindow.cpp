@@ -1061,6 +1061,25 @@ void MainWindow::setProfile(const QString &profile_name)
     emit profileChanged();
 }
 
+bool MainWindow::isSourceClipMyProject(QString resource)
+{
+    if (m_player->tabIndex() == Player::ProjectTabIndex && MLT.savedProducer() && MLT.savedProducer()->is_valid())
+        resource = QString::fromUtf8(MLT.savedProducer()->get("resource"));
+    if (QDir::toNativeSeparators(resource) == QDir::toNativeSeparators(MAIN.fileName())) {
+        QMessageBox dialog(QMessageBox::Information,
+                           qApp->applicationName(),
+                           tr("You cannot add a project to itself!"),
+                           QMessageBox::Ok,
+                           this);
+        dialog.setDefaultButton(QMessageBox::Ok);
+        dialog.setEscapeButton(QMessageBox::Ok);
+        dialog.setWindowModality(QmlApplication::dialogModality());
+        dialog.exec();
+        return true;
+    }
+    return false;
+}
+
 void MainWindow::setAudioChannels(int channels)
 {
     LOG_DEBUG() << channels;
@@ -2698,6 +2717,10 @@ public:
                 if (!qstrcmp(p.get("mlt_service"), "avformat")) {
                     p.set("mlt_service", "avformat-novalidate");
                     p.set("mute_on_pause", 0);
+                }
+                if (QDir::toNativeSeparators(filename) == QDir::toNativeSeparators(MAIN.fileName())) {
+                    MAIN.showStatusMessage(QObject::tr("You cannot add a project to itself!"));
+                    continue;
                 }
                 MLT.setImageDurationFromDefault(&p);
                 MAIN.getHash(p);
