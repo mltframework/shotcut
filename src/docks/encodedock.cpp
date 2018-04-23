@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2017 Meltytech, LLC
+ * Copyright (c) 2012-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -531,7 +531,6 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
             } else if (vcodec.contains("nvenc")) {
                 switch (ui->videoRateControlCombo->currentIndex()) {
                 case RateControlAverage:
-                    p->set("cbr", 1);
                     p->set("vb", ui->videoBitrateCombo->currentText().toLatin1().constData());
                     break;
                 case RateControlConstant: {
