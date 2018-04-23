@@ -910,7 +910,7 @@ void EncodeDock::resetOptions()
     ui->gopSpinner->setValue(13);
     ui->gopSpinner->blockSignals(false);
     ui->strictGopCheckBox->setChecked(false);
-    ui->bFramesSpinner->setValue(2);
+    ui->bFramesSpinner->setValue(3);
     ui->videoCodecThreadsSpinner->setValue(0);
     ui->dualPassCheckbox->setChecked(false);
     ui->disableVideoCheckbox->setChecked(false);
@@ -1163,7 +1163,7 @@ void EncodeDock::onProfileChanged()
     ui->fpsSpinner->setValue(MLT.profile().fps());
     if (m_isDefaultSettings) {
         ui->gopSpinner->blockSignals(true);
-        ui->gopSpinner->setValue(qRound(MLT.profile().fps() / 2));
+        ui->gopSpinner->setValue(qRound(MLT.profile().fps() * 5.0));
         ui->gopSpinner->blockSignals(false);
     }
 }
