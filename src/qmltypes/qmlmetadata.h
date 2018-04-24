@@ -32,6 +32,9 @@ class QmlKeyframesParameter : public QObject
     Q_PROPERTY(QString property MEMBER m_property NOTIFY changed)
     /// If isSimple this parameter cannot use full keyframes while simple is in use.
     Q_PROPERTY(bool isSimple MEMBER m_isSimple NOTIFY changed)
+    Q_PROPERTY(bool isCurve MEMBER m_isCurve NOTIFY changed)
+    Q_PROPERTY(double minimum MEMBER m_minimum NOTIFY changed)
+    Q_PROPERTY(double maximum MEMBER m_maximum NOTIFY changed)
 
 public:
     explicit QmlKeyframesParameter(QObject* parent = 0);
@@ -39,6 +42,9 @@ public:
     QString name() const { return m_name; }
     QString property() const { return m_property; }
     bool isSimple() const { return m_isSimple; }
+    bool isCurve() const { return m_isCurve; }
+    double minimum() const { return m_minimum; }
+    double maximum() const { return m_maximum; }
 
 signals:
     void changed();
@@ -47,6 +53,9 @@ private:
     QString m_name;
     QString m_property;
     bool m_isSimple;
+    bool m_isCurve;
+    double m_minimum;
+    double m_maximum;
 };
 
 class QmlKeyframesMetadata : public QObject
@@ -55,7 +64,7 @@ class QmlKeyframesMetadata : public QObject
     Q_PROPERTY(bool allowTrim MEMBER m_allowTrim NOTIFY changed)
     Q_PROPERTY(bool allowAnimateIn MEMBER m_allowAnimateIn NOTIFY changed)
     Q_PROPERTY(bool allowAnimateOut MEMBER m_allowAnimateOut NOTIFY changed)
-    Q_PROPERTY(QQmlListProperty<QmlKeyframesParameter> parameters READ parameters)
+    Q_PROPERTY(QQmlListProperty<QmlKeyframesParameter> parameters READ parameters NOTIFY changed)
 
 public:
     explicit QmlKeyframesMetadata(QObject *parent = 0);

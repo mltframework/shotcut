@@ -42,9 +42,9 @@ public:
     enum Roles {
         NameRole = Qt::UserRole + 1, /// parameter or keyframe
         PropertyNameRole, /// parameter only
-        IsCurvesRole,     /// parameter only
         FrameNumberRole,  /// keyframe only
-        KeyframeTypeRole  /// keyframe only
+        KeyframeTypeRole, /// keyframe only
+        NumericValueRole  /// keyframe only
     };
 
     explicit KeyframesModel(QObject* parent = 0);

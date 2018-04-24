@@ -163,5 +163,8 @@ QmlKeyframesMetadata::QmlKeyframesMetadata(QObject* parent)
 QmlKeyframesParameter::QmlKeyframesParameter(QObject* parent)
     : QObject(parent)
     , m_isSimple(false)
+    , m_isCurve(false)
+    , m_minimum(0.0)
+    , m_maximum(0.0)
 {
 }

@@ -473,9 +473,16 @@ int QmlFilter::keyframeIndex(Mlt::Animation& animation, int position)
 
 mlt_keyframe_type QmlFilter::getKeyframeType(Mlt::Animation& animation, int position, mlt_keyframe_type defaultType)
 {
-    mlt_keyframe_type result = defaultType;
-    if (animation.is_valid() && animation.is_key(position)) {
-        mlt_keyframe_type existingType = animation.key_get_type(keyframeIndex(animation, position));
+    mlt_keyframe_type result = mlt_keyframe_linear;
+    if (animation.is_valid()) {
+        mlt_keyframe_type existingType = defaultType;
+        if (animation.is_key(position)) {
+            existingType = animation.key_get_type(keyframeIndex(animation, position));
+        } else if (defaultType < 0) {
+            int previous = animation.previous_key(position);
+            if (previous >= 0)
+                existingType = animation.keyframe_type(previous);
+        }
         if (existingType >= 0)
             result = existingType;
     }

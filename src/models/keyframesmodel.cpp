@@ -86,6 +86,8 @@ QVariant KeyframesModel::data(const QModelIndex& index, int role) const
                         return position;
                     case KeyframeTypeRole:
                         return const_cast<Mlt::Animation&>(animation).key_get_type(index.row());
+                    case NumericValueRole:
+                        return m_filter->getDouble(name, position);
                     default:
                         break;
                     }
@@ -101,9 +103,6 @@ QVariant KeyframesModel::data(const QModelIndex& index, int role) const
             return m_metadata->keyframes()->parameter(index.row())->name();
         case PropertyNameRole:
             return m_metadata->keyframes()->parameter(index.row())->property();
-        case IsCurvesRole:
-            //TODO use parmeter metadata
-            return false;
         default:
             break;
         }
@@ -138,9 +137,9 @@ QHash<int, QByteArray> KeyframesModel::roleNames() const
     QHash<int, QByteArray> roles;
     roles[NameRole] = "name";
     roles[PropertyNameRole] = "property";
-    roles[IsCurvesRole] = "curves";
     roles[FrameNumberRole] = "frame";
     roles[KeyframeTypeRole] = "interpolation";
+    roles[NumericValueRole] = "value";
     return roles;
 }
 

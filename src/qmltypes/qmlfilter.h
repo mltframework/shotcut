@@ -57,11 +57,11 @@ public:
     Q_INVOKABLE QRectF getRect(QString name, int position = -1);
     Q_INVOKABLE void set(QString name, QString value, int position = -1);
     Q_INVOKABLE void set(QString name, double value,
-                         int position = -1, mlt_keyframe_type keyframeType = mlt_keyframe_linear);
+                         int position = -1, mlt_keyframe_type keyframeType = mlt_keyframe_type(-1));
     Q_INVOKABLE void set(QString name, int value,
-                         int position = -1, mlt_keyframe_type keyframeType = mlt_keyframe_linear);
+                         int position = -1, mlt_keyframe_type keyframeType = mlt_keyframe_type(-1));
     Q_INVOKABLE void set(QString name, double x, double y, double width, double height, double opacity = 1.0,
-                         int position = -1, mlt_keyframe_type keyframeType = mlt_keyframe_linear);
+                         int position = -1, mlt_keyframe_type keyframeType = mlt_keyframe_type(-1));
     QString path() const { return m_path; }
     Q_INVOKABLE void loadPresets();
     QStringList presets() const { return m_presets; }

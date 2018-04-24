@@ -20,20 +20,29 @@ import org.shotcut.qml 1.0
 import QtQuick.Controls 1.0
 import Shotcut.Controls 1.0
 import QtQuick.Window 2.2
+import 'Keyframes.js' as Logic
 
 Rectangle {
     id: keyframeRoot
     property int position: 0
     property int interpolation: KeyframesModel.DiscreteInterpolation // rectangle for discrete
     property bool isSelected: false
-    property string value: ''
+    property string name: ''
+    property double value
     property int parameterIndex
+    property int trackHeight: Logic.trackHeight(metadata.keyframes.parameters[parameterIndex].isCurve)
+    property double minimum: metadata.keyframes.parameters[parameterIndex].minimum
+    property double maximum: metadata.keyframes.parameters[parameterIndex].maximum
+    // median value = minimum + 0.5 * (maximum - minimum)
+    property double trackValue: ((minimum + 0.5 * (maximum - minimum)) - value) * (trackHeight - height * 2) / 2.0
 
     signal clicked(var keyframe)
 
     SystemPalette { id: activePalette }
 
     x: position * timeScale - width/2
+    anchors.verticalCenter: parameterRoot.verticalCenter
+    anchors.verticalCenterOffset: metadata.keyframes.parameters[parameterIndex].isCurve ? trackValue : 0
     height: 8
     width: height
     color: isSelected? 'red' : activePalette.buttonText
@@ -53,7 +62,7 @@ Rectangle {
                 producer.position = position
         }
     }
-    ToolTip { id: tooltip; text: value }
+    ToolTip { id: tooltip; text: name}
 
     Menu {
         id: menu

@@ -115,7 +115,7 @@ Rectangle {
 
                     ParameterHead {
                         id: clipHead
-                        visible: metadata != null
+                        visible: metadata !== null
                         trackName: metadata.name
                         width: headerWidth
                         height: Logic.trackHeight(true)
@@ -130,7 +130,7 @@ Rectangle {
                             delegateIndex: index
 //                            isLocked: model.locked
                             width: headerWidth
-                            height: Logic.trackHeight(model.curves)
+                            height: Logic.trackHeight(metadata.keyframes.parameters[index].isCurve)
                             current: index === currentTrack
 //                            onIsLockedChanged: parametersRepeater.itemAt(index).isLocked = isLocked
                             onClicked: {
@@ -142,7 +142,7 @@ Rectangle {
                 }
                 Rectangle {
                     // thin dividing line between headers and tracks
-                    visible: metadata != null
+                    visible: metadata !== null
                     color: activePalette.windowText
                     width: 1
                     x: parent.x + parent.width
@@ -211,7 +211,7 @@ Rectangle {
                         Column {
                             Rectangle {
                                 width: 1
-                                visible: metadata != null
+                                visible: metadata !== null
                                 height: clipHead.height
                             }
                             // These make the striped background for the tracks.
@@ -222,7 +222,7 @@ Rectangle {
                                 delegate: Rectangle {
                                     width: tracksContainer.width
                                     color: (index === currentTrack)? selectedTrackColor : (index % 2)? activePalette.alternateBase : activePalette.base
-                                    height: Logic.trackHeight(model.curves)
+                                    height: Logic.trackHeight(metadata.keyframes.parameters[index].isCurve)
                                 }
                             }
                         }
@@ -237,7 +237,7 @@ Rectangle {
                                     id: clipRow
                                     Clip {
                                         id: beforeClip
-                                        visible: metadata != null && filter.out > 0 && filter.in > 0
+                                        visible: metadata !== null && filter.out > 0 && filter.in > 0
                                         isBlank: true
                                         clipName: producer.name
                                         clipResource: producer.resource
@@ -252,7 +252,7 @@ Rectangle {
                                     }
                                     Clip {
                                         id: activeClip
-                                        visible: metadata != null && filter.out > 0
+                                        visible: metadata !== null && filter.out > 0
                                         clipName: producer.name
                                         clipResource: producer.resource
                                         mltService: producer.mlt_service
@@ -293,7 +293,7 @@ Rectangle {
                                     }
                                     Clip {
                                         id: afterClip
-                                        visible: metadata != null && filter.out > 0
+                                        visible: metadata !== null && filter.out > 0
                                         isBlank: true
                                         clipName: producer.name
                                         clipResource: producer.resource
@@ -317,7 +317,7 @@ Rectangle {
 
             Rectangle {
                 id: cursor
-                visible: producer.position > -1 && metadata != null
+                visible: producer.position > -1 && metadata !== null
                 color: activePalette.text
                 width: 1
                 height: root.height - scrollView.__horizontalScrollBar.height - keyframesToolbar.height
@@ -326,7 +326,7 @@ Rectangle {
             }
             TimelinePlayhead {
                 id: playhead
-                visible: producer.position > -1 && metadata != null
+                visible: producer.position > -1 && metadata !== null
                 x: producer.position * timeScale - scrollView.flickableItem.contentX - 5
                 y: 0
                 width: 11
@@ -434,7 +434,7 @@ Rectangle {
             model: parameters
             rootIndex: parameterDelegateModel.modelIndex(index)
             width: producer.duration * timeScale
-            height: Logic.trackHeight(false)
+            height: Logic.trackHeight(metadata.keyframes.parameters[index].isCurve)
             onClicked: {
                 currentTrack = parameter.DelegateModel.itemsIndex
                 root.selection = [keyframe.DelegateModel.itemsIndex]
