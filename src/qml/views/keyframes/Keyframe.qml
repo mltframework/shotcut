@@ -53,7 +53,7 @@ Rectangle {
                 producer.position = position
         }
     }
-    ToolTip { text: value }
+    ToolTip { id: tooltip; text: value }
 
     Menu {
         id: menu
@@ -97,5 +97,7 @@ Rectangle {
                 menu.__xOffset = Math.min(0, Screen.width - (__popupGeometry.x + __popupGeometry.width))
             }
         }
+        onAboutToShow: tooltip.isVisible = false
+        onAboutToHide: tooltip.isVisible = true
     }
 }

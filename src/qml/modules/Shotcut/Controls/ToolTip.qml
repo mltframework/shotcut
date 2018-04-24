@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Meltytech, LLC
+ * Copyright (c) 2014-2018 Meltytech, LLC
  * Author: Brian Matherly <pez4brian@yahoo.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,10 +24,12 @@ import org.shotcut.qml 1.0 as Shotcut
 
 Item {
     property alias text: toolTipText.text
-    
+    property alias isVisible: toolTipMouseArea.enabled
+
     anchors.fill: parent
 
     MouseArea {
+        id: toolTipMouseArea
         anchors.fill: parent
         acceptedButtons: Qt.NoButton
         hoverEnabled: true
@@ -36,6 +38,9 @@ Item {
         }
         onExited: {
             toolTipWindow.endDisplay()
+        }
+        onEnabledChanged: {
+            if (!enabled) toolTipWindow.close()
         }
     }
 
@@ -76,7 +81,7 @@ Item {
                 if (toolTipWindow.visible) {
                     toolTipWindow.close()
                 }
-                else {
+                else if (toolTipMouseArea.enabled) {
                     toolTipWindow.show()
                 }
             }
