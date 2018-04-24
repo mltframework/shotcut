@@ -49,6 +49,8 @@ Rectangle {
             parent.clicked(keyframeRoot)
             if (mouse.button === Qt.RightButton)
                 menu.popup()
+            else
+                producer.position = position
         }
     }
     ToolTip { text: value }
