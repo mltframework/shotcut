@@ -63,7 +63,7 @@ Item {
             if (keyframesRepeater.count) {
                 var widthOffset = keyframesRepeater.itemAt(0).width / 2
                 var heightOffset = keyframesRepeater.itemAt(0).height / 2
-                ctx.moveTo(0, keyframesRepeater.itemAt(0).y)
+                ctx.moveTo(keyframesRepeater.itemAt(0).x + widthOffset, keyframesRepeater.itemAt(0).y + heightOffset)
                 for (var i = 1; i < keyframesRepeater.count; i++) {
                     switch (keyframesRepeater.itemAt(i - 1).interpolation) {
                     case KeyframesModel.LinearInterpolation:
