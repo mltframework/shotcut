@@ -58,13 +58,20 @@ Item {
             if (filter.animateIn > 0 || filter.animateOut > 0) {
                 setControls()
             } else {
+                blockUpdate = true
+                brightnessSlider.value = filter.getDouble('opacity', getPosition()) * 100.0
+                blockUpdate = false
                 brightnessSlider.enabled = true
             }
         }
     }
 
+    function getPosition() {
+        return producer.position - (filter.in - producer.in)
+    }
+
     function setControls() {
-        var position = producer.position - (filter.in - producer.in)
+        var position = getPosition()
         blockUpdate = true
         brightnessSlider.value = filter.getDouble('opacity', position) * 100.0
         blockUpdate = false
@@ -84,26 +91,28 @@ Item {
                 middleValue = value
         }
 
-        filter.resetAnimation('opacity')
-        if (filter.animateIn > 0 && filter.animateOut > 1) {
-            filter.set('opacity', startValue, 0)
-            filter.set('opacity', middleValue, filter.animateIn - 1)
-            filter.set('opacity', middleValue, filter.duration - filter.animateOut)
-            filter.set('opacity', endValue, filter.duration - 1)
-        } else if (filter.animateIn > 0) {
-            filter.set('opacity', startValue, 0)
-            filter.set('opacity', middleValue, filter.animateIn - 1)
-        } else if (filter.animateOut > 0) {
-            filter.set('opacity', middleValue, filter.duration - filter.animateOut)
-            filter.set('opacity', endValue, filter.duration - 1)
-        } else {
+        if (filter.animateIn > 0 || filter.animateOut > 0) {
+            filter.resetAnimation('opacity')
+            brightnessKeyframesButton.checked = false
+            if (filter.animateIn > 0) {
+                filter.set('opacity', startValue, 0)
+                filter.set('opacity', middleValue, filter.animateIn - 1)
+            }
+            if (filter.animateOut > 0) {
+                filter.set('opacity', middleValue, filter.duration - filter.animateOut)
+                filter.set('opacity', endValue, filter.duration - 1)
+            }
+        } else if (!brightnessKeyframesButton.checked) {
+            filter.resetAnimation('opacity')
             filter.set('opacity', middleValue)
+        } else if (position !== null) {
+            filter.set('opacity', value, getPosition())
         }
 //        console.log('opacity: ' + filter.get('opacity'))
     }
 
     GridLayout {
-        columns: 3
+        columns: 4
         anchors.fill: parent
         anchors.margins: 8
 
@@ -122,6 +131,23 @@ Item {
         UndoButton {
             onClicked: brightnessSlider.value = 100
         }
+        KeyframesButton {
+            id: brightnessKeyframesButton
+            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('opacity') > 0
+            onToggled: {
+                var value = brightnessSlider.value / 100.0
+                if (checked) {
+                    blockUpdate = true
+                    filter.clearSimpleAnimation('opacity')
+                    blockUpdate = false
+                    filter.set('opacity', value, getPosition())
+                } else {
+                    filter.resetAnimation('opacity')
+                    filter.set('opacity', value)
+                }
+            }
+        }
+
 
         Item {
             Layout.fillHeight: true

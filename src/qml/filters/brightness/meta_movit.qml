@@ -13,5 +13,15 @@ Metadata {
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
+        parameters: [
+            Parameter {
+                name: qsTr('Brightness')
+                property: 'opacity'
+                isSimple: true
+                isCurve: true
+                minimum: 0
+                maximum: 2
+            }
+        ]
     }
 }
