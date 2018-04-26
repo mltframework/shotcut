@@ -33,11 +33,11 @@ Item {
             // Set default parameter values
             filter.set('level', 1.0)
         } else {
-            middleValue = filter.getDouble('opacity', filter.animateIn)
+            middleValue = filter.getDouble('level', filter.animateIn)
             if (filter.animateIn > 0)
-                startValue = filter.getDouble('opacity', 0)
+                startValue = filter.getDouble('level', 0)
             if (filter.animateOut > 0)
-                endValue = filter.getDouble('opacity', filter.duration - 1)
+                endValue = filter.getDouble('level', filter.duration - 1)
         }
         setControls()
     }
