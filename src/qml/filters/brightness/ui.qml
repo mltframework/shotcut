@@ -115,7 +115,7 @@ Item {
         anchors.margins: 8
 
         Label {
-            text: qsTr('Brightness')
+            text: qsTr('Level')
             Layout.alignment: Qt.AlignRight
         }
         SliderSpinner {

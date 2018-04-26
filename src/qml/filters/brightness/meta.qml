@@ -14,7 +14,7 @@ Metadata {
         allowAnimateOut: true
         parameters: [
             Parameter {
-                name: qsTr('Brightness')
+                name: qsTr('Level')
                 property: 'level'
                 isSimple: true
                 isCurve: true
