@@ -28,6 +28,7 @@
 #include "qmltypes/timelineitems.h"
 #include "settings.h"
 #include "models/metadatamodel.h"
+#include "models/keyframesmodel.h"
 #include <QCoreApplication>
 #include <QSysInfo>
 #include <QCursor>
@@ -45,6 +46,9 @@ void QmlUtilities::registerCommonTypes()
     qmlRegisterType<QmlFile>("org.shotcut.qml", 1, 0, "File");
     qmlRegisterType<QmlHtmlEditor>("org.shotcut.qml", 1, 0, "HtmlEditor");
     qmlRegisterType<QmlMetadata>("org.shotcut.qml", 1, 0, "Metadata");
+    qmlRegisterType<QmlKeyframesMetadata>();
+    qmlRegisterType<QmlKeyframesParameter>("org.shotcut.qml", 1,0, "Parameter");
+    qmlRegisterType<KeyframesModel>("org.shotcut.qml", 1,0, "KeyframesModel");
     qmlRegisterType<QmlUtilities>("org.shotcut.qml", 1, 0, "Utilities");
     // MetadataModel is registered to access its MetadataFilter enum.
     qmlRegisterUncreatableType<MetadataModel>("org.shotcut.qml", 1, 0, "MetadataModel",

@@ -10,4 +10,18 @@ Metadata {
     qml: "ui_movit.qml"
     isFavorite: true
     allowMultiple: false
+    keyframes {
+        allowAnimateIn: true
+        allowAnimateOut: true
+        parameters: [
+            Parameter {
+                name: qsTr('Level')
+                property: 'opacity'
+                isSimple: true
+                isCurve: true
+                minimum: 0
+                maximum: 2
+            }
+        ]
+    }
 }

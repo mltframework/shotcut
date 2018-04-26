@@ -140,6 +140,7 @@ public:
         return m_savedProducer.data();
     }
     void setSavedProducer(Mlt::Producer* producer);
+    static Mlt::Filter* getFilter(const QString& name, Mlt::Service* service);
 
 protected:
     Mlt::Repository* m_repo;

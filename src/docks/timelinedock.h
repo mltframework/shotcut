@@ -53,7 +53,6 @@ public:
     MultitrackModel* model() { return &m_model; }
     int position() const { return m_position; }
     void setPosition(int position);
-    Q_INVOKABLE QString timecode(int frames);
     Mlt::ClipInfo* getClipInfo(int trackIndex, int clipIndex);
     Mlt::Producer* producerForClip(int trackIndex, int clipIndex);
     int clipIndexAtPlayhead(int trackIndex = -1);
@@ -137,6 +136,8 @@ public slots:
     void emitSelectedFromSelection();
     void remakeAudioLevels(int trackIndex, int clipIndex, bool force = true);
     void commitTrimCommand();
+    void onRowsInserted(const QModelIndex& parent, int first, int last);
+    void onRowsRemoved(const QModelIndex& parent, int first, int last);
 
 protected:
     void dragEnterEvent(QDragEnterEvent* event);

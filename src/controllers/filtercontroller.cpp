@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2017 Meltytech, LLC
+ * Copyright (c) 2014-2018 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -131,7 +131,7 @@ void FilterController::setCurrentFilter(int attachedIndex, bool isNew)
     QmlFilter* filter = 0;
     if (meta) {
         m_mltFilter = m_attachedModel.getFilter(m_currentFilterIndex);
-        filter = new QmlFilter(m_mltFilter, meta);
+        filter = new QmlFilter(*m_mltFilter, meta);
         filter->setIsNew(isNew);
         connect(filter, SIGNAL(changed()), SLOT(onQmlFilterChanged()));
     }
@@ -139,6 +139,36 @@ void FilterController::setCurrentFilter(int attachedIndex, bool isNew)
     emit currentFilterAboutToChange();
     emit currentFilterChanged(filter, meta, m_currentFilterIndex);
     m_currentFilter.reset(filter);
+}
+
+void FilterController::onFadeInChanged()
+{
+    if (m_currentFilter) {
+        emit m_currentFilter->changed();
+        emit m_currentFilter->animateInChanged();
+    }
+}
+
+void FilterController::onFadeOutChanged()
+{
+    if (m_currentFilter) {
+        emit m_currentFilter->changed();
+        emit m_currentFilter->animateOutChanged();
+    }
+}
+
+void FilterController::onFilterInChanged(int delta, Mlt::Filter* filter)
+{
+    if (delta && m_currentFilter && (!filter || m_currentFilter->filter().get_filter() == filter->get_filter())) {
+        emit m_currentFilter->inChanged(delta);
+    }
+}
+
+void FilterController::onFilterOutChanged(int delta, Mlt::Filter* filter)
+{
+    if (delta && m_currentFilter && (!filter || m_currentFilter->filter().get_filter() == filter->get_filter())) {
+        emit m_currentFilter->outChanged(delta);
+    }
 }
 
 void FilterController::handleAttachedModelChange()

@@ -3,6 +3,7 @@ ColorPicker 1.0 ColorPicker.qml
 Preset 1.0 Preset.qml
 ToolTip 1.0 ToolTip.qml
 UndoButton 1.0 UndoButton.qml
+KeyframesButton 1.0 KeyframesButton.qml
 TimeSpinner 1.0 TimeSpinner.qml
 SaveDefaultButton 1.0 SaveDefaultButton.qml
 SliderSpinner 1.0 SliderSpinner.qml

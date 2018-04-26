@@ -53,6 +53,7 @@ public:
     static bool hasFiltersOnClipboard();
     Q_INVOKABLE static void copyFilters();
     Q_INVOKABLE static void pasteFilters();
+    Q_INVOKABLE static QString timecode(int frames);
 
 signals:
     void paletteChanged();

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2017 Meltytech, LLC
+ * Copyright (c) 2012-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -67,8 +67,8 @@ public:
 signals:
     void endOfStream();
     void showStatusMessage(QString);
-    void inChanged(int);
-    void outChanged(int);
+    void inChanged(int delta);
+    void outChanged(int delta);
     void played(double speed);
     void paused();
     void stopped();

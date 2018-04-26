@@ -63,6 +63,8 @@ TimelineDock::TimelineDock(QWidget *parent) :
     m_quickView.setClearColor(palette().window().color());
 
     connect(&m_model, SIGNAL(modified()), this, SLOT(clearSelectionIfInvalid()));
+    connect(&m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), SLOT(onRowsInserted(QModelIndex,int,int)));
+    connect(&m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), SLOT(onRowsRemoved(QModelIndex,int,int)));
 
     setWidget(&m_quickView);
 
@@ -88,11 +90,6 @@ void TimelineDock::setPosition(int position)
         m_position = m_model.tractor()->get_length();
         emit positionChanged();
     }
-}
-
-QString TimelineDock::timecode(int frames)
-{
-    return MLT.producer()->frames_to_time(frames, mlt_time_smpte);
 }
 
 Mlt::ClipInfo *TimelineDock::getClipInfo(int trackIndex, int clipIndex)
@@ -602,7 +599,7 @@ void TimelineDock::emitSelectedFromSelection()
 
     int trackIndex = currentTrack();
     int clipIndex = selection().isEmpty()? 0 : selection().first();
-    Mlt::ClipInfo* info = getClipInfo(trackIndex, clipIndex);
+    QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
     if (info && info->producer && info->producer->is_valid()) {
         delete m_updateCommand;
         m_updateCommand = new Timeline::UpdateCommand(*this, trackIndex, clipIndex, info->start);
@@ -611,12 +608,12 @@ void TimelineDock::emitSelectedFromSelection()
         // to the cut parent.
         info->producer->set(kFilterInProperty, info->frame_in);
         info->producer->set(kFilterOutProperty, info->frame_out);
+        info->producer->set(kPlaylistStartProperty, info->start);
         if (MLT.isImageProducer(info->producer))
             info->producer->set_in_and_out(info->cut->get_in(), info->cut->get_out());
         info->producer->set(kMultitrackItemProperty, QString("%1:%2").arg(clipIndex).arg(trackIndex).toLatin1().constData());
         m_ignoreNextPositionChange = true;
         emit selected(info->producer);
-        delete info;
     }
 }
 
@@ -636,6 +633,42 @@ void TimelineDock::commitTrimCommand()
         MAIN.undoStack()->push(m_trimCommand.take());
     }
     m_trimDelta = 0;
+}
+
+void TimelineDock::onRowsInserted(const QModelIndex& parent, int first, int last)
+{
+    Q_UNUSED(parent)
+    // Adjust selected clips for changed indices.
+    if (-1 == m_selection.selectedTrack) {
+        QList<int> newSelection;
+        int n = last - first + 1;
+        foreach (int i, m_selection.selectedClips) {
+            if (i < first)
+                newSelection << i;
+            else
+                newSelection << (i + n);
+        }
+        m_selection.selectedClips = newSelection;
+        emit selectionChanged();
+    }
+}
+
+void TimelineDock::onRowsRemoved(const QModelIndex& parent, int first, int last)
+{
+    Q_UNUSED(parent)
+    // Adjust selected clips for changed indices.
+    if (-1 == m_selection.selectedTrack) {
+        QList<int> newSelection;
+        int n = last - first + 1;
+        foreach (int i, m_selection.selectedClips) {
+            if (i < first)
+                newSelection << i;
+            else if (i > last)
+                newSelection << (i - n);
+        }
+        m_selection.selectedClips = newSelection;
+        emit selectionChanged();
+    }
 }
 
 void TimelineDock::setTrackName(int trackIndex, const QString &value)

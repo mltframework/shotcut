@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2017 Meltytech, LLC
+ * Copyright (c) 2013-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,13 +23,77 @@
 #include <QString>
 #include <QDir>
 #include <QUrl>
+#include <QQmlListProperty>
+
+class QmlKeyframesParameter : public QObject
+{
+    Q_OBJECT
+    Q_PROPERTY(QString name MEMBER m_name NOTIFY changed)
+    Q_PROPERTY(QString property MEMBER m_property NOTIFY changed)
+    /// If isSimple this parameter cannot use full keyframes while simple is in use.
+    Q_PROPERTY(bool isSimple MEMBER m_isSimple NOTIFY changed)
+    Q_PROPERTY(bool isCurve MEMBER m_isCurve NOTIFY changed)
+    Q_PROPERTY(double minimum MEMBER m_minimum NOTIFY changed)
+    Q_PROPERTY(double maximum MEMBER m_maximum NOTIFY changed)
+
+public:
+    explicit QmlKeyframesParameter(QObject* parent = 0);
+
+    QString name() const { return m_name; }
+    QString property() const { return m_property; }
+    bool isSimple() const { return m_isSimple; }
+    bool isCurve() const { return m_isCurve; }
+    double minimum() const { return m_minimum; }
+    double maximum() const { return m_maximum; }
+
+signals:
+    void changed();
+
+private:
+    QString m_name;
+    QString m_property;
+    bool m_isSimple;
+    bool m_isCurve;
+    double m_minimum;
+    double m_maximum;
+};
+
+class QmlKeyframesMetadata : public QObject
+{
+    Q_OBJECT
+    Q_PROPERTY(bool allowTrim MEMBER m_allowTrim NOTIFY changed)
+    Q_PROPERTY(bool allowAnimateIn MEMBER m_allowAnimateIn NOTIFY changed)
+    Q_PROPERTY(bool allowAnimateOut MEMBER m_allowAnimateOut NOTIFY changed)
+    Q_PROPERTY(QQmlListProperty<QmlKeyframesParameter> parameters READ parameters NOTIFY changed)
+
+public:
+    explicit QmlKeyframesMetadata(QObject *parent = 0);
+
+    bool allowTrim() const { return m_allowTrim; }
+    bool allowAnimateIn() const { return m_allowAnimateIn; }
+    bool allowAnimateOut() const { return m_allowAnimateOut; }
+
+    QQmlListProperty<QmlKeyframesParameter> parameters() { return QQmlListProperty<QmlKeyframesParameter>(this, m_parameters); }
+    int parameterCount() const { return m_parameters.count(); }
+    QmlKeyframesParameter *parameter(int index) const { return m_parameters[index]; }
+
+signals:
+    void changed();
+
+private:
+    bool m_allowTrim;
+    bool m_allowAnimateIn;
+    bool m_allowAnimateOut;
+    QList<QmlKeyframesParameter *> m_parameters;
+};
+
 
 class QmlMetadata : public QObject
 {
     Q_OBJECT
     Q_ENUMS(PluginType)
     Q_PROPERTY(PluginType type READ type WRITE setType)
-    Q_PROPERTY(QString name READ name WRITE setName)
+    Q_PROPERTY(QString name READ name WRITE setName NOTIFY changed)
     Q_PROPERTY(QString mlt_service READ mlt_service WRITE set_mlt_service)
     Q_PROPERTY(bool needsGPU READ needsGPU WRITE setNeedsGPU NOTIFY changed)
     Q_PROPERTY(QString qml READ qmlFileName WRITE setQmlFileName)
@@ -43,6 +107,7 @@ class QmlMetadata : public QObject
     Q_PROPERTY(bool allowMultiple READ allowMultiple WRITE setAllowMultiple)
     Q_PROPERTY(bool isClipOnly READ isClipOnly WRITE setIsClipOnly)
     Q_PROPERTY(bool isGpuCompatible READ isGpuCompatible() WRITE setIsGpuCompatible)
+    Q_PROPERTY(QmlKeyframesMetadata* keyframes READ keyframes NOTIFY changed)
 
 public:
     enum PluginType {
@@ -85,6 +150,7 @@ public:
     void setIsClipOnly(bool isClipOnly);
     bool isGpuCompatible() const { return m_isGpuCompatible; }
     void setIsGpuCompatible(bool isCompatible) { m_isGpuCompatible = isCompatible; }
+    QmlKeyframesMetadata* keyframes() { return &m_keyframes; }
 
 signals:
     void changed();
@@ -104,6 +170,7 @@ private:
     bool m_allowMultiple;
     bool m_isClipOnly;
     bool m_isGpuCompatible;
+    QmlKeyframesMetadata m_keyframes;
 };
 
 #endif // QMLMETADATA_H

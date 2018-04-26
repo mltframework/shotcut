@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2015 Meltytech, LLC
+ * Copyright (c) 2013-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,7 +24,11 @@
 #include <QVariant>
 #include <QRectF>
 #include <MltFilter.h>
+#include <MltProducer.h>
+#include <MltAnimation.h>
+
 #include "qmlmetadata.h"
+#include "shotcut_mlt_properties.h"
 
 class AbstractJob;
 
@@ -34,24 +38,30 @@ class QmlFilter : public QObject
     Q_PROPERTY(bool isNew READ isNew)
     Q_PROPERTY(QString path READ path)
     Q_PROPERTY(QStringList presets READ presets NOTIFY presetsChanged)
-    Q_PROPERTY(int producerIn READ producerIn)
-    Q_PROPERTY(int producerOut READ producerOut)
-    Q_PROPERTY(double producerAspect READ producerAspect)
+    Q_PROPERTY(int in READ in WRITE setIn NOTIFY inChanged)
+    Q_PROPERTY(int out READ out WRITE setOut NOTIFY outChanged)
+    Q_PROPERTY(int animateIn READ animateIn WRITE setAnimateIn NOTIFY animateInChanged)
+    Q_PROPERTY(int animateOut READ animateOut WRITE setAnimateOut NOTIFY animateOutChanged)
+    Q_PROPERTY(int duration READ duration NOTIFY durationChanged)
 
 public:
-    explicit QmlFilter(Mlt::Filter* mltFilter, const QmlMetadata* metadata, QObject *parent = 0);
+    explicit QmlFilter();
+    explicit QmlFilter(Mlt::Filter& mltFilter, const QmlMetadata* metadata, QObject *parent = 0);
     ~QmlFilter();
 
     bool isNew() const { return m_isNew; }
-    void setIsNew(bool isNew) { m_isNew = isNew; };
+    void setIsNew(bool isNew) { m_isNew = isNew; }
 
-    Q_INVOKABLE QString get(QString name);
-    Q_INVOKABLE double getDouble(QString name);
-    Q_INVOKABLE QRectF getRect(QString name);
-    Q_INVOKABLE void set(QString name, QString value);
-    Q_INVOKABLE void set(QString name, double value);
-    Q_INVOKABLE void set(QString name, int value);
-    Q_INVOKABLE void set(QString name, double x, double y, double width, double height, double opacity = 1.0);
+    Q_INVOKABLE QString get(QString name, int position = -1);
+    Q_INVOKABLE double getDouble(QString name, int position = -1);
+    Q_INVOKABLE QRectF getRect(QString name, int position = -1);
+    Q_INVOKABLE void set(QString name, QString value, int position = -1);
+    Q_INVOKABLE void set(QString name, double value,
+                         int position = -1, mlt_keyframe_type keyframeType = mlt_keyframe_type(-1));
+    Q_INVOKABLE void set(QString name, int value,
+                         int position = -1, mlt_keyframe_type keyframeType = mlt_keyframe_type(-1));
+    Q_INVOKABLE void set(QString name, double x, double y, double width, double height, double opacity = 1.0,
+                         int position = -1, mlt_keyframe_type keyframeType = mlt_keyframe_type(-1));
     QString path() const { return m_path; }
     Q_INVOKABLE void loadPresets();
     QStringList presets() const { return m_presets; }
@@ -62,9 +72,21 @@ public:
     Q_INVOKABLE static int framesFromTime(const QString& time);
     Q_INVOKABLE static QString timeFromFrames(int frames);
     Q_INVOKABLE void getHash();
-    int producerIn() const;
-    int producerOut() const;
-    double producerAspect() const;
+    Mlt::Producer& producer() { return m_producer; }
+    int in();
+    void setIn(int value);
+    int out();
+    void setOut(int value);
+    Mlt::Filter& filter() { return m_filter; }
+    int animateIn() { return m_filter.get_int(kShotcutAnimInProperty); }
+    void setAnimateIn(int value);
+    int animateOut() { return m_filter.get_int(kShotcutAnimOutProperty); }
+    void setAnimateOut(int value);
+    int duration();
+    Q_INVOKABLE void resetAnimation(const QString& name);
+    Q_INVOKABLE void clearSimpleAnimation(const QString& name);
+    Mlt::Animation getAnimation(const QString& name);
+    Q_INVOKABLE int keyframeCount(const QString& name);
 
 public slots:
     void preset(const QString& name);
@@ -73,22 +95,31 @@ signals:
     void presetsChanged();
     void analyzeFinished(bool isSuccess);
     void changed(); /// Use to let UI and VUI QML signal updates to each other.
+    void changed(QString name);
+    void inChanged(int delta);
+    void outChanged(int delta);
+    void animateInChanged();
+    void animateOutChanged();
+    void durationChanged();
 
 private:
     const QmlMetadata* m_metadata;
-    Mlt::Filter* m_filter;
+    Mlt::Filter m_filter;
+    Mlt::Producer m_producer;
     QString m_path;
     bool m_isNew;
     QStringList m_presets;
     
     QString objectNameOrService();
+    int keyframeIndex(Mlt::Animation& animation, int position);
+    mlt_keyframe_type getKeyframeType(Mlt::Animation& animation, int position, mlt_keyframe_type defaultType = mlt_keyframe_linear);
 };
 
 class AnalyzeDelegate : public QObject
 {
     Q_OBJECT
 public:
-    explicit AnalyzeDelegate(Mlt::Filter *filter);
+    explicit AnalyzeDelegate(Mlt::Filter& filter);
 
 public slots:
     void onAnalyzeFinished(AbstractJob *job, bool isSuccess);

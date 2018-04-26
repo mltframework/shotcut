@@ -173,6 +173,7 @@ public:
         mlt_log_set_level(MLT_LOG_INFO);
 #endif
         mlt_log_set_callback(mlt_log_handler);
+        cuteLogger->logToGlobalInstance("qml", true);
 
         // Log some basic info.
         LOG_INFO() << "Starting Shotcut version" << SHOTCUT_VERSION;

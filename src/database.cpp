@@ -59,6 +59,7 @@ Database &Database::singleton(QWidget *parent)
 
 bool Database::upgradeVersion1()
 {
+    if (!QSqlDatabase::database().isOpen()) return false;
     bool success = false;
     QSqlQuery query;
     if (query.exec("CREATE TABLE thumbnails (hash TEXT PRIMARY KEY NOT NULL, accessed DATETIME NOT NULL, image BLOB);")) {
@@ -119,6 +120,7 @@ void Database::commitTransaction()
 
 bool Database::putThumbnail(const QString& hash, const QImage& image)
 {
+    if (!QSqlDatabase::database().isOpen()) return false;
     DatabaseJob job;
     job.type = DatabaseJob::PutThumbnail;
     job.hash = hash;
@@ -144,6 +146,7 @@ void Database::submitAndWaitForJob(DatabaseJob * job)
 
 QImage Database::getThumbnail(const QString &hash)
 {
+    if (!QSqlDatabase::database().isOpen()) return QImage();
     DatabaseJob job;
     job.type = DatabaseJob::GetThumbnail;
     job.hash = hash;

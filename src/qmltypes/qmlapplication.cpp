@@ -115,3 +115,11 @@ void QmlApplication::pasteFilters()
     emit QmlApplication::singleton().filtersPasted(MAIN.filterController()->attachedModel()->producer());
 }
 
+QString QmlApplication::timecode(int frames)
+{
+    if (MLT.producer() && MLT.producer()->is_valid())
+        return MLT.producer()->frames_to_time(frames, mlt_time_smpte);
+    else
+        return QString();
+}
+

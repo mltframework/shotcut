@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 Meltytech, LLC
+ * Copyright (c) 2013-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -38,7 +38,11 @@ RowLayout {
         Layout.maximumWidth: 300
         model: filter.presets
         onCurrentTextChanged: {
+            filter.animateIn = 0
+            filter.animateOut = 0
             filter.preset(currentText)
+            filter.animateInChanged()
+            filter.animateOutChanged()
             presetSelected()
         }
     }
@@ -72,7 +76,10 @@ RowLayout {
         height: 90
 
         function acceptName() {
-            presetCombo.currentIndex = filter.savePreset(parameters, nameField.text)
+            var params = parameters
+            params.push('shotcut:animIn')
+            params.push('shotcut:animOut')
+            presetCombo.currentIndex = filter.savePreset(params, nameField.text)
             nameDialog.close()
         }
 

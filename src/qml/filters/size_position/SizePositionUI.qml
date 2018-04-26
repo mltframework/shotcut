@@ -24,19 +24,23 @@ import Shotcut.Controls 1.0
 Item {
     property string fillProperty
     property string distortProperty
+    property string legacyRectProperty: null
     property string rectProperty
     property string valignProperty
     property string halignProperty
-    property rect filterRect: filter.getRect(rectProperty)
+    property rect filterRect
+    property rect startValue: Qt.rect(-profile.width, 0, profile.width, profile.height)
+    property rect middleValue: Qt.rect(0, 0, profile.width, profile.height)
+    property rect endValue: Qt.rect(profile.width, 0, profile.width, profile.height)
 
     width: 350
     height: 180
 
     Component.onCompleted: {
         if (filter.isNew) {
-            filter.set(fillProperty, 0)
+            filter.set(fillProperty, 1)
             filter.set(distortProperty, 0)
-            filter.set(rectProperty,   '0/50%:50%x50%')
+            filter.set(rectProperty,   '0%/50%:50%x50%')
             filter.set(valignProperty, 'bottom')
             filter.set(halignProperty, 'left')
             filter.savePreset(preset.parameters, qsTr('Bottom Left'))
@@ -46,25 +50,52 @@ Item {
             filter.set(halignProperty, 'right')
             filter.savePreset(preset.parameters, qsTr('Bottom Right'))
 
-            filter.set(rectProperty,   '0/0:50%x50%')
+            filter.set(rectProperty,   '0%/0%:50%x50%')
             filter.set(valignProperty, 'top')
             filter.set(halignProperty, 'left')
             filter.savePreset(preset.parameters, qsTr('Top Left'))
 
-            filter.set(rectProperty,   '50%/0:50%x50%')
+            filter.set(rectProperty,   '50%/0%:50%x50%')
             filter.set(valignProperty, 'top')
             filter.set(halignProperty, 'right')
             filter.savePreset(preset.parameters, qsTr('Top Right'))
 
-            filter.set(rectProperty,   '0/0:100%x100%')
+            filter.set(rectProperty,   '0%/0%:100%x100%')
             filter.set(valignProperty, 'top')
             filter.set(halignProperty, 'left')
             filter.savePreset(preset.parameters)
+        } else {
+            if (legacyRectProperty !== null) {
+                var old = filter.get(legacyRectProperty)
+                if (old && old.length > 0) {
+                    filter.resetAnimation(legacyRectProperty)
+                    filter.set(rectProperty, old)
+                }
+            }
+            filterRect = filter.getRect(rectProperty)
+            middleValue = filter.getRect(rectProperty, filter.animateIn)
+            if (filter.animateIn > 0)
+                startValue = filter.getRect(rectProperty, 0)
+            if (filter.animateOut > 0)
+                endValue = filter.getRect(rectProperty, filter.duration - 1)
         }
         setControls()
+        setKeyframedControls()
     }
 
-    function setFilter() {
+    function mltRectString(rectangle) {
+        return '%L1%/%L2%:%L3%x%L4%'
+               .arg(rectangle.x / profile.width * 100)
+               .arg(rectangle.y / profile.height * 100)
+               .arg(rectangle.width / profile.width * 100)
+               .arg(rectangle.height / profile.height * 100)
+    }
+
+    function getPosition() {
+        return producer.position - (filter.in - producer.in)
+    }
+
+    function setFilter(position) {
         var x = parseFloat(rectX.text)
         var y = parseFloat(rectY.text)
         var w = parseFloat(rectW.text)
@@ -72,16 +103,34 @@ Item {
         if (x !== filterRect.x ||
             y !== filterRect.y ||
             w !== filterRect.width ||
-            h !== filterRect.height) {
+            h !== filterRect.height)
+        {
             filterRect.x = x
             filterRect.y = y
             filterRect.width = w
             filterRect.height = h
-            filter.set(rectProperty, '%L1%/%L2%:%L3%x%L4%'
-                       .arg(x / profile.width * 100)
-                       .arg(y / profile.height * 100)
-                       .arg(w / profile.width * 100)
-                       .arg(h / profile.height * 100))
+            if (position !== null) {
+                if (position <= 0)
+                    startValue = filterRect
+                else if (position >= filter.duration - 1)
+                    endValue = filterRect
+                else
+                    middleValue = filterRect
+            }
+
+            filter.resetAnimation(rectProperty)
+            if (filter.animateIn > 0 || filter.animateOut > 0) {
+                if (filter.animateIn > 0) {
+                    filter.set(rectProperty, startValue.x, startValue.y, startValue.width, startValue.height, 1.0, 0)
+                    filter.set(rectProperty, middleValue.x, middleValue.y, middleValue.width, middleValue.height, 1.0, filter.animateIn - 1)
+                }
+                if (filter.animateOut > 0) {
+                    filter.set(rectProperty, middleValue.x, middleValue.y, middleValue.width, middleValue.height, 1.0, filter.duration - filter.animateOut)
+                    filter.set(rectProperty, endValue.x, endValue.y, endValue.width, endValue.height, 1.0, filter.duration - 1)
+                }
+            } else {
+                filter.set(rectProperty, mltRectString(middleValue))
+            }
         }
     }
 
@@ -108,6 +157,18 @@ Item {
             bottomRadioButton.checked = true
     }
 
+    function setKeyframedControls() {
+        var position = getPosition()
+        var newValue = filter.getRect(rectProperty, position)
+        if (filterRect !== newValue)
+            filterRect = newValue
+        var enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
+        rectX.enabled = enabled
+        rectY.enabled = enabled
+        rectW.enabled = enabled
+        rectH.enabled = enabled
+    }
+
     ExclusiveGroup { id: sizeGroup }
     ExclusiveGroup { id: halignGroup }
     ExclusiveGroup { id: valignGroup }
@@ -125,7 +186,13 @@ Item {
             id: preset
             parameters: [fillProperty, distortProperty, rectProperty, halignProperty, valignProperty]
             Layout.columnSpan: 4
-            onPresetSelected: setControls()
+            onPresetSelected: {
+                setControls()
+                // remove old animation
+                var r = filter.get(rectProperty)
+                filter.resetAnimation(rectProperty)
+                filter.set(rectProperty, r)
+            }
         }
 
         Label {
@@ -136,16 +203,16 @@ Item {
             Layout.columnSpan: 4
             TextField {
                 id: rectX
-                text: filterRect.x
+                text: filterRect.x.toFixed()
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: setFilter()
+                onEditingFinished: setFilter(getPosition())
             }
             Label { text: ',' }
             TextField {
                 id: rectY
-                text: filterRect.y
+                text: filterRect.y.toFixed()
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: setFilter()
+                onEditingFinished: setFilter(getPosition())
             }
         }
         Label {
@@ -156,16 +223,16 @@ Item {
             Layout.columnSpan: 4
             TextField {
                 id: rectW
-                text: filterRect.width
+                text: filterRect.width.toFixed()
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: setFilter()
+                onEditingFinished: setFilter(getPosition())
             }
             Label { text: 'x' }
             TextField {
                 id: rectH
-                text: filterRect.height
+                text: filterRect.height.toFixed()
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: setFilter()
+                onEditingFinished: setFilter(getPosition())
             }
         }
 
@@ -263,10 +330,18 @@ Item {
 
     Connections {
         target: filter
-        onChanged: {
-            var newValue = filter.getRect(rectProperty)
-            if (filterRect !== newValue)
-                filterRect = newValue
+        onChanged: setKeyframedControls()
+        onInChanged: setFilter(null)
+        onOutChanged: setFilter(null)
+        onAnimateInChanged: setFilter(null)
+        onAnimateOutChanged: setFilter(null)
+    }
+
+    Connections {
+        target: producer
+        onPositionChanged: {
+            if (filter.animateIn > 0 || filter.animateOut > 0)
+                setKeyframedControls()
         }
     }
 }

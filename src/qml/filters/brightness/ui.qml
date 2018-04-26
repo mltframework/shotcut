@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Meltytech, LLC
+ * Copyright (c) 2016-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,22 +23,99 @@ import Shotcut.Controls 1.0
 Item {
     width: 200
     height: 50
-    
+    property bool blockUpdate: true
+    property double startValue: 0.0
+    property double middleValue: 1.0
+    property double endValue: 0.0
+
     Component.onCompleted: {
         if (filter.isNew) {
             // Set default parameter values
-            filter.set("level", 1.0);
+            filter.set('level', 1.0)
+        } else {
+            middleValue = filter.getDouble('level', filter.animateIn)
+            if (filter.animateIn > 0)
+                startValue = filter.getDouble('level', 0)
+            if (filter.animateOut > 0)
+                endValue = filter.getDouble('level', filter.duration - 1)
         }
-        brightnessSlider.value = filter.getDouble("level") * 100.0
+        setControls()
+    }
+
+    Connections {
+        target: filter
+        onInChanged: updateFilter(null)
+        onOutChanged: updateFilter(null)
+        onAnimateInChanged: updateFilter(null)
+        onAnimateOutChanged: updateFilter(null)
+    }
+
+    Connections {
+        target: producer
+        onPositionChanged: {
+            if (filter.animateIn > 0 || filter.animateOut > 0) {
+                setControls()
+            } else {
+                blockUpdate = true
+                brightnessSlider.value = filter.getDouble('level', getPosition()) * 100.0
+                blockUpdate = false
+                brightnessSlider.enabled = true
+            }
+        }
+    }
+
+    function getPosition() {
+        return producer.position - (filter.in - producer.in)
+    }
+
+    function setControls() {
+        var position = getPosition()
+        blockUpdate = true
+        brightnessSlider.value = filter.getDouble('level', position) * 100.0
+        blockUpdate = false
+        brightnessSlider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
+    }
+
+    function updateFilter(position) {
+        if (blockUpdate) return
+        var value = brightnessSlider.value / 100.0
+
+        if (position !== null) {
+            if (position <= 0)
+                startValue = value
+            else if (position >= filter.duration - 1)
+                endValue = value
+            else
+                middleValue = value
+        }
+
+        if (filter.animateIn > 0 || filter.animateOut > 0) {
+            filter.resetAnimation('level')
+            brightnessKeyframesButton.checked = false
+            if (filter.animateIn > 0) {
+                filter.set('level', startValue, 0)
+                filter.set('level', middleValue, filter.animateIn - 1)
+            }
+            if (filter.animateOut > 0) {
+                filter.set('level', middleValue, filter.duration - filter.animateOut)
+                filter.set('level', endValue, filter.duration - 1)
+            }
+        } else if (!brightnessKeyframesButton.checked) {
+            filter.resetAnimation('level')
+            filter.set('level', middleValue)
+        } else if (position !== null) {
+            filter.set('level', value, getPosition())
+        }
+//        console.log('level: ' + filter.get('level'))
     }
 
     GridLayout {
-        columns: 3
+        columns: 4
         anchors.fill: parent
         anchors.margins: 8
 
         Label {
-            text: qsTr('Brightness')
+            text: qsTr('Level')
             Layout.alignment: Qt.AlignRight
         }
         SliderSpinner {
@@ -47,10 +124,26 @@ Item {
             maximumValue: 200.0
             decimals: 1
             suffix: ' %'
-            onValueChanged: filter.set("level", value / 100.0)
+            onValueChanged: updateFilter(getPosition())
         }
         UndoButton {
             onClicked: brightnessSlider.value = 100
+        }
+        KeyframesButton {
+            id: brightnessKeyframesButton
+            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('level') > 0
+            onToggled: {
+                var value = brightnessSlider.value / 100.0
+                if (checked) {
+                    blockUpdate = true
+                    filter.clearSimpleAnimation('level')
+                    blockUpdate = false
+                    filter.set('level', value, getPosition())
+                } else {
+                    filter.resetAnimation('level')
+                    filter.set('level', value)
+                }
+            }
         }
 
         Item {

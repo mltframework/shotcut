@@ -276,6 +276,9 @@ void AttachedFiltersModel::add(QmlMetadata* meta)
     if (filter->is_valid()) {
         if (!meta->objectName().isEmpty())
             filter->set(kShotcutFilterProperty, meta->objectName().toUtf8().constData());
+        filter->set_in_and_out(
+            m_producer->get(kFilterInProperty)? m_producer->get_int(kFilterInProperty) : m_producer->get_in(),
+            m_producer->get(kFilterOutProperty)? m_producer->get_int(kFilterOutProperty) : m_producer->get_out());
 
         // Put the filter after the last filter that is greater than or equal
         // in sort order.

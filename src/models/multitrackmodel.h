@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2017 Meltytech, LLC
+ * Copyright (c) 2013-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -88,7 +88,7 @@ public:
     QModelIndex makeIndex(int trackIndex, int clipIndex) const;
     QModelIndex parent(const QModelIndex &index) const;
     QHash<int, QByteArray> roleNames() const;
-    void audioLevelsReady(const QModelIndex &index);
+    Q_INVOKABLE void audioLevelsReady(const QModelIndex &index);
     bool createIfNeeded();
     void addBackgroundTrack();
     int addAudioTrack();
@@ -120,6 +120,8 @@ signals:
     void showStatusMessage(QString);
     void durationChanged();
     void filteredChanged();
+    void filterInChanged(int delta, Mlt::Filter*);
+    void filterOutChanged(int delta, Mlt::Filter*);
 
 public slots:
     void refreshTrackList();

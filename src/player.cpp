@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2017 Meltytech, LLC
+ * Copyright (c) 2012-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -273,8 +273,6 @@ void Player::connectTransport(const TransportControllable* receiver)
     connect(this, SIGNAL(fastForwarded()), receiver, SLOT(fastForward()));
     connect(this, SIGNAL(previousSought(int)), receiver, SLOT(previous(int)));
     connect(this, SIGNAL(nextSought(int)), receiver, SLOT(next(int)));
-    connect(this, SIGNAL(inChanged(int)), receiver, SLOT(setIn(int)));
-    connect(this, SIGNAL(outChanged(int)), receiver, SLOT(setOut(int)));
 }
 
 void Player::setupActions(QWidget* widget)
@@ -635,16 +633,22 @@ void Player::updateSelection()
 
 void Player::onInChanged(int in)
 {
-    if (in != m_previousIn)
-        emit inChanged(in);
+    if (in != m_previousIn) {
+        int delta = in - MLT.producer()->get_in();
+        MLT.setIn(in);
+        emit inChanged(delta);
+    }
     m_previousIn = in;
     updateSelection();
 }
 
 void Player::onOutChanged(int out)
 {
-    if (out != m_previousOut)
-        emit outChanged(out);
+    if (out != m_previousOut) {
+        int delta = out - MLT.producer()->get_out();
+        MLT.setOut(out);
+        emit outChanged(delta);
+    }
     m_previousOut = out;
     m_playPosition = m_previousOut; // prevent O key from pausing
     updateSelection();

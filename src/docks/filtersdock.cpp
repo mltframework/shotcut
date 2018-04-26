@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 Meltytech, LLC
+ * Copyright (c) 2013-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  * Author: Brian Matherly <code@brianmatherly.com>
  *
@@ -33,6 +33,7 @@
 #include "qmltypes/qmlview.h"
 #include "models/metadatamodel.h"
 #include "models/attachedfiltersmodel.h"
+#include "mltcontroller.h"
 
 FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* attachedModel, QWidget *parent) :
     QDockWidget(tr("Filters"), parent),
@@ -51,6 +52,10 @@ FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* att
     m_qview.rootContext()->setContextProperty("view", new QmlView(&m_qview));
     m_qview.rootContext()->setContextProperty("metadatamodel", metadataModel);
     m_qview.rootContext()->setContextProperty("attachedfiltersmodel", attachedModel);
+    m_qview.rootContext()->setContextProperty("producer", &m_producer);
+    connect(&m_producer, SIGNAL(seeked(int)), SIGNAL(seeked(int)));
+    connect(this, SIGNAL(producerInChanged(int)), &m_producer, SIGNAL(inChanged(int)));
+    connect(this, SIGNAL(producerOutChanged(int)), &m_producer, SIGNAL(outChanged(int)));
     setCurrentFilter(0, 0, -1);
     connect(m_qview.quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(resetQview()));
 
@@ -71,21 +76,11 @@ void FiltersDock::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta, int ind
     QMetaObject::invokeMethod(m_qview.rootObject(), "setCurrentFilter", Q_ARG(QVariant, QVariant(index)));
     if (filter)
         connect(filter, SIGNAL(changed()), SIGNAL(changed()));
-}
-
-void FiltersDock::setFadeInDuration(int duration)
-{
-    QObject* filterUi = m_qview.rootObject()->findChild<QObject*>("fadeIn");
-    if (filterUi) {
-        filterUi->setProperty("duration", duration);
-    }
-}
-
-void FiltersDock::setFadeOutDuration(int duration)
-{
-    QObject* filterUi = m_qview.rootObject()->findChild<QObject*>("fadeOut");
-    if (filterUi) {
-        filterUi->setProperty("duration", duration);
+    if (filter && filter->producer().is_valid()) {
+        m_producer.setProducer(filter->producer());
+    } else {
+        Mlt::Producer emptyProducer(mlt_producer(0));
+        m_producer.setProducer(emptyProducer);
     }
 }
 
@@ -96,6 +91,36 @@ bool FiltersDock::event(QEvent *event)
         resetQview();
     }
     return result;
+}
+
+void FiltersDock::onSeeked(int position)
+{
+    if (m_producer.producer().is_valid()) {
+        if (MLT.isMultitrack()) {
+            // Make the position relative to clip's position on a timeline track.
+            position -= m_producer.producer().get_int(kPlaylistStartProperty);
+        } else {
+            // Make the position relative to the clip's in point.
+            position -= m_producer.in();
+        }
+        m_producer.seek(qBound(0, position, m_producer.duration()));
+    }
+}
+
+void FiltersDock::onShowFrame(const SharedFrame& frame)
+{
+    if (m_producer.producer().is_valid()) {
+        int position = frame.get_position();
+        if (MLT.isMultitrack()) {
+            // Make the position relative to clip's position on a timeline track.
+            position -= m_producer.producer().get_int(kPlaylistStartProperty);
+        } else {
+            // Make the position relative to the clip's in point.
+            position -= m_producer.in();
+        }
+        if (position >= 0 && position <= m_producer.duration())
+            m_producer.seek(position);
+    }
 }
 
 void FiltersDock::resetQview()

@@ -74,7 +74,9 @@
 #include "widgets/trackpropertieswidget.h"
 #include "widgets/timelinepropertieswidget.h"
 #include "dialogs/unlinkedfilesdialog.h"
+#include "docks/keyframesdock.h"
 #include "util.h"
+#include "models/keyframesmodel.h"
 
 #include <QtWidgets>
 #include <Logger.h>
@@ -327,9 +329,27 @@ MainWindow::MainWindow()
     connect(&QmlApplication::singleton(), SIGNAL(filtersPasted(Mlt::Producer*)),
             m_timelineDock->model(), SLOT(filterAddedOrRemoved(Mlt::Producer*)));
     connect(m_filterController, SIGNAL(statusChanged(QString)), this, SLOT(showStatusMessage(QString)));
-    connect(m_timelineDock, SIGNAL(fadeInChanged(int)), m_filtersDock, SLOT(setFadeInDuration(int)));
-    connect(m_timelineDock, SIGNAL(fadeOutChanged(int)), m_filtersDock, SLOT(setFadeOutDuration(int)));
+    connect(m_timelineDock, SIGNAL(fadeInChanged(int)), m_filterController, SLOT(onFadeInChanged()));
+    connect(m_timelineDock, SIGNAL(fadeOutChanged(int)), m_filterController, SLOT(onFadeOutChanged()));
     connect(m_timelineDock, SIGNAL(selected(Mlt::Producer*)), m_filterController, SLOT(setProducer(Mlt::Producer*)));
+    connect(m_player, SIGNAL(seeked(int)), m_filtersDock, SLOT(onSeeked(int)));
+    connect(m_filtersDock, SIGNAL(seeked(int)), SLOT(seekKeyframes(int)));
+    connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), m_filtersDock, SLOT(onShowFrame(const SharedFrame&)));
+    connect(m_player, SIGNAL(inChanged(int)), m_filtersDock, SIGNAL(producerInChanged(int)));
+    connect(m_player, SIGNAL(outChanged(int)), m_filtersDock, SIGNAL(producerOutChanged(int)));
+    connect(m_player, SIGNAL(inChanged(int)), m_filterController, SLOT(onFilterInChanged(int)));
+    connect(m_player, SIGNAL(outChanged(int)), m_filterController, SLOT(onFilterOutChanged(int)));
+    connect(m_timelineDock->model(), SIGNAL(filterInChanged(int, Mlt::Filter*)), m_filterController, SLOT(onFilterInChanged(int, Mlt::Filter*)));
+    connect(m_timelineDock->model(), SIGNAL(filterOutChanged(int, Mlt::Filter*)), m_filterController, SLOT(onFilterOutChanged(int, Mlt::Filter*)));
+
+    m_keyframesDock = new KeyframesDock(m_filterController->metadataModel(), m_filterController->attachedModel(), m_filtersDock->qmlProducer(), this);
+    m_keyframesDock->hide();
+    addDockWidget(Qt::BottomDockWidgetArea, m_keyframesDock);
+    ui->menuView->addAction(m_keyframesDock->toggleViewAction());
+    connect(m_keyframesDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onKeyframesDockTriggered(bool)));
+    connect(ui->actionKeyframes, SIGNAL(triggered()), this, SLOT(onKeyframesDockTriggered()));
+    connect(m_filterController, SIGNAL(currentFilterAboutToChange()), m_keyframesDock, SLOT(clearCurrentFilter()));
+    connect(m_filterController, SIGNAL(currentFilterChanged(QmlFilter*, QmlMetadata*, int)), m_keyframesDock, SLOT(setCurrentFilter(QmlFilter*, QmlMetadata*)), Qt::QueuedConnection);
 
     m_historyDock = new QDockWidget(tr("History"), this);
     m_historyDock->hide();
@@ -361,6 +381,7 @@ MainWindow::MainWindow()
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_propertiesDock, SLOT(setDisabled(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_recentDock, SLOT(setDisabled(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_filtersDock, SLOT(setDisabled(bool)));
+    connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_keyframesDock, SLOT(setDisabled(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), ui->actionOpen, SLOT(setDisabled(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), ui->actionOpenOther, SLOT(setDisabled(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), ui->actionExit, SLOT(setDisabled(bool)));
@@ -388,6 +409,7 @@ MainWindow::MainWindow()
     splitDockWidget(audioMeterDock, m_recentDock, Qt::Horizontal);
     tabifyDockWidget(m_recentDock, m_historyDock);
     tabifyDockWidget(m_historyDock, m_jobsDock);
+    tabifyDockWidget(m_keyframesDock, m_timelineDock);
     m_recentDock->raise();
 
     if (Settings.meltedEnabled()) {
@@ -1286,6 +1308,11 @@ void MainWindow::seekTimeline(int position)
     m_player->seek(position);
 }
 
+void MainWindow::seekKeyframes(int position)
+{
+    m_player->seek(position);
+}
+
 void MainWindow::readPlayerSettings()
 {
     LOG_DEBUG() << "begin";
@@ -1448,17 +1475,17 @@ void MainWindow::on_actionAbout_Shotcut_triggered()
     QMessageBox::about(this, tr("About Shotcut"),
              tr("<h1>Shotcut version %1</h1>"
                 "<p><a href=\"https://www.shotcut.org/\">Shotcut</a> is a free, open source, cross platform video editor.</p>"
-                "<small><p>Copyright &copy; 2011-2016 <a href=\"https://www.meltytech.com/\">Meltytech</a>, LLC</p>"
-                "<p>Licensed under the <a href=\"http://www.gnu.org/licenses/gpl.html\">GNU General Public License v3.0</a></p>"
+                "<small><p>Copyright &copy; 2011-2018 <a href=\"https://www.meltytech.com/\">Meltytech</a>, LLC</p>"
+                "<p>Licensed under the <a href=\"https://www.gnu.org/licenses/gpl.html\">GNU General Public License v3.0</a></p>"
                 "<p>This program proudly uses the following projects:<ul>"
-                "<li><a href=\"http://www.qt-project.org/\">Qt</a> application and UI framework</li>"
-                "<li><a href=\"http://www.mltframework.org/\">MLT</a> multimedia authoring framework</li>"
-                "<li><a href=\"http://www.ffmpeg.org/\">FFmpeg</a> multimedia format and codec libraries</li>"
-                "<li><a href=\"http://www.videolan.org/developers/x264.html\">x264</a> H.264 encoder</li>"
-                "<li><a href=\"http://www.webmproject.org/\">WebM</a> VP8 and VP9 encoders</li>"
+                "<li><a href=\"https://www.qt.io/\">Qt</a> application and UI framework</li>"
+                "<li><a href=\"https://www.mltframework.org/\">MLT</a> multimedia authoring framework</li>"
+                "<li><a href=\"https://www.ffmpeg.org/\">FFmpeg</a> multimedia format and codec libraries</li>"
+                "<li><a href=\"https://www.videolan.org/developers/x264.html\">x264</a> H.264 encoder</li>"
+                "<li><a href=\"https://www.webmproject.org/\">WebM</a> VP8 and VP9 encoders</li>"
                 "<li><a href=\"http://lame.sourceforge.net/\">LAME</a> MP3 encoder</li>"
-                "<li><a href=\"http://www.dyne.org/software/frei0r/\">Frei0r</a> video plugins</li>"
-                "<li><a href=\"http://www.ladspa.org/\">LADSPA</a> audio plugins</li>"
+                "<li><a href=\"https://www.dyne.org/software/frei0r/\">Frei0r</a> video plugins</li>"
+                "<li><a href=\"https://www.ladspa.org/\">LADSPA</a> audio plugins</li>"
                 "<li><a href=\"http://www.defaulticon.com/\">DefaultIcon</a> icon collection by <a href=\"http://www.interactivemania.com/\">interactivemania</a></li>"
                 "<li><a href=\"http://www.oxygen-icons.org/\">Oxygen</a> icon collection</li>"
                 "</ul></p>"
@@ -1816,6 +1843,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         break;
     case Qt::Key_F5:
         m_timelineDock->model()->reload();
+        m_keyframesDock->model().reload();
         break;
     case Qt::Key_F1:
         LOG_DEBUG() << "Current focusWidget:" << QApplication::focusWidget();
@@ -2201,6 +2229,14 @@ void MainWindow::onFiltersDockTriggered(bool checked)
     }
 }
 
+void MainWindow::onKeyframesDockTriggered(bool checked)
+{
+    if (checked) {
+        m_keyframesDock->show();
+        m_keyframesDock->raise();
+    }
+}
+
 void MainWindow::onPlaylistCreated()
 {
     if (!playlist() || playlist()->count() == 0) return;
@@ -2263,6 +2299,25 @@ void MainWindow::onMultitrackClosed()
 void MainWindow::onMultitrackModified()
 {
     setWindowModified(true);
+
+    // Reflect this playlist info onto the producer for keyframes dock.
+    if (!m_timelineDock->selection().isEmpty()) {
+        int clipIndex = m_timelineDock->selection().first();
+        QScopedPointer<Mlt::ClipInfo> info(m_timelineDock->getClipInfo(m_timelineDock->currentTrack(), clipIndex));
+        if (info && info->producer && info->producer->is_valid()) {
+            info->producer->set(kPlaylistStartProperty, info->start);
+            if (info->frame_in != info->producer->get_int(kFilterInProperty)) {
+                info->producer->set(kFilterInProperty, info->frame_in);
+                int delta = info->frame_in - info->producer->get_int(kFilterInProperty);
+                emit m_filtersDock->producerInChanged(delta);
+            }
+            if (info->frame_out != info->producer->get_int(kFilterOutProperty)) {
+                info->producer->set(kFilterOutProperty, info->frame_out);
+                int delta = info->frame_out - info->producer->get_int(kFilterOutProperty);
+                emit m_filtersDock->producerOutChanged(delta);
+            }
+        }
+    }
 }
 
 void MainWindow::onMultitrackDurationChanged()
@@ -2283,6 +2338,7 @@ void MainWindow::onCutModified()
 
 void MainWindow::onFilterModelChanged()
 {
+    MLT.refreshConsumer();
     setWindowModified(true);
     updateAutoSave();
     if (playlist())
@@ -2581,6 +2637,8 @@ void MainWindow::setInToCurrent(bool ripple)
         m_timelineDock->trimClipAtPlayhead(TimelineDock::TrimInPoint, ripple);
     } else if (MLT.isSeekable() && MLT.isClip()) {
         m_player->setIn(m_player->position());
+        int delta = m_player->position() - MLT.producer()->get_in();
+        emit m_player->inChanged(delta);
     }
 }
 
@@ -2590,6 +2648,8 @@ void MainWindow::setOutToCurrent(bool ripple)
         m_timelineDock->trimClipAtPlayhead(TimelineDock::TrimOutPoint, ripple);
     } else if (MLT.isSeekable() && MLT.isClip()) {
         m_player->setOut(m_player->position());
+        int delta = m_player->position() - MLT.producer()->get_out();
+        emit m_player->outChanged(delta);
     }
 }
 

@@ -82,8 +82,8 @@ Item {
             fileLabelTip.text = qsTr('No HTML file loaded. Click "Open" or "New" to load a file.')
             filter.set("disable", 1)
         }
-        filter.set('in', filter.producerIn)
-        filter.set('out', filter.producerOut)
+        filter.set('in', producer.in)
+        filter.set('out', producer.out)
     }
 
     FileDialog {

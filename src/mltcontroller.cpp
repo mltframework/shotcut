@@ -24,10 +24,13 @@
 #include <QUuid>
 #include <Logger.h>
 #include <Mlt.h>
+
 #include "glwidget.h"
 #include "settings.h"
 #include "shotcut_mlt_properties.h"
 #include "mainwindow.h"
+#include "controllers/filtercontroller.h"
+#include "qmltypes/qmlmetadata.h"
 
 namespace Mlt {
 
@@ -651,41 +654,48 @@ void Controller::next(int currentPosition)
 void Controller::setIn(int in)
 {
     if (m_producer && m_producer->is_valid()) {
-        m_producer->set("in", in);
-
-        // Adjust all filters that have an explicit duration.
+        // Adjust filters.
         int n = m_producer->filter_count();
         for (int i = 0; i < n; i++) {
             Filter* filter = m_producer->filter(i);
-            if (filter && filter->is_valid() && filter->get_length() > 0) {
-                if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeIn")
-                        || QString(filter->get("mlt_service")) == "webvfx") {
-                    filter->set_in_and_out(in, in + filter->get_length() - 1);
+            if (filter && filter->is_valid()) {
+                QmlMetadata* meta = MAIN.filterController()->metadataForService(filter);
+                if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeIn") && !filter->get(kShotcutAnimInProperty)) {
+                    // Convert legacy fadeIn filters.
+                    filter->set(kShotcutAnimInProperty, filter->get_length());
+                    filter->set_in_and_out(m_producer->get_in(), m_producer->get_out());
+                } else if (filter->get_in() <= m_producer->get_in()
+                           || (meta && meta->keyframes()->allowAnimateIn() && !meta->keyframes()->allowTrim())) {
+                    filter->set_in_and_out(in, filter->get_out());
                 }
             }
             delete filter;
         }
+        m_producer->set("in", in);
     }
 }
 
 void Controller::setOut(int out)
 {
     if (m_producer && m_producer->is_valid()) {
-        m_producer->set("out", out);
-
         // Adjust all filters that have an explicit duration.
         int n = m_producer->filter_count();
         for (int i = 0; i < n; i++) {
             Filter* filter = m_producer->filter(i);
-            if (filter && filter->is_valid() && filter->get_length() > 0) {
-                if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeOut")
-                        || QString(filter->get("mlt_service")) == "webvfx") {
-                    int in = out - filter->get_length() + 1;
-                    filter->set_in_and_out(in, out);
+            if (filter && filter->is_valid()) {
+                QmlMetadata* meta = MAIN.filterController()->metadataForService(filter);
+                if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeOut") && !filter->get(kShotcutAnimOutProperty)) {
+                    // Convert legacy fadeIn filters.
+                    filter->set(kShotcutAnimOutProperty, filter->get_length());
+                    filter->set_in_and_out(m_producer->get_in(), m_producer->get_out());
+                } else if (filter->get_out() >= m_producer->get_out()
+                           || (meta && meta->keyframes()->allowAnimateOut() && !meta->keyframes()->allowTrim())) {
+                    filter->set_in_and_out(filter->get_in(), out);
                 }
             }
             delete filter;
         }
+        m_producer->set("out", out);
     }
 }
 
@@ -867,22 +877,23 @@ void Controller::pasteFilters(Mlt::Producer* producer)
     if (targetProducer) {
         copyFilters(*m_filtersClipboard, *targetProducer);
 
-        // Adjust all filters that have an explicit duration.
+        // Adjust filters.
         int n = targetProducer->filter_count();
         for (int j = 0; j < n; j++) {
-            Mlt::Filter* filter = targetProducer->filter(j);
-            if (filter && filter->is_valid() && filter->get_length() > 0) {
-                if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeIn")
-                        || QString(filter->get("mlt_service")) == "webvfx") {
-                    int in = targetProducer->get_int(kFilterInProperty);
-                    filter->set_in_and_out(in, in + filter->get_length() - 1);
+            QScopedPointer<Mlt::Filter> filter(targetProducer->filter(j));
+            if (filter && filter->is_valid()) {
+                int in = targetProducer->get(kFilterInProperty)? targetProducer->get_int(kFilterInProperty) : targetProducer->get_in();
+                int out = targetProducer->get(kFilterOutProperty)? targetProducer->get_int(kFilterOutProperty): targetProducer->get_out();
+                if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeIn")) {
+                    // Convert legacy fadeIn filters.
+                    filter->set(kShotcutAnimInProperty, filter->get_length());
                 }
                 else if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeOut")) {
-                    int out = targetProducer->get_int(kFilterOutProperty);
-                    filter->set_in_and_out(out - filter->get_length() + 1, out);
+                    // Convert legacy fadeIn filters.
+                    filter->set(kShotcutAnimOutProperty, filter->get_length());
                 }
+                filter->set_in_and_out(in, out);
             }
-            delete filter;
         }
     }
 }
@@ -890,6 +901,19 @@ void Controller::pasteFilters(Mlt::Producer* producer)
 void Controller::setSavedProducer(Mlt::Producer* producer)
 {
     m_savedProducer.reset(new Mlt::Producer(producer));
+}
+
+Filter* Controller::getFilter(const QString& name, Service* service)
+{
+    for (int i = 0; i < service->filter_count(); i++) {
+        Mlt::Filter* filter = service->filter(i);
+        if (filter) {
+            if (name == filter->get(kShotcutFilterProperty))
+                return filter;
+            delete filter;
+        }
+    }
+    return 0;
 }
 
 void TransportControl::play(double speed)

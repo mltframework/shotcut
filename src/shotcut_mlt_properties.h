@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2017 Meltytech, LLC
+ * Copyright (c) 2013-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -45,6 +45,8 @@
 #define kShotcutDetailProperty "shotcut:detail"
 #define kShotcutHashProperty "shotcut:hash"
 #define kShotcutSkipConvertProperty "shotcut:skipConvert"
+#define kShotcutAnimInProperty "shotcut:animIn"
+#define kShotcutAnimOutProperty "shotcut:animOut"
 
 /* Project specific properties */
 #define kShotcutProjectAudioChannels "shotcut:projectAudioChannels"
@@ -67,6 +69,7 @@
 #define kAudioLevelsProperty "_shotcut:audio-levels"
 #define kBackgroundCaptureProperty "_shotcut:bgcapture"
 #define kPlaylistIndexProperty "_shotcut:playlistIndex"
+#define kPlaylistStartProperty "_shotcut:playlistStart"
 #define kFilterInProperty "_shotcut:filter_in"
 #define kFilterOutProperty "_shotcut:filter_out"
 #define kThumbnailInProperty "_shotcut:thumbnail-in"

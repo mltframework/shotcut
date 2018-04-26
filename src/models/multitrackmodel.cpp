@@ -24,6 +24,9 @@
 #include "util.h"
 #include "audiolevelstask.h"
 #include "shotcut_mlt_properties.h"
+#include "controllers/filtercontroller.h"
+#include "qmltypes/qmlmetadata.h"
+
 #include <QScopedPointer>
 #include <QApplication>
 #include <qmath.h>
@@ -137,7 +140,10 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                     filter.reset(getFilter("fadeInBrightness", info->producer));
                 if (!filter || !filter->is_valid())
                     filter.reset(getFilter("fadeInMovit", info->producer));
-                return (filter && filter->is_valid())? filter->get_length() : 0;
+                if (filter && filter->is_valid() && filter->get(kShotcutAnimInProperty))
+                    return filter->get_int(kShotcutAnimInProperty);
+                else
+                    return (filter && filter->is_valid())? filter->get_length() : 0;
             }
             case FadeOutRole: {
                 QScopedPointer<Mlt::Filter> filter(getFilter("fadeOutVolume", info->producer));
@@ -145,7 +151,10 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                     filter.reset(getFilter("fadeOutBrightness", info->producer));
                 if (!filter || !filter->is_valid())
                     filter.reset(getFilter("fadeOutMovit", info->producer));
-                return (filter && filter->is_valid())? filter->get_length() : 0;
+                if (filter && filter->is_valid() && filter->get(kShotcutAnimOutProperty))
+                    return filter->get_int(kShotcutAnimOutProperty);
+                else
+                    return (filter && filter->is_valid())? filter->get_length() : 0;
             }
             case IsTransitionRole:
                 return isTransition(playlist, index.row());
@@ -431,14 +440,21 @@ int MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta, bool r
         int out = info->frame_out;
         playlist.resize_clip(clipIndex, in, out);
 
-        // Adjust all filters that have an explicit duration.
+        // Adjust filters.
         int n = info->producer->filter_count();
         for (int j = 0; j < n; j++) {
             Mlt::Filter* filter = info->producer->filter(j);
-            if (filter && filter->is_valid() && filter->get_length() > 0) {
-                if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeIn")
-                        || QString(filter->get("mlt_service")) == "webvfx") {
-                    filter->set_in_and_out(in, in + filter->get_length() - 1);
+            if (filter && filter->is_valid()) {
+                QmlMetadata* meta = MAIN.filterController()->metadataForService(filter);
+                if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeIn") && !filter->get(kShotcutAnimInProperty)) {
+                    // Convert legacy fadeIn filters.
+                    filter->set(kShotcutAnimInProperty, filter->get_length());
+                    filter->set_in_and_out(info->frame_in, info->frame_out);
+                    emit filterInChanged(delta, filter);
+                } else if (filter->get_in() <= info->frame_in
+                           || (meta && meta->keyframes()->allowAnimateIn() && !meta->keyframes()->allowTrim())) {
+                    filter->set_in_and_out(in, filter->get_out());
+                    emit filterInChanged(delta, filter);
                 }
             }
             delete filter;
@@ -614,14 +630,21 @@ int MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta, bool 
         int out = info->frame_out - delta;
         playlist.resize_clip(clipIndex, in, out);
 
-        // Adjust all filters that have an explicit duration.
+        // Adjust filters.
         int n = info->producer->filter_count();
         for (int j = 0; j < n; j++) {
             Mlt::Filter* filter = info->producer->filter(j);
-            if (filter && filter->is_valid() && filter->get_length() > 0) {
-                if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeOut")
-                        || QString(filter->get("mlt_service")) == "webvfx") {
-                    filter->set_in_and_out(out - filter->get_length() + 1, out);
+            if (filter && filter->is_valid()) {
+                QmlMetadata* meta = MAIN.filterController()->metadataForService(filter);
+                if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeOut")) {
+                    // Convert legacy fadeOut filters.
+                    filter->set(kShotcutAnimOutProperty, filter->get_length());
+                    filter->set_in_and_out(info->frame_in, info->frame_out);
+                    emit filterOutChanged(delta, filter);
+                } else if (filter->get_out() >= info->frame_out
+                           || (meta && meta->keyframes()->allowAnimateOut() && !meta->keyframes()->allowTrim())) {
+                    filter->set_in_and_out(filter->get_in(), out);
+                    emit filterOutChanged(delta, filter);
                 }
             }
             delete filter;
@@ -1402,10 +1425,14 @@ void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
         Mlt::Playlist playlist(*track);
         QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
         if (info && info->producer && info->producer->is_valid()) {
+            bool isChanged = false;
             QScopedPointer<Mlt::Filter> filter;
             duration = qBound(0, duration, info->frame_count);
 
-            if (m_trackList[trackIndex].type == VideoTrackType) {
+            if (m_trackList[trackIndex].type == VideoTrackType
+                // If video track index is not None.
+                && (!info->producer->get("video_index") || info->producer->get_int("video_index") != -1)) {
+
                 // Get video filter.
                 if (Settings.playerGPU())
                     filter.reset(getFilter("fadeInMovit", info->producer));
@@ -1431,6 +1458,8 @@ void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
                         info->producer->attach(f);
                         filter.reset(new Mlt::Filter(f));
                     }
+                    filter->set_in_and_out(info->frame_in, info->frame_out);
+                    emit filterOutChanged(info->frame_out, filter.data());
                 } else if (Settings.playerGPU()) {
                     // Special handling for animation keyframes on movit.opacity.
                     QString opacity = QString("0~=0; %1=1").arg(duration - 1);
@@ -1441,30 +1470,40 @@ void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
                     filter->set("level", level.toLatin1().constData());
                 }
                 // Adjust video filter.
-                filter->set_in_and_out(info->frame_in, info->frame_in + duration - 1);
+                filter->set(kShotcutAnimInProperty, duration);
+                isChanged = true;
             }
 
-            // Get audio filter.
-            filter.reset(getFilter("fadeInVolume", info->producer));
+            // If audio track index is not None.
+            if (!info->producer->get("audio_index") || info->producer->get_int("audio_index") != -1) {
+                // Get audio filter.
+                filter.reset(getFilter("fadeInVolume", info->producer));
 
-            // Add audio filter if needed.
-            if (!filter) {
-                Mlt::Filter f(MLT.profile(), "volume");
-                f.set(kShotcutFilterProperty, "fadeInVolume");
-                f.set("gain", 0);
-                f.set("end", 1);
-                info->producer->attach(f);
-                filter.reset(new Mlt::Filter(f));
+                // Add audio filter if needed.
+                QString level = QString("0=-60; %1=0").arg(duration - 1);
+                if (!filter) {
+                    Mlt::Filter f(MLT.profile(), "volume");
+                    f.set(kShotcutFilterProperty, "fadeInVolume");
+                    info->producer->attach(f);
+                    filter.reset(new Mlt::Filter(f));
+                    filter->set_in_and_out(info->frame_in, info->frame_out);
+                    emit filterOutChanged(info->frame_out, filter.data());
+                }
+
+                // Adjust audio filter.
+                filter->set("level", level.toLatin1().constData());
+                filter->set(kShotcutAnimInProperty, duration);
+                isChanged = true;
             }
-            // Adjust audio filter.
-            filter->set_in_and_out(info->frame_in, info->frame_in + duration - 1);
 
-             // Signal change.
-            QModelIndex modelIndex = createIndex(clipIndex, 0, trackIndex);
-            QVector<int> roles;
-            roles << FadeInRole;
-            emit dataChanged(modelIndex, modelIndex, roles);
-            emit modified();
+            if (isChanged) {
+                 // Signal change.
+                QModelIndex modelIndex = createIndex(clipIndex, 0, trackIndex);
+                QVector<int> roles;
+                roles << FadeInRole;
+                emit dataChanged(modelIndex, modelIndex, roles);
+                emit modified();
+            }
         }
     }
 }
@@ -1479,8 +1518,12 @@ void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
         if (info && info->producer && info->producer->is_valid()) {
             QScopedPointer<Mlt::Filter> filter;
             duration = qBound(0, duration, info->frame_count);
+            bool isChanged = false;
 
-            if (m_trackList[trackIndex].type == VideoTrackType) {
+            if (m_trackList[trackIndex].type == VideoTrackType
+                // If video track index is not None.
+                && (!info->producer->get("video_index") || info->producer->get_int("video_index") != -1)) {
+
                 // Get video filter.
                 if (Settings.playerGPU())
                     filter.reset(getFilter("fadeOutMovit", info->producer));
@@ -1492,7 +1535,7 @@ void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
                     if (Settings.playerGPU()) {
                         Mlt::Filter f(MLT.profile(), "movit.opacity");
                         f.set(kShotcutFilterProperty, "fadeOutMovit");
-                        QString opacity = QString("0~=1; %1=1").arg(duration - 1);
+                        QString opacity = QString("%1~=1; %2=1").arg(info->frame_count - duration).arg(duration - 1);
                         f.set("opacity", opacity.toLatin1().constData());
                         f.set("alpha", 1);
                         info->producer->attach(f);
@@ -1500,46 +1543,58 @@ void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
                     } else {
                         Mlt::Filter f(MLT.profile(), "brightness");
                         f.set(kShotcutFilterProperty, "fadeOutBrightness");
-                        QString level = QString("0=1; %1=1").arg(duration - 1);
+                        QString level = QString("%1=1; %2=1").arg(info->frame_count - duration).arg(duration - 1);
                         f.set("level", level.toLatin1().constData());
                         f.set("alpha", 1);
                         info->producer->attach(f);
                         filter.reset(new Mlt::Filter(f));
                     }
+                    filter->set_in_and_out(info->frame_in, info->frame_out);
+                    emit filterOutChanged(info->frame_out, filter.data());
                 } else if (Settings.playerGPU()) {
                     // Special handling for animation keyframes on movit.opacity.
-                    QString opacity = QString("0~=1; %1=0").arg(duration - 1);
+                    QString opacity = QString("%1~=1; %2=1").arg(info->frame_count - duration).arg(duration - 1);
                     filter->set("opacity", opacity.toLatin1().constData());
                 } else {
                     // Special handling for animation keyframes on brightness.
-                    QString level = QString("0=1; %1=0").arg(duration - 1);
+                    QString level = QString("%1=1; %2=1").arg(info->frame_count - duration).arg(duration - 1);
                     filter->set("level", level.toLatin1().constData());
                 }
                 // Adjust video filter.
-                filter->set_in_and_out(info->frame_out - duration + 1, info->frame_out);
+                filter->set(kShotcutAnimOutProperty, duration);
+                isChanged = true;
             }
 
-            // Get audio filter.
-            filter.reset(getFilter("fadeOutVolume", info->producer));
+            // If audio track index is not None.
+            if (!info->producer->get("audio_index") || info->producer->get_int("audio_index") != -1) {
+                // Get audio filter.
+                filter.reset(getFilter("fadeOutVolume", info->producer));
 
-            // Add audio filter if needed.
-            if (!filter) {
-                Mlt::Filter f(MLT.profile(), "volume");
-                f.set(kShotcutFilterProperty, "fadeOutVolume");
-                f.set("gain", 1);
-                f.set("end", 0);
-                info->producer->attach(f);
-                filter.reset(new Mlt::Filter(f));
+                // Add audio filter if needed.
+                QString level = QString("%1=0; %2=-60").arg(info->frame_count - duration).arg(duration - 1);
+                if (!filter) {
+                    Mlt::Filter f(MLT.profile(), "volume");
+                    f.set(kShotcutFilterProperty, "fadeOutVolume");
+                    info->producer->attach(f);
+                    filter.reset(new Mlt::Filter(f));
+                    filter->set_in_and_out(info->frame_in, info->frame_out);
+                    emit filterOutChanged(info->frame_out, filter.data());
+                }
+
+                // Adjust audio filter.
+                filter->set("level", level.toLatin1().constData());
+                filter->set(kShotcutAnimOutProperty, duration);
+                isChanged = true;
             }
-            // Adjust audio filter.
-            filter->set_in_and_out(info->frame_out - duration + 1, info->frame_out);
 
-             // Signal change.
-            QModelIndex modelIndex = createIndex(clipIndex, 0, trackIndex);
-            QVector<int> roles;
-            roles << FadeOutRole;
-            emit dataChanged(modelIndex, modelIndex, roles);
-            emit modified();
+            if (isChanged) {
+                 // Signal change.
+                QModelIndex modelIndex = createIndex(clipIndex, 0, trackIndex);
+                QVector<int> roles;
+                roles << FadeOutRole;
+                emit dataChanged(modelIndex, modelIndex, roles);
+                emit modified();
+            }
         }
     }
 }
@@ -3068,15 +3123,7 @@ Mlt::Filter *MultitrackModel::getFilter(const QString &name, int trackIndex) con
 
 Mlt::Filter *MultitrackModel::getFilter(const QString &name, Mlt::Service* service) const
 {
-    for (int i = 0; i < service->filter_count(); i++) {
-        Mlt::Filter* filter = service->filter(i);
-        if (filter) {
-            if (name == filter->get(kShotcutFilterProperty))
-                return filter;
-            delete filter;
-        }
-    }
-    return 0;
+    return MLT.getFilter(name, service);
 }
 
 void MultitrackModel::removeBlankPlaceholder(Mlt::Playlist& playlist, int trackIndex)

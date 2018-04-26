@@ -114,7 +114,10 @@ SOURCES += main.cpp\
     jobs/ffprobejob.cpp \
     jobs/ffmpegjob.cpp \
     dialogs/unlinkedfilesdialog.cpp \
-    dialogs/transcodedialog.cpp
+    dialogs/transcodedialog.cpp \
+    docks/keyframesdock.cpp \
+    qmltypes/qmlproducer.cpp \
+    models/keyframesmodel.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -224,7 +227,10 @@ HEADERS  += mainwindow.h \
     jobs/ffprobejob.h \
     jobs/ffmpegjob.h \
     dialogs/unlinkedfilesdialog.h \
-    dialogs/transcodedialog.h
+    dialogs/transcodedialog.h \
+    docks/keyframesdock.h \
+    qmltypes/qmlproducer.h \
+    models/keyframesmodel.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
