@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2017 Meltytech, LLC
+ * Copyright (c) 2014-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,7 +20,8 @@ import QtQuick 2.0
 SizePositionUI {
     fillProperty: 'transition.fill'
     distortProperty: 'transition.distort'
-    rectProperty: 'transition.geometry'
+    legacyRectProperty: 'transition.geometry'
+    rectProperty: 'transition.rect'
     valignProperty: 'transition.valign'
     halignProperty: 'transition.halign'
     Component.onCompleted: {
