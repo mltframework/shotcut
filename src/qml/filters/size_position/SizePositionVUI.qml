@@ -32,9 +32,9 @@ Flickable {
     clip: true
     property real zoom: (video.zoom > 0)? video.zoom : 1.0
     property rect filterRect
-    property rect startValue: Qt.rect(-profile.width, 0, profile.width, profile.height)
-    property rect middleValue: Qt.rect(0, 0, profile.width, profile.height)
-    property rect endValue: Qt.rect(profile.width, 0, profile.width, profile.height)
+    property string startValue: '_shotcut:startValue'
+    property string middleValue: '_shotcut:middleValue'
+    property string endValue:  '_shotcut:endValue'
 
     contentWidth: video.rect.width * zoom
     contentHeight: video.rect.height * zoom
@@ -46,25 +46,9 @@ Flickable {
     }
 
     Component.onCompleted: {
-        if (!filter.isNew) {
-            filterRect = filter.getRect(rectProperty)
-            middleValue = filter.getRect(rectProperty, filter.animateIn)
-            if (filter.animateIn > 0)
-                startValue = filter.getRect(rectProperty, 0)
-            if (filter.animateOut > 0)
-                endValue = filter.getRect(rectProperty, filter.duration - 1)
-        }
         filterRect = filter.getRect(rectProperty, getPosition())
         rectangle.setHandles(filterRect)
         setRectangleControl()
-    }
-
-    function mltRectString(rectangle) {
-        return '%L1%/%L2%:%L3%x%L4%'
-               .arg(rectangle.x / profile.width * 100)
-               .arg(rectangle.y / profile.height * 100)
-               .arg(rectangle.width / profile.width * 100)
-               .arg(rectangle.height / profile.height * 100)
     }
 
     function getPosition() {
@@ -89,25 +73,25 @@ Flickable {
         filterRect.height = Math.round(rect.height / rectangle.heightScale)
         if (position !== null) {
             if (position <= 0)
-                startValue = filterRect
+                filter.set(startValue, filterRect)
             else if (position >= filter.duration - 1)
-                endValue = filterRect
+                filter.set(endValue, filterRect)
             else
-                middleValue = filterRect
+                filter.set(middleValue, filterRect)
         }
 
         filter.resetAnimation(rectProperty)
         if (filter.animateIn > 0 || filter.animateOut > 0) {
             if (filter.animateIn > 0) {
-                filter.set(rectProperty, startValue.x, startValue.y, startValue.width, startValue.height, 1.0, 0)
-                filter.set(rectProperty, middleValue.x, middleValue.y, middleValue.width, middleValue.height, 1.0, filter.animateIn - 1)
+                filter.set(rectProperty, filter.getRect(startValue), 1.0, 0)
+                filter.set(rectProperty, filter.getRect(middleValue), 1.0, filter.animateIn - 1)
             }
             if (filter.animateOut > 0) {
-                filter.set(rectProperty, middleValue.x, middleValue.y, middleValue.width, middleValue.height, 1.0, filter.duration - filter.animateOut)
-                filter.set(rectProperty, endValue.x, endValue.y, endValue.width, endValue.height, 1.0, filter.duration - 1)
+                filter.set(rectProperty, filter.getRect(middleValue), 1.0, filter.duration - filter.animateOut)
+                filter.set(rectProperty, filter.getRect(endValue), 1.0, filter.duration - 1)
             }
         } else {
-            filter.set(rectProperty, mltRectString(middleValue))
+            filter.set(rectProperty, filter.getRect(middleValue))
         }
     }
 

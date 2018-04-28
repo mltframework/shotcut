@@ -29,17 +29,21 @@ Item {
     property string valignProperty
     property string halignProperty
     property rect filterRect
-    property rect startValue: Qt.rect(-profile.width, 0, profile.width, profile.height)
-    property rect middleValue: Qt.rect(0, 0, profile.width, profile.height)
-    property rect endValue: Qt.rect(profile.width, 0, profile.width, profile.height)
+    property string startValue: '_shotcut:startValue'
+    property string middleValue: '_shotcut:middleValue'
+    property string endValue:  '_shotcut:endValue'
 
     width: 350
     height: 180
 
     Component.onCompleted: {
         if (filter.isNew) {
-            filter.set(fillProperty, 1)
+            filter.set(fillProperty, 0)
             filter.set(distortProperty, 0)
+            filter.set(startValue, Qt.rect(-profile.width, 0, profile.width, profile.height))
+            filter.set(middleValue, Qt.rect(0, 0, profile.width, profile.height))
+            filter.set(endValue, Qt.rect(profile.width, 0, profile.width, profile.height))
+
             filter.set(rectProperty,   '0%/50%:50%x50%')
             filter.set(valignProperty, 'bottom')
             filter.set(halignProperty, 'left')
@@ -64,6 +68,7 @@ Item {
             filter.set(valignProperty, 'top')
             filter.set(halignProperty, 'left')
             filter.savePreset(preset.parameters)
+            filter.set(fillProperty, 1)
         } else {
             if (legacyRectProperty !== null) {
                 var old = filter.get(legacyRectProperty)
@@ -73,34 +78,27 @@ Item {
                 }
             }
             filterRect = filter.getRect(rectProperty)
-            middleValue = filter.getRect(rectProperty, filter.animateIn)
+            filter.set(middleValue, filter.getRect(rectProperty, filter.animateIn))
             if (filter.animateIn > 0)
-                startValue = filter.getRect(rectProperty, 0)
+                filter.set(startValue, filter.getRect(rectProperty, 0))
             if (filter.animateOut > 0)
-                endValue = filter.getRect(rectProperty, filter.duration - 1)
+                filter.set(endValue, filter.getRect(rectProperty, filter.duration - 1))
         }
         setControls()
         setKeyframedControls()
-    }
-
-    function mltRectString(rectangle) {
-        return '%L1%/%L2%:%L3%x%L4%'
-               .arg(rectangle.x / profile.width * 100)
-               .arg(rectangle.y / profile.height * 100)
-               .arg(rectangle.width / profile.width * 100)
-               .arg(rectangle.height / profile.height * 100)
     }
 
     function getPosition() {
         return producer.position - (filter.in - producer.in)
     }
 
-    function setFilter(position) {
+    function setFilter(position, force) {
         var x = parseFloat(rectX.text)
         var y = parseFloat(rectY.text)
         var w = parseFloat(rectW.text)
         var h = parseFloat(rectH.text)
-        if (x !== filterRect.x ||
+        if (force ||
+            x !== filterRect.x ||
             y !== filterRect.y ||
             w !== filterRect.width ||
             h !== filterRect.height)
@@ -111,25 +109,25 @@ Item {
             filterRect.height = h
             if (position !== null) {
                 if (position <= 0)
-                    startValue = filterRect
+                    filter.set(startValue, filterRect)
                 else if (position >= filter.duration - 1)
-                    endValue = filterRect
+                    filter.set(endValue, filterRect)
                 else
-                    middleValue = filterRect
+                    filter.set(middleValue, filterRect)
             }
 
             filter.resetAnimation(rectProperty)
             if (filter.animateIn > 0 || filter.animateOut > 0) {
                 if (filter.animateIn > 0) {
-                    filter.set(rectProperty, startValue.x, startValue.y, startValue.width, startValue.height, 1.0, 0)
-                    filter.set(rectProperty, middleValue.x, middleValue.y, middleValue.width, middleValue.height, 1.0, filter.animateIn - 1)
+                    filter.set(rectProperty, filter.getRect(startValue), 1.0, 0)
+                    filter.set(rectProperty, filter.getRect(middleValue), 1.0, filter.animateIn - 1)
                 }
                 if (filter.animateOut > 0) {
-                    filter.set(rectProperty, middleValue.x, middleValue.y, middleValue.width, middleValue.height, 1.0, filter.duration - filter.animateOut)
-                    filter.set(rectProperty, endValue.x, endValue.y, endValue.width, endValue.height, 1.0, filter.duration - 1)
+                    filter.set(rectProperty, filter.getRect(middleValue), 1.0, filter.duration - filter.animateOut)
+                    filter.set(rectProperty, filter.getRect(endValue), 1.0, filter.duration - 1)
                 }
             } else {
-                filter.set(rectProperty, mltRectString(middleValue))
+                filter.set(rectProperty, filter.getRect(middleValue))
             }
         }
     }
@@ -333,8 +331,8 @@ Item {
         onChanged: setKeyframedControls()
         onInChanged: setFilter(null)
         onOutChanged: setFilter(null)
-        onAnimateInChanged: setFilter(null)
-        onAnimateOutChanged: setFilter(null)
+        onAnimateInChanged: setFilter(null, true)
+        onAnimateOutChanged: setFilter(null, true)
     }
 
     Connections {

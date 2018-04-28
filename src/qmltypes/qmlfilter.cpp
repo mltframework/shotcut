@@ -213,6 +213,11 @@ void QmlFilter::set(QString name, double x, double y, double width, double heigh
     }
 }
 
+void QmlFilter::set(QString name, const QRectF& rect, double opacity, int position, mlt_keyframe_type keyframeType)
+{
+    set(name, rect.x(), rect.y(), rect.width(), rect.height(), opacity, position, keyframeType);
+}
+
 void QmlFilter::loadPresets()
 {
     m_presets.clear();
