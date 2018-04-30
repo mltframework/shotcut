@@ -101,12 +101,12 @@ Rectangle {
         anchors.bottomMargin: parent.height / 2
         width: height * 16.0/9.0
         fillMode: Image.PreserveAspectFit
-        source: imagePath(outPoint)
+        source: visible? imagePath(outPoint) : ''
     }
 
     Image {
         id: inThumbnail
-        visible: settings.timelineShowThumbnails && inThumbnailVisible
+        visible: settings.timelineShowThumbnails && inThumbnailVisible && metadata !== null
         anchors.left: parent.left
         anchors.top: parent.top
         anchors.topMargin: parent.border.width
@@ -114,7 +114,7 @@ Rectangle {
         anchors.bottomMargin: parent.height / 2
         width: height * 16.0/9.0
         fillMode: Image.PreserveAspectFit
-        source: imagePath(inPoint)
+        source: visible? imagePath(inPoint) : ''
     }
 
     Row {
@@ -250,7 +250,7 @@ Rectangle {
     }
     Rectangle {
         id: animateInControl
-        visible: metadata.keyframes.allowAnimateIn
+        visible: metadata !== null && metadata.keyframes.allowAnimateIn
         enabled: !isBlank
         anchors.left: animateInTriangle.width > radius? undefined : animateInTriangle.left
         anchors.horizontalCenter: animateInTriangle.width > radius? animateInTriangle.right : undefined
@@ -343,7 +343,7 @@ Rectangle {
     }
     Rectangle {
         id: animateOutControl
-        visible: metadata.keyframes.allowAnimateOut
+        visible: metadata !== null && metadata.keyframes.allowAnimateOut
         enabled: !isBlank
         anchors.right: animateOutTriangle.width > radius? undefined : animateOutTriangle.right
         anchors.horizontalCenter: animateOutTriangle.width > radius? animateOutTriangle.left : undefined
@@ -416,7 +416,7 @@ Rectangle {
 
     Rectangle {
         id: trimIn
-        visible: metadata.keyframes.allowTrim
+        visible: metadata !== null && metadata.keyframes.allowTrim
         enabled: !isBlank
         anchors.left: parent.left
         anchors.leftMargin: 0
@@ -466,7 +466,7 @@ Rectangle {
     }
     Rectangle {
         id: trimOut
-        visible: metadata.keyframes.allowTrim
+        visible: metadata !== null && metadata.keyframes.allowTrim
         enabled: !isBlank
         anchors.right: parent.right
         anchors.rightMargin: 0

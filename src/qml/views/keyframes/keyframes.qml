@@ -116,7 +116,7 @@ Rectangle {
                     ParameterHead {
                         id: clipHead
                         visible: metadata !== null
-                        trackName: metadata.name
+                        trackName: metadata !== null? metadata.name : ''
                         width: headerWidth
                         height: Logic.trackHeight(true)
                         selected: false
@@ -130,7 +130,7 @@ Rectangle {
                             delegateIndex: index
 //                            isLocked: model.locked
                             width: headerWidth
-                            height: Logic.trackHeight(metadata.keyframes.parameters[index].isCurve)
+                            height: Logic.trackHeight(metadata !== null && metadata.keyframes.parameters[index].isCurve)
                             current: index === currentTrack
 //                            onIsLockedChanged: parametersRepeater.itemAt(index).isLocked = isLocked
                             onClicked: {
@@ -222,7 +222,7 @@ Rectangle {
                                 delegate: Rectangle {
                                     width: tracksContainer.width
                                     color: (index === currentTrack)? selectedTrackColor : (index % 2)? activePalette.alternateBase : activePalette.base
-                                    height: Logic.trackHeight(metadata.keyframes.parameters[index].isCurve)
+                                    height: Logic.trackHeight(metadata !== null && metadata.keyframes.parameters[index].isCurve)
                                 }
                             }
                         }
@@ -237,13 +237,13 @@ Rectangle {
                                     id: clipRow
                                     Clip {
                                         id: beforeClip
-                                        visible: metadata !== null && filter.out > 0 && filter.in > 0
+                                        visible: metadata !== null && filter !== null && filter.out > 0 && filter.in > 0
                                         isBlank: true
                                         clipName: producer.name
                                         clipResource: producer.resource
                                         mltService: producer.mlt_service
                                         inPoint: producer.in
-                                        outPoint: filter.in - 1
+                                        outPoint: filter !== null? filter.in - 1 : 0
                                         audioLevels: producer.audioLevels
                                         height: trackRoot.height
                                         hash: producer.hash
@@ -252,14 +252,14 @@ Rectangle {
                                     }
                                     Clip {
                                         id: activeClip
-                                        visible: metadata !== null && filter.out > 0
+                                        visible: metadata !== null && filter !== null && filter.out > 0
                                         clipName: producer.name
                                         clipResource: producer.resource
                                         mltService: producer.mlt_service
-                                        inPoint: filter.in
-                                        outPoint: filter.out
-                                        animateIn: filter.animateIn
-                                        animateOut: filter.animateOut
+                                        inPoint: filter !== null? filter.in : 0
+                                        outPoint: filter !== null? filter.out : 0
+                                        animateIn: filter !== null? filter.animateIn : 0
+                                        animateOut: filter !== null? filter.animateOut : 0
                                         audioLevels: producer.audioLevels
                                         height: trackRoot.height
                                         hash: producer.hash
@@ -293,12 +293,12 @@ Rectangle {
                                     }
                                     Clip {
                                         id: afterClip
-                                        visible: metadata !== null && filter.out > 0
+                                        visible: metadata !== null && filter !== null && filter.out > 0
                                         isBlank: true
                                         clipName: producer.name
                                         clipResource: producer.resource
                                         mltService: producer.mlt_service
-                                        inPoint: filter.out + 1
+                                        inPoint: filter !== null? filter.out + 1 : 0
                                         outPoint: producer.out
                                         audioLevels: producer.audioLevels
                                         height: trackRoot.height
@@ -434,7 +434,7 @@ Rectangle {
             model: parameters
             rootIndex: parameterDelegateModel.modelIndex(index)
             width: producer.duration * timeScale
-            height: Logic.trackHeight(metadata.keyframes.parameters[index].isCurve)
+            height: Logic.trackHeight(metadata !== null && metadata.keyframes.parameters[index].isCurve)
             onClicked: {
                 currentTrack = parameter.DelegateModel.itemsIndex
                 root.selection = [keyframe.DelegateModel.itemsIndex]
