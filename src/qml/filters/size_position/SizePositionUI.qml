@@ -37,12 +37,13 @@ Item {
     height: 180
 
     Component.onCompleted: {
+        filter.blockSignals = true
+        filter.set(middleValue, Qt.rect(0, 0, profile.width, profile.height))
+        filter.set(startValue, Qt.rect(-profile.width, 0, profile.width, profile.height))
+        filter.set(endValue, Qt.rect(profile.width, 0, profile.width, profile.height))
         if (filter.isNew) {
             filter.set(fillProperty, 0)
             filter.set(distortProperty, 0)
-            filter.set(startValue, Qt.rect(-profile.width, 0, profile.width, profile.height))
-            filter.set(middleValue, Qt.rect(0, 0, profile.width, profile.height))
-            filter.set(endValue, Qt.rect(profile.width, 0, profile.width, profile.height))
 
             filter.set(rectProperty,   '0%/50%:50%x50%')
             filter.set(valignProperty, 'bottom')
@@ -84,6 +85,7 @@ Item {
             if (filter.animateOut > 0)
                 filter.set(endValue, filter.getRect(rectProperty, filter.duration - 1))
         }
+        filter.blockSignals = false
         setControls()
         setKeyframedControls()
     }
@@ -184,12 +186,17 @@ Item {
             id: preset
             parameters: [fillProperty, distortProperty, rectProperty, halignProperty, valignProperty]
             Layout.columnSpan: 4
+            onBeforePresetLoaded: {
+                filter.resetAnimation(rectProperty)
+            }
             onPresetSelected: {
                 setControls()
-                // remove old animation
-                var r = filter.get(rectProperty)
-                filter.resetAnimation(rectProperty)
-                filter.set(rectProperty, r)
+                filterRect = filter.getRect(rectProperty, getPosition())
+                filter.set(middleValue, filter.getRect(rectProperty, filter.animateIn))
+                if (filter.animateIn > 0)
+                    filter.set(startValue, filter.getRect(rectProperty, 0))
+                if (filter.animateOut > 0)
+                    filter.set(endValue, filter.getRect(rectProperty, filter.duration - 1))
             }
         }
 

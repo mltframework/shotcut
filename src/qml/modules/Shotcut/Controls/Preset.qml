@@ -25,6 +25,7 @@ RowLayout {
     property var parameters: []
 
     // Tell the parent QML page to update its controls.
+    signal beforePresetLoaded()
     signal presetSelected()
 
     Component.onCompleted: {
@@ -38,12 +39,18 @@ RowLayout {
         Layout.maximumWidth: 300
         model: filter.presets
         onCurrentTextChanged: {
-            filter.animateIn = 0
-            filter.animateOut = 0
-            filter.preset(currentText)
-            filter.animateInChanged()
-            filter.animateOutChanged()
-            presetSelected()
+            if (currentText.length > 0) {
+                filter.blockSignals = true
+                filter.animateIn = 0
+                filter.animateOut = 0
+                beforePresetLoaded()
+                filter.preset(currentText)
+                presetSelected()
+                filter.blockSignals = false
+                filter.changed()
+                filter.animateInChanged()
+                filter.animateOutChanged()
+            }
         }
     }
     Button {

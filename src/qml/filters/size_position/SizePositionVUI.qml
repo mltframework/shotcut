@@ -125,7 +125,6 @@ Flickable {
             if (rectangle.aspectRatio !== getAspectRatio()) {
                 rectangle.aspectRatio = getAspectRatio()
                 rectangle.setHandles(filterRect)
-                setFilter(getPosition())
             }
         }
     }

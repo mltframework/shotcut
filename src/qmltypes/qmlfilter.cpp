@@ -64,7 +64,7 @@ QString QmlFilter::get(QString name, int position)
 {
     if (m_filter.is_valid()) {
         const char* propertyName = name.toUtf8().constData();
-        if (position < 0 || !m_filter.get_animation(propertyName))
+        if (position < 0)
             return QString::fromUtf8(m_filter.get(propertyName));
         else
             return QString::fromUtf8(m_filter.anim_get(propertyName, position, duration()));
@@ -77,7 +77,7 @@ double QmlFilter::getDouble(QString name, int position)
 {
     if (m_filter.is_valid()) {
         const char* propertyName = name.toUtf8().constData();
-        if (position < 0 || !m_filter.get_animation(propertyName))
+        if (position < 0)
             return m_filter.get_double(propertyName);
         else
             return m_filter.anim_get_double(propertyName, position, duration());
@@ -93,7 +93,7 @@ QRectF QmlFilter::getRect(QString name, int position)
     if (s) {
         const char* propertyName = name.toUtf8().constData();
         mlt_rect rect;
-        if (position < 0 || !m_filter.get_animation(propertyName)) {
+        if (position < 0) {
             rect = m_filter.get_rect(propertyName);
         } else {
             rect = m_filter.anim_get_rect(propertyName, position, duration());
@@ -226,7 +226,7 @@ void QmlFilter::loadPresets()
         QStringList entries = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::Executable);
         foreach (QString s, entries) {
             if (s == objectNameOrService() && dir.cd(s)) {
-                m_presets.append(" ");
+                m_presets.append("");
                 m_presets.append(dir.entryList(QDir::Files | QDir::Readable));
                 break;
             }

@@ -43,6 +43,7 @@ class QmlFilter : public QObject
     Q_PROPERTY(int animateIn READ animateIn WRITE setAnimateIn NOTIFY animateInChanged)
     Q_PROPERTY(int animateOut READ animateOut WRITE setAnimateOut NOTIFY animateOutChanged)
     Q_PROPERTY(int duration READ duration NOTIFY durationChanged)
+    Q_PROPERTY(bool blockSignals WRITE blockSignals)
 
 public:
     explicit QmlFilter();
