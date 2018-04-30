@@ -648,8 +648,7 @@ void TimelineDock::onRowsInserted(const QModelIndex& parent, int first, int last
             else
                 newSelection << (i + n);
         }
-        m_selection.selectedClips = newSelection;
-        emit selectionChanged();
+        setSelection(newSelection);
     }
 }
 
@@ -666,8 +665,7 @@ void TimelineDock::onRowsRemoved(const QModelIndex& parent, int first, int last)
             else if (i > last)
                 newSelection << (i - n);
         }
-        m_selection.selectedClips = newSelection;
-        emit selectionChanged();
+        setSelection(newSelection);
     }
 }
 

@@ -1122,38 +1122,11 @@ void MultitrackModel::removeClip(int trackIndex, int clipIndex)
                 clipStart = playlist.clip_start(clipIndex);
             }
 
-#ifdef Q_OS_MAC
-            // XXX Remove this when Qt is upgraded to > 5.2.
-            // Workaround a crash bug choosing Remove from CLip/blank context menu.
-            playlist.remove(clipIndex);
-            // Consolidate blanks
-            for (int i = 1; i < playlist.count(); i++) {
-                if (playlist.is_blank(i - 1) && playlist.is_blank(i)) {
-                    int out = playlist.clip_length(i - 1) + playlist.clip_length(i) - 1;
-                    playlist.resize_clip(i - 1, 0, out);
-                    QModelIndex idx = createIndex(i - 1, 0, trackIndex);
-                    QVector<int> roles;
-                    roles << DurationRole;
-                    emit dataChanged(idx, idx, roles);
-                    playlist.remove(i--);
-                }
-                if (playlist.count() > 0) {
-                    int i = playlist.count() - 1;
-                    if (playlist.is_blank(i)) {
-                        playlist.remove(i);
-                    }
-                }
-            }
-            if (playlist.count() == 0) {
-                playlist.blank(0);
-            }
-            QTimer::singleShot(10, this, SLOT(reload()));
-#else
             beginRemoveRows(index(trackIndex), clipIndex, clipIndex);
             playlist.remove(clipIndex);
             endRemoveRows();
             consolidateBlanks(playlist, trackIndex);
-#endif
+
             // Ripple all unlocked tracks.
             if (clipPlaytime > 0 && Settings.timelineRippleAllTracks())
             for (int j = 0; j < m_trackList.count(); ++j) {
