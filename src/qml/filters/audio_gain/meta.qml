@@ -8,4 +8,18 @@ Metadata {
     mlt_service: "volume"
     qml: "ui.qml"
     isFavorite: true
+    keyframes {
+        allowAnimateIn: true
+        allowAnimateOut: true
+        parameters: [
+            Parameter {
+                name: qsTr('Level')
+                property: 'level'
+                isSimple: true
+                isCurve: true
+                minimum: -50
+                maximum: 24
+            }
+        ]
+    }
 }

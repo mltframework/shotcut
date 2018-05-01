@@ -33,8 +33,7 @@ Rectangle {
     property int trackHeight: Logic.trackHeight(metadata.keyframes.parameters[parameterIndex].isCurve)
     property double minimum: metadata.keyframes.parameters[parameterIndex].minimum
     property double maximum: metadata.keyframes.parameters[parameterIndex].maximum
-    // median value = minimum + 0.5 * (maximum - minimum)
-    property double trackValue: ((minimum + 0.5 * (maximum - minimum)) - value) * (trackHeight - height * 2) / 2.0
+    property double trackValue: (0.5 - (value - minimum) / (maximum - minimum)) * (trackHeight - height - 2.0 * border.width)
 
     signal clicked(var keyframe)
 
