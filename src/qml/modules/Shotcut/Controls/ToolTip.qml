@@ -25,6 +25,8 @@ import org.shotcut.qml 1.0 as Shotcut
 Item {
     property alias text: toolTipText.text
     property alias isVisible: toolTipMouseArea.enabled
+    property alias cursorShape: toolTipMouseArea.cursorShape
+    property alias containsMouse: toolTipMouseArea.containsMouse
 
     anchors.fill: parent
 

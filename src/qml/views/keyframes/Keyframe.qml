@@ -43,7 +43,7 @@ Rectangle {
     x: position * timeScale - width/2
     anchors.verticalCenter: parameterRoot.verticalCenter
     anchors.verticalCenterOffset: metadata.keyframes.parameters[parameterIndex].isCurve ? trackValue : 0
-    height: 8
+    height: 10
     width: height
     color: isSelected? 'red' : activePalette.buttonText
     border.color: activePalette.button
@@ -62,7 +62,12 @@ Rectangle {
                 producer.position = position
         }
     }
-    ToolTip { id: tooltip; text: name}
+
+    ToolTip {
+        id: tooltip
+        text: name
+        cursorShape: Qt.PointingHandCursor
+    }
 
     Menu {
         id: menu
