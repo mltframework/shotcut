@@ -80,7 +80,7 @@ int KeyframesDock::seekNext()
         if (position > m_qmlProducer->position())
             m_qmlProducer->setPosition(position);
     }
-    return m_model.keyframeIndex(currentParameter(), m_qmlProducer->position() + m_qmlProducer->in());
+    return m_model.keyframeIndex(currentParameter(), m_qmlProducer->position() + m_qmlProducer->in() - MAIN.filterController()->currentFilter()->in());
 }
 
 void KeyframesDock::clearCurrentFilter()
