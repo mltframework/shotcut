@@ -103,7 +103,7 @@ Item {
             filter.resetAnimation('level')
             filter.set('level', middleValue)
         } else if (position !== null) {
-            filter.set('level', gainSlider.value, getPosition())
+            filter.set('level', gainSlider.value, position)
         }
     }
 

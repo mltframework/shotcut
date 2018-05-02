@@ -104,7 +104,7 @@ Item {
             filter.resetAnimation('level')
             filter.set('level', middleValue)
         } else if (position !== null) {
-            filter.set('level', value, getPosition())
+            filter.set('level', value, position)
         }
 //        console.log('level: ' + filter.get('level'))
     }
