@@ -65,7 +65,7 @@ Item {
     }
 
     function getPosition() {
-        return producer.position - (filter.in - producer.in)
+        return Math.max(producer.position - (filter.in - producer.in), 0)
     }
 
     function setControls() {
