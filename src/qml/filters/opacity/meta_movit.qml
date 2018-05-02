@@ -8,4 +8,18 @@ Metadata {
     mlt_service: "movit.opacity"
     needsGPU: true
     qml: "ui.qml"
+    keyframes {
+        allowAnimateIn: true
+        allowAnimateOut: true
+        parameters: [
+            Parameter {
+                name: qsTr('Level')
+                property: 'opacity'
+                isSimple: true
+                isCurve: true
+                minimum: 0
+                maximum: 1
+            }
+        ]
+    }
 }
