@@ -342,7 +342,7 @@ MainWindow::MainWindow()
     connect(m_timelineDock->model(), SIGNAL(filterInChanged(int, Mlt::Filter*)), m_filterController, SLOT(onFilterInChanged(int, Mlt::Filter*)));
     connect(m_timelineDock->model(), SIGNAL(filterOutChanged(int, Mlt::Filter*)), m_filterController, SLOT(onFilterOutChanged(int, Mlt::Filter*)));
 
-    m_keyframesDock = new KeyframesDock(m_filterController->metadataModel(), m_filterController->attachedModel(), m_filtersDock->qmlProducer(), this);
+    m_keyframesDock = new KeyframesDock(m_filtersDock->qmlProducer(), this);
     m_keyframesDock->hide();
     addDockWidget(Qt::BottomDockWidgetArea, m_keyframesDock);
     ui->menuView->addAction(m_keyframesDock->toggleViewAction());

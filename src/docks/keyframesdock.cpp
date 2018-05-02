@@ -38,7 +38,7 @@
 #include "controllers/filtercontroller.h"
 #include "qmltypes/qmlproducer.h"
 
-KeyframesDock::KeyframesDock(MetadataModel* metadataModel, AttachedFiltersModel* attachedModel, QmlProducer* qmlProducer, QWidget *parent)
+KeyframesDock::KeyframesDock(QmlProducer* qmlProducer, QWidget *parent)
     : QDockWidget(tr("Keyframes"), parent)
     , m_qview(QmlUtilities::sharedEngine(), this)
     , m_qmlProducer(qmlProducer)
