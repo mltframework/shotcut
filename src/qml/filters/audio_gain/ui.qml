@@ -33,6 +33,12 @@ Item {
             // Set default parameter values
             filter.set('level', 0)
         } else {
+            // Convert old version of filter.
+            if (filter.getDouble('gain') !== 0.0) {
+                filter.set('level', toDb(filter.getDouble('gain')))
+                filter.resetProperty('gain')
+            }
+
             middleValue = filter.getDouble('level', filter.animateIn)
             if (filter.animateIn > 0)
                 startValue = filter.getDouble('level', 0)
@@ -62,6 +68,10 @@ Item {
                 gainSlider.enabled = true
             }
         }
+    }
+
+    function toDb(value) {
+        return 20 * Math.log(value) / Math.LN10
     }
 
     function getPosition() {
