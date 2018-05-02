@@ -98,10 +98,12 @@ Rectangle {
         Column {
             z: 1
 
-            Item {
+            Rectangle {
                 // Padding between toolbar and track headers.
                 width: headerWidth
                 height: ruler.height
+                color: activePalette.window
+                z: 1
             }
             Flickable {
                 // Non-slider scroll area for the track headers.
@@ -130,8 +132,8 @@ Rectangle {
                             delegateIndex: index
 //                            isLocked: model.locked
                             width: headerWidth
-                            height: Logic.trackHeight(metadata !== null && metadata.keyframes.parameters[index].isCurve)
-                            current: index === currentTrack
+                            height: Logic.trackHeight(metadata !== null && typeof(metadata.keyframes.parameters[index]) !== 'undefined' && metadata.keyframes.parameters[index].isCurve)
+                            current: false // index === currentTrack
 //                            onIsLockedChanged: parametersRepeater.itemAt(index).isLocked = isLocked
                             onClicked: {
                                 currentTrack = index
@@ -221,8 +223,8 @@ Rectangle {
                                 model: parameters
                                 delegate: Rectangle {
                                     width: tracksContainer.width
-                                    color: (index === currentTrack)? selectedTrackColor : (index % 2)? activePalette.alternateBase : activePalette.base
-                                    height: Logic.trackHeight(metadata !== null && metadata.keyframes.parameters[index].isCurve)
+                                    color: (false /*index === currentTrack*/)? selectedTrackColor : (index % 2)? activePalette.alternateBase : activePalette.base
+                                    height: Logic.trackHeight(metadata !== null && typeof(metadata.keyframes.parameters[index]) !== 'undefined' && metadata.keyframes.parameters[index].isCurve)
                                 }
                             }
                         }
@@ -434,7 +436,7 @@ Rectangle {
             model: parameters
             rootIndex: parameterDelegateModel.modelIndex(index)
             width: producer.duration * timeScale
-            height: Logic.trackHeight(metadata !== null && metadata.keyframes.parameters[index].isCurve)
+            height: Logic.trackHeight(metadata !== null && typeof(metadata.keyframes.parameters[index]) !== 'undefined' && metadata.keyframes.parameters[index].isCurve)
             onClicked: {
                 currentTrack = parameter.DelegateModel.itemsIndex
                 root.selection = [keyframe.DelegateModel.itemsIndex]
