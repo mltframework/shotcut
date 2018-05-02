@@ -106,9 +106,8 @@ Item {
             filter.resetProperty('opacity')
             filter.set('opacity', middleValue)
         } else if (position !== null) {
-            filter.set('opacity', value, getPosition())
+            filter.set('opacity', value, position)
         }
-//        console.log('opacity: ' + filter.get('opacity'))
     }
 
     GridLayout {
@@ -126,7 +125,7 @@ Item {
             maximumValue: 200.0
             decimals: 1
             suffix: ' %'
-            onValueChanged: updateFilter(producer.position - (filter.in - producer.in))
+            onValueChanged: updateFilter(getPosition())
         }
         UndoButton {
             onClicked: brightnessSlider.value = 100
