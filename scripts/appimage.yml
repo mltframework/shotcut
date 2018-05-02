@@ -1,0 +1,31 @@
+app: Shotcut
+verbose: true
+
+ingredients:
+  packages:
+    - libsdl2-2.0-0
+    - libxkbcommon-x11-0
+  dist: trusty
+  sources: 
+    - deb http://us.archive.ubuntu.com/ubuntu/ trusty main universe
+  script:
+    - echo "multiarch-support" >> excludedeblist                                                                                         
+                                                                                                                                         
+script:
+  - tar xf ../../shotcut.tar.bz2 -C usr/bin --strip=2
+  - wget "https://github.com/mltframework/shotcut/raw/master/icons/shotcut-logo-64.png" -O shotcut.png
+  - cat > shotcut.desktop <<\EOF
+  - [Desktop Entry]
+  - Type=Application
+  - Name=Shotcut
+  - GenericName=Video Editor
+  - GenericName[de]=Video Bearbeitungsprogramm
+  - GenericName[ru]=Видеоредактор
+  - Comment=Video Editor
+  - Comment[de]=Programm zum Bearbeiten und Abspielen von Videodateien.
+  - Comment[ru]=Видеоредактор
+  - Terminal=false
+  - Exec=shotcut
+  - Icon=shotcut
+  - EOF
+
