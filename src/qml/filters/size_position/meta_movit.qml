@@ -11,6 +11,7 @@ Metadata {
     vui: 'vui_movit.qml'
     allowMultiple: false
     keyframes {
+        allowTrim: false
         allowAnimateIn: true
         allowAnimateOut: true
     }

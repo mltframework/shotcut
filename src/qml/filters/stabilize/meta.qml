@@ -8,4 +8,7 @@ Metadata {
     qml: "ui.qml"
     isClipOnly: true
     isGpuCompatible: false
+    keyframes {
+        allowTrim: false
+    }
 }
