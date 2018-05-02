@@ -237,24 +237,23 @@ int KeyframesModel::parameterIndex(const QString& propertyName) const
     return m_propertyNames.indexOf(propertyName);
 }
 
-bool KeyframesModel::setInterpolation(int parameterIndex, int position, InterpolationType type)
+bool KeyframesModel::setInterpolation(int parameterIndex, int keyframeIndex, InterpolationType type)
 {
     bool error = true;
     if (m_filter && parameterIndex < m_propertyNames.count()) {
         QString name = m_propertyNames[parameterIndex];
         Mlt::Animation animation = m_filter->getAnimation(name);
         if (animation.is_valid()) {
-            int i = keyframeIndex(parameterIndex, position);
-            if (!animation.key_set_type(i, mlt_keyframe_type(type))) {
-//                LOG_DEBUG() << "keyframe index" << i << "keyframe type" << type;
-                QModelIndex modelIndex = index(i, 0, index(parameterIndex));
+            if (!animation.key_set_type(keyframeIndex, mlt_keyframe_type(type))) {
+//                LOG_DEBUG() << "keyframe index" << keyframeIndex << "keyframe type" << type;
+                QModelIndex modelIndex = index(keyframeIndex, 0, index(parameterIndex));
                 emit dataChanged(modelIndex, modelIndex, QVector<int>() << KeyframeTypeRole << NameRole);
                 error = false;
             }
         }
     }
     if (error)
-        LOG_ERROR() << "failed to set keyframe" << "at parameter index" << parameterIndex << "position" << position << "to type" << type;
+        LOG_ERROR() << "failed to set keyframe" << "at parameter index" << parameterIndex << "keyframeIndex" << keyframeIndex << "to type" << type;
     return error;
 }
 
