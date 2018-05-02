@@ -63,7 +63,11 @@ Item {
             if (keyframesRepeater.count) {
                 var widthOffset = keyframesRepeater.itemAt(0).width / 2
                 var heightOffset = keyframesRepeater.itemAt(0).height / 2
-                ctx.moveTo(keyframesRepeater.itemAt(0).x + widthOffset, keyframesRepeater.itemAt(0).y + heightOffset)
+                // Draw extent before first keyframe.
+                var startX = (filter.in - producer.in) * timeScale
+                ctx.moveTo(startX, keyframesRepeater.itemAt(0).y + heightOffset)
+                ctx.lineTo(keyframesRepeater.itemAt(0).x + widthOffset, keyframesRepeater.itemAt(0).y + heightOffset)
+                // Draw lines between keyframes.
                 for (var i = 1; i < keyframesRepeater.count; i++) {
                     switch (keyframesRepeater.itemAt(i - 1).interpolation) {
                     case KeyframesModel.LinearInterpolation:
@@ -78,8 +82,9 @@ Item {
                         ctx.moveTo(keyframesRepeater.itemAt(i).x + widthOffset, keyframesRepeater.itemAt(i).y + heightOffset)
                         break
                     }
-
                 }
+                // Draw extent after last keyframe.
+                ctx.lineTo((filter.out - producer.in + 1) * timeScale, keyframesRepeater.itemAt(i - 1).y + heightOffset)
             }
             ctx.stroke()
         }
