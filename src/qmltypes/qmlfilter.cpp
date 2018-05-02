@@ -431,7 +431,7 @@ int QmlFilter::keyframeCount(const QString& name)
     return getAnimation(name).key_count();
 }
 
-void QmlFilter::resetAnimation(const QString& name)
+void QmlFilter::resetProperty(const QString& name)
 {
     m_filter.set(name.toUtf8().constData(), NULL, 0);
 }
@@ -440,7 +440,7 @@ void QmlFilter::clearSimpleAnimation(const QString& name)
 {
     // Reset the animation if there are no keyframes yet.
     if (animateIn() <= 0 && animateOut() <= 0 && keyframeCount(name) <= 0)
-        resetAnimation(name);
+        resetProperty(name);
     setAnimateIn(0);
     setAnimateOut(0);
 }

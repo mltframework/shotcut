@@ -92,7 +92,7 @@ Item {
         }
 
         if (filter.animateIn > 0 || filter.animateOut > 0) {
-            filter.resetAnimation('opacity')
+            filter.resetProperty('opacity')
             brightnessKeyframesButton.checked = false
             if (filter.animateIn > 0) {
                 filter.set('opacity', startValue, 0)
@@ -103,7 +103,7 @@ Item {
                 filter.set('opacity', endValue, filter.duration - 1)
             }
         } else if (!brightnessKeyframesButton.checked) {
-            filter.resetAnimation('opacity')
+            filter.resetProperty('opacity')
             filter.set('opacity', middleValue)
         } else if (position !== null) {
             filter.set('opacity', value, getPosition())
@@ -142,7 +142,7 @@ Item {
                     blockUpdate = false
                     filter.set('opacity', value, getPosition())
                 } else {
-                    filter.resetAnimation('opacity')
+                    filter.resetProperty('opacity')
                     filter.set('opacity', value)
                 }
             }

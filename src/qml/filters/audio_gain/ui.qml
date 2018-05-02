@@ -89,7 +89,7 @@ Item {
         }
 
         if (filter.animateIn > 0 || filter.animateOut > 0) {
-            filter.resetAnimation('level')
+            filter.resetProperty('level')
             gainKeyframesButton.checked = false
             if (filter.animateIn > 0) {
                 filter.set('level', startValue, 0)
@@ -100,7 +100,7 @@ Item {
                 filter.set('level', endValue, filter.duration - 1)
             }
         } else if (!gainKeyframesButton.checked) {
-            filter.resetAnimation('level')
+            filter.resetProperty('level')
             filter.set('level', middleValue)
         } else if (position !== null) {
             filter.set('level', gainSlider.value, position)
@@ -137,7 +137,7 @@ Item {
                     blockUpdate = false
                     filter.set('level', gainSlider.value, getPosition())
                 } else {
-                    filter.resetAnimation('level')
+                    filter.resetProperty('level')
                     filter.set('level', gainSlider.value)
                 }
             }

@@ -80,7 +80,7 @@ Flickable {
                 filter.set(middleValue, filterRect)
         }
 
-        filter.resetAnimation(rectProperty)
+        filter.resetProperty(rectProperty)
         if (filter.animateIn > 0 || filter.animateOut > 0) {
             if (filter.animateIn > 0) {
                 filter.set(rectProperty, filter.getRect(startValue), 1.0, 0)

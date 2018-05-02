@@ -86,7 +86,7 @@ public:
     int animateOut() { return m_filter.get_int(kShotcutAnimOutProperty); }
     void setAnimateOut(int value);
     int duration();
-    Q_INVOKABLE void resetAnimation(const QString& name);
+    Q_INVOKABLE void resetProperty(const QString& name);
     Q_INVOKABLE void clearSimpleAnimation(const QString& name);
     Mlt::Animation getAnimation(const QString& name);
     Q_INVOKABLE int keyframeCount(const QString& name);

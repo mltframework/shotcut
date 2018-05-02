@@ -74,7 +74,7 @@ Item {
             if (legacyRectProperty !== null) {
                 var old = filter.get(legacyRectProperty)
                 if (old && old.length > 0) {
-                    filter.resetAnimation(legacyRectProperty)
+                    filter.resetProperty(legacyRectProperty)
                     filter.set(rectProperty, old)
                 }
             }
@@ -118,7 +118,7 @@ Item {
                     filter.set(middleValue, filterRect)
             }
 
-            filter.resetAnimation(rectProperty)
+            filter.resetProperty(rectProperty)
             if (filter.animateIn > 0 || filter.animateOut > 0) {
                 if (filter.animateIn > 0) {
                     filter.set(rectProperty, filter.getRect(startValue), 1.0, 0)
@@ -187,7 +187,7 @@ Item {
             parameters: [fillProperty, distortProperty, rectProperty, halignProperty, valignProperty]
             Layout.columnSpan: 4
             onBeforePresetLoaded: {
-                filter.resetAnimation(rectProperty)
+                filter.resetProperty(rectProperty)
             }
             onPresetSelected: {
                 setControls()
