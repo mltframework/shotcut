@@ -79,6 +79,7 @@ private:
     QmlMetadata* m_metadata;
     QmlFilter* m_filter;
     QList<int> m_keyframeCounts;
+    QList<int> m_metadataIndex;
 
     int keyframeCount(int index) const;
 };

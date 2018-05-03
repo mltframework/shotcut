@@ -100,9 +100,9 @@ QVariant KeyframesModel::data(const QModelIndex& index, int role) const
         switch (role) {
         case Qt::DisplayRole:
         case NameRole:
-            return m_metadata->keyframes()->parameter(index.row())->name();
+            return m_metadata->keyframes()->parameter(m_metadataIndex[index.row()])->name();
         case PropertyNameRole:
-            return m_metadata->keyframes()->parameter(index.row())->property();
+            return m_metadata->keyframes()->parameter(m_metadataIndex[index.row()])->property();
         default:
             break;
         }
@@ -148,6 +148,7 @@ void KeyframesModel::load(QmlFilter* filter, QmlMetadata* meta)
     beginResetModel();
     m_propertyNames.clear();
     m_keyframeCounts.clear();
+    m_metadataIndex.clear();
     m_filter = filter;
     m_metadata = meta;
     if (m_filter && m_metadata)
@@ -155,7 +156,8 @@ void KeyframesModel::load(QmlFilter* filter, QmlMetadata* meta)
         if (!m_metadata->keyframes()->parameter(i)->isSimple() || (m_filter->animateIn() <= 0 && m_filter->animateOut() <= 0)) {
             if (m_filter->keyframeCount(m_metadata->keyframes()->parameter(i)->property()) > 0) {
                 m_propertyNames << m_metadata->keyframes()->parameter(i)->property();
-                m_keyframeCounts << keyframeCount(i);
+                m_keyframeCounts << keyframeCount(m_propertyNames.count() - 1);
+                m_metadataIndex << i;
 //            LOG_DEBUG() << m_propertyNames.last() << m_filter->get(m_propertyNames.last()) << keyframeCount(i);
             }
         }
@@ -262,12 +264,14 @@ void KeyframesModel::reload()
     beginResetModel();
     m_propertyNames.clear();
     m_keyframeCounts.clear();
+    m_metadataIndex.clear();
     if (m_filter)
     for (int i = 0; i < m_metadata->keyframes()->parameterCount(); i++) {
         if (!m_metadata->keyframes()->parameter(i)->isSimple() || (m_filter->animateIn() <= 0 && m_filter->animateOut() <= 0)) {
             if (m_filter->keyframeCount(m_metadata->keyframes()->parameter(i)->property()) > 0) {
                 m_propertyNames << m_metadata->keyframes()->parameter(i)->property();
-                m_keyframeCounts << keyframeCount(i);
+                m_keyframeCounts << keyframeCount(m_propertyNames.count() - 1);
+                m_metadataIndex << i;
             }
         }
     }
@@ -355,6 +359,8 @@ void KeyframesModel::onFilterOutChanged(int delta)
 
 int KeyframesModel::keyframeCount(int index) const
 {
-
-    return qMax(const_cast<QmlFilter*>(m_filter)->keyframeCount(m_propertyNames[index]), 0);
+    if (index < m_propertyNames.count())
+        return qMax(const_cast<QmlFilter*>(m_filter)->keyframeCount(m_propertyNames[index]), 0);
+    else
+        return 0;
 }

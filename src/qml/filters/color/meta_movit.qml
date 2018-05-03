@@ -8,4 +8,20 @@ Metadata {
     needsGPU: true
     qml: "ui.qml"
     isFavorite: true
+    keyframes {
+        parameters: [
+            Parameter {
+                name: qsTr('Shadows (Lift)')
+                property: 'lift_r'
+            },
+            Parameter {
+                name: qsTr('Midtones (Gamma)')
+                property: 'gamma_r'
+            },
+            Parameter {
+                name: qsTr('Highlights (Gain)')
+                property: 'gain_r'
+            }
+        ]
+    }
 }
