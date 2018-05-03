@@ -256,13 +256,13 @@ Rectangle {
         anchors.horizontalCenter: animateInTriangle.width > radius? animateInTriangle.right : undefined
         anchors.top: animateInTriangle.top
         anchors.topMargin: -3
-        width: 20
-        height: 20
-        radius: 10
+        width: 14
+        height: 14
+        radius: 7
         color: 'black'
         border.width: 2
         border.color: 'white'
-        opacity: 0
+        opacity: enabled? 0.7 : 0
         Drag.active: animateInMouseArea.drag.active
         MouseArea {
             id: animateInMouseArea
@@ -273,15 +273,12 @@ Rectangle {
             drag.axis: Drag.XAxis
             property int startX
             property int startFadeIn
-            onEntered: parent.opacity = 0.7
-            onExited: parent.opacity = 0
             onPressed: {
                 root.stopScrolling = true
                 startX = parent.x
                 startFadeIn = animateIn
                 parent.anchors.left = undefined
                 parent.anchors.horizontalCenter = undefined
-                parent.opacity = 1
             }
             onReleased: {
                 root.stopScrolling = false
@@ -308,12 +305,12 @@ Rectangle {
             running: animateInMouseArea.containsMouse
             NumberAnimation {
                 from: 1.0
-                to: 0.5
+                to: 1.5
                 duration: 250
                 easing.type: Easing.InOutQuad
             }
             NumberAnimation {
-                from: 0.5
+                from: 1.5
                 to: 1.0
                 duration: 250
                 easing.type: Easing.InOutQuad
@@ -349,13 +346,13 @@ Rectangle {
         anchors.horizontalCenter: animateOutTriangle.width > radius? animateOutTriangle.left : undefined
         anchors.top: animateOutTriangle.top
         anchors.topMargin: -3
-        width: 20
-        height: 20
-        radius: 10
+        width: 14
+        height: 14
+        radius: 7
         color: 'black'
         border.width: 2
         border.color: 'white'
-        opacity: 0
+        opacity: enabled? 0.7 : 0
         Drag.active: animateOutMouseArea.drag.active
         MouseArea {
             id: animateOutMouseArea
@@ -366,15 +363,12 @@ Rectangle {
             drag.axis: Drag.XAxis
             property int startX
             property int startFadeOut
-            onEntered: parent.opacity = 0.7
-            onExited: parent.opacity = 0
             onPressed: {
                 root.stopScrolling = true
                 startX = parent.x
                 startFadeOut = animateOut
                 parent.anchors.right = undefined
                 parent.anchors.horizontalCenter = undefined
-                parent.opacity = 1
             }
             onReleased: {
                 root.stopScrolling = false
@@ -401,12 +395,12 @@ Rectangle {
             running: animateOutMouseArea.containsMouse
             NumberAnimation {
                 from: 1.0
-                to: 0.5
+                to: 1.5
                 duration: 250
                 easing.type: Easing.InOutQuad
             }
             NumberAnimation {
-                from: 0.5
+                from: 1.5
                 to: 1.0
                 duration: 250
                 easing.type: Easing.InOutQuad
@@ -423,7 +417,7 @@ Rectangle {
         height: parent.height
         width: 5
         color: isAudio? 'green' : 'lawngreen'
-        opacity: 0
+        opacity: enabled? 0.5 : 0
         Drag.active: trimInMouseArea.drag.active
         Drag.proposedAction: Qt.MoveAction
 
@@ -446,7 +440,6 @@ Rectangle {
                 root.stopScrolling = false
                 parent.anchors.left = clipRoot.left
                 clipRoot.trimmedIn(clipRoot)
-                parent.opacity = 0
             }
             onPositionChanged: {
                 if (mouse.buttons === Qt.LeftButton) {
@@ -460,8 +453,6 @@ Rectangle {
                     }
                 }
             }
-            onEntered: parent.opacity = 0.5
-            onExited: parent.opacity = 0
         }
     }
     Rectangle {
@@ -473,7 +464,7 @@ Rectangle {
         height: parent.height
         width: 5
         color: 'red'
-        opacity: 0
+        opacity: enabled? 0.5 : 0
         Drag.active: trimOutMouseArea.drag.active
         Drag.proposedAction: Qt.MoveAction
 
@@ -509,8 +500,6 @@ Rectangle {
                     }
                 }
             }
-            onEntered: parent.opacity = 0.5
-            onExited: parent.opacity = 0
         }
     }
     Menu {
