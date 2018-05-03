@@ -7,4 +7,18 @@ Metadata {
     name: qsTr("Circular Frame (HTML)")
     mlt_service: "webvfx"
     qml: "ui.qml"
+    keyframes {
+        allowAnimateIn: true
+        allowAnimateOut: true
+        parameters: [
+            Parameter {
+                name: qsTr('Radius')
+                property: 'radius'
+                isSimple: true
+                isCurve: true
+                minimum: 0
+                maximum: 1
+            }
+        ]
+    }
 }
