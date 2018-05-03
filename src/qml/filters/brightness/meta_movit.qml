@@ -9,7 +9,6 @@ Metadata {
     needsGPU: true
     qml: "ui_movit.qml"
     isFavorite: true
-    allowMultiple: false
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
