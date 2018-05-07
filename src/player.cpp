@@ -611,7 +611,7 @@ void Player::onFrameDisplayed(const SharedFrame& frame)
             m_playPosition = std::numeric_limits<int>::max();
         }
     }
-    if (position >= m_duration)
+    if (position >= m_duration - 1)
         emit endOfStream();
 }
 
