@@ -39,8 +39,8 @@ Item {
     Component.onCompleted: {
         filter.blockSignals = true
         filter.set(middleValue, Qt.rect(0, 0, profile.width, profile.height))
-        filter.set(startValue, Qt.rect(-profile.width, 0, profile.width, profile.height))
-        filter.set(endValue, Qt.rect(profile.width, 0, profile.width, profile.height))
+        filter.set(startValue, Qt.rect(0, 0, profile.width, profile.height))
+        filter.set(endValue, Qt.rect(0, 0, profile.width, profile.height))
         if (filter.isNew) {
             filter.set(fillProperty, 0)
             filter.set(distortProperty, 0)

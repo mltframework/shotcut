@@ -24,9 +24,9 @@ Item {
     width: 200
     height: 50
     property bool blockUpdate: true
-    property double startValue: 0.0
+    property double startValue: 1.0
     property double middleValue: 1.0
-    property double endValue: 0.0
+    property double endValue: 1.0
 
     Component.onCompleted: {
         if (filter.isNew) {
