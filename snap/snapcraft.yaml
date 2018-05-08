@@ -18,7 +18,7 @@ parts:
   shotcut:
     after: [desktop-qt5]
     plugin: dump
-    source: 'https://github.com/mltframework/shotcut/releases/download/v18.05/shotcut-linux-x86_64-180503.tar.bz2'
+    source: 'https://github.com/mltframework/shotcut/releases/download/v18.05/shotcut-linux-x86_64-180508.tar.bz2'
     organize:
       'Shotcut': './'
     build-attributes: [no-patchelf]
