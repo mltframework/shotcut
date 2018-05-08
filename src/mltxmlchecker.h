@@ -48,6 +48,7 @@ public:
     bool check(const QString& fileName);
     QString errorString() const;
     bool needsGPU() const { return m_needsGPU; }
+    bool needsCPU() const { return m_needsCPU; }
     bool hasEffects() const { return m_hasEffects; }
     bool isCorrected() const { return m_isCorrected; }
     QString tempFileName() const { return m_tempFile.fileName(); }
@@ -61,6 +62,7 @@ private:
     bool fixWebVfxPath(QString& resource);
     bool readResourceProperty(const QString& name, QString& value);
     void checkGpuEffects(const QString& mlt_service);
+    void checkCpuEffects(const QString& mlt_service);
     void checkUnlinkedFile(const QString& mlt_service);
     bool fixUnlinkedFile(QString& value);
     void fixStreamIndex(QString& value);
@@ -69,6 +71,7 @@ private:
     QXmlStreamReader m_xml;
     QXmlStreamWriter m_newXml;
     bool m_needsGPU;
+    bool m_needsCPU;
     bool m_hasEffects;
     bool m_isCorrected;
     QChar m_decimalPoint;

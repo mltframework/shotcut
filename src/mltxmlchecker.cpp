@@ -53,6 +53,7 @@ static bool isNumericProperty(const QString& name)
 
 MltXmlChecker::MltXmlChecker()
     : m_needsGPU(false)
+    , m_needsCPU(false)
     , m_hasEffects(false)
     , m_isCorrected(false)
     , m_decimalPoint(QLocale().decimalPoint())
@@ -212,6 +213,7 @@ void MltXmlChecker::processProperties()
 
     if (mlt_class == "filter" || mlt_class == "transition" || mlt_class == "producer") {
         checkGpuEffects(mlt_service);
+        checkCpuEffects(mlt_service);
         checkUnlinkedFile(mlt_service);
 
         // Second pass: amend property values.
@@ -351,6 +353,12 @@ void MltXmlChecker::checkGpuEffects(const QString& mlt_service)
         m_hasEffects = true;
     if (mlt_service.startsWith("movit.") || mlt_service.startsWith("glsl."))
         m_needsGPU = true;
+}
+
+void MltXmlChecker::checkCpuEffects(const QString& mlt_service)
+{
+    if (mlt_service.startsWith("dynamictext") || mlt_service.startsWith("vidstab"))
+        m_needsCPU = true;
 }
 
 void MltXmlChecker::checkUnlinkedFile(const QString& mlt_service)

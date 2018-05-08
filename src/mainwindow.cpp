@@ -880,8 +880,8 @@ bool MainWindow::isCompatibleWithGpuMode(MltXmlChecker& checker)
         LOG_INFO() << "file uses GPU but GPU not enabled";
         QMessageBox dialog(QMessageBox::Question,
            qApp->applicationName(),
-           tr("The file you opened uses GPU effects, but GPU processing is not enabled.\n"
-              "Do you want to enable GPU processing and restart?"),
+           tr("The file you opened uses GPU effects, but GPU effects are not enabled.\n"
+              "Do you want to enable GPU effects and restart?"),
            QMessageBox::No |
            QMessageBox::Yes,
            this);
@@ -891,6 +891,26 @@ bool MainWindow::isCompatibleWithGpuMode(MltXmlChecker& checker)
         int r = dialog.exec();
         if (r == QMessageBox::Yes) {
             ui->actionGPU->setChecked(true);
+            m_exitCode = EXIT_RESTART;
+            QApplication::closeAllWindows();
+        }
+        return false;
+    }
+    else if (checker.needsCPU() && Settings.playerGPU()) {
+        LOG_INFO() << "file uses GPU incompatible filters but GPU is enabled";
+        QMessageBox dialog(QMessageBox::Question,
+           qApp->applicationName(),
+           tr("The file you opened uses CPU effects that are incompatible with GPU effects, but GPU effects are enabled.\n"
+              "Do you want to disable GPU effects and restart?"),
+           QMessageBox::No |
+           QMessageBox::Yes,
+           this);
+        dialog.setWindowModality(QmlApplication::dialogModality());
+        dialog.setDefaultButton(QMessageBox::Yes);
+        dialog.setEscapeButton(QMessageBox::No);
+        int r = dialog.exec();
+        if (r == QMessageBox::Yes) {
+            ui->actionGPU->setChecked(false);
             m_exitCode = EXIT_RESTART;
             QApplication::closeAllWindows();
         }
@@ -2583,7 +2603,7 @@ void MainWindow::onGpuNotSupported()
     }
     LOG_WARNING() << "";
     QMessageBox::critical(this, qApp->applicationName(),
-        tr("GPU Processing is not supported"));
+        tr("GPU effects are not supported"));
 }
 
 void MainWindow::editHTML(const QString &fileName)
@@ -2867,19 +2887,46 @@ void MainWindow::on_actionJack_triggered(bool checked)
 
 void MainWindow::on_actionGPU_triggered(bool checked)
 {
-    Q_UNUSED(checked)
-    QMessageBox dialog(QMessageBox::Information,
-                       qApp->applicationName(),
-                       tr("You must restart Shotcut to switch using GPU processing.\n"
-                          "Do you want to restart now?"),
-                       QMessageBox::No | QMessageBox::Yes,
-                       this);
-    dialog.setDefaultButton(QMessageBox::Yes);
-    dialog.setEscapeButton(QMessageBox::No);
-    dialog.setWindowModality(QmlApplication::dialogModality());
-    if (dialog.exec() == QMessageBox::Yes) {
-        m_exitCode = EXIT_RESTART;
-        QApplication::closeAllWindows();
+    if (checked) {
+        QMessageBox dialog(QMessageBox::Information,
+                           qApp->applicationName(),
+                           tr("GPU effects are experimental and may cause instability on some systems. "
+                              "Some CPU effects are incompatible with GPU effects and will be disabled. "
+                              "A project created with GPU effects can not be converted to a CPU only project later."
+                              "\n\n"
+                              "Do you want to enable GPU effects and restart Shotcut?"),
+                           QMessageBox::No | QMessageBox::Yes,
+                           this);
+        dialog.setDefaultButton(QMessageBox::Yes);
+        dialog.setEscapeButton(QMessageBox::No);
+        dialog.setWindowModality(QmlApplication::dialogModality());
+        if (dialog.exec() == QMessageBox::Yes) {
+            m_exitCode = EXIT_RESTART;
+            QApplication::closeAllWindows();
+        }
+        else {
+            ui->actionGPU->setChecked(false);
+        }
+    }
+    else
+    {
+        QMessageBox dialog(QMessageBox::Information,
+                           qApp->applicationName(),
+                           tr("Shotcut must restart to disable GPU effects."
+                              "\n\n"
+                              "Disable GPU effects and restart?"),
+                           QMessageBox::No | QMessageBox::Yes,
+                           this);
+        dialog.setDefaultButton(QMessageBox::Yes);
+        dialog.setEscapeButton(QMessageBox::No);
+        dialog.setWindowModality(QmlApplication::dialogModality());
+        if (dialog.exec() == QMessageBox::Yes) {
+            m_exitCode = EXIT_RESTART;
+            QApplication::closeAllWindows();
+        }
+        else {
+            ui->actionGPU->setChecked(true);
+        }
     }
 }
 
