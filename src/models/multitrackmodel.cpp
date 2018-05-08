@@ -1417,23 +1417,22 @@ void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
                     if (Settings.playerGPU()) {
                         Mlt::Filter f(MLT.profile(), "movit.opacity");
                         f.set(kShotcutFilterProperty, "fadeInMovit");
-                        QString opacity = QString("0~=0; %1=1").arg(duration - 1);
-                        f.set("opacity", opacity.toLatin1().constData());
                         f.set("alpha", 1);
                         info->producer->attach(f);
                         filter.reset(new Mlt::Filter(f));
                     } else {
                         Mlt::Filter f(MLT.profile(), "brightness");
                         f.set(kShotcutFilterProperty, "fadeInBrightness");
-                        QString level = QString("0=0; %1=1").arg(duration - 1);
-                        f.set("level", level.toLatin1().constData());
                         f.set("alpha", 1);
                         info->producer->attach(f);
                         filter.reset(new Mlt::Filter(f));
                     }
                     filter->set_in_and_out(info->frame_in, info->frame_out);
                     emit filterOutChanged(info->frame_out, filter.data());
-                } else if (Settings.playerGPU()) {
+                }
+
+                // Adjust video filter.
+                if (Settings.playerGPU()) {
                     // Special handling for animation keyframes on movit.opacity.
                     QString opacity = QString("0~=0; %1=1").arg(duration - 1);
                     filter->set("opacity", opacity.toLatin1().constData());
@@ -1442,7 +1441,6 @@ void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
                     QString level = QString("0=0; %1=1").arg(duration - 1);
                     filter->set("level", level.toLatin1().constData());
                 }
-                // Adjust video filter.
                 filter->set(kShotcutAnimInProperty, duration);
                 isChanged = true;
             }
@@ -1453,7 +1451,6 @@ void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
                 filter.reset(getFilter("fadeInVolume", info->producer));
 
                 // Add audio filter if needed.
-                QString level = QString("0=-60; %1=0").arg(duration - 1);
                 if (!filter) {
                     Mlt::Filter f(MLT.profile(), "volume");
                     f.set(kShotcutFilterProperty, "fadeInVolume");
@@ -1464,6 +1461,7 @@ void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
                 }
 
                 // Adjust audio filter.
+                QString level = QString("0=-60; %1=0").arg(duration - 1);
                 filter->set("level", level.toLatin1().constData());
                 filter->set(kShotcutAnimInProperty, duration);
                 isChanged = true;
@@ -1508,32 +1506,30 @@ void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
                     if (Settings.playerGPU()) {
                         Mlt::Filter f(MLT.profile(), "movit.opacity");
                         f.set(kShotcutFilterProperty, "fadeOutMovit");
-                        QString opacity = QString("%1~=1; %2=1").arg(info->frame_count - duration).arg(duration - 1);
-                        f.set("opacity", opacity.toLatin1().constData());
                         f.set("alpha", 1);
                         info->producer->attach(f);
                         filter.reset(new Mlt::Filter(f));
                     } else {
                         Mlt::Filter f(MLT.profile(), "brightness");
                         f.set(kShotcutFilterProperty, "fadeOutBrightness");
-                        QString level = QString("%1=1; %2=1").arg(info->frame_count - duration).arg(duration - 1);
-                        f.set("level", level.toLatin1().constData());
                         f.set("alpha", 1);
                         info->producer->attach(f);
                         filter.reset(new Mlt::Filter(f));
                     }
                     filter->set_in_and_out(info->frame_in, info->frame_out);
                     emit filterOutChanged(info->frame_out, filter.data());
-                } else if (Settings.playerGPU()) {
+                }
+
+                // Adjust video filter.
+                if (Settings.playerGPU()) {
                     // Special handling for animation keyframes on movit.opacity.
-                    QString opacity = QString("%1~=1; %2=1").arg(info->frame_count - duration).arg(duration - 1);
+                    QString opacity = QString("%1~=1; %2=0").arg(info->frame_count - duration).arg(info->frame_count - 1);
                     filter->set("opacity", opacity.toLatin1().constData());
                 } else {
                     // Special handling for animation keyframes on brightness.
-                    QString level = QString("%1=1; %2=1").arg(info->frame_count - duration).arg(duration - 1);
+                    QString level = QString("%1=1; %2=0").arg(info->frame_count - duration).arg(info->frame_count - 1);
                     filter->set("level", level.toLatin1().constData());
                 }
-                // Adjust video filter.
                 filter->set(kShotcutAnimOutProperty, duration);
                 isChanged = true;
             }
@@ -1544,7 +1540,6 @@ void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
                 filter.reset(getFilter("fadeOutVolume", info->producer));
 
                 // Add audio filter if needed.
-                QString level = QString("%1=0; %2=-60").arg(info->frame_count - duration).arg(duration - 1);
                 if (!filter) {
                     Mlt::Filter f(MLT.profile(), "volume");
                     f.set(kShotcutFilterProperty, "fadeOutVolume");
@@ -1555,6 +1550,7 @@ void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
                 }
 
                 // Adjust audio filter.
+                QString level = QString("%1=0; %2=-60").arg(info->frame_count - duration).arg(info->frame_count - 1);
                 filter->set("level", level.toLatin1().constData());
                 filter->set(kShotcutAnimOutProperty, duration);
                 isChanged = true;
