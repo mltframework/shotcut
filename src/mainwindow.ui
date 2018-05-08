@@ -466,7 +466,10 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>GPU Processing (experimental)</string>
+    <string>GPU Effects (experimental)</string>
+   </property>
+   <property name="toolTip">
+    <string>Use GPU filters</string>
    </property>
   </action>
   <action name="actionChannels1">
