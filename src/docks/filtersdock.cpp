@@ -73,15 +73,15 @@ void FiltersDock::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta, int ind
 {
     m_qview.rootContext()->setContextProperty("filter", filter);
     m_qview.rootContext()->setContextProperty("metadata", meta);
-    QMetaObject::invokeMethod(m_qview.rootObject(), "setCurrentFilter", Q_ARG(QVariant, QVariant(index)));
-    if (filter)
-        connect(filter, SIGNAL(changed()), SIGNAL(changed()));
     if (filter && filter->producer().is_valid()) {
         m_producer.setProducer(filter->producer());
     } else {
         Mlt::Producer emptyProducer(mlt_producer(0));
         m_producer.setProducer(emptyProducer);
     }
+    QMetaObject::invokeMethod(m_qview.rootObject(), "setCurrentFilter", Q_ARG(QVariant, QVariant(index)));
+    if (filter)
+        connect(filter, SIGNAL(changed()), SIGNAL(changed()));
 }
 
 bool FiltersDock::event(QEvent *event)
