@@ -28,7 +28,6 @@ Item {
     property alias duration: timeSpinner.value
 
     Component.onCompleted: {
-        console.log('fadeIn', 'filter.isNew', filter.isNew, 'filter.animateIn', filter.animateIn)
         if (filter.isNew) {
             filter.set('alpha', 1)
             duration = Math.ceil(settings.videoInDuration * profile.fps)

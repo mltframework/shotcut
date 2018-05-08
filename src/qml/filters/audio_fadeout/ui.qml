@@ -47,7 +47,7 @@ Item {
 
     function updateFilter() {
         var filterDuration = producer.duration
-        filter.set('level', '%1=1; %2=-60'.arg(filterDuration - duration).arg(filterDuration - 1))
+        filter.set('level', '%1=0; %2=-60'.arg(filterDuration - duration).arg(filterDuration - 1))
     }
 
     ColumnLayout {
