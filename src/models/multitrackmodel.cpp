@@ -445,14 +445,11 @@ int MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta, bool r
         for (int j = 0; j < n; j++) {
             Mlt::Filter* filter = info->producer->filter(j);
             if (filter && filter->is_valid()) {
-                QmlMetadata* meta = MAIN.filterController()->metadataForService(filter);
-                if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeIn") && !filter->get(kShotcutAnimInProperty)) {
-                    // Convert legacy fadeIn filters.
-                    filter->set(kShotcutAnimInProperty, filter->get_length());
-                    filter->set_in_and_out(info->frame_in, info->frame_out);
-                    emit filterInChanged(delta, filter);
-                } else if (filter->get_in() <= info->frame_in
-                           || (meta && meta->keyframes()->allowAnimateIn() && !meta->keyframes()->allowTrim())) {
+                if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeIn")) {
+                    if (!filter->get(kShotcutAnimInProperty)) {
+                        // Convert legacy fadeIn filters.
+                        filter->set(kShotcutAnimInProperty, filter->get_length());
+                    }
                     filter->set_in_and_out(in, filter->get_out());
                     emit filterInChanged(delta, filter);
                 }
@@ -635,15 +632,29 @@ int MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta, bool 
         for (int j = 0; j < n; j++) {
             Mlt::Filter* filter = info->producer->filter(j);
             if (filter && filter->is_valid()) {
-                QmlMetadata* meta = MAIN.filterController()->metadataForService(filter);
-                if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeOut")) {
-                    // Convert legacy fadeOut filters.
-                    filter->set(kShotcutAnimOutProperty, filter->get_length());
-                    filter->set_in_and_out(info->frame_in, info->frame_out);
-                    emit filterOutChanged(delta, filter);
-                } else if (filter->get_out() >= info->frame_out
-                           || (meta && meta->keyframes()->allowAnimateOut() && !meta->keyframes()->allowTrim())) {
+                QString filterName = filter->get(kShotcutFilterProperty);
+                if (filterName.startsWith("fadeOut")) {
+                    if (!filter->get(kShotcutAnimOutProperty)) {
+                        // Convert legacy fadeOut filters.
+                        filter->set(kShotcutAnimOutProperty, filter->get_length());
+                    }
                     filter->set_in_and_out(filter->get_in(), out);
+                    if (filterName == "fadeOutBrightness") {
+                        filter->set(filter->get_int("alpha") != 1? "alpha" : "level", QString("%1=1; %2=0")
+                                    .arg(filter->get_length() - filter->get_int(kShotcutAnimOutProperty))
+                                    .arg(filter->get_length() - 1)
+                                    .toLatin1().constData());
+                    } else if (filterName == "fadeOutMovit") {
+                        filter->set("opacity", QString("%1~=1; %2=0")
+                                    .arg(filter->get_length() - filter->get_int(kShotcutAnimOutProperty))
+                                    .arg(filter->get_length() - 1)
+                                    .toLatin1().constData());
+                    } else if (filterName == "fadeOutVolume") {
+                        filter->set("level", QString("%1=0; %2=-60")
+                                    .arg(filter->get_length() - filter->get_int(kShotcutAnimOutProperty))
+                                    .arg(filter->get_length() - 1)
+                                    .toLatin1().constData());
+                    }
                     emit filterOutChanged(delta, filter);
                 }
             }
