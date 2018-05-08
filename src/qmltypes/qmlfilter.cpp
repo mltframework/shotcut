@@ -163,7 +163,7 @@ void QmlFilter::set(QString name, int value, int position, mlt_keyframe_type key
     if (position < 0) {
         if (!m_filter.get(name.toUtf8().constData())
             || m_filter.get_int(name.toUtf8().constData()) != value) {
-            int delta = value - m_filter.get_double(name.toUtf8().constData());
+            int delta = value - m_filter.get_int(name.toUtf8().constData());
             m_filter.set(name.toUtf8().constData(), value);
             emit changed(name);
             if (name == "in") {
@@ -182,6 +182,11 @@ void QmlFilter::set(QString name, int value, int position, mlt_keyframe_type key
             emit changed(name);
         }
     }
+}
+
+void QmlFilter::set(QString name, bool value, int position, mlt_keyframe_type keyframeType)
+{
+    set(name, value? 1 : 0, position, keyframeType);
 }
 
 void QmlFilter::set(QString name, double x, double y, double width, double height, double opacity,
