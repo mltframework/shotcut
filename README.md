@@ -17,13 +17,13 @@ Binaries are regularly built and are available at https://www.shotcut.org, on th
 ## Dependencies
 
 - [MLT](https://www.mltframework.org/): multimedia authoring framework
-- [Qt 5](http://qt-project.org/): application and UI framework
-- [FFmpeg](http://www.ffmpeg.org/): multimedia format and codec libraries
-- [x264](http://www.videolan.org/developers/x264.html): H.264 encoder
-- [WebM](http://www.webmproject.org/): VP8 encoder
+- [Qt 5](https://www.qt.io/): application and UI framework
+- [FFmpeg](https://www.ffmpeg.org/): multimedia format and codec libraries
+- [x264](https://www.videolan.org/developers/x264.html): H.264 encoder
+- [WebM](https://www.webmproject.org/): VP8 encoder
 - [LAME](http://lame.sourceforge.net/): MP3 encoder
-- [Frei0r](http://www.dyne.org/software/frei0r/): video plugins
-- [LADSPA](http://www.ladspa.org/): audio plugins
+- [Frei0r](https://www.dyne.org/software/frei0r/): video plugins
+- [LADSPA](https://www.ladspa.org/): audio plugins
 - [WebVfx](https://github.com/mltframework/webvfx): video effects using web technologies
 - [Movit](https://git.sesse.net/?p=movit)
 
@@ -37,7 +37,7 @@ GPLv3. See [COPYING](COPYING).
 
 ### Qt Creator
 
-The fastest way to build and try Shotcut dev version is probably using [Qt Creator](http://qt-project.org/downloads#qt-creator).
+The fastest way to build and try Shotcut dev version is probably using [Qt Creator](https://www.qt.io/download#qt-creator).
 
 ### From command line
 
