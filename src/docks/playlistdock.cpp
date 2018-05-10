@@ -526,6 +526,12 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
             if (MAIN.isSourceClipMyProject(path)) continue;
             Mlt::Producer p(MLT.profile(), path.toUtf8().constData());
             if (p.is_valid()) {
+                // Convert MLT XML to a virtual clip.
+                if (!qstrcmp(p.get("mlt_service"), "xml")) {
+                    p.set(kShotcutVirtualClip, 1);
+                    p.set("resource", path.toUtf8().constData());
+                    first = false;
+                }
                 Mlt::Producer* producer = &p;
                 if (first) {
                     first = false;
