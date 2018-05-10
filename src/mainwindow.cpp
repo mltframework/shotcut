@@ -2287,9 +2287,9 @@ void MainWindow::onMultitrackCreated()
 
 void MainWindow::onMultitrackClosed()
 {
-    setProfile(Settings.playerProfile());
     setAudioChannels(Settings.playerAudioChannels());
     closeProducer();
+    setProfile(Settings.playerProfile());
     setCurrentFile("");
     setWindowModified(false);
     m_undoStack->clear();

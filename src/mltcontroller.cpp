@@ -518,9 +518,20 @@ void Controller::setProfile(const QString& profile_name)
         m_profile->set_explicit(true);
     } else {
         m_profile->set_explicit(false);
-        if (m_producer) {
+        if (m_producer && m_producer->is_valid()
+            && (qstrcmp(m_producer->get("mlt_service"), "color") || qstrcmp(m_producer->get("resource"), "_hide"))) {
             m_profile->from_producer(*m_producer);
             m_profile->set_width(alignWidth(m_profile->width()));
+        } else {
+            // Use a default profile with the dummy hidden color producer.
+            Mlt::Profile tmp("atsc_1080p_25");
+            m_profile->set_colorspace(tmp.colorspace());
+            m_profile->set_frame_rate(tmp.frame_rate_num(), tmp.frame_rate_den());
+            m_profile->set_height(tmp.height());
+            m_profile->set_progressive(tmp.progressive());
+            m_profile->set_sample_aspect(tmp.sample_aspect_num(), tmp.sample_aspect_den());
+            m_profile->set_display_aspect(tmp.display_aspect_num(), tmp.display_aspect_den());
+            m_profile->set_width(alignWidth(tmp.width()));
         }
     }
 }
