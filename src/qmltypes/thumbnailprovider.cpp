@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 Meltytech, LLC
+ * Copyright (c) 2013-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -64,9 +64,13 @@ QImage ThumbnailProvider::requestImage(const QString &id, QSize *size, const QSi
                 DB.putThumbnail(key, result);
             }
         }
-        if (size)
-            *size = result.size();
     }
+    if (result.isNull()) {
+        result = QImage(1, 1, QImage::Format_Alpha8);
+        result.fill(0);
+    }
+    if (size)
+        *size = result.size();
     return result;
 }
 
