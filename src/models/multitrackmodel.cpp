@@ -44,6 +44,7 @@ MultitrackModel::MultitrackModel(QObject *parent)
     , m_isMakingTransition(false)
 {
     connect(this, SIGNAL(modified()), SLOT(adjustBackgroundDuration()));
+    connect(this, SIGNAL(modified()), SLOT(adjustFilterDurations()));
 }
 
 MultitrackModel::~MultitrackModel()
@@ -2392,29 +2393,50 @@ void MultitrackModel::addBackgroundTrack()
 void MultitrackModel::adjustBackgroundDuration()
 {
     if (!m_tractor) return;
-    int n = 0;
-    foreach (Track t, m_trackList) {
-        Mlt::Producer* track = m_tractor->track(t.mlt_index);
-        if (track)
-            n = qMax(n, track->get_length());
-        delete track;
-    }
+    int duration = getDuration();
     Mlt::Producer* track = m_tractor->track(0);
     if (track) {
         Mlt::Playlist playlist(*track);
         Mlt::Producer* clip = playlist.get_clip(0);
         if (clip) {
-            if (n != clip->parent().get_length()) {
-                clip->parent().set("length", n);
-                clip->parent().set_in_and_out(0, n - 1);
-                clip->set("length", n);
-                clip->set_in_and_out(0, n - 1);
-                playlist.resize_clip(0, 0, n - 1);
+            if (duration != clip->parent().get_length()) {
+                clip->parent().set("length", duration);
+                clip->parent().set_in_and_out(0, duration - 1);
+                clip->set("length", duration);
+                clip->set_in_and_out(0, duration - 1);
+                playlist.resize_clip(0, 0, duration - 1);
                 emit durationChanged();
             }
             delete clip;
         }
         delete track;
+    }
+}
+
+void MultitrackModel::adjustServiceFilterDurations(Mlt::Service& service, int duration)
+{
+    int n = service.filter_count();
+    for (int i = 0; i < n; i++) {
+        QScopedPointer<Mlt::Filter> filter(service.filter(i));
+        if (filter && filter->is_valid() && !filter->get_int("_loader")) {
+            filter->set_in_and_out(0, duration - 1);
+        }
+    }
+}
+
+void MultitrackModel::adjustFilterDurations()
+{
+    if (!m_tractor) return;
+    int duration = getDuration();
+
+    // Adjust filters on the tractor.
+    adjustServiceFilterDurations(*m_tractor, duration);
+
+    // Adjust filters on the tracks.
+    foreach (Track t, m_trackList) {
+        QScopedPointer<Mlt::Producer> track(m_tractor->track(t.mlt_index));
+        if (track && track->is_valid())
+            adjustServiceFilterDurations(*track, duration);
     }
 }
 
@@ -2841,6 +2863,19 @@ bool MultitrackModel::isFiltered(Mlt::Producer* producer) const
     return false;
 }
 
+int MultitrackModel::getDuration()
+{
+    int n = 0;
+    if (m_tractor) {
+        foreach (Track t, m_trackList) {
+            QScopedPointer<Mlt::Producer> track(m_tractor->track(t.mlt_index));
+            if (track && track->is_valid())
+                n = qMax(n, track->get_length());
+        }
+    }
+    return n;
+}
+
 void MultitrackModel::load()
 {
     if (m_tractor) {
@@ -2871,6 +2906,7 @@ void MultitrackModel::load()
     convertOldDoc();
     consolidateBlanksAllTracks();
     adjustBackgroundDuration();
+    adjustFilterDurations();
     if (m_trackList.count() > 0) {
         beginInsertRows(QModelIndex(), 0, m_trackList.count() - 1);
         endInsertRows();

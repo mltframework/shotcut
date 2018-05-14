@@ -189,11 +189,14 @@ private:
     void removeRegion(int trackIndex, int position, int length);
     void clearMixReferences(int trackIndex, int clipIndex);
     bool isFiltered(Mlt::Producer* producer = 0) const;
+    int getDuration();
+    void adjustServiceFilterDurations(Mlt::Service& service, int duration);
 
     friend class UndoHelper;
 
 private slots:
     void adjustBackgroundDuration();
+    void adjustFilterDurations();
 
 };
 
