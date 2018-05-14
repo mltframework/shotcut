@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2017 Meltytech, LLC
+ * Copyright (c) 2014-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,6 +23,9 @@
 #include <QPalette>
 
 class QWidget;
+namespace Mlt {
+    class Producer;
+}
 
 class Util
 {
@@ -33,6 +36,7 @@ public:
     static void setColorsToHighlight(QWidget* widget, QPalette::ColorRole role = QPalette::Window);
     static void showInFolder(const QString &path);
     static bool warnIfNotWritable(const QString& filePath, QWidget* parent, const QString& caption);
+    static QString producerTitle(const Mlt::Producer& producer);
 };
 
 #endif // UTIL_H

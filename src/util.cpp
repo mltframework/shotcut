@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2017 Meltytech, LLC
+ * Copyright (c) 2014-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -26,6 +26,8 @@
 #include <QUrl>
 #include <QDesktopServices>
 #include <QMessageBox>
+#include <MltProducer.h>
+#include "shotcut_mlt_properties.h"
 
 QString Util::baseName(const QString &filePath)
 {
@@ -96,4 +98,22 @@ bool Util::warnIfNotWritable(const QString& filePath, QWidget* parent, const QSt
         }
     }
     return false;
+}
+
+QString Util::producerTitle(const Mlt::Producer& producer)
+{
+    QString result;
+    Mlt::Producer& p = const_cast<Mlt::Producer&>(producer);
+    if (!p.is_valid()) return result;
+    if (p.get(kShotcutTransitionProperty))
+        return QObject::tr("Transition");
+    if (p.get(kTrackNameProperty))
+        return QObject::tr("Track: %1").arg(QString::fromUtf8(p.get(kTrackNameProperty)));
+    if (tractor_type == p.type())
+        return QObject::tr("Master");
+    if (p.get(kShotcutCaptionProperty))
+        return QString::fromUtf8(p.get(kShotcutCaptionProperty));
+    if (p.get("resource"))
+        return Util::baseName(QString::fromUtf8(p.get("resource")));
+    return result;
 }

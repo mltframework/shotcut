@@ -241,7 +241,6 @@ Rectangle {
                                         id: beforeClip
                                         visible: metadata !== null && filter !== null && filter.out > 0 && filter.in > 0
                                         isBlank: true
-                                        clipName: producer.name
                                         clipResource: producer.resource
                                         mltService: producer.mlt_service
                                         inPoint: producer.in
@@ -297,7 +296,6 @@ Rectangle {
                                         id: afterClip
                                         visible: metadata !== null && filter !== null && filter.out > 0
                                         isBlank: true
-                                        clipName: producer.name
                                         clipResource: producer.resource
                                         mltService: producer.mlt_service
                                         inPoint: filter !== null? filter.out + 1 : 0

@@ -84,15 +84,7 @@ QString QmlProducer::resource()
 
 QString QmlProducer::name()
 {
-    QString result;
-    if (!m_producer.is_valid()) return result;
-    if (m_producer.is_valid())
-        result = m_producer.get(kShotcutCaptionProperty);
-    if (result.isNull())
-        result = Util::baseName(QString::fromUtf8(m_producer.get("resource")));
-    if (result == "<producer>" && m_producer.get("mlt_service"))
-        result = QString::fromUtf8(m_producer.get("mlt_service"));
-    return result;
+    return Util::producerTitle(m_producer);
 }
 
 QVariant QmlProducer::audioLevels()
