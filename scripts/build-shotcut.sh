@@ -2082,6 +2082,7 @@ End-of-shotcut-wrapper
   cp ../packaging/linux/org.shotcut.Shotcut.desktop $TMPFILE
   desktop-file-edit --set-key=Exec --set-value='sh -c "\$(dirname "%k")/Shotcut.app/shotcut "%F""' $TMPFILE
   desktop-file-edit --set-key=Icon --set-value='applications-multimedia' $TMPFILE
+  sed -i '1i #!/usr/bin/env xdg-open' $TMPFILE
   if test 0 != $? ; then
     die "Unable to create desktop file"
   fi
