@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
-  <mime-type type="application/vnd.mlt-project">
-    <comment>MLT project</comment>
+  <mime-type type="application/vnd.mlt+xml">
+    <comment>MLT XML</comment>
     <glob pattern="*.mlt"/>
   </mime-type>
 </mime-info>

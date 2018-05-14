@@ -11,4 +11,4 @@ Exec=shotcut %F
 Icon=org.shotcut.Shotcut
 Terminal=false
 Categories=AudioVideo;Video;AudioVideoEditing;
-MimeType=application/vnd.mlt-project
+MimeType=application/vnd.mlt+xml

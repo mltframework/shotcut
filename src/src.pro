@@ -349,7 +349,7 @@ VERSION = $$SHOTCUT_VERSION
 mac {
     TARGET = Shotcut
     ICON = ../icons/shotcut.icns
-    QMAKE_INFO_PLIST = ../Info.plist
+    QMAKE_INFO_PLIST = ../packaging/macos/Info.plist
     INCLUDEPATH += $$[QT_INSTALL_HEADERS]
 
     # QMake from Qt 5.1.0 on OSX is messing with the environment in which it runs
