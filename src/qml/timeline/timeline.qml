@@ -91,18 +91,18 @@ Rectangle {
     DropArea {
         anchors.fill: parent
         onEntered: {
-            if (drag.formats.indexOf('application/mlt+xml') >= 0)
+            if (drag.formats.indexOf('application/vnd.mlt+xml') >= 0)
                 drag.acceptProposedAction()
         }
         onExited: Logic.dropped()
         onPositionChanged: {
-            if (drag.formats.indexOf('application/mlt+xml') >= 0)
+            if (drag.formats.indexOf('application/vnd.mlt+xml') >= 0)
                 Logic.dragging(drag, drag.text)
         }
         onDropped: {
-            if (drop.formats.indexOf('application/mlt+xml') >= 0) {
+            if (drop.formats.indexOf('application/vnd.mlt+xml') >= 0) {
                 if (currentTrack >= 0) {
-                    Logic.acceptDrop(drop.getDataAsString('application/mlt+xml'))
+                    Logic.acceptDrop(drop.getDataAsString('application/vnd.mlt+xml'))
                     drop.acceptProposedAction()
                 }
             }

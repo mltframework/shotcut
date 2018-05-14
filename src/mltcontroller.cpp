@@ -37,7 +37,7 @@ namespace Mlt {
 static const int kThumbnailOutSeekFactor = 5;
 
 static Controller* instance = 0;
-const QString XmlMimeType("application/mlt+xml");
+const QString XmlMimeType("application/vnd.mlt+xml");
 
 static int alignWidth(int width)
 {
