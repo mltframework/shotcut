@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Meltytech, LLC
+ * Copyright (c) 2014-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -28,7 +28,7 @@ Item {
     property int handleSize: 10
     property int borderSize: 2
     property alias rectangle: rectangle
-    property color handleColor: Qt.rgba(1, 1, 1, 0.9)
+    property color handleColor: Qt.rgba(1, 1, 1, enabled? 0.9 : 0.2)
 
     signal rectChanged(Rectangle rect)
 
@@ -65,14 +65,14 @@ Item {
         // Provides contrasting thick line to above rectangle.
         color: 'transparent'
         border.width: handleSize - borderSize
-        border.color: Qt.rgba(0, 0, 0, 0.4)
+        border.color: Qt.rgba(0, 0, 0, item.enabled? 0.4 : 0.2)
         anchors.fill: rectangle
         anchors.margins: borderSize
     }
 
     Rectangle {
         id: positionHandle
-        color: Qt.rgba(0, 0, 0, 0.5)
+        color: Qt.rgba(0, 0, 0, item.enabled? 0.5 : 0.2)
         border.width: borderSize
         border.color: handleColor
         width: handleSize * 2
