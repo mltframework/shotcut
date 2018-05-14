@@ -13,6 +13,16 @@ confinement: classic
 apps:
   shotcut:
     command: bin/desktop-launch $SNAP/Shotcut.app/shotcut
+  ffmpeg:
+    command: Shotcut.app/ffmpeg
+  ffplay:
+    command: Shotcut.app/ffplay
+  ffprobe:
+    command: Shotcut.app/ffprobe
+  melt:
+    command: Shotcut.app/melt
+  qmelt:
+    command: Shotcut.app/qmelt
 
 parts:
   shotcut:
@@ -22,4 +32,3 @@ parts:
     organize:
       'Shotcut': './'
     build-attributes: [no-patchelf]
-
