@@ -43,7 +43,7 @@ Item {
             filter.set(paramVertical, 0.5)
             filter.set(paramWidth, 0.1)
             filter.set(paramHeight, 0.1)
-            filter.set(paramRotation, 0)
+            filter.set(paramRotation, 0.5)
             filter.set(paramSoftness, 0.2)
             filter.savePreset(defaultParameters)
         }
