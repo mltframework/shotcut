@@ -453,7 +453,7 @@ int MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta, bool r
                     }
                     filter->set_in_and_out(in, filter->get_out());
                     emit filterInChanged(delta, filter.data());
-                } else if (!filter->get_int("_loader")) {
+                } else if (!filter->get_int("_loader") && filter->get_in() == info->frame_in) {
                     filter->set_in_and_out(in, filter->get_out());
                     emit filterInChanged(delta, filter.data());
                 }
@@ -659,7 +659,7 @@ int MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta, bool 
                                     .toLatin1().constData());
                     }
                     emit filterOutChanged(delta, filter.data());
-                } else if (!filter->get_int("_loader")) {
+                } else if (!filter->get_int("_loader") && filter->get_out() == info->frame_out) {
                     filter->set_in_and_out(filter->get_in(), out);
                     emit filterOutChanged(delta, filter.data());
 

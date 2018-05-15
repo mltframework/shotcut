@@ -678,7 +678,7 @@ void Controller::setIn(int in)
                     }
                     filter->set_in_and_out(in, filter->get_out());
                     changed = true;
-                } else if (!filter->get_int("_loader")) {
+                } else if (!filter->get_int("_loader") && filter->get_in() == m_producer->get_in()) {
                     filter->set_in_and_out(in, filter->get_out());
                     changed = true;
                 }
@@ -723,7 +723,7 @@ void Controller::setOut(int out)
                                     .arg(filter->get_length() - 1)
                                     .toLatin1().constData());
                     }
-                } else if (!filter->get_int("_loader")) {
+                } else if (!filter->get_int("_loader") && filter->get_out() == m_producer->get_out()) {
                     filter->set_in_and_out(filter->get_in(), out);
                     changed = true;
 
