@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2017 Meltytech, LLC
+ * Copyright (c) 2015-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -63,14 +63,14 @@ Mlt::Producer *AvfoundationProducerWidget::newProducer(Mlt::Profile& profile)
             .arg(ui->videoCombo->currentText().replace(tr("None"), "none"))
             .arg(ui->audioCombo->currentText().replace(tr("None"), "none"));
     LOG_DEBUG() << resource;
-    Mlt::Producer* p = new Mlt::Producer(profile, resource.toLatin1().constData());
+    Mlt::Producer* p = new Mlt::Producer(profile, resource.toUtf8().constData());
     if (!p || !p->is_valid()) {
         delete p;
         p = new Mlt::Producer(profile, "color:");
         p->set("resource", QString("avfoundation:%1:%2")
                .arg(ui->videoCombo->currentText())
                .arg(ui->audioCombo->currentText())
-               .toLatin1().constData());
+               .toUtf8().constData());
         p->set("error", 1);
     }
     p->set("force_seekable", 0);
