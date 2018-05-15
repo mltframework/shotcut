@@ -1324,7 +1324,7 @@ yourself, you do not need to do that. You can just let Shotcut use
 the macports dependencies in /opt/local.
 END_OF_SRC_README
     cmd mkdir -p "$INSTALL_DIR" 2> /dev/null
-    cmd tar -cjf "$INSTALL_DIR"/src.tar.bz2 src
+    cmd tar -cjf "$INSTALL_DIR"/src.tar.bz2 src --exclude-vcs
   fi
 }
 
