@@ -65,6 +65,8 @@ class QmlKeyframesMetadata : public QObject
     Q_PROPERTY(bool allowAnimateIn MEMBER m_allowAnimateIn NOTIFY changed)
     Q_PROPERTY(bool allowAnimateOut MEMBER m_allowAnimateOut NOTIFY changed)
     Q_PROPERTY(QQmlListProperty<QmlKeyframesParameter> parameters READ parameters NOTIFY changed)
+    /// simpleProperties identifies a list of properties whose keyframe position must be updated when trimming.
+    Q_PROPERTY(QList<QString> simpleProperties MEMBER m_simpleProperties NOTIFY changed)
 
 public:
     explicit QmlKeyframesMetadata(QObject *parent = 0);
@@ -72,6 +74,7 @@ public:
     bool allowTrim() const { return m_allowTrim; }
     bool allowAnimateIn() const { return m_allowAnimateIn; }
     bool allowAnimateOut() const { return m_allowAnimateOut; }
+    QList<QString> simpleProperties() const { return m_simpleProperties; }
 
     QQmlListProperty<QmlKeyframesParameter> parameters() { return QQmlListProperty<QmlKeyframesParameter>(this, m_parameters); }
     int parameterCount() const { return m_parameters.count(); }
@@ -85,6 +88,7 @@ private:
     bool m_allowAnimateIn;
     bool m_allowAnimateOut;
     QList<QmlKeyframesParameter *> m_parameters;
+    QList<QString> m_simpleProperties;
 };
 
 

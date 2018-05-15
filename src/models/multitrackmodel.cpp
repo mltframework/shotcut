@@ -444,7 +444,7 @@ int MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta, bool r
         // Adjust filters.
         int n = info->producer->filter_count();
         for (int j = 0; j < n; j++) {
-            Mlt::Filter* filter = info->producer->filter(j);
+            QScopedPointer<Mlt::Filter> filter(info->producer->filter(j));
             if (filter && filter->is_valid()) {
                 if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeIn")) {
                     if (!filter->get(kShotcutAnimInProperty)) {
@@ -452,10 +452,12 @@ int MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta, bool r
                         filter->set(kShotcutAnimInProperty, filter->get_length());
                     }
                     filter->set_in_and_out(in, filter->get_out());
-                    emit filterInChanged(delta, filter);
+                    emit filterInChanged(delta, filter.data());
+                } else if (!filter->get_int("_loader")) {
+                    filter->set_in_and_out(in, filter->get_out());
+                    emit filterInChanged(delta, filter.data());
                 }
             }
-            delete filter;
         }
 
         QModelIndex modelIndex = createIndex(clipIndex, 0, i);
@@ -631,7 +633,7 @@ int MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta, bool 
         // Adjust filters.
         int n = info->producer->filter_count();
         for (int j = 0; j < n; j++) {
-            Mlt::Filter* filter = info->producer->filter(j);
+            QScopedPointer<Mlt::Filter> filter(info->producer->filter(j));
             if (filter && filter->is_valid()) {
                 QString filterName = filter->get(kShotcutFilterProperty);
                 if (filterName.startsWith("fadeOut")) {
@@ -656,10 +658,35 @@ int MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta, bool 
                                     .arg(filter->get_length() - 1)
                                     .toLatin1().constData());
                     }
-                    emit filterOutChanged(delta, filter);
+                    emit filterOutChanged(delta, filter.data());
+                } else if (!filter->get_int("_loader")) {
+                    filter->set_in_and_out(filter->get_in(), out);
+                    emit filterOutChanged(delta, filter.data());
+
+                    // Update simple keyframes of non-current filters.
+                    if (MAIN.filterController()->currentFilter()
+                        && MAIN.filterController()->currentFilter()->filter().get_filter() != filter.data()->get_filter()) {
+                        QmlMetadata* meta = MAIN.filterController()->metadataForService(filter.data());
+                        if (meta && meta->keyframes()) {
+                            foreach (QString name, meta->keyframes()->simpleProperties()) {
+                                const char* propertyName = name.toUtf8().constData();
+                                if (!filter->get_animation(propertyName))
+                                    // Cause a string property to be interpreted as animated value.
+                                    filter->anim_get_double(propertyName, 0, filter->get_length());
+                                Mlt::Animation animation = filter->get_animation(propertyName);
+                                if (animation.is_valid()) {
+                                    int n = animation.key_count();
+                                    if (n > 1) {
+                                        animation.set_length(filter->get_length());
+                                        animation.key_set_frame(n - 2, filter->get_length() - filter->get_int(kShotcutAnimOutProperty));
+                                        animation.key_set_frame(n - 1, filter->get_length() - 1);
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
-            delete filter;
         }
 
         QModelIndex index = createIndex(clipIndex, 0, i);

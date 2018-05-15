@@ -11,6 +11,7 @@ Metadata {
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
+        simpleProperties: ['alpha']
         parameters: [
             Parameter {
                 name: qsTr('Level')

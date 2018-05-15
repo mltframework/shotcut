@@ -14,5 +14,6 @@ Metadata {
         allowTrim: false
         allowAnimateIn: true
         allowAnimateOut: true
+        simpleProperties: ['rect']
     }
 }

@@ -35,6 +35,7 @@
 
 QmlFilter::QmlFilter()
     : QObject(0)
+    , m_metadata(0)
     , m_filter(mlt_filter(0))
     , m_producer(mlt_producer(0))
     , m_isNew(false)

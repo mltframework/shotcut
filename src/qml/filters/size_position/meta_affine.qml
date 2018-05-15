@@ -12,5 +12,6 @@ Metadata {
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
+        simpleProperties: ['transition.rect']
     }
 }

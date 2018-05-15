@@ -666,9 +666,10 @@ void Controller::setIn(int in)
 {
     if (m_producer && m_producer->is_valid()) {
         // Adjust filters.
+        bool changed = false;
         int n = m_producer->filter_count();
         for (int i = 0; i < n; i++) {
-            Filter* filter = m_producer->filter(i);
+            QScopedPointer<Filter> filter(m_producer->filter(i));
             if (filter && filter->is_valid()) {
                 if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeIn")) {
                     if (!filter->get(kShotcutAnimInProperty)) {
@@ -676,11 +677,15 @@ void Controller::setIn(int in)
                         filter->set(kShotcutAnimInProperty, filter->get_length());
                     }
                     filter->set_in_and_out(in, filter->get_out());
-                    refreshConsumer();
+                    changed = true;
+                } else if (!filter->get_int("_loader")) {
+                    filter->set_in_and_out(in, filter->get_out());
+                    changed = true;
                 }
             }
-            delete filter;
         }
+        if (changed)
+            refreshConsumer();
         m_producer->set("in", in);
     }
 }
@@ -689,9 +694,10 @@ void Controller::setOut(int out)
 {
     if (m_producer && m_producer->is_valid()) {
         // Adjust all filters that have an explicit duration.
+        bool changed = false;
         int n = m_producer->filter_count();
         for (int i = 0; i < n; i++) {
-            Filter* filter = m_producer->filter(i);
+            QScopedPointer<Filter> filter(m_producer->filter(i));
             if (filter && filter->is_valid()) {
                 QString filterName = filter->get(kShotcutFilterProperty);
                 if (filterName.startsWith("fadeOut")) {
@@ -700,6 +706,7 @@ void Controller::setOut(int out)
                         filter->set(kShotcutAnimOutProperty, filter->get_length());
                     }
                     filter->set_in_and_out(filter->get_in(), out);
+                    changed = true;
                     if (filterName == "fadeOutBrightness") {
                         filter->set(filter->get_int("alpha") != 1? "alpha" : "level", QString("%1=1; %2=0")
                                     .arg(filter->get_length() - filter->get_int(kShotcutAnimOutProperty))
@@ -716,10 +723,36 @@ void Controller::setOut(int out)
                                     .arg(filter->get_length() - 1)
                                     .toLatin1().constData());
                     }
-                    refreshConsumer();
+                } else if (!filter->get_int("_loader")) {
+                    filter->set_in_and_out(filter->get_in(), out);
+                    changed = true;
+
+                    // Update simple keyframes of non-current filters.
+                    if (MAIN.filterController()->currentFilter()
+                        && MAIN.filterController()->currentFilter()->filter().get_filter() != filter.data()->get_filter()) {
+                        QmlMetadata* meta = MAIN.filterController()->metadataForService(filter.data());
+                        if (meta && meta->keyframes()) {
+                            foreach (QString name, meta->keyframes()->simpleProperties()) {
+                                const char* propertyName = name.toUtf8().constData();
+                                if (!filter->get_animation(propertyName))
+                                    // Cause a string property to be interpreted as animated value.
+                                    filter->anim_get_double(propertyName, 0, filter->get_length());
+                                Mlt::Animation animation = filter->get_animation(propertyName);
+                                if (animation.is_valid()) {
+                                    int n = animation.key_count();
+                                    if (n > 1) {
+                                        animation.set_length(filter->get_length());
+                                        animation.key_set_frame(n - 2, filter->get_length() - filter->get_int(kShotcutAnimOutProperty));
+                                        animation.key_set_frame(n - 1, filter->get_length() - 1);
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
-            delete filter;
+            if (changed)
+                refreshConsumer();
         }
         m_producer->set("out", out);
     }
