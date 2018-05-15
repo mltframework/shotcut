@@ -664,7 +664,8 @@ int MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta, bool 
                     emit filterOutChanged(delta, filter.data());
 
                     // Update simple keyframes of non-current filters.
-                    if (MAIN.filterController()->currentFilter()
+                    if (filter->get_int(kShotcutAnimOutProperty) > 0
+                        && MAIN.filterController()->currentFilter()
                         && MAIN.filterController()->currentFilter()->filter().get_filter() != filter.data()->get_filter()) {
                         QmlMetadata* meta = MAIN.filterController()->metadataForService(filter.data());
                         if (meta && meta->keyframes()) {
