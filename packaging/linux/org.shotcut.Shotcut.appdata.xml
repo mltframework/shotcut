@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop">
-  <id>shotcut.desktop</id>
+  <id>org.shotcut.Shotcut.desktop</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPLv3</project_license>
   <name>Shotcut</name>
-  <summary>A free, open source, cross-platform **video editor**</summary>
+  <summary>Video editor</summary>
   <description>
     <p>
       Shotcut is a free and open-source cross-platform video editing application for
