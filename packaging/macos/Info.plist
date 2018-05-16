@@ -9,7 +9,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>NSHumanReadableCopyright</key>
-    <string>Copyright © 2011-2018 Meltytech, LLC</string>
+	<string>Copyright © 2011-2018 Meltytech, LLC</string>
 	<key>CFBundleSignature</key>
 	<string>scut</string>
 	<key>CFBundleExecutable</key>
@@ -35,7 +35,7 @@
 			<string>shotcut.icns</string>
 			<key>CFBundleTypeMIMETypes</key>
 			<array>
-                <string>application/vnd.mlt+xml</string>
+			<string>application/vnd.mlt+xml</string>
 			</array>
 			<key>CFBundleTypeName</key>
 			<string>MLT XML File</string>
