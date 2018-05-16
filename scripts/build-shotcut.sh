@@ -2079,21 +2079,10 @@ End-of-shotcut-wrapper
   $SUDO cp $TMPFILE "$FINAL_INSTALL_DIR/shotcut" || die "Unable to create wrapper script - cp failed"
 
   log Creating desktop file in $TMPFILE
-  cat > $TMPFILE <<End-of-desktop-file
-#!/usr/bin/env xdg-open
-[Desktop Entry]
-Type=Application
-Name=Shotcut
-GenericName=Video Editor
-GenericName[de]=Video Bearbeitungsprogramm
-GenericName[ru]=Видеоредактор
-Comment=Video Editor
-Comment[de]=Programm zum Bearbeiten und Abspielen von Videodateien.
-Comment[ru]=Видеоредактор
-Terminal=false
-Exec=sh -c "\$(dirname "%k")/Shotcut.app/shotcut "%F""
-Icon=applications-multimedia
-End-of-desktop-file
+  cp ../packaging/linux/org.shotcut.Shotcut.desktop $TMPFILE
+  desktop-file-edit --set-key=Exec --set-value='sh -c "\$(dirname "%k")/Shotcut.app/shotcut "%F""' $TMPFILE
+  desktop-file-edit --set-key=Icon --set-value='applications-multimedia' $TMPFILE
+  sed -i '1i #!/usr/bin/env xdg-open' $TMPFILE
   if test 0 != $? ; then
     die "Unable to create desktop file"
   fi

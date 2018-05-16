@@ -284,13 +284,16 @@ OTHER_FILES += \
     shotcut.rc \
     ../scripts/build-shotcut.sh \
     ../icons/shotcut.icns \
-    ../scripts/shotcut.nsi \
-    ../Info.plist \
+    ../packaging/windows/shotcut.nsi \
+    ../packaging/macos/Info.plist \
     ../icons/dark/index.theme \
     ../icons/light/index.theme \
-    ../snap/snapcraft.yaml \
-    ../snap/setup/gui/shotcut.desktop \
-    ../shotcut.appdata.xml
+    ../packaging/linux/appimage/appimage.yml \
+    ../packaging/linux/snap/snapcraft.yaml \
+    ../packaging/linux/snap/package.mak \
+    ../packaging/linux/org.shotcut.Shotcut.appdata.xml \
+    ../packaging/linux/org.shotcut.Shotcut.desktop \
+    ../packaging/linux/org.shotcut.Shotcut.xml
 
 TRANSLATIONS += \
     ../translations/shotcut_ca.ts \
@@ -346,7 +349,7 @@ VERSION = $$SHOTCUT_VERSION
 mac {
     TARGET = Shotcut
     ICON = ../icons/shotcut.icns
-    QMAKE_INFO_PLIST = ../Info.plist
+    QMAKE_INFO_PLIST = ../packaging/macos/Info.plist
     INCLUDEPATH += $$[QT_INSTALL_HEADERS]
 
     # QMake from Qt 5.1.0 on OSX is messing with the environment in which it runs
@@ -396,7 +399,13 @@ qmlfiles.path = $$PREFIX/share/shotcut
 INSTALLS += qmlfiles
 
 unix:!mac {
-    metainfo.files = $$PWD/../shotcut.appdata.xml
+    metainfo.files = $$PWD/../packaging/linux/org.shotcut.Shotcut.appdata.xml
     metainfo.path = $$PREFIX/share/metainfo
-    INSTALLS += qmlfiles
+    desktop.files = $$PWD/../packaging/linux/org.shotcut.Shotcut.desktop
+    desktop.path = $$PREFIX/share/applications
+    mime.files = $$PWD/../packaging/linux/org.shotcut.Shotcut.xml
+    mime.path = $$PREFIX/share/mime/packages
+    icons.files = $$PWD/../packaging/linux/org.shotcut.Shotcut.png
+    icons.path = $$PREFIX/share/icons/hicolor/64x64/apps
+    INSTALLS += metainfo desktop mime icons
 }
