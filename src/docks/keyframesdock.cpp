@@ -69,7 +69,7 @@ int KeyframesDock::seekPrevious()
         position -= m_qmlProducer->in();
         m_qmlProducer->setPosition(position);
     }
-    return m_model.keyframeIndex(currentParameter(), m_qmlProducer->position() + m_qmlProducer->in());
+    return m_model.keyframeIndex(currentParameter(), m_qmlProducer->position() + m_qmlProducer->in() - MAIN.filterController()->currentFilter()->in());
 }
 
 int KeyframesDock::seekNext()
