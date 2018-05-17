@@ -71,10 +71,11 @@ Flickable {
         filterRect.y = Math.round(rect.y / rectangle.heightScale)
         filterRect.width = Math.round(rect.width / rectangle.widthScale)
         filterRect.height = Math.round(rect.height / rectangle.heightScale)
+
         if (position !== null) {
-            if (position <= 0)
+            if (position <= 0 && filter.animateIn > 0)
                 filter.set(startValue, filterRect)
-            else if (position >= filter.duration - 1)
+            else if (position >= filter.duration - 1 && filter.animateOut > 0)
                 filter.set(endValue, filterRect)
             else
                 filter.set(middleValue, filterRect)

@@ -90,9 +90,9 @@ Item {
         if (blockUpdate) return
 
         if (position !== null) {
-            if (position <= 0)
+            if (position <= 0 && filter.animateIn > 0)
                 startValue = gainSlider.value
-            else if (position >= filter.duration - 1)
+            else if (position >= filter.duration - 1 && filter.animateOut > 0)
                 endValue = gainSlider.value
             else
                 middleValue = gainSlider.value

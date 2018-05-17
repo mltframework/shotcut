@@ -63,9 +63,9 @@ Item {
         var value = slider.value / 100.0
 
         if (position !== null) {
-            if (position <= 0)
+            if (position <= 0 && filter.animateIn > 0)
                 startValue = value
-            else if (position >= filter.duration - 1)
+            else if (position >= filter.duration - 1 && filter.animateOut > 0)
                 endValue = value
             else
                 middleValue = value
