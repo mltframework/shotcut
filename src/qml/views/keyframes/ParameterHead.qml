@@ -100,16 +100,30 @@ Rectangle {
             spacing: 8
             ToolButton {
                 id: previousButton
-                visible: delegateIndex >= 0
                 implicitWidth: 20
                 implicitHeight: 20
                 iconName: 'media-skip-backward'
                 iconSource: 'qrc:///icons/oxygen/32x32/actions/media-skip-backward.png'
                 onClicked: {
-                    root.selection = [keyframes.seekPrevious()]
-                    root.currentTrack = delegateIndex
+                    if (delegateIndex >= 0) {
+                        root.selection = [keyframes.seekPrevious()]
+                        root.currentTrack = delegateIndex
+                    } else {
+                        var position = producer.position + producer.in
+                        if (position > filter.out)
+                            position = filter.out
+                        else if (position > filter.out - filter.animateOut)
+                            position = filter.out - filter.animateOut
+                        else if (producer.position > filter.in + filter.animateIn)
+                            position = filter.in + filter.animateIn
+                        else if (producer.position > filter.in)
+                            position = filter.in
+                        else
+                            position = 0
+                        producer.position = position - producer.in
+                    }
                 }
-                tooltip: qsTr('Seek to previous keyframe')
+                tooltip: (delegateIndex >= 0) ? qsTr('Seek to previous keyframe') : qsTr('Seek backwards')
             }
 
             ToolButton {
@@ -127,19 +141,38 @@ Rectangle {
                 }
                 tooltip: qsTr('Delete the selected keyframe')
             }
+            Item {
+                visible: delegateIndex < 0
+                width: 20
+                height: 20
+            }
 
             ToolButton {
                 id: nextButton
-                visible: delegateIndex >= 0
                 implicitWidth: 20
                 implicitHeight: 20
                 iconName: 'media-skip-forward'
                 iconSource: 'qrc:///icons/oxygen/32x32/actions/media-skip-forward.png'
                 onClicked: {
-                    root.selection = [keyframes.seekNext()]
-                    root.currentTrack = delegateIndex
+                    if (delegateIndex >= 0) {
+                        root.selection = [keyframes.seekNext()]
+                        root.currentTrack = delegateIndex
+                    } else {
+                        var position = producer.position + producer.in
+                        if (position < filter.in)
+                            position = filter.in
+                        else if (position < filter.in + filter.animateIn)
+                            position = filter.in + filter.animateIn
+                        else if (position < filter.out - filter.animateOut)
+                            position = filter.out - filter.animateOut
+                        else if (position < filter.out)
+                            position = filter.out
+                        else
+                            position = producer.out
+                        producer.position = position - producer.in
+                    }
                 }
-                tooltip: qsTr('Seek to next keyframe')
+                tooltip: (delegateIndex >= 0) ? qsTr('Seek to next keyframe') : qsTr('Seek forwards')
             }
 
             ToolButton {
