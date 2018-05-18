@@ -162,6 +162,40 @@ Rectangle {
             focus: true
             hoverEnabled: true
             onClicked: producer.position = (scrollView.flickableItem.contentX + mouse.x) / timeScale
+            onDoubleClicked: {
+                // Figure out which parameter row that is in.
+                for (var i = 0; i < parametersRepeater.count; i++) {
+                    // Only for parameters with curves.
+                    if (metadata.keyframes.parameters[i].isCurve) {
+                        var point = tracksArea.mapToItem(parametersRepeater.itemAt(i), mouse.x, mouse.y)
+                        var position = Math.round(point.x / timeScale) - (filter.in - producer.in)
+                        var trackHeight = parametersRepeater.itemAt(i).height
+                        var interpolation = 1
+                        // Get the interpolation from the previous keyframe if any.
+                        for (var j = 0; j < parametersRepeater.itemAt(i).getKeyframeCount(); j++) {
+                            var k = parametersRepeater.itemAt(i).getKeyframe(j)
+                            if (k.position - (filter.in - producer.in) < position)
+                                interpolation = k.interpolation
+                            else
+                                break
+                        }
+                        // If click position is within range.
+                        if (position >= 0 && position < filter.duration
+                            && point.y > 0 && point.y < trackHeight) {
+                            // Determine the value to set.
+                            var keyframeHeight = 12 // height + 2 * border.width
+                            var trackValue = Math.min(Math.max(0, 1.0 - (point.y - keyframeHeight) / (trackHeight - 2 * keyframeHeight)), 1.0)
+                            var minimum = metadata.keyframes.parameters[i].minimum
+                            var maximum = metadata.keyframes.parameters[i].maximum
+                            var value = trackValue * (maximum - minimum) - minimum
+                            //console.log('clicked parameter ' + i + ' frame ' + position + ' trackValue ' + trackValue + ' value ' + value)
+                            parameters.addKeyframe(i, value, position, interpolation)
+                            break
+                        }
+                    }
+                }
+            }
+
             property bool scim: false
             onReleased: scim = false
             onExited: scim = false

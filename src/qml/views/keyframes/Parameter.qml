@@ -27,6 +27,17 @@ Item {
 
     signal clicked(var keyframe, var parameter)
 
+    function getKeyframeCount() {
+        return keyframesRepeater.count
+    }
+
+    function getKeyframe(keyframeIndex) {
+        if (keyframeIndex < keyframesRepeater.count)
+            return keyframesRepeater.itemAt(keyframeIndex)
+        else
+            return null
+    }
+
     Repeater { id: keyframesRepeater; model: keyframeDelegateModel; onCountChanged: canvas.requestPaint() }
 
     Canvas {

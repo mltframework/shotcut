@@ -60,6 +60,7 @@ Rectangle {
             else
                 producer.position = position
         }
+        onDoubleClicked: removeMenuItem.trigger()
     }
 
     ToolTip {
@@ -97,6 +98,7 @@ Rectangle {
             }
         }
         MenuItem {
+            id: removeMenuItem
             text: qsTr('Remove')
             onTriggered: {
                 parameters.remove(parameterIndex, index)

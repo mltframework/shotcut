@@ -259,6 +259,14 @@ bool KeyframesModel::setInterpolation(int parameterIndex, int keyframeIndex, Int
     return error;
 }
 
+void KeyframesModel::addKeyframe(int parameterIndex, double value, int position, KeyframesModel::InterpolationType type)
+{
+    if (m_filter && parameterIndex < m_propertyNames.count()) {
+        QString name = m_propertyNames[parameterIndex];
+        m_filter->set(name, value, position,  mlt_keyframe_type(type));
+    }
+}
+
 void KeyframesModel::reload()
 {
     beginResetModel();
