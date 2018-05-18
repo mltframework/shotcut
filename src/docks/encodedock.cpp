@@ -55,7 +55,14 @@ EncodeDock::EncodeDock(QWidget *parent) :
     LOG_DEBUG() << "begin";
     ui->setupUi(this);
     ui->stopCaptureButton->hide();
+#if QT_POINTER_SIZE == 4
+    // On 32-bit process, limit multi-threading to mitigate running out of memory.
+    ui->parallelCheckbox->setChecked(false);
+    ui->parallelCheckbox->setHidden(true);
+    ui->videoCodecThreadsSpinner->setMaximum(qMin(4, QThread::idealThreadCount()));
+#else
     ui->videoCodecThreadsSpinner->setMaximum(QThread::idealThreadCount());
+#endif
     if (QThread::idealThreadCount() < 3)
         ui->parallelCheckbox->setHidden(true);
     toggleViewAction()->setIcon(windowIcon());
@@ -671,9 +678,14 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
             else if (ui->videoCodecThreadsSpinner->value() == 0
                      && ui->videoCodecCombo->currentText() != "libx264"
                      && ui->videoCodecCombo->currentText() != "libx265")
-                p->set("threads", QThread::idealThreadCount() - 1);
+                p->set("threads", ui->videoCodecThreadsSpinner->maximum() - 1);
             else
+#if QT_POINTER_SIZE == 4
+                // On 32-bit process, if 0 for auto use maximum, which might be limited to reduce memory usage.
+                p->set("threads", (ui->videoCodecThreadsSpinner->value() == 0) ? ui->videoCodecThreadsSpinner->maximum() : ui->videoCodecThreadsSpinner->value());
+#else
                 p->set("threads", ui->videoCodecThreadsSpinner->value());
+#endif
             if (ui->videoRateControlCombo->currentIndex() != RateControlQuality &&
                 !vcodec.contains("nvenc") &&
                 ui->dualPassCheckbox->isEnabled() && ui->dualPassCheckbox->isChecked())

@@ -862,7 +862,12 @@ int Controller::realTime() const
         if (Settings.playerGPU()) {
             return -1;
         } else {
+#if QT_POINTER_SIZE == 4
+            // Limit to 1 rendering thread on 32-bit process to reduce memory usage.
+            int threadCount = 1;
+#else
             int threadCount = QThread::idealThreadCount();
+#endif
             threadCount = threadCount > 2? qMin(threadCount - 1, 4) : 1;
             realtime = -threadCount;
         }
