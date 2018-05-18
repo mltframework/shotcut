@@ -299,6 +299,7 @@ Rectangle {
                     bubbleHelp.show(clipRoot.x, trackRoot.y + clipRoot.height, s.substring(6))
                 }
             }
+            onDoubleClicked: filter.animateIn = (filter.animateIn > 0) ? 0 : Math.round(profile.fps)
         }
         SequentialAnimation on scale {
             loops: Animation.Infinite
@@ -389,6 +390,7 @@ Rectangle {
                     bubbleHelp.show(clipRoot.x + clipRoot.width, trackRoot.y + clipRoot.height, s.substring(6))
                 }
             }
+            onDoubleClicked: filter.animateOut = (filter.animateOut > 0) ?  0 : Math.round(profile.fps)
         }
         SequentialAnimation on scale {
             loops: Animation.Infinite
