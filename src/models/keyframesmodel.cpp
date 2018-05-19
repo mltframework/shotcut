@@ -259,11 +259,43 @@ bool KeyframesModel::setInterpolation(int parameterIndex, int keyframeIndex, Int
     return error;
 }
 
+bool KeyframesModel::setPosition(int parameterIndex, int keyframeIndex, int position)
+{
+    bool error = true;
+    if (m_filter && parameterIndex < m_propertyNames.count()) {
+        QString name = m_propertyNames[parameterIndex];
+        Mlt::Animation animation = m_filter->getAnimation(name);
+        if (animation.is_valid()) {
+            if (!animation.key_set_frame(keyframeIndex, position)) {
+//                LOG_DEBUG() << "keyframe index" << keyframeIndex << "position" << position;
+                QModelIndex modelIndex = index(keyframeIndex, 0, index(parameterIndex));
+                emit dataChanged(modelIndex, modelIndex, QVector<int>() << FrameNumberRole << NameRole);
+                error = false;
+                emit m_filter->changed();
+            }
+        }
+    }
+    if (error)
+        LOG_ERROR() << "failed to set keyframe" << "at parameter index" << parameterIndex << "keyframeIndex" << keyframeIndex << "to position" << position;
+    return error;
+}
+
 void KeyframesModel::addKeyframe(int parameterIndex, double value, int position, KeyframesModel::InterpolationType type)
 {
     if (m_filter && parameterIndex < m_propertyNames.count()) {
         QString name = m_propertyNames[parameterIndex];
         m_filter->set(name, value, position,  mlt_keyframe_type(type));
+    }
+}
+
+void KeyframesModel::setKeyframe(int parameterIndex, double value, int position, KeyframesModel::InterpolationType type)
+{
+    if (m_filter && parameterIndex < m_propertyNames.count()) {
+        QString name = m_propertyNames[parameterIndex];
+        m_filter->filter().anim_set(name.toUtf8().constData(), value, position, m_filter->duration(), mlt_keyframe_type(type));
+        emit m_filter->changed();
+        QModelIndex modelIndex = index(keyframeIndex(parameterIndex, position), 0, index(parameterIndex));
+        emit dataChanged(modelIndex, modelIndex, QVector<int>() << NumericValueRole << NameRole);
     }
 }
 

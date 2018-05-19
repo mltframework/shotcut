@@ -183,11 +183,11 @@ Rectangle {
                         if (position >= 0 && position < filter.duration
                             && point.y > 0 && point.y < trackHeight) {
                             // Determine the value to set.
-                            var keyframeHeight = 12 // height + 2 * border.width
-                            var trackValue = Math.min(Math.max(0, 1.0 - (point.y - keyframeHeight) / (trackHeight - 2 * keyframeHeight)), 1.0)
+                            var keyframeHeight = 10
+                            var trackValue = Math.min(Math.max(0, 1.0 - (point.y - keyframeHeight/2) / (trackHeight - keyframeHeight)), 1.0)
                             var minimum = metadata.keyframes.parameters[i].minimum
                             var maximum = metadata.keyframes.parameters[i].maximum
-                            var value = trackValue * (maximum - minimum) - minimum
+                            var value = minimum + trackValue * (maximum - minimum)
                             //console.log('clicked parameter ' + i + ' frame ' + position + ' trackValue ' + trackValue + ' value ' + value)
                             parameters.addKeyframe(i, value, position, interpolation)
                             break

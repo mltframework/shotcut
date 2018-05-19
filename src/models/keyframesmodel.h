@@ -64,7 +64,9 @@ public:
     Q_INVOKABLE int keyframeIndex(int parameterIndex, int currentPosition);
     Q_INVOKABLE int parameterIndex(const QString& propertyName) const;
     Q_INVOKABLE bool setInterpolation(int parameterIndex, int keyframeIndex, InterpolationType type);
+    Q_INVOKABLE bool setPosition(int parameterIndex, int keyframeIndex, int position);
     Q_INVOKABLE void addKeyframe(int parameterIndex, double value, int position, InterpolationType type);
+    Q_INVOKABLE void setKeyframe(int parameterIndex, double value, int position, InterpolationType type);
 
 signals:
     void loaded();

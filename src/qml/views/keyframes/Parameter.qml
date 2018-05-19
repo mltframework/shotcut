@@ -112,6 +112,8 @@ Item {
             parameterIndex: parameterRoot.DelegateModel.itemsIndex
             onClicked: parameterRoot.clicked(keyframe, parameterRoot)
             onInterpolationChanged: canvas.requestPaint()
+            onPositionChanged: canvas.requestPaint()
+            onValueChanged: canvas.requestPaint()
         }
     }
 }

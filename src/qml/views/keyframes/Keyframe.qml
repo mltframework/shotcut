@@ -30,7 +30,8 @@ Rectangle {
     property string name: ''
     property double value
     property int parameterIndex
-    property int trackHeight: Logic.trackHeight(metadata.keyframes.parameters[parameterIndex].isCurve)
+    property bool isCurve: metadata.keyframes.parameters[parameterIndex].isCurve
+    property int trackHeight: Logic.trackHeight(isCurve)
     property double minimum: metadata.keyframes.parameters[parameterIndex].minimum
     property double maximum: metadata.keyframes.parameters[parameterIndex].maximum
     property double trackValue: (0.5 - (value - minimum) / (maximum - minimum)) * (trackHeight - height - 2.0 * border.width)
@@ -41,7 +42,7 @@ Rectangle {
 
     x: position * timeScale - width/2
     anchors.verticalCenter: parameterRoot.verticalCenter
-    anchors.verticalCenterOffset: metadata.keyframes.parameters[parameterIndex].isCurve ? trackValue : 0
+    anchors.verticalCenterOffset: isCurve ? trackValue : 0
     height: 10
     width: height
     color: isSelected? 'red' : activePalette.buttonText
@@ -54,13 +55,39 @@ Rectangle {
         anchors.fill: parent
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         onClicked: {
-            parent.clicked(keyframeRoot)
             if (mouse.button === Qt.RightButton)
                 menu.popup()
             else
                 producer.position = position
         }
         onDoubleClicked: removeMenuItem.trigger()
+        drag.target: parent
+        drag.axis: isCurve? Drag.XAndYAxis : Drag.XAxis
+        drag.threshold: 0
+        onPressed: {
+            parent.clicked(keyframeRoot)
+            if (isCurve) {
+               if (mouse.modifiers & Qt.ControlModifier)
+                   drag.axis = Drag.YAxis
+               else if (mouse.modifiers & Qt.AltModifier)
+                   drag.axis = Drag.XAxis
+               else
+                   drag.axis = Drag.XAndYAxis
+           }
+        }
+        onEntered: if (isCurve) parent.anchors.verticalCenter = undefined
+        onReleased: if (isCurve) parent.anchors.verticalCenter = parameterRoot.verticalCenter
+        onPositionChanged: {
+            var newPosition = Math.round(parent.x / timeScale + (parent.width/2))
+            if (newPosition !== keyframeRoot.position)
+                parameters.setPosition(parameterIndex, index, newPosition - (filter.in - producer.in))
+            if (isCurve) {
+                var trackValue = Math.min(Math.max(0, 1.0 - parent.y / (parameterRoot.height - parent.height)), 1.0)
+                var newValue = minimum + trackValue * (maximum - minimum)
+                if (trackValue !== newValue)
+                    parameters.setKeyframe(parameterIndex, newValue, newPosition - (filter.in - producer.in), interpolation)
+            }
+        }
     }
 
     ToolTip {
