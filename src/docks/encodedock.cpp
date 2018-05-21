@@ -1404,14 +1404,16 @@ void EncodeDock::on_audioRateControlCombo_activated(int index)
 
 void EncodeDock::on_scanModeCombo_currentIndexChanged(int index)
 {
-    if (index == 0) {
-        ui->fieldOrderCombo->removeItem(2);
-        ui->deinterlacerCombo->addItem(tr("None"));
-        ui->deinterlacerCombo->setCurrentIndex(4);
-    } else {
-        ui->deinterlacerCombo->removeItem(4);
-        ui->fieldOrderCombo->addItem(tr("None"));
-        ui->fieldOrderCombo->setCurrentIndex(2);
+    if (index == 0) { // Interlaced
+        ui->fieldOrderCombo->removeItem(2); // None, if it exists
+        if (ui->deinterlacerCombo->count() < 5)
+            ui->deinterlacerCombo->addItem(tr("None"));
+        ui->deinterlacerCombo->setCurrentIndex(ui->deinterlacerCombo->count() - 1);
+    } else { // Progressive
+        ui->deinterlacerCombo->removeItem(4); // None, if it exists
+        if (ui->fieldOrderCombo->count() < 3)
+            ui->fieldOrderCombo->addItem(tr("None"));
+        ui->fieldOrderCombo->setCurrentIndex(ui->fieldOrderCombo->count() - 1);
     }
     ui->fieldOrderCombo->setDisabled(index);
     ui->deinterlacerCombo->setEnabled(index);
