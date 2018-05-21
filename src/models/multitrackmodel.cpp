@@ -208,6 +208,8 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
             }
             case IsFilteredRole:
                 return isFiltered(track.data());
+            case IsBottomVideoRole:
+                return m_trackList[index.row()].number == 0 && m_trackList[index.row()].type == VideoTrackType;
             default:
                 break;
             }
@@ -274,6 +276,7 @@ QHash<int, QByteArray> MultitrackModel::roleNames() const
     roles[FileHashRole] = "hash";
     roles[SpeedRole] = "speed";
     roles[IsFilteredRole] = "filtered";
+    roles[IsBottomVideoRole] = "isBottomVideo";
     return roles;
 }
 
@@ -3008,6 +3011,15 @@ void MultitrackModel::refreshTrackList()
                     trackName = QString("V%1").arg(v);
                 track->set(kTrackNameProperty, trackName.toUtf8().constData());
                 m_trackList.prepend(t);
+
+                // Always disable compositing on V1.
+                if (v == 1) {
+                    QScopedPointer<Mlt::Transition> transition(getTransition("frei0r.cairoblend", v-1));
+                    if (!transition)
+                        transition.reset(getTransition("movit.overlay", v-1));
+                    if (transition && transition->is_valid())
+                        track->set("disable", 1);
+                }
             }
         }
     }

@@ -71,7 +71,8 @@ public:
         IsTransitionRole,/// clip only
         FileHashRole,    /// clip only
         SpeedRole,       /// clip only
-        IsFilteredRole
+        IsFilteredRole,
+        IsBottomVideoRole/// track only
     };
 
     explicit MultitrackModel(QObject *parent = 0);

@@ -183,6 +183,7 @@ Rectangle {
                             isLocked: model.locked
                             isVideo: !model.audio
                             isFiltered: model.filtered
+                            isBottomVideo: model.isBottomVideo
                             width: headerWidth
                             height: Logic.trackHeight(model.audio)
                             selected: false

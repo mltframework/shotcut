@@ -30,6 +30,7 @@ Rectangle {
     property bool isLocked
     property bool isVideo
     property bool isFiltered
+    property bool isBottomVideo
     property bool selected: false
     property bool current: false
     signal clicked()
@@ -157,12 +158,14 @@ Rectangle {
             ToolButton {
                 id: compositeButton
                 visible: isVideo
+                enabled: !isBottomVideo
+                opacity: enabled? 1.0 : 0.5
                 implicitWidth: 20
                 implicitHeight: 20
                 iconName: isComposite ? 'merge' : 'split'
                 iconSource: isComposite ? 'qrc:///icons/oxygen/32x32/actions/merge.png' : 'qrc:///icons/oxygen/32x32/actions/split.png'
                 onClicked: timeline.setTrackComposite(index, !isComposite)
-                tooltip: isComposite? qsTr('Disable compositing') : qsTr('Composite')
+                tooltip: isComposite? qsTr('Disable compositing') : qsTr('Enable compositing')
             }
 
             ToolButton {
