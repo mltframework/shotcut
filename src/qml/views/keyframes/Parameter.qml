@@ -42,7 +42,7 @@ Item {
 
     Canvas {
         id: canvas
-        visible: metadata.keyframes.parameters[parameterRoot.DelegateModel.itemsIndex].isCurve
+        visible: metadata !== null && metadata.keyframes.parameters[parameterRoot.DelegateModel.itemsIndex].isCurve
         anchors.fill: parent
 
         function catmullRomToBezier(context, i) {
