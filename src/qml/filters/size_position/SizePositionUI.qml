@@ -65,11 +65,59 @@ Item {
             filter.set(halignProperty, 'right')
             filter.savePreset(preset.parameters, qsTr('Top Right'))
 
+            // Add some animated presets.
+            filter.set(valignProperty, 'middle')
+            filter.set(halignProperty, 'center')
+            filter.animateIn = profile.fps
+            filter.set(rectProperty,   '0=-100%/0%:100%x100%; :1.0=0%/0%:100%x100%')
+            filter.savePreset(preset.parameters.concat('shotcut:animIn'), qsTr('Slide In From Left'))
+            filter.set(rectProperty,   '0=100%/0%:100%x100%; :1.0=0%/0%:100%x100%')
+            filter.savePreset(preset.parameters.concat('shotcut:animIn'), qsTr('Slide In From Right'))
+            filter.set(rectProperty,   '0=0%/-100%:100%x100%; :1.0=0%/0%:100%x100%')
+            filter.savePreset(preset.parameters.concat('shotcut:animIn'), qsTr('Slide In From Top'))
+            filter.set(rectProperty,   '0=0%/100%:100%x100%; :1.0=0%/0%:100%x100%')
+            filter.savePreset(preset.parameters.concat('shotcut:animIn'), qsTr('Slide In From Bottom'))
+            filter.animateIn = 0
+            filter.animateOut = profile.fps
+            filter.set(rectProperty,   ':-1.0=0%/0%:100%x100%; -1=-100%/0%:100%x100%')
+            filter.savePreset(preset.parameters.concat('shotcut:animOut'), qsTr('Slide Out Left'))
+            filter.set(rectProperty,   ':-1.0=0%/0%:100%x100%; -1=100%/0%:100%x100%')
+            filter.savePreset(preset.parameters.concat('shotcut:animOut'), qsTr('Slide Out Right'))
+            filter.set(rectProperty,   ':-1.0=0%/0%:100%x100%; -1=0%/-100%:100%x100%')
+            filter.savePreset(preset.parameters.concat('shotcut:animOut'), qsTr('Slide Out Top'))
+            filter.set(rectProperty,   ':-1.0=0%/0%:100%x100%; -1=0%/100%:100%x100%')
+            filter.savePreset(preset.parameters.concat('shotcut:animOut'), qsTr('Slide Out Bottom'))
+            filter.set(fillProperty, 1)
+            filter.animateOut = 0
+            filter.animateIn = filter.duration
+            filter.set(rectProperty,   '0=0%/0%:100%x100%; -1=-5%/-5%:110%x110%')
+            filter.savePreset(preset.parameters.concat('shotcut:animIn'), qsTr('Slow Zoom In'))
+            filter.set(rectProperty,   '0=-5%/-5%:110%x110%; -1=0%/0%:100%x100%')
+            filter.savePreset(preset.parameters.concat('shotcut:animIn'), qsTr('Slow Zoom Out'))
+            filter.set(rectProperty,   '0=-5%/-5%:110%x110%; -1=-10%/-5%:110%x110%')
+            filter.savePreset(preset.parameters.concat('shotcut:animIn'), qsTr('Slow Pan Left'))
+            filter.set(rectProperty,   '0=-5%/-5%:110%x110%; -1=0%/-5%:110%x110%')
+            filter.savePreset(preset.parameters.concat('shotcut:animIn'), qsTr('Slow Pan Right'))
+            filter.set(rectProperty,   '0=-5%/-5%:110%x110%; -1=-5%/-10%:110%x110%')
+            filter.savePreset(preset.parameters.concat('shotcut:animIn'), qsTr('Slow Pan Up'))
+            filter.set(rectProperty,   '0=-5%/-5%:110%x110%; -1=-5%/0%:110%x110%')
+            filter.savePreset(preset.parameters.concat('shotcut:animIn'), qsTr('Slow Pan Down'))
+            filter.set(rectProperty,   '0=0%/0%:100%x100%; -1=-10%/-10%:110%x110%')
+            filter.savePreset(preset.parameters.concat('shotcut:animIn'), qsTr('Slow Zoom In, Pan Up Left'))
+            filter.set(rectProperty,   '0=0%/0%:100%x100%; -1=0%/0%:110%x110%')
+            filter.savePreset(preset.parameters.concat('shotcut:animIn'), qsTr('Slow Zoom In, Pan Down Right'))
+            filter.set(rectProperty,   '0=-10%/0%:110%x110%; -1=0%/0%:100%x100%')
+            filter.savePreset(preset.parameters.concat('shotcut:animIn'), qsTr('Slow Zoom Out, Pan Up Right'))
+            filter.set(rectProperty,   '0=0%/-10%:110%x110%; -1=0%/0%:100%x100%')
+            filter.savePreset(preset.parameters.concat('shotcut:animIn'), qsTr('Slow Zoom Out, Pan Down Left'))
+            filter.animateIn = 0
+            filter.resetProperty(rectProperty)
+
+            // Add default preset.
             filter.set(rectProperty,   '0%/0%:100%x100%')
             filter.set(valignProperty, 'top')
             filter.set(halignProperty, 'left')
             filter.savePreset(preset.parameters)
-            filter.set(fillProperty, 1)
         } else {
             if (legacyRectProperty !== null) {
                 var old = filter.get(legacyRectProperty)
@@ -88,6 +136,7 @@ Item {
         filter.blockSignals = false
         setControls()
         setKeyframedControls()
+        filter.changed()
     }
 
     function getPosition() {
