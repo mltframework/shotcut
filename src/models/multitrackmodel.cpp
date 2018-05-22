@@ -1147,6 +1147,7 @@ void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
     if (track) {
         Mlt::Playlist playlist(*track);
         QScopedPointer<Mlt::Producer> clip(playlist.get_clip(clipIndex));
+        int originalDuration = playlist.clip_length(clipIndex);
 
         // Make copy of clip.
         Mlt::Producer producer(MLT.profile(), "xml-string",
@@ -1155,86 +1156,46 @@ void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
         int out = clip->get_out();
         int duration = position - playlist.clip_start(clipIndex);
 
-        // If this clip has a transition on the right.
-        if (clip->get_data("mix_out")) {
-            // Remove fades that are usually not desired after split.
-            QScopedPointer<Mlt::Filter> filter(getFilter("fadeOutVolume", &producer));
-            if (filter && filter->is_valid())
-                producer.detach(*filter);
-            filter.reset(getFilter("fadeOutBrightness", &producer));
-            if (filter && filter->is_valid())
-                producer.detach(*filter);
-            filter.reset(getFilter("fadeOutMovit", &producer));
-            if (filter && filter->is_valid())
-                producer.detach(*filter);
-            filter.reset(getFilter("fadeInVolume", &clip->parent()));
-            if (filter && filter->is_valid())
-                clip->parent().detach(*filter);
-            filter.reset(getFilter("fadeInBrightness", &clip->parent()));
-            if (filter && filter->is_valid())
-                clip->parent().detach(*filter);
-            filter.reset(getFilter("fadeInMovit", &clip->parent()));
-            if (filter && filter->is_valid())
-                clip->parent().detach(*filter);
+        // Remove fades that are usually not desired after split.
+        QScopedPointer<Mlt::Filter> filter(getFilter("fadeOutVolume", &producer));
+        if (filter && filter->is_valid())
+            producer.detach(*filter);
+        filter.reset(getFilter("fadeOutBrightness", &producer));
+        if (filter && filter->is_valid())
+            producer.detach(*filter);
+        filter.reset(getFilter("fadeOutMovit", &producer));
+        if (filter && filter->is_valid())
+            producer.detach(*filter);
+        filter.reset(getFilter("fadeInVolume", &clip->parent()));
+        if (filter && filter->is_valid())
+            clip->parent().detach(*filter);
+        filter.reset(getFilter("fadeInBrightness", &clip->parent()));
+        if (filter && filter->is_valid())
+            clip->parent().detach(*filter);
+        filter.reset(getFilter("fadeInMovit", &clip->parent()));
+        if (filter && filter->is_valid())
+            clip->parent().detach(*filter);
 
-            beginInsertRows(index(trackIndex), clipIndex, clipIndex);
-            if (clip->is_blank()) {
-                playlist.insert_blank(clipIndex, duration - 1);
-            } else {
-                playlist.insert(producer, clipIndex, in, in + duration - 1);
-                QModelIndex modelIndex = createIndex(clipIndex, 0, trackIndex);
-                AudioLevelsTask::start(producer.parent(), this, modelIndex);
-            }
-            endInsertRows();
-
-            playlist.resize_clip(clipIndex + 1, in + duration, out);
-            QModelIndex modelIndex = createIndex(clipIndex + 1, 0, trackIndex);
-            QVector<int> roles;
-            roles << DurationRole;
-            roles << OutPointRole;
-            roles << FadeInRole;
-            emit dataChanged(modelIndex, modelIndex, roles);
-            AudioLevelsTask::start(clip->parent(), this, modelIndex);
+        beginInsertRows(index(trackIndex), clipIndex, clipIndex);
+        if (clip->is_blank()) {
+            playlist.insert_blank(clipIndex, duration - 1);
         } else {
-            // Remove fades that are usually not desired after split.
-            QScopedPointer<Mlt::Filter> filter(getFilter("fadeOutVolume", &clip->parent()));
-            if (filter && filter->is_valid())
-                clip->parent().detach(*filter);
-            filter.reset(getFilter("fadeOutBrightness", &clip->parent()));
-            if (filter && filter->is_valid())
-                clip->parent().detach(*filter);
-            filter.reset(getFilter("fadeOutMovit", &clip->parent()));
-            if (filter && filter->is_valid())
-                clip->parent().detach(*filter);
-            filter.reset(getFilter("fadeInVolume", &producer));
-            if (filter && filter->is_valid())
-                producer.detach(*filter);
-            filter.reset(getFilter("fadeInBrightness", &producer));
-            if (filter && filter->is_valid())
-                producer.detach(*filter);
-            filter.reset(getFilter("fadeInMovit", &producer));
-            if (filter && filter->is_valid())
-                producer.detach(*filter);
-
-            playlist.resize_clip(clipIndex, in, in + duration - 1);
+            playlist.insert(producer, clipIndex, in, in + duration - 1);
             QModelIndex modelIndex = createIndex(clipIndex, 0, trackIndex);
-            QVector<int> roles;
-            roles << DurationRole;
-            roles << OutPointRole;
-            roles << FadeOutRole;
-            emit dataChanged(modelIndex, modelIndex, roles);
-            AudioLevelsTask::start(clip->parent(), this, modelIndex);
-
-            beginInsertRows(index(trackIndex), clipIndex + 1, clipIndex + 1);
-            if (clip->is_blank()) {
-                playlist.insert_blank(clipIndex + 1, out - in - duration);
-            } else {
-                playlist.insert(producer, clipIndex + 1, in + duration, out);
-                QModelIndex modelIndex = createIndex(clipIndex + 1, 0, trackIndex);
-                AudioLevelsTask::start(producer.parent(), this, modelIndex);
-            }
-            endInsertRows();
+            AudioLevelsTask::start(producer.parent(), this, modelIndex);
         }
+        endInsertRows();
+        adjustClipFilters(producer, in, out, 0, originalDuration - duration);
+
+        playlist.resize_clip(clipIndex + 1, in + duration, out);
+        QModelIndex modelIndex = createIndex(clipIndex + 1, 0, trackIndex);
+        QVector<int> roles;
+        roles << DurationRole;
+        roles << OutPointRole;
+        roles << FadeInRole;
+        emit dataChanged(modelIndex, modelIndex, roles);
+        AudioLevelsTask::start(clip->parent(), this, modelIndex);
+        adjustClipFilters(clip->parent(), in, out, duration, 0);
 
         emit modified();
     }
@@ -1250,7 +1211,8 @@ void MultitrackModel::joinClips(int trackIndex, int clipIndex)
         if (clipIndex >= playlist.count() - 1) return;
         QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
         int in = info->frame_in;
-        int duration = info->frame_count + playlist.clip_length(clipIndex + 1);
+        int out = info->frame_out;
+        int delta = -playlist.clip_length(clipIndex + 1);
 
         // Move a fade out on the right clip onto the left clip.
         QScopedPointer<Mlt::Producer> clip(playlist.get_clip(clipIndex));
@@ -1265,7 +1227,7 @@ void MultitrackModel::joinClips(int trackIndex, int clipIndex)
         if (filter && filter->is_valid())
             clip->parent().attach(*filter);
 
-        playlist.resize_clip(clipIndex, in, in + duration - 1);
+        playlist.resize_clip(clipIndex, in, out - delta);
         QModelIndex modelIndex = createIndex(clipIndex, 0, trackIndex);
         QVector<int> roles;
         roles << DurationRole;
@@ -1277,6 +1239,8 @@ void MultitrackModel::joinClips(int trackIndex, int clipIndex)
         beginRemoveRows(index(trackIndex), clipIndex + 1, clipIndex + 1);
         playlist.remove(clipIndex + 1);
         endRemoveRows();
+
+        adjustClipFilters(clip->parent(), in, out, 0, delta);
 
         emit modified();
     }
@@ -2873,6 +2837,9 @@ bool MultitrackModel::mergeClipWithNext(int trackIndex, int clipIndex, bool dryr
     beginRemoveRows(index(trackIndex), clipIndex + 1, clipIndex + 1);
     playlist.remove(clipIndex + 1);
     endRemoveRows();
+
+    adjustClipFilters(*clip1.producer, clip1.frame_in, clip1.frame_out, 0, -clip2.frame_count);
+
     emit modified();
     return true;
 }
