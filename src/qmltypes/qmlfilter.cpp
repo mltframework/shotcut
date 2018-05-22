@@ -259,7 +259,17 @@ int QmlFilter::savePreset(const QStringList &propertyNames, const QString &name)
             dir.cd(objectNameOrService());
     }
     const QString preset = name.isEmpty()? tr("(defaults)") : name;
-    properties.save(dir.filePath(preset).toUtf8().constData());
+    // Convert properties to YAML string.
+    char* yamlStr = properties.serialise_yaml();
+    QString yaml = yamlStr;
+    free(yamlStr);
+    // Save YAML to file
+    QFile yamlFile(dir.filePath(preset));
+    if(!yamlFile.open(QIODevice::WriteOnly)) {
+        LOG_ERROR() << "Failed to save preset: " << dir.filePath(preset);
+    }
+    yamlFile.write(yaml.toUtf8());
+    yamlFile.close();
     loadPresets();
     return m_presets.indexOf(name);
 }
@@ -458,7 +468,26 @@ void QmlFilter::preset(const QString &name)
 
     if (!dir.cd("presets") || !dir.cd(objectNameOrService()))
         return;
-    m_filter.load(dir.filePath(name).toUtf8().constData());
+
+    // Detect the preset file format
+    bool isYaml = false;
+    QFile presetFile(dir.filePath(name));
+    if(presetFile.open(QIODevice::ReadOnly)) {
+        if(presetFile.readLine(4) == "---") {
+            isYaml = true;
+        }
+        presetFile.close();
+    }
+
+    if(isYaml) {
+        // Load from YAML file.
+        QScopedPointer<Mlt::Properties> properties(Mlt::Properties::parse_yaml(dir.filePath(name).toUtf8().constData()));
+        m_filter.inherit(*properties);
+    } else {
+        // Load from legacy preset file
+        m_filter.load(dir.filePath(name).toUtf8().constData());
+    }
+
     emit changed();
 }
 
