@@ -197,8 +197,8 @@ private:
 
 private slots:
     void adjustBackgroundDuration();
-    void adjustFilterDurations();
-
+    void adjustTrackFilters();
+    void adjustClipFilters(Mlt::Producer& producer, int in, int out, int inDelta, int outDelta);
 };
 
 #endif // MULTITRACKMODEL_H
