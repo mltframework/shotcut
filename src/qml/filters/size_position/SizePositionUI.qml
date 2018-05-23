@@ -224,7 +224,7 @@ Item {
     ExclusiveGroup { id: valignGroup }
 
     GridLayout {
-        columns: 5
+        columns: 6
         anchors.fill: parent
         anchors.margins: 8
 
@@ -235,7 +235,7 @@ Item {
         Preset {
             id: preset
             parameters: [fillProperty, distortProperty, rectProperty, halignProperty, valignProperty]
-            Layout.columnSpan: 4
+            Layout.columnSpan: 5
             onBeforePresetLoaded: {
                 filter.resetProperty(rectProperty)
             }
@@ -270,6 +270,13 @@ Item {
                 onEditingFinished: setFilter(getPosition())
             }
         }
+        UndoButton {
+            onClicked: {
+                rectX.text = rectY.text = 0
+                setFilter(getPosition())
+            }
+        }
+
         Label {
             text: qsTr('Size')
             Layout.alignment: Qt.AlignRight
@@ -290,41 +297,53 @@ Item {
                 onEditingFinished: setFilter(getPosition())
             }
         }
+        UndoButton {
+            onClicked: {
+                rectW.text = profile.width
+                rectH.text = profile.height
+                setFilter(getPosition())
+            }
+        }
 
         Label {
             text: qsTr('Size mode')
             Layout.alignment: Qt.AlignRight
         }
-        RowLayout {
-            Layout.columnSpan: 4
-            RadioButton {
-                id: fitRadioButton
-                text: qsTr('Fit')
-                exclusiveGroup: sizeGroup
-                onClicked: {
-                    filter.set(fillProperty, 0)
-                    filter.set(distortProperty, 0)
-                }
-            }
-            RadioButton {
-                id: fillRadioButton
-                text: qsTr('Fill')
-                exclusiveGroup: sizeGroup
-                onClicked: {
-                    filter.set(fillProperty, 1)
-                    filter.set(distortProperty, 0)
-                }
-            }
-            RadioButton {
-                id: distortRadioButton
-                text: qsTr('Distort')
-                exclusiveGroup: sizeGroup
-                onClicked: {
-                    filter.set(fillProperty, 1)
-                    filter.set(distortProperty, 1)
-                }
+        RadioButton {
+            id: fitRadioButton
+            text: qsTr('Fit')
+            exclusiveGroup: sizeGroup
+            onClicked: {
+                filter.set(fillProperty, 0)
+                filter.set(distortProperty, 0)
             }
         }
+        RadioButton {
+            id: fillRadioButton
+            text: qsTr('Fill')
+            exclusiveGroup: sizeGroup
+            onClicked: {
+                filter.set(fillProperty, 1)
+                filter.set(distortProperty, 0)
+            }
+        }
+        RadioButton {
+            id: distortRadioButton
+            text: qsTr('Distort')
+            exclusiveGroup: sizeGroup
+            onClicked: {
+                filter.set(fillProperty, 1)
+                filter.set(distortProperty, 1)
+            }
+        }
+        UndoButton {
+            onClicked: {
+                fillRadioButton.checked = true
+                filter.set(fillProperty, 1)
+                filter.set(distortProperty, 0)
+            }
+        }
+        Item { Layout.fillWidth: true }
 
         Label {
             text: qsTr('Horizontal fit')
@@ -350,6 +369,12 @@ Item {
             exclusiveGroup: halignGroup
             enabled: fitRadioButton.checked
             onClicked: filter.set(halignProperty, 'right')
+        }
+        UndoButton {
+            onClicked: {
+                leftRadioButton.checked = true
+                filter.set(halignProperty, 'left')
+            }
         }
         Item { Layout.fillWidth: true }
 
@@ -377,6 +402,12 @@ Item {
             exclusiveGroup: valignGroup
             enabled: fitRadioButton.checked
             onClicked: filter.set(valignProperty, 'bottom')
+        }
+        UndoButton {
+            onClicked: {
+                topRadioButton.checked = true
+                filter.set(valignProperty, 'top')
+            }
         }
         Item { Layout.fillWidth: true }
 
