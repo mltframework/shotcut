@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2017 Meltytech, LLC
+ * Copyright (c) 2012-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -48,16 +48,6 @@ EncodeJob::EncodeJob(const QString &name, const QString &xml)
     action = new QAction(tr("Measure Video Quality..."), this);
     connect(action, SIGNAL(triggered()), this, SLOT(onVideoQualityTriggered()));
     m_successActions << action;
-}
-
-void EncodeJob::onOpenTiggered()
-{
-    MAIN.open(objectName().toUtf8().constData());
-}
-
-void EncodeJob::onShowFolderTriggered()
-{
-    Util::showInFolder(objectName());
 }
 
 void EncodeJob::onVideoQualityTriggered()

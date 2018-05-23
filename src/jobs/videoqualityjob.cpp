@@ -93,8 +93,3 @@ void VideoQualityJob::onViewReportTriggered()
     dialog.setText(s);
     dialog.exec();
 }
-
-void VideoQualityJob::onShowFolderTriggered()
-{
-    Util::showInFolder(m_reportPath);
-}

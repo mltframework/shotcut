@@ -86,6 +86,8 @@ private slots:
 
     void on_actionFFmpegConvert_triggered();
 
+    void on_actionReverse_triggered();
+    
 private:
     Ui::AvformatProducerWidget *ui;
     int m_defaultDuration;

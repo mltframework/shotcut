@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2015 Meltytech, LLC
+ * Copyright (c) 2012-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -28,8 +28,6 @@ public:
     EncodeJob(const QString& name, const QString& xml);
 
 private slots:
-    void onOpenTiggered();
-    void onShowFolderTriggered();
     void onVideoQualityTriggered();
 };
 

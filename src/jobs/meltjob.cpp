@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2017 Meltytech, LLC
+ * Copyright (c) 2012-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -28,20 +28,50 @@
 #include <Logger.h>
 #include "mainwindow.h"
 #include "dialogs/textviewerdialog.h"
+#include "util.h"
 
 MeltJob::MeltJob(const QString& name, const QString& xml)
     : AbstractJob(name)
-    , m_xml(QDir::tempPath().append("/shotcut-XXXXXX.mlt"))
     , m_isStreaming(false)
     , m_previousPercent(0)
 {
-    QAction* action = new QAction(tr("View XML"), this);
-    action->setToolTip(tr("View the MLT XML for this job"));
-    connect(action, SIGNAL(triggered()), this, SLOT(onViewXmlTriggered()));
-    m_standardActions << action;
-    m_xml.open();
-    m_xml.write(xml.toUtf8());
-    m_xml.close();
+    if (!xml.isEmpty()) {
+        QAction* action = new QAction(tr("View XML"), this);
+        action->setToolTip(tr("View the MLT XML for this job"));
+        connect(action, SIGNAL(triggered()), this, SLOT(onViewXmlTriggered()));
+        m_standardActions << action;
+        m_xml.setFileTemplate(QDir::tempPath().append("/shotcut-XXXXXX.mlt"));
+        m_xml.open();
+        m_xml.write(xml.toUtf8());
+        m_xml.close();
+    } else {
+        // Not an EncodeJob
+        QAction* action = new QAction(tr("Open"), this);
+        action->setToolTip(tr("Open the output file in the Shotcut player"));
+        connect(action, SIGNAL(triggered()), this, SLOT(onOpenTiggered()));
+        m_successActions << action;
+    
+        action = new QAction(tr("Show In Folder"), this);
+        action->setToolTip(tr("Show In Folder"));
+        connect(action, SIGNAL(triggered()), this, SLOT(onShowFolderTriggered()));
+        m_successActions << action;
+    }
+}
+
+void MeltJob::onOpenTiggered()
+{
+    MAIN.open(objectName().toUtf8().constData());
+}
+
+void MeltJob::onShowFolderTriggered()
+{
+    Util::showInFolder(objectName());
+}
+
+MeltJob::MeltJob(const QString& name, const QStringList& args)
+    : MeltJob(name)
+{
+    m_args = args;
 }
 
 MeltJob::~MeltJob()
@@ -62,7 +92,10 @@ void MeltJob::start()
     args << "-verbose";
     args << "-progress2";
     args << "-abort";
-    args << xmlPath();
+    if (m_args.size() > 0)
+        args.append(m_args);
+    else
+        args << xmlPath();
     LOG_DEBUG() << meltPath.absoluteFilePath() << args;
 #ifdef Q_OS_WIN
     if (m_isStreaming) args << "-getc";

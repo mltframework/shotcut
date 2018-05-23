@@ -24,6 +24,7 @@
 #include "jobqueue.h"
 #include "jobs/ffprobejob.h"
 #include "jobs/ffmpegjob.h"
+#include "jobs/meltjob.h"
 #include "settings.h"
 #include "util.h"
 #include "Logger.h"
@@ -548,6 +549,7 @@ void AvformatProducerWidget::on_menuButton_clicked()
     menu.addAction(ui->actionFFmpegInfo);
     menu.addAction(ui->actionFFmpegIntegrityCheck);
     menu.addAction(ui->actionFFmpegConvert);
+    menu.addAction(ui->actionReverse);
     menu.exec(ui->menuButton->mapToGlobal(QPoint(0, 0)));
 }
 
@@ -645,6 +647,75 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
             Settings.setSavePath(QFileInfo(filename).path());
             args << filename;
             JOBS.add(new FfmpegJob(filename, args, false));
+        }
+    }
+}
+
+void AvformatProducerWidget::on_actionReverse_triggered()
+{
+    TranscodeDialog dialog(tr("Choose an edit-friendly format below and then click OK to choose a file name. "
+                              "After choosing a file name, a job is created. "
+                              "When it is done, double-click the job to open it.\n"), this);
+    dialog.setWindowTitle(tr("Reverse..."));
+    int result = dialog.exec();
+    if (dialog.isCheckBoxChecked()) {
+        Settings.setShowConvertClipDialog(false);
+    }
+    if (result == QDialog::Accepted) {
+        QString resource = QString::fromUtf8(GetFilenameFromProducer(producer()));
+        QString path = Settings.savePath();
+        QStringList args;
+
+        args << QString("timewarp:-1.0:").append(resource);
+//        In and out points do not work reliably.
+//        args << QString("in=%1").arg(m_producer->get_int("in"));
+//        args << QString("out=%1").arg(m_producer->get_int("out"));
+        args << "-consumer" << "avformat";
+        if (m_producer->get_int("audio_index") == -1) {
+            args << "an=1" << "audio_off=1";
+        } else if (qstrcmp(m_producer->get("audio_index"), "all")) {
+            int index = m_producer->get_int("audio_index");
+            QString key = QString("meta.media.%1.codec.channels").arg(index);
+            const char* channels = m_producer->get(key.toLatin1().constData());
+            args << QString("channels=").append(channels);
+        }
+        if (m_producer->get_int("video_index") == -1)
+            args << "vn=1" << "video_off=1";
+
+        switch (dialog.format()) {
+        case 0:
+            path.append("/%1 - %2.mp4");
+            args << "acodec=aac" << "ab=512k" << "vcodec=libx264";
+            args << "vpreset=medium" << "g=1" << "crf=11";
+            break;
+        case 1:
+            args << "acodec=alac" << "vcodec=prores_ks" << "vprofile=standard";
+            path.append("/%1 - %2.mov");
+            break;
+        case 2:
+            args << "acodec=flac" << "vcodec=ffv1" << "coder=1";
+            args << "context=1" << "g=1" << QString::number(QThread::idealThreadCount()).prepend("threads=");
+            path.append("/%1 - %2.mkv");
+            break;
+        }
+        QFileInfo fi(resource);
+        path = path.arg(fi.completeBaseName()).arg(tr("Reversed"));
+        QString filename = QFileDialog::getSaveFileName(this, dialog.windowTitle(), path);
+        if (!filename.isEmpty()) {
+            if (filename == QDir::toNativeSeparators(resource)) {
+                QMessageBox::warning(this, dialog.windowTitle(),
+                                     QObject::tr("Unable to write file %1\n"
+                                        "Perhaps you do not have permission.\n"
+                                        "Try again with a different folder.")
+                                     .arg(fi.fileName()));
+                return;
+            }
+            if (Util::warnIfNotWritable(filename, this, dialog.windowTitle()))
+                return;
+
+            Settings.setSavePath(QFileInfo(filename).path());
+            args << QString("target=").append(filename);
+            JOBS.add(new MeltJob(filename, args));
         }
     }
 }

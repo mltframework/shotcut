@@ -799,8 +799,10 @@
    <property name="text">
     <string>Convert to Edit-friendly...</string>
    </property>
-   <property name="toolTip">
-    <string>Convert to Edit-friendly...</string>
+  </action>
+  <action name="actionReverse">
+   <property name="text">
+    <string>Reverse...</string>
    </property>
   </action>
  </widget>
