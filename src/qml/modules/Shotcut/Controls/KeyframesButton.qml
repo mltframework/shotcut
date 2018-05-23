@@ -43,9 +43,10 @@ CheckBox {
             iconSource: 'qrc:///icons/oxygen/32x32/actions/chronometer.png'
         }
     }
-    Shotcut.ToolTip { text: qsTr('Use Keyframes for this parameter') }
+    Shotcut.ToolTip { id: tooltip; text: qsTr('Use Keyframes for this parameter') }
 
     onClicked: {
+        tooltip.isVisible = false
         if (!checked) {
            checked = true
            confirmDialog.visible = true
@@ -54,6 +55,7 @@ CheckBox {
             keyframes.raise()
             toggled()
         }
+        tooltip.isVisible = true
     }
 
     MessageDialog {
