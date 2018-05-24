@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2014-2018 Meltytech, LLC
- * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -64,6 +63,15 @@ void FilterController::loadFilterMetadata() {
                     meta->setPath(subdir);
                     meta->setParent(0);
                     addMetadata(meta);
+
+                    // Check if a keyframes minimum version is required.
+                    QScopedPointer<Mlt::Properties> mltMetadata(MLT.repository()->metadata(filter_type, meta->mlt_service().toLatin1().constData()));
+                    if (mltMetadata && mltMetadata->is_valid() && mltMetadata->get("version") && meta->keyframes()) {
+                        QString version = QString::fromLatin1(mltMetadata->get("version"));
+                        if (version.startsWith("lavfi"))
+                            version.remove(0, 5);
+                        meta->keyframes()->checkVersion(version);
+                    }
                 }
             } else if (!meta) {
                 LOG_WARNING() << component.errorString();

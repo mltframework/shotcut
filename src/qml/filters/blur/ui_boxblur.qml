@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2013-2015 Meltytech, LLC
- * Author: Brian Matherly <pez4brian@yahoo.com>
+ * Copyright (c) 2013-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,19 +23,114 @@ import Shotcut.Controls 1.0
 Item {
     width: 200
     height: 50
+    property bool blockUpdate: true
+    property int startWidthValue: 1
+    property int middleWidthValue: 2
+    property int endWidthValue: 1
+    property int startHeightValue: 1
+    property int middleHeightValue: 2
+    property int endHeightValue: 1
+
     Component.onCompleted: {
         filter.set('start', 1)
         if (filter.isNew) {
             // Set default parameter values
             filter.set('hori', 2)
-            wslider.value = 2;
             filter.set('vert', 2)
-            hslider.value = 2
+        } else {
+            middleWidthValue = filter.getDouble('hori', filter.animateIn)
+            middleHeightValue = filter.getDouble('vert', filter.animateIn)
+            if (filter.animateIn > 0) {
+                startWidthValue = filter.getDouble('hori', 0)
+                startHeightValue = filter.getDouble('vert', 0)
+            }
+            if (filter.animateOut > 0) {
+                endWidthValue = filter.getDouble('hori', filter.duration - 1)
+                endHeightValue = filter.getDouble('vert', filter.duration - 1)
+            }
+        }
+        setControls()
+    }
+
+    function getPosition() {
+        return Math.max(producer.position - (filter.in - producer.in), 0)
+    }
+
+    function setControls() {
+        var position = getPosition()
+        blockUpdate = true
+        wslider.value = filter.getDouble('hori', position)
+        hslider.value = filter.getDouble('vert', position)
+        blockUpdate = false
+        wslider.enabled = hslider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
+    }
+
+    function updateFilterWidth(position) {
+        if (blockUpdate) return
+        var value = wslider.value
+
+        if (position !== null) {
+            if (position <= 0 && filter.animateIn > 0)
+                startWidthValue = value
+            else if (position >= filter.duration - 1 && filter.animateOut > 0)
+                endWidthValue = value
+            else
+                middleWidthValue = value
+        }
+
+        if (filter.animateIn > 0 || filter.animateOut > 0) {
+            filter.resetProperty('hori')
+            widthKeyframesButton.checked = false
+            if (filter.animateIn > 0) {
+                filter.set('hori', startWidthValue, 0)
+                filter.set('hori', middleWidthValue, filter.animateIn - 1)
+            }
+            if (filter.animateOut > 0) {
+                filter.set('hori', middleWidthValue, filter.duration - filter.animateOut)
+                filter.set('hori', endWidthValue, filter.duration - 1)
+            }
+        } else if (!widthKeyframesButton.checked) {
+            filter.resetProperty('hori')
+            filter.set('hori', middleWidthValue)
+        } else if (position !== null) {
+            filter.set('hori', value, position)
+        }
+    }
+
+    function updateFilterHeight(position) {
+        if (blockUpdate) return
+        var value = hslider.value
+
+        if (position !== null) {
+            if (position <= 0 && filter.animateIn > 0)
+                startHeightValue = value
+            else if (position >= filter.duration - 1 && filter.animateOut > 0)
+                endHeightValue = value
+            else
+                middleHeightValue = value
+        }
+
+        if (filter.animateIn > 0 || filter.animateOut > 0) {
+            filter.resetProperty('vert')
+            heightKeyframesButton.checked = false
+            if (filter.animateIn > 0) {
+                filter.set('vert', startHeightValue, 0)
+                filter.set('vert', middleHeightValue, filter.animateIn - 1)
+            }
+            if (filter.animateOut > 0) {
+                filter.set('vert', middleHeightValue, filter.duration - filter.animateOut)
+                filter.set('vert', endHeightValue, filter.duration - 1)
+            }
+        } else if (!heightKeyframesButton.checked) {
+            filter.resetProperty('vert')
+            filter.set('vert', middleHeightValue)
+        } else if (position !== null) {
+            filter.set('vert', value, position)
         }
     }
 
     GridLayout {
-        columns: 3
+        columns: 4
         anchors.fill: parent
         anchors.margins: 8
 
@@ -49,11 +143,30 @@ Item {
             minimumValue: 1
             maximumValue: 99
             suffix: ' px'
-            value: filter.getDouble('hori')
-            onValueChanged: filter.set('hori', value)
+            onValueChanged: updateFilterWidth(getPosition())
         }
         UndoButton {
             onClicked: wslider.value = 2
+        }
+        KeyframesButton {
+            id: widthKeyframesButton
+            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('hori') > 0
+            onToggled: {
+                if (checked) {
+                    blockUpdate = true
+                    if (filter.animateIn > 0 || filter.animateOut > 0) {
+                        filter.resetProperty('vert')
+                        filter.set('vert', middleHeightValue)
+                        hslider.enabled = true
+                    }
+                    filter.clearSimpleAnimation('hori')
+                    blockUpdate = false
+                    filter.set('hori', wslider.value, getPosition())
+                } else {
+                    filter.resetProperty('hori')
+                    filter.set('hori', wslider.value)
+                }
+            }
         }
 
         Label {
@@ -65,15 +178,58 @@ Item {
             minimumValue: 1
             maximumValue: 99
             suffix: ' px'
-            value: filter.getDouble('vert')
-            onValueChanged: filter.set('vert', value)
+            onValueChanged: updateFilterHeight(getPosition())
         }
         UndoButton {
             onClicked: hslider.value = 2
         }
-        
+        KeyframesButton {
+            id: heightKeyframesButton
+            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('vert') > 0
+            onToggled: {
+                if (checked) {
+                    blockUpdate = true
+                    if (filter.animateIn > 0 || filter.animateOut > 0) {
+                        filter.resetProperty('hori')
+                        filter.set('hori', middleWidthValue)
+                        wslider.enabled = true
+                    }
+                    filter.clearSimpleAnimation('vert')
+                    blockUpdate = false
+                    filter.set('vert', hslider.value, getPosition())
+                } else {
+                    filter.resetProperty('vert')
+                    filter.set('vert', hslider.value)
+                }
+            }
+        }
+
         Item {
             Layout.fillHeight: true
+        }
+    }
+
+    Connections {
+        target: filter
+        onInChanged: { updateFilterWidth(null); updateFilterHeight(null) }
+        onOutChanged: { updateFilterWidth(null); updateFilterHeight(null) }
+        onAnimateInChanged: { updateFilterWidth(null); updateFilterHeight(null) }
+        onAnimateOutChanged: { updateFilterWidth(null); updateFilterHeight(null) }
+    }
+
+    Connections {
+        target: producer
+        onPositionChanged: {
+            if (filter.animateIn > 0 || filter.animateOut > 0) {
+                setControls()
+            } else {
+                blockUpdate = true
+                wslider.value = filter.getDouble('hori', getPosition())
+                hslider.value = filter.getDouble('vert', getPosition())
+                blockUpdate = false
+                wslider.enabled = true
+                hslider.enabled = true
+            }
         }
     }
 }

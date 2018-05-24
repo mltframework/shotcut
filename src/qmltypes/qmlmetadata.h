@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2013-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,6 +66,8 @@ class QmlKeyframesMetadata : public QObject
     Q_PROPERTY(QQmlListProperty<QmlKeyframesParameter> parameters READ parameters NOTIFY changed)
     /// simpleProperties identifies a list of properties whose keyframe position must be updated when trimming.
     Q_PROPERTY(QList<QString> simpleProperties MEMBER m_simpleProperties NOTIFY changed)
+    Q_PROPERTY(QString minimumVersion MEMBER m_minimumVersion NOTIFY changed)
+    Q_PROPERTY(bool enabled MEMBER m_enabled NOTIFY changed)
 
 public:
     explicit QmlKeyframesMetadata(QObject *parent = 0);
@@ -79,6 +80,7 @@ public:
     QQmlListProperty<QmlKeyframesParameter> parameters() { return QQmlListProperty<QmlKeyframesParameter>(this, m_parameters); }
     int parameterCount() const { return m_parameters.count(); }
     QmlKeyframesParameter *parameter(int index) const { return m_parameters[index]; }
+    void checkVersion(const QString& version);
 
 signals:
     void changed();
@@ -89,6 +91,8 @@ private:
     bool m_allowAnimateOut;
     QList<QmlKeyframesParameter *> m_parameters;
     QList<QString> m_simpleProperties;
+    QString m_minimumVersion;
+    bool m_enabled;
 };
 
 

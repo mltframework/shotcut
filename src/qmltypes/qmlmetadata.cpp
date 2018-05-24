@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2013-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +17,7 @@
 
 #include "qmlmetadata.h"
 #include "settings.h"
+#include <Logger.h>
 
 QmlMetadata::QmlMetadata(QObject *parent)
     : QObject(parent)
@@ -157,7 +157,25 @@ QmlKeyframesMetadata::QmlKeyframesMetadata(QObject* parent)
     , m_allowTrim(true)
     , m_allowAnimateIn(false)
     , m_allowAnimateOut(false)
+    , m_enabled(true)
 {
+}
+
+void QmlKeyframesMetadata::checkVersion(const QString& version)
+{
+    if (!m_minimumVersion.isEmpty()) {
+        // m_enabled = version >= m_minimumVersion, but we need to compare each field of the version separately.
+        LOG_DEBUG() << "MLT version:" << version << "Shotcut minimumVersion:" << m_minimumVersion;
+        QStringList versionParts = version.split('.');
+        QStringList minimumVersionParts = m_minimumVersion.split('.');
+        int i = 0;
+        foreach (QString field, versionParts) {
+            if (field.toUInt() < minimumVersionParts[i++].toUInt()) {
+                m_enabled = m_allowAnimateIn = m_allowAnimateOut = false;
+                break;
+            }
+        }
+    }
 }
 
 QmlKeyframesParameter::QmlKeyframesParameter(QObject* parent)

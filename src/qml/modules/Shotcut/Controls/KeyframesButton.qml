@@ -23,6 +23,9 @@ import QtQuick.Dialogs 1.2
 
 CheckBox {
     id: checkbox
+    enabled: metadata !== null && metadata.keyframes.enabled
+    opacity: enabled? 1.0 : 0.0
+
     signal toggled()
 
     style: CheckBoxStyle {
