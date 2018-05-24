@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2012-2017 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2012-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,7 +35,7 @@ public:
 
     // AbstractProducerWidget overrides
     Mlt::Producer* newProducer(Mlt::Profile&);
-    Mlt::Properties* getPreset() const;
+    Mlt::Properties getPreset() const;
     void loadPreset(Mlt::Properties&);
     void setProducer(Mlt::Producer*);
 

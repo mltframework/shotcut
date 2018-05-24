@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2016-2017 Meltytech, LLC
- * Author: Brian Matherly <code@brianmatherly.com>
+ * Copyright (c) 2016-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -61,7 +60,7 @@ CountProducerWidget::CountProducerWidget(QWidget *parent) :
 
     ui->durationSpinBox->setValue(qRound(MLT.profile().fps() * 10.0)); // 10 seconds
 
-    ui->preset->saveDefaultPreset(*getPreset());
+    ui->preset->saveDefaultPreset(getPreset());
     ui->preset->loadPresets();
 }
 
@@ -104,15 +103,15 @@ Mlt::Producer* CountProducerWidget::newProducer(Mlt::Profile& profile)
     return p;
 }
 
-Mlt::Properties* CountProducerWidget::getPreset() const
+Mlt::Properties CountProducerWidget::getPreset() const
 {
-    Mlt::Properties* p = new Mlt::Properties;
-    p->set("direction", currentDirection().toLatin1().constData());
-    p->set("style", currentStyle().toLatin1().constData());
-    p->set("sound", currentSound().toLatin1().constData());
-    p->set("background", currentBackground().toLatin1().constData());
-    p->set("drop", ui->dropCheckBox->isChecked());
-    setLength(p, ui->durationSpinBox->value());
+    Mlt::Properties p;
+    p.set("direction", currentDirection().toLatin1().constData());
+    p.set("style", currentStyle().toLatin1().constData());
+    p.set("sound", currentSound().toLatin1().constData());
+    p.set("background", currentBackground().toLatin1().constData());
+    p.set("drop", ui->dropCheckBox->isChecked());
+    setLength(&p, ui->durationSpinBox->value());
     return p;
 }
 

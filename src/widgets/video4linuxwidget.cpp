@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2017 Meltytech, LLC
+ * Copyright (c) 2012-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -34,7 +34,7 @@ Video4LinuxWidget::Video4LinuxWidget(QWidget *parent) :
     ui->setupUi(this);
     Util::setColorsToHighlight(ui->label_3);
     ui->applyButton->hide();
-    ui->preset->saveDefaultPreset(*getPreset());
+    ui->preset->saveDefaultPreset(getPreset());
     ui->preset->loadPresets();
 }
 
@@ -117,16 +117,16 @@ Mlt::Producer* Video4LinuxWidget::newProducer(Mlt::Profile& profile)
     return p;
 }
 
-Mlt::Properties* Video4LinuxWidget::getPreset() const
+Mlt::Properties Video4LinuxWidget::getPreset() const
 {
-    Mlt::Properties* p = new Mlt::Properties;
-    p->set("device", ui->v4lLineEdit->text().toLatin1().constData());
-    p->set("width", ui->v4lWidthSpinBox->value());
-    p->set("height", ui->v4lHeightSpinBox->value());
-    p->set("framerate", ui->v4lFramerateSpinBox->value());
-    p->set("standard", ui->v4lStandardCombo->currentText().toLatin1().constData());
-    p->set("channel", ui->v4lChannelSpinBox->value());
-    p->set("audio_ix", ui->v4lAudioComboBox->currentIndex());
+    Mlt::Properties p;
+    p.set("device", ui->v4lLineEdit->text().toLatin1().constData());
+    p.set("width", ui->v4lWidthSpinBox->value());
+    p.set("height", ui->v4lHeightSpinBox->value());
+    p.set("framerate", ui->v4lFramerateSpinBox->value());
+    p.set("standard", ui->v4lStandardCombo->currentText().toLatin1().constData());
+    p.set("channel", ui->v4lChannelSpinBox->value());
+    p.set("audio_ix", ui->v4lAudioComboBox->currentIndex());
     return p;
 }
 

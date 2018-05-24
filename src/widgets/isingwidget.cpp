@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2012-2017 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2012-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +30,7 @@ IsingWidget::IsingWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     Util::setColorsToHighlight(ui->nameLabel);
-    ui->preset->saveDefaultPreset(*getPreset());
+    ui->preset->saveDefaultPreset(getPreset());
     ui->preset->loadPresets();
 }
 
@@ -93,12 +92,12 @@ Mlt::Producer* IsingWidget::newProducer(Mlt::Profile& profile)
     return p;
 }
 
-Mlt::Properties* IsingWidget::getPreset() const
+Mlt::Properties IsingWidget::getPreset() const
 {
-    Mlt::Properties* p = new Mlt::Properties;
-    p->set(kParamTemperature, ui->tempSpinner->text().toLatin1().constData());
-    p->set(kParamBorderGrowth, ui->borderGrowthSpinner->text().toLatin1().constData());
-    p->set(kParamSpontaneous, ui->spontGrowthSpinner->text().toLatin1().constData());
+    Mlt::Properties p;
+    p.set(kParamTemperature, ui->tempSpinner->text().toLatin1().constData());
+    p.set(kParamBorderGrowth, ui->borderGrowthSpinner->text().toLatin1().constData());
+    p.set(kParamSpontaneous, ui->spontGrowthSpinner->text().toLatin1().constData());
     return p;
 }
 

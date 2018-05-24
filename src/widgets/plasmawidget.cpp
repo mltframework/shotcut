@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2017 Meltytech, LLC
+ * Copyright (c) 2012-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -34,7 +34,7 @@ PlasmaWidget::PlasmaWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     Util::setColorsToHighlight(ui->nameLabel);
-    ui->preset->saveDefaultPreset(*getPreset());
+    ui->preset->saveDefaultPreset(getPreset());
     ui->preset->loadPresets();
 }
 
@@ -141,15 +141,15 @@ Mlt::Producer* PlasmaWidget::newProducer(Mlt::Profile& profile)
     return p;
 }
 
-Mlt::Properties* PlasmaWidget::getPreset() const
+Mlt::Properties PlasmaWidget::getPreset() const
 {
-    Mlt::Properties* p = new Mlt::Properties;
-    p->set(kParamSpeed1, ui->speed1Spinner->text().toLatin1().constData());
-    p->set(kParamSpeed2, ui->speed2Spinner->text().toLatin1().constData());
-    p->set(kParamSpeed3, ui->speed3Spinner->text().toLatin1().constData());
-    p->set(kParamSpeed4, ui->speed4Spinner->text().toLatin1().constData());
-    p->set(kParamMove1, ui->move1Spinner->text().toLatin1().constData());
-    p->set(kParamMove2, ui->move2Spinner->text().toLatin1().constData());
+    Mlt::Properties p;
+    p.set(kParamSpeed1, ui->speed1Spinner->text().toLatin1().constData());
+    p.set(kParamSpeed2, ui->speed2Spinner->text().toLatin1().constData());
+    p.set(kParamSpeed3, ui->speed3Spinner->text().toLatin1().constData());
+    p.set(kParamSpeed4, ui->speed4Spinner->text().toLatin1().constData());
+    p.set(kParamMove1, ui->move1Spinner->text().toLatin1().constData());
+    p.set(kParamMove2, ui->move2Spinner->text().toLatin1().constData());
     return p;
 }
 

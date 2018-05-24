@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2016 Meltytech, LLC
+ * Copyright (c) 2012-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -59,7 +59,7 @@ void ServicePresetWidget::loadPresets()
     }
 }
 
-void ServicePresetWidget::saveDefaultPreset(Mlt::Properties& properties)
+void ServicePresetWidget::saveDefaultPreset(const Mlt::Properties& properties)
 {
     QDir dir(Settings.appDataLocation());
 
@@ -73,10 +73,10 @@ void ServicePresetWidget::saveDefaultPreset(Mlt::Properties& properties)
         if (dir.mkdir(m_widgetName))
             dir.cd(m_widgetName);
     }
-    properties.save(dir.filePath(tr("(defaults)")).toUtf8().constData());
+    const_cast<Mlt::Properties&>(properties).save(dir.filePath(tr("(defaults)")).toUtf8().constData());
 }
 
-void ServicePresetWidget::savePreset(Mlt::Properties* properties)
+void ServicePresetWidget::savePreset(const Mlt::Properties& properties)
 {
     QInputDialog dialog(this);
     dialog.setInputMode(QInputDialog::TextInput);
@@ -98,7 +98,7 @@ void ServicePresetWidget::savePreset(Mlt::Properties* properties)
             if (dir.mkdir(m_widgetName))
                 dir.cd(m_widgetName);
         }
-        properties->save(dir.filePath(preset).toUtf8().constData());
+        const_cast<Mlt::Properties&>(properties).save(dir.filePath(preset).toUtf8().constData());
 
         // add the preset and select it
         loadPresets();

@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2015-2017 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2015-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +33,7 @@ GDIgrabWidget::GDIgrabWidget(QWidget *parent) :
     const QRect& r = QApplication::desktop()->screenGeometry();
     ui->widthSpinBox->setValue(r.size().width());
     ui->heightSpinBox->setValue(r.size().height());
-    ui->preset->saveDefaultPreset(*getPreset());
+    ui->preset->saveDefaultPreset(getPreset());
     ui->preset->loadPresets();
 
     if (QAudioDeviceInfo::availableDevices(QAudio::AudioInput).count() > 0) {
@@ -105,17 +104,17 @@ Mlt::Producer* GDIgrabWidget::newProducer(Mlt::Profile& profile)
     return p;
 }
 
-Mlt::Properties* GDIgrabWidget::getPreset() const
+Mlt::Properties GDIgrabWidget::getPreset() const
 {
-    Mlt::Properties* p = new Mlt::Properties;
-    p->set("xpos", ui->xSpinBox->value());
-    p->set("ypos", ui->ySpinBox->value());
-    p->set("width", ui->widthSpinBox->value());
-    p->set("height", ui->heightSpinBox->value());
-    p->set("show_region", ui->showRegionCheckBox->isChecked()? 1: 0);
-    p->set("draw_mouse", ui->drawMouseCheckBox->isChecked()? 1: 0);
-    p->set("audio_ix", ui->audioComboBox->currentIndex());
-    p->set(kBackgroundCaptureProperty, 1);
+    Mlt::Properties p;
+    p.set("xpos", ui->xSpinBox->value());
+    p.set("ypos", ui->ySpinBox->value());
+    p.set("width", ui->widthSpinBox->value());
+    p.set("height", ui->heightSpinBox->value());
+    p.set("show_region", ui->showRegionCheckBox->isChecked()? 1: 0);
+    p.set("draw_mouse", ui->drawMouseCheckBox->isChecked()? 1: 0);
+    p.set("audio_ix", ui->audioComboBox->currentIndex());
+    p.set(kBackgroundCaptureProperty, 1);
     return p;
 }
 

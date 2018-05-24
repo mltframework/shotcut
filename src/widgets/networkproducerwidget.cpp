@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2012-2017 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2012-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +27,7 @@ NetworkProducerWidget::NetworkProducerWidget(QWidget *parent) :
     ui->setupUi(this);
     Util::setColorsToHighlight(ui->label_2);
     ui->applyButton->hide();
-    ui->preset->saveDefaultPreset(*getPreset());
+    ui->preset->saveDefaultPreset(getPreset());
     ui->preset->loadPresets();
 }
 
@@ -43,10 +42,10 @@ Mlt::Producer* NetworkProducerWidget::newProducer(Mlt::Profile& profile)
     return p;
 }
 
-Mlt::Properties* NetworkProducerWidget::getPreset() const
+Mlt::Properties NetworkProducerWidget::getPreset() const
 {
-    Mlt::Properties* p = new Mlt::Properties;
-    p->set("resource", ui->urlLineEdit->text().toUtf8().constData());
+    Mlt::Properties p;
+    p.set("resource", ui->urlLineEdit->text().toUtf8().constData());
     return p;
 }
 

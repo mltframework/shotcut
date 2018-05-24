@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2012-2017 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2012-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,8 +28,8 @@ public:
     virtual ~AbstractProducerWidget();
     virtual Mlt::Producer* newProducer(Mlt::Profile&) = 0;
     virtual void setProducer(Mlt::Producer*);
-    virtual Mlt::Properties* getPreset() const
-        { return new Mlt::Properties; }
+    virtual Mlt::Properties getPreset() const
+        { Mlt::Properties p; return p; }
     virtual void loadPreset(Mlt::Properties&) {}
     Mlt::Producer* producer() const { return m_producer.data(); }
 

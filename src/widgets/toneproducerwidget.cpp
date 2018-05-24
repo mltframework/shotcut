@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2015-2017 Meltytech, LLC
- * Author: Brian Matherly <code@brianmatherly.com>
+ * Copyright (c) 2015-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +27,7 @@ ToneProducerWidget::ToneProducerWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     Util::setColorsToHighlight(ui->nameLabel);
-    ui->preset->saveDefaultPreset(*getPreset());
+    ui->preset->saveDefaultPreset(getPreset());
     ui->preset->loadPresets();
 }
 
@@ -47,11 +46,11 @@ Mlt::Producer* ToneProducerWidget::newProducer(Mlt::Profile& profile)
     return p;
 }
 
-Mlt::Properties* ToneProducerWidget::getPreset() const
+Mlt::Properties ToneProducerWidget::getPreset() const
 {
-    Mlt::Properties* p = new Mlt::Properties;
-    p->set("frequency", ui->frequencySpinBox->value());
-    p->set("level", ui->levelSpinBox->value());
+    Mlt::Properties p;
+    p.set("frequency", ui->frequencySpinBox->value());
+    p.set("level", ui->levelSpinBox->value());
     return p;
 }
 

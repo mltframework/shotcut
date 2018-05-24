@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2012-2017 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2012-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +28,7 @@ AlsaWidget::AlsaWidget(QWidget *parent) :
     ui->setupUi(this);
     Util::setColorsToHighlight(ui->label_2);
     ui->applyButton->hide();
-    ui->preset->saveDefaultPreset(*getPreset());
+    ui->preset->saveDefaultPreset(getPreset());
     ui->preset->loadPresets();
 }
 
@@ -53,16 +52,16 @@ Mlt::Producer* AlsaWidget::newProducer(Mlt::Profile& profile)
     return p;
 }
 
-Mlt::Properties* AlsaWidget::getPreset() const
+Mlt::Properties AlsaWidget::getPreset() const
 {
-    Mlt::Properties* p = new Mlt::Properties;
+    Mlt::Properties p;
     QString s("alsa:%1");
     if (ui->lineEdit->text().isEmpty())
         s = s.arg("default");
     else
         s = s.arg(ui->lineEdit->text());
-    p->set("resource", s.toUtf8().constData());
-    p->set("channels", ui->alsaChannelsSpinBox->value());
+    p.set("resource", s.toUtf8().constData());
+    p.set("channels", ui->alsaChannelsSpinBox->value());
     return p;
 }
 

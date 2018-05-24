@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2017 Meltytech, LLC
+ * Copyright (c) 2012-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -34,7 +34,7 @@ X11grabWidget::X11grabWidget(QWidget *parent) :
     ui->setupUi(this);
     ui->applyButton->hide();
     Util::setColorsToHighlight(ui->label_9);
-    ui->preset->saveDefaultPreset(*getPreset());
+    ui->preset->saveDefaultPreset(getPreset());
     ui->preset->loadPresets();
 }
 
@@ -120,19 +120,19 @@ Mlt::Producer* X11grabWidget::newProducer(Mlt::Profile& profile)
     return p;
 }
 
-Mlt::Properties* X11grabWidget::getPreset() const
+Mlt::Properties X11grabWidget::getPreset() const
 {
-    Mlt::Properties* p = new Mlt::Properties;
-    p->set("display", ui->lineEdit->text().toLatin1().constData());
-    p->set("xpos", ui->xSpinBox->value());
-    p->set("ypos", ui->ySpinBox->value());
-    p->set("width", ui->widthSpinBox->value());
-    p->set("height", ui->heightSpinBox->value());
-    p->set("show_region", ui->showRegionCheckBox->isChecked()? 1: 0);
-    p->set("draw_mouse", ui->drawMouseCheckBox->isChecked()? 1: 0);
-    p->set("follow_mouse", ui->positionComboBox->currentIndex() - 1);
-    p->set("audio_ix", ui->audioComboBox->currentIndex());
-    p->set(kBackgroundCaptureProperty, 1);
+    Mlt::Properties p;
+    p.set("display", ui->lineEdit->text().toLatin1().constData());
+    p.set("xpos", ui->xSpinBox->value());
+    p.set("ypos", ui->ySpinBox->value());
+    p.set("width", ui->widthSpinBox->value());
+    p.set("height", ui->heightSpinBox->value());
+    p.set("show_region", ui->showRegionCheckBox->isChecked()? 1: 0);
+    p.set("draw_mouse", ui->drawMouseCheckBox->isChecked()? 1: 0);
+    p.set("follow_mouse", ui->positionComboBox->currentIndex() - 1);
+    p.set("audio_ix", ui->audioComboBox->currentIndex());
+    p.set(kBackgroundCaptureProperty, 1);
     return p;
 }
 

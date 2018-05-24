@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2012-2017 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2012-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -80,11 +79,11 @@ Mlt::Producer* DecklinkProducerWidget::newProducer(Mlt::Profile& profile)
     return p;
 }
 
-Mlt::Properties* DecklinkProducerWidget::getPreset() const
+Mlt::Properties DecklinkProducerWidget::getPreset() const
 {
-    Mlt::Properties* p = new Mlt::Properties;
-    p->set("card", ui->deviceCombo->currentIndex());
-    p->set("profile", ui->profileCombo->currentIndex());
+    Mlt::Properties p;
+    p.set("card", ui->deviceCombo->currentIndex());
+    p.set("profile", ui->profileCombo->currentIndex());
     return p;
 }
 
