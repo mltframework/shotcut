@@ -25,6 +25,7 @@
 #include "jobs/ffprobejob.h"
 #include "jobs/ffmpegjob.h"
 #include "jobs/meltjob.h"
+#include "jobs/postjobaction.h"
 #include "settings.h"
 #include "util.h"
 #include "Logger.h"
@@ -646,7 +647,9 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
 
             Settings.setSavePath(QFileInfo(filename).path());
             args << filename;
-            JOBS.add(new FfmpegJob(filename, args, false));
+            FfmpegJob* job = new FfmpegJob(filename, args, false);
+            job->setPostJobAction(new FilePropertiesPostJobAction(resource, filename));
+            JOBS.add(job);
         }
     }
 }
@@ -715,7 +718,9 @@ void AvformatProducerWidget::on_actionReverse_triggered()
 
             Settings.setSavePath(QFileInfo(filename).path());
             args << QString("target=").append(filename);
-            JOBS.add(new MeltJob(filename, args));
+            MeltJob* job = new MeltJob(filename, args);
+            job->setPostJobAction(new FilePropertiesPostJobAction(resource, filename));
+            JOBS.add(job);
         }
     }
 }
