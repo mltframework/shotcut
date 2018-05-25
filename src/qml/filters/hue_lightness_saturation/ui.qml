@@ -21,9 +21,9 @@ import QtQuick.Layouts 1.1
 import Shotcut.Controls 1.0
 
 Item {
-    property double hueDegreeDefault: 0.0
-    property double lightnessDefault: 0.0
-    property double saturationDefault: 1.0
+    property double hueDegreeDefault: 100
+    property double lightnessDefault: 100
+    property double saturationDefault: 100
 
     property var defaultParameters: ["av.h", "av.b", "av.s"]
 
@@ -66,10 +66,10 @@ Item {
         }
         SliderSpinner {
             id: hueDegreeSlider
-            minimumValue: -360
-            maximumValue: 360
-            decimals: 0
-            onValueChanged: filter.set("av.h", value)
+            minimumValue: 0
+            maximumValue: 200
+            suffix: ' %'
+            onValueChanged: filter.set("av.h", (value - 100) * 360 / 100)
         }
         UndoButton {
             onClicked: hueDegreeSlider.value = hueDegreeDefault
@@ -81,10 +81,10 @@ Item {
         }
         SliderSpinner {
             id: lightnessSlider
-            minimumValue: -10.0
-            maximumValue: 10.0
-            decimals: 1
-            onValueChanged: filter.set("av.b", value)
+            minimumValue: 0
+            maximumValue: 200
+            suffix: ' %'
+            onValueChanged: filter.set("av.b", (value - 100) * 10 / 100)
         }
         UndoButton {
             onClicked: lightnessSlider.value = lightnessDefault
@@ -96,10 +96,10 @@ Item {
         }
         SliderSpinner {
             id: saturationSlider
-            minimumValue: -10.0
-            maximumValue: 10.0
-            decimals: 1
-            onValueChanged: filter.set("av.s", value)
+            minimumValue: 0
+            maximumValue: 500
+            suffix: ' %'
+            onValueChanged: filter.set("av.s", value / 100.0)
         }
         UndoButton {
             onClicked: saturationSlider.value = saturationDefault
