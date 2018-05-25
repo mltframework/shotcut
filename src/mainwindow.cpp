@@ -2748,6 +2748,7 @@ void MainWindow::changeDeinterlacer(bool checked, const char* method)
         MLT.videoWidget()->setProperty("deinterlace_method", method);
         if (MLT.consumer()) {
             MLT.consumer()->set("deinterlace_method", method);
+            MLT.refreshConsumer();
         }
     }
     Settings.setPlayerDeinterlacer(method);
@@ -2779,6 +2780,7 @@ void MainWindow::changeInterpolation(bool checked, const char* method)
         MLT.videoWidget()->setProperty("rescale", method);
         if (MLT.consumer()) {
             MLT.consumer()->set("rescale", method);
+            MLT.refreshConsumer();
         }
     }
     Settings.setPlayerInterpolation(method);
