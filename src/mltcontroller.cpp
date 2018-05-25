@@ -209,16 +209,6 @@ void Controller::play(double speed)
     if (m_producer)
         m_producer->set_speed(speed);
     if (m_consumer) {
-        // Restore real_time behavior and work-ahead buffering
-        if (!Settings.playerGPU())
-        if (m_consumer->get_int("real_time") != realTime()) {
-            m_consumer->set("real_time", realTime());
-            m_consumer->set("buffer", 25);
-            m_consumer->set("prefill", 1);
-            // Changes to real_time require a consumer restart if running.
-            if (!m_consumer->is_stopped())
-                m_consumer->stop();
-        }
         m_consumer->start();
         refreshConsumer(Settings.playerScrubAudio());
     }
@@ -228,13 +218,6 @@ void Controller::play(double speed)
 void Controller::pause()
 {
     if (m_producer && m_producer->get_speed() != 0) {
-        if (!Settings.playerGPU())
-        if (m_consumer && m_consumer->is_valid()) {
-            // Disable real_time behavior and buffering for frame accurate seeking.
-            m_consumer->set("real_time", -1);
-            m_consumer->set("buffer", 0);
-            m_consumer->set("prefill", 0);
-        }
         m_producer->set_speed(0);
         m_producer->seek(m_consumer->position() + 1);
         if (m_consumer && m_consumer->is_valid()) {
@@ -405,13 +388,6 @@ void Controller::seek(int position)
     setVolume(m_volume, false);
     if (m_producer) {
         // Always pause before seeking (if not already paused).
-        if (!Settings.playerGPU())
-        if (m_consumer && m_consumer->is_valid() && m_producer->get_speed() != 0) {
-            // Disable real_time behavior and buffering for frame accurate seeking.
-            m_consumer->set("real_time", -1);
-            m_consumer->set("buffer", 0);
-            m_consumer->set("prefill", 0);
-        }
         m_producer->set_speed(0);
         m_producer->seek(position);
         if (m_consumer && m_consumer->is_valid()) {
@@ -763,10 +739,6 @@ void Controller::restart()
 {
     if (!m_consumer || !m_consumer->is_valid() || !m_producer || !m_producer->is_valid())
         return;
-    if (m_producer->get_speed() != 0) {
-        // Update the real_time property if not paused.
-        m_consumer->set("real_time", realTime());
-    }
     const char* position = m_consumer->frames_to_time(m_consumer->position());
     double speed = m_producer->get_speed();
     QString xml = XML();
