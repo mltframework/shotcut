@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2011-2017 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2011-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -280,6 +279,7 @@ private slots:
     void on_actionAppDataSet_triggered();
     void on_actionAppDataShow_triggered();
     void on_actionNew_triggered();
+    void on_actionKeyboardShortcuts_triggered();
 };
 
 #define MAIN MainWindow::singleton()

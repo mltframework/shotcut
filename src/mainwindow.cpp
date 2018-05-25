@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2011-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -3442,4 +3441,9 @@ void MainWindow::on_actionAppDataShow_triggered()
 void MainWindow::on_actionNew_triggered()
 {
     on_actionClose_triggered();
+}
+
+void MainWindow::on_actionKeyboardShortcuts_triggered()
+{
+    QDesktopServices::openUrl(QUrl("https://www.shotcut.org/howtos/keyboard-shortcuts/"));
 }

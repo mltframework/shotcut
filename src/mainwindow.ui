@@ -83,6 +83,7 @@
     <property name="title">
      <string>&amp;Help</string>
     </property>
+    <addaction name="actionKeyboardShortcuts"/>
     <addaction name="actionUpgrade"/>
     <addaction name="actionFAQ"/>
     <addaction name="actionTutorials"/>
@@ -888,6 +889,11 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="actionKeyboardShortcuts">
+   <property name="text">
+    <string>Keyboard Shortcuts...</string>
    </property>
   </action>
  </widget>
