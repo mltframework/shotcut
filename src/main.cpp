@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2011-2017 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2011-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -298,7 +297,10 @@ int main(int argc, char **argv)
     if (EXIT_RESTART == result) {
         LOG_DEBUG() << "restarting app";
         QProcess* restart = new QProcess;
-        restart->start(a.applicationFilePath(), QStringList());
+        QStringList args = a.arguments();
+        if (!args.isEmpty())
+            args.removeFirst();
+        restart->start(a.applicationFilePath(), args);
         restart->waitForReadyRead();
         restart->waitForFinished(1000);
         result = EXIT_SUCCESS;
