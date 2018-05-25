@@ -171,11 +171,16 @@ void QmlKeyframesMetadata::checkVersion(const QString& version)
         int i = 0;
         foreach (QString field, versionParts) {
             if (field.toUInt() < minimumVersionParts[i++].toUInt()) {
-                m_enabled = m_allowAnimateIn = m_allowAnimateOut = false;
+                setDisabled();
                 break;
             }
         }
     }
+}
+
+void QmlKeyframesMetadata::setDisabled()
+{
+    m_enabled = m_allowAnimateIn = m_allowAnimateOut = false;
 }
 
 QmlKeyframesParameter::QmlKeyframesParameter(QObject* parent)

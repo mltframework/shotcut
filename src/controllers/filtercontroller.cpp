@@ -71,6 +71,11 @@ void FilterController::loadFilterMetadata() {
                         if (version.startsWith("lavfi"))
                             version.remove(0, 5);
                         meta->keyframes()->checkVersion(version);
+                        // MLT frei0r module did get mlt_animation support until v6.10 (6.9 while in development).
+                        if (meta->mlt_service().startsWith("frei0r.")) {
+                            if (mlt_version_get_major() < 6 || mlt_version_get_minor() < 9)
+                                meta->keyframes()->setDisabled();
+                        }
                     }
                 }
             } else if (!meta) {

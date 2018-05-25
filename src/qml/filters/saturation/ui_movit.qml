@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2013-2015 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2013-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,36 +24,149 @@ Item {
     width: 350
     height: 50
     property string saturationParameter: 'saturation'
+    property bool blockUpdate: true
+    property double startValue: 1.0
+    property double middleValue: 1.0
+    property double endValue: 1.0
+
     Component.onCompleted: {
         if (filter.isNew) {
             // Set default parameter values
+            filter.set(saturationParameter, 0)
+            filter.savePreset(preset.parameters, qsTr('Grayscale'))
             filter.set(saturationParameter, 1.0)
-            slider.value = 100
+        } else {
+            middleValue = filter.getDouble(saturationParameter, filter.animateIn)
+            if (filter.animateIn > 0)
+                startValue = filter.getDouble(saturationParameter, 0)
+            if (filter.animateOut > 0)
+                endValue = filter.getDouble(saturationParameter, filter.duration - 1)
+        }
+        setControls()
+    }
+
+    function getPosition() {
+        return Math.max(producer.position - (filter.in - producer.in), 0)
+    }
+
+    function setControls() {
+        var position = getPosition()
+        blockUpdate = true
+        slider.value = filter.getDouble(saturationParameter, position) * 100
+        blockUpdate = false
+        slider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
+    }
+
+    function updateFilter(position) {
+        if (blockUpdate) return
+        var value = slider.value / 100
+
+        if (position !== null) {
+            if (position <= 0 && filter.animateIn > 0)
+                startValue = value
+            else if (position >= filter.duration - 1 && filter.animateOut > 0)
+                endValue = value
+            else
+                middleValue = value
+        }
+
+        if (filter.animateIn > 0 || filter.animateOut > 0) {
+            filter.resetProperty(saturationParameter)
+            brightnessKeyframesButton.checked = false
+            if (filter.animateIn > 0) {
+                filter.set(saturationParameter, startValue, 0)
+                filter.set(saturationParameter, middleValue, filter.animateIn - 1)
+            }
+            if (filter.animateOut > 0) {
+                filter.set(saturationParameter, middleValue, filter.duration - filter.animateOut)
+                filter.set(saturationParameter, endValue, filter.duration - 1)
+            }
+        } else if (!brightnessKeyframesButton.checked) {
+            filter.resetProperty(saturationParameter)
+            filter.set(saturationParameter, middleValue)
+        } else if (position !== null) {
+            filter.set(saturationParameter, value, position)
         }
     }
 
-    ColumnLayout {
+    GridLayout {
+        columns: 4
         anchors.fill: parent
         anchors.margins: 8
 
-        RowLayout {
-            anchors.fill: parent
-
-            Label { text: qsTr('Saturation') }
-            SliderSpinner {
-                id: slider
-                minimumValue: 0
-                maximumValue: 300
-                suffix: ' %'
-                value: filter.getDouble(saturationParameter) * 100
-                onValueChanged: filter.set(saturationParameter, value / 100)
+        Label {
+            text: qsTr('Preset')
+            Layout.alignment: Qt.AlignRight
+        }
+        Preset {
+            id: preset
+            Layout.columnSpan: 3
+            parameters: [saturationParameter]
+            onBeforePresetLoaded: {
+                filter.resetProperty(saturationParameter)
             }
-            UndoButton {
-                onClicked: slider.value = 100
+            onPresetSelected: {
+                setControls()
+                middleValue = filter.getDouble(saturationParameter, filter.animateIn)
+                if (filter.animateIn > 0)
+                    startValue = filter.getDouble(saturationParameter, 0)
+                if (filter.animateOut > 0)
+                    endValue = filter.getDouble(saturationParameter, filter.duration - 1)
             }
         }
+
+        Label { text: qsTr('Level') }
+        SliderSpinner {
+            id: slider
+            minimumValue: 0
+            maximumValue: 300
+            suffix: ' %'
+            onValueChanged: updateFilter(getPosition())
+        }
+        UndoButton {
+            onClicked: slider.value = 100
+        }
+        KeyframesButton {
+            id: brightnessKeyframesButton
+            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(saturationParameter) > 0
+            onToggled: {
+                var value = slider.value / 100
+                if (checked) {
+                    blockUpdate = true
+                    filter.clearSimpleAnimation(saturationParameter)
+                    blockUpdate = false
+                    filter.set(saturationParameter, value, getPosition())
+                } else {
+                    filter.resetProperty(saturationParameter)
+                    filter.set(saturationParameter, value)
+                }
+            }
+        }
+
         Item {
             Layout.fillHeight: true;
+        }
+    }
+
+    Connections {
+        target: filter
+        onInChanged: updateFilter(null)
+        onOutChanged: updateFilter(null)
+        onAnimateInChanged: updateFilter(null)
+        onAnimateOutChanged: updateFilter(null)
+    }
+
+    Connections {
+        target: producer
+        onPositionChanged: {
+            if (filter.animateIn > 0 || filter.animateOut > 0) {
+                setControls()
+            } else {
+                blockUpdate = true
+                slider.value = filter.getDouble(saturationParameter, getPosition()) * 100
+                blockUpdate = false
+                slider.enabled = true
+            }
         }
     }
 }

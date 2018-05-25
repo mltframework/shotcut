@@ -81,6 +81,7 @@ public:
     int parameterCount() const { return m_parameters.count(); }
     QmlKeyframesParameter *parameter(int index) const { return m_parameters[index]; }
     void checkVersion(const QString& version);
+    void setDisabled();
 
 signals:
     void changed();
