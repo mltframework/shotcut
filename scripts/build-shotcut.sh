@@ -1880,7 +1880,7 @@ function deploy_win32
     cmd mv bin/qmelt.exe .
     cmd rm -rf bin include etc man manifest src *.txt
     cmd rm lib/*
-    cmd rm -rf lib/pkgconfig lib/gdk-pixbuf-2.0 lib/glib-2.0 lib/gtk-2.0
+    cmd rm -rf lib/cmake lib/pkgconfig lib/gdk-pixbuf-2.0 lib/glib-2.0 lib/gtk-2.0
     cmd rm -rf share/doc share/man share/ffmpeg/examples share/aclocal share/glib-2.0 share/gtk-2.0 share/gtk-doc share/themes share/locale
   fi
   cmd mv COPYING COPYING.txt
@@ -1899,8 +1899,7 @@ function deploy_win32
     fi
   fi
   cmd mkdir -p lib/qt5/sqldrivers
-  cmd cp -pr "$QTDIR"/plugins/{audio,iconengines,imageformats,mediaservice,platforms,generic,platforminputcontexts,platformthemes} lib/qt5
-  cmd cp -p  "$QTDIR"/plugins/sqldrivers/qsqlite.dll lib/qt5/sqldrivers
+  cmd cp -pr "$QTDIR"/plugins/{audio,iconengines,imageformats,mediaservice,platforms,generic,sqldrivers} lib/qt5
   cmd cp -pr "$QTDIR"/qml lib
   cmd cp -pr "$QTDIR"/translations/qt_*.qm share/translations
   cmd cp -pr "$QTDIR"/translations/qtbase_*.qm share/translations
@@ -1909,9 +1908,7 @@ function deploy_win32
     cmd rm lib/qt5/imageformats/qddsd.dll
     cmd rm lib/qt5/imageformats/qgifd.dll
     cmd rm lib/qt5/imageformats/qicod.dll
-    cmd rm lib/qt5/imageformats/qjp2d.dll
     cmd rm lib/qt5/imageformats/qjpegd.dll
-    cmd rm lib/qt5/imageformats/qmngd.dll
     cmd rm lib/qt5/imageformats/qsvgd.dll
     cmd rm lib/qt5/imageformats/qtgad.dll
     cmd rm lib/qt5/imageformats/qtiffd.dll
@@ -1922,6 +1919,7 @@ function deploy_win32
     cmd rm lib/qt5/platforms/qminimald.dll
     cmd rm lib/qt5/platforms/qoffscreend.dll
     cmd rm lib/qt5/platforms/qwindowsd.dll
+    cmd rm lib/qt5/sqldrivers/qsqlited.dll
 
     cmd rm lib/qml/QtLocation/declarative_locationd.dll
     cmd rm lib/qml/QtQml/StateMachine/qtqmlstatemachined.dll
@@ -1932,7 +1930,6 @@ function deploy_win32
     cmd rm lib/qml/QtWebKit/qmlwebkitplugind.dll
     cmd rm lib/qml/QtWebKit/experimental/qmlwebkitexperimentalplugind.dll
     cmd rm lib/qml/QtQuick.2/qtquick2plugind.dll
-    cmd rm lib/qml/Enginio/enginioplugind.dll
     cmd rm lib/qml/Qt/labs/settings/qmlsettingsplugind.dll
     cmd rm lib/qml/Qt/labs/folderlistmodel/qmlfolderlistmodelplugind.dll
     cmd rm lib/qml/QtWebSockets/declarative_qmlwebsocketsd.dll
@@ -1943,7 +1940,6 @@ function deploy_win32
     cmd rm lib/qml/QtQuick/Dialogs/dialogplugind.dll
     cmd rm lib/qml/QtQuick/Dialogs/Private/dialogsprivateplugind.dll
     cmd rm lib/qml/QtQuick/PrivateWidgets/widgetsplugind.dll
-    cmd rm lib/qml/QtQuick/Scene3D/qtquickscene3dplugind.dll
     cmd rm lib/qml/QtQuick/Layouts/qquicklayoutsplugind.dll
     cmd rm lib/qml/QtQuick/Controls/qtquickcontrolsplugind.dll
     cmd rm lib/qml/QtQuick/Controls/Styles/Flat/qtquickextrasflatplugind.dll
@@ -1954,9 +1950,6 @@ function deploy_win32
     cmd rm lib/qml/QtMultimedia/declarative_multimediad.dll
     cmd rm lib/qml/QtNfc/declarative_nfcd.dll
     cmd rm lib/qml/QtWebChannel/declarative_webchanneld.dll
-    cmd rm lib/qml/Qt3D/Renderer/quick3drendererplugind.dll
-    cmd rm lib/qml/Qt3D/quick3dcoreplugind.dll
-    cmd rm lib/qml/Qt3D/Input/quick3dinputplugind.dll
   fi
   if [ "$TARGET_OS" = "Win32" ]; then
     cmd tar -xJf "$HOME/swh-plugins-win32-0.4.15.tar.xz"
