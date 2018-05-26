@@ -1282,7 +1282,7 @@ function get_all_sources {
     get_subproject $DIR
   done
   feedback_status Done getting all sources
-  if test "$TARGET_OS" = "Darwin" -a "$ARCHIVE" = "1" ; then
+  if test "$TARGET_OS" = "Linux" -a "$ARCHIVE" = "1" ; then
     feedback_status Making source archive
     cmd cd "$SOURCE_DIR"/..
     cat >src/README <<END_OF_SRC_README
@@ -1299,7 +1299,7 @@ more mundane dependencies. The rest like x264, x265, libvpx, lame, libopus,
 FFmpeg, and frei0r are provided by the script.
 
 For macOS, we rely upon macports to provide the dependencies:
-  port install ffmpeg libsamplerate libsdl sox glib2 jack
+  port install ffmpeg libsamplerate libsdl2 sox glib2 jack
 
 For Windows, see this page on the MLT wiki about getting pre-built
 dependencies from various sources on the Internet:
@@ -1308,8 +1308,6 @@ Except, now we build FFmpeg instead of using a pre-built copy.
 
 As for Shotcut itself, its really as simple as:
   mkdir build ; cd build ; qmake .. ; make
-There is no make install target at this time. Just copy the executable
-(Shotcut.app on macOS) where needed.
 
 Then, there is the app bundling so that dependencies can be located and Qt
 plugins included. For that you really need to see the build script; it
@@ -1325,7 +1323,7 @@ yourself, you do not need to do that. You can just let Shotcut use
 the macports dependencies in /opt/local.
 END_OF_SRC_README
     cmd mkdir -p "$INSTALL_DIR" 2> /dev/null
-    cmd tar -cjf "$INSTALL_DIR"/src.tar.bz2 src
+    cmd tar -cJf "$INSTALL_DIR"/src.tar.xz src --exclude-vcs
   fi
 }
 
