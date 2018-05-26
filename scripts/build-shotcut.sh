@@ -55,6 +55,7 @@ FFMPEG_SUPPORT_MP3=1
 FFMPEG_SUPPORT_FAAC=0
 FFMPEG_SUPPORT_OPUS=1
 FFMPEG_SUPPORT_NVENC=1
+FFMPEG_SUPPORT_AMF=1
 FFMPEG_ADDITIONAL_OPTIONS=
 ENABLE_VIDSTAB=1
 VIDSTAB_HEAD=1
@@ -201,6 +202,9 @@ function to_key {
     ;;
     nv-codec-headers)
       echo 15
+    ;;
+    AMF)
+      echo 16
     ;;
     *)
       echo UNKNOWN
@@ -387,6 +391,9 @@ function set_globals {
     if test "$FFMPEG_SUPPORT_NVENC" = 1 && test "$TARGET_OS" != "Darwin"; then
         SUBDIRS="nv-codec-headers $SUBDIRS"
     fi
+    if test "$FFMPEG_SUPPORT_AMF" = 1 && test "$TARGET_OS" != "Darwin" && test "$TARGET_OS" != "Linux"; then
+        SUBDIRS="AMF $SUBDIRS"
+    fi
     if test "$ENABLE_SWH_PLUGINS" = "1" && test "$TARGET_OS" = "Darwin"; then
         SUBDIRS="swh-plugins $SUBDIRS"
     fi
@@ -436,6 +443,7 @@ function set_globals {
   REPOLOCS[13]="https://github.com/videolan/x265"
   REPOLOCS[14]="https://bitbucket.org/eigen/eigen/get/3.2.4.tar.gz"
   REPOLOCS[15]="git://github.com/FFmpeg/nv-codec-headers.git"
+  REPOLOCS[16]="git://github.com/GPUOpen-LibrariesAndSDKs/AMF.git"
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
   REPOTYPES[0]="git"
@@ -454,6 +462,7 @@ function set_globals {
   REPOTYPES[13]="git"
   REPOTYPES[14]="http-tgz"
   REPOTYPES[15]="git"
+  REPOTYPES[16]="git"
 
   # And, set up the revisions
   REVISIONS[0]=""
@@ -509,6 +518,7 @@ function set_globals {
   fi
   REVISIONS[14]="eigen-eigen-10219c95fe65"
   REVISIONS[15]=""
+  REVISIONS[16]=""
 
   # Figure out the number of cores in the system. Used both by make and startup script
   if test "$TARGET_OS" = "Darwin"; then
@@ -812,6 +822,10 @@ function set_globals {
   #######
   # nv-codec-headers
   CONFIG[15]="sed -i s,/usr/local,$FINAL_INSTALL_DIR, Makefile"
+  
+  #######
+  # AMF - no build required
+  CONFIG[16]=""
 }
 
 ######################################################################
@@ -1504,6 +1518,13 @@ function configure_compile_install_subproject {
   # Special hack for x265
   if test "x265" = "$1"; then
     cd source
+  fi
+
+  # Special hack for AMF
+  if test "AMF" = "$1" -a ! -d "$FINAL_INSTALL_DIR/include/AMF"; then
+    cmd rm -rf Thirdparty
+    cmd mkdir -p "$FINAL_INSTALL_DIR/include/AMF"
+    cmd cp -av "amf/public/include/." "$FINAL_INSTALL_DIR/include/AMF"
   fi
 
   MYCONFIG=`lookup CONFIG $1`
