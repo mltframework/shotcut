@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2017-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +29,12 @@ Item {
     property string paramRotation: '5'
     property string paramSoftness: '6'
     property string paramOperation: '9'
-    property var defaultParameters: [paramHorizontal, paramShape, paramWidth, paramVertical, paramRotation, paramSoftness, paramOperation]
+    property var defaultParameters: [paramHorizontal, paramShape, paramWidth, paramHeight,  paramVertical, paramRotation, paramSoftness, paramOperation]
+    property bool blockUpdate: true
+    property var startValues: [0.5, 0.5, 0, 0]
+    property var middleValues: [0.5, 0.5, 0.1, 0.1]
+    property var endValues: [0.5, 0.5, 0, 0]
+
     width: 350
     height: 250
 
@@ -46,23 +50,99 @@ Item {
             filter.set(paramRotation, 0.5)
             filter.set(paramSoftness, 0.2)
             filter.savePreset(defaultParameters)
+        } else {
+            initSimpleAnimation()
         }
         setControls()
     }
 
+    function initSimpleAnimation() {
+        middleValues = [filter.getDouble(paramHorizontal, filter.animateIn),
+                        filter.getDouble(paramVertical, filter.animateIn),
+                        filter.getDouble(paramWidth, filter.animateIn),
+                        filter.getDouble(paramHeight, filter.animateIn)]
+        if (filter.animateIn > 0) {
+            startValues = [filter.getDouble(paramHorizontal, 0),
+                           filter.getDouble(paramVertical, 0),
+                           filter.getDouble(paramWidth, 0),
+                           filter.getDouble(paramHeight, 0)]
+        }
+        if (filter.animateOut > 0) {
+            endValues = [filter.getDouble(paramHorizontal, filter.duration - 1),
+                         filter.getDouble(paramVertical, filter.duration - 1),
+                         filter.getDouble(paramWidth, filter.duration - 1),
+                         filter.getDouble(paramHeight, filter.duration - 1)]
+        }
+    }
+
+    function getPosition() {
+        return Math.max(producer.position - (filter.in - producer.in), 0)
+    }
+
     function setControls() {
+        var position = getPosition()
+        blockUpdate = true
+        horizontalSlider.value = filter.getDouble(paramHorizontal, position) * 100
+        verticalSlider.value   = filter.getDouble(paramVertical, position) * 100
+        widthSlider.value      = filter.getDouble(paramWidth, position) * 100
+        heightSlider.value     = filter.getDouble(paramHeight, position) * 100
+        blockUpdate = false
+        horizontalSlider.enabled = verticalSlider.enabled = widthSlider.enabled = heightSlider.enabled
+            = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
         operationCombo.currentIndex = Math.round(filter.getDouble(paramOperation) * 4)
         shapeCombo.currentIndex = Math.round(filter.getDouble(paramShape) * 3)
-        horizontalSlider.value = filter.getDouble(paramHorizontal) * 100
-        verticalSlider.value = filter.getDouble(paramVertical) * 100
-        widthSlider.value = filter.getDouble(paramWidth) * 100
-        heightSlider.value = filter.getDouble(paramHeight) * 100
         rotationSlider.value = filter.getDouble(paramRotation) * 100
         softnessSlider.value = filter.getDouble(paramSoftness) * 100
     }
 
+    function updateFilter(parameter, value, position, button) {
+        if (blockUpdate) return
+        var index = parseInt(parameter - 1)
+
+        if (position !== null) {
+            if (position <= 0 && filter.animateIn > 0)
+                startValues[index] = value
+            else if (position >= filter.duration - 1 && filter.animateOut > 0)
+                endValues[index] = value
+            else
+                middleValues[index] = value
+        }
+
+        if (filter.animateIn > 0 || filter.animateOut > 0) {
+            filter.resetProperty(parameter)
+            button.checked = false
+            if (filter.animateIn > 0) {
+                filter.set(parameter, startValues[index], 0)
+                filter.set(parameter, middleValues[index], filter.animateIn - 1)
+            }
+            if (filter.animateOut > 0) {
+                filter.set(parameter, middleValues[index], filter.duration - filter.animateOut)
+                filter.set(parameter, endValues[index], filter.duration - 1)
+            }
+        } else if (!button.checked) {
+            filter.resetProperty(parameter)
+            filter.set(parameter, middleValues[index])
+        } else if (position !== null) {
+            filter.set(parameter, value, position)
+        }
+    }
+
+    function onKeyframesButtonClicked(checked, parameter, value) {
+        if (checked) {
+            blockUpdate = true
+            horizontalSlider.enabled = verticalSlider.enabled = widthSlider.enabled = heightSlider.enabled = true
+            horizontalKeyframesButton.checked = verticalKeyframesButton.checked = widthKeyframesButton.checked = heightKeyframesButton.checked = true
+            filter.clearSimpleAnimation(parameter)
+            blockUpdate = false
+            filter.set(parameter, value, getPosition())
+        } else {
+            filter.resetProperty(parameter)
+            filter.set(parameter, value)
+        }
+    }
+
     GridLayout {
-        columns: 3
+        columns: 4
         anchors.fill: parent
         anchors.margins: 8
 
@@ -71,9 +151,18 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
         Preset {
-            Layout.columnSpan: 2
+            Layout.columnSpan: 3
             parameters: defaultParameters
-            onPresetSelected: setControls()
+            onBeforePresetLoaded: {
+                filter.resetProperty(paramHorizontal)
+                filter.resetProperty(paramVertical)
+                filter.resetProperty(paramWidth)
+                filter.resetProperty(paramHeight)
+            }
+            onPresetSelected: {
+                setControls()
+                initSimpleAnimation()
+            }
         }
 
         Label {
@@ -87,6 +176,7 @@ Item {
             onCurrentIndexChanged: filter.set(paramOperation, currentIndex / 4)
         }
         UndoButton {
+            Layout.columnSpan: 2
             onClicked: operationCombo.currentIndex = 0
         }
 
@@ -101,6 +191,7 @@ Item {
             onCurrentIndexChanged: filter.set(paramShape, currentIndex / 3)
         }
         UndoButton {
+            Layout.columnSpan: 2
             onClicked: shapeCombo.currentIndex = 0
         }
 
@@ -114,10 +205,15 @@ Item {
             maximumValue: 100
             decimals: 2
             suffix: ' %'
-            onValueChanged: filter.set(paramHorizontal, value / 100)
+            onValueChanged: updateFilter(paramHorizontal, value/100, getPosition(), horizontalKeyframesButton)
         }
         UndoButton {
             onClicked: horizontalSlider.value = 50
+        }
+        KeyframesButton {
+            id: horizontalKeyframesButton
+            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramHorizontal) > 0
+            onToggled: onKeyframesButtonClicked(checked, paramHorizontal, horizontalSlider.value / 100)
         }
 
         Label {
@@ -130,10 +226,15 @@ Item {
             maximumValue: 100
             decimals: 2
             suffix: ' %'
-            onValueChanged: filter.set(paramVertical, value / 100)
+            onValueChanged: updateFilter(paramVertical, value/100, getPosition(), verticalKeyframesButton)
         }
         UndoButton {
             onClicked: verticalSlider.value = 50
+        }
+        KeyframesButton {
+            id: verticalKeyframesButton
+            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramVertical) > 0
+            onToggled: onKeyframesButtonClicked(checked, paramVertical, verticalSlider.value / 100)
         }
 
         Label {
@@ -146,10 +247,15 @@ Item {
             maximumValue: 100
             decimals: 2
             suffix: ' %'
-            onValueChanged: filter.set(paramWidth, value / 100)
+            onValueChanged: updateFilter(paramWidth, value/100, getPosition(), widthKeyframesButton)
         }
         UndoButton {
             onClicked: widthSlider.value = 10
+        }
+        KeyframesButton {
+            id: widthKeyframesButton
+            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramWidth) > 0
+            onToggled: onKeyframesButtonClicked(checked, paramWidth, widthSlider.value / 100)
         }
 
         Label {
@@ -162,10 +268,15 @@ Item {
             maximumValue: 100
             decimals: 2
             suffix: ' %'
-            onValueChanged: filter.set(paramHeight, value / 100)
+            onValueChanged: updateFilter(paramHeight, value/100, getPosition(), heightKeyframesButton)
         }
         UndoButton {
             onClicked: heightSlider.value = 10
+        }
+        KeyframesButton {
+            id: heightKeyframesButton
+            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramHeight) > 0
+            onToggled: onKeyframesButtonClicked(checked, paramHeight, heightSlider.value / 100)
         }
 
         Label {
@@ -181,6 +292,7 @@ Item {
             onValueChanged: filter.set(paramRotation, value / 100)
         }
         UndoButton {
+            Layout.columnSpan: 2
             onClicked: rotationSlider.value = 0
         }
 
@@ -197,11 +309,45 @@ Item {
             onValueChanged: filter.set(paramSoftness, value / 100)
         }
         UndoButton {
+            Layout.columnSpan: 2
             onClicked: softnessSlider.value = 20
         }
 
         Item {
+            Layout.columnSpan: 2
             Layout.fillHeight: true;
+        }
+    }
+
+    function updatedSimpleAnimation() {
+        updateFilter(paramHorizontal, horizontalSlider.value/100, getPosition(), horizontalKeyframesButton)
+        updateFilter(paramVertical,   verticalSlider.value/100,   getPosition(), verticalKeyframesButton)
+        updateFilter(paramWidth,      widthSlider.value/100,      getPosition(), widthKeyframesButton)
+        updateFilter(paramHeight,     heightSlider.value/100,     getPosition(), heightKeyframesButton)
+    }
+
+    Connections {
+        target: filter
+        onInChanged: updatedSimpleAnimation()
+        onOutChanged: updatedSimpleAnimation()
+        onAnimateInChanged: updatedSimpleAnimation()
+        onAnimateOutChanged: updatedSimpleAnimation()
+    }
+
+    Connections {
+        target: producer
+        onPositionChanged: {
+            if (filter.animateIn > 0 || filter.animateOut > 0) {
+                setControls()
+            } else {
+                blockUpdate = true
+                horizontalSlider.value = filter.getDouble(paramHorizontal, getPosition()) * 100
+                verticalSlider.value   = filter.getDouble(paramVertical,   getPosition()) * 100
+                widthSlider.value      = filter.getDouble(paramWidth,      getPosition()) * 100
+                heightSlider.value     = filter.getDouble(paramHeight,     getPosition()) * 100
+                blockUpdate = false
+                horizontalSlider.enabled = verticalSlider.enabled = widthSlider.enabled = heightSlider.enabled = true
+            }
         }
     }
 }
