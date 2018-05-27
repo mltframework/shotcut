@@ -320,7 +320,8 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
     if (ui->videoRateControlCombo->currentIndex() == RateControlQuality && videoQuality > -1) {
         const QString& vcodec = ui->videoCodecCombo->currentText();
         //val = min + (max - min) * paramval;
-        if (vcodec == "libx264" || vcodec == "libx265" || vcodec.contains("nvenc")) // 0 (best, 100%) - 51 (worst)
+        if (vcodec == "libx264" || vcodec == "libx265" || vcodec.contains("nvenc") || vcodec.endsWith("_amf"))
+            // 0 (best, 100%) - 51 (worst)
             ui->videoQualitySpinner->setValue(TO_RELATIVE(51, 0, videoQuality));
         else if (vcodec.startsWith("libvpx")) // 0 (best, 100%) - 63 (worst)
             ui->videoQualitySpinner->setValue(TO_RELATIVE(63, 0, videoQuality));
@@ -551,13 +552,56 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                 case RateControlQuality: {
                     int vq = ui->videoQualitySpinner->value();
                     p->set("rc", "constqp");
-                    p->set("global_quality", TO_ABSOLUTE(51, 0, vq));
+                    p->set("vglobal_quality", TO_ABSOLUTE(51, 0, vq));
                     p->set("vq", TO_ABSOLUTE(51, 0, vq));
                     break;
                     }
                 case RateControlConstrained: {
                     const QString& b = ui->videoBitrateCombo->currentText();
                     int vq = ui->videoQualitySpinner->value();
+                    p->set("qmin", TO_ABSOLUTE(51, 0, vq));
+                    p->set("vb", qRound(0.8f * b.toFloat()));
+                    p->set("vmaxrate", b.toLatin1().constData());
+                    p->set("vbufsize", int(ui->videoBufferSizeSpinner->value() * 8 * 1024));
+                    break;
+                    }
+                }
+                if (ui->dualPassCheckbox->isChecked())
+                    p->set("v2pass", 1);
+                if (ui->strictGopCheckBox->isChecked()) {
+                    p->set("sc_threshold", 0);
+                    p->set("strict_gop", 1);
+                }
+                // Also set some properties so that custom presets can be interpreted properly.
+                p->set("g", ui->gopSpinner->value());
+                p->set("bf", ui->bFramesSpinner->value());
+            } else if (vcodec.endsWith("_amf")) {
+                switch (ui->videoRateControlCombo->currentIndex()) {
+                case RateControlAverage:
+                    p->set("vb", ui->videoBitrateCombo->currentText().toLatin1().constData());
+                    break;
+                case RateControlConstant: {
+                    const QString& b = ui->videoBitrateCombo->currentText();
+                    p->set("rc", "cbr");
+                    p->set("vb", b.toLatin1().constData());
+                    p->set("vminrate", b.toLatin1().constData());
+                    p->set("vmaxrate", b.toLatin1().constData());
+                    p->set("vbufsize", int(ui->videoBufferSizeSpinner->value() * 8 * 1024));
+                    break;
+                    }
+                case RateControlQuality: {
+                    int vq = ui->videoQualitySpinner->value();
+                    p->set("rc", "cqp");
+                    p->set("qp_i", TO_ABSOLUTE(51, 0, vq));
+                    p->set("qp_p", TO_ABSOLUTE(51, 0, vq));
+                    p->set("qp_b", TO_ABSOLUTE(51, 0, vq));
+                    p->set("vq", TO_ABSOLUTE(51, 0, vq));
+                    break;
+                    }
+                case RateControlConstrained: {
+                    const QString& b = ui->videoBitrateCombo->currentText();
+                    int vq = ui->videoQualitySpinner->value();
+                    p->set("rc", "vbr_peak");
                     p->set("qmin", TO_ABSOLUTE(51, 0, vq));
                     p->set("vb", qRound(0.8f * b.toFloat()));
                     p->set("vmaxrate", b.toLatin1().constData());
@@ -688,7 +732,7 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                 p->set("threads", ui->videoCodecThreadsSpinner->value());
 #endif
             if (ui->videoRateControlCombo->currentIndex() != RateControlQuality &&
-                !vcodec.contains("nvenc") &&
+                !vcodec.contains("nvenc") && !vcodec.endsWith("_amf") &&
                 ui->dualPassCheckbox->isEnabled() && ui->dualPassCheckbox->isChecked())
                 p->set("pass", 1);
         }
@@ -842,6 +886,7 @@ void EncodeDock::enqueueMelt(const QString& target, int realtime)
     Mlt::Producer* service = fromProducer();
     int pass = (ui->videoRateControlCombo->currentIndex() != RateControlQuality
             && !ui->videoCodecCombo->currentText().contains("nvenc")
+            && !ui->videoCodecCombo->currentText().endsWith("_amf")
             &&  ui->dualPassCheckbox->isEnabled() && ui->dualPassCheckbox->isChecked())? 1 : 0;
     if (!service) {
         // For each playlist item.
@@ -1477,7 +1522,8 @@ void EncodeDock::on_fromCombo_currentIndexChanged(int index)
 void EncodeDock::on_videoCodecCombo_currentIndexChanged(int index)
 {
     Q_UNUSED(index)
-    if (ui->videoCodecCombo->currentText().contains("nvenc")) {
+    QString vcodec = ui->videoCodecCombo->currentText();
+    if (vcodec.contains("nvenc")) {
         QString newValue;
         foreach (QString line, ui->advancedTextEdit->toPlainText().split("\n")) {
             if (!line.startsWith("preset=")) {
@@ -1486,8 +1532,17 @@ void EncodeDock::on_videoCodecCombo_currentIndexChanged(int index)
             }
         }
         ui->advancedTextEdit->setPlainText(newValue);
-        if (ui->videoCodecCombo->currentText().contains("hevc"))
+        if (vcodec.contains("hevc"))
             ui->bFramesSpinner->setValue(0);
+        ui->dualPassCheckbox->setChecked(false);
+        ui->dualPassCheckbox->setEnabled(false);
+    } else if (vcodec.endsWith("_amf")) {
+        if (vcodec.startsWith("hevc_"))
+            ui->bFramesSpinner->setValue(0);
+        ui->dualPassCheckbox->setChecked(false);
+        ui->dualPassCheckbox->setEnabled(false);
+    } else {
+        ui->dualPassCheckbox->setEnabled(true);
     }
 }
 
