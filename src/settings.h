@@ -153,7 +153,7 @@ public:
 
     void sync();
     QString appDataLocation() const;
-    void setAppDataForSession(const QString& location);
+    static void setAppDataForSession(const QString& location);
     void setAppDataLocally(const QString& location);
 
 signals:
@@ -174,6 +174,7 @@ signals:
 private:
     QSettings settings;
     QString m_appDataLocation;
+    static QString appDataForSession;
 };
 
 #define Settings ShotcutSettings::singleton()
