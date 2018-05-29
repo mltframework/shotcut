@@ -146,7 +146,7 @@ public:
         setProperty("noupgrade", parser.isSet(noupgradeOption));
         if (!parser.value(appDataOption).isEmpty()) {
             appDirArg = parser.value(appDataOption);
-            Settings.setAppDataForSession(appDirArg);
+            ShotcutSettings::setAppDataForSession(appDirArg);
         }
         if (parser.isSet(gpuOption))
             Settings.setPlayerGPU(true);

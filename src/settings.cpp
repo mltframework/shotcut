@@ -25,14 +25,19 @@
 static const QString APP_DATA_DIR_KEY("appdatadir");
 static const QString SHOTCUT_INI_FILENAME("/shotcut.ini");
 static QScopedPointer<ShotcutSettings> instance;
+static QString appDataForSession;
 
 ShotcutSettings &ShotcutSettings::singleton()
 {
     if (!instance) {
-        instance.reset(new ShotcutSettings);
-        if (instance->settings.value(APP_DATA_DIR_KEY).isValid()
-            && QFile::exists(instance->settings.value(APP_DATA_DIR_KEY).toString() + SHOTCUT_INI_FILENAME) )
-            instance.reset(new ShotcutSettings(instance->settings.value(APP_DATA_DIR_KEY).toString()));
+        if (appDataForSession.isEmpty()) {
+            instance.reset(new ShotcutSettings);
+            if (instance->settings.value(APP_DATA_DIR_KEY).isValid()
+                && QFile::exists(instance->settings.value(APP_DATA_DIR_KEY).toString() + SHOTCUT_INI_FILENAME) )
+                instance.reset(new ShotcutSettings(instance->settings.value(APP_DATA_DIR_KEY).toString()));
+        } else {
+            instance.reset(new ShotcutSettings(appDataForSession));
+        }
         LOG_DEBUG() << "language" << instance->language();
         LOG_DEBUG() << "deinterlacer" << instance->playerDeinterlacer();
         LOG_DEBUG() << "external monitor" << instance->playerExternal();
@@ -531,7 +536,9 @@ void ShotcutSettings::setAppDataForSession(const QString& location)
 {
     // This is intended to be called when using a command line option
     // to set the AppData location.
-    instance.reset(new ShotcutSettings(location));
+    appDataForSession = location;
+    if (instance)
+        instance.reset(new ShotcutSettings(location));
 }
 
 void ShotcutSettings::setAppDataLocally(const QString& location)
