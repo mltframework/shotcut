@@ -77,7 +77,7 @@ QMAKE_EXTRA_TARGETS += ts
 win32 {
     TARGET_DIR = .
 } else:macx {
-    TARGET_DIR = ../bin/shotcut.app/Contents/Translations
+    TARGET_DIR = ../src/Shotcut.app/Contents/Resources/translations
 } else {
     TARGET_DIR = ../share/shotcut/translations
 }
@@ -90,8 +90,10 @@ updateqm.name = LRELEASE ${QMAKE_FILE_IN}
 updateqm.CONFIG += no_link
 QMAKE_EXTRA_COMPILERS += updateqm
 
-# Install rule for translations
-qmfiles.files = $$prependAppend(LANGUAGES, $$OUT_PWD/$$TARGET_DIR/shotcut_, .qm)
-qmfiles.path = $${PREFIX}/share/shotcut/translations
-qmfiles.CONFIG += no_check_exist
-INSTALLS += qmfiles
+unix:!mac {
+    # Install rule for translations
+    qmfiles.files = $$prependAppend(LANGUAGES, $$OUT_PWD/$$TARGET_DIR/shotcut_, .qm)
+    qmfiles.path = $${PREFIX}/share/shotcut/translations
+    qmfiles.CONFIG += no_check_exist
+    INSTALLS += qmfiles
+}
