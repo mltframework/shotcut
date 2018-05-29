@@ -88,6 +88,18 @@ QVariant KeyframesModel::data(const QModelIndex& index, int role) const
                         return const_cast<Mlt::Animation&>(animation).key_get_type(index.row());
                     case NumericValueRole:
                         return m_filter->getDouble(name, position);
+                    case MinimumFrameRole: {
+                        int result = (index.row() > 0 && position > 0) ? (animation.previous_key(position - 1) + 1) : 0;
+//                        LOG_DEBUG() << "keyframeIndex" << index.row() << "minimumFrame" << result;
+                        return result;
+                    }
+                    case MaximumFrameRole: {
+                        int minimum = animation.previous_key(qMax(0, position - 1)) + 1;
+                        int result = animation.next_key(position + 1) - 1;
+                        result = (result < minimum) ? m_filter->duration() : result;
+//                        LOG_DEBUG() << "keyframeIndex" << index.row() << "maximumFrame" << result;
+                        return result - 1;
+                    }
                     default:
                         break;
                     }
@@ -140,6 +152,8 @@ QHash<int, QByteArray> KeyframesModel::roleNames() const
     roles[FrameNumberRole] = "frame";
     roles[KeyframeTypeRole] = "interpolation";
     roles[NumericValueRole] = "value";
+    roles[MinimumFrameRole] = "minimumFrame";
+    roles[MaximumFrameRole] = "maximumFrame";
     return roles;
 }
 
@@ -179,6 +193,16 @@ bool KeyframesModel::remove(int parameterIndex, int keyframeIndex)
                 beginRemoveRows(index(parameterIndex), keyframeIndex, keyframeIndex);
                 m_keyframeCounts[parameterIndex] -= 1;
                 endRemoveRows();
+
+                QModelIndex modelIndex;
+                if (keyframeIndex > 0) {
+                    modelIndex = index(keyframeIndex - 1, 0, index(parameterIndex));
+                    emit dataChanged(modelIndex, modelIndex, QVector<int>() << MaximumFrameRole);
+                }
+                if (keyframeIndex < keyframeCount(parameterIndex)) {
+                    modelIndex = index(keyframeIndex, 0, index(parameterIndex));
+                    emit dataChanged(modelIndex, modelIndex, QVector<int>() << MinimumFrameRole);
+                }
             }
         }
     }
@@ -270,6 +294,7 @@ bool KeyframesModel::setPosition(int parameterIndex, int keyframeIndex, int posi
 //                LOG_DEBUG() << "keyframe index" << keyframeIndex << "position" << position;
                 QModelIndex modelIndex = index(keyframeIndex, 0, index(parameterIndex));
                 emit dataChanged(modelIndex, modelIndex, QVector<int>() << FrameNumberRole << NameRole);
+                updateNeighborsMinMax(parameterIndex, keyframeIndex);
                 error = false;
                 emit m_filter->changed();
             }
@@ -296,6 +321,7 @@ void KeyframesModel::setKeyframe(int parameterIndex, double value, int position,
         emit m_filter->changed();
         QModelIndex modelIndex = index(keyframeIndex(parameterIndex, position), 0, index(parameterIndex));
         emit dataChanged(modelIndex, modelIndex, QVector<int>() << NumericValueRole << NameRole);
+        updateNeighborsMinMax(parameterIndex, modelIndex.row());
     }
 }
 
@@ -403,4 +429,17 @@ int KeyframesModel::keyframeCount(int index) const
         return qMax(const_cast<QmlFilter*>(m_filter)->keyframeCount(m_propertyNames[index]), 0);
     else
         return 0;
+}
+
+void KeyframesModel::updateNeighborsMinMax(int parameterIndex, int keyframeIndex)
+{
+    QModelIndex modelIndex;
+    if (keyframeIndex > 0) {
+        modelIndex = index(keyframeIndex - 1, 0, index(parameterIndex));
+        emit dataChanged(modelIndex, modelIndex, QVector<int>() << MaximumFrameRole);
+    }
+    if (keyframeIndex < keyframeCount(parameterIndex) - 1) {
+        modelIndex = index(keyframeIndex + 1, 0, index(parameterIndex));
+        emit dataChanged(modelIndex, modelIndex, QVector<int>() << MinimumFrameRole);
+    }
 }

@@ -44,7 +44,9 @@ public:
         PropertyNameRole, /// parameter only
         FrameNumberRole,  /// keyframe only
         KeyframeTypeRole, /// keyframe only
-        NumericValueRole  /// keyframe only
+        NumericValueRole, /// keyframe only
+        MinimumFrameRole, /// keyframe only
+        MaximumFrameRole  /// keyframe only
     };
 
     explicit KeyframesModel(QObject* parent = 0);
@@ -85,6 +87,7 @@ private:
     QList<int> m_metadataIndex;
 
     int keyframeCount(int index) const;
+    void updateNeighborsMinMax(int parameterIndex, int keyframeIndex);
 };
 
 #endif // KEYFRAMESMODEL_H

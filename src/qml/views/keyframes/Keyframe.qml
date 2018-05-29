@@ -35,6 +35,10 @@ Rectangle {
     property double minimum: metadata !== null? metadata.keyframes.parameters[parameterIndex].minimum : 0.0
     property double maximum: metadata !== null? metadata.keyframes.parameters[parameterIndex].maximum : 1.0
     property double trackValue: (0.5 - (value - minimum) / (maximum - minimum)) * (trackHeight - height - 2.0 * border.width)
+    property double minDragX: activeClip.x - width/2
+    property double maxDragX: activeClip.x + activeClip.width - width/2
+    property double minDragY: activeClip.y - width/2
+    property double maxDragY: activeClip.y + activeClip.height - width/2
 
     signal clicked(var keyframe)
 
@@ -61,9 +65,15 @@ Rectangle {
                 producer.position = position
         }
         onDoubleClicked: removeMenuItem.trigger()
-        drag.target: parent
-        drag.axis: isCurve? Drag.XAndYAxis : Drag.XAxis
-        drag.threshold: 0
+        drag {
+            target: parent
+            axis: isCurve? Drag.XAndYAxis : Drag.XAxis
+            threshold: 0
+            minimumX: minDragX
+            maximumX: maxDragX
+            minimumY: minDragY
+            maximumY: maxDragY
+        }
         onPressed: {
             parent.clicked(keyframeRoot)
             if (isCurve) {

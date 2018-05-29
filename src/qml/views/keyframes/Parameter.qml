@@ -108,6 +108,8 @@ Item {
             interpolation: model.interpolation
             name: model.name
             value: model.value
+            minDragX: (filter.in - producer.in + model.minimumFrame) * timeScale - width/2
+            maxDragX: (filter.in - producer.in + model.maximumFrame) * timeScale - width/2
             isSelected: root.currentTrack === parameterRoot.DelegateModel.itemsIndex && root.selection.indexOf(index) !== -1
             parameterIndex: parameterRoot.DelegateModel.itemsIndex
             onClicked: parameterRoot.clicked(keyframe, parameterRoot)
