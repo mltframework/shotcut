@@ -295,37 +295,6 @@ OTHER_FILES += \
     ../packaging/linux/org.shotcut.Shotcut.desktop \
     ../packaging/linux/org.shotcut.Shotcut.xml
 
-TRANSLATIONS += \
-    ../translations/shotcut_ca.ts \
-    ../translations/shotcut_cs.ts \
-    ../translations/shotcut_da.ts \
-    ../translations/shotcut_de.ts \
-    ../translations/shotcut_el.ts \
-    ../translations/shotcut_en.ts \
-    ../translations/shotcut_es.ts \
-    ../translations/shotcut_et.ts \
-    ../translations/shotcut_fi.ts \
-    ../translations/shotcut_fr.ts \
-    ../translations/shotcut_gd.ts \
-    ../translations/shotcut_hu.ts \
-    ../translations/shotcut_it.ts \
-    ../translations/shotcut_ja.ts \
-    ../translations/shotcut_nb.ts \
-    ../translations/shotcut_ne.ts \
-    ../translations/shotcut_nl.ts \
-    ../translations/shotcut_oc.ts \
-    ../translations/shotcut_pl.ts \
-    ../translations/shotcut_pt_BR.ts \
-    ../translations/shotcut_pt_PT.ts \
-    ../translations/shotcut_ru.ts \
-    ../translations/shotcut_sk.ts \
-    ../translations/shotcut_sl.ts \
-    ../translations/shotcut_tr.ts \
-    ../translations/shotcut_uk.ts \
-    ../translations/shotcut_zh_CN.ts \
-    ../translations/shotcut_zh_TW.ts
-
-
 INCLUDEPATH = ../CuteLogger/include ../mvcp
 
 debug_and_release {
