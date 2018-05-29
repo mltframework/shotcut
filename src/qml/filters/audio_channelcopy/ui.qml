@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2013-2015 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2013-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,12 +25,26 @@ Item {
     property string fromParameter: 'from'
     property string toParameter: 'to'
     Component.onCompleted: {
+        console.log('settings.playerAudioChannels ' + settings.playerAudioChannels)
+        if (settings.playerAudioChannels === 1) {
+            fromCombo.enabled = false
+            toCombo.enabled = false
+        } else if (settings.playerAudioChannels === 6) {
+            fromCombo.model = [qsTr('Front left'),
+                           qsTr('Front right'),
+                           qsTr('Center'),
+                           qsTr('Low frequency'),
+                           qsTr('Left surround'),
+                           qsTr('Right surround')]
+        }
         if (filter.isNew) {
             // Set default parameter values
-            combo.currentIndex = 0
+            fromCombo.currentIndex = 0
+            toCombo.currentIndex = (settings.playerAudioChannels === 1) ? 0 : 1
         } else {
             // Initialize parameter values
-            combo.currentIndex = filter.get(fromParameter) * 1
+            fromCombo.currentIndex = filter.get(fromParameter)
+            toCombo.currentIndex = filter.get(toParameter)
         }
     }
 
@@ -42,12 +55,15 @@ Item {
         RowLayout {
             Label { text: qsTr('Copy from') }
             ComboBox {
-                id: combo
-                model: [qsTr('Left to right'), qsTr('Right to left')]
-                onCurrentIndexChanged: {
-                    filter.set(fromParameter, currentIndex)
-                    filter.set(toParameter, 1 - currentIndex)
-                }
+                id: fromCombo
+                model: [qsTr('Left'), qsTr('Right')]
+                onCurrentIndexChanged: filter.set(fromParameter, currentIndex)
+            }
+            Label { text: qsTr('to') }
+            ComboBox {
+                id: toCombo
+                model: fromCombo.model
+                onCurrentIndexChanged: filter.set(toParameter, currentIndex)
             }
         }
         Item {
