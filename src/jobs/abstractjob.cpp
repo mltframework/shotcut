@@ -17,6 +17,7 @@
  */
 
 #include "abstractjob.h"
+#include "postjobaction.h"
 #include <QApplication>
 #include <QTimer>
 #include <Logger.h>
@@ -30,6 +31,7 @@ AbstractJob::AbstractJob(const QString& name)
     , m_ran(false)
     , m_killed(false)
     , m_label(name)
+    , m_postJobAction(nullptr)
 {
     setObjectName(name);
     connect(this, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(onFinished(int, QProcess::ExitStatus)));
@@ -89,6 +91,11 @@ QTime AbstractJob::estimateRemaining(int percent)
     return result;
 }
 
+void AbstractJob::setPostJobAction(PostJobAction* action)
+{
+    m_postJobAction.reset(action);
+}
+
 void AbstractJob::stop()
 {
     closeWriteChannel();
@@ -102,6 +109,9 @@ void AbstractJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
     m_log.append(readAll());
     const QTime& time = QTime::fromMSecsSinceStartOfDay(m_time.elapsed());
     if (exitStatus == QProcess::NormalExit && exitCode == 0 && !m_killed) {
+        if (m_postJobAction) {
+            m_postJobAction->doAction();
+        }
         LOG_INFO() << "job succeeeded";
         m_log.append(QString("Completed successfully in %1\n").arg(time.toString()));
         emit progressUpdated(m_item, 100);
