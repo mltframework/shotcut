@@ -174,6 +174,7 @@ signals:
 private:
     QSettings settings;
     QString m_appDataLocation;
+    static QString appDataForSession;
 };
 
 #define Settings ShotcutSettings::singleton()
