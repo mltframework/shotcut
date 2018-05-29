@@ -90,6 +90,7 @@ SOURCES += main.cpp\
     jobs/abstractjob.cpp \
     jobs/meltjob.cpp \
     jobs/encodejob.cpp \
+    jobs/postjobaction.cpp \
     jobs/videoqualityjob.cpp \
     commands/playlistcommands.cpp \
     docks/scopedock.cpp \
@@ -201,6 +202,7 @@ HEADERS  += mainwindow.h \
     jobs/abstractjob.h \
     jobs/meltjob.h \
     jobs/encodejob.h \
+    jobs/postjobaction.h \
     jobs/videoqualityjob.h \
     commands/playlistcommands.h \
     docks/scopedock.h \

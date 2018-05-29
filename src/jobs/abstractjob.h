@@ -19,6 +19,7 @@
 #ifndef ABSTRACTJOB_H
 #define ABSTRACTJOB_H
 
+#include "postjobaction.h"
 #include <QProcess>
 #include <QModelIndex>
 #include <QList>
@@ -46,6 +47,7 @@ public:
     QList<QAction*> successActions() const { return m_successActions; }
     QTime estimateRemaining(int percent);
     QTime time() const { return m_time; }
+    void setPostJobAction(PostJobAction* action);
 
 public slots:
     virtual void start();
@@ -71,6 +73,7 @@ private:
     QString m_log;
     QString m_label;
     QTime m_time;
+    QScopedPointer<PostJobAction> m_postJobAction;
 };
 
 #endif // ABSTRACTJOB_H
