@@ -25,7 +25,6 @@ Item {
     property string fromParameter: 'from'
     property string toParameter: 'to'
     Component.onCompleted: {
-        console.log('settings.playerAudioChannels ' + settings.playerAudioChannels)
         if (settings.playerAudioChannels === 1) {
             fromCombo.enabled = false
             toCombo.enabled = false

@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2013-2015 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2013-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,9 +20,54 @@ import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.0
 
 Item {
+    width: 100
+    height: 50
+    property string fromParameter: 'from'
+    property string toParameter: 'to'
     Component.onCompleted: {
+        if (settings.playerAudioChannels === 1) {
+            fromCombo.enabled = false
+            toCombo.enabled = false
+        } else if (settings.playerAudioChannels === 6) {
+            fromCombo.model = [qsTr('Front left'),
+                           qsTr('Front right'),
+                           qsTr('Center'),
+                           qsTr('Low frequency'),
+                           qsTr('Left surround'),
+                           qsTr('Right surround')]
+        }
         filter.set('swap', 1)
-        filter.set('from', 0)
-        filter.set('top', 1)
+        if (filter.isNew) {
+            // Set default parameter values
+            fromCombo.currentIndex = 0
+            toCombo.currentIndex = (settings.playerAudioChannels === 1) ? 0 : 1
+        } else {
+            // Initialize parameter values
+            fromCombo.currentIndex = filter.get(fromParameter)
+            toCombo.currentIndex = filter.get(toParameter)
+        }
+    }
+
+    ColumnLayout {
+        anchors.fill: parent
+        anchors.margins: 8
+
+        RowLayout {
+            Label { text: qsTr('Swap') }
+            ComboBox {
+                id: fromCombo
+                model: [qsTr('Left'), qsTr('Right')]
+                onCurrentIndexChanged: filter.set(fromParameter, currentIndex)
+            }
+            Label { text: qsTr('with') }
+            ComboBox {
+                id: toCombo
+                model: fromCombo.model
+                onCurrentIndexChanged: filter.set(toParameter, currentIndex)
+            }
+        }
+        Item {
+            Layout.fillHeight: true;
+        }
     }
 }
