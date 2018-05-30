@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2013-2017 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2013-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -441,7 +440,7 @@ FadeInCommand::FadeInCommand(MultitrackModel &model, int trackIndex, int clipInd
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_clipIndex(clipIndex)
-    , m_duration(qMax(duration, 2))
+    , m_duration(qMax(duration, 0))
 {
     QModelIndex modelIndex = m_model.index(clipIndex, 0, m_model.index(trackIndex));
     m_previous = model.data(modelIndex, MultitrackModel::FadeInRole).toInt();
@@ -462,7 +461,8 @@ void FadeInCommand::undo()
 bool FadeInCommand::mergeWith(const QUndoCommand *other)
 {
     const FadeInCommand* that = static_cast<const FadeInCommand*>(other);
-    if (that->id() != id() || that->m_trackIndex != m_trackIndex || that->m_clipIndex != m_clipIndex)
+    if (that->id() != id() || that->m_trackIndex != m_trackIndex || that->m_clipIndex != m_clipIndex
+            || (!that->m_duration && m_duration != that->m_duration))
         return false;
     m_duration = static_cast<const FadeInCommand*>(other)->m_duration;
     return true;
@@ -473,7 +473,7 @@ FadeOutCommand::FadeOutCommand(MultitrackModel &model, int trackIndex, int clipI
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_clipIndex(clipIndex)
-    , m_duration(qMax(duration, 2))
+    , m_duration(qMax(duration, 0))
 {
     QModelIndex modelIndex = m_model.index(clipIndex, 0, m_model.index(trackIndex));
     m_previous = model.data(modelIndex, MultitrackModel::FadeOutRole).toInt();
@@ -494,7 +494,8 @@ void FadeOutCommand::undo()
 bool FadeOutCommand::mergeWith(const QUndoCommand *other)
 {
     const FadeOutCommand* that = static_cast<const FadeOutCommand*>(other);
-    if (that->id() != id() || that->m_trackIndex != m_trackIndex || that->m_clipIndex != m_clipIndex)
+    if (that->id() != id() || that->m_trackIndex != m_trackIndex || that->m_clipIndex != m_clipIndex
+            || (!that->m_duration && m_duration != that->m_duration))
         return false;
     m_duration = static_cast<const FadeOutCommand*>(other)->m_duration;
     return true;

@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2013-2016 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2013-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -365,14 +364,15 @@ Rectangle {
             onPositionChanged: {
                 if (mouse.buttons === Qt.LeftButton) {
                     var delta = Math.round((parent.x - startX) / timeScale)
-                    var duration = startFadeIn + delta
+                    var duration = Math.max(0, startFadeIn + delta)
                     timeline.fadeIn(trackIndex, index, duration)
 
                     // Show fade duration as time in a "bubble" help.
-                    var s = application.timecode(Math.max(duration, 0))
+                    var s = application.timecode(duration)
                     bubbleHelp.show(clipRoot.x, trackRoot.y + clipRoot.height, s.substring(6))
                 }
             }
+            onDoubleClicked: timeline.fadeIn(trackIndex, index, (fadeIn > 0) ? 0 : Math.round(profile.fps))
         }
         SequentialAnimation on scale {
             loops: Animation.Infinite
@@ -457,14 +457,15 @@ Rectangle {
             onPositionChanged: {
                 if (mouse.buttons === Qt.LeftButton) {
                     var delta = Math.round((startX - parent.x) / timeScale)
-                    var duration = startFadeOut + delta
+                    var duration = Math.max(0, startFadeOut + delta)
                     timeline.fadeOut(trackIndex, index, duration)
 
                     // Show fade duration as time in a "bubble" help.
-                    var s = application.timecode(Math.max(duration, 0))
+                    var s = application.timecode(duration)
                     bubbleHelp.show(clipRoot.x + clipRoot.width, trackRoot.y + clipRoot.height, s.substring(6))
                 }
             }
+            onDoubleClicked: timeline.fadeOut(trackIndex, index, (fadeOut > 0) ? 0 : Math.round(profile.fps))
         }
         SequentialAnimation on scale {
             loops: Animation.Infinite
