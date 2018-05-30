@@ -40,15 +40,6 @@ LANGUAGES = \
     zh_CN \
     zh_TW
 
-# Disabled languages because they're too outdated
-#    lv \
-
-# Helper function to adapt the slashes in a path to the system
-defineReplace(fixSlashes) {
-    win32:1 ~= s|/|\\|g
-    return($$1)
-}
-
 # Helper function prepending and appending text to all values
 # Usage: var, prepend, append
 defineReplace(prependAppend) {
@@ -67,9 +58,9 @@ OBJECTS_DIR =
 win32:CONFIG -= embed_manifest_exe
 
 TRANSLATIONS = $$prependAppend(LANGUAGES, $$PWD/shotcut_, .ts)
-LUPDATE = $$fixSlashes($$[QT_INSTALL_BINS]/lupdate) -locations relative -no-obsolete
+LUPDATE = $$[QT_INSTALL_BINS]/lupdate -locations relative -no-obsolete
 LRELEASE = $$QMAKE_LRELEASE
-isEmpty(LRELEASE):LRELEASE = $$fixSlashes($$[QT_INSTALL_BINS]/lrelease)
+isEmpty(LRELEASE):LRELEASE = $$[QT_INSTALL_BINS]/lrelease
 
 ts.commands = cd $$PWD/.. && $$LUPDATE src -ts $$TRANSLATIONS
 QMAKE_EXTRA_TARGETS += ts
