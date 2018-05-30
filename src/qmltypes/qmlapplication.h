@@ -1,7 +1,5 @@
 /*
  * Copyright (c) 2014-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
- * Author: Brian Matherly <pez4brian@yahoo.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -54,6 +52,7 @@ public:
     Q_INVOKABLE static void copyFilters();
     Q_INVOKABLE static void pasteFilters();
     Q_INVOKABLE static QString timecode(int frames);
+    Q_INVOKABLE static int audioChannels();
 
 signals:
     void paletteChanged();

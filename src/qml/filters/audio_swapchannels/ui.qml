@@ -25,10 +25,10 @@ Item {
     property string fromParameter: 'from'
     property string toParameter: 'to'
     Component.onCompleted: {
-        if (settings.playerAudioChannels === 1) {
+        if (application.audioChannels() === 1) {
             fromCombo.enabled = false
             toCombo.enabled = false
-        } else if (settings.playerAudioChannels === 6) {
+        } else if (application.audioChannels() === 6) {
             fromCombo.model = [qsTr('Front left'),
                            qsTr('Front right'),
                            qsTr('Center'),
@@ -40,7 +40,7 @@ Item {
         if (filter.isNew) {
             // Set default parameter values
             fromCombo.currentIndex = 0
-            toCombo.currentIndex = (settings.playerAudioChannels === 1) ? 0 : 1
+            toCombo.currentIndex = (application.audioChannels() === 1) ? 0 : 1
         } else {
             // Initialize parameter values
             fromCombo.currentIndex = filter.get(fromParameter)

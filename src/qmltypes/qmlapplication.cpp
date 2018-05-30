@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2013-2018 Meltytech, LLC
- * Author: Brian Matherly <pez4brian@yahoo.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -121,5 +120,10 @@ QString QmlApplication::timecode(int frames)
         return MLT.producer()->frames_to_time(frames, mlt_time_smpte);
     else
         return QString();
+}
+
+int QmlApplication::audioChannels()
+{
+    return MLT.audioChannels();
 }
 
