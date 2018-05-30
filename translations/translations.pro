@@ -58,7 +58,7 @@ OBJECTS_DIR =
 win32:CONFIG -= embed_manifest_exe
 
 TRANSLATIONS = $$prependAppend(LANGUAGES, $$PWD/shotcut_, .ts)
-LUPDATE = $$[QT_INSTALL_BINS]/lupdate -locations relative -no-obsolete
+LUPDATE = $$[QT_INSTALL_BINS]/lupdate -locations absolute -no-obsolete
 LRELEASE = $$QMAKE_LRELEASE
 isEmpty(LRELEASE):LRELEASE = $$[QT_INSTALL_BINS]/lrelease
 
