@@ -669,6 +669,21 @@ void TimelineDock::onRowsRemoved(const QModelIndex& parent, int first, int last)
     }
 }
 
+void TimelineDock::detachAudio(int trackIndex, int clipIndex)
+{
+    if (!m_model.trackList().count())
+        return;
+    Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
+    QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
+    if (info && info->producer && info->producer->is_valid() && !info->producer->is_blank()
+             && info->producer->get("audio_index") && info->producer->get_int("audio_index") >= 0) {
+        Mlt::Producer clip(MLT.profile(), "xml-string", MLT.XML(info->producer).toUtf8().constData());
+        clip.set_in_and_out(info->frame_in, info->frame_out);
+        MAIN.undoStack()->push(
+            new Timeline::DetachAudioCommand(m_model, trackIndex, clipIndex, info->start, MLT.XML(&clip)));
+    }
+}
+
 void TimelineDock::setTrackName(int trackIndex, const QString &value)
 {
     MAIN.undoStack()->push(

@@ -138,6 +138,7 @@ public slots:
     void commitTrimCommand();
     void onRowsInserted(const QModelIndex& parent, int first, int last);
     void onRowsRemoved(const QModelIndex& parent, int first, int last);
+    void detachAudio(int trackIndex, int clipIndex);
 
 protected:
     void dragEnterEvent(QDragEnterEvent* event);

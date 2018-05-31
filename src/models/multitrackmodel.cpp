@@ -169,6 +169,8 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
             }
             case IsFilteredRole:
                 return isFiltered(info->producer);
+            case AudioIndexRole:
+                return info->producer->get("audio_index");
             default:
                 break;
             }
@@ -275,6 +277,7 @@ QHash<int, QByteArray> MultitrackModel::roleNames() const
     roles[SpeedRole] = "speed";
     roles[IsFilteredRole] = "filtered";
     roles[IsBottomVideoRole] = "isBottomVideo";
+    roles[AudioIndexRole] = "audioIndex";
     return roles;
 }
 

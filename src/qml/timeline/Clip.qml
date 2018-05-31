@@ -43,6 +43,7 @@ Rectangle {
     property bool selected: false
     property string hash: ''
     property double speed: 1.0
+    property string audioIndex: ''
 
     signal clicked(var clip)
     signal moved(var clip)
@@ -142,7 +143,7 @@ Rectangle {
 
     Row {
         id: waveform
-        visible: !isBlank && settings.timelineShowWaveforms && !trackHeaderRepeater.itemAt(trackIndex).isMute
+        visible: !isBlank && settings.timelineShowWaveforms && !trackHeaderRepeater.itemAt(trackIndex).isMute && (parseInt(audioIndex) > -1 || audioIndex === 'all')
         height: isAudio? parent.height : parent.height / 2
         anchors.left: parent.left
         anchors.bottom: parent.bottom
@@ -629,6 +630,11 @@ Rectangle {
             id: mergeItem
             text: qsTr('Merge with next clip')
             onTriggered: timeline.mergeClipWithNext(trackIndex, index, false)
+        }
+        MenuItem {
+            visible: !isBlank && !isTransition && !isAudio
+            text: qsTr('Detach Audio')
+            onTriggered: timeline.detachAudio(trackIndex, index)
         }
         MenuItem {
             visible: !isBlank && !isTransition && settings.timelineShowWaveforms

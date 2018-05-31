@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2013-2017 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2013-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -79,7 +78,6 @@ public:
 private:
     MultitrackModel& m_model;
     int m_trackIndex;
-    QString m_playlistXml;
     int m_position;
     QString m_xml;
     UndoHelper m_undoHelper;
@@ -483,6 +481,23 @@ private:
     int m_position;
     QString m_xmlAfter;
     bool m_isFirstRedo;
+    UndoHelper m_undoHelper;
+};
+
+class DetachAudioCommand: public QUndoCommand
+{
+public:
+    DetachAudioCommand(MultitrackModel& model, int trackIndex, int clipIndex, int position, const QString& xml, QUndoCommand* parent = 0);
+    void redo();
+    void undo();
+private:
+    MultitrackModel& m_model;
+    int m_trackIndex;
+    int m_clipIndex;
+    int m_position;
+    int m_targetTrackIndex;
+    QString m_audioIndex;
+    QString m_xml;
     UndoHelper m_undoHelper;
 };
 

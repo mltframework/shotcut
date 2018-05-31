@@ -93,7 +93,7 @@ void OverwriteCommand::redo()
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "position" << m_position;
     m_undoHelper.recordBeforeState();
     Mlt::Producer clip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
-    m_playlistXml = m_model.overwrite(m_trackIndex, clip, m_position);
+    m_model.overwrite(m_trackIndex, clip, m_position);
     m_undoHelper.recordAfterState();
 }
 
@@ -931,6 +931,95 @@ void UpdateCommand::undo()
     m_undoHelper.undoChanges();
     m_timeline.emitSelectedFromSelection();
     m_isFirstRedo = false;
+}
+
+DetachAudioCommand::DetachAudioCommand(MultitrackModel& model, int trackIndex, int clipIndex, int position, const QString& xml, QUndoCommand* parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_trackIndex(trackIndex)
+    , m_clipIndex(clipIndex)
+    , m_position(position)
+    , m_targetTrackIndex(-1)
+    , m_xml(xml)
+    , m_undoHelper(m_model)
+{
+    setText(QObject::tr("Detach Audio"));
+}
+
+void DetachAudioCommand::redo()
+{
+    LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position" << m_position;
+    Mlt::Producer clip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
+    if (clip.is_valid()) {
+        // Save the original clip's audio_index.
+        m_audioIndex = QString::fromLatin1(clip.get("audio_index"));
+
+        // Disable audio on the original clip.
+        int i = m_model.trackList().at(m_trackIndex).mlt_index;
+        Mlt::Producer track(m_model.tractor()->track(i));
+        if (track.is_valid()) {
+            Mlt::Playlist playlist(track);
+            Mlt::Producer originalClip(playlist.get_clip(m_clipIndex));
+            if (originalClip.is_valid()) {
+                originalClip.parent().set("audio_index", -1);
+                QModelIndex modelIndex = m_model.makeIndex(m_trackIndex, m_clipIndex);
+                emit m_model.dataChanged(modelIndex, modelIndex, QVector<int>() << MultitrackModel::AudioIndexRole);
+            }
+        }
+
+        // Add an audio track if needed.
+        int n = m_model.tractor()->count();
+        for(int i = 0; i < n; i++) {
+            Mlt::Producer track(m_model.tractor()->track(i));
+            if (!track.is_valid())
+                continue;
+            int hide = track.get_int("hide");
+            // hide: 1 = audio only track, 3 = muted audio-only track
+            if (track.get(kAudioTrackProperty) || hide == 1 || hide == 3) {
+                Mlt::Playlist playlist(track);
+                int out = clip.get_playtime() - 1;
+                // If the audio track is blank in the target region.
+                if (playlist.is_blank_at(m_position) && playlist.is_blank_at(m_position + out)
+                        && playlist.get_clip_index_at(m_position) == playlist.get_clip_index_at(m_position + out)) {
+                    // Save the target track index.
+                    m_targetTrackIndex = i;
+                    break;
+                }
+            }
+        }
+        if (m_targetTrackIndex == -1)
+            // No target audio track
+            m_targetTrackIndex = m_model.addAudioTrack();
+
+        // Add the clip to the new audio track.
+        m_undoHelper.recordBeforeState();
+        m_model.overwrite(m_targetTrackIndex, clip, m_position);
+        m_undoHelper.recordAfterState();
+    }
+}
+
+void DetachAudioCommand::undo()
+{
+    LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position" << m_position;
+    if (m_targetTrackIndex > -1)
+        // Remove the new audio track.
+        m_model.removeTrack(m_targetTrackIndex);
+    else
+        // Remove the clip from the audio track.
+        m_undoHelper.undoChanges();
+
+    // Restore the audio stream index on the original clip.
+    int i = m_model.trackList().at(m_trackIndex).mlt_index;
+    Mlt::Producer track(m_model.tractor()->track(i));
+    if (track.is_valid()) {
+        Mlt::Playlist playlist(track);
+        Mlt::Producer clip(playlist.get_clip(m_clipIndex));
+        if (clip.is_valid()) {
+            clip.parent().set("audio_index", m_audioIndex.toLatin1().constData());
+            QModelIndex modelIndex = m_model.makeIndex(m_trackIndex, m_clipIndex);
+            emit m_model.dataChanged(modelIndex, modelIndex, QVector<int>() << MultitrackModel::AudioIndexRole);
+        }
+    }
 }
 
 } // namespace
