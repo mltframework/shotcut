@@ -259,6 +259,7 @@ int QmlFilter::savePreset(const QStringList &propertyNames, const QString &name)
             dir.cd(objectNameOrService());
     }
     const QString preset = name.isEmpty()? tr("(defaults)") : name;
+#if LIBMLT_VERSION_INT >= ((6<<16)+(9<<8))
     // Convert properties to YAML string.
     char* yamlStr = properties.serialise_yaml();
     QString yaml = yamlStr;
@@ -270,6 +271,9 @@ int QmlFilter::savePreset(const QStringList &propertyNames, const QString &name)
     }
     yamlFile.write(yaml.toUtf8());
     yamlFile.close();
+#else
+    properties.save(dir.filePath(preset).toUtf8().constData());
+#endif
     loadPresets();
     return m_presets.indexOf(name);
 }
@@ -469,6 +473,7 @@ void QmlFilter::preset(const QString &name)
     if (!dir.cd("presets") || !dir.cd(objectNameOrService()))
         return;
 
+#if LIBMLT_VERSION_INT >= ((6<<16)+(9<<8))
     // Detect the preset file format
     bool isYaml = false;
     QFile presetFile(dir.filePath(name));
@@ -487,6 +492,9 @@ void QmlFilter::preset(const QString &name)
         // Load from legacy preset file
         m_filter.load(dir.filePath(name).toUtf8().constData());
     }
+#else
+    m_filter.load(dir.filePath(name).toUtf8().constData());
+#endif
 
     emit changed();
 }
