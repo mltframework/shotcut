@@ -13,6 +13,6 @@ mv shotcut_nl_NL.ts shotcut_nl.ts
 mv shotcut_tr_TR.ts shotcut_tr.ts
 popd
 
-$QTDIR/bin/lupdate src/src.pro
+#$QTDIR/bin/lupdate src/src.pro
 git checkout -- translations/shotcut_en.ts
 
