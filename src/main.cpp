@@ -273,8 +273,8 @@ int main(int argc, char **argv)
 #endif
 
     Application a(argc, argv);
-    QSplashScreen splash(QPixmap(":/icons/shotcut-logo-640.png"));
-    splash.showMessage(QCoreApplication::translate("main", "Loading plugins..."), Qt::AlignHCenter | Qt::AlignBottom);
+    QSplashScreen splash(QPixmap(":/icons/shotcut-logo-320x320.png"));
+    splash.showMessage(QCoreApplication::translate("main", "Loading plugins..."), Qt::AlignRight | Qt::AlignVCenter);
     splash.show();
 
     a.setProperty("system-style", a.style()->objectName());
