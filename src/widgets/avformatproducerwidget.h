@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2018 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -38,7 +38,6 @@ public:
 
     // AbstractProducerWidget overrides
     Mlt::Producer* newProducer(Mlt::Profile&);
-    void setProducer(Mlt::Producer*);
 
 signals:
     void producerChanged(Mlt::Producer*);
@@ -48,9 +47,7 @@ protected:
     void keyPressEvent(QKeyEvent *event);
 
 private slots:
-    void onProducerChanged();
-
-    void onFrameDecoded();
+    void onFrameDisplayed(const SharedFrame&);
 
     void on_resetButton_clicked();
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2018 Meltytech, LLC
+ * Copyright (c) 2012-2017 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -60,26 +60,6 @@ double GetSpeedFromProducer( Mlt::Producer* producer )
     return speed;
 }
 
-class DecodeTask : public QRunnable
-{
-public:
-    DecodeTask(AvformatProducerWidget* widget)
-        : QRunnable()
-        , m_widget(widget)
-    {}
-    void run()
-    {
-        QScopedPointer<Mlt::Frame> frame(m_widget->producer()->get_frame());
-        mlt_image_format format = mlt_image_none;
-        int w = MLT.profile().width();
-        int h = MLT.profile().height();
-        frame->get_image(format, w, h);
-        QMetaObject::invokeMethod(m_widget, "onFrameDecoded", Qt::QueuedConnection);
-    }
-private:
-    AvformatProducerWidget* m_widget;
-};
-
 AvformatProducerWidget::AvformatProducerWidget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::AvformatProducerWidget)
@@ -88,7 +68,7 @@ AvformatProducerWidget::AvformatProducerWidget(QWidget *parent)
 {
     ui->setupUi(this);
     Util::setColorsToHighlight(ui->filenameLabel);
-    connect(this, SIGNAL(producerChanged(Mlt::Producer*)), SLOT(onProducerChanged()));
+    connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
 }
 
 AvformatProducerWidget::~AvformatProducerWidget()
@@ -116,12 +96,6 @@ Mlt::Producer* AvformatProducerWidget::newProducer(Mlt::Profile& profile)
     return p;
 }
 
-void AvformatProducerWidget::setProducer(Mlt::Producer* p)
-{
-    AbstractProducerWidget::setProducer(p);
-    emit producerChanged(p);
-}
-
 void AvformatProducerWidget::keyPressEvent(QKeyEvent* event)
 {
     if (ui->speedSpinBox->hasFocus() &&
@@ -130,11 +104,6 @@ void AvformatProducerWidget::keyPressEvent(QKeyEvent* event)
     } else {
         QWidget::keyPressEvent(event);
     }
-}
-
-void AvformatProducerWidget::onProducerChanged()
-{
-    QThreadPool::globalInstance()->start(new DecodeTask(this));
 }
 
 void AvformatProducerWidget::reopen(Mlt::Producer* p)
@@ -175,6 +144,7 @@ void AvformatProducerWidget::reopen(Mlt::Producer* p)
         return;
     }
     MLT.stop();
+    connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
     emit producerReopened();
     emit producerChanged(p);
     MLT.seek(position);
@@ -201,8 +171,12 @@ void AvformatProducerWidget::recreateProducer()
     }
 }
 
-void AvformatProducerWidget::onFrameDecoded()
+void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
 {
+    // This forces avformat-novalidate or unloaded avformat to load and get
+    // media information.
+    delete m_producer->get_frame();
+
     int tabIndex = ui->tabWidget->currentIndex();
     ui->tabWidget->setTabEnabled(0, false);
     ui->tabWidget->setTabEnabled(1, false);
@@ -336,6 +310,11 @@ void AvformatProducerWidget::onFrameDecoded()
     int height = m_producer->get_int("meta.media.height");
     if (width || height)
         ui->videoTableWidget->setItem(1, 1, new QTableWidgetItem(QString("%1x%2").arg(width).arg(height)));
+
+    // We can stop listening to this signal if this is audio-only or if we have
+    // received the video resolution.
+    if (videoIndex == 1 || width || height)
+        disconnect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, 0);
 
     double sar = m_producer->get_double("meta.media.sample_aspect_num");
     if (m_producer->get_double("meta.media.sample_aspect_den") > 0)
@@ -477,6 +456,7 @@ void AvformatProducerWidget::on_scanComboBox_activated(int index)
             // by setting them NULL.
             m_producer->set("force_progressive", QString::number(index).toLatin1().constData());
         emit producerChanged(producer());
+        connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
     }
 }
 
@@ -487,6 +467,7 @@ void AvformatProducerWidget::on_fieldOrderComboBox_activated(int index)
         if (m_producer->get("force_tff") || tff != index)
             m_producer->set("force_tff", QString::number(index).toLatin1().constData());
         emit producerChanged(producer());
+        connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
     }
 }
 
@@ -504,6 +485,7 @@ void AvformatProducerWidget::on_aspectNumSpinBox_valueChanged(int)
             m_producer->set(kAspectRatioDenominator, ui->aspectDenSpinBox->text().toLatin1().constData());
         }
         emit producerChanged(producer());
+        connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
     }
 }
 
