@@ -2105,18 +2105,19 @@ End-of-shotcut-wrapper
   chmod 755 $TMPFILE || die "Unable to make wrapper script executable"
   $SUDO cp $TMPFILE "$FINAL_INSTALL_DIR/shotcut" || die "Unable to create wrapper script - cp failed"
 
+  popd
+
   log Creating desktop file in $TMPFILE
   cp ../packaging/linux/org.shotcut.Shotcut.desktop $TMPFILE
-  desktop-file-edit --set-key=Exec --set-value='sh -c "\$(dirname "%k")/Shotcut.app/shotcut "%F""' $TMPFILE
-  desktop-file-edit --set-key=Icon --set-value='applications-multimedia' $TMPFILE
   sed -i '1i #!/usr/bin/env xdg-open' $TMPFILE
+  sed -i 's|Exec=.*|Exec=sh -c "\$(dirname "%k")/Shotcut.app/shotcut "%F""|' $TMPFILE
+  sed -i 's|Icon=.*|Icon=applications-multimedia|' $TMPFILE
   if test 0 != $? ; then
     die "Unable to create desktop file"
   fi
   $SUDO cp $TMPFILE "$FINAL_INSTALL_DIR/../Shotcut.desktop" || die "Unable to create desktop file - cp failed"
 
   feedback_progress Done creating startup and environment script
-  popd
 
   cmd pushd "$INSTALL_DIR"
 
