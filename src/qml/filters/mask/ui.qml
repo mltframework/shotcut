@@ -131,7 +131,6 @@ Item {
         if (checked) {
             blockUpdate = true
             horizontalSlider.enabled = verticalSlider.enabled = widthSlider.enabled = heightSlider.enabled = true
-            horizontalKeyframesButton.checked = verticalKeyframesButton.checked = widthKeyframesButton.checked = heightKeyframesButton.checked = true
             filter.clearSimpleAnimation(parameter)
             blockUpdate = false
             filter.set(parameter, value, getPosition())
