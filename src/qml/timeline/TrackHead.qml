@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2013-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -101,14 +100,14 @@ Rectangle {
             color: 'transparent'
             width: trackHeadRoot.width - trackHeadColumn.anchors.margins * 2
             radius: 2
-            border.color: (!timeline.floating && trackNameMouseArea.containsMouse)? activePalette.shadow : 'transparent'
+            border.color: (!timeline.isFloating() && trackNameMouseArea.containsMouse)? activePalette.shadow : 'transparent'
             height: nameEdit.height
             MouseArea {
                 id: trackNameMouseArea
                 height: parent.height
                 width: nameEdit.width
                 hoverEnabled: true
-                onClicked: if (!timeline.floating) {
+                onClicked: if (!timeline.isFloating()) {
                     nameEdit.focus = true
                     nameEdit.selectAll()
                 }
