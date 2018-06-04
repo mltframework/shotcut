@@ -64,7 +64,7 @@ public:
     void seek(int position);
     Mlt::Producer& producer() { return m_producer; }
     Q_INVOKABLE void audioLevelsReady(const QModelIndex &index);
-    Q_INVOKABLE void remakeAudioLevels(bool force = true);
+    Q_INVOKABLE void remakeAudioLevels();
     double sampleAspectRatio();
 
 signals:
@@ -78,6 +78,7 @@ signals:
 
 public slots:
     void setProducer(Mlt::Producer& producer);
+    void remakeAudioLevels(bool isKeyframesVisible);
 
 private:
     Mlt::Producer m_producer;

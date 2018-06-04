@@ -116,6 +116,7 @@ MainWindow::MainWindow()
     , m_exitCode(EXIT_SUCCESS)
     , m_navigationPosition(0)
     , m_upgradeUrl("https://www.shotcut.org/download/")
+    , m_keyframesDock(0)
 {
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     QLibrary libJack("libjack.so.0");
@@ -349,6 +350,7 @@ MainWindow::MainWindow()
     connect(ui->actionKeyframes, SIGNAL(triggered()), this, SLOT(onKeyframesDockTriggered()));
     connect(m_filterController, SIGNAL(currentFilterAboutToChange()), m_keyframesDock, SLOT(clearCurrentFilter()));
     connect(m_filterController, SIGNAL(currentFilterChanged(QmlFilter*, QmlMetadata*, int)), m_keyframesDock, SLOT(setCurrentFilter(QmlFilter*, QmlMetadata*)), Qt::QueuedConnection);
+    connect(m_keyframesDock, SIGNAL(visibilityChanged(bool)), m_filtersDock->qmlProducer(), SLOT(remakeAudioLevels(bool)));
 
     m_historyDock = new QDockWidget(tr("History"), this);
     m_historyDock->hide();
@@ -1122,6 +1124,11 @@ bool MainWindow::isSourceClipMyProject(QString resource)
         return true;
     }
     return false;
+}
+
+bool MainWindow::keyframesDockIsVisible() const
+{
+    return m_keyframesDock && m_keyframesDock->isVisible();
 }
 
 void MainWindow::setAudioChannels(int channels)

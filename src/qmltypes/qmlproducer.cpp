@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2016-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,8 +18,8 @@
 #include "qmlproducer.h"
 #include "mltcontroller.h"
 #include "util.h"
-#include "settings.h"
 #include "models/audiolevelstask.h"
+#include "mainwindow.h"
 
 static const char* kWidthProperty = "meta.media.width";
 static const char* kHeightProperty = "meta.media.height";
@@ -158,10 +157,15 @@ void QmlProducer::audioLevelsReady(const QModelIndex& index)
     emit audioLevelsChanged();
 }
 
-void QmlProducer::remakeAudioLevels(bool force)
+void QmlProducer::remakeAudioLevels()
 {
-    if (Settings.timelineShowWaveforms())
-        AudioLevelsTask::start(m_producer, this, QModelIndex(), force);
+    AudioLevelsTask::start(m_producer, this, QModelIndex(), true);
+}
+
+void QmlProducer::remakeAudioLevels(bool isKeyframesVisible)
+{
+    if (isKeyframesVisible)
+        AudioLevelsTask::start(m_producer, this, QModelIndex());
 }
 
 double QmlProducer::sampleAspectRatio()
@@ -181,8 +185,8 @@ double QmlProducer::sampleAspectRatio()
 void QmlProducer::setProducer(Mlt::Producer& producer)
 {
     m_producer = producer;
-    if (Settings.timelineShowWaveforms())
-        AudioLevelsTask::start(m_producer, this, QModelIndex());
+    if (m_producer.is_valid())
+        remakeAudioLevels(MAIN.keyframesDockIsVisible());
     emit producerChanged();
     emit inChanged(0);
     emit outChanged(0);
