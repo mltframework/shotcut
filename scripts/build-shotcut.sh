@@ -1576,13 +1576,8 @@ function configure_compile_install_subproject {
     fi
   else
     if test "shotcut" = "$1" ; then
-      # Convert translations
-      if [ "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ]; then
-          cmd "$LRELEASE" src/src.pro
-      else
-          cmd "$QTDIR/bin/lrelease" src/src.pro
-      fi
       if test "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ; then
+        cmd make install
         cmd install -c -m 755 src/shotcut.exe "$FINAL_INSTALL_DIR"
         cmd install -c COPYING "$FINAL_INSTALL_DIR"
         if [ "$TARGET_OS" = "Win32" ]; then
@@ -1596,11 +1591,8 @@ function configure_compile_install_subproject {
         cmd cp -a src/qml "$FINAL_INSTALL_DIR"/share/shotcut
 
       elif test "$TARGET_OS" != "Darwin"; then
-        cmd install -c -m 755 src/shotcut "$FINAL_INSTALL_DIR"/bin
+        cmd make install
         cmd install -p -c COPYING "$FINAL_INSTALL_DIR"
-        cmd install -d "$FINAL_INSTALL_DIR"/share/shotcut/translations
-        cmd install -p -c translations/*.qm "$FINAL_INSTALL_DIR"/share/shotcut/translations
-        cmd cp -a src/qml "$FINAL_INSTALL_DIR"/share/shotcut
         cmd install -p -c "$QTDIR"/translations/qt_*.qm "$FINAL_INSTALL_DIR"/share/shotcut/translations
         cmd install -p -c "$QTDIR"/translations/qtbase_*.qm "$FINAL_INSTALL_DIR"/share/shotcut/translations
         cmd install -p -c "$QTDIR"/lib/libQt5{Concurrent,Core,Declarative,Gui,Multimedia,MultimediaQuick,MultimediaWidgets,Network,OpenGL,Positioning,PrintSupport,Qml,QmlParticles,Quick,QuickWidgets,Script,Sensors,Sql,Svg,V8,WebChannel,WebKit,WebKitWidgets,WebSockets,Widgets,Xml,XmlPatterns,X11Extras,DBus,XcbQpa}.so.5 "$FINAL_INSTALL_DIR"/lib
@@ -2108,7 +2100,7 @@ End-of-shotcut-wrapper
   popd
 
   log Creating desktop file in $TMPFILE
-  cp ../packaging/linux/org.shotcut.Shotcut.desktop $TMPFILE
+  cp shotcut/packaging/linux/org.shotcut.Shotcut.desktop $TMPFILE
   sed -i '1i #!/usr/bin/env xdg-open' $TMPFILE
   sed -i 's|Exec=.*|Exec=sh -c "\$(dirname "%k")/Shotcut.app/shotcut "%F""|' $TMPFILE
   sed -i 's|Icon=.*|Icon=applications-multimedia|' $TMPFILE
