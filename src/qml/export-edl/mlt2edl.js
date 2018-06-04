@@ -1,6 +1,5 @@
 /*
- * MltXmlParser class Copyright (c) 2016-2017 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * MltXmlParser class Copyright (c) 2016-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -210,7 +209,7 @@ MltXmlParser.prototype.createEdl = function() {
     var EDLfile = '';
     var self = this;
     self.getPlaylists().forEach(function (playlist) {
-        if (playlist.id === 'main bin' || playlist.id === 'background')
+        if (playlist.id === 'main_bin' || playlist.id === 'main bin' || playlist.id === 'background')
             return;
         var EdlEventCount = 1;
         var progIn = self.Timecode(0); //showtime tally

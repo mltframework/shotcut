@@ -62,7 +62,8 @@
 /* Special object Ids expected by Shotcut and used in XML */
 
 #define kBackgroundTrackId "background"
-#define kPlaylistTrackId "main bin"
+#define kLegacyPlaylistTrackId "main bin"
+#define kPlaylistTrackId "main_bin"
 
 /* Internal only */
 

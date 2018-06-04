@@ -2644,10 +2644,15 @@ void MultitrackModel::retainPlaylist()
 void MultitrackModel::loadPlaylist()
 {
     Mlt::Properties retainList((mlt_properties) m_tractor->get_data("xml_retain"));
-    if (retainList.is_valid() && retainList.get_data(kPlaylistTrackId)) {
+    if (retainList.is_valid()) {
         Mlt::Playlist playlist((mlt_playlist) retainList.get_data(kPlaylistTrackId));
-        if (playlist.is_valid() && playlist.type() == playlist_type)
+        if (playlist.is_valid() && playlist.type() == playlist_type) {
             MAIN.playlistDock()->model()->setPlaylist(playlist);
+        } else {
+            playlist = (mlt_playlist) retainList.get_data(kLegacyPlaylistTrackId);
+            if (playlist.is_valid() && playlist.type() == playlist_type)
+                MAIN.playlistDock()->model()->setPlaylist(playlist);
+        }
     }
     retainPlaylist();
 }
@@ -3034,7 +3039,7 @@ void MultitrackModel::refreshTrackList()
         else if (isKdenlive && trackId == "playlist1")
             // In Kdenlive, playlist1 is a special audio mixdown track.
             continue;
-        else if (trackId == kPlaylistTrackId)
+        else if (trackId == kPlaylistTrackId || trackId == kLegacyPlaylistTrackId)
             continue;
         else if (!track->get(kShotcutPlaylistProperty) && !track->get(kVideoTrackProperty)) {
             int hide = track->get_int("hide");

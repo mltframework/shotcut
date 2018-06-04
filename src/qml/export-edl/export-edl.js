@@ -6959,7 +6959,7 @@ MltXmlParser.prototype.createEdl = function() {
     var EDLfile = '';
     var self = this;
     self.getPlaylists().forEach(function (playlist) {
-        if (playlist.id === 'main bin' || playlist.id === 'background')
+        if (playlist.id === 'main_bin' || playlist.id === 'main bin' || playlist.id === 'background')
             return;
         var EdlEventCount = 1;
         var progIn = self.Timecode(0); //showtime tally
