@@ -1193,7 +1193,7 @@ void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
         QModelIndex modelIndex = createIndex(clipIndex + 1, 0, trackIndex);
         QVector<int> roles;
         roles << DurationRole;
-        roles << OutPointRole;
+        roles << InPointRole;
         roles << FadeInRole;
         emit dataChanged(modelIndex, modelIndex, roles);
         AudioLevelsTask::start(clip->parent(), this, modelIndex);
