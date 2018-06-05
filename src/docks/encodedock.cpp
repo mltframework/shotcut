@@ -972,7 +972,7 @@ void EncodeDock::resetOptions()
     ui->videoBitrateCombo->lineEdit()->setText("2M");
     ui->videoBufferSizeSpinner->setValue(224);
     ui->gopSpinner->blockSignals(true);
-    ui->gopSpinner->setValue(13);
+    ui->gopSpinner->setValue(MLT.profile().fps() * 5.0);
     ui->gopSpinner->blockSignals(false);
     ui->strictGopCheckBox->setChecked(false);
     ui->bFramesSpinner->setValue(3);
