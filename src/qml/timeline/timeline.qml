@@ -402,7 +402,7 @@ Rectangle {
         }
         MenuItem {
             text: qsTr('Add Video Track')
-            shortcut: 'Ctrl+Y'
+            shortcut: 'Ctrl+I'
             onTriggered: timeline.addVideoTrack();
         }
         MenuItem {

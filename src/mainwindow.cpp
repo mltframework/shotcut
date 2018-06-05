@@ -201,7 +201,11 @@ MainWindow::MainWindow()
     undoAction->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/icons/oxygen/32x32/actions/edit-undo.png")));
     redoAction->setIcon(QIcon::fromTheme("edit-redo", QIcon(":/icons/oxygen/32x32/actions/edit-redo.png")));
     undoAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+Z", 0));
+#ifdef Q_OS_WIN
+    redoAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+Y", 0));
+#else
     redoAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+Z", 0));
+#endif
     ui->menuEdit->insertAction(ui->actionCut, undoAction);
     ui->menuEdit->insertAction(ui->actionCut, redoAction);
     ui->menuEdit->insertSeparator(ui->actionCut);
@@ -1667,7 +1671,13 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_timelineDock->toggleTrackMute(m_timelineDock->currentTrack());
         break;
     case Qt::Key_I:
-        setInToCurrent(event->modifiers() & Qt::ShiftModifier);
+        if (event->modifiers() == Qt::ControlModifier) {
+            m_timelineDock->show();
+            m_timelineDock->raise();
+            m_timelineDock->addVideoTrack();
+        } else {
+            setInToCurrent(event->modifiers() & Qt::ShiftModifier);
+        }
         break;
     case Qt::Key_O:
         setOutToCurrent(event->modifiers() & Qt::ShiftModifier);
@@ -1824,13 +1834,6 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_playlistDock->show();
             m_playlistDock->raise();
             m_playlistDock->on_removeButton_clicked();
-        }
-        break;
-    case Qt::Key_Y:
-        if (event->modifiers() == Qt::ControlModifier) {
-            m_timelineDock->show();
-            m_timelineDock->raise();
-            m_timelineDock->addVideoTrack();
         }
         break;
     case Qt::Key_Z: // Avid Lift
