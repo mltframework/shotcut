@@ -174,11 +174,15 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
             ui->bFramesSpinner->setValue(preset.get_int("bf"));
         else if (name == "deinterlace") {
             ui->scanModeCombo->setCurrentIndex(preset.get_int("deinterlace"));
+            on_scanModeCombo_currentIndexChanged(ui->scanModeCombo->currentIndex());
         }
         else if (name == "progressive") {
             ui->scanModeCombo->setCurrentIndex(preset.get_int("progressive"));
+            on_scanModeCombo_currentIndexChanged(ui->scanModeCombo->currentIndex());
         }
         else if (name == "top_field_first") {
+            ui->scanModeCombo->setCurrentIndex(0);
+            on_scanModeCombo_currentIndexChanged(ui->scanModeCombo->currentIndex());
             ui->fieldOrderCombo->setCurrentIndex(preset.get_int("top_field_first"));
         }
         else if (name == "width") {
@@ -277,6 +281,8 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
             m_extension = preset.get("meta.preset.extension");
         }
         else if (name == "deinterlace_method") {
+            ui->scanModeCombo->setCurrentIndex(1);
+            on_scanModeCombo_currentIndexChanged(ui->scanModeCombo->currentIndex());
             name = preset.get("deinterlace_method");
             if (name == "onefield")
                 ui->deinterlacerCombo->setCurrentIndex(0);
@@ -957,6 +963,8 @@ void EncodeDock::resetOptions()
     // Reset all controls to default values.
     ui->formatCombo->setCurrentIndex(0);
 
+    ui->scanModeCombo->setCurrentIndex(1);
+    on_scanModeCombo_currentIndexChanged(ui->scanModeCombo->currentIndex());
     ui->deinterlacerCombo->setCurrentIndex(3);
     ui->interpolationCombo->setCurrentIndex(1);
 
