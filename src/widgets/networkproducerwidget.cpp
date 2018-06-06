@@ -51,7 +51,9 @@ Mlt::Properties NetworkProducerWidget::getPreset() const
 
 void NetworkProducerWidget::loadPreset(Mlt::Properties& p)
 {
-    ui->urlLineEdit->setText(p.get("resource"));
+    const char *resource = p.get("resource");
+    if (qstrcmp(resource, "<tractor>") && qstrcmp(resource, "<playlist>"))
+        ui->urlLineEdit->setText(resource);
 }
 
 void NetworkProducerWidget::on_preset_selected(void* p)
