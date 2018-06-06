@@ -643,7 +643,7 @@ function set_globals {
 
   #####
   # mlt
-  CONFIG[1]="./configure --prefix=$FINAL_INSTALL_DIR --enable-gpl --enable-gpl3 --without-kde $CONFIGURE_DEBUG_FLAG"
+  CONFIG[1]="./configure --prefix=$FINAL_INSTALL_DIR --enable-gpl --enable-gpl3 --without-kde --disable-sdl $CONFIGURE_DEBUG_FLAG"
   # Remember, if adding more of these, to update the post-configure check.
   [ "$QT_INCLUDE_DIR" ] && CONFIG[1]="${CONFIG[1]} --qt-includedir=$QT_INCLUDE_DIR"
   [ "$QT_LIB_DIR" ] && CONFIG[1]="${CONFIG[1]} --qt-libdir=$QT_LIB_DIR"
