@@ -28,6 +28,7 @@
 #include "shotcut_mlt_properties.h"
 #include "settings.h"
 
+#include <QAction>
 #include <QtQml>
 #include <QtQuick>
 #include <Logger.h>

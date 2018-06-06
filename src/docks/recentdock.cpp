@@ -21,6 +21,7 @@
 #include "ui_recentdock.h"
 #include "util.h"
 
+#include <QAction>
 #include <QDir>
 #include <QKeyEvent>
 #include <Logger.h>
