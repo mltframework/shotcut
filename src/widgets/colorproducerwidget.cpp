@@ -22,11 +22,29 @@
 #include "shotcut_mlt_properties.h"
 #include "util.h"
 
+static const QString kTransparent = QObject::tr("transparent", "Open Other > Color");
+
+static QString colorToString(const QColor& color)
+{
+    return (color.alpha() == 0) ? kTransparent
+                                : QString().sprintf("#%02X%02X%02X%02X",
+                                                    qAlpha(color.rgba()),
+                                                    qRed(color.rgba()),
+                                                    qGreen(color.rgba()),
+                                                    qBlue(color.rgba()));
+}
+
+static QString colorStringToResource(const QString& s)
+{
+    return (s == kTransparent) ? "#00000000" : s;
+}
+
 ColorProducerWidget::ColorProducerWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ColorProducerWidget)
 {
     ui->setupUi(this);
+    ui->colorLabel->setText(kTransparent);
     Util::setColorsToHighlight(ui->label_2);
     ui->preset->saveDefaultPreset(getPreset());
     ui->preset->loadPresets();
@@ -42,17 +60,12 @@ void ColorProducerWidget::on_colorButton_clicked()
     QColorDialog dialog;
     dialog.setOption(QColorDialog::ShowAlphaChannel);
     if (dialog.exec() == QDialog::Accepted) {
-        ui->colorLabel->setText(QString().sprintf("#%02X%02X%02X%02X",
-                                                  qAlpha(dialog.currentColor().rgba()),
-                                                  qRed(dialog.currentColor().rgba()),
-                                                  qGreen(dialog.currentColor().rgba()),
-                                                  qBlue(dialog.currentColor().rgba())
-                                                  ));
+        ui->colorLabel->setText(colorToString(dialog.currentColor()));
         ui->colorLabel->setStyleSheet(QString("color: %1; background-color: %2")
                                       .arg((dialog.currentColor().value() < 150)? "white":"black")
                                       .arg(dialog.currentColor().name()));
         if (m_producer) {
-            m_producer->set("resource", ui->colorLabel->text().toLatin1().constData());
+            m_producer->set("resource", colorStringToResource(ui->colorLabel->text()).toLatin1().constData());
             m_producer->set(kShotcutCaptionProperty, ui->colorLabel->text().toLatin1().constData());
             m_producer->set(kShotcutDetailProperty, ui->colorLabel->text().toLatin1().constData());
             emit producerChanged(m_producer.data());
@@ -63,7 +76,7 @@ void ColorProducerWidget::on_colorButton_clicked()
 Mlt::Producer* ColorProducerWidget::newProducer(Mlt::Profile& profile)
 {
     Mlt::Producer* p = new Mlt::Producer(profile, "color:");
-    p->set("resource", ui->colorLabel->text().toLatin1().constData());
+    p->set("resource", colorStringToResource(ui->colorLabel->text()).toLatin1().constData());
     p->set(kShotcutCaptionProperty, ui->colorLabel->text().toLatin1().constData());
     p->set(kShotcutDetailProperty, ui->colorLabel->text().toLatin1().constData());
     return p;
@@ -72,24 +85,20 @@ Mlt::Producer* ColorProducerWidget::newProducer(Mlt::Profile& profile)
 Mlt::Properties ColorProducerWidget::getPreset() const
 {
     Mlt::Properties p;
-    p.set("resource", ui->colorLabel->text().toLatin1().constData());
+    QString color = colorStringToResource(ui->colorLabel->text());
+    p.set("resource", color.toLatin1().constData());
     return p;
 }
 
 void ColorProducerWidget::loadPreset(Mlt::Properties& p)
 {
     QColor color(QFileInfo(p.get("resource")).baseName());
-    ui->colorLabel->setText(QString().sprintf("#%02X%02X%02X%02X",
-                                              qAlpha(color.rgba()),
-                                              qRed(color.rgba()),
-                                              qGreen(color.rgba()),
-                                              qBlue(color.rgba())
-                                              ));
+    ui->colorLabel->setText(colorToString(color));
     ui->colorLabel->setStyleSheet(QString("color: %1; background-color: %2")
         .arg((color.value() < 150)? "white":"black")
         .arg(color.name()));
     if (m_producer) {
-        m_producer->set("resource", ui->colorLabel->text().toLatin1().constData());
+        m_producer->set("resource", colorStringToResource(ui->colorLabel->text()).toLatin1().constData());
         m_producer->set(kShotcutCaptionProperty, ui->colorLabel->text().toLatin1().constData());
         m_producer->set(kShotcutDetailProperty, ui->colorLabel->text().toLatin1().constData());
         emit producerChanged(m_producer.data());
