@@ -1,7 +1,5 @@
 /*
  * Copyright (c) 2013-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
- * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -79,9 +77,9 @@ void FiltersDock::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta, int ind
         Mlt::Producer emptyProducer(mlt_producer(0));
         m_producer.setProducer(emptyProducer);
     }
-    QMetaObject::invokeMethod(m_qview.rootObject(), "setCurrentFilter", Q_ARG(QVariant, QVariant(index)));
     if (filter)
         connect(filter, SIGNAL(changed()), SIGNAL(changed()));
+    QMetaObject::invokeMethod(m_qview.rootObject(), "setCurrentFilter", Q_ARG(QVariant, QVariant(index)));
 }
 
 bool FiltersDock::event(QEvent *event)

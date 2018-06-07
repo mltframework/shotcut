@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2014-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,6 +32,7 @@ Item {
     height: 350
 
     Component.onCompleted: {
+        filter.blockSignals = true
         if (filter.isNew) {
             if (application.OS === 'Windows')
                 filter.set('family', 'Verdana')
@@ -74,6 +74,8 @@ Item {
             filter.set('size', filterRect.height)
             filter.savePreset(preset.parameters)
         }
+        filter.blockSignals = false
+        filter.changed()
         setControls()
     }
 

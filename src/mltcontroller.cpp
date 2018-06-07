@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2011-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -411,6 +410,7 @@ void Controller::refreshConsumer(bool scrubAudio)
     if (m_consumer) {
         // need to refresh consumer when paused
         m_consumer->set("scrub_audio", scrubAudio);
+        m_consumer->set("refresh", 1);
         m_consumer->set("refresh", 1);
     }
 }
