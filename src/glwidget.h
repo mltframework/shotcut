@@ -132,6 +132,7 @@ private:
     QOpenGLContext* m_shareContext;
     SharedFrame m_sharedFrame;
     QMutex m_mutex;
+    QUrl m_savedQmlSource;
 
     static void on_frame_show(mlt_consumer, void* self, mlt_frame frame);
 

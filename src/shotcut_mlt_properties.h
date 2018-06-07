@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2013-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,6 +46,9 @@
 #define kShotcutSkipConvertProperty "shotcut:skipConvert"
 #define kShotcutAnimInProperty "shotcut:animIn"
 #define kShotcutAnimOutProperty "shotcut:animOut"
+// Shotcut's VUI (video user interface) components set this so that glwidget can
+// hide the VUI when the play head is not over the clip with the current filter.
+#define kShotcutVuiMetaProperty "meta.shotcut.vui"
 
 /* Project specific properties */
 #define kShotcutProjectAudioChannels "shotcut:projectAudioChannels"
