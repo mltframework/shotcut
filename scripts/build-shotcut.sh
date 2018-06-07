@@ -689,7 +689,7 @@ function set_globals {
   CONFIG[4]="./configure --prefix=$FINAL_INSTALL_DIR --enable-vp8 --enable-postproc --enable-multithread --enable-runtime-cpu-detect --disable-install-docs --disable-debug-libs --disable-examples --disable-unit-tests $CONFIGURE_DEBUG_FLAG"
   if test "$TARGET_OS" = "Linux" ; then
     CONFIG[4]="${CONFIG[4]} --enable-shared"
-  if test "$TARGET_OS" = "Darwin" ; then
+  elif test "$TARGET_OS" = "Darwin" ; then
     CONFIG[4]="${CONFIG[4]} --disable-avx512"
   elif test "$TARGET_OS" = "Win32" ; then
     CONFIG[4]="${CONFIG[4]} --target=x86-win32-gcc"
