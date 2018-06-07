@@ -259,6 +259,10 @@ Rectangle {
         drag.axis: Drag.XAxis
         property int startX
         onPressed: {
+            if (!doubleClickTimer.running) {
+                doubleClickTimer.restart()
+                doubleClickTimer.isFirstRelease = true
+            }
             root.stopScrolling = true
             originalX = parent.x
             originalTrackIndex = trackIndex
@@ -275,18 +279,29 @@ Rectangle {
             parent.dragged(clipRoot, mouse)
         }
         onReleased: {
-            root.stopScrolling = false
-            parent.y = 0
-            var delta = parent.x - startX
-            if (Math.abs(delta) >= 1.0 || trackIndex !== originalTrackIndex) {
-                parent.moved(clipRoot)
-                originalX = parent.x
-                originalTrackIndex = trackIndex
+            if (!doubleClickTimer.isFirstRelease && doubleClickTimer.running) {
+                timeline.position = clipRoot.x / multitrack.scaleFactor
+                doubleClickTimer.stop()
             } else {
-                parent.dropped(clipRoot)
+                doubleClickTimer.isFirstRelease = false
+
+                root.stopScrolling = false
+                parent.y = 0
+                var delta = parent.x - startX
+                if (Math.abs(delta) >= 1.0 || trackIndex !== originalTrackIndex) {
+                    parent.moved(clipRoot)
+                    originalX = parent.x
+                    originalTrackIndex = trackIndex
+                } else {
+                    parent.dropped(clipRoot)
+                }
             }
         }
-        onDoubleClicked: timeline.position = clipRoot.x / multitrack.scaleFactor
+        Timer {
+            id: doubleClickTimer
+            interval: 500 //ms
+            property bool isFirstRelease
+        }
 
         MouseArea {
             anchors.fill: parent
