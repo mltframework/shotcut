@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2014-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -391,7 +390,7 @@ Item {
         }
         RadioButton {
             id: middleRadioButton
-            text: qsTr('Middle')
+            text: qsTr('Middle', 'Size and Position video filter')
             exclusiveGroup: valignGroup
             enabled: fitRadioButton.checked
             onClicked: filter.set(valignProperty, 'middle')

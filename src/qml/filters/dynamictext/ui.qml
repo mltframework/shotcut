@@ -405,7 +405,7 @@ Item {
         }
         RadioButton {
             id: middleRadioButton
-            text: qsTr('Middle')
+            text: qsTr('Middle', 'Text video filter')
             exclusiveGroup: valignGroup
             onClicked: filter.set(valignProperty, 'middle')
         }
