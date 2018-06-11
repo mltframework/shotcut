@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2013-2017 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2013-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,11 +52,6 @@ AttachedFiltersModel::AttachedFiltersModel(QObject *parent)
 {
 }
 
-bool AttachedFiltersModel::isReady()
-{
-    return m_producer;
-}
-
 Mlt::Filter* AttachedFiltersModel::getFilter(int row) const
 {
     Mlt::Filter* result = 0;
@@ -92,7 +86,7 @@ QString AttachedFiltersModel::producerTitle() const
 
 bool AttachedFiltersModel::isProducerSelected() const
 {
-    return !m_producer.isNull();
+    return !m_producer.isNull() && m_producer->is_valid() && !m_producer->is_blank();
 }
 
 int AttachedFiltersModel::rowCount(const QModelIndex &) const
@@ -397,7 +391,6 @@ void AttachedFiltersModel::reset(Mlt::Producer* producer)
     endResetModel();
     emit trackTitleChanged();
     emit isProducerSelectedChanged();
-    emit readyChanged();
 }
 
 void AttachedFiltersModel::producerChanged(mlt_properties, AttachedFiltersModel* model)

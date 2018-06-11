@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2013-2017 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2013-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +28,6 @@ class QmlMetadata;
 class AttachedFiltersModel : public QAbstractListModel
 {
     Q_OBJECT
-    Q_PROPERTY(bool ready READ isReady NOTIFY readyChanged)
     Q_PROPERTY(QString producerTitle READ producerTitle NOTIFY trackTitleChanged)
     Q_PROPERTY(bool isProducerSelected READ isProducerSelected NOTIFY isProducerSelectedChanged)
 public:
@@ -39,7 +37,6 @@ public:
 
     explicit AttachedFiltersModel(QObject *parent = 0);
 
-    bool isReady();
     Mlt::Filter* getFilter(int row) const;
     QmlMetadata* getMetadata(int row) const;
     void setProducer(Mlt::Producer* producer = 0);
@@ -60,7 +57,6 @@ public:
  
 signals:
     void changed();
-    void readyChanged();
     void duplicateAddFailed(int index);
     void trackTitleChanged();
     void isProducerSelectedChanged();

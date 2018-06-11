@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2014-2017 Meltytech, LLC
- * Author: Brian Matherly <code@brianmatherly.com>
+ * Copyright (c) 2014-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -121,7 +120,7 @@ Rectangle {
             id: addButton
             Layout.minimumWidth: height
             iconName: 'list-add'
-            enabled: attachedfiltersmodel.ready
+            enabled: attachedfiltersmodel.isProducerSelected
             opacity: enabled ? 1.0 : 0.5
             tooltip: qsTr('Add a filter')
             onClicked: filterMenu.open()

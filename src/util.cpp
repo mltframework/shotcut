@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2014-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -104,7 +103,7 @@ QString Util::producerTitle(const Mlt::Producer& producer)
 {
     QString result;
     Mlt::Producer& p = const_cast<Mlt::Producer&>(producer);
-    if (!p.is_valid()) return result;
+    if (!p.is_valid() || p.is_blank()) return result;
     if (p.get(kShotcutTransitionProperty))
         return QObject::tr("Transition");
     if (p.get(kTrackNameProperty))
