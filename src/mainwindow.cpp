@@ -102,7 +102,7 @@ static bool eventDebugCallback(void **data)
     return false;
 }
 
-static const int AUTOSAVE_TIMEOUT_MS = 10000;
+static const int AUTOSAVE_TIMEOUT_MS = 30000;
 
 MainWindow::MainWindow()
     : QMainWindow(0)
@@ -1151,7 +1151,7 @@ void MainWindow::setAudioChannels(int channels)
 
 static void autosaveTask(MainWindow* p)
 {
-    LOG_DEBUG() << "running";
+    LOG_DEBUG_TIME();
     p->doAutosave();
 }
 
