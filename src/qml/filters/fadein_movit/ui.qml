@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2014-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +19,7 @@ import QtQuick 2.2
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
 import Shotcut.Controls 1.0
+import org.shotcut.qml 1.0
 
 Item {
     width: 100
@@ -59,7 +59,9 @@ Item {
                 maximumValue: 5000
                 onValueChanged: {
                     filter.animateIn = duration
-                    filter.set('opacity', '0~=0; %1=1'.arg(duration - 1))
+                    filter.resetProperty('opacity')
+                    filter.set('opacity', 0, 0, KeyframesModel.SmoothInterpolation)
+                    filter.set('opacity', 1, duration - 1)
                 }
                 onSetDefaultClicked: {
                     duration = Math.ceil(settings.videoInDuration * profile.fps)

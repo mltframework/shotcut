@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2014-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,8 +45,9 @@ Item {
     }
 
     function updateFilter() {
-        var filterDuration = producer.duration
-        filter.set('level', '%1=0; %2=-60'.arg(filterDuration - duration).arg(filterDuration - 1))
+        filter.resetProperty('level')
+        filter.set('level', 0, filter.duration - duration)
+        filter.set('level', -60, filter.duration - 1)
     }
 
     ColumnLayout {

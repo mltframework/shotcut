@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2014-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,7 +48,9 @@ Item {
 
     function updateFilter() {
         var name = (filter.get('alpha') != 1)? 'alpha' : 'level'
-        filter.set(name, '0=0; %1=1'.arg(duration - 1))
+        filter.resetProperty(name)
+        filter.set(name, 0, 0)
+        filter.set(name, 1, duration - 1)
     }
 
     ColumnLayout {

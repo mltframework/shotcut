@@ -1366,12 +1366,14 @@ void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
                     // Adjust video filter.
                     if (Settings.playerGPU()) {
                         // Special handling for animation keyframes on movit.opacity.
-                        QString opacity = QString("0~=0; %1=1").arg(duration - 1);
-                        filter->set("opacity", opacity.toLatin1().constData());
+                        filter->clear("opacity");
+                        filter->anim_set("opacity", 0, 0, 0, mlt_keyframe_smooth);
+                        filter->anim_set("opacity", 1, duration - 1);
                     } else {
                         // Special handling for animation keyframes on brightness.
-                        QString level = QString("0=0; %1=1").arg(duration - 1);
-                        filter->set("level", level.toLatin1().constData());
+                        filter->clear("level");
+                        filter->anim_set("level", 0, 0);
+                        filter->anim_set("level", 1, duration - 1);
                     }
                     filter->set(kShotcutAnimInProperty, duration);
                     isChanged = true;
@@ -1401,8 +1403,9 @@ void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
                     }
 
                     // Adjust audio filter.
-                    QString level = QString("0=-60; %1=0").arg(duration - 1);
-                    filter->set("level", level.toLatin1().constData());
+                    filter->clear("level");
+                    filter->anim_set("level", -60, 0);
+                    filter->anim_set("level", 0, duration - 1);
                     filter->set(kShotcutAnimInProperty, duration);
                     isChanged = true;
                 } else if (filter) {
@@ -1471,12 +1474,14 @@ void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
                     // Adjust video filter.
                     if (Settings.playerGPU()) {
                         // Special handling for animation keyframes on movit.opacity.
-                        QString opacity = QString("%1~=1; %2=0").arg(info->frame_count - duration).arg(info->frame_count - 1);
-                        filter->set("opacity", opacity.toLatin1().constData());
+                        filter->clear("opacity");
+                        filter->anim_set("opacity", 1, info->frame_count - duration, 0, mlt_keyframe_smooth);
+                        filter->anim_set("opacity", 0, info->frame_count - 1);
                     } else {
                         // Special handling for animation keyframes on brightness.
-                        QString level = QString("%1=1; %2=0").arg(info->frame_count - duration).arg(info->frame_count - 1);
-                        filter->set("level", level.toLatin1().constData());
+                        filter->clear("level");
+                        filter->anim_set("level", 1, info->frame_count - duration);
+                        filter->anim_set("level", 0, info->frame_count - 1);
                     }
                     filter->set(kShotcutAnimOutProperty, duration);
                     isChanged = true;
@@ -1506,8 +1511,9 @@ void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
                     }
 
                     // Adjust audio filter.
-                    QString level = QString("%1=0; %2=-60").arg(info->frame_count - duration).arg(info->frame_count - 1);
-                    filter->set("level", level.toLatin1().constData());
+                    filter->clear("level");
+                    filter->anim_set("level", 0, info->frame_count - duration);
+                    filter->anim_set("level", -60, info->frame_count - 1);
                     filter->set(kShotcutAnimOutProperty, duration);
                     isChanged = true;
                 } else if (filter) {
@@ -2419,20 +2425,18 @@ void MultitrackModel::adjustClipFilters(Mlt::Producer& producer, int in, int out
                 }
                 filter->set_in_and_out(filter->get_in(), out - outDelta);
                 if (filterName == "fadeOutBrightness") {
-                    filter->set(filter->get_int("alpha") != 1? "alpha" : "level", QString("%1=1; %2=0")
-                                .arg(filter->get_length() - filter->get_int(kShotcutAnimOutProperty))
-                                .arg(filter->get_length() - 1)
-                                .toLatin1().constData());
+                    const char* key = filter->get_int("alpha") != 1? "alpha" : "level";
+                    filter->clear(key);
+                    filter->anim_set(key, 1, filter->get_length() - filter->get_int(kShotcutAnimOutProperty));
+                    filter->anim_set(key, 0, filter->get_length() - 1);
                 } else if (filterName == "fadeOutMovit") {
-                    filter->set("opacity", QString("%1~=1; %2=0")
-                                .arg(filter->get_length() - filter->get_int(kShotcutAnimOutProperty))
-                                .arg(filter->get_length() - 1)
-                                .toLatin1().constData());
+                    filter->clear("opacity");
+                    filter->anim_set("opacity", 1, filter->get_length() - filter->get_int(kShotcutAnimOutProperty), 0, mlt_keyframe_smooth);
+                    filter->anim_set("opacity", 0, filter->get_length() - 1);
                 } else if (filterName == "fadeOutVolume") {
-                    filter->set("level", QString("%1=0; %2=-60")
-                                .arg(filter->get_length() - filter->get_int(kShotcutAnimOutProperty))
-                                .arg(filter->get_length() - 1)
-                                .toLatin1().constData());
+                    filter->clear("level");
+                    filter->anim_set("level", 0, filter->get_length() - filter->get_int(kShotcutAnimOutProperty));
+                    filter->anim_set("level", -60, filter->get_length() - 1);
                 }
                 emit filterOutChanged(outDelta, filter.data());
             } else if (!filter->get_int("_loader") && filter->get_out() == out) {

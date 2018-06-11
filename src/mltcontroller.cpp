@@ -684,20 +684,18 @@ void Controller::setOut(int out)
                     filter->set_in_and_out(filter->get_in(), out);
                     changed = true;
                     if (filterName == "fadeOutBrightness") {
-                        filter->set(filter->get_int("alpha") != 1? "alpha" : "level", QString("%1=1; %2=0")
-                                    .arg(filter->get_length() - filter->get_int(kShotcutAnimOutProperty))
-                                    .arg(filter->get_length() - 1)
-                                    .toLatin1().constData());
+                        const char* key = filter->get_int("alpha") != 1? "alpha" : "level";
+                        filter->clear(key);
+                        filter->anim_set(key, 1, filter->get_length() - filter->get_int(kShotcutAnimOutProperty));
+                        filter->anim_set(key, 0, filter->get_length() - 1);
                     } else if (filterName == "fadeOutMovit") {
-                        filter->set("opacity", QString("%1~=1; %2=0")
-                                    .arg(filter->get_length() - filter->get_int(kShotcutAnimOutProperty))
-                                    .arg(filter->get_length() - 1)
-                                    .toLatin1().constData());
+                        filter->clear("opacity");
+                        filter->anim_set("opacity", 1, filter->get_length() - filter->get_int(kShotcutAnimOutProperty), 0, mlt_keyframe_smooth);
+                        filter->anim_set("opacity", 0, filter->get_length() - 1);
                     } else if (filterName == "fadeOutVolume") {
-                        filter->set("level", QString("%1=0; %2=-60")
-                                    .arg(filter->get_length() - filter->get_int(kShotcutAnimOutProperty))
-                                    .arg(filter->get_length() - 1)
-                                    .toLatin1().constData());
+                        filter->clear("level");
+                        filter->anim_set("level", 0, filter->get_length() - filter->get_int(kShotcutAnimOutProperty));
+                        filter->anim_set("level", -60, filter->get_length() - 1);
                     }
                 } else if (!filter->get_int("_loader") && filter->get_out() == m_producer->get_out()) {
                     filter->set_in_and_out(filter->get_in(), out);

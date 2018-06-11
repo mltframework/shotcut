@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2014-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -57,7 +56,9 @@ Item {
                 maximumValue: 5000
                 onValueChanged: {
                     filter.animateIn = duration
-                    filter.set('level', '0=-60; %1=0'.arg(duration - 1))
+                    filter.resetProperty('level')
+                    filter.set('level', -60, 0)
+                    filter.set('level', 0, duration - 1)
                 }
                 onSetDefaultClicked: {
                     duration = Math.ceil(settings.audioInDuration * profile.fps)
