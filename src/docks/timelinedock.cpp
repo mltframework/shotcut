@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2013-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -510,6 +509,7 @@ void TimelineDock::lift(int trackIndex, int clipIndex)
         QString xml = MLT.XML(clip.data());
         MAIN.undoStack()->push(
             new Timeline::LiftCommand(m_model, trackIndex, clipIndex, xml));
+        setSelection();
     }
 }
 
