@@ -81,8 +81,8 @@ Flickable {
                 filter.set(middleValue, filterRect)
         }
 
-        filter.resetProperty(rectProperty)
         if (filter.animateIn > 0 || filter.animateOut > 0) {
+            filter.resetProperty(rectProperty)
             if (filter.animateIn > 0) {
                 filter.set(rectProperty, filter.getRect(startValue), 1.0, 0)
                 filter.set(rectProperty, filter.getRect(middleValue), 1.0, filter.animateIn - 1)
@@ -91,8 +91,11 @@ Flickable {
                 filter.set(rectProperty, filter.getRect(middleValue), 1.0, filter.duration - filter.animateOut)
                 filter.set(rectProperty, filter.getRect(endValue), 1.0, filter.duration - 1)
             }
-        } else {
+        } else if (filter.keyframeCount(rectProperty) <= 0) {
+            filter.resetProperty(rectProperty)
             filter.set(rectProperty, filter.getRect(middleValue))
+        } else if (position !== null) {
+            filter.set(rectProperty, filterRect, 1.0, position)
         }
     }
 
@@ -132,9 +135,6 @@ Flickable {
 
     Connections {
         target: producer
-        onPositionChanged: {
-            if (filter.animateIn > 0 || filter.animateOut > 0)
-                setRectangleControl()
-        }
+        onPositionChanged: setRectangleControl()
     }
 }

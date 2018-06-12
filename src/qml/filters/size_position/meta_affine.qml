@@ -13,5 +13,12 @@ Metadata {
         allowAnimateIn: true
         allowAnimateOut: true
         simpleProperties: ['transition.rect']
+        parameters: [
+            Parameter {
+                name: qsTr('Position / Size')
+                property: 'transition.rect'
+                isSimple: true
+            }
+        ]
     }
 }

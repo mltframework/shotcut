@@ -126,7 +126,7 @@ Item {
                 }
             }
             filterRect = filter.getRect(rectProperty)
-            filter.set(middleValue, filter.getRect(rectProperty, filter.animateIn))
+            filter.set(middleValue, filter.getRect(rectProperty, filter.animateIn + 1))
             if (filter.animateIn > 0)
                 filter.set(startValue, filter.getRect(rectProperty, 0))
             if (filter.animateOut > 0)
@@ -167,8 +167,9 @@ Item {
                     filter.set(middleValue, filterRect)
             }
 
-            filter.resetProperty(rectProperty)
             if (filter.animateIn > 0 || filter.animateOut > 0) {
+                filter.resetProperty(rectProperty)
+                positionKeyframesButton.checked = false
                 if (filter.animateIn > 0) {
                     filter.set(rectProperty, filter.getRect(startValue), 1.0, 0)
                     filter.set(rectProperty, filter.getRect(middleValue), 1.0, filter.animateIn - 1)
@@ -177,8 +178,11 @@ Item {
                     filter.set(rectProperty, filter.getRect(middleValue), 1.0, filter.duration - filter.animateOut)
                     filter.set(rectProperty, filter.getRect(endValue), 1.0, filter.duration - 1)
                 }
-            } else {
+            } else if (!positionKeyframesButton.checked) {
+                filter.resetProperty(rectProperty)
                 filter.set(rectProperty, filter.getRect(middleValue))
+            } else if (position !== null) {
+                filter.set(rectProperty, filterRect, 1.0, position)
             }
         }
     }
@@ -241,7 +245,7 @@ Item {
             onPresetSelected: {
                 setControls()
                 filterRect = filter.getRect(rectProperty, getPosition())
-                filter.set(middleValue, filter.getRect(rectProperty, filter.animateIn))
+                filter.set(middleValue, filter.getRect(rectProperty, filter.animateIn + 1))
                 if (filter.animateIn > 0)
                     filter.set(startValue, filter.getRect(rectProperty, 0))
                 if (filter.animateOut > 0)
@@ -254,7 +258,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
         RowLayout {
-            Layout.columnSpan: 4
+            Layout.columnSpan: 3
             TextField {
                 id: rectX
                 text: filterRect.x.toFixed()
@@ -275,13 +279,26 @@ Item {
                 setFilter(getPosition())
             }
         }
+        KeyframesButton {
+            id: positionKeyframesButton
+            checked: filter.keyframeCount(rectProperty) > 0
+            onToggled: {
+                if (checked) {
+                    filter.clearSimpleAnimation(rectProperty)
+                    filter.set(rectProperty, filterRect, 1.0, getPosition())
+                } else {
+                    filter.resetProperty(rectProperty)
+                    filter.set(rectProperty, filterRect)
+                }
+            }
+        }
 
         Label {
             text: qsTr('Size')
             Layout.alignment: Qt.AlignRight
         }
         RowLayout {
-            Layout.columnSpan: 4
+            Layout.columnSpan: 3
             TextField {
                 id: rectW
                 text: filterRect.width.toFixed()
@@ -303,6 +320,7 @@ Item {
                 setFilter(getPosition())
             }
         }
+        Item { Layout.fillWidth: true }
 
         Label {
             text: qsTr('Size mode')
@@ -424,9 +442,6 @@ Item {
 
     Connections {
         target: producer
-        onPositionChanged: {
-            if (filter.animateIn > 0 || filter.animateOut > 0)
-                setKeyframedControls()
-        }
+        onPositionChanged: setKeyframedControls()
     }
 }
