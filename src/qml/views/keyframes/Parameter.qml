@@ -21,8 +21,10 @@ import org.shotcut.qml 1.0
 
 Item {
     id: parameterRoot
-    property alias model: keyframeDelegateModel.model
     property alias rootIndex: keyframeDelegateModel.rootIndex
+    property bool isCurve: false
+    property double minimum: 0.0
+    property double maximum: 1.0
     property bool isLocked: false
 
     signal clicked(var keyframe, var parameter)
@@ -42,7 +44,7 @@ Item {
 
     Canvas {
         id: canvas
-        visible: metadata !== null && metadata.keyframes.parameters[parameterRoot.DelegateModel.itemsIndex].isCurve
+        visible: isCurve
         anchors.fill: parent
 
         function catmullRomToBezier(context, i) {
@@ -103,6 +105,7 @@ Item {
 
     DelegateModel {
         id: keyframeDelegateModel
+        model: parameters
         Keyframe {
             position: (filter.in - producer.in) + model.frame
             interpolation: model.interpolation
@@ -111,6 +114,9 @@ Item {
             minDragX: (filter.in - producer.in + model.minimumFrame) * timeScale - width/2
             maxDragX: (filter.in - producer.in + model.maximumFrame) * timeScale - width/2
             isSelected: root.currentTrack === parameterRoot.DelegateModel.itemsIndex && root.selection.indexOf(index) !== -1
+            isCurve: parameterRoot.isCurve
+            minimum: parameterRoot.minimum
+            maximum: parameterRoot.maximum
             parameterIndex: parameterRoot.DelegateModel.itemsIndex
             onClicked: parameterRoot.clicked(keyframe, parameterRoot)
             onInterpolationChanged: canvas.requestPaint()

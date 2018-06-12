@@ -42,6 +42,9 @@ public:
     enum Roles {
         NameRole = Qt::UserRole + 1, /// parameter or keyframe
         PropertyNameRole, /// parameter only
+        IsCurveRole,      /// parameter only
+        MinimumValueRole, /// parameter only
+        MaximumValueRole, /// parameter only
         FrameNumberRole,  /// keyframe only
         KeyframeTypeRole, /// keyframe only
         NumericValueRole, /// keyframe only

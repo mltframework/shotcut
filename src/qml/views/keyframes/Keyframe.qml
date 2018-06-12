@@ -30,10 +30,10 @@ Rectangle {
     property string name: ''
     property double value
     property int parameterIndex
-    property bool isCurve: metadata !== null? metadata.keyframes.parameters[parameterIndex].isCurve : false
+    property bool isCurve: false
     property int trackHeight: Logic.trackHeight(isCurve)
-    property double minimum: metadata !== null? metadata.keyframes.parameters[parameterIndex].minimum : 0.0
-    property double maximum: metadata !== null? metadata.keyframes.parameters[parameterIndex].maximum : 1.0
+    property double minimum: 0.0
+    property double maximum: 1.0
     property double trackValue: (0.5 - (value - minimum) / (maximum - minimum)) * (trackHeight - height - 2.0 * border.width)
     property double minDragX: activeClip.x - width/2
     property double maxDragX: activeClip.x + activeClip.width - width/2

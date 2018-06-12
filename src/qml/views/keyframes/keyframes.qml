@@ -132,7 +132,7 @@ Rectangle {
                             delegateIndex: index
 //                            isLocked: model.locked
                             width: headerWidth
-                            height: Logic.trackHeight(metadata !== null && typeof(metadata.keyframes.parameters[index]) !== 'undefined' && metadata.keyframes.parameters[index].isCurve)
+                            height: Logic.trackHeight(model.isCurve)
                             current: false // index === currentTrack
 //                            onIsLockedChanged: parametersRepeater.itemAt(index).isLocked = isLocked
                             onClicked: {
@@ -165,15 +165,16 @@ Rectangle {
             onDoubleClicked: {
                 // Figure out which parameter row that is in.
                 for (var i = 0; i < parametersRepeater.count; i++) {
+                    var parameter = parametersRepeater.itemAt(i)
                     // Only for parameters with curves.
-                    if (metadata.keyframes.parameters[i].isCurve) {
-                        var point = tracksArea.mapToItem(parametersRepeater.itemAt(i), mouse.x, mouse.y)
+                    if (parameter.isCurve) {
+                        var point = tracksArea.mapToItem(parameter, mouse.x, mouse.y)
                         var position = Math.round(point.x / timeScale) - (filter.in - producer.in)
-                        var trackHeight = parametersRepeater.itemAt(i).height
+                        var trackHeight = parameter.height
                         var interpolation = 1
                         // Get the interpolation from the previous keyframe if any.
-                        for (var j = 0; j < parametersRepeater.itemAt(i).getKeyframeCount(); j++) {
-                            var k = parametersRepeater.itemAt(i).getKeyframe(j)
+                        for (var j = 0; j < parameter.getKeyframeCount(); j++) {
+                            var k = parameter.getKeyframe(j)
                             if (k.position - (filter.in - producer.in) < position)
                                 interpolation = k.interpolation
                             else
@@ -185,9 +186,7 @@ Rectangle {
                             // Determine the value to set.
                             var keyframeHeight = 10
                             var trackValue = Math.min(Math.max(0, 1.0 - (point.y - keyframeHeight/2) / (trackHeight - keyframeHeight)), 1.0)
-                            var minimum = metadata.keyframes.parameters[i].minimum
-                            var maximum = metadata.keyframes.parameters[i].maximum
-                            var value = minimum + trackValue * (maximum - minimum)
+                            var value = parameter.minimum + trackValue * (parameter.maximum - parameter.minimum)
                             //console.log('clicked parameter ' + i + ' frame ' + position + ' trackValue ' + trackValue + ' value ' + value)
                             parameters.addKeyframe(i, value, position, interpolation)
                             break
@@ -255,10 +254,10 @@ Rectangle {
                             // otherwise, the clips will be obscured by the Track's background.
                             Repeater {
                                 model: parameters
-                                delegate: Rectangle {
+                                Rectangle {
                                     width: tracksContainer.width
                                     color: (false /*index === currentTrack*/)? selectedTrackColor : (index % 2)? activePalette.alternateBase : activePalette.base
-                                    height: Logic.trackHeight(metadata !== null && typeof(metadata.keyframes.parameters[index]) !== 'undefined' && metadata.keyframes.parameters[index].isCurve)
+                                    height: Logic.trackHeight(model.isCurve)
                                 }
                             }
                         }
@@ -465,10 +464,12 @@ Rectangle {
         id: parameterDelegateModel
         model: parameters
         Parameter {
-            model: parameters
             rootIndex: parameterDelegateModel.modelIndex(index)
             width: producer.duration * timeScale
-            height: Logic.trackHeight(metadata !== null && typeof(metadata.keyframes.parameters[index]) !== 'undefined' && metadata.keyframes.parameters[index].isCurve)
+            isCurve: model.isCurve
+            minimum: model.minimum
+            maximum: model.maximum
+            height: Logic.trackHeight(model.isCurve)
             onClicked: {
                 currentTrack = parameter.DelegateModel.itemsIndex
                 root.selection = [keyframe.DelegateModel.itemsIndex]

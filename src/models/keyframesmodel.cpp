@@ -115,6 +115,12 @@ QVariant KeyframesModel::data(const QModelIndex& index, int role) const
             return m_metadata->keyframes()->parameter(m_metadataIndex[index.row()])->name();
         case PropertyNameRole:
             return m_metadata->keyframes()->parameter(m_metadataIndex[index.row()])->property();
+        case IsCurveRole:
+            return m_metadata->keyframes()->parameter(m_metadataIndex[index.row()])->isCurve();
+        case MinimumValueRole:
+            return m_metadata->keyframes()->parameter(m_metadataIndex[index.row()])->minimum();
+        case MaximumValueRole:
+            return m_metadata->keyframes()->parameter(m_metadataIndex[index.row()])->maximum();
         default:
             break;
         }
@@ -147,9 +153,12 @@ QModelIndex KeyframesModel::parent(const QModelIndex& index) const
 QHash<int, QByteArray> KeyframesModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
-    roles[NameRole] = "name";
+    roles[NameRole]         = "name";
     roles[PropertyNameRole] = "property";
-    roles[FrameNumberRole] = "frame";
+    roles[IsCurveRole]      = "isCurve";
+    roles[MinimumValueRole] = "minimum";
+    roles[MaximumValueRole] = "maximum";
+    roles[FrameNumberRole]  = "frame";
     roles[KeyframeTypeRole] = "interpolation";
     roles[NumericValueRole] = "value";
     roles[MinimumFrameRole] = "minimumFrame";
