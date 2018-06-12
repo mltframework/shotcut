@@ -661,6 +661,7 @@ function set_globals {
     LDFLAGS_[1]="${LDFLAGS_[1]} -L/opt/local/lib/libomp"
   fi
   [ "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ]  && CFLAGS_[1]="${CFLAGS_[1]} -I$FINAL_INSTALL_DIR/include/SDL2"
+  [ "$TARGET_OS" != "Win32" ] && CFLAGS_[1]="${CFLAGS_[1]} -DUSE_MLT_POOL"
   LDFLAGS_[1]="${LDFLAGS_[1]} -L$FINAL_INSTALL_DIR/lib $ASAN_LDFLAGS $LDFLAGS"
 
   ####
