@@ -11,4 +11,5 @@ Exec=shotcut %F
 Icon=org.shotcut.Shotcut
 Terminal=false
 Categories=AudioVideo;Video;AudioVideoEditing;
+Keywords=video;audio;editing;suite;mlt;4k;video4linux;blackmagic;decklink;
 MimeType=application/vnd.mlt+xml
