@@ -2614,6 +2614,17 @@ void MultitrackModel::removeTrack(int trackIndex)
                 --m_trackList[row].mlt_index;
             if (t.type == track.type && t.number > track.number) {
                 --m_trackList[row].number;
+                QModelIndex modelIndex = index(row, 0);
+
+                // Disable compositing on the bottom video track.
+                if (m_trackList[row].number == 0 && t.type == VideoTrackType) {
+                    QScopedPointer<Mlt::Transition> transition(getTransition("frei0r.cairoblend", 1));
+                    if (!transition)
+                        transition.reset(getTransition("movit.overlay", 1));
+                    if (transition && transition->is_valid())
+                        transition->set("disable", 1);
+                    emit dataChanged(modelIndex, modelIndex, QVector<int>() << IsBottomVideoRole << IsCompositeRole);
+                }
 
                 // Rename default track names.
                 QScopedPointer<Mlt::Producer> mltTrack(m_tractor->track(m_trackList[row].mlt_index));
@@ -2622,10 +2633,7 @@ void MultitrackModel::removeTrack(int trackIndex)
                 if (mltTrack && mltTrack->get(kTrackNameProperty) == trackName) {
                     trackName = trackNameTemplate.arg(m_trackList[row].number + 1);
                     mltTrack->set(kTrackNameProperty, trackName.toUtf8().constData());
-                    QModelIndex modelIndex = index(row, 0);
-                    QVector<int> roles;
-                    roles << NameRole;
-                    emit dataChanged(modelIndex, modelIndex, roles);
+                    emit dataChanged(modelIndex, modelIndex, QVector<int>() << NameRole);
                 }
             }
             ++row;
@@ -3022,11 +3030,11 @@ void MultitrackModel::refreshTrackList()
 
                 // Always disable compositing on V1.
                 if (v == 1) {
-                    QScopedPointer<Mlt::Transition> transition(getTransition("frei0r.cairoblend", v-1));
+                    QScopedPointer<Mlt::Transition> transition(getTransition("frei0r.cairoblend", 1));
                     if (!transition)
-                        transition.reset(getTransition("movit.overlay", v-1));
+                        transition.reset(getTransition("movit.overlay", 1));
                     if (transition && transition->is_valid())
-                        track->set("disable", 1);
+                        transition->set("disable", 1);
                 }
             }
         }
