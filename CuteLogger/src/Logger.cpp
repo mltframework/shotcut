@@ -922,7 +922,7 @@ void Logger::write(const QDateTime& timeStamp, LogLevel logLevel, const char* fi
     if (appenders.length() == 0)
     {
       if (logCategory != d->defaultCategory && !linkedToGlobal && !fromLocalInstance)
-        std::cerr << "No appenders assotiated with category " << qPrintable(logCategory) << std::endl;
+        std::cerr << "No appenders associated with category " << qPrintable(logCategory) << std::endl;
     }
     else
     {
