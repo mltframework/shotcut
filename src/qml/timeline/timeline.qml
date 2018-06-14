@@ -420,6 +420,10 @@ Rectangle {
             checked: settings.timelineRippleAllTracks
             onTriggered: settings.timelineRippleAllTracks = checked
         }
+        MenuItem {
+            text: qsTr('Copy Timeline to Source')
+            onTriggered: timeline.copyToSource()
+        }
         MenuSeparator {}
         MenuItem {
             enabled: multitrack.trackHeight >= 50

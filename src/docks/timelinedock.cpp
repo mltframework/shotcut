@@ -26,6 +26,7 @@
 #include "qmltypes/qmlview.h"
 #include "shotcut_mlt_properties.h"
 #include "settings.h"
+#include "util.h"
 
 #include <QAction>
 #include <QtQml>
@@ -351,6 +352,23 @@ void TimelineDock::trimClipAtPlayhead(TrimLocation location, bool ripple)
 bool TimelineDock::isRipple() const
 {
     return m_quickView.rootObject()->property("ripple").toBool();
+}
+
+void TimelineDock::copyToSource()
+{
+    if (model()->tractor() && model()->tractor()->is_valid()) {
+        QString xml = MLT.XML(model()->tractor());
+        Mlt::Producer producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
+        if (producer.is_valid()) {
+            producer.set(kShotcutVirtualClip, 1);
+            producer.set(kExportFromProperty, 1);
+            QString resource = MAIN.fileName();
+            if (resource.isEmpty())
+                resource = tr("Untitled");
+            producer.set("resource", resource.toUtf8().constData());
+            MAIN.openCut(new Mlt::Producer(producer));
+        }
+    }
 }
 
 void TimelineDock::clearSelectionIfInvalid()

@@ -80,5 +80,6 @@
 #define kUndoIdProperty "_shotcut:undo_id"
 #define kUuidProperty "_shotcut:uuid"
 #define kMultitrackItemProperty "_shotcut:multitrack-item"
+#define kExportFromProperty "_shotcut:exportFromDefault"
 
 #endif // SHOTCUT_MLT_PROPERTIES_H

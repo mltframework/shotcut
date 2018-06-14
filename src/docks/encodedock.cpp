@@ -364,7 +364,7 @@ void EncodeDock::onProducerOpened()
         } else {
             ui->fromCombo->addItem(tr("Source"), "clip");
         }
-        if (MLT.producer()->get_int(kBackgroundCaptureProperty))
+        if (MLT.producer()->get_int(kBackgroundCaptureProperty) || MLT.producer()->get_int(kExportFromProperty))
             index = ui->fromCombo->count() - 1;
     } else if (MLT.savedProducer() && MLT.savedProducer()->is_valid()
                && qstrcmp("_hide", MLT.savedProducer()->get("resource"))) {
@@ -724,7 +724,7 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
             }
             else
                 p->set("r", ui->fpsSpinner->value());
-            if (ui->videoCodecCombo->currentText() == "prores" || ui->formatCombo->currentText() == "image2")
+            if (ui->formatCombo->currentText() == "image2")
                 p->set("threads", 1);
             else if (ui->videoCodecThreadsSpinner->value() == 0
                      && ui->videoCodecCombo->currentText() != "libx264"

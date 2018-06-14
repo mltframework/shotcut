@@ -1493,7 +1493,7 @@ void MainWindow::configureVideoWidget()
 
 void MainWindow::setCurrentFile(const QString &filename)
 {
-    QString shownName = "Untitled";
+    QString shownName = tr("Untitled");
     if (filename == untitledFileName())
         m_currentFile.clear();
     else

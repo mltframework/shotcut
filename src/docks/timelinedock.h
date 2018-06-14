@@ -77,6 +77,7 @@ public:
     Q_INVOKABLE bool isMultitrackSelected() const { return m_selection.isMultitrackSelected; }
     Q_INVOKABLE int selectedTrack() const { return m_selection.selectedTrack; }
     Q_INVOKABLE bool isFloating() const { return QDockWidget::isFloating(); }
+    Q_INVOKABLE void copyToSource();
 
 signals:
     void currentTrackChanged();
