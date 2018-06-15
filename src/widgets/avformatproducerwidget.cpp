@@ -613,7 +613,7 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
         switch (dialog.format()) {
         case 0:
             path.append("/%1.mp4");
-            args << "-f" << "mp4" << "-codec:a" << "aac" << "-b:a" << "512k" << "-codec:v" << "libx264";
+            args << "-f" << "mp4" << "-codec:a" << "ac3" << "-b:a" << "512k" << "-codec:v" << "libx264";
             args << "-preset" << "medium" << "-g" << "1" << "-crf" << "11";
             break;
         case 1:
@@ -684,7 +684,7 @@ void AvformatProducerWidget::on_actionReverse_triggered()
         switch (dialog.format()) {
         case 0:
             path.append("/%1 - %2.mp4");
-            args << "acodec=aac" << "ab=512k" << "vcodec=libx264";
+            args << "acodec=ac3" << "ab=512k" << "vcodec=libx264";
             args << "vpreset=medium" << "g=1" << "crf=11";
             break;
         case 1:
