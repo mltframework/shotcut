@@ -31,18 +31,18 @@ Item {
     height: 125
     Component.onCompleted: {
         if (filter.isNew) {
-            filter.set("av.h", hueDegreeDefault)
-            filter.set("av.b", lightnessDefault)
-            filter.set("av.s", saturationDefault)
+            filter.set("av.h", (hueDegreeDefault - 100) * 360 / 100)
+            filter.set("av.b", (lightnessDefault - 100) * 10 / 100)
+            filter.set("av.s", saturationDefault / 100)
             filter.savePreset(defaultParameters)
         }
         setControls()
     }
 
     function setControls() {
-        hueDegreeSlider.value = filter.getDouble("av.h")
-        lightnessSlider.value = filter.getDouble("av.b")
-        saturationSlider.value = filter.getDouble("av.s")
+        hueDegreeSlider.value = filter.getDouble("av.h") * 100 / 360 + 100
+        lightnessSlider.value = filter.getDouble("av.b") * 100 / 10 + 100
+        saturationSlider.value = filter.getDouble("av.s") * 100
     }
 
     GridLayout {
@@ -57,6 +57,7 @@ Item {
         Preset {
             id: presetItem
             Layout.columnSpan: 2
+            parameters: defaultParameters
             onPresetSelected: setControls()
         }
 
