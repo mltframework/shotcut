@@ -110,7 +110,6 @@ void QmlApplication::pasteFilters()
 {
     QScopedPointer<Mlt::Producer> producer(new Mlt::Producer(MAIN.filterController()->attachedModel()->producer()));
     MLT.pasteFilters(producer.data());
-    MLT.refreshConsumer();
     emit QmlApplication::singleton().filtersPasted(MAIN.filterController()->attachedModel()->producer());
 }
 
