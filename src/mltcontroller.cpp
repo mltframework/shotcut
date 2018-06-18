@@ -449,6 +449,7 @@ QString Controller::XML(Service* service, bool withProfile)
     int ignore = s.get_int("ignore_points");
     if (ignore)
         s.set("ignore_points", 0);
+    c.set("time_format", "clock");
     c.set("no_meta", 1);
     c.set("no_profile", !withProfile);
     c.set("store", "shotcut");
