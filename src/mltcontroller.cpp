@@ -23,6 +23,7 @@
 #include <QUuid>
 #include <Logger.h>
 #include <Mlt.h>
+#include <math.h>
 
 #include "glwidget.h"
 #include "settings.h"
