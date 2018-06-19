@@ -597,11 +597,15 @@ void Controller::rewind()
     // frame before last.
     if (m_producer->position() >= m_producer->get_length() - 1)
         m_producer->seek(m_producer->get_length() - 2);
-    if (m_producer->get_speed() >= 0) {
+    double speed = m_producer->get_speed();
+    if (speed == 0.0) {
         play(-1.0);
     } else {
         stopJack();
-        m_producer->set_speed(m_producer->get_speed() * 2);
+        if (speed < 0.0)
+            m_producer->set_speed(speed * 2.0);
+        else
+            m_producer->set_speed(::floor(speed * 0.5));
     }
 }
 
@@ -609,11 +613,15 @@ void Controller::fastForward()
 {
     if (!m_producer || !m_producer->is_valid())
         return;
-    if (m_producer->get_speed() <= 0) {
+    double speed = m_producer->get_speed();
+    if (speed == 0.0) {
         play();
     } else {
         stopJack();
-        m_producer->set_speed(m_producer->get_speed() * 2);
+        if (speed > 0.0)
+            m_producer->set_speed(speed * 2.0);
+        else
+            m_producer->set_speed(::ceil(speed * 0.5));
     }
 }
 
