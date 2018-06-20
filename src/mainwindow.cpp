@@ -315,6 +315,7 @@ MainWindow::MainWindow()
 
     m_filterController = new FilterController(this);
     m_filtersDock = new FiltersDock(m_filterController->metadataModel(), m_filterController->attachedModel(), this);
+    m_filtersDock->setMinimumSize(400, 300);
     m_filtersDock->hide();
     addDockWidget(Qt::LeftDockWidgetArea, m_filtersDock);
     ui->menuView->addAction(m_filtersDock->toggleViewAction());
@@ -842,6 +843,14 @@ void MainWindow::setupSettingsMenu()
     delete ui->menuDrawingMethod;
     ui->menuDrawingMethod = 0;
 #endif
+
+    // Add custom layouts to View > Layout submenu.
+    m_layoutGroup = new QActionGroup(this);
+    connect(m_layoutGroup, SIGNAL(triggered(QAction*)), SLOT(onLayoutTriggered(QAction*)));
+    if (Settings.layouts().size() > 0)
+        ui->menuLayout->addSeparator();
+    foreach (QString name, Settings.layouts())
+        ui->menuLayout->addAction(addLayout(m_layoutGroup, name));
     LOG_DEBUG() << "end";
 }
 
@@ -850,6 +859,13 @@ QAction* MainWindow::addProfile(QActionGroup* actionGroup, const QString& desc, 
     QAction* action = new QAction(desc, this);
     action->setCheckable(true);
     action->setData(name);
+    actionGroup->addAction(action);
+    return action;
+}
+
+QAction*MainWindow::addLayout(QActionGroup* actionGroup, const QString& name)
+{
+    QAction* action = new QAction(name, this);
     actionGroup->addAction(action);
     return action;
 }
@@ -1433,8 +1449,12 @@ void MainWindow::readWindowSettings()
     Settings.setWindowGeometryDefault(saveGeometry());
     Settings.setWindowStateDefault(saveState());
     Settings.sync();
-    restoreGeometry(Settings.windowGeometry());
-    restoreState(Settings.windowState());
+    if (!Settings.windowGeometry().isEmpty()) {
+        restoreGeometry(Settings.windowGeometry());
+        restoreState(Settings.windowState());
+    } else {
+        on_actionLayoutTimeline_triggered();
+    }
     LOG_DEBUG() << "end";
 }
 
@@ -3066,6 +3086,7 @@ void MainWindow::on_actionRestoreLayout_triggered()
 {
     restoreGeometry(Settings.windowGeometryDefault());
     restoreState(Settings.windowStateDefault());
+    on_actionLayoutTimeline_triggered();
     ui->actionShowTitleBars->setChecked(true);
     on_actionShowTitleBars_triggered(true);
 }
@@ -3456,4 +3477,64 @@ void MainWindow::on_actionNew_triggered()
 void MainWindow::on_actionKeyboardShortcuts_triggered()
 {
     QDesktopServices::openUrl(QUrl("https://www.shotcut.org/howtos/keyboard-shortcuts/"));
+}
+
+void MainWindow::on_actionLayoutPlayer_triggered()
+{
+    restoreState(Settings.windowStateDefault());
+}
+
+void MainWindow::on_actionLayoutPlaylist_triggered()
+{
+    restoreState(Settings.windowStateDefault());
+    m_recentDock->show();
+    m_recentDock->raise();
+    m_playlistDock->show();
+    m_playlistDock->raise();
+}
+
+void MainWindow::on_actionLayoutTimeline_triggered()
+{
+    restoreState(Settings.windowStateDefault());
+    QDockWidget* audioMeterDock = findChild<QDockWidget*>("AudioPeakMeterDock");
+    if (audioMeterDock) {
+        audioMeterDock->show();
+        audioMeterDock->raise();
+    }
+    m_recentDock->show();
+    m_recentDock->raise();
+    m_filtersDock->show();
+    m_filtersDock->raise();
+    m_timelineDock->show();
+    m_timelineDock->raise();
+}
+
+void MainWindow::on_actionLayoutClip_triggered()
+{
+    restoreState(Settings.windowStateDefault());
+    m_recentDock->show();
+    m_recentDock->raise();
+    m_filtersDock->show();
+    m_filtersDock->raise();
+}
+
+void MainWindow::on_actionLayoutAdd_triggered()
+{
+    bool ok;
+    QString name = QInputDialog::getText(this, tr("Add Custom Layout"),
+                                         tr("Name"), QLineEdit::Normal,
+                                         "", &ok);
+    if (ok && !name.isEmpty()) {
+        if (Settings.setLayout(name, saveGeometry(), saveState())) {
+            if (Settings.layouts().size() == 1)
+                ui->menuLayout->addSeparator();
+            ui->menuLayout->addAction(addLayout(m_layoutGroup, name));
+        }
+    }
+}
+
+void MainWindow::onLayoutTriggered(QAction* action)
+{
+    restoreGeometry(Settings.layoutGeometry(action->text()));
+    restoreState(Settings.layoutState(action->text()));
 }

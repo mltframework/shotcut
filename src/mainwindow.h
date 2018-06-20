@@ -103,6 +103,7 @@ protected:
 private:
     void setupSettingsMenu();
     QAction *addProfile(QActionGroup* actionGroup, const QString& desc, const QString& name);
+    QAction *addLayout(QActionGroup* actionGroup, const QString& name);
     void readPlayerSettings();
     void readWindowSettings();
     void writeSettings();
@@ -133,6 +134,7 @@ private:
     QActionGroup* m_profileGroup;
     QActionGroup* m_externalGroup;
     QActionGroup* m_keyerGroup;
+    QActionGroup* m_layoutGroup;
     FiltersDock* m_filtersDock;
     FilterController* m_filterController;
     ScopeController* m_scopeController;
@@ -281,6 +283,12 @@ private slots:
     void on_actionAppDataShow_triggered();
     void on_actionNew_triggered();
     void on_actionKeyboardShortcuts_triggered();
+    void on_actionLayoutPlayer_triggered();
+    void on_actionLayoutPlaylist_triggered();
+    void on_actionLayoutTimeline_triggered();
+    void on_actionLayoutClip_triggered();
+    void on_actionLayoutAdd_triggered();
+    void onLayoutTriggered(QAction*);
 };
 
 #define MAIN MainWindow::singleton()

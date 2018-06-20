@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2013-2017 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2013-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -155,6 +154,11 @@ public:
     QString appDataLocation() const;
     static void setAppDataForSession(const QString& location);
     void setAppDataLocally(const QString& location);
+
+    QStringList layouts() const;
+    bool setLayout(const QString& name, const QByteArray& geometry, const QByteArray& state);
+    QByteArray layoutGeometry(const QString& name);
+    QByteArray layoutState(const QString& name);
 
 signals:
     void openPathChanged();

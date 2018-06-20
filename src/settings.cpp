@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2013-2017 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2013-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -558,4 +557,35 @@ void ShotcutSettings::setAppDataLocally(const QString& location)
     QSettings localSettings;
     localSettings.setValue(APP_DATA_DIR_KEY, location);
     localSettings.sync();
+}
+
+QStringList ShotcutSettings::layouts() const
+{
+    return settings.value("layout/layouts").toStringList();
+}
+
+bool ShotcutSettings::setLayout(const QString& name, const QByteArray& geometry, const QByteArray& state)
+{
+    bool isNew = false;
+    QStringList layouts = Settings.layouts();
+    if (layouts.indexOf(name) == -1) {
+        isNew = true;
+        layouts.append(name);
+        settings.setValue("layout/layouts", layouts);
+    }
+    settings.setValue(QString("layout/%1_%2").arg(name).arg("geometry"), geometry);
+    settings.setValue(QString("layout/%1_%2").arg(name).arg("state"), state);
+    return isNew;
+}
+
+QByteArray ShotcutSettings::layoutGeometry(const QString& name)
+{
+    QString key = QString("layout/%1_geometry").arg(name);
+    return settings.value(key).toByteArray();
+}
+
+QByteArray ShotcutSettings::layoutState(const QString& name)
+{
+    QString key = QString("layout/%1_state").arg(name);
+    return settings.value(key).toByteArray();
 }

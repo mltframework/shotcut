@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>832</width>
-    <height>535</height>
+    <width>1270</width>
+    <height>688</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -38,8 +38,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>832</width>
-     <height>31</height>
+     <width>1270</width>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -65,8 +65,20 @@
     <property name="title">
      <string>&amp;View</string>
     </property>
+    <widget class="QMenu" name="menuLayout">
+     <property name="title">
+      <string>Layout</string>
+     </property>
+     <addaction name="actionLayoutTimeline"/>
+     <addaction name="actionLayoutClip"/>
+     <addaction name="actionLayoutPlaylist"/>
+     <addaction name="actionLayoutPlayer"/>
+     <addaction name="separator"/>
+     <addaction name="actionRestoreLayout"/>
+     <addaction name="actionLayoutAdd"/>
+    </widget>
     <addaction name="actionEnter_Full_Screen"/>
-    <addaction name="actionRestoreLayout"/>
+    <addaction name="menuLayout"/>
     <addaction name="actionShowTitleBars"/>
     <addaction name="actionShowToolbar"/>
     <addaction name="separator"/>
@@ -894,6 +906,31 @@
   <action name="actionKeyboardShortcuts">
    <property name="text">
     <string>Keyboard Shortcuts...</string>
+   </property>
+  </action>
+  <action name="actionLayoutPlayer">
+   <property name="text">
+    <string>Player</string>
+   </property>
+  </action>
+  <action name="actionLayoutPlaylist">
+   <property name="text">
+    <string>Playlist Project</string>
+   </property>
+  </action>
+  <action name="actionLayoutTimeline">
+   <property name="text">
+    <string>Timeline Project</string>
+   </property>
+  </action>
+  <action name="actionLayoutClip">
+   <property name="text">
+    <string>Clip-only Project</string>
+   </property>
+  </action>
+  <action name="actionLayoutAdd">
+   <property name="text">
+    <string>Add...</string>
    </property>
   </action>
  </widget>
