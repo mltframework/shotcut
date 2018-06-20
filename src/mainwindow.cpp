@@ -2416,16 +2416,16 @@ void MainWindow::on_actionForum_triggered()
 
 void MainWindow::saveXML(const QString &filename, bool withRelativePaths)
 {
-    if (multitrack()) {
+    if (m_timelineDock->model()->rowCount() > 0) {
         MLT.saveXML(filename, multitrack(), withRelativePaths);
-    } else if (playlist()) {
+    } else if (m_playlistDock->model()->rowCount() > 0) {
         int in = MLT.producer()->get_in();
         int out = MLT.producer()->get_out();
         MLT.producer()->set_in_and_out(0, MLT.producer()->get_length() - 1);
         MLT.saveXML(filename, playlist(), withRelativePaths);
         MLT.producer()->set_in_and_out(in, out);
     } else {
-        MLT.saveXML(filename, 0, withRelativePaths);
+        MLT.saveXML(filename, (MLT.isMultitrack() || MLT.isPlaylist())? MLT.savedProducer() : 0, withRelativePaths);
     }
 }
 
