@@ -389,19 +389,43 @@ void EncodeDock::loadPresets()
     QStandardItemModel* sourceModel = (QStandardItemModel*) m_presetsModel.sourceModel();
     sourceModel->clear();
 
-    QStandardItem* parentItem = new QStandardItem(tr("Custom"));
+    QStandardItem* grandParentItem = new QStandardItem(tr("Custom"));
+    QStandardItem* parentItem = grandParentItem;
     sourceModel->invisibleRootItem()->appendRow(parentItem);
     QDir dir(Settings.appDataLocation());
     if (dir.cd("presets") && dir.cd("encode")) {
         QStringList entries = dir.entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
         foreach (QString name, entries) {
-            QStandardItem* item = new QStandardItem(name);
+            // Create a category node if the name includes a ).
+            QStringList nameParts = name.split(')');
+            if (nameParts.count() > 1) {
+                // See if there is already a category node with this name.
+                int row;
+                for (row = 0; row < grandParentItem->rowCount(); row++) {
+                    if (grandParentItem->child(row)->text() == nameParts[0]) {
+                        // There is already a category node; use it.
+                        parentItem = grandParentItem->child(row);
+                        break;
+                    }
+                }
+                if (row == grandParentItem->rowCount()) {
+                    // There is no category node yet; create it.
+                    parentItem = new QStandardItem(nameParts[0]);
+                    grandParentItem->appendRow(parentItem);
+                }
+                // Remove the category from the name.
+                nameParts.removeFirst();
+            } else {
+                parentItem = grandParentItem;
+            }
+            QStandardItem* item = new QStandardItem(nameParts.join(')'));
             item->setData(name);
             parentItem->appendRow(item);
         }
     }
 
-    parentItem = new QStandardItem(tr("Stock"));
+    grandParentItem = new QStandardItem(tr("Stock"));
+    parentItem = grandParentItem;
     sourceModel->invisibleRootItem()->appendRow(parentItem);
     QString prefix("consumer/avformat/");
     if (m_presets && m_presets->is_valid()) {
@@ -422,10 +446,32 @@ void EncodeDock::loadPresets()
                         QString profile = textParts.at(0);
                         textParts.removeFirst();
                         if (m_profiles->get_data(profile.toLatin1().constData()))
-                            name = QString("%1 (%2)").arg(textParts.join("/")).arg(profile);
+                            name = QString("%1 (%2)").arg(textParts.join('/')).arg(profile);
                     }
                 }
-                QStandardItem* item = new QStandardItem(name);
+                // Create a category node if the name includes a slash.
+                QStringList nameParts = name.split('/');
+                if (nameParts.count() > 1) {
+                    // See if there is already a category node with this name.
+                    int row;
+                    for (row = 0; row < grandParentItem->rowCount(); row++) {
+                        if (grandParentItem->child(row)->text() == nameParts[0]) {
+                            // There is already a category node; use it.
+                            parentItem = grandParentItem->child(row);
+                            break;
+                        }
+                    }
+                    if (row == grandParentItem->rowCount()) {
+                        // There is no category node yet; create it.
+                        parentItem = new QStandardItem(nameParts[0]);
+                        grandParentItem->appendRow(parentItem);
+                    }
+                    // Remove the category from the name.
+                    nameParts.removeFirst();
+                } else {
+                    parentItem = grandParentItem;
+                }
+                QStandardItem* item = new QStandardItem(nameParts.join('/'));
                 item->setData(QString(m_presets->get_name(j)));
                 if (preset.get("meta.preset.note"))
                     item->setToolTip(QString("<p>%1</p>").arg(QString::fromUtf8(preset.get("meta.preset.note"))));
