@@ -412,7 +412,6 @@ void Controller::refreshConsumer(bool scrubAudio)
         // need to refresh consumer when paused
         m_consumer->set("scrub_audio", scrubAudio);
         m_consumer->set("refresh", 1);
-        m_consumer->set("refresh", 1);
     }
 }
 
