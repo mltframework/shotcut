@@ -30,14 +30,29 @@ public:
 class FilePropertiesPostJobAction : public PostJobAction
 {
 public:
-    FilePropertiesPostJobAction(QString srcFile, QString dstFile)
+    FilePropertiesPostJobAction(const QString& srcFile, const QString& dstFile)
         : m_srcFile(srcFile)
-        , m_dstFile(dstFile) {};
-    void doAction();
+        , m_dstFile(dstFile)
+        {}
+    virtual ~FilePropertiesPostJobAction() {}
+    virtual void doAction();
 
 private:
     QString m_srcFile;
     QString m_dstFile;
+};
+
+class ReverseFilePostJobAction : public FilePropertiesPostJobAction
+{
+public:
+    ReverseFilePostJobAction(const QString& srcFile, const QString& dstFile, const QString& fileNameToRemove)
+        : FilePropertiesPostJobAction(srcFile, dstFile)
+        , m_fileNameToRemove(fileNameToRemove)
+        {}
+    void doAction();
+
+private:
+    QString m_fileNameToRemove;
 };
 
 #endif // POSTJOBACTION_H

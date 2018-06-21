@@ -21,6 +21,8 @@
 #include <utime.h>
 #include <sys/stat.h>
 
+#include <QFile>
+
 void FilePropertiesPostJobAction::doAction()
 {
     // TODO: When QT 5.10 is available, use QFileDevice functions
@@ -39,4 +41,10 @@ void FilePropertiesPostJobAction::doAction()
     dstTime.modtime = srcTime.st_mtime;
     utime(m_dstFile.toUtf8().constData(), &dstTime);
 #endif
+}
+
+void ReverseFilePostJobAction::doAction()
+{
+    FilePropertiesPostJobAction::doAction();
+    QFile::remove(m_fileNameToRemove);
 }

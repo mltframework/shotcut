@@ -642,8 +642,9 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
                 return;
 
             Settings.setSavePath(QFileInfo(filename).path());
-            args << filename;
+            args << "-y" << filename;
             FfmpegJob* job = new FfmpegJob(filename, args, false);
+            job->setLabel(tr("Convert %1").arg(Util::baseName(filename)));
             job->setPostJobAction(new FilePropertiesPostJobAction(resource, filename));
             JOBS.add(job);
         }
@@ -663,37 +664,55 @@ void AvformatProducerWidget::on_actionReverse_triggered()
     if (result == QDialog::Accepted) {
         QString resource = QString::fromUtf8(GetFilenameFromProducer(producer()));
         QString path = Settings.savePath();
-        QStringList args;
+        QStringList meltArgs;
+        QStringList ffmpegArgs;
 
-        args << QString("timewarp:-1.0:").append(resource);
-//        In and out points do not work reliably.
-//        args << QString("in=%1").arg(m_producer->get_int("in"));
-//        args << QString("out=%1").arg(m_producer->get_int("out"));
-        args << "-consumer" << "avformat";
+        ffmpegArgs << "-loglevel" << "verbose";
+        ffmpegArgs << "-i" << resource;
+        // set trim options
+        if (m_producer->get(kFilterInProperty))
+            ffmpegArgs << "-ss" << m_producer->get_time(kFilterInProperty, mlt_time_clock);
+        else
+            ffmpegArgs << "-ss" << m_producer->get_time("in", mlt_time_clock);
+        if (m_producer->get(kFilterOutProperty))
+            ffmpegArgs << "-to" << m_producer->get_time(kFilterOutProperty, mlt_time_clock);
+        else
+            ffmpegArgs << "-to" << m_producer->get_time("out", mlt_time_clock);
+        // transcode all streams
+        ffmpegArgs << "-map" << "0";
+        // except data, subtitles, and attachments
+        ffmpegArgs << "-map" << "-0:d" << "-map" << "-0:s" << "-map" << "-0:t" << "-ignore_unknown";
+
+        meltArgs << "-consumer" << "avformat";
         if (m_producer->get_int("audio_index") == -1) {
-            args << "an=1" << "audio_off=1";
+            meltArgs << "an=1" << "audio_off=1";
         } else if (qstrcmp(m_producer->get("audio_index"), "all")) {
             int index = m_producer->get_int("audio_index");
             QString key = QString("meta.media.%1.codec.channels").arg(index);
             const char* channels = m_producer->get(key.toLatin1().constData());
-            args << QString("channels=").append(channels);
+            meltArgs << QString("channels=").append(channels);
         }
         if (m_producer->get_int("video_index") == -1)
-            args << "vn=1" << "video_off=1";
+            meltArgs << "vn=1" << "video_off=1";
 
         switch (dialog.format()) {
         case 0:
             path.append("/%1 - %2.mp4");
-            args << "acodec=ac3" << "ab=512k" << "vcodec=libx264";
-            args << "vpreset=medium" << "g=1" << "crf=11";
+            ffmpegArgs << "-f" << "mp4" << "-codec:a" << "ac3" << "-b:a" << "512k" << "-codec:v" << "libx264";
+            ffmpegArgs << "-preset" << "medium" << "-g" << "1" << "-crf" << "11";
+            meltArgs << "acodec=ac3" << "ab=512k" << "vcodec=libx264";
+            meltArgs << "vpreset=medium" << "g=1" << "crf=11";
             break;
         case 1:
-            args << "acodec=alac" << "vcodec=prores_ks" << "vprofile=standard";
+            ffmpegArgs << "-f" << "mov" << "-codec:a" << "alac" << "-codec:v" << "prores_ks" << "-profile:v" << "standard";
+            meltArgs << "acodec=alac" << "vcodec=prores_ks" << "vprofile=standard";
             path.append("/%1 - %2.mov");
             break;
         case 2:
-            args << "acodec=flac" << "vcodec=ffv1" << "coder=1";
-            args << "context=1" << "g=1" << QString::number(QThread::idealThreadCount()).prepend("threads=");
+            ffmpegArgs << "-f" << "matroska" << "-codec:a" << "flac" << "-codec:v" << "ffv1" << "-coder" << "1";
+            ffmpegArgs << "-context" << "1" << "-g" << "1" << "-threads" << QString::number(QThread::idealThreadCount());
+            meltArgs << "acodec=flac" << "vcodec=ffv1" << "coder=1";
+            meltArgs << "context=1" << "g=1" << QString::number(QThread::idealThreadCount()).prepend("threads=");
             path.append("/%1 - %2.mkv");
             break;
         }
@@ -713,10 +732,29 @@ void AvformatProducerWidget::on_actionReverse_triggered()
                 return;
 
             Settings.setSavePath(QFileInfo(filename).path());
-            args << QString("target=").append(filename);
-            MeltJob* job = new MeltJob(filename, args);
-            job->setPostJobAction(new FilePropertiesPostJobAction(resource, filename));
-            JOBS.add(job);
+
+            // Make a temporary file name for the ffmpeg job.
+            QFileInfo fi(filename);
+            QString tmpFileName = QString("%1/%2 - XXXXXX.%3").arg(fi.path()).arg(fi.completeBaseName()).arg(fi.suffix());
+            QTemporaryFile tmp(tmpFileName);
+            tmp.setAutoRemove(false);
+            tmp.open();
+            tmp.close();
+            tmpFileName = tmp.fileName();
+
+            // Run the ffmpeg job to convert a portion of the file to something edit-friendly.
+            ffmpegArgs << "-y" << tmpFileName;
+            FfmpegJob* ffmpegJob = new FfmpegJob(filename, ffmpegArgs, false);
+            ffmpegJob->setLabel(tr("Convert %1").arg(Util::baseName(resource)));
+            JOBS.add(ffmpegJob);
+
+            // Run the melt job to convert the intermediate file to the reversed clip.
+            meltArgs.prepend(QString("timewarp:-1.0:").append(tmpFileName));
+            meltArgs << QString("target=").append(filename);
+            MeltJob* meltJob = new MeltJob(filename, meltArgs);
+            meltJob->setLabel(tr("Reverse %1").arg(Util::baseName(resource)));
+            meltJob->setPostJobAction(new ReverseFilePostJobAction(resource, filename, tmpFileName));
+            JOBS.add(meltJob);
         }
     }
 }
