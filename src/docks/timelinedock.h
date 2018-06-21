@@ -78,6 +78,7 @@ public:
     Q_INVOKABLE int selectedTrack() const { return m_selection.selectedTrack; }
     Q_INVOKABLE bool isFloating() const { return QDockWidget::isFloating(); }
     Q_INVOKABLE void copyToSource();
+    Q_INVOKABLE static void openProperties();
 
 signals:
     void currentTrackChanged();

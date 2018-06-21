@@ -183,6 +183,7 @@ public slots:
     void setInToCurrent(bool ripple);
     void setOutToCurrent(bool ripple);
     void onShuttle(float x);
+    void onPropertiesDockTriggered(bool checked = true);
 
 private slots:
     void showUpgradePrompt();
@@ -195,7 +196,6 @@ private slots:
     void onCaptureStateChanged(bool started);
     void onJobsDockTriggered(bool);
     void onRecentDockTriggered(bool checked = true);
-    void onPropertiesDockTriggered(bool checked = true);
     void onPlaylistDockTriggered(bool checked = true);
     void onTimelineDockTriggered(bool checked = true);
     void onHistoryDockTriggered(bool checked = true);

@@ -463,6 +463,12 @@ Rectangle {
             onTriggered: settings.timelineShowThumbnails = checked
         }
         MenuItem {
+            id: propertiesMenuItem
+            visible: false
+            text: qsTr('Properties')
+            onTriggered: timeline.openProperties()
+        }
+        MenuItem {
             text: qsTr('Reload')
             onTriggered: {
                 multitrack.reload()
@@ -564,6 +570,7 @@ Rectangle {
             var selectedTrack = timeline.selectedTrack()
             for (var i = 0; i < trackHeaderRepeater.count; i++)
                 trackHeaderRepeater.itemAt(i).selected = (i === selectedTrack)
+            propertiesMenuItem.visible = (cornerstone.selected || (selectedTrack >= 0 && selectedTrack < trackHeaderRepeater.count))
         }
     }
 

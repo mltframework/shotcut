@@ -656,6 +656,15 @@ Rectangle {
             text: qsTr('Rebuild Audio Waveform')
             onTriggered: timeline.remakeAudioLevels(trackIndex, index)
         }
+        MenuItem {
+            visible: !isBlank
+            text: qsTr('Properties')
+            onTriggered: {
+                clipRoot.forceActiveFocus()
+                clipRoot.clicked(clipRoot)
+                timeline.openProperties()
+            }
+        }
         onPopupVisibleChanged: {
             if (visible && application.OS !== 'OS X' && __popupGeometry.height > 0) {
                 // Try to fix menu running off screen. This only works intermittently.

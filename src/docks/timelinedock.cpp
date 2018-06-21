@@ -371,6 +371,11 @@ void TimelineDock::copyToSource()
     }
 }
 
+void TimelineDock::openProperties()
+{
+    MAIN.onPropertiesDockTriggered(true);
+}
+
 void TimelineDock::clearSelectionIfInvalid()
 {
     int count = clipCount(currentTrack());
