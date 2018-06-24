@@ -2470,22 +2470,22 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/qml/views/keyframes/Keyframe.qml" line="113"/>
         <source>Keyframe Type</source>
-        <translation type="unfinished"></translation>
+        <translation>关键侦类型</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/Keyframe.qml" line="116"/>
         <source>Discrete</source>
-        <translation type="unfinished"></translation>
+        <translation>离散型</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/Keyframe.qml" line="123"/>
         <source>Linear</source>
-        <translation type="unfinished"></translation>
+        <translation>线型</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/Keyframe.qml" line="130"/>
         <source>Smooth</source>
-        <translation type="unfinished"></translation>
+        <translation>平滑型</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/Keyframe.qml" line="139"/>
@@ -2498,17 +2498,17 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/KeyframesButton.qml" line="49"/>
         <source>Use Keyframes for this parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>为这个参数使用关键侦</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/KeyframesButton.qml" line="69"/>
         <source>Confirm Removing Keyframes</source>
-        <translation type="unfinished"></translation>
+        <translation>确认移除关键侦</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/KeyframesButton.qml" line="70"/>
         <source>This will remove all keyframes for this parameter.&lt;p&gt;Do you still want to do this?</source>
-        <translation type="unfinished"></translation>
+        <translation>这将为这个参数移除所有关键侦。您是否仍然要这样做？</translation>
     </message>
 </context>
 <context>
@@ -2516,7 +2516,7 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="42"/>
         <source>Keyframes</source>
-        <translation type="unfinished"></translation>
+        <translation>关键侦</translation>
     </message>
 </context>
 <context>
@@ -2524,17 +2524,17 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="72"/>
         <source>Discrete</source>
-        <translation type="unfinished"></translation>
+        <translation>离散</translation>
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="75"/>
         <source>Linear</source>
-        <translation type="unfinished"></translation>
+        <translation>线型</translation>
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="78"/>
         <source>Smooth</source>
-        <translation type="unfinished"></translation>
+        <translation>平滑</translation>
     </message>
 </context>
 <context>
@@ -2547,12 +2547,12 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="67"/>
         <source>Zoom timeline out (-)</source>
-        <translation>缩小时间轴 （-）</translation>
+        <translation>缩小时间轴 (-)</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="74"/>
         <source>Zoom timeline in (+)</source>
-        <translation>放大时间轴（+）</translation>
+        <translation>放大时间轴 (+)</translation>
     </message>
 </context>
 <context>
@@ -3014,7 +3014,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="371"/>
         <source>FAQ...</source>
-        <translation>FAQ...</translation>
+        <translation>常见问题解答...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="380"/>
@@ -3077,12 +3077,12 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="470"/>
         <source>GPU Effects (experimental)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">GPU 特效 (试验性)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="473"/>
         <source>Use GPU filters</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">使用 GPU 滤镜</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="481"/>
@@ -3361,7 +3361,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="896"/>
         <source>Keyboard Shortcuts...</source>
-        <translation type="unfinished"></translation>
+        <translation>快捷键...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="124"/>
@@ -4174,7 +4174,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/openotherdialog.cpp" line="66"/>
         <source>macOS A/V Device</source>
-        <translation>mac操作系统 A/V 设备</translation>
+        <translation>macOS A/V 设备</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="71"/>
@@ -4235,27 +4235,27 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="126"/>
         <source>Seek to previous keyframe</source>
-        <translation type="unfinished"></translation>
+        <translation>寻求上一个关键侦</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="126"/>
         <source>Seek backwards</source>
-        <translation type="unfinished"></translation>
+        <translation>寻求后退</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="142"/>
         <source>Delete the selected keyframe</source>
-        <translation type="unfinished"></translation>
+        <translation>移除选定的关键侦</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="175"/>
         <source>Seek to next keyframe</source>
-        <translation type="unfinished"></translation>
+        <translation>寻求下一个关键侦</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="175"/>
         <source>Seek forwards</source>
-        <translation type="unfinished"></translation>
+        <translation>寻求前进</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="186"/>
@@ -4331,7 +4331,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/player.cpp" line="159"/>
         <source>Silence the audio</source>
-        <translation>敬仰</translation>
+        <translation>静止音量</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="178"/>
