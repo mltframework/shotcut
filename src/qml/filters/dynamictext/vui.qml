@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2014-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +19,6 @@ import QtQuick 2.1
 import Shotcut.Controls 1.0
 
 Flickable {
-    property string fillProperty: 'fill'
     property string rectProperty: 'geometry'
     property string halignProperty: 'valign'
     property string valignProperty: 'halign'
@@ -31,32 +29,73 @@ Flickable {
     interactive: false
     clip: true
     property real zoom: (video.zoom > 0)? video.zoom : 1.0
-    property rect filterRect: filter.getRect(rectProperty)
+    property rect filterRect
+    property bool blockUpdate: false
+    property string startValue: '_shotcut:startValue'
+    property string middleValue: '_shotcut:middleValue'
+    property string endValue:  '_shotcut:endValue'
     contentWidth: video.rect.width * zoom
     contentHeight: video.rect.height * zoom
     contentX: video.offset.x
     contentY: video.offset.y
 
-    function getAspectRatio() {
-        return (filter.get(fillProperty) === '1')? producer.sampleAspectRatio : 0.0
-    }
-
-    function setSizeFromRect() {
-        if (!parseInt(filter.get(useFontSizeProperty)))
-            filter.set('size', filterRect.height / filter.get('argument').split('\n').length)
-    }
-
     Component.onCompleted: {
-        if (filter.isNew) {
-            setSizeFromRect()
-        }
-        rectangle.setHandles(filter.getRect(rectProperty))
+        filterRect = filter.getRect(rectProperty, getPosition())
+        rectangle.setHandles(filterRect)
+        setRectangleControl()
     }
 
-    MouseArea {
-        anchors.fill: parent
-        onClicked: textEdit.focus = false
+    function getPosition() {
+        return Math.max(producer.position - (filter.in - producer.in), 0)
     }
+
+    function setRectangleControl() {
+        if (blockUpdate) return
+        var position = getPosition()
+        var newValue = filter.getRect(rectProperty, position)
+        if (filterRect !== newValue) {
+            filterRect = newValue
+            rectangle.setHandles(filterRect)
+        }
+        rectangle.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
+    }
+
+    function updateFilter(position) {
+        blockUpdate = true
+        var rect = rectangle.rectangle
+        filterRect.x = Math.round(rect.x / rectangle.widthScale)
+        filterRect.y = Math.round(rect.y / rectangle.heightScale)
+        filterRect.width = Math.round(rect.width / rectangle.widthScale)
+        filterRect.height = Math.round(rect.height / rectangle.heightScale)
+
+        if (position !== null) {
+            if (position <= 0 && filter.animateIn > 0)
+                filter.set(startValue, filterRect)
+            else if (position >= filter.duration - 1 && filter.animateOut > 0)
+                filter.set(endValue, filterRect)
+            else
+                filter.set(middleValue, filterRect)
+        }
+
+        if (filter.animateIn > 0 || filter.animateOut > 0) {
+            filter.resetProperty(rectProperty)
+            if (filter.animateIn > 0) {
+                filter.set(rectProperty, filter.getRect(startValue), 1.0, 0)
+                filter.set(rectProperty, filter.getRect(middleValue), 1.0, filter.animateIn - 1)
+            }
+            if (filter.animateOut > 0) {
+                filter.set(rectProperty, filter.getRect(middleValue), 1.0, filter.duration - filter.animateOut)
+                filter.set(rectProperty, filter.getRect(endValue), 1.0, filter.duration - 1)
+            }
+        } else if (filter.keyframeCount(rectProperty) <= 0) {
+            filter.resetProperty(rectProperty)
+            filter.set(rectProperty, filter.getRect(middleValue))
+        } else if (position !== null) {
+            filter.set(rectProperty, filterRect, 1.0, position)
+        }
+        blockUpdate = false
+    }
+
     DropArea { anchors.fill: parent }
 
     Item {
@@ -67,77 +106,25 @@ Flickable {
         height: video.rect.height
         scale: zoom
 
-        Rectangle {
-            visible: false // DISABLED FOR NOW
-            anchors.fill: textEdit
-            color: 'white'
-            opacity: textEdit.opacity * 0.5
-        }
-        TextEdit {
-            visible: false // DISABLED FOR NOW
-            id: textEdit
-            x: Math.round(filterRect.x * rectangle.widthScale) + rectangle.handleSize
-            y: Math.round(filterRect.y * rectangle.heightScale) + rectangle.handleSize
-            width: Math.round(filterRect.width * rectangle.widthScale) - 2 * rectangle.handleSize
-            height: Math.round(filterRect.height * rectangle.heightScale) - 2 * rectangle.handleSize
-            horizontalAlignment: (filter.get('halign') === 'left')? TextEdit.AlignLeft
-                               : (filter.get('halign') === 'right')? TextEdit.AlignRight
-                               : TextEdit.AlignHCenter
-            verticalAlignment: (filter.get('valign') === 'top')? TextEdit.AlignTop
-                             : (filter.get('valign') === 'bottom')? TextEdit.AlignBottom
-                             : TextEdit.AlignVCenter
-            text: filter.get('argument')
-            font.family: filter.get('family')
-            font.pixelSize: 24 //0.85 * height / text.split("\n").length
-            textMargin: filter.get('pad')
-            opacity: activeFocus
-            onActiveFocusChanged: filter.set('disable', activeFocus)
-            onTextChanged: filter.set('argument', text)
-        }
-
         RectangleControl {
             id: rectangle
             widthScale: video.rect.width / profile.width
             heightScale: video.rect.height / profile.height
-            aspectRatio: getAspectRatio()
             handleSize: Math.max(Math.round(8 / zoom), 4)
             borderSize: Math.max(Math.round(1.33 / zoom), 1)
-            onWidthScaleChanged: setHandles(filter.getRect(rectProperty))
-            onHeightScaleChanged: setHandles(filter.getRect(rectProperty))
-            onRectChanged:  {
-                filterRect.x = Math.round(rect.x / rectangle.widthScale)
-                filterRect.y = Math.round(rect.y / rectangle.heightScale)
-                filterRect.width = Math.round(rect.width / rectangle.widthScale)
-                filterRect.height = Math.round(rect.height / rectangle.heightScale)
-                filter.set(rectProperty, '%L1%/%L2%:%L3%x%L4%'
-                           .arg(filterRect.x / profile.width * 100)
-                           .arg(filterRect.y / profile.height * 100)
-                           .arg(filterRect.width / profile.width * 100)
-                           .arg(filterRect.height / profile.height * 100))
-                setSizeFromRect()
-            }
+            onWidthScaleChanged: setHandles(filterRect)
+            onHeightScaleChanged: setHandles(filterRect)
+            onRectChanged: updateFilter(getPosition())
         }
     }
 
     Connections {
         target: filter
-        onChanged: {
-            var newRect = filter.getRect(rectProperty)
-            if (filterRect !== newRect) {
-                filterRect = newRect
-                rectangle.setHandles(filterRect)
-                setSizeFromRect()
-            }
-            if (rectangle.aspectRatio !== getAspectRatio()) {
-                rectangle.aspectRatio = getAspectRatio()
-                rectangle.setHandles(filterRect)
-                var rect = rectangle.rectangle
-                filter.set(rectProperty, '%L1%/%L2%:%L3%x%L4%'
-                           .arg(Math.round(rect.x / rectangle.widthScale) / profile.width * 100)
-                           .arg(Math.round(rect.y / rectangle.heightScale) / profile.height * 100)
-                           .arg(Math.round(rect.width / rectangle.widthScale) / profile.width * 100)
-                           .arg(Math.round(rect.height / rectangle.heightScale) / profile.height * 100))
-            }
-        }
+        onChanged: setRectangleControl()
+    }
+
+    Connections {
+        target: producer
+        onPositionChanged: setRectangleControl()
     }
 }

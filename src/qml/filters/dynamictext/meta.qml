@@ -9,4 +9,16 @@ Metadata {
     qml: "ui.qml"
     vui: 'vui.qml'
     isGpuCompatible: false
+    keyframes {
+        allowAnimateIn: true
+        allowAnimateOut: true
+        simpleProperties: ['geometry']
+        parameters: [
+            Parameter {
+                name: qsTr('Position / Size')
+                property: 'geometry'
+                isSimple: true
+            }
+        ]
+    }
 }
