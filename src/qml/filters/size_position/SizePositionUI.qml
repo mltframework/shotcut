@@ -67,7 +67,7 @@ Item {
             // Add some animated presets.
             filter.set(valignProperty, 'middle')
             filter.set(halignProperty, 'center')
-            filter.animateIn = profile.fps
+            filter.animateIn = Math.round(profile.fps)
             filter.set(rectProperty,   '0=-100%/0%:100%x100%; :1.0=0%/0%:100%x100%')
             filter.savePreset(preset.parameters.concat('shotcut:animIn'), qsTr('Slide In From Left'))
             filter.set(rectProperty,   '0=100%/0%:100%x100%; :1.0=0%/0%:100%x100%')
@@ -77,7 +77,7 @@ Item {
             filter.set(rectProperty,   '0=0%/100%:100%x100%; :1.0=0%/0%:100%x100%')
             filter.savePreset(preset.parameters.concat('shotcut:animIn'), qsTr('Slide In From Bottom'))
             filter.animateIn = 0
-            filter.animateOut = profile.fps
+            filter.animateOut = Math.round(profile.fps)
             filter.set(rectProperty,   ':-1.0=0%/0%:100%x100%; -1=-100%/0%:100%x100%')
             filter.savePreset(preset.parameters.concat('shotcut:animOut'), qsTr('Slide Out Left'))
             filter.set(rectProperty,   ':-1.0=0%/0%:100%x100%; -1=100%/0%:100%x100%')
@@ -281,7 +281,7 @@ Item {
         }
         KeyframesButton {
             id: positionKeyframesButton
-            checked: filter.keyframeCount(rectProperty) > 0
+            checked: filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
             onToggled: {
                 if (checked) {
                     filter.clearSimpleAnimation(rectProperty)

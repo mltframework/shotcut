@@ -749,6 +749,7 @@ void GLWidget::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta)
         filter->producer().set(kShotcutVuiMetaProperty, 1);
         rootContext()->setContextProperty("filter", filter);
         setSource(meta->vuiFilePath());
+        refreshConsumer();
     } else {
         setBlankScene();
     }
