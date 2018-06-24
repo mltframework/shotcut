@@ -84,7 +84,10 @@ AvformatProducerWidget::AvformatProducerWidget(QWidget *parent)
 {
     ui->setupUi(this);
     Util::setColorsToHighlight(ui->filenameLabel);
-    connect(this, SIGNAL(producerChanged(Mlt::Producer*)), SLOT(onProducerChanged()));
+    if (Settings.playerGPU())
+        connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
+    else
+        connect(this, SIGNAL(producerChanged(Mlt::Producer*)), SLOT(onProducerChanged()));
 }
 
 AvformatProducerWidget::~AvformatProducerWidget()
@@ -126,6 +129,18 @@ void AvformatProducerWidget::keyPressEvent(QKeyEvent* event)
     } else {
         QWidget::keyPressEvent(event);
     }
+}
+
+void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
+{
+    // This forces avformat-novalidate or unloaded avformat to load and get
+    // media information.
+    delete m_producer->get_frame();
+    onFrameDecoded();
+    // We can stop listening to this signal if this is audio-only or if we have
+    // received the video resolution.
+    if (m_producer->get_int("audio_index") == -1 || m_producer->get_int("meta.media.width") || m_producer->get_int("meta.media.height"))
+        disconnect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, 0);
 }
 
 void AvformatProducerWidget::onProducerChanged()
@@ -473,6 +488,8 @@ void AvformatProducerWidget::on_scanComboBox_activated(int index)
             // by setting them NULL.
             m_producer->set("force_progressive", QString::number(index).toLatin1().constData());
         emit producerChanged(producer());
+        if (Settings.playerGPU())
+            connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
     }
 }
 
@@ -483,6 +500,8 @@ void AvformatProducerWidget::on_fieldOrderComboBox_activated(int index)
         if (m_producer->get("force_tff") || tff != index)
             m_producer->set("force_tff", QString::number(index).toLatin1().constData());
         emit producerChanged(producer());
+        if (Settings.playerGPU())
+            connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
     }
 }
 
@@ -500,6 +519,8 @@ void AvformatProducerWidget::on_aspectNumSpinBox_valueChanged(int)
             m_producer->set(kAspectRatioDenominator, ui->aspectDenSpinBox->text().toLatin1().constData());
         }
         emit producerChanged(producer());
+        if (Settings.playerGPU())
+            connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
     }
 }
 

@@ -48,6 +48,8 @@ protected:
     void keyPressEvent(QKeyEvent *event);
 
 private slots:
+    void onFrameDisplayed(const SharedFrame&);
+
     void onProducerChanged();
 
     void onFrameDecoded();
