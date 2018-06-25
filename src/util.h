@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2014-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +20,7 @@
 
 #include <QString>
 #include <QPalette>
+#include <QUrl>
 
 class QWidget;
 namespace Mlt {
@@ -37,6 +37,8 @@ public:
     static void showInFolder(const QString &path);
     static bool warnIfNotWritable(const QString& filePath, QWidget* parent, const QString& caption);
     static QString producerTitle(const Mlt::Producer& producer);
+    static QString removeFileScheme(QUrl &url);
+    static QStringList sortedFileList(const QList<QUrl>& urls);
 };
 
 #endif // UTIL_H

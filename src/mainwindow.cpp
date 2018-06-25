@@ -1066,14 +1066,6 @@ void MainWindow::setFullScreen(bool isFullScreen)
     }
 }
 
-QString MainWindow::removeFileScheme(QUrl &url)
-{
-    QString path = url.url();
-    if (url.scheme() == "file")
-        path = url.url(QUrl::PreferLocalFile);
-    return path;
-}
-
 QString MainWindow::untitledFileName() const
 {
     QDir dir = Settings.appDataLocation();
@@ -1981,13 +1973,8 @@ void MainWindow::dropEvent(QDropEvent *event)
         }
     }
     else if (mimeData->hasUrls()) {
-        if (mimeData->urls().length() > 1) {
-            foreach (QUrl url, mimeData->urls()) {
-                QString path = removeFileScheme(url);
-                m_multipleFiles.append(path);
-            }
-        }
-        QString path = removeFileScheme(mimeData->urls().first());
+        m_multipleFiles = Util::sortedFileList(mimeData->urls());
+        QString path = m_multipleFiles.first();
         open(path);
         event->acceptProposedAction();
     }
@@ -2851,15 +2838,15 @@ private:
 
 void MainWindow::processMultipleFiles()
 {
-    if (m_multipleFiles.length() > 0) {
+    if (m_multipleFiles.length() > 1) {
         PlaylistModel* model = m_playlistDock->model();
         m_playlistDock->show();
         m_playlistDock->raise();
         QThreadPool::globalInstance()->start(new AppendTask(model, m_multipleFiles));
         foreach (QString filename, m_multipleFiles)
             m_recentDock->add(filename.toUtf8().constData());
-        m_multipleFiles.clear();
     }
+    m_multipleFiles.clear();
     if (m_isPlaylistLoaded && Settings.playerGPU()) {
         updateThumbnails();
         m_isPlaylistLoaded = false;

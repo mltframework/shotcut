@@ -25,6 +25,7 @@
 #include <QUrl>
 #include <QDesktopServices>
 #include <QMessageBox>
+#include <QMap>
 #include <MltProducer.h>
 #include "shotcut_mlt_properties.h"
 
@@ -114,5 +115,55 @@ QString Util::producerTitle(const Mlt::Producer& producer)
         return QString::fromUtf8(p.get(kShotcutCaptionProperty));
     if (p.get("resource"))
         return Util::baseName(QString::fromUtf8(p.get("resource")));
+    return result;
+}
+
+QString Util::removeFileScheme(QUrl& url)
+{
+    QString path = url.url();
+    if (url.scheme() == "file")
+        path = url.url(QUrl::PreferLocalFile);
+    return path;
+}
+
+QStringList Util::sortedFileList(const QList<QUrl>& urls)
+{
+    QStringList result;
+    QMap<QString, QStringList> goproFiles;
+
+    // First look for GoPro main files.
+    foreach (QUrl url, urls) {
+        QFileInfo fi(removeFileScheme(url));
+        if (fi.baseName().size() == 8 && fi.suffix() == "MP4" && fi.baseName().startsWith("GOPR"))
+            goproFiles[fi.baseName().mid(4)] << fi.filePath();
+    }
+    // Then, look for GoPro split files.
+    foreach (QUrl url, urls) {
+        QFileInfo fi(removeFileScheme(url));
+        if (fi.baseName().size() == 8 && fi.suffix() == "MP4" && fi.baseName().startsWith("GP")) {
+            QString goproNumber = fi.baseName().mid(4);
+            // Only if there is a matching main GoPro file.
+            if (goproFiles.contains(goproNumber) && goproFiles[goproNumber].size())
+                goproFiles[goproNumber] << fi.filePath();
+        }
+    }
+    // Next, sort the GoPro files.
+    foreach (QString goproNumber, goproFiles.keys())
+        goproFiles[goproNumber].sort(Qt::CaseSensitive);
+    // Finally, build the list of all files.
+    // Add all the GoPro files first.
+    foreach (QStringList paths, goproFiles)
+        result << paths;
+    // Add all the non-GoPro files.
+    foreach (QUrl url, urls) {
+        QFileInfo fi(removeFileScheme(url));
+        if (fi.baseName().size() == 8 && fi.suffix() == "MP4" &&
+                (fi.baseName().startsWith("GOPR") || fi.baseName().startsWith("GP"))) {
+            QString goproNumber = fi.baseName().mid(4);
+            if (goproFiles.contains(goproNumber) && goproFiles[goproNumber].contains(fi.filePath()))
+                continue;
+        }
+        result << fi.filePath();
+    }
     return result;
 }

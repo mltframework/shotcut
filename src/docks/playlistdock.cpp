@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2012-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +22,8 @@
 #include "settings.h"
 #include "shotcut_mlt_properties.h"
 #include "widgets/playlisticonview.h"
-#include <commands/playlistcommands.h>
+#include "util.h"
+#include "commands/playlistcommands.h"
 #include <Logger.h>
 
 #include <QMenu>
@@ -521,8 +521,8 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
     if (data && data->hasUrls()) {
         int insertNextAt = row;
         bool first = true;
-        foreach (QUrl url, data->urls()) {
-            QString path = MAIN.removeFileScheme(url);
+        QStringList fileNames = Util::sortedFileList(data->urls());
+        foreach (QString path, fileNames) {
             if (MAIN.isSourceClipMyProject(path)) continue;
             Mlt::Producer p(MLT.profile(), path.toUtf8().constData());
             if (p.is_valid()) {
