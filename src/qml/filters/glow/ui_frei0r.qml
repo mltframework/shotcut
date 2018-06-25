@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2014-2015 Meltytech, LLC
- * Author: Brian Matherly <pez4brian@yahoo.com>
+ * Copyright (c) 2014-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,20 +23,73 @@ import Shotcut.Controls 1.0
 Item {
     property string paramBlur: '0'
     property var defaultParameters: [paramBlur]
+    property bool blockUpdate: true
+    property double startValue: 0.0
+    property double middleValue: 0.5
+    property double endValue: 0.0
     width: 350
     height: 50
     Component.onCompleted: {
-        filter.set('start', 1)
         if (filter.isNew) {
             // Set default parameter values
             filter.set(paramBlur, 50.0 / 100.0)
             filter.savePreset(defaultParameters)
-            bslider.value = filter.getDouble(paramBlur) * 100.0
+        } else {
+            middleValue = filter.getDouble(paramBlur, filter.animateIn)
+            if (filter.animateIn > 0)
+                startValue = filter.getDouble(paramBlur, 0)
+            if (filter.animateOut > 0)
+                endValue = filter.getDouble(paramBlur, filter.duration - 1)
+        }
+        setControls()
+    }
+
+    function getPosition() {
+        return Math.max(producer.position - (filter.in - producer.in), 0)
+    }
+
+    function setControls() {
+        var position = getPosition()
+        blockUpdate = true
+        bslider.value = filter.getDouble(paramBlur, position) * 100.0
+        blockUpdate = false
+        bslider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
+    }
+
+    function updateFilter(position) {
+        if (blockUpdate) return
+        var value = bslider.value / 100.0
+
+        if (position !== null) {
+            if (position <= 0 && filter.animateIn > 0)
+                startValue = value
+            else if (position >= filter.duration - 1 && filter.animateOut > 0)
+                endValue = value
+            else
+                middleValue = value
+        }
+
+        if (filter.animateIn > 0 || filter.animateOut > 0) {
+            filter.resetProperty(paramBlur)
+            blurKeyframesButton.checked = false
+            if (filter.animateIn > 0) {
+                filter.set(paramBlur, startValue, 0)
+                filter.set(paramBlur, middleValue, filter.animateIn - 1)
+            }
+            if (filter.animateOut > 0) {
+                filter.set(paramBlur, middleValue, filter.duration - filter.animateOut)
+                filter.set(paramBlur, endValue, filter.duration - 1)
+            }
+        } else if (!blurKeyframesButton.checked) {
+            filter.resetProperty(paramBlur)
+            filter.set(paramBlur, middleValue)
+        } else if (position !== null) {
+            filter.set(paramBlur, value, position)
         }
     }
 
     GridLayout {
-        columns: 3
+        columns: 4
         anchors.fill: parent
         anchors.margins: 8
 
@@ -46,10 +98,16 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
         Preset {
-            Layout.columnSpan: 2
+            Layout.columnSpan: 3
             parameters: defaultParameters
+            onBeforePresetLoaded: filter.resetProperty(paramBlur)
             onPresetSelected: {
-                bslider.value = filter.getDouble(paramBlur) * 100.0
+                middleValue = filter.getDouble(paramBlur, filter.animateIn)
+                if (filter.animateIn > 0)
+                    startValue = filter.getDouble(paramBlur, 0)
+                if (filter.animateOut > 0)
+                    endValue = filter.getDouble(paramBlur, filter.duration - 1)
+                setControls()
             }
         }
 
@@ -62,15 +120,43 @@ Item {
             minimumValue: 0
             maximumValue: 100
             suffix: ' %'
-            value: filter.getDouble(paramBlur) * 100.0
-            onValueChanged: filter.set(paramBlur, value / 100.0)
+            onValueChanged: updateFilter(getPosition())
         }
         UndoButton {
             onClicked: bslider.value = 50
+        }
+        KeyframesButton {
+            id: blurKeyframesButton
+            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramBlur) > 0
+            onToggled: {
+                var value = bslider.value / 100.0
+                if (checked) {
+                    blockUpdate = true
+                    filter.clearSimpleAnimation(paramBlur)
+                    blockUpdate = false
+                    filter.set(paramBlur, value, getPosition())
+                } else {
+                    filter.resetProperty(paramBlur)
+                    filter.set(paramBlur, value)
+                }
+            }
         }
 
         Item {
             Layout.fillHeight: true
         }
+    }
+
+    Connections {
+        target: filter
+        onInChanged: updateFilter(null)
+        onOutChanged: updateFilter(null)
+        onAnimateInChanged: updateFilter(null)
+        onAnimateOutChanged: updateFilter(null)
+    }
+
+    Connections {
+        target: producer
+        onPositionChanged: setControls()
     }
 }

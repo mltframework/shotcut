@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2014-2015 Meltytech, LLC
- * Author: Brian Matherly <pez4brian@yahoo.com>
+ * Copyright (c) 2014-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,24 +22,110 @@ import Shotcut.Controls 1.0
 
 Item {
     property var defaultParameters: ['radius','blur_mix','highlight_cutoff']
+    property bool blockUpdate: true
+    property var startValues:  [0.0,  0.0, 0.1]
+    property var middleValues: [20.0, 1.0, 0.2]
+    property var endValues:    [0.0,  0.0, 0.1]
     width: 350
     height: 125
     Component.onCompleted: {
-        filter.set('start', 1)
         if (filter.isNew) {
             // Set default parameter values
             filter.set('radius', 20.0)
             filter.set('blur_mix', 1.0)
             filter.set('highlight_cutoff', 0.2)
             filter.savePreset(defaultParameters)
-            radiusslider.value = filter.getDouble("radius")
-            blurslider.value = filter.getDouble("blur_mix")
-            cutoffslider.value = filter.getDouble("highlight_cutoff")
+        } else {
+            initSimpleAnimation()
+        }
+        setControls()
+    }
+
+    function initSimpleAnimation() {
+        middleValues = [filter.getDouble(defaultParameters[0], filter.animateIn),
+                        filter.getDouble(defaultParameters[1], filter.animateIn),
+                        filter.getDouble(defaultParameters[2], filter.animateIn)]
+        if (filter.animateIn > 0) {
+            startValues = [filter.getDouble(defaultParameters[0], 0),
+                           filter.getDouble(defaultParameters[1], 0),
+                           filter.getDouble(defaultParameters[2], 0)]
+        }
+        if (filter.animateOut > 0) {
+            endValues = [filter.getDouble(defaultParameters[0], filter.duration - 1),
+                         filter.getDouble(defaultParameters[1], filter.duration - 1),
+                         filter.getDouble(defaultParameters[2], filter.duration - 1)]
+        }
+    }
+
+    function getPosition() {
+        return Math.max(producer.position - (filter.in - producer.in), 0)
+    }
+
+    function setControls() {
+        var position = getPosition()
+        blockUpdate = true
+        radiusslider.value = filter.getDouble('radius', position)
+        blurslider.value = filter.getDouble('blur_mix', position)
+        cutoffslider.value = filter.getDouble('highlight_cutoff', position)
+        blockUpdate = false
+        radiusslider.enabled = blurslider.enabled = cutoffslider.enabled
+            = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
+    }
+
+    function updateFilter(parameter, value, position, button) {
+        if (blockUpdate) return
+        var index = defaultParameters.indexOf(parameter)
+
+        if (position !== null) {
+            if (position <= 0 && filter.animateIn > 0)
+                startValues[index] = value
+            else if (position >= filter.duration - 1 && filter.animateOut > 0)
+                endValues[index] = value
+            else
+                middleValues[index] = value
+        }
+
+        if (filter.animateIn > 0 || filter.animateOut > 0) {
+            filter.resetProperty(parameter)
+            button.checked = false
+            if (filter.animateIn > 0) {
+                filter.set(parameter, startValues[index], 0)
+                filter.set(parameter, middleValues[index], filter.animateIn - 1)
+            }
+            if (filter.animateOut > 0) {
+                filter.set(parameter, middleValues[index], filter.duration - filter.animateOut)
+                filter.set(parameter, endValues[index], filter.duration - 1)
+            }
+        } else if (!button.checked) {
+            filter.resetProperty(parameter)
+            filter.set(parameter, middleValues[index])
+        } else if (position !== null) {
+            filter.set(parameter, value, position)
+        }
+    }
+
+    function onKeyframesButtonClicked(checked, parameter, value) {
+        if (checked) {
+            blockUpdate = true
+            radiusslider.enabled = blurslider.enabled = cutoffslider.enabled = true
+            if (filter.animateIn > 0 || filter.animateOut > 0) {
+                filter.resetProperty('radius')
+                filter.resetProperty('blur_mix')
+                filter.resetProperty('highlight_cutoff')
+                filter.animateIn = filter.animateOut = 0
+            } else {
+                filter.clearSimpleAnimation('radius')
+            }
+            blockUpdate = false
+            filter.set(parameter, value, getPosition())
+        } else {
+            filter.resetProperty(parameter)
+            filter.set(parameter, value)
         }
     }
 
     GridLayout {
-        columns: 3
+        columns: 4
         anchors.fill: parent
         anchors.margins: 8
         
@@ -49,12 +134,16 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
         Preset {
-            Layout.columnSpan: 2
+            Layout.columnSpan: 3
             parameters: defaultParameters
+            onBeforePresetLoaded: {
+                filter.resetProperty('radius')
+                filter.resetProperty('blur_mix')
+                filter.resetProperty('highlight_cutoff')
+            }
             onPresetSelected: {
-                radiusslider.value = filter.getDouble("radius")
-                blurslider.value = filter.getDouble("blur_mix")
-                cutoffslider.value = filter.getDouble("highlight_cutoff")
+                setControls()
+                initSimpleAnimation()
             }
         }
 
@@ -68,11 +157,15 @@ Item {
             minimumValue: 0
             maximumValue: 100
             decimals: 1
-            value: filter.getDouble("radius")
-            onValueChanged: filter.set("radius", value)
+            onValueChanged: updateFilter('radius', value, getPosition(), radiusKeyframesButton)
         }
         UndoButton {
             onClicked: radiusslider.value = 20
+        }
+        KeyframesButton {
+            id: radiusKeyframesButton
+            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('radius') > 0
+            onToggled: onKeyframesButtonClicked(checked, 'radius', radiusslider.value)
         }
 
         // Row 2
@@ -85,11 +178,15 @@ Item {
             minimumValue: 0.0
             maximumValue: 1.0
             decimals: 2
-            value: filter.getDouble("blur_mix")
-            onValueChanged: filter.set("blur_mix", value)
+            onValueChanged: updateFilter('blur_mix', value, getPosition(), blurKeyframesButton)
         }
         UndoButton {
             onClicked: blurslider.value = 1.0
+        }
+        KeyframesButton {
+            id: blurKeyframesButton
+            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('blur_mix') > 0
+            onToggled: onKeyframesButtonClicked(checked, 'blur_mix', blurslider.value)
         }
 
         // Row 3
@@ -102,15 +199,38 @@ Item {
             minimumValue: 0.1
             maximumValue: 1.0
             decimals: 2
-            value: filter.getDouble("highlight_cutoff")
-            onValueChanged: filter.set("highlight_cutoff", value)
+            onValueChanged: updateFilter('highlight_cutoff', value, getPosition(), cutoffKeyframesButton)
         }
         UndoButton {
             onClicked: cutoffslider.value = 0.2
+        }
+        KeyframesButton {
+            id: cutoffKeyframesButton
+            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('highlight_cutoff') > 0
+            onToggled: onKeyframesButtonClicked(checked, 'highlight_cutoff', cutoffslider.value)
         }
 
         Item {
             Layout.fillHeight: true
         }
+    }
+
+    function updatedSimpleAnimation() {
+        updateFilter('radius', radiusslider.value, getPosition(), radiusKeyframesButton)
+        updateFilter('blur_mix', blurslider.value, getPosition(), blurKeyframesButton)
+        updateFilter('highlight_cutoff', cutoffslider.value, getPosition(), cutoffKeyframesButton)
+    }
+
+    Connections {
+        target: filter
+        onInChanged: updatedSimpleAnimation()
+        onOutChanged: updatedSimpleAnimation()
+        onAnimateInChanged: updatedSimpleAnimation()
+        onAnimateOutChanged: updatedSimpleAnimation()
+    }
+
+    Connections {
+        target: producer
+        onPositionChanged: setControls()
     }
 }
