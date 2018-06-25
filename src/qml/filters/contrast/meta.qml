@@ -9,4 +9,16 @@ Metadata {
     qml: "ui.qml"
     isFavorite: true
     gpuAlt: "movit.lift_gamma_gain"
+    keyframes {
+        allowAnimateIn: true
+        allowAnimateOut: true
+        simpleProperties: ['gain_r']
+        parameters: [
+            Parameter {
+                name: qsTr('Level')
+                property: 'gain_r'
+                isSimple: true
+            }
+        ]
+    }
 }

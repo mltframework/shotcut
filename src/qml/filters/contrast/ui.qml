@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Meltytech, LLC
+ * Copyright (c) 2016-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,12 +24,12 @@ Item {
     property var defaultParameters: ['gamma_r', 'gamma_g', 'gamma_b', 'gain_r', 'gain_g', 'gain_b']
     property double gammaFactor: 2.0
     property double gainFactor: 2.0
+    property bool blockUpdate: true
+    property double startValue: 0.5
+    property double middleValue: 0.5
+    property double endValue: 0.5
     width: 200
     height: 50
-    
-    function setControls() {
-        contrastSlider.value = filter.getDouble("gain_r") / gainFactor * 100.0
-    }
     
     Component.onCompleted: {
         if (filter.isNew) {
@@ -41,12 +41,102 @@ Item {
             filter.set("gain_g", 1.0);
             filter.set("gain_b", 1.0);
             filter.savePreset(defaultParameters)
+        } else {
+            middleValue = filter.getDouble('gain_r', filter.animateIn) / gainFactor
+            if (filter.animateIn > 0)
+                startValue = filter.getDouble('gain_r', 0) / gainFactor
+            if (filter.animateOut > 0)
+                endValue = filter.getDouble('gain_r', filter.duration - 1) / gainFactor
         }
         setControls()
     }
 
+    function getPosition() {
+        return Math.max(producer.position - (filter.in - producer.in), 0)
+    }
+
+    function setControls() {
+        var position = getPosition()
+        blockUpdate = true
+        contrastSlider.value = filter.getDouble("gain_r", position) / gainFactor * 100.0
+        blockUpdate = false
+        contrastSlider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
+    }
+
+    function updateFilter(position) {
+        if (blockUpdate) return
+        var value = contrastSlider.value / 100.0
+
+        if (position !== null) {
+            if (position <= 0 && filter.animateIn > 0)
+                startValue = value
+            else if (position >= filter.duration - 1 && filter.animateOut > 0)
+                endValue = value
+            else
+                middleValue = value
+        }
+
+        if (filter.animateIn > 0 || filter.animateOut > 0) {
+            filter.resetProperty('gamma_r')
+            filter.resetProperty('gamma_g')
+            filter.resetProperty('gamma_b')
+            filter.resetProperty('gain_r')
+            filter.resetProperty('gain_g')
+            filter.resetProperty('gain_b')
+            keyframesButton.checked = false
+            if (filter.animateIn > 0) {
+                filter.set("gamma_r", (1.0 - startValue) * gammaFactor, 0)
+                filter.set("gamma_g", (1.0 - startValue) * gammaFactor, 0)
+                filter.set("gamma_b", (1.0 - startValue) * gammaFactor, 0)
+                filter.set("gain_r",  startValue * gainFactor, 0)
+                filter.set("gain_g",  startValue * gainFactor, 0)
+                filter.set("gain_b",  startValue * gainFactor, 0)
+                filter.set("gamma_r", (1.0 - middleValue) * gammaFactor, filter.animateIn - 1)
+                filter.set("gamma_g", (1.0 - middleValue) * gammaFactor, filter.animateIn - 1)
+                filter.set("gamma_b", (1.0 - middleValue) * gammaFactor, filter.animateIn - 1)
+                filter.set("gain_r",  middleValue * gainFactor, filter.animateIn - 1)
+                filter.set("gain_g",  middleValue * gainFactor, filter.animateIn - 1)
+                filter.set("gain_b",  middleValue * gainFactor, filter.animateIn - 1)
+            }
+            if (filter.animateOut > 0) {
+                filter.set("gamma_r", (1.0 - middleValue) * gammaFactor, filter.duration - filter.animateOut)
+                filter.set("gamma_g", (1.0 - middleValue) * gammaFactor, filter.duration - filter.animateOut)
+                filter.set("gamma_b", (1.0 - middleValue) * gammaFactor, filter.duration - filter.animateOut)
+                filter.set("gain_r",  middleValue * gainFactor, filter.duration - filter.animateOut)
+                filter.set("gain_g",  middleValue * gainFactor, filter.duration - filter.animateOut)
+                filter.set("gain_b",  middleValue * gainFactor, filter.duration - filter.animateOut)
+                filter.set("gamma_r", (1.0 - endValue) * gammaFactor, filter.duration - 1)
+                filter.set("gamma_g", (1.0 - endValue) * gammaFactor, filter.duration - 1)
+                filter.set("gamma_b", (1.0 - endValue) * gammaFactor, filter.duration - 1)
+                filter.set("gain_r",  endValue * gainFactor, filter.duration - 1)
+                filter.set("gain_g",  endValue * gainFactor, filter.duration - 1)
+                filter.set("gain_b",  endValue * gainFactor, filter.duration - 1)
+            }
+        } else if (!keyframesButton.checked) {
+            filter.resetProperty('gamma_r')
+            filter.resetProperty('gamma_g')
+            filter.resetProperty('gamma_b')
+            filter.resetProperty('gain_r')
+            filter.resetProperty('gain_g')
+            filter.resetProperty('gain_b')
+            filter.set("gamma_r", (1.0 - middleValue) * gammaFactor)
+            filter.set("gamma_g", (1.0 - middleValue) * gammaFactor)
+            filter.set("gamma_b", (1.0 - middleValue) * gammaFactor)
+            filter.set("gain_r",  middleValue * gainFactor)
+            filter.set("gain_g",  middleValue * gainFactor)
+            filter.set("gain_b",  middleValue * gainFactor)
+        } else if (position !== null) {
+            filter.set("gamma_r", (1.0 - value) * gammaFactor, position)
+            filter.set("gamma_g", (1.0 - value) * gammaFactor, position)
+            filter.set("gamma_b", (1.0 - value) * gammaFactor, position)
+            filter.set("gain_r",  value * gainFactor, position)
+            filter.set("gain_g",  value * gainFactor, position)
+            filter.set("gain_b",  value * gainFactor, position)
+        }
+    }
+
     GridLayout {
-        columns: 3
+        columns: 4
         anchors.fill: parent
         anchors.margins: 8
 
@@ -55,7 +145,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
         Preset {
-            Layout.columnSpan: 2
+            Layout.columnSpan: 3
             parameters: defaultParameters
             onPresetSelected: {
                 setControls()
@@ -63,7 +153,7 @@ Item {
         }
 
         Label {
-            text: qsTr('Contrast')
+            text: qsTr('Level')
             Layout.alignment: Qt.AlignRight
         }
         SliderSpinner {
@@ -72,22 +162,60 @@ Item {
             maximumValue: 100
             decimals: 1
             suffix: ' %'
-            onValueChanged: {
-                var v = value / 100.0
-                filter.set("gamma_r", (1.0 - v) * gammaFactor)
-                filter.set("gamma_g", (1.0 - v) * gammaFactor)
-                filter.set("gamma_b", (1.0 - v) * gammaFactor)
-                filter.set("gain_r",  v * gainFactor)
-                filter.set("gain_g",  v * gainFactor)
-                filter.set("gain_b",  v * gainFactor)
-            }
+            onValueChanged: updateFilter(getPosition())
         }
         UndoButton {
             onClicked: contrastSlider.value = 50
+        }
+        KeyframesButton {
+            id:keyframesButton
+            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('gain_r') > 0
+            onToggled: {
+                var value = contrastSlider.value / 100.0
+                blockUpdate = true
+                filter.resetProperty('gamma_r')
+                filter.resetProperty('gamma_g')
+                filter.resetProperty('gamma_b')
+                filter.resetProperty('gain_r')
+                filter.resetProperty('gain_g')
+                filter.resetProperty('gain_b')
+                if (checked) {
+                    filter.animateIn = filter.animateOut = 0
+                    blockUpdate = false
+                    var position = getPosition()
+                    filter.set("gamma_r", (1.0 - value) * gammaFactor, position)
+                    filter.set("gamma_g", (1.0 - value) * gammaFactor, position)
+                    filter.set("gamma_b", (1.0 - value) * gammaFactor, position)
+                    filter.set("gain_r",  value * gainFactor, position)
+                    filter.set("gain_g",  value * gainFactor, position)
+                    filter.set("gain_b",  value * gainFactor, position)
+                } else {
+                    blockUpdate = false
+                    filter.set("gamma_r", (1.0 - value) * gammaFactor)
+                    filter.set("gamma_g", (1.0 - value) * gammaFactor)
+                    filter.set("gamma_b", (1.0 - value) * gammaFactor)
+                    filter.set("gain_r",  value * gainFactor)
+                    filter.set("gain_g",  value * gainFactor)
+                    filter.set("gain_b",  value * gainFactor)
+                }
+            }
         }
 
         Item {
             Layout.fillHeight: true
         }
+    }
+
+    Connections {
+        target: filter
+        onInChanged: updateFilter(null)
+        onOutChanged: updateFilter(null)
+        onAnimateInChanged: updateFilter(null)
+        onAnimateOutChanged: updateFilter(null)
+    }
+
+    Connections {
+        target: producer
+        onPositionChanged: setControls()
     }
 }

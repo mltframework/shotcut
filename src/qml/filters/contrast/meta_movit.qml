@@ -9,4 +9,16 @@ Metadata {
     needsGPU: true
     qml: "ui.qml"
     isFavorite: true
+    keyframes {
+        allowAnimateIn: true
+        allowAnimateOut: true
+        simpleProperties: ['gain_r']
+        parameters: [
+            Parameter {
+                name: qsTr('Level')
+                property: 'gain_r'
+                isSimple: true
+            }
+        ]
+    }
 }
