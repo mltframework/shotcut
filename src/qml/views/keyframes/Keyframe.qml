@@ -93,9 +93,8 @@ Rectangle {
                 parameters.setPosition(parameterIndex, index, newPosition - (filter.in - producer.in))
             if (isCurve) {
                 var trackValue = Math.min(Math.max(0, 1.0 - parent.y / (parameterRoot.height - parent.height)), 1.0)
-                var newValue = minimum + trackValue * (maximum - minimum)
-                if (trackValue !== newValue)
-                    parameters.setKeyframe(parameterIndex, newValue, newPosition - (filter.in - producer.in), interpolation)
+                trackValue = minimum + trackValue * (maximum - minimum)
+                parameters.setKeyframe(parameterIndex, trackValue, newPosition - (filter.in - producer.in), interpolation)
             }
         }
     }
