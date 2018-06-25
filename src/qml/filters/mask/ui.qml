@@ -131,7 +131,15 @@ Item {
         if (checked) {
             blockUpdate = true
             horizontalSlider.enabled = verticalSlider.enabled = widthSlider.enabled = heightSlider.enabled = true
-            filter.clearSimpleAnimation(parameter)
+            if (filter.animateIn > 0 || filter.animateOut > 0) {
+                filter.resetProperty(paramHorizontal)
+                filter.resetProperty(paramVertical)
+                filter.resetProperty(paramWidth)
+                filter.resetProperty(paramHeight)
+                filter.animateIn = filter.animateOut = 0
+            } else {
+                filter.clearSimpleAnimation(parameter)
+            }
             blockUpdate = false
             filter.set(parameter, value, getPosition())
         } else {
