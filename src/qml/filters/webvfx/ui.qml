@@ -102,7 +102,7 @@ Item {
                 if (!htmlFile.suffix()) {
                     htmlFile.url = htmlFile.url + ".html"
                 }
-                htmlFile.copyFromFile(":/scripts/new.html")
+                htmlFile.copyFromFile(webvfxCheckBox.checked? ":/scripts/web-animations.html" : ":/scripts/new.html")
             }
 
             fileLabel.text = htmlFile.fileName
@@ -115,7 +115,9 @@ Item {
             reloadButton.visible = true
 
             var resource = htmlFile.url
-            if (!webvfxCheckBox.checked) {
+            if (webvfxCheckBox.checked) {
+                filter.set('duration', filter.duration / profile.fps)
+            } else {
                 resource = "plain:" + resource
             }
             filter.set('resource', resource)
@@ -254,5 +256,9 @@ Item {
             Layout.columnSpan: 4
         }
     }
-
+    Connections {
+        target: filter
+        onInChanged: filter.set('duration', filter.duration / profile.fps)
+        onOutChanged: filter.set('duration', filter.duration / profile.fps)
+    }
 }
