@@ -2102,8 +2102,6 @@ bool MainWindow::on_actionSave_triggered()
 
 bool MainWindow::on_actionSave_As_triggered()
 {
-    if (!MLT.producer())
-        return false;
     QString path = Settings.savePath();
     path.append("/.mlt");
     QString caption = tr("Save XML");
@@ -2431,7 +2429,7 @@ void MainWindow::saveXML(const QString &filename, bool withRelativePaths)
         MLT.producer()->set_in_and_out(0, MLT.producer()->get_length() - 1);
         MLT.saveXML(filename, playlist(), withRelativePaths);
         MLT.producer()->set_in_and_out(in, out);
-    } else {
+    } else if (MLT.producer()) {
         MLT.saveXML(filename, (MLT.isMultitrack() || MLT.isPlaylist())? MLT.savedProducer() : 0, withRelativePaths);
     }
 }
