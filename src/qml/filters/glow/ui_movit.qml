@@ -114,7 +114,7 @@ Item {
                 filter.resetProperty('highlight_cutoff')
                 filter.animateIn = filter.animateOut = 0
             } else {
-                filter.clearSimpleAnimation('radius')
+                filter.clearSimpleAnimation(parameter)
             }
             blockUpdate = false
             filter.set(parameter, value, getPosition())
@@ -215,7 +215,7 @@ Item {
         }
     }
 
-    function updatedSimpleAnimation() {
+    function updateSimpleAnimation() {
         updateFilter('radius', radiusslider.value, getPosition(), radiusKeyframesButton)
         updateFilter('blur_mix', blurslider.value, getPosition(), blurKeyframesButton)
         updateFilter('highlight_cutoff', cutoffslider.value, getPosition(), cutoffKeyframesButton)
@@ -223,10 +223,10 @@ Item {
 
     Connections {
         target: filter
-        onInChanged: updatedSimpleAnimation()
-        onOutChanged: updatedSimpleAnimation()
-        onAnimateInChanged: updatedSimpleAnimation()
-        onAnimateOutChanged: updatedSimpleAnimation()
+        onInChanged: updateSimpleAnimation()
+        onOutChanged: updateSimpleAnimation()
+        onAnimateInChanged: updateSimpleAnimation()
+        onAnimateOutChanged: updateSimpleAnimation()
     }
 
     Connections {
