@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2014-2017 Meltytech, LLC
- * Author: Brian Matherly <code@brianmatherly.com>
+ * Copyright (c) 2014-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -134,6 +133,14 @@ void MetadataModel::setFilter(MetadataFilter filter)
     endResetModel();
 }
 
+void MetadataModel::setSearch(const QString& search)
+{
+    beginResetModel();
+    m_search = search;
+    emit searchChanged();
+    endResetModel();
+}
+
 bool MetadataModel::isVisible(int row) const
 {
     QmlMetadata* meta = m_list.at(row);
@@ -141,10 +148,14 @@ bool MetadataModel::isVisible(int row) const
     if (meta->needsGPU() && !Settings.playerGPU()) return false;
     if (!meta->needsGPU() && Settings.playerGPU() && !meta->gpuAlt().isEmpty()) return false;
     if (!meta->isGpuCompatible() && Settings.playerGPU()) return false;
-    if (m_filter == FavoritesFilter && !meta->isFavorite()) return false;
-    if (m_filter == AudioFilter && !meta->isAudio()) return false;
-    if (m_filter == VideoFilter && meta->isAudio()) return false;
     if (meta->isClipOnly() && !m_isClipProducer) return false;
+    if (m_search.isEmpty()) {
+        if (m_filter == FavoritesFilter && !meta->isFavorite()) return false;
+        if (m_filter == AudioFilter && !meta->isAudio()) return false;
+        if (m_filter == VideoFilter && meta->isAudio()) return false;
+    } else {
+        if (!meta->name().contains(m_search, Qt::CaseInsensitive)) return false;
+    }
     return true;
 }
 

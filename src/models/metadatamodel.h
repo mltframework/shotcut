@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Meltytech, LLC
- * Author: Brian Matherly <code@brianmatherly.com>
+ * Copyright (c) 2014-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +28,7 @@ class MetadataModel : public QAbstractListModel
     Q_OBJECT
     Q_ENUMS(MetadataFilter)
     Q_PROPERTY(MetadataFilter filter READ filter WRITE setFilter NOTIFY filterChanged)
+    Q_PROPERTY(QString search READ search WRITE setSearch NOTIFY searchChanged)
 
 public:
 
@@ -63,17 +63,21 @@ public:
     Q_INVOKABLE QmlMetadata* get(int index) const;
     MetadataFilter filter() const { return m_filter; }
     void setFilter(MetadataFilter);
+    QString search() const { return m_search; }
+    void setSearch(const QString& search);
     Q_INVOKABLE bool isVisible(int row) const;
     void setIsClipProducer(bool isClipProducer);
 
 signals:
     void filterChanged();
+    void searchChanged();
 
 private:
     typedef QList<QmlMetadata*> MetadataList;
     MetadataList m_list;
     MetadataFilter m_filter;
     bool m_isClipProducer;
+    QString m_search;
 };
 
 #endif // METADATAMODEL_H

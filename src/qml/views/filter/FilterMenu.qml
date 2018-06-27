@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2014-2017 Meltytech, LLC
- * Author: Brian Matherly <code@brianmatherly.com>
+ * Copyright (c) 2014-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,10 +28,13 @@ Rectangle {
 
     function open() {
         filterWindow.visible = true
+        searchField.focus = true
     }
 
     function close() {
         filterWindow.visible = false
+        searchField.text = ''
+        searchField.focus = false
     }
 
     color: activePalette.window
@@ -42,11 +44,11 @@ Rectangle {
     ColumnLayout {
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.margins: 10
+        anchors.margins: 8
 
         ScrollView {
             Layout.fillWidth: true
-            Layout.preferredHeight: filterWindow.height - toolBar.height - parent.anchors.margins * 2
+            Layout.preferredHeight: filterWindow.height - toolBar.height - searchBar.height - parent.anchors.margins * 2
 
             ListView {
                 id: menuListView
@@ -62,6 +64,46 @@ Rectangle {
                 boundsBehavior: Flickable.StopAtBounds
                 currentIndex: -1
                 focus: true
+            }
+        }
+
+        RowLayout {
+            id: searchBar
+            Layout.fillWidth: true
+            property var savedFilter
+
+            TextField {
+                id: searchField
+                Layout.fillWidth: true
+                focus: true
+                placeholderText: qsTr("search")
+                text: metadatamodel.search
+                onTextChanged: {
+                    if (length !== 1 && text !== metadatamodel.search) {
+                        metadatamodel.search = text
+                    }
+                    if (length > 0) {
+                        parent.savedFilter = typeGroup.current
+                        favButton.checked = vidButton.checked = audButton.checked = false
+                    } else {
+                        parent.savedFilter.checked = true
+                    }
+                }
+                Keys.onEscapePressed: {
+                    if (text !== '')
+                        text = ''
+                    else
+                        filterWindow.close()
+                }
+            }
+            ToolButton {
+                id: clearButton
+                implicitWidth: 20
+                implicitHeight: 20
+                iconName: 'edit-clear'
+                iconSource: 'qrc:///icons/oxygen/32x32/actions/edit-clear.png'
+                tooltip: qsTr('Clear search')
+                onClicked: searchField.text = ''
             }
         }
 
