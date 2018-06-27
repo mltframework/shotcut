@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2014-2015 Meltytech, LLC
- * Author: Brian Matherly <pez4brian@yahoo.com>
+ * Copyright (c) 2014-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +22,10 @@ import Shotcut.Controls 1.0
 
 Item {
     property var defaultParameters: ['circle_radius','gaussian_radius', 'correlation', 'noise']
+    property bool blockUpdate: true
+    property var startValues:  [0.0, 0.0, 0.0,  0.0 ]
+    property var middleValues: [2.0, 0.0, 0.95, 0.01]
+    property var endValues:    [0.0, 0.0, 0.0,  0.0 ]
     width: 350
     height: 150
     Component.onCompleted: {
@@ -33,15 +36,100 @@ Item {
             filter.set('correlation', 0.95)
             filter.set('noise', 0.01)
             filter.savePreset(defaultParameters)
-            cradiusslider.value = filter.getDouble("circle_radius")
-            gradiusslider.value = filter.getDouble("gaussian_radius")
-            corrslider.value = filter.getDouble("correlation")
-            noiseslider.value = filter.getDouble("noise")
+        } else {
+            initSimpleAnimation()
+        }
+        setControls()
+    }
+
+    function initSimpleAnimation() {
+        middleValues = [filter.getDouble(defaultParameters[0], filter.animateIn),
+                        filter.getDouble(defaultParameters[1], filter.animateIn),
+                        filter.getDouble(defaultParameters[2], filter.animateIn),
+                        filter.getDouble(defaultParameters[3], filter.animateIn)]
+        if (filter.animateIn > 0) {
+            startValues = [filter.getDouble(defaultParameters[0], 0),
+                           filter.getDouble(defaultParameters[1], 0),
+                           filter.getDouble(defaultParameters[2], 0),
+                           filter.getDouble(defaultParameters[3], 0)]
+        }
+        if (filter.animateOut > 0) {
+            endValues = [filter.getDouble(defaultParameters[0], filter.duration - 1),
+                         filter.getDouble(defaultParameters[1], filter.duration - 1),
+                         filter.getDouble(defaultParameters[2], filter.duration - 1),
+                         filter.getDouble(defaultParameters[3], filter.duration - 1)]
+        }
+    }
+
+    function getPosition() {
+        return Math.max(producer.position - (filter.in - producer.in), 0)
+    }
+
+    function setControls() {
+        var position = getPosition()
+        blockUpdate = true
+        circleSlider.value = filter.getDouble("circle_radius", position)
+        gaussianSlider.value = filter.getDouble("gaussian_radius", position)
+        correlationSlider.value = filter.getDouble("correlation", position)
+        noiseSlider.value = filter.getDouble("noise", position)
+        blockUpdate = false
+        circleSlider.enabled = gaussianSlider.enabled = correlationSlider.enabled = noiseSlider.enabled
+            = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
+    }
+
+    function updateFilter(parameter, value, position, button) {
+        if (blockUpdate) return
+        var index = defaultParameters.indexOf(parameter)
+
+        if (position !== null) {
+            if (position <= 0 && filter.animateIn > 0)
+                startValues[index] = value
+            else if (position >= filter.duration - 1 && filter.animateOut > 0)
+                endValues[index] = value
+            else
+                middleValues[index] = value
+        }
+
+        if (filter.animateIn > 0 || filter.animateOut > 0) {
+            filter.resetProperty(parameter)
+            button.checked = false
+            if (filter.animateIn > 0) {
+                filter.set(parameter, startValues[index], 0)
+                filter.set(parameter, middleValues[index], filter.animateIn - 1)
+            }
+            if (filter.animateOut > 0) {
+                filter.set(parameter, middleValues[index], filter.duration - filter.animateOut)
+                filter.set(parameter, endValues[index], filter.duration - 1)
+            }
+        } else if (!button.checked) {
+            filter.resetProperty(parameter)
+            filter.set(parameter, middleValues[index])
+        } else if (position !== null) {
+            filter.set(parameter, value, position)
+        }
+    }
+
+    function onKeyframesButtonClicked(checked, parameter, value) {
+        if (checked) {
+            blockUpdate = true
+            circleSlider.enabled = gaussianSlider.enabled = correlationSlider.enabled = noiseSlider.enabled = true
+            if (filter.animateIn > 0 || filter.animateOut > 0) {
+                for (var i = 0; i < defaultParameters.length; i++)
+                    filter.resetProperty(defaultParameters[i])
+                filter.animateIn = filter.animateOut = 0
+            } else {
+                filter.clearSimpleAnimation(parameter)
+            }
+            blockUpdate = false
+            filter.set(parameter, value, getPosition())
+        } else {
+            filter.resetProperty(parameter)
+            filter.set(parameter, value)
         }
     }
 
     GridLayout {
-        columns: 3
+        columns: 4
         anchors.fill: parent
         anchors.margins: 8
         
@@ -50,13 +138,15 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
         Preset {
-            Layout.columnSpan: 2
+            Layout.columnSpan: 3
             parameters: defaultParameters
+            onBeforePresetLoaded: {
+                for (var i = 0; i < defaultParameters.length; i++)
+                    filter.resetProperty(defaultParameters[i])
+            }
             onPresetSelected: {
-                cradiusslider.value = filter.getDouble("circle_radius")
-                gradiusslider.value = filter.getDouble("gaussian_radius")
-                corrslider.value = filter.getDouble("correlation")
-                noiseslider.value = filter.getDouble("noise")
+                setControls()
+                initSimpleAnimation()
             }
         }
 
@@ -66,34 +156,42 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
         SliderSpinner {
-            id: cradiusslider
+            id: circleSlider
             minimumValue: 0
             maximumValue: 99.99
             decimals: 2
             stepSize: 0.1
-            value: filter.getDouble("circle_radius")
-            onValueChanged: filter.set("circle_radius", value)
+            onValueChanged: updateFilter('circle_radius', value, getPosition(), circleKeyframesButton)
         }
         UndoButton {
-            onClicked: cradiusslider.value = 2
+            onClicked: circleSlider.value = 2
         }
-        
+        KeyframesButton {
+            id: circleKeyframesButton
+            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('circle_radius') > 0
+            onToggled: onKeyframesButtonClicked(checked, 'circle_radius', circleSlider.value)
+        }
+
         // Row 3
         Label {
             text: qsTr('Gaussian radius')
             Layout.alignment: Qt.AlignRight
         }
         SliderSpinner {
-            id: gradiusslider
+            id: gaussianSlider
             minimumValue: 0
             maximumValue: 99.99
             decimals: 2
             stepSize: 0.1
-            value: filter.getDouble("gaussian_radius")
-            onValueChanged: filter.set("gaussian_radius", value)
+            onValueChanged: updateFilter('gaussian_radius', value, getPosition(), gaussianKeyframesButton)
         }
         UndoButton {
-            onClicked: gradiusslider.value = 0
+            onClicked: gaussianSlider.value = 0
+        }
+        KeyframesButton {
+            id: gaussianKeyframesButton
+            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('gaussian_radius') > 0
+            onToggled: onKeyframesButtonClicked(checked, 'gaussian_radius', gaussianSlider.value)
         }
 
         // Row 4
@@ -102,15 +200,19 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
         SliderSpinner {
-            id: corrslider
+            id: correlationSlider
             minimumValue: 0.0
             maximumValue: 1.0
             decimals: 2
-            value: filter.getDouble("correlation")
-            onValueChanged: filter.set("correlation", value)
+            onValueChanged: updateFilter('correlation', value, getPosition(), correlationKeyframesButton)
         }
         UndoButton {
-            onClicked: corrslider.value = 0.95
+            onClicked: correlationSlider.value = 0.95
+        }
+        KeyframesButton {
+            id: correlationKeyframesButton
+            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('correlation') > 0
+            onToggled: onKeyframesButtonClicked(checked, 'correlation', correlationSlider.value)
         }
 
         // Row 5
@@ -119,19 +221,43 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
         SliderSpinner {
-            id: noiseslider
+            id: noiseSlider
             minimumValue: 0.0
             maximumValue: 1.0
             decimals: 2
-            value: filter.getDouble("noise")
-            onValueChanged: filter.set("noise", value)
+            onValueChanged: updateFilter('noise', value, getPosition(), noiseKeyframesButton)
         }
         UndoButton {
-            onClicked: noiseslider.value = 0.01
+            onClicked: noiseSlider.value = 0.01
+        }
+        KeyframesButton {
+            id: noiseKeyframesButton
+            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('noise') > 0
+            onToggled: onKeyframesButtonClicked(checked, 'noise', noiseSlider.value)
         }
 
         Item {
             Layout.fillHeight: true
         }
+    }
+
+    function updateSimpleAnimation() {
+        updateFilter('circle_radius', circleSlider.value, getPosition(), circleKeyframesButton)
+        updateFilter('gaussian_radius', gaussianSlider.value, getPosition(), gaussianKeyframesButton)
+        updateFilter('correlation', correlationSlider.value, getPosition(), correlationKeyframesButton)
+        updateFilter('noise', noiseSlider.value, getPosition(), noiseKeyframesButton)
+    }
+
+    Connections {
+        target: filter
+        onInChanged: updateSimpleAnimation()
+        onOutChanged: updateSimpleAnimation()
+        onAnimateInChanged: updateSimpleAnimation()
+        onAnimateOutChanged: updateSimpleAnimation()
+    }
+
+    Connections {
+        target: producer
+        onPositionChanged: setControls()
     }
 }

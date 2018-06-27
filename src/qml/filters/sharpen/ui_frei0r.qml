@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2014-2015 Meltytech, LLC
- * Author: Brian Matherly <pez4brian@yahoo.com>
+ * Copyright (c) 2014-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +24,10 @@ Item {
     property string paramAmount: '0'
     property string paramSize: '1'
     property var defaultParameters: [paramAmount, paramSize]
+    property bool blockUpdate: true
+    property var startValues:  [0.0, 0.0]
+    property var middleValues: [0.5, 0.5]
+    property var endValues:    [0.0, 0.0]
     width: 350
     height: 100
     Component.onCompleted: {
@@ -33,13 +36,92 @@ Item {
             filter.set(paramAmount, 0.5)
             filter.set(paramSize, 0.5)
             filter.savePreset(defaultParameters)
-            aslider.value = filter.getDouble(paramAmount) * 100.0
-            sslider.value = filter.getDouble(paramSize) * 100.0
+        } else {
+            initSimpleAnimation()
+        }
+        setControls()
+    }
+
+    function initSimpleAnimation() {
+        middleValues = [filter.getDouble(defaultParameters[0], filter.animateIn),
+                        filter.getDouble(defaultParameters[1], filter.animateIn)]
+        if (filter.animateIn > 0) {
+            startValues = [filter.getDouble(defaultParameters[0], 0),
+                           filter.getDouble(defaultParameters[1], 0)]
+        }
+        if (filter.animateOut > 0) {
+            endValues = [filter.getDouble(defaultParameters[0], filter.duration - 1),
+                         filter.getDouble(defaultParameters[1], filter.duration - 1)]
+        }
+    }
+
+    function getPosition() {
+        return Math.max(producer.position - (filter.in - producer.in), 0)
+    }
+
+    function setControls() {
+        var position = getPosition()
+        blockUpdate = true
+        amountSlider.value = filter.getDouble(paramAmount, position) * 100.0
+        sizeSlider.value = filter.getDouble(paramSize, position) * 100.0
+        blockUpdate = false
+        amountSlider.enabled = sizeSlider.enabled
+            = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
+    }
+
+    function updateFilter(parameter, value, position, button) {
+        if (blockUpdate) return
+        var index = defaultParameters.indexOf(parameter)
+
+        if (position !== null) {
+            if (position <= 0 && filter.animateIn > 0)
+                startValues[index] = value
+            else if (position >= filter.duration - 1 && filter.animateOut > 0)
+                endValues[index] = value
+            else
+                middleValues[index] = value
+        }
+
+        if (filter.animateIn > 0 || filter.animateOut > 0) {
+            filter.resetProperty(parameter)
+            button.checked = false
+            if (filter.animateIn > 0) {
+                filter.set(parameter, startValues[index], 0)
+                filter.set(parameter, middleValues[index], filter.animateIn - 1)
+            }
+            if (filter.animateOut > 0) {
+                filter.set(parameter, middleValues[index], filter.duration - filter.animateOut)
+                filter.set(parameter, endValues[index], filter.duration - 1)
+            }
+        } else if (!button.checked) {
+            filter.resetProperty(parameter)
+            filter.set(parameter, middleValues[index])
+        } else if (position !== null) {
+            filter.set(parameter, value, position)
+        }
+    }
+
+    function onKeyframesButtonClicked(checked, parameter, value) {
+        if (checked) {
+            blockUpdate = true
+            amountSlider.enabled = sizeSlider.enabled = true
+            if (filter.animateIn > 0 || filter.animateOut > 0) {
+                filter.resetProperty(defaultParameters[0])
+                filter.resetProperty(defaultParameters[1])
+                filter.animateIn = filter.animateOut = 0
+            } else {
+                filter.clearSimpleAnimation(parameter)
+            }
+            blockUpdate = false
+            filter.set(parameter, value, getPosition())
+        } else {
+            filter.resetProperty(parameter)
+            filter.set(parameter, value)
         }
     }
 
     GridLayout {
-        columns: 3
+        columns: 4
         anchors.fill: parent
         anchors.margins: 8
         
@@ -48,11 +130,15 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
         Preset {
-            Layout.columnSpan: 2
+            Layout.columnSpan: 3
             parameters: defaultParameters
+            onBeforePresetLoaded: {
+                filter.resetProperty(paramAmount)
+                filter.resetProperty(paramSize)
+            }
             onPresetSelected: {
-                aslider.value = filter.getDouble(paramAmount) * 100.0
-                sslider.value = filter.getDouble(paramSize) * 100.0
+                setControls()
+                initSimpleAnimation()
             }
         }
 
@@ -61,16 +147,20 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
         SliderSpinner {
-            id: aslider
+            id: amountSlider
             minimumValue: 0
             maximumValue: 100
             suffix: ' %'
             decimals: 1
-            value: filter.getDouble(paramAmount) * 100.0
-            onValueChanged: filter.set(paramAmount, value / 100.0)
+            onValueChanged: updateFilter(paramAmount, value / 100.0, getPosition(), amountKeyframesButton)
         }
         UndoButton {
-            onClicked: aslider.value = 50
+            onClicked: amountSlider.value = 50
+        }
+        KeyframesButton {
+            id: amountKeyframesButton
+            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramAmount) > 0
+            onToggled: onKeyframesButtonClicked(checked, paramAmount, amountSlider.value / 100.0)
         }
 
         Label {
@@ -78,20 +168,42 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
         SliderSpinner {
-            id: sslider
+            id: sizeSlider
             minimumValue: 0
             maximumValue: 100
             suffix: ' %'
             decimals: 1
-            value: filter.getDouble(paramSize) * 100.0
-            onValueChanged: filter.set(paramSize, value / 100.0)
+            onValueChanged: updateFilter(paramSize, value / 100.0, getPosition(), sizeKeyframesButton)
         }
         UndoButton {
-            onClicked: sslider.value = 50
+            onClicked: sizeSlider.value = 50
+        }
+        KeyframesButton {
+            id: sizeKeyframesButton
+            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramSize) > 0
+            onToggled: onKeyframesButtonClicked(checked, paramSize, sizeSlider.value / 100.0)
         }
 
         Item {
             Layout.fillHeight: true
         }
+    }
+
+    function updateSimpleAnimation() {
+        updateFilter(paramAmount, amountSlider.value / 100.0, getPosition(), amountKeyframesButton)
+        updateFilter(paramSize, sizeSlider.value / 100.0, getPosition(), sizeKeyframesButton)
+    }
+
+    Connections {
+        target: filter
+        onInChanged: updateSimpleAnimation()
+        onOutChanged: updateSimpleAnimation()
+        onAnimateInChanged: updateSimpleAnimation()
+        onAnimateOutChanged: updateSimpleAnimation()
+    }
+
+    Connections {
+        target: producer
+        onPositionChanged: setControls()
     }
 }
