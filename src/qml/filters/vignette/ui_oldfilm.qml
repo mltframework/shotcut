@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2014-2015 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2014-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,15 +21,117 @@ import QtQuick.Layouts 1.0
 import Shotcut.Controls 1.0
 
 Item {
+    property var defaultParameters: ['radius', 'smooth', 'opacity', 'mode']
+    property bool blockUpdate: true
+    property var startValues:  [1.0, 0.0, 0.0]
+    property var middleValues: [0.5, 2.0, 0.0]
+    property var endValues:    [1.0, 0.0, 0.0]
+
     width: 350
     height: 150
+
     Component.onCompleted: {
-        if (filter.isNew)
-            filter.savePreset(preset.parameters)
+        if (filter.isNew) {
+            // Set default parameter values
+            for (var i = 0; i < 3; i++)
+                filter.set(defaultParameters[i], middleValues[i])
+            filter.set('mode', 1)
+            filter.savePreset(defaultParameters)
+        } else {
+            initSimpleAnimation()
+        }
+        setControls()
+        setKeyframedControls()
+    }
+
+    function initSimpleAnimation() {
+        middleValues = [filter.getDouble(defaultParameters[0], filter.animateIn),
+                        filter.getDouble(defaultParameters[1], filter.animateIn),
+                        filter.getDouble(defaultParameters[2], filter.animateIn)]
+        if (filter.animateIn > 0) {
+            startValues = [filter.getDouble(defaultParameters[0], 0),
+                           filter.getDouble(defaultParameters[1], 0),
+                           filter.getDouble(defaultParameters[2], 0)]
+        }
+        if (filter.animateOut > 0) {
+            endValues = [filter.getDouble(defaultParameters[0], filter.duration - 1),
+                         filter.getDouble(defaultParameters[1], filter.duration - 1),
+                         filter.getDouble(defaultParameters[2], filter.duration - 1)]
+        }
+    }
+
+    function getPosition() {
+        return Math.max(producer.position - (filter.in - producer.in), 0)
+    }
+
+    function setKeyframedControls() {
+        var position = getPosition()
+        blockUpdate = true
+        radiusSlider.value = filter.getDouble('radius', position) * 100.0
+        smoothSlider.value = filter.getDouble('smooth', position) * 100.0
+        opacitySlider.value = (1.0 - filter.getDouble('opacity', position)) * 100.0
+        blockUpdate = false
+        radiusSlider.enabled = smoothSlider.enabled = opacitySlider.enabled
+            = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
+    }
+
+    function setControls() {
+        modeCheckBox.checked = filter.get('mode') === '1'
+    }
+
+    function updateFilter(parameter, value, position, button) {
+        if (blockUpdate) return
+        var index = defaultParameters.indexOf(parameter)
+
+        if (position !== null) {
+            if (position <= 0 && filter.animateIn > 0)
+                startValues[index] = value
+            else if (position >= filter.duration - 1 && filter.animateOut > 0)
+                endValues[index] = value
+            else
+                middleValues[index] = value
+        }
+
+        if (filter.animateIn > 0 || filter.animateOut > 0) {
+            filter.resetProperty(parameter)
+            button.checked = false
+            if (filter.animateIn > 0) {
+                filter.set(parameter, startValues[index], 0)
+                filter.set(parameter, middleValues[index], filter.animateIn - 1)
+            }
+            if (filter.animateOut > 0) {
+                filter.set(parameter, middleValues[index], filter.duration - filter.animateOut)
+                filter.set(parameter, endValues[index], filter.duration - 1)
+            }
+        } else if (!button.checked) {
+            filter.resetProperty(parameter)
+            filter.set(parameter, middleValues[index])
+        } else if (position !== null) {
+            filter.set(parameter, value, position)
+        }
+    }
+
+    function onKeyframesButtonClicked(checked, parameter, value) {
+        if (checked) {
+            radiusSlider.enabled = smoothSlider.enabled = opacitySlider.enabled = true
+            blockUpdate = true
+            if (filter.animateIn > 0 || filter.animateOut > 0) {
+                for (var i = 0; i < 3; i++)
+                    filter.resetProperty(defaultParameters[i])
+                filter.animateIn = filter.animateOut = 0
+            } else {
+                filter.clearSimpleAnimation(parameter)
+            }
+            blockUpdate = false
+            filter.set(parameter, value, getPosition())
+        } else {
+            filter.resetProperty(parameter)
+            filter.set(parameter, value)
+        }
     }
 
     GridLayout {
-        columns: 3
+        columns: 4
         anchors.fill: parent
         anchors.margins: 8
 
@@ -40,13 +141,16 @@ Item {
         }
         Preset {
             id: preset
-            Layout.columnSpan: 2
-            parameters: ['radius', 'smooth', 'opacity', 'mode']
+            Layout.columnSpan: 3
+            parameters: defaultParameters
+            onBeforePresetLoaded: {
+                for (var i = 0; i < 3; i++)
+                    filter.resetProperty(defaultParameters[i])
+            }
             onPresetSelected: {
-                radiusSlider.value = filter.getDouble('radius') * 100
-                smoothSlider.value = filter.getDouble('smooth') * 100
-                opacitySlider.value = (1.0 - filter.getDouble('opacity')) * 100
-                modeCheckBox.checked = filter.get('mode') === '1'
+                setControls()
+                setKeyframedControls()
+                initSimpleAnimation()
             }
         }
 
@@ -59,11 +163,15 @@ Item {
             minimumValue: 0
             maximumValue: 100
             suffix: ' %'
-            value: filter.getDouble('radius') * 100
-            onValueChanged: filter.set('radius', value / 100)
+            onValueChanged: updateFilter('radius', value / 100.0, getPosition(), radiusKeyframesButton)
         }
         UndoButton {
             onClicked: radiusSlider.value = 50
+        }
+        KeyframesButton {
+            id: radiusKeyframesButton
+            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('radius') > 0
+            onToggled: onKeyframesButtonClicked(checked, 'radius', radiusSlider.value / 100.0)
         }
 
         Label {
@@ -75,19 +183,22 @@ Item {
             minimumValue: 0
             maximumValue: 500
             suffix: ' %'
-            value: filter.getDouble('smooth') * 100
-            onValueChanged: filter.set('smooth', value / 100)
+            onValueChanged: updateFilter('smooth', value / 100.0, getPosition(), smoothKeyframesButton)
         }
         UndoButton {
-            onClicked: smoothSlider.value = 80
+            onClicked: smoothSlider.value = 200
+        }
+        KeyframesButton {
+            id: smoothKeyframesButton
+            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('smooth') > 0
+            onToggled: onKeyframesButtonClicked(checked, 'smooth', smoothSlider.value / 100.0)
         }
 
         Label {}
         CheckBox {
             id: modeCheckBox
             text: qsTr('Non-linear feathering')
-            Layout.columnSpan: 2
-            checked: filter.get('mode') === '1'
+            Layout.columnSpan: 3
             property bool isReady: false
             Component.onCompleted: isReady = true
             onClicked: {
@@ -105,15 +216,38 @@ Item {
             minimumValue: 0
             maximumValue: 100
             suffix: ' %'
-            value: (1.0 - filter.getDouble('opacity')) * 100
-            onValueChanged: filter.set('opacity', 1.0 - value / 100)
+            onValueChanged: updateFilter('opacity', 1.0 - value / 100.0, getPosition(), opacityKeyframesButton)
         }
         UndoButton {
             onClicked: opacitySlider.value = 100
+        }
+        KeyframesButton {
+            id: opacityKeyframesButton
+            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('opacity') > 0
+            onToggled: onKeyframesButtonClicked(checked, 'opacity', 1.0 - opacitySlider.value / 100.0)
         }
 
         Item {
             Layout.fillHeight: true
         }
+    }
+
+    function updateSimpleAnimation() {
+        updateFilter('radius', radiusSlider.value / 100.0, getPosition(), radiusKeyframesButton)
+        updateFilter('smooth', smoothSlider.value / 100.0, getPosition(), smoothKeyframesButton)
+        updateFilter('opacity', 1.0 - opacitySlider.value / 100.0, getPosition(), opacityKeyframesButton)
+    }
+
+    Connections {
+        target: filter
+        onInChanged: updateSimpleAnimation()
+        onOutChanged: updateSimpleAnimation()
+        onAnimateInChanged: updateSimpleAnimation()
+        onAnimateOutChanged: updateSimpleAnimation()
+    }
+
+    Connections {
+        target: producer
+        onPositionChanged: setKeyframedControls()
     }
 }
