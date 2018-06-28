@@ -110,6 +110,7 @@ GLWidget::~GLWidget()
     }
     delete m_shareContext;
     delete m_shader;
+    LOG_DEBUG() << "end";
 }
 
 void GLWidget::initializeGL()
@@ -598,17 +599,17 @@ int GLWidget::reconfigure(bool isMulti)
     QString serviceName = property("mlt_service").toString();
     if (!m_consumer || !m_consumer->is_valid()) {
         if (serviceName.isEmpty()) {
-            m_consumer = new Mlt::FilteredConsumer(profile(), "sdl2_audio");
+            m_consumer.reset(new Mlt::FilteredConsumer(profile(), "sdl2_audio"));
             if (m_consumer->is_valid())
                 serviceName = "sdl2_audio";
             else
                 serviceName = "rtaudio";
-            delete m_consumer;
+            m_consumer.reset();
         }
         if (isMulti)
-            m_consumer = new Mlt::FilteredConsumer(profile(), "multi");
+            m_consumer.reset(new Mlt::FilteredConsumer(profile(), "multi"));
         else
-            m_consumer = new Mlt::FilteredConsumer(profile(), serviceName.toLatin1().constData());
+            m_consumer.reset(new Mlt::FilteredConsumer(profile(), serviceName.toLatin1().constData()));
 
         delete m_threadStartEvent;
         m_threadStartEvent = 0;

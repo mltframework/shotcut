@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2011-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -125,10 +124,10 @@ public:
         return *m_profile;
     }
     Mlt::Producer* producer() const {
-        return m_producer;
+        return m_producer.data();
     }
     Mlt::Consumer* consumer() const {
-        return m_consumer;
+        return m_consumer.data();
     }
     const QString& URL() const {
         return m_url;
@@ -144,13 +143,13 @@ public:
 
 protected:
     Mlt::Repository* m_repo;
-    Mlt::Producer* m_producer;
-    Mlt::FilteredConsumer* m_consumer;
+    QScopedPointer<Mlt::Producer> m_producer;
+    QScopedPointer<Mlt::FilteredConsumer> m_consumer;
 
 private:
-    Mlt::Profile* m_profile;
+    QScopedPointer<Mlt::Profile> m_profile;
     int m_audioChannels;
-    Mlt::Filter* m_jackFilter;
+    QScopedPointer<Mlt::Filter> m_jackFilter;
     QString m_url;
     double m_volume;
     TransportControl m_transportControl;

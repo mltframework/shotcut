@@ -45,16 +45,13 @@ static int alignWidth(int width)
 }
 
 Controller::Controller()
-    : m_producer(0)
-    , m_consumer(0)
-    , m_audioChannels(2)
-    , m_jackFilter(0)
+    : m_audioChannels(2)
     , m_volume(1.0)
     , m_skipJackEvents(0)
 {
     LOG_DEBUG() << "begin";
     m_repo = Mlt::Factory::init();
-    m_profile = new Mlt::Profile("atsc_1080p_25");
+    m_profile.reset(new Mlt::Profile("atsc_1080p_25"));
     m_filtersClipboard.reset(new Mlt::Producer(profile(), "color", "black"));
     updateAvformatCaching(0);
     LOG_DEBUG() << "end";
@@ -72,9 +69,10 @@ Controller& Controller::singleton(QObject *parent)
 
 Controller::~Controller()
 {
+    LOG_DEBUG() << "begin";
     close();
     closeConsumer();
-    delete m_profile;
+    LOG_DEBUG() << "end";
 }
 
 void Controller::destroy()
@@ -86,10 +84,10 @@ int Controller::setProducer(Mlt::Producer* producer, bool)
 {
     int error = 0;
 
-    if (producer != m_producer)
+    if (producer != m_producer.data())
         close();
     if (producer && producer->is_valid()) {
-        m_producer = producer;
+        m_producer.reset(producer);
     }
     else {
         // Cleanup on error
@@ -108,9 +106,9 @@ int Controller::open(const QString &url)
     if (Settings.playerGPU() && !profile().is_explicit())
         // Prevent loading normalizing filters, which might be Movit ones that
         // may not have a proper OpenGL context when requesting a sample frame.
-        m_producer = new Mlt::Producer(profile(), "abnormal", url.toUtf8().constData());
+        m_producer.reset(new Mlt::Producer(profile(), "abnormal", url.toUtf8().constData()));
     else
-        m_producer = new Mlt::Producer(profile(), url.toUtf8().constData());
+        m_producer.reset(new Mlt::Producer(profile(), url.toUtf8().constData()));
     if (m_producer->is_valid()) {
         double fps = profile().fps();
         if (!profile().is_explicit()) {
@@ -126,8 +124,7 @@ int Controller::open(const QString &url)
         }
         if (profile().fps() != fps || (Settings.playerGPU() && !profile().is_explicit())) {
             // Reload with correct FPS or with Movit normalizing filters attached.
-            delete m_producer;
-            m_producer = new Mlt::Producer(profile(), url.toUtf8().constData());
+            m_producer.reset(new Mlt::Producer(profile(), url.toUtf8().constData()));
         }
         // Convert avformat to avformat-novalidate so that XML loads faster.
         if (!qstrcmp(m_producer->get("mlt_service"), "avformat")) {
@@ -139,11 +136,10 @@ int Controller::open(const QString &url)
                (m_producer->get_int("_original_type") == tractor_type && m_producer->get("shotcut")))
                 m_url = url;
         }
-        setImageDurationFromDefault(m_producer);
+        setImageDurationFromDefault(m_producer.data());
     }
     else {
-        delete m_producer;
-        m_producer = 0;
+        m_producer.reset();
         error = 1;
     }
     return error;
@@ -182,20 +178,17 @@ void Controller::close()
         m_consumer->stop();
     }
     if (isSeekableClip()) {
-        setSavedProducer(m_producer);
+        setSavedProducer(m_producer.data());
     }
-    delete m_producer;
-    m_producer = 0;
+    m_producer.reset();
 }
 
 void Controller::closeConsumer()
 {
     if (m_consumer)
         m_consumer->stop();
-    delete m_consumer;
-    m_consumer = 0;
-    delete m_jackFilter;
-    m_jackFilter = 0;
+    m_consumer.reset();
+    m_jackFilter.reset();
 }
 
 void Controller::play(double speed)
@@ -298,7 +291,7 @@ bool Controller::enableJack(bool enable)
 	if (!m_consumer)
 		return true;
 	if (enable && !m_jackFilter) {
-		m_jackFilter = new Mlt::Filter(profile(), "jack", "Shotcut player");
+		m_jackFilter.reset(new Mlt::Filter(profile(), "jack", "Shotcut player"));
 		if (m_jackFilter->is_valid()) {
             m_jackFilter->set("channels", Settings.playerAudioChannels());
             switch (Settings.playerAudioChannels()) {
@@ -337,15 +330,13 @@ bool Controller::enableJack(bool enable)
 			}
 		}
 		else {
-			delete m_jackFilter;
-			m_jackFilter = 0;
+            m_jackFilter.reset();
 			return false;
 		}
 	}
 	else if (!enable && m_jackFilter) {
 		m_consumer->detach(*m_jackFilter);
-		delete m_jackFilter;
-		m_jackFilter = 0;
+        m_jackFilter.reset();
 		m_consumer->set("audio_off", 0);
 		m_consumer->stop();
 		m_consumer->start();
@@ -464,12 +455,10 @@ int Controller::consumerChanged()
 {
     int error = 0;
     if (m_consumer) {
-        bool jackEnabled = m_jackFilter != 0;
+        bool jackEnabled = !m_jackFilter.isNull();
         m_consumer->stop();
-        delete m_consumer;
-        m_consumer = 0;
-        delete m_jackFilter;
-        m_jackFilter= 0;
+        m_consumer.reset();
+        m_jackFilter.reset();
         error = reconfigure(false);
         if (m_consumer) {
             enableJack(jackEnabled);
@@ -534,7 +523,7 @@ QString Controller::resource() const
 bool Controller::isSeekable(Producer* p) const
 {
     bool seekable = false;
-    Mlt::Producer* producer = p? p : m_producer;
+    Mlt::Producer* producer = p? p : m_producer.data();
     if (producer && producer->is_valid()) {
         if (producer->get("force_seekable")) {
             seekable = producer->get_int("force_seekable");
@@ -920,7 +909,7 @@ void Controller::copyFilters(Mlt::Producer* producer)
 void Controller::pasteFilters(Mlt::Producer* producer)
 {
     Mlt::Producer* targetProducer = (producer && producer->is_valid())? producer
-                      :(m_producer && m_producer->is_valid())? m_producer
+                      :(m_producer && m_producer->is_valid())? m_producer.data()
                       : 0;
     if (targetProducer) {
         copyFilters(*m_filtersClipboard, *targetProducer);
