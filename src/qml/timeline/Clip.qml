@@ -311,7 +311,12 @@ Rectangle {
                 (fadeInMouseArea.drag.active || fadeOutMouseArea.drag.active)? Qt.PointingHandCursor :
                 drag.active? Qt.ClosedHandCursor :
                 isBlank? Qt.ArrowCursor : Qt.OpenHandCursor
-            onClicked: menu.show()
+            onClicked: {
+                root.stopScrolling = true
+                clipRoot.forceActiveFocus();
+                clipRoot.clicked(clipRoot)
+                menu.show()
+            }
         }
     }
 
