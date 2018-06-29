@@ -2103,7 +2103,10 @@ bool MainWindow::on_actionSave_triggered()
 bool MainWindow::on_actionSave_As_triggered()
 {
     QString path = Settings.savePath();
-    path.append("/.mlt");
+    if (m_currentFile.isEmpty())
+        path.append("/.mlt");
+    else
+        path = m_currentFile;
     QString caption = tr("Save XML");
     QString filename = QFileDialog::getSaveFileName(this, caption, path, tr("MLT XML (*.mlt)"));
     if (!filename.isEmpty()) {
