@@ -968,9 +968,9 @@ void DetachAudioCommand::redo()
         }
 
         // Add an audio track if needed.
-        int n = m_model.tractor()->count();
-        for(int i = 0; i < n; i++) {
-            Mlt::Producer track(m_model.tractor()->track(i));
+        int n = m_model.trackList().size();
+        for (int i = 0; i < n; i++) {
+            Mlt::Producer track(m_model.tractor()->track(m_model.trackList()[i].mlt_index));
             if (!track.is_valid())
                 continue;
             int hide = track.get_int("hide");
