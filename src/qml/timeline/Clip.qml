@@ -648,6 +648,7 @@ Rectangle {
         }
         MenuItem {
             id: mergeItem
+            visible: false
             text: qsTr('Merge with next clip')
             onTriggered: timeline.mergeClipWithNext(trackIndex, index, false)
         }
