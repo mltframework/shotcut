@@ -652,7 +652,7 @@ Rectangle {
             onTriggered: timeline.mergeClipWithNext(trackIndex, index, false)
         }
         MenuItem {
-            visible: !isBlank && !isTransition && !isAudio
+            visible: !isBlank && !isTransition && !isAudio && (parseInt(audioIndex) > -1 || audioIndex === 'all')
             text: qsTr('Detach Audio')
             onTriggered: timeline.detachAudio(trackIndex, index)
         }
