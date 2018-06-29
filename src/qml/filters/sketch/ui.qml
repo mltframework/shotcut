@@ -102,7 +102,7 @@ Item {
             id: scale
             minimumValue: 0
             maximumValue: 10
-            stepSize: 0.1
+            stepSize: 1
             ratio: 0.1
             suffix: ' %'
             value: filter.get('scale')
@@ -120,7 +120,7 @@ Item {
             id: mix
             minimumValue: 0
             maximumValue: 10
-            stepSize: 0.1
+            stepSize: 1
             ratio: 0.1
             suffix: ' %'
             value: filter.get('mix')
