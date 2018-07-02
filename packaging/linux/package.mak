@@ -11,4 +11,4 @@ appimage: appimage/appimage.yml
 	bash -ex pkg2appimage appimage/appimage.yml
 
 clean:
-	rm -rf out pkg2appimage
+	rm -rf out pkg2appimage Shotcut
