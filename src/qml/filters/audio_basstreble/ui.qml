@@ -200,6 +200,7 @@ Item {
                 id: bassLabel
                 text: qsTr('Bass')
                 anchors.horizontalCenter: parent.horizontalCenter
+                ToolTip { text: '100 Hz' }
             }
         }
 
@@ -221,6 +222,7 @@ Item {
             Label {
                 text: qsTr('Middle', 'Bass & Treble audio filter')
                 anchors.horizontalCenter: parent.horizontalCenter
+                ToolTip { text: '1000 Hz' }
             }
         }
 
@@ -242,6 +244,7 @@ Item {
             Label {
                 text: qsTr('Treble')
                 anchors.horizontalCenter: parent.horizontalCenter
+                ToolTip { text: '10000 Hz' }
             }
         }
 
