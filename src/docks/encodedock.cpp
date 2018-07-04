@@ -41,6 +41,7 @@
 #define TO_RELATIVE(min, max, abs) qRound(100.0f * float((abs) - (min)) / float((max) - (min) + 1))
 static const int kOpenCaptureFileDelayMs = 1500;
 static const qint64 kFreeSpaceThesholdGB = 50LL * 1024 * 1024 * 1024;
+static const int kCustomPresetFileNameRole = Qt::UserRole + 1;
 
 static double getBufferSize(Mlt::Properties& preset, const char* property);
 
@@ -398,7 +399,7 @@ void EncodeDock::loadPresets()
         foreach (QString name, entries) {
             // Create a category node if the name includes a ).
             QStringList nameParts = name.split(')');
-            if (nameParts.count() > 1) {
+            if (nameParts.count() > 1 && !nameParts[1].isEmpty() && !name.contains('(')) {
                 // See if there is already a category node with this name.
                 int row;
                 for (row = 0; row < grandParentItem->rowCount(); row++) {
@@ -1074,10 +1075,11 @@ void EncodeDock::on_presetsTree_clicked(const QModelIndex &index)
 {
     if (!index.parent().isValid())
         return;
-    QString name = m_presetsModel.data(index, Qt::UserRole + 1).toString();
+    QString name = m_presetsModel.data(index, kCustomPresetFileNameRole).toString();
     if (!name.isEmpty()) {
         Mlt::Properties* preset;
-        if (m_presetsModel.data(index.parent()).toString() == tr("Custom")) {
+        if (m_presetsModel.data(index.parent()).toString() == tr("Custom")
+            || m_presetsModel.data(index.parent().parent()).toString() == tr("Custom")) {
             ui->removePresetButton->setEnabled(true);
             preset = new Mlt::Properties();
             QDir dir(Settings.appDataLocation());
@@ -1372,7 +1374,7 @@ void EncodeDock::on_addPresetButton_clicked()
             int n = m_presetsModel.rowCount(parentIndex);
             for (int i = 0; i < n; i++) {
                 QModelIndex index = m_presetsModel.index(i, 0, parentIndex);
-                if (m_presetsModel.data(index).toString() == preset) {
+                if (m_presetsModel.data(index, kCustomPresetFileNameRole).toString() == preset) {
                     ui->presetsTree->setCurrentIndex(index);
                     break;
                 }
@@ -1384,7 +1386,7 @@ void EncodeDock::on_addPresetButton_clicked()
 void EncodeDock::on_removePresetButton_clicked()
 {
     QModelIndex index = ui->presetsTree->currentIndex();
-    QString preset = m_presetsModel.data(index).toString();
+    QString preset = m_presetsModel.data(index, kCustomPresetFileNameRole).toString();
     QMessageBox dialog(QMessageBox::Question,
                        tr("Delete Preset"),
                        tr("Are you sure you want to delete %1?").arg(preset),
