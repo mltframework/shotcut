@@ -692,13 +692,13 @@ void AvformatProducerWidget::on_actionReverse_triggered()
         ffmpegArgs << "-i" << resource;
         // set trim options
         if (m_producer->get(kFilterInProperty))
-            ffmpegArgs << "-ss" << m_producer->get_time(kFilterInProperty, mlt_time_clock);
+            ffmpegArgs << "-ss" << QString::fromLatin1(m_producer->get_time(kFilterInProperty, mlt_time_clock)).replace(',', '.');
         else
-            ffmpegArgs << "-ss" << m_producer->get_time("in", mlt_time_clock);
+            ffmpegArgs << "-ss" << QString::fromLatin1(m_producer->get_time("in", mlt_time_clock)).replace(',', '.').replace(',', '.');
         if (m_producer->get(kFilterOutProperty))
-            ffmpegArgs << "-to" << m_producer->get_time(kFilterOutProperty, mlt_time_clock);
+            ffmpegArgs << "-to" << QString::fromLatin1(m_producer->get_time(kFilterOutProperty, mlt_time_clock)).replace(',', '.');
         else
-            ffmpegArgs << "-to" << m_producer->get_time("out", mlt_time_clock);
+            ffmpegArgs << "-to" << QString::fromLatin1(m_producer->get_time("out", mlt_time_clock)).replace(',', '.');
         // transcode all streams
         ffmpegArgs << "-map" << "0";
         // except data, subtitles, and attachments
