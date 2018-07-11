@@ -248,9 +248,6 @@ int main(int argc, char **argv)
 #if defined(Q_OS_WIN) && defined(QT_DEBUG)
     ExcHndlInit();
 #endif
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    QCoreApplication::setAttribute(Qt::AA_X11InitThreads);
-#endif
 #if QT_VERSION >= 0x050600
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
