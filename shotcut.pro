@@ -1,4 +1,4 @@
 TEMPLATE = subdirs
-SUBDIRS = CuteLogger mvcp src translations
+SUBDIRS = CuteLogger src translations
 cache()
-src.depends = CuteLogger mvcp
+src.depends = CuteLogger

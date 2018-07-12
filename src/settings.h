@@ -80,11 +80,6 @@ public:
     bool showConvertClipDialog() const;
     void setShowConvertClipDialog(bool);
 
-    bool meltedEnabled() const;
-    void setMeltedEnabled(bool);
-    QStringList meltedServers() const;
-    void setMeltedServers(const QStringList&);
-
     int playerAudioChannels() const;
     void setPlayerAudioChannels(int);
     QString playerDeinterlacer() const;

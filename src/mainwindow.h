@@ -39,8 +39,6 @@ class EncodeDock;
 class JobsDock;
 class PlaylistDock;
 class QUndoStack;
-class MeltedPlaylistDock;
-class MeltedServerDock;
 class QActionGroup;
 class FilterController;
 class ScopeController;
@@ -129,8 +127,6 @@ private:
     bool m_isKKeyPressed;
     QUndoStack* m_undoStack;
     QDockWidget* m_historyDock;
-    MeltedServerDock* m_meltedServerDock;
-    MeltedPlaylistDock* m_meltedPlaylistDock;
     QActionGroup* m_profileGroup;
     QActionGroup* m_externalGroup;
     QActionGroup* m_keyerGroup;
@@ -218,8 +214,6 @@ private slots:
     void on_actionRedo_triggered();
     void on_actionFAQ_triggered();
     void on_actionForum_triggered();
-    void onMeltedUnitOpened();
-    void onMeltedUnitActivated();
     void on_actionEnter_Full_Screen_triggered();
     void on_actionRealtime_triggered(bool checked);
     void on_actionProgressive_triggered(bool checked);

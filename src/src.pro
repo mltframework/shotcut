@@ -47,14 +47,6 @@ SOURCES += main.cpp\
     models/playlistmodel.cpp \
     docks/playlistdock.cpp \
     dialogs/durationdialog.cpp \
-    mvcp/qconsole.cpp \
-    mvcp/mvcp_socket.cpp \
-    mvcp/meltedclipsmodel.cpp \
-    mvcp/meltedunitsmodel.cpp \
-    mvcp/mvcpthread.cpp \
-    mvcp/meltedplaylistmodel.cpp \
-    mvcp/meltedplaylistdock.cpp \
-    mvcp/meltedserverdock.cpp \
     widgets/colorwheel.cpp \
     models/attachedfiltersmodel.cpp \
     models/metadatamodel.cpp \
@@ -159,13 +151,6 @@ HEADERS  += mainwindow.h \
     models/playlistmodel.h \
     docks/playlistdock.h \
     dialogs/durationdialog.h \
-    mvcp/qconsole.h \
-    mvcp/meltedclipsmodel.h \
-    mvcp/meltedunitsmodel.h \
-    mvcp/mvcpthread.h \
-    mvcp/meltedplaylistmodel.h \
-    mvcp/meltedplaylistdock.h \
-    mvcp/meltedserverdock.h \
     transportcontrol.h \
     widgets/colorwheel.h \
     models/attachedfiltersmodel.h \
@@ -261,8 +246,6 @@ FORMS    += mainwindow.ui \
     dialogs/textviewerdialog.ui \
     docks/playlistdock.ui \
     dialogs/durationdialog.ui \
-    mvcp/meltedserverdock.ui \
-    mvcp/meltedplaylistdock.ui \
     dialogs/customprofiledialog.ui \
     htmleditor/htmleditor.ui \
     htmleditor/inserthtmldialog.ui \
@@ -297,18 +280,18 @@ OTHER_FILES += \
     ../packaging/linux/org.shotcut.Shotcut.desktop \
     ../packaging/linux/org.shotcut.Shotcut.xml
 
-INCLUDEPATH = ../CuteLogger/include ../mvcp
+INCLUDEPATH = ../CuteLogger/include
 
 debug_and_release {
     build_pass:CONFIG(debug, debug|release) {
-        LIBS += -L../CuteLogger/debug -L../mvcp/debug
+        LIBS += -L../CuteLogger/debug
     } else {
-        LIBS += -L../CuteLogger/release -L../mvcp/release
+        LIBS += -L../CuteLogger/release
     }
 } else {
-    LIBS += -L../CuteLogger -L../mvcp
+    LIBS += -L../CuteLogger
 }
-LIBS += -lCuteLogger -lmvcp -lpthread
+LIBS += -lCuteLogger
 
 isEmpty(SHOTCUT_VERSION) {
     !win32:SHOTCUT_VERSION = $$system(date "+%y.%m.%d")

@@ -218,26 +218,6 @@ void ShotcutSettings::setShowConvertClipDialog(bool b)
     settings.setValue("showConvertClipDialog", b);
 }
 
-bool ShotcutSettings::meltedEnabled() const
-{
-    return settings.value("melted/enabled", false).toBool();
-}
-
-void ShotcutSettings::setMeltedEnabled(bool b)
-{
-    settings.setValue("melted/enabled", b);
-}
-
-QStringList ShotcutSettings::meltedServers() const
-{
-    return settings.value("melted/servers").toStringList();
-}
-
-void ShotcutSettings::setMeltedServers(const QStringList& ls)
-{
-    settings.setValue("melted/servers", ls);
-}
-
 int ShotcutSettings::playerAudioChannels() const
 {
     return settings.value("player/audioChannels", 2).toInt();
