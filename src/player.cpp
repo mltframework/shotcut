@@ -271,8 +271,8 @@ void Player::connectTransport(const TransportControllable* receiver)
     connect(this, SIGNAL(paused()), receiver, SLOT(pause()));
     connect(this, SIGNAL(stopped()), receiver, SLOT(stop()));
     connect(this, SIGNAL(seeked(int)), receiver, SLOT(seek(int)));
-    connect(this, SIGNAL(rewound()), receiver, SLOT(rewind()));
-    connect(this, SIGNAL(fastForwarded()), receiver, SLOT(fastForward()));
+    connect(this, SIGNAL(rewound(bool)), receiver, SLOT(rewind(bool)));
+    connect(this, SIGNAL(fastForwarded(bool)), receiver, SLOT(fastForward(bool)));
     connect(this, SIGNAL(previousSought(int)), receiver, SLOT(previous(int)));
     connect(this, SIGNAL(nextSought(int)), receiver, SLOT(next(int)));
 }
@@ -692,16 +692,16 @@ void Player::on_actionSkipPrevious_triggered()
     }
 }
 
-void Player::rewind()
+void Player::rewind(bool forceChangeDirection)
 {
     if (m_isSeekable)
-        emit rewound();
+        emit rewound(forceChangeDirection);
 }
 
-void Player::fastForward()
+void Player::fastForward(bool forceChangeDirection)
 {
     if (m_isSeekable) {
-        emit fastForwarded();
+        emit fastForwarded(forceChangeDirection);
         m_playPosition = m_position;
     } else {
         play();

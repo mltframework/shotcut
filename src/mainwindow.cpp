@@ -1608,7 +1608,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         if (m_isKKeyPressed)
             m_player->seek(m_player->position() - 1);
         else
-            m_player->rewind();
+            m_player->rewind(false);
         break;
     case Qt::Key_K:
             m_player->pause();
@@ -1628,7 +1628,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         else if (m_isKKeyPressed)
             m_player->seek(m_player->position() + 1);
         else
-            m_player->fastForward();
+            m_player->fastForward(false);
         break;
     case Qt::Key_M:
 #ifdef Q_OS_MAC

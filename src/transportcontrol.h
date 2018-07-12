@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2012 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2012-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,8 +28,8 @@ public slots:
     virtual void pause() = 0;
     virtual void stop() = 0;
     virtual void seek(int position) = 0;
-    virtual void rewind() = 0;
-    virtual void fastForward() = 0;
+    virtual void rewind(bool forceChangeDirection) = 0;
+    virtual void fastForward(bool forceChangeDirection) = 0;
     virtual void previous(int currentPosition) = 0;
     virtual void next(int currentPosition) = 0;
     virtual void setIn(int) = 0;

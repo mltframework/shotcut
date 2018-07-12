@@ -578,7 +578,7 @@ bool Controller::isImageProducer(Service* service) const
     return false;
 }
 
-void Controller::rewind()
+void Controller::rewind(bool forceChangeDirection)
 {
     if (!m_producer || !m_producer->is_valid())
         return;
@@ -591,6 +591,8 @@ void Controller::rewind()
         play(-1.0);
     } else {
         stopJack();
+        if (forceChangeDirection && speed > 0.0)
+            speed = -0.5;
         if (speed < 0.0)
             m_producer->set_speed(speed * 2.0);
         else
@@ -598,15 +600,17 @@ void Controller::rewind()
     }
 }
 
-void Controller::fastForward()
+void Controller::fastForward(bool forceChangeDirection)
 {
     if (!m_producer || !m_producer->is_valid())
         return;
     double speed = m_producer->get_speed();
     if (speed == 0.0) {
-        play();
+        play(1.0);
     } else {
         stopJack();
+        if (forceChangeDirection && speed < 0.0)
+            speed = 0.5;
         if (speed > 0.0)
             m_producer->set_speed(speed * 2.0);
         else
@@ -1016,14 +1020,14 @@ void TransportControl::seek(int position)
     MLT.seek(position);
 }
 
-void TransportControl::rewind()
+void TransportControl::rewind(bool forceChangeDirection)
 {
-    MLT.rewind();
+    MLT.rewind(forceChangeDirection);
 }
 
-void TransportControl::fastForward()
+void TransportControl::fastForward(bool forceChangeDirection)
 {
-    MLT.fastForward();
+    MLT.fastForward(forceChangeDirection);
 }
 
 void TransportControl::previous(int currentPosition)

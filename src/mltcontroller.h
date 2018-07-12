@@ -41,8 +41,8 @@ public slots:
     void pause();
     void stop();
     void seek(int position);
-    void rewind();
-    void fastForward();
+    void rewind(bool forceChangeDirection);
+    void fastForward(bool forceChangeDirection);
     void previous(int currentPosition);
     void next(int currentPosition);
     void setIn(int);
@@ -90,8 +90,8 @@ public:
     bool isPlaylist() const;
     bool isMultitrack() const;
     bool isImageProducer(Service* service) const;
-    void rewind();
-    void fastForward();
+    void rewind(bool forceChangeDirection);
+    void fastForward(bool forceChangeDirection);
     void previous(int currentPosition);
     void next(int currentPosition);
     void setIn(int);

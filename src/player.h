@@ -72,8 +72,8 @@ signals:
     void paused();
     void stopped();
     void seeked(int position);
-    void rewound();
-    void fastForwarded();
+    void rewound(bool forceChangeDirection);
+    void fastForwarded(bool forceChangeDirection);
     void previousSought(int currentPosition);
     void previousSought();
     void nextSought(int currentPosition);
@@ -98,8 +98,8 @@ public slots:
     void onFrameDisplayed(const SharedFrame& frame);
     void onVolumeChanged(int);
     void onCaptureStateChanged(bool);
-    void rewind();
-    void fastForward();
+    void rewind(bool forceChangeDirection = true);
+    void fastForward(bool forceChangeDirection = true);
     void showPaused();
     void showPlaying();
     void switchToTab(TabIndex index);
