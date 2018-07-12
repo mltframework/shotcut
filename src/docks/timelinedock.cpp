@@ -639,6 +639,8 @@ void TimelineDock::emitSelectedFromSelection()
         m_ignoreNextPositionChange = true;
         emit selected(info->producer);
     }
+    m_model.tractor()->set(kFilterInProperty, 0);
+    m_model.tractor()->set(kFilterOutProperty, m_model.tractor()->get_length() - 1);
 }
 
 void TimelineDock::remakeAudioLevels(int trackIndex, int clipIndex, bool force)
