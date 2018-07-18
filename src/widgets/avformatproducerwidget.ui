@@ -86,10 +86,10 @@
         <string notr="true" extracomment="The multiplication symbol that appears as the unit of measure for the speed field"> x</string>
        </property>
        <property name="decimals">
-        <number>3</number>
+        <number>6</number>
        </property>
        <property name="minimum">
-        <double>0.010000000000000</double>
+        <double>0.000001000000000</double>
        </property>
        <property name="maximum">
         <double>200.000000000000000</double>
