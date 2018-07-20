@@ -180,13 +180,13 @@ public slots:
     void setOutToCurrent(bool ripple);
     void onShuttle(float x);
     void onPropertiesDockTriggered(bool checked = true);
+    bool on_actionSave_triggered();
 
 private slots:
     void showUpgradePrompt();
     void on_actionAbout_Shotcut_triggered();
     void on_actionOpenOther_triggered();
     void onProducerChanged();
-    bool on_actionSave_triggered();
     bool on_actionSave_As_triggered();
     void onEncodeTriggered(bool checked = true);
     void onCaptureStateChanged(bool started);

@@ -357,16 +357,15 @@ bool TimelineDock::isRipple() const
 void TimelineDock::copyToSource()
 {
     if (model()->tractor() && model()->tractor()->is_valid()) {
-        QString xml = MLT.XML(model()->tractor());
-        Mlt::Producer producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
-        if (producer.is_valid()) {
-            producer.set(kShotcutVirtualClip, 1);
-            producer.set(kExportFromProperty, 1);
-            QString resource = MAIN.fileName();
-            if (resource.isEmpty())
-                resource = tr("Untitled");
-            producer.set("resource", resource.toUtf8().constData());
-            MAIN.openCut(new Mlt::Producer(producer));
+        if (MAIN.on_actionSave_triggered()) {
+            if (!MLT.openXML(MAIN.fileName())) {
+                MLT.producer()->set(kExportFromProperty, 1);
+                MAIN.open(MLT.producer());
+            } else {
+                emit showStatusMessage(tr("Failed to open ") + MAIN.fileName());
+            }
+        } else {
+            emit showStatusMessage(tr("You must save to Copy Timline to Source."));
         }
     }
 }
