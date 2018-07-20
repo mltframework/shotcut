@@ -182,8 +182,6 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
             on_scanModeCombo_currentIndexChanged(ui->scanModeCombo->currentIndex());
         }
         else if (name == "top_field_first") {
-            ui->scanModeCombo->setCurrentIndex(0);
-            on_scanModeCombo_currentIndexChanged(ui->scanModeCombo->currentIndex());
             ui->fieldOrderCombo->setCurrentIndex(preset.get_int("top_field_first"));
         }
         else if (name == "width") {
@@ -282,8 +280,6 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
             m_extension = preset.get("meta.preset.extension");
         }
         else if (name == "deinterlace_method") {
-            ui->scanModeCombo->setCurrentIndex(1);
-            on_scanModeCombo_currentIndexChanged(ui->scanModeCombo->currentIndex());
             name = preset.get("deinterlace_method");
             if (name == "onefield")
                 ui->deinterlacerCombo->setCurrentIndex(0);
