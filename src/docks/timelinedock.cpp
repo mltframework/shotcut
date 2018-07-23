@@ -437,9 +437,22 @@ void TimelineDock::onProducerChanged(Mlt::Producer* after)
             double speedRatio = oldSpeed / newSpeed;
 
             int length = qRound(info->length * speedRatio);
+            int in = qMin(qRound(info->frame_in * speedRatio), length - 1);
+            int out = qMin(qRound(info->frame_out * speedRatio), length - 1);
             after->set("length", length);
-            after->set_in_and_out(qMin(qRound(info->frame_in * speedRatio), length - 1),
-                                  qMin(qRound(info->frame_out * speedRatio), length - 1));
+            after->set_in_and_out(in, out);
+
+            // Adjust filters.
+            int n = after->filter_count();
+            for (int j = 0; j < n; j++) {
+                QScopedPointer<Mlt::Filter> filter(after->filter(j));
+                if (filter && filter->is_valid() && !filter->get_int("_loader")) {
+                    in = qMin(qRound(filter->get_in() * speedRatio), length - 1);
+                    out = qMin(qRound(filter->get_out() * speedRatio), length - 1);
+                    filter->set_in_and_out(in, out);
+                    //TODO: keyframes
+                }
+            }
         }
     }
     QString xmlAfter = MLT.XML(after);

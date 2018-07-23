@@ -163,10 +163,23 @@ void AvformatProducerWidget::reopen(Mlt::Producer* p)
         int in = m_producer->get_in();
 
         length = qRound(length * speedRatio);
+        in = qMin(qRound(in * speedRatio), length - 1);
+        out = qMin(qRound(out * speedRatio), length - 1);
         p->set("length", length);
-        p->set_in_and_out(qMin(qRound(in * speedRatio), length - 1),
-                          qMin(qRound(out * speedRatio), length - 1));
+        p->set_in_and_out(in, out);
         position = qRound(position * speedRatio);
+
+        // Adjust filters.
+        int n = p->filter_count();
+        for (int j = 0; j < n; j++) {
+            QScopedPointer<Mlt::Filter> filter(p->filter(j));
+            if (filter && filter->is_valid() && !filter->get_int("_loader")) {
+                in = qMin(qRound(filter->get_in() * speedRatio), length - 1);
+                out = qMin(qRound(filter->get_out() * speedRatio), length - 1);
+                filter->set_in_and_out(in, out);
+                //TODO: keyframes
+            }
+        }
     }
     else
     {
