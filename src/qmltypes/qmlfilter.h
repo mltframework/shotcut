@@ -46,6 +46,15 @@ class QmlFilter : public QObject
     Q_PROPERTY(bool blockSignals WRITE blockSignals)
 
 public:
+    enum TimeFormat
+    {
+        TIME_FRAMES,
+        TIME_CLOCK,
+        TIME_TIMECODE_DF,
+        TIME_TIMECODE_NDF,
+    };
+    Q_ENUMS(TimeFormat)
+
     explicit QmlFilter();
     explicit QmlFilter(Mlt::Filter& mltFilter, const QmlMetadata* metadata, QObject *parent = 0);
     ~QmlFilter();
@@ -75,7 +84,7 @@ public:
     Q_INVOKABLE void deletePreset(const QString& name);
     Q_INVOKABLE void analyze(bool isAudio = false);
     Q_INVOKABLE static int framesFromTime(const QString& time);
-    Q_INVOKABLE static QString timeFromFrames(int frames);
+    Q_INVOKABLE static QString timeFromFrames(int frames, TimeFormat format = TIME_TIMECODE_DF);
     Q_INVOKABLE void getHash();
     Mlt::Producer& producer() { return m_producer; }
     int in();
