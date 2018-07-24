@@ -23,6 +23,7 @@
 #include "qmltypes/qmlutilities.h"
 #include "qmltypes/qmlview.h"
 #include "qmltypes/qmlfile.h"
+#include "qmltypes/qmlfilter.h"
 #include "qmltypes/qmlhtmleditor.h"
 #include "qmltypes/qmlmetadata.h"
 #include "qmltypes/timelineitems.h"
@@ -44,6 +45,7 @@ QmlUtilities::QmlUtilities(QObject *parent) :
 void QmlUtilities::registerCommonTypes()
 {
     qmlRegisterType<QmlFile>("org.shotcut.qml", 1, 0, "File");
+    qmlRegisterType<QmlFilter>("org.shotcut.qml", 1, 0, "Filter");
     qmlRegisterType<QmlHtmlEditor>("org.shotcut.qml", 1, 0, "HtmlEditor");
     qmlRegisterType<QmlMetadata>("org.shotcut.qml", 1, 0, "Metadata");
     qmlRegisterType<QmlKeyframesMetadata>();

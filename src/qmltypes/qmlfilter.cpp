@@ -349,10 +349,26 @@ int QmlFilter::framesFromTime(const QString &time)
     return 0;
 }
 
-QString QmlFilter::timeFromFrames(int frames)
+QString QmlFilter::timeFromFrames(int frames, TimeFormat format)
 {
     if (MLT.producer()) {
-        return MLT.producer()->frames_to_time(frames);
+        mlt_time_format mltFormat = mlt_time_smpte_df;
+        switch ( format )
+        {
+            case TIME_FRAMES:
+                mltFormat = mlt_time_frames;
+                break;
+            case TIME_CLOCK:
+                mltFormat = mlt_time_clock;
+                break;
+            case TIME_TIMECODE_DF:
+                mltFormat = mlt_time_smpte_df;
+                break;
+            case TIME_TIMECODE_NDF:
+                mltFormat = mlt_time_smpte_ndf;
+                break;
+        }
+        return MLT.producer()->frames_to_time(frames, mltFormat);
     }
     return QString();
 }
