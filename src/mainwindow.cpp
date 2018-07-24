@@ -1469,7 +1469,11 @@ void MainWindow::setCurrentFile(const QString &filename)
         m_currentFile = filename;
     if (!m_currentFile.isEmpty())
         shownName = QFileInfo(m_currentFile).fileName();
-    setWindowTitle(tr("%1[*] - %2").arg(shownName).arg(qApp->applicationName()));
+#ifdef Q_OS_MAC
+    setWindowTitle(QString("%1 - %2").arg(shownName).arg(qApp->applicationName()));
+#else
+    setWindowTitle(QString("%1[*] - %2").arg(shownName).arg(qApp->applicationName()));
+#endif
 }
 
 void MainWindow::on_actionAbout_Shotcut_triggered()
