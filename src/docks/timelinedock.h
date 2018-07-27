@@ -97,6 +97,7 @@ signals:
     void clipCopied();
     void clipMoved(int fromTrack, int toTrack, int clipIndex, int position);
     void filteredClicked();
+    void imageDurationChanged();
 
 public slots:
     void addAudioTrack();

@@ -61,7 +61,7 @@ void ImageProducerWidget::setProducer(Mlt::Producer* p)
         p->set("ttl", 1);
     }
     ui->filenameLabel->setText(ui->filenameLabel->fontMetrics().elidedText(s, Qt::ElideLeft, width() - 40));
-    ui->durationSpinBox->setValue(m_producer->get_playtime());
+    updateDuration();
     ui->widthLineEdit->setText(p->get("meta.media.width"));
     ui->heightLineEdit->setText(p->get("meta.media.height"));
     ui->aspectNumSpinBox->blockSignals(true);
@@ -89,9 +89,12 @@ void ImageProducerWidget::setProducer(Mlt::Producer* p)
     ui->durationSpinBox->setEnabled(!p->get(kMultitrackItemProperty));
 }
 
-void ImageProducerWidget::setOutPoint(int duration)
+void ImageProducerWidget::updateDuration()
 {
-    ui->durationSpinBox->setValue(duration + 1);
+    if (m_producer->get(kFilterOutProperty))
+        ui->durationSpinBox->setValue(m_producer->get_int(kFilterOutProperty) - m_producer->get_int(kFilterInProperty) + 1);
+    else
+        ui->durationSpinBox->setValue(m_producer->get_playtime());
 }
 
 void ImageProducerWidget::reopen(Mlt::Producer* p)

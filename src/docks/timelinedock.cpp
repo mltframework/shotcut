@@ -806,6 +806,12 @@ bool TimelineDock::trimClipIn(int trackIndex, int clipIndex, int delta, bool rip
             m_undoHelper->recordBeforeState();
         }
         m_model.trimClipIn(trackIndex, clipIndex, delta, ripple);
+
+        // Update duration in properties for image clip.
+        QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
+        if (info && MLT.isImageProducer(info->producer) && !info->producer->get_int(kShotcutSequenceProperty))
+            emit imageDurationChanged();
+
         m_trimDelta += delta;
         if (!ripple) --clipIndex;
         m_trimCommand.reset(new Timeline::TrimClipInCommand(m_model, trackIndex, clipIndex, m_trimDelta, ripple, false));
@@ -842,9 +848,12 @@ bool TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta, bool ri
             m_undoHelper->recordBeforeState();
         }
         m_model.trimClipOut(trackIndex, clipIndex, delta, ripple);
+
+        // Update duration in properties for image clip.
         QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
-        if (MLT.isImageProducer(info->producer))
-            info->producer->set("out", info->cut->get_int("out"));
+        if (info && MLT.isImageProducer(info->producer) && !info->producer->get_int(kShotcutSequenceProperty))
+            emit imageDurationChanged();
+
         m_trimDelta += delta;
         m_trimCommand.reset(new Timeline::TrimClipOutCommand(m_model, trackIndex, clipIndex, m_trimDelta, ripple, false));
     }

@@ -2489,7 +2489,8 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
         w = new AvformatProducerWidget(this);
     else if (MLT.isImageProducer(producer)) {
         ImageProducerWidget* ipw = new ImageProducerWidget(this);
-        connect(m_player, SIGNAL(outChanged(int)), ipw, SLOT(setOutPoint(int)));
+        connect(m_player, SIGNAL(outChanged(int)), ipw, SLOT(updateDuration()));
+        connect(m_timelineDock, SIGNAL(imageDurationChanged()), ipw, SLOT(updateDuration()));
         w = ipw;
     }
     else if (service == "decklink" || resource.contains("decklink"))
