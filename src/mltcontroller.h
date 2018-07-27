@@ -96,7 +96,7 @@ public:
     void next(int currentPosition);
     void setIn(int);
     void setOut(int);
-    void restart();
+    void restart(const QString& xml = "");
     void resetURL();
     QImage image(Frame *frame, int width, int height);
     QImage image(Mlt::Producer& producer, int frameNumber, int width, int height);
