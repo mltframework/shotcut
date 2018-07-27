@@ -645,8 +645,6 @@ void TimelineDock::emitSelectedFromSelection()
         info->producer->set(kFilterInProperty, info->frame_in);
         info->producer->set(kFilterOutProperty, info->frame_out);
         info->producer->set(kPlaylistStartProperty, info->start);
-        if (MLT.isImageProducer(info->producer))
-            info->producer->set_in_and_out(info->cut->get_in(), info->cut->get_out());
         info->producer->set(kMultitrackItemProperty, QString("%1:%2").arg(clipIndex).arg(trackIndex).toLatin1().constData());
         m_ignoreNextPositionChange = true;
         emit selected(info->producer);
