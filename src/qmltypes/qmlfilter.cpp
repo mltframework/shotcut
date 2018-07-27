@@ -416,15 +416,25 @@ void QmlFilter::setOut(int value)
     set("out", value);
 }
 
+int QmlFilter::animateIn()
+{
+    return m_filter.time_to_frames(m_filter.get(kShotcutAnimInProperty));
+}
+
 void QmlFilter::setAnimateIn(int value)
 {
-    m_filter.set(kShotcutAnimInProperty, value);
+    m_filter.set(kShotcutAnimInProperty, m_filter.frames_to_time(value, mlt_time_clock));
     emit animateInChanged();
+}
+
+int QmlFilter::animateOut()
+{
+    return m_filter.time_to_frames(m_filter.get(kShotcutAnimOutProperty));
 }
 
 void QmlFilter::setAnimateOut(int value)
 {
-    m_filter.set(kShotcutAnimOutProperty, value);
+    m_filter.set(kShotcutAnimOutProperty, m_filter.frames_to_time(value, mlt_time_clock));
     emit animateOutChanged();
 }
 
