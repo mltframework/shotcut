@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2013-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -96,7 +95,8 @@ bool AudioLevelsTask::operator==(AudioLevelsTask &b)
     if (!m_producers.isEmpty() && !b.m_producers.isEmpty()) {
         Mlt::Producer* a_producer = m_producers.first().first;
         Mlt::Producer* b_producer = b.m_producers.first().first;
-        return !qstrcmp(a_producer->get("resource"), b_producer->get("resource"));
+        return a_producer && a_producer->is_valid() && b_producer && b_producer->is_valid()
+                && !qstrcmp(a_producer->get("resource"), b_producer->get("resource"));
     }
     return false;
 }
