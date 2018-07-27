@@ -735,15 +735,17 @@ void Controller::setOut(int out)
     }
 }
 
-void Controller::restart()
+void Controller::restart(const QString& xml)
 {
     if (!m_consumer || !m_consumer->is_valid() || !m_producer || !m_producer->is_valid())
         return;
     const char* position = m_consumer->frames_to_time(m_consumer->position());
     double speed = m_producer->get_speed();
-    QString xml = XML();
+    QString loadXml = xml;
+    if (loadXml.isEmpty())
+        loadXml = XML();
     stop();
-    if (!setProducer(new Mlt::Producer(profile(), "xml-string", xml.toUtf8().constData()))) {
+    if (!setProducer(new Mlt::Producer(profile(), "xml-string", loadXml.toUtf8().constData()))) {
 #ifdef Q_OS_WIN
         play(speed);
         if (m_producer && m_producer->is_valid())
