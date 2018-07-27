@@ -94,7 +94,6 @@ public slots:
     void postProducerOpened();
     void onMeltedUnitOpened();
     void onDurationChanged();
-    void onShowFrame(int position, double fps, int in, int out, int length, bool isPlaying);
     void onFrameDisplayed(const SharedFrame& frame);
     void onVolumeChanged(int);
     void onCaptureStateChanged(bool);

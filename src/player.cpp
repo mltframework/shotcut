@@ -564,43 +564,12 @@ void Player::onDurationChanged()
         seek(m_duration - 1);
 }
 
-void Player::onShowFrame(int position, double fps, int in, int out, int length, bool isPlaying)
-{
-    m_duration = length;
-    MLT.producer()->set("length", length);
-    m_durationLabel->setText(QString(MLT.producer()->get_length_time()).prepend(" / "));
-    m_scrubber->setFramerate(fps);
-    m_scrubber->setScale(m_duration);
-    if (position < m_duration) {
-        m_position = position;
-        m_positionSpinner->blockSignals(true);
-        m_positionSpinner->setValue(position);
-        m_positionSpinner->blockSignals(false);
-        m_scrubber->onSeek(position);
-    }
-    if (m_isMeltedPlaying == -1 || isPlaying != m_isMeltedPlaying) {
-        m_isMeltedPlaying = isPlaying;
-        if (isPlaying) {
-            actionPlay->setIcon(m_pauseIcon);
-            actionPlay->setText(tr("Pause"));
-            actionPlay->setToolTip(tr("Pause playback (K)"));
-        }
-        else {
-            actionPlay->setIcon(m_playIcon);
-            actionPlay->setText(tr("Play"));
-            actionPlay->setToolTip(tr("Start playback (L)"));
-        }
-    }
-    m_previousIn = in;
-    m_previousOut = out;
-    m_scrubber->blockSignals(true);
-    setIn(in);
-    setOut(out);
-    m_scrubber->blockSignals(false);
-}
-
 void Player::onFrameDisplayed(const SharedFrame& frame)
 {
+    if (MLT.producer() && MLT.producer()->get_length() != m_duration) {
+        // This can happen if the profile changes. Reload the properties from the producer.
+        onProducerOpened(false);
+    }
     int position = frame.get_position();
     if (position < m_duration) {
         m_position = position;
