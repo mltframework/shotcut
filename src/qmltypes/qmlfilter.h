@@ -83,9 +83,9 @@ public:
     int out();
     void setOut(int value);
     Mlt::Filter& filter() { return m_filter; }
-    int animateIn() { return m_filter.get_int(kShotcutAnimInProperty); }
+    int animateIn();
     void setAnimateIn(int value);
-    int animateOut() { return m_filter.get_int(kShotcutAnimOutProperty); }
+    int animateOut();
     void setAnimateOut(int value);
     int duration();
     Q_INVOKABLE void resetProperty(const QString& name);
