@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2012-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,10 +29,11 @@
 #include "dialogs/textviewerdialog.h"
 #include "util.h"
 
-MeltJob::MeltJob(const QString& name, const QString& xml)
+MeltJob::MeltJob(const QString& name, const QString& xml, int frameRateNum, int frameRateDen)
     : AbstractJob(name)
     , m_isStreaming(false)
     , m_previousPercent(0)
+    , m_currentFrame(0)
 {
     if (!xml.isEmpty()) {
         QAction* action = new QAction(tr("View XML"), this);
@@ -56,6 +56,8 @@ MeltJob::MeltJob(const QString& name, const QString& xml)
         connect(action, SIGNAL(triggered()), this, SLOT(onShowFolderTriggered()));
         m_successActions << action;
     }
+    if (frameRateNum > 0 && frameRateDen > 0)
+        m_profile.set_frame_rate(frameRateNum, frameRateDen);
 }
 
 void MeltJob::onOpenTiggered()
@@ -68,8 +70,8 @@ void MeltJob::onShowFolderTriggered()
     Util::showInFolder(objectName());
 }
 
-MeltJob::MeltJob(const QString& name, const QStringList& args)
-    : MeltJob(name)
+MeltJob::MeltJob(const QString& name, const QStringList& args, int frameRateNum, int frameRateDen)
+    : MeltJob(name, QString(), frameRateNum, frameRateDen)
 {
     m_args = args;
 }
@@ -131,8 +133,15 @@ void MeltJob::onViewXmlTriggered()
 void MeltJob::onReadyRead()
 {
     QString msg = readLine();
-    if (msg.contains("percentage:")) {
-        int percent = msg.mid(msg.indexOf("percentage:") + 11).toInt();
+    int index = msg.indexOf("Frame:");
+    if (index > -1) {
+        index += 6;
+        int comma = msg.indexOf(',', index);
+        m_currentFrame = msg.mid(index, comma - index).toInt();
+    }
+    index = msg.indexOf("percentage:");
+    if (index > -1) {
+        int percent = msg.mid(index + 11).toInt();
         if (percent != m_previousPercent) {
             emit progressUpdated(m_item, percent);
             m_previousPercent = percent;
@@ -140,5 +149,15 @@ void MeltJob::onReadyRead()
     }
     else {
         appendToLog(msg);
+    }
+}
+
+void MeltJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
+{
+    AbstractJob::onFinished(exitCode, exitStatus);
+    if (exitStatus != QProcess::NormalExit && exitCode != 0 && !stopped()) {
+        Mlt::Producer producer(m_profile, "colour:");
+        QString time = QString::fromLatin1(producer.frames_to_time(m_currentFrame));
+        emit finished(this, false, time);
     }
 }

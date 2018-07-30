@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2012-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -895,7 +894,9 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Service* service, const QString& target,
     for (int i = 0; i < playlists.length();++i)
         playlists.item(i).toElement().setAttribute("autoclose", 1);
 
-    return new EncodeJob(target, dom.toString(2));
+    int frameRateNum = consumerNode.attribute("frame_rate_num").toInt();
+    int frameRateDen = consumerNode.attribute("frame_rate_den").toInt();
+    return new EncodeJob(target, dom.toString(2), frameRateNum, frameRateDen);
 }
 
 void EncodeDock::runMelt(const QString& target, int realtime)
@@ -914,7 +915,7 @@ void EncodeDock::runMelt(const QString& target, int realtime)
             m_immediateJob.reset(createMeltJob(producer.data(), target, realtime));
             if (m_immediateJob) {
                 m_immediateJob->setIsStreaming(true);
-                connect(m_immediateJob.data(), SIGNAL(finished(AbstractJob*,bool)), this, SLOT(onFinished(AbstractJob*,bool)));
+                connect(m_immediateJob.data(), SIGNAL(finished(AbstractJob*,bool,QString)), this, SLOT(onFinished(AbstractJob*,bool)));
                 m_immediateJob->start();
             }
             return;
@@ -925,7 +926,7 @@ void EncodeDock::runMelt(const QString& target, int realtime)
     m_immediateJob.reset(createMeltJob(service, target, realtime));
     if (m_immediateJob) {
         m_immediateJob->setIsStreaming(true);
-        connect(m_immediateJob.data(), SIGNAL(finished(AbstractJob*,bool)), this, SLOT(onFinished(AbstractJob*,bool)));
+        connect(m_immediateJob.data(), SIGNAL(finished(AbstractJob*,bool,QString)), this, SLOT(onFinished(AbstractJob*,bool)));
         m_immediateJob->start();
     }
 }
@@ -1208,7 +1209,7 @@ void EncodeDock::on_encodeButton_clicked()
                 MAIN.hideProducer();
 
                 m_immediateJob->setIsStreaming(true);
-                connect(m_immediateJob.data(), SIGNAL(finished(AbstractJob*,bool)), this, SLOT(onFinished(AbstractJob*,bool)));
+                connect(m_immediateJob.data(), SIGNAL(finished(AbstractJob*,bool,QString)), this, SLOT(onFinished(AbstractJob*,bool)));
 
                 if (MLT.resource().startsWith("gdigrab:") || MLT.resource().startsWith("x11grab:")) {
                     ui->stopCaptureButton->show();

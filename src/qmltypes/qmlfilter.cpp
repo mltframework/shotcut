@@ -329,7 +329,8 @@ void QmlFilter::analyze(bool isAudio)
     consumerNode.setAttribute("no_meta", 1);
     consumerNode.setAttribute("resource", tmpTarget.fileName());
 
-    AbstractJob* job = new MeltJob(tmpTarget.fileName(), dom.toString(2));
+    AbstractJob* job = new MeltJob(tmpTarget.fileName(), dom.toString(2),
+        MLT.profile().frame_rate_num(), MLT.profile().frame_rate_den());
     if (job) {
         AnalyzeDelegate* delegate = new AnalyzeDelegate(m_filter);
         connect(job, &AbstractJob::finished, delegate, &AnalyzeDelegate::onAnalyzeFinished);

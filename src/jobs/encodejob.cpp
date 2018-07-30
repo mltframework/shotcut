@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2012-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,8 +31,8 @@
 #include "jobs/videoqualityjob.h"
 #include "util.h"
 
-EncodeJob::EncodeJob(const QString &name, const QString &xml)
-    : MeltJob(name, xml)
+EncodeJob::EncodeJob(const QString &name, const QString &xml, int frameRateNum, int frameRateDen)
+    : MeltJob(name, xml, frameRateNum, frameRateDen)
 {
     QAction* action = new QAction(tr("Open"), this);
     action->setToolTip(tr("Open the output file in the Shotcut player"));
@@ -100,7 +99,8 @@ void EncodeJob::onVideoQualityTriggered()
             consumerNode.setAttribute("terminate_on_pause", 1);
 
             // Create job and add it to the queue.
-            JOBS.add(new VideoQualityJob(objectName(), dom.toString(2), reportPath));
+            JOBS.add(new VideoQualityJob(objectName(), dom.toString(2), reportPath,
+                     MLT.profile().frame_rate_num(), MLT.profile().frame_rate_den()));
         }
     }
 }

@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2012-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,13 +20,14 @@
 
 #include "abstractjob.h"
 #include <QTemporaryFile>
+#include <MltProfile.h>
 
 class MeltJob : public AbstractJob
 {
     Q_OBJECT
 public:
-    MeltJob(const QString& name, const QString& xml = QString());
-    MeltJob(const QString& name, const QStringList& args);
+    MeltJob(const QString& name, const QString& xml, int frameRateNum, int frameRateDen);
+    MeltJob(const QString& name, const QStringList& args, int frameRateNum, int frameRateDen);
     virtual ~MeltJob();
     QString xml();
     QString xmlPath() const { return m_xml.fileName(); }
@@ -43,10 +43,14 @@ protected slots:
     
 private:
     void onReadyRead();
+    void onFinished(int exitCode, QProcess::ExitStatus exitStatus);
+
     QTemporaryFile m_xml;
     bool m_isStreaming;
     int m_previousPercent;
-    QStringList m_args;    
+    QStringList m_args;
+    int m_currentFrame;
+    Mlt::Profile m_profile;
 };
 
 #endif // MELTJOB_H

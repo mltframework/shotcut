@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2012-2017 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2012-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -61,7 +60,7 @@ AbstractJob* JobQueue::add(AbstractJob* job)
     job->setParent(this);
     job->setStandardItem(item);
     connect(job, SIGNAL(progressUpdated(QStandardItem*, int)), SLOT(onProgressUpdated(QStandardItem*, int)));
-    connect(job, SIGNAL(finished(AbstractJob*, bool)), SLOT(onFinished(AbstractJob*, bool)));
+    connect(job, SIGNAL(finished(AbstractJob*, bool, QString)), SLOT(onFinished(AbstractJob*, bool, QString)));
     m_mutex.lock();
     m_jobs.append(job);
     m_mutex.unlock();
@@ -84,7 +83,7 @@ void JobQueue::onProgressUpdated(QStandardItem* standardItem, int percent)
     }
 }
 
-void JobQueue::onFinished(AbstractJob* job, bool isSuccess)
+void JobQueue::onFinished(AbstractJob* job, bool isSuccess, QString time)
 {
     QStandardItem* item = job->standardItem();
     if (item) {
@@ -98,7 +97,7 @@ void JobQueue::onFinished(AbstractJob* job, bool isSuccess)
             item->setText(tr("stopped"));
             icon = QIcon(":/icons/oxygen/32x32/status/task-attempt.png");
         } else {
-            item->setText(tr("failed"));
+            item->setText(tr("failed").append(' ').append(time));
             icon = QIcon(":/icons/oxygen/32x32/status/task-reject.png");
         }
         item = JOBS.item(item->row(), JobQueue::COLUMN_ICON);

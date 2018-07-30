@@ -29,8 +29,8 @@
 #include "util.h"
 
 VideoQualityJob::VideoQualityJob(const QString& name, const QString& xml,
-                                 const QString& reportPath)
-    : MeltJob(name, xml)
+                                 const QString& reportPath, int frameRateNum, int frameRateDen)
+    : MeltJob(name, xml, frameRateNum, frameRateDen)
     , m_reportPath(reportPath)
 {
     QAction* action = new QAction(tr("Open"), this);

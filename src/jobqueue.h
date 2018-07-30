@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2012-2017 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2012-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,7 +52,7 @@ signals:
 
 public slots:
     void onProgressUpdated(QStandardItem* standardItem, int percent);
-    void onFinished(AbstractJob* job, bool isSuccess);
+    void onFinished(AbstractJob* job, bool isSuccess, QString time);
 
 private:
     QList<AbstractJob*> m_jobs;

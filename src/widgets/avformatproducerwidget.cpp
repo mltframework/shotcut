@@ -785,7 +785,8 @@ void AvformatProducerWidget::on_actionReverse_triggered()
             // Run the melt job to convert the intermediate file to the reversed clip.
             meltArgs.prepend(QString("timewarp:-1.0:").append(tmpFileName));
             meltArgs << QString("target=").append(filename);
-            MeltJob* meltJob = new MeltJob(filename, meltArgs);
+            MeltJob* meltJob = new MeltJob(filename, meltArgs,
+                m_producer->get_int("meta.media.frame_rate_num"), m_producer->get_int("meta.media.frame_rate_den"));
             meltJob->setLabel(tr("Reverse %1").arg(Util::baseName(resource)));
             meltJob->setPostJobAction(new ReverseFilePostJobAction(resource, filename, tmpFileName));
             JOBS.add(meltJob);

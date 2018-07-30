@@ -55,7 +55,7 @@ public slots:
 
 signals:
     void progressUpdated(QStandardItem* item, int percent);
-    void finished(AbstractJob* job, bool isSuccess);
+    void finished(AbstractJob* job, bool isSuccess, QString failureTime = QString());
 
 protected:
     QList<QAction*> m_standardActions;
