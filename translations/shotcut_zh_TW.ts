@@ -387,28 +387,28 @@
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="805"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="680"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="693"/>
         <source>Reverse...</source>
         <translation>反轉…</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="263"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="293"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="276"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="306"/>
         <source>None</source>
         <translation>無</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="314"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="327"/>
         <source>All</source>
         <translation>全部</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="392"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="405"/>
         <source>(variable)</source>
         <translation>（可變）</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="428"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="441"/>
         <source>This file is variable frame rate, which is not reliable for editing. Do you want to convert it to an edit-friendly format?
 
 If yes, choose a format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
@@ -419,7 +419,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="439"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="452"/>
         <source>This file does not support seeking and cannot be used for editing. Do you want to convert it to an edit-friendly format?
 
 If yes, choose a format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
@@ -430,26 +430,26 @@ If yes, choose a format below and then click OK to choose a file name. After cho
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="610"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="677"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="623"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="690"/>
         <source>Choose an edit-friendly format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
 </source>
         <translation>請在下方選擇一種編輯友善格式，然後按下 [確定] 來選擇檔案名稱；在選擇檔案名稱後，會建立一項工作。當工作完成時，按兩下來打開它。
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="668"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="769"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="681"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="782"/>
         <source>Convert %1</source>
         <translation>轉換 %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="741"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="754"/>
         <source>Reversed</source>
         <translation>已反轉</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="776"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="790"/>
         <source>Reverse %1</source>
         <translation>反轉 %1</translation>
     </message>
@@ -1461,17 +1461,17 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1605"/>
-        <location filename="../src/docks/encodedock.cpp" line="850"/>
-        <location filename="../src/docks/encodedock.cpp" line="1156"/>
-        <location filename="../src/docks/encodedock.cpp" line="1571"/>
+        <location filename="../src/docks/encodedock.cpp" line="846"/>
+        <location filename="../src/docks/encodedock.cpp" line="1155"/>
+        <location filename="../src/docks/encodedock.cpp" line="1570"/>
         <source>Export File</source>
         <translation>匯出至檔案</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1612"/>
-        <location filename="../src/docks/encodedock.cpp" line="1294"/>
-        <location filename="../src/docks/encodedock.cpp" line="1301"/>
-        <location filename="../src/docks/encodedock.cpp" line="1412"/>
+        <location filename="../src/docks/encodedock.cpp" line="1293"/>
+        <location filename="../src/docks/encodedock.cpp" line="1300"/>
+        <location filename="../src/docks/encodedock.cpp" line="1411"/>
         <source>Stream</source>
         <translation>串流</translation>
     </message>
@@ -1487,9 +1487,9 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1649"/>
-        <location filename="../src/docks/encodedock.cpp" line="1130"/>
-        <location filename="../src/docks/encodedock.cpp" line="1218"/>
-        <location filename="../src/docks/encodedock.cpp" line="1232"/>
+        <location filename="../src/docks/encodedock.cpp" line="1129"/>
+        <location filename="../src/docks/encodedock.cpp" line="1217"/>
+        <location filename="../src/docks/encodedock.cpp" line="1231"/>
         <source>Stop Capture</source>
         <translation>停止擷取</translation>
     </message>
@@ -1505,102 +1505,103 @@ in temporal compression</source>
         <translation>作為格式預設值</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="352"/>
+        <location filename="../src/docks/encodedock.cpp" line="348"/>
         <source>Timeline</source>
         <translation>時間軸</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="354"/>
+        <location filename="../src/docks/encodedock.cpp" line="350"/>
         <source>Playlist</source>
         <translation>播放清單</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="356"/>
+        <location filename="../src/docks/encodedock.cpp" line="352"/>
         <source>Each Playlist Item</source>
         <translation>每一個播放清單項目</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="365"/>
-        <location filename="../src/docks/encodedock.cpp" line="377"/>
+        <location filename="../src/docks/encodedock.cpp" line="361"/>
+        <location filename="../src/docks/encodedock.cpp" line="373"/>
         <source>Source</source>
         <translation>來源</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="392"/>
-        <location filename="../src/docks/encodedock.cpp" line="1080"/>
+        <location filename="../src/docks/encodedock.cpp" line="388"/>
+        <location filename="../src/docks/encodedock.cpp" line="1078"/>
+        <location filename="../src/docks/encodedock.cpp" line="1079"/>
         <source>Custom</source>
         <translation>自訂</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="427"/>
+        <location filename="../src/docks/encodedock.cpp" line="423"/>
         <source>Stock</source>
         <translation>內建</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="854"/>
+        <location filename="../src/docks/encodedock.cpp" line="850"/>
         <source>You cannot write to a file that is in your project.
 Try again with a different folder or file name.</source>
         <translation>無法寫入到已經存在專案裡的檔案。
 請選擇其他資料夾或檔名再試。</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1156"/>
-        <location filename="../src/docks/encodedock.cpp" line="1573"/>
+        <location filename="../src/docks/encodedock.cpp" line="1155"/>
+        <location filename="../src/docks/encodedock.cpp" line="1572"/>
         <source>Capture File</source>
         <translation>擷取至檔案</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1177"/>
+        <location filename="../src/docks/encodedock.cpp" line="1176"/>
         <source>The drive you chose only has %1 MiB of free space.
 Do you still want to continue?</source>
         <translation>選擇的磁碟機只有 %1 MiB 的可用空間。
 確定要繼續嗎？</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1184"/>
+        <location filename="../src/docks/encodedock.cpp" line="1183"/>
         <source>Do not show this anymore.</source>
         <comment>Export free disk space warning dialog</comment>
         <translation>不再顯示此提示。</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1189"/>
+        <location filename="../src/docks/encodedock.cpp" line="1188"/>
         <source>Export canceled.</source>
         <translation>匯出已取消。</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1289"/>
-        <location filename="../src/docks/encodedock.cpp" line="1310"/>
+        <location filename="../src/docks/encodedock.cpp" line="1288"/>
+        <location filename="../src/docks/encodedock.cpp" line="1309"/>
         <source>Stop Stream</source>
         <translation>停止串流</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1302"/>
+        <location filename="../src/docks/encodedock.cpp" line="1301"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>以 URL 形式輸入網路通訊協定、位置、連接埠與參數：</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1347"/>
+        <location filename="../src/docks/encodedock.cpp" line="1346"/>
         <source>Add Export Preset</source>
         <translation>新增匯出預設設定</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1389"/>
+        <location filename="../src/docks/encodedock.cpp" line="1388"/>
         <source>Delete Preset</source>
         <translation>刪除預設設定</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1390"/>
+        <location filename="../src/docks/encodedock.cpp" line="1389"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>確定要刪除 %1？</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1509"/>
-        <location filename="../src/docks/encodedock.cpp" line="1514"/>
+        <location filename="../src/docks/encodedock.cpp" line="1508"/>
+        <location filename="../src/docks/encodedock.cpp" line="1513"/>
         <source>None</source>
         <translation>無</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1557"/>
+        <location filename="../src/docks/encodedock.cpp" line="1556"/>
         <source>KiB (%1s)</source>
         <translation>KiB (%1s)</translation>
     </message>
@@ -1608,28 +1609,28 @@ Do you still want to continue?</source>
 <context>
     <name>EncodeJob</name>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="38"/>
+        <location filename="../src/jobs/encodejob.cpp" line="37"/>
         <source>Open</source>
         <translation>開啟</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="39"/>
+        <location filename="../src/jobs/encodejob.cpp" line="38"/>
         <source>Open the output file in the Shotcut player</source>
         <translation>在 Shotcut 播放器中開啟輸出檔案</translation>
     </message>
     <message>
+        <location filename="../src/jobs/encodejob.cpp" line="42"/>
         <location filename="../src/jobs/encodejob.cpp" line="43"/>
-        <location filename="../src/jobs/encodejob.cpp" line="44"/>
         <source>Show In Folder</source>
         <translation>在資料夾中顯示</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="48"/>
+        <location filename="../src/jobs/encodejob.cpp" line="47"/>
         <source>Measure Video Quality...</source>
         <translation>測量視訊品質…</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="58"/>
+        <location filename="../src/jobs/encodejob.cpp" line="57"/>
         <source>Video Quality Report</source>
         <translation>視訊品質報表</translation>
     </message>
@@ -2336,13 +2337,13 @@ Do you want to save your changes?</source>
         <translation>重設</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.cpp" line="203"/>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="206"/>
         <source>Getting length of image sequence...</source>
         <translation>正在取得影像序列長度…</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.cpp" line="215"/>
-        <location filename="../src/widgets/imageproducerwidget.cpp" line="231"/>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="218"/>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="234"/>
         <source>Reloading image sequence...</source>
         <translation>正在重新載入影像序列…</translation>
     </message>
@@ -2396,27 +2397,27 @@ Do you want to save your changes?</source>
 <context>
     <name>JobQueue</name>
     <message>
-        <location filename="../src/jobqueue.cpp" line="52"/>
+        <location filename="../src/jobqueue.cpp" line="51"/>
         <source>pending</source>
         <translation>等待中</translation>
     </message>
     <message>
-        <location filename="../src/jobqueue.cpp" line="58"/>
+        <location filename="../src/jobqueue.cpp" line="57"/>
         <source>Estimated Hours:Minutes:Seconds</source>
         <translation>估計所需時:分:秒</translation>
     </message>
     <message>
-        <location filename="../src/jobqueue.cpp" line="95"/>
+        <location filename="../src/jobqueue.cpp" line="94"/>
         <source>Elapsed Hours:Minutes:Seconds</source>
         <translation>已經耗用時:分:秒</translation>
     </message>
     <message>
-        <location filename="../src/jobqueue.cpp" line="98"/>
+        <location filename="../src/jobqueue.cpp" line="97"/>
         <source>stopped</source>
         <translation>停止</translation>
     </message>
     <message>
-        <location filename="../src/jobqueue.cpp" line="101"/>
+        <location filename="../src/jobqueue.cpp" line="100"/>
         <source>failed</source>
         <translation>失敗</translation>
     </message>
@@ -3055,7 +3056,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="392"/>
-        <location filename="../src/mainwindow.cpp" line="2607"/>
+        <location filename="../src/mainwindow.cpp" line="2549"/>
         <source>Enter Full Screen</source>
         <translation>進入全螢幕模式</translation>
     </message>
@@ -3076,7 +3077,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="416"/>
-        <location filename="../src/mainwindow.cpp" line="245"/>
+        <location filename="../src/mainwindow.cpp" line="239"/>
         <source>Properties</source>
         <translation>屬性</translation>
     </message>
@@ -3092,7 +3093,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="443"/>
-        <location filename="../src/mainwindow.cpp" line="360"/>
+        <location filename="../src/mainwindow.cpp" line="354"/>
         <source>History</source>
         <translation>歷程記錄</translation>
     </message>
@@ -3418,7 +3419,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>僅短片專案</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="125"/>
+        <location filename="../src/mainwindow.cpp" line="119"/>
         <source>Error: This program requires the JACK 1 library.
 
 Please install it using your package manager. It may be named libjack0, jack-audio-connection-kit, jack, or similar.</source>
@@ -3427,7 +3428,7 @@ Please install it using your package manager. It may be named libjack0, jack-aud
 請透過套件管理員完成安裝。套件名稱可能為 libjack0、jack-audio-connection-kit、jack 或類似的名稱。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="133"/>
+        <location filename="../src/mainwindow.cpp" line="127"/>
         <source>Error: This program requires the SDL 2 library.
 
 Please install it using your package manager. It may be named libsdl2-2.0-0, SDL2, or similar.</source>
@@ -3436,99 +3437,99 @@ Please install it using your package manager. It may be named libsdl2-2.0-0, SDL
 請透過套件管理員完成安裝。套件名稱可能為 libsdl2-2.0-0、SDL2 或類似的名稱。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="203"/>
+        <location filename="../src/mainwindow.cpp" line="197"/>
         <source>Ctrl+Z</source>
         <translation>Ctrl+Z</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="205"/>
+        <location filename="../src/mainwindow.cpp" line="199"/>
         <source>Ctrl+Y</source>
         <translation>Ctrl+Y</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="207"/>
+        <location filename="../src/mainwindow.cpp" line="201"/>
         <source>Ctrl+Shift+Z</source>
         <translation>Ctrl+Shift+Z</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="599"/>
+        <location filename="../src/mainwindow.cpp" line="556"/>
         <source>Non-Broadcast</source>
         <translation>非廣播</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="610"/>
+        <location filename="../src/mainwindow.cpp" line="567"/>
         <source>DVD Widescreen NTSC</source>
         <translation>DVD 寬螢幕 NTSC</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="611"/>
+        <location filename="../src/mainwindow.cpp" line="568"/>
         <source>DVD Widescreen PAL</source>
         <translation>DVD 寬螢幕 PAL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="616"/>
+        <location filename="../src/mainwindow.cpp" line="573"/>
         <source>Custom</source>
         <translation>自訂</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="635"/>
+        <location filename="../src/mainwindow.cpp" line="592"/>
         <source>Screen %1</source>
         <translation>螢幕 %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="666"/>
+        <location filename="../src/mainwindow.cpp" line="623"/>
         <source>Off</source>
         <translation>關</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="669"/>
+        <location filename="../src/mainwindow.cpp" line="626"/>
         <source>Internal</source>
         <translation>內部</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="672"/>
+        <location filename="../src/mainwindow.cpp" line="629"/>
         <source>External</source>
         <translation>外部</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="686"/>
+        <location filename="../src/mainwindow.cpp" line="643"/>
         <source>DeckLink Keyer</source>
         <translation>DeckLink Keyer</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="876"/>
-        <location filename="../src/mainwindow.cpp" line="878"/>
-        <location filename="../src/mainwindow.cpp" line="1236"/>
-        <location filename="../src/mainwindow.cpp" line="3160"/>
+        <location filename="../src/mainwindow.cpp" line="833"/>
+        <location filename="../src/mainwindow.cpp" line="835"/>
+        <location filename="../src/mainwindow.cpp" line="1193"/>
+        <location filename="../src/mainwindow.cpp" line="3104"/>
         <source>Failed to open </source>
         <translation>無法開啟</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="904"/>
+        <location filename="../src/mainwindow.cpp" line="861"/>
         <source>The file you opened uses GPU effects, but GPU effects are not enabled.
 Do you want to enable GPU effects and restart?</source>
         <translation>所開啟的檔案使用了 GPU 效果，但目前並未啟用 GPU 效果功能。
 要啟用 GPU 效果並重新啟動程式嗎？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="924"/>
+        <location filename="../src/mainwindow.cpp" line="881"/>
         <source>The file you opened uses CPU effects that are incompatible with GPU effects, but GPU effects are enabled.
 Do you want to disable GPU effects and restart?</source>
         <translation>所開啟的檔案使用了 CPU 效果，與目前啟用的 GPU 效果並不相容。
 要停用 GPU 效果並重新啟動程式嗎？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="947"/>
+        <location filename="../src/mainwindow.cpp" line="904"/>
         <source>Repaired</source>
         <translation>已修復</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="970"/>
+        <location filename="../src/mainwindow.cpp" line="927"/>
         <source>Repairing the project failed.</source>
         <translation>修復專案失敗。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="982"/>
+        <location filename="../src/mainwindow.cpp" line="939"/>
         <source>Shotcut noticed some problems in your project.
 Do you want Shotcut to try to repair it?
 
@@ -3539,107 +3540,102 @@ with &quot;- Repaired&quot; in the file name and open it.</source>
 如果選擇 [是]，Shotcut 將建立一份以「 - 已修復」命名的專案副本並開啟該檔案。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1018"/>
+        <location filename="../src/mainwindow.cpp" line="975"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation>有自動儲存的檔案。要復原嗎？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1129"/>
+        <location filename="../src/mainwindow.cpp" line="1086"/>
         <source>You cannot add a project to itself!</source>
         <translation>不能把專案加進其本身！</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1247"/>
-        <location filename="../src/mainwindow.cpp" line="3140"/>
+        <location filename="../src/mainwindow.cpp" line="1204"/>
+        <location filename="../src/mainwindow.cpp" line="3084"/>
         <source>Open File</source>
         <translation>開啟檔案</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1508"/>
+        <location filename="../src/mainwindow.cpp" line="1465"/>
         <source>Untitled</source>
         <translation>未命名</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1515"/>
-        <source>%1[*] - %2</source>
-        <translation>%1[*] - %2</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="1520"/>
+        <location filename="../src/mainwindow.cpp" line="1481"/>
         <source>About Shotcut</source>
         <translation>關於 Shotcut</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1521"/>
+        <location filename="../src/mainwindow.cpp" line="1482"/>
         <source>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2018 &lt;a href=&quot;https://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.qt.io/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;https://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
         <translation>&lt;h1&gt;Shotcut 版本 %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; 是自由、開放原始碼、跨平台的視訊編輯軟體。&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2018 &lt;a href=&quot;https://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;以 &lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt; 授權公眾使用。&lt;/p&gt;&lt;p&gt;此程式十分榮幸的使用了下列專案：&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.qt.io/&quot;&gt;Qt&lt;/a&gt; 應用程式與使用者介面框架&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; 多媒體製作框架&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; 多媒體格式與轉碼器函式庫&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 編碼器&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 與 VP9 編碼器&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 編碼器&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; 視訊外掛程式&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; 音訊外掛程式&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; 圖示集，由 &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt; 所製作&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; 圖示集&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;用於組建此程式的原始碼可以從 &lt;a href=&quot;https://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt; 下載。&lt;/p&gt;此程式雖然在有實用性的期待下散佈，但不含任何瑕疵擔保，甚至不含適售性、符合特定目的之默示擔保。&lt;/small&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2092"/>
-        <location filename="../src/mainwindow.cpp" line="2110"/>
+        <location filename="../src/mainwindow.cpp" line="2050"/>
+        <location filename="../src/mainwindow.cpp" line="2068"/>
         <source>Save XML</source>
         <translation>儲存 XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2097"/>
-        <location filename="../src/mainwindow.cpp" line="2129"/>
+        <location filename="../src/mainwindow.cpp" line="2055"/>
+        <location filename="../src/mainwindow.cpp" line="2087"/>
         <source>Saved %1</source>
         <translation>已儲存 %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2111"/>
+        <location filename="../src/mainwindow.cpp" line="2069"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2141"/>
+        <location filename="../src/mainwindow.cpp" line="2099"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>專案已修改。要儲存變更嗎？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2168"/>
+        <location filename="../src/mainwindow.cpp" line="2126"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
         <translation>有未完成的工作。確定要結束嗎？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2181"/>
+        <location filename="../src/mainwindow.cpp" line="2139"/>
         <source>An export is in progress.
 Do you want to still want to exit?</source>
         <translation>輸出正在進行中。確定要結束嗎？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2610"/>
+        <location filename="../src/mainwindow.cpp" line="2552"/>
         <source>Exit Full Screen</source>
         <translation>結束全螢幕模式</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2623"/>
+        <location filename="../src/mainwindow.cpp" line="2565"/>
         <source>GPU effects are not supported</source>
         <translation>不支援 GPU 效果</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2711"/>
+        <location filename="../src/mainwindow.cpp" line="2653"/>
         <source>Click here to check for a new version of Shotcut.</source>
         <translation>按一下這裡以檢查 Shotcut 的新版本</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2862"/>
+        <location filename="../src/mainwindow.cpp" line="2804"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>必須重新啟動 Shotcut 才能切換至新的語言。
 要立刻重新啟動嗎？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2903"/>
+        <location filename="../src/mainwindow.cpp" line="2845"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>連接 JACK 失敗。
 請確認 JACK 已經安裝並且正在執行。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2912"/>
+        <location filename="../src/mainwindow.cpp" line="2854"/>
         <source>GPU effects are experimental and may cause instability on some systems. Some CPU effects are incompatible with GPU effects and will be disabled. A project created with GPU effects can not be converted to a CPU only project later.
 
 Do you want to enable GPU effects and restart Shotcut?</source>
@@ -3648,7 +3644,7 @@ Do you want to enable GPU effects and restart Shotcut?</source>
 要啟用 GPU 效果並重新啟動程式嗎？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2934"/>
+        <location filename="../src/mainwindow.cpp" line="2876"/>
         <source>Shotcut must restart to disable GPU effects.
 
 Disable GPU effects and restart?</source>
@@ -3657,86 +3653,86 @@ Disable GPU effects and restart?</source>
 要停用 GPU 效果並重新啟動程式嗎？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3141"/>
+        <location filename="../src/mainwindow.cpp" line="3085"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;所有檔案 (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3201"/>
+        <location filename="../src/mainwindow.cpp" line="3145"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
         <translation>必須重新啟動 Shotcut 才能變更顯示方式。
 要立刻重新啟動嗎？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3223"/>
+        <location filename="../src/mainwindow.cpp" line="3167"/>
         <source>Application Log</source>
         <translation>應用程式記錄檔</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3257"/>
+        <location filename="../src/mainwindow.cpp" line="3201"/>
         <source>Shotcut version %1 is available! Click here to get it.</source>
         <translation>Shotcut 版本 %1 可用！按一下這裡取得新版本。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3263"/>
+        <location filename="../src/mainwindow.cpp" line="3207"/>
         <source>You are running the latest version of Shotcut.</source>
         <translation>正在執行最新版本的 Shotcut。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3273"/>
+        <location filename="../src/mainwindow.cpp" line="3217"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation>檢查更新時無法讀取 version.json。按一下這裡以移至官方網站。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3323"/>
+        <location filename="../src/mainwindow.cpp" line="3267"/>
         <source>Export EDL</source>
         <translation>匯出 EDL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3324"/>
+        <location filename="../src/mainwindow.cpp" line="3268"/>
         <source>EDL (*.edl)</source>
         <translation>EDL (*.edl)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3370"/>
+        <location filename="../src/mainwindow.cpp" line="3314"/>
         <source>A JavaScript error occurred during export.</source>
         <translation>匯出時發生了 JavaScript 錯誤。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3373"/>
+        <location filename="../src/mainwindow.cpp" line="3317"/>
         <source>Failed to open export-edl.js</source>
         <translation>無法開啟 export-edl.js</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3399"/>
+        <location filename="../src/mainwindow.cpp" line="3343"/>
         <source>Export Frame</source>
         <translation>匯出畫面</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3412"/>
+        <location filename="../src/mainwindow.cpp" line="3356"/>
         <source>Unable to export frame.</source>
         <translation>無法匯出畫面。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3420"/>
+        <location filename="../src/mainwindow.cpp" line="3364"/>
         <source>You must restart Shotcut to change the data directory.
 Do you want to continue?</source>
         <translation>必須重新啟動 Shotcut 才能變更資料目錄。
 要立刻重新啟動嗎？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3429"/>
+        <location filename="../src/mainwindow.cpp" line="3373"/>
         <source>Data Directory</source>
         <translation>資料目錄</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3512"/>
+        <location filename="../src/mainwindow.cpp" line="3456"/>
         <source>Add Custom Layout</source>
         <translation>新增自訂配置</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3513"/>
+        <location filename="../src/mainwindow.cpp" line="3457"/>
         <source>Name</source>
         <translation>名稱</translation>
     </message>
@@ -3770,381 +3766,9 @@ Do you want to continue?</source>
         <translation>在資料夾中顯示</translation>
     </message>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="126"/>
+        <location filename="../src/jobs/meltjob.cpp" line="128"/>
         <source>MLT XML</source>
         <translation>MLT XML</translation>
-    </message>
-</context>
-<context>
-    <name>MeltedClipsModel</name>
-    <message>
-        <location filename="../src/mvcp/meltedclipsmodel.cpp" line="92"/>
-        <source>%1 GiB</source>
-        <translation>%1 GiB</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedclipsmodel.cpp" line="95"/>
-        <source>%1 MiB</source>
-        <translation>%1 MiB</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedclipsmodel.cpp" line="98"/>
-        <source>%1 KiB</source>
-        <translation>%1 KiB</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedclipsmodel.cpp" line="99"/>
-        <source>%1 B</source>
-        <translation>%1 B</translation>
-    </message>
-    <message numerus="yes">
-        <location filename="../src/mvcp/meltedclipsmodel.cpp" line="102"/>
-        <source>%n item(s)</source>
-        <translation>
-            <numerusform>%n 個項目</numerusform>
-        </translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedclipsmodel.cpp" line="117"/>
-        <source>Clip</source>
-        <translation>短片</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedclipsmodel.cpp" line="117"/>
-        <source>Size</source>
-        <translation>大小</translation>
-    </message>
-</context>
-<context>
-    <name>MeltedPlaylistDock</name>
-    <message>
-        <location filename="../src/mvcp/meltedplaylistdock.ui" line="18"/>
-        <source>Melted Playlist</source>
-        <translation>Melted 播放清單</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedplaylistdock.ui" line="67"/>
-        <source>Add something to the playlist</source>
-        <translation>新增到播放清單</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedplaylistdock.ui" line="84"/>
-        <source>Remove cut</source>
-        <translation>移除剪輯</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedplaylistdock.ui" line="98"/>
-        <source>Display a menu of additional actions</source>
-        <translation>顯示有額外指令的功能表</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedplaylistdock.ui" line="128"/>
-        <source>Insert Cut</source>
-        <translation>插入剪輯</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedplaylistdock.ui" line="137"/>
-        <source>Append Cut</source>
-        <translation>附加剪輯</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedplaylistdock.ui" line="142"/>
-        <source>Open As Clip</source>
-        <translation>開啟爲短片</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedplaylistdock.ui" line="145"/>
-        <source>Open the cut in the player</source>
-        <translation>在播放器中開啟剪輯</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedplaylistdock.ui" line="150"/>
-        <source>Remove</source>
-        <translation>移除</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedplaylistdock.ui" line="155"/>
-        <source>Goto</source>
-        <translation>轉到</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedplaylistdock.ui" line="158"/>
-        <source>Go to the start of this cut in the playlist</source>
-        <translation>轉到播放清單中剪輯開始處</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedplaylistdock.ui" line="163"/>
-        <source>Remove All</source>
-        <translation>全部移除</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedplaylistdock.ui" line="166"/>
-        <source>Remove all items from the playlist</source>
-        <translation>移除播放清單中的全部內容</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedplaylistdock.ui" line="171"/>
-        <source>Wipe</source>
-        <translation>擦除</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedplaylistdock.ui" line="174"/>
-        <source>Remove all items before the currently playing clip</source>
-        <translation>移除目前正在播放的短片之前的所有項目</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedplaylistdock.ui" line="179"/>
-        <source>Clean</source>
-        <translation>清除</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedplaylistdock.ui" line="182"/>
-        <source>Remove all items except the currently playing clip</source>
-        <translation>移除目前正在播放的短片之外的所有項目</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedplaylistdock.cpp" line="198"/>
-        <location filename="../src/mvcp/meltedplaylistdock.cpp" line="215"/>
-        <source>&quot;Remove All&quot; will remove all of clips in the playlist.
-
-IMPORTANT: You cannot Undo this action!
-
-Do you want to continue?</source>
-        <translation>[全部移除] 將移除播放清單中所有短片。
-
-注意：此動作無法復原！
-
-要繼續嗎？</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedplaylistdock.cpp" line="232"/>
-        <source>&quot;Clean&quot; will remove all of clips in the playlist
-except the currently playing clip.
-
-IMPORTANT: You cannot Undo this action!
-
-Do you want to continue?</source>
-        <translation>除了正在播放的短片外，[清除] 將移除
-播放清單中所有短片。
-
-注意：此動作無法復原！
-
-要繼續嗎？</translation>
-    </message>
-</context>
-<context>
-    <name>MeltedPlaylistModel</name>
-    <message>
-        <location filename="../src/mvcp/meltedplaylistmodel.cpp" line="112"/>
-        <source>#</source>
-        <translation>#</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedplaylistmodel.cpp" line="114"/>
-        <source>Clip</source>
-        <translation>短片</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedplaylistmodel.cpp" line="116"/>
-        <source>In</source>
-        <translation>入</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedplaylistmodel.cpp" line="118"/>
-        <source>Out</source>
-        <translation>出</translation>
-    </message>
-</context>
-<context>
-    <name>MeltedServerDock</name>
-    <message>
-        <location filename="../src/mvcp/meltedserverdock.ui" line="18"/>
-        <source>Melted Server</source>
-        <translation>Melted 伺服器</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedserverdock.ui" line="52"/>
-        <source>Enter the server address and press Enter</source>
-        <translation>輸入伺服器地址並按 [Enter] 鍵</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedserverdock.ui" line="59"/>
-        <location filename="../src/mvcp/meltedserverdock.cpp" line="160"/>
-        <source>Connect</source>
-        <translation>連線</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedserverdock.ui" line="93"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Single-click&lt;/span&gt; a unit to open its playlist.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Double-click&lt;/span&gt; a unit to control it in the player, or &lt;span style=&quot; font-weight:600;&quot;&gt;right-click&lt;/span&gt; the unit for transport control actions.&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Single-click&lt;/span&gt; a playlist item to select it for edit operations (e.g. Insert).&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Double-click&lt;/span&gt; a playlist item to seek the unit to it.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Drag-n-drop&lt;/span&gt; from the server&apos;s clips tree to the playlist, or &lt;span style=&quot; font-weight:600;&quot;&gt;single-click&lt;/span&gt; a clip to select it for use with &lt;span style=&quot; font-weight:600;&quot;&gt;Add&lt;/span&gt; and &lt;span style=&quot; font-weight:600;&quot;&gt;Insert&lt;/span&gt; actions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;在單元上&lt;span style=&quot; font-weight:600;&quot;&gt;按一下&lt;/span&gt;以開啟其播放清單。&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;在單元上&lt;span style=&quot; font-weight:600;&quot;&gt;按兩下&lt;/span&gt; 以在播放器中控制，或在單元上&lt;span style=&quot; font-weight:600;&quot;&gt;按右鍵&lt;/span&gt;以存取傳輸控制選項。&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;在播放清單項目上&lt;span style=&quot; font-weight:600;&quot;&gt;按一下&lt;/span&gt;以選取並進行編輯作業，例如 [插入]。&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;在播放清單項目上&lt;span style=&quot; font-weight:600;&quot;&gt;按兩下&lt;/span&gt;以將單元移至項目的位置。&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;從伺服器的短片樹狀目錄&lt;span style=&quot; font-weight:600;&quot;&gt;拖放&lt;/span&gt; 短片到播放清單，或&lt;span style=&quot; font-weight:600;&quot;&gt;按一下&lt;/span&gt;短片以選取並 &lt;span style=&quot; font-weight:600;&quot;&gt;[新增]&lt;/span&gt; 或 &lt;span style=&quot; font-weight:600;&quot;&gt;[插入]&lt;/span&gt;。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedserverdock.ui" line="195"/>
-        <source>Console</source>
-        <translation>主控台</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedserverdock.ui" line="208"/>
-        <source>Display a menu of additional actions</source>
-        <translation>顯示有額外指令的功能表</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedserverdock.ui" line="238"/>
-        <source>Play</source>
-        <translation>播放</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedserverdock.ui" line="243"/>
-        <source>Pause</source>
-        <translation>暫停</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedserverdock.ui" line="248"/>
-        <source>Stop</source>
-        <translation>停止</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedserverdock.ui" line="253"/>
-        <source>Rewind</source>
-        <translation>倒轉</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedserverdock.ui" line="258"/>
-        <source>Fast Forward</source>
-        <translation>向前快轉</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedserverdock.ui" line="263"/>
-        <source>Map Clips Root</source>
-        <translation>對應短片根目錄</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedserverdock.cpp" line="152"/>
-        <source>Disconnect</source>
-        <translation>未連接</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedserverdock.cpp" line="257"/>
-        <source>Choose Directory</source>
-        <translation>選擇檔案夾</translation>
-    </message>
-</context>
-<context>
-    <name>MeltedUnitsModel</name>
-    <message>
-        <location filename="../src/mvcp/meltedunitsmodel.cpp" line="70"/>
-        <source>Unit</source>
-        <translation>單元</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedunitsmodel.cpp" line="70"/>
-        <source>Status</source>
-        <translation>狀態</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedunitsmodel.cpp" line="111"/>
-        <source>unknown</source>
-        <translation>未知</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedunitsmodel.cpp" line="112"/>
-        <source>undefined</source>
-        <translation>未定義</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedunitsmodel.cpp" line="113"/>
-        <source>offline</source>
-        <translation>離線</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedunitsmodel.cpp" line="114"/>
-        <source>unloaded</source>
-        <translation>已卸載</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedunitsmodel.cpp" line="115"/>
-        <source>stopped</source>
-        <translation>已停止</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedunitsmodel.cpp" line="116"/>
-        <source>playing</source>
-        <translation>正在播放</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedunitsmodel.cpp" line="117"/>
-        <source>paused</source>
-        <translation>已暫停</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedunitsmodel.cpp" line="118"/>
-        <source>disconnected</source>
-        <translation>已中斷連線</translation>
-    </message>
-</context>
-<context>
-    <name>MvcpThread</name>
-    <message>
-        <location filename="../src/mvcp/mvcpthread.cpp" line="165"/>
-        <source>unknown</source>
-        <translation>未知</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/mvcpthread.cpp" line="166"/>
-        <source>undefined</source>
-        <translation>未定義</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/mvcpthread.cpp" line="167"/>
-        <source>offline</source>
-        <translation>離線</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/mvcpthread.cpp" line="168"/>
-        <source>unloaded</source>
-        <translation>已卸載</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/mvcpthread.cpp" line="169"/>
-        <source>stopped</source>
-        <translation>已停止</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/mvcpthread.cpp" line="170"/>
-        <source>playing</source>
-        <translation>正在播放</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/mvcpthread.cpp" line="171"/>
-        <source>paused</source>
-        <translation>已暫停</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/mvcpthread.cpp" line="172"/>
-        <source>disconnected</source>
-        <translation>已中斷連線</translation>
     </message>
 </context>
 <context>
@@ -4475,8 +4099,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/player.cpp" line="316"/>
         <location filename="../src/player.cpp" line="412"/>
         <location filename="../src/player.cpp" line="435"/>
-        <location filename="../src/player.cpp" line="590"/>
-        <location filename="../src/player.cpp" line="714"/>
+        <location filename="../src/player.cpp" line="683"/>
         <source>Play</source>
         <translation>播放</translation>
     </message>
@@ -4484,24 +4107,21 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/player.cpp" line="318"/>
         <location filename="../src/player.cpp" line="413"/>
         <location filename="../src/player.cpp" line="436"/>
-        <location filename="../src/player.cpp" line="591"/>
-        <location filename="../src/player.cpp" line="715"/>
+        <location filename="../src/player.cpp" line="684"/>
         <source>Start playback (L)</source>
         <translation>開始播放 (L)</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="321"/>
         <location filename="../src/player.cpp" line="391"/>
-        <location filename="../src/player.cpp" line="585"/>
-        <location filename="../src/player.cpp" line="721"/>
+        <location filename="../src/player.cpp" line="690"/>
         <source>Pause</source>
         <translation>暫停</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="323"/>
         <location filename="../src/player.cpp" line="392"/>
-        <location filename="../src/player.cpp" line="586"/>
-        <location filename="../src/player.cpp" line="722"/>
+        <location filename="../src/player.cpp" line="691"/>
         <source>Pause playback (K)</source>
         <translation>暫停播放 (K)</translation>
     </message>
@@ -4571,12 +4191,12 @@ p, li { white-space: pre-wrap; }
         <translation>即時</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="931"/>
+        <location filename="../src/player.cpp" line="900"/>
         <source>Unmute</source>
         <translation>解除靜音</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="936"/>
+        <location filename="../src/player.cpp" line="905"/>
         <source>Mute</source>
         <translation>靜音</translation>
     </message>
@@ -4866,89 +4486,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>QConsole</name>
-    <message>
-        <location filename="../src/mvcp/qconsole.cpp" line="757"/>
-        <source>Undo</source>
-        <translation>復原</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/qconsole.cpp" line="758"/>
-        <source>Ctrl+Z</source>
-        <translation>Ctrl+Z</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/qconsole.cpp" line="759"/>
-        <source>Redo</source>
-        <translation>重做</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/qconsole.cpp" line="760"/>
-        <source>Ctrl+Y</source>
-        <translation>Ctrl+Y</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/qconsole.cpp" line="761"/>
-        <source>Cut</source>
-        <translation>剪下</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/qconsole.cpp" line="762"/>
-        <source>Ctrl+X</source>
-        <translation>Ctrl+X</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/qconsole.cpp" line="763"/>
-        <source>Copy</source>
-        <translation>複製</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/qconsole.cpp" line="764"/>
-        <source>Ctrl+Ins</source>
-        <translation>Ctrl+Ins</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/qconsole.cpp" line="765"/>
-        <source>Paste</source>
-        <translation>貼上</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/qconsole.cpp" line="766"/>
-        <source>Ctrl+V</source>
-        <translation>Ctrl+V</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/qconsole.cpp" line="767"/>
-        <source>Delete</source>
-        <translation>刪除</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/qconsole.cpp" line="768"/>
-        <source>Del</source>
-        <translation>Del</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/qconsole.cpp" line="769"/>
-        <source>Select All</source>
-        <translation>全選</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/qconsole.cpp" line="770"/>
-        <source>Ctrl+A</source>
-        <translation>Ctrl+A</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/qconsole.cpp" line="835"/>
-        <source>:\</source>
-        <translation>:\</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/qconsole.cpp" line="837"/>
-        <source>/</source>
-        <translation>/</translation>
-    </message>
-</context>
-<context>
     <name>QObject</name>
     <message>
         <location filename="../src/commands/playlistcommands.cpp" line="32"/>
@@ -5134,7 +4671,7 @@ p, li { white-space: pre-wrap; }
         <translation>分離音訊</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2826"/>
+        <location filename="../src/mainwindow.cpp" line="2768"/>
         <source>You cannot add a project to itself!</source>
         <translation>不能把專案加進其本身！</translation>
     </message>
@@ -5144,29 +4681,9 @@ p, li { white-space: pre-wrap; }
         <translation>檔案不是一個 MLT XML 檔案。</translation>
     </message>
     <message>
-        <location filename="../src/mvcp/meltedplaylistdock.cpp" line="317"/>
-        <source>Append %1</source>
-        <translation>附加 %1</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedplaylistdock.cpp" line="343"/>
-        <source>Remove %1 at %2</source>
-        <translation>將 %1 從 %2 移除</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedplaylistdock.cpp" line="369"/>
-        <source>Insert %1 at %2</source>
-        <translation>將 %1 插入到 %2</translation>
-    </message>
-    <message>
-        <location filename="../src/mvcp/meltedplaylistdock.cpp" line="393"/>
-        <source>Move %1 from %2 to %3</source>
-        <translation>將 %1 從 %2 移動到 %3</translation>
-    </message>
-    <message>
         <location filename="../src/util.cpp" line="91"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="656"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="746"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="669"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="759"/>
         <source>Unable to write file %1
 Perhaps you do not have permission.
 Try again with a different folder.</source>
@@ -5204,7 +4721,7 @@ Try again with a different folder.</source>
         <translation>（預設）</translation>
     </message>
     <message>
-        <location filename="../src/qmltypes/qmlfilter.cpp" line="338"/>
+        <location filename="../src/qmltypes/qmlfilter.cpp" line="339"/>
         <source>Analyze %1</source>
         <translation>分析 %1</translation>
     </message>
@@ -5545,12 +5062,17 @@ Try again with a different folder.</source>
         <translation>此軌道已鎖定</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="367"/>
-        <source>Untitled</source>
-        <translation>未命名</translation>
+        <location filename="../src/docks/timelinedock.cpp" line="365"/>
+        <source>Failed to open </source>
+        <translation type="unfinished">無法開啟</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="913"/>
+        <location filename="../src/docks/timelinedock.cpp" line="368"/>
+        <source>You must save to Copy Timline to Source.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="934"/>
         <source>You cannot split a transition.</source>
         <translation>無法分割轉場效果。</translation>
     </message>
@@ -6447,7 +5969,7 @@ Most users do not need to change this.</source>
         <translation>要開啟的一個檔案。</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="277"/>
+        <location filename="../src/main.cpp" line="274"/>
         <source>Loading plugins...</source>
         <translation>正在載入插件…</translation>
     </message>
@@ -6813,6 +6335,11 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/rotate/meta.qml" line="35"/>
         <source>Y offset</source>
         <translation>Y 位移</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/unpremultiply/meta.qml" line="23"/>
+        <source>Unpremultiply Alpha</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7434,13 +6961,13 @@ Most users do not need to change this.</source>
         <translation>低音</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="222"/>
+        <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="223"/>
         <source>Middle</source>
         <comment>Bass &amp; Treble audio filter</comment>
         <translation>中</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="243"/>
+        <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="245"/>
         <source>Treble</source>
         <translation>高音</translation>
     </message>
