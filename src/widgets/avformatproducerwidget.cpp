@@ -562,8 +562,11 @@ void AvformatProducerWidget::on_speedSpinBox_editingFinished()
 
 void AvformatProducerWidget::on_syncSlider_valueChanged(int value)
 {
-    if (m_producer)
-        m_producer->set("video_delay", double(value) / 1000);
+    double delay = double(value) / 1000.0;
+    if (m_producer && m_producer->get_double("video_delay") != delay) {
+        m_producer->set("video_delay", delay);
+        emit modified();
+    }
 }
 
 void AvformatProducerWidget::on_actionOpenFolder_triggered()
@@ -591,7 +594,11 @@ void AvformatProducerWidget::on_actionCopyFullFilePath_triggered()
 
 void AvformatProducerWidget::on_notesTextEdit_textChanged()
 {
-    m_producer->set(kCommentProperty, ui->notesTextEdit->toPlainText().toUtf8().constData());
+    const char* text = ui->notesTextEdit->toPlainText().toUtf8().constData();
+    if (qstrcmp(m_producer->get(kCommentProperty), text)) {
+        m_producer->set(kCommentProperty, text);
+        emit modified();
+    }
 }
 
 void AvformatProducerWidget::on_actionFFmpegInfo_triggered()

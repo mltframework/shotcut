@@ -43,6 +43,7 @@ public:
 signals:
     void producerChanged(Mlt::Producer*);
     void producerReopened();
+    void modified();
 
 protected:
     void keyPressEvent(QKeyEvent *event);

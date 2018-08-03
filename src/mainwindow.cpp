@@ -2334,6 +2334,14 @@ void MainWindow::onCutModified()
         m_playlistDock->setUpdateButtonEnabled(true);
 }
 
+void MainWindow::onProducerModified()
+{
+    setWindowModified(true);
+    updateAutoSave();
+    if (playlist())
+        m_playlistDock->setUpdateButtonEnabled(true);
+}
+
 void MainWindow::onFilterModelChanged()
 {
     MLT.refreshConsumer();
@@ -2533,6 +2541,9 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
             connect(w, SIGNAL(producerChanged(Mlt::Producer*)), m_filterController, SLOT(setProducer(Mlt::Producer*)));
             if (producer->get(kMultitrackItemProperty))
                 connect(w, SIGNAL(producerChanged(Mlt::Producer*)), m_timelineDock, SLOT(onProducerChanged(Mlt::Producer*)));
+        }
+        if (-1 != w->metaObject()->indexOfSignal("modified()")) {
+            connect(w, SIGNAL(modified()), SLOT(onProducerModified()));
         }
         scrollArea->setWidget(w);
         onProducerChanged();

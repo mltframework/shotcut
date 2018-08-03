@@ -207,6 +207,7 @@ private slots:
     void onMultitrackModified();
     void onMultitrackDurationChanged();
     void onCutModified();
+    void onProducerModified();
     void onFilterModelChanged();
     void updateMarkers();
     void updateThumbnails();
