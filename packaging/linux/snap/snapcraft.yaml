@@ -12,7 +12,7 @@ confinement: classic
 
 apps:
   shotcut:
-    command: bin/desktop-launch $SNAP/Shotcut.app/shotcut
+    command: Shotcut.app/shotcut
   ffmpeg:
     command: Shotcut.app/ffmpeg
   ffplay:
@@ -26,7 +26,6 @@ apps:
 
 parts:
   shotcut:
-    after: [desktop-qt5]
     plugin: dump
     source: 'https://github.com/mltframework/shotcut/releases/download/v18.08/shotcut-linux-x86_64-180801.tar.bz2'
     organize:
