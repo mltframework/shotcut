@@ -26,7 +26,6 @@
 #include "jobs/meltjob.h"
 #include "jobs/postjobaction.h"
 #include "settings.h"
-#include "util.h"
 #include "Logger.h"
 #include <QtWidgets>
 
