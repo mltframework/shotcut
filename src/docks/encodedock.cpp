@@ -479,6 +479,13 @@ void EncodeDock::loadPresets()
     ui->presetsTree->expandAll();
 }
 
+template<typename T>
+static void setIfNotSet(Mlt::Properties* properties, const char* name, T value)
+{
+    if (!properties->get(name))
+         properties->set(name, value);
+}
+
 Mlt::Properties* EncodeDock::collectProperties(int realtime)
 {
     Mlt::Properties* p = new Mlt::Properties;
@@ -486,36 +493,36 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
         foreach (QString line, ui->advancedTextEdit->toPlainText().split("\n"))
             p->parse(line.toUtf8().constData());
         if (realtime)
-            p->set("real_time", realtime);
+            setIfNotSet(p, "real_time", realtime);
         if (ui->formatCombo->currentIndex() != 0)
-            p->set("f", ui->formatCombo->currentText().toLatin1().constData());
+            setIfNotSet(p, "f", ui->formatCombo->currentText().toLatin1().constData());
         if (ui->disableAudioCheckbox->isChecked()) {
-            p->set("an", 1);
-            p->set("audio_off", 1);
+            setIfNotSet(p, "an", 1);
+            setIfNotSet(p, "audio_off", 1);
         }
         else {
             const QString& acodec = ui->audioCodecCombo->currentText();
             if (ui->audioCodecCombo->currentIndex() > 0)
-                p->set("acodec", ui->audioCodecCombo->currentText().toLatin1().constData());
+                setIfNotSet(p, "acodec", ui->audioCodecCombo->currentText().toLatin1().constData());
             if (ui->audioChannelsCombo->currentIndex() == AudioChannels1)
-                p->set("channels", 1);
+                setIfNotSet(p, "channels", 1);
             else if (ui->audioChannelsCombo->currentIndex() == AudioChannels2)
-                p->set("channels", 2);
+                setIfNotSet(p, "channels", 2);
             else
-                p->set("channels", 6);
-            p->set("ar", ui->sampleRateCombo->currentText().toLatin1().constData());
+                setIfNotSet(p, "channels", 6);
+            setIfNotSet(p, "ar", ui->sampleRateCombo->currentText().toLatin1().constData());
             if (ui->audioRateControlCombo->currentIndex() == RateControlAverage
                     || ui->audioRateControlCombo->currentIndex() == RateControlConstant) {
-                p->set("ab", ui->audioBitrateCombo->currentText().toLatin1().constData());
+                setIfNotSet(p, "ab", ui->audioBitrateCombo->currentText().toLatin1().constData());
                 if (acodec == "libopus") {
                     if (RateControlConstant == ui->audioRateControlCombo->currentIndex())
-                        p->set("vbr", "off");
+                        setIfNotSet(p, "vbr", "off");
                     else
-                        p->set("vbr", "on");
+                        setIfNotSet(p, "vbr", "on");
                 }
             } else if (acodec == "libopus") {
-                p->set("vbr", "on");
-                p->set("compression_level", TO_ABSOLUTE(0, 10, ui->audioQualitySpinner->value()));
+                setIfNotSet(p, "vbr", "on");
+                setIfNotSet(p, "compression_level", TO_ABSOLUTE(0, 10, ui->audioQualitySpinner->value()));
             } else {
                 int aq = ui->audioQualitySpinner->value();
                 if (acodec == "libmp3lame")
@@ -524,23 +531,23 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                     aq = TO_ABSOLUTE(0, 10, aq);
                 else
                     aq = TO_ABSOLUTE(0, 500, aq);
-                p->set("aq", aq);
+                setIfNotSet(p, "aq", aq);
             }
         }
         if (ui->disableVideoCheckbox->isChecked()) {
-            p->set("vn", 1);
-            p->set("video_off", 1);
+            setIfNotSet(p, "vn", 1);
+            setIfNotSet(p, "video_off", 1);
         }
         else {
             const QString& vcodec = ui->videoCodecCombo->currentText();
             if (ui->videoCodecCombo->currentIndex() > 0)
-                p->set("vcodec", vcodec.toLatin1().constData());
+                setIfNotSet(p, "vcodec", vcodec.toLatin1().constData());
             if (vcodec == "libx265") {
                 // Most x265 parameters must be supplied through x265-params.
                 QString x265params = QString::fromUtf8(p->get("x265-params"));
                 switch (ui->videoRateControlCombo->currentIndex()) {
                 case RateControlAverage:
-                    p->set("vb", ui->videoBitrateCombo->currentText().toLatin1().constData());
+                    setIfNotSet(p, "vb", ui->videoBitrateCombo->currentText().toLatin1().constData());
                     break;
                 case RateControlConstant: {
                     QString b = ui->videoBitrateCombo->currentText();
@@ -548,15 +555,15 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                     b.replace('k', "").replace('M', "000");
                     x265params = QString("bitrate=%1:vbv-bufsize=%2:vbv-maxrate=%3:%4")
                         .arg(b).arg(int(ui->videoBufferSizeSpinner->value() * 8)).arg(b).arg(x265params);
-                    p->set("vb", b.toLatin1().constData());
-                    p->set("vbufsize", int(ui->videoBufferSizeSpinner->value() * 8 * 1024));
+                    setIfNotSet(p, "vb", b.toLatin1().constData());
+                    setIfNotSet(p, "vbufsize", int(ui->videoBufferSizeSpinner->value() * 8 * 1024));
                     break;
                     }
                 case RateControlQuality: {
                     int vq = ui->videoQualitySpinner->value();
                     x265params = QString("crf=%1:%2").arg(TO_ABSOLUTE(51, 0, vq)).arg(x265params);
                     // Also set crf property so that custom presets can be interpreted properly.
-                    p->set("crf", TO_ABSOLUTE(51, 0, vq));
+                    setIfNotSet(p, "crf", TO_ABSOLUTE(51, 0, vq));
                     break;
                     }
                 case RateControlConstrained: {
@@ -567,9 +574,9 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                     x265params = QString("crf=%1:vbv-bufsize=%2:vbv-maxrate=%3:%4")
                         .arg(TO_ABSOLUTE(51, 0, vq)).arg(int(ui->videoBufferSizeSpinner->value() * 8)).arg(b).arg(x265params);
                     // Also set properties so that custom presets can be interpreted properly.
-                    p->set("crf", TO_ABSOLUTE(51, 0, vq));
-                    p->set("vbufsize", int(ui->videoBufferSizeSpinner->value() * 8 * 1024));
-                    p->set("vmaxrate", ui->videoBitrateCombo->currentText().toLatin1().constData());
+                    setIfNotSet(p, "crf", TO_ABSOLUTE(51, 0, vq));
+                    setIfNotSet(p, "vbufsize", int(ui->videoBufferSizeSpinner->value() * 8 * 1024));
+                    setIfNotSet(p, "vmaxrate", ui->videoBitrateCombo->currentText().toLatin1().constData());
                     break;
                     }
                 }
@@ -577,117 +584,117 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                             .arg(ui->bFramesSpinner->value()).arg(x265params);
                 if (ui->strictGopCheckBox->isChecked()) {
                     x265params = QString("scenecut=0:%1").arg(x265params);
-                    p->set("sc_threshold", 0);
+                    setIfNotSet(p, "sc_threshold", 0);
                 }
                 // Also set some properties so that custom presets can be interpreted properly.
-                p->set("g", ui->gopSpinner->value());
-                p->set("bf", ui->bFramesSpinner->value());
+                setIfNotSet(p, "g", ui->gopSpinner->value());
+                setIfNotSet(p, "bf", ui->bFramesSpinner->value());
                 p->set("x265-params", x265params.toUtf8().constData());
             } else if (vcodec.contains("nvenc")) {
                 switch (ui->videoRateControlCombo->currentIndex()) {
                 case RateControlAverage:
-                    p->set("vb", ui->videoBitrateCombo->currentText().toLatin1().constData());
+                    setIfNotSet(p, "vb", ui->videoBitrateCombo->currentText().toLatin1().constData());
                     break;
                 case RateControlConstant: {
                     const QString& b = ui->videoBitrateCombo->currentText();
-                    p->set("cbr", 1);
-                    p->set("vb", b.toLatin1().constData());
-                    p->set("vminrate", b.toLatin1().constData());
-                    p->set("vmaxrate", b.toLatin1().constData());
-                    p->set("vbufsize", int(ui->videoBufferSizeSpinner->value() * 8 * 1024));
+                    setIfNotSet(p, "cbr", 1);
+                    setIfNotSet(p, "vb", b.toLatin1().constData());
+                    setIfNotSet(p, "vminrate", b.toLatin1().constData());
+                    setIfNotSet(p, "vmaxrate", b.toLatin1().constData());
+                    setIfNotSet(p, "vbufsize", int(ui->videoBufferSizeSpinner->value() * 8 * 1024));
                     break;
                     }
                 case RateControlQuality: {
                     int vq = ui->videoQualitySpinner->value();
-                    p->set("rc", "constqp");
-                    p->set("vglobal_quality", TO_ABSOLUTE(51, 0, vq));
-                    p->set("vq", TO_ABSOLUTE(51, 0, vq));
+                    setIfNotSet(p, "rc", "constqp");
+                    setIfNotSet(p, "vglobal_quality", TO_ABSOLUTE(51, 0, vq));
+                    setIfNotSet(p, "vq", TO_ABSOLUTE(51, 0, vq));
                     break;
                     }
                 case RateControlConstrained: {
                     const QString& b = ui->videoBitrateCombo->currentText();
                     int vq = ui->videoQualitySpinner->value();
-                    p->set("qmin", TO_ABSOLUTE(51, 0, vq));
-                    p->set("vb", qRound(0.8f * b.toFloat()));
-                    p->set("vmaxrate", b.toLatin1().constData());
-                    p->set("vbufsize", int(ui->videoBufferSizeSpinner->value() * 8 * 1024));
+                    setIfNotSet(p, "qmin", TO_ABSOLUTE(51, 0, vq));
+                    setIfNotSet(p, "vb", qRound(0.8f * b.toFloat()));
+                    setIfNotSet(p, "vmaxrate", b.toLatin1().constData());
+                    setIfNotSet(p, "vbufsize", int(ui->videoBufferSizeSpinner->value() * 8 * 1024));
                     break;
                     }
                 }
                 if (ui->dualPassCheckbox->isChecked())
-                    p->set("v2pass", 1);
+                    setIfNotSet(p, "v2pass", 1);
                 if (ui->strictGopCheckBox->isChecked()) {
-                    p->set("sc_threshold", 0);
-                    p->set("strict_gop", 1);
+                    setIfNotSet(p, "sc_threshold", 0);
+                    setIfNotSet(p, "strict_gop", 1);
                 }
                 // Also set some properties so that custom presets can be interpreted properly.
-                p->set("g", ui->gopSpinner->value());
-                p->set("bf", ui->bFramesSpinner->value());
+                setIfNotSet(p, "g", ui->gopSpinner->value());
+                setIfNotSet(p, "bf", ui->bFramesSpinner->value());
             } else if (vcodec.endsWith("_amf")) {
                 switch (ui->videoRateControlCombo->currentIndex()) {
                 case RateControlAverage:
-                    p->set("vb", ui->videoBitrateCombo->currentText().toLatin1().constData());
+                    setIfNotSet(p, "vb", ui->videoBitrateCombo->currentText().toLatin1().constData());
                     break;
                 case RateControlConstant: {
                     const QString& b = ui->videoBitrateCombo->currentText();
-                    p->set("rc", "cbr");
-                    p->set("vb", b.toLatin1().constData());
-                    p->set("vminrate", b.toLatin1().constData());
-                    p->set("vmaxrate", b.toLatin1().constData());
-                    p->set("vbufsize", int(ui->videoBufferSizeSpinner->value() * 8 * 1024));
+                    setIfNotSet(p, "rc", "cbr");
+                    setIfNotSet(p, "vb", b.toLatin1().constData());
+                    setIfNotSet(p, "vminrate", b.toLatin1().constData());
+                    setIfNotSet(p, "vmaxrate", b.toLatin1().constData());
+                    setIfNotSet(p, "vbufsize", int(ui->videoBufferSizeSpinner->value() * 8 * 1024));
                     break;
                     }
                 case RateControlQuality: {
                     int vq = ui->videoQualitySpinner->value();
-                    p->set("rc", "cqp");
-                    p->set("qp_i", TO_ABSOLUTE(51, 0, vq));
-                    p->set("qp_p", TO_ABSOLUTE(51, 0, vq));
-                    p->set("qp_b", TO_ABSOLUTE(51, 0, vq));
-                    p->set("vq", TO_ABSOLUTE(51, 0, vq));
+                    setIfNotSet(p, "rc", "cqp");
+                    setIfNotSet(p, "qp_i", TO_ABSOLUTE(51, 0, vq));
+                    setIfNotSet(p, "qp_p", TO_ABSOLUTE(51, 0, vq));
+                    setIfNotSet(p, "qp_b", TO_ABSOLUTE(51, 0, vq));
+                    setIfNotSet(p, "vq", TO_ABSOLUTE(51, 0, vq));
                     break;
                     }
                 case RateControlConstrained: {
                     const QString& b = ui->videoBitrateCombo->currentText();
                     int vq = ui->videoQualitySpinner->value();
-                    p->set("rc", "vbr_peak");
-                    p->set("qmin", TO_ABSOLUTE(51, 0, vq));
-                    p->set("vb", qRound(0.8f * b.toFloat()));
-                    p->set("vmaxrate", b.toLatin1().constData());
-                    p->set("vbufsize", int(ui->videoBufferSizeSpinner->value() * 8 * 1024));
+                    setIfNotSet(p, "rc", "vbr_peak");
+                    setIfNotSet(p, "qmin", TO_ABSOLUTE(51, 0, vq));
+                    setIfNotSet(p, "vb", qRound(0.8f * b.toFloat()));
+                    setIfNotSet(p, "vmaxrate", b.toLatin1().constData());
+                    setIfNotSet(p, "vbufsize", int(ui->videoBufferSizeSpinner->value() * 8 * 1024));
                     break;
                     }
                 }
                 if (ui->dualPassCheckbox->isChecked())
-                    p->set("v2pass", 1);
+                    setIfNotSet(p, "v2pass", 1);
                 if (ui->strictGopCheckBox->isChecked()) {
-                    p->set("sc_threshold", 0);
-                    p->set("strict_gop", 1);
+                    setIfNotSet(p, "sc_threshold", 0);
+                    setIfNotSet(p, "strict_gop", 1);
                 }
                 // Also set some properties so that custom presets can be interpreted properly.
-                p->set("g", ui->gopSpinner->value());
-                p->set("bf", ui->bFramesSpinner->value());
+                setIfNotSet(p, "g", ui->gopSpinner->value());
+                setIfNotSet(p, "bf", ui->bFramesSpinner->value());
             } else {
                 switch (ui->videoRateControlCombo->currentIndex()) {
                 case RateControlAverage:
-                    p->set("vb", ui->videoBitrateCombo->currentText().toLatin1().constData());
+                    setIfNotSet(p, "vb", ui->videoBitrateCombo->currentText().toLatin1().constData());
                     break;
                 case RateControlConstant: {
                     const QString& b = ui->videoBitrateCombo->currentText();
-                    p->set("vb", b.toLatin1().constData());
-                    p->set("vminrate", b.toLatin1().constData());
-                    p->set("vmaxrate", b.toLatin1().constData());
-                    p->set("vbufsize", int(ui->videoBufferSizeSpinner->value() * 8 * 1024));
+                    setIfNotSet(p, "vb", b.toLatin1().constData());
+                    setIfNotSet(p, "vminrate", b.toLatin1().constData());
+                    setIfNotSet(p, "vmaxrate", b.toLatin1().constData());
+                    setIfNotSet(p, "vbufsize", int(ui->videoBufferSizeSpinner->value() * 8 * 1024));
                     break;
                     }
                 case RateControlQuality: {
                     int vq = ui->videoQualitySpinner->value();
                     if (vcodec == "libx264") {
-                        p->set("crf", TO_ABSOLUTE(51, 0, vq));
+                        setIfNotSet(p, "crf", TO_ABSOLUTE(51, 0, vq));
                     } else if (vcodec.startsWith("libvpx")) {
-                        p->set("crf", TO_ABSOLUTE(63, 0, vq));
-                        p->set("vb", 0); // VP9 needs this to prevent constrained quality mode.
+                        setIfNotSet(p, "crf", TO_ABSOLUTE(63, 0, vq));
+                        setIfNotSet(p, "vb", 0); // VP9 needs this to prevent constrained quality mode.
                     } else {
-                        p->set("qscale", TO_ABSOLUTE(31, 1, vq));
+                        setIfNotSet(p, "qscale", TO_ABSOLUTE(31, 1, vq));
                     }
                     break;
                     }
@@ -695,94 +702,94 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                     const QString& b = ui->videoBitrateCombo->currentText();
                     int vq = ui->videoQualitySpinner->value();
                     if (vcodec == "libx264") {
-                        p->set("crf", TO_ABSOLUTE(51, 0, vq));
+                        setIfNotSet(p, "crf", TO_ABSOLUTE(51, 0, vq));
                     } else if (vcodec.startsWith("libvpx")) {
-                        p->set("crf", TO_ABSOLUTE(63, 0, vq));
+                        setIfNotSet(p, "crf", TO_ABSOLUTE(63, 0, vq));
                     } else {
-                        p->set("qscale", TO_ABSOLUTE(31, 1, vq));
+                        setIfNotSet(p, "qscale", TO_ABSOLUTE(31, 1, vq));
                     }
-                    p->set("vmaxrate", b.toLatin1().constData());
-                    p->set("vbufsize", int(ui->videoBufferSizeSpinner->value() * 8 * 1024));
+                    setIfNotSet(p, "vmaxrate", b.toLatin1().constData());
+                    setIfNotSet(p, "vbufsize", int(ui->videoBufferSizeSpinner->value() * 8 * 1024));
                     break;
                     }
                 }
-                p->set("g", ui->gopSpinner->value());
-                p->set("bf", ui->bFramesSpinner->value());
+                setIfNotSet(p, "g", ui->gopSpinner->value());
+                setIfNotSet(p, "bf", ui->bFramesSpinner->value());
                 if (ui->strictGopCheckBox->isChecked()) {
                     if (vcodec.startsWith("libvpx"))
-                        p->set("keyint_min", ui->gopSpinner->value());
+                        setIfNotSet(p, "keyint_min", ui->gopSpinner->value());
                     else
-                        p->set("sc_threshold", 0);
+                        setIfNotSet(p, "sc_threshold", 0);
                 }
             }
-            p->set("width", ui->widthSpinner->value());
-            p->set("height", ui->heightSpinner->value());
-            p->set("aspect", double(ui->aspectNumSpinner->value()) / double(ui->aspectDenSpinner->value()));
-            p->set("progressive", ui->scanModeCombo->currentIndex());
-            p->set("top_field_first", ui->fieldOrderCombo->currentIndex());
+            setIfNotSet(p, "width", ui->widthSpinner->value());
+            setIfNotSet(p, "height", ui->heightSpinner->value());
+            setIfNotSet(p, "aspect", double(ui->aspectNumSpinner->value()) / double(ui->aspectDenSpinner->value()));
+            setIfNotSet(p, "progressive", ui->scanModeCombo->currentIndex());
+            setIfNotSet(p, "top_field_first", ui->fieldOrderCombo->currentIndex());
             switch (ui->deinterlacerCombo->currentIndex()) {
             case 0:
-                p->set("deinterlace_method", "onefield");
+                setIfNotSet(p, "deinterlace_method", "onefield");
                 break;
             case 1:
-                p->set("deinterlace_method", "linearblend");
+                setIfNotSet(p, "deinterlace_method", "linearblend");
                 break;
             case 2:
-                p->set("deinterlace_method", "yadif-nospatial");
+                setIfNotSet(p, "deinterlace_method", "yadif-nospatial");
                 break;
             default:
-                p->set("deinterlace_method", "yadif");
+                setIfNotSet(p, "deinterlace_method", "yadif");
                 break;
             }
             switch (ui->interpolationCombo->currentIndex()) {
             case 0:
-                p->set("rescale", "nearest");
+                setIfNotSet(p, "rescale", "nearest");
                 break;
             case 1:
-                p->set("rescale", "bilinear");
+                setIfNotSet(p, "rescale", "bilinear");
                 break;
             case 2:
-                p->set("rescale", "bicubic");
+                setIfNotSet(p, "rescale", "bicubic");
                 break;
             default:
-                p->set("rescale", "hyper");
+                setIfNotSet(p, "rescale", "hyper");
                 break;
             }
             if (qFloor(ui->fpsSpinner->value() * 10.0) == 239) {
-                p->set("frame_rate_num", 24000);
-                p->set("frame_rate_den", 1001);
+                setIfNotSet(p, "frame_rate_num", 24000);
+                setIfNotSet(p, "frame_rate_den", 1001);
             }
             else if (qFloor(ui->fpsSpinner->value() * 10.0) == 299) {
-                p->set("frame_rate_num", 30000);
-                p->set("frame_rate_den", 1001);
+                setIfNotSet(p, "frame_rate_num", 30000);
+                setIfNotSet(p, "frame_rate_den", 1001);
             }
             else if (qFloor(ui->fpsSpinner->value() * 10.0) == 479) {
-                p->set("frame_rate_num", 48000);
-                p->set("frame_rate_den", 1001);
+                setIfNotSet(p, "frame_rate_num", 48000);
+                setIfNotSet(p, "frame_rate_den", 1001);
             }
             else if (qFloor(ui->fpsSpinner->value() * 10.0) == 599) {
-                p->set("frame_rate_num", 60000);
-                p->set("frame_rate_den", 1001);
+                setIfNotSet(p, "frame_rate_num", 60000);
+                setIfNotSet(p, "frame_rate_den", 1001);
             }
             else
-                p->set("r", ui->fpsSpinner->value());
+                setIfNotSet(p, "r", ui->fpsSpinner->value());
             if (ui->formatCombo->currentText() == "image2")
-                p->set("threads", 1);
+                setIfNotSet(p, "threads", 1);
             else if (ui->videoCodecThreadsSpinner->value() == 0
                      && ui->videoCodecCombo->currentText() != "libx264"
                      && ui->videoCodecCombo->currentText() != "libx265")
-                p->set("threads", ui->videoCodecThreadsSpinner->maximum() - 1);
+                setIfNotSet(p, "threads", ui->videoCodecThreadsSpinner->maximum() - 1);
             else
 #if QT_POINTER_SIZE == 4
                 // On 32-bit process, if 0 for auto use maximum, which might be limited to reduce memory usage.
-                p->set("threads", (ui->videoCodecThreadsSpinner->value() == 0) ? ui->videoCodecThreadsSpinner->maximum() : ui->videoCodecThreadsSpinner->value());
+                setIfNotSet(p, "threads", (ui->videoCodecThreadsSpinner->value() == 0) ? ui->videoCodecThreadsSpinner->maximum() : ui->videoCodecThreadsSpinner->value());
 #else
-                p->set("threads", ui->videoCodecThreadsSpinner->value());
+                setIfNotSet(p, "threads", ui->videoCodecThreadsSpinner->value());
 #endif
             if (ui->videoRateControlCombo->currentIndex() != RateControlQuality &&
                 !vcodec.contains("nvenc") && !vcodec.endsWith("_amf") &&
                 ui->dualPassCheckbox->isEnabled() && ui->dualPassCheckbox->isChecked())
-                p->set("pass", 1);
+                setIfNotSet(p, "pass", 1);
         }
     }
     return p;
