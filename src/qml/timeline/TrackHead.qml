@@ -82,7 +82,7 @@ Rectangle {
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         onClicked: {
             parent.clicked()
-            nameEdit.visible = false
+            nameEdit.focus = false
             if (mouse.button == Qt.RightButton)
                 menu.popup()
         }
@@ -187,7 +187,7 @@ Rectangle {
                 tooltip: qsTr('Filters')
                 onClicked: {
                     trackHeadRoot.clicked()
-                    nameEdit.visible = false
+                    nameEdit.focus = false
                     timeline.filteredClicked()
                 }
             }
