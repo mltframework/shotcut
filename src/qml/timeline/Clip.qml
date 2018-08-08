@@ -247,7 +247,10 @@ Rectangle {
         anchors.fill: parent
         enabled: isBlank
         acceptedButtons: Qt.RightButton
-        onClicked: menu.show()
+        onClicked: {
+            timeline.position = timeline.position // pause
+            menu.show()
+        }
     }
 
     MouseArea {
@@ -312,7 +315,7 @@ Rectangle {
                 drag.active? Qt.ClosedHandCursor :
                 isBlank? Qt.ArrowCursor : Qt.OpenHandCursor
             onClicked: {
-                root.stopScrolling = true
+                timeline.position = timeline.position // pause
                 clipRoot.forceActiveFocus();
                 clipRoot.clicked(clipRoot)
                 menu.show()
