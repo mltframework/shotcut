@@ -903,7 +903,12 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Service* service, const QString& target,
 
     int frameRateNum = consumerNode.attribute("frame_rate_num").toInt();
     int frameRateDen = consumerNode.attribute("frame_rate_den").toInt();
-    return new EncodeJob(target, dom.toString(2), frameRateNum, frameRateDen);
+    MeltJob* job = new EncodeJob(target, dom.toString(2), frameRateNum, frameRateDen);
+    job->setUseMultiConsumer(
+            ui->widthSpinner->value() != MLT.profile().width() ||
+            ui->heightSpinner->value() != MLT.profile().height() ||
+            double(ui->aspectNumSpinner->value()) / double(ui->aspectDenSpinner->value()) != MLT.profile().dar());
+    return job;
 }
 
 void EncodeDock::runMelt(const QString& target, int realtime)
@@ -1532,7 +1537,7 @@ void EncodeDock::on_presetsSearch_textChanged(const QString &search)
 bool PresetsProxyModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
 {
     QModelIndex index = sourceModel()->index(source_row, 0, source_parent);
-    return !source_parent.isValid() || 
+    return !source_parent.isValid() ||
         sourceModel()->data(index).toString().contains(filterRegExp()) ||
         sourceModel()->data(index, Qt::ToolTipRole).toString().contains(filterRegExp());
 }

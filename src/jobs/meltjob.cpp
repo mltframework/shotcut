@@ -34,6 +34,7 @@ MeltJob::MeltJob(const QString& name, const QString& xml, int frameRateNum, int 
     , m_isStreaming(false)
     , m_previousPercent(0)
     , m_currentFrame(0)
+    , m_useMultiConsumer(false)
 {
     if (!xml.isEmpty()) {
         QAction* action = new QAction(tr("View XML"), this);
@@ -94,10 +95,13 @@ void MeltJob::start()
     args << "-verbose";
     args << "-progress2";
     args << "-abort";
-    if (m_args.size() > 0)
+    if (m_args.size() > 0) {
         args.append(m_args);
-    else
+    } else if (m_useMultiConsumer) {
+        args << xmlPath() + "?multi:1";
+    } else {
         args << xmlPath();
+    }
     LOG_DEBUG() << meltPath.absoluteFilePath() << args;
 #ifdef Q_OS_WIN
     if (m_isStreaming) args << "-getc";
@@ -120,6 +124,11 @@ QString MeltJob::xml()
 void MeltJob::setIsStreaming(bool streaming)
 {
     m_isStreaming = streaming;
+}
+
+void MeltJob::setUseMultiConsumer(bool multi)
+{
+    m_useMultiConsumer = multi;
 }
 
 void MeltJob::onViewXmlTriggered()

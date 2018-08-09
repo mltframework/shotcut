@@ -32,6 +32,7 @@ public:
     QString xml();
     QString xmlPath() const { return m_xml.fileName(); }
     void setIsStreaming(bool streaming);
+    void setUseMultiConsumer(bool multi = true);
 
 public slots:
     void start();
@@ -51,6 +52,7 @@ private:
     QStringList m_args;
     int m_currentFrame;
     Mlt::Profile m_profile;
+    bool m_useMultiConsumer;
 };
 
 #endif // MELTJOB_H
