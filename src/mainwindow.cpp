@@ -2964,10 +2964,12 @@ void MainWindow::onKeyerTriggered(QAction *action)
 void MainWindow::onProfileTriggered(QAction *action)
 {
     Settings.setPlayerProfile(action->data().toString());
-    // Save the XML to get correct in/out points before profile is changed.
-    QString xml = MLT.XML();
-    setProfile(action->data().toString());
-    MLT.restart(xml);
+    if (MLT.producer() && MLT.producer()->is_valid()) {
+        // Save the XML to get correct in/out points before profile is changed.
+        QString xml = MLT.XML();
+        setProfile(action->data().toString());
+        MLT.restart(xml);
+    }
 }
 
 void MainWindow::onProfileChanged()
