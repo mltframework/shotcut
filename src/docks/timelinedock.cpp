@@ -70,6 +70,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     setWidget(&m_quickView);
 
     connect(this, SIGNAL(clipMoved(int,int,int,int)), SLOT(onClipMoved(int,int,int,int)), Qt::QueuedConnection);
+    connect(this, SIGNAL(transitionAdded(int,int,int)), SLOT(onTransitionAdded(int,int,int)), Qt::QueuedConnection);
     connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onShowFrame(const SharedFrame&)));
     connect(this, SIGNAL(visibilityChanged(bool)), this, SLOT(load(bool)));
     connect(this, SIGNAL(topLevelChanged(bool)), this, SLOT(onTopLevelChanged(bool)));
@@ -758,11 +759,7 @@ bool TimelineDock::moveClip(int fromTrack, int toTrack, int clipIndex, int posit
         emit clipMoved(fromTrack, toTrack, clipIndex, position);
         return true;
     } else if (m_model.addTransitionValid(fromTrack, toTrack, clipIndex, position)) {
-        setSelection(); // cleared
-        Timeline::AddTransitionCommand* command = new Timeline::AddTransitionCommand(m_model, fromTrack, clipIndex, position);
-        MAIN.undoStack()->push(command);
-        // Select the transition.
-        setSelection(QList<int>() << command->getTransitionIndex());
+        emit transitionAdded(fromTrack, clipIndex, position);
         return true;
     } else {
         return false;
@@ -1093,4 +1090,13 @@ void TimelineDock::load(bool force)
 void TimelineDock::onTopLevelChanged(bool floating)
 {
     m_quickView.setFocusPolicy(floating? Qt::NoFocus : Qt::StrongFocus);
+}
+
+void TimelineDock::onTransitionAdded(int trackIndex, int clipIndex, int position)
+{
+    setSelection(); // cleared
+    Timeline::AddTransitionCommand* command = new Timeline::AddTransitionCommand(m_model, trackIndex, clipIndex, position);
+    MAIN.undoStack()->push(command);
+    // Select the transition.
+    setSelection(QList<int>() << command->getTransitionIndex());
 }

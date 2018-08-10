@@ -98,6 +98,7 @@ signals:
     void clipMoved(int fromTrack, int toTrack, int clipIndex, int position);
     void filteredClicked();
     void imageDurationChanged();
+    void transitionAdded(int trackIndex, int clipIndex, int position);
 
 public slots:
     void addAudioTrack();
@@ -176,6 +177,7 @@ private:
 private slots:
     void load(bool force = false);
     void onTopLevelChanged(bool floating);
+    void onTransitionAdded(int trackIndex, int clipIndex, int position);
 };
 
 #endif // TIMELINEDOCK_H
