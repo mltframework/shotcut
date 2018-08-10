@@ -753,12 +753,9 @@ void TimelineDock::setTrackLock(int trackIndex, bool lock)
 bool TimelineDock::moveClip(int fromTrack, int toTrack, int clipIndex, int position)
 {
     if (m_model.moveClipValid(fromTrack, toTrack, clipIndex, position)) {
-        if (fromTrack != toTrack)
-            // Workaround bug #326 moving clips between tracks stops allowing drag-n-drop
-            // into Timeline, which appeared with Qt 5.6 upgrade.
-            emit clipMoved(fromTrack, toTrack, clipIndex, position);
-        else
-            onClipMoved(fromTrack, toTrack, clipIndex, position);
+        // Workaround bug #326 moving clips between tracks stops allowing drag-n-drop
+        // into Timeline, which appeared with Qt 5.6 upgrade.
+        emit clipMoved(fromTrack, toTrack, clipIndex, position);
         return true;
     } else if (m_model.addTransitionValid(fromTrack, toTrack, clipIndex, position)) {
         setSelection(); // cleared
