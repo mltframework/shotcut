@@ -103,7 +103,9 @@ EncodeDock::EncodeDock(QWidget *parent) :
 
     p = new Mlt::Properties(c.get_data("vcodec"));
     for (int i = 0; i < p->count(); i++) {
-        if (qstrcmp("nvenc", p->get(i)))
+        if (qstrcmp("nvenc", p->get(i)) // redundant codec names nvenc_...
+            && qstrcmp("wrapped_avframe", p->get(i))  // not usable
+            && !::strstr(p->get(i), "_videotoolbox")) // not working yet on macOS
             ui->videoCodecCombo->addItem(p->get(i));
     }
     delete p;
