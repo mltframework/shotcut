@@ -139,7 +139,10 @@ Item {
         filter.blockSignals = false
         setControls()
         setKeyframedControls()
-        filter.set(rectProperty, filter.getRect(rectProperty))
+        if (filter.isNew)
+            filter.set(rectProperty, filter.getRect(rectProperty))
+        else
+            filter.changed()
     }
 
     function getPosition() {
