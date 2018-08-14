@@ -214,7 +214,8 @@ void AvformatProducerWidget::recreateProducer()
                  kAspectRatioDenominator ","
                  kShotcutHashProperty ","
                  kPlaylistIndexProperty ","
-                 kShotcutSkipConvertProperty);
+                 kShotcutSkipConvertProperty ","
+                 kCommentProperty);
     Mlt::Controller::copyFilters(*m_producer, *p);
     if (m_producer->get(kMultitrackItemProperty)) {
         emit producerChanged(p);
