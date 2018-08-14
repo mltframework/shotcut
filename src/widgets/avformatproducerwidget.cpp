@@ -593,9 +593,9 @@ void AvformatProducerWidget::on_actionCopyFullFilePath_triggered()
 
 void AvformatProducerWidget::on_notesTextEdit_textChanged()
 {
-    const char* text = ui->notesTextEdit->toPlainText().toUtf8().constData();
-    if (qstrcmp(m_producer->get(kCommentProperty), text)) {
-        m_producer->set(kCommentProperty, text);
+    QString existing = QString::fromUtf8(m_producer->get(kCommentProperty));
+    if (ui->notesTextEdit->toPlainText() != existing) {
+        m_producer->set(kCommentProperty, ui->notesTextEdit->toPlainText().toUtf8().constData());
         emit modified();
     }
 }
