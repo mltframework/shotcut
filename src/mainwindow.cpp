@@ -1677,12 +1677,22 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_timelineDock->insert(-1);
         }
         break;
-    case Qt::Key_B: // Avid Overwrite
-        if (event->modifiers() == Qt::ShiftModifier) {
+    case Qt::Key_B:
+        if (event->modifiers() & Qt::ControlModifier && event->modifiers() & Qt::AltModifier) {
+            // Toggle track blending.
+            int trackIndex = m_timelineDock->currentTrack();
+            bool isBottomVideo = m_timelineDock->model()->data(m_timelineDock->model()->index(trackIndex), MultitrackModel::IsBottomVideoRole).toBool();
+            if (!isBottomVideo) {
+                bool isComposite = m_timelineDock->model()->data(m_timelineDock->model()->index(trackIndex), MultitrackModel::IsCompositeRole).toBool();
+                m_timelineDock->setTrackComposite(trackIndex, !isComposite);
+            }
+        } else if (event->modifiers() == Qt::ShiftModifier) {
+            // Update playlist item.
             m_playlistDock->show();
             m_playlistDock->raise();
             m_playlistDock->on_actionUpdate_triggered();
         } else {
+            // Overwrite on timeline.
             m_timelineDock->show();
             m_timelineDock->raise();
             m_timelineDock->overwrite(-1);
@@ -2526,9 +2536,13 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
         scrollArea->setWidget(w);
         return w;
     } else if (playlist_type == producer->type()) {
-        w = new TrackPropertiesWidget(*producer, this);
-        scrollArea->setWidget(w);
-        return w;
+        int trackIndex = m_timelineDock->currentTrack();
+        bool isBottomVideo = m_timelineDock->model()->data(m_timelineDock->model()->index(trackIndex), MultitrackModel::IsBottomVideoRole).toBool();
+        if (!isBottomVideo) {
+            w = new TrackPropertiesWidget(*producer, this);
+            scrollArea->setWidget(w);
+            return w;
+        }
     } else if (tractor_type == producer->type()) {
         w = new TimelinePropertiesWidget(*producer, this);
         scrollArea->setWidget(w);

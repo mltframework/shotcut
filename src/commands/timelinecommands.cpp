@@ -884,20 +884,26 @@ void ChangeBlendModeCommand::redo()
 {
     LOG_DEBUG() << "mode" << m_newMode;
     if (!m_newMode.isEmpty()) {
+        m_transition.set("disable", 0);
         m_transition.set(m_propertyName.toLatin1().constData(), m_newMode.toUtf8().constData());
-        MLT.refreshConsumer();
-        emit modeChanged(m_newMode);
+    } else {
+        m_transition.set("disable", 1);
     }
+    MLT.refreshConsumer();
+    emit modeChanged(m_newMode);
 }
 
 void ChangeBlendModeCommand::undo()
 {
     LOG_DEBUG() << "mode" << m_newMode;
     if (!m_oldMode.isEmpty()) {
+        m_transition.set("disable", 0);
         m_transition.set(m_propertyName.toLatin1().constData(), m_oldMode.toUtf8().constData());
-        MLT.refreshConsumer();
-        emit modeChanged(m_oldMode);
+    } else {
+        m_transition.set("disable", 1);
     }
+    MLT.refreshConsumer();
+    emit modeChanged(m_oldMode);
 }
 
 UpdateCommand::UpdateCommand(TimelineDock& timeline, int trackIndex, int clipIndex,

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2016 Meltytech, LLC
+ * Copyright (c) 2015-2018 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -41,6 +41,7 @@ TrackPropertiesWidget::TrackPropertiesWidget(Mlt::Producer& track, QWidget *pare
     QScopedPointer<Mlt::Transition> transition(getTransition("frei0r.cairoblend"));
     if (transition && transition->is_valid()) {
         ui->blendModeCombo->blockSignals(true);
+        ui->blendModeCombo->addItem(tr("None"), "");
         ui->blendModeCombo->addItem(tr("Over"), "normal");
         ui->blendModeCombo->addItem(tr("Add"), "add");
         ui->blendModeCombo->addItem(tr("Saturate"), "saturate");
@@ -63,7 +64,23 @@ TrackPropertiesWidget::TrackPropertiesWidget(Mlt::Producer& track, QWidget *pare
         ui->blendModeCombo->show();
 
         QString blendMode = transition->get(BLEND_PROPERTY_CAIROBLEND);
+        if (transition->get_int("disable"))
+            blendMode = QString();
+        else if (blendMode.isEmpty()) // A newly added track does not set its mode property.
+            blendMode = "normal";
         onModeChanged(blendMode);
+    } else {
+        transition.reset(getTransition("movit.overlay"));
+        if (transition && transition->is_valid()) {
+            ui->blendModeCombo->blockSignals(true);
+            ui->blendModeCombo->addItem(tr("None"), "");
+            ui->blendModeCombo->addItem(tr("Over"), "over");
+            ui->blendModeCombo->blockSignals(false);
+            ui->blendModeLabel->show();
+            ui->blendModeCombo->show();
+            QString blendMode = transition->get_int("disable")? QString() : "over";
+            onModeChanged(blendMode);
+        }
     }
 }
 
@@ -104,6 +121,8 @@ void TrackPropertiesWidget::on_blendModeCombo_currentIndexChanged(int index)
 {
     if (index >= 0) {
         QScopedPointer<Mlt::Transition> transition(getTransition("frei0r.cairoblend"));
+        if (!transition)
+            transition.reset(getTransition("movit.overlay"));
         if (transition && transition->is_valid()) {
             Timeline::ChangeBlendModeCommand* command = new Timeline::ChangeBlendModeCommand(
                 *transition, BLEND_PROPERTY_CAIROBLEND, ui->blendModeCombo->itemData(index).toString());
