@@ -62,8 +62,7 @@ void ImageProducerWidget::setProducer(Mlt::Producer* p)
     }
     ui->filenameLabel->setText(ui->filenameLabel->fontMetrics().elidedText(s, Qt::ElideLeft, width() - 40));
     updateDuration();
-    ui->widthLineEdit->setText(p->get("meta.media.width"));
-    ui->heightLineEdit->setText(p->get("meta.media.height"));
+    ui->resolutionLabel->setText(QString("%1x%2").arg(p->get("meta.media.width")).arg(p->get("meta.media.height")));
     ui->aspectNumSpinBox->blockSignals(true);
     if (p->get(kAspectRatioNumerator) && p->get(kAspectRatioDenominator)) {
         ui->aspectNumSpinBox->setValue(p->get_int(kAspectRatioNumerator));
