@@ -1371,9 +1371,10 @@ void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
                         filter->anim_set("opacity", 1, duration - 1);
                     } else {
                         // Special handling for animation keyframes on brightness.
-                        filter->clear("level");
-                        filter->anim_set("level", 0, 0);
-                        filter->anim_set("level", 1, duration - 1);
+                        const char* key = filter->get_int("alpha") != 1? "alpha" : "level";
+                        filter->clear(key);
+                        filter->anim_set(key, 0, 0);
+                        filter->anim_set(key, 1, duration - 1);
                     }
                     filter->set(kShotcutAnimInProperty, duration);
                     isChanged = true;
@@ -1479,9 +1480,10 @@ void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
                         filter->anim_set("opacity", 0, info->frame_count - 1);
                     } else {
                         // Special handling for animation keyframes on brightness.
-                        filter->clear("level");
-                        filter->anim_set("level", 1, info->frame_count - duration);
-                        filter->anim_set("level", 0, info->frame_count - 1);
+                        const char* key = filter->get_int("alpha") != 1? "alpha" : "level";
+                        filter->clear(key);
+                        filter->anim_set(key, 1, info->frame_count - duration);
+                        filter->anim_set(key, 0, info->frame_count - 1);
                     }
                     filter->set(kShotcutAnimOutProperty, duration);
                     isChanged = true;
