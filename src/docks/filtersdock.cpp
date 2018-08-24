@@ -60,25 +60,20 @@ FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* att
     LOG_DEBUG() << "end";
 }
 
-void FiltersDock::clearCurrentFilter()
-{
-    m_qview.rootContext()->setContextProperty("metadata", 0);
-    QMetaObject::invokeMethod(m_qview.rootObject(), "clearCurrentFilter");
-    disconnect(this, SIGNAL(changed()));
-}
-
 void FiltersDock::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta, int index)
 {
-    m_qview.rootContext()->setContextProperty("filter", filter);
-    m_qview.rootContext()->setContextProperty("metadata", meta);
     if (filter && filter->producer().is_valid()) {
         m_producer.setProducer(filter->producer());
     } else {
         Mlt::Producer emptyProducer(mlt_producer(0));
         m_producer.setProducer(emptyProducer);
     }
+    m_qview.rootContext()->setContextProperty("filter", filter);
+    m_qview.rootContext()->setContextProperty("metadata", meta);
     if (filter)
         connect(filter, SIGNAL(changed()), SIGNAL(changed()));
+    else
+        disconnect(this, SIGNAL(changed()));
     QMetaObject::invokeMethod(m_qview.rootObject(), "setCurrentFilter", Q_ARG(QVariant, QVariant(index)));
 }
 

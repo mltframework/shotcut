@@ -83,12 +83,6 @@ int KeyframesDock::seekNext()
     return m_model.keyframeIndex(currentParameter(), m_qmlProducer->position() + m_qmlProducer->in() - MAIN.filterController()->currentFilter()->in());
 }
 
-void KeyframesDock::clearCurrentFilter()
-{
-    m_model.load(0, 0);
-    disconnect(this, SIGNAL(changed()));
-}
-
 void KeyframesDock::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta)
 {
     if (!filter || !filter->producer().is_valid()) {
@@ -96,6 +90,7 @@ void KeyframesDock::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta)
         meta = &m_emptyQmlMetadata;
     }
     m_model.load(filter, meta);
+    disconnect(this, SIGNAL(changed()));
     connect(filter, SIGNAL(changed()), SIGNAL(changed()));
     connect(filter, SIGNAL(changed(QString)), &m_model, SLOT(onFilterChanged(QString)));
     connect(filter, SIGNAL(animateInChanged()), &m_model, SLOT(reload()));

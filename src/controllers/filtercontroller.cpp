@@ -149,7 +149,6 @@ void FilterController::setCurrentFilter(int attachedIndex, bool isNew)
         connect(filter, SIGNAL(changed()), SLOT(onQmlFilterChanged()));
     }
 
-    emit currentFilterAboutToChange();
     emit currentFilterChanged(filter, meta, m_currentFilterIndex);
     m_currentFilter.reset(filter);
 }

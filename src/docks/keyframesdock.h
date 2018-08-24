@@ -49,7 +49,6 @@ signals:
     void changed(); /// Notifies when a filter parameter changes.
 
 public slots:
-    void clearCurrentFilter();
     void setCurrentFilter(QmlFilter* filter, QmlMetadata* meta);
     void load(bool force = false);
 

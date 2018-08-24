@@ -34,6 +34,7 @@ Rectangle {
     }
     
     function setCurrentFilter(index) {
+        clearCurrentFilter()
         attachedFilters.setCurrentFilter(index)
         selectedIndex = index
         filterConfig.source = metadata ? metadata.qmlFilePath : ""

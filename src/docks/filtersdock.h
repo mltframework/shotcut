@@ -1,7 +1,5 @@
 /*
  * Copyright (c) 2013-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
- * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,7 +48,6 @@ signals:
     void producerOutChanged(int delta);
 
 public slots:
-    void clearCurrentFilter();
     void setCurrentFilter(QmlFilter* filter, QmlMetadata* meta, int index);
     void onSeeked(int position);
     void onShowFrame(const SharedFrame& frame);
