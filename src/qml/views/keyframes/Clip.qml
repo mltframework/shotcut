@@ -255,6 +255,7 @@ Rectangle {
         anchors.left: animateInTriangle.width > radius? undefined : animateInTriangle.left
         anchors.horizontalCenter: animateInTriangle.width > radius? animateInTriangle.right : undefined
         anchors.top: animateInTriangle.top
+        anchors.horizontalCenterOffset: animateInTriangle.width > parent.width ? -1.5 * width : 0
         anchors.topMargin: -3
         width: 14
         height: 14
@@ -271,6 +272,8 @@ Rectangle {
             cursorShape: Qt.PointingHandCursor
             drag.target: parent
             drag.axis: Drag.XAxis
+            drag.minimumX: 0
+            drag.maximumX: clipRoot.width
             property int startX
             property int startFadeIn
             onPressed: {
@@ -362,6 +365,8 @@ Rectangle {
             cursorShape: Qt.PointingHandCursor
             drag.target: parent
             drag.axis: Drag.XAxis
+            drag.minimumX: 0
+            drag.maximumX: clipRoot.width
             property int startX
             property int startFadeOut
             onPressed: {
