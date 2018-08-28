@@ -2980,6 +2980,8 @@ void MainWindow::onProfileTriggered(QAction *action)
         QString xml = MLT.XML();
         setProfile(action->data().toString());
         MLT.restart(xml);
+    } else {
+        setProfile(action->data().toString());
     }
 }
 
