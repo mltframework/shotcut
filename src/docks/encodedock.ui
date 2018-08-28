@@ -1424,6 +1424,11 @@ in temporal compression</string>
                 </item>
                 <item>
                  <property name="text">
+                  <string>192k</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
                   <string>220k</string>
                  </property>
                 </item>
