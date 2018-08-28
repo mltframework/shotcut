@@ -135,55 +135,42 @@ Item {
         filter.blockSignals = false
         setControls()
         setKeyframedControls()
-        filter.changed()
+        if (filter.isNew)
+            filter.set(rectProperty, filter.getRect(rectProperty))
+        else
+            filter.changed()
     }
 
     function getPosition() {
         return Math.max(producer.position - (filter.in - producer.in), 0)
     }
 
-    function setFilter(position, force) {
-        var x = parseFloat(rectX.text)
-        var y = parseFloat(rectY.text)
-        var w = parseFloat(rectW.text)
-        var h = parseFloat(rectH.text)
-        if (force ||
-            x !== filterRect.x ||
-            y !== filterRect.y ||
-            w !== filterRect.width ||
-            h !== filterRect.height)
-        {
-            filterRect.x = x
-            filterRect.y = y
-            filterRect.width = w
-            filterRect.height = h
+    function setFilter(position) {
+        if (position !== null) {
+            if (position <= 0 && filter.animateIn > 0)
+                filter.set(startValue, filterRect)
+            else if (position >= filter.duration - 1 && filter.animateOut > 0)
+                filter.set(endValue, filterRect)
+            else
+                filter.set(middleValue, filterRect)
+        }
 
-            if (position !== null) {
-                if (position <= 0 && filter.animateIn > 0)
-                    filter.set(startValue, filterRect)
-                else if (position >= filter.duration - 1 && filter.animateOut > 0)
-                    filter.set(endValue, filterRect)
-                else
-                    filter.set(middleValue, filterRect)
+        if (filter.animateIn > 0 || filter.animateOut > 0) {
+            filter.resetProperty(rectProperty)
+            positionKeyframesButton.checked = false
+            if (filter.animateIn > 0) {
+                filter.set(rectProperty, filter.getRect(startValue), 1.0, 0)
+                filter.set(rectProperty, filter.getRect(middleValue), 1.0, filter.animateIn - 1)
             }
-
-            if (filter.animateIn > 0 || filter.animateOut > 0) {
-                filter.resetProperty(rectProperty)
-                positionKeyframesButton.checked = false
-                if (filter.animateIn > 0) {
-                    filter.set(rectProperty, filter.getRect(startValue), 1.0, 0)
-                    filter.set(rectProperty, filter.getRect(middleValue), 1.0, filter.animateIn - 1)
-                }
-                if (filter.animateOut > 0) {
-                    filter.set(rectProperty, filter.getRect(middleValue), 1.0, filter.duration - filter.animateOut)
-                    filter.set(rectProperty, filter.getRect(endValue), 1.0, filter.duration - 1)
-                }
-            } else if (!positionKeyframesButton.checked) {
-                filter.resetProperty(rectProperty)
-                filter.set(rectProperty, filter.getRect(middleValue))
-            } else if (position !== null) {
-                filter.set(rectProperty, filterRect, 1.0, position)
+            if (filter.animateOut > 0) {
+                filter.set(rectProperty, filter.getRect(middleValue), 1.0, filter.duration - filter.animateOut)
+                filter.set(rectProperty, filter.getRect(endValue), 1.0, filter.duration - 1)
             }
+        } else if (!positionKeyframesButton.checked) {
+            filter.resetProperty(rectProperty)
+            filter.set(rectProperty, filter.getRect(middleValue))
+        } else if (position !== null) {
+            filter.set(rectProperty, filterRect, 1.0, position)
         }
     }
 
@@ -213,8 +200,13 @@ Item {
     function setKeyframedControls() {
         var position = getPosition()
         var newValue = filter.getRect(rectProperty, position)
-        if (filterRect !== newValue)
+        if (filterRect !== newValue) {
             filterRect = newValue
+            rectX.text = filterRect.x.toFixed()
+            rectY.text = filterRect.y.toFixed()
+            rectW.text = filterRect.width.toFixed()
+            rectH.text = filterRect.height.toFixed()
+        }
         var enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
         rectX.enabled = enabled
         rectY.enabled = enabled
@@ -261,21 +253,25 @@ Item {
             Layout.columnSpan: 3
             TextField {
                 id: rectX
-                text: filterRect.x.toFixed()
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: setFilter(getPosition())
+                onEditingFinished: {
+                    filterRect.x = parseFloat(text)
+                    setFilter(getPosition())
+                }
             }
             Label { text: ',' }
             TextField {
                 id: rectY
-                text: filterRect.y.toFixed()
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: setFilter(getPosition())
+                onEditingFinished: {
+                    filterRect.y = parseFloat(text)
+                    setFilter(getPosition())
+                }
             }
         }
         UndoButton {
             onClicked: {
-                rectX.text = rectY.text = 0
+                filterRect.x = filterRect.y = 0
                 setFilter(getPosition())
             }
         }
@@ -301,22 +297,26 @@ Item {
             Layout.columnSpan: 3
             TextField {
                 id: rectW
-                text: filterRect.width.toFixed()
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: setFilter(getPosition())
+                onEditingFinished: {
+                    filterRect.width = parseFloat(text)
+                    setFilter(getPosition())
+                }
             }
             Label { text: 'x' }
             TextField {
                 id: rectH
-                text: filterRect.height.toFixed()
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: setFilter(getPosition())
+                onEditingFinished: {
+                    filterRect.height = parseFloat(text)
+                    setFilter(getPosition())
+                }
             }
         }
         UndoButton {
             onClicked: {
-                rectW.text = profile.width
-                rectH.text = profile.height
+                filterRect.width = profile.width
+                filterRect.height = profile.height
                 setFilter(getPosition())
             }
         }
@@ -436,8 +436,8 @@ Item {
         onChanged: setKeyframedControls()
         onInChanged: setFilter(null)
         onOutChanged: setFilter(null)
-        onAnimateInChanged: setFilter(null, true)
-        onAnimateOutChanged: setFilter(null, true)
+        onAnimateInChanged: setFilter(null)
+        onAnimateOutChanged: setFilter(null)
     }
 
     Connections {

@@ -32,6 +32,7 @@ Flickable {
     clip: true
     property real zoom: (video.zoom > 0)? video.zoom : 1.0
     property rect filterRect
+    property bool blockUpdate: false
     property string startValue: '_shotcut:startValue'
     property string middleValue: '_shotcut:middleValue'
     property string endValue:  '_shotcut:endValue'
@@ -56,6 +57,7 @@ Flickable {
     }
 
     function setRectangleControl() {
+        if (blockUpdate) return
         var position = getPosition()
         var newValue = filter.getRect(rectProperty, position)
         if (filterRect !== newValue) {
@@ -66,6 +68,7 @@ Flickable {
     }
 
     function setFilter(position) {
+        blockUpdate = true
         var rect = rectangle.rectangle
         filterRect.x = Math.round(rect.x / rectangle.widthScale)
         filterRect.y = Math.round(rect.y / rectangle.heightScale)
@@ -97,6 +100,7 @@ Flickable {
         } else if (position !== null) {
             filter.set(rectProperty, filterRect, 1.0, position)
         }
+        blockUpdate = false
     }
 
     DropArea { anchors.fill: parent }
