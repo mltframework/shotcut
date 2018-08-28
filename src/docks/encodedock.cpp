@@ -1052,7 +1052,7 @@ void EncodeDock::resetOptions()
     preset.set("movflags", "+faststart");
     preset.set("vcodec", "libx264");
     preset.set("crf", "21");
-    preset.set("preset", "fast");
+    preset.set("preset", "faster");
     preset.set("acodec", "aac");
     preset.set("meta.preset.extension", "mp4");
     loadPresetFromProperties(preset);
