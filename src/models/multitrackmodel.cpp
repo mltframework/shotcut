@@ -2731,7 +2731,7 @@ void MultitrackModel::insertTrack(int trackIndex, TrackType type)
     }
 
     // Get the new track index.
-    Track& track = m_trackList[qMax(0, qMin(trackIndex, m_trackList.count() - 1))];
+    Track& track = m_trackList[qBound(0, trackIndex, m_trackList.count() - 1)];
     int i = track.mlt_index;
     if (type == VideoTrackType)
         ++i;
@@ -2784,9 +2784,9 @@ void MultitrackModel::insertTrack(int trackIndex, TrackType type)
 
     // Create the MLT track.
     Mlt::Playlist playlist(MLT.profile());
-    if (track.type == VideoTrackType) {
+    if (type == VideoTrackType) {
         playlist.set(kVideoTrackProperty, 1);
-    } else if (track.type == AudioTrackType) {
+    } else if (type == AudioTrackType) {
         playlist.set(kAudioTrackProperty, 1);
         playlist.set("hide", 1);
     }
