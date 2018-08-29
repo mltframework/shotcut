@@ -2077,6 +2077,7 @@ bool MultitrackModel::moveClipToTrack(int fromTrack, int toTrack, int clipIndex,
     // Replace clip on fromTrack with blank.
     beginRemoveRows(parentIndex, clipIndex, clipIndex);
     endRemoveRows();
+    clearMixReferences(fromTrack, clipIndex);
     beginInsertRows(parentIndex, clipIndex, clipIndex);
     delete playlistFrom.replace_with_blank(clipIndex);
     endInsertRows();
