@@ -110,7 +110,8 @@ SOURCES += main.cpp\
     dialogs/transcodedialog.cpp \
     docks/keyframesdock.cpp \
     qmltypes/qmlproducer.cpp \
-    models/keyframesmodel.cpp
+    models/keyframesmodel.cpp \
+    widgets/textproducerwidget.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -217,7 +218,8 @@ HEADERS  += mainwindow.h \
     dialogs/transcodedialog.h \
     docks/keyframesdock.h \
     qmltypes/qmlproducer.h \
-    models/keyframesmodel.h
+    models/keyframesmodel.h \
+    widgets/textproducerwidget.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
@@ -258,7 +260,8 @@ FORMS    += mainwindow.ui \
     widgets/trackpropertieswidget.ui \
     widgets/timelinepropertieswidget.ui \
     dialogs/unlinkedfilesdialog.ui \
-    dialogs/transcodedialog.ui
+    dialogs/transcodedialog.ui \
+    widgets/textproducerwidget.ui
 
 RESOURCES += \
     ../icons/resources.qrc \

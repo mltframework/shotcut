@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2012-2017 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2012-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,6 +31,7 @@ OpenOtherDialog::OpenOtherDialog(QWidget *parent) :
     m_current = ui->networkWidget;
 
     QScopedPointer<Mlt::Properties> mltProducers(MLT.repository()->producers());
+    QScopedPointer<Mlt::Properties> mltFilters(MLT.repository()->filters());
     QTreeWidgetItem* group = new QTreeWidgetItem(ui->treeWidget, QStringList(tr("Network")));
     group->setData(0, Qt::UserRole, ui->networkTab->objectName());
     ui->treeWidget->setCurrentItem(group);
@@ -72,6 +72,10 @@ OpenOtherDialog::OpenOtherDialog(QWidget *parent) :
     if (mltProducers->get_data("color")) {
         QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("Color")));
         item->setData(0, Qt::UserRole, ui->colorTab->objectName());
+        if (mltProducers->get_data("qtext") && mltFilters->get_data("dynamictext")) {
+            QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("Text")));
+            item->setData(0, Qt::UserRole, ui->textTab->objectName());
+        }
     }
     if (mltProducers->get_data("noise")) {
         QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("Noise")));
@@ -191,6 +195,8 @@ void OpenOtherDialog::on_treeWidget_currentItemChanged(QTreeWidgetItem *current,
                     m_current = ui->v4lWidget;
                 else if (w == ui->colorTab)
                     m_current = ui->colorWidget;
+                else if (w == ui->textTab)
+                    m_current = ui->textWidget;
                 else if (w == ui->noiseTab)
                     m_current = ui->noiseWidget;
                 else if (w == ui->isingTab)

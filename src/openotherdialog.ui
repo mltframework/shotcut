@@ -19,7 +19,7 @@
   <property name="sizeGripEnabled">
    <bool>true</bool>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout_19">
    <item>
     <widget class="QSplitter" name="splitter">
      <property name="orientation">
@@ -63,6 +63,9 @@
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
+      <property name="currentIndex">
+       <number>5</number>
+      </property>
       <widget class="QWidget" name="networkTab">
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
@@ -95,6 +98,13 @@
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
          <widget class="ColorProducerWidget" name="colorWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="textTab">
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="TextProducerWidget" name="textWidget" native="true"/>
         </item>
        </layout>
       </widget>
@@ -317,6 +327,12 @@
    <class>CountProducerWidget</class>
    <extends>QWidget</extends>
    <header>widgets/countproducerwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TextProducerWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/textproducerwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
