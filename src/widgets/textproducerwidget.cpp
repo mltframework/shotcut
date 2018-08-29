@@ -17,15 +17,16 @@
 
 #include <QColorDialog>
 #include <QFileInfo>
+#include <QFont>
 #include "textproducerwidget.h"
 #include "ui_textproducerwidget.h"
 #include "shotcut_mlt_properties.h"
 #include "util.h"
-#include <MltProducer.h>
-#include <MltFilter.h>
-#include <MltProfile.h>
+#include "mltcontroller.h"
 
-static const QString kTransparent = QObject::tr("transparent", "Open Other > Text");
+static const QString kTransparent = QObject::tr("transparent", "Open Other > Color");
+static const char* kFilterName = "dynamicText";
+static const int kPointSize = 60;
 
 static QString colorToString(const QColor& color)
 {
@@ -83,7 +84,7 @@ Mlt::Producer* TextProducerWidget::newProducer(Mlt::Profile& profile)
     p->set(kShotcutCaptionProperty, ui->colorLabel->text().toLatin1().constData());
     p->set(kShotcutDetailProperty, ui->colorLabel->text().toLatin1().constData());
     Mlt::Filter filter(profile, "dynamictext");
-    filter.set(kShotcutFilterProperty, "dynamicText");
+    filter.set(kShotcutFilterProperty, kFilterName);
     if (!ui->plainTextEdit->toPlainText().isEmpty())
         filter.set("argument", ui->plainTextEdit->toPlainText().toUtf8().constData());
     else
@@ -93,16 +94,21 @@ Mlt::Producer* TextProducerWidget::newProducer(Mlt::Profile& profile)
 #endif
     filter.set("fgcolour", "#ffffffff");
     filter.set("bgcolour", "#00000000");
-    filter.set("olcolour", "#ff000000");
-    filter.set("weight", 500);
+    filter.set("olcolour", "#aa000000");
+    filter.set("outline", 3);
+    filter.set("weight", QFont::Bold * 10);
     filter.set("style", "normal");
-    filter.set("shotcut:usePointSize", 0);
-    filter.set("size", profile.height());
-    filter.set("geometry", QString("0 0 %1 %2 1").arg(profile.width()).arg(profile.height()).toUtf8().constData());
-    filter.set("valign", "bottom");
+    filter.set("shotcut:usePointSize", 1);
+    filter.set("shotcut:pointSize", kPointSize);
+    QFont font(filter.get("family"), kPointSize, filter.get_int("weight"));
+    filter.set("size", QFontInfo(font).pixelSize());
+    filter.set("geometry", QString("0 %1 %2 %3 1")
+               .arg(qRound(0.75 * profile.height()))
+               .arg(profile.width())
+               .arg(profile.height() * 0.25)
+               .toUtf8().constData());
+    filter.set("valign", "top");
     filter.set("halign", "center");
-    filter.set("shotcut:animIn", "00:00:00.000");
-    filter.set("shotcut:animOut", "00:00:00.000");
     filter.set_in_and_out(p->get_in(), p->get_out());
     p->attach(filter);
     return p;
@@ -113,7 +119,7 @@ Mlt::Properties TextProducerWidget::getPreset() const
     Mlt::Properties p;
     QString color = colorStringToResource(ui->colorLabel->text());
     p.set("resource", color.toLatin1().constData());
-    p.set("text", ui->plainTextEdit->toPlainText().toUtf8().constData());
+    p.set("argument", ui->plainTextEdit->toPlainText().toUtf8().constData());
     return p;
 }
 
@@ -124,11 +130,18 @@ void TextProducerWidget::loadPreset(Mlt::Properties& p)
     ui->colorLabel->setStyleSheet(QString("color: %1; background-color: %2")
         .arg((color.value() < 150)? "white":"black")
         .arg(color.name()));
+    if (qstrcmp("", p.get("argument")))
+        ui->plainTextEdit->setPlainText(QString::fromUtf8(p.get("argument")));
     if (m_producer) {
         m_producer->set("resource", colorStringToResource(ui->colorLabel->text()).toLatin1().constData());
         m_producer->set(kShotcutCaptionProperty, ui->colorLabel->text().toLatin1().constData());
         m_producer->set(kShotcutDetailProperty, ui->colorLabel->text().toLatin1().constData());
-        emit producerChanged(m_producer.data());
+        if (qstrcmp("", p.get("argument"))) {
+            QScopedPointer<Mlt::Filter> filter(MLT.getFilter(kFilterName, m_producer.data()));
+            if (filter && filter->is_valid())
+                filter->set("argument", p.get("argument"));
+            emit producerChanged(m_producer.data());
+        }
     }
 }
 

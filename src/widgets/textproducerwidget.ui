@@ -34,6 +34,13 @@
     <widget class="ServicePresetWidget" name="preset" native="true"/>
    </item>
    <item>
+    <widget class="QPlainTextEdit" name="plainTextEdit">
+     <property name="placeholderText">
+      <string>Type or paste the text here</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
       <widget class="QPushButton" name="colorButton">
@@ -72,13 +79,6 @@
       </spacer>
      </item>
     </layout>
-   </item>
-   <item>
-    <widget class="QPlainTextEdit" name="plainTextEdit">
-     <property name="placeholderText">
-      <string>Your text</string>
-     </property>
-    </widget>
    </item>
    <item>
     <widget class="QLabel" name="label">
