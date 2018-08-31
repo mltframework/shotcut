@@ -556,7 +556,7 @@ function set_globals {
       export LRELEASE="$HOME/Qt/5.6.1/gcc_64/bin/lrelease"
       export CFLAGS="-I/usr/$HOST/include $CFLAGS"
       export CXXFLAGS="-I/usr/$HOST/include $CXXFLAGS"
-      export LDFLAGS="-L/usr/$HOST/lib $LDFLAGS"
+      export LDFLAGS="-L/usr/$HOST/lib -Wl,--large-address-aware $LDFLAGS"
       export CROSS=${HOST}-
     else
       export HOST=x86_64-w64-mingw32
@@ -1126,7 +1126,7 @@ QMAKE_RUN_CXX_IMP	= \$(CXX) -c \$(CXXFLAGS) \$(INCPATH) -o \$@ \$<
 
 QMAKE_LINK		= ${CROSS}g++
 QMAKE_LINK_C		= ${CROSS}gcc
-QMAKE_LFLAGS		= -Wl,-enable-stdcall-fixup -Wl,-enable-auto-import -Wl,-enable-runtime-pseudo-reloc
+QMAKE_LFLAGS		= -Wl,-enable-stdcall-fixup -Wl,-enable-auto-import -Wl,-enable-runtime-pseudo-reloc -Wl,--large-address-aware
 QMAKE_LFLAGS_EXCEPTIONS_ON = -mthreads
 QMAKE_LFLAGS_EXCEPTIONS_OFF =
 QMAKE_LFLAGS_RELEASE	= -Wl,-s
