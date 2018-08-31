@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2014-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -52,7 +51,7 @@ Item {
     function setControls() {
         colorSwatch.value = filter.get('color')
         tiltSlider.value = filter.getDouble('x_rotation') * tiltSlider.maximumValue
-        fontCombo.currentIndex = fontCombo.valueToIndex(filter.get('font'))
+        fontCombo.currentIndex = fontCombo.valueToIndex()
         boldCheckBox.checked = filter.get('weight') === 'bold'
         bevelCheckBox.checked = filter.getDouble('bevel')
         depthSlider.value = filter.getDouble('depth') * 2
@@ -97,10 +96,14 @@ Item {
         }
         ComboBox {
             id: fontCombo
-            model: ['Droid Sans', 'Droid Serif', 'Gentilis', 'Helvetiker', 'Optimer']
-            property var values: ['droid sans', 'droid serif', 'gentilis', 'helvetiker', 'optimer']
+            model: ['Liberation Sans', 'Liberation Serif', 'Gentilis', 'Helvetiker', 'Optimer']
+            property var values: ['liberation sans', 'liberation serif', 'gentilis', 'helvetiker', 'optimer']
             function valueToIndex() {
                 var w = filter.get('font')
+                if (w === 'droid sans')
+                    w = 'liberation sans';
+                else if (w === 'droid serif')
+                    w = 'liberation serif';
                 for (var i = 0; i < values.length; ++i)
                     if (values[i] === w) break;
                 if (i === values.length) i = 0;

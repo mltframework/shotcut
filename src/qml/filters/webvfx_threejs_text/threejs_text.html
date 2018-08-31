@@ -50,10 +50,10 @@ THE SOFTWARE.
 	<script src="fonts/optimer_regular.typeface.js"></script>
 	<script src="fonts/helvetiker_bold.typeface.js"></script>
 	<script src="fonts/helvetiker_regular.typeface.js"></script>
-	<script src="fonts/droid_sans_regular.typeface.js"></script>
-	<script src="fonts/droid_sans_bold.typeface.js"></script>
-	<script src="fonts/droid_serif_regular.typeface.js"></script>
-	<script src="fonts/droid_serif_bold.typeface.js"></script>
+	<script src="fonts/liberation_sans_regular.typeface.js"></script>
+	<script src="fonts/liberation_sans_bold.typeface.js"></script>
+	<script src="fonts/liberation_serif_regular.typeface.js"></script>
+	<script src="fonts/liberation_serif_bold.typeface.js"></script>
 
 	<script>
 
@@ -75,7 +75,7 @@ THE SOFTWARE.
 		bevelSegments = 3,
 		bevelEnabled = true,
 
-		font = "optimer", // helvetiker, optimer, gentilis, droid sans, droid serif
+		font = "optimer",
 		weight = "bold", // normal bold
 		style = "normal"; // normal italic
 
@@ -248,6 +248,10 @@ THE SOFTWARE.
 			refreshText();
 		}
 		var myFont = webvfx.getStringParameter('font');
+        if (myFont === 'droid sans')
+            myFont = 'liberation sans';
+        else if (myFont === 'droid serif')
+            myFont = 'liberation serif';
 		if (font !== myFont) {
 			font = myFont;
 			refreshText();
