@@ -96,6 +96,7 @@ Item {
         }
         ComboBox {
             id: fontCombo
+            implicitWidth: 200
             model: ['Liberation Sans', 'Liberation Serif', 'Gentilis', 'Helvetiker', 'Optimer']
             property var values: ['liberation sans', 'liberation serif', 'gentilis', 'helvetiker', 'optimer']
             function valueToIndex() {
