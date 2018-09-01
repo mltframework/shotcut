@@ -226,7 +226,10 @@ MainWindow::MainWindow()
     setupSettingsMenu();
     readPlayerSettings();
     configureVideoWidget();
+
+#ifndef SHOTCUT_NOUPGRADE
     if (Settings.noUpgrade() || qApp->property("noupgrade").toBool())
+#endif
         delete ui->actionUpgrade;
 
     // Add the docks.
@@ -1982,8 +1985,10 @@ void MainWindow::showEvent(QShowEvent* event)
 
     windowHandle()->installEventFilter(this);
 
+#ifndef SHOTCUT_NOUPGRADE
     if (!Settings.noUpgrade() && !qApp->property("noupgrade").toBool())
         QTimer::singleShot(0, this, SLOT(showUpgradePrompt()));
+#endif
 }
 
 void MainWindow::on_actionOpenOther_triggered()
