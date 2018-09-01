@@ -29,6 +29,7 @@ Rectangle {
     property bool isCurrentTrack: false
     property bool isLocked: false
     property var selection
+    property alias clipCount: repeater.count
 
     signal clipClicked(var clip, var track)
     signal clipDragged(var clip, int x, int y)
@@ -122,7 +123,7 @@ Rectangle {
             onTrimmingIn: {
                 var originalDelta = delta
                 if (!(mouse.modifiers & Qt.AltModifier) && toolbar.snap && !toolbar.ripple)
-                    delta = Logic.snapTrimIn(clip, delta)
+                    delta = Logic.snapTrimIn(clip, delta, root, trackRoot.DelegateModel.itemsIndex)
                 if (delta != 0) {
                     if (timeline.trimClipIn(trackRoot.DelegateModel.itemsIndex,
                                             clip.DelegateModel.itemsIndex, delta, toolbar.ripple)) {
@@ -148,7 +149,7 @@ Rectangle {
             onTrimmingOut: {
                 var originalDelta = delta
                 if (!(mouse.modifiers & Qt.AltModifier) && toolbar.snap && !toolbar.ripple)
-                    delta = Logic.snapTrimOut(clip, delta)
+                    delta = Logic.snapTrimOut(clip, delta, root, trackRoot.DelegateModel.itemsIndex)
                 if (delta != 0) {
                     if (timeline.trimClipOut(trackRoot.DelegateModel.itemsIndex,
                                              clip.DelegateModel.itemsIndex, delta, toolbar.ripple)) {

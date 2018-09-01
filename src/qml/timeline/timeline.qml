@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2013-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -69,6 +68,10 @@ Rectangle {
         for (var i = 0; i < trackHeaderRepeater.count; i++)
             trackHeaderRepeater.itemAt(i).selected = false
         cornerstone.selected = true
+    }
+
+    function trackAt(index) {
+        return tracksRepeater.itemAt(index)
     }
 
     property int headerWidth: 140
