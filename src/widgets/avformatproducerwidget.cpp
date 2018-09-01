@@ -144,7 +144,7 @@ void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
 
 void AvformatProducerWidget::onProducerChanged()
 {
-    QThreadPool::globalInstance()->start(new DecodeTask(this));
+    QThreadPool::globalInstance()->start(new DecodeTask(this), 10);
 }
 
 void AvformatProducerWidget::reopen(Mlt::Producer* p)

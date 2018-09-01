@@ -441,6 +441,8 @@ MainWindow::MainWindow()
 
     connect(&m_network, SIGNAL(finished(QNetworkReply*)), SLOT(onUpgradeCheckFinished(QNetworkReply*)));
 
+    QThreadPool::globalInstance()->setMaxThreadCount(qMin(4, QThreadPool::globalInstance()->maxThreadCount()));
+
     LOG_DEBUG() << "end";
 }
 
@@ -2807,7 +2809,7 @@ void MainWindow::processMultipleFiles()
         PlaylistModel* model = m_playlistDock->model();
         m_playlistDock->show();
         m_playlistDock->raise();
-        QThreadPool::globalInstance()->start(new AppendTask(model, m_multipleFiles));
+        QThreadPool::globalInstance()->start(new AppendTask(model, m_multipleFiles), 9);
         foreach (QString filename, m_multipleFiles)
             m_recentDock->add(filename.toUtf8().constData());
     }

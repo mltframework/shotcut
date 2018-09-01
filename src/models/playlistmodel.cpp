@@ -527,7 +527,7 @@ void PlaylistModel::append(Mlt::Producer& producer)
     int out = producer.get_out();
     producer.set_in_and_out(0, producer.get_length() - 1);
     QThreadPool::globalInstance()->start(
-        new UpdateThumbnailTask(this, producer, in, out, count));
+        new UpdateThumbnailTask(this, producer, in, out, count), 1);
     beginInsertRows(QModelIndex(), count, count);
     m_playlist->append(producer, in, out);
     endInsertRows();
@@ -541,7 +541,7 @@ void PlaylistModel::insert(Mlt::Producer& producer, int row)
     int out = producer.get_out();
     producer.set_in_and_out(0, producer.get_length() - 1);
     QThreadPool::globalInstance()->start(
-        new UpdateThumbnailTask(this, producer, in, out, row));
+        new UpdateThumbnailTask(this, producer, in, out, row), 1);
     beginInsertRows(QModelIndex(), row, row);
     m_playlist->insert(producer, row, in, out);
     endInsertRows();
@@ -567,7 +567,7 @@ void PlaylistModel::update(int row, Mlt::Producer& producer)
     int out = producer.get_out();
     producer.set_in_and_out(0, producer.get_length() - 1);
     QThreadPool::globalInstance()->start(
-        new UpdateThumbnailTask(this, producer, in, out, row));
+        new UpdateThumbnailTask(this, producer, in, out, row), 1);
     m_playlist->remove(row);
     m_playlist->insert(producer, row, in, out);
     emit dataChanged(createIndex(row, 0), createIndex(row, columnCount()));
@@ -633,7 +633,7 @@ void PlaylistModel::refreshThumbnails()
             Mlt::ClipInfo* info = m_playlist->clip_info(i);
             if (info && info->producer && info->producer->is_valid()) {
                 QThreadPool::globalInstance()->start(
-                    new UpdateThumbnailTask(this, *info->producer, info->frame_in, info->frame_out, i));
+                    new UpdateThumbnailTask(this, *info->producer, info->frame_in, info->frame_out, i), 1);
             }
             delete info;
         }
