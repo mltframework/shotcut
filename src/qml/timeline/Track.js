@@ -16,6 +16,7 @@
  */
 
 var SNAP = 10
+var SNAP_TRIM = 7
 
 function snapClip(clip, repeater) {
     var left = clip.x
@@ -72,9 +73,9 @@ function snapTrimIn(clip, delta, timeline, trackIndex) {
                 continue
             var itemLeft = repeater.itemAt(i).x
             var itemRight = itemLeft + repeater.itemAt(i).width
-            if (x > itemLeft - SNAP && x < itemLeft + SNAP)
+            if (x > itemLeft - SNAP_TRIM && x < itemLeft + SNAP_TRIM)
                 return Math.round((itemLeft - clip.x) / timeScale)
-            else if (x > itemRight - SNAP && x < itemRight + SNAP)
+            else if (x > itemRight - SNAP_TRIM && x < itemRight + SNAP_TRIM)
                 return Math.round((itemRight - clip.x) / timeScale)
         }
     }
@@ -88,17 +89,17 @@ function snapTrimIn(clip, delta, timeline, trackIndex) {
                     continue
                 itemLeft = item.x
                 itemRight = itemLeft + item.width
-                if (x > itemLeft - SNAP && x < itemLeft + SNAP)
+                if (x > itemLeft - SNAP_TRIM && x < itemLeft + SNAP_TRIM)
                     return Math.round((itemLeft - clip.x) / timeScale)
-                else if (x > itemRight - SNAP && x < itemRight + SNAP)
+                else if (x > itemRight - SNAP_TRIM && x < itemRight + SNAP_TRIM)
                     return Math.round((itemRight - clip.x) / timeScale)
             }
         }
     }
-    if (x > -SNAP && x < SNAP) {
+    if (x > -SNAP_TRIM && x < SNAP_TRIM) {
         // Snap around origin.
         return Math.round(-clip.x / timeScale)
-    } else if (x > cursorX - SNAP && x < cursorX + SNAP) {
+    } else if (x > cursorX - SNAP_TRIM && x < cursorX + SNAP_TRIM) {
         // Snap around cursor/playhead.
         return Math.round((cursorX - clip.x) / timeScale)
     }
@@ -116,9 +117,9 @@ function snapTrimOut(clip, delta, timeline, trackIndex) {
                 continue
             var itemLeft = repeater.itemAt(i).x
             var itemRight = itemLeft + repeater.itemAt(i).width
-            if (x > itemLeft - SNAP && x < itemLeft + SNAP)
+            if (x > itemLeft - SNAP_TRIM && x < itemLeft + SNAP_TRIM)
                 return Math.round((rightEdge - itemLeft) / timeScale)
-            else if (x > itemRight - SNAP && x < itemRight + SNAP)
+            else if (x > itemRight - SNAP_TRIM && x < itemRight + SNAP_TRIM)
                 return Math.round((rightEdge - itemRight) / timeScale)
         }
     }
@@ -132,14 +133,14 @@ function snapTrimOut(clip, delta, timeline, trackIndex) {
                     continue
                 itemLeft = item.x
                 itemRight = itemLeft + item.width
-                if (x > itemLeft - SNAP && x < itemLeft + SNAP)
+                if (x > itemLeft - SNAP_TRIM && x < itemLeft + SNAP_TRIM)
                     return Math.round((rightEdge - itemLeft) / timeScale)
-                else if (x > itemRight - SNAP && x < itemRight + SNAP)
+                else if (x > itemRight - SNAP_TRIM && x < itemRight + SNAP_TRIM)
                     return Math.round((rightEdge - itemRight) / timeScale)
             }
         }
     }
-    if (x > cursorX - SNAP && x < cursorX + SNAP) {
+    if (x > cursorX - SNAP_TRIM && x < cursorX + SNAP_TRIM) {
         // Snap around cursor/playhead.
         return Math.round((rightEdge - cursorX) / timeScale)
     }
