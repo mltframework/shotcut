@@ -2201,6 +2201,7 @@ void MultitrackModel::relocateClip(Mlt::Playlist& playlist, int trackIndex, int 
     // Replace clip with blank.
     beginRemoveRows(parentIndex, clipIndex, clipIndex);
     endRemoveRows();
+    clearMixReferences(trackIndex, clipIndex);
     beginInsertRows(parentIndex, clipIndex, clipIndex);
     delete playlist.replace_with_blank(clipIndex);
     endInsertRows();
