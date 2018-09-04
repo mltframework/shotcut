@@ -16,7 +16,7 @@
  */
 
 var SNAP = 10
-var SNAP_TRIM = 7
+var SNAP_TRIM = 4
 
 function snapClip(clip, repeater) {
     var left = clip.x
@@ -69,7 +69,7 @@ function snapTrimIn(clip, delta, timeline, trackIndex) {
     if (delta < 0) {
         // Snap to other clips on the same track.
         for (var i = 0; i < repeater.count; i++) {
-            if (i === clip.DelegateModel.itemsIndex || repeater.itemAt(i).isBlank)
+            if (i === clip.DelegateModel.itemsIndex || repeater.itemAt(i).isBlank || repeater.itemAt(i).isTransition)
                 continue
             var itemLeft = repeater.itemAt(i).x
             var itemRight = itemLeft + repeater.itemAt(i).width
