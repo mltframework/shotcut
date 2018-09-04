@@ -1126,7 +1126,7 @@ QMAKE_RUN_CXX_IMP	= \$(CXX) -c \$(CXXFLAGS) \$(INCPATH) -o \$@ \$<
 
 QMAKE_LINK		= ${CROSS}g++
 QMAKE_LINK_C		= ${CROSS}gcc
-QMAKE_LFLAGS		= -Wl,-enable-stdcall-fixup -Wl,-enable-auto-import -Wl,-enable-runtime-pseudo-reloc -Wl,--large-address-aware
+QMAKE_LFLAGS		= -Wl,-enable-stdcall-fixup -Wl,-enable-auto-import -Wl,-enable-runtime-pseudo-reloc
 QMAKE_LFLAGS_EXCEPTIONS_ON = -mthreads
 QMAKE_LFLAGS_EXCEPTIONS_OFF =
 QMAKE_LFLAGS_RELEASE	= -Wl,-s
@@ -1168,6 +1168,9 @@ QMAKE_STRIP		= ${CROSS}strip
 QMAKE_STRIPFLAGS_LIB 	+= --strip-unneeded
 load(qt_config)
 END_OF_QMAKE_SPEC
+    if [ "$TARGET_OS" = "Win32" ]; then
+      echo >>mkspecs/mingw/qmake.conf "QMAKE_LFLAGS += -Wl,--large-address-aware"
+    fi
   fi
 }
 
