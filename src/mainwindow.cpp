@@ -1789,7 +1789,10 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         break;
     case Qt::Key_0:
         if (m_timelineDock->isVisible()) {
-            m_timelineDock->resetZoom();
+            if (event->modifiers() & Qt::ControlModifier)
+                m_timelineDock->model()->setTrackHeight(50);
+            else
+                m_timelineDock->resetZoom();
         } else if (m_playlistDock->isVisible()) {
             m_playlistDock->raise();
             m_playlistDock->setIndex(9);
