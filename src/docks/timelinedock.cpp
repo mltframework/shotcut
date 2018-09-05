@@ -366,7 +366,7 @@ void TimelineDock::copyToSource()
                 emit showStatusMessage(tr("Failed to open ") + MAIN.fileName());
             }
         } else {
-            emit showStatusMessage(tr("You must save to Copy Timline to Source."));
+            emit showStatusMessage(tr("You must save to Copy Timeline to Source."));
         }
     }
 }

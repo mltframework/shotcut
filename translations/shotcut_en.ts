@@ -5181,7 +5181,7 @@ Try again with a different folder.</source>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="369"/>
-        <source>You must save to Copy Timline to Source.</source>
+        <source>You must save to Copy Timeline to Source.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
