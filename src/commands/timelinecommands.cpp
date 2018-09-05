@@ -744,6 +744,7 @@ AddTransitionByTrimOutCommand::AddTransitionByTrimOutCommand(MultitrackModel &mo
 void AddTransitionByTrimOutCommand::redo()
 {
     if (m_redo) {
+        LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex;
         m_model.addTransitionByTrimOut(m_trackIndex, m_clipIndex, m_delta);
         if (m_notify)
             m_model.notifyClipIn(m_trackIndex, m_clipIndex + 2);
