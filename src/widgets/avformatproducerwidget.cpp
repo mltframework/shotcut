@@ -26,6 +26,7 @@
 #include "jobs/meltjob.h"
 #include "jobs/postjobaction.h"
 #include "settings.h"
+#include "mainwindow.h"
 #include "Logger.h"
 #include <QtWidgets>
 
@@ -34,18 +35,20 @@ bool ProducerIsTimewarp( Mlt::Producer* producer )
     return QString::fromUtf8(producer->get("mlt_service")) == "timewarp";
 }
 
-char* GetFilenameFromProducer( Mlt::Producer* producer )
+QString GetFilenameFromProducer( Mlt::Producer* producer )
 {
-    char* resource = NULL;
-    if (ProducerIsTimewarp(producer))
-    {
-        resource = producer->get("warp_resource");
+    QString resource;
+    if (ProducerIsTimewarp(producer)) {
+        resource = QString::fromUtf8(producer->get("warp_resource"));
+    } else {
+        resource = QString::fromUtf8(producer->get("resource"));
     }
-    else
-    {
-        resource = producer->get("resource");
+    if (QFileInfo(resource).isRelative()) {
+        QString basePath = QFileInfo(MAIN.fileName()).canonicalPath();
+        QFileInfo fi(basePath, resource);
+        resource = fi.filePath();
     }
-    return resource;
+    return QDir::toNativeSeparators(resource);
 }
 
 double GetSpeedFromProducer( Mlt::Producer* producer )
@@ -99,12 +102,12 @@ Mlt::Producer* AvformatProducerWidget::newProducer(Mlt::Profile& profile)
     Mlt::Producer* p = 0;
     if ( ui->speedSpinBox->value() == 1.0 )
     {
-        p = new Mlt::Producer(profile, GetFilenameFromProducer(producer()));
+        p = new Mlt::Producer(profile, GetFilenameFromProducer(producer()).toUtf8().constData());
     }
     else
     {
         double warpspeed = ui->speedSpinBox->value();
-        char* filename = GetFilenameFromProducer(producer());
+        QString filename = GetFilenameFromProducer(producer());
         QString s = QString("%1:%L2:%3").arg("timewarp").arg(warpspeed).arg(filename);
         p = new Mlt::Producer(profile, s.toUtf8().constData());
         p->set(kShotcutProducerProperty, "avformat");
@@ -235,7 +238,7 @@ void AvformatProducerWidget::onFrameDecoded()
         m_defaultDuration = m_producer->get_length();
 
     double warpSpeed = GetSpeedFromProducer(producer());
-    QString resource = QString::fromUtf8(GetFilenameFromProducer(producer()));
+    QString resource = GetFilenameFromProducer(producer());
     QString name = Util::baseName(resource);
     QString caption = name;
     if(warpSpeed != 1.0)
@@ -640,7 +643,7 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
         Settings.setShowConvertClipDialog(false);
     }
     if (result == QDialog::Accepted) {
-        QString resource = QString::fromUtf8(GetFilenameFromProducer(producer()));
+        QString resource = GetFilenameFromProducer(producer());
         QString path = Settings.savePath();
         QStringList args;
 
@@ -703,7 +706,7 @@ void AvformatProducerWidget::on_actionReverse_triggered()
         Settings.setShowConvertClipDialog(false);
     }
     if (result == QDialog::Accepted) {
-        QString resource = QString::fromUtf8(GetFilenameFromProducer(producer()));
+        QString resource = GetFilenameFromProducer(producer());
         QString path = Settings.savePath();
         QStringList meltArgs;
         QStringList ffmpegArgs;
