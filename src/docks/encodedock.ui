@@ -391,7 +391,7 @@
                  <item>
                   <widget class="QDoubleSpinBox" name="fpsSpinner">
                    <property name="decimals">
-                    <number>3</number>
+                    <number>6</number>
                    </property>
                    <property name="minimum">
                     <double>1.000000000000000</double>

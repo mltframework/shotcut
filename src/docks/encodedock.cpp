@@ -757,24 +757,30 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                 setIfNotSet(p, "rescale", "hyper");
                 break;
             }
-            if (qFloor(ui->fpsSpinner->value() * 10.0) == 239) {
-                setIfNotSet(p, "frame_rate_num", 24000);
-                setIfNotSet(p, "frame_rate_den", 1001);
+            // If the frame rate is not specified in Other.
+            if (!p->get("r") && !(p->get("frame_rate_num") && p->get("frame_rate_den"))
+                // Only if the frame rate spinner does not match the profile.
+                && qRound(ui->fpsSpinner->value() * 1000000.0) != qRound(MLT.profile().fps() * 1000000.0))
+            {
+                // Convert some common non-integer frame rates to fractions.
+                if (qRound(ui->fpsSpinner->value() * 1000000.0) == 23976024) {
+                    p->set("frame_rate_num", 24000);
+                    p->set("frame_rate_den", 1001);
+                } else if (qFloor(ui->fpsSpinner->value() * 1000000.0) == 299700299) {
+                    p->set("frame_rate_num", 30000);
+                    p->set("frame_rate_den", 1001);
+                } else if (qRound(ui->fpsSpinner->value() * 1000000.0) == 47952048) {
+                    p->set("frame_rate_num", 48000);
+                    p->set("frame_rate_den", 1001);
+                } else if (qFloor(ui->fpsSpinner->value() * 1000000.0) == 599400599) {
+                    p->set("frame_rate_num", 60000);
+                    p->set("frame_rate_den", 1001);
+                } else {
+                    // Workaround storing QDoubleSpinBox::value() loses precison.
+                    p->set("frame_rate_num", qRound(ui->fpsSpinner->value() * 1000000.0));
+                    p->set("frame_rate_den", 1000000);
+                }
             }
-            else if (qFloor(ui->fpsSpinner->value() * 10.0) == 299) {
-                setIfNotSet(p, "frame_rate_num", 30000);
-                setIfNotSet(p, "frame_rate_den", 1001);
-            }
-            else if (qFloor(ui->fpsSpinner->value() * 10.0) == 479) {
-                setIfNotSet(p, "frame_rate_num", 48000);
-                setIfNotSet(p, "frame_rate_den", 1001);
-            }
-            else if (qFloor(ui->fpsSpinner->value() * 10.0) == 599) {
-                setIfNotSet(p, "frame_rate_num", 60000);
-                setIfNotSet(p, "frame_rate_den", 1001);
-            }
-            else
-                setIfNotSet(p, "r", ui->fpsSpinner->value());
             if (ui->formatCombo->currentText() == "image2")
                 setIfNotSet(p, "threads", 1);
             else if (ui->videoCodecThreadsSpinner->value() == 0
