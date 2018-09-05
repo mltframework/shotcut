@@ -1688,6 +1688,7 @@ void MultitrackModel::removeTransitionByTrimOut(int trackIndex, int clipIndex, i
 
 bool MultitrackModel::trimTransitionInValid(int trackIndex, int clipIndex, int delta)
 {
+    if (m_isMakingTransition) return false;
     bool result = false;
     int i = m_trackList.at(trackIndex).mlt_index;
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
@@ -1761,7 +1762,7 @@ void MultitrackModel::trimTransitionIn(int trackIndex, int clipIndex, int delta)
 
 bool MultitrackModel::trimTransitionOutValid(int trackIndex, int clipIndex, int delta)
 {
-    Q_UNUSED(delta)
+    if (m_isMakingTransition) return false;
     bool result = false;
     int i = m_trackList.at(trackIndex).mlt_index;
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
@@ -1857,6 +1858,9 @@ bool MultitrackModel::addTransitionByTrimInValid(int trackIndex, int clipIndex, 
             } else if (m_isMakingTransition && isTransition(playlist, clipIndex - 1)) {
                 // Invalid if transition length will be 0 or less.
                 result = playlist.clip_length(clipIndex - 1) - delta > 0;
+                if (result && clipIndex > 1)
+                    // Invalid if left clip length will be 0 or less.
+                    result = playlist.clip_length(clipIndex - 2) + delta > 0;
             } else {
                 result = m_isMakingTransition;
             }
@@ -1923,6 +1927,9 @@ bool MultitrackModel::addTransitionByTrimOutValid(int trackIndex, int clipIndex,
                 // Invalid if transition length will be 0 or less.
 //                LOG_DEBUG() << "playlist.clip_length(clipIndex + 1)" << playlist.clip_length(clipIndex + 1) << "- delta" << delta << "=" << (playlist.clip_length(clipIndex + 1) - delta);
                 result = playlist.clip_length(clipIndex + 1) - delta > 0;
+                if (result && clipIndex + 2 < playlist.count())
+                    // Invalid if right clip length will be 0 or less.
+                    result = playlist.clip_length(clipIndex + 2) + delta > 0;
             } else {
                 result = m_isMakingTransition;
             }
