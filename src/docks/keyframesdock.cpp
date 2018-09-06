@@ -68,8 +68,9 @@ int KeyframesDock::seekPrevious()
         int position = m_model.previousKeyframePosition(currentParameter(), m_qmlProducer->position() + m_qmlProducer->in());
         position -= m_qmlProducer->in();
         m_qmlProducer->setPosition(position);
+        return m_model.keyframeIndex(currentParameter(), position + m_qmlProducer->in() - MAIN.filterController()->currentFilter()->in());
     }
-    return m_model.keyframeIndex(currentParameter(), m_qmlProducer->position() + m_qmlProducer->in() - MAIN.filterController()->currentFilter()->in());
+    return 0;
 }
 
 int KeyframesDock::seekNext()
@@ -79,8 +80,11 @@ int KeyframesDock::seekNext()
         position -= m_qmlProducer->in();
         if (position > m_qmlProducer->position())
             m_qmlProducer->setPosition(position);
+        else
+            position = m_qmlProducer->position();
+        return m_model.keyframeIndex(currentParameter(), position + m_qmlProducer->in() - MAIN.filterController()->currentFilter()->in());
     }
-    return m_model.keyframeIndex(currentParameter(), m_qmlProducer->position() + m_qmlProducer->in() - MAIN.filterController()->currentFilter()->in());
+    return 0;
 }
 
 void KeyframesDock::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta)
