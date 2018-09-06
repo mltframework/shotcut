@@ -41,12 +41,14 @@ GridLayout {
 
     function updateFilter(position) {
         if (position !== null) {
+            filter.blockSignals = true
             if (position <= 0 && filter.animateIn > 0)
                 filter.set(startValue, filterRect)
             else if (position >= filter.duration - 1 && filter.animateOut > 0)
                 filter.set(endValue, filterRect)
             else
                 filter.set(middleValue, filterRect)
+            filter.blockSignals = false
         }
 
         if (filter.animateIn > 0 || filter.animateOut > 0) {
