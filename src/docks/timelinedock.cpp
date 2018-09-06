@@ -399,9 +399,13 @@ void TimelineDock::insertTrack()
 
 void TimelineDock::removeTrack()
 {
-    if (m_model.trackList().size() > 0)
+    if (m_model.trackList().size() > 0) {
+        int trackIndex = currentTrack();
         MAIN.undoStack()->push(
-                new Timeline::RemoveTrackCommand(m_model, currentTrack()));
+                new Timeline::RemoveTrackCommand(m_model, trackIndex));
+        if (trackIndex >= m_model.trackList().count())
+            setCurrentTrack(m_model.trackList().count() - 1);
+    }
 }
 
 bool TimelineDock::mergeClipWithNext(int trackIndex, int clipIndex, bool dryrun)
