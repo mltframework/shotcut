@@ -180,7 +180,7 @@ Item {
         Label { text: qsTr('Rotation') }
         SliderSpinner {
             id: rotationSlider
-            minimumValue: 0
+            minimumValue: -360
             maximumValue: 360
             decimals: 1
             spinnerWidth: 110

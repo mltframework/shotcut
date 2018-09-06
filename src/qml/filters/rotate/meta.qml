@@ -19,7 +19,7 @@ Metadata {
                 property: 'transition.fix_rotate_x'
                 isSimple: true
                 isCurve: true
-                minimum: 0
+                minimum: -360
                 maximum: 360
             },
             Parameter {
