@@ -179,6 +179,7 @@ Rectangle {
         onWidthChanged: expandWidth()
         Loader {
             id: filterConfig
+            enabled: !filterMenu.visible
             property int minimumWidth: 0
             onLoaded: {
                 minimumWidth = item.width
