@@ -1583,7 +1583,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         }
         break;
     case Qt::Key_C:
-        if (event->modifiers() == Qt::ShiftModifier) {
+        if (event->modifiers() == Qt::ShiftModifier && m_playlistDock->model()->rowCount() > 0) {
             m_playlistDock->show();
             m_playlistDock->raise();
             if (m_playlistDock->position() >= 0)
@@ -1689,10 +1689,12 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
                 m_timelineDock->setTrackComposite(trackIndex, !isComposite);
             }
         } else if (event->modifiers() == Qt::ShiftModifier) {
-            // Update playlist item.
-            m_playlistDock->show();
-            m_playlistDock->raise();
-            m_playlistDock->on_actionUpdate_triggered();
+            if (m_playlistDock->model()->rowCount() > 0) {
+                // Update playlist item.
+                m_playlistDock->show();
+                m_playlistDock->raise();
+                m_playlistDock->on_actionUpdate_triggered();
+            }
         } else {
             // Overwrite on timeline.
             m_timelineDock->show();
@@ -1718,7 +1720,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         }
         break;
     case Qt::Key_Up:
-        if (m_playlistDock->isVisible() && event->modifiers() & Qt::AltModifier) {
+        if (m_playlistDock->isVisible() && event->modifiers() & Qt::AltModifier && m_playlistDock->model()->rowCount() > 0) {
             m_playlistDock->raise();
             m_playlistDock->decrementIndex();
             m_playlistDock->on_actionOpen_triggered();
@@ -1738,7 +1740,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
                 m_timelineDock->setSelection(QList<int>() << newClipIndex);
             }
 
-        } else if (m_playlistDock->isVisible()) {
+        } else if (m_playlistDock->isVisible() && m_playlistDock->model()->rowCount() > 0) {
             m_playlistDock->raise();
             if (event->modifiers() & Qt::ControlModifier)
                 m_playlistDock->moveClipUp();
@@ -1746,7 +1748,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         }
         break;
     case Qt::Key_Down:
-        if (m_playlistDock->isVisible() && event->modifiers() & Qt::AltModifier) {
+        if (m_playlistDock->isVisible() && event->modifiers() & Qt::AltModifier && m_playlistDock->model()->rowCount() > 0) {
             m_playlistDock->raise();
             m_playlistDock->incrementIndex();
             m_playlistDock->on_actionOpen_triggered();
@@ -1766,7 +1768,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
                 m_timelineDock->setSelection(QList<int>() << newClipIndex);
             }
 
-        } else if (m_playlistDock->isVisible()) {
+        } else if (m_playlistDock->isVisible() && m_playlistDock->model()->rowCount() > 0) {
             m_playlistDock->raise();
             if (event->modifiers() & Qt::ControlModifier)
                 m_playlistDock->moveClipDown();
@@ -1782,7 +1784,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
     case Qt::Key_7:
     case Qt::Key_8:
     case Qt::Key_9:
-        if (m_playlistDock->isVisible()) {
+        if (m_playlistDock->isVisible() && m_playlistDock->model()->rowCount() > 0) {
             m_playlistDock->raise();
             m_playlistDock->setIndex(event->key() - Qt::Key_1);
         }
@@ -1793,13 +1795,13 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
                 m_timelineDock->model()->setTrackHeight(50);
             else
                 m_timelineDock->resetZoom();
-        } else if (m_playlistDock->isVisible()) {
+        } else if (m_playlistDock->isVisible() && m_playlistDock->model()->rowCount() > 0) {
             m_playlistDock->raise();
             m_playlistDock->setIndex(9);
         }
         break;
     case Qt::Key_X: // Avid Extract
-        if (event->modifiers() == Qt::ShiftModifier) {
+        if (event->modifiers() == Qt::ShiftModifier && m_playlistDock->model()->rowCount() > 0) {
             m_playlistDock->show();
             m_playlistDock->raise();
             m_playlistDock->on_removeButton_clicked();
@@ -1818,14 +1820,14 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
                 m_timelineDock->removeSelection();
             else
                 m_timelineDock->liftSelection();
-        } else {
+        } else if (m_playlistDock->model()->rowCount() > 0) {
             m_playlistDock->show();
             m_playlistDock->raise();
             m_playlistDock->on_removeButton_clicked();
         }
         break;
     case Qt::Key_Z: // Avid Lift
-        if (event->modifiers() == Qt::ShiftModifier) {
+        if (event->modifiers() == Qt::ShiftModifier && m_playlistDock->model()->rowCount() > 0) {
             m_playlistDock->show();
             m_playlistDock->raise();
             m_playlistDock->on_removeButton_clicked();
