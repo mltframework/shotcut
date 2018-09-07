@@ -915,7 +915,8 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Service* service, const QString& target,
     job->setUseMultiConsumer(
             ui->widthSpinner->value() != MLT.profile().width() ||
             ui->heightSpinner->value() != MLT.profile().height() ||
-            double(ui->aspectNumSpinner->value()) / double(ui->aspectDenSpinner->value()) != MLT.profile().dar());
+            double(ui->aspectNumSpinner->value()) / double(ui->aspectDenSpinner->value()) != MLT.profile().dar() ||
+            (ui->fromCombo->currentData().toString() != "clip" && qFloor(ui->fpsSpinner->value() * 10000.0) != qFloor(MLT.profile().fps() * 10000.0)));
     return job;
 }
 
