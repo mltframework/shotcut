@@ -83,7 +83,7 @@
    <item>
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>Text attributes are available in the &lt;b&gt;Filters&lt;/b&gt; panel after clicking &lt;b&gt;OK&lt;b&gt;.</string>
+      <string>Text attributes are available in the &lt;b&gt;Filters&lt;/b&gt; panel after clicking &lt;b&gt;OK&lt;/b&gt;.</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
