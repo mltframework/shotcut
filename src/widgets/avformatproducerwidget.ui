@@ -805,6 +805,11 @@
     <string>Reverse...</string>
    </property>
   </action>
+  <action name="actionExtractSubclip">
+   <property name="text">
+    <string>Extract Sub-clip...</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>

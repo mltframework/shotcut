@@ -587,6 +587,7 @@ void AvformatProducerWidget::on_menuButton_clicked()
     menu.addAction(ui->actionFFmpegIntegrityCheck);
     menu.addAction(ui->actionFFmpegConvert);
     menu.addAction(ui->actionReverse);
+    menu.addAction(ui->actionExtractSubclip);
     menu.exec(ui->menuButton->mapToGlobal(QPoint(0, 0)));
 }
 
@@ -804,3 +805,50 @@ void AvformatProducerWidget::on_actionReverse_triggered()
     }
 }
 
+
+void AvformatProducerWidget::on_actionExtractSubclip_triggered()
+{
+    QString resource = GetFilenameFromProducer(producer());
+    QString path = Settings.savePath();
+    QFileInfo fi(resource);
+
+    path.append("/%1 - %2.%3");
+    path = path.arg(fi.completeBaseName()).arg(tr("Sub-clip")).arg(fi.suffix());
+    QString caption = tr("Extract Sub-clip...");
+    QString filename = QFileDialog::getSaveFileName(this, caption, path);
+
+    if (!filename.isEmpty()) {
+        if (filename == QDir::toNativeSeparators(resource)) {
+            QMessageBox::warning(this, caption,
+                                 QObject::tr("Unable to write file %1\n"
+                                    "Perhaps you do not have permission.\n"
+                                    "Try again with a different folder.")
+                                 .arg(fi.fileName()));
+            return;
+        }
+        if (Util::warnIfNotWritable(filename, this, caption))
+            return;
+        Settings.setSavePath(QFileInfo(filename).path());
+
+        QStringList ffmpegArgs;
+
+        // Build the ffmpeg command line.
+        ffmpegArgs << "-loglevel" << "verbose";
+        ffmpegArgs << "-i" << resource;
+        // set trim options
+        if (m_producer->get(kFilterInProperty))
+            ffmpegArgs << "-ss" << QString::fromLatin1(m_producer->get_time(kFilterInProperty, mlt_time_clock)).replace(',', '.');
+        else
+            ffmpegArgs << "-ss" << QString::fromLatin1(m_producer->get_time("in", mlt_time_clock)).replace(',', '.').replace(',', '.');
+        if (m_producer->get(kFilterOutProperty))
+            ffmpegArgs << "-to" << QString::fromLatin1(m_producer->get_time(kFilterOutProperty, mlt_time_clock)).replace(',', '.');
+        else
+            ffmpegArgs << "-to" << QString::fromLatin1(m_producer->get_time("out", mlt_time_clock)).replace(',', '.');
+        ffmpegArgs << "-map" << "0" << "-codec" << "copy" << "-y" << filename;
+
+        // Run the ffmpeg job.
+        FfmpegJob* ffmpegJob = new FfmpegJob(filename, ffmpegArgs, false);
+        ffmpegJob->setLabel(tr("Extract sub-clip %1").arg(Util::baseName(resource)));
+        JOBS.add(ffmpegJob);
+    }
+}

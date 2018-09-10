@@ -91,6 +91,8 @@ private slots:
 
     void on_actionReverse_triggered();
     
+    void on_actionExtractSubclip_triggered();
+
 private:
     Ui::AvformatProducerWidget *ui;
     int m_defaultDuration;
