@@ -79,7 +79,7 @@ public:
     virtual void seek(int position);
     void refreshConsumer(bool scrubAudio = false);
     void saveXML(const QString& filename, Service* service = 0, bool withRelativePaths = true);
-    QString XML(Service* service = 0, bool withProfile = false);
+    QString XML(Service* service = 0, bool withProfile = false, bool withMetadata = false);
     int consumerChanged();
     void setProfile(const QString& profile_name);
     void setAudioChannels(int audioChannels);

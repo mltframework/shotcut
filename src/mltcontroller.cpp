@@ -429,7 +429,7 @@ void Controller::saveXML(const QString& filename, Service* service, bool withRel
     }
 }
 
-QString Controller::XML(Service* service, bool withProfile)
+QString Controller::XML(Service* service, bool withProfile, bool withMetadata)
 {
     static const char* propertyName = "string";
     Consumer c(profile(), "xml", propertyName);
@@ -440,7 +440,8 @@ QString Controller::XML(Service* service, bool withProfile)
     if (ignore)
         s.set("ignore_points", 0);
     c.set("time_format", "clock");
-    c.set("no_meta", 1);
+    if (!withMetadata)
+        c.set("no_meta", 1);
     c.set("no_profile", !withProfile);
     c.set("store", "shotcut");
     c.connect(s);
