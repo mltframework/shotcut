@@ -112,6 +112,26 @@ Item {
             filter.animateIn = 0
             filter.resetProperty(rectProperty)
 
+            filter.set(rectProperty,
+                  '00:00:00.000= -7.937%  -7.648% 115% 115%; 00:00:00.080= -7.781% -11.815% 115% 115%;'
+                + '00:00:00.160= -0.094% -13.019% 115% 115%; 00:00:00.240= -7.313%  -9.037% 115% 115%;'
+                + '00:00:00.320= -7.469% -13.760% 115% 115%; 00:00:00.400=-10.229%  -5.593% 115% 115%;'
+                + '00:00:00.480= -6.615% -11.074% 115% 115%; 00:00:00.560= -5.031%  -6.074% 115% 115%;'
+                + '00:00:00.640= -2.990%  -6.074% 115% 115%; 00:00:00.720= -3.260%  -3.574% 115% 115%;'
+                + '00:00:00.800= -5.229%  -7.093% 115% 115%; 00:00:00.880= -5.906%  -3.574% 115% 115%;'
+                + '00:00:00.960=-10.958%  -9.315% 115% 115%; 00:00:01.040= -7.500%  -7.500% 115% 115%')
+            filter.savePreset(preset.parameters, qsTr('Shake 1 Second - Scaled'))
+            filter.set(rectProperty,
+                 '00:00:00.000=  -0.437%  -0.148% 100% 100%; 00:00:00.080= -0.281%  -4.315% 100% 100%;'
+               + '00:00:00.160=   7.406%  -5.519% 100% 100%; 00:00:00.240=  0.187%  -1.537% 100% 100%;'
+               + '00:00:00.320=   0.031%  -6.260% 100% 100%; 00:00:00.400= -2.729%   1.907% 100% 100%;'
+               + '00:00:00.480=   0.885%  -3.574% 100% 100%; 00:00:00.560=  2.469%   1.426% 100% 100%;'
+               + '00:00:00.640=   4.510%   1.426% 100% 100%; 00:00:00.720=  4.240%   3.926% 100% 100%;'
+               + '00:00:00.800=   2.271%   0.407% 100% 100%; 00:00:00.880=  1.594%   3.926% 100% 100%;'
+               + '00:00:00.960=  -3.458%  -1.815% 100% 100%; 00:00:01.040=  0.000%   0.000% 100% 100%')
+            filter.savePreset(preset.parameters, qsTr('Shake 1 Second - Unscaled'))
+            filter.resetProperty(rectProperty)
+
             // Add default preset.
             filter.set(rectProperty,   '0%/0%:100%x100%')
             filter.set(valignProperty, 'top')
@@ -239,11 +259,15 @@ Item {
             onPresetSelected: {
                 setControls()
                 filterRect = filter.getRect(rectProperty, getPosition())
+                if (filter.keyframeCount(rectProperty) > 0)
+                    positionKeyframesButton.checked = true
+                filter.blockSignals = true
                 filter.set(middleValue, filter.getRect(rectProperty, filter.animateIn + 1))
                 if (filter.animateIn > 0)
                     filter.set(startValue, filter.getRect(rectProperty, 0))
                 if (filter.animateOut > 0)
                     filter.set(endValue, filter.getRect(rectProperty, filter.duration - 1))
+                filter.blockSignals = false
             }
         }
 

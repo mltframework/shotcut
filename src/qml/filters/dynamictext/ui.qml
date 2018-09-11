@@ -273,11 +273,13 @@ Item {
             onPresetSelected: {
                 setControls()
                 setKeyframedControls()
+                filter.blockSignals = true
                 filter.set(middleValue, filter.getRect(rectProperty, filter.animateIn + 1))
                 if (filter.animateIn > 0)
                     filter.set(startValue, filter.getRect(rectProperty, 0))
                 if (filter.animateOut > 0)
                     filter.set(endValue, filter.getRect(rectProperty, filter.duration - 1))
+                filter.blockSignals = false
             }
         }
 
