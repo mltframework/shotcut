@@ -145,7 +145,6 @@ Item {
                     filter.set(rectProperty, old)
                 }
             }
-            filterRect = filter.getRect(rectProperty)
             filter.set(middleValue, filter.getRect(rectProperty, filter.animateIn + 1))
             if (filter.animateIn > 0)
                 filter.set(startValue, filter.getRect(rectProperty, 0))
@@ -157,8 +156,6 @@ Item {
         setKeyframedControls()
         if (filter.isNew)
             filter.set(rectProperty, filter.getRect(rectProperty))
-        else
-            filter.changed()
     }
 
     function getPosition() {
@@ -258,9 +255,8 @@ Item {
             }
             onPresetSelected: {
                 setControls()
-                filterRect = filter.getRect(rectProperty, getPosition())
-                if (filter.keyframeCount(rectProperty) > 0)
-                    positionKeyframesButton.checked = true
+                setKeyframedControls()
+                positionKeyframesButton.checked = filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
                 filter.blockSignals = true
                 filter.set(middleValue, filter.getRect(rectProperty, filter.animateIn + 1))
                 if (filter.animateIn > 0)

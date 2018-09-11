@@ -71,8 +71,6 @@ Item {
         setControls()
         if (filter.isNew)
             filter.set(textFilterUi.rectProperty, filter.getRect(textFilterUi.rectProperty))
-        else
-            filter.changed()
     }
 
     function setControls() {

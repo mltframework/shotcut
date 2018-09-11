@@ -141,8 +141,6 @@ Item {
         setKeyframedControls()
         if (filter.isNew)
             filter.set(rectProperty, filter.getRect(rectProperty))
-        else
-            filter.changed()
     }
 
     function getPosition() {
