@@ -54,6 +54,8 @@ public slots:
 
 protected:
     bool event(QEvent *event);
+    void keyPressEvent(QKeyEvent* event);
+    void keyReleaseEvent(QKeyEvent* event);
 
 private slots:
     void onVisibilityChanged(bool visible);

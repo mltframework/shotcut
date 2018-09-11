@@ -419,6 +419,7 @@ Rectangle {
         MenuSeparator {}
         MenuItem {
             text: qsTr("Ripple All Tracks")
+            shortcut: 'Ctrl+Alt+R'
             checkable: true
             checked: settings.timelineRippleAllTracks
             onTriggered: settings.timelineRippleAllTracks = checked
@@ -456,7 +457,7 @@ Rectangle {
                             tracksRepeater.itemAt(i).redrawWaveforms()
                     } else {
                         settings.timelineShowWaveforms = checked
-                        for (var i = 0; i < tracksRepeater.count; i++)
+                        for (i = 0; i < tracksRepeater.count; i++)
                             tracksRepeater.itemAt(i).remakeWaveforms(false)
                     }
                 } else {

@@ -112,6 +112,20 @@ bool KeyframesDock::event(QEvent *event)
     return result;
 }
 
+void KeyframesDock::keyPressEvent(QKeyEvent* event)
+{
+    QDockWidget::keyPressEvent(event);
+    if (!event->isAccepted())
+        MAIN.keyPressEvent(event);
+}
+
+void KeyframesDock::keyReleaseEvent(QKeyEvent* event)
+{
+    QDockWidget::keyReleaseEvent(event);
+    if (!event->isAccepted())
+        MAIN.keyReleaseEvent(event);
+}
+
 void KeyframesDock::onVisibilityChanged(bool visible)
 {
     if (visible)

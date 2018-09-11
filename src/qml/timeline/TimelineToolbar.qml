@@ -119,10 +119,12 @@ ToolBar {
             implicitWidth: 28
             implicitHeight: 24
             checkable: true
+            checked: settings.timelineRipple
             iconName: 'target'
             iconSource: 'qrc:///icons/oxygen/32x32/actions/target.png'
             tooltip: qsTr('Ripple trim and drop')
             text: qsTr('Ripple')
+            onClicked: settings.timelineRipple = !settings.timelineRipple
         }
         Button { // separator
             enabled: false

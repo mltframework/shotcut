@@ -403,6 +403,17 @@ void ShotcutSettings::setTimelineShowThumbnails(bool b)
     emit timelineShowThumbnailsChanged();
 }
 
+bool ShotcutSettings::timelineRipple() const
+{
+    return settings.value("timeline/ripple", false).toBool();
+}
+
+void ShotcutSettings::setTimelineRipple(bool b)
+{
+    settings.setValue("timeline/ripple", b);
+    emit timelineRippleChanged();
+}
+
 bool ShotcutSettings::timelineRippleAllTracks() const
 {
     return settings.value("timeline/rippleAllTracks", false).toBool();

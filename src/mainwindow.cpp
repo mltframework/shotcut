@@ -1657,6 +1657,18 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
     case Qt::Key_O:
         setOutToCurrent(event->modifiers() & Qt::ShiftModifier);
         break;
+    case Qt::Key_R:
+        if (event->modifiers() & Qt::ControlModifier) {
+            if (event->modifiers() & Qt::AltModifier) {
+                Settings.setTimelineRippleAllTracks(!Settings.timelineRippleAllTracks());
+            } else if (event->modifiers() & Qt::ShiftModifier) {
+                Settings.setTimelineRippleAllTracks(!Settings.timelineRipple());
+                Settings.setTimelineRipple(!Settings.timelineRipple());
+            } else {
+                Settings.setTimelineRipple(!Settings.timelineRipple());
+            }
+        }
+        break;
     case Qt::Key_S:
         if (isMultitrackValid())
             m_timelineDock->splitClip();
@@ -1910,7 +1922,7 @@ bool MainWindow::eventFilter(QObject* target, QEvent* event)
         return true;
     } else if (event->type() == QEvent::KeyPress || event->type() == QEvent::KeyRelease) {
         QQuickWidget * focusedQuickWidget = qobject_cast<QQuickWidget*>(qApp->focusWidget());
-        if (focusedQuickWidget) {
+        if (focusedQuickWidget && focusedQuickWidget->quickWindow()->activeFocusItem()) {
             event->accept();
             focusedQuickWidget->quickWindow()->sendEvent(focusedQuickWidget->quickWindow()->activeFocusItem(), event);
             QWidget * w = focusedQuickWidget->parentWidget();

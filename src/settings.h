@@ -28,6 +28,7 @@ class ShotcutSettings : public QObject
     Q_OBJECT
     Q_PROPERTY(bool timelineShowWaveforms READ timelineShowWaveforms WRITE setTimelineShowWaveforms NOTIFY timelineShowWaveformsChanged)
     Q_PROPERTY(bool timelineShowThumbnails READ timelineShowThumbnails WRITE setTimelineShowThumbnails NOTIFY timelineShowThumbnailsChanged)
+    Q_PROPERTY(bool timelineRipple READ timelineRipple WRITE setTimelineRipple NOTIFY timelineRippleChanged)
     Q_PROPERTY(bool timelineRippleAllTracks READ timelineRippleAllTracks WRITE setTimelineRippleAllTracks NOTIFY timelineRippleAllTracksChanged)
     Q_PROPERTY(QString openPath READ openPath WRITE setOpenPath NOTIFY openPathChanged)
     Q_PROPERTY(QString savePath READ savePath WRITE setSavePath NOTIFY savePathChanged)
@@ -118,6 +119,9 @@ public:
     void setTimelineShowWaveforms(bool);
     bool timelineShowThumbnails() const;
     void setTimelineShowThumbnails(bool);
+
+    bool timelineRipple() const;
+    void setTimelineRipple(bool);
     bool timelineRippleAllTracks() const;
     void setTimelineRippleAllTracks(bool);
 
@@ -160,6 +164,7 @@ signals:
     void savePathChanged();
     void timelineShowWaveformsChanged();
     void timelineShowThumbnailsChanged();
+    void timelineRippleChanged();
     void timelineRippleAllTracksChanged();
     void playerAudioChannelsChanged(int);
     void playerGpuChanged();
