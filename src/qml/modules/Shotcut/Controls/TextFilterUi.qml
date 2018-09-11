@@ -137,6 +137,7 @@ GridLayout {
         rectY.enabled = enabled
         rectW.enabled = enabled
         rectH.enabled = enabled
+        positionKeyframesButton.checked = filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
     }
 
     ExclusiveGroup { id: sizeGroup }

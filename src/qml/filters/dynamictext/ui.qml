@@ -271,6 +271,7 @@ Item {
             onPresetSelected: {
                 setControls()
                 setKeyframedControls()
+                positionKeyframesButton.checked = filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
                 filter.blockSignals = true
                 filter.set(middleValue, filter.getRect(rectProperty, filter.animateIn + 1))
                 if (filter.animateIn > 0)
