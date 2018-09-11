@@ -35,7 +35,6 @@
 namespace Mlt {
 
 static const int kThumbnailOutSeekFactor = 5;
-
 static Controller* instance = 0;
 const QString XmlMimeType("application/vnd.mlt+xml");
 
@@ -51,7 +50,7 @@ Controller::Controller()
 {
     LOG_DEBUG() << "begin";
     m_repo = Mlt::Factory::init();
-    m_profile.reset(new Mlt::Profile("atsc_1080p_25"));
+    m_profile.reset(new Mlt::Profile(kDefaultMltProfile));
     m_filtersClipboard.reset(new Mlt::Producer(profile(), "color", "black"));
     updateAvformatCaching(0);
     LOG_DEBUG() << "end";
@@ -490,7 +489,7 @@ void Controller::setProfile(const QString& profile_name)
             m_profile->set_width(alignWidth(m_profile->width()));
         } else {
             // Use a default profile with the dummy hidden color producer.
-            Mlt::Profile tmp("atsc_1080p_25");
+            Mlt::Profile tmp(kDefaultMltProfile);
             m_profile->set_colorspace(tmp.colorspace());
             m_profile->set_frame_rate(tmp.frame_rate_num(), tmp.frame_rate_den());
             m_profile->set_height(tmp.height());

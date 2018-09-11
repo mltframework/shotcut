@@ -2945,7 +2945,7 @@ void MainWindow::onExternalTriggered(QAction *action)
     QString profile = Settings.playerProfile();
     // Automatic not permitted for SDI/HDMI
     if (isExternal && profile.isEmpty()) {
-        profile = "atsc_720p_50";
+        profile = kDefaultMltProfile;
         Settings.setPlayerProfile(profile);
         setProfile(profile);
         MLT.restart();
