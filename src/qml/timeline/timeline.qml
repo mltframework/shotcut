@@ -500,6 +500,7 @@ Rectangle {
             rootIndex: trackDelegateModel.modelIndex(index)
             height: Logic.trackHeight(audio)
             isAudio: audio
+            isMute: mute
             isCurrentTrack: currentTrack === index
             timeScale: multitrack.scaleFactor
             selection: timeline.selection

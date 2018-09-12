@@ -30,6 +30,7 @@ Rectangle {
     property bool isLocked: false
     property var selection
     property alias clipCount: repeater.count
+    property bool isMute: false
 
     signal clipClicked(var clip, var track)
     signal clipDragged(var clip, int x, int y)
@@ -84,6 +85,7 @@ Rectangle {
             speed: model.speed
             audioIndex: model.audioIndex
             selected: trackRoot.isCurrentTrack && trackRoot.selection.indexOf(index) !== -1
+            isTrackMute: trackRoot.isMute
 
             onClicked: trackRoot.clipClicked(clip, trackRoot);
             onMoved: {

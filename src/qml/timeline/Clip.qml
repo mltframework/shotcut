@@ -44,6 +44,7 @@ Rectangle {
     property string hash: ''
     property double speed: 1.0
     property string audioIndex: ''
+    property bool isTrackMute: false
 
     signal clicked(var clip)
     signal moved(var clip)
@@ -143,7 +144,7 @@ Rectangle {
 
     Row {
         id: waveform
-        visible: !isBlank && settings.timelineShowWaveforms && !trackHeaderRepeater.itemAt(trackIndex).isMute && (parseInt(audioIndex) > -1 || audioIndex === 'all')
+        visible: !isBlank && settings.timelineShowWaveforms && !isTrackMute && (parseInt(audioIndex) > -1 || audioIndex === 'all')
         height: isAudio? parent.height : parent.height / 2
         anchors.left: parent.left
         anchors.bottom: parent.bottom
