@@ -290,7 +290,7 @@ void LockTrackCommand::undo()
     m_model.setTrackLock(m_trackIndex, m_oldValue);
 }
 
-MoveClipCommand::MoveClipCommand(MultitrackModel &model, int fromTrackIndex, int toTrackIndex, int clipIndex, int position, QUndoCommand *parent)
+MoveClipCommand::MoveClipCommand(MultitrackModel &model, int fromTrackIndex, int toTrackIndex, int clipIndex, int position, bool ripple, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_fromTrackIndex(fromTrackIndex)
@@ -300,6 +300,7 @@ MoveClipCommand::MoveClipCommand(MultitrackModel &model, int fromTrackIndex, int
         m_model.index(clipIndex, 0, m_model.index(fromTrackIndex)),
             MultitrackModel::StartRole).toInt())
     , m_toStart(position)
+    , m_ripple(ripple)
     , m_undoHelper(m_model)
 {
     setText(QObject::tr("Move clip"));
@@ -309,7 +310,7 @@ void MoveClipCommand::redo()
 {
     LOG_DEBUG() << "fromTrack" << m_fromTrackIndex << "toTrack" << m_toTrackIndex;
     m_undoHelper.recordBeforeState();
-    m_model.moveClip(m_fromTrackIndex, m_toTrackIndex, m_fromClipIndex, m_toStart);
+    m_model.moveClip(m_fromTrackIndex, m_toTrackIndex, m_fromClipIndex, m_toStart, m_ripple);
     m_undoHelper.recordAfterState();
 }
 
@@ -501,13 +502,14 @@ bool FadeOutCommand::mergeWith(const QUndoCommand *other)
     return true;
 }
 
-AddTransitionCommand::AddTransitionCommand(MultitrackModel &model, int trackIndex, int clipIndex, int position, QUndoCommand *parent)
+AddTransitionCommand::AddTransitionCommand(MultitrackModel &model, int trackIndex, int clipIndex, int position, bool ripple, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_clipIndex(clipIndex)
     , m_position(position)
     , m_transitionIndex(-1)
+    , m_ripple(ripple)
     , m_undoHelper(model)
 {
     setText(QObject::tr("Add transition"));
@@ -517,7 +519,7 @@ void AddTransitionCommand::redo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position" << m_position;
     m_undoHelper.recordBeforeState();
-    m_transitionIndex = m_model.addTransition(m_trackIndex, m_clipIndex, m_position);
+    m_transitionIndex = m_model.addTransition(m_trackIndex, m_clipIndex, m_position, m_ripple);
     m_undoHelper.recordAfterState();
 }
 

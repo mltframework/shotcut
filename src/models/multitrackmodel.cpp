@@ -651,7 +651,7 @@ void MultitrackModel::notifyClipOut(int trackIndex, int clipIndex)
     m_isMakingTransition = false;
 }
 
-bool MultitrackModel::moveClipValid(int fromTrack, int toTrack, int clipIndex, int position)
+bool MultitrackModel::moveClipValid(int fromTrack, int toTrack, int clipIndex, int position, bool ripple)
 {
     // XXX This is very redundant with moveClip().
     bool result = false;
@@ -662,6 +662,7 @@ bool MultitrackModel::moveClipValid(int fromTrack, int toTrack, int clipIndex, i
         int targetIndex = playlist.get_clip_index_at(position);
 
         if (fromTrack != toTrack) {
+            // moveClipToTrack
             Mlt::Producer* trackFrom = m_tractor->track(m_trackList.at(fromTrack).mlt_index);
             Mlt::Playlist playlistFrom(*trackFrom);
             delete trackFrom;
@@ -690,10 +691,16 @@ bool MultitrackModel::moveClipValid(int fromTrack, int toTrack, int clipIndex, i
             }
         }
         else if ((clipIndex + 1) < playlist.count() && position >= playlist.get_playtime()) {
+            // moveClipToEnd
             result = true;
         }
         else if ((targetIndex < (clipIndex - 1) || targetIndex > (clipIndex + 1))
             && playlist.is_blank_at(position) && playlist.clip_length(clipIndex) <= playlist.clip_length(targetIndex)) {
+            // relocateClip
+            result = true;
+        }
+        else if (ripple && targetIndex >= clipIndex) {
+            // insertOrAdjustBlankAt
             result = true;
         }
         else if (targetIndex >= (clipIndex - 1) && targetIndex <= (clipIndex + 1)) {
@@ -702,7 +709,7 @@ bool MultitrackModel::moveClipValid(int fromTrack, int toTrack, int clipIndex, i
 
             if ((playlist.is_blank_at(position) || targetIndex == clipIndex)
                 && (playlist.is_blank_at(position + length - 1) || targetIndexEnd == clipIndex)) {
-
+                // moveClipInBlank
                 result = true;
             }
         }
@@ -710,7 +717,7 @@ bool MultitrackModel::moveClipValid(int fromTrack, int toTrack, int clipIndex, i
     return result;
 }
 
-bool MultitrackModel::moveClip(int fromTrack, int toTrack, int clipIndex, int position)
+bool MultitrackModel::moveClip(int fromTrack, int toTrack, int clipIndex, int position, bool ripple)
 {
 //    LOG_DEBUG() << __FUNCTION__ << clipIndex << "fromTrack" << fromTrack << "toTrack" << toTrack;
     bool result = false;
@@ -721,18 +728,36 @@ bool MultitrackModel::moveClip(int fromTrack, int toTrack, int clipIndex, int po
         int targetIndex = playlist.get_clip_index_at(position);
 
         if (fromTrack != toTrack) {
-            result = moveClipToTrack(fromTrack, toTrack, clipIndex, position);
+            result = moveClipToTrack(fromTrack, toTrack, clipIndex, position, ripple);
         }
         else if ((clipIndex + 1) < playlist.count() && position >= playlist.get_playtime()) {
             // Clip relocated to end of playlist.
-            moveClipToEnd(playlist, toTrack, clipIndex, position);
+            moveClipToEnd(playlist, toTrack, clipIndex, position, ripple);
             result = true;
         }
         else if ((targetIndex < (clipIndex - 1) || targetIndex > (clipIndex + 1))
             && playlist.is_blank_at(position) && playlist.clip_length(clipIndex) <= playlist.clip_length(targetIndex)) {
             // Relocate clip.
-            relocateClip(playlist, toTrack, clipIndex, position);
+            relocateClip(playlist, toTrack, clipIndex, position, ripple);
             result = true;
+        }
+        else if (ripple && targetIndex >= clipIndex) {
+            int clipStart = playlist.clip_start(clipIndex);
+            int duration = position - clipStart;
+            QList<int> trackList;
+            trackList << fromTrack;
+            if (Settings.timelineRippleAllTracks()) {
+                for (int i = 0; i < m_trackList.count(); ++i) {
+                    if (i == fromTrack)
+                        continue;
+                    int mltIndex = m_trackList.at(i).mlt_index;
+                    QScopedPointer<Mlt::Producer> otherTrack(m_tractor->track(mltIndex));
+                    if (otherTrack && otherTrack->get_int(kTrackLockProperty))
+                        continue;
+                    trackList << i;
+                }
+            }
+            insertOrAdjustBlankAt(trackList, clipStart, duration);
         }
         else if (targetIndex >= (clipIndex - 1) && targetIndex <= (clipIndex + 1)) {
             int length = playlist.clip_length(clipIndex);
@@ -761,7 +786,7 @@ bool MultitrackModel::moveClip(int fromTrack, int toTrack, int clipIndex, int po
                     }
                 }
                 // Reposition the clip within its current blank spot.
-                moveClipInBlank(playlist, toTrack, clipIndex, position);
+                moveClipInBlank(playlist, toTrack, clipIndex, position, ripple);
                 result = true;
             }
         }
@@ -1570,7 +1595,7 @@ bool MultitrackModel::addTransitionValid(int fromTrack, int toTrack, int clipInd
     return result;
 }
 
-int MultitrackModel::addTransition(int trackIndex, int clipIndex, int position)
+int MultitrackModel::addTransition(int trackIndex, int clipIndex, int position, bool ripple)
 {
     int i = m_trackList.at(trackIndex).mlt_index;
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
@@ -1587,7 +1612,7 @@ int MultitrackModel::addTransition(int trackIndex, int clipIndex, int position)
             int duration = qAbs(position - playlist.clip_start(clipIndex));
 
             // Adjust/insert blanks
-            moveClipInBlank(playlist, trackIndex, clipIndex, position);
+            moveClipInBlank(playlist, trackIndex, clipIndex, position, ripple, duration);
             targetIndex = playlist.get_clip_index_at(position);
 
             // Create mix
@@ -2080,7 +2105,7 @@ void MultitrackModel::onFilterChanged(Mlt::Filter* filter)
     }
 }
 
-bool MultitrackModel::moveClipToTrack(int fromTrack, int toTrack, int clipIndex, int position)
+bool MultitrackModel::moveClipToTrack(int fromTrack, int toTrack, int clipIndex, int position, bool ripple)
 {
     bool result;
     Mlt::Producer* trackFrom = m_tractor->track(m_trackList.at(fromTrack).mlt_index);
@@ -2090,12 +2115,33 @@ bool MultitrackModel::moveClipToTrack(int fromTrack, int toTrack, int clipIndex,
     QModelIndex parentIndex = index(fromTrack);
 
     // Replace clip on fromTrack with blank.
-    beginRemoveRows(parentIndex, clipIndex, clipIndex);
-    endRemoveRows();
     clearMixReferences(fromTrack, clipIndex);
-    beginInsertRows(parentIndex, clipIndex, clipIndex);
-    delete playlistFrom.replace_with_blank(clipIndex);
-    endInsertRows();
+    if (ripple) {
+        int clipPlaytime = playlistFrom.clip_length(clipIndex);
+        int clipStart = playlistFrom.clip_start(clipIndex);
+        beginRemoveRows(parentIndex, clipIndex, clipIndex);
+        playlistFrom.remove(clipIndex);
+        endRemoveRows();
+
+        // Ripple all unlocked tracks.
+        if (clipPlaytime > 0 && Settings.timelineRippleAllTracks()) {
+            for (int i = 0; i < m_trackList.count(); ++i) {
+                if (i == fromTrack || i == toTrack)
+                    continue;
+                int mltIndex = m_trackList.at(i).mlt_index;
+                QScopedPointer<Mlt::Producer> otherTrack(m_tractor->track(mltIndex));
+                if (otherTrack && otherTrack->get_int(kTrackLockProperty))
+                    continue;
+                removeRegion(i, clipStart, clipPlaytime);
+            }
+        }
+    } else {
+        beginRemoveRows(parentIndex, clipIndex, clipIndex);
+        endRemoveRows();
+        beginInsertRows(parentIndex, clipIndex, clipIndex);
+        delete playlistFrom.replace_with_blank(clipIndex);
+        endInsertRows();
+    }
 
     result = overwriteClip(toTrack, *clip, position, false) >= 0;
 
@@ -2116,38 +2162,42 @@ bool MultitrackModel::moveClipToTrack(int fromTrack, int toTrack, int clipIndex,
     return result;
 }
 
-void MultitrackModel::moveClipToEnd(Mlt::Playlist& playlist, int trackIndex, int clipIndex, int position)
+void MultitrackModel::moveClipToEnd(Mlt::Playlist& playlist, int trackIndex, int clipIndex, int position, bool ripple)
 {
     int n = playlist.count();
     int length = position - playlist.clip_start(n - 1) - playlist.clip_length(n - 1);
+    int clipPlaytime = playlist.clip_length(clipIndex);
+    int clipStart = playlist.clip_start(clipIndex);
 
-    if (clipIndex > 0 && playlist.is_blank(clipIndex - 1)) {
-        // If there was a blank on the left adjust it.
-        int duration = playlist.clip_length(clipIndex - 1) + playlist.clip_length(clipIndex);
-//        LOG_DEBUG() << "adjust blank on left to" << duration;
-        playlist.resize_clip(clipIndex - 1, 0, duration - 1);
+    if (!ripple) {
+        if (clipIndex > 0 && playlist.is_blank(clipIndex - 1)) {
+            // If there was a blank on the left adjust it.
+            int duration = playlist.clip_length(clipIndex - 1) + playlist.clip_length(clipIndex);
+//            LOG_DEBUG() << "adjust blank on left to" << duration;
+            playlist.resize_clip(clipIndex - 1, 0, duration - 1);
 
-        QModelIndex index = createIndex(clipIndex - 1, 0, trackIndex);
-        QVector<int> roles;
-        roles << DurationRole;
-        emit dataChanged(index, index, roles);
-    } else if ((clipIndex + 1) < n && playlist.is_blank(clipIndex + 1)) {
-        // If there was a blank on the right adjust it.
-        int duration = playlist.clip_length(clipIndex + 1) + playlist.clip_length(clipIndex);
-//        LOG_DEBUG() << "adjust blank on right to" << duration;
-        playlist.resize_clip(clipIndex + 1, 0, duration - 1);
+            QModelIndex index = createIndex(clipIndex - 1, 0, trackIndex);
+            QVector<int> roles;
+            roles << DurationRole;
+            emit dataChanged(index, index, roles);
+        } else if ((clipIndex + 1) < n && playlist.is_blank(clipIndex + 1)) {
+            // If there was a blank on the right adjust it.
+            int duration = playlist.clip_length(clipIndex + 1) + playlist.clip_length(clipIndex);
+//            LOG_DEBUG() << "adjust blank on right to" << duration;
+            playlist.resize_clip(clipIndex + 1, 0, duration - 1);
 
-        QModelIndex index = createIndex(clipIndex + 1, 0, trackIndex);
-        QVector<int> roles;
-        roles << DurationRole;
-        emit dataChanged(index, index, roles);
-    } else {
-        // Add new blank
-        beginInsertRows(index(trackIndex), clipIndex, clipIndex);
-        playlist.insert_blank(clipIndex, playlist.clip_length(clipIndex) - 1);
-        endInsertRows();
-        ++clipIndex;
-        ++n;
+            QModelIndex index = createIndex(clipIndex + 1, 0, trackIndex);
+            QVector<int> roles;
+            roles << DurationRole;
+            emit dataChanged(index, index, roles);
+        } else {
+            // Add new blank
+            beginInsertRows(index(trackIndex), clipIndex, clipIndex);
+            playlist.insert_blank(clipIndex, playlist.clip_length(clipIndex) - 1);
+            endInsertRows();
+            ++clipIndex;
+            ++n;
+        }
     }
     // Add blank to end if needed.
     if (length > 0) {
@@ -2161,11 +2211,29 @@ void MultitrackModel::moveClipToEnd(Mlt::Playlist& playlist, int trackIndex, int
     playlist.move(clipIndex, playlist.count());
     endMoveRows();
     consolidateBlanks(playlist, trackIndex);
+
+    // Ripple all unlocked tracks.
+    if (clipPlaytime > 0 && ripple && Settings.timelineRippleAllTracks())
+    for (int j = 0; j < m_trackList.count(); ++j) {
+        if (j == trackIndex)
+            continue;
+
+        int mltIndex = m_trackList.at(j).mlt_index;
+        QScopedPointer<Mlt::Producer> otherTrack(m_tractor->track(mltIndex));
+        if (otherTrack) {
+            if (otherTrack->get_int(kTrackLockProperty))
+                continue;
+
+            removeRegion(j, clipStart, clipPlaytime);
+        }
+    }
 }
 
-void MultitrackModel::relocateClip(Mlt::Playlist& playlist, int trackIndex, int clipIndex, int position)
+void MultitrackModel::relocateClip(Mlt::Playlist& playlist, int trackIndex, int clipIndex, int position, bool ripple)
 {
     int targetIndex = playlist.get_clip_index_at(position);
+    int clipPlaytime = playlist.clip_length(clipIndex);
+    int clipStart = playlist.clip_start(clipIndex);
 
     if (position > playlist.clip_start(targetIndex)) {
 //        LOG_DEBUG() << "splitting clip at position" << position;
@@ -2213,20 +2281,41 @@ void MultitrackModel::relocateClip(Mlt::Playlist& playlist, int trackIndex, int 
     if (clipIndex >= targetIndex)
         ++clipIndex;
 
-    // Replace clip with blank.
-    beginRemoveRows(parentIndex, clipIndex, clipIndex);
-    endRemoveRows();
     clearMixReferences(trackIndex, clipIndex);
-    beginInsertRows(parentIndex, clipIndex, clipIndex);
-    delete playlist.replace_with_blank(clipIndex);
-    endInsertRows();
+    if (ripple) {
+        // Remove clip.
+        beginRemoveRows(parentIndex, clipIndex, clipIndex);
+        playlist.remove(clipIndex);
+        endRemoveRows();
 
+        // Ripple all unlocked tracks.
+        if (clipPlaytime > 0 && Settings.timelineRippleAllTracks()) {
+            for (int i = 0; i < m_trackList.count(); ++i) {
+                if (i == trackIndex)
+                    continue;
+                int mltIndex = m_trackList.at(i).mlt_index;
+                QScopedPointer<Mlt::Producer> otherTrack(m_tractor->track(mltIndex));
+                if (otherTrack && otherTrack->get_int(kTrackLockProperty))
+                    continue;
+                removeRegion(i, clipStart, clipPlaytime);
+            }
+        }
+    } else {
+        // Replace clip with blank.
+        beginRemoveRows(parentIndex, clipIndex, clipIndex);
+        endRemoveRows();
+        beginInsertRows(parentIndex, clipIndex, clipIndex);
+        delete playlist.replace_with_blank(clipIndex);
+        endInsertRows();
+    }
     consolidateBlanks(playlist, trackIndex);
 }
 
-void MultitrackModel::moveClipInBlank(Mlt::Playlist& playlist, int trackIndex, int clipIndex, int position)
+void MultitrackModel::moveClipInBlank(Mlt::Playlist& playlist, int trackIndex, int clipIndex, int position, bool ripple, int duration)
 {
-    int delta = position - playlist.clip_start(clipIndex);
+    int clipPlaytime = duration? duration : playlist.clip_length(clipIndex);
+    int clipStart = playlist.clip_start(clipIndex);
+    int delta = position - clipStart;
 
     if (clipIndex > 0 && playlist.is_blank(clipIndex - 1)) {
         // Adjust blank on left.
@@ -2258,7 +2347,7 @@ void MultitrackModel::moveClipInBlank(Mlt::Playlist& playlist, int trackIndex, i
         ++clipIndex;
     }
 
-    if ((clipIndex + 1) < playlist.count() && playlist.is_blank(clipIndex + 1)) {
+    if (!ripple && (clipIndex + 1) < playlist.count() && playlist.is_blank(clipIndex + 1)) {
         // Adjust blank to right.
         int duration = playlist.clip_length(clipIndex + 1) - delta;
         if (duration > 0) {
@@ -2277,12 +2366,32 @@ void MultitrackModel::moveClipInBlank(Mlt::Playlist& playlist, int trackIndex, i
             endRemoveRows();
             consolidateBlanks(playlist, trackIndex);
         }
-    } else if (delta < 0 && (clipIndex + 1) < playlist.count()) {
+    } else if (!ripple && delta < 0 && (clipIndex + 1) < playlist.count()) {
         // Add blank to right.
 //        LOG_DEBUG() << "add blank on right with duration" << -delta;
         beginInsertRows(index(trackIndex), clipIndex + 1, clipIndex + 1);
         playlist.insert_blank(clipIndex + 1, (-delta - 1));
         endInsertRows();
+    }
+
+    // Ripple all unlocked tracks.
+    if (clipPlaytime > 0 && ripple && Settings.timelineRippleAllTracks()) {
+        QList<int> otherTracksToRipple;
+        for (int i = 0; i < m_trackList.count(); ++i) {
+            if (i == trackIndex)
+                continue;
+            int mltIndex = m_trackList.at(i).mlt_index;
+            QScopedPointer<Mlt::Producer> otherTrack(m_tractor->track(mltIndex));
+            if (otherTrack && otherTrack->get_int(kTrackLockProperty))
+                continue;
+            otherTracksToRipple << i;
+        }
+        if (position < clipStart) {
+            foreach (int idx, otherTracksToRipple)
+                removeRegion(idx, position, clipStart - position);
+        } else {
+            insertOrAdjustBlankAt(otherTracksToRipple, clipStart, position - clipStart);
+        }
     }
 }
 

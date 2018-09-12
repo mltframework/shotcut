@@ -190,7 +190,7 @@ private:
 class MoveClipCommand : public QUndoCommand
 {
 public:
-    MoveClipCommand(MultitrackModel& model, int fromTrackIndex, int toTrackIndex, int clipIndex, int position, QUndoCommand * parent = 0);
+    MoveClipCommand(MultitrackModel& model, int fromTrackIndex, int toTrackIndex, int clipIndex, int position, bool ripple, QUndoCommand * parent = 0);
     void redo();
     void undo();
 private:
@@ -200,6 +200,7 @@ private:
     int m_fromClipIndex;
     int m_fromStart;
     int m_toStart;
+    bool m_ripple;
     UndoHelper m_undoHelper;
 };
 
@@ -299,7 +300,7 @@ private:
 class AddTransitionCommand : public QUndoCommand
 {
 public:
-    AddTransitionCommand(MultitrackModel& model, int trackIndex, int clipIndex, int position, QUndoCommand * parent = 0);
+    AddTransitionCommand(MultitrackModel& model, int trackIndex, int clipIndex, int position, bool ripple, QUndoCommand * parent = 0);
     void redo();
     void undo();
     int getTransitionIndex() const { return m_transitionIndex; }
@@ -309,6 +310,7 @@ private:
     int m_clipIndex;
     int m_position;
     int m_transitionIndex;
+    bool m_ripple;
     UndoHelper m_undoHelper;
 };
 

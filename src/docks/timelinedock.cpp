@@ -69,8 +69,8 @@ TimelineDock::TimelineDock(QWidget *parent) :
 
     setWidget(&m_quickView);
 
-    connect(this, SIGNAL(clipMoved(int,int,int,int)), SLOT(onClipMoved(int,int,int,int)), Qt::QueuedConnection);
-    connect(this, SIGNAL(transitionAdded(int,int,int)), SLOT(onTransitionAdded(int,int,int)), Qt::QueuedConnection);
+    connect(this, SIGNAL(clipMoved(int,int,int,int,bool)), SLOT(onClipMoved(int,int,int,int,bool)), Qt::QueuedConnection);
+    connect(this, SIGNAL(transitionAdded(int,int,int,bool)), SLOT(onTransitionAdded(int,int,int,bool)), Qt::QueuedConnection);
     connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onShowFrame(const SharedFrame&)));
     connect(this, SIGNAL(visibilityChanged(bool)), this, SLOT(load(bool)));
     connect(this, SIGNAL(topLevelChanged(bool)), this, SLOT(onTopLevelChanged(bool)));
@@ -755,25 +755,25 @@ void TimelineDock::setTrackLock(int trackIndex, bool lock)
         new Timeline::LockTrackCommand(m_model, trackIndex, lock));
 }
 
-bool TimelineDock::moveClip(int fromTrack, int toTrack, int clipIndex, int position)
+bool TimelineDock::moveClip(int fromTrack, int toTrack, int clipIndex, int position, bool ripple)
 {
-    if (m_model.moveClipValid(fromTrack, toTrack, clipIndex, position)) {
+    if (m_model.moveClipValid(fromTrack, toTrack, clipIndex, position, ripple)) {
         // Workaround bug #326 moving clips between tracks stops allowing drag-n-drop
         // into Timeline, which appeared with Qt 5.6 upgrade.
-        emit clipMoved(fromTrack, toTrack, clipIndex, position);
+        emit clipMoved(fromTrack, toTrack, clipIndex, position, ripple);
         return true;
     } else if (m_model.addTransitionValid(fromTrack, toTrack, clipIndex, position)) {
-        emit transitionAdded(fromTrack, clipIndex, position);
+        emit transitionAdded(fromTrack, clipIndex, position, ripple);
         return true;
     } else {
         return false;
     }
 }
 
-void TimelineDock::onClipMoved(int fromTrack, int toTrack, int clipIndex, int position)
+void TimelineDock::onClipMoved(int fromTrack, int toTrack, int clipIndex, int position, bool ripple)
 {
     MAIN.undoStack()->push(
-        new Timeline::MoveClipCommand(m_model, fromTrack, toTrack, clipIndex, position));
+        new Timeline::MoveClipCommand(m_model, fromTrack, toTrack, clipIndex, position, ripple));
 }
 
 bool TimelineDock::trimClipIn(int trackIndex, int clipIndex, int delta, bool ripple)
@@ -1097,10 +1097,10 @@ void TimelineDock::onTopLevelChanged(bool floating)
     m_quickView.setFocusPolicy(floating? Qt::NoFocus : Qt::StrongFocus);
 }
 
-void TimelineDock::onTransitionAdded(int trackIndex, int clipIndex, int position)
+void TimelineDock::onTransitionAdded(int trackIndex, int clipIndex, int position, bool ripple)
 {
     setSelection(); // cleared
-    Timeline::AddTransitionCommand* command = new Timeline::AddTransitionCommand(m_model, trackIndex, clipIndex, position);
+    Timeline::AddTransitionCommand* command = new Timeline::AddTransitionCommand(m_model, trackIndex, clipIndex, position, ripple);
     MAIN.undoStack()->push(command);
     // Select the transition.
     setSelection(QList<int>() << command->getTransitionIndex());

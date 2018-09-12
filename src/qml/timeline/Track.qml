@@ -104,7 +104,7 @@ Rectangle {
                     else
                         trackModel.items.remove(clipIndex, 1)
                 }
-                if (!timeline.moveClip(fromTrack, toTrack, clipIndex, frame))
+                if (!timeline.moveClip(fromTrack, toTrack, clipIndex, frame, toolbar.ripple))
                     clip.x = clip.originalX
             }
             onDragged: {

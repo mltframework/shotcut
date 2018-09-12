@@ -95,10 +95,10 @@ signals:
     void clipClicked();
     void showStatusMessage(QString);
     void clipCopied();
-    void clipMoved(int fromTrack, int toTrack, int clipIndex, int position);
+    void clipMoved(int fromTrack, int toTrack, int clipIndex, int position, bool ripple);
     void filteredClicked();
     void imageDurationChanged();
-    void transitionAdded(int trackIndex, int clipIndex, int position);
+    void transitionAdded(int trackIndex, int clipIndex, int position, bool ripple);
 
 public slots:
     void addAudioTrack();
@@ -120,8 +120,8 @@ public slots:
     void toggleTrackHidden(int trackIndex);
     void setTrackComposite(int trackIndex, bool composite);
     void setTrackLock(int trackIndex, bool lock);
-    bool moveClip(int fromTrack, int toTrack, int clipIndex, int position);
-    void onClipMoved(int fromTrack, int toTrack, int clipIndex, int position);
+    bool moveClip(int fromTrack, int toTrack, int clipIndex, int position, bool ripple);
+    void onClipMoved(int fromTrack, int toTrack, int clipIndex, int position, bool ripple);
     bool trimClipIn(int trackIndex, int clipIndex, int delta, bool ripple);
     bool trimClipOut(int trackIndex, int clipIndex, int delta, bool ripple);
     void insert(int trackIndex, int position = -1, const QString &xml = QString());
@@ -177,7 +177,7 @@ private:
 private slots:
     void load(bool force = false);
     void onTopLevelChanged(bool floating);
-    void onTransitionAdded(int trackIndex, int clipIndex, int position);
+    void onTransitionAdded(int trackIndex, int clipIndex, int position, bool ripple);
 };
 
 #endif // TIMELINEDOCK_H
