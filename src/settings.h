@@ -47,6 +47,7 @@ public:
     static ShotcutSettings& singleton();
     explicit ShotcutSettings() : QObject() {}
     explicit ShotcutSettings(const QString& appDataLocation);
+    void log();
 
     QString language() const;
     void setLanguage(const QString&);

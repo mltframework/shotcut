@@ -37,13 +37,6 @@ ShotcutSettings &ShotcutSettings::singleton()
         } else {
             instance.reset(new ShotcutSettings(appDataForSession));
         }
-        LOG_DEBUG() << "language" << instance->language();
-        LOG_DEBUG() << "deinterlacer" << instance->playerDeinterlacer();
-        LOG_DEBUG() << "external monitor" << instance->playerExternal();
-        LOG_DEBUG() << "GPU processing" << instance->playerGPU();
-        LOG_DEBUG() << "interpolation" << instance->playerInterpolation();
-        LOG_DEBUG() << "video mode" << instance->playerProfile();
-        LOG_DEBUG() << "realtime" << instance->playerRealtime();
     }
     return *instance;
 }
@@ -53,6 +46,21 @@ ShotcutSettings::ShotcutSettings(const QString& appDataLocation)
     , settings(appDataLocation + SHOTCUT_INI_FILENAME, QSettings::IniFormat)
     , m_appDataLocation(appDataLocation)
 {
+}
+
+void ShotcutSettings::log()
+{
+    LOG_DEBUG() << "language" << language();
+    LOG_DEBUG() << "deinterlacer" << playerDeinterlacer();
+    LOG_DEBUG() << "external monitor" << playerExternal();
+    LOG_DEBUG() << "GPU processing" << playerGPU();
+    LOG_DEBUG() << "interpolation" << playerInterpolation();
+    LOG_DEBUG() << "video mode" << playerProfile();
+    LOG_DEBUG() << "realtime" << playerRealtime();
+    LOG_DEBUG() << "audio channels" << playerAudioChannels();
+#ifdef Q_OS_WIN
+    LOG_DEBUG() << "display method" << drawMethod();
+#endif
 }
 
 QString ShotcutSettings::language() const

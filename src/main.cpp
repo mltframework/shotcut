@@ -187,6 +187,7 @@ public:
         LOG_INFO() << "locale =" << QLocale();
         LOG_INFO() << "install dir =" <<  applicationDirPath();
         LOG_INFO() << "device pixel ratio =" << devicePixelRatio();
+        Settings.log();
 
 #if defined(Q_OS_WIN)
         if (Settings.playerGPU()) {
