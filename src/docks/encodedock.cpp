@@ -59,7 +59,6 @@ EncodeDock::EncodeDock(QWidget *parent) :
     // On 32-bit process, limit multi-threading to mitigate running out of memory.
     ui->parallelCheckbox->setChecked(false);
     ui->parallelCheckbox->setHidden(true);
-    ui->videoCodecThreadsSpinner->setMaximum(qMin(4, QThread::idealThreadCount()));
 #else
     ui->videoCodecThreadsSpinner->setMaximum(QThread::idealThreadCount());
 #endif
@@ -788,12 +787,7 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                      && ui->videoCodecCombo->currentText() != "libx265")
                 setIfNotSet(p, "threads", ui->videoCodecThreadsSpinner->maximum() - 1);
             else
-#if QT_POINTER_SIZE == 4
-                // On 32-bit process, if 0 for auto use maximum, which might be limited to reduce memory usage.
-                setIfNotSet(p, "threads", (ui->videoCodecThreadsSpinner->value() == 0) ? ui->videoCodecThreadsSpinner->maximum() : ui->videoCodecThreadsSpinner->value());
-#else
                 setIfNotSet(p, "threads", ui->videoCodecThreadsSpinner->value());
-#endif
             if (ui->videoRateControlCombo->currentIndex() != RateControlQuality &&
                 !vcodec.contains("nvenc") && !vcodec.endsWith("_amf") &&
                 ui->dualPassCheckbox->isEnabled() && ui->dualPassCheckbox->isChecked())

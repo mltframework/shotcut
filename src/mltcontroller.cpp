@@ -810,11 +810,7 @@ QImage Controller::image(Producer& producer, int frameNumber, int width, int hei
 
 void Controller::updateAvformatCaching(int trackCount)
 {
-#if QT_POINTER_SIZE == 4
-    int i = QThread::idealThreadCount() + trackCount;
-#else
     int i = QThread::idealThreadCount() + trackCount * 2;
-#endif
     mlt_service_cache_set_size(NULL, "producer_avformat", qMax(4, i));
 }
 
