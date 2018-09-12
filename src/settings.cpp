@@ -425,6 +425,17 @@ void ShotcutSettings::setTimelineRippleAllTracks(bool b)
     emit timelineRippleAllTracksChanged();
 }
 
+bool ShotcutSettings::timelineSnap() const
+{
+    return settings.value("timeline/snap", true).toBool();
+}
+
+void ShotcutSettings::setTimelineSnap(bool b)
+{
+    settings.setValue("timeline/snap", b);
+    emit timelineSnapChanged();
+}
+
 QString ShotcutSettings::filterFavorite(const QString& filterName)
 {
     return settings.value("filter/favorite/" + filterName, "").toString();

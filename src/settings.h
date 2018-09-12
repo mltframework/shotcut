@@ -30,6 +30,7 @@ class ShotcutSettings : public QObject
     Q_PROPERTY(bool timelineShowThumbnails READ timelineShowThumbnails WRITE setTimelineShowThumbnails NOTIFY timelineShowThumbnailsChanged)
     Q_PROPERTY(bool timelineRipple READ timelineRipple WRITE setTimelineRipple NOTIFY timelineRippleChanged)
     Q_PROPERTY(bool timelineRippleAllTracks READ timelineRippleAllTracks WRITE setTimelineRippleAllTracks NOTIFY timelineRippleAllTracksChanged)
+    Q_PROPERTY(bool timelineSnap READ timelineSnap WRITE setTimelineSnap NOTIFY timelineSnapChanged)
     Q_PROPERTY(QString openPath READ openPath WRITE setOpenPath NOTIFY openPathChanged)
     Q_PROPERTY(QString savePath READ savePath WRITE setSavePath NOTIFY savePathChanged)
     Q_PROPERTY(QString playlistThumbnails READ playlistThumbnails WRITE setPlaylistThumbnails NOTIFY playlistThumbnailsChanged)
@@ -124,6 +125,8 @@ public:
     void setTimelineRipple(bool);
     bool timelineRippleAllTracks() const;
     void setTimelineRippleAllTracks(bool);
+    bool timelineSnap() const;
+    void setTimelineSnap(bool);
 
     QString filterFavorite(const QString& filterName);
     void setFilterFavorite(const QString& filterName, const QString& value);
@@ -166,6 +169,7 @@ signals:
     void timelineShowThumbnailsChanged();
     void timelineRippleChanged();
     void timelineRippleAllTracksChanged();
+    void timelineSnapChanged();
     void playerAudioChannelsChanged(int);
     void playerGpuChanged();
     void audioInDurationChanged();

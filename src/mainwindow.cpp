@@ -1657,6 +1657,11 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
     case Qt::Key_O:
         setOutToCurrent(event->modifiers() & Qt::ShiftModifier);
         break;
+    case Qt::Key_P:
+        if (event->modifiers() == Qt::ControlModifier) {
+            Settings.setTimelineSnap(!Settings.timelineSnap());
+        }
+        break;
     case Qt::Key_R:
         if (event->modifiers() & Qt::ControlModifier) {
             if (event->modifiers() & Qt::AltModifier) {
