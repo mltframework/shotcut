@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2013-2015 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2013-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,6 +36,8 @@ public:
     bool upgradeVersion1();
     bool putThumbnail(const QString& hash, const QImage& image);
     QImage getThumbnail(const QString& hash);
+    bool isShutdown() const;
+    bool isFailing() const { return m_isFailing; }
 
 private slots:
     void commitTransaction();
@@ -55,6 +56,7 @@ private:
     QWaitCondition m_waitForFinished;
     QWaitCondition m_waitForNewJob;
     QTimer * m_commitTimer;
+    bool m_isFailing;
 };
 
 #define DB Database::singleton()

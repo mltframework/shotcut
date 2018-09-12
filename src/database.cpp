@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2013-2016 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2013-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,10 +40,12 @@ struct DatabaseJob {
 };
 
 static Database* instance = 0;
+static bool g_isShutdown = false;
 
 Database::Database(QObject *parent) :
     QThread(parent)
     , m_commitTimer(0)
+    , m_isFailing(false)
 {
 }
 
@@ -94,6 +95,7 @@ void Database::doJob(DatabaseJob * job)
         job->result = query.exec();
         if (!job->result)
             LOG_ERROR() << query.lastError();
+        m_isFailing = !job->result;
     } else if (job->type == DatabaseJob::GetThumbnail) {
         QImage result;
         QSqlQuery query;
@@ -104,7 +106,8 @@ void Database::doJob(DatabaseJob * job)
             QSqlQuery update;
             update.prepare("UPDATE thumbnails SET accessed = datetime('now') WHERE hash = :hash ;");
             update.bindValue(":hash", job->hash);
-            if (!update.exec())
+            m_isFailing = !update.exec();
+            if (m_isFailing)
                 LOG_ERROR() << update.lastError();
         }
         job->image = result;
@@ -154,13 +157,20 @@ QImage Database::getThumbnail(const QString &hash)
     return job.image;
 }
 
+bool Database::isShutdown() const
+{
+    return g_isShutdown;
+}
+
 void Database::shutdown()
 {
+    g_isShutdown = true;
     requestInterruption();
     wait();
     QString connection = QSqlDatabase::database().connectionName();
     QSqlDatabase::database().close();
     QSqlDatabase::removeDatabase(connection);
+    LOG_DEBUG() << "database closed";
     instance = 0;
 }
 

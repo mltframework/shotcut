@@ -56,6 +56,13 @@ AudioLevelsTask::~AudioLevelsTask()
 void AudioLevelsTask::start(Mlt::Producer& producer, QObject* object, const QModelIndex& index, bool force)
 {
     if (Settings.timelineShowWaveforms() && producer.is_valid()) {
+
+        QString serviceName = producer.get("mlt_service");
+        if (DB.isShutdown()
+            || serviceName == "pixbuf" || serviceName == "qimage" || serviceName == "webvfx"
+            || serviceName == "color"|| serviceName.startsWith("frei0r"))
+            return;
+
         AudioLevelsTask* task = new AudioLevelsTask(producer, object, index);
         tasksListMutex.lock();
         // See if there is already a task for this MLT service and resource.
@@ -143,7 +150,7 @@ void AudioLevelsTask::run()
     // 2 channels interleaved of uchar values
     QVariantList levels;
     QImage image = DB.getThumbnail(cacheKey());
-    if (image.isNull() || m_isForce) {
+    if ((image.isNull() || m_isForce) && !DB.isFailing()) {
         const char* key[2] = { "meta.media.audio_level.0", "meta.media.audio_level.1"};
         QTime updateTime; updateTime.start();
         // TODO: use project channel count
@@ -209,7 +216,7 @@ void AudioLevelsTask::run()
                 DB.putThumbnail(cacheKey(), image);
             }
         }
-    } else if (!m_isCanceled) {
+    } else if (!m_isCanceled && !image.isNull()) {
         // convert cached image
         int channels = 2;
         int n = image.width() * image.height();
