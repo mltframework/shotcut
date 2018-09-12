@@ -387,28 +387,34 @@
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="805"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="693"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="704"/>
         <source>Reverse...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="276"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="306"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="810"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="817"/>
+        <source>Extract Sub-clip...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="279"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="309"/>
         <source>None</source>
         <translation>无</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="327"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="330"/>
         <source>All</source>
         <translation>全部</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="405"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="408"/>
         <source>(variable)</source>
         <translation>(可变)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="441"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="444"/>
         <source>This file is variable frame rate, which is not reliable for editing. Do you want to convert it to an edit-friendly format?
 
 If yes, choose a format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
@@ -418,7 +424,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
 如果是，从下列格式中选择一个，再点击确定以选择文件名，选择文件名以后，就创建一项工作。完成后，单击这项工作以开始。</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="452"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="455"/>
         <source>This file does not support seeking and cannot be used for editing. Do you want to convert it to an edit-friendly format?
 
 If yes, choose a format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
@@ -426,26 +432,36 @@ If yes, choose a format below and then click OK to choose a file name. After cho
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="623"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="690"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="634"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="701"/>
         <source>Choose an edit-friendly format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="681"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="782"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="692"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="793"/>
         <source>Convert %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="754"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="765"/>
         <source>Reversed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="790"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="801"/>
         <source>Reverse %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="816"/>
+        <source>Sub-clip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="851"/>
+        <source>Extract sub-clip %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -484,50 +500,63 @@ If yes, choose a format below and then click OK to choose a file name. After cho
 <context>
     <name>Clip</name>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="614"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="617"/>
         <source>Cut</source>
         <translation>剪切</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="626"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="629"/>
         <source>Copy</source>
         <translation>粘贴</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="633"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="636"/>
         <source>Remove</source>
         <translation>移除</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="638"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="641"/>
         <source>Lift</source>
         <translation>Lift</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="646"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="649"/>
         <source>Split At Playhead (S)</source>
         <translation>于播放点处切割 (S)</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="652"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="655"/>
         <source>Merge with next clip</source>
         <translation>与下段剪辑合并</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="657"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="660"/>
         <source>Detach Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="662"/>
-        <location filename="../src/qml/views/keyframes/Clip.qml" line="511"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="665"/>
+        <location filename="../src/qml/views/keyframes/Clip.qml" line="516"/>
         <source>Rebuild Audio Waveform</source>
         <translation>重建音频波形</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="667"/>
+        <location filename="../src/qml/timeline/Clip.qml" line="670"/>
         <source>Properties</source>
         <translation>属性</translation>
+    </message>
+</context>
+<context>
+    <name>ClockSpinner</name>
+    <message>
+        <location filename="../src/qml/filters/timer/ClockSpinner.qml" line="103"/>
+        <source>Decrement</source>
+        <translation>递减</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/timer/ClockSpinner.qml" line="124"/>
+        <source>Increment</source>
+        <translation>增量</translation>
     </message>
 </context>
 <context>
@@ -1109,13 +1138,13 @@ not be inserted at detected scene changes.</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="797"/>
-        <location filename="../src/docks/encodedock.ui" line="1432"/>
+        <location filename="../src/docks/encodedock.ui" line="1437"/>
         <source>256k</source>
         <translation>256k</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="802"/>
-        <location filename="../src/docks/encodedock.ui" line="1442"/>
+        <location filename="../src/docks/encodedock.ui" line="1447"/>
         <source>512k</source>
         <translation>512k</translation>
     </message>
@@ -1126,7 +1155,7 @@ not be inserted at detected scene changes.</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="812"/>
-        <location filename="../src/docks/encodedock.ui" line="1447"/>
+        <location filename="../src/docks/encodedock.ui" line="1452"/>
         <source>1M</source>
         <translation>1M</translation>
     </message>
@@ -1242,7 +1271,7 @@ not be inserted at detected scene changes.</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="930"/>
-        <location filename="../src/docks/encodedock.ui" line="1455"/>
+        <location filename="../src/docks/encodedock.ui" line="1460"/>
         <source>b/s</source>
         <translation>比特/秒</translation>
     </message>
@@ -1280,25 +1309,25 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1054"/>
-        <location filename="../src/docks/encodedock.ui" line="1497"/>
+        <location filename="../src/docks/encodedock.ui" line="1502"/>
         <source>Rate control</source>
         <translation>码率控制</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1067"/>
-        <location filename="../src/docks/encodedock.ui" line="1510"/>
+        <location filename="../src/docks/encodedock.ui" line="1515"/>
         <source>Average Bitrate</source>
         <translation>平均码率 （ABR）</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1072"/>
-        <location filename="../src/docks/encodedock.ui" line="1515"/>
+        <location filename="../src/docks/encodedock.ui" line="1520"/>
         <source>Constant Bitrate</source>
         <translation>固定码率（CBR）</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1077"/>
-        <location filename="../src/docks/encodedock.ui" line="1520"/>
+        <location filename="../src/docks/encodedock.ui" line="1525"/>
         <source>Quality-based VBR</source>
         <translation>可变码率（VBR）</translation>
     </message>
@@ -1319,13 +1348,13 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1149"/>
-        <location filename="../src/docks/encodedock.ui" line="1543"/>
+        <location filename="../src/docks/encodedock.ui" line="1548"/>
         <source>Quality</source>
         <translation>质量</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1161"/>
-        <location filename="../src/docks/encodedock.ui" line="1555"/>
+        <location filename="../src/docks/encodedock.ui" line="1560"/>
         <source> %</source>
         <translation> %</translation>
     </message>
@@ -1353,12 +1382,12 @@ in temporal compression</source>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1228"/>
         <source>1 (mono)</source>
-        <translation type="unfinished"></translation>
+        <translation>单声道</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1233"/>
         <source>2 (stereo)</source>
-        <translation type="unfinished"></translation>
+        <translation>立体声</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1238"/>
@@ -1437,165 +1466,170 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1427"/>
+        <source>192k</source>
+        <translation type="unfinished">192k</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.ui" line="1432"/>
         <source>220k</source>
         <translation>220k</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1437"/>
+        <location filename="../src/docks/encodedock.ui" line="1442"/>
         <source>384k</source>
         <translation>384k</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1477"/>
+        <location filename="../src/docks/encodedock.ui" line="1482"/>
         <source>Disable audio</source>
         <translation>禁用音频</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1587"/>
+        <location filename="../src/docks/encodedock.ui" line="1592"/>
         <source>Other</source>
         <translation>其他</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1605"/>
-        <location filename="../src/docks/encodedock.cpp" line="846"/>
-        <location filename="../src/docks/encodedock.cpp" line="1155"/>
-        <location filename="../src/docks/encodedock.cpp" line="1570"/>
+        <location filename="../src/docks/encodedock.ui" line="1610"/>
+        <location filename="../src/docks/encodedock.cpp" line="855"/>
+        <location filename="../src/docks/encodedock.cpp" line="1170"/>
+        <location filename="../src/docks/encodedock.cpp" line="1585"/>
         <source>Export File</source>
         <translation>输出文件</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1612"/>
-        <location filename="../src/docks/encodedock.cpp" line="1293"/>
-        <location filename="../src/docks/encodedock.cpp" line="1300"/>
-        <location filename="../src/docks/encodedock.cpp" line="1411"/>
+        <location filename="../src/docks/encodedock.ui" line="1617"/>
+        <location filename="../src/docks/encodedock.cpp" line="1308"/>
+        <location filename="../src/docks/encodedock.cpp" line="1315"/>
+        <location filename="../src/docks/encodedock.cpp" line="1426"/>
         <source>Stream</source>
         <translation>串流（Stream）</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1619"/>
+        <location filename="../src/docks/encodedock.ui" line="1624"/>
         <source>Reset options to defaults</source>
         <translation>重置选项到默认</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1622"/>
+        <location filename="../src/docks/encodedock.ui" line="1627"/>
         <source>Reset</source>
         <translation>重置</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1649"/>
-        <location filename="../src/docks/encodedock.cpp" line="1129"/>
-        <location filename="../src/docks/encodedock.cpp" line="1217"/>
-        <location filename="../src/docks/encodedock.cpp" line="1231"/>
+        <location filename="../src/docks/encodedock.ui" line="1654"/>
+        <location filename="../src/docks/encodedock.cpp" line="1144"/>
+        <location filename="../src/docks/encodedock.cpp" line="1232"/>
+        <location filename="../src/docks/encodedock.cpp" line="1246"/>
         <source>Stop Capture</source>
         <translation>停止捕捉</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="94"/>
+        <location filename="../src/docks/encodedock.cpp" line="93"/>
         <source>Automatic from extension</source>
         <translation>根据扩展名自动识别</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="102"/>
-        <location filename="../src/docks/encodedock.cpp" line="111"/>
+        <location filename="../src/docks/encodedock.cpp" line="101"/>
+        <location filename="../src/docks/encodedock.cpp" line="112"/>
         <source>Default for format</source>
         <translation>默认格式</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="348"/>
+        <location filename="../src/docks/encodedock.cpp" line="349"/>
         <source>Timeline</source>
         <translation>时间线</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="350"/>
+        <location filename="../src/docks/encodedock.cpp" line="351"/>
         <source>Playlist</source>
         <translation>播放列表</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="352"/>
+        <location filename="../src/docks/encodedock.cpp" line="353"/>
         <source>Each Playlist Item</source>
         <translation>每一个播放列表项</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="361"/>
-        <location filename="../src/docks/encodedock.cpp" line="373"/>
+        <location filename="../src/docks/encodedock.cpp" line="362"/>
+        <location filename="../src/docks/encodedock.cpp" line="374"/>
         <source>Source</source>
         <translation>来源</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="388"/>
-        <location filename="../src/docks/encodedock.cpp" line="1078"/>
-        <location filename="../src/docks/encodedock.cpp" line="1079"/>
+        <location filename="../src/docks/encodedock.cpp" line="389"/>
+        <location filename="../src/docks/encodedock.cpp" line="1093"/>
+        <location filename="../src/docks/encodedock.cpp" line="1094"/>
         <source>Custom</source>
         <translation>自定义</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="423"/>
+        <location filename="../src/docks/encodedock.cpp" line="424"/>
         <source>Stock</source>
         <translation>内建</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="850"/>
+        <location filename="../src/docks/encodedock.cpp" line="859"/>
         <source>You cannot write to a file that is in your project.
 Try again with a different folder or file name.</source>
-        <translation type="unfinished"></translation>
+        <translation>无法写文件。可能您没有足够的权限。请尝试另一个文件夹来保存文件。</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1155"/>
-        <location filename="../src/docks/encodedock.cpp" line="1572"/>
+        <location filename="../src/docks/encodedock.cpp" line="1170"/>
+        <location filename="../src/docks/encodedock.cpp" line="1587"/>
         <source>Capture File</source>
         <translation>捕捉到文件</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1176"/>
+        <location filename="../src/docks/encodedock.cpp" line="1191"/>
         <source>The drive you chose only has %1 MiB of free space.
 Do you still want to continue?</source>
         <translation>您选择的磁盘仅有%1MiB可用空间，请问是否继续？</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1183"/>
+        <location filename="../src/docks/encodedock.cpp" line="1198"/>
         <source>Do not show this anymore.</source>
         <comment>Export free disk space warning dialog</comment>
         <translation>不再显示此消息</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1188"/>
+        <location filename="../src/docks/encodedock.cpp" line="1203"/>
         <source>Export canceled.</source>
         <translation>导出已取消</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1288"/>
-        <location filename="../src/docks/encodedock.cpp" line="1309"/>
+        <location filename="../src/docks/encodedock.cpp" line="1303"/>
+        <location filename="../src/docks/encodedock.cpp" line="1324"/>
         <source>Stop Stream</source>
         <translation>停止串流</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1301"/>
+        <location filename="../src/docks/encodedock.cpp" line="1316"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>输入网络协议、地址、端口和参数到一个 URL，例如:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1346"/>
+        <location filename="../src/docks/encodedock.cpp" line="1361"/>
         <source>Add Export Preset</source>
         <translation>添加输出预设</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1388"/>
+        <location filename="../src/docks/encodedock.cpp" line="1403"/>
         <source>Delete Preset</source>
         <translation>删除预设</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1389"/>
+        <location filename="../src/docks/encodedock.cpp" line="1404"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>您确定要删除 %1？</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1508"/>
-        <location filename="../src/docks/encodedock.cpp" line="1513"/>
+        <location filename="../src/docks/encodedock.cpp" line="1523"/>
+        <location filename="../src/docks/encodedock.cpp" line="1528"/>
         <source>None</source>
         <translation>无</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1556"/>
+        <location filename="../src/docks/encodedock.cpp" line="1571"/>
         <source>KiB (%1s)</source>
         <translation>KiB (%1秒)</translation>
     </message>
@@ -1658,7 +1692,7 @@ Do you still want to continue?</source>
 <context>
     <name>FilterController</name>
     <message>
-        <location filename="../src/controllers/filtercontroller.cpp" line="212"/>
+        <location filename="../src/controllers/filtercontroller.cpp" line="211"/>
         <source>Only one %1 filter is allowed.</source>
         <translation>只允许一个 %1 滤镜。</translation>
     </message>
@@ -1673,7 +1707,7 @@ Do you still want to continue?</source>
     <message>
         <location filename="../src/qml/views/filter/FilterMenu.qml" line="105"/>
         <source>Clear search</source>
-        <translation type="unfinished"></translation>
+        <translation>清空搜索内容</translation>
     </message>
     <message>
         <location filename="../src/qml/views/filter/FilterMenu.qml" line="124"/>
@@ -2277,68 +2311,68 @@ Do you want to save your changes?</source>
         <translation>分辨率</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="78"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="53"/>
         <source>x</source>
         <translation>x</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="106"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="65"/>
         <source>Duration</source>
         <translation>时长</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="116"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="75"/>
         <source>Pixel aspect ratio</source>
         <translation>像素长宽比</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="147"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="106"/>
         <source>:</source>
         <translation>:</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="175"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="134"/>
         <source>Image sequence</source>
         <translation>图像序列</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="182"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="141"/>
         <source>Repeat</source>
         <translation>重复</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="200"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="159"/>
         <source> frames</source>
         <translation>帧</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="216"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="175"/>
         <source>per picture</source>
         <translation>每图片</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="255"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="214"/>
         <source>Make the current duration value the default value</source>
         <translation>使当前持续时间变为默认值</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="258"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="217"/>
         <source>Set Default</source>
         <translation>设为默认</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="271"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="230"/>
         <source>Reset</source>
         <translation>重置</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.cpp" line="206"/>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="205"/>
         <source>Getting length of image sequence...</source>
         <translation>正在获取图像序列长度...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.cpp" line="218"/>
-        <location filename="../src/widgets/imageproducerwidget.cpp" line="234"/>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="217"/>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="233"/>
         <source>Reloading image sequence...</source>
         <translation>正在重新加载图像序列...</translation>
     </message>
@@ -2504,17 +2538,17 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/qml/views/keyframes/Keyframe.qml" line="115"/>
         <source>Discrete</source>
-        <translation type="unfinished"></translation>
+        <translation>分散</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/Keyframe.qml" line="122"/>
         <source>Linear</source>
-        <translation type="unfinished"></translation>
+        <translation>线性</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/Keyframe.qml" line="129"/>
         <source>Smooth</source>
-        <translation type="unfinished"></translation>
+        <translation>光滑</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/Keyframe.qml" line="138"/>
@@ -2553,17 +2587,17 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="72"/>
         <source>Discrete</source>
-        <translation type="unfinished"></translation>
+        <translation>分散</translation>
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="75"/>
         <source>Linear</source>
-        <translation type="unfinished"></translation>
+        <translation>线性</translation>
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="78"/>
         <source>Smooth</source>
-        <translation type="unfinished"></translation>
+        <translation>光滑</translation>
     </message>
 </context>
 <context>
@@ -3052,7 +3086,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="392"/>
-        <location filename="../src/mainwindow.cpp" line="2549"/>
+        <location filename="../src/mainwindow.cpp" line="2600"/>
         <source>Enter Full Screen</source>
         <translation>进入全屏模式</translation>
     </message>
@@ -3073,7 +3107,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="416"/>
-        <location filename="../src/mainwindow.cpp" line="239"/>
+        <location filename="../src/mainwindow.cpp" line="242"/>
         <source>Properties</source>
         <translation>属性</translation>
     </message>
@@ -3089,7 +3123,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="443"/>
-        <location filename="../src/mainwindow.cpp" line="354"/>
+        <location filename="../src/mainwindow.cpp" line="355"/>
         <source>History</source>
         <translation>历史</translation>
     </message>
@@ -3121,12 +3155,12 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="493"/>
         <source>1 (mono)</source>
-        <translation type="unfinished"></translation>
+        <translation>单声道</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="501"/>
         <source>2 (stereo)</source>
-        <translation type="unfinished"></translation>
+        <translation>立体声</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="509"/>
@@ -3448,82 +3482,82 @@ Please install it using your package manager. It may be named libsdl2-2.0-0, SDL
         <translation>Ctrl+Shift+Z</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="556"/>
+        <location filename="../src/mainwindow.cpp" line="558"/>
         <source>Non-Broadcast</source>
         <translation>非广播</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="567"/>
+        <location filename="../src/mainwindow.cpp" line="569"/>
         <source>DVD Widescreen NTSC</source>
         <translation>DVD Widescreen NTSC</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="568"/>
+        <location filename="../src/mainwindow.cpp" line="570"/>
         <source>DVD Widescreen PAL</source>
         <translation>DVD Widescreen PAL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="573"/>
+        <location filename="../src/mainwindow.cpp" line="575"/>
         <source>Custom</source>
         <translation>自定义</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="592"/>
+        <location filename="../src/mainwindow.cpp" line="594"/>
         <source>Screen %1</source>
         <translation>屏幕 %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="623"/>
+        <location filename="../src/mainwindow.cpp" line="625"/>
         <source>Off</source>
         <translation>关</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="626"/>
+        <location filename="../src/mainwindow.cpp" line="628"/>
         <source>Internal</source>
         <translation>内部</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="629"/>
+        <location filename="../src/mainwindow.cpp" line="631"/>
         <source>External</source>
         <translation>外部</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="643"/>
+        <location filename="../src/mainwindow.cpp" line="645"/>
         <source>DeckLink Keyer</source>
         <translation>DeckLink Keyer</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="833"/>
         <location filename="../src/mainwindow.cpp" line="835"/>
-        <location filename="../src/mainwindow.cpp" line="1193"/>
-        <location filename="../src/mainwindow.cpp" line="3104"/>
+        <location filename="../src/mainwindow.cpp" line="837"/>
+        <location filename="../src/mainwindow.cpp" line="1195"/>
+        <location filename="../src/mainwindow.cpp" line="3159"/>
         <source>Failed to open </source>
         <translation>打开失败</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="861"/>
+        <location filename="../src/mainwindow.cpp" line="863"/>
         <source>The file you opened uses GPU effects, but GPU effects are not enabled.
 Do you want to enable GPU effects and restart?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="881"/>
+        <location filename="../src/mainwindow.cpp" line="883"/>
         <source>The file you opened uses CPU effects that are incompatible with GPU effects, but GPU effects are enabled.
 Do you want to disable GPU effects and restart?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="904"/>
+        <location filename="../src/mainwindow.cpp" line="906"/>
         <source>Repaired</source>
         <translation>已修复</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="927"/>
+        <location filename="../src/mainwindow.cpp" line="929"/>
         <source>Repairing the project failed.</source>
         <translation>修复项目失败。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="939"/>
+        <location filename="../src/mainwindow.cpp" line="941"/>
         <source>Shotcut noticed some problems in your project.
 Do you want Shotcut to try to repair it?
 
@@ -3534,197 +3568,197 @@ with &quot;- Repaired&quot; in the file name and open it.</source>
 如果选择 [是]，Shotcut 将建立一份以“ - 已修复”命名的项目副本并打开该文件。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="975"/>
+        <location filename="../src/mainwindow.cpp" line="977"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation>存在自动保存的文件。您想恢复它们吗？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1086"/>
+        <location filename="../src/mainwindow.cpp" line="1088"/>
         <source>You cannot add a project to itself!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1204"/>
-        <location filename="../src/mainwindow.cpp" line="3084"/>
+        <location filename="../src/mainwindow.cpp" line="1206"/>
+        <location filename="../src/mainwindow.cpp" line="3139"/>
         <source>Open File</source>
         <translation>打开文件</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1465"/>
+        <location filename="../src/mainwindow.cpp" line="1467"/>
         <source>Untitled</source>
-        <translation type="unfinished"></translation>
+        <translation>未命名</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1481"/>
+        <location filename="../src/mainwindow.cpp" line="1483"/>
         <source>About Shotcut</source>
         <translation>关于 Shotcut</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1482"/>
+        <location filename="../src/mainwindow.cpp" line="1484"/>
         <source>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2018 &lt;a href=&quot;https://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.qt.io/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;https://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
         <translation>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; 是免费、开源、跨平台的视频编辑器。&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2018 &lt;a href=&quot;https://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;使用 &lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0 授权&lt;/a&gt;&lt;/p&gt;&lt;p&gt;本程序自豪地使用下列项目：&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.qt.io/&quot;&gt;Qt&lt;/a&gt; 应用程序及 UI 框架&lt;/li&gt;&lt;/li&gt;&lt;a href=&quot;https://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; 多媒体创作框架&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; 多媒体格式及解码库&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 编码器&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 及 VP9 编码器&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 编码器&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; 视频插件&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; 音频插件&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; 图标集，作者 &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; 图标集&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;用于编译本程序的源代码可从 &lt;a href=&quot;https://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;下载。&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2050"/>
-        <location filename="../src/mainwindow.cpp" line="2068"/>
+        <location filename="../src/mainwindow.cpp" line="2086"/>
+        <location filename="../src/mainwindow.cpp" line="2104"/>
         <source>Save XML</source>
         <translation>保存 XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2055"/>
-        <location filename="../src/mainwindow.cpp" line="2087"/>
+        <location filename="../src/mainwindow.cpp" line="2091"/>
+        <location filename="../src/mainwindow.cpp" line="2123"/>
         <source>Saved %1</source>
         <translation>已保存 %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2069"/>
+        <location filename="../src/mainwindow.cpp" line="2105"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2099"/>
+        <location filename="../src/mainwindow.cpp" line="2135"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>项目已被修改。
 您想保存您的更改吗？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2126"/>
+        <location filename="../src/mainwindow.cpp" line="2162"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
         <translation>仍有未完成的任务。
 您确定要退出吗？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2139"/>
+        <location filename="../src/mainwindow.cpp" line="2175"/>
         <source>An export is in progress.
 Do you want to still want to exit?</source>
         <translation>一个输出任务正在执行中，您确定要退出吗？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2552"/>
+        <location filename="../src/mainwindow.cpp" line="2603"/>
         <source>Exit Full Screen</source>
         <translation>退出全屏模式</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2565"/>
+        <location filename="../src/mainwindow.cpp" line="2616"/>
         <source>GPU effects are not supported</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2653"/>
+        <location filename="../src/mainwindow.cpp" line="2704"/>
         <source>Click here to check for a new version of Shotcut.</source>
         <translation>点击这里以检查 Shotcut 的新版本 </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2804"/>
+        <location filename="../src/mainwindow.cpp" line="2855"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>您必须重新启动 Shotcut 才能切换到新的语言。
 您想立即重启吗？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2845"/>
+        <location filename="../src/mainwindow.cpp" line="2896"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>连接 JACK 失败。
 请验证 JACK 已经安装并正在运行。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2854"/>
+        <location filename="../src/mainwindow.cpp" line="2905"/>
         <source>GPU effects are experimental and may cause instability on some systems. Some CPU effects are incompatible with GPU effects and will be disabled. A project created with GPU effects can not be converted to a CPU only project later.
 
 Do you want to enable GPU effects and restart Shotcut?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2876"/>
+        <location filename="../src/mainwindow.cpp" line="2927"/>
         <source>Shotcut must restart to disable GPU effects.
 
 Disable GPU effects and restart?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3085"/>
+        <location filename="../src/mainwindow.cpp" line="3140"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;所有文件 (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3145"/>
+        <location filename="../src/mainwindow.cpp" line="3200"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
         <translation>您必须重新启动 Shotcut 才能更改显示方式。
 您想立即重新启动吗？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3167"/>
+        <location filename="../src/mainwindow.cpp" line="3222"/>
         <source>Application Log</source>
         <translation>程序日志</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3201"/>
+        <location filename="../src/mainwindow.cpp" line="3256"/>
         <source>Shotcut version %1 is available! Click here to get it.</source>
         <translation>Shotcut 版本 %1 可用！按一下这里取得新版本。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3207"/>
+        <location filename="../src/mainwindow.cpp" line="3262"/>
         <source>You are running the latest version of Shotcut.</source>
         <translation>当前运行的已经是最新版本的 Shotcut。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3217"/>
+        <location filename="../src/mainwindow.cpp" line="3272"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation>检查更新时无法读取 version.json。按一下这里以移至官方网站 </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3267"/>
+        <location filename="../src/mainwindow.cpp" line="3322"/>
         <source>Export EDL</source>
         <translation>输出 EDL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3268"/>
+        <location filename="../src/mainwindow.cpp" line="3323"/>
         <source>EDL (*.edl)</source>
         <translation>EDL (*.edl)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3314"/>
+        <location filename="../src/mainwindow.cpp" line="3369"/>
         <source>A JavaScript error occurred during export.</source>
         <translation>输出时发生了 JavaScirpt 错误。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3317"/>
+        <location filename="../src/mainwindow.cpp" line="3372"/>
         <source>Failed to open export-edl.js</source>
         <translation>无法打开 export-edl.js</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3343"/>
+        <location filename="../src/mainwindow.cpp" line="3398"/>
         <source>Export Frame</source>
         <translation>输出单帧</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3356"/>
+        <location filename="../src/mainwindow.cpp" line="3411"/>
         <source>Unable to export frame.</source>
         <translation>无法输出单帧</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3364"/>
+        <location filename="../src/mainwindow.cpp" line="3419"/>
         <source>You must restart Shotcut to change the data directory.
 Do you want to continue?</source>
         <translation>您必须重新启动 Shotcut 才能更改资料目录。
 您想立即重新启动吗？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3373"/>
+        <location filename="../src/mainwindow.cpp" line="3428"/>
         <source>Data Directory</source>
         <translation>数据目录</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3456"/>
+        <location filename="../src/mainwindow.cpp" line="3511"/>
         <source>Add Custom Layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3457"/>
+        <location filename="../src/mainwindow.cpp" line="3512"/>
         <source>Name</source>
         <translation>名称</translation>
     </message>
@@ -3732,33 +3766,33 @@ Do you want to continue?</source>
 <context>
     <name>MeltJob</name>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="39"/>
+        <location filename="../src/jobs/meltjob.cpp" line="40"/>
         <source>View XML</source>
         <translation>查看 XML</translation>
     </message>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="40"/>
+        <location filename="../src/jobs/meltjob.cpp" line="41"/>
         <source>View the MLT XML for this job</source>
         <translation>查看此任务的 MLT XML</translation>
     </message>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="49"/>
+        <location filename="../src/jobs/meltjob.cpp" line="50"/>
         <source>Open</source>
         <translation>打开</translation>
     </message>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="50"/>
+        <location filename="../src/jobs/meltjob.cpp" line="51"/>
         <source>Open the output file in the Shotcut player</source>
         <translation>在 Shotcut 播放器中打开输出文件</translation>
     </message>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="54"/>
         <location filename="../src/jobs/meltjob.cpp" line="55"/>
+        <location filename="../src/jobs/meltjob.cpp" line="56"/>
         <source>Show In Folder</source>
         <translation>打开所在文件夹</translation>
     </message>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="128"/>
+        <location filename="../src/jobs/meltjob.cpp" line="137"/>
         <source>MLT XML</source>
         <translation>MLT XML</translation>
     </message>
@@ -3813,7 +3847,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="35"/>
-        <location filename="../src/openotherdialog.cpp" line="141"/>
+        <location filename="../src/openotherdialog.cpp" line="145"/>
         <source>Network</source>
         <translation>网络</translation>
     </message>
@@ -3824,44 +3858,44 @@ Do you want to continue?</source>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="42"/>
-        <location filename="../src/openotherdialog.cpp" line="143"/>
+        <location filename="../src/openotherdialog.cpp" line="147"/>
         <source>SDI/HDMI</source>
         <translation>SDI/HDMI</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="46"/>
-        <location filename="../src/openotherdialog.cpp" line="129"/>
+        <location filename="../src/openotherdialog.cpp" line="133"/>
         <source>Video4Linux</source>
         <translation>Video4Linux</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="48"/>
-        <location filename="../src/openotherdialog.cpp" line="131"/>
+        <location filename="../src/openotherdialog.cpp" line="135"/>
         <source>PulseAudio</source>
         <translation>PulseAudio</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="50"/>
-        <location filename="../src/openotherdialog.cpp" line="133"/>
+        <location filename="../src/openotherdialog.cpp" line="137"/>
         <source>JACK Audio</source>
         <translation>JACK Audio</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="52"/>
-        <location filename="../src/openotherdialog.cpp" line="135"/>
+        <location filename="../src/openotherdialog.cpp" line="139"/>
         <source>ALSA Audio</source>
         <translation>ALSA Audio</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="55"/>
         <location filename="../src/openotherdialog.cpp" line="62"/>
-        <location filename="../src/openotherdialog.cpp" line="139"/>
+        <location filename="../src/openotherdialog.cpp" line="143"/>
         <source>Screen</source>
         <translation>屏幕</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="59"/>
-        <location filename="../src/openotherdialog.cpp" line="137"/>
+        <location filename="../src/openotherdialog.cpp" line="141"/>
         <source>DirectShow</source>
         <translation>DirectShow</translation>
     </message>
@@ -3877,49 +3911,54 @@ Do you want to continue?</source>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="73"/>
-        <location filename="../src/openotherdialog.cpp" line="145"/>
+        <location filename="../src/openotherdialog.cpp" line="149"/>
         <source>Color</source>
         <translation>颜色</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="77"/>
-        <location filename="../src/openotherdialog.cpp" line="147"/>
+        <location filename="../src/openotherdialog.cpp" line="76"/>
+        <source>Text</source>
+        <translation>文本</translation>
+    </message>
+    <message>
+        <location filename="../src/openotherdialog.cpp" line="81"/>
+        <location filename="../src/openotherdialog.cpp" line="151"/>
         <source>Noise</source>
         <translation>噪声</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="81"/>
-        <location filename="../src/openotherdialog.cpp" line="149"/>
+        <location filename="../src/openotherdialog.cpp" line="85"/>
+        <location filename="../src/openotherdialog.cpp" line="153"/>
         <source>Ising</source>
         <translation>伊辛 (Ising)</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="85"/>
-        <location filename="../src/openotherdialog.cpp" line="151"/>
+        <location filename="../src/openotherdialog.cpp" line="89"/>
+        <location filename="../src/openotherdialog.cpp" line="155"/>
         <source>Lissajous</source>
         <translation>利萨茹 (Lissajous)</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="89"/>
-        <location filename="../src/openotherdialog.cpp" line="153"/>
+        <location filename="../src/openotherdialog.cpp" line="93"/>
+        <location filename="../src/openotherdialog.cpp" line="157"/>
         <source>Plasma</source>
         <translation>Plasma</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="93"/>
-        <location filename="../src/openotherdialog.cpp" line="155"/>
+        <location filename="../src/openotherdialog.cpp" line="97"/>
+        <location filename="../src/openotherdialog.cpp" line="159"/>
         <source>Color Bars</source>
         <translation>彩条</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="97"/>
-        <location filename="../src/openotherdialog.cpp" line="157"/>
+        <location filename="../src/openotherdialog.cpp" line="101"/>
+        <location filename="../src/openotherdialog.cpp" line="161"/>
         <source>Audio Tone</source>
         <translation>音频音调</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="101"/>
-        <location filename="../src/openotherdialog.cpp" line="159"/>
+        <location filename="../src/openotherdialog.cpp" line="105"/>
+        <location filename="../src/openotherdialog.cpp" line="163"/>
         <source>Count</source>
         <translation>计时</translation>
     </message>
@@ -4565,105 +4604,105 @@ p, li { white-space: pre-wrap; }
         <translation>锁定轨道</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="305"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="306"/>
         <source>Move clip</source>
         <translation>移动剪辑</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="331"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="332"/>
         <source>Trim clip in point</source>
         <translation>修剪剪辑入点</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="378"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="379"/>
         <source>Trim clip out point</source>
         <translation>修剪剪辑出点</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="423"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="424"/>
         <source>Split clip</source>
         <translation>切割剪辑</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="447"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="448"/>
         <source>Adjust fade in</source>
         <translation>调整淡入</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="480"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="481"/>
         <source>Adjust fade out</source>
         <translation>调整淡出</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="513"/>
-        <location filename="../src/commands/timelinecommands.cpp" line="628"/>
-        <location filename="../src/commands/timelinecommands.cpp" line="741"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="515"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="630"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="743"/>
         <source>Add transition</source>
         <translation>添加转场</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="541"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="543"/>
         <source>Trim transition in point</source>
         <translation>修剪转场入点</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="584"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="586"/>
         <source>Trim transition out point</source>
         <translation>修剪转场出点</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="670"/>
-        <location filename="../src/commands/timelinecommands.cpp" line="705"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="672"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="707"/>
         <source>Remove transition</source>
         <translation>移除转场</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="779"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="782"/>
         <source>Add video track</source>
         <translation>添加视频轨道</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="781"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="784"/>
         <source>Add audio track</source>
         <translation>添加音频轨道</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="806"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="809"/>
         <source>Insert audio track</source>
         <translation>插入音频轨道</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="808"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="811"/>
         <source>Insert video track</source>
         <translation>插入视频轨道</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="830"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="833"/>
         <source>Remove audio track</source>
         <translation>移除音频轨道</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="832"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="835"/>
         <source>Remove video track</source>
         <translation>移除视频轨道</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="879"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="882"/>
         <source>Change track blend mode</source>
         <translation>更改轨道混合模式</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="913"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="922"/>
         <source>Change clip properties</source>
         <translation>更改剪辑属性</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="946"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="955"/>
         <source>Detach Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2768"/>
+        <location filename="../src/mainwindow.cpp" line="2819"/>
         <source>You cannot add a project to itself!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4674,8 +4713,9 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/util.cpp" line="91"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="669"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="759"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="680"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="770"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="823"/>
         <source>Unable to write file %1
 Perhaps you do not have permission.
 Try again with a different folder.</source>
@@ -4700,6 +4740,7 @@ Try again with a different folder.</source>
     </message>
     <message>
         <location filename="../src/widgets/colorproducerwidget.cpp" line="25"/>
+        <location filename="../src/widgets/textproducerwidget.cpp" line="27"/>
         <source>transparent</source>
         <comment>Open Other &gt; Color</comment>
         <translation type="unfinished"></translation>
@@ -4833,52 +4874,52 @@ Try again with a different folder.</source>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="72"/>
         <source>Slide In From Left</source>
-        <translation type="unfinished"></translation>
+        <translation>从左划入</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="74"/>
         <source>Slide In From Right</source>
-        <translation type="unfinished"></translation>
+        <translation>从右划入</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="76"/>
         <source>Slide In From Top</source>
-        <translation type="unfinished"></translation>
+        <translation>从顶划入</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="78"/>
         <source>Slide In From Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>从底划入</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="82"/>
         <source>Slide Out Left</source>
-        <translation type="unfinished"></translation>
+        <translation>从左划出</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="84"/>
         <source>Slide Out Right</source>
-        <translation type="unfinished"></translation>
+        <translation>从右划出</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="86"/>
         <source>Slide Out Top</source>
-        <translation type="unfinished"></translation>
+        <translation>从顶划出</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="88"/>
         <source>Slide Out Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>从底划出</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="93"/>
         <source>Slow Zoom In</source>
-        <translation type="unfinished"></translation>
+        <translation>逐渐缩小</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="95"/>
         <source>Slow Zoom Out</source>
-        <translation type="unfinished"></translation>
+        <translation>逐渐缩小</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="97"/>
@@ -4921,80 +4962,222 @@ Try again with a different folder.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="235"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="123"/>
+        <source>Shake 1 Second - Scaled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="132"/>
+        <source>Shake 1 Second - Unscaled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="246"/>
         <source>Preset</source>
         <translation>预设</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="257"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="271"/>
         <source>Position</source>
         <translation>位置</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="297"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="315"/>
         <source>Size</source>
         <translation>大小</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="326"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="348"/>
         <source>Size mode</source>
         <translation>尺寸模式</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="331"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="353"/>
         <source>Fit</source>
         <translation>适合</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="340"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="362"/>
         <source>Fill</source>
         <translation>填充</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="349"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="371"/>
         <source>Distort</source>
         <translation>变形</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="366"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="388"/>
         <source>Horizontal fit</source>
         <translation>水平适合</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="371"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="393"/>
         <source>Left</source>
         <translation>左</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="378"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="400"/>
         <source>Center</source>
         <translation>中心</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="385"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="407"/>
         <source>Right</source>
         <translation>右</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="399"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="421"/>
         <source>Vertical fit</source>
         <translation>垂直适合</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="404"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="426"/>
         <source>Top</source>
         <translation>顶部</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="411"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="433"/>
         <source>Middle</source>
         <comment>Size and Position video filter</comment>
         <translation>中间</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="418"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="440"/>
         <source>Bottom</source>
         <translation>底部</translation>
+    </message>
+</context>
+<context>
+    <name>TextFilterUi</name>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="85"/>
+        <source>Bold</source>
+        <translation>粗体</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="87"/>
+        <source>Italic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="148"/>
+        <source>Font</source>
+        <translation>字体</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="185"/>
+        <source>Use font size</source>
+        <translation>使用字体大小</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="200"/>
+        <source>Outline</source>
+        <translation>轮廓</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="210"/>
+        <source>Thickness</source>
+        <translation>宽度</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="224"/>
+        <source>Background</source>
+        <translation>背景</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="234"/>
+        <source>Padding</source>
+        <translation>间距</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="248"/>
+        <source>Position</source>
+        <translation>位置</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="292"/>
+        <source>Size</source>
+        <translation>大小</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="325"/>
+        <source>Horizontal fit</source>
+        <translation>水平适合</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="330"/>
+        <source>Left</source>
+        <translation>左</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="336"/>
+        <source>Center</source>
+        <translation>中心</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="342"/>
+        <source>Right</source>
+        <translation>右</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="355"/>
+        <source>Vertical fit</source>
+        <translation>垂直适合</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="360"/>
+        <source>Top</source>
+        <translation>顶部</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="366"/>
+        <source>Middle</source>
+        <comment>Text video filter</comment>
+        <translation>中间</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="372"/>
+        <source>Bottom</source>
+        <translation>底部</translation>
+    </message>
+</context>
+<context>
+    <name>TextProducerWidget</name>
+    <message>
+        <location filename="../src/widgets/textproducerwidget.ui" line="14"/>
+        <source>Form</source>
+        <translation>表单</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/textproducerwidget.ui" line="26"/>
+        <source>Text</source>
+        <translation>文本</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/textproducerwidget.ui" line="39"/>
+        <source>Type or paste the text here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/textproducerwidget.ui" line="48"/>
+        <source>Background color...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/textproducerwidget.ui" line="61"/>
+        <source>#00000000</source>
+        <translation>#00000000</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/textproducerwidget.ui" line="86"/>
+        <source>Text attributes are available in the &lt;b&gt;Filters&lt;/b&gt; panel after clicking &lt;b&gt;OK&lt;b&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/textproducerwidget.cpp" line="91"/>
+        <source>Edit your text using the Filters panel.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5049,22 +5232,22 @@ Try again with a different folder.</source>
         <translation>时间线</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="153"/>
+        <location filename="../src/docks/timelinedock.cpp" line="154"/>
         <source>This track is locked</source>
         <translation>此轨道已经锁定</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="365"/>
+        <location filename="../src/docks/timelinedock.cpp" line="366"/>
         <source>Failed to open </source>
-        <translation type="unfinished">打开失败</translation>
+        <translation>打开失败</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="368"/>
-        <source>You must save to Copy Timline to Source.</source>
+        <location filename="../src/docks/timelinedock.cpp" line="369"/>
+        <source>You must save to Copy Timeline to Source.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="934"/>
+        <location filename="../src/docks/timelinedock.cpp" line="933"/>
         <source>You cannot split a transition.</source>
         <translation>您不能切割一个转场。</translation>
     </message>
@@ -5134,7 +5317,7 @@ Try again with a different folder.</source>
 <context>
     <name>TimelineToolbar</name>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="106"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="105"/>
         <source>Toggle snapping</source>
         <translation>切换吸附</translation>
     </message>
@@ -5144,75 +5327,75 @@ Try again with a different folder.</source>
         <translation>拖曳时预览播放</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="124"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="125"/>
         <source>Ripple trim and drop</source>
         <translation>波纹式修剪与插入</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="125"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="126"/>
         <source>Ripple</source>
         <translation>波纹</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="174"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="176"/>
         <source>Display a menu of additional actions</source>
         <translation>显示附加操作菜单</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="182"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="184"/>
         <source>Cut - Copy the current clip to the Source
 player and ripple delete it</source>
         <translation>剪切 - 将目前的剪辑复制至 [源] 播放器，
 并进行波纹式删除</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="191"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="193"/>
         <source>Copy - Copy the current clip to the Source player (C)</source>
         <translation>复制 - 复制目前的短片至 [源] 播放器 (C)</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="200"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="202"/>
         <source>Paste - Insert clip into the current track
 shifting following clips to the right (V)</source>
         <translation>粘贴 - 将剪辑插入目前的轨道，
 其后剪辑顺次向右位移 (V)</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="208"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="210"/>
         <source>Append to the current track (A)</source>
         <translation>追加到当前轨道末尾（A）</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="216"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="218"/>
         <source>Ripple Delete - Remove current clip
 shifting following clips to the left (X)</source>
         <translation>波纹式删除 - 移除当前剪辑
 其后续剪辑顺次向左位移 (X)</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="224"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="226"/>
         <source>Lift - Remove current clip without
 affecting position of other clips (Z)</source>
         <translation>提取 - 移除当前剪辑，而不
 影响其他剪辑的位置 (Z)</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="232"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="234"/>
         <source>Overwrite clip onto the current track (B)</source>
         <translation>覆盖剪辑到当前轨道 (B)</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="240"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="242"/>
         <source>Split At Playhead (S)</source>
         <translation>于播放点处切割</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="248"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="250"/>
         <source>Zoom timeline out (-)</source>
         <translation>缩小时间轴 （-）</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="256"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="258"/>
         <source>Zoom timeline in (+)</source>
         <translation>放大时间轴（+）</translation>
     </message>
@@ -5278,29 +5461,19 @@ affecting position of other clips (Z)</source>
         <translation>隐藏</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TrackHead.qml" line="167"/>
-        <source>Disable compositing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/timeline/TrackHead.qml" line="167"/>
-        <source>Enable compositing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/timeline/TrackHead.qml" line="177"/>
+        <location filename="../src/qml/timeline/TrackHead.qml" line="164"/>
         <source>Unlock track</source>
         <translation>解锁轨道</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TrackHead.qml" line="177"/>
+        <location filename="../src/qml/timeline/TrackHead.qml" line="164"/>
         <source>Lock track</source>
         <translation>锁定轨道</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TrackHead.qml" line="187"/>
+        <location filename="../src/qml/timeline/TrackHead.qml" line="174"/>
         <source>Filters</source>
-        <translation type="unfinished">滤镜</translation>
+        <translation>滤镜</translation>
     </message>
 </context>
 <context>
@@ -5322,86 +5495,93 @@ affecting position of other clips (Z)</source>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="44"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="76"/>
+        <source>None</source>
+        <translation>无</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="45"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="77"/>
         <source>Over</source>
         <translation>正常</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="45"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="46"/>
         <source>Add</source>
         <translation>添加...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="46"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="47"/>
         <source>Saturate</source>
         <translation>饱和</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="47"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="48"/>
         <source>Multiply</source>
         <translation>正片叠底</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="48"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="49"/>
         <source>Screen</source>
         <translation>屏幕</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="49"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="50"/>
         <source>Overlay</source>
         <translation>覆盖</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="50"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="51"/>
         <source>Darken</source>
         <translation>变暗</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="51"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="52"/>
         <source>Dodge</source>
         <translation>颜色减淡</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="52"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="53"/>
         <source>Burn</source>
         <translation>颜色加深</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="53"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="54"/>
         <source>Hard Light</source>
         <translation>强光</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="54"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="55"/>
         <source>Soft Light</source>
         <translation>柔光</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="55"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="56"/>
         <source>Difference</source>
         <translation>差值</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="56"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="57"/>
         <source>Exclusion</source>
         <translation>排除</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="57"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="58"/>
         <source>HSL Hue</source>
         <translation>HSL 色相</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="58"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="59"/>
         <source>HSL Saturation</source>
         <translation>HSL 饱和度</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="59"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="60"/>
         <source>HSL Color</source>
         <translation>HSL 颜色</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="60"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="61"/>
         <source>HSL Luminosity</source>
         <translation>HSL 明度</translation>
     </message>
@@ -5886,27 +6066,27 @@ Most users do not need to change this.</source>
 <context>
     <name>filterview</name>
     <message>
-        <location filename="../src/qml/views/filter/filterview.qml" line="113"/>
+        <location filename="../src/qml/views/filter/filterview.qml" line="114"/>
         <source>Nothing selected</source>
         <translation>未选中</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/filterview.qml" line="125"/>
+        <location filename="../src/qml/views/filter/filterview.qml" line="126"/>
         <source>Add a filter</source>
         <translation>添加一个滤镜</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/filterview.qml" line="134"/>
+        <location filename="../src/qml/views/filter/filterview.qml" line="135"/>
         <source>Remove selected filter</source>
         <translation>移除选定滤镜</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/filterview.qml" line="151"/>
+        <location filename="../src/qml/views/filter/filterview.qml" line="152"/>
         <source>Copy the filters</source>
         <translation>复制滤镜</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/filterview.qml" line="161"/>
+        <location filename="../src/qml/views/filter/filterview.qml" line="162"/>
         <source>Paste filters</source>
         <translation>粘贴滤镜</translation>
     </message>
@@ -6144,6 +6324,7 @@ Most users do not need to change this.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/meta.qml" line="18"/>
+        <location filename="../src/qml/filters/timer/meta.qml" line="18"/>
         <source>Position / Size</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6328,6 +6509,11 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/rotate/meta.qml" line="35"/>
         <source>Y offset</source>
         <translation>Y 偏移</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/timer/meta.qml" line="7"/>
+        <source>Timer</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/unpremultiply/meta.qml" line="23"/>
@@ -6671,82 +6857,87 @@ Most users do not need to change this.</source>
 <context>
     <name>timeline</name>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="137"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="140"/>
         <source>Master</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="154"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="157"/>
         <source>Filters</source>
-        <translation type="unfinished">滤镜</translation>
+        <translation>滤镜</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="335"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="338"/>
         <source>Insert</source>
         <translation>插入</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="335"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="338"/>
         <source>Overwrite</source>
         <translation>覆盖</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="399"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="402"/>
         <source>Add Audio Track</source>
         <translation>添加音频轨道</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="404"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="407"/>
         <source>Add Video Track</source>
         <translation>添加视频轨道</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="409"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="412"/>
         <source>Insert Track</source>
         <translation>插入轨道</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="413"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="416"/>
         <source>Remove Track</source>
         <translation>移除轨道</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="418"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="421"/>
         <source>Ripple All Tracks</source>
         <translation>波纹所有轨道</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="424"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="428"/>
         <source>Copy Timeline to Source</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="430"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="434"/>
         <source>Make Tracks Shorter</source>
         <translation>减小轨道显示高度</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="435"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="439"/>
         <source>Make Tracks Taller</source>
         <translation>增大轨道显示高度</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="440"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="444"/>
+        <source>Reset Track Height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/timeline/timeline.qml" line="449"/>
         <source>Show Audio Waveforms</source>
         <translation>显示音频波形</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="460"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="469"/>
         <source>Show Video Thumbnails</source>
         <translation>显示视频缩略图</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="468"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="477"/>
         <source>Properties</source>
         <translation>属性</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="472"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="481"/>
         <source>Reload</source>
         <translation>重新载入</translation>
     </message>
@@ -6856,7 +7047,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="53"/>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="59"/>
         <location filename="../src/qml/filters/crop/ui.qml" line="175"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="517"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="523"/>
         <source>Left</source>
         <translation>左</translation>
     </message>
@@ -6867,7 +7058,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="60"/>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="59"/>
         <location filename="../src/qml/filters/crop/ui.qml" line="192"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="529"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="535"/>
         <source>Right</source>
         <translation>右</translation>
     </message>
@@ -6888,7 +7079,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/contrast/ui.qml" line="144"/>
         <location filename="../src/qml/filters/crop/ui.qml" line="83"/>
         <location filename="../src/qml/filters/dust/ui.qml" line="48"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="257"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="260"/>
         <location filename="../src/qml/filters/grain/ui.qml" line="49"/>
         <location filename="../src/qml/filters/hue_lightness_saturation/ui.qml" line="54"/>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="99"/>
@@ -6903,9 +7094,10 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/sketch/ui.qml" line="53"/>
         <location filename="../src/qml/filters/smartblur/ui.qml" line="58"/>
         <location filename="../src/qml/filters/tcolor/ui.qml" line="48"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="110"/>
         <location filename="../src/qml/filters/wave/ui.qml" line="44"/>
         <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="62"/>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="70"/>
+        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="69"/>
         <location filename="../src/qml/filters/white/ui.qml" line="66"/>
         <source>Preset</source>
         <translation>预设</translation>
@@ -6980,7 +7172,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="34"/>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="34"/>
         <location filename="../src/qml/filters/crop/ui.qml" line="102"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="523"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="529"/>
         <source>Center</source>
         <translation>中心</translation>
     </message>
@@ -7133,6 +7325,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/fadein_movit/ui.qml" line="55"/>
         <location filename="../src/qml/filters/fadeout_brightness/ui.qml" line="61"/>
         <location filename="../src/qml/filters/fadeout_movit/ui.qml" line="60"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="192"/>
         <source>Duration</source>
         <translation>时长</translation>
     </message>
@@ -7423,30 +7616,32 @@ Most users do not need to change this.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="141"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="547"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="553"/>
         <source>Top</source>
         <translation>顶部</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="158"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="559"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="565"/>
         <source>Bottom</source>
         <translation>底部</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dust/ui.qml" line="59"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="479"/>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="148"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="485"/>
+        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="152"/>
         <source>Size</source>
         <translation>大小</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="62"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="53"/>
         <source>Bottom Left</source>
         <translation>左下</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="67"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="58"/>
         <source>Bottom Right</source>
         <translation>右下</translation>
     </message>
@@ -7468,52 +7663,52 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="87"/>
         <source>Slide In From Left</source>
-        <translation type="unfinished"></translation>
+        <translation>从左划入</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="89"/>
         <source>Slide In From Right</source>
-        <translation type="unfinished"></translation>
+        <translation>从右划入</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="91"/>
         <source>Slide In From Top</source>
-        <translation type="unfinished"></translation>
+        <translation>从顶划入</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="93"/>
         <source>Slide In From Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>从底划入</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="97"/>
         <source>Slide Out Left</source>
-        <translation type="unfinished"></translation>
+        <translation>从左划出</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="99"/>
         <source>Slide Out Right</source>
-        <translation type="unfinished"></translation>
+        <translation>从右划出</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="101"/>
         <source>Slide Out Top</source>
-        <translation type="unfinished"></translation>
+        <translation>从顶划出</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="103"/>
         <source>Slide Out Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>从底划出</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="107"/>
         <source>Slow Zoom In</source>
-        <translation type="unfinished"></translation>
+        <translation>逐渐放大</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="109"/>
         <source>Slow Zoom Out</source>
-        <translation type="unfinished"></translation>
+        <translation>逐渐缩小</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="111"/>
@@ -7556,102 +7751,102 @@ Most users do not need to change this.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="190"/>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="115"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="193"/>
+        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="119"/>
         <source>Bold</source>
         <translation>粗体</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="192"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="195"/>
         <source>Italic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="280"/>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="82"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="286"/>
+        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="81"/>
         <source>Text</source>
         <translation>文本</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="307"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="313"/>
         <source>Insert field</source>
         <translation>插入字段</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="313"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="319"/>
         <source># (Hash sign)</source>
         <translation>#（哈希签名）</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="317"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="323"/>
         <source>Timecode</source>
         <translation>时间码</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="321"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="327"/>
         <source>Frame #</source>
         <comment>Frame number</comment>
         <translation>帧 #</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="325"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="331"/>
         <source>File date</source>
         <translation>文件日期</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="329"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="335"/>
         <source>File name</source>
         <translation>文件名称</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="335"/>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="95"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="341"/>
+        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="94"/>
         <source>Font</source>
         <translation>字体</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="372"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="378"/>
         <source>Use font size</source>
-        <translation type="unfinished"></translation>
+        <translation>使用字体大小</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="387"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="393"/>
         <source>Outline</source>
         <translation>轮廓</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="397"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="403"/>
         <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="91"/>
         <source>Thickness</source>
         <translation>宽度</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="411"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="417"/>
         <source>Background</source>
         <translation>背景</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="421"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="427"/>
         <source>Padding</source>
         <translation>间距</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="435"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="441"/>
         <source>Position</source>
         <translation>位置</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="512"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="518"/>
         <source>Horizontal fit</source>
         <translation>水平适合</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="542"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="548"/>
         <source>Vertical fit</source>
         <translation>垂直适合</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="553"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="559"/>
         <source>Middle</source>
         <comment>Text video filter</comment>
         <translation>中间</translation>
@@ -7678,7 +7873,7 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/hue_lightness_saturation/ui.qml" line="65"/>
         <source>Hue</source>
-        <translation type="unfinished"></translation>
+        <translation>色调</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/hue_lightness_saturation/ui.qml" line="80"/>
@@ -7918,17 +8113,17 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="197"/>
         <source>Rectangle</source>
-        <translation type="unfinished"></translation>
+        <translation>长方形</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="197"/>
         <source>Ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>椭圆形</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="197"/>
         <source>Triangle</source>
-        <translation type="unfinished"></translation>
+        <translation>三角形</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="197"/>
@@ -7938,13 +8133,13 @@ Click &quot;Open&quot; to load a file.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="206"/>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="198"/>
+        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="202"/>
         <source>Horizontal</source>
         <translation>水平</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="227"/>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="215"/>
+        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="219"/>
         <source>Vertical</source>
         <translation>垂直</translation>
     </message>
@@ -8134,17 +8329,17 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/sketch/ui.qml" line="64"/>
         <source>Line Width</source>
-        <translation type="unfinished"></translation>
+        <translation>线宽</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sketch/ui.qml" line="81"/>
         <source>Line Height</source>
-        <translation type="unfinished"></translation>
+        <translation>线高</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sketch/ui.qml" line="116"/>
         <location filename="../src/qml/filters/webvfx_circular_frame/ui.qml" line="133"/>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="127"/>
+        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="131"/>
         <source>Color</source>
         <translation>颜色</translation>
     </message>
@@ -8332,7 +8527,7 @@ Click &quot;Open&quot; to load a file.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="123"/>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="164"/>
+        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="168"/>
         <source>Depth</source>
         <translation>深度</translation>
     </message>
@@ -8347,17 +8542,17 @@ Click &quot;Open&quot; to load a file.</source>
         <translation>Y 轴旋转</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="33"/>
+        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="32"/>
         <source>3D Text</source>
         <translation>3D 文本</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="122"/>
+        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="126"/>
         <source>Beveled</source>
         <translation>斜</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="181"/>
+        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="185"/>
         <source>Tilt</source>
         <translation>倾斜</translation>
     </message>
@@ -8370,6 +8565,71 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/white/ui.qml" line="103"/>
         <source>Color temperature</source>
         <translation>色温</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/timer/ui.qml" line="132"/>
+        <source>Format</source>
+        <translation>格式</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/timer/ui.qml" line="138"/>
+        <source>HH:MM:SS</source>
+        <translation>时.分.秒</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/timer/ui.qml" line="139"/>
+        <source>HH:MM:SS.S</source>
+        <translation>时.分.秒.毫秒</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/timer/ui.qml" line="140"/>
+        <source>MM:SS</source>
+        <translation>分.秒</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/timer/ui.qml" line="141"/>
+        <source>SS</source>
+        <translation>秒</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/timer/ui.qml" line="142"/>
+        <source>SS.S</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/timer/ui.qml" line="143"/>
+        <source>SS.SS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/timer/ui.qml" line="151"/>
+        <source>Direction</source>
+        <translation>方向</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/timer/ui.qml" line="157"/>
+        <source>Up</source>
+        <translation>正计时</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/timer/ui.qml" line="158"/>
+        <source>Down</source>
+        <translation>倒计时</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/timer/ui.qml" line="166"/>
+        <source>Start</source>
+        <translation>开始</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/timer/ui.qml" line="184"/>
+        <source>Set start to current position</source>
+        <translation>设置当前位置为开始</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/timer/ui.qml" line="210"/>
+        <source>Set end to current position</source>
+        <translation>设置当前位置为结束</translation>
     </message>
 </context>
 <context>
@@ -8402,7 +8662,7 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="37"/>
         <source>Grayscale</source>
-        <translation type="unfinished"></translation>
+        <translation>灰度图像</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="121"/>
@@ -8478,7 +8738,7 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/saturation/ui_movit.qml" line="36"/>
         <source>Grayscale</source>
-        <translation type="unfinished"></translation>
+        <translation>灰度图像</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="155"/>
@@ -8569,7 +8829,7 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="136"/>
         <source>Background Color</source>
-        <translation type="unfinished"></translation>
+        <translation>背景颜色</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="148"/>
