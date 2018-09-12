@@ -404,8 +404,8 @@ bool MultitrackModel::trimClipInValid(int trackIndex, int clipIndex, int delta, 
 int MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta, bool ripple)
 {
     int result = clipIndex;
-    QList<int> tracksToRemoveRegionFrom;
-    int whereToRemoveRegion = -1;
+    QList<int> otherTracksToRipple;
+    int otherTracksPosition = -1;
 
     for (int i = 0; i < m_trackList.count(); ++i) {
         int mltIndex = m_trackList.at(i).mlt_index;
@@ -422,7 +422,7 @@ int MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta, bool r
                 continue;
 
             if (trackIndex != i && ripple) {
-                tracksToRemoveRegionFrom << i;
+                otherTracksToRipple << i;
                 continue;
             }
         }
@@ -430,8 +430,8 @@ int MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta, bool r
         Mlt::Playlist playlist(*track);
         QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
 
-        Q_ASSERT(whereToRemoveRegion == -1);
-        whereToRemoveRegion = info->start + delta;
+        Q_ASSERT(otherTracksPosition == -1);
+        otherTracksPosition = info->start;
 
         if (info->frame_in + delta < 0)
              // clamp to clip start
@@ -481,9 +481,13 @@ int MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta, bool r
         }
         emit modified();
     }
-    foreach (int idx, tracksToRemoveRegionFrom) {
-        Q_ASSERT(whereToRemoveRegion != -1);
-        removeRegion(idx, whereToRemoveRegion - delta, delta);
+    if (delta > 0) {
+        foreach (int idx, otherTracksToRipple) {
+            Q_ASSERT(otherTracksPosition != -1);
+            removeRegion(idx, otherTracksPosition, delta);
+        }
+    } else {
+        insertOrAdjustBlankAt(otherTracksToRipple, otherTracksPosition, -delta);
     }
     return result;
 }
@@ -548,9 +552,9 @@ void MultitrackModel::setScaleFactor(double scale)
 
 int MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta, bool ripple)
 {
-    QList<int> tracksToRemoveRegionFrom;
+    QList<int> otherTracksToRipple;
     int result = clipIndex;
-    int whereToRemoveRegion = -1;
+    int otherTracksPosition = -1;
 
     for (int i = 0; i < m_trackList.count(); ++i) {
         int mltIndex = m_trackList.at(i).mlt_index;
@@ -570,13 +574,13 @@ int MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta, bool 
                 continue;
 
             if (trackIndex != i && ripple) {
-                tracksToRemoveRegionFrom << i;
+                otherTracksToRipple << i;
                 continue;
             }
         }
 
-        Q_ASSERT(whereToRemoveRegion == -1);
-        whereToRemoveRegion = info->start + info->frame_count - delta;
+        Q_ASSERT(otherTracksPosition == -1);
+        otherTracksPosition = info->start + info->frame_count - delta;
 
         if ((info->frame_out - delta) >= info->length)
              // clamp to clip duration
@@ -624,9 +628,13 @@ int MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta, bool 
         emit dataChanged(index, index, roles);
         emit modified();
     }
-    foreach (int idx, tracksToRemoveRegionFrom) {
-        Q_ASSERT(whereToRemoveRegion != -1);
-        removeRegion(idx, whereToRemoveRegion, delta);
+    if (delta > 0) {
+        foreach (int idx, otherTracksToRipple) {
+            Q_ASSERT(otherTracksPosition != -1);
+            removeRegion(idx, otherTracksPosition, delta);
+        }
+    } else {
+        insertOrAdjustBlankAt(otherTracksToRipple, otherTracksPosition, -delta);
     }
     return result;
 }
@@ -2710,9 +2718,7 @@ void MultitrackModel::removeRegion(int trackIndex, int position, int length)
                 if (clipIndex < playlist.count()) {
                     // Shotcut does not like the behavior of remove() on a
                     // transition (MLT mix clip). So, we null mlt_mix to prevent it.
-                    QScopedPointer<Mlt::Producer> producer(playlist.get_clip(clipIndex));
-                    if (producer)
-                        producer->parent().set("mlt_mix", NULL, 0);
+                    clearMixReferences(trackIndex, clipIndex);
                     beginRemoveRows(index(trackIndex), clipIndex, clipIndex);
                     playlist.remove(clipIndex);
                     endRemoveRows();
