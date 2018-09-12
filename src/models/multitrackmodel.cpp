@@ -1142,6 +1142,7 @@ void MultitrackModel::removeClip(int trackIndex, int clipIndex)
                     removeRegion(j, clipStart, clipPlaytime);
                 }
             }
+            consolidateBlanks(playlist, trackIndex);
             emit modified();
         }
     }
@@ -2409,13 +2410,13 @@ void MultitrackModel::consolidateBlanks(Mlt::Playlist &playlist, int trackIndex)
             playlist.remove(i--);
             endRemoveRows();
         }
-        if (playlist.count() > 0) {
-            int i = playlist.count() - 1;
-            if (playlist.is_blank(i)) {
-                beginRemoveRows(index(trackIndex), i, i);
-                playlist.remove(i);
-                endRemoveRows();
-            }
+    }
+    if (playlist.count() > 0) {
+        int i = playlist.count() - 1;
+        if (playlist.is_blank(i)) {
+            beginRemoveRows(index(trackIndex), i, i);
+            playlist.remove(i);
+            endRemoveRows();
         }
     }
     if (playlist.count() == 0) {
