@@ -83,6 +83,8 @@ Section "Install Program Files"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Shotcut" "DisplayName" "Shotcut"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Shotcut" "DisplayVersion" "18.09.13"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Shotcut" "UninstallString" '"$INSTDIR\uninstall.exe"'
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Shotcut" "DisplayIcon" '"$INSTDIR\shotcut.exe"'
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Shotcut" "Publisher" "Meltytech, LLC"
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Shotcut" "NoModify" 1
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Shotcut" "NoRepair" 1
   WriteUninstaller "uninstall.exe"
