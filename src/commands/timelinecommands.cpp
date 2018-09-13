@@ -828,24 +828,29 @@ RemoveTrackCommand::RemoveTrackCommand(MultitrackModel& model, int trackIndex, Q
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_trackType(model.trackList().at(trackIndex).type)
+    , m_undoHelper(model)
 {
     if (m_trackType == AudioTrackType)
         setText(QObject::tr("Remove audio track"));
     else if (m_trackType == VideoTrackType)
         setText(QObject::tr("Remove video track"));
 
-    // Save track XML.
+    // Save track name.
     int mlt_index = m_model.trackList().at(m_trackIndex).mlt_index;
     QScopedPointer<Mlt::Producer> producer(m_model.tractor()->multitrack()->track(mlt_index));
-    if (producer && producer->is_valid()) {
-        m_xml = MLT.XML(producer.data());
+    if (producer && producer->is_valid())
         m_trackName = QString::fromUtf8(producer->get(kTrackNameProperty));
-    }
 }
 
 void RemoveTrackCommand::redo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "type" << (m_trackType == AudioTrackType? "audio" : "video");
+    m_undoHelper.recordBeforeState();
+    int mlt_index = m_model.trackList().at(m_trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> producer(m_model.tractor()->multitrack()->track(mlt_index));
+    Mlt::Playlist playlist(*producer);
+    playlist.clear();
+    m_undoHelper.recordAfterState();
     m_model.removeTrack(m_trackIndex);
 }
 
@@ -855,21 +860,18 @@ void RemoveTrackCommand::undo()
     m_model.insertTrack(m_trackIndex, m_trackType);
     m_model.setTrackName(m_trackIndex, m_trackName);
 
-    // Restore track from XML.
-    Mlt::Producer producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
-    Mlt::Playlist playlist(producer);
-    m_model.appendFromPlaylist(&playlist, m_trackIndex);
+    // Restore track contents from UndoHelper.
+    m_undoHelper.undoChanges();
 
     // Re-attach filters.
+    int mlt_index = m_model.trackList().at(m_trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> producer(m_model.tractor()->multitrack()->track(mlt_index));
+    Mlt::Playlist playlist(*producer);
     int n = playlist.filter_count();
-    if (n > 0) {
-        int mlt_index = m_model.trackList().at(m_trackIndex).mlt_index;
-        QScopedPointer<Mlt::Producer> producer(m_model.tractor()->multitrack()->track(mlt_index));
-        for (int i = 0; i < n; ++i) {
-            QScopedPointer<Mlt::Filter> filter(playlist.filter(i));
-            if (filter && filter->is_valid())
-                producer->attach(*filter);
-        }
+    for (int i = 0; i < n; ++i) {
+        QScopedPointer<Mlt::Filter> filter(playlist.filter(i));
+        if (filter && filter->is_valid())
+            producer->attach(*filter);
     }
 }
 

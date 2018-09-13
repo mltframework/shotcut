@@ -447,9 +447,9 @@ public:
 private:
     MultitrackModel& m_model;
     int m_trackIndex;
-    QString m_xml;
     TrackType m_trackType;
     QString m_trackName;
+    UndoHelper m_undoHelper;
 };
 
 class ChangeBlendModeCommand : public QObject, public QUndoCommand

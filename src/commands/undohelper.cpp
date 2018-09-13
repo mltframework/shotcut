@@ -224,7 +224,6 @@ void UndoHelper::undoChanges()
         for (int i = playlist.count() - 1; i >= 0; --i) {
             QScopedPointer<Mlt::Producer> clip(playlist.get_clip(i));
             QUuid uid = MLT.uuid(*clip);
-            Q_ASSERT(!uid.isNull());
             if (m_clipsAdded.removeOne(uid)) {
                 UNDOLOG << "Removing clip at" << i;
                 m_model.beginRemoveRows(m_model.index(trackIndex), i, i);
