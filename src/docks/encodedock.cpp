@@ -765,13 +765,13 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                 if (qRound(ui->fpsSpinner->value() * 1000000.0) == 23976024) {
                     p->set("frame_rate_num", 24000);
                     p->set("frame_rate_den", 1001);
-                } else if (qFloor(ui->fpsSpinner->value() * 1000000.0) == 299700299) {
+                } else if (qRound(ui->fpsSpinner->value() * 100000.0) == 2997003) {
                     p->set("frame_rate_num", 30000);
                     p->set("frame_rate_den", 1001);
                 } else if (qRound(ui->fpsSpinner->value() * 1000000.0) == 47952048) {
                     p->set("frame_rate_num", 48000);
                     p->set("frame_rate_den", 1001);
-                } else if (qFloor(ui->fpsSpinner->value() * 1000000.0) == 599400599) {
+                } else if (qRound(ui->fpsSpinner->value() * 100000.0) == 5994006) {
                     p->set("frame_rate_num", 60000);
                     p->set("frame_rate_den", 1001);
                 } else {
