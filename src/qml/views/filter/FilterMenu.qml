@@ -18,11 +18,13 @@
 import QtQuick 2.2
 import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.1
+import QtGraphicalEffects 1.0
 import org.shotcut.qml 1.0 as Shotcut
 
 Rectangle {
     id: filterWindow
     visible: false
+    property color checkedColor: Qt.rgba(activePalette.highlight.r, activePalette.highlight.g, activePalette.highlight.b, 0.4)
 
     signal filterSelected(int index)
 
@@ -172,6 +174,27 @@ Rectangle {
                 iconSource: 'qrc:///icons/oxygen/32x32/actions/window-close.png'
                 tooltip: qsTr('Close menu')
                 onClicked: filterWindow.close()
+            }
+            ColorOverlay {
+                visible: favButton.checked
+                anchors.fill: favButton
+                source: favButton
+                color: checkedColor
+                cached: true
+            }
+            ColorOverlay {
+                visible: vidButton.checked
+                anchors.fill: vidButton
+                source: vidButton
+                color: checkedColor
+                cached: true
+            }
+            ColorOverlay {
+                visible: audButton.checked
+                anchors.fill: audButton
+                source: audButton
+                color: checkedColor
+                cached: true
             }
 
             Item {
