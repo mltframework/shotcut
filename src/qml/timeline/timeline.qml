@@ -80,7 +80,6 @@ Rectangle {
     property alias trackCount: tracksRepeater.count
     property bool stopScrolling: false
     property color shotcutBlue: Qt.rgba(23/255, 92/255, 118/255, 1.0)
-    property alias ripple: toolbar.ripple
 
     onCurrentTrackChanged: timeline.selection = []
 
@@ -335,7 +334,7 @@ Rectangle {
         Text {
             anchors.fill: parent
             anchors.leftMargin: 100
-            text: toolbar.ripple? qsTr('Insert') : qsTr('Overwrite')
+            text: settings.timelineRipple? qsTr('Insert') : qsTr('Overwrite')
             style: Text.Outline
             styleColor: 'white'
             font.pixelSize: Math.min(Math.max(parent.height * 0.8, 15), 30)

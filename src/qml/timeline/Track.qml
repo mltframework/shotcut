@@ -106,7 +106,7 @@ Rectangle {
                     else
                         trackModel.items.remove(clipIndex, 1)
                 }
-                if (!timeline.moveClip(fromTrack, toTrack, clipIndex, frame, toolbar.ripple))
+                if (!timeline.moveClip(fromTrack, toTrack, clipIndex, frame, settings.timelineRipple))
                     clip.x = clip.originalX
             }
             onDragged: {
@@ -115,7 +115,7 @@ Rectangle {
                     timeline.position = Math.round(clip.x / timeScale)
                 }
                 // Snap if Alt key is not down.
-                if (!(mouse.modifiers & Qt.AltModifier) && toolbar.snap)
+                if (!(mouse.modifiers & Qt.AltModifier) && settings.timelineSnap)
                     trackRoot.checkSnap(clip)
                 // Prevent dragging left of multitracks origin.
                 clip.x = Math.max(0, clip.x)
@@ -124,11 +124,11 @@ Rectangle {
             }
             onTrimmingIn: {
                 var originalDelta = delta
-                if (!(mouse.modifiers & Qt.AltModifier) && toolbar.snap && !toolbar.ripple)
+                if (!(mouse.modifiers & Qt.AltModifier) && settings.timelineSnap && !settings.timelineRipple)
                     delta = Logic.snapTrimIn(clip, delta, root, trackRoot.DelegateModel.itemsIndex)
                 if (delta != 0) {
                     if (timeline.trimClipIn(trackRoot.DelegateModel.itemsIndex,
-                                            clip.DelegateModel.itemsIndex, delta, toolbar.ripple)) {
+                                            clip.DelegateModel.itemsIndex, delta, settings.timelineRipple)) {
                         // Show amount trimmed as a time in a "bubble" help.
                         var s = application.timecode(Math.abs(clip.originalX))
                         s = '%1%2 = %3'.arg((clip.originalX < 0)? '-' : (clip.originalX > 0)? '+' : '')
@@ -150,11 +150,11 @@ Rectangle {
             }
             onTrimmingOut: {
                 var originalDelta = delta
-                if (!(mouse.modifiers & Qt.AltModifier) && toolbar.snap && !toolbar.ripple)
+                if (!(mouse.modifiers & Qt.AltModifier) && settings.timelineSnap && !settings.timelineRipple)
                     delta = Logic.snapTrimOut(clip, delta, root, trackRoot.DelegateModel.itemsIndex)
                 if (delta != 0) {
                     if (timeline.trimClipOut(trackRoot.DelegateModel.itemsIndex,
-                                             clip.DelegateModel.itemsIndex, delta, toolbar.ripple)) {
+                                             clip.DelegateModel.itemsIndex, delta, settings.timelineRipple)) {
                         // Show amount trimmed as a time in a "bubble" help.
                         var s = application.timecode(Math.abs(clip.originalX))
                         s = '%1%2 = %3'.arg((clip.originalX < 0)? '+' : (clip.originalX > 0)? '-' : '')

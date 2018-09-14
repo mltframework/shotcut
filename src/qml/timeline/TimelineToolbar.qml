@@ -21,9 +21,7 @@ import QtQuick.Layouts 1.0
 import QtGraphicalEffects 1.0
 
 ToolBar {
-    property alias ripple: rippleButton.checked
     property alias scrub: scrubButton.checked
-    property alias snap: snapButton.checked
     property color checkedColor: Qt.rgba(activePalette.highlight.r, activePalette.highlight.g, activePalette.highlight.b, 0.4)
     property alias scaleSlider: scaleSlider
 

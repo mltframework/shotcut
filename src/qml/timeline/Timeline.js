@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2013-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -75,7 +74,7 @@ function dragging(pos, duration) {
             timeline.position = Math.round(
                 (pos.x + scrollView.flickableItem.contentX - headerWidth) / multitrack.scaleFactor)
         }
-        if (toolbar.snap) {
+        if (settings.timelineSnap) {
             for (i = 0; i < tracksRepeater.count; i++)
                 tracksRepeater.itemAt(i).snapDrop(pos)
         }
@@ -89,7 +88,7 @@ function dropped() {
 
 function acceptDrop(xml) {
     var position = Math.round((dropTarget.x + scrollView.flickableItem.contentX - headerWidth) / multitrack.scaleFactor)
-    if (toolbar.ripple)
+    if (settings.timelineRipple)
         timeline.insert(currentTrack, position, xml)
     else
         timeline.overwrite(currentTrack, position, xml)
