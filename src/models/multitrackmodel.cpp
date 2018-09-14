@@ -43,6 +43,7 @@ MultitrackModel::MultitrackModel(QObject *parent)
 {
     connect(this, SIGNAL(modified()), SLOT(adjustBackgroundDuration()));
     connect(this, SIGNAL(modified()), SLOT(adjustTrackFilters()));
+    connect(this, SIGNAL(reloadRequested()), SLOT(reload()), Qt::QueuedConnection);
 }
 
 MultitrackModel::~MultitrackModel()
@@ -3090,13 +3091,17 @@ void MultitrackModel::load()
     emit filteredChanged();
 }
 
-void MultitrackModel::reload()
+void MultitrackModel::reload(bool asynchronous)
 {
     if (m_tractor) {
-        beginResetModel();
-        endResetModel();
-        getAudioLevels();
-        emit filteredChanged();
+        if (asynchronous) {
+            emit reloadRequested();
+        } else {
+            beginResetModel();
+            endResetModel();
+            getAudioLevels();
+            emit filteredChanged();
+        }
     }
 }
 
