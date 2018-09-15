@@ -123,8 +123,8 @@ Rectangle {
                 if (!(mouse.modifiers & Qt.AltModifier) && settings.timelineSnap && !settings.timelineRipple)
                     delta = Logic.snapTrimIn(clip, delta, root, trackRoot.DelegateModel.itemsIndex)
                 if (delta != 0) {
-                    if (timeline.trimClipIn(trackRoot.DelegateModel.itemsIndex,
-                                            clip.DelegateModel.itemsIndex, delta, settings.timelineRipple)) {
+                    if (timeline.trimClipIn(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex,
+                                            clip.originalClipIndex, delta, settings.timelineRipple)) {
                         // Show amount trimmed as a time in a "bubble" help.
                         var s = application.timecode(Math.abs(clip.originalX))
                         s = '%1%2 = %3'.arg((clip.originalX < 0)? '-' : (clip.originalX > 0)? '+' : '')

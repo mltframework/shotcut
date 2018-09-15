@@ -776,7 +776,7 @@ void TimelineDock::onClipMoved(int fromTrack, int toTrack, int clipIndex, int po
         new Timeline::MoveClipCommand(m_model, fromTrack, toTrack, clipIndex, position, ripple));
 }
 
-bool TimelineDock::trimClipIn(int trackIndex, int clipIndex, int delta, bool ripple)
+bool TimelineDock::trimClipIn(int trackIndex, int clipIndex, int oldClipIndex, int delta, bool ripple)
 {
     if (!ripple && m_model.addTransitionByTrimInValid(trackIndex, clipIndex, delta)) {
         m_model.addTransitionByTrimIn(trackIndex, clipIndex, delta);
@@ -803,7 +803,7 @@ bool TimelineDock::trimClipIn(int trackIndex, int clipIndex, int delta, bool rip
             if (ripple) m_undoHelper->setHints(UndoHelper::SkipXML);
             m_undoHelper->recordBeforeState();
         }
-        m_model.trimClipIn(trackIndex, clipIndex, delta, ripple);
+        clipIndex = m_model.trimClipIn(trackIndex, clipIndex, delta, ripple);
 
         // Update duration in properties for image clip.
         QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
@@ -811,8 +811,7 @@ bool TimelineDock::trimClipIn(int trackIndex, int clipIndex, int delta, bool rip
             emit imageDurationChanged();
 
         m_trimDelta += delta;
-        if (!ripple) --clipIndex;
-        m_trimCommand.reset(new Timeline::TrimClipInCommand(m_model, trackIndex, clipIndex, m_trimDelta, ripple, false));
+        m_trimCommand.reset(new Timeline::TrimClipInCommand(m_model, trackIndex, oldClipIndex, m_trimDelta, ripple, false));
     }
     else return false;
     return true;

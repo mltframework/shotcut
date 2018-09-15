@@ -536,6 +536,7 @@ Rectangle {
                 startX = mapToItem(null, x, y).x
                 originalX = 0 // reusing originalX to accumulate delta for bubble help
                 parent.anchors.left = undefined
+                originalClipIndex = index
             }
             onReleased: {
                 root.stopScrolling = false
