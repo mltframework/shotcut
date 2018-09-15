@@ -81,7 +81,7 @@ Section "Install Program Files"
   
   ; Write the uninstall keys for Windows
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Shotcut" "DisplayName" "Shotcut"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Shotcut" "DisplayVersion" "18.09.13"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Shotcut" "DisplayVersion" "18.09.15"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Shotcut" "UninstallString" '"$INSTDIR\uninstall.exe"'
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Shotcut" "DisplayIcon" '"$INSTDIR\shotcut.exe"'
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Shotcut" "Publisher" "Meltytech, LLC"
