@@ -62,6 +62,7 @@ Rectangle {
 
     color: 'transparent'
     width: clipRow.width
+    onIsMuteChanged: if (!isMute) redrawWaveforms()
 
     DelegateModel {
         id: trackModel
