@@ -82,6 +82,6 @@
 #define kMultitrackItemProperty "_shotcut:multitrack-item"
 #define kExportFromProperty "_shotcut:exportFromDefault"
 
-#define kDefaultMltProfile "atsc_1080p_50"
+#define kDefaultMltProfile "atsc_1080p_25"
 
 #endif // SHOTCUT_MLT_PROPERTIES_H
