@@ -159,9 +159,9 @@ Item {
             filter.blockSignals = false
         }
 
+        positionKeyframesButton.checked = filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
         if (filter.animateIn > 0 || filter.animateOut > 0) {
             filter.resetProperty(rectProperty)
-            positionKeyframesButton.checked = false
             if (filter.animateIn > 0) {
                 filter.set(rectProperty, filter.getRect(startValue), 1.0, 0)
                 filter.set(rectProperty, filter.getRect(middleValue), 1.0, filter.animateIn - 1)
