@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2013-2016 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2013-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +19,7 @@
 #include "ui_customprofiledialog.h"
 #include "mltcontroller.h"
 #include "settings.h"
+#include "util.h"
 #include <QDir>
 #include <QDesktopServices>
 
@@ -100,4 +100,14 @@ void CustomProfileDialog::on_buttonBox_accepted()
     p.set("frame_rate_num", MLT.profile().frame_rate_num());
     p.set("frame_rate_den", MLT.profile().frame_rate_den());
     p.save(dir.filePath(ui->nameEdit->text()).toUtf8().constData());
+}
+
+void CustomProfileDialog::on_widthSpinner_editingFinished()
+{
+    ui->widthSpinner->setValue(Util::coerceMultiple(ui->widthSpinner->value()));
+}
+
+void CustomProfileDialog::on_heightSpinner_editingFinished()
+{
+    ui->heightSpinner->setValue(Util::coerceMultiple(ui->heightSpinner->value()));
 }

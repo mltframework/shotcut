@@ -167,3 +167,8 @@ QStringList Util::sortedFileList(const QList<QUrl>& urls)
     }
     return result;
 }
+
+int Util::coerceMultiple(int value, int multiple)
+{
+    return (value + multiple - 1) / multiple * multiple;
+}

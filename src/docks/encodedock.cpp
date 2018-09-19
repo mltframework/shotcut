@@ -1625,3 +1625,13 @@ void EncodeDock::setAudioChannels( int channels )
     else
         ui->audioChannelsCombo->setCurrentIndex(AudioChannels6);
 }
+
+void EncodeDock::on_widthSpinner_editingFinished()
+{
+    ui->widthSpinner->setValue(Util::coerceMultiple(ui->widthSpinner->value()));
+}
+
+void EncodeDock::on_heightSpinner_editingFinished()
+{
+    ui->heightSpinner->setValue(Util::coerceMultiple(ui->heightSpinner->value()));
+}

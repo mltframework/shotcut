@@ -39,6 +39,7 @@ public:
     static QString producerTitle(const Mlt::Producer& producer);
     static QString removeFileScheme(QUrl &url);
     static QStringList sortedFileList(const QList<QUrl>& urls);
+    static int coerceMultiple(int value, int multiple = 2);
 };
 
 #endif // UTIL_H

@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2013-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,6 +36,10 @@ public:
 private slots:
     void on_buttonBox_accepted();
     
+    void on_widthSpinner_editingFinished();
+
+    void on_heightSpinner_editingFinished();
+
 private:
     Ui::CustomProfileDialog *ui;
 };

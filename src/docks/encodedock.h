@@ -102,6 +102,10 @@ private slots:
 
     void setAudioChannels( int channels );
 
+    void on_widthSpinner_editingFinished();
+
+    void on_heightSpinner_editingFinished();
+
 private:
     enum {
         RateControlAverage = 0,

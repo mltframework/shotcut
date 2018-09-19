@@ -31,17 +31,13 @@
 #include "mainwindow.h"
 #include "controllers/filtercontroller.h"
 #include "qmltypes/qmlmetadata.h"
+#include "util.h"
 
 namespace Mlt {
 
 static const int kThumbnailOutSeekFactor = 5;
 static Controller* instance = 0;
 const QString XmlMimeType("application/vnd.mlt+xml");
-
-static int alignWidth(int width)
-{
-    return (width + 7) / 8 * 8;
-}
 
 Controller::Controller()
     : m_audioChannels(2)
@@ -112,7 +108,8 @@ int Controller::open(const QString &url)
         double fps = profile().fps();
         if (!profile().is_explicit()) {
             profile().from_producer(*m_producer);
-            profile().set_width(alignWidth(profile().width()));
+            profile().set_width(Util::coerceMultiple(profile().width()));
+            profile().set_height(Util::coerceMultiple(profile().height()));
         }
         if ( url.endsWith(".mlt") ) {
             // Load the number of audio channels being used when this project was created.
@@ -153,7 +150,8 @@ bool Controller::openXML(const QString &filename)
         double fps = profile().fps();
         if (!profile().is_explicit()) {
             profile().from_producer(*producer);
-            profile().set_width(alignWidth(profile().width()));
+            profile().set_width(Util::coerceMultiple(profile().width()));
+            profile().set_height(Util::coerceMultiple(profile().height()));
         }
         if (profile().fps() != fps) {
             // reopen with the correct fps
@@ -476,28 +474,28 @@ void Controller::setProfile(const QString& profile_name)
         Mlt::Profile tmp(profile_name.toLatin1().constData());
         m_profile->set_colorspace(tmp.colorspace());
         m_profile->set_frame_rate(tmp.frame_rate_num(), tmp.frame_rate_den());
-        m_profile->set_height(tmp.height());
+        m_profile->set_height(Util::coerceMultiple(tmp.height()));
         m_profile->set_progressive(tmp.progressive());
         m_profile->set_sample_aspect(tmp.sample_aspect_num(), tmp.sample_aspect_den());
         m_profile->set_display_aspect(tmp.display_aspect_num(), tmp.display_aspect_den());
-        m_profile->set_width(alignWidth(tmp.width()));
+        m_profile->set_width(Util::coerceMultiple(tmp.width()));
         m_profile->set_explicit(true);
     } else {
         m_profile->set_explicit(false);
         if (m_producer && m_producer->is_valid()
             && (qstrcmp(m_producer->get("mlt_service"), "color") || qstrcmp(m_producer->get("resource"), "_hide"))) {
             m_profile->from_producer(*m_producer);
-            m_profile->set_width(alignWidth(m_profile->width()));
+            m_profile->set_width(Util::coerceMultiple(m_profile->width()));
         } else {
             // Use a default profile with the dummy hidden color producer.
             Mlt::Profile tmp(kDefaultMltProfile);
             m_profile->set_colorspace(tmp.colorspace());
             m_profile->set_frame_rate(tmp.frame_rate_num(), tmp.frame_rate_den());
-            m_profile->set_height(tmp.height());
+            m_profile->set_height(Util::coerceMultiple(tmp.height()));
             m_profile->set_progressive(tmp.progressive());
             m_profile->set_sample_aspect(tmp.sample_aspect_num(), tmp.sample_aspect_den());
             m_profile->set_display_aspect(tmp.display_aspect_num(), tmp.display_aspect_den());
-            m_profile->set_width(alignWidth(tmp.width()));
+            m_profile->set_width(Util::coerceMultiple(tmp.width()));
         }
     }
 }
