@@ -1759,6 +1759,8 @@ void MultitrackModel::trimTransitionIn(int trackIndex, int clipIndex, int delta)
         // Adjust the playlist "mix" entry.
         QScopedPointer<Mlt::Producer> producer(playlist.get_clip(clipIndex + 1));
         Mlt::Tractor tractor(producer->parent());
+        if (!tractor.is_valid())
+            return;
         QScopedPointer<Mlt::Producer> track_a(tractor.track(0));
         QScopedPointer<Mlt::Producer> track_b(tractor.track(1));
         int out = playlist.clip_length(clipIndex + 1) + delta - 1;
@@ -1833,6 +1835,8 @@ void MultitrackModel::trimTransitionOut(int trackIndex, int clipIndex, int delta
         // Adjust the playlist "mix" entry.
         QScopedPointer<Mlt::Producer> producer(playlist.get_clip(clipIndex - 1));
         Mlt::Tractor tractor(producer->parent());
+        if (!tractor.is_valid())
+            return;
         QScopedPointer<Mlt::Producer> track_a(tractor.track(0));
         QScopedPointer<Mlt::Producer> track_b(tractor.track(1));
         int out = playlist.clip_length(clipIndex - 1) + delta - 1;
