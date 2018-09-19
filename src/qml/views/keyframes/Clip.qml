@@ -245,11 +245,12 @@ Rectangle {
         enabled: !isBlank
         anchors.left: animateInTriangle.right
         anchors.top: animateInTriangle.top
-        anchors.leftMargin: Math.min(clipRoot.width - animateInTriangle.width - 2 * width, 0)
+        anchors.leftMargin: Math.min(clipRoot.width - animateInTriangle.width - width, 0)
         anchors.topMargin: -3
         width: 14
         height: 14
         radius: 7
+        z: 1
         color: 'black'
         border.width: 2
         border.color: 'white'
@@ -280,7 +281,7 @@ Rectangle {
             onPositionChanged: {
                 if (mouse.buttons === Qt.LeftButton) {
                     var delta = Math.round((parent.x - startX) / timeScale)
-                    var duration = startFadeIn + delta
+                    var duration = Math.min(Math.max(0, startFadeIn + delta), clipDuration)
                     filter.animateIn = duration
 
                     // Show fade duration as time in a "bubble" help.
@@ -325,7 +326,7 @@ Rectangle {
         enabled: !isBlank
         anchors.right: animateOutTriangle.left
         anchors.top: animateOutTriangle.top
-        anchors.rightMargin: Math.min(clipRoot.width - animateOutTriangle.width - 2 * width, 0)
+        anchors.rightMargin: Math.min(clipRoot.width - animateOutTriangle.width - width, 0)
         anchors.topMargin: -3
         width: 14
         height: 14
@@ -342,7 +343,7 @@ Rectangle {
             cursorShape: Qt.PointingHandCursor
             drag.target: parent
             drag.axis: Drag.XAxis
-            drag.minimumX: 0
+            drag.minimumX: -width - 1
             drag.maximumX: clipRoot.width
             property int startX
             property int startFadeOut
@@ -360,11 +361,11 @@ Rectangle {
             onPositionChanged: {
                 if (mouse.buttons === Qt.LeftButton) {
                     var delta = Math.round((startX - parent.x) / timeScale)
-                    var duration = startFadeOut + delta
+                    var duration = Math.min(Math.max(0, startFadeOut + delta), clipDuration)
                     filter.animateOut = duration
 
                     // Show fade duration as time in a "bubble" help.
-                    var s = application.timecode(Math.max(duration, 0))
+                    var s = application.timecode(duration, 0)
                     bubbleHelp.show(clipRoot.x + clipRoot.width, trackRoot.y + clipRoot.height, s.substring(6))
                 }
             }
