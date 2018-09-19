@@ -847,8 +847,10 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Service* service, const QString& target,
     // parse xml
     QFile f1(tmp.fileName());
     f1.open(QIODevice::ReadOnly);
+    QXmlSimpleReader xmlReader;
+    QXmlInputSource xmlSource(&f1);
     QDomDocument dom(tmp.fileName());
-    dom.setContent(&f1);
+    dom.setContent(&xmlSource, &xmlReader);
     f1.close();
 
     // Check if the target file is a member of the project.
