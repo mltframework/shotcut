@@ -11,3 +11,4 @@ RectangleControl 1.0 RectangleControl.qml
 SimplePropertyUI 1.0 SimplePropertyUI.qml
 TextFilterUi 1.0 TextFilterUi.qml
 TextFilterVui 1.0 TextFilterVui.qml
+ToggleButton 1.0 ToggleButton.qml

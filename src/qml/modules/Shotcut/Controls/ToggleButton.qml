@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2014 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,22 +24,24 @@ CheckBox {
     property string iconName
     property url iconSource
     property alias tooltip: tooltip.text
+    property bool border: true
+    implicitWidth: 26
+    implicitHeight: 22
 
     anchors.verticalCenter: parent.verticalCenter
     style: CheckBoxStyle {
         background: Rectangle {
-            implicitWidth: 28
-            implicitHeight: 24
             radius: 3
             SystemPalette { id: activePalette }
             color: control.checked? activePalette.highlight : activePalette.button
             border.color: activePalette.shadow
-            border.width: 1
+            border.width: (control.border && !control.checked) ? 1 : 0
         }
         indicator: ToolButton {
-            x: 3
-            implicitWidth: 24
-            implicitHeight: 20
+            id: toolbutton
+            x: control.border? 3 : 0
+            implicitWidth: control.border? 20 : 26
+            implicitHeight: control.border? 18 : 22
             iconName: control.iconName
             iconSource: control.iconSource
         }
