@@ -206,7 +206,7 @@ void TimelineDock::setCurrentTrack(int currentTrack)
 {
     if (!m_quickView.rootObject())
         return;
-    m_quickView.rootObject()->setProperty("currentTrack", currentTrack);
+    m_quickView.rootObject()->setProperty("currentTrack", qBound(0, currentTrack, m_model.trackList().size() - 1));
 }
 
 int TimelineDock::currentTrack() const
