@@ -238,24 +238,14 @@ Rectangle {
         anchors.top: parent.top
         anchors.margins: parent.border.width
         opacity: 0.5
-        onWidthChanged: {
-            if (width === 0) {
-                animateInControl.anchors.horizontalCenter = undefined
-                animateInControl.anchors.left = animateInTriangle.left
-            } else if (animateInControl.anchors.left && !animateInMouseArea.pressed) {
-                animateInControl.anchors.left = undefined
-                animateInControl.anchors.horizontalCenter = animateInTriangle.right
-            }
-        }
     }
     Rectangle {
         id: animateInControl
         visible: metadata !== null && metadata.keyframes.allowAnimateIn
         enabled: !isBlank
-        anchors.left: animateInTriangle.width > radius? undefined : animateInTriangle.left
-        anchors.horizontalCenter: animateInTriangle.width > radius? animateInTriangle.right : undefined
+        anchors.left: animateInTriangle.right
         anchors.top: animateInTriangle.top
-        anchors.horizontalCenterOffset: animateInTriangle.width > parent.width ? -1.5 * width : 0
+        anchors.leftMargin: Math.min(clipRoot.width - animateInTriangle.width - 2 * width, 0)
         anchors.topMargin: -3
         width: 14
         height: 14
@@ -281,14 +271,10 @@ Rectangle {
                 startX = parent.x
                 startFadeIn = animateIn
                 parent.anchors.left = undefined
-                parent.anchors.horizontalCenter = undefined
             }
             onReleased: {
                 root.stopScrolling = false
-                if (animateInTriangle.width > parent.radius)
-                    parent.anchors.horizontalCenter = animateInTriangle.right
-                else
-                    parent.anchors.left = animateInTriangle.left
+                parent.anchors.left = animateInTriangle.right
                 bubbleHelp.hide()
             }
             onPositionChanged: {
@@ -332,23 +318,14 @@ Rectangle {
         anchors.margins: parent.border.width
         opacity: 0.5
         transform: Scale { xScale: -1; origin.x: animateOutTriangle.width / 2}
-        onWidthChanged: {
-            if (width === 0) {
-                animateOutControl.anchors.horizontalCenter = undefined
-                animateOutControl.anchors.right = animateOutTriangle.right
-            } else if (animateOutControl.anchors.right && !animateOutMouseArea.pressed) {
-                animateOutControl.anchors.right = undefined
-                animateOutControl.anchors.horizontalCenter = animateOutTriangle.left
-            }
-        }
     }
     Rectangle {
         id: animateOutControl
         visible: metadata !== null && metadata.keyframes.allowAnimateOut
         enabled: !isBlank
-        anchors.right: animateOutTriangle.width > radius? undefined : animateOutTriangle.right
-        anchors.horizontalCenter: animateOutTriangle.width > radius? animateOutTriangle.left : undefined
+        anchors.right: animateOutTriangle.left
         anchors.top: animateOutTriangle.top
+        anchors.rightMargin: Math.min(clipRoot.width - animateOutTriangle.width - 2 * width, 0)
         anchors.topMargin: -3
         width: 14
         height: 14
@@ -374,14 +351,10 @@ Rectangle {
                 startX = parent.x
                 startFadeOut = animateOut
                 parent.anchors.right = undefined
-                parent.anchors.horizontalCenter = undefined
             }
             onReleased: {
                 root.stopScrolling = false
-                if (animateOutTriangle.width > parent.radius)
-                    parent.anchors.horizontalCenter = animateOutTriangle.left
-                else
-                    parent.anchors.right = animateOutTriangle.right
+                parent.anchors.right = animateOutTriangle.left
                 bubbleHelp.hide()
             }
             onPositionChanged: {
