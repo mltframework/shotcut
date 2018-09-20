@@ -298,9 +298,7 @@ int main(int argc, char **argv)
         QStringList args = a.arguments();
         if (!args.isEmpty())
             args.removeFirst();
-        restart->start(a.applicationFilePath(), args);
-        restart->waitForReadyRead();
-        restart->waitForFinished(1000);
+        restart->start(a.applicationFilePath(), args, QIODevice::NotOpen);
         result = EXIT_SUCCESS;
     }
     return result;

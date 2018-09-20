@@ -1984,6 +1984,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
     if (continueJobsRunning() && continueModified()) {
         if (!m_htmlEditor || m_htmlEditor->close()) {
             LOG_DEBUG() << "begin";
+            MLT.stop();
             writeSettings();
             QThreadPool::globalInstance()->clear();
             AudioLevelsTask::closeAll();
