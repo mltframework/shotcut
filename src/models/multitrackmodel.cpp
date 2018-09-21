@@ -661,6 +661,7 @@ bool MultitrackModel::moveClipValid(int fromTrack, int toTrack, int clipIndex, i
     if (track) {
         Mlt::Playlist playlist(*track);
         int targetIndex = playlist.get_clip_index_at(position);
+        int clipPlaytime = playlist.clip_length(clipIndex);
 
         if (fromTrack != toTrack) {
             // moveClipToTrack
@@ -696,7 +697,8 @@ bool MultitrackModel::moveClipValid(int fromTrack, int toTrack, int clipIndex, i
             result = true;
         }
         else if ((targetIndex < (clipIndex - 1) || targetIndex > (clipIndex + 1))
-            && playlist.is_blank_at(position) && playlist.clip_length(clipIndex) <= playlist.clip_length(targetIndex)) {
+            && playlist.is_blank_at(position) && playlist.is_blank_at(position + clipPlaytime - 1)
+            && clipPlaytime <= playlist.clip_length(targetIndex)) {
             // relocateClip
             result = true;
         }
@@ -705,11 +707,10 @@ bool MultitrackModel::moveClipValid(int fromTrack, int toTrack, int clipIndex, i
             result = true;
         }
         else if (targetIndex >= (clipIndex - 1) && targetIndex <= (clipIndex + 1)) {
-            int length = playlist.clip_length(clipIndex);
-            int targetIndexEnd = playlist.get_clip_index_at(position + length - 1);
+            int targetIndexEnd = playlist.get_clip_index_at(position + clipPlaytime - 1);
 
             if ((playlist.is_blank_at(position) || targetIndex == clipIndex)
-                && (playlist.is_blank_at(position + length - 1) || targetIndexEnd == clipIndex)) {
+                && (playlist.is_blank_at(position + clipPlaytime - 1) || targetIndexEnd == clipIndex)) {
                 // moveClipInBlank
                 result = true;
             }
