@@ -761,6 +761,7 @@ bool MultitrackModel::moveClip(int fromTrack, int toTrack, int clipIndex, int po
             }
             insertOrAdjustBlankAt(trackList, clipStart, duration);
             consolidateBlanks(playlist, fromTrack);
+            result = true;
         }
         else if (targetIndex >= (clipIndex - 1) && targetIndex <= (clipIndex + 1)) {
             int length = playlist.clip_length(clipIndex);
