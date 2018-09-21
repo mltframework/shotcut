@@ -173,6 +173,7 @@ private:
     QScopedPointer<Timeline::TrimCommand> m_trimCommand;
     QScopedPointer<UndoHelper> m_undoHelper;
     int m_trimDelta;
+    int m_transitionDelta;
 
 private slots:
     void load(bool force = false);

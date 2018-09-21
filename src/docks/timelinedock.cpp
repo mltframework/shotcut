@@ -41,7 +41,8 @@ TimelineDock::TimelineDock(QWidget *parent) :
     m_position(-1),
     m_updateCommand(0),
     m_ignoreNextPositionChange(false),
-    m_trimDelta(0)
+    m_trimDelta(0),
+    m_transitionDelta(0)
 {
     LOG_DEBUG() << "begin";
     m_selection.selectedTrack = -1;
@@ -669,11 +670,12 @@ void TimelineDock::remakeAudioLevels(int trackIndex, int clipIndex, bool force)
 
 void TimelineDock::commitTrimCommand()
 {
-    if (m_trimCommand && m_trimDelta) {
+    if (m_trimCommand && (m_trimDelta || m_transitionDelta)) {
         if (m_undoHelper) m_trimCommand->setUndoHelper(m_undoHelper.take());
         MAIN.undoStack()->push(m_trimCommand.take());
     }
     m_trimDelta = 0;
+    m_transitionDelta = 0;
 }
 
 void TimelineDock::onRowsInserted(const QModelIndex& parent, int first, int last)
@@ -780,8 +782,8 @@ bool TimelineDock::trimClipIn(int trackIndex, int clipIndex, int oldClipIndex, i
 {
     if (!ripple && m_model.addTransitionByTrimInValid(trackIndex, clipIndex, delta)) {
         m_model.addTransitionByTrimIn(trackIndex, clipIndex, delta);
-        m_trimDelta += delta;
-        m_trimCommand.reset(new Timeline::AddTransitionByTrimInCommand(m_model, trackIndex, clipIndex - 1, m_trimDelta, false));
+        m_transitionDelta += delta;
+        m_trimCommand.reset(new Timeline::AddTransitionByTrimInCommand(m_model, trackIndex, clipIndex - 1, m_transitionDelta, m_trimDelta, false));
     }
     else if (!ripple && m_model.removeTransitionByTrimInValid(trackIndex, clipIndex, delta)) {
         Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
@@ -821,8 +823,8 @@ bool TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta, bool ri
 {
     if (!ripple && m_model.addTransitionByTrimOutValid(trackIndex, clipIndex, delta)) {
         m_model.addTransitionByTrimOut(trackIndex, clipIndex, delta);
-        m_trimDelta += delta;
-        m_trimCommand.reset(new Timeline::AddTransitionByTrimOutCommand(m_model, trackIndex, clipIndex, m_trimDelta, false));
+        m_transitionDelta += delta;
+        m_trimCommand.reset(new Timeline::AddTransitionByTrimOutCommand(m_model, trackIndex, clipIndex, m_transitionDelta, m_trimDelta, false));
     }
     else if (!ripple && m_model.removeTransitionByTrimOutValid(trackIndex, clipIndex, delta)) {
         Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);

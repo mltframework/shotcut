@@ -1707,20 +1707,28 @@ void MultitrackModel::removeTransitionByTrimIn(int trackIndex, int clipIndex, in
 {
     QModelIndex modelIndex = index(clipIndex, 0, index(trackIndex));
     clearMixReferences(trackIndex, clipIndex);
-    delta = -data(modelIndex, MultitrackModel::DurationRole).toInt();
+    int duration = -data(modelIndex, MultitrackModel::DurationRole).toInt();
     liftClip(trackIndex, clipIndex);
-    trimClipOut(trackIndex, clipIndex - 1, delta, false);
+    trimClipOut(trackIndex, clipIndex - 1, duration, false);
     notifyClipOut(trackIndex, clipIndex - 1);
+    if (delta) {
+        trimClipIn(trackIndex, clipIndex, delta, false);
+        notifyClipIn(trackIndex, clipIndex);
+    }
 }
 
 void MultitrackModel::removeTransitionByTrimOut(int trackIndex, int clipIndex, int delta)
 {
     QModelIndex modelIndex = index(clipIndex + 1, 0, index(trackIndex));
     clearMixReferences(trackIndex, clipIndex);
-    delta = -data(modelIndex, MultitrackModel::DurationRole).toInt();
+    int duration = -data(modelIndex, MultitrackModel::DurationRole).toInt();
     liftClip(trackIndex, clipIndex + 1);
-    trimClipIn(trackIndex, clipIndex + 2, delta, false);
+    trimClipIn(trackIndex, clipIndex + 2, duration, false);
     notifyClipIn(trackIndex, clipIndex + 1);
+    if (delta) {
+        trimClipOut(trackIndex, clipIndex, delta, false);
+        notifyClipOut(trackIndex, clipIndex);
+    }
 }
 
 bool MultitrackModel::trimTransitionInValid(int trackIndex, int clipIndex, int delta)

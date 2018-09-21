@@ -353,7 +353,7 @@ private:
 class AddTransitionByTrimInCommand : public TrimCommand
 {
 public:
-    AddTransitionByTrimInCommand(MultitrackModel& model, int trackIndex, int clipIndex, int delta, bool redo = true, QUndoCommand * parent = 0);
+    AddTransitionByTrimInCommand(MultitrackModel& model, int trackIndex, int clipIndex, int duration, int trimDelta, bool redo = true, QUndoCommand * parent = 0);
     void redo();
     void undo();
 protected:
@@ -363,7 +363,8 @@ private:
     MultitrackModel& m_model;
     int m_trackIndex;
     int m_clipIndex;
-    int m_delta;
+    int m_duration;
+    int m_trimDelta;
     bool m_notify;
     bool m_redo;
 };
@@ -399,7 +400,7 @@ private:
 class AddTransitionByTrimOutCommand : public TrimCommand
 {
 public:
-    AddTransitionByTrimOutCommand(MultitrackModel& model, int trackIndex, int clipIndex, int delta, bool redo = true, QUndoCommand * parent = 0);
+    AddTransitionByTrimOutCommand(MultitrackModel& model, int trackIndex, int clipIndex, int duration, int trimDelta, bool redo = true, QUndoCommand * parent = 0);
     void redo();
     void undo();
 protected:
@@ -409,7 +410,8 @@ private:
     MultitrackModel& m_model;
     int m_trackIndex;
     int m_clipIndex;
-    int m_delta;
+    int m_duration;
+    int m_trimDelta;
     bool m_notify;
     bool m_redo;
 };

@@ -618,12 +618,13 @@ bool TrimTransitionOutCommand::mergeWith(const QUndoCommand *other)
     return true;
 }
 
-AddTransitionByTrimInCommand::AddTransitionByTrimInCommand(MultitrackModel &model, int trackIndex, int clipIndex, int delta, bool redo, QUndoCommand *parent)
+AddTransitionByTrimInCommand::AddTransitionByTrimInCommand(MultitrackModel &model, int trackIndex, int clipIndex, int duration, int trimDelta, bool redo, QUndoCommand *parent)
     : TrimCommand(parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_clipIndex(clipIndex)
-    , m_delta(delta)
+    , m_duration(duration)
+    , m_trimDelta(trimDelta)
     , m_notify(false)
     , m_redo(redo)
 {
@@ -633,8 +634,10 @@ AddTransitionByTrimInCommand::AddTransitionByTrimInCommand(MultitrackModel &mode
 void AddTransitionByTrimInCommand::redo()
 {
     if (m_redo) {
-        LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex;
-        m_model.addTransitionByTrimIn(m_trackIndex, m_clipIndex, m_delta);
+        LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta" << m_trimDelta << "duration" << m_duration;
+        if (m_trimDelta)
+            m_model.trimClipIn(m_trackIndex, m_clipIndex + 1, m_trimDelta, false);
+        m_model.addTransitionByTrimIn(m_trackIndex, m_clipIndex, m_duration);
         if (m_notify && m_clipIndex > 0)
             m_model.notifyClipOut(m_trackIndex, m_clipIndex - 1);
     } else {
@@ -645,8 +648,8 @@ void AddTransitionByTrimInCommand::redo()
 void AddTransitionByTrimInCommand::undo()
 {
     if (m_clipIndex > 0) {
-        LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta" << m_delta;
-        m_model.removeTransitionByTrimIn(m_trackIndex, m_clipIndex, m_delta);
+        LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta" << m_trimDelta;
+        m_model.removeTransitionByTrimIn(m_trackIndex, m_clipIndex, -m_trimDelta);
         m_notify = true;
     }
     else LOG_WARNING() << "invalid clip index" << m_clipIndex;
@@ -731,12 +734,13 @@ void RemoveTransitionByTrimOutCommand::undo()
     else LOG_WARNING() << "invalid clip index" << m_clipIndex;
 }
 
-AddTransitionByTrimOutCommand::AddTransitionByTrimOutCommand(MultitrackModel &model, int trackIndex, int clipIndex, int delta, bool redo, QUndoCommand *parent)
+AddTransitionByTrimOutCommand::AddTransitionByTrimOutCommand(MultitrackModel &model, int trackIndex, int clipIndex, int duration, int trimDelta, bool redo, QUndoCommand *parent)
     : TrimCommand(parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_clipIndex(clipIndex)
-    , m_delta(delta)
+    , m_duration(duration)
+    , m_trimDelta(trimDelta)
     , m_notify(false)
     , m_redo(redo)
 {
@@ -746,8 +750,10 @@ AddTransitionByTrimOutCommand::AddTransitionByTrimOutCommand(MultitrackModel &mo
 void AddTransitionByTrimOutCommand::redo()
 {
     if (m_redo) {
-        LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex;
-        m_model.addTransitionByTrimOut(m_trackIndex, m_clipIndex, m_delta);
+        LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta" << m_trimDelta << "duration" << m_duration;
+        if (m_trimDelta)
+            m_model.trimClipOut(m_trackIndex, m_clipIndex, m_trimDelta, false);
+        m_model.addTransitionByTrimOut(m_trackIndex, m_clipIndex, m_duration);
         if (m_notify)
             m_model.notifyClipIn(m_trackIndex, m_clipIndex + 2);
     } else {
@@ -758,8 +764,8 @@ void AddTransitionByTrimOutCommand::redo()
 void AddTransitionByTrimOutCommand::undo()
 {
     if (m_clipIndex + 2 < m_model.rowCount(m_model.index(m_trackIndex))) {
-        LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta" << m_delta;
-        m_model.removeTransitionByTrimOut(m_trackIndex, m_clipIndex, m_delta);
+        LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta" << m_trimDelta;
+        m_model.removeTransitionByTrimOut(m_trackIndex, m_clipIndex, -m_trimDelta);
         m_notify = true;
     }
     else LOG_WARNING() << "invalid clip index" << m_clipIndex;
