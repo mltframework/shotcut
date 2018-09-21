@@ -88,8 +88,8 @@ Rectangle {
         generateWaveform()
     }
 
-    function generateWaveform() {
-        if (!waveform.visible) return
+    function generateWaveform(force) {
+        if (!waveform.visible && !force) return
         // This is needed to make the model have the correct count.
         // Model as a property expression is not working in all cases.
         waveformRepeater.model = Math.ceil(waveform.innerWidth / waveform.maxWidth)

@@ -38,9 +38,9 @@ Rectangle {
     signal clipDraggedToTrack(var clip, int direction)
     signal checkSnap(var clip)
 
-    function redrawWaveforms() {
+    function redrawWaveforms(force) {
         for (var i = 0; i < repeater.count; i++)
-            repeater.itemAt(i).generateWaveform()
+            repeater.itemAt(i).generateWaveform(force)
     }
 
     function remakeWaveforms(force) {
@@ -62,7 +62,7 @@ Rectangle {
 
     color: 'transparent'
     width: clipRow.width
-    onIsMuteChanged: if (!isMute) redrawWaveforms()
+    onIsMuteChanged: if (!isMute) redrawWaveforms(true)
 
     DelegateModel {
         id: trackModel
