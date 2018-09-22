@@ -1168,7 +1168,7 @@ void MainWindow::open(QString url, const Mlt::Properties* properties)
         setWindowModified(modified);
         MLT.resetURL();
         // Return to automatic video mode if selected.
-        if (m_profileGroup->checkedAction()->data().toString().isEmpty())
+        if (m_profileGroup->checkedAction() && m_profileGroup->checkedAction()->data().toString().isEmpty())
             MLT.profile().set_explicit(false);
     }
     if (!MLT.open(url)) {
@@ -1424,7 +1424,8 @@ void MainWindow::writeSettings()
 void MainWindow::configureVideoWidget()
 {
     LOG_DEBUG() << "begin";
-    setProfile(m_profileGroup->checkedAction()->data().toString());
+    if (m_profileGroup->checkedAction())
+        setProfile(m_profileGroup->checkedAction()->data().toString());
     MLT.videoWidget()->setProperty("realtime", ui->actionRealtime->isChecked());
     bool ok = false;
     m_externalGroup->checkedAction()->data().toInt(&ok);
@@ -1984,8 +1985,8 @@ void MainWindow::closeEvent(QCloseEvent* event)
     if (continueJobsRunning() && continueModified()) {
         if (!m_htmlEditor || m_htmlEditor->close()) {
             LOG_DEBUG() << "begin";
-            MLT.stop();
             writeSettings();
+            MLT.stop();
             QThreadPool::globalInstance()->clear();
             AudioLevelsTask::closeAll();
             event->accept();
@@ -3037,6 +3038,7 @@ void MainWindow::on_actionAddCustomProfile_triggered()
     if (dialog.exec() == QDialog::Accepted) {
         QString name = dialog.profileName();
         if (!name.isEmpty()) {
+            // Add new profile to the menu.
             QDir dir(Settings.appDataLocation());
             if (dir.cd("profiles")) {
                 QStringList profiles = dir.entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
@@ -3045,11 +3047,15 @@ void MainWindow::on_actionAddCustomProfile_triggered()
                 QAction* action = addProfile(m_profileGroup, name, dir.filePath(name));
                 action->setChecked(true);
                 m_customProfileMenu->addAction(action);
+                Settings.setPlayerProfile(dir.filePath(name));
             }
-        } else if (!xml.isEmpty()) {
-            emit profileChanged();
-            MLT.restart(xml);
+        } else if (m_profileGroup->checkedAction()) {
+            m_profileGroup->checkedAction()->setChecked(false);
         }
+        // Use the new profile.
+        emit profileChanged();
+        if (!xml.isEmpty())
+            MLT.restart(xml);
     }
 }
 
