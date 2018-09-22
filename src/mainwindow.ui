@@ -938,6 +938,11 @@
     <string>Remove...</string>
    </property>
   </action>
+  <action name="actionLayoutRemove">
+   <property name="text">
+    <string>Remove...</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>

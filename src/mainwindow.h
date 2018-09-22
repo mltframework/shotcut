@@ -285,6 +285,7 @@ private slots:
     void on_actionLayoutAdd_triggered();
     void onLayoutTriggered(QAction*);
     void on_actionProfileRemove_triggered();
+    void on_actionLayoutRemove_triggered();
 };
 
 #define MAIN MainWindow::singleton()

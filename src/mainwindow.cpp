@@ -809,8 +809,10 @@ void MainWindow::setupSettingsMenu()
     // Add custom layouts to View > Layout submenu.
     m_layoutGroup = new QActionGroup(this);
     connect(m_layoutGroup, SIGNAL(triggered(QAction*)), SLOT(onLayoutTriggered(QAction*)));
-    if (Settings.layouts().size() > 0)
+    if (Settings.layouts().size() > 0) {
+        ui->menuLayout->addAction(ui->actionLayoutRemove);
         ui->menuLayout->addSeparator();
+    }
     foreach (QString name, Settings.layouts())
         ui->menuLayout->addAction(addLayout(m_layoutGroup, name));
     LOG_DEBUG() << "end";
@@ -3538,8 +3540,11 @@ void MainWindow::on_actionLayoutAdd_triggered()
                                          "", &ok);
     if (ok && !name.isEmpty()) {
         if (Settings.setLayout(name, saveGeometry(), saveState())) {
-            if (Settings.layouts().size() == 1)
+            Settings.sync();
+            if (Settings.layouts().size() == 1) {
+                ui->menuLayout->addAction(ui->actionLayoutRemove);
                 ui->menuLayout->addSeparator();
+            }
             ui->menuLayout->addAction(addLayout(m_layoutGroup, name));
         }
     }
@@ -3583,6 +3588,47 @@ void MainWindow::on_actionProfileRemove_triggered()
                     if (a->isSeparator()) {
                         delete a;
                         break;
+                    }
+                }
+            }
+        }
+    }
+}
+
+void MainWindow::on_actionLayoutRemove_triggered()
+{
+    // Setup the dialog.
+    ListSelectionDialog dialog(Settings.layouts(), this);
+    dialog.setWindowModality(QmlApplication::dialogModality());
+    dialog.setWindowTitle(tr("Remove Layout"));
+
+    // Show the dialog.
+    if (dialog.exec() == QDialog::Accepted) {
+        foreach(const QString& layout, dialog.selection()) {
+            // Update the configuration.
+            if (Settings.removeLayout(layout))
+                Settings.sync();
+            // Locate the menu item.
+            foreach (QAction* action, ui->menuLayout->actions()) {
+                if (action->text() == layout) {
+                    // Remove the menu item.
+                    delete action;
+                    break;
+                }
+            }
+        }
+        // If no more custom layouts.
+        if (Settings.layouts().size() == 0) {
+            // Remove the Remove action and separator.
+            ui->menuLayout->removeAction(ui->actionLayoutRemove);
+            bool isSecondSeparator = false;
+            foreach (QAction* action, ui->menuLayout->actions()) {
+                if (action->isSeparator()) {
+                    if (isSecondSeparator) {
+                        delete action;
+                        break;
+                    } else {
+                        isSecondSeparator = true;
                     }
                 }
             }

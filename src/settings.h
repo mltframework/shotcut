@@ -162,6 +162,7 @@ public:
     bool setLayout(const QString& name, const QByteArray& geometry, const QByteArray& state);
     QByteArray layoutGeometry(const QString& name);
     QByteArray layoutState(const QString& name);
+    bool removeLayout(const QString& name);
 
 signals:
     void openPathChanged();

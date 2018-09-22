@@ -599,3 +599,20 @@ QByteArray ShotcutSettings::layoutState(const QString& name)
     QString key = QString("layout/%1_state").arg(name);
     return settings.value(key).toByteArray();
 }
+
+bool ShotcutSettings::removeLayout(const QString& name)
+{
+    QStringList list = layouts();
+    int index = list.indexOf(name);
+    if (index > -1) {
+        list.removeAt(index);
+        if (list.isEmpty())
+            settings.remove("layout/layouts");
+        else
+            settings.setValue("layout/layouts", list);
+        settings.remove(QString("layout/%1_%2").arg(name).arg("geometry"));
+        settings.remove(QString("layout/%1_%2").arg(name).arg("state"));
+        return true;
+    }
+    return false;
+}
