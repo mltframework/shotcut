@@ -111,7 +111,8 @@ SOURCES += main.cpp\
     docks/keyframesdock.cpp \
     qmltypes/qmlproducer.cpp \
     models/keyframesmodel.cpp \
-    widgets/textproducerwidget.cpp
+    widgets/textproducerwidget.cpp \
+    dialogs/listselectiondialog.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -219,7 +220,8 @@ HEADERS  += mainwindow.h \
     docks/keyframesdock.h \
     qmltypes/qmlproducer.h \
     models/keyframesmodel.h \
-    widgets/textproducerwidget.h
+    widgets/textproducerwidget.h \
+    dialogs/listselectiondialog.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
@@ -261,7 +263,8 @@ FORMS    += mainwindow.ui \
     widgets/timelinepropertieswidget.ui \
     dialogs/unlinkedfilesdialog.ui \
     dialogs/transcodedialog.ui \
-    widgets/textproducerwidget.ui
+    widgets/textproducerwidget.ui \
+    dialogs/listselectiondialog.ui
 
 RESOURCES += \
     ../icons/resources.qrc \

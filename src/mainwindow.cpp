@@ -72,6 +72,7 @@
 #include "docks/keyframesdock.h"
 #include "util.h"
 #include "models/keyframesmodel.h"
+#include "dialogs/listselectiondialog.h"
 
 #include <QtWidgets>
 #include <Logger.h>
@@ -578,8 +579,10 @@ void MainWindow::setupSettingsMenu()
     QDir dir(Settings.appDataLocation());
     if (dir.cd("profiles")) {
         QStringList profiles = dir.entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
-        if (profiles.length() > 0)
+        if (profiles.length() > 0) {
+            m_customProfileMenu->addAction(ui->actionProfileRemove);
             m_customProfileMenu->addSeparator();
+        }
         foreach (QString name, profiles)
             m_customProfileMenu->addAction(addProfile(m_profileGroup, name, dir.filePath(name)));
     }
@@ -3042,12 +3045,15 @@ void MainWindow::on_actionAddCustomProfile_triggered()
             QDir dir(Settings.appDataLocation());
             if (dir.cd("profiles")) {
                 QStringList profiles = dir.entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
-                if (profiles.length() == 1)
+                if (profiles.length() == 1) {
+                    m_customProfileMenu->addAction(ui->actionProfileRemove);
                     m_customProfileMenu->addSeparator();
+                }
                 QAction* action = addProfile(m_profileGroup, name, dir.filePath(name));
                 action->setChecked(true);
                 m_customProfileMenu->addAction(action);
                 Settings.setPlayerProfile(dir.filePath(name));
+                Settings.sync();
             }
         } else if (m_profileGroup->checkedAction()) {
             m_profileGroup->checkedAction()->setChecked(false);
@@ -3543,4 +3549,43 @@ void MainWindow::onLayoutTriggered(QAction* action)
 {
     restoreGeometry(Settings.layoutGeometry(action->text()));
     restoreState(Settings.layoutState(action->text()));
+}
+
+void MainWindow::on_actionProfileRemove_triggered()
+{
+    QDir dir(Settings.appDataLocation());
+    if (dir.cd("profiles")) {
+        // Setup the dialog.
+        QStringList profiles = dir.entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
+        ListSelectionDialog dialog(profiles, this);
+        dialog.setWindowModality(QmlApplication::dialogModality());
+        dialog.setWindowTitle(tr("Remove Video Mode"));
+
+        // Show the dialog.
+        if (dialog.exec() == QDialog::Accepted) {
+            foreach(const QString& profile, dialog.selection()) {
+                // Remove the file.
+                dir.remove(profile);
+                // Locate the menu item.
+                foreach (QAction* a, m_customProfileMenu->actions()) {
+                    if (a->text() == profile) {
+                        // Remove the menu item.
+                        delete a;
+                        break;
+                    }
+                }
+            }
+            // If no more custom video modes.
+            if (m_customProfileMenu->actions().size() == 3) {
+                // Remove the Remove action and separator.
+                m_customProfileMenu->removeAction(ui->actionProfileRemove);
+                foreach (QAction* a, m_customProfileMenu->actions()) {
+                    if (a->isSeparator()) {
+                        delete a;
+                        break;
+                    }
+                }
+            }
+        }
+    }
 }

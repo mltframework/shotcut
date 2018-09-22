@@ -933,6 +933,11 @@
     <string>Add...</string>
    </property>
   </action>
+  <action name="actionProfileRemove">
+   <property name="text">
+    <string>Remove...</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
