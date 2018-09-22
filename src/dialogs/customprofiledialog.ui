@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>238</width>
-    <height>215</height>
+    <width>271</width>
+    <height>248</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,7 +23,7 @@
       <property name="verticalSpacing">
        <number>3</number>
       </property>
-      <item row="6" column="0">
+      <item row="7" column="0">
        <widget class="QLabel" name="label_2">
         <property name="text">
          <string>Colorspace</string>
@@ -36,7 +36,7 @@
         </property>
        </widget>
       </item>
-      <item row="6" column="1" colspan="2">
+      <item row="7" column="1" colspan="2">
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
          <widget class="QComboBox" name="colorspaceCombo">
@@ -70,7 +70,7 @@
         </item>
        </layout>
       </item>
-      <item row="1" column="0">
+      <item row="2" column="0">
        <widget class="QLabel" name="label_22">
         <property name="text">
          <string>Resolution</string>
@@ -86,7 +86,7 @@
       <item row="0" column="1" colspan="2">
        <widget class="QLineEdit" name="nameEdit"/>
       </item>
-      <item row="2" column="1" colspan="2">
+      <item row="3" column="1" colspan="2">
        <layout class="QHBoxLayout" name="horizontalLayout_8">
         <property name="spacing">
          <number>2</number>
@@ -152,7 +152,7 @@
         </property>
        </widget>
       </item>
-      <item row="5" column="1" colspan="2">
+      <item row="6" column="1" colspan="2">
        <layout class="QHBoxLayout" name="horizontalLayout_9">
         <property name="spacing">
          <number>2</number>
@@ -189,7 +189,7 @@
         </item>
        </layout>
       </item>
-      <item row="2" column="0">
+      <item row="3" column="0">
        <widget class="QLabel" name="label_13">
         <property name="text">
          <string>Aspect ratio</string>
@@ -202,7 +202,7 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="1" colspan="2">
+      <item row="2" column="1" colspan="2">
        <layout class="QHBoxLayout" name="horizontalLayout_7">
         <property name="spacing">
          <number>2</number>
@@ -261,7 +261,7 @@
         </item>
        </layout>
       </item>
-      <item row="4" column="0">
+      <item row="5" column="0">
        <widget class="QLabel" name="label_10">
         <property name="text">
          <string>Frames/sec</string>
@@ -274,7 +274,7 @@
         </property>
        </widget>
       </item>
-      <item row="4" column="1" colspan="2">
+      <item row="5" column="1" colspan="2">
        <layout class="QHBoxLayout" name="horizontalLayout_16">
         <item>
          <widget class="QDoubleSpinBox" name="fpsSpinner">
@@ -307,7 +307,7 @@
         </item>
        </layout>
       </item>
-      <item row="5" column="0">
+      <item row="6" column="0">
        <widget class="QLabel" name="label_14">
         <property name="text">
          <string>Scan mode</string>
@@ -320,7 +320,7 @@
         </property>
        </widget>
       </item>
-      <item row="9" column="0">
+      <item row="10" column="0">
        <spacer name="verticalSpacer_2">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -332,6 +332,28 @@
          </size>
         </property>
        </spacer>
+      </item>
+      <item row="1" column="0" colspan="3">
+       <widget class="QLabel" name="label_3">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>&lt;small&gt;(Leave Name blank to skip saving a preset and use a temporary or project-specific Video Mode.)&lt;/small&gt;</string>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+        <property name="textInteractionFlags">
+         <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>

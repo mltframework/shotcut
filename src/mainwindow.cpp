@@ -3027,18 +3027,28 @@ void MainWindow::onProfileChanged()
 
 void MainWindow::on_actionAddCustomProfile_triggered()
 {
+    QString xml;
+    if (MLT.producer() && MLT.producer()->is_valid()) {
+        // Save the XML to get correct in/out points before profile is changed.
+        xml = MLT.XML();
+    }
     CustomProfileDialog dialog(this);
     dialog.setWindowModality(QmlApplication::dialogModality());
     if (dialog.exec() == QDialog::Accepted) {
-        QDir dir(Settings.appDataLocation());
-        if (dir.cd("profiles")) {
-            QString name = dialog.profileName();
-            QStringList profiles = dir.entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
-            if (profiles.length() == 1)
-                m_customProfileMenu->addSeparator();
-            QAction* action = addProfile(m_profileGroup, name, dir.filePath(name));
-            action->setChecked(true);
-            m_customProfileMenu->addAction(action);
+        QString name = dialog.profileName();
+        if (!name.isEmpty()) {
+            QDir dir(Settings.appDataLocation());
+            if (dir.cd("profiles")) {
+                QStringList profiles = dir.entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
+                if (profiles.length() == 1)
+                    m_customProfileMenu->addSeparator();
+                QAction* action = addProfile(m_profileGroup, name, dir.filePath(name));
+                action->setChecked(true);
+                m_customProfileMenu->addAction(action);
+            }
+        } else if (!xml.isEmpty()) {
+            emit profileChanged();
+            MLT.restart(xml);
         }
     }
 }

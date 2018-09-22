@@ -49,17 +49,6 @@ QString CustomProfileDialog::profileName() const
 
 void CustomProfileDialog::on_buttonBox_accepted()
 {
-    // Save it to a file
-    if (ui->nameEdit->text().isEmpty())
-        return;
-    QDir dir(Settings.appDataLocation());
-    QString subdir("profiles");
-    if (!dir.exists())
-        dir.mkpath(dir.path());
-    if (!dir.cd(subdir)) {
-        if (dir.mkdir(subdir))
-            dir.cd(subdir);
-    }
     MLT.profile().set_explicit(1);
     MLT.profile().set_width(ui->widthSpinner->value());
     MLT.profile().set_height(ui->heightSpinner->value());
@@ -88,18 +77,30 @@ void CustomProfileDialog::on_buttonBox_accepted()
     }
     MLT.profile().set_progressive(ui->scanModeCombo->currentIndex());
     MLT.profile().set_colorspace((ui->colorspaceCombo->currentIndex() == 1)? 709 : 601);
-    Mlt::Properties p;
-    p.set("width", MLT.profile().width());
-    p.set("height", MLT.profile().height());
-    p.set("sample_aspect_num", MLT.profile().sample_aspect_num());
-    p.set("sample_aspect_den", MLT.profile().sample_aspect_den());
-    p.set("display_aspect_num", MLT.profile().display_aspect_num());
-    p.set("display_aspect_den", MLT.profile().display_aspect_den());
-    p.set("progressive", MLT.profile().progressive());
-    p.set("colorspace", MLT.profile().colorspace());
-    p.set("frame_rate_num", MLT.profile().frame_rate_num());
-    p.set("frame_rate_den", MLT.profile().frame_rate_den());
-    p.save(dir.filePath(ui->nameEdit->text()).toUtf8().constData());
+
+    // Save it to a file
+    if (!ui->nameEdit->text().isEmpty()) {
+        QDir dir(Settings.appDataLocation());
+        QString subdir("profiles");
+        if (!dir.exists())
+            dir.mkpath(dir.path());
+        if (!dir.cd(subdir)) {
+            if (dir.mkdir(subdir))
+                dir.cd(subdir);
+        }
+        Mlt::Properties p;
+        p.set("width", MLT.profile().width());
+        p.set("height", MLT.profile().height());
+        p.set("sample_aspect_num", MLT.profile().sample_aspect_num());
+        p.set("sample_aspect_den", MLT.profile().sample_aspect_den());
+        p.set("display_aspect_num", MLT.profile().display_aspect_num());
+        p.set("display_aspect_den", MLT.profile().display_aspect_den());
+        p.set("progressive", MLT.profile().progressive());
+        p.set("colorspace", MLT.profile().colorspace());
+        p.set("frame_rate_num", MLT.profile().frame_rate_num());
+        p.set("frame_rate_den", MLT.profile().frame_rate_den());
+        p.save(dir.filePath(ui->nameEdit->text()).toUtf8().constData());
+    }
 }
 
 void CustomProfileDialog::on_widthSpinner_editingFinished()
