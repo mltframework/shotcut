@@ -163,6 +163,7 @@ Item {
                 filter.resetProperty('transition.oy')
             }
             onPresetSelected: {
+                filter.set('transition.scale_y', filter.get('transition.scale_x'))
                 setControls()
                 middleRotateValue = filter.getDouble('transition.fix_rotate_x', filter.animateIn)
                 middleScaleValue = filter.getDouble('transition.scale_x', filter.animateIn)
