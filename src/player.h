@@ -31,6 +31,7 @@ class TimeSpinBox;
 class QFrame;
 class QSlider;
 class QAction;
+class QActionGroup;
 class QScrollBar;
 class QToolButton;
 class QTabBar;
@@ -79,6 +80,7 @@ signals:
     void nextSought(int currentPosition);
     void nextSought();
     void zoomChanged(float zoom);
+    void gridChanged(int grid);
     void scrolledHorizontally(int x);
     void scrolledVertically(int y);
     void tabIndexChanged(int index);
@@ -151,6 +153,8 @@ private:
     QAction* m_zoomOutAction25;
     QAction* m_zoomOutAction10;
     QAction* m_zoomInAction;
+    QToolButton* m_gridButton;
+    QActionGroup* m_gridActionGroup;
     float m_zoomToggleFactor;
     QTabBar* m_tabs;
     bool m_pauseAfterOpen;
@@ -180,6 +184,11 @@ private slots:
     void zoomOut10();
     void zoomIn();
     void toggleZoom(bool checked);
+    void grid2();
+    void grid3();
+    void grid4();
+    void grid16();
+    void toggleGrid(bool checked);
     void onFadeOutFinished();
 };
 

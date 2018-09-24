@@ -18,26 +18,17 @@
 import QtQuick 2.1
 import Shotcut.Controls 1.0
 
-Flickable {
+VuiBase {
     property string rectProperty: 'geometry'
     property string halignProperty: 'valign'
     property string valignProperty: 'halign'
     property string useFontSizeProperty: 'shotcut:usePointSize'
-
-    width: 400
-    height: 200
-    interactive: false
-    clip: true
     property real zoom: (video.zoom > 0)? video.zoom : 1.0
     property rect filterRect
     property bool blockUpdate: false
     property string startValue: '_shotcut:startValue'
     property string middleValue: '_shotcut:middleValue'
     property string endValue:  '_shotcut:endValue'
-    contentWidth: video.rect.width * zoom
-    contentHeight: video.rect.height * zoom
-    contentX: video.offset.x
-    contentY: video.offset.y
 
     Component.onCompleted: {
         filterRect = filter.getRect(rectProperty, getPosition())
@@ -98,25 +89,33 @@ Flickable {
         blockUpdate = false
     }
 
-    DropArea { anchors.fill: parent }
+    Flickable {
+        anchors.fill: parent
+        interactive: false
+        clip: true
+        contentWidth: video.rect.width * zoom
+        contentHeight: video.rect.height * zoom
+        contentX: video.offset.x
+        contentY: video.offset.y
 
-    Item {
-        id: videoItem
-        x: video.rect.x
-        y: video.rect.y
-        width: video.rect.width
-        height: video.rect.height
-        scale: zoom
+        Item {
+            id: videoItem
+            x: video.rect.x
+            y: video.rect.y
+            width: video.rect.width
+            height: video.rect.height
+            scale: zoom
 
-        RectangleControl {
-            id: rectangle
-            widthScale: video.rect.width / profile.width
-            heightScale: video.rect.height / profile.height
-            handleSize: Math.max(Math.round(8 / zoom), 4)
-            borderSize: Math.max(Math.round(1.33 / zoom), 1)
-            onWidthScaleChanged: setHandles(filterRect)
-            onHeightScaleChanged: setHandles(filterRect)
-            onRectChanged: updateFilter(getPosition())
+            RectangleControl {
+                id: rectangle
+                widthScale: video.rect.width / profile.width
+                heightScale: video.rect.height / profile.height
+                handleSize: Math.max(Math.round(8 / zoom), 4)
+                borderSize: Math.max(Math.round(1.33 / zoom), 1)
+                onWidthScaleChanged: setHandles(filterRect)
+                onHeightScaleChanged: setHandles(filterRect)
+                onRectChanged: updateFilter(getPosition())
+            }
         }
     }
 

@@ -232,6 +232,33 @@ Player::Player(QWidget *parent)
     m_zoomButton->setCheckable(true);
     m_zoomButton->setToolTip(tr("Toggle zoom"));
     toolbar->addWidget(m_zoomButton);
+
+    // Add grid display button to toolbar.
+    m_gridButton = new QToolButton;
+    QMenu* gridMenu = new QMenu(this);
+    m_gridActionGroup = new QActionGroup(this);
+    QAction* action = nullptr;
+    action = gridMenu->addAction(tr("2x2 Grid"), this, SLOT(grid2()));
+    action->setCheckable(true);
+    m_gridActionGroup->addAction(action);
+    action = gridMenu->addAction(tr("3x3 Grid"), this, SLOT(grid3()));
+    action->setCheckable(true);
+    m_gridActionGroup->addAction(action);
+    action = gridMenu->addAction(tr("4x4 Grid"), this, SLOT(grid4()));
+    action->setCheckable(true);
+    m_gridActionGroup->addAction(action);
+    action = gridMenu->addAction(tr("16x16 Grid"), this, SLOT(grid16()));
+    action->setCheckable(true);
+    m_gridActionGroup->addAction(action);
+    connect(m_gridButton, SIGNAL(toggled(bool)), SLOT(toggleGrid(bool)));
+    m_gridButton->setMenu(gridMenu);
+    m_gridButton->setIcon(QIcon::fromTheme("view-grid", QIcon(":/icons/oxygen/32x32/actions/view-grid")));
+    m_gridButton->setPopupMode(QToolButton::MenuButtonPopup);
+    m_gridButton->setCheckable(true);
+    m_gridButton->setToolTip(tr("Toggle grid display on the player"));
+    toolbar->addWidget(m_gridButton);
+
+    // Add volume control to toolbar.
     toolbar->addAction(actionVolume);
     m_volumeWidget = toolbar->widgetForAction(actionVolume);
 
@@ -255,6 +282,7 @@ Player::Player(QWidget *parent)
     connect(m_positionSpinner, SIGNAL(valueChanged(int)), this, SLOT(seek(int)));
     connect(m_positionSpinner, SIGNAL(editingFinished()), this, SLOT(setFocus()));
     connect(this, SIGNAL(endOfStream()), this, SLOT(pause()));
+    connect(this, SIGNAL(gridChanged(int)), MLT.videoWidget(), SLOT(setGrid(int)));
     connect(this, SIGNAL(zoomChanged(float)), MLT.videoWidget(), SLOT(setZoom(float)));
     connect(m_horizontalScroll, SIGNAL(valueChanged(int)), MLT.videoWidget(), SLOT(setOffsetX(int)));
     connect(m_verticalScroll, SIGNAL(valueChanged(int)), MLT.videoWidget(), SLOT(setOffsetY(int)));
@@ -969,4 +997,41 @@ void Player::toggleZoom(bool checked)
         zoomOut10();
     else if (m_zoomToggleFactor == 2.0f)
         zoomIn();
+}
+
+void Player::grid2()
+{
+    m_gridButton->setChecked(true);
+    emit gridChanged(2);
+}
+
+void Player::grid3()
+{
+    m_gridButton->setChecked(true);
+    emit gridChanged(3);
+}
+
+void Player::grid4()
+{
+    m_gridButton->setChecked(true);
+    emit gridChanged(4);
+}
+
+void Player::grid16()
+{
+    m_gridButton->setChecked(true);
+    emit gridChanged(16);
+}
+
+void Player::toggleGrid(bool checked)
+{
+    if(!checked) {
+        QAction* action = m_gridActionGroup->checkedAction();
+        if(action)
+            action->setChecked(false);
+        emit gridChanged(0);
+    } else {
+        // If grid is disabled and the button is clicked, choose the first grid.
+        m_gridActionGroup->actions()[0]->trigger();
+    }
 }

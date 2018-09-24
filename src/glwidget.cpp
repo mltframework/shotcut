@@ -55,6 +55,7 @@ using namespace Mlt;
 GLWidget::GLWidget(QObject *parent)
     : QQuickWidget(QmlUtilities::sharedEngine(), (QWidget*) parent)
     , Controller()
+    , m_grid(0)
     , m_shader(0)
     , m_glslManager(0)
     , m_initSem(0)
@@ -675,8 +676,12 @@ int GLWidget::reconfigure(bool isMulti)
 
 QPoint GLWidget::offset() const
 {
-    return QPoint(m_offset.x() - (MLT.profile().width()  * m_zoom -  width()) / 2,
-                  m_offset.y() - (MLT.profile().height() * m_zoom - height()) / 2);
+    if (m_zoom == 0.0) {
+        return QPoint(0,0);
+    } else {
+        return QPoint(m_offset.x() - (MLT.profile().width()  * m_zoom -  width()) / 2,
+                      m_offset.y() - (MLT.profile().height() * m_zoom - height()) / 2);
+    }
 }
 
 QImage GLWidget::image() const
@@ -720,6 +725,13 @@ void GLWidget::onFrameDisplayed(const SharedFrame &frame)
     } else if (isVui && !m_savedQmlSource.isEmpty() && source() != m_savedQmlSource) {
         setSource(m_savedQmlSource);
     }
+    quickWindow()->update();
+}
+
+void GLWidget::setGrid(int grid)
+{
+    m_grid = grid;
+    emit gridChanged();
     quickWindow()->update();
 }
 

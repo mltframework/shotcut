@@ -7,6 +7,5 @@
         <file>scripts/htmleditor.js</file>
         <file>scripts/web-animations.html</file>
         <file>scripts/web-animations.js</file>
-        <file>src/qml/vui_droparea.qml</file>
     </qresource>
 </RCC>

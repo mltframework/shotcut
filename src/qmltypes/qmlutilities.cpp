@@ -89,5 +89,9 @@ QQmlEngine * QmlUtilities::sharedEngine()
 
 QUrl QmlUtilities::blankVui()
 {
-    return QUrl("qrc:/src/qml/vui_droparea.qml");
+    QDir dir = qmlDir();
+    dir.cd("modules");
+    dir.cd("Shotcut");
+    dir.cd("Controls");
+    return QUrl::fromLocalFile(dir.absoluteFilePath("VuiBase.qml"));
 }

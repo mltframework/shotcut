@@ -49,6 +49,7 @@ class GLWidget : public QQuickWidget, public Controller, protected QOpenGLFuncti
 {
     Q_OBJECT
     Q_PROPERTY(QRect rect READ rect NOTIFY rectChanged)
+    Q_PROPERTY(int grid READ grid NOTIFY gridChanged)
     Q_PROPERTY(float zoom READ zoom NOTIFY zoomChanged)
     Q_PROPERTY(QPoint offset READ offset NOTIFY offsetChanged)
 
@@ -81,6 +82,7 @@ public:
     QObject* videoWidget() { return this; }
     Filter* glslManager() const { return m_glslManager; }
     QRect rect() const { return m_rect; }
+    int grid() const { return m_grid; }
     float zoom() const { return m_zoom * MLT.profile().width() / m_rect.width(); }
     QPoint offset() const;
     QImage image() const;
@@ -88,6 +90,7 @@ public:
 
 public slots:
     void onFrameDisplayed(const SharedFrame& frame);
+    void setGrid(int grid);
     void setZoom(float zoom);
     void setOffsetX(int x);
     void setOffsetY(int y);
@@ -103,12 +106,14 @@ signals:
     void paused();
     void playing();
     void rectChanged();
+    void gridChanged();
     void zoomChanged();
     void offsetChanged();
     void imageReady();
 
 private:
     QRect m_rect;
+    int m_grid;
     GLuint m_texture[3];
     QOpenGLShaderProgram* m_shader;
     QPoint m_dragStart;
