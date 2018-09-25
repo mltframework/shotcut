@@ -155,6 +155,7 @@ private:
     QAction* m_zoomInAction;
     QToolButton* m_gridButton;
     QActionGroup* m_gridActionGroup;
+    QAction* m_gridDefaultAction;
     float m_zoomToggleFactor;
     QTabBar* m_tabs;
     bool m_pauseAfterOpen;

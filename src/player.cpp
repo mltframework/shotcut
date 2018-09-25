@@ -240,6 +240,7 @@ Player::Player(QWidget *parent)
     QAction* action = nullptr;
     action = gridMenu->addAction(tr("2x2 Grid"), this, SLOT(grid2()));
     action->setCheckable(true);
+    m_gridDefaultAction = action;
     m_gridActionGroup->addAction(action);
     action = gridMenu->addAction(tr("3x3 Grid"), this, SLOT(grid3()));
     action->setCheckable(true);
@@ -1002,36 +1003,40 @@ void Player::toggleZoom(bool checked)
 void Player::grid2()
 {
     m_gridButton->setChecked(true);
+    m_gridDefaultAction = m_gridActionGroup->actions()[0];
     emit gridChanged(2);
 }
 
 void Player::grid3()
 {
     m_gridButton->setChecked(true);
+    m_gridDefaultAction = m_gridActionGroup->actions()[1];
     emit gridChanged(3);
 }
 
 void Player::grid4()
 {
     m_gridButton->setChecked(true);
+    m_gridDefaultAction = m_gridActionGroup->actions()[2];
     emit gridChanged(4);
 }
 
 void Player::grid16()
 {
     m_gridButton->setChecked(true);
+    m_gridDefaultAction = m_gridActionGroup->actions()[3];
     emit gridChanged(16);
 }
 
 void Player::toggleGrid(bool checked)
 {
+    QAction* action = m_gridActionGroup->checkedAction();
     if(!checked) {
-        QAction* action = m_gridActionGroup->checkedAction();
         if(action)
             action->setChecked(false);
         emit gridChanged(0);
     } else {
-        // If grid is disabled and the button is clicked, choose the first grid.
-        m_gridActionGroup->actions()[0]->trigger();
+        if(!action)
+            m_gridDefaultAction->trigger();
     }
 }
