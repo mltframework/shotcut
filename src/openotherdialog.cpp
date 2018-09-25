@@ -57,14 +57,14 @@ OpenOtherDialog::OpenOtherDialog(QWidget *parent) :
     item->setData(0, Qt::UserRole, ui->x11grabTab->objectName());
 #endif
 #elif defined(Q_OS_WIN)
-    QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("DirectShow")));
+    QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("Audio/Video Device")));
     item->setData(0, Qt::UserRole, ui->dshowVideoTab->objectName());
 #if ENABLE_SCREEN_CAPTURE
     item = new QTreeWidgetItem(group, QStringList(tr("Screen")));
     item->setData(0, Qt::UserRole, ui->gdigrabTab->objectName());
 #endif
 #elif defined(Q_OS_MAC)
-    QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("macOS A/V Device")));
+    QTreeWidgetItem* item = new QTreeWidgetItem(group, QStringList(tr("Audio/Video Device")));
     item->setData(0, Qt::UserRole, ui->avfoundationTab->objectName());
 #endif
 
@@ -139,7 +139,7 @@ void OpenOtherDialog::load(Mlt::Producer* producer)
         else if (resource.startsWith("alsa:"))
             selectTreeWidget(tr("ALSA Audio"));
         else if (resource.startsWith("dshow:"))
-            selectTreeWidget(tr("DirectShow"));
+            selectTreeWidget(tr("Audio/Video Device"));
         else if (resource.startsWith("x11grab:") || resource.startsWith("gdigrab:"))
             selectTreeWidget(tr("Screen"));
         else if (service.startsWith("avformat"))

@@ -2808,6 +2808,7 @@ void MainWindow::changeInterpolation(bool checked, const char* method)
 void AppendTask::run()
 {
     foreach (QString filename, filenames) {
+        LOG_DEBUG() << filename;
         Mlt::Producer p(MLT.profile(), filename.toUtf8().constData());
         if (p.is_valid()) {
             // Convert avformat to avformat-novalidate so that XML loads faster.

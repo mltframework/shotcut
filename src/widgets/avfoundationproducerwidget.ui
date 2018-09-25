@@ -23,7 +23,7 @@
       </font>
      </property>
      <property name="text">
-      <string>macOS A/V Device</string>
+      <string>Audio/Video Device</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>

@@ -75,7 +75,7 @@ Mlt::Producer *AvfoundationProducerWidget::newProducer(Mlt::Profile& profile)
     }
     p->set("force_seekable", 0);
     p->set(kBackgroundCaptureProperty, 1);
-    p->set(kShotcutCaptionProperty, tr("macOS A/V Device").toUtf8().constData());
+    p->set(kShotcutCaptionProperty, tr("Audio/Video Device").toUtf8().constData());
     return p;
 }
 
