@@ -232,6 +232,7 @@ Player::Player(QWidget *parent)
     m_zoomButton->setCheckable(true);
     m_zoomButton->setToolTip(tr("Toggle zoom"));
     toolbar->addWidget(m_zoomButton);
+    toggleZoom(false);
 
     // Add grid display button to toolbar.
     m_gridButton = new QToolButton;
