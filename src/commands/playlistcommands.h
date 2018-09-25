@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2013-2015 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2013-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,12 +28,13 @@ namespace Playlist
 class AppendCommand : public QUndoCommand
 {
 public:
-    AppendCommand(PlaylistModel& model, const QString& xml, QUndoCommand * parent = 0);
+    AppendCommand(PlaylistModel& model, const QString& xml, bool emitModified = true, QUndoCommand * parent = 0);
     void redo();
     void undo();
 private:
     PlaylistModel& m_model;
     QString m_xml;
+    bool m_emitModified;
 };
 
 class InsertCommand : public QUndoCommand

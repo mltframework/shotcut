@@ -2805,47 +2805,37 @@ void MainWindow::changeInterpolation(bool checked, const char* method)
     Settings.setPlayerInterpolation(method);
 }
 
-class AppendTask : public QRunnable
+void AppendTask::run()
 {
-public:
-    AppendTask(PlaylistModel* model, const QStringList& filenames)
-        : QRunnable()
-        , model(model)
-        , filenames(filenames)
-    {
-    }
-    void run()
-    {
-        foreach (QString filename, filenames) {
-            Mlt::Producer p(MLT.profile(), filename.toUtf8().constData());
-            if (p.is_valid()) {
-                // Convert avformat to avformat-novalidate so that XML loads faster.
-                if (!qstrcmp(p.get("mlt_service"), "avformat")) {
-                    p.set("mlt_service", "avformat-novalidate");
-                    p.set("mute_on_pause", 0);
-                }
-                if (QDir::toNativeSeparators(filename) == QDir::toNativeSeparators(MAIN.fileName())) {
-                    MAIN.showStatusMessage(QObject::tr("You cannot add a project to itself!"));
-                    continue;
-                }
-                MLT.setImageDurationFromDefault(&p);
-                MAIN.getHash(p);
-                MAIN.undoStack()->push(new Playlist::AppendCommand(*model, MLT.XML(&p)));
+    foreach (QString filename, filenames) {
+        Mlt::Producer p(MLT.profile(), filename.toUtf8().constData());
+        if (p.is_valid()) {
+            // Convert avformat to avformat-novalidate so that XML loads faster.
+            if (!qstrcmp(p.get("mlt_service"), "avformat")) {
+                p.set("mlt_service", "avformat-novalidate");
+                p.set("mute_on_pause", 0);
             }
+            if (QDir::toNativeSeparators(filename) == QDir::toNativeSeparators(MAIN.fileName())) {
+                MAIN.showStatusMessage(QObject::tr("You cannot add a project to itself!"));
+                continue;
+            }
+            MLT.setImageDurationFromDefault(&p);
+            MAIN.getHash(p);
+            emit appendToPlaylist(MLT.XML(&p));
         }
     }
-private:
-    PlaylistModel* model;
-    const QStringList& filenames;
-};
+    emit done();
+}
 
 void MainWindow::processMultipleFiles()
 {
     if (m_multipleFiles.length() > 1) {
-        PlaylistModel* model = m_playlistDock->model();
         m_playlistDock->show();
         m_playlistDock->raise();
-        QThreadPool::globalInstance()->start(new AppendTask(model, m_multipleFiles), 9);
+        AppendTask* task = new AppendTask(m_multipleFiles);
+        connect(task, SIGNAL(appendToPlaylist(QString)), SLOT(onAppendToPlaylist(QString)));
+        connect(task, SIGNAL(done()), SLOT(onAppendTaskDone()));
+        QThreadPool::globalInstance()->start(task, 9);
         foreach (QString filename, m_multipleFiles)
             m_recentDock->add(filename.toUtf8().constData());
     }
@@ -3634,4 +3624,15 @@ void MainWindow::on_actionLayoutRemove_triggered()
             }
         }
     }
+}
+
+void MainWindow::onAppendToPlaylist(const QString& xml)
+{
+    MAIN.undoStack()->push(new Playlist::AppendCommand(*m_playlistDock->model(), xml, false));
+}
+
+void MainWindow::onAppendTaskDone()
+{
+    qApp->processEvents();
+    emit m_playlistDock->model()->modified();
 }

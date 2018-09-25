@@ -519,7 +519,7 @@ void PlaylistModel::load()
     emit loaded();
 }
 
-void PlaylistModel::append(Mlt::Producer& producer)
+void PlaylistModel::append(Mlt::Producer& producer, bool emitModified)
 {
     createIfNeeded();
     int count = m_playlist->count();
@@ -531,7 +531,8 @@ void PlaylistModel::append(Mlt::Producer& producer)
     beginInsertRows(QModelIndex(), count, count);
     m_playlist->append(producer, in, out);
     endInsertRows();
-    emit modified();
+    if (emitModified)
+        emit modified();
 }
 
 void PlaylistModel::insert(Mlt::Producer& producer, int row)

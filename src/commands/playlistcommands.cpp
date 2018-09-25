@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2013-2016 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2013-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,10 +23,11 @@
 namespace Playlist
 {
 
-AppendCommand::AppendCommand(PlaylistModel& model, const QString& xml, QUndoCommand *parent)
+AppendCommand::AppendCommand(PlaylistModel& model, const QString& xml, bool emitModified, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_xml(xml)
+    , m_emitModified(emitModified)
 {
     setText(QObject::tr("Append playlist item %1").arg(m_model.rowCount() + 1));
 }
@@ -36,7 +36,7 @@ void AppendCommand::redo()
 {
     LOG_DEBUG() << "";
     Mlt::Producer producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
-    m_model.append(producer);
+    m_model.append(producer, m_emitModified);
 }
 
 void AppendCommand::undo()
