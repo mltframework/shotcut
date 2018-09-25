@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2017-2018 Meltytech, LLC
- * Author: Brian Matherly <code@brianmatherly.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,52 +18,51 @@
 import QtQuick 2.1
 import Shotcut.Controls 1.0
 
-Flickable {
+VuiBase {
     property string rectProperty: "rect"
-
-    width: 400
-    height: 200
-    interactive: false
-    clip: true
     property real zoom: (video.zoom > 0)? video.zoom : 1.0
     property rect filterRect: filter.getRect(rectProperty)
-    contentWidth: video.rect.width * zoom
-    contentHeight: video.rect.height * zoom
-    contentX: video.offset.x
-    contentY: video.offset.y
 
     Component.onCompleted: {
         rectangle.setHandles(filter.getRect(rectProperty))
     }
 
-    DropArea { anchors.fill: parent }
+    Flickable {
+        anchors.fill: parent
+        interactive: false
+        clip: true
+        contentWidth: video.rect.width * zoom
+        contentHeight: video.rect.height * zoom
+        contentX: video.offset.x
+        contentY: video.offset.y
 
-    Item {
-        id: videoItem
-        x: video.rect.x
-        y: video.rect.y
-        width: video.rect.width
-        height: video.rect.height
-        scale: zoom
+        Item {
+            id: videoItem
+            x: video.rect.x
+            y: video.rect.y
+            width: video.rect.width
+            height: video.rect.height
+            scale: zoom
 
-        RectangleControl {
-            id: rectangle
-            widthScale: video.rect.width / profile.width
-            heightScale: video.rect.height / profile.height
-            handleSize: Math.max(Math.round(8 / zoom), 4)
-            borderSize: Math.max(Math.round(1.33 / zoom), 1)
-            onWidthScaleChanged: setHandles(filter.getRect(rectProperty))
-            onHeightScaleChanged: setHandles(filter.getRect(rectProperty))
-            onRectChanged:  {
-                filterRect.x = Math.round(rect.x / rectangle.widthScale)
-                filterRect.y = Math.round(rect.y / rectangle.heightScale)
-                filterRect.width = Math.round(rect.width / rectangle.widthScale)
-                filterRect.height = Math.round(rect.height / rectangle.heightScale)
-                filter.set(rectProperty, '%L1%/%L2%:%L3%x%L4%'
-                           .arg(filterRect.x / profile.width * 100)
-                           .arg(filterRect.y / profile.height * 100)
-                           .arg(filterRect.width / profile.width * 100)
-                           .arg(filterRect.height / profile.height * 100))
+            RectangleControl {
+                id: rectangle
+                widthScale: video.rect.width / profile.width
+                heightScale: video.rect.height / profile.height
+                handleSize: Math.max(Math.round(8 / zoom), 4)
+                borderSize: Math.max(Math.round(1.33 / zoom), 1)
+                onWidthScaleChanged: setHandles(filter.getRect(rectProperty))
+                onHeightScaleChanged: setHandles(filter.getRect(rectProperty))
+                onRectChanged:  {
+                    filterRect.x = Math.round(rect.x / rectangle.widthScale)
+                    filterRect.y = Math.round(rect.y / rectangle.heightScale)
+                    filterRect.width = Math.round(rect.width / rectangle.widthScale)
+                    filterRect.height = Math.round(rect.height / rectangle.heightScale)
+                    filter.set(rectProperty, '%L1%/%L2%:%L3%x%L4%'
+                               .arg(filterRect.x / profile.width * 100)
+                               .arg(filterRect.y / profile.height * 100)
+                               .arg(filterRect.width / profile.width * 100)
+                               .arg(filterRect.height / profile.height * 100))
+                }
             }
         }
     }

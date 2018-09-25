@@ -27,6 +27,7 @@
         <file>dark/32x32/video-television.png</file>
         <file>dark/32x32/view-filter.png</file>
         <file>dark/32x32/view-fullscreen.png</file>
+        <file>dark/32x32/view-grid.png</file>
         <file>dark/32x32/view-history.png</file>
         <file>dark/32x32/view-media-playlist.png</file>
         <file>dark/32x32/window-close.png</file>
@@ -58,6 +59,7 @@
         <file>light/32x32/video-television.png</file>
         <file>light/32x32/view-filter.png</file>
         <file>light/32x32/view-fullscreen.png</file>
+        <file>light/32x32/view-grid.png</file>
         <file>light/32x32/view-history.png</file>
         <file>light/32x32/view-media-playlist.png</file>
         <file>light/32x32/window-close.png</file>
@@ -84,6 +86,7 @@
         <file>oxygen/32x32/actions/speaker.png</file>
         <file>oxygen/32x32/actions/view-filter.png</file>
         <file>oxygen/32x32/actions/view-fullscreen.png</file>
+        <file>oxygen/32x32/actions/view-grid.png</file>
         <file>oxygen/32x32/actions/view-history.png</file>
         <file>oxygen/32x32/actions/view-media-playlist.png</file>
         <file>oxygen/32x32/actions/window-close.png</file>
