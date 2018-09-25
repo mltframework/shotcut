@@ -73,6 +73,7 @@
 #include "util.h"
 #include "models/keyframesmodel.h"
 #include "dialogs/listselectiondialog.h"
+#include "widgets/textproducerwidget.h"
 
 #include <QtWidgets>
 #include <Logger.h>
@@ -225,6 +226,7 @@ MainWindow::MainWindow()
     connect(MLT.videoWidget(), SIGNAL(playing()), m_player, SLOT(showPlaying()));
 
     setupSettingsMenu();
+    setupOpenOtherMenu();
     readPlayerSettings();
     configureVideoWidget();
 
@@ -816,6 +818,47 @@ void MainWindow::setupSettingsMenu()
     foreach (QString name, Settings.layouts())
         ui->menuLayout->addAction(addLayout(m_layoutGroup, name));
     LOG_DEBUG() << "end";
+}
+
+void MainWindow::setupOpenOtherMenu()
+{
+    // Open Other toolbar menu button
+    QScopedPointer<Mlt::Properties> mltProducers(MLT.repository()->producers());
+    QScopedPointer<Mlt::Properties> mltFilters(MLT.repository()->filters());
+    QMenu* otherMenu = new QMenu(this);
+    ui->actionOpenOther2->setMenu(otherMenu);
+
+    // populate the generators
+    if (mltProducers->get_data("color")) {
+        otherMenu->addAction(tr("Color"), this, SLOT(onOpenOtherColor()));
+        if (!Settings.playerGPU() && mltProducers->get_data("qtext") && mltFilters->get_data("dynamictext"))
+            otherMenu->addAction(tr("Text"), this, SLOT(onOpenOtherText()));
+    }
+    if (mltProducers->get_data("noise"))
+        otherMenu->addAction(tr("Noise"), this, SLOT(onOpenOtherNoise()));
+    if (mltProducers->get_data("frei0r.ising0r"))
+        otherMenu->addAction(tr("Ising"), this, SLOT(onOpenOtherIsing()));
+    if (mltProducers->get_data("frei0r.lissajous0r"))
+        otherMenu->addAction(tr("Lissajous"), this, SLOT(onOpenOtherLissajous()));
+    if (mltProducers->get_data("frei0r.plasma"))
+        otherMenu->addAction(tr("Plasma"), this, SLOT(onOpenOtherPlasma()));
+    if (mltProducers->get_data("frei0r.test_pat_B"))
+        otherMenu->addAction(tr("Color Bars"), this, SLOT(onOpenOtherColorBars()));
+    if (mltProducers->get_data("tone"))
+        otherMenu->addAction(tr("Audio Tone"), this, SLOT(onOpenOtherTone()));
+    if (mltProducers->get_data("count"))
+        otherMenu->addAction(tr("Count"), this, SLOT(onOpenOtherCount()));
+
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    otherMenu->addAction(tr("Video4Linux"), this, SLOT(onOpenOtherV4L2()));
+    otherMenu->addAction(tr("PulseAudio"), this, SLOT(onOpenOtherPulse()));
+    otherMenu->addAction(tr("JACK Audio"), this, SLOT(onOpenOtherJack()));
+    otherMenu->addAction(tr("ALSA Audio"), this, SLOT(onOpenOtherAlsa()));
+#elif defined(Q_OS_WIN) || defined(Q_OS_MAC)
+    otherMenu->addAction(tr("Audio/Video Device"), this, SLOT(onOpenOtherDevice()));
+#endif
+    if (mltProducers->get_data("decklink"))
+        otherMenu->addAction(tr("SDI/HDMI"), this, SLOT(onOpenOtherDecklink()));
 }
 
 QAction* MainWindow::addProfile(QActionGroup* actionGroup, const QString& desc, const QString& name)
@@ -3658,4 +3701,113 @@ void MainWindow::onAppendTaskDone()
 {
     qApp->processEvents();
     emit m_playlistDock->model()->modified();
+}
+
+void MainWindow::on_actionOpenOther2_triggered()
+{
+    ui->actionOpenOther2->menu()->popup(mapToGlobal(ui->mainToolBar->geometry().bottomLeft()) + QPoint(64, 0));
+}
+
+void MainWindow::onOpenOtherTriggered(QWidget* widget)
+{
+    QDialog dialog(this);
+    QVBoxLayout vlayout(&dialog);
+    vlayout.addWidget(widget);
+    QDialogButtonBox buttonBox(&dialog);
+    buttonBox.setOrientation(Qt::Horizontal);
+    buttonBox.setStandardButtons(QDialogButtonBox::Cancel | QDialogButtonBox::Ok);
+    vlayout.addWidget(&buttonBox);
+    connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+    QString name = widget->objectName();
+    if (name == "NoiseWidget" || dialog.exec() == QDialog::Accepted) {
+        open(dynamic_cast<AbstractProducerWidget*>(widget)->newProducer(MLT.profile()));
+        if (name == "TextProducerWidget") {
+            m_filtersDock->show();
+            m_filtersDock->raise();
+        } else {
+            m_propertiesDock->show();
+            m_propertiesDock->raise();
+        }
+    }
+    delete widget;
+}
+
+void MainWindow::onOpenOtherColor()
+{
+    onOpenOtherTriggered(new ColorProducerWidget(this));
+}
+
+void MainWindow::onOpenOtherText()
+{
+    onOpenOtherTriggered(new TextProducerWidget(this));
+}
+
+void MainWindow::onOpenOtherNoise()
+{
+    onOpenOtherTriggered(new NoiseWidget(this));
+}
+
+void MainWindow::onOpenOtherIsing()
+{
+    onOpenOtherTriggered(new IsingWidget(this));
+}
+
+void MainWindow::onOpenOtherLissajous()
+{
+    onOpenOtherTriggered(new LissajousWidget(this));
+}
+
+void MainWindow::onOpenOtherPlasma()
+{
+    onOpenOtherTriggered(new PlasmaWidget(this));
+}
+
+void MainWindow::onOpenOtherColorBars()
+{
+    onOpenOtherTriggered(new ColorBarsWidget(this));
+}
+
+void MainWindow::onOpenOtherTone()
+{
+    onOpenOtherTriggered(new ToneProducerWidget(this));
+}
+
+void MainWindow::onOpenOtherCount()
+{
+    onOpenOtherTriggered(new CountProducerWidget(this));
+}
+
+void MainWindow::onOpenOtherV4L2()
+{
+    onOpenOtherTriggered(new Video4LinuxWidget(this));
+}
+
+void MainWindow::onOpenOtherPulse()
+{
+    onOpenOtherTriggered(new PulseAudioWidget(this));
+}
+
+void MainWindow::onOpenOtherJack()
+{
+    onOpenOtherTriggered(new JackProducerWidget(this));
+}
+
+void MainWindow::onOpenOtherAlsa()
+{
+    onOpenOtherTriggered(new AlsaWidget(this));
+}
+
+void MainWindow::onOpenOtherDevice()
+{
+#if defined(Q_OS_MAC)
+    onOpenOtherTriggered(new AvfoundationProducerWidget(this));
+#elif defined(Q_OS_WIN)
+    onOpenOtherTriggered(new DirectShowVideoWidget(this));
+#endif
+}
+
+void MainWindow::onOpenOtherDecklink()
+{
+    onOpenOtherTriggered(new DecklinkProducerWidget(this));
 }

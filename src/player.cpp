@@ -237,8 +237,7 @@ Player::Player(QWidget *parent)
     m_gridButton = new QToolButton;
     QMenu* gridMenu = new QMenu(this);
     m_gridActionGroup = new QActionGroup(this);
-    QAction* action = nullptr;
-    action = gridMenu->addAction(tr("2x2 Grid"), this, SLOT(grid2()));
+    QAction* action = gridMenu->addAction(tr("2x2 Grid"), this, SLOT(grid2()));
     action->setCheckable(true);
     m_gridDefaultAction = action;
     m_gridActionGroup->addAction(action);

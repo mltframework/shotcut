@@ -238,6 +238,7 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionOpen"/>
+   <addaction name="actionOpenOther2"/>
    <addaction name="actionSave"/>
    <addaction name="separator"/>
    <addaction name="actionUndo"/>
@@ -941,6 +942,21 @@
   <action name="actionLayoutRemove">
    <property name="text">
     <string>Remove...</string>
+   </property>
+  </action>
+  <action name="actionOpenOther2">
+   <property name="icon">
+    <iconset theme="document-new" resource="../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/document-new.png</normaloff>:/icons/oxygen/32x32/actions/document-new.png</iconset>
+   </property>
+   <property name="text">
+    <string>Open Other</string>
+   </property>
+   <property name="toolTip">
+    <string>Open a device, stream or generator</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
  </widget>

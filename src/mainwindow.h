@@ -119,6 +119,7 @@ protected:
 
 private:
     void setupSettingsMenu();
+    void setupOpenOtherMenu();
     QAction *addProfile(QActionGroup* actionGroup, const QString& desc, const QString& name);
     QAction *addLayout(QActionGroup* actionGroup, const QString& name);
     void readPlayerSettings();
@@ -309,6 +310,23 @@ private slots:
     void on_actionLayoutRemove_triggered();
     void onAppendToPlaylist(const QString& xml);
     void onAppendTaskDone();
+    void on_actionOpenOther2_triggered();
+    void onOpenOtherTriggered(QWidget* widget);
+    void onOpenOtherColor();
+    void onOpenOtherText();
+    void onOpenOtherNoise();
+    void onOpenOtherIsing();
+    void onOpenOtherLissajous();
+    void onOpenOtherPlasma();
+    void onOpenOtherColorBars();
+    void onOpenOtherTone();
+    void onOpenOtherCount();
+    void onOpenOtherV4L2();
+    void onOpenOtherPulse();
+    void onOpenOtherJack();
+    void onOpenOtherAlsa();
+    void onOpenOtherDevice();
+    void onOpenOtherDecklink();
 };
 
 #define MAIN MainWindow::singleton()
