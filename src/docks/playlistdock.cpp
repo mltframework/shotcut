@@ -535,9 +535,11 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
                 Mlt::Producer* producer = &p;
                 if (first) {
                     first = false;
-                    MAIN.open(path);
-                    if (MLT.producer() && MLT.producer()->is_valid())
-                        producer = MLT.producer();
+                    if (!MLT.producer() || !MLT.producer()->is_valid()) {
+                        MAIN.open(path);
+                        if (MLT.producer() && MLT.producer()->is_valid())
+                            producer = MLT.producer();
+                    }
                 }
                 // Convert avformat to avformat-novalidate so that XML loads faster.
                 if (!qstrcmp(producer->get("mlt_service"), "avformat")) {
