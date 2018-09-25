@@ -20,11 +20,31 @@ DropArea {
                 var rectY = video.rect.y - video.offset.y + zoomOffsetY
                 var gridSizeX = rectW / video.grid
                 var gridSizeY = rectH / video.grid
-                ctx.lineWidth = 2
-                ctx.strokeStyle = "#777777"
+
+                // Black shadow grid (offset by 1)
+                ctx.lineWidth = 1
+                ctx.strokeStyle = "#000000"
                 ctx.beginPath()
-                // Outline
-                ctx.rect(rectX + 1, rectY + 1 , rectW - 2, rectH - 2)
+                // vertical grid lines
+                for(var x = 1; x * gridSizeX < rectW; x++)
+                {
+                    context.moveTo(rectX + x * gridSizeX + 1, rectY)
+                    context.lineTo(rectX + x * gridSizeX + 1, rectY + rectH)
+                }
+                // horizontal grid lines
+                for(var y = 1; y * gridSizeY < rectH; y++)
+                {
+                    context.moveTo(rectX, rectY + y * gridSizeY + 1)
+                    context.lineTo(rectX + rectW, rectY + y * gridSizeY + 1)
+                }
+                // draw and close
+                context.stroke()
+                context.closePath()
+
+                // White line grid
+                ctx.lineWidth = 1
+                ctx.strokeStyle = "#ffffff"
+                ctx.beginPath()
                 // vertical grid lines
                 for(var x = 1; x * gridSizeX < rectW; x++)
                 {
