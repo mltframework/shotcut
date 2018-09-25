@@ -1202,6 +1202,29 @@ void MainWindow::open(QString url, const Mlt::Properties* properties)
     }
 }
 
+void MainWindow::openMultiple(const QStringList& paths)
+{
+    if (paths.size() > 1) {
+        QList<QUrl> urls;
+        foreach (const QString& s, paths)
+            urls << s;
+        openMultiple(urls);
+    } else if (!paths.isEmpty()) {
+        open(paths.first());
+    }
+}
+
+void MainWindow::openMultiple(const QList<QUrl>& urls)
+{
+    if (urls.size() > 1) {
+        m_multipleFiles = Util::sortedFileList(Util::expandDirectories(urls));
+        open(m_multipleFiles.first());
+    } else {
+        QUrl url = urls.first();
+        open(Util::removeFileScheme(url));
+    }
+}
+
 void MainWindow::openVideo()
 {
     QString path = Settings.openPath();
@@ -1974,9 +1997,7 @@ void MainWindow::dropEvent(QDropEvent *event)
         }
     }
     else if (mimeData->hasUrls()) {
-        m_multipleFiles = Util::sortedFileList(mimeData->urls());
-        QString path = m_multipleFiles.first();
-        open(path);
+        openMultiple(mimeData->urls());
         event->acceptProposedAction();
     }
     else if (mimeData->hasFormat(Mlt::XmlMimeType )) {

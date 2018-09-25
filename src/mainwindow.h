@@ -178,6 +178,8 @@ public slots:
     bool isXmlRepaired(MltXmlChecker& checker, QString& fileName);
     void updateAutoSave();
     void open(QString url, const Mlt::Properties* = 0);
+    void openMultiple(const QStringList& paths);
+    void openMultiple(const QList<QUrl>& urls);
     void openVideo();
     void openCut(Mlt::Producer* producer);
     void hideProducer();

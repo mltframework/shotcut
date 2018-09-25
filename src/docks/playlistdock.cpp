@@ -521,7 +521,7 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
     if (data && data->hasUrls()) {
         int insertNextAt = row;
         bool first = true;
-        QStringList fileNames = Util::sortedFileList(data->urls());
+        QStringList fileNames = Util::sortedFileList(Util::expandDirectories(data->urls()));
         foreach (QString path, fileNames) {
             if (MAIN.isSourceClipMyProject(path)) continue;
             Mlt::Producer p(MLT.profile(), path.toUtf8().constData());

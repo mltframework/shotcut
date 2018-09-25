@@ -172,3 +172,20 @@ int Util::coerceMultiple(int value, int multiple)
 {
     return (value + multiple - 1) / multiple * multiple;
 }
+
+QList<QUrl> Util::expandDirectories(const QList<QUrl>& urls)
+{
+    QList<QUrl> result;
+    foreach (QUrl url, urls) {
+        QString path = Util::removeFileScheme(url);
+        QFileInfo fi(path);
+        if (fi.isDir()) {
+            QDir dir(path);
+            foreach (QFileInfo fi, dir.entryInfoList(QDir::Files | QDir::Readable, QDir::Name))
+                result << fi.filePath();
+        } else {
+            result << url;
+        }
+    }
+    return result;
+}

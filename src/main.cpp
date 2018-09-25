@@ -95,7 +95,7 @@ public:
     QTranslator qtTranslator;
     QTranslator qtBaseTranslator;
     QTranslator shotcutTranslator;
-    QString resourceArg;
+    QStringList resourceArg;
     bool isFullScreen;
     QString appDirArg;
 
@@ -151,7 +151,7 @@ public:
         if (parser.isSet(gpuOption))
             Settings.setPlayerGPU(true);
         if (!parser.positionalArguments().isEmpty())
-            resourceArg = parser.positionalArguments().first();
+            resourceArg = parser.positionalArguments();
 
         // Startup logging.
         dir = Settings.appDataLocation();
@@ -237,7 +237,7 @@ protected:
     bool event(QEvent *event) {
         if (event->type() == QEvent::FileOpen) {
             QFileOpenEvent *openEvent = static_cast<QFileOpenEvent*>(event);
-            resourceArg = openEvent->file();
+            resourceArg << openEvent->file();
             return true;
         }
         else return QApplication::event(event);
@@ -286,7 +286,7 @@ int main(int argc, char **argv)
     splash.finish(a.mainWindow);
 
     if (!a.resourceArg.isEmpty())
-        a.mainWindow->open(a.resourceArg);
+        a.mainWindow->openMultiple(a.resourceArg);
     else
         a.mainWindow->open(a.mainWindow->untitledFileName());
 
