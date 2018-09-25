@@ -2300,6 +2300,7 @@ void MainWindow::onPlaylistCleared()
 
 void MainWindow::onPlaylistClosed()
 {
+    closeProducer();
     setProfile(Settings.playerProfile());
     setAudioChannels(Settings.playerAudioChannels());
     setCurrentFile("");
