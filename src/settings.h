@@ -164,6 +164,9 @@ public:
     QByteArray layoutState(const QString& name);
     bool removeLayout(const QString& name);
 
+    bool clearRecent() const;
+    void setClearRecent(bool);
+
 signals:
     void openPathChanged();
     void savePathChanged();

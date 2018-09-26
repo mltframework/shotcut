@@ -817,6 +817,15 @@ void MainWindow::setupSettingsMenu()
     }
     foreach (QString name, Settings.layouts())
         ui->menuLayout->addAction(addLayout(m_layoutGroup, name));
+
+    if (qApp->property("clearRecent").toBool()) {
+        ui->actionClearRecentOnExit->setVisible(false);
+        Settings.setRecent(QStringList());
+        Settings.setClearRecent(true);
+    } else {
+        ui->actionClearRecentOnExit->setChecked(Settings.clearRecent());
+    }
+
     LOG_DEBUG() << "end";
 }
 
@@ -3771,4 +3780,11 @@ void MainWindow::onOpenOtherTriggered()
 #endif
     else if (sender()->objectName() == "decklink")
         onOpenOtherTriggered(new DecklinkProducerWidget(this));
+}
+
+void MainWindow::on_actionClearRecentOnExit_toggled(bool arg1)
+{
+    Settings.setClearRecent(arg1);
+    if (arg1)
+        Settings.setRecent(QStringList());
 }

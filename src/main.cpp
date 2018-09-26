@@ -131,6 +131,9 @@ public:
         QCommandLineOption gpuOption("gpu",
             QCoreApplication::translate("main", "Use GPU processing."));
         parser.addOption(gpuOption);
+        QCommandLineOption clearRecentOption("clear-recent",
+            QCoreApplication::translate("main", "Clear Recent on Exit"));
+        parser.addOption(clearRecentOption);
         QCommandLineOption appDataOption("appdata",
             QCoreApplication::translate("main", "The directory for app configuration and data."),
             QCoreApplication::translate("main", "directory"));
@@ -144,6 +147,7 @@ public:
         isFullScreen = parser.isSet(fullscreenOption);
 #endif
         setProperty("noupgrade", parser.isSet(noupgradeOption));
+        setProperty("clearRecent", parser.isSet(clearRecentOption));
         if (!parser.value(appDataOption).isEmpty()) {
             appDirArg = parser.value(appDataOption);
             ShotcutSettings::setAppDataForSession(appDirArg);

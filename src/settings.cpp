@@ -112,7 +112,10 @@ QStringList ShotcutSettings::recent() const
 
 void ShotcutSettings::setRecent(const QStringList& ls)
 {
-    settings.setValue("recent", ls);
+    if (ls.isEmpty())
+        settings.remove("recent");
+    else if (!clearRecent())
+        settings.setValue("recent", ls);
 }
 
 QString ShotcutSettings::theme() const
@@ -615,4 +618,14 @@ bool ShotcutSettings::removeLayout(const QString& name)
         return true;
     }
     return false;
+}
+
+bool ShotcutSettings::clearRecent() const
+{
+    return settings.value("clearRecent", false).toBool();
+}
+
+void ShotcutSettings::setClearRecent(bool b)
+{
+    settings.setValue("clearRecent", b);
 }

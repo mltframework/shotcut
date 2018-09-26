@@ -313,6 +313,7 @@ private slots:
     void on_actionOpenOther2_triggered();
     void onOpenOtherTriggered(QWidget* widget);
     void onOpenOtherTriggered();
+    void on_actionClearRecentOnExit_toggled(bool arg1);
 };
 
 #define MAIN MainWindow::singleton()

@@ -202,6 +202,7 @@
     <addaction name="menuTheme"/>
     <addaction name="menuDrawingMethod"/>
     <addaction name="menuData_Directory"/>
+    <addaction name="actionClearRecentOnExit"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -957,6 +958,14 @@
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionClearRecentOnExit">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Clear Recent on Exit</string>
    </property>
   </action>
  </widget>
