@@ -3762,10 +3762,11 @@ void MainWindow::onOpenOtherTriggered()
         onOpenOtherTriggered(new JackProducerWidget(this));
     else if (sender()->objectName() == "alsa")
         onOpenOtherTriggered(new TextProducerWidget(this));
-    else if (sender()->objectName() == "device")
 #if defined(Q_OS_MAC)
+    else if (sender()->objectName() == "device")
         onOpenOtherTriggered(new AvfoundationProducerWidget(this));
 #elif defined(Q_OS_WIN)
+    else if (sender()->objectName() == "device")
         onOpenOtherTriggered(new DirectShowVideoWidget(this));
 #endif
     else if (sender()->objectName() == "decklink")
