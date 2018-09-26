@@ -312,21 +312,7 @@ private slots:
     void onAppendTaskDone();
     void on_actionOpenOther2_triggered();
     void onOpenOtherTriggered(QWidget* widget);
-    void onOpenOtherColor();
-    void onOpenOtherText();
-    void onOpenOtherNoise();
-    void onOpenOtherIsing();
-    void onOpenOtherLissajous();
-    void onOpenOtherPlasma();
-    void onOpenOtherColorBars();
-    void onOpenOtherTone();
-    void onOpenOtherCount();
-    void onOpenOtherV4L2();
-    void onOpenOtherPulse();
-    void onOpenOtherJack();
-    void onOpenOtherAlsa();
-    void onOpenOtherDevice();
-    void onOpenOtherDecklink();
+    void onOpenOtherTriggered();
 };
 
 #define MAIN MainWindow::singleton()
