@@ -189,6 +189,8 @@ private slots:
     void grid3();
     void grid4();
     void grid16();
+    void gridSafeAreas8090();
+    void gridSafeAreasEbuR95();
     void toggleGrid(bool checked);
     void onFadeOutFinished();
 };

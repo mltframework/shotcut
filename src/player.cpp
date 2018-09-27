@@ -251,6 +251,12 @@ Player::Player(QWidget *parent)
     action = gridMenu->addAction(tr("16x16 Grid"), this, SLOT(grid16()));
     action->setCheckable(true);
     m_gridActionGroup->addAction(action);
+    action = gridMenu->addAction(tr("80/90% Safe Areas"), this, SLOT(gridSafeAreas8090()));
+    action->setCheckable(true);
+    m_gridActionGroup->addAction(action);
+    action = gridMenu->addAction(tr("EBU R95 Safe Areas"), this, SLOT(gridSafeAreasEbuR95()));
+    action->setCheckable(true);
+    m_gridActionGroup->addAction(action);
     connect(m_gridButton, SIGNAL(toggled(bool)), SLOT(toggleGrid(bool)));
     m_gridButton->setMenu(gridMenu);
     m_gridButton->setIcon(QIcon::fromTheme("view-grid", QIcon(":/icons/oxygen/32x32/actions/view-grid")));
@@ -1026,6 +1032,20 @@ void Player::grid16()
     m_gridButton->setChecked(true);
     m_gridDefaultAction = m_gridActionGroup->actions()[3];
     emit gridChanged(16);
+}
+
+void Player::gridSafeAreas8090()
+{
+    m_gridButton->setChecked(true);
+    m_gridDefaultAction = m_gridActionGroup->actions()[4];
+    emit gridChanged(8090);
+}
+
+void Player::gridSafeAreasEbuR95()
+{
+    m_gridButton->setChecked(true);
+    m_gridDefaultAction = m_gridActionGroup->actions()[5];
+    emit gridChanged(95);
 }
 
 void Player::toggleGrid(bool checked)
