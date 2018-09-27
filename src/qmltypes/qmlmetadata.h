@@ -29,6 +29,7 @@ class QmlKeyframesParameter : public QObject
     Q_OBJECT
     Q_PROPERTY(QString name MEMBER m_name NOTIFY changed)
     Q_PROPERTY(QString property MEMBER m_property NOTIFY changed)
+    Q_PROPERTY(QStringList gangedProperties MEMBER m_gangedProperties NOTIFY changed)
     /// If isSimple this parameter cannot use full keyframes while simple is in use.
     Q_PROPERTY(bool isSimple MEMBER m_isSimple NOTIFY changed)
     Q_PROPERTY(bool isCurve MEMBER m_isCurve NOTIFY changed)
@@ -40,6 +41,7 @@ public:
 
     QString name() const { return m_name; }
     QString property() const { return m_property; }
+    QStringList gangedProperties() const { return m_gangedProperties; }
     bool isSimple() const { return m_isSimple; }
     bool isCurve() const { return m_isCurve; }
     double minimum() const { return m_minimum; }
@@ -51,6 +53,7 @@ signals:
 private:
     QString m_name;
     QString m_property;
+    QStringList m_gangedProperties;
     bool m_isSimple;
     bool m_isCurve;
     double m_minimum;

@@ -25,6 +25,7 @@ Metadata {
             Parameter {
                 name: qsTr('Scale')
                 property: 'transition.scale_x'
+                gangedProperties: ['transition.scale_y']
                 isSimple: true
             },
             Parameter {
