@@ -257,6 +257,11 @@ Player::Player(QWidget *parent)
     action = gridMenu->addAction(tr("EBU R95 Safe Areas"), this, SLOT(gridSafeAreasEbuR95()));
     action->setCheckable(true);
     m_gridActionGroup->addAction(action);
+    gridMenu->addSeparator();
+    action = gridMenu->addAction(tr("Snap to Grid"));
+    action->setCheckable(true);
+    action->setChecked(true);
+    connect(action, SIGNAL(toggled(bool)), MLT.videoWidget(), SLOT(setSnapToGrid(bool)));
     connect(m_gridButton, SIGNAL(toggled(bool)), SLOT(toggleGrid(bool)));
     m_gridButton->setMenu(gridMenu);
     m_gridButton->setIcon(QIcon::fromTheme("view-grid", QIcon(":/icons/oxygen/32x32/actions/view-grid")));

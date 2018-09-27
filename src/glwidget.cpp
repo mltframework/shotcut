@@ -68,6 +68,7 @@ GLWidget::GLWidget(QObject *parent)
     , m_zoom(0.0f)
     , m_offset(QPoint(0, 0))
     , m_shareContext(0)
+    , m_snapToGrid(true)
 {
     LOG_DEBUG() << "begin";
     m_texture[0] = m_texture[1] = m_texture[2] = 0;
@@ -766,6 +767,12 @@ void GLWidget::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta)
     } else {
         setBlankScene();
     }
+}
+
+void GLWidget::setSnapToGrid(bool snap)
+{
+    m_snapToGrid = snap;
+    emit snapToGridChanged();
 }
 
 void GLWidget::updateTexture(GLuint yName, GLuint uName, GLuint vName)

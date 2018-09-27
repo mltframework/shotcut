@@ -50,6 +50,7 @@ class GLWidget : public QQuickWidget, public Controller, protected QOpenGLFuncti
     Q_OBJECT
     Q_PROPERTY(QRect rect READ rect NOTIFY rectChanged)
     Q_PROPERTY(int grid READ grid NOTIFY gridChanged)
+    Q_PROPERTY(bool snapToGrid READ snapToGrid NOTIFY snapToGridChanged)
     Q_PROPERTY(float zoom READ zoom NOTIFY zoomChanged)
     Q_PROPERTY(QPoint offset READ offset NOTIFY offsetChanged)
 
@@ -87,6 +88,7 @@ public:
     QPoint offset() const;
     QImage image() const;
     void requestImage() const;
+    bool snapToGrid() const { return m_snapToGrid; }
 
 public slots:
     void onFrameDisplayed(const SharedFrame& frame);
@@ -96,6 +98,7 @@ public slots:
     void setOffsetY(int y);
     void setBlankScene();
     void setCurrentFilter(QmlFilter* filter, QmlMetadata* meta);
+    void setSnapToGrid(bool snap);
 
 signals:
     void frameDisplayed(const SharedFrame& frame);
@@ -110,6 +113,7 @@ signals:
     void zoomChanged();
     void offsetChanged();
     void imageReady();
+    void snapToGridChanged();
 
 private:
     QRect m_rect;
@@ -138,6 +142,7 @@ private:
     SharedFrame m_sharedFrame;
     QMutex m_mutex;
     QUrl m_savedQmlSource;
+    bool m_snapToGrid;
 
     static void on_frame_show(mlt_consumer, void* self, mlt_frame frame);
 

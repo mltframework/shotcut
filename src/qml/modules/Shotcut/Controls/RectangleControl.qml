@@ -29,6 +29,7 @@ Item {
     property int borderSize: 2
     property alias rectangle: rectangle
     property color handleColor: Qt.rgba(1, 1, 1, enabled? 0.9 : 0.2)
+    property int snapMargin: 10
 
     signal rectChanged(Rectangle rect)
 
@@ -52,11 +53,10 @@ Item {
     }
 
     function snapX(x) {
-        if (video.grid == 0) {
+        if (!video.snapToGrid || video.grid === 0 || video.grid >= 95) {
             return x
         }
         var gridSize = parent.width / video.grid
-        var snapMargin = gridSize / 5
         var delta = x % gridSize
         if (delta < snapMargin) {
             return x - delta
@@ -68,11 +68,10 @@ Item {
     }
 
     function snapY(y) {
-        if (video.grid == 0) {
+        if (!video.snapToGrid || video.grid === 0 || video.grid >= 95) {
             return y
         }
         var gridSize = parent.height / video.grid
-        var snapMargin = gridSize / 5
         var delta = y % gridSize
         if (delta < snapMargin) {
             return y - delta
