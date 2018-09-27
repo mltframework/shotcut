@@ -51,6 +51,38 @@ Item {
         bottomLeftHandle.y = bottomRightHandle.y
     }
 
+    function snapX(x) {
+        if (video.grid == 0) {
+            return x
+        }
+        var gridSize = parent.width / video.grid
+        var snapMargin = gridSize / 5
+        var delta = x % gridSize
+        if (delta < snapMargin) {
+            return x - delta
+        } else if ((gridSize - delta) < snapMargin) {
+            return x + gridSize - delta
+        } else {
+            return x
+        }
+    }
+
+    function snapY(y) {
+        if (video.grid == 0) {
+            return y
+        }
+        var gridSize = parent.height / video.grid
+        var snapMargin = gridSize / 5
+        var delta = y % gridSize
+        if (delta < snapMargin) {
+            return y - delta
+        } else if ((gridSize - delta) < snapMargin) {
+            return y + gridSize - delta
+        } else {
+            return y
+        }
+    }
+
     Rectangle {
         id: rectangle
         color: 'transparent'
@@ -99,7 +131,11 @@ Item {
                 bottomRightHandle.anchors.right = rectangle.right
                 bottomRightHandle.anchors.bottom = rectangle.bottom
             }
-            onPositionChanged: rectChanged(rectangle)
+            onPositionChanged: {
+                rectangle.x = snapX(rectangle.x + rectangle.width / 2) - rectangle.width / 2
+                rectangle.y = snapY(rectangle.y + rectangle.height / 2) - rectangle.height / 2
+                rectChanged(rectangle)
+            }
             onReleased: {
                 rectChanged(rectangle)
                 rectangle.anchors.top = topLeftHandle.top
@@ -134,6 +170,8 @@ Item {
                 bottomLeftHandle.anchors.left = rectangle.left
             }
             onPositionChanged: {
+                topLeftHandle.x = snapX(topLeftHandle.x)
+                topLeftHandle.y = snapY(topLeftHandle.y)
                 if (aspectRatio !== 0.0)
                     parent.x = topRightHandle.x + handleSize - rectangle.height * aspectRatio
                 parent.x = Math.min(parent.x, bottomRightHandle.x)
@@ -167,6 +205,8 @@ Item {
                 bottomRightHandle.anchors.right = rectangle.right
             }
             onPositionChanged: {
+                topRightHandle.x = snapX(topRightHandle.x + handleSize) - handleSize
+                topRightHandle.y = snapY(topRightHandle.y)
                 if (aspectRatio !== 0.0)
                     parent.x = topLeftHandle.x + rectangle.height * aspectRatio - handleSize
                 parent.x = Math.max(parent.x, bottomLeftHandle.x)
@@ -200,6 +240,8 @@ Item {
                 bottomRightHandle.anchors.bottom = rectangle.bottom
             }
             onPositionChanged: {
+                bottomLeftHandle.x = snapX(bottomLeftHandle.x)
+                bottomLeftHandle.y = snapY(bottomLeftHandle.y + handleSize) - handleSize
                 if (aspectRatio !== 0.0)
                     parent.x = topRightHandle.x + handleSize - rectangle.height * aspectRatio
                 parent.x = Math.min(parent.x, topRightHandle.x)
@@ -231,6 +273,8 @@ Item {
                 bottomLeftHandle.anchors.bottom = rectangle.bottom
             }
             onPositionChanged: {
+                bottomRightHandle.x = snapX(bottomRightHandle.x + handleSize) - handleSize
+                bottomRightHandle.y = snapY(bottomRightHandle.y + handleSize) - handleSize
                 if (aspectRatio !== 0.0)
                     parent.x = topLeftHandle.x + rectangle.height * aspectRatio - handleSize
                 parent.x = Math.max(parent.x, topLeftHandle.x)
