@@ -155,37 +155,37 @@ void TimelineDock::pulseLockButtonOnTrack(int trackIndex)
     emit showStatusMessage(tr("This track is locked"));
 }
 
-void TimelineDock::chooseClipAtPosition(int position, int * trackIndex, int * clipIndex)
+void TimelineDock::chooseClipAtPosition(int position, int& trackIndex, int& clipIndex)
 {
     QScopedPointer<Mlt::Producer> clip;
 
     // Start by checking for a hit at the specified track
-    if (*trackIndex != -1 && !isTrackLocked(*trackIndex)) {
-        *clipIndex = clipIndexAtPosition(*trackIndex, position);
-        if (*clipIndex != -1 && !isBlank(*trackIndex, *clipIndex))
+    if (trackIndex != -1 && !isTrackLocked(trackIndex)) {
+        clipIndex = clipIndexAtPosition(trackIndex, position);
+        if (clipIndex != -1 && !isBlank(trackIndex, clipIndex))
             return;
     }
 
     // Next we try the current track
-    *trackIndex = currentTrack();
-    *clipIndex = clipIndexAtPosition(*trackIndex, position);
+    trackIndex = currentTrack();
+    clipIndex = clipIndexAtPosition(trackIndex, position);
 
-    if (!isTrackLocked(*trackIndex) && *clipIndex != -1 && !isBlank(*trackIndex, *clipIndex)) {
+    if (!isTrackLocked(trackIndex) && clipIndex != -1 && !isBlank(trackIndex, clipIndex)) {
         return;
     }
 
     // if there was no hit, look through the other tracks
-    for (*trackIndex = 0; *trackIndex < m_model.trackList().size(); (*trackIndex)++) {
-        if (*trackIndex == currentTrack())
+    for (trackIndex = 0; trackIndex < m_model.trackList().size(); (trackIndex)++) {
+        if (trackIndex == currentTrack())
             continue;
-        if (isTrackLocked(*trackIndex))
+        if (isTrackLocked(trackIndex))
             continue;
-        *clipIndex = clipIndexAtPosition(*trackIndex, position);
-        if (*clipIndex != -1 && !isBlank(*trackIndex, *clipIndex))
+        clipIndex = clipIndexAtPosition(trackIndex, position);
+        if (clipIndex != -1 && !isBlank(trackIndex, clipIndex))
             return;
     }
-    *trackIndex = -1;
-    *clipIndex = -1;
+    trackIndex = -1;
+    clipIndex = -1;
 }
 
 int TimelineDock::clipCount(int trackIndex) const
@@ -286,7 +286,7 @@ void TimelineDock::restoreSelection()
 void TimelineDock::selectClipUnderPlayhead()
 {
     int track = -1, clip = -1;
-    chooseClipAtPosition(m_position, &track, &clip);
+    chooseClipAtPosition(m_position, track, clip);
     if (clip == -1) {
         if (isTrackLocked(currentTrack())) {
             pulseLockButtonOnTrack(currentTrack());
@@ -326,7 +326,7 @@ bool TimelineDock::isTrackLocked(int trackIndex) const
 void TimelineDock::trimClipAtPlayhead(TrimLocation location, bool ripple)
 {
     int trackIndex = currentTrack(), clipIndex = -1;
-    chooseClipAtPosition(m_position, &trackIndex, &clipIndex);
+    chooseClipAtPosition(m_position, trackIndex, clipIndex);
     if (trackIndex < 0 || clipIndex < 0)
         return;
     setCurrentTrack(trackIndex);
@@ -915,7 +915,7 @@ void TimelineDock::appendFromPlaylist(Mlt::Playlist *playlist)
 void TimelineDock::splitClip(int trackIndex, int clipIndex)
 {
     if (trackIndex < 0 || clipIndex < 0)
-        chooseClipAtPosition(m_position, &trackIndex, &clipIndex);
+        chooseClipAtPosition(m_position, trackIndex, clipIndex);
     if (trackIndex < 0 || clipIndex < 0)
         return;
     setCurrentTrack(trackIndex);

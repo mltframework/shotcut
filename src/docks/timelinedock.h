@@ -56,7 +56,7 @@ public:
     Mlt::Producer* producerForClip(int trackIndex, int clipIndex);
     int clipIndexAtPlayhead(int trackIndex = -1);
     int clipIndexAtPosition(int trackIndex, int position);
-    void chooseClipAtPosition(int position, int * trackIndex, int * clipIndex);
+    void chooseClipAtPosition(int position, int& trackIndex, int& clipIndex);
     void setCurrentTrack(int currentTrack);
     int currentTrack() const;
     int clipCount(int trackIndex) const;
