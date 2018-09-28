@@ -168,7 +168,7 @@ void TimelineDock::chooseClipAtPosition(int position, int& trackIndex, int& clip
 
     // Next we try the current track
     trackIndex = currentTrack();
-    clipIndex = clipIndexAtPosition(trackIndex, position);
+    clipIndex = qMin(clipIndexAtPosition(trackIndex, position), clipCount(trackIndex) - 1);
 
     if (!isTrackLocked(trackIndex) && clipIndex != -1 && !isBlank(trackIndex, clipIndex)) {
         return;
