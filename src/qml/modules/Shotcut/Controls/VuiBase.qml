@@ -26,7 +26,7 @@ DropArea {
                 ctx.strokeStyle = "#000000"
                 ctx.beginPath()
                 if (video.grid === 8090) {
-                    // 80%/90% Safe Areas
+                    // 80/90% Safe Areas
                     ctx.rect( 0.1 * rectW + rectX + 2,  0.1 * rectH + rectY + 2, 0.8 * rectW - 1, 0.8 * rectH - 1)
                     ctx.rect(0.05 * rectW + rectX + 2, 0.05 * rectH + rectY + 2, 0.9 * rectW - 1, 0.9 * rectH - 1)
                 } else if (video.grid == 95) {
@@ -56,7 +56,7 @@ DropArea {
                 ctx.strokeStyle = "#ffffff"
                 ctx.beginPath()
                 if (video.grid === 8090) {
-                    // 80%/90% Safe Areas
+                    // 80/90% Safe Areas
                     ctx.rect( 0.1 * rectW + rectX + 1,  0.1 * rectH + rectY + 1, 0.8 * rectW - 2, 0.8 * rectH - 2)
                     ctx.rect(0.05 * rectW + rectX + 1, 0.05 * rectH + rectY + 2, 0.9 * rectW - 2, 0.9 * rectH - 2)
                 } else if (video.grid == 95) {

@@ -258,7 +258,7 @@ Player::Player(QWidget *parent)
     action->setCheckable(true);
     m_gridActionGroup->addAction(action);
     gridMenu->addSeparator();
-    action = gridMenu->addAction(tr("Snap to Grid"));
+    action = gridMenu->addAction(tr("Snapping"));
     action->setCheckable(true);
     action->setChecked(true);
     connect(action, SIGNAL(toggled(bool)), MLT.videoWidget(), SLOT(setSnapToGrid(bool)));

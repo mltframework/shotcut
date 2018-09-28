@@ -53,33 +53,67 @@ Item {
     }
 
     function snapX(x) {
-        if (!video.snapToGrid || video.grid === 0 || video.grid >= 95) {
+        if (!video.snapToGrid || video.grid === 0) {
             return x
         }
-        var gridSize = parent.width / video.grid
-        var delta = x % gridSize
-        if (delta < snapMargin) {
-            return x - delta
-        } else if ((gridSize - delta) < snapMargin) {
-            return x + gridSize - delta
+        if (video.grid < 95) {
+            var gridSize = parent.width / video.grid
+            var delta = x % gridSize
+            if (delta < snapMargin) {
+                return x - delta
+            } else if ((gridSize - delta) < snapMargin) {
+                return x + gridSize - delta
+            }
         } else {
-            return x
+            var deltas = null
+            if (video.grid === 8090) {
+                // 80/90% Safe Areas
+                deltas = [0.0, 0.05, 0.1, 0.9, 0.95, 1.0]
+            } else if (video.grid === 95) {
+                // EBU R95 Safe Areas
+                deltas = [0.0, 0.035, 0.05, 0.95, 0.965, 1.0]
+            }
+            if (deltas) {
+                for (var i = 0; i < deltas.length; i++) {
+                    delta = x - deltas[i] * parent.width
+                    if (Math.abs(delta) < snapMargin)
+                        return x - delta
+                }
+            }
         }
+        return x
     }
 
     function snapY(y) {
-        if (!video.snapToGrid || video.grid === 0 || video.grid >= 95) {
+        if (!video.snapToGrid || video.grid === 0) {
             return y
         }
-        var gridSize = parent.height / video.grid
-        var delta = y % gridSize
-        if (delta < snapMargin) {
-            return y - delta
-        } else if ((gridSize - delta) < snapMargin) {
-            return y + gridSize - delta
+        if (video.grid < 95) {
+            var gridSize = parent.height / video.grid
+            var delta = y % gridSize
+            if (delta < snapMargin) {
+                return y - delta
+            } else if ((gridSize - delta) < snapMargin) {
+                return y + gridSize - delta
+            }
         } else {
-            return y
+            var deltas = null
+            if (video.grid === 8090) {
+                // 80/90% Safe Areas
+                deltas = [0.0, 0.05, 0.1, 0.9, 0.95, 1.0]
+            } else if (video.grid === 95) {
+                // EBU R95 Safe Areas
+                deltas = [0.0, 0.035, 0.05, 0.95, 0.965, 1.0]
+            }
+            if (deltas) {
+                for (var i = 0; i < deltas.length; i++) {
+                    delta = y - deltas[i] * parent.height
+                    if (Math.abs(delta) < snapMargin)
+                        return y - delta
+                }
+            }
         }
+        return y
     }
 
     Rectangle {
