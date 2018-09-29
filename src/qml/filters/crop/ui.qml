@@ -117,6 +117,7 @@ Item {
             onClicked: {
                 centerCheckBox.checked = false
                 filter.set('center', false)
+                setEnabled()
             }
         }
 
