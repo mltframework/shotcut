@@ -152,6 +152,10 @@ public:
 
     bool noUpgrade() const;
     void setNoUpgrade(bool value);
+    bool checkUpgradeAutomatic();
+    void setCheckUpgradeAutomatic(bool b);
+    bool askUpgradeAutmatic();
+    void setAskUpgradeAutomatic(bool b);
 
     void sync();
     QString appDataLocation() const;

@@ -531,6 +531,26 @@ void ShotcutSettings::setNoUpgrade(bool value)
     settings.setValue("noupgrade", value);
 }
 
+bool ShotcutSettings::checkUpgradeAutomatic()
+{
+    return settings.value("checkUpgradeAutomatic", false).toBool();
+}
+
+void ShotcutSettings::setCheckUpgradeAutomatic(bool b)
+{
+    settings.setValue("checkUpgradeAutomatic", b);
+}
+
+bool ShotcutSettings::askUpgradeAutmatic()
+{
+    return settings.value("askUpgradeAutmatic", true).toBool();
+}
+
+void ShotcutSettings::setAskUpgradeAutomatic(bool b)
+{
+    settings.setValue("askUpgradeAutmatic", b);
+}
+
 void ShotcutSettings::sync()
 {
     settings.sync();
