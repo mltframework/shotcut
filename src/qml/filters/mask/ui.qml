@@ -91,7 +91,7 @@ Item {
             = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
         operationCombo.currentIndex = Math.round(filter.getDouble(paramOperation) * 4)
         shapeCombo.currentIndex = Math.round(filter.getDouble(paramShape) * 3)
-        rotationSlider.value = filter.getDouble(paramRotation) * 100
+        rotationSlider.value = (filter.getDouble(paramRotation) - 0.5) * 360
         softnessSlider.value = filter.getDouble(paramSoftness) * 100
     }
 
@@ -292,15 +292,16 @@ Item {
         }
         SliderSpinner {
             id: rotationSlider
-            minimumValue: 0.01
-            maximumValue: 99.99
-            decimals: 2
-            suffix: ' %'
-            onValueChanged: filter.set(paramRotation, value / 100)
+            minimumValue: -179.9
+            maximumValue: 179.9
+            decimals: 1
+            spinnerWidth: 110
+            suffix: qsTr(' deg', 'degrees')
+            onValueChanged: filter.set(paramRotation, 0.5 + value / 360)
         }
         UndoButton {
             Layout.columnSpan: 2
-            onClicked: rotationSlider.value = 50
+            onClicked: rotationSlider.value = 0
         }
 
         Label {
