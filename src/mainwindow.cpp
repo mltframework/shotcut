@@ -74,6 +74,7 @@
 #include "models/keyframesmodel.h"
 #include "dialogs/listselectiondialog.h"
 #include "widgets/textproducerwidget.h"
+#include "qmltypes/qmlprofile.h"
 
 #include <QtWidgets>
 #include <Logger.h>
@@ -393,6 +394,7 @@ MainWindow::MainWindow()
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_historyDock, SLOT(setDisabled(bool)));
     connect(this, SIGNAL(profileChanged()), m_encodeDock, SLOT(onProfileChanged()));
     connect(this, SIGNAL(profileChanged()), SLOT(onProfileChanged()));
+    connect(this, SIGNAL(profileChanged()), &QmlProfile::singleton(), SIGNAL(profileChanged()));
     connect(this, SIGNAL(audioChannelsChanged()), m_encodeDock, SLOT(onAudioChannelsChanged()));
     connect(m_playlistDock->model(), SIGNAL(modified()), m_encodeDock, SLOT(onProducerOpened()));
     connect(m_timelineDock, SIGNAL(clipCopied()), m_encodeDock, SLOT(onProducerOpened()));
