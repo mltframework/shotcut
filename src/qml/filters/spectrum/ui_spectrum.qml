@@ -171,14 +171,14 @@ Item {
                 id: rectX
                 text: filterRect.x
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: setFilter()
+                onEditingFinished: if (filterRect.x !== parseFloat(text)) setFilter()
             }
             Label { text: ',' }
             TextField {
                 id: rectY
                 text: filterRect.y
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: setFilter()
+                onEditingFinished: if (filterRect.y !== parseFloat(text)) setFilter()
             }
         }
 
@@ -192,14 +192,14 @@ Item {
                 id: rectW
                 text: filterRect.width
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: setFilter()
+                onEditingFinished: if (filterRect.width !== parseFloat(text)) setFilter()
             }
             Label { text: 'x' }
             TextField {
                 id: rectH
                 text: filterRect.height
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: setFilter()
+                onEditingFinished: if (filterRect.height !== parseFloat(text)) setFilter()
             }
         }
         

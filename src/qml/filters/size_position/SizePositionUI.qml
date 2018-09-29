@@ -276,7 +276,7 @@ Item {
             TextField {
                 id: rectX
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: {
+                onEditingFinished: if (filterRect.x !== parseFloat(text)) {
                     filterRect.x = parseFloat(text)
                     setFilter(getPosition())
                 }
@@ -285,7 +285,7 @@ Item {
             TextField {
                 id: rectY
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: {
+                onEditingFinished: if (filterRect.y !== parseFloat(text)) {
                     filterRect.y = parseFloat(text)
                     setFilter(getPosition())
                 }
@@ -320,7 +320,7 @@ Item {
             TextField {
                 id: rectW
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: {
+                onEditingFinished: if (filterRect.width !== parseFloat(text)) {
                     filterRect.width = parseFloat(text)
                     setFilter(getPosition())
                 }
@@ -329,7 +329,7 @@ Item {
             TextField {
                 id: rectH
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: {
+                onEditingFinished: if (filterRect.height !== parseFloat(text)) {
                     filterRect.height = parseFloat(text)
                     setFilter(getPosition())
                 }
