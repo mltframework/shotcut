@@ -189,3 +189,16 @@ QList<QUrl> Util::expandDirectories(const QList<QUrl>& urls)
     }
     return result;
 }
+
+uint Util::versionStringToUInt(const QString& s)
+{
+    // This only accepts up to 3 period-delimited fields where each
+    // field value <= 999.
+    uint version = 0;
+    QStringList list = s.split('.').mid(0, 3);
+    QList<QString>::const_reverse_iterator i;
+    uint factor = 1;
+    for (i = list.crbegin(); i != list.crend(); ++i, factor *= 1000)
+         version += qMin(i->toUInt(), 999U) * factor;
+    return version;
+}

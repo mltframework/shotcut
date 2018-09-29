@@ -17,6 +17,7 @@
 
 #include "qmlmetadata.h"
 #include "settings.h"
+#include "util.h"
 #include <Logger.h>
 
 QmlMetadata::QmlMetadata(QObject *parent)
@@ -166,15 +167,8 @@ void QmlKeyframesMetadata::checkVersion(const QString& version)
     if (!m_minimumVersion.isEmpty()) {
         // m_enabled = version >= m_minimumVersion, but we need to compare each field of the version separately.
         LOG_DEBUG() << "MLT version:" << version << "Shotcut minimumVersion:" << m_minimumVersion;
-        QStringList versionParts = version.split('.');
-        QStringList minimumVersionParts = m_minimumVersion.split('.');
-        int i = 0;
-        foreach (QString field, versionParts) {
-            if (field.toUInt() < minimumVersionParts[i++].toUInt()) {
-                setDisabled();
-                break;
-            }
-        }
+        if (Util::versionStringToUInt(version) < Util::versionStringToUInt(m_minimumVersion))
+            setDisabled();
     }
 }
 

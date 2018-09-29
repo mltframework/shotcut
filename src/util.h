@@ -41,6 +41,7 @@ public:
     static QStringList sortedFileList(const QList<QUrl>& urls);
     static int coerceMultiple(int value, int multiple = 2);
     static QList<QUrl> expandDirectories(const QList<QUrl>& urls);
+    static uint versionStringToUInt(const QString& s);
 };
 
 #endif // UTIL_H

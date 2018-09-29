@@ -3364,14 +3364,16 @@ void MainWindow::onUpgradeCheckFinished(QNetworkReply* reply)
         QByteArray response = reply->readAll();
         LOG_DEBUG() << "response: " << response;
         QJsonDocument json = QJsonDocument::fromJson(response);
-        if (!json.isNull() && json.object().value("version_string").type() == QJsonValue::String) {
-            QString version = json.object().value("version_string").toString();
-            if (version != qApp->applicationVersion()) {
-                QAction* action = new QAction(tr("Shotcut version %1 is available! Click here to get it.").arg(version), 0);
+        QString current = qApp->applicationVersion();
+
+        if (!json.isNull() && json.object().value("version_string").type() == QJsonValue::String && current != "adhoc") {
+            QString latest = json.object().value("version_string").toString();
+            if (Util::versionStringToUInt(current) < Util::versionStringToUInt(latest)) {
+                QAction* action = new QAction(tr("Shotcut version %1 is available! Click here to get it.").arg(latest), 0);
                 connect(action, SIGNAL(triggered(bool)), SLOT(onUpgradeTriggered()));
                 if (!json.object().value("url").isUndefined())
                     m_upgradeUrl = json.object().value("url").toString();
-                showStatusMessage(action, 10 /* seconds */);
+                showStatusMessage(action, 15 /* seconds */);
             } else {
                 showStatusMessage(tr("You are running the latest version of Shotcut."));
             }
