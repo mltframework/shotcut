@@ -292,15 +292,15 @@ Item {
         }
         SliderSpinner {
             id: rotationSlider
-            minimumValue: 0
-            maximumValue: 100
+            minimumValue: 0.01
+            maximumValue: 99.99
             decimals: 2
             suffix: ' %'
             onValueChanged: filter.set(paramRotation, value / 100)
         }
         UndoButton {
             Layout.columnSpan: 2
-            onClicked: rotationSlider.value = 0
+            onClicked: rotationSlider.value = 50
         }
 
         Label {
