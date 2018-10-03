@@ -1289,6 +1289,7 @@ void EncodeDock::onProfileChanged()
     ui->scanModeCombo->setCurrentIndex(MLT.profile().progressive());
     on_scanModeCombo_currentIndexChanged(ui->scanModeCombo->currentIndex());
     ui->fpsSpinner->setValue(MLT.profile().fps());
+    ui->fpsSpinner->setMinimum(qRound(MLT.profile().fps() / 3.0));
     if (m_isDefaultSettings) {
         ui->gopSpinner->blockSignals(true);
         ui->gopSpinner->setValue(qRound(MLT.profile().fps() * 5.0));
