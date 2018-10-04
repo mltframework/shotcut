@@ -463,6 +463,7 @@ Item {
         }
         UndoButton {
             onClicked: {
+                rectX.text = rectY.text = 0
                 filterRect.x = filterRect.y = 0
                 updateFilter(getPosition())
             }
@@ -507,6 +508,8 @@ Item {
         }
         UndoButton {
             onClicked: {
+                rectW.text = profile.width
+                rectH.text = profile.height
                 filterRect.width = profile.width
                 filterRect.height = profile.height
                 updateFilter(getPosition())
